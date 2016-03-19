@@ -141,13 +141,14 @@ while($dannivnb = mysqli_fetch_array($qannivnb))
       $anb_css[$nannivnb] = '';
 
     // Déterminer le style des lignes qui sont aujourd'hui
-    if((date('m-d',time()) == date('m-d',$dannivnb['date_creation'])) && !$dannivnb['admin'])
+    if((date('m-d',time()) == date('m-d',$dannivnb['date_creation'])))
     {
       if($anb_xanniv[$nannivnb] == 1)
         $anb_xanniv[$nannivnb] = "Joyeux ".$anb_xanniv[$nannivnb]." an !";
       else
         $anb_xanniv[$nannivnb] = "Joyeux ".$anb_xanniv[$nannivnb]." ans !";
-      $anb_css[$nannivnb] = $anb_css[$nannivnb].' vert_background gras';
+      if(!$dannivnb['admin'])
+        $anb_css[$nannivnb] = $anb_css[$nannivnb].' vert_background gras';
     }
     else
     {
