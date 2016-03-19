@@ -110,6 +110,17 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
 
 
   //*************************************************************************************************************************************//
+  // Mot de passe d'un user modifié par un admin
+  else if($dactrec['action_type'] === 'editpass')
+  {
+    $description_class[$nactrec]  = 'mise_a_jour texte_blanc';
+    $description_action[$nactrec] = '<a class="nolink texte_blanc gras" href="'.$chemin.'pages/user/user?id='.$dactrec['parent_id'].'">'.$dactrec['parent_titre'].'</a> a modifié le mot de passe de <a class="nolink texte_blanc gras" href="'.$chemin.'pages/user/user?id='.$dactrec['FKmembres'].'">'.$dactrec['pseudonyme'].'</a>';
+    $description_raison[$nactrec] = '';
+    $description_diff[$nactrec]   = '';
+  }
+
+
+  //*************************************************************************************************************************************//
   // Profil d'un user modifié par un admin
   else if($dactrec['action_type'] === 'profil_edit')
   {

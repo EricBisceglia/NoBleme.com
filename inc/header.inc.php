@@ -1106,6 +1106,13 @@ else
                   </a>
                 </li>
 
+
+                <li>
+                  <a class="menu_link" href="<?=$chemin?>pages/sysop/pass">
+                    Modifier un mot de passe
+                  </a>
+                </li>
+
               </ul>
             </li>
 
