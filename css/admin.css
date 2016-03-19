@@ -1,0 +1,16 @@
+/************************************************************** Mise à jour **************************************************************/
+td.maj_version_titre { width:80px; }
+
+/*********************************************************** Référence du CSS ************************************************************/
+div.css_couleurs { width:400px;  }
+   div.css_table { width:500px;  }
+div.css_sections { width:1200px; }
+     div.css_div { width:850px;  }
+ div.css_example { width:200px;  }
+
+/************************************************************ Stats referers *************************************************************/
+     td.referer_raw { width: 500px; }
+   td.referer_alias { width: 250px; }
+td.referer_modifier { width: 100px; }
+
+div.referer_evolution { width: 1200px; }

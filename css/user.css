@@ -1,0 +1,27 @@
+/************************************************************* register.php **************************************************************/
+              td.user_register { width:140px; }
+          td.user_register_big { width:400px; }
+    td.user_register_questions { width:450px; }
+td.user_register_questions_big { width:500px; }
+
+/**************************************************************** pm.php *****************************************************************/
+td.titres_pm { width: 100px; }
+
+/************************************************************** profil.php ***************************************************************/
+  td.profil_colonnegauche { width: 155px; }
+td.profil_minixeplication { font-size: 0.6em; }
+
+/*************************************************************** user.php ****************************************************************/
+               table.userprofil_titre { width: 1050px;                 }
+              table.userprofil_gauche { height: 500px; width: 420px;   }
+                 td.userprofil_milieu { height: 500px; width: 20px;    }
+              table.userprofil_droite { height: 500px; width: 610px;   }
+                    div.userprofil_pm { height: 60px;                  }
+                  div.userprofil_info { height: 385px; overflow: auto; }
+                div.userprofil_custom { height: 500px; overflow: auto; }
+div.userprofil_custom > img.bbcodeimg { max-width: 550px;              }
+
+span.user_pseudo { font-size: 2.0em; font-weight: bold; }
+span.user_titre  { font-size: 1.2em; font-weight: bold; }
+
+hr.separateur_profil { border:1px dashed #888888; }

@@ -1,0 +1,12 @@
+Options +FollowSymlinks -MultiViews
+RewriteEngine On
+
+# Pour retirer le .php à la fin des urls
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC]
+
+# Cette ligne avant une condition permettrait de faire un truc en local only, à fixer en prod :
+# Ne fonctionne pas pour errordocument btw (donc pas pour les 404)
+# RewriteCond %{SERVER_NAME} =127.0.0.1
+ErrorDocument 404 http://nobleme.com/pages/nobleme/404
