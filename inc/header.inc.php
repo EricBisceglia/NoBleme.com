@@ -707,6 +707,12 @@ else
                   <ul class="menu_main">
 
                     <li>
+                      <a class="menu_link" href="<?=$chemin?>pages/devblog/blog">
+                        Devblog le plus récent
+                      </a>
+                    </li>
+
+                    <li>
                       <a class="menu_link" href="<?=$chemin?>pages/devblog/index">
                         Liste des devblogs
                       </a>
@@ -715,12 +721,6 @@ else
                     <li>
                       <a class="menu_link" href="<?=$chemin?>pages/devblog/top">
                         Devblogs populaires
-                      </a>
-                    </li>
-
-                    <li>
-                      <a class="menu_link" href="<?=$chemin?>pages/devblog/blog">
-                        Devblog le plus récent
                       </a>
                     </li>
 
@@ -734,16 +734,16 @@ else
                 </li>
 
                 <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/todo/roadmap">
-                    Plan de route
-                  </a>
-                </li>
-
-                <li>
                   <a class="dropdown">
                     Liste des tâches
                   </a>
                   <ul class="menu_main">
+
+                    <li>
+                      <a class="menu_link" href="<?=$chemin?>pages/todo/roadmap">
+                        Plan de route
+                      </a>
+                    </li>
 
                     <li>
                       <a class="menu_link" href="<?=$chemin?>pages/todo/index">
