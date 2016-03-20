@@ -19,26 +19,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 $le_subd = explode('.',$_SERVER['HTTP_HOST']);
 
 // Et on redirige vers le lieu approprié
-if($le_subd[0] == 'www')
+if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0.1"  && $le_subd[0] != 'nobleme' && $le_subd[1] != 'com')
   header("Location: "."http://".$le_subd[1].".".$le_subd[2].$_SERVER['REQUEST_URI']);
-else if($le_subd[0] == 'wiki')
-  header("Location: "."http://".$le_subd[1].".".$le_subd[2].$_SERVER['REQUEST_URI']);
-else if($le_subd[0] == 'forum')
-  header("Location: "."http://".$le_subd[1].".".$le_subd[2].$_SERVER['REQUEST_URI']);
-else if($le_subd[0] == 'nrm')
-  header("Location: "."http://".$le_subd[1].".".$le_subd[2].$_SERVER['REQUEST_URI']);
-else if($le_subd[0] == 'ufretin')
-  header("Location: "."http://".$le_subd[1].".".$le_subd[2].$_SERVER['REQUEST_URI']);
-else if($le_subd[0] == 'ks361946')
-  header("Location: http://www.nobleme.com/");
-else if($le_subd[0] == 'ns3032550')
-  header("Location: http://www.nobleme.com/");
-else if($le_subd[0] == 'badfurday')
-  header("Location: "."http://".$le_subd[1].".".$le_subd[2]."/pages/nobleme/cv");
-else if($le_subd[0] == 'irc')
-  header("Location: "."http://".$le_subd[1].".".$le_subd[2]."/pages/irc/index");
-else if($le_subd[0] == 'quotes')
-  header("Location: "."http://".$le_subd[1].".".$le_subd[2]."/pages/quotes/index");
 
 
 
