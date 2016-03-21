@@ -499,38 +499,38 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
 
           <?php for($i=0;$i<$ntodo;$i++) { ?>
           <tr onClick="toggle_row('todo_row<?=$todo_id[$i]?>');">
-            <td class="cadre_gris align_center gras spaced <?=$todo_importance_css[$i]?>">
+            <td class="cadre_gris align_center pointeur gras spaced <?=$todo_importance_css[$i]?>">
               #<?=$todo_id[$i]?>
             </td>
-            <td class="cadre_gris align_center gras nowrap spaced todo_encours <?=$todo_importance_css[$i]?>">
+            <td class="cadre_gris align_center pointeur gras nowrap spaced todo_encours <?=$todo_importance_css[$i]?>">
               <?=$todo_titre[$i]?>
             </td>
-            <td class="cadre_gris align_center nowrap spaced <?=$todo_importance_css[$i]?>">
+            <td class="cadre_gris align_center pointeur nowrap spaced <?=$todo_importance_css[$i]?>">
               <?=$todo_createur[$i]?>
             </td>
-            <td class="cadre_gris align_center nowrap spaced <?=$todo_importance_css[$i]?>">
+            <td class="cadre_gris align_center pointeur nowrap spaced <?=$todo_importance_css[$i]?>">
               <?=$todo_creation[$i]?>
             </td>
-            <td class="cadre_gris align_center nowrap spaced <?=$todo_importance_css[$i]?>">
+            <td class="cadre_gris align_center pointeur nowrap spaced <?=$todo_importance_css[$i]?>">
               <?=$todo_resolution[$i]?>
             </td>
-            <td class="cadre_gris align_center nowrap spaced <?=$todo_importance_css[$i]?>">
+            <td class="cadre_gris align_center pointeur nowrap spaced <?=$todo_importance_css[$i]?>">
               <?=$todo_importance[$i]?>
             </td>
-            <td class="cadre_gris align_center nowrap spaced <?=$todo_importance_css[$i]?>">
+            <td class="cadre_gris align_center pointeur nowrap spaced <?=$todo_importance_css[$i]?>">
               <?=$todo_categorie[$i]?>
             </td>
-            <td class="cadre_gris align_center nowrap spaced <?=$todo_importance_css[$i]?>">
+            <td class="cadre_gris align_center pointeur nowrap spaced <?=$todo_importance_css[$i]?>">
               <?=$todo_objectif[$i]?>
             </td>
-            <td class="cadre_gris align_center nowrap spaced gras <?=$todo_importance_css[$i]?>">
+            <td class="cadre_gris align_center pointeur nowrap spaced gras <?=$todo_importance_css[$i]?>">
               <?=$todo_commentaires[$i]?>
             </td>
             <?php if(loggedin() && getadmin() && !isset($_GET['noadmin'])) { ?>
-            <td class="cadre_gris align_center nowrap spaced gras <?=$todo_importance_css[$i]?>">
+            <td class="cadre_gris align_center pointeur nowrap spaced gras <?=$todo_importance_css[$i]?>">
               <?=$todo_valide[$i]?>
             </td>
-            <td class="cadre_gris align_center nowrap spaced gras <?=$todo_importance_css[$i]?>">
+            <td class="cadre_gris align_center pointeur nowrap spaced gras <?=$todo_importance_css[$i]?>">
               <?=$todo_public[$i]?>
             </td>
             <?php } ?>
