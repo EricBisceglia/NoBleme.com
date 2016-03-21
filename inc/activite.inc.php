@@ -80,8 +80,8 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   // Nouvelle version
   if($dactrec['action_type'] === 'version')
   {
-    $description_class[$nactrec]  = 'gras nobleme_clair';
-    $description_action[$nactrec] = 'Nouvelle version de NoBleme.com publiée : <a class="dark blank gras" href="'.$chemin.'pages/todo/roadmap">Version '.$dactrec['action_titre'].'</a>';
+    $description_class[$nactrec]  = 'gras texte_blanc sysop';
+    $description_action[$nactrec] = 'Nouvelle version de NoBleme.com publiée : <a class="nolink texte_blanc gras" href="'.$chemin.'pages/todo/roadmap">Version '.$dactrec['action_titre'].'</a>';
   }
 
 
@@ -125,8 +125,8 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   else if($dactrec['action_type'] === 'profil_edit')
   {
     // Log de modération
-    $description_class[$nactrec]  = 'sysop';
-    $description_action[$nactrec] = '<a class="dark blank gras" href="'.$chemin.'pages/user/user?id='.$dactrec['parent_id'].'">'.$dactrec['parent_titre'].'</a> a modifié le profil public de <a class="dark blank gras" href="'.$chemin.'pages/user/user?id='.$dactrec['FKmembres'].'">'.$dactrec['pseudonyme'].'</a>';
+    $description_class[$nactrec]  = 'sysop texte_blanc';
+    $description_action[$nactrec] = '<a class="nolink texte_blanc gras" href="'.$chemin.'pages/user/user?id='.$dactrec['parent_id'].'">'.$dactrec['parent_titre'].'</a> a modifié le profil public de <a class="nolink texte_blanc gras" href="'.$chemin.'pages/user/user?id='.$dactrec['FKmembres'].'">'.$dactrec['pseudonyme'].'</a>';
     $description_raison[$nactrec] = 'Raison de la modification : <span class="souligne">'.bbcode(destroy_html($dactrec['justification']))."</span>";
 
     // Diff
