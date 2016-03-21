@@ -167,7 +167,7 @@ if(isset($_POST['todo_add_ajouter_x']))
       Votre ticket a bien été envoyé. Il sera maintenant jugé, puis accepté ou refusé.<br>
       Même s'il finit par être refusé, merci d'avoir proposé de contribuer à l'amélioration de NoBleme. Votre aide est appréciée.<br>
       <br>
-      Vous recevrez une <a href="<?=$chemin?>pages/user/pm">notification</a> vous informant du sort de votre requête une fois que le jugement aura eu lieu.<br>
+      Vous recevrez une notification vous informant du sort de votre requête une fois que le jugement aura eu lieu.<br>
       Notez que le contenu de votre ticket sera probablement reformulé.<br>
     </div>
 
