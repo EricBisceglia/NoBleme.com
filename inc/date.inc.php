@@ -84,7 +84,10 @@ function datefr($date)
                     "Décembre"  );
 
   // Conversion de la date en toutes lettres
-  $date_text = $joursfr[date("w", strtotime($date))]." ".date("j", strtotime($date))." ".$moisfr[date("n", strtotime($date))]." ".date("Y", strtotime($date));
+  $date_text  = $joursfr[date("w", strtotime($date))]." ";
+  $date_text .= (date("j", strtotime($date)) == '1') ? date("j", strtotime($date))."er " : date("j", strtotime($date))." ";
+  $date_text .= $moisfr[date("n", strtotime($date))]." ";
+  $date_text .= date("Y", strtotime($date));
 
   // Renvoi de la valeur
   return $date_text;
@@ -119,6 +122,10 @@ function jourfr($date)
 
   // Conversion de la date en toutes lettres
   $date_text = date("j", strtotime($date))." ".$moisfr[date("n", strtotime($date))]." ".date("Y", strtotime($date));
+
+  // Transformer 1 en 1er
+  if(substr($date_text,0,2) == '1 ')
+    $date_text = '1er '.substr($date_text,1);
 
   // Renvoi de la valeur
   return $date_text;
