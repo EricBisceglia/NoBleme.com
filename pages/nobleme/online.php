@@ -27,34 +27,39 @@ $js = array('toggle');
 
 // On va chercher le mix d'invités et de membres qui se baladent sur nobleme
 $maxdate = time() - 86400;
-$qonline = query("  ( SELECT
-                        'guest'                       AS 'type'   ,
-                        '0'                           AS 'id'     ,
-                        '0'                           AS 'admin'  ,
-                        '0'                           AS 'sysop'  ,
-                        invites.surnom                AS 'pseudo' ,
-                        invites.derniere_visite       AS 'date'   ,
-                        invites.derniere_visite_page  AS 'page'   ,
-                        invites.derniere_visite_url   AS 'url'
-                      FROM      invites
-                      WHERE     invites.derniere_visite >= '$maxdate'
-                      ORDER BY  invites.derniere_visite DESC
-                      LIMIT     100 )
-                    UNION
-                      ( SELECT
-                        'user'                        AS 'type'   ,
-                        membres.id                    AS 'id'     ,
-                        membres.admin                 AS 'admin'  ,
-                        membres.sysop                 AS 'sysop'  ,
-                        membres.pseudonyme            AS 'pseudo' ,
-                        membres.derniere_visite       AS 'date'   ,
-                        membres.derniere_visite_page  AS 'page'   ,
-                        membres.derniere_visite_url   AS 'url'
-                      FROM      membres
-                      WHERE     membres.derniere_visite >= '$maxdate'
-                      ORDER BY  membres.derniere_visite DESC
-                      LIMIT     100 )
-                    ORDER BY date DESC ");
+$qonline =  "  ( SELECT
+                  'guest'                       AS 'type'   ,
+                  '0'                           AS 'id'     ,
+                  '0'                           AS 'admin'  ,
+                  '0'                           AS 'sysop'  ,
+                  invites.surnom                AS 'pseudo' ,
+                  invites.derniere_visite       AS 'date'   ,
+                  invites.derniere_visite_page  AS 'page'   ,
+                  invites.derniere_visite_url   AS 'url'
+                FROM      invites
+                WHERE     invites.derniere_visite >= '$maxdate'
+                ORDER BY  invites.derniere_visite DESC ";
+if(!isset($_GET['noguest']))
+  $qonline .= " LIMIT     100 ) ";
+else
+  $qonline .= " LIMIT       0 ) ";
+$qonline .= " UNION
+                ( SELECT
+                  'user'                        AS 'type'   ,
+                  membres.id                    AS 'id'     ,
+                  membres.admin                 AS 'admin'  ,
+                  membres.sysop                 AS 'sysop'  ,
+                  membres.pseudonyme            AS 'pseudo' ,
+                  membres.derniere_visite       AS 'date'   ,
+                  membres.derniere_visite_page  AS 'page'   ,
+                  membres.derniere_visite_url   AS 'url'
+                FROM      membres
+                WHERE     membres.derniere_visite >= '$maxdate'
+                ORDER BY  membres.derniere_visite DESC
+                LIMIT     100 )
+              ORDER BY date DESC ";
+
+$qonline = query($qonline);
 
 // Et à partir de ça, on se prépare les données
 for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
@@ -111,9 +116,16 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
       <br>
       Cette page recense les visiteurs connectés dans les dernières 24 heures, et la page de NoBleme qu'ils ont visité en dernier<br>
       <br>
+      <?php if(!isset($_GET['noguest'])) { ?>
       Les invités n'ayant pas de pseudonymes, ils sont identifiés par des surnoms idiots. C'est plus rigolo que des adresses IP, non ?<br>
+      Si vous en avez marre de voir tous ces invités : <a class="dark blank gras" href="<?=$chemin?>pages/nobleme/online?noguest">cliquez ici pour masquer les invités et ne voir que les membres enregistrés</a><br>
+      <?php } else { ?>
+      Les invités sont actuellement masqués, <a class="dark blank gras" href="<?=$chemin?>pages/nobleme/online">cliquez ici pour afficher les invités</a><br>
+      <?php } ?>
       <br>
+      <?php if(!isset($_GET['noguest'])) { ?>
       Les invités apparaissent en blanc,<br>
+      <?php } ?>
       les membres enregistrés ont un fond <span class="nobleme_background gras">&nbsp;gris&nbsp;</span>,<br>
       les sysops (modérateurs du site) en <span class="sysop texte_blanc gras">&nbsp;orange&nbsp;</span>,<br>
       et l'administrateur apparait en <span class="mise_a_jour texte_blanc gras">&nbsp;rouge&nbsp;</span>.
