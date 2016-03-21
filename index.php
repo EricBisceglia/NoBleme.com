@@ -108,7 +108,7 @@ if(date('d-m') == '19-03')
           <a class="dark blank gras" href="<?=$chemin?>pages/doc/index">La documentation</a>, où l'on comprend mieux le fonctionnement du site
         </li>
         <li class="spaced">
-          <a class="dark blank gras" href="<?=$chemin?>pages/irc/misc">Les miscellanées</a>, où l'on rigole des idioties écrites par les NoBlemeux sur <a class="dark blank gras" href="<?=$chemin?>pages/irc/index">IRC</a>
+          <a class="dark blank gras" href="<?=$chemin?>pages/irc/quotes">Les miscellanées</a>, où l'on rigole des idioties écrites par les NoBlemeux sur <a class="dark blank gras" href="<?=$chemin?>pages/irc/index">IRC</a>
         </li>
         <li class="spaced">
           <a class="dark blank gras" href="<?=$chemin?>pages/nobleme/coulisses">Les coulisses</a>, où l'on s'informe sur le passé, le présent et le futur du site

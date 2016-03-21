@@ -25,7 +25,9 @@ $page_id  = "nobleme";
     <br>
     <br>
     <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/documentation.png" alt="Documentation">
+      <a href="<?=$chemin?>pages/doc/">
+        <img src="<?=$chemin?>img/logos/documentation.png" alt="Documentation">
+      </a>
     </div>
     <br>
 

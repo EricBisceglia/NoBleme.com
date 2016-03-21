@@ -25,7 +25,9 @@ $page_id  = "canaux";
     <br>
     <br>
     <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/irc.png" alt="Logo">
+      <a href="<?=$chemin?>pages/irc/">
+        <img src="<?=$chemin?>img/logos/irc.png" alt="Logo">
+      </a>
     </div>
     <br>
 

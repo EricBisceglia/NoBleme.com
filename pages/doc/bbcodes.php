@@ -40,7 +40,9 @@ $preview_traite   = isset($_POST['bbcodes_test']) ? bbcode(nl2br_fixed($_POST['b
     <br>
     <br>
     <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/documentation.png" alt="Documentation">
+      <a href="<?=$chemin?>pages/doc/">
+        <img src="<?=$chemin?>img/logos/documentation.png" alt="Documentation">
+      </a>
     </div>
     <br>
 

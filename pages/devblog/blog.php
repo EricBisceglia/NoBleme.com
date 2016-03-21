@@ -277,7 +277,9 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
     <br>
     <br>
     <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/devblog.png" alt="Devblog">
+      <a href="<?=$chemin?>pages/devblog/">
+        <img src="<?=$chemin?>img/logos/devblog.png" alt="Devblog">
+      </a>
     </div>
     <br>
 

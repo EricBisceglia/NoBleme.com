@@ -175,7 +175,9 @@ for($nirliste = 0 ; $dirliste = mysqli_fetch_array($qirliste) ; $nirliste++)
     <br>
     <br>
     <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/irlstats.png" alt="Statistiques des IRL">
+      <a href="<?=$chemin?>pages/nobleme/irls">
+        <img src="<?=$chemin?>img/logos/irlstats.png" alt="Statistiques des IRL">
+      </a>
     </div>
     <br>
 
