@@ -32,6 +32,7 @@ $qonline =  "  ( SELECT
                   '0'                           AS 'id'     ,
                   '0'                           AS 'admin'  ,
                   '0'                           AS 'sysop'  ,
+                  '0'                           AS 'mod'    ,
                   invites.surnom                AS 'pseudo' ,
                   invites.derniere_visite       AS 'date'   ,
                   invites.derniere_visite_page  AS 'page'   ,
@@ -49,6 +50,7 @@ $qonline .= " UNION
                   membres.id                    AS 'id'     ,
                   membres.admin                 AS 'admin'  ,
                   membres.sysop                 AS 'sysop'  ,
+                  membres.moderateur            AS 'mod'    ,
                   membres.pseudonyme            AS 'pseudo' ,
                   membres.derniere_visite       AS 'date'   ,
                   membres.derniere_visite_page  AS 'page'   ,
@@ -75,10 +77,12 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
   // Les couleurs de fond
   if ($donline['type'] === 'guest')
     $online_css[$nonline] = '';
-  else if (!$donline['admin'] && !$donline['sysop'])
+  else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
     $online_css[$nonline] = 'nobleme_background gras';
   else if ($donline['sysop'])
     $online_css[$nonline] = 'sysop texte_blanc gras';
+  else if ($donline['mod'])
+    $online_css[$nonline] = 'vert_background gras';
   else
     $online_css[$nonline] = 'mise_a_jour texte_blanc gras';
 
@@ -126,9 +130,10 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
       <?php if(!isset($_GET['noguest'])) { ?>
       Les invités apparaissent en blanc,<br>
       <?php } ?>
-      les membres enregistrés ont un fond <span class="nobleme_background gras">&nbsp;gris&nbsp;</span>,<br>
-      les sysops (modérateurs du site) en <span class="sysop texte_blanc gras">&nbsp;orange&nbsp;</span>,<br>
-      et l'administrateur apparait en <span class="mise_a_jour texte_blanc gras">&nbsp;rouge&nbsp;</span>.
+      les <a href="<?=$chemin?>pages/nobleme/membres">membres enregistrés</a> ont un fond <span class="nobleme_background gras">&nbsp;gris&nbsp;</span>,<br>
+      les <a href="<?=$chemin?>pages/nobleme/admins">modérateurs</a> ont le droit à du <span class="vert_background gras">&nbsp;vert&nbsp;</span>,<br>
+      les <a href="<?=$chemin?>pages/nobleme/admins">sysops</a> (modérateurs globaux) en <span class="sysop texte_blanc gras">&nbsp;orange&nbsp;</span>,<br>
+      et <a href="<?=$chemin?>pages/user/user?id=1">l'administrateur</a> apparait en <span class="mise_a_jour texte_blanc gras">&nbsp;rouge&nbsp;</span>.
     </div>
 
     <br>

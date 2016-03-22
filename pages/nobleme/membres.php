@@ -30,6 +30,7 @@ $qmembres = "     SELECT    membres.id            ,
                             membres.pseudonyme    ,
                             membres.admin         ,
                             membres.sysop         ,
+                            membres.moderateur    ,
                             membres.date_creation ,
                             membres.derniere_visite
                   FROM      membres               ";
@@ -110,6 +111,11 @@ for($nmembres = 0 ; $dmembres = mysqli_fetch_array($qmembres) ; $nmembres++)
     $m_cssl[$nmembres]  = 'texte_blanc nolink';
     $m_css[$nmembres]   = 'sysop gras texte_blanc';
   }
+  else if($dmembres['moderateur'])
+  {
+    $m_cssl[$nmembres]  = 'dark blank';
+    $m_css[$nmembres]   = 'vert_background gras';
+  }
   else if((time() - $dmembres['derniere_visite']) < 2592000)
   {
     $m_css[$nmembres]   = 'nobleme_background gras';
@@ -142,9 +148,10 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
       <br>
       Le tableau ci-dessous recense toutes les personnes qui se sont inscrites sur NoBleme.<br>
       <br>
-      Les membres récemment actifs apparaissent en <span class="gras">gras</span> et sur fond <span class="nobleme_background gras">&nbsp;gris&nbsp;</span>,<br>
-      les sysops (modérateurs du site) sur fond <span class="sysop gras texte_blanc">&nbsp;orange&nbsp;</span><br>
-      et l'administrateur sur fond <span class="mise_a_jour gras texte_blanc">&nbsp;rouge&nbsp;</span>.<br>
+      Les membres <a href="<?=$chemin?>pages/nobleme/online">récemment actifs</a> apparaissent en <span class="gras">gras</span> et sur fond <span class="nobleme_background gras">&nbsp;gris&nbsp;</span>,<br>
+      les <a href="<?=$chemin?>pages/nobleme/admins">modérateurs</a> ont le droit à du <span class="vert_background gras">&nbsp;vert&nbsp;</span>,<br>
+      les <a href="<?=$chemin?>pages/nobleme/admins">sysops</a> (modérateurs globaux) en <span class="sysop texte_blanc gras">&nbsp;orange&nbsp;</span>,<br>
+      et <a href="<?=$chemin?>pages/user/user?id=1">l'administrateur</a> apparait en <span class="mise_a_jour texte_blanc gras">&nbsp;rouge&nbsp;</span>.<br>
       <br>
       Vous pouvez trier les résultats dans un ordre autre que du plus ancien au plus récent en cliquant sur le titre des colonnes du tableau (par exemple sur "Dernière connexion" pour voir les membres actifs).<br>
       <br>

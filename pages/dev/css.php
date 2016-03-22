@@ -165,6 +165,10 @@ $css = array('admin');
           <td class="cadre_gris align_center">.texte_erreur</td>
           <td class="cadre_gris align_center gras texte_erreur">Texte coloré</td>
         </tr>
+        <tr>
+          <td class="cadre_gris align_center">.texte_vert</td>
+          <td class="cadre_gris align_center gras texte_vert">Texte coloré</td>
+        </tr>
 
       </table>
     </div>

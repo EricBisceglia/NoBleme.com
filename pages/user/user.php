@@ -66,6 +66,7 @@ if($banquery["banni_date"] < time())
 $datenow = date("Y-m-d");
 $qprofil = query("  SELECT  membres.admin           AS 'admin'        ,
                             membres.sysop           AS 'sysop'        ,
+                            membres.moderateur      AS 'moderateur'   ,
                             membres.date_creation   AS 'creation'     ,
                             membres.derniere_visite AS 'visite'       ,
                             membres.banni_date      AS 'ban_date'     ,
@@ -88,6 +89,7 @@ while($dprofil = mysqli_fetch_array($qprofil))
 {
   $p_admin            = $dprofil['admin'];
   $p_sysop            = $dprofil['sysop'];
+  $p_moderateur       = $dprofil['moderateur'];
   $p_creation         = 'Le <span class="gras">'.jourfr(date('Y-m-d',$dprofil['creation'])).'</span> à '.date('H:i',$dprofil['creation']);
   $p_creation        .= ' ('.strtolower(ilya($dprofil['creation'],1)).')';
   if($dprofil['visite'])
@@ -142,7 +144,9 @@ while($dprofil = mysqli_fetch_array($qprofil))
             <?php if($p_admin) { ?>
             <span class="texte_mise_a_jour user_titre">Administrateur</span><br>
             <?php } else if($p_sysop) { ?>
-            <span class="texte_sysop user_titre">Modérateur global</span><br>
+            <a href="<?=$chemin?>pages/nobleme/admins"><span class="texte_sysop user_titre">Modérateur global</span></a><br>
+            <?php } else if($p_moderateur) { ?>
+            <a href="<?=$chemin?>pages/nobleme/admins"><span class="texte_vert user_titre">Modérateur</span></a><br>
             <?php } ?>
             Membre #<?=$page_id?>
           </div>

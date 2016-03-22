@@ -35,6 +35,7 @@ html { background:#E9E9E9; }
 .texte_sysop         { color: #F78331; }
 .texte_mise_a_jour   { color: #D13030; }
 .texte_erreur        { color: #FF0000; }
+.texte_vert          { color: #2DC117; }
 
 /************************************************************* TAGS GÉNÉRAUX *************************************************************/
 .align_center  { text-align: center;     }

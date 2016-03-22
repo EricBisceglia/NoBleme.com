@@ -30,6 +30,7 @@ $qannivirl =  query(" SELECT  membres.id              ,
                               membres.pseudonyme      ,
                               membres.admin           ,
                               membres.sysop           ,
+                              membres.moderateur      ,
                               membres.anniversaire    ,
                               membres.derniere_visite ,
                               YEAR(CURDATE()) - YEAR(membres.anniversaire) AS 'xeme_anniv'
@@ -60,14 +61,14 @@ while($dannivirl = mysqli_fetch_array($qannivirl))
     $annivirl_pseudo[$nannivirl]  = $dannivirl['pseudonyme'];
     $annivirl_date[$nannivirl]    = jourfr($dannivirl['anniversaire']);
     $annivirl_css[$nannivirl]     = ((time() - $dannivirl['derniere_visite']) < 2678400) ? ' gras' : ' ';
-    $annivirl_linkcss[$nannivirl] = ($dannivirl['admin'] || $dannivirl['sysop']) ? 'texte_blanc nolink' : 'dark blank ';
+    $annivirl_linkcss[$nannivirl] = ($dannivirl['admin'] || $dannivirl['sysop'] || $dannivirl['moderateur']) ? 'texte_blanc nolink' : 'dark blank ';
 
     // Déterminer le style des lignes qui sont aujourd'hui
     if(date('md') == (substr($dannivirl['anniversaire'],-5,2).substr($dannivirl['anniversaire'],-2,2)))
     {
       if ($dannivirl['admin'])
         $annivirl_css[$nannivirl] .= ' mise_a_jour texte_blanc gras';
-      else if ($dannivirl['sysop'])
+      else if ($dannivirl['sysop'] || $dannivirl['moderateur'])
         $annivirl_css[$nannivirl] .= ' sysop texte_blanc gras';
       else
         $annivirl_css[$nannivirl] .= ' vert_background gras';
@@ -83,7 +84,7 @@ while($dannivirl = mysqli_fetch_array($qannivirl))
       // On finit le style des lignes
       if ($dannivirl['admin'])
         $annivirl_css[$nannivirl] .= ' mise_a_jour texte_blanc gras';
-      else if ($dannivirl['sysop'])
+      else if ($dannivirl['sysop'] || $dannivirl['moderateur'])
         $annivirl_css[$nannivirl] .= ' sysop texte_blanc gras';
       else if ((time() - $dannivirl['derniere_visite']) < 2678400)
         $annivirl_css[$nannivirl] .= ' nobleme_background';
@@ -105,6 +106,7 @@ $qannivnb = query(" SELECT    membres.id                                        
                               membres.pseudonyme                                                                ,
                               membres.admin                                                                     ,
                               membres.sysop                                                                     ,
+                              membres.moderateur                                                                ,
                               membres.date_creation                                                             ,
                               membres.derniere_visite                                                           ,
                               DATE(FROM_UNIXTIME(membres.date_creation))                          AS inscr      ,
@@ -128,12 +130,12 @@ while($dannivnb = mysqli_fetch_array($qannivnb))
     $anb_user[$nannivnb]    = $dannivnb['pseudonyme'];
     $anb_inscr[$nannivnb]   = jourfr($dannivnb['inscr']);
     $anb_xanniv[$nannivnb]  = $dannivnb['xeme_anniv'];
-    $anb_linkcss[$nannivnb] = ($dannivnb['admin'] || $dannivnb['sysop']) ? 'texte_blanc nolink' : 'dark blank ';
+    $anb_linkcss[$nannivnb] = ($dannivnb['admin'] || $dannivnb['sysop'] || $dannivnb['moderateur']) ? 'texte_blanc nolink' : 'dark blank ';
 
     // Déterminer le style pour toutes les lignes
     if($dannivnb['admin'])
       $anb_css[$nannivnb] = ' mise_a_jour texte_blanc gras';
-    else if($dannivnb['sysop'])
+    else if($dannivnb['sysop'] || $dannivnb['moderateur'])
       $anb_css[$nannivnb] = ' sysop texte_blanc gras';
     else if((time() - $dannivnb['derniere_visite']) < 2678400)
       $anb_css[$nannivnb] = ' nobleme_background gras';
@@ -188,9 +190,9 @@ while($dannivnb = mysqli_fetch_array($qannivnb))
       Le secornd liste les <span class="gras">anniversaires noblemeux</span>, célébrant la date anniversaire de l'inscription de l'utilisateur sur NoBleme.<br>
       <br>
       Les lignes ayant un <span class="vert_background">&nbsp;fond vert&nbsp;</span> signifient que l'anniversaire en question a lieu aujourd'hui.<br>
-      Les lignes ayant un <span class="nobleme_background gras">&nbsp;fond gris&nbsp;</span> et/ou dont le texte est en <span class="gras">gras</span> signifient que le membre concerné a été actif sur NoBleme récemment.<br>
-      Les lignes ayant un <span class="sysop texte_blanc gras">&nbsp;fond orange&nbsp;</span> signifient qu'il s'agit d'un sysop (modérateur du site).<br>
-      Les lignes ayant un <span class="mise_a_jour texte_blanc gras">&nbsp;fond rouge&nbsp;</span> signifient qu'il s'agit de l'administrateur.<br>
+      Les lignes ayant un <span class="nobleme_background gras">&nbsp;fond gris&nbsp;</span> et/ou dont le texte est en <span class="gras">gras</span> signifient que le membre concerné a été <a href="<?=$chemin?>pages/nobleme/online">actif récemment</a>.<br>
+      Les lignes ayant un <span class="sysop texte_blanc gras">&nbsp;fond orange&nbsp;</span> signifient qu'il s'agit d'un <a href="<?=$chemin?>pages/nobleme/admins">modérateur</a> ou d'un <a href="<?=$chemin?>pages/nobleme/admins">sysop</a> (modérateur global du site).<br>
+      Les lignes ayant un <span class="mise_a_jour texte_blanc gras">&nbsp;fond rouge&nbsp;</span> signifient qu'il s'agit de <a href="<?=$chemin?>pages/user/user?id=1">l'administrateur</a>.<br>
     </div>
 
     <br>
