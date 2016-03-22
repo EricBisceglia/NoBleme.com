@@ -1,6 +1,6 @@
 /**************************************************************** irl.php ****************************************************************/
 td.confirme { width:80px; }
 
-input.irldate    { width:70px;  }
-input.irllieu    { width:300px; }
-input.irldetails { width:700px; }
+      input.irldate { width:70px;  }
+      input.irllieu { width:300px; }
+textarea.irldetails { width:700px; }

@@ -68,10 +68,10 @@ $page_desc  = "Détails de l'IRL NoBlemeuse du ".jourfr($dirl['irldate']);
 $irl_id       = $dirl['irlid'];
 $irl_date     = datefr($dirl['irldate']);
 $irl_etatdate = (strtotime($dirl['irldate']) >= strtotime(date('Y-m-d'))) ? 1 : 0;
-$irl_pourquoi = bbcode(destroy_html($dirl['irlpourquoi']));
-$irl_ou       = bbcode(destroy_html($dirl['irlou']));
-$irl_quand    = bbcode(destroy_html($dirl['irlquand']));
-$irl_quoi     = bbcode(destroy_html($dirl['irlquoi']));
+$irl_pourquoi = nl2br_fixed(bbcode(destroy_html($dirl['irlpourquoi'])));
+$irl_ou       = nl2br_fixed(bbcode(destroy_html($dirl['irlou'])));
+$irl_quand    = nl2br_fixed(bbcode(destroy_html($dirl['irlquand'])));
+$irl_quoi     = nl2br_fixed(bbcode(destroy_html($dirl['irlquoi'])));
 $irl_combien  = $dirl['irlcombien'];
 
 

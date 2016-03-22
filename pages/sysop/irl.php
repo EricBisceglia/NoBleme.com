@@ -652,22 +652,22 @@ else
 
           <tr>
             <td class="gras align_right spaced">Pourquoi :</td>
-            <td class="align_left"><input class="irldetails" name="irl_pourquoi" value="<?=$irl_pourquoi?>"></td>
+            <td class="align_left"><textarea class="irldetails" name="irl_pourquoi" rows="1"><?=$irl_pourquoi?></textarea>
           </tr>
 
           <tr>
             <td class="gras align_right spaced">Où :</td>
-            <td class="align_left"><input class="irldetails" name="irl_ou" value="<?=$irl_ou?>"></td>
+            <td class="align_left"><textarea class="irldetails" name="irl_ou" rows="1"><?=$irl_ou?></textarea>
           </tr>
 
           <tr>
             <td class="gras align_right spaced">Quand :</td>
-            <td class="align_left"><input class="irldetails" name="irl_quand" value="<?=$irl_quand?>"></td>
+            <td class="align_left"><textarea class="irldetails" name="irl_quand" rows="1"><?=$irl_quand?></textarea>
           </tr>
 
           <tr>
             <td class="gras align_right spaced">Quoi :</td>
-            <td class="align_left"><input class="irldetails" name="irl_quoi" value="<?=$irl_quoi?>"></td>
+            <td class="align_left"><textarea class="irldetails" name="irl_quoi" rows="1"><?=$irl_quoi?></textarea>
           </tr>
 
           <tr>
