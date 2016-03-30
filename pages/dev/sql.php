@@ -39,6 +39,22 @@ else
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Version 2
+
+if($idmaj == 'v2')
+{
+  $majq .= '<span class="gras souligne moinsgros alinea">Version 2</span><br>';
+
+  // Ajout du champ todo.source
+  if(!@mysqli_query($GLOBALS['db'], " SELECT source FROM todo "))
+    query(" ALTER TABLE todo ADD source MEDIUMTEXT AFTER timestamp_fini ");
+  $majq .= "<br><br>Ajout du champ todo.source";
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Re-Alpha 15
 
 if($idmaj == 'ra15')
@@ -454,6 +470,19 @@ if($idmaj)
           </td>
           <td class="cadre_gris_titre moinsgros">
             CHANGEMENTS STRUCTURELS
+          </td>
+        </tr>
+
+        <tr>
+          <td class="cadre_gris moinsgros gras">
+            <a class="dark blank" href="?maj=v2">Version 2</a>
+          </td>
+          <td class="cadre_gris">
+            Création du champ todo.source
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="cadre_gris_vide">
           </td>
         </tr>
 

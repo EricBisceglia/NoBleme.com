@@ -100,25 +100,28 @@ if(isset($_POST['todo_modifier_x']))
   $todo_categorie   = postdata($_POST['todo_categorie']);
   $todo_roadmap     = postdata($_POST['todo_roadmap']);
   $todo_visibilite  = postdata($_POST['todo_visibilite']);
+  $todo_source      = postdata($_POST['todo_source']);
 
   // Déjà on veut récolter des infos sur le ticket pour plus tard
-  $dtodo = mysqli_fetch_array(query(" SELECT  FKmembres     ,
-                                              timestamp     ,
-                                              valide_admin  ,
-                                              public        ,
-                                              timestamp_fini
+  $dtodo = mysqli_fetch_array(query(" SELECT  FKmembres       ,
+                                              timestamp       ,
+                                              valide_admin    ,
+                                              public          ,
+                                              timestamp_fini  ,
+                                              source
                                       FROM    todo
                                       WHERE   todo.id = '$todoid' "));
 
   // Mise à jour du ticket
   query(" UPDATE  todo
-          SET     importance        = '$todo_priorite'  ,
-                  titre             = '$todo_titre'     ,
-                  contenu           = '$todo_contenu'   ,
-                  FKtodo_categorie  = '$todo_categorie' ,
-                  FKtodo_roadmap    = '$todo_roadmap'   ,
-                  public            = '$todo_visibilite'
-          WHERE   id                = '$todoid'         ");
+          SET     importance        = '$todo_priorite'    ,
+                  titre             = '$todo_titre'       ,
+                  contenu           = '$todo_contenu'     ,
+                  FKtodo_categorie  = '$todo_categorie'   ,
+                  FKtodo_roadmap    = '$todo_roadmap'     ,
+                  public            = '$todo_visibilite'  ,
+                  source            = '$todo_source'
+          WHERE   id                = '$todoid'           ");
 
   // S'il passe de public à privé, on le vire de l'activité récente
   if($dtodo['public'] && !$todo_visibilite)
@@ -126,6 +129,10 @@ if(isset($_POST['todo_modifier_x']))
     query(" DELETE FROM activite WHERE action_type = 'new_todo' AND action_id = '$todoid' ");
     query(" DELETE FROM activite WHERE action_type = 'fini_todo' AND action_id = '$todoid' ");
   }
+
+  // S'il a une source, on notifie avec le bot irc
+  if(!$dtodo['source'] && $todo_source)
+    ircbot($chemin,"Nouveau commit : ".$_POST['todo_source'],"#dev");
 
   // S'il passe de privé à public, on le (re)met dans l'activité récente
   if(!$dtodo['public'] && $todo_visibilite)
@@ -205,6 +212,7 @@ else if(isset($_POST['todo_previsualiser_x']))
   $todo_roadmap           = $_POST['todo_roadmap'];
   $todo_visibilite        = $_POST['todo_visibilite'];
   $todo_previsualisation  = bbcode(nl2br_fixed(destroy_html($_POST['todo_contenu'])));
+  $todo_source            = destroy_html($_POST['todo_source']);
 }
 // Sinon on est en train d'edit, on va chercher les valeurs
 else
@@ -216,7 +224,8 @@ else
                                               contenu           ,
                                               FKtodo_categorie  ,
                                               FKtodo_roadmap    ,
-                                              public
+                                              public            ,
+                                              source
                                       FROM    todo
                                       WHERE   todo.id = '$todoid' "));
   // Et on les prépare à l'affichage
@@ -226,6 +235,7 @@ else
   $todo_categorie   = $dtodo['FKtodo_categorie'];
   $todo_roadmap     = $dtodo['FKtodo_roadmap'];
   $todo_visibilite  = $dtodo['public'];
+  $todo_source      = destroy_html($dtodo['source']);
 }
 
 
@@ -354,6 +364,13 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
             <td class="data_input_right admin_gauche spaced">Visibilité :</td>
             <td colspan="3"><select class="intable" name="todo_visibilite"><?=$select_visibilite?></select></td>
           </tr>
+          <?php if(!isset($_GET['add'])) { ?>
+          <tr>
+            <td class="data_input_right admin_gauche spaced">URL patch :</td>
+            <td><input class="intable" name="todo_source" value="<?=$todo_source?>"></td>
+            <td colspan="2" class="align_left admin_droite spaced"><a class="dark blank gras" href="https://bitbucket.org/EricBisceglia/nobleme.com/commits/all" target="_blank">Bitbucket</a></td>
+          </tr>
+          <?php } ?>
           <tr>
             <td colspan="4" class="align_center">
               <input type="image" src="<?=$chemin?>img/boutons/previsualiser.png" alt="PRÉVISUALISER" name="todo_previsualiser">

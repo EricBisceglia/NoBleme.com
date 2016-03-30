@@ -108,6 +108,7 @@ $qtodo = "    SELECT    todo.id                   ,
                         todo.valide_admin         ,
                         todo.public               ,
                         todo.contenu              ,
+                        todo.source               ,
                         COUNT(todo_commentaire.id) AS 'commentaires'
 
               FROM      todo
@@ -190,6 +191,7 @@ for($ntodo = 0 ; $dtodo = mysqli_fetch_array($qtodo) ; $ntodo++)
   $todo_createur_id[$ntodo]     = $dtodo['FKmembres'];
   $todo_date_complete[$ntodo]   = jourfr(date('Y-m-d',$dtodo['timestamp']));
   $todo_date_resolution[$ntodo] = ($dtodo['timestamp_fini']) ? '<br>Résolu depuis le '.jourfr(date('Y-m-d',$dtodo['timestamp_fini'])) : '';
+  $todo_source[$ntodo]          = ($dtodo['source']) ? '<br><a class="dark blank" href="'.destroy_html($dtodo['source']).'" target="_blank">Cliquez ici pour voir le code source du patch</a>' : '';
   $todo_contenu[$ntodo]         = bbcode(nl2br_fixed($dtodo['contenu']));
 
   // Si y'a des commentaires, on va les chercher
@@ -548,7 +550,7 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
             <?php } ?>
               <br>
               <span class="moinsgros gras souligne">Ticket <a class="dark blank" href="<?=$chemin?>pages/todo/index?id=<?=$todo_id[$i]?>">#<?=$todo_id[$i]?></a> : <?=$todo_titre_complet[$i]?></span><br>
-              <span class="italique dark">Soumis le <?=$todo_date_complete[$i]?> par <a class="dark blank gras" href="<?=$chemin?>pages/user/user?id=<?=$todo_createur_id[$i]?>"><?=$todo_createur[$i]?></a><?=$todo_date_resolution[$i]?></span><br>
+              <span class="italique dark">Soumis le <?=$todo_date_complete[$i]?> par <a class="dark blank gras" href="<?=$chemin?>pages/user/user?id=<?=$todo_createur_id[$i]?>"><?=$todo_createur[$i]?></a><?=$todo_date_resolution[$i]?><?=$todo_source[$i]?></span><br>
               <?php if(loggedin() && getadmin()) { ?>
               <a class="dark blank gras" href="<?=$chemin?>pages/todo/admin?id=<?=$todo_id[$i]?>"><?=$todo_valider_texte[$i]?></a> -
               <?php if(!$todo_resolution[$i] && $todo_valide[$i] != 'non') { ?>
