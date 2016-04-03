@@ -488,6 +488,25 @@ $css = array('admin');
         </tr>
         <tr>
           <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
+            <b>ircbot(</b>$chemin,"texte","canal"<b>)</b>
+          </td>
+          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
+            Envoie une commande au bot IRC NoBleme<br>
+            $chemin doit être le $chemin usuel<br>
+            Canal doit contenir le nom du canal entier, avec le #<br>
+            Si canal est NULL, le message brut sera envoyé
+          </td>
+          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
+            ircbot($chemin,"Bonjour !","#NoBleme");<br>
+            ircbot($chemin,"NICK NouveauPseudo");
+          </td>
+        </tr>
+        <tr>
+          <td class="cadre_gris_vide" colspan="3">
+          </td>
+        </tr>
+        <tr>
+          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
             <b>bbcode(</b>data<b>)</b>
           </td>
           <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">

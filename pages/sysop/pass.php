@@ -87,9 +87,9 @@ if(isset($_POST['sysop_modifier_x']) && $_POST['sysop_pass'])
 
   // Log de modération
   $timestamp      = time();
-  $membre_pseudo  = getpseudo($idpass);
+  $membre_pseudo  = postdata(getpseudo($idpass));
   $admin_id       = $_SESSION['user'];
-  $admin_pseudo   = getpseudo();
+  $admin_pseudo   = postdata(getpseudo());
   query(" INSERT INTO activite
           SET         timestamp       = '$timestamp'      ,
                       log_moderation  = 1                 ,
@@ -98,6 +98,9 @@ if(isset($_POST['sysop_modifier_x']) && $_POST['sysop_pass'])
                       action_type     = 'editpass'        ,
                       parent_id       = '$admin_id'       ,
                       parent_titre    = '$admin_pseudo'   ");
+
+  // Bot IRC NoBleme
+  ircbot($chemin,"http://nobleme.com/pages/nobleme/activite?mod : ".getpseudo()." a modifié le mot de passe de ".getpseudo($idpass),"#sysop");
 
   // Redirection vers une page de confirmation
   header('Location: '.$chemin.'pages/sysop/pass?id='.$idpass.'&ok');

@@ -77,6 +77,9 @@ if(isset($_GET['add']))
                         action_id     = '$blog_id'    ,
                         action_titre  = '$add_titre'  ");
 
+    // Bot IRC NoBleme
+    ircbot($chemin,"Nouveau devblog publié : http://nobleme.com/pages/devblog/blog?id=".$blog_id." - ".$_POST['add_titre'],"#dev");
+
     // Redirection vers le nouveau devblog
     header('Location: '.$chemin.'pages/devblog/blog');
   }

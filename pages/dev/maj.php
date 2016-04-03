@@ -390,6 +390,9 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
     // Activité récente
     query(" INSERT INTO activite SET activite.timestamp = '$timestamp', activite.action_type = 'version', activite.action_titre = '$v_activite' ");
 
+    // Bot IRC NoBleme
+    ircbot($chemin,"Nouvelle version de NoBleme publiée : Version ".$version." build ".$build." - http://nobleme.com/pages/todo/roadmap","#dev");
+
     // Et on affiche tout ça
     $newversion = stripslashes("Version ".$version.", build ".$build." du ".jourfr($date));
     ?>

@@ -92,7 +92,7 @@ if(isset($_POST['irl_add_x']))
   // Activité récente
   $timestamp  = time();
   $new_irl    = mysqli_insert_id($db);
-  $nom_irl    = datefr($add_date);
+  $nom_irl    = postdata(datefr($add_date));
   query(" INSERT INTO activite
           SET         timestamp     = '$timestamp'  ,
                       action_type   = 'new_irl'     ,
@@ -101,7 +101,7 @@ if(isset($_POST['irl_add_x']))
 
   // Log de modération
   $sysop_id     = $_SESSION['user'];
-  $sysop_pseudo = getpseudo();
+  $sysop_pseudo = postdata(getpseudo());
   query(" INSERT INTO activite
           SET         timestamp       = '$timestamp'    ,
                       log_moderation  = 1               ,
@@ -110,6 +110,9 @@ if(isset($_POST['irl_add_x']))
                       action_type     = 'new_irl'       ,
                       action_id       = '$new_irl'      ,
                       action_titre    = '$nom_irl'      ");
+
+  // Bot IRC NoBleme
+  ircbot($chemin,"Nouvelle IRL planifiée : le ".datefr($add_date)." - http://nobleme.com/pages/nobleme/irl?irl=".$new_irl,"#NoBleme");
 
   // Redirection vers la nouvelle IRL
   header("Location: ".$chemin."pages/nobleme/irl?irl=".$new_irl);
@@ -325,7 +328,7 @@ if(isset($_POST['irlp_ajouter']) && postdata($_POST['irlp_pseudo']))
 
     // On récupère le nom de l'IRL
     $infosirl = mysqli_fetch_array(query(" SELECT date FROM irl WHERE irl.id = '$id_irl' "));
-    $nom_irl  = datefr($infosirl['date']);
+    $nom_irl  = postdata(datefr($infosirl['date']));
 
     // Activité récente
     $timestamp  = time();
@@ -339,7 +342,7 @@ if(isset($_POST['irlp_ajouter']) && postdata($_POST['irlp_pseudo']))
 
     // Log de modération
     $sysop_id     = $_SESSION['user'];
-    $sysop_pseudo = getpseudo();
+    $sysop_pseudo = postdata(getpseudo());
     query(" INSERT INTO activite
             SET         timestamp       = '$timestamp'          ,
                         log_moderation  = 1                     ,
@@ -350,6 +353,10 @@ if(isset($_POST['irlp_ajouter']) && postdata($_POST['irlp_pseudo']))
                         action_titre    = '$nom_irl'            ,
                         parent_id       = '$sysop_id'           ,
                         parent_titre    = '$sysop_pseudo'       ");
+
+    // Bot IRC NoBleme
+    if((strtotime($infosirl['date']) >= strtotime(date('Y-m-d'))))
+      ircbot($chemin,$addp_pseudonyme." a rejoint l'IRL du ".datefr($infosirl['date'])." - http://nobleme.com/pages/nobleme/irl?irl=".$id_irl,"#NoBleme");
   }
 }
 
@@ -494,6 +501,10 @@ if(isset($_POST['irlp_supprimer']))
       $delp_details   = postdata($ddelpid['irlp_details']);
       query(" INSERT INTO activite_diff SET FKactivite = '$id_diff' , titre_diff = 'Confirmé' , diff = '$delp_confirme' ");
       query(" INSERT INTO activite_diff SET FKactivite = '$id_diff' , titre_diff = 'Détails'  , diff = '$delp_details' ");
+
+      // Bot IRC NoBleme
+      if((strtotime($ddelpid['irl_date']) >= strtotime(date('Y-m-d'))))
+        ircbot($chemin,$delp_pseudo." a quitté l'IRL du ".datefr($ddelpid['irl_date'])." - http://nobleme.com/pages/nobleme/irl?irl=".$id_irl,"#NoBleme");
     }
   }
 }

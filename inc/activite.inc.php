@@ -324,7 +324,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
       $devblog_titre = substr(html_entity_decode($dactrec['action_titre']),0,68).'...';
     else
       $devblog_titre = $dactrec['action_titre'];
-    $description_action[$nactrec] = 'Nouveau devblog publié : <a class="dark blank gras" href="'.$chemin.'pages/devblog/blog.php?id='.$dactrec['action_id'].'">'.$devblog_titre.'</a>';
+    $description_action[$nactrec] = 'Nouveau devblog publié : <a class="dark blank gras" href="'.$chemin.'pages/devblog/blog?id='.$dactrec['action_id'].'">'.$devblog_titre.'</a>';
   }
 
 
@@ -399,7 +399,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
       $todo_titre = substr(html_entity_decode($dactrec['action_titre']),0,62).'...';
     else
       $todo_titre = $dactrec['action_titre'];
-    $description_action[$nactrec] = '<a class="dark blank gras gras" href="'.$chemin.'pages/user/user?id='.$dactrec['FKmembres'].'">'.$dactrec['pseudonyme'].'</a> a ouvert un nouveau ticket : <a class="dark blank gras" href="'.$chemin.'pages/todo/index.php?id='.$dactrec['action_id'].'">'.$todo_titre.'</a>';
+    $description_action[$nactrec] = '<a class="dark blank gras gras" href="'.$chemin.'pages/user/user?id='.$dactrec['FKmembres'].'">'.$dactrec['pseudonyme'].'</a> a ouvert un nouveau ticket : <a class="dark blank gras" href="'.$chemin.'pages/todo/index?id='.$dactrec['action_id'].'">'.$todo_titre.'</a>';
   }
 
 
@@ -411,7 +411,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
       $todo_titre = substr(html_entity_decode($dactrec['action_titre']),0,67).'...';
     else
       $todo_titre = $dactrec['action_titre'];
-    $description_action[$nactrec] = 'Ticket résolu : <a class="dark blank gras" href="'.$chemin.'pages/todo/index.php?id='.$dactrec['action_id'].'">'.$todo_titre.'</a>';
+    $description_action[$nactrec] = 'Ticket résolu : <a class="dark blank gras" href="'.$chemin.'pages/todo/index?id='.$dactrec['action_id'].'">'.$todo_titre.'</a>';
   }
 
 
@@ -423,7 +423,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
       $todo_titre = substr(html_entity_decode($dactrec['parent_titre']),0,62).'...';
     else
       $todo_titre = $dactrec['parent_titre'];
-    $description_action[$nactrec] = '<a class="dark blank gras gras" href="'.$chemin.'pages/user/user?id='.$dactrec['FKmembres'].'">'.$dactrec['pseudonyme'].'</a> a commenté le ticket <a class="dark blank gras" href="'.$chemin.'pages/todo/index.php?id='.$dactrec['parent_id'].'">'.$todo_titre.'</a>';
+    $description_action[$nactrec] = '<a class="dark blank gras gras" href="'.$chemin.'pages/user/user?id='.$dactrec['FKmembres'].'">'.$dactrec['pseudonyme'].'</a> a commenté le ticket <a class="dark blank gras" href="'.$chemin.'pages/todo/index?id='.$dactrec['parent_id'].'">'.$todo_titre.'</a>';
   }
 
 

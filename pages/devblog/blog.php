@@ -321,11 +321,11 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
         <tr>
           <?php if(isset($id_blog_prev)) { ?>
           <td class="devblog_midwidth align_center valign_top">
-            <a class="dark blank gras" href="<?=$chemin?>pages/devblog/blog.php?id=<?=$id_blog_prev?>"><?=$titre_blog_prev?></a>
+            <a class="dark blank gras" href="<?=$chemin?>pages/devblog/blog?id=<?=$id_blog_prev?>"><?=$titre_blog_prev?></a>
           </td>
           <?php } if(isset($id_blog_next)) { ?>
           <td class="devblog_midwidth align_center valign_top">
-            <a class="dark blank gras" href="<?=$chemin?>pages/devblog/blog.php?id=<?=$id_blog_next?>"><?=$titre_blog_next?></a>
+            <a class="dark blank gras" href="<?=$chemin?>pages/devblog/blog?id=<?=$id_blog_next?>"><?=$titre_blog_next?></a>
           </td>
           <?php } ?>
         </tr>
@@ -511,6 +511,9 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
         $archive_comment  = postdata(diff(nl2br_fixed($deditcomm['contenu']),nl2br_fixed($_POST['comm_sysop_edit']),1));
         query(" INSERT INTO activite_diff SET FKactivite = '$id_diff' , diff = '$archive_comment' ");
 
+        // Bot IRC NoBleme
+        ircbot($chemin,"http://nobleme.com/pages/nobleme/activite?mod : ".getpseudo()." a modifié un commentaire sur un devblog","#sysop");
+
         // Édition du commentaire
         query(" UPDATE devblog_commentaire SET contenu = '$edit_contenu' WHERE id = '$edit_commid' ");
       }
@@ -581,6 +584,9 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
         $id_diff          = mysqli_insert_id($db);
         $archive_comment  = postdata(nl2br_fixed($ddelcom['contenu']));
         query(" INSERT INTO activite_diff SET FKactivite = '$id_diff' , diff = '$archive_comment' ");
+
+        // Bot IRC NoBleme
+        ircbot($chemin,"http://nobleme.com/pages/nobleme/activite?mod : ".getpseudo()." a supprimé un commentaire sur un devblog","#sysop");
 
         // Suppression du commentaire
         query(" DELETE FROM devblog_commentaire WHERE id = '$del_commid' ");

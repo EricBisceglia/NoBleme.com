@@ -13,3 +13,4 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 $GLOBALS['mysql_pass']  = 'mon mot de passe'; // Mot de passe de la base de données
 $GLOBALS['salage']      = '$6$mon string$';   // String utilisé par crypt() pour saler les mots de passe
+$GLOBALS['bot_pass']    = 'pass du bot irc';  // Mot de passe du bot IRC

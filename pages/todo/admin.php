@@ -81,6 +81,10 @@ if(isset($_POST['todo_ajouter_x']))
                         action_titre  = '$todo_titre'     ");
   }
 
+  // Bot IRC NoBleme
+  if($todo_visibilite)
+    ircbot($chemin,"Nouveau ticket ouvert : ".substr($_POST['todo_titre'],0,200)." - http://nobleme.com/pages/todo/index?id=".$add_todo,"#dev");
+
   // Redirection
   header("Location: ".$chemin."pages/todo/index?id=".$add_todo);
 }
@@ -173,6 +177,10 @@ if(isset($_POST['todo_modifier_x']))
     envoyer_notif($dtodo['FKmembres'] , 'Ticket accepté : '.$add_titre , postdata($add_message));
   }
 
+  // Bot IRC NoBleme si c'est un nouveau ticket
+  if(!$dtodo['valide_admin'] && $todo_visibilite)
+    ircbot($chemin,"Nouveau ticket ouvert : ".substr($_POST['todo_titre'],0,200)." - http://nobleme.com/pages/todo/index?id=".$todoid,"#dev");
+
   // Et on redirige
   header("Location: ".$chemin."pages/todo/index?id=".$todoid);
 }
@@ -212,7 +220,7 @@ else if(isset($_POST['todo_previsualiser_x']))
   $todo_roadmap           = $_POST['todo_roadmap'];
   $todo_visibilite        = $_POST['todo_visibilite'];
   $todo_previsualisation  = bbcode(nl2br_fixed(destroy_html($_POST['todo_contenu'])));
-  $todo_source            = destroy_html($_POST['todo_source']);
+  $todo_source            = isset($_POST['todo_source']) ? destroy_html($_POST['todo_source']) : '';
 }
 // Sinon on est en train d'edit, on va chercher les valeurs
 else

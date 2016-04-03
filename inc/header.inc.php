@@ -1222,6 +1222,12 @@ else
             </li>
 
             <li>
+              <a class="menu_link" href="<?=$chemin?>pages/dev/ircbot">
+                Gestion du bot IRC
+              </a>
+            </li>
+
+            <li>
               <a class="dropdown">
                 Références
               </a>

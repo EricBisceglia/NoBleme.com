@@ -98,7 +98,7 @@ if(isset($_POST['sysop_bannir_x']) && $_POST['sysop_raison'] != '' && $idban != 
 
   // Activité récente
   $timestamp      = time();
-  $membre_pseudo  = getpseudo($idban);
+  $membre_pseudo  = postdata(getpseudo($idban));
   $log_finban     = $sysop_duree;
   query(" INSERT INTO activite
           SET         timestamp       = '$timestamp'      ,
@@ -108,12 +108,14 @@ if(isset($_POST['sysop_bannir_x']) && $_POST['sysop_raison'] != '' && $idban != 
                       action_type     = 'ban'             ,
                       action_id       = '$log_finban'     ");
 
+  ircbot($chemin,$membre_pseudo." vient de se faire bannir de NoBleme jusqu'au ".jourfr(date("Y-m-d",$ban_datefin))." ! (Raison : ".$_POST['sysop_raison'].") - http://nobleme.com/pages/nobleme/pilori","#nobleme");
+
   // Log de modération
   $timestamp      = time();
-  $membre_pseudo  = getpseudo($idban);
+  $membre_pseudo  = postdata(getpseudo($idban));
   $log_finban     = $sysop_duree;
   $admin_id       = $_SESSION['user'];
-  $admin_pseudo   = getpseudo();
+  $admin_pseudo   = postdata(getpseudo());
   query(" INSERT INTO activite
           SET         timestamp       = '$timestamp'      ,
                       log_moderation  = 1                 ,
@@ -133,7 +135,7 @@ if(isset($_POST['sysop_bannir_x']) && $_POST['sysop_raison'] != '' && $idban != 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Déannir un utilisateur
+// Débannir un utilisateur
 
 if(isset($_POST['sysop_debannir_x']) && $_POST['sysop_raison'] != '')
 {
@@ -145,7 +147,7 @@ if(isset($_POST['sysop_debannir_x']) && $_POST['sysop_raison'] != '')
 
   // Activité récente
   $timestamp      = time();
-  $membre_pseudo  = getpseudo($idban);
+  $membre_pseudo  = postdata(getpseudo($idban));
   query(" INSERT INTO activite
           SET         timestamp       = '$timestamp'      ,
                       log_moderation  = 0                 ,
@@ -153,11 +155,13 @@ if(isset($_POST['sysop_debannir_x']) && $_POST['sysop_raison'] != '')
                       pseudonyme      = '$membre_pseudo'  ,
                       action_type     = 'deban'           ");
 
+  ircbot($chemin,$membre_pseudo." vient de se débannir de NoBleme ! (Raison : ".$_POST['sysop_raison'].")","#nobleme");
+
   // Log de modération
   $timestamp      = time();
-  $membre_pseudo  = getpseudo($idban);
+  $membre_pseudo  = postdata(getpseudo($idban));
   $admin_id       = $_SESSION['user'];
-  $admin_pseudo   = getpseudo();
+  $admin_pseudo   = postdata(getpseudo());
   query(" INSERT INTO activite
           SET         timestamp       = '$timestamp'      ,
                       log_moderation  = 1                 ,

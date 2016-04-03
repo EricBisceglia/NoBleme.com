@@ -264,3 +264,35 @@ function todo_importance($importance,$style=NULL)
   }
   return $returnme;
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction envoyant un message qui sera broadcasté par le bot IRC NoBleme s'il est en ligne
+//
+// Le paramètre optionnel permet de spécifier un canal sur lequel écrire le message
+//
+// Utilisation: ircbot($chemin,"PRIVMSG #NoBleme :Bonjour !");
+// Utilisation: ircbot($chemin,"Bonjour !","#NoBleme");
+
+function ircbot($chemin,$message_irc,$canal_irc=NULL)
+{
+  // On assainit le message
+  $message_irc = str_replace("\\n", '', $message_irc);
+  $message_irc = str_replace("\\r", '', $message_irc);
+  $message_irc = str_replace("\\t", '', $message_irc);
+
+  // Si on peut écrire dans le fichier, on remplace son contenu par le message
+  if($fichier_ircbot = fopen($chemin.'ircbot.txt', "w+"))
+  {
+    if(!$canal_irc)
+      fwrite($fichier_ircbot, time()." ".substr($message_irc,0,450)."\r\n");
+    else
+      fwrite($fichier_ircbot, time()." PRIVMSG ".$canal_irc." :".substr($message_irc,0,450)."\r\n");
+    fclose($fichier_ircbot);
+    return 1;
+  }
+  else
+    return 0;
+}

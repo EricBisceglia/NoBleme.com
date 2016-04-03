@@ -697,6 +697,8 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
                           action_titre  = '$solved_titre'     ");
     }
 
+    // Bot IRC NoBleme
+    ircbot($chemin,"Ticket résolu : ".substr($dtodo['titre'],0,200)." - http://nobleme.com/pages/todo/index?id=".$solved_id,"#dev");
 
     // On envoie une notification au submitteur pour le tenir au courant
     if($dtodo['FKmembres'] > 1)
@@ -867,6 +869,9 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
         $archive_comment  = postdata(diff(nl2br_fixed($deditcomm['contenu']),nl2br_fixed($_POST['comm_sysop_edit']),1));
         query(" INSERT INTO activite_diff SET FKactivite = '$id_diff' , diff = '$archive_comment' ");
 
+        // Bot IRC NoBleme
+        ircbot($chemin,"http://nobleme.com/pages/nobleme/activite?mod : ".getpseudo()." a modifié un commentaire sur un ticket","#sysop");
+
         // Édition du commentaire
         query(" UPDATE todo_commentaire SET contenu = '$edit_contenu' WHERE id = '$edit_commid' ");
       }
@@ -937,6 +942,9 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
         $id_diff          = mysqli_insert_id($db);
         $archive_comment  = postdata(nl2br_fixed($ddelcom['contenu']));
         query(" INSERT INTO activite_diff SET FKactivite = '$id_diff' , diff = '$archive_comment' ");
+
+        // Bot IRC NoBleme
+        ircbot($chemin,"http://nobleme.com/pages/nobleme/activite?mod : ".getpseudo()." a supprimé un commentaire sur un ticket","#sysop");
 
         // Suppression du commentaire
         query(" DELETE FROM todo_commentaire WHERE id = '$del_commid' ");

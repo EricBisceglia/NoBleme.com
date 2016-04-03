@@ -100,9 +100,9 @@ if(isset($_POST['sysop_modifier_x']))
 
   // Log de modération
   $timestamp      = time();
-  $membre_pseudo  = getpseudo($idprofil);
+  $membre_pseudo  = postdata(getpseudo($idprofil));
   $admin_id       = $_SESSION['user'];
-  $admin_pseudo   = getpseudo();
+  $admin_pseudo   = postdata(getpseudo());
   query(" INSERT INTO activite
           SET         timestamp       = '$timestamp'      ,
                       log_moderation  = 1                 ,
@@ -130,6 +130,9 @@ if(isset($_POST['sysop_modifier_x']))
             SET         FKactivite  = '$id_diff'        ,
                         titre_diff  = 'Texte de profil' ,
                         diff        = '".postdata(diff($qprofiledit['profil'],$_POST['sysop_texte'],1))."' ");
+
+  // Bot IRC NoBleme
+  ircbot($chemin,"http://nobleme.com/pages/nobleme/activite?mod : ".getpseudo()." a modifié le profil public de ".getpseudo($idprofil),"#sysop");
 
   // Puis on redirige vers le profil modifié
   header('Location: '.$chemin.'pages/user/user?id='.$idprofil.'#profil_haut');

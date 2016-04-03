@@ -129,12 +129,15 @@ if (isset($_POST["register_go_x"]))
                         date_creation = '$date_creation'    ");
 
     // Ajout du register dans l'activité
-    $new_user   = mysqli_insert_id($db);
+    $new_user = mysqli_insert_id($db);
     query(" INSERT INTO activite
             SET         timestamp   = '$date_creation'    ,
                         pseudonyme  = '$register_pseudo'  ,
                         FKmembres   = '$new_user'         ,
                         action_type = 'register'          ");
+
+    // Bot IRC NoBleme
+    ircbot($chemin,"Nouveau membre enregistré sur le site : ".$_POST["register_pseudo"]." - http://www.nobleme.com/pages/user/user?id=".$new_user,"#NoBleme");
 
     // Envoi d'un message de bienvenue
     envoyer_notif($new_user,"Bienvenue sur NoBleme !",postdata("[size=1.3][b]Bienvenue sur NoBleme ![/b][/size]\r\n\r\nMaintenant que vous êtes inscrit, pourquoi pas rejoindre la communauté là où elle est active :\r\n- Princiaplement [url=".$chemin."pages/irc/index][color=#2F4456][b]sur le serveur IRC[/b][/color][/url], où l'on discute en temps réel\r\n- Parfois sur [url=".$chemin."pages/forum/index][color=#2F4456][b]le forum[/b][/color][/url], où l'on discute en différé\r\n- Et dans tous les endroits actifs dans [url=".$chemin."pages/nobleme/activite][color=#2F4456][b]l'activité récente[/b][/color][/url], où vous aurez une idée de ce qui se passe sur le site\r\n\r\n\r\nBon séjour sur NoBleme,\r\nSi vous avez la moindre question, n'hésitez pas à répondre à ce message.\r\n\r\nVotre administrateur,\r\n[url=".$chemin."pages/user/user?id=1][color=#2F4456][b]Bad[/b][/color][/url]"));

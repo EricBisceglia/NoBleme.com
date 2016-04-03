@@ -1,2 +1,3 @@
 syntax: glob
 inc/conf.inc.php
+ircbot.txt

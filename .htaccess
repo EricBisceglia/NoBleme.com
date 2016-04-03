@@ -6,7 +6,11 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC]
 
-# Cette ligne avant une condition permettrait de faire un truc en local only, à fixer en prod :
-# Ne fonctionne pas pour errordocument btw (donc pas pour les 404)
-# RewriteCond %{SERVER_NAME} =127.0.0.1
+# Fichier de 404 personnalisé
 ErrorDocument 404 http://nobleme.com/pages/nobleme/404
+
+# Empêcher l'accès au .txt du bot
+<Files "ircbot.txt">
+  Deny from all
+  Allow from 127.0.0.1
+</Files>
