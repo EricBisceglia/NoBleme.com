@@ -32,26 +32,6 @@ mysqli_set_charset($GLOBALS['db'], "utf8");
 
 function query($requete)
 {
-  //echo '<br><br>'.$requete.'<br><br>';
   $query = mysqli_query($GLOBALS['db'],$requete) or die ('Erreur SQL !<br>'.mysqli_error($GLOBALS['db']));
   return $query;
-}
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction permettant d'effectuer une chaine de requêtes, ne renvoie rien, sauf un message d'erreur en cas d'échec
-//
-// Exemple d'utilisation:
-// $ma_requete = query($db,"SELECT * FROM ma_bdd");
-
-function multi_query($query)
-{
-  $link = $GLOBALS['db'];
-  if (mysqli_multi_query($link, $query)  or die ('Erreur SQL !<br>'.mysqli_error($GLOBALS['db']))) {
-    do { '';
-    } while (@mysqli_next_result($link));
-  }
 }

@@ -356,7 +356,7 @@ if(isset($_POST['irlp_ajouter']) && postdata($_POST['irlp_pseudo']))
 
     // Bot IRC NoBleme
     if((strtotime($infosirl['date']) >= strtotime(date('Y-m-d'))))
-      ircbot($chemin,$addp_pseudonyme." a rejoint l'IRL du ".datefr($infosirl['date'])." - http://nobleme.com/pages/nobleme/irl?irl=".$id_irl,"#NoBleme");
+      ircbot($chemin,$addp_pseudo." a rejoint l'IRL du ".datefr($infosirl['date'])." - http://nobleme.com/pages/nobleme/irl?irl=".$id_irl,"#NoBleme");
   }
 }
 
