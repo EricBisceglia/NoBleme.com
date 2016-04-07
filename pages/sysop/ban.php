@@ -90,10 +90,10 @@ if(isset($_POST['sysop_bannir_x']) && $_POST['sysop_raison'] != '' && $idban != 
 
   // Notification au banni pour qu'il sache qu'il a été banni si jamais il se connecte pas pendant le ban
   $sysopm_contenu  = "[b]Vous avez été temporairement banni de NoBleme[/b]\r\n\r\n";
-  $sysopm_contenu .= "Votre bannissement a commencé le ".datefr(date("Y-m-d",time()))." à ".date("Y-m-d",time())."\r\n";
-  $sysopm_contenu .= "Et a pris fin le ".datefr(date("Y-m-d",$ban_datefin))." à ".date("Y-m-d",$ban_datefin)."\r\n\r\n";
+  $sysopm_contenu .= "Vous avez été banni du ".datefr(date("Y-m-d",time()))." à ".date("H:i",time());
+  $sysopm_contenu .= " au ".datefr(date("Y-m-d",$ban_datefin))." à ".date("H:i",$ban_datefin)."\r\n";
   $sysopm_contenu .= "La raison pour laquelle vous avez été banni est la suivante : ".$_POST['sysop_raison']."\r\n\r\n";
-  $sysopm_contenu .= "Dans le futur, assurez-vous de respecter les [url=".$chemin."pages/doc/eula]règles[/url] de NoBleme.";
+  $sysopm_contenu .= "Dans le futur, assurez-vous de respecter le [url=".$chemin."pages/doc/coc]code de conduite[/url] de NoBleme.";
   envoyer_notif($idban , 'Vous avez été banni de NoBleme' , postdata($sysopm_contenu));
 
   // Activité récente
