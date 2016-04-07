@@ -165,6 +165,18 @@ $page_id  = "canaux";
 
         <tr>
           <td class="cadre_gris align_center spaced vspaced">
+            #musique
+          </td>
+          <td class="cadre_gris align_center gras spaced vspaced">
+            <a class="dark blank" href="<?=$chemin?>pages/user/user?pseudo=Wan">Wan</a>
+          </td>
+          <td class="cadre_gris align_center spaced vspaced">
+            Pour partager ce que l'on écoute et ainsi peut-être découvrir de nouveaux artistes
+          </td>
+        </tr>
+
+        <tr>
+          <td class="cadre_gris align_center spaced vspaced">
             #starcraft
           </td>
           <td class="cadre_gris align_center gras spaced vspaced">
