@@ -14,8 +14,9 @@ $page_titre = "Stats - Referers";
 // Identification
 $page_nom = "admin";
 
-// CSS
+// CSS & JS
 $css = array("admin");
+$js  = array("toggle");
 
 
 
@@ -46,6 +47,9 @@ if(isset($_POST['referer_edit']))
 /*                                                        PRÉPARATION DES DONNÉES                                                        */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Liste des referers
 
 // On va chercher les referers
 $qreferers = query("  SELECT    stats_referer.id      ,
@@ -98,6 +102,28 @@ query(" UPDATE stats_referer SET stats_referer.nombre_lastvisit = stats_referer.
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Liste des alias
+
+// On va chercher les alias
+$qaliasref = query("  SELECT    stats_referer.alias         AS 'alias_nom' ,
+                                COUNT(stats_referer.alias)  AS 'alias_num'
+                      FROM      stats_referer
+                      WHERE     stats_referer.alias != ''
+                      GROUP BY  stats_referer.alias
+                      ORDER BY  COUNT(stats_referer.alias) DESC ");
+
+// Et on les prépare pour l'affichage
+for($naliasref = 0 ; $daliasref = mysqli_fetch_array($qaliasref) ; $naliasref++)
+{
+  $alias_nom[$naliasref]    = $daliasref['alias_nom'];
+  $alias_count[$naliasref]  = $daliasref['alias_num'];
+  $alias_css[$naliasref]    = ($naliasref % 2) ? 'nobleme_background' : 'blanc';
+}
+
+
+
+
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
@@ -110,6 +136,34 @@ query(" UPDATE stats_referer SET stats_referer.nombre_lastvisit = stats_referer.
       <img src="<?=$chemin?>img/logos/administration.png" alt="Administration">
     </div>
     <br>
+
+    <div class="body_main referer_aliaslist hidden">
+      <table class="cadre_gris indiv">
+        <tr>
+          <td colspan="2" class="cadre_gris cadre_gris_titre moinsgros align_center">
+            ALIAS DE REFERERS
+          </td>
+        </tr>
+        <tr>
+          <td class="cadre_gris cadre_gris_sous_titre cadre_gris_haut">
+            Alias
+          </td>
+          <td class="cadre_gris cadre_gris_sous_titre cadre_gris_haut">
+            Nombre
+          </td>
+        </tr>
+        <?php for($i=0;$i<$naliasref;$i++) { ?>
+        <tr>
+          <td class="cadre_gris align_center gras <?=$alias_css[$i]?>">
+            <?=$alias_nom[$i]?>
+          </td>
+          <td class="cadre_gris align_center gras <?=$alias_css[$i]?>">
+            <?=$alias_count[$i]?>
+          </td>
+        </tr>
+        <?php } ?>
+      </table>
+    </div>
 
     <div class="body_main referer_evolution">
       <form name="stats_referers" action="stats_referers" method="POST">
@@ -124,7 +178,7 @@ query(" UPDATE stats_referer SET stats_referer.nombre_lastvisit = stats_referer.
             <td class="referer_raw cadre_gris_sous_titre cadre_gris_haut">
               Raw
             </td>
-            <td colspan="2" class="referer_alias cadre_gris_sous_titre cadre_gris_haut">
+            <td colspan="2" class="referer_alias cadre_gris_sous_titre cadre_gris_haut pointeur" onClick="toggle_class('hidden')" >
               Alias
             </td>
             <td class="cadre_gris_sous_titre cadre_gris_haut">
