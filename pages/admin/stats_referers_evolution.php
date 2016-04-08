@@ -54,6 +54,7 @@ $qreferers = query("  SELECT    stats_referer.id      ,
                                 stats_referer.nombre  ,
                                 stats_referer.nombre_lastvisit
                       FROM      stats_referer
+                      WHERE     stats_referer.nombre != stats_referer.nombre_lastvisit
                       ORDER BY  (stats_referer.nombre - stats_referer.nombre_lastvisit) DESC ,
                                 stats_referer.nombre DESC ");
 
