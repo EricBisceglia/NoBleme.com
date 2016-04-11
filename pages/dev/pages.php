@@ -30,10 +30,10 @@ $js  = array('dynamique');
 if(isset($_POST['addrow']))
 {
   // Traitement du postdata
-  $add_nom  = postdata_vide('add_nom');
-  $add_id   = postdata_vide('add_id');
-  $add_page = postdata_vide('add_page');
-  $add_url  = postdata_vide('add_url');
+  $add_nom  = postdata(destroy_html($_POST['add_nom']));
+  $add_id   = postdata(destroy_html($_POST['add_id']));
+  $add_page = postdata(destroy_html($_POST['add_page']));
+  $add_url  = postdata(destroy_html($_POST['add_url']));
 
   // Insertion de la nouvelle ligne
   query(" INSERT INTO pages
@@ -190,10 +190,10 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
   if(isset($_POST['editrow']))
   {
     // Traitement du postdata
-    $post_id    = postdata_vide('p_id');
-    $post_page  = postdata_vide('p_page');
-    $post_url   = postdata_vide('p_url');
-    $i          = postdata_vide('editrow');
+    $post_id    = postdata($_POST['p_id']);
+    $post_page  = postdata(destroy_html($_POST['p_page']));
+    $post_url   = postdata(destroy_html($_POST['p_url']));
+    $i          = postdata($_POST['editrow']);
 
     // Mise à jour des données
     query(" UPDATE pages SET pages.visite_page = '$post_page', pages.visite_url = '$post_url' WHERE pages.id = '$post_id' ");

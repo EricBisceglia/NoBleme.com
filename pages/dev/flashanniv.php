@@ -30,8 +30,8 @@ $js  = array('dynamique','popup');
 if(isset($_POST['addrow']))
 {
   // Traitement du postdata
-  $add_nom      = postdata_vide('add_nom');
-  $add_largeur  = postdata_vide('add_largeur');
+  $add_nom      = postdata(destroy_html($_POST['add_nom']));
+  $add_largeur  = postdata(destroy_html($_POST['add_largeur']));
 
   // Insertion des données
   query(" INSERT INTO anniv_flash SET anniv_flash.nom_fichier = '$add_nom', anniv_flash.largeur = '$add_largeur' ");
@@ -201,9 +201,9 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
   if(isset($_POST['editrow']))
   {
     // Récupération du postdata
-    $edit_id      = postdata_vide('fa_id');
-    $edit_nom     = postdata_vide('fa_nom');
-    $edit_largeur = postdata_vide('fa_largeur');
+    $edit_id      = postdata($_POST['fa_id']);
+    $edit_nom     = postdata(destroy_html($_POST['fa_nom']));
+    $edit_largeur = postdata(destroy_html($_POST['fa_largeur']));
 
     // Modification des données
     query(" UPDATE anniv_flash SET anniv_flash.nom_fichier = '$edit_nom', anniv_flash.largeur = '$edit_largeur' WHERE anniv_flash.id = '$edit_id' ");
