@@ -80,7 +80,7 @@ if(isset($_POST['profil_gauche_modifier_x']) || isset($_POST['profil_droite_modi
   {
     // S'il y a pas de flood, on crée le log dans l'activité récente
     $timestamp  = time();
-    $edit_nick  = getpseudo($edit_user);
+    $edit_nick  = postdata(getpseudo($edit_user));
     query(" INSERT INTO activite
             SET         timestamp   = '$timestamp'  ,
                         FKmembres   = '$edit_user'  ,

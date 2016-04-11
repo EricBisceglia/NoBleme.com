@@ -72,13 +72,13 @@ if(isset($_POST['nobleme_login_x']))
       {
 
         // On sale le mot de passe, puis on compare si le pass entré correspond au pass stocké
-        $passtest     = salage($pass);
-        $passtest_old = old_salage($pass);
+        $passtest     = postdata(salage($pass));
+        $passtest_old = postdata(old_salage($pass));
 
         while($logins = mysqli_fetch_array($login))
         {
           // Vérifions s'il y a bruteforce
-          $login_id         = $logins['id'];
+          $login_id         = postdata($logins['id']);
           $timecheck        = (time() - 300);
           $qcheckbruteforce = query(" SELECT COUNT(*) AS 'num_brute' FROM membres_essais_login WHERE FKmembres = '$login_id' AND timestamp > '$timecheck' ");
           $checkbruteforce  = mysqli_fetch_array($qcheckbruteforce);
@@ -304,7 +304,7 @@ else
 if(isset($_SERVER['HTTP_REFERER']))
 {
   // Abort si le visiteur se balade sur nobleme et ne vient pas de l'extérieur
-  $referer = $_SERVER['HTTP_REFERER'];
+  $referer = postdata($_SERVER['HTTP_REFERER']);
   $origine = parse_url($referer);
   if($origine['host'] != "www.nobleme.com" AND $origine['host'] != "nobleme.com" AND $origine['host'] != "localhost" AND $origine['host'] != "127.0.0.1")
   {

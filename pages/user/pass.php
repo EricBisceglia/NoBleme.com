@@ -34,8 +34,8 @@ if(isset($_POST['edit_pass_go_x']))
 {
   // On assainit le postdata
   $pass_actuel_check  = postdata($_POST['pass_actuel']);
-  $nouveau_pass_1     = postdata($_POST['nouveau_pass_1']);
-  $nouveau_pass_2     = postdata($_POST['nouveau_pass_2']);
+  $nouveau_pass_1     = $_POST['nouveau_pass_1'];
+  $nouveau_pass_2     = $_POST['nouveau_pass_2'];
 
   // On va chercher le pass actuel
   $user_id      = $_SESSION['user'];
@@ -59,7 +59,7 @@ if(isset($_POST['edit_pass_go_x']))
       {
         // On peut changer le pass si tout est bon
         $changement_pass = 1;
-        $nouveau_pass = salage($nouveau_pass_1);
+        $nouveau_pass = postdata(salage($nouveau_pass_1));
         query(" UPDATE membres SET membres.pass = '$nouveau_pass' WHERE membres.id = '$user_id' ");
       }
     }

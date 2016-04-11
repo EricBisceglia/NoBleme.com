@@ -489,7 +489,7 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
         // Log de modération
         $timestamp    = time();
         $editc_membre = $deditcomm['FKmembres'];
-        $editc_pseudo = $deditcomm['pseudonyme'];
+        $editc_pseudo = postdata($deditcomm['pseudonyme']);
         $editc_blogid = $deditcomm['FKdevblog'];
         $editc_blog   = postdata($deditcomm['titre']);
         $sysop_id     = $_SESSION['user'];

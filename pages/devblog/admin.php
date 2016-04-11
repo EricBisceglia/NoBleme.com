@@ -32,9 +32,9 @@ $js  = array('calendrier');
 // Définition du blogid
 
 if(isset($_GET['edit']))
-  $blogid = $_GET['edit'];
+  $blogid = postdata($_GET['edit']);
 else if(isset($_GET['delete']))
-  $blogid = $_GET['delete'];
+  $blogid = postdata($_GET['delete']);
 else if(!isset($_GET['add']))
   erreur('ID invalide');
 

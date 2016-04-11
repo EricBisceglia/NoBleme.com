@@ -143,7 +143,7 @@ if(isset($_POST['todo_modifier_x']))
   {
     $activite_timestamp = $dtodo['timestamp'];
     $activite_user      = $dtodo['FKmembres'];
-    $activite_pseudo    = getpseudo($activite_user);
+    $activite_pseudo    = postdata(getpseudo($activite_user));
     query(" INSERT INTO activite
             SET         timestamp     = '$activite_timestamp' ,
                         FKmembres     = '$activite_user'      ,
@@ -174,7 +174,7 @@ if(isset($_POST['todo_modifier_x']))
       $add_message .= "Votre ticket est un secret et n'apparait pas sur la liste des tâches. Aidez-moi à garder le secret, n'en parlez pas !\r\n";
     $add_message .= "Merci d'avoir aidé à contribuer à l'amélioration de NoBleme !\r\n";
     $add_message .= "N'hésitez pas à soumettre d'autres propositions de tickets dans le futur.";
-    envoyer_notif($dtodo['FKmembres'] , 'Ticket accepté : '.$add_titre , postdata($add_message));
+    envoyer_notif($dtodo['FKmembres'] , 'Ticket accepté : '.postdata($add_titre) , postdata($add_message));
   }
 
   // Bot IRC NoBleme si c'est un nouveau ticket

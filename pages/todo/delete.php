@@ -59,7 +59,7 @@ if(isset($_POST['todo_supprimer_x']))
   // Si le ticket n'était pas encore validé, on message le submitteur pour s'excuser
   if(!$dtodo['valide_admin'])
   {
-    $del_titre    = (strlen(html_entity_decode($dtodo['titre'])) > 25) ? substr(html_entity_decode(postdata($dtodo['titre'])),0,24).'...' : postdata($dtodo['titre']);
+    $del_titre    = (strlen(html_entity_decode($dtodo['titre'])) > 25) ? substr(html_entity_decode($dtodo['titre']),0,24).'...' : $dtodo['titre'];
     $del_message  = "[b]Votre proposition de ticket a été refusée.[/b]\r\n\r\n";
     $del_message .= "[b]Ticket proposé :[/b] ".$dtodo['titre']."\r\n";
     if($_POST['todo_raison'])
@@ -68,7 +68,7 @@ if(isset($_POST['todo_supprimer_x']))
     $del_message .= "Même si votre ticket a été refusé, votre tentative de contribution au développement de NoBleme est appréciée.\r\n";
     $del_message .= "Si vous pensez que le refus de ce ticket est injuste, vous pouvez répondre à ce message privé pour contester la décision.\r\n";
     $del_message .= "N'hésitez pas à soumettre d'autres propositions de tickets dans le futur.";
-    envoyer_notif($dtodo['FKmembres'] , 'Ticket refusé : '.$del_titre , postdata($del_message));
+    envoyer_notif($dtodo['FKmembres'] , 'Ticket refusé : '.postdata($del_titre) , postdata($del_message));
   }
 
   // Reste plus qu'à rediriger

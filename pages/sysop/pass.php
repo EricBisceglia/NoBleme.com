@@ -80,7 +80,7 @@ if(isset($_POST['sysop_chercher_x']) && $_POST['sysop_pass'])
 if(isset($_POST['sysop_modifier_x']) && $_POST['sysop_pass'])
 {
   // Assainissement du postdata et salage du mot de passe
-  $new_pass = salage(postdata($_POST['sysop_pass']));
+  $new_pass = postdata(salage($_POST['sysop_pass']));
 
   // Mise à jour du mot de passe
   query(" UPDATE membres SET membres.pass = '$new_pass' WHERE membres.id = '$idpass' ");

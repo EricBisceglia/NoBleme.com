@@ -52,8 +52,8 @@ else
 if(isset($_POST['todo_add_ajouter_x']))
 {
   // Assainissement du postdata
-  $add_titre      = destroy_html(postdata($_POST['todo_add_titre']));
-  $add_contenu    = destroy_html(postdata($_POST['todo_add_contenu']));
+  $add_titre      = postdata(destroy_html($_POST['todo_add_titre']));
+  $add_contenu    = postdata(destroy_html($_POST['todo_add_contenu']));
   $add_user       = $_SESSION['user'];
   $add_timestamp  = time();
 
@@ -72,8 +72,8 @@ if(isset($_POST['todo_add_ajouter_x']))
 
   // Et finalement on envoie une notification
   $add_ticket   = mysqli_insert_id($db);
-  $add_pseudo   = getpseudo();
-  $add_date     = datefr(date('Y-m-d',$add_timestamp));
+  $add_pseudo   = postdata(getpseudo());
+  $add_date     = postdata(datefr(date('Y-m-d',$add_timestamp)));
   $add_message  = '[b][url='.$chemin.'pages/todo/index?id='.$add_ticket.']Lien vers le ticket[/url][/b]\r\n\r\n';
   $add_message .= '[b]Date : [/b]'.$add_date.'\r\n';
   $add_message .= '[b]Auteur : [/b] [url='.$chemin.'pages/user/user?id='.$add_user.']'.$add_pseudo.'[/url]\r\n';

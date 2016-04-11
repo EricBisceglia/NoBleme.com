@@ -703,11 +703,11 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
     // On envoie une notification au submitteur pour le tenir au courant
     if($dtodo['FKmembres'] > 1)
     {
-      $solved_titre     = (strlen(html_entity_decode($dtodo['titre'])) > 25) ? substr(html_entity_decode(postdata($dtodo['titre'])),0,24).'...' : postdata($dtodo['titre']);
+      $solved_titre     = (strlen(html_entity_decode($dtodo['titre'])) > 25) ? substr(html_entity_decode($dtodo['titre']),0,24).'...' : $dtodo['titre'];
       $solved_message   = "[b]Votre ticket [url=".$chemin."pages/todo/index?id=".$solved_id."]".$dtodo['titre']."[/url] a été résolu.[/b]\r\n\r\n";
       $solved_message  .= "Merci d'avoir contribué à l'amélioration de NoBleme !\r\n";
       $solved_message  .= "N'hésitez pas à proposer d'autres tickets dans le futur";
-      envoyer_notif($dtodo['FKmembres'] , 'Ticket résolu : '.$solved_titre , postdata($solved_message));
+      envoyer_notif($dtodo['FKmembres'] , 'Ticket résolu : '.postdata($solved_titre) , postdata($solved_message));
     }
 
     // Et on retourne un affichage
@@ -770,7 +770,7 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
   {
     // On commence par assainir
     $add_comm_parent  = postdata($_POST['comm_parent_todo']);
-    $add_comm_contenu = destroy_html(postdata($_POST['comm_contenu']));
+    $add_comm_contenu = postdata(destroy_html($_POST['comm_contenu']));
 
     // On vérifie que le ticket existe bien
     $todotest = query(" SELECT id FROM todo WHERE id = '$add_comm_parent' ");
@@ -786,7 +786,7 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
                           contenu   = '$add_comm_contenu'   ");
 
       // Activité récente
-      $add_comm_pseudo  = getpseudo();
+      $add_comm_pseudo  = postdata(getpseudo());
       $fetchbuggy       = mysqli_fetch_array(query(" SELECT id FROM todo_commentaire ORDER BY timestamp DESC LIMIT 1 "));
       $add_comm_id      = (mysqli_insert_id($db)) ? mysqli_insert_id($db) : $fetchbuggy['id'];
       $fetchparent      = mysqli_fetch_array(query(" SELECT titre FROM todo WHERE id = '$add_comm_parent' "));

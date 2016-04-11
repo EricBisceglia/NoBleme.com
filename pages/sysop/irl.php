@@ -161,8 +161,8 @@ if(isset($_POST['irl_edit_x']))
   // Log de modération
   $timestamp    = time();
   $sysop_id     = $_SESSION['user'];
-  $sysop_pseudo = getpseudo();
-  $nom_irl      = datefr($dirl['date']);
+  $sysop_pseudo = postdata(getpseudo());
+  $nom_irl      = postdata(datefr($dirl['date']));
   query(" INSERT INTO activite
           SET         timestamp       = '$timestamp'    ,
                       log_moderation  = 1               ,
@@ -267,8 +267,8 @@ if(isset($_POST['irl_delete_x']))
   // Log de modération
   $timestamp    = time();
   $admin_id     = $_SESSION['user'];
-  $admin_pseudo = getpseudo();
-  $nom_irl      = datefr($dirl['date']);
+  $admin_pseudo = postdata(getpseudo());
+  $nom_irl      = postdata(datefr($dirl['date']));
   $delraison    = postdata($_POST['irl_delete_raison']);
   query(" INSERT INTO activite
           SET         timestamp       = '$timestamp'    ,
@@ -404,9 +404,9 @@ if(isset($_POST['irlp_modifier']))
       $editp_membre = ($deditpid['irlp_user']) ? $deditpid['irlp_user'] : 0;
       $editp_nick   = postdata(($deditpid['user_pseudo']) ? $deditpid['user_pseudo'] : $deditpid['irlp_pseudo']);
       $editp_irlid  = $deditpid['irl_id'];
-      $editp_irlnom = datefr($deditpid['irl_date']);
+      $editp_irlnom = postdata(datefr($deditpid['irl_date']));
       $sysop_id     = $_SESSION['user'];
-      $sysop_pseudo = getpseudo();
+      $sysop_pseudo = postdata(getpseudo());
       query(" INSERT INTO activite
               SET         timestamp       = '$timestamp'            ,
                           log_moderation  = 1                       ,
@@ -472,7 +472,7 @@ if(isset($_POST['irlp_supprimer']))
       $delp_membre  = ($ddelpid['irlp_user']) ? $ddelpid['irlp_user'] : 0;
       $delp_pseudo  = postdata(($ddelpid['user_pseudo']) ? $ddelpid['user_pseudo'] : $ddelpid['irlp_pseudo']);
       $delp_irlid   = $ddelpid['irl_id'];
-      $delp_irlnom  = datefr($ddelpid['irl_date']);
+      $delp_irlnom  = postdata(datefr($ddelpid['irl_date']));
       query(" INSERT INTO activite
               SET         timestamp     = '$timestamp'          ,
                           FKmembres     = '$delp_membre'        ,
@@ -483,7 +483,7 @@ if(isset($_POST['irlp_supprimer']))
 
       // Log de modération
       $sysop_id     = $_SESSION['user'];
-      $sysop_pseudo = getpseudo();
+      $sysop_pseudo = postdata(getpseudo());
       query(" INSERT INTO activite
               SET         timestamp       = '$timestamp'          ,
                           log_moderation  = 1                     ,

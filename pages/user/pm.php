@@ -213,7 +213,7 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
       $erreur = 'Votre message est vide';
 
     // Duplicata ?
-    $itsme = postdata($_SESSION['user']);
+    $itsme = $_SESSION['user'];
     if($erreur === '')
     {
       $pm_titre = postdata_vide('sujet');
@@ -253,7 +253,7 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
     else
     {
       // Traitement du postdata
-      $pm_envoyeur  = postdata($_SESSION['user']);
+      $pm_envoyeur  = $_SESSION['user'];
       $pm_date      = time();
       $pm_message   = postdata_vide('message');
 

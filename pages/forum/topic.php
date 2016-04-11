@@ -45,7 +45,7 @@ if(isset($_POST['forumloljk_x']))
 {
   // On assainit le postdata
   if(isset($_GET['new']))
-    $add_titre  = substr(postdata($_POST['loljk_titre']),0,50);
+    $add_titre  = postdata(substr($_POST['loljk_titre'],0,50));
   $add_contenu  = postdata($_POST['loljk_contenu']);
 
   // Si le titre est vide

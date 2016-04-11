@@ -44,10 +44,10 @@ for($i=1;$i<=3;$i++)
 if (isset($_POST["register_go_x"]))
 {
   // Récupération du postdata
-  $register_pseudo  = destroy_html(postdata($_POST["register_pseudo"]));
-  $register_pass_1  = destroy_html(postdata($_POST["register_pass_1"]));
-  $register_pass_2  = destroy_html(postdata($_POST["register_pass_2"]));
-  $register_email   = destroy_html(postdata($_POST["register_email"]));
+  $register_pseudo  = postdata(destroy_html($_POST["register_pseudo"]));
+  $register_pass_1  = postdata(destroy_html($_POST["register_pass_1"]));
+  $register_pass_2  = postdata(destroy_html($_POST["register_pass_2"]));
+  $register_email   = postdata(destroy_html($_POST["register_email"]));
   $register_captcha = postdata($_POST["register_captcha"]);
   $register_q1      = isset($_POST["register_question_1"]) ? postdata($_POST["register_question_1"]) : 0;
   $register_q2      = isset($_POST["register_question_2"]) ? postdata($_POST["register_question_2"]) : 0;
@@ -116,7 +116,7 @@ if (isset($_POST["register_go_x"]))
   if($register_erreur == "")
   {
     // Préparation des données à insérer
-    $register_pass  = salage($register_pass_1);
+    $register_pass  = postdata(salage($register_pass_1));
     $date_creation  = time();
 
     // Création du compte
