@@ -228,8 +228,11 @@ else
                 <?=$description_action[$i]?>
               </td>
               <?php } else if(!$description_diff[$i] && !$description_raison[$i]) { ?>
-              <td colspan="2" class="cadre_gris cadre_gris_haut align_center spaced nowrap <?=$description_class[$i]?>">
+              <td class="cadre_gris cadre_gris_haut align_center spaced nowrap <?=$description_class[$i]?>">
                 <?=$description_action[$i]?>
+              </td>
+              <td class="cadre_gris align_center texte_nobleme_clair">
+                -
               </td>
               <?php } else { ?>
               <td class="cadre_gris cadre_gris_haut align_center spaced nowrap <?=$description_class[$i]?>">

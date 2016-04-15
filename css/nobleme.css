@@ -78,7 +78,7 @@ a.nolink     { text-decoration: none;                 }
 a.dark       { color: #2F4456;                        }
 a.dark:hover { color: #7F9DB1;                        }
 
-ul.dotlist { list-style:disc;padding-left:30px;     }
+ul.dotlist { list-style: disc; padding-left: 30px;  }
 li.spaced  { margin-bottom: 2px; padding-left: 0px; }
 
 input.discret, select.discret, textarea.discret { border: 0px; }
@@ -93,7 +93,7 @@ div.smallsize { width: 600px;  }
 div.midsize   { width: 800px;  }
 div.bigsize   { width: 1000px; }
 
-div.limited { max-height:300px; overflow:auto; }
+div.limited { max-height: 300px; overflow: auto; }
 
 /************************************************************ DIV : BODY MAIN ************************************************************/
 div.body_main                  { background: #FFFFFF; font: 13.05px Tahoma, Calibri, sans-serif; margin: auto; margin-top: 20px;       ;
@@ -160,10 +160,10 @@ li:hover                  { position: relative; z-index: 9001;                  
 span.menu_secret          { color: #7F9DB1;                                                                             }
 
 /**************************************************************** BBCODES ****************************************************************/
-div.smallsize > img.bbcodeimg { max-width : 550px; }
-  div.midsize > img.bbcodeimg { max-width : 750px; }
-               img.midsizeimg { max-width : 750px; }
-                img.bbcodeimg { max-width : 950px; }
+div.smallsize > img.bbcodeimg { max-width: 550px; }
+  div.midsize > img.bbcodeimg { max-width: 750px; }
+               img.midsizeimg { max-width: 750px; }
+                img.bbcodeimg { max-width: 950px; }
 
 pre.flou       { text-shadow: 0 0 10px #000000; color: rgba(255,255,255,0); transition: 2s text-shadow linear; }
 pre.flou:hover { text-shadow: none; color: #000000;                                                            }
@@ -176,6 +176,6 @@ div.spoiler_corps { padding: 3px; background-color: #FFFFFF; border: 1px solid #
 
 /******************************************************** RESPONSIVENESS (MOBILE) ********************************************************/
 
-@media (max-width:992px) {
+@media (max-width: 992px) {
   a.nonlien{ pointer-events: none; cursor: default; };
 }
