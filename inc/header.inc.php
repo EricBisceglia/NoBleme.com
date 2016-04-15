@@ -34,8 +34,8 @@ if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Préparation de l'url complète de la page pour login/logout
 
-$url_complete = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.htmlspecialchars($_SERVER['QUERY_STRING']) : substr(basename($_SERVER['PHP_SELF']),0,-4);
-$url_logout   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.htmlspecialchars($_SERVER['QUERY_STRING']).'&amp;logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
+$url_complete = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'] : substr(basename($_SERVER['PHP_SELF']),0,-4);
+$url_logout   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&amp;logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
 
 
 
@@ -298,7 +298,7 @@ else
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Si l'user est connecté, mise à jour de son referer & de son langage
+// Si l'user est connecté, mise à jour de son referer
 
 // On ne s'en occupe que si la page a un nom
 if(isset($_SERVER['HTTP_REFERER']))

@@ -188,7 +188,7 @@ if($idmisc)
       <hr class="points">
       <?php } ?>
       <?php for($i=0;$i<$nmisc;$i++) { ?>
-      <span class="monospace italique souligne"><a class="dark blank" href="<?=$chemin?>pages/irc/quotes?id=<?=$misc_id[$i]?>">Miscellanée #<?=$misc_id[$i]?></a><?=$misc_date[$i]?> :</span><br>
+      <span class="monospace"><a class="dark blank gras" href="<?=$chemin?>pages/irc/quotes?id=<?=$misc_id[$i]?>">Miscellanée #<?=$misc_id[$i]?></a><?=$misc_date[$i]?></span><br>
       <br>
       <span class="monospace"><?=$misc_contenu[$i]?></span><br>
       <?php if(!isset($_GET['id']) && !isset($_GET['random'])) { ?>

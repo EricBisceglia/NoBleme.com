@@ -56,6 +56,11 @@ if($idmaj == 'v2')
     query(" ALTER TABLE todo ADD source MEDIUMTEXT AFTER timestamp_fini ");
   $majq .= "<br><br>Ajout du champ todo.source";
 
+  // Suppression du champ membres.bie
+  if(@mysqli_query($GLOBALS['db'], " SELECT bie FROM membres "))
+    query(" ALTER TABLE membres DROP bie ");
+  $majq .= "<br><br>Suppression du champ membres.bie";
+
   // Création de l'enregistrement propose une nouvelle miscellanée
   if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'quotes' AND page_id LIKE 'add' ")))
     query(" INSERT INTO pages
@@ -503,7 +508,8 @@ if($idmaj)
           </td>
           <td class="cadre_gris">
             Fix du bordel dans les miscellanées<br>
-            Création du champ todo.source
+            Création du champ todo.source<br>
+            Suppression du champ membres.bie
           </td>
         </tr>
         <tr>
