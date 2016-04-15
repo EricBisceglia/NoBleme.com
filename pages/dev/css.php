@@ -373,6 +373,15 @@ $css = array('admin');
           <td class="cadre_gris align_center"><del>&nbsp;Contenu supprimé&nbsp;</del></td>
         </tr>
 
+        <tr>
+          <td class="cadre_gris_vide" colspan="2"></td>
+        </tr>
+
+        <tr>
+          <td class="cadre_gris align_center"><b>hr</b>.points</td>
+          <td class="cadre_gris align_center"><hr class="points">Ligne pointillée<hr class="points"></td>
+        </tr>
+
       </table>
     </div>
 

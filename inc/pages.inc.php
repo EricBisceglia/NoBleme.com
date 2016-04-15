@@ -98,4 +98,11 @@ else if(isset($chemin))
     $visite_page  = "Regarde le profil de ".$page_titre;
     $visite_url     = $chemin.'pages/user/user?id='.$page_id;
   }
+
+  // Miscellanées
+  if($page_nom == 'quotes' && is_numeric($page_id))
+  {
+    $visite_page  = "Se marre devant la miscellanée #".$page_id;
+    $visite_url     = $chemin.'pages/irc/quotes?id='.$page_id;
+  }
 }

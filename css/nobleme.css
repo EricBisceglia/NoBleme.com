@@ -86,6 +86,8 @@ input.discret, select.discret, textarea.discret { border: 0px; }
 del { background: #DB4141; text-decoration: none; font-weight:bold; }
 ins { background: #3CE052; text-decoration: none; font-weight:bold; }
 
+hr.points { border:1px dashed #555555; }
+
 /********************************************************** SECTIONS DE CONTENU **********************************************************/
 div.smallsize { width: 600px;  }
 div.midsize   { width: 800px;  }

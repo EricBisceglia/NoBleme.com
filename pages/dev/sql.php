@@ -45,10 +45,34 @@ if($idmaj == 'v2')
 {
   $majq .= '<span class="gras souligne moinsgros alinea">Version 2</span><br>';
 
+  // Nettoyage du bordel dans les miscellanées
+  $getmisc = query(" SELECT id, contenu FROM quotes ");
+  while($fixmisc = mysqli_fetch_array($getmisc))
+    query(" UPDATE quotes SET contenu = '".postdata(stripslashes($fixmisc['contenu']))."' WHERE id = '".$fixmisc['id']."'");
+  $majq .= "<br><br>Fixé le bordel dans les miscellanées";
+
   // Ajout du champ todo.source
   if(!@mysqli_query($GLOBALS['db'], " SELECT source FROM todo "))
     query(" ALTER TABLE todo ADD source MEDIUMTEXT AFTER timestamp_fini ");
   $majq .= "<br><br>Ajout du champ todo.source";
+
+  // Création de l'enregistrement propose une nouvelle miscellanée
+  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'quotes' AND page_id LIKE 'add' ")))
+    query(" INSERT INTO pages
+            SET         page_nom    = 'quotes'                            ,
+                        page_id     = 'add'                               ,
+                        visite_page = 'Propose une nouvelle miscellanée'  ,
+                        visite_url  = 'pages/irc/quotes'                  ");
+  $majq .= "<br><br>Activité : Propose une nouvelle miscellanée";
+
+  // Création de l'enregistrement se marre devant les miscellanées
+  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'quotes' AND page_id LIKE 'index' ")))
+    query(" INSERT INTO pages
+            SET         page_nom    = 'quotes'                            ,
+                        page_id     = 'index'                             ,
+                        visite_page = 'Se marre devant les miscellanées'  ,
+                        visite_url  = 'pages/irc/quotes'                  ");
+  $majq .= "<br>Activité : Se marre devant les miscellanées";
 }
 
 
@@ -478,6 +502,7 @@ if($idmaj)
             <a class="dark blank" href="?maj=v2">Version 2</a>
           </td>
           <td class="cadre_gris">
+            Fix du bordel dans les miscellanées<br>
             Création du champ todo.source
           </td>
         </tr>

@@ -857,51 +857,37 @@ else
             </li>
 
             <li>
-              <a class="menu_link" href="<?=$chemin?>pages/irc/quotes">
-                Miscellanées
-              </a>
-            </li>
-
-            <!--
-            <li>
               <a class="dropdown">
                 Miscellanées
               </a>
               <ul class="menu_main">
 
                 <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/misc">
+                  <a class="menu_link" href="<?=$chemin?>pages/irc/quotes">
                     Paroles de NoBlemeux
                   </a>
                 </li>
 
                 <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/misc_add">
+                  <a class="menu_link" href="<?=$chemin?>pages/irc/quote_add">
                     Proposer une citation
                   </a>
                 </li>
 
                 <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/misc?random">
+                  <a class="menu_link" href="<?=$chemin?>pages/irc/quotes?random">
                     Citation au hasard
                   </a>
                 </li>
 
                 <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/misc_search">
-                    Chercher une citation
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link">
-                    <s>Flux RSS</s>
+                  <a class="menu_link" href="<?=$chemin?>pages/irc/quotes_rss">
+                    Flux RSS
                   </a>
                 </li>
 
               </ul>
             </li>
-            -->
 
           </ul>
         </li>
@@ -1158,6 +1144,27 @@ else
                 <li>
                   <a class="menu_link" href="<?=$chemin?>pages/todo/index?admin">
                     Tickets à valider
+                  </a>
+                </li>
+
+              </ul>
+            </li>
+
+            <li>
+              <a class="dropdown">
+                Miscellanées
+              </a>
+              <ul class="menu_main">
+
+                <li>
+                  <a class="menu_link" href="<?=$chemin?>pages/irc/quote_add">
+                    Nouvelle miscellanée
+                  </a>
+                </li>
+
+                <li>
+                  <a class="menu_link" href="<?=$chemin?>pages/irc/quotes?admin">
+                    Miscellanées à valider
                   </a>
                 </li>
 

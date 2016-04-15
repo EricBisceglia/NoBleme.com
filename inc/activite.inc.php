@@ -473,6 +473,18 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
 
 
 
+  //*************************************************************************************************************************************//
+  //                                                            MISCELLANÉES                                                             //
+  //*************************************************************************************************************************************//
+
+  // Nouveau todo
+  else if($dactrec['action_type'] === 'quote_add')
+  {
+    $description_class[$nactrec]  = 'nobleme_background';
+    $description_action[$nactrec] = 'Nouvelle miscellanée ajoutée à la collection : <a class="dark blank gras" href="'.$chemin.'pages/irc/quotes?id='.$dactrec['action_id'].'">Miscellanée #'.$dactrec['action_id'].'</a>';
+  }
+
+
 
   //*************************************************************************************************************************************//
   //                           SI ON NE TROUVE RIEN, ON A UN PROBLÈME, ET ON LE FAIT SAVOIR EN ENGUEULANT BAD                            //
