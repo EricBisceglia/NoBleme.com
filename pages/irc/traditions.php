@@ -32,7 +32,7 @@ $page_id  = "traditions";
     <br>
 
     <div class="body_main midsize">
-      <span class="titre">Coutumes et traditions de l'IRC NoBlemeux</span><br>
+      <span class="titre">Coutumes et traditions du chat IRC NoBlemeux</span><br>
       <br>
       Cette page sert de mini-documentation explicative de choses inhabituelles que vous pourriez trouver sur le <a class="dark blank" href="<?=$chemin?>pages/irc/index">chat IRC de NoBleme</a>.<br>
       <br>

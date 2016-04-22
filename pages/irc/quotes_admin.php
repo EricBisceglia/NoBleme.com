@@ -149,7 +149,7 @@ $quote_contenu      = nl2br_fixed($dquote['contenu']);
         <textarea class="indiv" rows="25" name="quote_contenu"><?=$quote_contenu_raw?></textarea><br>
         <br>
         <div class="indiv align_center">
-          <input type="image" src="<?=$chemin?>img/boutons/modifier.png" alt="Modifier" name="quote_edit"></textarea>
+          <input type="image" src="<?=$chemin?>img/boutons/modifier.png" alt="Modifier" name="quote_edit">
         </div>
       </form>
     </div>
@@ -168,7 +168,7 @@ $quote_contenu      = nl2br_fixed($dquote['contenu']);
         <input class="indiv" name="quote_raison"><br>
         <br>
         <div class="indiv align_center">
-          <input type="image" src="<?=$chemin?>img/boutons/supprimer.png" alt="Supprimer" name="quote_delete"></textarea>
+          <input type="image" src="<?=$chemin?>img/boutons/supprimer.png" alt="Supprimer" name="quote_delete">
         </div>
       </form>
     </div>

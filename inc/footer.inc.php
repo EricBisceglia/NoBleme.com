@@ -20,10 +20,10 @@ $page_views = isset($pageviews) ? "Cette page a été consultée ".$pageviews." 
 
     <!-- Début du footer -->
 
-    <?php if(!isset($_GET['popup'])) { ?>
+    <br>
+    <br>
 
-    <br>
-    <br>
+    <?php if(!isset($_GET["popup"]) && !isset($_GET["popout"]) && !isset($_GET["dynamique"])) { ?>
 
     <div class="footer">
       <?php if(loggedin() && getadmin($_SESSION['user'])) { ?>

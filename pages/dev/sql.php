@@ -61,6 +61,15 @@ if($idmaj == 'v2')
     query(" ALTER TABLE membres DROP bie ");
   $majq .= "<br><br>Suppression du champ membres.bie";
 
+  // Création de l'enregistrement consulte le CV de Bad
+  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'nobleme' AND page_id LIKE 'cv' ")))
+    query(" INSERT INTO pages
+            SET         page_nom    = 'nobleme'                 ,
+                        page_id     = 'cv'                      ,
+                        visite_page = 'Consulte de CV de Bad'   ,
+                        visite_url  = 'pages/cv'                ");
+  $majq .= "<br><br>Activité : Consulte le CV de Bad";
+
   // Création de l'enregistrement propose une nouvelle miscellanée
   if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'quotes' AND page_id LIKE 'add' ")))
     query(" INSERT INTO pages
@@ -68,7 +77,7 @@ if($idmaj == 'v2')
                         page_id     = 'add'                               ,
                         visite_page = 'Propose une nouvelle miscellanée'  ,
                         visite_url  = 'pages/irc/quotes'                  ");
-  $majq .= "<br><br>Activité : Propose une nouvelle miscellanée";
+  $majq .= "<br>Activité : Propose une nouvelle miscellanée";
 
   // Création de l'enregistrement se marre devant les miscellanées
   if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'quotes' AND page_id LIKE 'index' ")))
