@@ -660,8 +660,8 @@ $_GET['popout'] = 1;
       <br>
       You can find detailed and illustrated examples of my development skills in the <span><a class="dark gras" href="cv?en&amp;portfolio#portfolio">portfolio</a></span> that comes with my CV.<br>
       <br>
-      Other than computer pregramming (my main passion), I am passionate about french literature, sociology, and art history.<br>
-      I manage the cultural inheritance of the photographic and literary collections of my deceased father, <a href="http://inconstantsol.blogspot.fr/2013/03/jacques-bisceglia-1940-2013.html">Jacques Bisceglia</a>.<br>
+      Other than computer programming (my main passion), I am passionate about french literature, sociology, and art history.<br>
+      I manage the cultural inheritance (photographic and literary collections) of my deceased father, <a href="http://inconstantsol.blogspot.fr/2013/03/jacques-bisceglia-1940-2013.html">Jacques Bisceglia</a>.<br>
       I've practiced competitive rollerblading from 2003 to 2005, and still practice it as an amateur nowadays.<br>
       <br>
       Do not hesitate to contact me by email at <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> or on IRC at irc.nobleme.com on the channel #english.

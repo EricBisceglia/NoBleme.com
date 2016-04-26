@@ -105,7 +105,7 @@ while($dprofil = mysqli_fetch_array($qprofil))
   $p_sexe             = ($dprofil['sexe']) ? '<span class="gras">'.substr($dprofil['sexe'],0,1).'</span>'.substr($dprofil['sexe'],1) : 0;
   if(substr($dprofil['anniversaire'],0,4) > '0000' && substr($dprofil['anniversaire'],5,2) != '00' && substr($dprofil['anniversaire'],8,2) != '00')
   {
-    $p_anniversaire   = '<span class="gras">'.(date('Y')-substr($dprofil['anniversaire'],0,4)).'</span> ans / Anniversaire le ';
+    $p_anniversaire   = '<span class="gras">'.floor((strtotime(date('Y-m-d'))-strtotime($dprofil['anniversaire']))/31556926).'</span> ans / Anniversaire le ';
     $p_anniversaire  .= substr(jourfr(date('Y').'-'.substr($dprofil['anniversaire'],5,5)),0,-5);
   }
   else
