@@ -45,6 +45,14 @@ if($idmaj == 'v2')
 {
   $majq .= '<span class="gras souligne moinsgros alinea">Version 2</span><br>';
 
+  // Création de la table quotes_membres
+  query(" CREATE TABLE IF NOT EXISTS quotes_membres (
+            id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+            FKquotes          INT(11) UNSIGNED NOT NULL                             ,
+            FKmembres         INT(11) UNSIGNED NOT NULL
+          ) ENGINE=MyISAM; ");
+  $majq .= "<br>Crée la table quotes_membres";
+
   // Nettoyage du bordel dans les miscellanées
   $getmisc = query(" SELECT id, contenu FROM quotes ");
   while($fixmisc = mysqli_fetch_array($getmisc))
@@ -69,6 +77,15 @@ if($idmaj == 'v2')
                         visite_page = 'Consulte de CV de Bad'   ,
                         visite_url  = 'pages/cv'                ");
   $majq .= "<br><br>Activité : Consulte le CV de Bad";
+
+  // Création de l'enregistrement observe les stats des miscellanées
+  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'quotes' AND page_id LIKE 'stats' ")))
+    query(" INSERT INTO pages
+            SET         page_nom    = 'quotes'                              ,
+                        page_id     = 'stats'                                 ,
+                        visite_page = 'Observe les stats des miscellanées'  ,
+                        visite_url  = 'pages/irc/quotes'                    ");
+  $majq .= "<br>Activité : Observe les stats des miscellanées";
 
   // Création de l'enregistrement propose une nouvelle miscellanée
   if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'quotes' AND page_id LIKE 'add' ")))
@@ -516,6 +533,7 @@ if($idmaj)
             <a class="dark blank" href="?maj=v2">Version 2</a>
           </td>
           <td class="cadre_gris">
+            Création de la table quotes_membres<br>
             Fix du bordel dans les miscellanées<br>
             Création du champ todo.source<br>
             Suppression du champ membres.bie

@@ -83,9 +83,9 @@ for($nhabitues = 0 ; $dhabitues = mysqli_fetch_array($qhabitues) ; $nhabitues++)
   $habitues_nombre[$nhabitues]      = $dhabitues['irlstat_nombre'];
   $habitues_pourcent[$nhabitues]    = round(($dhabitues['irlstat_nombre']/$totalirls)*100,0);
   $habitues_premiereid[$nhabitues]  = $qpremiereirl['irlid'];
-  $habitues_premiere[$nhabitues]    = substr(jourfr($qpremiereirl['irldate']),2);
+  $habitues_premiere[$nhabitues]    = jourfr($qpremiereirl['irldate'],1);
   $habitues_derniereid[$nhabitues]  = $qderniereirl['irlid'];
-  $habitues_derniere[$nhabitues]    = substr(jourfr($qderniereirl['irldate']),2);
+  $habitues_derniere[$nhabitues]    = jourfr($qderniereirl['irldate'],1);
 }
 
 

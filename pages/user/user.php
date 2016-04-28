@@ -79,9 +79,12 @@ $qprofil = query("  SELECT  membres.admin           AS 'admin'        ,
                    (SELECT COUNT(*) FROM irl_participants, irl  WHERE irl_participants.FKmembres    = '$userid'
                                                                 AND   irl_participants.confirme     = 1
                                                                 AND   irl_participants.FKirl        = irl.id
-                                                                AND   irl.date                      < '$datenow') AS 'irls'          ,
-                   (SELECT COUNT(*) FROM devblog_commentaire    WHERE devblog_commentaire.FKmembres = '$userid')  AS 'devblog'       ,
-                   (SELECT COUNT(*) FROM todo                   WHERE todo.FKmembres                = '$userid')  AS 'tickets'       ,
+                                                                AND   irl.date                      < '$datenow') AS 'irls'     ,
+                   (SELECT COUNT(*) FROM quotes                 WHERE quotes.valide_admin           = 1
+                                                                AND   quotes.FKauteur               = '$userid')  AS 'squotes'  ,
+                   (SELECT COUNT(*) FROM quotes_membres         WHERE quotes_membres.FKmembres      = '$userid')  AS 'quotes'   ,
+                   (SELECT COUNT(*) FROM devblog_commentaire    WHERE devblog_commentaire.FKmembres = '$userid')  AS 'devblog'  ,
+                   (SELECT COUNT(*) FROM todo                   WHERE todo.FKmembres                = '$userid')  AS 'tickets'  ,
                    (SELECT COUNT(*) FROM todo_commentaire       WHERE todo_commentaire.FKmembres    = '$userid')  AS 'tickets_comm'
                     FROM    membres
                     WHERE   membres.id = '$userid' ");
@@ -113,6 +116,8 @@ while($dprofil = mysqli_fetch_array($qprofil))
   $p_region           = destroy_html($dprofil['region']);
   $p_metier           = destroy_html($dprofil['metier']);
   $p_irls             = $dprofil['irls'];
+  $p_squotes          = $dprofil['squotes'];
+  $p_quotes           = $dprofil['quotes'];
   $p_devblog          = $dprofil['devblog'];
   $p_tickets          = $dprofil['tickets'];
   $p_tickets_comm     = $dprofil['tickets_comm'];
@@ -209,8 +214,15 @@ while($dprofil = mysqli_fetch_array($qprofil))
                   <a href="<?=$chemin?>pages/nobleme/irls">IRLs NoBlemeuses</a> :<br>
                   Est venu <span class="gras"><?=$p_irls?></span> fois
                   <hr class="separateur_profil">
-                  <?php } ?>
-                  <?php if($p_devblog) { ?>
+                  <?php } if($p_squotes) { ?>
+                  <a href="<?=$chemin?>pages/irc/quotes">Miscellanées</a> proposées :<br>
+                  <span class="gras"><?=$p_squotes?></span>
+                  <hr class="separateur_profil">
+                  <?php } if($p_quotes) { ?>
+                  Apparitions dans les <a href="<?=$chemin?>pages/irc/quotes">miscellanées</a> :<br>
+                  <span class="gras"><?=$p_quotes?></span>
+                  <hr class="separateur_profil">
+                  <?php } if($p_devblog) { ?>
                   Commentaires postés sur des <a href="<?=$chemin?>pages/devblog/index">devblogs</a> :<br>
                   <span class="gras"><?=$p_devblog?></span>
                   <hr class="separateur_profil">

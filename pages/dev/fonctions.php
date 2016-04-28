@@ -579,10 +579,12 @@ $css = array('admin');
           </td>
           <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
             Similaire à datefr, mais ne renvoie pas le nom du jour<br>
-            Aujourd'hui (<?=date('Y-m-d')?>) en jourfr() est le <?=jourfr(date('Y-m-d'))?>
+            Aujourd'hui (<?=date('Y-m-d')?>) en jourfr() est le <?=jourfr(date('Y-m-d'))?><br>
+            Un paramètre optionnel permet de ne pas spécifier le jour avant la date
           </td>
           <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $date = jourfr(date('Y-m-d'));
+            $date = jourfr(date('Y-m-d'));<br>
+            $date = jourfr('2005-19-03',1);
           </td>
         </tr>
         <tr>

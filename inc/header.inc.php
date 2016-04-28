@@ -881,6 +881,12 @@ else
                 </li>
 
                 <li>
+                  <a class="menu_link" href="<?=$chemin?>pages/irc/quotes_stats">
+                   Statistiques des citations
+                  </a>
+                </li>
+
+                <li>
                   <a class="menu_link" href="<?=$chemin?>pages/irc/quotes_rss">
                     Flux RSS
                   </a>

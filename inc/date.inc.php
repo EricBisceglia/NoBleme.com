@@ -99,10 +99,12 @@ function datefr($date)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction de conversion d'une date mysql vers une date en toutes lettres, ne renvoie pas de nom de jour
 //
+// Le second paramètre, optionnel, retire le numéro du jour
+//
 // Exemple d'utilisation
-// $ma_date = jourfr($date_a_convertir);
+// $ma_date = jourfr($date_a_convertir,1);
 
-function jourfr($date)
+function jourfr($date,$stripday=NULL)
 {
 
   // Mois de l'année en toutes lettres
@@ -120,12 +122,20 @@ function jourfr($date)
                     "Novembre"  ,
                     "Décembre"  );
 
-  // Conversion de la date en toutes lettres
-  $date_text = date("j", strtotime($date))." ".$moisfr[date("n", strtotime($date))]." ".date("Y", strtotime($date));
+  if(!$stripday)
+  {
+    // Conversion de la date en toutes lettres
+    $date_text = date("j", strtotime($date))." ".$moisfr[date("n", strtotime($date))]." ".date("Y", strtotime($date));
 
-  // Transformer 1 en 1er
-  if(substr($date_text,0,2) == '1 ')
-    $date_text = '1er '.substr($date_text,1);
+    // Transformer 1 en 1er
+    if(substr($date_text,0,2) == '1 ')
+      $date_text = '1er '.substr($date_text,1);
+  }
+  else
+  {
+    // Conversion de la date en toutes lettres
+    $date_text = $moisfr[date("n", strtotime($date))]." ".date("Y", strtotime($date));
+  }
 
   // Renvoi de la valeur
   return $date_text;

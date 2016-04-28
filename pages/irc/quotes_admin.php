@@ -23,10 +23,12 @@ $page_id  = "admin";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // On récupère l'id de la miscellanée à éditer ou supprimer
 
-if(!isset($_GET['edit']) && !isset($_GET['delete']))
+if(!isset($_GET['edit']) && !isset($_GET['tag']) && !isset($_GET['delete']))
   erreur('ID invalide');
 if(isset($_GET['edit']))
   $idquote = postdata($_GET['edit']);
+if(isset($_GET['tag']))
+  $idquote = postdata($_GET['tag']);
 if(isset($_GET['delete']))
   $idquote = postdata($_GET['delete']);
 
@@ -45,7 +47,7 @@ if(isset($_POST['quote_edit_x']))
   query(" UPDATE quotes SET contenu = '$quote_contenu' WHERE id = '$idquote' ");
 
   // On va check si c'était une quote non approuvée
-  $qapprove = mysqli_fetch_array(query(" SELECT FKauteur, valide_admin FROM quotes WHERE id = '$idquote' "));
+  $qapprove = mysqli_fetch_array(query(" SELECT quotes.FKauteur, quotes.valide_admin FROM quotes WHERE quotes.id = '$idquote' "));
   if(!$qapprove['valide_admin'])
   {
     // Auquel cas on la valide et on félécite son auteur
@@ -80,7 +82,7 @@ if(isset($_POST['quote_edit_x']))
 if(isset($_POST['quote_delete_x']))
 {
   // On va check si c'était une quote non approuvée
-  $qapprove = mysqli_fetch_array(query(" SELECT FKauteur, valide_admin FROM quotes WHERE id = '$idquote' "));
+  $qapprove = mysqli_fetch_array(query(" SELECT quotes.FKauteur, quotes.valide_admin FROM quotes WHERE quotes.id = '$idquote' "));
   if(!$qapprove['valide_admin'])
   {
     // Auquel cas on fait savoir à son auteur qu'elle dégage
@@ -106,14 +108,67 @@ if(isset($_POST['quote_delete_x']))
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Ajout de membres liés à une quote
+
+if(isset($_POST['quote_tag_x']))
+{
+  // Assainissement
+  $taguser = postdata($_POST['quote_taguser']);
+
+  // On va check si l'user existe
+  $qtaguser = query(" SELECT membres.id FROM membres WHERE membres.pseudonyme LIKE '$taguser' ");
+  if(mysqli_num_rows($qtaguser))
+  {
+    // S'il existe, on va check s'il existe déjà
+    $dtaguser   = mysqli_fetch_array($qtaguser);
+    $idtaguser  = $dtaguser['id'];
+    $qidtaguser = query(" SELECT quotes_membres.id FROM quotes_membres WHERE quotes_membres.FKquotes = '$idquote' AND quotes_membres.FKmembres = '$idtaguser' ");
+
+    // S'il existe pas, on l'ajoute
+    if(!mysqli_num_rows($qidtaguser))
+      query(" INSERT INTO quotes_membres SET FKquotes = '$idquote' , FKmembres = '$idtaguser' ");
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Suppression d'un membre lié à une quote
+
+if(isset($_POST['quote_taguser']) && !isset($_POST['quote_tag_x']))
+{
+  // On part chercher la liste des users tag à la quote
+  $qtaggedcheck = query(" SELECT quotes_membres.id, quotes_membres.FKmembres FROM quotes_membres WHERE quotes_membres.FKquotes = '$idquote' ");
+
+  // On les parcourt à la recherche de celui qui se fait delete
+  while($dtaggedcheck = mysqli_fetch_array($qtaggedcheck))
+  {
+    // On recherche la quote qui doit être delete
+    $tagcheck = $dtaggedcheck['FKmembres'];
+    if(isset($_POST['quote_tag_delete_'.$tagcheck.'_x']))
+    {
+      // Puis on la delete
+      $tagdelete = $dtaggedcheck['id'];
+      query(" DELETE FROM quotes_membres WHERE id = '$tagdelete' ");
+    }
+  }
+}
+
+
+
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                        PRÉPARATION DES DONNÉES                                                        */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Contenu de la miscellanée
+
 // On va chercher la miscellanée qui se fait editer
-$qquote = query(" SELECT contenu FROM quotes WHERE id = '$idquote' ");
+$qquote = query(" SELECT quotes.contenu FROM quotes WHERE quotes.id = '$idquote' ");
 
 // Si y'en a pas on dégage
 if(!mysqli_num_rows($qquote))
@@ -123,6 +178,29 @@ if(!mysqli_num_rows($qquote))
 $dquote = mysqli_fetch_array($qquote);
 $quote_contenu_raw  = $dquote['contenu'];
 $quote_contenu      = nl2br_fixed($dquote['contenu']);
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Membres liés à la miscellanée
+
+if(isset($_GET['tag']))
+{
+  // On va chercher les users tag à la miscellanée
+  $qtagged = query("  SELECT      membres.pseudonyme        AS 'qpseudo'  ,
+                                  quotes_membres.FKmembres  AS 'qid'
+                      FROM        quotes_membres
+                      LEFT JOIN   membres ON quotes_membres.FKmembres = membres.id
+                      WHERE       quotes_membres.FKquotes = '$idquote'  ");
+
+  // Et on les prépare pour l'affichage
+  for($ntagged = 0 ; $dtagged = mysqli_fetch_array($qtagged) ; $ntagged++)
+  {
+    $tagged_id[$ntagged]      = $dtagged['qid'];
+    $tagged_pseudo[$ntagged]  = $dtagged['qpseudo'];
+  }
+}
 
 
 
@@ -170,6 +248,35 @@ $quote_contenu      = nl2br_fixed($dquote['contenu']);
         <div class="indiv align_center">
           <input type="image" src="<?=$chemin?>img/boutons/supprimer.png" alt="Supprimer" name="quote_delete">
         </div>
+      </form>
+    </div>
+
+    <?php } else if(isset($_GET['tag'])) { ?>
+    <div class="body_main midsize">
+      <span class="titre">Lier des membres à une miscellanée :</span><br>
+      <br>
+      <br>
+      <span class="monospace"><?=$quote_contenu?></span><br>
+      <br>
+      <hr class="points">
+      <br>
+      <form name="edit_quote" action="quotes_admin?tag=<?=$idquote?>" method="POST">
+        <span class="gras">Rajouter un membre :</span><br>
+        <input class="indiv" name="quote_taguser"><br>
+        <br>
+        <div class="indiv align_center">
+          <input type="image" src="<?=$chemin?>img/boutons/ajouter.png" alt="Ajouter" name="quote_tag">
+        </div>
+        <br>
+        <hr class="points">
+        <br>
+        <?php if($ntagged) { ?>
+        <span class="gras">Membres liés :</span><br>
+        <?php for($i=0;$i<$ntagged;$i++) { ?>
+        <input type="image" src="<?=$chemin?>img/icones/delete.png" alt="X" width="12px" name="quote_tag_delete_<?=$tagged_id[$i]?>"> <a class="dark blank" href="<?=$chemin?>pages/user/user?id=<?=$tagged_id[$i]?>"><?=$tagged_pseudo[$i]?></a><br>
+        <?php } } else { ?>
+        <div class="moinsgros gras indiv align_center">Aucun membre n'est lié à cette miscellanée pour le moment.</div>
+        <?php } ?>
       </form>
     </div>
     <?php } ?>
