@@ -6,7 +6,7 @@
 include './inc/includes.inc.php'; // Inclusions communes
 
 // Titre et description
-$page_titre = "Éric Bisceglia";
+$page_titre = "CV de Éric Bisceglia";
 $page_desc  = "Curriculum Vitae de Éric Bisceglia aka Bad, administrateur et développeur de NoBleme";
 
 // Identification
