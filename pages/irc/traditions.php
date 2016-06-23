@@ -77,7 +77,7 @@ $page_id  = "traditions";
       Certains membres de la communauté ont très envie de discuter de sujets spécifiques qui les passionnent.<br>
       D'autres par contre sont lourdés quand ils se retrouvent exposés à des conversations auxquelles ils ne comprennent rien.<br>
       <br>
-      Afin de résoudre ce problème, nous avons déplacé ces conversations spécifiques vers des canaux (comme #dev, #diablo, ou #starcraft).<br>
+      Afin de résoudre ce problème, nous avons déplacé ces conversations spécifiques vers des canaux (comme #dev, #english, ou #starcraft).<br>
       Pour tous les autres sujets de conversation, le canal de discussion principal (#NoBleme) est utilisé.<br>
       <br>
       Je vous invite à aller regarder dans la <a class="dark blank" href="<?=$chemin?>pages/irc/canaux">liste des canaux</a> les sujets que nous isolons hors du canal principal #NoBleme.<br>

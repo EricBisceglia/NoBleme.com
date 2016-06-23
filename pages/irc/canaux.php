@@ -105,18 +105,6 @@ $page_id  = "canaux";
 
         <tr>
           <td class="cadre_gris align_center spaced vspaced">
-            #diablo
-          </td>
-          <td class="cadre_gris align_center gras spaced vspaced">
-            <a class="dark blank" href="<?=$chemin?>pages/user/user?pseudo=Kutz">Kutz</a>
-          </td>
-          <td class="cadre_gris align_center spaced vspaced">
-            Pour les joueurs et/ou spectateurs de <a class="dark blank" href="https://fr.wikipedia.org/wiki/Diablo_3">Diablo 3</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="cadre_gris align_center spaced vspaced">
             #hots
           </td>
           <td class="cadre_gris align_center gras spaced vspaced">
@@ -136,30 +124,6 @@ $page_id  = "canaux";
           </td>
           <td class="cadre_gris align_center spaced vspaced">
             Pour les amateurs de <a class="dark blank" href="https://fr.wikipedia.org/wiki/Jeu_de_r%C3%B4le">jeux de rôle</a> et/ou ceux qui veulent faire des jeux de rôles par internet
-          </td>
-        </tr>
-
-        <tr>
-          <td class="cadre_gris align_center spaced vspaced">
-            #lol
-          </td>
-          <td class="cadre_gris align_center gras spaced vspaced">
-            <a class="dark blank" href="<?=$chemin?>pages/user/user?pseudo=Planeshift">Planeshift</a>
-          </td>
-          <td class="cadre_gris align_center spaced vspaced">
-            Pour les joueurs et/ou spectateurs de <a class="dark blank" href="https://fr.wikipedia.org/wiki/League_of_Legends">League of Legends</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="cadre_gris align_center spaced vspaced">
-            #minecraft
-          </td>
-          <td class="cadre_gris align_center gras spaced vspaced">
-            <a class="dark blank" href="<?=$chemin?>pages/user/user?pseudo=Kutz">Kutz</a>
-          </td>
-          <td class="cadre_gris align_center spaced vspaced">
-            Pour les joueurs et/ou spectateurs de <a class="dark blank" href="https://fr.wikipedia.org/wiki/Minecraft">Minecraft</a>
           </td>
         </tr>
 

@@ -104,6 +104,15 @@ if($idmaj == 'v2')
                         visite_page = 'Se marre devant les miscellanées'  ,
                         visite_url  = 'pages/irc/quotes'                  ");
   $majq .= "<br>Activité : Se marre devant les miscellanées";
+
+  // Création de l'enregistrement déchiffre les commandes IRC
+  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'irc' AND page_id LIKE 'services' ")))
+    query(" INSERT INTO pages
+            SET         page_nom    = 'irc'                         ,
+                        page_id     = 'services'                    ,
+                        visite_page = 'Déchiffre les commandes IRC' ,
+                        visite_url  = 'pages/irc/services'          ");
+  $majq .= "<br>Activité : Déchiffre les commandes IRC";
 }
 
 
