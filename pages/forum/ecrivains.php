@@ -6,9 +6,8 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = '';
-$header_submenu   = 'dev';
-$header_sidemenu  = 'devblog_rss';
+$header_menu      = 'discuter';
+$header_submenu   = 'ecrivains';
 
 // Titre et description
 $page_titre = "Travaux";

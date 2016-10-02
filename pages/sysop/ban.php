@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 sysoponly();
 
+// Menus du header
+$header_menu      = 'admin';
+$header_submenu   = 'mod';
+$header_sidemenu  = 'bannir';
+
 // Titre et description
 $page_titre = "Bannir un utilisateur";
 $page_desc  = "Administration - Bannir un utilisateur de NoBleme";

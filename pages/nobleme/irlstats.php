@@ -5,6 +5,10 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'communaute';
+$header_submenu   = 'irl';
+
 // Titre et description
 $page_titre = "IRL - Statistiques";
 $page_desc  = "Statistiques concernant les IRL NoBlemeuses et leurs participants";

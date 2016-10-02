@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = '';
+$header_submenu   = 'dev';
+$header_sidemenu  = 'devblog_top';
+
 // Titre et description
 $page_titre = "Devblogs populaires";
 $page_desc  = "Blogs de développement de NoBleme les plus populaires";

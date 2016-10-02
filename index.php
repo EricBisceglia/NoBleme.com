@@ -5,6 +5,10 @@
 // Inclusions /***************************************************************************************************************************/
 include './inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = '';
+$header_submenu   = 'accueil';
+
 // Identification
 $page_nom = "index";
 $page_id  = "index";
@@ -96,10 +100,10 @@ if(date('d-m') == '19-03')
           <a class="dark blank gras" href="<?=$chemin?>pages/irc/index">Le serveur IRC</a>, où les NoBlemeux discutent entre eux en temps réel
         </li>
         <li class="spaced">
-          <a class="dark blank gras" href="<?=$chemin?>pages/forum/index">Le forum NoBleme</a>, où les NoBlemeux discutent entre eux en différé
+          <span class="barre"><a class="dark blank gras" href="<?=$chemin?>pages/forum/index">Le forum NoBleme</a></span> [en travaux], où les NoBlemeux discutent entre eux en différé
         </li>
         <li class="spaced">
-          <a class="dark blank gras" href="<?=$chemin?>pages/wiki/index">La NBDatabase</a>, où l'on découvre (entre autres) le monde de la culture internet
+          <span class="barre"><a class="dark blank gras" href="<?=$chemin?>pages/nbdb/index">La NBDatabase</a></span> [en travaux], où l'on découvre (entre autres) le monde de la culture internet
         </li>
         <li class="spaced">
           <a class="dark blank gras" href="<?=$chemin?>pages/nobleme/activite">L'activité récente</a>, où l'on suit ce qui se passe un peu partout sur le site

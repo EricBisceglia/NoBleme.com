@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = '';
+$header_submenu   = 'aide';
+$header_sidemenu  = 'bbcodes';
+
 // Titre et description
 $page_titre = "Doc : BBCodes";
 $page_desc  = "Documentation illustrée des balises de formatage de texte sur NoBleme";

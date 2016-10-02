@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = '';
+$header_submenu   = 'aide';
+$header_sidemenu  = 'emotes';
+
 // Titre et description
 $page_titre = "Doc: Émoticônes";
 $page_desc  = "Liste des émoticônes disponibles sur NoBleme";

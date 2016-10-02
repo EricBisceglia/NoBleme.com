@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 useronly();
 
+// Menus du header
+$header_menu      = 'compte';
+$header_submenu   = 'reglages';
+$header_sidemenu  = 'email';
+
 // Titre et description
 $page_titre = "Changer d'e-mail";
 $page_desc  = "Changer l'e-mail que vous utilisez pour récupérer votre compte sur NoBleme";

@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'lire';
+$header_submenu   = 'miscellanees';
+$header_sidemenu  = 'stats';
+
 // Titre et description
 $page_titre = "Stats des miscellanées";
 $page_desc  = "Statistiques sur les miscellanées (citations de NoBlemeux)";

@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 adminonly();
 
+// Menus du header
+$header_menu      = 'admin';
+$header_submenu   = 'dev';
+$header_sidemenu  = 'formattage';
+
 // Titre
 $page_titre = "Dev : Formattage";
 
@@ -48,6 +53,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
 guestonly();
+
+// Menus du header
+$header_menu      = '';
+$header_submenu   = '';
+$header_sidemenu  = '';
 
 // Titre et description
 $page_titre = "Titre";

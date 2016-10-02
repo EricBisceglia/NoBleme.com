@@ -8,6 +8,10 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 useronly();
 
+// Menus du header
+$header_menu      = 'compte';
+$header_submenu   = 'profil';
+
 // Titre et description
 $page_titre = "Modifier mon profil";
 $page_desc  = "Modification de votre profil public";

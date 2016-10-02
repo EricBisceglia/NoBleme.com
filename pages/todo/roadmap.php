@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = '';
+$header_submenu   = 'dev';
+$header_sidemenu  = 'roadmap';
+
 // Titre et description
 $page_titre = "Plan de route";
 $page_desc  = "Historique et futur du développement de Nobleme";

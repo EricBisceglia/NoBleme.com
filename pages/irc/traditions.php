@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'discuter';
+$header_submenu   = 'irc';
+$header_sidemenu  = 'traditions';
+
 // Titre et description
 $page_titre = "Coutumes IRC";
 $page_desc  = "Coutumes et traditions du serveur IRC de NoBleme";

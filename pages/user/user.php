@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'communaute';
+$header_submenu   = 'membres';
+$header_sidemenu  = 'portail';
+
 // Titre et description
 $page_titre = "Profil de ";
 $page_desc  = "Profil public du membre de NoBleme ";
@@ -52,7 +57,15 @@ else
   $userpseudo = $getpseudo;
 }
 
-// Et on complète les infos d'indentification de la page
+// Et on complète les infos des menus du header
+if(loggedin() && $userid == $_SESSION['user'])
+{
+  $header_menu      = 'compte';
+  $header_submenu   = 'profil';
+  $header_sidemenu  = '';
+}
+
+// Et les infos d'identification de la page
 $page_titre .= $userpseudo;
 $page_desc  .= $userpseudo;
 $page_id     = $userid;

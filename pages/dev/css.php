@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 adminonly();
 
+// Menus du header
+$header_menu      = 'admin';
+$header_submenu   = 'dev';
+$header_sidemenu  = 'css';
+
 // Titre
 $page_titre = "Dev : Référence CSS";
 
@@ -244,6 +249,10 @@ $css = array('admin');
         <tr>
           <td class="cadre_gris align_center">.souligne</td>
           <td class="cadre_gris align_center souligne">Souligné</td>
+        </tr>
+        <tr>
+          <td class="cadre_gris align_center">.barre</td>
+          <td class="cadre_gris align_center barre">Barré</td>
         </tr>
         <tr>
           <td class="cadre_gris align_center">.maigre</td>

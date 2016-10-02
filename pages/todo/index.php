@@ -5,6 +5,14 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = (!isset($_GET['admin'])) ? '' : 'admin';
+$header_submenu   = (!isset($_GET['admin'])) ? 'dev' : 'admin';
+$header_sidemenu  = (!isset($_GET['solved'])) ? 'todo' : 'todo_solved';
+$header_sidemenu  = (!isset($_GET['recent'])) ? $header_sidemenu : 'todo_recent';
+$header_sidemenu  = (!isset($_GET['admin'])) ? $header_sidemenu : 'todo_valider';
+$header_sidemenu  = (!isset($_GET['id'])) ? $header_sidemenu : 'roadmap';
+
 // Titre et description
 $page_titre = "Liste des tâches";
 $page_desc  = "Liste des tâches accomplies et/ou à accomplir dans le développement de NoBleme";
@@ -626,8 +634,8 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
               <br>
               Il est nécessaire d'être connecté à un compte sur NoBleme pour poster un commentaire<br>
               <br>
-              Si vous ne possédez pas de compte et désirez commenter, <a class="dark blank gras" href="<?=$chemin?>pages/user/register">cliquez ici</a> pour vous inscrire.<br>
-              Si vous possédez un compte, connectez-vous <a class="dark blank gras" href="#body">en haut à droite</a> de la page actuelle.<br>
+              Si vous possédez un compte, connectez-vous en <a href="<?=$chemin?>pages/user/login" class="dark blank gras">cliquant ici</a>.<br>
+              Si vous ne possédez pas de compte et désirez commenter, <a href="<?=$chemin?>pages/user/register" class="dark blank gras">cliquez ici</a> pour vous inscrire.<br>
               <br>
               <?php } else { ?>
               <br>

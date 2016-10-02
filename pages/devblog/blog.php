@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = '';
+$header_submenu   = 'dev';
+$header_sidemenu  = 'devblog';
+
 // Titre et description
 $page_titre = "Devblog : ";
 $page_desc  = "Blog de développement : ";
@@ -347,8 +352,8 @@ if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans
       <br>
       Il est nécessaire d'être connecté à un compte sur NoBleme pour poster un commentaire<br>
       <br>
+      Si vous possédez un compte, connectez-vous en <a href="<?=$chemin?>pages/user/login">cliquant ici</a>.<br>
       Si vous ne possédez pas de compte et désirez commenter, <a href="<?=$chemin?>pages/user/register">cliquez ici</a> pour vous inscrire.<br>
-      Si vous possédez un compte, connectez-vous <a href="<?=$chemin?>pages/devblog/blog?id=<?=$blogid?>#body">en haut à droite</a> de la page actuelle.<br>
     </div>
     <?php } else { ?>
     <div class="body_main midsize" id="commentaires">

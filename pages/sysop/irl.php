@@ -8,6 +8,12 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 sysoponly('irl');
 
+// Menus du header
+$header_menu      = 'admin';
+$header_submenu   = 'mod';
+$header_sidemenu  = (!isset($_GET['edit']))   ? 'irl_add' : 'irl_edit';
+$header_sidemenu  = (!isset($_GET['delete'])) ? $header_sidemenu : 'irl_delete';
+
 // Titre et description
 $page_titre = "Ajouter une IRL";
 

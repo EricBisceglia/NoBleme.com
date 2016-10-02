@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = '';
+$header_submenu   = 'aide';
+$header_sidemenu  = 'nobleme';
+
 // Titre et description
 $page_titre = "Doc : NoBleme";
 $page_desc  = "Documentation : Mais qu'est-ce que NoBleme ?";

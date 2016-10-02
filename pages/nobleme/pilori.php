@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'communaute';
+$header_submenu   = 'membres';
+$header_sidemenu  = 'pilori';
+
 // Titre et description
 $page_titre = "Utilisateurs bannis";
 $page_desc  = "Liste des membres de NoBleme bannis de la communauté";

@@ -59,19 +59,19 @@ $_GET['popout'] = 1;
         <tr>
           <td class="spaced">2016 - Aujourd'hui</td>
           <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="http://www.mtd-finance.fr/">MTD Finance</a> : Développement intranet</td>
+          <td class="spaced"><a class="dark blank gras" href="http://www.mtd-finance.fr/">MTD Finance</a> : CTO (Directeur informatique)</td>
           <td>&nbsp;&nbsp;</td>
           <td class="spaced">PHP - MySQL - JavaScript</td>
         </tr>
         <tr>
-          <td class="spaced">2014 - 2016</td>
+          <td class="spaced">2015 - 2016</td>
           <td>&nbsp;&nbsp;</td>
           <td class="spaced"><span class="gras">Freelance</span> : Sous secret professionel</td>
           <td>&nbsp;&nbsp;</td>
           <td class="spaced">C - Python - PostgreSQL</td>
         </tr>
         <tr>
-          <td class="spaced">2010 - 2014</td>
+          <td class="spaced">2010 - 2015</td>
           <td>&nbsp;&nbsp;</td>
           <td class="spaced"><a class="dark blank gras" href="http://www.mtd-finance.fr/">MTD Finance</a> : Développement intranet</td>
           <td>&nbsp;&nbsp;</td>
@@ -484,19 +484,19 @@ $_GET['popout'] = 1;
         <tr>
           <td class="spaced">2016 - Today</td>
           <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="http://www.mtd-finance.fr/">MTD Finance</a> : Intranet development</td>
+          <td class="spaced"><a class="dark blank gras" href="http://www.mtd-finance.fr/">MTD Finance</a> : CTO + Intranet development</td>
           <td>&nbsp;&nbsp;</td>
           <td class="spaced">PHP - MySQL - JavaScript</td>
         </tr>
         <tr>
-          <td class="spaced">2014 - 2016</td>
+          <td class="spaced">2015 - 2016</td>
           <td>&nbsp;&nbsp;</td>
           <td class="spaced"><span class="gras">Freelance</span> : Details protected by a NDA</td>
           <td>&nbsp;&nbsp;</td>
           <td class="spaced">C - Python - PostgreSQL</td>
         </tr>
         <tr>
-          <td class="spaced">2010 - 2014</td>
+          <td class="spaced">2010 - 2015</td>
           <td>&nbsp;&nbsp;</td>
           <td class="spaced"><a class="dark blank gras" href="http://www.mtd-finance.fr/">MTD Finance</a> : Intranet development</td>
           <td>&nbsp;&nbsp;</td>

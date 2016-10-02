@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'discuter';
+$header_submenu   = 'irc';
+$header_sidemenu  = 'canaux';
+
 // Titre et description
 $page_titre = "Canaux IRC";
 $page_desc  = "Liste des canaux IRC principaux du serveur NoBleme";
@@ -105,6 +110,18 @@ $page_id  = "canaux";
 
         <tr>
           <td class="cadre_gris align_center spaced vspaced">
+            #cuisine
+          </td>
+          <td class="cadre_gris align_center gras spaced vspaced">
+            <a class="dark blank" href="<?=$chemin?>pages/user/user?pseudo=Phnix">Phnix</a>
+          </td>
+          <td class="cadre_gris align_center spaced vspaced">
+            Où l'on parle de bouffe et autres trucs comestibles
+          </td>
+        </tr>
+
+        <tr>
+          <td class="cadre_gris align_center spaced vspaced">
             #hots
           </td>
           <td class="cadre_gris align_center gras spaced vspaced">
@@ -132,7 +149,7 @@ $page_id  = "canaux";
             #musique
           </td>
           <td class="cadre_gris align_center gras spaced vspaced">
-            <a class="dark blank" href="<?=$chemin?>pages/user/user?pseudo=Wan">Wan</a>
+            <a class="dark blank" href="<?=$chemin?>pages/user/user?pseudo=Trucy">Trucy</a>
           </td>
           <td class="cadre_gris align_center spaced vspaced">
             Pour partager ce que l'on écoute et ainsi peut-être découvrir de nouveaux artistes
@@ -144,7 +161,7 @@ $page_id  = "canaux";
             #overwatch
           </td>
           <td class="cadre_gris align_center gras spaced vspaced">
-            <a class="dark blank" href="<?=$chemin?>pages/user/user?pseudo=Wan">Wan</a>
+            <a class="dark blank" href="<?=$chemin?>pages/user/user?pseudo=Trucy">Trucy</a>
           </td>
           <td class="cadre_gris align_center spaced vspaced">
             Pour les joueurs et/ou spectateurs de <a class="dark blank" href="https://fr.wikipedia.org/wiki/Overwatch">Overwatch</a>

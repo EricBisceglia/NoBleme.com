@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 useronly();
 
+// Menus du header
+$header_menu      = 'compte';
+$header_submenu   = 'messages';
+$header_sidemenu  = 'ecrire';
+
 // Titre et description
 $page_titre = "Composer un message privé";
 $page_desc  = "Composer un message privé destiné à un autre membre du site";

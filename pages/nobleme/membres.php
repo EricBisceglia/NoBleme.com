@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'communaute';
+$header_submenu   = 'membres';
+$header_sidemenu  = 'liste';
+
 // Titre et description
 $page_titre = "Liste des membres";
 $page_desc  = "Liste des utilisateurs inscrits sur NoBleme";

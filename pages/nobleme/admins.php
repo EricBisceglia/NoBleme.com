@@ -5,6 +5,10 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'communaute';
+$header_submenu   = 'admins';
+
 // Titre et description
 $page_titre = "Équipe administrative";
 $page_desc  = "Liste des administrateurs, sysops, et modérateurs de NoBleme";

@@ -3,12 +3,17 @@ html { background:#000000; color:#CACACA; }
 
 textarea.texte404 { background: #000000; border: 0px solid #000000; color: #CACACA; text-align: center; overflow: auto; resize: none; }
 
-       td.img404 { width: 300px; }
+       td.img404 { width: 300px;       }
 img.img404gauche { margin-right: 10px; }
 img.img404droite { margin-left: 10px;  }
 
-    a.header_logo { visibility:hidden !important; }
-  div.header_logo { background:#000000 !important; }
-  div.header_menu { background:#333333 !important; }
-div.header_bottom { background:#000000 !important; }
- span.menu_secret { color:#333333 !important; }
+.menu_main                     { background-color: #000000 !important; border-bottom: 1px solid #CACACA !important; }
+.menu_main_item > a            { color: #CACACA !important;                                                         }
+.menu_main_item:hover          { background-color: #000000 !important;                                              }
+.menu_main_item:hover > a      { color: #FFFFFF !important; background-color: #000000 !important;                   }
+.menu_main_item_selected       { background-color: #000000 !important;                                              }
+.menu_main_item_selected:hover { color: #CACACA !important;                                                         }
+.menu_main_item_secrets        { color: #000000 !important; background-color: #000000 !important;                   }
+div.menu_main_item_secrets > a { color: #000000 !important; background-color: #000000 !important;                   }
+.menu_sub                      { visibility: collapse !important ;                                                  }
+a.footer_lien                  { color: #333333 !important;                                                         }

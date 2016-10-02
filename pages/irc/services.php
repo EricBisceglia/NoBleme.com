@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'discuter';
+$header_submenu   = 'irc';
+$header_sidemenu  = 'services';
+
 // Titre et description
 $page_titre = "IRC NoBleme: Services";
 $page_desc  = "Liste de commandes et services pratiques utilisables sur le serveur IRC NoBleme";
@@ -465,7 +470,7 @@ $page_id  = "services";
             /CS vop #canal add pseudonyme
           </td>
           <td class="cadre_gris align_center spaced vspaced nowrap">
-            /CS vop #dev add Wan
+            /CS vop #dev add Trucy
           </td>
           <td class="cadre_gris align_center spaced vspaced nowrap">
             Super opérateur

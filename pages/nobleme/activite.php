@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = (!isset($_GET['mod'])) ? '' : 'admin';
+$header_submenu   = (!isset($_GET['mod'])) ? 'activite' : 'mod';
+$header_sidemenu  = (!isset($_GET['mod'])) ? '' : 'modlogs';
+
 // Titre et description
 $page_titre = "Activité récente";
 $page_desc  = "Recensement de l'activité récente sur toutes les pages du site";

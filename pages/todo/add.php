@@ -8,6 +8,14 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 useronly();
 
+// Menus du header
+$header_menu      = '';
+$header_submenu   = 'dev';
+$header_submenu   = (!isset($_GET['doc'])) ? $header_submenu : 'aide';
+$header_sidemenu  = (!isset($_GET['bug'])) ? 'ticket' : 'ticket_bug';
+$header_sidemenu  = (!isset($_GET['feature'])) ? $header_sidemenu : 'ticket_feature';
+$header_sidemenu  = (!isset($_GET['doc'])) ? $header_sidemenu : 'bug';
+
 // Titre et description
 $page_titre = "Ouvrir un ticket";
 $page_desc  = "Ouverture d'un ticket pour reporter un bug ou proposer un feature";

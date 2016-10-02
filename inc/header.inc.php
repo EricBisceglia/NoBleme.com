@@ -31,124 +31,11 @@ if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Préparation de l'url complète de la page pour login/logout
-
+// Préparation de l'url complète de la page
 $url_complete = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'] : substr(basename($_SERVER['PHP_SELF']),0,-4);
 $url_logout   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&amp;logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
 
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Connexion
-
-if(isset($_POST['nobleme_login_x']))
-{
-  // Récupération du postdata
-  $pseudo   = destroy_html(postdata($_POST['nobleme_pseudo']));
-  $pass     = destroy_html(postdata($_POST['nobleme_pass']));
-  $souvenir = postdata_vide('nobleme_souvenir');
-
-  // Vérification que le pseudo & pass sont bien rentrés
-  if($pseudo != "" && $pass != "")
-  {
-    // On check si la personne tente de bruteforce nobleme
-    $brute_ip     = postdata($_SERVER["REMOTE_ADDR"]);
-    $timecheck    = (time() - 3600);
-    $qcheckbrute  = query(" SELECT COUNT(*) AS 'num_brute' FROM membres_essais_login WHERE ip = '$brute_ip' AND timestamp > '$timecheck' ");
-    $checkbrute   = mysqli_fetch_array($qcheckbrute);
-    if( $checkbrute['num_brute'] > 9 )
-      exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Non mais ho, c\'est quoi cette tentative de choper les mots de passe des gens ?<br><br>Vous êtes privé d\'utiliser un compte sur NoBleme pendant une heure.<br><br>Revenez quand vous serez calmé.<br><br>Couillon.</body></html>');
-    else
-    {
-      // On récupère les pseudos correspondant au pseudo rentré
-      $login = query(" SELECT membres.pass , membres.pass_old , membres.id FROM membres WHERE membres.pseudonyme = '$pseudo' ");
-
-      // On s'arrête là si ça ne renvoie pas de résultat
-      if (mysqli_num_rows($login) == 0)
-        $erreur = "Ce pseudonyme n'existe pas";
-      else
-      {
-
-        // On sale le mot de passe, puis on compare si le pass entré correspond au pass stocké
-        $passtest     = postdata(salage($pass));
-        $passtest_old = postdata(old_salage($pass));
-
-        while($logins = mysqli_fetch_array($login))
-        {
-          // Vérifions s'il y a bruteforce
-          $login_id         = postdata($logins['id']);
-          $timecheck        = (time() - 300);
-          $qcheckbruteforce = query(" SELECT COUNT(*) AS 'num_brute' FROM membres_essais_login WHERE FKmembres = '$login_id' AND timestamp > '$timecheck' ");
-          $checkbruteforce  = mysqli_fetch_array($qcheckbruteforce);
-
-          // Pas de bruteforce? Allons-y
-          $login_ok     = 0;
-          $bonpass      = $logins['pass'];
-          $bonpass_old  = $logins['pass_old'];
-
-          if(($bonpass === $passtest || $bonpass_old === $passtest_old ) && $checkbruteforce['num_brute'] < 5)
-          {
-            // C'est bon, on peut login
-            $login_ok = 1;
-
-            // Si on en est encore au vieux pass, on le fait sauter et on met le nouveau pass à la place
-            if($bonpass_old !== 'nope')
-              query(" UPDATE membres SET pass = '$passtest' , pass_old = 'nope' WHERE id = '$login_id' ");
-          }
-          else if ($checkbruteforce['num_brute'] >= 5)
-            $erreur = "Trop d'essais de connexion à ce compte dans les 5 dernières minutes &nbsp;&nbsp;<a href=\"".$chemin."pages/user/register?oublie\" class=\"header_whitelink\">Mot de passe oublié ?</a>";
-        }
-
-        // Si le pass est pas bon, dehors. Et tant qu'on y est, on log l'essai en cas de bruteforce
-        if($login_ok == 0 && $checkbruteforce['num_brute'] < 5)
-        {
-          $timestamp  = time();
-          query(" INSERT INTO membres_essais_login SET FKmembres = '$login_id' , timestamp = '$timestamp' , ip = '$brute_ip' ");
-          $erreur     = "Mot de passe incorrect &nbsp;&nbsp;<a href=\"".$chemin."pages/user/register?oublie\" class=\"header_whitelink\">Mot de passe oublié ?</a>";
-        }
-        else if ($checkbruteforce['num_brute'] < 5)
-        {
-          // On est bons, reste plus qu'à se connecter!
-          if($souvenir == "ok")
-          {
-            // Si checkbox se souvenir est cochée, on crée un cookie
-            setcookie("nobleme_memory", old_salage($pseudo) , time()+630720000, "/");
-            $_SESSION['user'] = $login_id;
-          }
-          else
-          {
-            // Sinon, on se contente d'ouvrir une session
-            $_SESSION['user'] = $login_id;
-          }
-
-          // Validation & redirection
-          $erreur = "Login ok, rechargez la page";
-          header("location: ".$url_complete);
-
-        }
-      }
-    }
-
-  }
-  // Si pseudo & pass ne sont pas correctement entrés, messages d'erreur
-  else if ($pseudo != "" && $pass == "")
-    $erreur = "Vous n'avez pas rentré de mot de passe.";
-  else if ($pseudo == "" && $pass != "")
-    $erreur = "Vous n'avez pas rentré de pseudonyme.";
-  else
-    $erreur = "Vous n'avez pas rentré d'identifiants.";
-}
-else
-  $erreur = "";
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Déconnexion
-
 if(isset($_GET['logout']))
 {
   // Déconnexion & redirection
@@ -341,40 +228,18 @@ if(isset($_SERVER['HTTP_REFERER']))
 if (loggedin())
 {
   // Requête
-  $qnotif = query(" SELECT  COUNT(*)                                                                      AS total ,
-                            COUNT(CASE WHEN notifications.FKmembres_envoyeur != '0' THEN 1 ELSE NULL END) AS pm
+  $qnotif = query(" SELECT  notifications.id
                     FROM    notifications
                     WHERE   notifications.date_consultation       = 0
-                    AND     notifications.FKmembres_destinataire  = ".$_SESSION['user'] );
+                    AND     notifications.FKmembres_destinataire  = ".$_SESSION['user']."
+                    LIMIT   1 " );
 
-  // Récupération des données
-  $notifs       = mysqli_fetch_array($qnotif);
-  $total_notif  = $notifs['total'];
-  $notif        = $notifs['total'] - $notifs['pm'];
-  $pms          = $notifs['pm'];
-
-  // Préparation de la phrase à afficher dans le header
-  if ($notif == 0 && $pms == 0)
-    $notifications = "";
-  else if ($notif == 1 && $pms == 0)
-    $notifications = "Vous avez 1 nouvelle notification !";
-  else if ($pms == 0)
-    $notifications = "Vous avez ".$notif." nouvelles notifications !";
-  else if ($pms == 1 && $notif == 0)
-    $notifications = "Vous avez 1 nouveau message privé !";
-  else if ($pms == 1 && $notif == 1)
-    $notifications = "Vous avez 1 nouveau message et 1 notification !";
-  else if ($notif == 0)
-    $notifications = "Vous avez ".$pms." nouveaux messages privés !";
-  else if ($pms == 1)
-    $notifications = "Vous avez 1 nouveau message privé et ".$notif." notifications !";
-  else if ($notif == 1)
-    $notifications = "Vous avez ".$pms." nouveaux messages privés et 1 notification !";
-  else
-    $notifications = "Vous avez ".$pms." nouveaux messages privés et ".$notif." notifications !";
+  // Préparation des données pour l'affichage
+  $notifications  = mysqli_num_rows($qnotif);
+  $notifs_texte   = ($notifications) ? ' (!)' : '';
+  $notifs_css     = ($notifications) ? ' class="nouveaux_messages"' : '';
 }
-else
-  $notifications = "";
+
 
 
 
@@ -456,48 +321,6 @@ if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Préparation de l'URL de l'image du header
-
-// Détermineront si on montre des images de header amusantes pour certains users
-$rand_conneries_connes    = rand(0,9);
-$rand_conneries_normales  = rand(0,4);
-
-// Pour quand on est en dev
-if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1" )
-  $header_image = "nobleme_dev.png";
-
-// Des conneries pour certains users
-else if(loggedin() && getpseudo() == 'Planeshift')
-  $header_image = "nobleme_popup.png";
-else if(loggedin() && getpseudo() == 'Wan')
-  $header_image = "nobleme_mlle_milis.png";
-else if(!$rand_conneries_normales && loggedin() && getpseudo() == 'ThArGos')
-  $header_image = "nobleme_kiwis.png";
-else if(!$rand_conneries_connes && loggedin() && getpseudo() == 'Enerhpozyks')
-  $header_image = "nobleme_posix.png";
-else if(!$rand_conneries_connes && loggedin() && getpseudo() == 'Kutz')
-  $header_image = "nobleme_fabrice.png";
-
-// Si c'est l'anniv de nobleme
-else if(date('d-m') == '19-03')
-  $header_image = "nobleme_anniv.png";
-
-// Sinon, on pioche un logo au hasard
-else
-{
-  // On va compter le nombre de fichiers qui existent
-  $nlogos = 1;
-  for($i = 0 ; file_exists($chemin.'img/logos/nobleme_'.($i+1).'.png') ; $i++)
-    $nlogos ++;
-
-  // Et on file un logo aléatoire dans le tas
-  $header_image = "nobleme_".rand(1,$nlogos-1).".png";
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Préparation de la meta description de la page
 
 // Si pas de description, truc générique par défaut
@@ -531,6 +354,191 @@ else
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Choix du menu à afficher
+
+// Déjà on init les variables de menu si elles sont vides
+if(!isset($header_menu))
+  $header_menu = '';
+if(!isset($header_submenu))
+  $header_submenu = '';
+if(!isset($header_sidemenu))
+  $header_sidemenu = '';
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Préparation du menu principal
+
+$h_menu_css['nobleme']           = ($header_menu == '')                    ? ' menu_main_item_selected' : '';
+$h_menu_css['communaute']        = ($header_menu == 'communaute')          ? ' menu_main_item_selected' : '';
+$h_menu_css['lire']              = ($header_menu == 'lire')                ? ' menu_main_item_selected' : '';
+$h_menu_css['discuter']          = ($header_menu == 'discuter')            ? ' menu_main_item_selected' : '';
+$h_menu_css['admin']             = ($header_menu == 'admin')               ? ' menu_main_item_selected' : '';
+$h_menu_css['secrets']           = ($header_menu == 'secrets')             ? ' menu_main_item_selected' : ' menu_main_item_secrets';
+$h_menu_css['connexion']         = ($header_menu == 'connexion')           ? ' menu_main_item_selected' : '';
+$h_menu_css['inscription']       = ($header_menu == 'inscription')         ? ' menu_main_item_selected' : '';
+$h_menu_css['compte']            = ($header_menu == 'compte')              ? ' menu_main_item_selected' : '';
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Préparation des menus secondaires
+
+if($header_menu == '' || $header_menu == 'connexion' || $header_menu == 'inscription')
+{
+  $h_submenu_css['accueil']      = ($header_submenu == 'accueil')          ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['activite']     = ($header_submenu == 'activite')         ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['online']       = ($header_submenu == 'online')           ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['dev']          = ($header_submenu == 'dev')              ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['aide']         = ($header_submenu == 'aide')             ? ' menu_sub_item_selected' : '';
+}
+else if($header_menu == 'communaute')
+{
+  $h_submenu_css['membres']      = ($header_submenu == 'membres')          ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['irl']          = ($header_submenu == 'irl')              ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['admins']       = ($header_submenu == 'admins')           ? ' menu_sub_item_selected' : '';
+}
+else if($header_menu == 'lire')
+{
+  $h_submenu_css['nbdb']         = ($header_submenu == 'nbdb')             ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['nbrpg']        = ($header_submenu == 'nbrpg')            ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['miscellanees'] = ($header_submenu == 'miscellanees')     ? ' menu_sub_item_selected' : '';
+}
+else if($header_menu == 'discuter')
+{
+  $h_submenu_css['forum']        = ($header_submenu == 'forum')            ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['ecrivains']    = ($header_submenu == 'ecrivains')        ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['irc']          = ($header_submenu == 'irc')              ? ' menu_sub_item_selected' : '';
+}
+else if($header_menu == 'admin')
+{
+  $h_submenu_css['mod']          = ($header_submenu == 'mod')              ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['admin']        = ($header_submenu == 'admin')            ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['dev']          = ($header_submenu == 'dev')              ? ' menu_sub_item_selected' : '';
+}
+else if($header_menu == 'secrets')
+{
+  $h_submenu_css['liste']        = ($header_submenu == 'liste')            ? ' menu_sub_item_selected' : '';
+}
+else if($header_menu == 'compte')
+{
+  $h_submenu_css['messages']     = ($header_submenu == 'messages')         ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['profil']       = ($header_submenu == 'profil')           ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['reglages']     = ($header_submenu == 'reglages')         ? ' menu_sub_item_selected' : '';
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Préparation des menus latéraux
+
+if($header_menu == '' && $header_submenu == 'dev')
+{
+  $h_side_css['coulisses']       = ($header_sidemenu == 'coulisses')       ? ' menu_side_item_selected' : '';
+  $h_side_css['source']          = ($header_sidemenu == 'source')          ? ' menu_side_item_selected' : '';
+  $h_side_css['todo']            = ($header_sidemenu == 'todo')            ? ' menu_side_item_selected' : '';
+  $h_side_css['todo_recent']     = ($header_sidemenu == 'todo_recent')     ? ' menu_side_item_selected' : '';
+  $h_side_css['todo_solved']     = ($header_sidemenu == 'todo_solved')     ? ' menu_side_item_selected' : '';
+  $h_side_css['roadmap']         = ($header_sidemenu == 'roadmap')         ? ' menu_side_item_selected' : '';
+  $h_side_css['ticket']          = ($header_sidemenu == 'ticket')          ? ' menu_side_item_selected' : '';
+  $h_side_css['todo_rss']        = ($header_sidemenu == 'todo_rss')        ? ' menu_side_item_selected' : '';
+  $h_side_css['devblog']         = ($header_sidemenu == 'devblog')         ? ' menu_side_item_selected' : '';
+  $h_side_css['devblog_top']     = ($header_sidemenu == 'devblog_top')     ? ' menu_side_item_selected' : '';
+  $h_side_css['devblog_rss']     = ($header_sidemenu == 'devblog_rss')     ? ' menu_side_item_selected' : '';
+  $h_side_css['ticket_bug']      = ($header_sidemenu == 'ticket_bug')      ? ' menu_side_item_selected' : '';
+  $h_side_css['ticket_feature']  = ($header_sidemenu == 'ticket_feature')  ? ' menu_side_item_selected' : '';
+}
+else if($header_menu == '' && $header_submenu == 'aide')
+{
+  $h_side_css['documentation']   = ($header_sidemenu == 'documentation')   ? ' menu_side_item_selected' : '';
+  $h_side_css['nobleme']         = ($header_sidemenu == 'nobleme')         ? ' menu_side_item_selected' : '';
+  $h_side_css['coc']             = ($header_sidemenu == 'coc')             ? ' menu_side_item_selected' : '';
+  $h_side_css['bbcodes']         = ($header_sidemenu == 'bbcodes')         ? ' menu_side_item_selected' : '';
+  $h_side_css['emotes']          = ($header_sidemenu == 'emotes')          ? ' menu_side_item_selected' : '';
+  $h_side_css['rss']             = ($header_sidemenu == 'rss')             ? ' menu_side_item_selected' : '';
+  $h_side_css['bug']             = ($header_sidemenu == 'bug')             ? ' menu_side_item_selected' : '';
+}
+else if($header_menu == 'communaute' && $header_submenu == 'membres')
+{
+  $h_side_css['portail']         = ($header_sidemenu == 'portail')         ? ' menu_side_item_selected' : '';
+  $h_side_css['liste']           = ($header_sidemenu == 'liste')           ? ' menu_side_item_selected' : '';
+  $h_side_css['anniversaires']   = ($header_sidemenu == 'anniversaires')   ? ' menu_side_item_selected' : '';
+  $h_side_css['pilori']          = ($header_sidemenu == 'pilori')          ? ' menu_side_item_selected' : '';
+}
+else if($header_menu == 'lire' && $header_submenu == 'miscellanees')
+{
+  $h_side_css['paroles']         = ($header_sidemenu == 'paroles')         ? ' menu_side_item_selected' : '';
+  $h_side_css['hasard']          = ($header_sidemenu == 'hasard')          ? ' menu_side_item_selected' : '';
+  $h_side_css['stats']           = ($header_sidemenu == 'stats')           ? ' menu_side_item_selected' : '';
+  $h_side_css['proposer']        = ($header_sidemenu == 'proposer')        ? ' menu_side_item_selected' : '';
+  $h_side_css['rss']             = ($header_sidemenu == 'rss')             ? ' menu_side_item_selected' : '';
+}
+else if($header_menu == 'discuter' && $header_submenu == 'irc')
+{
+  $h_side_css['index']           = ($header_sidemenu == 'index')           ? ' menu_side_item_selected' : '';
+  $h_side_css['clic']            = ($header_sidemenu == 'clic')            ? ' menu_side_item_selected' : '';
+  $h_side_css['traditions']      = ($header_sidemenu == 'traditions')      ? ' menu_side_item_selected' : '';
+  $h_side_css['canaux']          = ($header_sidemenu == 'canaux')          ? ' menu_side_item_selected' : '';
+  $h_side_css['services']        = ($header_sidemenu == 'services')        ? ' menu_side_item_selected' : '';
+  $h_side_css['akundo']          = ($header_sidemenu == 'akundo')          ? ' menu_side_item_selected' : '';
+  $h_side_css['client']          = ($header_sidemenu == 'client')          ? ' menu_side_item_selected' : '';
+  $h_side_css['bouncer']         = ($header_sidemenu == 'bouncer')         ? ' menu_side_item_selected' : '';
+}
+else if($header_menu == 'admin' && $header_submenu == 'mod')
+{
+  $h_side_css['modlogs']         = ($header_sidemenu == 'modlogs')         ? ' menu_side_item_selected' : '';
+  $h_side_css['bannir']          = ($header_sidemenu == 'bannir')          ? ' menu_side_item_selected' : '';
+  $h_side_css['profil']          = ($header_sidemenu == 'profil')          ? ' menu_side_item_selected' : '';
+  $h_side_css['pass']            = ($header_sidemenu == 'pass')            ? ' menu_side_item_selected' : '';
+  $h_side_css['irl_add']         = ($header_sidemenu == 'irl_add')         ? ' menu_side_item_selected' : '';
+  $h_side_css['irl_edit']        = ($header_sidemenu == 'irl_edit')        ? ' menu_side_item_selected' : '';
+  $h_side_css['irl_delete']      = ($header_sidemenu == 'irl_delete')      ? ' menu_side_item_selected' : '';
+}
+else if($header_menu == 'admin' && $header_submenu == 'admin')
+{
+  $h_side_css['stats_dop']       = ($header_sidemenu == 'stats_dop')       ? ' menu_side_item_selected' : '';
+  $h_side_css['stats_views']     = ($header_sidemenu == 'stats_views')     ? ' menu_side_item_selected' : '';
+  $h_side_css['stats_views_evo'] = ($header_sidemenu == 'stats_views_evo') ? ' menu_side_item_selected' : '';
+  $h_side_css['stats_refs']      = ($header_sidemenu == 'stats_refs')      ? ' menu_side_item_selected' : '';
+  $h_side_css['stats_refs_evo']  = ($header_sidemenu == 'stats_refs_evo')  ? ' menu_side_item_selected' : '';
+  $h_side_css['devblog_add']     = ($header_sidemenu == 'devblog_add')     ? ' menu_side_item_selected' : '';
+  $h_side_css['todo_add']        = ($header_sidemenu == 'todo_add')        ? ' menu_side_item_selected' : '';
+  $h_side_css['todo_valider']    = ($header_sidemenu == 'todo_valider')    ? ' menu_side_item_selected' : '';
+  $h_side_css['quote_add']       = ($header_sidemenu == 'quote_add')       ? ' menu_side_item_selected' : '';
+  $h_side_css['quote_valider']   = ($header_sidemenu == 'quote_valider')   ? ' menu_side_item_selected' : '';
+}
+else if($header_menu == 'admin' && $header_submenu == 'dev')
+{
+  $h_side_css['maj']             = ($header_sidemenu == 'maj')             ? ' menu_side_item_selected' : '';
+  $h_side_css['sql']             = ($header_sidemenu == 'sql')             ? ' menu_side_item_selected' : '';
+  $h_side_css['ircbot']          = ($header_sidemenu == 'ircbot')          ? ' menu_side_item_selected' : '';
+  $h_side_css['formattage']      = ($header_sidemenu == 'formattage')      ? ' menu_side_item_selected' : '';
+  $h_side_css['css']             = ($header_sidemenu == 'css')             ? ' menu_side_item_selected' : '';
+  $h_side_css['fonctions']       = ($header_sidemenu == 'fonctions')       ? ' menu_side_item_selected' : '';
+  $h_side_css['charte']          = ($header_sidemenu == 'charte')          ? ' menu_side_item_selected' : '';
+  $h_side_css['nompages']        = ($header_sidemenu == 'nompages')        ? ' menu_side_item_selected' : '';
+  $h_side_css['flashanniv']      = ($header_sidemenu == 'flashanniv')      ? ' menu_side_item_selected' : '';
+}
+else if($header_menu == 'compte' && $header_submenu == 'messages')
+{
+  $h_side_css['inbox']           = ($header_sidemenu == 'inbox')           ? ' menu_side_item_selected' : '';
+  $h_side_css['envoyes']         = ($header_sidemenu == 'envoyes')         ? ' menu_side_item_selected' : '';
+  $h_side_css['ecrire']          = ($header_sidemenu == 'ecrire')          ? ' menu_side_item_selected' : '';
+}
+else if($header_menu == 'compte' && $header_submenu == 'reglages')
+{
+  $h_side_css['reglages']        = ($header_sidemenu == 'reglages')        ? ' menu_side_item_selected' : '';
+  $h_side_css['email']           = ($header_sidemenu == 'email')           ? ' menu_side_item_selected' : '';
+  $h_side_css['pass']            = ($header_sidemenu == 'pass')            ? ' menu_side_item_selected' : '';
+}
+
+
+
+
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
@@ -546,10 +554,6 @@ else
     <meta name="description" content="<?=$page_desc?>">
     <?=$stylesheets?>
     <?=$javascripts?>
-    <style type="text/css">
-            a.dropdown { background: url('<?=$chemin?>img/divers/fleche.png') 160px 7px no-repeat;       }
-      a.dropdown:hover { background: url('<?=$chemin?>img/divers/fleche_hover.png') 160px 7px no-repeat; }
-    </style>
   </head>
 
   <?php if(isset($cette_page_est_404)) { ?>
@@ -558,809 +562,478 @@ else
   <body id="body">
   <?php } ?>
 
+
+    <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                                                                                                                   //
+    //                                                          MENU  PRINCIPAL                                                          //
+    //                                                                                                                                   //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
+
     <?php if(!isset($_GET["popup"]) && !isset($_GET["popout"]) && !isset($_GET["dynamique"])) { ?>
 
-    <form name="login" action="<?=$url_complete?>" method="POST">
-      <div class="header header_logo">
-        <table class="header_login">
-          <tr>
-
-            <?php if(!loggedin()) { ?>
-            <td rowspan="4">
-            <?php } else { ?>
-            <td>
-            <?php } ?>
-
-              <a class="header_logo nonlien" href="<?=$chemin?>">
-                <img src="<?=$chemin?>img/logos/<?=$header_image?>" alt="Logo">
-              </a>
-            </td>
-            <?php if(!loggedin()) { ?>
-            <td colspan="2"></td>
-            <?php } ?>
-          </tr>
-
-          <?php if(!loggedin()) { ?>
-
-          <tr>
-            <td class="login_row align_right">
-              Pseudonyme :&nbsp;
-            </td>
-            <td class="login_row2">
-             <input type="text" name="nobleme_pseudo" class="intable">
-           </td>
-          </tr>
-          <tr>
-            <td class="login_row align_right">
-              Mot de passe :&nbsp;
-            </td>
-            <td class="login_row2">
-              <input type="password" name="nobleme_pass" class="intable">
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" class="login_row3">
-              <table class="header_login">
-                <tr>
-                  <td class="login_row3">
-                    <input type="checkbox" name="nobleme_souvenir" value="ok"> Se souvenir de moi
-                  </td>
-                  <td class="login_row3">
-                    <input type="image" src="<?=$chemin?>img/boutons/connexion.png" name="nobleme_login" alt="Connexion">
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <?php } ?>
-
-        </table>
-      </div>
-    </form>
-
-    <div class="header header_menu">
-      <ul id="menu_main">
-
-        <li class="menu_first">NoBleme
-          <ul class="menu_main menu_low">
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>">
-                Page d'accueil
-              </a>
-            </li>
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/nobleme/activite">
-                Activité récente
-              </a>
-            </li>
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/nobleme/online">
-                Qui est en ligne ?
-              </a>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Communauté
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/nobleme/membres">
-                    Liste des membres
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/nobleme/admins">
-                    Équipe administrative
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/nobleme/anniversaires">
-                    Anniversaires
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/nobleme/pilori">
-                    Pilori des bannis
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/nobleme/irls">
-                    Organisation des IRL
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/nobleme/irlstats">
-                    Statistiques des IRL
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Développement
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/nobleme/coulisses">
-                    Coulisses de NoBleme
-                  </a>
-                </li>
-
-                <li>
-                  <a class="dropdown">
-                    Blog de développement
-                  </a>
-                  <ul class="menu_main">
-
-                    <li>
-                      <a class="menu_link" href="<?=$chemin?>pages/devblog/blog">
-                        Devblog le plus récent
-                      </a>
-                    </li>
-
-                    <li>
-                      <a class="menu_link" href="<?=$chemin?>pages/devblog/index">
-                        Liste des devblogs
-                      </a>
-                    </li>
-
-                    <li>
-                      <a class="menu_link" href="<?=$chemin?>pages/devblog/top">
-                        Devblogs populaires
-                      </a>
-                    </li>
-
-                    <li>
-                      <a class="menu_link" href="<?=$chemin?>pages/devblog/rss">
-                        Flux RSS
-                      </a>
-                    </li>
-
-                  </ul>
-                </li>
-
-                <li>
-                  <a class="dropdown">
-                    Liste des tâches
-                  </a>
-                  <ul class="menu_main">
-
-                    <li>
-                      <a class="menu_link" href="<?=$chemin?>pages/todo/roadmap">
-                        Plan de route
-                      </a>
-                    </li>
-
-                    <li>
-                      <a class="menu_link" href="<?=$chemin?>pages/todo/index">
-                        Tous les tickets ouverts
-                      </a>
-                    </li>
-
-                    <li>
-                      <a class="menu_link" href="<?=$chemin?>pages/todo/index?recent">
-                        Derniers tickets ouverts
-                      </a>
-                    </li>
-
-                    <li>
-                      <a class="menu_link" href="<?=$chemin?>pages/todo/index?solved">
-                        Derniers tickets résolus
-                      </a>
-                    </li>
-
-                    <li>
-                      <a class="menu_link" href="<?=$chemin?>pages/todo/add">
-                        Ouvrir un ticket
-                      </a>
-                    </li>
-
-                    <li>
-                      <a class="menu_link" href="<?=$chemin?>pages/todo/rss">
-                        Flux RSS
-                      </a>
-                    </li>
-
-                  </ul>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/todo/add?bug">
-                    Rapporter un bug
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/todo/add?feature">
-                    Proposer un feature
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-          </ul>
-        </li>
-
-        <li>Chat IRC
-          <ul class="menu_main menu_low">
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/irc/index">
-                Qu'est-ce que IRC ?
-              </a>
-            </li>
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/irc/web">
-                Venir discuter en un clic
-              </a>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Documentation d'IRC
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/traditions">
-                    Coutumes et traditions
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/canaux">
-                    Liste des canaux
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/services">
-                    Commandes et services
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/akundo">
-                    Utilisation d'Akundo
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/client">
-                    Installer un client IRC
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/bouncer">
-                    Utiliser un bouncer
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Miscellanées
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/quotes">
-                    Paroles de NoBlemeux
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/quote_add">
-                    Proposer une citation
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/quotes?random">
-                    Citation au hasard
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/quotes_stats">
-                   Statistiques des citations
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/quotes_rss">
-                    Flux RSS
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-          </ul>
-        </li>
-
-        <li>Forum
-
-          <ul class="menu_main menu_low">
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/forum/index">
-                Le Forum NoBleme... ?
-              </a>
-            </li>
-
-          </ul>
-
-        </li>
-
-        <li>NBDatabase
-
-          <ul class="menu_main menu_low">
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/wiki/index">
-                NBDatabase en travaux :(
-              </a>
-            </li>
-
-          </ul>
-
-        </li>
-
-        <li>Aide &amp; Infos
-          <ul class="menu_main menu_low">
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/doc/index">
-                Documentation du site
-              </a>
-            </li>
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/doc/nobleme">
-                Qu'est-ce que NoBleme ?
-              </a>
-            </li>
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/doc/coc">
-                Code de conduite
-              </a>
-            </li>
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/doc/rss">
-                S'abonner aux flux RSS
-              </a>
-            </li>
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/todo/add?bug">
-                Rapporter un bug
-              </a>
-            </li>
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/user/pm?user=1">
-                Contacter l'administration
-              </a>
-            </li>
-
-          </ul>
-        </li>
-
-        <?php if(loggedin()) { ?>
-
-        <li>Mon compte
-          <ul class="menu_main menu_low">
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/user/notifications">
-                Notifications
-              </a>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Messages privés
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/user/pm">
-                    Écrire un message privé
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/user/notifications">
-                    Boite de réception
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/user/notifications?envoyes">
-                    Messages envoyés
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Profil public
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/user/user?id=<?=$_SESSION['user']?>">
-                    Voir mon profil
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/user/profil">
-                    Modifier mon profil
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Réglages / Sécurité
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/user/email">
-                    Changer d'e-mail
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/user/pass">
-                    Changer de mot de passe
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-          </ul>
-        </li>
-
-        <?php } if(getsysop()) { ?>
-
-        <li>Modération
-          <ul class="menu_main menu_low">
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/nobleme/activite?mod">
-                Logs de modération
-              </a>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Utilisateurs
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/sysop/ban">
-                    Bannir un utilisateur
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/sysop/profil">
-                    Modifier un profil public
-                  </a>
-                </li>
-
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/sysop/pass">
-                    Modifier un mot de passe
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Orginasation des IRL
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/sysop/irl?add">
-                    Créer une nouvelle IRL
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/nobleme/irls?edit">
-                    Modifier une IRL existante
-                  </a>
-                </li>
-
-                <?php if(getadmin()) { ?>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/nobleme/irls?delete">
-                    Supprimer une IRL
-                  </a>
-                </li>
-
-                <?php } ?>
-
-              </ul>
-            </li>
-
-          </ul>
-        </li>
-
-        <?php } if(getadmin()) { ?>
-
-        <li>Administration
-          <ul class="menu_main menu_low">
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/devblog/admin?add">
-                Nouveau devblog
-              </a>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Liste des tâches
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/todo/admin?add">
-                    Nouveau ticket
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/todo/index?admin">
-                    Tickets à valider
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Miscellanées
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/quote_add">
-                    Nouvelle miscellanée
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/irc/quotes?admin">
-                    Miscellanées à valider
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Statistiques
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/admin/stats_doppelgangers">
-                    Doppelgängers
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/admin/stats_pageviews">
-                    Pageviews : Global
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/admin/stats_pageviews_evolution">
-                    Pageviews : Évolution
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/admin/stats_referers">
-                    Referers : Global
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/admin/stats_referers_evolution">
-                    Referers : Évolution
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-          </ul>
-        </li>
-
-        <li>Développement
-          <ul class="menu_main menu_low">
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/dev/maj">
-                Mise à jour : Checklist
-              </a>
-            </li>
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/dev/sql">
-                Mise à jour : Requêtes
-              </a>
-            </li>
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/dev/ircbot">
-                Gestion du bot IRC
-              </a>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Références
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/dev/formattage">
-                    Formattage du code
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/dev/css">
-                    Référence du CSS
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/dev/fonctions">
-                    Liste des fonctions
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/dev/images">
-                    Références graphiques
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-            <li>
-              <a class="dropdown">
-                Gestion
-              </a>
-              <ul class="menu_main">
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/dev/pages">
-                    Nom des pages
-                  </a>
-                </li>
-
-                <li>
-                  <a class="menu_link" href="<?=$chemin?>pages/dev/flashanniv">
-                    Flashs anniversaire
-                  </a>
-                </li>
-
-              </ul>
-            </li>
-
-          </ul>
-        </li>
-
-        <li><s>Life.base</s></li>
-
+    <div class="menu_main">
+      <div class="menu_main_section">
+        <div onClick="location.href = '<?=$chemin?>'" class="menu_main_item<?=$h_menu_css['nobleme']?>">
+          <a                     href="<?=$chemin?>">NoBleme.com</a>
+        </div>
+        <div onClick="location.href = '<?=$chemin?>pages/nobleme/index'" class="menu_main_item<?=$h_menu_css['communaute']?>">
+          <a                     href="<?=$chemin?>pages/nobleme/index">Communauté</a>
+        </div>
+        <div onClick="location.href = '<?=$chemin?>pages/nbdb/index'" class="menu_main_item<?=$h_menu_css['lire']?>">
+          <a                     href="<?=$chemin?>pages/nbdb/index">Lire</a>
+        </div>
+        <div onClick="location.href = '<?=$chemin?>pages/forum/index'" class="menu_main_item<?=$h_menu_css['discuter']?>">
+          <a                     href="<?=$chemin?>pages/forum/index">Discuter</a>
+        </div>
+        <?php if(loggedin() && getsysop($_SESSION['user'])) { ?>
+        <div onClick="location.href = '<?=$chemin?>pages/nobleme/activite?mod'" class="menu_main_item<?=$h_menu_css['admin']?>">
+          <a                     href="<?=$chemin?>pages/nobleme/activite?mod">Administration</a>
+        </div>
         <?php } ?>
-
-        <li>
-          <span class="menu_secret">
-            Secrets
-          </span>
-          <ul class="menu_main menu_low">
-
-            <li>
-              <a class="menu_link" href="<?=$chemin?>pages/nobleme/secrets">
-                Liste des secrets
-              </a>
-            </li>
-
-          </ul>
-        </li>
-
-      </ul>
-
+        <div onClick="location.href = '<?=$chemin?>pages/secrets/index'" class="menu_main_item<?=$h_menu_css['secrets']?>">
+          <a                     href="<?=$chemin?>pages/secrets/index">Secrets</a>
+        </div>
+      </div>
+      <div class="menu_main_section">
+        <?php if(!loggedin()) { ?>
+        <div onClick="location.href = '<?=$chemin?>pages/user/login'" class="menu_main_item<?=$h_menu_css['connexion']?>">
+          <a                     href="<?=$chemin?>pages/user/login">Vous n'êtes pas connecté : &nbsp; &nbsp; Connexion</a>
+        </div>
+        <div onClick="location.href = '<?=$chemin?>pages/user/register'" class="menu_main_item<?=$h_menu_css['inscription']?>">
+          <a                     href="<?=$chemin?>pages/user/register">S'inscrire</a>
+        </div>
+        <?php } else { ?>
+        <div onClick="location.href = '<?=$chemin?>pages/user/notifications'" class="menu_main_item<?=$h_menu_css['compte']?>">
+          <a                     href="<?=$chemin?>pages/user/notifications" <?=$notifs_css?>>Mon compte : <?=getpseudo();?><?=$notifs_texte?></a>
+        </div>
+        <div onClick="location.href = '<?=$url_logout?>'" class="menu_main_item">
+          <a                     href="<?=$url_logout?>">Déconnexion</a>
+        </div>
+        <?php } ?>
+      </div>
     </div>
 
-    <div class="header header_bottom">
-      <table class="indiv">
-        <tr>
-          <td class="header_info_left">
-            <a class="header_notif" href="<?=$chemin?>pages/user/notifications"><?=$notifications?></a>
-          </td>
-          <td class="header_info_right align_right texte_blanc">
 
-            <?php if(!loggedin()) {
-              if (!$erreur) { ?>
+    <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                                                                                                                   //
+    //                                                          MENU SECONDAIRE                                                          //
+    //                                                                                                                                   //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
 
-            Vous n'êtes pas connecté
-
-              <?php } else { ?>
-
-            Erreur : <?=$erreur?>
-
-              <?php } ?>
-
-            &nbsp;&nbsp;<a href="<?=$chemin?>pages/user/register" class="header_whitelink">Créer un compte</a>
-
-            <?php } else { ?>
-
-            Vous êtes connecté en tant que <a class="header_whiteblank" href="<?=$chemin?>pages/user/user?id=<?=$_SESSION['user']?>"><?=getpseudo()?></a>&nbsp;&nbsp;<a href="<?=$url_logout?>" class="header_whitelink">Déconnexion</a>
-
-            <?php } ?>
-
-          </td>
-        </tr>
-      </table>
+    <?php if ($header_menu == '' || $header_menu == 'connexion' || $header_menu == 'inscription') { ?>
+    <div class="menu_sub">
+      <div onClick="location.href = '<?=$chemin?>'" class="menu_sub_item<?=$h_submenu_css['accueil']?>">
+        <a                     href="<?=$chemin?>">Page d'accueil</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/nobleme/activite'" class="menu_sub_item<?=$h_submenu_css['activite']?>">
+        <a                     href="<?=$chemin?>pages/nobleme/activite">Activité récente</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/nobleme/online'" class="menu_sub_item<?=$h_submenu_css['online']?>">
+        <a                     href="<?=$chemin?>pages/nobleme/online">Qui est en ligne ?</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/nobleme/coulisses'" class="menu_sub_item<?=$h_submenu_css['dev']?>">
+        <a                     href="<?=$chemin?>pages/nobleme/coulisses">Développement</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/doc/index'" class="menu_sub_item<?=$h_submenu_css['aide']?>">
+        <a                     href="<?=$chemin?>pages/doc/index">Aide &amp; Infos</a>
+      </div>
     </div>
 
-    <?php } if($alerte_meta != "") { ?>
+    <?php } else if ($header_menu == 'communaute') { ?>
+    <div class="menu_sub">
+      <div onClick="location.href = '<?=$chemin?>pages/nobleme/index'" class="menu_sub_item<?=$h_submenu_css['membres']?>">
+        <a                     href="<?=$chemin?>pages/nobleme/index">Membres</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/nobleme/irls'" class="menu_sub_item<?=$h_submenu_css['irl']?>">
+        <a                     href="<?=$chemin?>pages/nobleme/irls">Rencontres IRL</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/nobleme/admins'" class="menu_sub_item<?=$h_submenu_css['admins']?>">
+        <a                     href="<?=$chemin?>pages/nobleme/admins">Équipe administrative</a>
+      </div>
+    </div>
 
-    <br>
-    <br>
+    <?php } else if ($header_menu == 'lire') { ?>
+    <div class="menu_sub">
+      <div onClick="location.href = '<?=$chemin?>pages/nbdb/index'" class="menu_sub_item<?=$h_submenu_css['nbdb']?>">
+        <a                     href="<?=$chemin?>pages/nbdb/index">NBDatabase</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/nbrpg/index'" class="menu_sub_item<?=$h_submenu_css['nbrpg']?>">
+        <a                     href="<?=$chemin?>pages/nbrpg/index">NoBlemeRPG</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/irc/quotes'" class="menu_sub_item<?=$h_submenu_css['miscellanees']?>">
+        <a                     href="<?=$chemin?>pages/irc/quotes">Miscellanees</a>
+      </div>
+    </div>
 
-    <div class="gros gras texte_erreur align_center monospace">
-      <?=$alerte_meta?>
+    <?php } else if ($header_menu == 'discuter') { ?>
+    <div class="menu_sub">
+      <div onClick="location.href = '<?=$chemin?>pages/forum/index'" class="menu_sub_item<?=$h_submenu_css['forum']?>">
+        <a                     href="<?=$chemin?>pages/forum/index">Forum NoBleme</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/forum/ecrivains'" class="menu_sub_item<?=$h_submenu_css['ecrivains']?>">
+        <a                     href="<?=$chemin?>pages/forum/ecrivains">Le coin des écrivains</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/irc/index'" class="menu_sub_item<?=$h_submenu_css['irc']?>">
+        <a                     href="<?=$chemin?>pages/irc/index">Chat IRC</a>
+      </div>
+    </div>
+
+    <?php } else if ($header_menu == 'admin') { ?>
+    <div class="menu_sub">
+      <div onClick="location.href = '<?=$chemin?>pages/nobleme/activite?mod'" class="menu_sub_item<?=$h_submenu_css['mod']?>">
+        <a                     href="<?=$chemin?>pages/nobleme/activite?mod">Modération</a>
+      </div>
+      <?php if(getadmin()) { ?>
+      <div onClick="location.href = '<?=$chemin?>pages/todo/index?admin'" class="menu_sub_item<?=$h_submenu_css['admin']?>">
+        <a                     href="<?=$chemin?>pages/todo/index?admin">Administration</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/dev/formattage'" class="menu_sub_item<?=$h_submenu_css['dev']?>">
+        <a                     href="<?=$chemin?>pages/dev/formattage">Développement</a>
+      </div>
+      <?php } ?>
+    </div>
+
+    <?php } else if ($header_menu == 'secrets') { ?>
+    <div class="menu_sub">
+      <div onClick="location.href = '<?=$chemin?>pages/secrets/index'" class="menu_sub_item<?=$h_submenu_css['liste']?>">
+        <a                     href="<?=$chemin?>pages/secrets/index">Liste des secrets</a>
+      </div>
+    </div>
+
+    <?php } else if ($header_menu == 'compte') { ?>
+    <div class="menu_sub">
+      <div onClick="location.href = '<?=$chemin?>pages/user/notifications'" class="menu_sub_item<?=$h_submenu_css['messages']?>">
+        <a                     href="<?=$chemin?>pages/user/notifications">Messages privés</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/user/user?id=<?=$_SESSION['user']?>'" class="menu_sub_item<?=$h_submenu_css['profil']?>">
+        <a                     href="<?=$chemin?>pages/user/user?id=<?=$_SESSION['user']?>">Profil public</a>
+      </div>
+      <div onClick="location.href = '<?=$chemin?>pages/user/reglages'" class="menu_sub_item<?=$h_submenu_css['reglages']?>">
+        <a                     href="<?=$chemin?>pages/user/reglages">Réglages du compte</a>
+      </div>
     </div>
 
     <?php } ?>
 
-    <!-- Fin du header -->
+
+    <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                                                                                                                   //
+    //                                                           MENU  LATÉRAL                                                           //
+    //                                                                                                                                   //
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
+
+    <div class="body_container">
+      <?php if($header_sidemenu) { ?>
+
+      <?php if($header_menu == '' && $header_submenu == 'dev') { ?>
+      <nav>
+        <div class="menu_side">
+          <div onClick="location.href = '<?=$chemin?>pages/nobleme/coulisses'" class="menu_side_item<?=$h_side_css['coulisses']?>">
+            <a                     href="<?=$chemin?>pages/nobleme/coulisses">Coulisses de NoBleme</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/nobleme/coulisses?source'" class="menu_side_item<?=$h_side_css['source']?>">
+            <a                     href="<?=$chemin?>pages/nobleme/coulisses?source">Code source du site</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/todo/roadmap'" class="menu_side_item<?=$h_side_css['roadmap']?>">
+            <a                     href="<?=$chemin?>pages/todo/roadmap">Plan de route</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/todo/index'" class="menu_side_item<?=$h_side_css['todo']?>">
+            <a                     href="<?=$chemin?>pages/todo/index">Tâches non résolues</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/todo/index?solved'" class="menu_side_item<?=$h_side_css['todo_solved']?>">
+            <a                     href="<?=$chemin?>pages/todo/index?solved">Tâches résolues</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/todo/index?recent'" class="menu_side_item<?=$h_side_css['todo_recent']?>">
+            <a                     href="<?=$chemin?>pages/todo/index?recent">Tâches récentes</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/todo/add'" class="menu_side_item<?=$h_side_css['ticket']?>">
+            <a                     href="<?=$chemin?>pages/todo/add">Ouvrir un ticket</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/todo/rss'" class="menu_side_item<?=$h_side_css['todo_rss']?>">
+            <a                     href="<?=$chemin?>pages/todo/rss">Tâches : Flux RSS</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/devblog/index'" class="menu_side_item<?=$h_side_css['devblog']?>">
+            <a                     href="<?=$chemin?>pages/devblog/index">Blog de développement</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/devblog/top'" class="menu_side_item<?=$h_side_css['devblog_top']?>">
+            <a                     href="<?=$chemin?>pages/devblog/top">Devblogs populaires</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/devblog/rss'" class="menu_side_item<?=$h_side_css['devblog_rss']?>">
+            <a                     href="<?=$chemin?>pages/devblog/rss">Devblogs : Flux RSS</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/todo/add?bug'" class="menu_side_item<?=$h_side_css['ticket_bug']?>">
+            <a                     href="<?=$chemin?>pages/todo/add?bug">Rapporter un bug</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/todo/add?feature'" class="menu_side_item<?=$h_side_css['ticket_feature']?>">
+            <a                     href="<?=$chemin?>pages/todo/add?feature">Quémander un feature</a>
+          </div>
+        </div>
+      </nav>
+
+      <?php } else if($header_menu == '' && $header_submenu == 'aide') { ?>
+      <nav>
+        <div class="menu_side">
+          <div onClick="location.href = '<?=$chemin?>pages/doc/index'" class="menu_side_item<?=$h_side_css['documentation']?>">
+            <a                     href="<?=$chemin?>pages/doc/index">Documentation du site</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/doc/nobleme'" class="menu_side_item<?=$h_side_css['nobleme']?>">
+            <a                     href="<?=$chemin?>pages/doc/nobleme">Qu'est-ce que NoBleme</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/doc/coc'" class="menu_side_item<?=$h_side_css['coc']?>">
+            <a                     href="<?=$chemin?>pages/doc/coc">Code de conduite</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/doc/bbcodes'" class="menu_side_item<?=$h_side_css['bbcodes']?>">
+            <a                     href="<?=$chemin?>pages/doc/bbcodes">Utiliser les BBCodes</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/doc/emotes'" class="menu_side_item<?=$h_side_css['emotes']?>">
+            <a                     href="<?=$chemin?>pages/doc/emotes">Liste des émoticônes</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/doc/rss'" class="menu_side_item<?=$h_side_css['rss']?>">
+            <a                     href="<?=$chemin?>pages/doc/rss">S'abonner aux flux RSS</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/todo/add?bug&amp;doc'" class="menu_side_item<?=$h_side_css['bug']?>">
+            <a                     href="<?=$chemin?>pages/todo/add?bug&amp;doc">Rapporter un bug</a>
+          </div>
+
+        </div>
+      </nav>
+
+      <?php } else if($header_menu == 'communaute' && $header_submenu == 'membres') { ?>
+      <nav>
+        <div class="menu_side">
+          <div onClick="location.href = '<?=$chemin?>pages/nobleme/index'" class="menu_side_item<?=$h_side_css['portail']?>">
+            <a                     href="<?=$chemin?>pages/nobleme/index">Portail des membres</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/nobleme/membres'" class="menu_side_item<?=$h_side_css['liste']?>">
+            <a                     href="<?=$chemin?>pages/nobleme/membres">Liste des membres</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/nobleme/anniversaires'" class="menu_side_item<?=$h_side_css['anniversaires']?>">
+            <a                     href="<?=$chemin?>pages/nobleme/anniversaires">Anniversaires</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/nobleme/pilori'" class="menu_side_item<?=$h_side_css['pilori']?>">
+            <a                     href="<?=$chemin?>pages/nobleme/pilori">Pilori des bannis</a>
+          </div>
+        </div>
+      </nav>
+
+      <?php } else if($header_menu == 'lire' && $header_submenu == 'miscellanees') { ?>
+      <nav>
+        <div class="menu_side">
+          <div onClick="location.href = '<?=$chemin?>pages/irc/quotes'" class="menu_side_item<?=$h_side_css['paroles']?>">
+            <a                     href="<?=$chemin?>pages/irc/quotes">Paroles de NoBlemeux</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/irc/quotes?random'" class="menu_side_item<?=$h_side_css['hasard']?>">
+            <a                     href="<?=$chemin?>pages/irc/quotes?random">Citation au hasard</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/irc/quotes_stats'" class="menu_side_item<?=$h_side_css['stats']?>">
+            <a                     href="<?=$chemin?>pages/irc/quotes_stats">Statistiques des citations</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/irc/quote_add'" class="menu_side_item<?=$h_side_css['proposer']?>">
+            <a                     href="<?=$chemin?>pages/irc/quote_add">Proposer une citation</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/irc/quotes_rss'" class="menu_side_item<?=$h_side_css['rss']?>">
+            <a                     href="<?=$chemin?>pages/irc/quotes_rss">Flux RSS des citations</a>
+          </div>
+        </div>
+      </nav>
+
+      <?php } else if($header_menu == 'discuter' && $header_submenu == 'irc') { ?>
+      <nav>
+        <div class="menu_side">
+          <div onClick="location.href = '<?=$chemin?>pages/irc/index'" class="menu_side_item<?=$h_side_css['index']?>">
+            <a                     href="<?=$chemin?>pages/irc/index">Qu'est-ce que IRC ?</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/irc/web'" class="menu_side_item<?=$h_side_css['clic']?>">
+            <a                     href="<?=$chemin?>pages/irc/web">Discuter en un clic</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/irc/traditions'" class="menu_side_item<?=$h_side_css['traditions']?>">
+            <a                     href="<?=$chemin?>pages/irc/traditions">Coutumes et traditions</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/irc/canaux'" class="menu_side_item<?=$h_side_css['canaux']?>">
+            <a                     href="<?=$chemin?>pages/irc/canaux">Liste des canaux</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/irc/services'" class="menu_side_item<?=$h_side_css['services']?>">
+            <a                     href="<?=$chemin?>pages/irc/services">Commandes et services</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/irc/akundo'" class="menu_side_item<?=$h_side_css['akundo']?>">
+            <a                     href="<?=$chemin?>pages/irc/akundo">Utilisation d'Akundo</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/irc/client'" class="menu_side_item<?=$h_side_css['client']?>">
+            <a                     href="<?=$chemin?>pages/irc/client">Installer un client IRC</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/irc/bouncer'" class="menu_side_item<?=$h_side_css['bouncer']?>">
+            <a                     href="<?=$chemin?>pages/irc/bouncer">Utiliser un bouncer</a>
+          </div>
+        </div>
+      </nav>
+
+      <?php } else if($header_menu == 'admin' && $header_submenu == 'mod' && getsysop()) { ?>
+      <nav>
+        <div class="menu_side">
+          <div onClick="location.href = '<?=$chemin?>pages/nobleme/activite?mod'" class="menu_side_item<?=$h_side_css['modlogs']?>">
+            <a                     href="<?=$chemin?>pages/nobleme/activite?mod">Logs de modération</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/sysop/ban'" class="menu_side_item<?=$h_side_css['bannir']?>">
+            <a                     href="<?=$chemin?>pages/sysop/ban">Bannir un utilisateur</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/sysop/profil'" class="menu_side_item<?=$h_side_css['profil']?>">
+            <a                     href="<?=$chemin?>pages/sysop/profil">Modifier un profil</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/sysop/pass'" class="menu_side_item<?=$h_side_css['pass']?>">
+            <a                     href="<?=$chemin?>pages/sysop/pass">Éditer un mot de passe</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/sysop/irl?add'" class="menu_side_item<?=$h_side_css['irl_add']?>">
+            <a                     href="<?=$chemin?>pages/sysop/irl?add">Créer une nouvelle IRL</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/nobleme/irls?edit'" class="menu_side_item<?=$h_side_css['irl_edit']?>">
+            <a                     href="<?=$chemin?>pages/nobleme/irls?edit">Modifier une IRL</a>
+          </div>
+          <?php if(getadmin()) { ?>
+          <div onClick="location.href = '<?=$chemin?>pages/nobleme/irls?delete'" class="menu_side_item<?=$h_side_css['irl_delete']?>">
+            <a                     href="<?=$chemin?>pages/nobleme/irls?delete">Supprimer une IRL</a>
+          </div>
+          <?php } ?>
+        </div>
+      </nav>
+
+      <?php } else if($header_menu == 'admin' && $header_submenu == 'admin' && getadmin()) { ?>
+      <nav>
+        <div class="menu_side">
+          <div onClick="location.href = '<?=$chemin?>pages/admin/stats_doppelgangers'" class="menu_side_item<?=$h_side_css['stats_dop']?>">
+            <a                     href="<?=$chemin?>pages/admin/stats_doppelgangers">Doppelgängers</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/admin/stats_pageviews'" class="menu_side_item<?=$h_side_css['stats_views']?>">
+            <a                     href="<?=$chemin?>pages/admin/stats_pageviews">Stats : Pageviews</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/admin/stats_referers'" class="menu_side_item<?=$h_side_css['stats_refs']?>">
+            <a                     href="<?=$chemin?>pages/admin/stats_referers">Stats : Referers</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/admin/stats_pageviews_evolution'" class="menu_side_item<?=$h_side_css['stats_views_evo']?>">
+            <a                     href="<?=$chemin?>pages/admin/stats_pageviews_evolution">Évolution : Pageviews</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/admin/stats_referers_evolution'" class="menu_side_item<?=$h_side_css['stats_refs_evo']?>">
+            <a                     href="<?=$chemin?>pages/admin/stats_referers_evolution">Évolution : Referers</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/devblog/admin?add'" class="menu_side_item<?=$h_side_css['devblog_add']?>">
+            <a                     href="<?=$chemin?>pages/devblog/admin?add">Nouveau devblog</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/todo/admin?add'" class="menu_side_item<?=$h_side_css['todo_add']?>">
+            <a                     href="<?=$chemin?>pages/todo/admin?add">Nouveau ticket</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/todo/index?admin'" class="menu_side_item<?=$h_side_css['todo_valider']?>">
+            <a                     href="<?=$chemin?>pages/todo/index?admin">Tâches à valider</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/irc/quote_add?admin'" class="menu_side_item<?=$h_side_css['quote_add']?>">
+            <a                     href="<?=$chemin?>pages/irc/quote_add?admin">Nouvelle miscellanée</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/irc/quotes?admin'" class="menu_side_item<?=$h_side_css['quote_valider']?>">
+            <a                     href="<?=$chemin?>pages/irc/quotes?admin">Miscellanées à valider</a>
+          </div>
+        </div>
+      </nav>
+
+      <?php } else if($header_menu == 'admin' && $header_submenu == 'dev' && getadmin()) { ?>
+      <nav>
+        <div class="menu_side">
+          <div onClick="location.href = '<?=$chemin?>pages/dev/maj'" class="menu_side_item<?=$h_side_css['maj']?>">
+            <a                     href="<?=$chemin?>pages/dev/maj">Mise à jour : Checklist</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/dev/sql'" class="menu_side_item<?=$h_side_css['sql']?>">
+            <a                     href="<?=$chemin?>pages/dev/sql">Mise à jour : Requêtes</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/dev/ircbot'" class="menu_side_item<?=$h_side_css['ircbot']?>">
+            <a                     href="<?=$chemin?>pages/dev/ircbot">Gestion du bot IRC</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/dev/formattage'" class="menu_side_item<?=$h_side_css['formattage']?>">
+            <a                     href="<?=$chemin?>pages/dev/formattage">Formattage du code</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/dev/css'" class="menu_side_item<?=$h_side_css['css']?>">
+            <a                     href="<?=$chemin?>pages/dev/css">Référence du CSS</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/dev/fonctions'" class="menu_side_item<?=$h_side_css['fonctions']?>">
+            <a                     href="<?=$chemin?>pages/dev/fonctions">Liste des fonctions</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/dev/images'" class="menu_side_item<?=$h_side_css['charte']?>">
+            <a                     href="<?=$chemin?>pages/dev/images">Charte graphique</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/dev/pages'" class="menu_side_item<?=$h_side_css['nompages']?>">
+            <a                     href="<?=$chemin?>pages/dev/pages">Gestion : Nom des pages</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/dev/flashanniv'" class="menu_side_item<?=$h_side_css['flashanniv']?>">
+            <a                     href="<?=$chemin?>pages/dev/flashanniv">Gestion : Flashs anniv.</a>
+          </div>
+        </div>
+      </nav>
+
+      <?php } else if($header_menu == 'compte' && $header_submenu == 'messages') { ?>
+      <nav>
+        <div class="menu_side">
+          <div onClick="location.href = '<?=$chemin?>pages/user/pm'" class="menu_side_item<?=$h_side_css['ecrire']?>">
+            <a                     href="<?=$chemin?>pages/user/pm">Écrire un message</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/user/notifications'" class="menu_side_item<?=$h_side_css['inbox']?>">
+            <a                     href="<?=$chemin?>pages/user/notifications">Messages reçus</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/user/notifications?envoyes'" class="menu_side_item<?=$h_side_css['envoyes']?>">
+            <a                     href="<?=$chemin?>pages/user/notifications?envoyes">Messages envoyés</a>
+          </div>
+        </div>
+      </nav>
+
+      <?php } else if($header_menu == 'compte' && $header_submenu == 'reglages') { ?>
+      <nav>
+        <div class="menu_side">
+          <div onClick="location.href = '<?=$chemin?>pages/user/reglages'" class="menu_side_item<?=$h_side_css['reglages']?>">
+            <a                     href="<?=$chemin?>pages/user/reglages">Réglages généraux</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/user/email'" class="menu_side_item<?=$h_side_css['email']?>">
+            <a                     href="<?=$chemin?>pages/user/email">Changer d'e-mail</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/user/pass'" class="menu_side_item<?=$h_side_css['pass']?>">
+            <a                     href="<?=$chemin?>pages/user/pass">Changer de mot de passe</a>
+          </div>
+        </div>
+      </nav>
+
+      <?php } ?>
+      <?php } ?>
+
+      <?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      //                                                                                                                                 //
+      //                                                          FIN DES MENUS                                                          //
+      //                                                                                                                                 //
+      ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
+
+
+      <div class="body_contenu">
+
+      <?php } if($alerte_meta != "") { ?>
+
+      <br>
+      <br>
+
+      <div class="gros gras texte_erreur align_center monospace">
+        <?=$alerte_meta?>
+      </div>
+
+      <?php } ?>

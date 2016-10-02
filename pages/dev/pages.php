@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 adminonly();
 
+// Menus du header
+$header_menu      = 'admin';
+$header_submenu   = 'dev';
+$header_sidemenu  = 'nompages';
+
 // Titre et description
 $page_titre = "Dev : Nom des pages";
 

@@ -337,7 +337,7 @@ function useronly()
         $chemin .= "../";
     }
 
-    erreur("Cette page n'est utilisable que par les utilisateurs connectés.<br><br>Connectez-vous à votre compte via le formulaire situé en haut à droite,<br>ou créez-vous un compte en <a class=\"dark\" href=\"".$chemin."pages/user/register\">cliquant ici</a>.");
+    erreur("Cette page n'est utilisable que par les utilisateurs connectés.<br><br>Connectez-vous à votre compte en <a class=\"dark\" href=\"".$chemin."pages/user/login\">cliquant ici</a>,<br>ou créez-vous un compte en <a class=\"dark\" href=\"".$chemin."pages/user/register\">cliquant ici</a>.");
   }
 }
 

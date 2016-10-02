@@ -5,6 +5,10 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'discuter';
+$header_submenu   = 'forum';
+
 // Titre et description
 $page_titre = "Forum";
 $page_desc  = "Le forum NoBleme... plus ou moins";
@@ -113,7 +117,7 @@ if(isset($_GET['id']))
 
     // Troll
     $jk_bordelisateur = rand(0,10);
-    if($dthreadjk['pseudonyme'] == "Wan")
+    if($dthreadjk['pseudonyme'] == "Wan" || $dthreadjk['pseudonyme'] == "Trucy")
       $jk_contenu[$nthreadjk] = '<img src="'.$chemin.'img/forumloljk/gorille_jk.png" alt="Gorille">';
     else if($dthreadjk['pseudonyme'] == "Shalena")
       $jk_contenu[$nthreadjk] = destroy_html(str_shuffle($jk_contenu[$nthreadjk]));

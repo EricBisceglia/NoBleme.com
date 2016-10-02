@@ -35,11 +35,13 @@ $cette_page_est_404 = '';
     <br>
     <br>
     <br>
+    <br>
     <div class="indiv align_center">
       <a class="blank" href="<?=$chemin?>">
         <img src="<?=$chemin?>img/logos/404.png" alt="Erreur 404 : Perdus dans l'espace">
       </a>
     </div>
+    <br>
     <br>
     <br>
     <br>
@@ -73,6 +75,7 @@ Erreur 404 : 'Zig' introuvable</textarea>
       </table>
     </div>
 
+    <br>
     <br>
     <br>
 

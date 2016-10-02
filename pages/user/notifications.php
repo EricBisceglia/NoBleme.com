@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 useronly();
 
+// Menus du header
+$header_menu      = 'compte';
+$header_submenu   = 'messages';
+$header_sidemenu  = (!isset($_GET['envoyes'])) ? 'inbox' : 'envoyes';
+
 // Titre et description
 $page_titre = "Nofitications";
 $page_desc  = "Boite de réception des messages et notifications";

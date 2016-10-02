@@ -5,6 +5,10 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'communaute';
+$header_submenu   = 'irl';
+
 // Identification
 $page_nom = "irl";
 
@@ -269,7 +273,7 @@ if($irl_combien)
       Les IRLs NoBlemeuses ne sont pas des cercles fermés, nous sommes parfaitement acceptants de toute nouvelle personne qui souhaiterait y assister.<br>
       <br>
       La seule condition pour participer à l'IRL est de nous prévenir à l'avance de votre intention de venir.<br>
-      Pour ce faire, prévenez <a href="<?=$chemin?>pages/user/user?pseudo=Wan">Wan</a> ou <a href="<?=$chemin?>pages/user/user?id=1">Bad</a> par <a href="<?=$chemin?>pages/user/pm.php?user=227">message privé</a> ou via <a href="<?=$chemin?>pages/irc/index">IRC</a> et vous serez ajouté à la liste.
+      Pour ce faire, prévenez <a href="<?=$chemin?>pages/user/user?pseudo=Trucy">Trucy</a> ou <a href="<?=$chemin?>pages/user/user?id=1">Bad</a> par <a href="<?=$chemin?>pages/user/pm.php?user=227">message privé</a> ou via <a href="<?=$chemin?>pages/irc/index">IRC</a> et vous serez ajouté à la liste.
 
       <?php } ?>
 

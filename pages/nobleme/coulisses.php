@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = '';
+$header_submenu   = 'dev';
+$header_sidemenu  = (!isset($_GET['source'])) ? 'coulisses' : 'source';
+
 // Titre et description
 $page_titre = "Coulisses de NoBleme";
 $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles de NoBleme";
@@ -27,6 +32,8 @@ $page_id  = "coulisses";
       <img src="<?=$chemin?>img/logos/developpement.png" alt="Développement: Les coulisses de NoBleme">
     </div>
     <br>
+
+    <?php if(!isset($_GET['source'])) { ?>
 
     <div class="body_main midsize">
       <span class="titre">La face cachée de NoBleme</span><br>
@@ -143,6 +150,8 @@ $page_id  = "coulisses";
 
     <br>
     <br>
+
+    <?php } ?>
 
     <div class="body_main midsize" id="source">
       <span class="titre">Code source de NoBleme</span><br>

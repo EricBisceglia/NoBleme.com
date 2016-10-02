@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 adminonly();
 
+// Menus du header
+$header_menu      = (!isset($_GET['add'])) ? '' :'admin';
+$header_submenu   = (!isset($_GET['add'])) ? 'dev' : 'admin';
+$header_sidemenu  = (!isset($_GET['add'])) ? 'devblog' : 'devblog_add';
+
 // Titre et description
 $page_titre = "Devblog - Admin";
 

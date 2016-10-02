@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = '';
+$header_submenu   = 'aide';
+$header_sidemenu  = 'coc';
+
 // Titre et description
 $page_titre = "Code de conduite";
 $page_desc  = "Code de conduite à respecter au sein de la communauté NoBleme";

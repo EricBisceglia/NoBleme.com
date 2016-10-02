@@ -8,6 +8,9 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 guestonly();
 
+// Menus du header
+$header_menu = 'inscription';
+
 // Titre et description
 $page_titre = "Créer un compte";
 $page_desc  = "S'inscrire sur NoBleme pour devenir un membre de la communauté";

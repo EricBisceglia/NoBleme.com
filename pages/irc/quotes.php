@@ -5,6 +5,12 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = (!isset($_GET['admin'])) ? 'lire' : 'admin';
+$header_submenu   = (!isset($_GET['admin'])) ? 'miscellanees' : 'admin';
+$header_sidemenu  = (!isset($_GET['admin'])) ? 'paroles' : 'quote_valider';
+$header_sidemenu  = (!isset($_GET['random'])) ? $header_sidemenu : 'hasard';
+
 // Titre et description
 $page_titre = "Miscellanées";
 $page_desc  = "Les miscellanées sont des phrases, des monologues, ou des conversations entre membres de NoBleme qui ont été conservées pour la postérité";

@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 sysoponly();
 
+// Menus du header
+$header_menu      = 'admin';
+$header_submenu   = 'mod';
+$header_sidemenu  = 'pass';
+
 // Titre et description
 $page_titre = "Modifier un mot de passe";
 $page_desc  = "Administration - Modifier le mot de passe d'un utilisateur";

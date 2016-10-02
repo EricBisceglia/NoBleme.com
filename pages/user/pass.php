@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 useronly();
 
+// Menus du header
+$header_menu      = 'compte';
+$header_submenu   = 'reglages';
+$header_sidemenu  = 'pass';
+
 // Titre et description
 $page_titre = "Changer de mot de passe";
 $page_desc  = "Changer le mot de passe de votre compte sur NoBleme";

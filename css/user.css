@@ -1,8 +1,5 @@
-/************************************************************* register.php **************************************************************/
-              td.user_register { width:140px; }
-          td.user_register_big { width:400px; }
-    td.user_register_questions { width:450px; }
-td.user_register_questions_big { width:500px; }
+/*************************************************************** login.php ***************************************************************/
+td.login_texte { width: 130px; }
 
 /**************************************************************** pm.php *****************************************************************/
 td.titres_pm { width: 100px; }
@@ -10,6 +7,12 @@ td.titres_pm { width: 100px; }
 /************************************************************** profil.php ***************************************************************/
   td.profil_colonnegauche { width: 155px; }
 td.profil_minixeplication { font-size: 0.6em; }
+
+/************************************************************* register.php **************************************************************/
+              td.user_register { width:140px; }
+          td.user_register_big { width:400px; }
+    td.user_register_questions { width:450px; }
+td.user_register_questions_big { width:500px; }
 
 /*************************************************************** user.php ****************************************************************/
                table.userprofil_titre { width: 1050px;                 }

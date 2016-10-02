@@ -9,6 +9,9 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 if(loggedin(0))
   header('Location: ./../../index');
 
+// Menus du header
+$header_menu = 'inscription';
+
 // Titre et description
 $page_titre = "Bienvenue !";
 $page_desc  = "Bienvenue sur NoBleme";
@@ -38,7 +41,7 @@ $page_id  = "welcome";
       <br>
       <br>
 
-      <div class="body_main midsize">
+      <div class="body_main smallsize">
 
         <span class="titre">
           Bienvenue sur NoBleme !
@@ -46,12 +49,13 @@ $page_id  = "welcome";
         <br>
 
         <br>
-        Vous pouvez désormais utiliser le formulaire situé en haut à droite de chaque page pour vous connecter, et vous servir de votre compte.<br>
+        <br>
+        Vous pouvez désormais vous connecter à votre compte en <a href="<?=$chemin?>pages/user/login">cliquant ici</a>.<br>
         <br>
         <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;Bienvenue et bon séjour sur NoBleme,<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;Votre administrateur,<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;<b>Bad</b>
+        Bienvenue et bon séjour sur NoBleme,<br>
+        Votre administrateur,<br>
+        <b>Bad</b>
 
       </div>
 

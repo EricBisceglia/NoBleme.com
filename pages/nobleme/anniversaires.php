@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'communaute';
+$header_submenu   = 'membres';
+$header_sidemenu  = 'anniversaires';
+
 // Titre et description
 $page_titre = "Anniversaires";
 $page_desc  = "Anniversaires des NoBlemeux en cours et/ou à venir";

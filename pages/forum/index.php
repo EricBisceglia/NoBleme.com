@@ -5,6 +5,10 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'discuter';
+$header_submenu   = 'forum';
+
 // Titre et description
 $page_titre = "Forum";
 $page_desc  = "Le forum NoBleme... plus ou moins";

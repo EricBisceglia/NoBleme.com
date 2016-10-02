@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 adminonly();
 
+// Menus du header
+$header_menu      = 'admin';
+$header_submenu   = 'dev';
+$header_sidemenu  = 'sql';
+
 // Titre et description
 $page_titre = "Dev : Requêtes";
 
@@ -113,6 +118,15 @@ if($idmaj == 'v2')
                         visite_page = 'Déchiffre les commandes IRC' ,
                         visite_url  = 'pages/irc/services'          ");
   $majq .= "<br>Activité : Déchiffre les commandes IRC";
+
+  // Création de l'enregistrement se connecte à son compte
+  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'user' AND page_id LIKE 'login' ")))
+    query(" INSERT INTO pages
+            SET         page_nom    = 'user'                      ,
+                        page_id     = 'login'                     ,
+                        visite_page = 'Se connecte à son compte'  ,
+                        visite_url  = 'pages/user/login'          ");
+  $majq .= "<br>Activité : Se connecte à son compte";
 }
 
 

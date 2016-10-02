@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 sysoponly();
 
+// Menus du header
+$header_menu      = 'admin';
+$header_submenu   = 'mod';
+$header_sidemenu  = 'profil';
+
 // Titre et description
 $page_titre = "Modifier un profil";
 $page_desc  = "Administration - Modifier le profil public d'un utilisateur";

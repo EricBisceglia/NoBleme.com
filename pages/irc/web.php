@@ -5,6 +5,11 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = 'discuter';
+$header_submenu   = 'irc';
+$header_sidemenu  = 'clic';
+
 // Titre et description
 $page_titre = "IRC #NoBleme : Clients web";
 $page_desc  = "Rejoindre le serveur de discussion IRC de NoBleme en un clic via un client web";

@@ -8,6 +8,11 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 useronly();
 
+// Menus du header
+$header_menu      = (!isset($_GET['admin'])) ? 'lire' : 'admin';
+$header_submenu   = (!isset($_GET['admin'])) ? 'miscellanees' : 'admin';
+$header_sidemenu  = (!isset($_GET['admin'])) ? 'proposer' : 'quote_add';
+
 // Titre et description
 $page_titre = "Miscellanées";
 $page_desc  = "Proposer l'ajout d'une nouvelle miscellanée";

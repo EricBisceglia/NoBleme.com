@@ -5,6 +5,10 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Menus du header
+$header_menu      = '';
+$header_submenu   = 'online';
+
 // Titre et description
 $page_titre = "Qui est en ligne ?";
 $page_desc  = "Liste des membres de NoBleme connectés au site dans les dernières 24 heures";
