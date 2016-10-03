@@ -95,7 +95,7 @@ else if(isset($chemin))
   {
     if($page_titre == -1)
       $page_titre = getpseudo($page_id);
-    $visite_page  = "Regarde le profil de ".$page_titre;
+    $visite_page  = "Regarde le ".lcfirst($page_titre);
     $visite_url     = $chemin.'pages/user/user?id='.$page_id;
   }
 
