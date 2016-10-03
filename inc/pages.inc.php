@@ -83,10 +83,10 @@ else if(isset($chemin))
       $getpagedev = mysqli_fetch_array(query(" SELECT titre FROM devblog WHERE id = '$page_id' "));
       $page_titre = destroy_html($getpagedev['titre']);
     }
-    if(strlen($page_titre) <= 35)
-      $visite_page  = "Lit le devblog ".$page_titre;
+    if(strlen($page_titre) <= 40)
+      $visite_page  = "Lit le ".lcfirst($page_titre);
     else
-      $visite_page  = "Lit le devblog ".substr($page_titre,0,32).'...';
+      $visite_page  = "Lit le ".substr(lcfirst($page_titre),0,37).'...';
     $visite_url     = $chemin.'pages/devblog/blog?id='.$page_id;
   }
 
