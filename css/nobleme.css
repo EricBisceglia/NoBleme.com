@@ -125,7 +125,7 @@ td.data_input_right { text-align: right; font-weight: bold; }
 
 /*********************************************************** HEADER ET FOOTER ************************************************************/
 .menu_main                              { display: flex; justify-content: space-between; background-color: #2F4456             ;
-                                           padding-left: 50px; padding-top: 6px; padding-bottom: 6px;                          }
+                                           padding-left: 45px; padding-top: 6px; padding-bottom: 6px;                          }
 .menu_main_section                      { display: flex; align-items: center;                                                  }
 div.menu_main_item                      { padding-top: 4px; padding-bottom: 4px; padding-left: 10px; padding-right: 10px       ;
                                           font-size: 17px; cursor: pointer; font-weight: bold;  white-space: nowrap;           }

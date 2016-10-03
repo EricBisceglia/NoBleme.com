@@ -597,14 +597,14 @@ else if($header_menu == 'compte' && $header_submenu == 'reglages')
       <div class="menu_main_section">
         <?php if(!loggedin()) { ?>
         <div onClick="location.href = '<?=$chemin?>pages/user/login'" class="menu_main_item<?=$h_menu_css['connexion']?>">
-          <a                     href="<?=$chemin?>pages/user/login">Vous n'êtes pas connecté : &nbsp; &nbsp; Connexion</a>
+          <a                     href="<?=$chemin?>pages/user/login">Connexion à un compte</a>
         </div>
         <div onClick="location.href = '<?=$chemin?>pages/user/register'" class="menu_main_item<?=$h_menu_css['inscription']?>">
           <a                     href="<?=$chemin?>pages/user/register">S'inscrire</a>
         </div>
         <?php } else { ?>
         <div onClick="location.href = '<?=$chemin?>pages/user/notifications'" class="menu_main_item<?=$h_menu_css['compte']?>">
-          <a                     href="<?=$chemin?>pages/user/notifications" <?=$notifs_css?>>Mon compte : <?=getpseudo();?><?=$notifs_texte?></a>
+          <a                     href="<?=$chemin?>pages/user/notifications" <?=$notifs_css?>>Mon compte<?=$notifs_texte?></a>
         </div>
         <div onClick="location.href = '<?=$url_logout?>'" class="menu_main_item">
           <a                     href="<?=$url_logout?>">Déconnexion</a>
