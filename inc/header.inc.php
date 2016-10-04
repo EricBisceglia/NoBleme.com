@@ -574,40 +574,37 @@ else if($header_menu == 'compte' && $header_submenu == 'reglages')
     <div class="menu_main">
       <div class="menu_main_section">
         <div onClick="location.href = '<?=$chemin?>'" class="menu_main_item<?=$h_menu_css['nobleme']?>">
-          <a                     href="<?=$chemin?>">NoBleme.com</a>
+          <a                     href="<?=$chemin?>">NOBLEME.COM</a>
         </div>
         <div onClick="location.href = '<?=$chemin?>pages/nobleme/index'" class="menu_main_item<?=$h_menu_css['communaute']?>">
-          <a                     href="<?=$chemin?>pages/nobleme/index">Communauté</a>
+          <a                     href="<?=$chemin?>pages/nobleme/index">COMMUNAUTÉ</a>
         </div>
         <div onClick="location.href = '<?=$chemin?>pages/nbdb/index'" class="menu_main_item<?=$h_menu_css['lire']?>">
-          <a                     href="<?=$chemin?>pages/nbdb/index">Lire</a>
+          <a                     href="<?=$chemin?>pages/nbdb/index">LIRE</a>
         </div>
         <div onClick="location.href = '<?=$chemin?>pages/forum/index'" class="menu_main_item<?=$h_menu_css['discuter']?>">
-          <a                     href="<?=$chemin?>pages/forum/index">Discuter</a>
+          <a                     href="<?=$chemin?>pages/forum/index">DISCUTER</a>
         </div>
-        <?php if(loggedin() && getsysop($_SESSION['user'])) { ?>
-        <div onClick="location.href = '<?=$chemin?>pages/nobleme/activite?mod'" class="menu_main_item<?=$h_menu_css['admin']?>">
-          <a                     href="<?=$chemin?>pages/nobleme/activite?mod">Administration</a>
-        </div>
-        <?php } ?>
         <div onClick="location.href = '<?=$chemin?>pages/secrets/index'" class="menu_main_item<?=$h_menu_css['secrets']?>">
-          <a                     href="<?=$chemin?>pages/secrets/index">Secrets</a>
+          <a                     href="<?=$chemin?>pages/secrets/index">SECRETS</a>
         </div>
       </div>
       <div class="menu_main_section">
         <?php if(!loggedin()) { ?>
         <div onClick="location.href = '<?=$chemin?>pages/user/login'" class="menu_main_item<?=$h_menu_css['connexion']?>">
-          <a                     href="<?=$chemin?>pages/user/login">Connexion à un compte</a>
+          <a                     href="<?=$chemin?>pages/user/login">CONNEXION</a>
         </div>
         <div onClick="location.href = '<?=$chemin?>pages/user/register'" class="menu_main_item<?=$h_menu_css['inscription']?>">
-          <a                     href="<?=$chemin?>pages/user/register">S'inscrire</a>
+          <a                     href="<?=$chemin?>pages/user/register">S'INSCRIRE</a>
         </div>
         <?php } else { ?>
-        <div onClick="location.href = '<?=$chemin?>pages/user/notifications'" class="menu_main_item<?=$h_menu_css['compte']?>">
-          <a                     href="<?=$chemin?>pages/user/notifications" <?=$notifs_css?>>Mon compte<?=$notifs_texte?></a>
+        <?php if(loggedin() && getsysop($_SESSION['user'])) { ?>
+        <div onClick="location.href = '<?=$chemin?>pages/nobleme/activite?mod'" class="menu_main_item<?=$h_menu_css['admin']?>">
+          <a                     href="<?=$chemin?>pages/nobleme/activite?mod">ADMINISTRATION</a>
         </div>
-        <div onClick="location.href = '<?=$url_logout?>'" class="menu_main_item">
-          <a                     href="<?=$url_logout?>">Déconnexion</a>
+        <?php } ?>
+        <div onClick="location.href = '<?=$chemin?>pages/user/notifications'" class="menu_main_item<?=$h_menu_css['compte']?>">
+          <a                     href="<?=$chemin?>pages/user/notifications" <?=$notifs_css?>>MON COMPTE<?=$notifs_texte?></a>
         </div>
         <?php } ?>
       </div>
@@ -710,6 +707,9 @@ else if($header_menu == 'compte' && $header_submenu == 'reglages')
       </div>
       <div onClick="location.href = '<?=$chemin?>pages/user/reglages'" class="menu_sub_item<?=$h_submenu_css['reglages']?>">
         <a                     href="<?=$chemin?>pages/user/reglages">Réglages du compte</a>
+      </div>
+      <div onClick="location.href = '<?=$url_logout?>'" class="menu_sub_item">
+        <a                     href="<?=$url_logout?>">Déconnexion</a>
       </div>
     </div>
 
