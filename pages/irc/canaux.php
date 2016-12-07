@@ -87,7 +87,7 @@ $page_id  = "canaux";
             <a class="dark blank" href="<?=$chemin?>pages/user/user?pseudo=Bad">Bad</a>
           </td>
           <td class="cadre_gris align_center spaced vspaced">
-            Le coin des développeurs, où l'on parle informatique. Tous niveaux, d'amateur à professionel.
+            Le coin des développeurs, où l'on parle informatique. Tous niveaux, d'amateur à professionnel.
           </td>
         </tr>
 

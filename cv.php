@@ -53,7 +53,7 @@ $_GET['popout'] = 1;
       <br>
       <hr>
       <br>
-      <span class="alinea gras">Parcours professionel :</span><br>
+      <span class="alinea gras">Parcours professionnel :</span><br>
       <br>
       <table>
         <tr>
@@ -66,7 +66,7 @@ $_GET['popout'] = 1;
         <tr>
           <td class="spaced">2015 - 2016</td>
           <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">Freelance</span> : Sous secret professionel</td>
+          <td class="spaced"><span class="gras">Freelance</span> : Sous secret professionnel</td>
           <td>&nbsp;&nbsp;</td>
           <td class="spaced">C - Python - PostgreSQL</td>
         </tr>
@@ -257,7 +257,7 @@ $_GET['popout'] = 1;
     <div class="body_main midsize">
       <span class="titre">Portfolio : Exemples de projets personnels</span><br>
       <br>
-      Par respect du secret professionel et de mes anciens employeurs, je ne vais pas parler de mes anciens emplois dans mon portfolio. À la place, je vais illustrer mes compétences à l'aide de projets personnels (dont un semi-professionel).<br>
+      Par respect du secret professionnel et de mes anciens employeurs, je ne vais pas parler de mes anciens emplois dans mon portfolio. À la place, je vais illustrer mes compétences à l'aide de projets personnels (dont un semi-professionnel).<br>
       <br>
       Il s'agit principalement de projets que j'ai réalisés parfois pour apprendre, parfois pour le plaisir, parfois pour les deux à la fois.<br>
       J'apprécie la production et le partage de contenu gratuit, par conséquent je ne monétise que très rarement ce que je produis.<br>
@@ -353,7 +353,7 @@ $_GET['popout'] = 1;
       <span class="alinea moinsgros">Perl - FileMaker - AppleScript</span><br>
       <br>
       <br>
-      SteelDB est le nom de code d'un projet professionel que j'ai réalisé qui a gagné un appel d'offres en 2010 et que j'ai continué à développer jusqu'en 2011. Il s'agit d'une situation très spécifique : Une entreprise ayant un environnement entièrement Mac OSX, et désirant utiliser le logiciel (très limité) FileMaker pour leur outil interne.<br>
+      SteelDB est le nom de code d'un projet professionnel que j'ai réalisé qui a gagné un appel d'offres en 2010 et que j'ai continué à développer jusqu'en 2011. Il s'agit d'une situation très spécifique : Une entreprise ayant un environnement entièrement Mac OSX, et désirant utiliser le logiciel (très limité) FileMaker pour leur outil interne.<br>
       <br>
       Étant à l'époque un des seuls développeurs sur Paris ayant de l'expérience avec FileMaker et l'industrie de l'acier, j'ai décidé de tenter ma chance en répondant à l'appel d'offres. Sur mon temps libre, j'ai assemblé un prototype d'outil utilisant des hooks système en AppleScript qui servent à appeler des scripts en Perl afin de contourner les limitations de FileMaker et d'effectuer certaines actions requises par l'appel d'offres qui sont difficiles ou impossibles à faire depuis FileMaker (par exemple envoyer un e-mail, exporter un fichier Excel ou PDF).<br>
       <br>
@@ -366,7 +366,7 @@ $_GET['popout'] = 1;
       - Un système de traduction de chaque étape des dossiers du français vers l'anglais<br>
       - D'autres outils plus spécifiques dont je ne peux pas parler sans trop révéler d'informations sur l'entreprise<br>
       <br>
-      Voici des captures d'écran de SteelDB en production, lourdement censurées des données professionelles qu'elle contient :<br>
+      Voici des captures d'écran de SteelDB en production, lourdement censurées des données professionnelles qu'elle contient :<br>
       (les premières illustrations sont un schéma relationnel complet de la base de données de l'outil)<br>
       <br>
       <div class="indiv align_center">

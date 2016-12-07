@@ -133,7 +133,7 @@ td.data_input_right { text-align: right; font-family: 'NoBleme-bold'; }
 /*********************************************************** HEADER ET FOOTER ************************************************************/
 .menu_main                              { display: flex; justify-content: space-between; background-color: #2F4456             ;
                                           padding-left: 10px; padding-top: 6px; padding-bottom: 6px                            ;
-                                          font-family: 'NoBleme-header-2';                                                       }
+                                          font-family: 'NoBleme-header-2';                                                     }
 .menu_main_section                      { display: flex; align-items: center;                                                  }
 div.menu_main_item                      { padding-top: 3px; padding-bottom: 5px; padding-left: 10px; padding-right: 10px       ;
                                           font-size: 16px; cursor: pointer; font-weight: bold;  white-space: nowrap;           }
