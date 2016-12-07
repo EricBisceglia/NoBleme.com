@@ -271,17 +271,47 @@ function todo_importance($importance,$style=NULL)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction envoyant un message qui sera broadcasté par le bot IRC NoBleme s'il est en ligne
 //
-// Le paramètre optionnel permet de spécifier un canal sur lequel écrire le message
+// Le premier paramètre optionnel permet de spécifier un canal sur lequel écrire le message
+// Le second paramètre optionnel autorise les codes de formattage de texte
 //
 // Utilisation: ircbot($chemin,"PRIVMSG #NoBleme :Bonjour !");
 // Utilisation: ircbot($chemin,"Bonjour !","#NoBleme");
 
-function ircbot($chemin,$message_irc,$canal_irc=NULL)
+function ircbot($chemin,$message_irc,$canal_irc=NULL,$formattage=NULL)
 {
   // On assainit le message
   $message_irc = str_replace("\\n", '', $message_irc);
   $message_irc = str_replace("\\r", '', $message_irc);
   $message_irc = str_replace("\\t", '', $message_irc);
+
+  // On formatte le message si c'est autorisé
+  if($formattage)
+  {
+    // Substitution des bytes de formattage
+    $message_irc = str_replace('%O',chr(0x0f),$message_irc);        // Remise à zéro
+    $message_irc = str_replace('%B',chr(0x02),$message_irc);        // Gras
+    $message_irc = str_replace('%I',chr(0x1d),$message_irc);        // Italique
+    $message_irc = str_replace('%U',chr(0x1f),$message_irc);        // Souligné
+    $message_irc = str_replace('%C00',chr(0x03).'00',$message_irc); // Couleur : Blanc
+    $message_irc = str_replace('%C01',chr(0x03).'01',$message_irc); // Couleur : Noir
+    $message_irc = str_replace('%C02',chr(0x03).'02',$message_irc); // Couleur : Bleu
+    $message_irc = str_replace('%C03',chr(0x03).'03',$message_irc); // Couleur : Vert
+    $message_irc = str_replace('%C04',chr(0x03).'04',$message_irc); // Couleur : Rouge
+    $message_irc = str_replace('%C05',chr(0x03).'05',$message_irc); // Couleur : Marron
+    $message_irc = str_replace('%C06',chr(0x03).'06',$message_irc); // Couleur : Violet
+    $message_irc = str_replace('%C07',chr(0x03).'07',$message_irc); // Couleur : Orange
+    $message_irc = str_replace('%C08',chr(0x03).'08',$message_irc); // Couleur : Jaune
+    $message_irc = str_replace('%C09',chr(0x03).'09',$message_irc); // Couleur : Vert clair
+    $message_irc = str_replace('%C10',chr(0x03).'10',$message_irc); // Couleur : Bleu vert
+    $message_irc = str_replace('%C11',chr(0x03).'11',$message_irc); // Couleur : Cyan clair
+    $message_irc = str_replace('%C12',chr(0x03).'12',$message_irc); // Couleur : Bleu clair
+    $message_irc = str_replace('%C13',chr(0x03).'13',$message_irc); // Couleur : Rose
+    $message_irc = str_replace('%C14',chr(0x03).'14',$message_irc); // Couleur : Gris
+
+    // Bytes de formattage personnalisés / combinés
+    $message_irc = str_replace('%NB',chr(0x02).chr(0x03).'00,01',$message_irc);               // Fond noir, texte blanc gras
+    $message_irc = str_replace('%TROLL',chr(0x1f).chr(0x02).chr(0x03).'08,13',$message_irc);  // Fond rose, texte jaune gras, souligné
+  }
 
   // Si on peut écrire dans le fichier, on remplace son contenu par le message
   if($fichier_ircbot = fopen($chemin.'ircbot.txt', "w+"))

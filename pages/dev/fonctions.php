@@ -493,13 +493,16 @@ $css = array('admin');
         </tr>
         <tr>
           <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>ircbot(</b>$chemin,"texte","canal"<b>)</b>
+            <b>ircbot(</b>$chemin,"texte",<br>
+            "canal","formattage"<b>)</b>
           </td>
           <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
             Envoie une commande au bot IRC NoBleme<br>
             $chemin doit être le $chemin usuel<br>
             Canal doit contenir le nom du canal entier, avec le #<br>
-            Si canal est NULL, le message brut sera envoyé
+            Si canal est NULL, le message brut sera envoyé<br>
+            Si formattage n'est pas NULL, le texte sera formatté<br>
+            (c'est à dire que les codes comme %B fonctionneront)
           </td>
           <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
             ircbot($chemin,"Bonjour !","#NoBleme");<br>

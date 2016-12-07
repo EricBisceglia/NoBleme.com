@@ -54,7 +54,7 @@ if(isset($_POST['ircbot_message']) && $_POST['ircbot_commande'])
 
   // Reste plus qu'à balancer la commande
   if($ircbot_canal)
-    ircbot($chemin,$ircbot_message,$ircbot_canal);
+    ircbot($chemin,$ircbot_message,$ircbot_canal,1);
   else
     ircbot($chemin,$ircbot_message);
 }
