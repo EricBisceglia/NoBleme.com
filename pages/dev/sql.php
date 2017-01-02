@@ -95,6 +95,14 @@ if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE 
                       visite_url  = 'pages/nbrpg/index'         ");
 $majq .= '<p class="nobleme_background vspaced">Crée l\'entrée activité : Attend le retour du NBRPG</p>';
 
+if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'nbrpg' AND page_id LIKE 'personnages' ")))
+  query(" INSERT INTO pages
+          SET         page_nom    = 'nbrpg'                         ,
+                      page_id     = 'personnages'                   ,
+                      visite_page = 'Juge les personnages du NBRPG' ,
+                      visite_url  = 'pages/nbrpg/joueurs_actifs'    ");
+$majq .= '<p class="nobleme_background vspaced">Crée l\'entrée activité : Juge les personnages du NBRPG</p>';
+
 
 /********************************NBRPGTEST*DELETEME**********************/
 query(" INSERT INTO nbrpg_persos SET id = 1 , FKmembres = 47, couleur_chat = '#AAAA66' , date_creation = 1394875860 , nom = 'Raclette' , max_vie = 21 ");
