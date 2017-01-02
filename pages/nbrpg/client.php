@@ -85,11 +85,13 @@ while($dchat = mysqli_fetch_array($qchat))
     <br>
 
     <script>
-    window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_chat','chat_rp', 'xhr&type=RP', 'append','container_chat_rp','chatrp_onglet') }, 1800);
-    window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_chat','chat_hrp', 'xhr&type=HRP', 'append','container_chat_hrp','chathrp_onglet') }, 1900);
-    window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_session','nbrpg_session', 'xhr'); }, 2900);
-    window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_fiche_perso','fiche_perso', 'xhr'); }, 3000);
-    window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_evenements','nbrpg_evenements', '', 'append','container_evenements','evenements_onglet') }, 1900);
+    window.addEventListener("DOMContentLoaded", function() {
+      window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_chat','chat_rp', 'xhr&type=RP', 'append','container_chat_rp','chatrp_onglet') }, 1800);
+      window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_chat','chat_hrp', 'xhr&type=HRP', 'append','container_chat_hrp','chathrp_onglet') }, 1900);
+      window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_session','nbrpg_session', 'xhr'); }, 2900);
+      window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_fiche_perso','fiche_perso', 'xhr'); }, 3000);
+      window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_evenements','nbrpg_evenements', '', 'append','container_evenements','evenements_onglet') }, 1900);
+    }, false);
     </script>
 
     <div class="body_main midsize">
@@ -173,9 +175,11 @@ while($dchat = mysqli_fetch_array($qchat))
 
     <script>
     // Une fois la page chargée, on fait le choix de l'onglet à ouvrir et positionnement par défaut des barres de défilement
-    document.getElementById("chatrp_onglet").click();
-    document.getElementById('container_chat_rp').scrollTop = document.getElementById('container_chat_rp').scrollHeight;
-    document.getElementById('container_chat_hrp').scrollTop = document.getElementById('container_chat_hrp').scrollHeight;
+    window.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("chatrp_onglet").click();
+      document.getElementById('container_chat_rp').scrollTop = document.getElementById('container_chat_rp').scrollHeight;
+      document.getElementById('container_chat_hrp').scrollTop = document.getElementById('container_chat_hrp').scrollHeight;
+    }, false);
     </script>
 
 <?php include './../../inc/footer.inc.php'; /*********************************************************************************************/

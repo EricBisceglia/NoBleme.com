@@ -37,7 +37,11 @@ $js = array("dynamique");
     </div>
     <br>
 
-    <script>window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/admin_table_session','table_session', 'xhr') }, 2000); </script>
+    <script>
+    window.addEventListener("DOMContentLoaded", function() {
+      window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/admin_table_session','table_session', 'xhr') }, 2000);
+    }, false);
+    </script>
 
     <div class="body_main smallsize">
       <div id="table_session">
