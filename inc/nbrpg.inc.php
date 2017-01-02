@@ -10,7 +10,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction interdisant l'accès à une page si l'utilisateur n'a pas de personnage crée dans le NBRPG
 //
-// Renvoie l'id du personnage appartement au joueur, ou 0 si le joueur n'existe pas
+// Renvoie l'id du personnage appartenant au joueur, ou 0 si le joueur n'existe pas
 //
 // Exemple d'utilisation:
 // $id_perso = nbrpg();
