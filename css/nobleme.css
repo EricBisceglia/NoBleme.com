@@ -64,6 +64,7 @@ textarea.intable { width: 98%; margin: 0 0 0 0;           }
 .maigre          { font-size: 0.75em;                     }
 .moinsgros       { font-size: 1.25em;                     }
 .gros            { font-size: 1.5em;                      }
+.plusgros        { font-size: 2.0em;                      }
 .italique        { font-style: italic;                    }
 .monospace       { font-family: monospace;                }
 .pointeur        { cursor: pointer;                       }
@@ -104,14 +105,16 @@ div.bigsize   { width: 1000px;                     }
 
 div.limited   { max-height: 300px; overflow: auto; }
 
+.container    { display: flex; flex-wrap: nowrap;  }
+
 /************************************************************ DIV : BODY MAIN ************************************************************/
-div.body_main                  { background: #FFFFFF; font-size: 13px; font-family: 'NoBleme'; line-height: 17px ;
-                                 margin: auto; margin-top: 20px; padding-left: 15px; padding-right: 15px         ;
-                                 padding-bottom: 20px; padding-top: 15px; border-radius: 5px;                    }
-div.body_main > span.titre     { font-size: 1.5em; font-family: 'NoBleme-bold'; padding-left: 15px;              }
-div.body_main > span.soustitre { font-size: 1.20em; font-family: 'NoBleme-bold'; padding-left: 8px;              }
-div.body_main > a              { color: #2F4456; text-decoration: none; font-family: 'NoBleme-bold';             }
-div.body_main > a:hover        { color: #7F9DB1;                                                                 }
+div.body_main               { background: #FFFFFF; font-size: 13px; font-family: 'NoBleme'; line-height: 17px ;
+                              margin: auto; margin-top: 20px; padding-left: 15px; padding-right: 15px         ;
+                              padding-bottom: 20px; padding-top: 15px; border-radius: 5px;                    }
+div.body_main > .titre      { font-size: 1.5em; font-family: 'NoBleme-bold'; padding-left: 15px;              }
+div.body_main > .soustitre  { font-size: 1.20em; font-family: 'NoBleme-bold'; padding-left: 8px;              }
+div.body_main > a           { color: #2F4456; text-decoration: none; font-family: 'NoBleme-bold';             }
+div.body_main > a:hover     { color: #7F9DB1;                                                                 }
 
 /********************************************************** TABLE : CADRE GRIS ***********************************************************/
 table.cadre_gris           { border: 1px solid #9A9A9A ; margin-top: 6px ; margin-bottom: 3px                             ;
@@ -176,13 +179,11 @@ div.menu_side_item:first-child          { margin-top: 8px;                      
 hr.menu_side_hr                         { width: 100%; padding: 0px; border: 0px; height: 1px; background: #2F4456;            }
 
 a.nouveaux_messages                     { animation-name: blink-relou; animation-iteration-count: infinite;                    ;
-                                          animation-duration: 1337ms; -webkit-animation: blink-relou 1337ms infinite;          }
+                                          animation-duration: 1337ms;                                                          }
 @keyframes blink-relou                  { from { color: #FF0000; } to { color: #7F9DB1; }                                      }
-@-webkit-keyframes blink-relou          { from { color: #FF0000; } to { color: #7F9DB1; }                                      }
 a.nouveaux_messages:hover               { animation-name: blink-relou-hover; animation-iteration-count: infinite;              ;
-                                          animation-duration: 1337ms; -webkit-animation: blink-relou-hover 1337ms infinite;    }
+                                          animation-duration: 1337ms;                                                          }
 @keyframes blink-relou-hover            { from { color: #FF0000; } to { color: #2F4456; }                                      }
-@-webkit-keyframes blink-relou-hover    { from { color: #FF0000; } to { color: #2F4456; }                                      }
 
 .body_container                         { display: flex; height: 100%;                                                         }
 .body_contenu                           { flex: 1; padding-left: 10px;                                                         }

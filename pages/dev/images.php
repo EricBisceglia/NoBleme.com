@@ -178,6 +178,14 @@ $css = array('admin');
           </td>
         </tr>
         <tr>
+          <td class="cadre_gris_sous_titre cadre_gris_haut gros">NOBLEMERPG : <u>BREATHE FIRE</u> + <u>DPOLY TWENTY SIDER</u></td>
+        </tr>
+        <tr>
+          <td class="cadre_gris nobleme_background cadre_gris_haut align_center">
+            <img src="<?=$chemin?>img/logos/nbrpg.png" alt=" ">
+          </td>
+        </tr>
+        <tr>
           <td class="cadre_gris_sous_titre cadre_gris_haut gros">PROFIL / MESSAGES PRIVÉS : <u>X-FILES</u></td>
         </tr>
         <tr>

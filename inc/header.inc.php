@@ -418,6 +418,7 @@ else if($header_menu == 'admin')
   $h_submenu_css['mod']          = ($header_submenu == 'mod')              ? ' menu_sub_item_selected' : '';
   $h_submenu_css['admin']        = ($header_submenu == 'admin')            ? ' menu_sub_item_selected' : '';
   $h_submenu_css['dev']          = ($header_submenu == 'dev')              ? ' menu_sub_item_selected' : '';
+  $h_submenu_css['nbrpg']        = ($header_submenu == 'nbrpg')            ? ' menu_sub_item_selected' : '';
 }
 else if($header_menu == 'secrets')
 {
@@ -476,6 +477,17 @@ else if($header_menu == 'lire' && $header_submenu == 'miscellanees')
   $h_side_css['stats']           = ($header_sidemenu == 'stats')           ? ' menu_side_item_selected' : '';
   $h_side_css['proposer']        = ($header_sidemenu == 'proposer')        ? ' menu_side_item_selected' : '';
   $h_side_css['rss']             = ($header_sidemenu == 'rss')             ? ' menu_side_item_selected' : '';
+}
+else if($header_menu == 'lire' && $header_submenu == 'nbrpg')
+{
+  $h_side_css['index']           = ($header_sidemenu == 'index')           ? ' menu_side_item_selected' : '';
+  $h_side_css['liste_persos']    = ($header_sidemenu == 'liste_persos')    ? ' menu_side_item_selected' : '';
+  $h_side_css['archive']         = ($header_sidemenu == 'archive')         ? ' menu_side_item_selected' : '';
+  $h_side_css['caverne']         = ($header_sidemenu == 'caverne')         ? ' menu_side_item_selected' : '';
+  $h_side_css['historique']      = ($header_sidemenu == 'historique')      ? ' menu_side_item_selected' : '';
+  $h_side_css['caverne_random']  = ($header_sidemenu == 'caverne_random')  ? ' menu_side_item_selected' : '';
+  $h_side_css['client']          = ($header_sidemenu == 'client')          ? ' menu_side_item_selected' : '';
+  $h_side_css['fiche_perso']     = ($header_sidemenu == 'fiche_perso')     ? ' menu_side_item_selected' : '';
 }
 else if($header_menu == 'discuter' && $header_submenu == 'irc')
 {
@@ -687,6 +699,9 @@ else if($header_menu == 'compte' && $header_submenu == 'reglages')
       <div onClick="location.href = '<?=$chemin?>pages/dev/formattage'" class="menu_sub_item<?=$h_submenu_css['dev']?>">
         <a                     href="<?=$chemin?>pages/dev/formattage">Développement</a>
       </div>
+      <div onClick="location.href = '<?=$chemin?>pages/nbrpg/admin'" class="menu_sub_item<?=$h_submenu_css['nbrpg']?>">
+        <a                     href="<?=$chemin?>pages/nbrpg/admin">NBRPG</a>
+      </div>
       <?php } ?>
     </div>
 
@@ -818,6 +833,38 @@ else if($header_menu == 'compte' && $header_submenu == 'reglages')
           </div>
           <div onClick="location.href = '<?=$chemin?>pages/nobleme/pilori'" class="menu_side_item<?=$h_side_css['pilori']?>">
             <a                     href="<?=$chemin?>pages/nobleme/pilori">Pilori des bannis</a>
+          </div>
+        </div>
+      </nav>
+
+      <?php } else if($header_menu == 'lire' && $header_submenu == 'nbrpg') { ?>
+      <nav>
+        <div class="menu_side">
+          <div onClick="location.href = '<?=$chemin?>pages/nbrpg/index'" class="menu_side_item<?=$h_side_css['index']?>">
+            <a                     href="<?=$chemin?>pages/nbrpg/index">Qu'est-ce que le NBRPG ?</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/nbrpg/joueurs_actifs'" class="menu_side_item<?=$h_side_css['liste_persos']?>">
+            <a                     href="<?=$chemin?>pages/nbrpg/joueurs_actifs">Liste des personnages</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/nbrpg/archive'" class="menu_side_item<?=$h_side_css['archive']?>">
+            <a                     href="<?=$chemin?>pages/nbrpg/archive">Archive des sessions</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/nbrpg/caverne'" class="menu_side_item<?=$h_side_css['caverne']?>">
+            <a                     href="<?=$chemin?>pages/nbrpg/caverne">La caverne de Liodain</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/nbrpg/caverne?historique'" class="menu_side_item<?=$h_side_css['historique']?>">
+            <a                     href="<?=$chemin?>pages/nbrpg/caverne?historique">Caverne : Historique</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/nbrpg/caverne?random'" class="menu_side_item<?=$h_side_css['caverne_random']?>">
+            <a                     href="<?=$chemin?>pages/nbrpg/caverne?random">Caverne : Page au hasard</a>
+          </div>
+          <hr class="menu_side_hr">
+          <div onClick="location.href = '<?=$chemin?>pages/nbrpg/client'" class="menu_side_item<?=$h_side_css['client']?>">
+            <a                     href="<?=$chemin?>pages/nbrpg/client">Client : Jouer au NBRPG</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/nbrpg/fiche_perso'" class="menu_side_item<?=$h_side_css['fiche_perso']?>">
+            <a                     href="<?=$chemin?>pages/nbrpg/fiche_perso">Ma fiche de personnage</a>
           </div>
         </div>
       </nav>
