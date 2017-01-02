@@ -25,16 +25,13 @@ function nbrpg()
   $checkuser  = $_SESSION['user'];
   $checkperso = query(" SELECT id FROM nbrpg_persos WHERE FKmembres = '$checkuser' ");
 
-  // S'il n'existe pas, on return 0
-  if(!mysqli_num_rows($checkperso))
-    return 0;
-
-  // Sinon, on renvoie son ID
-  else
-  {
-    $dcheckperso = mysqli_fetch_array($checkperso);
+  // On renvoie l'ID du perso
+  if($dcheckperso = mysqli_fetch_array($checkperso))
     return $dcheckperso['id'];
-  }
+
+  // S'il n'existe pas, on return 0
+  else
+    return 0;
 }
 
 
