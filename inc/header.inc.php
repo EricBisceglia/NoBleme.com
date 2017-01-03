@@ -487,6 +487,7 @@ else if($header_menu == 'lire' && $header_submenu == 'nbrpg')
   $h_side_css['historique']      = ($header_sidemenu == 'historique')      ? ' menu_side_item_selected' : '';
   $h_side_css['caverne_random']  = ($header_sidemenu == 'caverne_random')  ? ' menu_side_item_selected' : '';
   $h_side_css['client']          = ($header_sidemenu == 'client')          ? ' menu_side_item_selected' : '';
+  $h_side_css['observer']        = ($header_sidemenu == 'observer')        ? ' menu_side_item_selected' : '';
   $h_side_css['fiche_perso']     = ($header_sidemenu == 'fiche_perso')     ? ' menu_side_item_selected' : '';
 }
 else if($header_menu == 'discuter' && $header_submenu == 'irc')
@@ -862,6 +863,9 @@ else if($header_menu == 'compte' && $header_submenu == 'reglages')
           <hr class="menu_side_hr">
           <div onClick="location.href = '<?=$chemin?>pages/nbrpg/client'" class="menu_side_item<?=$h_side_css['client']?>">
             <a                     href="<?=$chemin?>pages/nbrpg/client">Client : Jouer au NBRPG</a>
+          </div>
+          <div onClick="location.href = '<?=$chemin?>pages/nbrpg/client_spectateur'" class="menu_side_item<?=$h_side_css['observer']?>">
+            <a                     href="<?=$chemin?>pages/nbrpg/client_spectateur">Observer le jeu en cours</a>
           </div>
           <div onClick="location.href = '<?=$chemin?>pages/nbrpg/fiche_perso'" class="menu_side_item<?=$h_side_css['fiche_perso']?>">
             <a                     href="<?=$chemin?>pages/nbrpg/fiche_perso">Ma fiche de personnage</a>

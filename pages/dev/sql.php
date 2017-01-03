@@ -140,9 +140,9 @@ query(" INSERT INTO nbrpg_monstres SET id = 1 , nom = 'Bitounette moulée' , max
 query(" INSERT INTO nbrpg_monstres SET id = 2 , nom = 'Clafoutis des forêts' , max_vie = 37");
 query(" INSERT INTO nbrpg_monstres SET id = 3 , nom = 'Schnafon' , max_vie = 189");
 
-query(" INSERT INTO nbrpg_session SET id = 5 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , vie = 94 ");
-query(" INSERT INTO nbrpg_session SET id = 6 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , vie = 94 ");
-query(" INSERT INTO nbrpg_session SET id = 7 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 3 , vie = 189 ");
+query(" INSERT INTO nbrpg_session SET id = 5 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , vie = 94, danger = 5 ");
+query(" INSERT INTO nbrpg_session SET id = 6 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , vie = 94, danger = 5 ");
+query(" INSERT INTO nbrpg_session SET id = 7 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 3 , vie = 189, danger = 15 ");
 
 $majq .= '<p class="erreur texte_blanc gros gras vspaced">Exécution des tests à supprimer avant de mettre en live</p>';
 /********************************NBRPGTEST*DELETEME**********************/

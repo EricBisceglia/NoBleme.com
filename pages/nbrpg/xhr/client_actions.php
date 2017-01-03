@@ -11,8 +11,11 @@ if(!isset($_POST['xhr']))
 include './../../../inc/includes.inc.php';
 include './../../../inc/nbrpg.inc.php';
 $chemin_fixed = substr($chemin,0,-3);
-$id_nbrpg = nbrpg();
+$id_nbrpg     = nbrpg();
 if(!$id_nbrpg)
+  exit();
+$id_session   = nbrpg_session($id_nbrpg);
+if(!$id_session)
   exit();
 
 /*****************************************************************************************************************************************/

@@ -10,6 +10,9 @@ include './../../inc/nbrpg.inc.php';    // Contenu du NBRPG
 $id_nbrpg = nbrpg();
 if(!$id_nbrpg)
   header("Location: ".$chemin."pages/nbrpg/fiche_perso");
+$id_session = nbrpg_session($id_nbrpg);
+if(!$id_session)
+  header("Location: ".$chemin."pages/nbrpg/client_spectateur");
 
 // Cette page est à apprécier en plein écran, on vire les menus !
 $_GET['popup'] = 1;

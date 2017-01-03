@@ -39,6 +39,32 @@ function nbrpg()
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction interdisant l'accès à une page si le personnage n'est pas invité à jouer dans la session en cours
+//
+// Renvoie l'id de session du personnage, ou 0 si le personnage n'est pas dans la session
+//
+// Exemple d'utilisation:
+// $id_session = nbrpg_session(nbrpg());
+
+function nbrpg_session($id_perso)
+{
+  // On va chercher si le perso est dans une session
+  $checksession = query(" SELECT id FROM nbrpg_session WHERE FKnbrpg_persos = '$id_perso' ");
+
+  // On renvoie l'ID de session du perso
+  if($dchecksession = mysqli_fetch_array($checksession))
+    return $dchecksession['id'];
+
+  // S'il n'est pas dans la session, on renvoie 0
+  else
+    return 0;
+}
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction assignant une couleur aléatoire à un nouveau compte
 //
 // Exemple d'utilisation:
