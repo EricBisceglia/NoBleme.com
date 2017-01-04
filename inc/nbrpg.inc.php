@@ -103,6 +103,32 @@ function nbrpg_chatlog($timestamp,$couleur,$nom,$type,$message)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Augmente une valeur en fonction d'un niveau (par exemple détermine les points de vie d'un monstre selon son niveau)
+//
+// $valeur est la valeur à multiplier
+// $niveau est le niveau par lequel multiplier la valeur
+// Utilisation: nbrpg_multiplicateur(100,5);
+
+function nbrpg_multiplicateur($valeur,$niveau)
+{
+  // Le multiplicateur actuel - plus il est élevé, plus le jeu est facile
+  $multiplicateur_actuel = 10;
+
+  // Application du multiplicateur pour augmenter la difficulté linéairement avec le niveau
+  $nouvelle_valeur = floor($valeur + ($valeur * (($niveau - 1) / $multiplicateur_actuel)));
+
+  // On augmente également la difficulté exponentiellement avec le niveau
+  if($niveau > 1)
+    $nouvelle_valeur = floor($nouvelle_valeur * 1 + (exp ($niveau / ($multiplicateur_actuel / 3))));
+
+  // Et on renvoie la nouvelle valeur
+  return $nouvelle_valeur;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Affiche les points de vie d'un personnage ou monstre, en vert si ça va bien et en rouge si ça va pas
 //
 // $vie est les points de vie actuels
@@ -113,10 +139,12 @@ function nbrpg_vierestante($vie,$viemax)
 {
   // Si les points de vie sont bien, on met en vert
   if($vie >= $viemax * 0.75)
-    $cssvie = '<span style="color:#008000;">';
+    $cssvie = '<span class="nbrpg_hp_high">';
+
   // S'ils sont pas bien, rouge et gras
   else if ($vie <= $viemax * 0.25)
-    $cssvie = '<span style="color:#B22222;font-weight:bold;">';
+    $cssvie = '<span class="nbrpg_hp_low gras">';
+
   // Sinon, on laisse tel quel
   else
     $cssvie = '';

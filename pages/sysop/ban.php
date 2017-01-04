@@ -73,7 +73,6 @@ if(isset($_POST['sysop_chercher_x']) && $_POST['sysop_ban'])
     $pchercher_id[$npchercher]      = $dpchercher['id'];
     $pchercher_pseudo[$npchercher]  = $dpchercher['pseudonyme'];
     $pchercher_banni[$npchercher]   = ($dpchercher['banni_date']) ? 'Débannir' : 'Bannir' ;
-    $pchercher_css[$npchercher]     = ($npchercher%2) ? ' nobleme_background' : '' ;
   }
 }
 
@@ -240,37 +239,41 @@ if(isset($_GET['id']))
 
     <div class="body_main smallsize">
       <table class="cadre_gris indiv">
-        <tr>
-          <td colspan="2" class="cadre_gris_titre moinsgros">
-            RÉSULTATS DE LA RECHERCHE
-          </td>
-        </tr>
-        <?php if($npchercher) { ?>
-        <tr>
-          <td class="cadre_gris_sous_titre">
-            Pseudonyme
-          </td>
-          <td class="cadre_gris_sous_titre">
-            Action
-          </td>
-        </tr>
-        <?php for($i=0;$i<$npchercher;$i++) { ?>
-        <tr>
-          <td class="cadre_gris spaced align_center<?=$pchercher_css[$i]?>">
-            <a class="dark blank gras" href="<?=$chemin?>pages/user/user?id=<?=$pchercher_id[$i]?>"><?=$pchercher_pseudo[$i]?></a>
-          </td>
-          <td class="cadre_gris spaced align_center<?=$pchercher_css[$i]?>">
-            <a class="dark blank" href="<?=$chemin?>pages/sysop/ban?id=<?=$pchercher_id[$i]?>"><?=$pchercher_banni[$i]?></a>
-          </td>
-        </tr>
-        <?php } ?>
-        <?php } else { ?>
-        <tr>
-          <td colspan="3" class="align_center moinsgros gras cadre_gris_haut mise_a_jour texte_blanc">
-            Aucun utilisateur trouvé, cherchez mieux
-          </td>
-        </tr>
-        <?php } ?>
+        <thead>
+          <tr>
+            <td colspan="2" class="cadre_gris_titre moinsgros">
+              RÉSULTATS DE LA RECHERCHE
+            </td>
+          </tr>
+          <?php if($npchercher) { ?>
+          <tr>
+            <td class="cadre_gris_sous_titre">
+              Pseudonyme
+            </td>
+            <td class="cadre_gris_sous_titre">
+              Action
+            </td>
+          </tr>
+        </thead>
+        <tbody class="cadre_gris_altc">
+          <?php for($i=0;$i<$npchercher;$i++) { ?>
+          <tr>
+            <td class="cadre_gris spaced align_center">
+              <a class="dark blank gras" href="<?=$chemin?>pages/user/user?id=<?=$pchercher_id[$i]?>"><?=$pchercher_pseudo[$i]?></a>
+            </td>
+            <td class="cadre_gris spaced align_center">
+              <a class="dark blank" href="<?=$chemin?>pages/sysop/ban?id=<?=$pchercher_id[$i]?>"><?=$pchercher_banni[$i]?></a>
+            </td>
+          </tr>
+          <?php } ?>
+          <?php } else { ?>
+          <tr>
+            <td colspan="3" class="align_center moinsgros gras cadre_gris_haut mise_a_jour texte_blanc">
+              Aucun utilisateur trouvé, cherchez mieux
+            </td>
+          </tr>
+          <?php } ?>
+        </tbody>
       </table>
     </div>
 

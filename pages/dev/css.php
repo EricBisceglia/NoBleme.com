@@ -414,6 +414,10 @@ $css = array('admin');
           <td class="cadre_gris"><table class="cadre_gris indiv"><tr><td class="align_center">Table avec cadre gris</td></tr></table></td>
         </tr>
         <tr>
+          <td class="cadre_gris align_center"><b>tbody</b>.cadre_gris_altc<br><b>tbody</b>.cadre_gris_altc2</td>
+          <td class="cadre_gris"><table class="cadre_gris indiv"><tr><td class="align_center blanc">Une rangée sur deux</td></tr><tr><td class="align_center">sera en gris clair</td></tr></table></td>
+        </tr>
+        <tr>
           <td class="cadre_gris align_center"><b>td</b>.cadre_gris</td>
           <td class="cadre_gris"><table class="indiv"><tr><td class="cadre_gris align_center">Case avec cadre gris</td></tr></table></td>
         </tr>

@@ -103,7 +103,6 @@ if($irl_combien)
   // Préparation des données pour l'affichage
   for($nparticipants = 0 ; $dparticipants = mysqli_fetch_array($qparticipants) ; $nparticipants++)
   {
-    $irlp_css[$nparticipants]       = ($nparticipants%2) ? ' nobleme_background' : '';
     $irlp_pseudo[$nparticipants]    = (!$dparticipants['membreid']) ? $dparticipants['irlppseudo'] : '<a class="dark blank" href="'.$chemin.'pages/user/user?id='.$dparticipants['membreid'].'">'.$dparticipants['membrepseudo'].'</a>' ;
     $irlp_confirme[$nparticipants]  = (!$dparticipants['irlpconfirme']) ? '&nbsp;' : '&check;';
     $irlp_details[$nparticipants]   = $dparticipants['irlpdetails'];
@@ -222,34 +221,34 @@ if($irl_combien)
     <div class="body_main bigsize" id="irlp">
 
       <table class="cadre_gris indiv">
-        <tr>
-          <td class="cadre_gris_sous_titre spaced noflow moinsgros">
-            Pseudonyme
-          </td>
-          <td class="cadre_gris_sous_titre spaced noflow moinsgros">
-            Présence confirmée
-          </td>
-          <td class="cadre_gris_sous_titre spaced noflow moinsgros">
-            Détail(s) particulier(s)
-          </td>
-        </tr>
-
-        <?php for($i=0;$i<$nparticipants;$i++) { ?>
-
-        <tr>
-          <td class="cadre_gris align_center spaced noflow<?=$irlp_css[$i]?>">
-            <?=$irlp_pseudo[$i]?>
-          </td>
-          <td class="cadre_gris align_center spaced noflow<?=$irlp_css[$i]?>">
-            <?=$irlp_confirme[$i]?>
-          </td>
-          <td class="cadre_gris align_center spaced noflow<?=$irlp_css[$i]?>">
-            <?=$irlp_details[$i]?>
-          </td>
-        </tr>
-
-        <?php } ?>
-
+        <thead>
+          <tr>
+            <td class="cadre_gris_sous_titre spaced noflow moinsgros">
+              Pseudonyme
+            </td>
+            <td class="cadre_gris_sous_titre spaced noflow moinsgros">
+              Présence confirmée
+            </td>
+            <td class="cadre_gris_sous_titre spaced noflow moinsgros">
+              Détail(s) particulier(s)
+            </td>
+          </tr>
+        </thead>
+        <tbody class="cadre_gris_altc">
+          <?php for($i=0;$i<$nparticipants;$i++) { ?>
+          <tr>
+            <td class="cadre_gris align_center spaced noflow">
+              <?=$irlp_pseudo[$i]?>
+            </td>
+            <td class="cadre_gris align_center spaced noflow">
+              <?=$irlp_confirme[$i]?>
+            </td>
+            <td class="cadre_gris align_center spaced noflow">
+              <?=$irlp_details[$i]?>
+            </td>
+          </tr>
+          <?php } ?>
+        </tbody>
       </table>
 
       <?php } ?>

@@ -63,9 +63,6 @@ for($npageviews = 0 ; $dpageviews = mysqli_fetch_array($qpageviews) ; $npageview
     $pageviews_growpourcent[$npageviews] = 'New !';
   else
     $pageviews_growpourcent[$npageviews] = '-';
-
-  // Et on alterne les couleurs pour pouvoir suivre les lignes
-  $pageviews_css[$npageviews]   = ($npageviews % 2) ? ' nobleme_background' : '';
 }
 
 // On va chercher de quand datent les stats
@@ -98,53 +95,57 @@ $page_titre = "Stats - Pageviews";
 
     <div class="body_main midsize">
       <table class="cadre_gris indiv">
-        <tr>
-          <td colspan="6" class="cadre_gris_titre gros">
-            PAGEVIEWS : ÉVOLUTION SUR <?=$pageviews_jours?> JOURS DEPUIS LE <?=$pageviews_date?>
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre cadre_gris_haut">
-            Raw
-          </td>
-          <td class="cadre_gris_sous_titre cadre_gris_haut">
-            Formaté
-          </td>
-          <td class="cadre_gris_sous_titre cadre_gris_haut">
-            Croissance
-          </td>
-          <td class="cadre_gris_sous_titre cadre_gris_haut">
-            Croissance %
-          </td>
-          <td class="cadre_gris_sous_titre cadre_gris_haut">
-            Avant
-          </td>
-          <td class="cadre_gris_sous_titre cadre_gris_haut">
-            Maintenant
-          </td>
-        </tr>
-        <?php for($i=0;$i<$npageviews;$i++) { ?>
-        <tr>
-          <td class="cadre_gris align_center<?=$pageviews_css[$i]?>">
-            <?=$page_nom_raw[$i]?> - <?=$page_id_raw[$i]?>
-          </td>
-          <td class="cadre_gris align_center<?=$pageviews_css[$i]?>">
-            <?=$pageviews_nom[$i]?>
-          </td>
-          <td class="cadre_gris align_center gras<?=$pageviews_css[$i]?>">
-            <?=$pageviews_grow[$i]?>
-          </td>
-          <td class="cadre_gris align_center gras<?=$pageviews_css[$i]?>">
-            <?=$pageviews_growpourcent[$i]?>
-          </td>
-          <td class="cadre_gris align_center<?=$pageviews_css[$i]?>">
-            <?=$pageviews_last[$i]?>
-          </td>
-          <td class="cadre_gris align_center<?=$pageviews_css[$i]?>">
-            <?=$pageviews_vues[$i]?>
-          </td>
-        </tr>
-        <?php } ?>
+        <thead>
+          <tr>
+            <td colspan="6" class="cadre_gris_titre gros">
+              PAGEVIEWS : ÉVOLUTION SUR <?=$pageviews_jours?> JOURS DEPUIS LE <?=$pageviews_date?>
+            </td>
+          </tr>
+          <tr>
+            <td class="cadre_gris_sous_titre cadre_gris_haut">
+              Raw
+            </td>
+            <td class="cadre_gris_sous_titre cadre_gris_haut">
+              Formaté
+            </td>
+            <td class="cadre_gris_sous_titre cadre_gris_haut">
+              Croissance
+            </td>
+            <td class="cadre_gris_sous_titre cadre_gris_haut">
+              Croissance %
+            </td>
+            <td class="cadre_gris_sous_titre cadre_gris_haut">
+              Avant
+            </td>
+            <td class="cadre_gris_sous_titre cadre_gris_haut">
+              Maintenant
+            </td>
+          </tr>
+        </thead>
+        <tbody class="cadre_gris_altc">
+          <?php for($i=0;$i<$npageviews;$i++) { ?>
+          <tr>
+            <td class="cadre_gris align_center">
+              <?=$page_nom_raw[$i]?> - <?=$page_id_raw[$i]?>
+            </td>
+            <td class="cadre_gris align_center">
+              <?=$pageviews_nom[$i]?>
+            </td>
+            <td class="cadre_gris align_center gras">
+              <?=$pageviews_grow[$i]?>
+            </td>
+            <td class="cadre_gris align_center gras">
+              <?=$pageviews_growpourcent[$i]?>
+            </td>
+            <td class="cadre_gris align_center">
+              <?=$pageviews_last[$i]?>
+            </td>
+            <td class="cadre_gris align_center">
+              <?=$pageviews_vues[$i]?>
+            </td>
+          </tr>
+          <?php } ?>
+        </tbody>
       </table>
     </div>
 

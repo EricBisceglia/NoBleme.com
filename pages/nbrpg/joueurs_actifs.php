@@ -18,6 +18,9 @@ $page_desc  = "Liste des personnages actuellement actifs dans le NoBlemeRPG";
 $page_nom = "nbrpg";
 $page_id  = "personnages";
 
+// CSS
+$css = array('nbrpg');
+
 
 
 
@@ -89,66 +92,70 @@ for($npersos = 0 ; $dpersos = mysqli_fetch_array($qpersos) ; $npersos++)
 
     <div class="body_main bigsize">
       <table class="cadre_gris indiv">
-        <tr>
-          <td class="cadre_gris_titre moinsgros vspaced spaced">
-            PERSONNAGE
-          </td>
-          <td class="cadre_gris_titre moinsgros vspaced spaced">
-            JOUEUR
-          </td>
-          <td class="cadre_gris_titre moinsgros vspaced spaced nowrap">
-            REJOINT LE GROUPE
-          </td>
-          <td class="cadre_gris_titre moinsgros vspaced spaced">
-            CLASSE
-          </td>
-          <td class="cadre_gris_titre moinsgros vspaced spaced">
-            NIVEAU
-          </td>
-          <td class="cadre_gris_titre moinsgros vspaced spaced nowrap">
-            VIE MAX.
-          </td>
-          <td class="cadre_gris_titre moinsgros vspaced spaced">
-            PHYSIQUE
-          </td>
-          <td class="cadre_gris_titre moinsgros vspaced spaced">
-            MENTAL
-          </td>
-          <td class="cadre_gris_titre moinsgros vspaced spaced">
-            DANGER
-          </td>
-        </tr>
-        <?php for($i=0;$i<$npersos;$i++) { ?>
-        <tr>
-          <td class="cadre_gris align_center moinsgros gras vspaced spaced nowrap" style="color:<?=$perso_couleur[$i]?>">
-            <?=$perso_nom[$i]?>
-          </td>
-          <td class="cadre_gris align_center vspaced spaced nowrap">
-            <a href="<?=$chemin?>pages/user/user.php?id=<?=$perso_userid[$i]?>" class="dark blank"><?=$perso_joueur[$i]?></a>
-          </td>
-          <td class="cadre_gris align_center vspaced spaced nowrap">
-            <?=$perso_creation[$i]?>
-          </td>
-          <td class="cadre_gris align_center vspaced spaced nowrap">
-            <?=$perso_classe[$i]?>
-          </td>
-          <td class="cadre_gris align_center gras vspaced spaced nowrap">
-            <?=$perso_niveau[$i]?>
-          </td>
-          <td class="cadre_gris align_center gras vspaced spaced nowrap" style="color:#008000;">
-            <?=$perso_maxvie[$i]?>
-          </td>
-          <td class="cadre_gris align_center vspaced spaced nowrap">
-            <?=$perso_physique[$i]?>
-          </td>
-          <td class="cadre_gris align_center  vspaced spaced nowrap">
-            <?=$perso_mental[$i]?>
-          </td>
-          <td class="cadre_gris align_center vspaced spaced nowrap">
-            <?=$perso_danger[$i]?>
-          </td>
-        </tr>
-        <?php } ?>
+        <thead>
+          <tr>
+            <td class="cadre_gris_titre moinsgros vspaced spaced">
+              PERSONNAGE
+            </td>
+            <td class="cadre_gris_titre moinsgros vspaced spaced">
+              JOUEUR
+            </td>
+            <td class="cadre_gris_titre moinsgros vspaced spaced nowrap">
+              REJOINT LE GROUPE
+            </td>
+            <td class="cadre_gris_titre moinsgros vspaced spaced">
+              CLASSE
+            </td>
+            <td class="cadre_gris_titre moinsgros vspaced spaced">
+              NIVEAU
+            </td>
+            <td class="cadre_gris_titre moinsgros vspaced spaced nowrap">
+              VIE MAX.
+            </td>
+            <td class="cadre_gris_titre moinsgros vspaced spaced">
+              PHYSIQUE
+            </td>
+            <td class="cadre_gris_titre moinsgros vspaced spaced">
+              MENTAL
+            </td>
+            <td class="cadre_gris_titre moinsgros vspaced spaced">
+              DANGER
+            </td>
+          </tr>
+        </thead>
+        <tbody class="cadre_gris_altc">
+          <?php for($i=0;$i<$npersos;$i++) { ?>
+          <tr>
+            <td class="cadre_gris align_center moinsgros gras vspaced spaced nowrap" style="color:<?=$perso_couleur[$i]?>">
+              <?=$perso_nom[$i]?>
+            </td>
+            <td class="cadre_gris align_center vspaced spaced nowrap">
+              <a href="<?=$chemin?>pages/user/user.php?id=<?=$perso_userid[$i]?>" class="dark blank"><?=$perso_joueur[$i]?></a>
+            </td>
+            <td class="cadre_gris align_center vspaced spaced nowrap">
+              <?=$perso_creation[$i]?>
+            </td>
+            <td class="cadre_gris align_center vspaced spaced nowrap">
+              <?=$perso_classe[$i]?>
+            </td>
+            <td class="cadre_gris align_center gras vspaced spaced nowrap">
+              <?=$perso_niveau[$i]?>
+            </td>
+            <td class="cadre_gris align_center gras vspaced spaced nowrap nbrpg_hp_high">
+              <?=$perso_maxvie[$i]?>
+            </td>
+            <td class="cadre_gris align_center vspaced spaced nowrap">
+              <?=$perso_physique[$i]?>
+            </td>
+            <td class="cadre_gris align_center  vspaced spaced nowrap">
+              <?=$perso_mental[$i]?>
+            </td>
+            <td class="cadre_gris align_center vspaced spaced nowrap">
+              <?=$perso_danger[$i]?>
+            </td>
+          </tr>
+          <?php } ?>
+        </tbody>
       </table>
     </div>
 

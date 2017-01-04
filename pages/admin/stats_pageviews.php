@@ -53,9 +53,6 @@ for($npageviews = 0 ; $dpageviews = mysqli_fetch_array($qpageviews) ; $npageview
 
   // On formate le nombre de vues pour que ça soit lisible
   $pageviews_vues[$npageviews]  = number_format($dpageviews['vues'], 0, ',', ' ');
-
-  // Et on alterne les couleurs pour pouvoir suivre les lignes
-  $pageviews_css[$npageviews]   = ($npageviews % 2) ? ' nobleme_background' : '';
 }
 
 // On set le titre de la page avant d'invoquer le header
@@ -78,35 +75,39 @@ $page_titre = "Stats - Pageviews";
 
     <div class="body_main smallsize">
       <table class="cadre_gris indiv">
-        <tr>
-          <td colspan="3" class="cadre_gris_titre gros">
-            PAGEVIEWS
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre cadre_gris_haut">
-            Raw
-          </td>
-          <td class="cadre_gris_sous_titre cadre_gris_haut">
-            Formaté
-          </td>
-          <td class="cadre_gris_sous_titre cadre_gris_haut">
-            Pageviews
-          </td>
-        </tr>
-        <?php for($i=0;$i<$npageviews;$i++) { ?>
-        <tr>
-          <td class="cadre_gris align_center<?=$pageviews_css[$i]?>">
-            <?=$page_nom_raw[$i]?> - <?=$page_id_raw[$i]?>
-          </td>
-          <td class="cadre_gris align_center<?=$pageviews_css[$i]?>">
-            <?=$pageviews_nom[$i]?>
-          </td>
-          <td class="cadre_gris align_center gras<?=$pageviews_css[$i]?>">
-            <?=$pageviews_vues[$i]?>
-          </td>
-        </tr>
-        <?php } ?>
+        <thead>
+          <tr>
+            <td colspan="3" class="cadre_gris_titre gros">
+              PAGEVIEWS
+            </td>
+          </tr>
+          <tr>
+            <td class="cadre_gris_sous_titre cadre_gris_haut">
+              Raw
+            </td>
+            <td class="cadre_gris_sous_titre cadre_gris_haut">
+              Formaté
+            </td>
+            <td class="cadre_gris_sous_titre cadre_gris_haut">
+              Pageviews
+            </td>
+          </tr>
+        </thead>
+        <tbody class="cadre_gris_altc">
+          <?php for($i=0;$i<$npageviews;$i++) { ?>
+          <tr>
+            <td class="cadre_gris align_center">
+              <?=$page_nom_raw[$i]?> - <?=$page_id_raw[$i]?>
+            </td>
+            <td class="cadre_gris align_center">
+              <?=$pageviews_nom[$i]?>
+            </td>
+            <td class="cadre_gris align_center gras">
+              <?=$pageviews_vues[$i]?>
+            </td>
+          </tr>
+          <?php } ?>
+        </tbody>
       </table>
     </div>
 
