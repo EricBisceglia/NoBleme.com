@@ -71,7 +71,10 @@ $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg
 query(" CREATE TABLE IF NOT EXISTS nbrpg_monstres (
           id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
           nom               MEDIUMTEXT                                            ,
-          max_vie           INT(11) UNSIGNED NOT NULL
+          max_vie           INT(11) UNSIGNED NOT NULL                             ,
+          physique          INT(11) UNSIGNED NOT NULL                             ,
+          mental            INT(11) UNSIGNED NOT NULL                             ,
+          danger            INT(11) UNSIGNED NOT NULL
         ) ENGINE=MyISAM; ");
 $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_monstres</p>';
 
@@ -137,13 +140,13 @@ query(" INSERT INTO nbrpg_session SET id = 2 , FKnbrpg_persos = 3 , FKnbrpg_mons
 query(" INSERT INTO nbrpg_session SET id = 3 , FKnbrpg_persos = 4 , FKnbrpg_monstres = 0 , vie = 350 , energie = 100 , charges_oracle = 1, physique = 20, mental = 16, danger = 20 ");
 query(" INSERT INTO nbrpg_session SET id = 4 , FKnbrpg_persos = 5 , FKnbrpg_monstres = 0 , vie = 100 , energie = 100 , charges_oracle = 1, physique = 10, mental = 10, danger = 10 ");
 
-query(" INSERT INTO nbrpg_monstres SET id = 1 , nom = 'Bitounette moulée' , max_vie = 80 ");
-query(" INSERT INTO nbrpg_monstres SET id = 2 , nom = 'Clafoutis des forêts' , max_vie = 60 ");
-query(" INSERT INTO nbrpg_monstres SET id = 3 , nom = 'Schnafon' , max_vie = 300 ");
+query(" INSERT INTO nbrpg_monstres SET id = 1 , nom = 'Bitounette moulée' , max_vie = 80 , physique = 10 , mental = 5 , danger = 10 ");
+query(" INSERT INTO nbrpg_monstres SET id = 2 , nom = 'Clafoutis des forêts' , max_vie = 60 , physique = 10 , mental = 10 , danger = 10 ");
+query(" INSERT INTO nbrpg_monstres SET id = 3 , nom = 'Schnafon' , max_vie = 300 , physique = 20 , mental = 20 , danger = 20 ");
 
-query(" INSERT INTO nbrpg_session SET id = 5 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , monstre_niveau = 1 , vie = 80, danger = 5 ");
-query(" INSERT INTO nbrpg_session SET id = 6 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , monstre_niveau = 3 , vie = 98, danger = 5 ");
-query(" INSERT INTO nbrpg_session SET id = 7 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 3 , monstre_niveau = 7 , vie = 488, danger = 15 ");
+query(" INSERT INTO nbrpg_session SET id = 5 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , monstre_niveau = 1 , vie = 80, physique = 10 , mental = 5 , danger = 10 ");
+query(" INSERT INTO nbrpg_session SET id = 6 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , monstre_niveau = 3 , vie = 98, physique = 12 , mental = 6 , danger = 5 ");
+query(" INSERT INTO nbrpg_session SET id = 7 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 3 , monstre_niveau = 7 , vie = 488, physique = 26 , mental = 26 , danger = 26 ");
 
 $majq .= '<p class="erreur texte_blanc gros gras vspaced">Exécution des tests à supprimer avant de mettre en live</p>';
 /********************************NBRPGTEST*DELETEME**********************/

@@ -136,6 +136,15 @@ table.data_input    { margin: auto; text-align: center;               }
 td.data_input_left  { text-align: left; font-style: italic;           }
 td.data_input_right { text-align: right; font-family: 'NoBleme-bold'; }
 
+/************************************************************** INFO-BULLES **************************************************************/
+.tooltip div       { display: none; padding-top: 5px; padding-bottom: 7px; padding-left: 10px; padding-right: 8px     ;
+                     z-index: 1337; margin-top:-20px; margin-left:15px; font-size: 13px;                              }
+.tooltip:hover div { display: inline; position: absolute; color: #000000;  text-align: left; background: #FFFFFF      ;
+                     border-radius: 5px; border: 1px solid #7F9DB1; box-shadow: 6px 6px 6px #7F9DB1;                  }
+
+.petittooltip { max-width: 200px; }
+.grandtooltip { max-width: 400px; }
+
 /*********************************************************** HEADER ET FOOTER ************************************************************/
 .menu_main                              { display: flex; justify-content: space-between; background-color: #2F4456             ;
                                           padding-left: 10px; padding-top: 6px; padding-bottom: 6px                            ;

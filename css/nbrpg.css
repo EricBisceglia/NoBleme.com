@@ -7,3 +7,8 @@ input.nbrpg_searchcaverne { width: 450px; margin-top: 5px;         }
 
 .nbrpg_hp_high { color:#008000; }
 .nbrpg_hp_low  { color:#B22222; }
+
+.nbrpg_buff_tooltip div        { display: none; padding-top: 5px; padding-bottom: 7px; padding-left: 10px; padding-right: 8px     ;
+                                 z-index: 1337; margin-left:-150px; font-size: 13px; width: 342px;          }
+.nbrpg_buff_tooltip:active div { display: inline; position: absolute; color: #000000;  text-align: left; background: #FFFFFF      ;
+                                 border-radius: 5px; border: 1px solid #7F9DB1; box-shadow: 6px 6px 6px #7F9DB1;                  }

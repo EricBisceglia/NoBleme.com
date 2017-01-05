@@ -107,7 +107,7 @@ $perso_danger    .= ($perso_danger != $dpersonnage['perso_danger_max']) ? ' ('.$
       <p class="gras"><?=$perso_vie?></p>
       <br>
       <p class="gras"><?=$perso_energie?></p>
-      <p><a class="dark blank pointeur"><?=$perso_oracle?></a></p>
+      <p><a class="dark blank pointeur tooltip" href="#"><?=$perso_oracle?></a></p>
       <br>
       <p class="gras"><?=$perso_physique?></p>
       <p class="gras"><?=$perso_mental?></p>
