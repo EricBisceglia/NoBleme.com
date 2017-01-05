@@ -141,10 +141,10 @@ for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
         </td>
         <td class="cadre_gris_sous_titre vspaced moinsgros pointeur tooltip">
           EFFETS
-          <div class="grandtooltip">
+          <div class="petittooltip">
             La liste des afflictions, bénédictions, ou autres effets qui sont affectent actuellement le personnage.<br>
             <br>
-            Pour voir les détails d'un effet spécifique, cliquez sur son icône et une infobulle s'ouvrira contenant des informations. Vous pourrez ensuite fermer cette infobulle en cliquant n'importe où dedans.<br>
+            Pour voir les détails d'un effet spécifique, passez votre souris dessus et une infobulle s'ouvrira.
           </div>
         </td>
       </tr>
@@ -174,17 +174,28 @@ for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
           <?=$session_mental[$i]?>
         </td>
         <td class="cadre_gris align_center vspaced">
-          <div class="pointeur nbrpg_buff_tooltip">
-            PLACEHOLDER
-            <div>
-              <p class="indiv align_center gras">NOM DU BUFF</p>
+          <span class="pointeur tooltip">
+            <img src="./../../img/nbrpg/effet_plus.png" style="border:1px solid #000000;border-radius:4px;filter:sepia(100%)">
+            <div class="petittooltip">
+              <p class="indiv align_center gras">NOM DU PREMIER BUFF</p>
               <p class="indiv align_center">n tours restants</p>
               <hr class="points">
               <p>Description du buff. Blabla je suis la description du buff. C'est technique donc ça prend de la place. Blabla. Je clavarde dans la bulle</p>
               <hr class="points">
               <p class="italique">Flavor text du buff. Ici un truc comédique. Haha c'est drôle parce que c'est dans le NBRPG.</p>
             </div>
-          </div>
+          </span>
+          <span class="pointeur tooltip">
+            <img src="./../../img/nbrpg/effet_moins.png" style="border:1px solid #000000;border-radius:4px;filter:hue-rotate(90deg);">
+            <div class="petittooltip">
+              <p class="indiv align_center gras">NOM DU SECOND BUFF</p>
+              <p class="indiv align_center">n tours restants</p>
+              <hr class="points">
+              <p>Description du buff. Blabla je suis la description du buff. C'est technique donc ça prend de la place. Blabla. Je clavarde dans la bulle</p>
+              <hr class="points">
+              <p class="italique">Flavor text du buff. Ici un truc comédique. Haha c'est drôle parce que c'est dans le NBRPG.</p>
+            </div>
+          </span>
         </td>
       </tr>
       <?php } ?>
