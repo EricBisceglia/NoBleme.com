@@ -31,22 +31,58 @@ $css = array('nbrpg');
 /*****************************************************************************************************************************************/
 
 // On va chercher la liste des personnages
-$qpersos = query("  SELECT    nbrpg_persos.couleur_chat     AS 'p_couleur'  ,
-                              nbrpg_persos.nom              AS 'p_nom'      ,
-                              membres.id                    AS 'p_userid'   ,
-                              membres.pseudonyme            AS 'p_pseudo'   ,
-                              nbrpg_persos.date_creation    AS 'p_creation' ,
-                              nbrpg_persos.classe           AS 'p_classe'   ,
-                              nbrpg_persos.niveau           AS 'p_niveau'   ,
-                              nbrpg_persos.max_vie          AS 'p_vie'      ,
-                              nbrpg_persos.physique         AS 'p_physique' ,
-                              nbrpg_persos.mental           AS 'p_mental'   ,
-                              nbrpg_persos.danger           AS 'p_danger'
-                    FROM      nbrpg_persos
-                    LEFT JOIN membres ON nbrpg_persos.FKmembres = membres.id
-                    ORDER BY  nbrpg_persos.niveau        DESC  ,
-                              nbrpg_persos.experience    DESC  ,
-                              nbrpg_persos.date_creation ASC   ");
+$qpersos = "    SELECT    nbrpg_persos.couleur_chat     AS 'p_couleur'  ,
+                          nbrpg_persos.nom              AS 'p_nom'      ,
+                          membres.id                    AS 'p_userid'   ,
+                          membres.pseudonyme            AS 'p_pseudo'   ,
+                          nbrpg_persos.date_creation    AS 'p_creation' ,
+                          nbrpg_persos.classe           AS 'p_classe'   ,
+                          nbrpg_persos.niveau           AS 'p_niveau'   ,
+                          nbrpg_persos.max_vie          AS 'p_vie'      ,
+                          nbrpg_persos.physique         AS 'p_physique' ,
+                          nbrpg_persos.mental           AS 'p_mental'   ,
+                          nbrpg_persos.danger           AS 'p_danger'
+                FROM      nbrpg_persos
+                LEFT JOIN membres ON nbrpg_persos.FKmembres = membres.id ";
+// Ordre de tri
+if(isset($_GET['perso']))
+  $qpersos .= " ORDER BY  nbrpg_persos.nom            ASC   ";
+else if(isset($_GET['joueur']))
+  $qpersos .= " ORDER BY  membres.pseudonyme          ASC   ";
+else if(isset($_GET['creation']))
+  $qpersos .= " ORDER BY  nbrpg_persos.date_creation  ASC   ";
+else if(isset($_GET['classe']))
+  $qpersos .= " ORDER BY  nbrpg_persos.classe         ASC   ,
+                          nbrpg_persos.niveau         DESC  ,
+                          nbrpg_persos.experience     DESC  ,
+                          nbrpg_persos.date_creation  ASC   ";
+else if(isset($_GET['viemax']))
+  $qpersos .= " ORDER BY  nbrpg_persos.max_vie        DESC  ,
+                          nbrpg_persos.niveau         DESC  ,
+                          nbrpg_persos.experience     DESC  ,
+                          nbrpg_persos.date_creation  ASC   ";
+else if(isset($_GET['physique']))
+  $qpersos .= " ORDER BY  nbrpg_persos.physique       DESC  ,
+                          nbrpg_persos.niveau         DESC  ,
+                          nbrpg_persos.experience     DESC  ,
+                          nbrpg_persos.date_creation  ASC   ";
+else if(isset($_GET['mental']))
+  $qpersos .= " ORDER BY  nbrpg_persos.mental         DESC  ,
+                          nbrpg_persos.niveau         DESC  ,
+                          nbrpg_persos.experience     DESC  ,
+                          nbrpg_persos.date_creation  ASC   ";
+else if(isset($_GET['danger']))
+  $qpersos .= " ORDER BY  nbrpg_persos.danger         DESC  ,
+                          nbrpg_persos.niveau         DESC  ,
+                          nbrpg_persos.experience     DESC  ,
+                          nbrpg_persos.date_creation  ASC   ";
+else
+  $qpersos .= " ORDER BY  nbrpg_persos.niveau         DESC  ,
+                          nbrpg_persos.experience     DESC  ,
+                          nbrpg_persos.date_creation  ASC   ";
+
+// On envoie la requête
+$qpersos = query($qpersos);
 
 // Puis on les prépare pour l'affichage
 for($npersos = 0 ; $dpersos = mysqli_fetch_array($qpersos) ; $npersos++)
@@ -85,7 +121,9 @@ for($npersos = 0 ; $dpersos = mysqli_fetch_array($qpersos) ; $npersos++)
       <br>
       Cette page contient une liste des personnages actifs en ce moment dans le <a href="<?=$chemin?>pages/nbrpg/index">NoBlemeRPG</a>.<br>
       <br>
-      À la fin de certains <a href="<?=$chemin?>pages/nbrpg/caverne?historique">arcs d'histoire</a>, il arrive parfois que tous les personnages soient mis à la retraite (ou tués) et que de nouveaux personnages soient crées à leur place pour vivre de nouvelles aventures. Vous ne trouverez sur cette page que les personnages actuellement incarnés par des joueurs. L'historique des anciens personnages est trouvable dans la <a href="<?=$chemin?>pages/nbrpg/caverne">caverne de Liodain</a>. Les couleurs sont aléatoirement assignées aux personnages au moment de leur création, et permettent de les identifier plus facilement pendant le jeu.
+      À la fin de certains <a href="<?=$chemin?>pages/nbrpg/caverne?historique">arcs d'histoire</a>, il arrive parfois que tous les personnages soient mis à la retraite (ou tués) et que de nouveaux personnages soient crées à leur place pour vivre de nouvelles aventures. Vous ne trouverez sur cette page que les personnages actuellement incarnés par des joueurs. L'historique des anciens personnages est trouvable dans la <a href="<?=$chemin?>pages/nbrpg/caverne">caverne de Liodain</a>. Les couleurs sont aléatoirement assignées aux personnages au moment de leur création, et permettent de les identifier plus facilement pendant le jeu.<br>
+      <br>
+      Par défaut, les joueurs sont classés par niveau. Cliquez sur le titre d'une colonne pour changer l'ordre de tri.<br>
     </div>
 
     <br>
@@ -94,31 +132,31 @@ for($npersos = 0 ; $dpersos = mysqli_fetch_array($qpersos) ; $npersos++)
       <table class="cadre_gris indiv">
         <thead>
           <tr>
-            <td class="cadre_gris_titre moinsgros vspaced spaced">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs?perso';">
               PERSONNAGE
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs?joueur';">
               JOUEUR
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced nowrap">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur nowrap" onClick="window.location = 'joueurs_actifs?creation';">
               REJOINT LE GROUPE
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs?classe';">
               CLASSE
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs';">
               NIVEAU
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced nowrap">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur nowrap" onClick="window.location = 'joueurs_actifs?viemax';">
               VIE MAX.
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs?physique';">
               PHYSIQUE
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs?mental';">
               MENTAL
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs?danger';">
               DANGER
             </td>
           </tr>
