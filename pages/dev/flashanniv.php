@@ -10,7 +10,7 @@ adminonly();
 
 // Menus du header
 $header_menu      = 'admin';
-$header_submenu   = 'dev';
+$header_submenu   = 'admin';
 $header_sidemenu  = 'flashanniv';
 
 // Titre et description

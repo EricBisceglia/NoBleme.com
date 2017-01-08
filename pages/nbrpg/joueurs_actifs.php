@@ -132,31 +132,31 @@ for($npersos = 0 ; $dpersos = mysqli_fetch_array($qpersos) ; $npersos++)
       <table class="cadre_gris indiv">
         <thead>
           <tr>
-            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs?perso';">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick=" window.location = './joueurs_actifs?perso';">
               PERSONNAGE
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs?joueur';">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick=" window.location = './joueurs_actifs?joueur';">
               JOUEUR
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur nowrap" onClick="window.location = 'joueurs_actifs?creation';">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur nowrap" onClick=" window.location = './joueurs_actifs?creation';">
               REJOINT LE GROUPE
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs?classe';">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick=" window.location = './joueurs_actifs?classe';">
               CLASSE
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs';">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick=" window.location = './joueurs_actifs';">
               NIVEAU
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur nowrap" onClick="window.location = 'joueurs_actifs?viemax';">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur nowrap" onClick=" window.location = './joueurs_actifs?viemax';">
               VIE MAX.
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs?physique';">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick=" window.location = './joueurs_actifs?physique';">
               PHYSIQUE
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs?mental';">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick=" window.location = './joueurs_actifs?mental';">
               MENTAL
             </td>
-            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick="window.location = 'joueurs_actifs?danger';">
+            <td class="cadre_gris_titre moinsgros vspaced spaced pointeur" onClick=" window.location = './joueurs_actifs?danger';">
               DANGER
             </td>
           </tr>

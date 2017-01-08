@@ -10,7 +10,8 @@ adminonly();
 
 // Menus du header
 $header_menu      = 'admin';
-$header_submenu   = 'nbrpg';
+$header_submenu   = 'admin';
+$header_sidemenu  = 'nbrpg_client';
 
 // Titre et description
 $page_titre = "NBRPG - Administration";

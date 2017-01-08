@@ -326,3 +326,38 @@ function ircbot($chemin,$message_irc,$canal_irc=NULL,$formattage=NULL)
   else
     return 0;
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Renvoie une (ou aucune) propriété CSS correspondant à un menu de navigation du header, selon si l'option est sélectionnée ou non
+//
+// Le premier paramètre est l'option de menu actuellement sélectionnée
+// Le second paramètre est l'option de menu dont on veut récupérer le CSS
+// Le troisième paramètre est le type de menu (0 -> menu principal / 1 -> sous-menu / 2 -> menu latéral)
+//
+// Utilisation: menu_css($header_menu,'communaute',0)
+
+function menu_css($menu_postdata, $menu_objet, $menu_type)
+{
+  // Si l'entrée est sélectionnée, on renvoie le CSS approprié
+  if($menu_postdata == $menu_objet)
+  {
+    if($menu_type == 0)
+      return ' menu_main_item_selected';
+    else if($menu_type == 1)
+      return ' menu_sub_item_selected';
+    else if($menu_type == 2)
+      return ' menu_side_item_selected';
+  }
+
+  // Si elle n'est pas sélectionnée, on ne renvoie rien, sauf dans le cas du menu secret
+  else
+  {
+    if($menu_objet == 'secrets' && $menu_type == 0)
+      return ' menu_main_item_secrets';
+    else
+      return '';
+  }
+}

@@ -5,6 +5,9 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
+// Permissions
+useronly();
+
 // Menus du header
 $header_menu      = 'compte';
 $header_submenu   = 'reglages';
