@@ -49,16 +49,65 @@ $qsession = query(" SELECT    nbrpg_session.id              AS 's_id'       ,
 // Puis on prépare tout ça pour l'affichage
 for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
 {
-  $session_id[$nsession]        = $dsession['s_id'];
+  // On a d'abord besoin de chercher certains effets, on prépare le terrain pour ça
+  $session_id                   = $dsession['s_id'];
+  $session_effets[$nsession]    = '';
+  $buff_hpmax                   = 0;
+  $buff_hpmax_p                 = 0;
+  $buff_danger                  = 0;
+  $buff_danger_p                = 0;
+  $buff_physique                = 0;
+  $buff_physique_p              = 0;
+  $buff_mental                  = 0;
+  $buff_mental_p                = 0;
+
+  // Puis on va chercher les effets
+  $qeffets                      = query(" SELECT    nbrpg_session_effets.FKnbrpg_effets             AS 'e_id'           ,
+                                                    nbrpg_session_effets.duree_restante             AS 'e_duree'        ,
+                                                    nbrpg_effets.duree                              AS 'e_dureemax'     ,
+                                                    nbrpg_effets.reduction_effet_par_tour           AS 'e_reduction'    ,
+                                                    nbrpg_effets.reduction_effet_par_tour_pourcent  AS 'e_reduction_p'  ,
+                                                    nbrpg_effets.buff_hpmax                         AS 'e_hpmax'        ,
+                                                    nbrpg_effets.buff_hpmax_pourcent                AS 'e_hpmax_p'      ,
+                                                    nbrpg_effets.buff_danger                        AS 'e_danger'       ,
+                                                    nbrpg_effets.buff_danger_pourcent               AS 'e_danger_p'     ,
+                                                    nbrpg_effets.buff_physique                      AS 'e_physique'     ,
+                                                    nbrpg_effets.buff_physique_pourcent             AS 'e_physique_p'   ,
+                                                    nbrpg_effets.buff_mental                        AS 'e_mental'       ,
+                                                    nbrpg_effets.buff_mental_pourcent               AS 'e_mental_p'
+                                          FROM      nbrpg_session_effets
+                                          LEFT JOIN nbrpg_effets ON nbrpg_session_effets.FKnbrpg_effets = nbrpg_effets.id
+                                          WHERE     nbrpg_session_effets.FKnbrpg_session = '$session_id'
+                                          ORDER BY  nbrpg_session_effets.duree_restante DESC ");
+
+  // Et on fait des calculs sur ces effets
+  while($deffets = mysqli_fetch_array($qeffets))
+  {
+    $session_effets[$nsession]  .= nbrpg_format_effet($deffets['e_id'],$deffets['e_duree']);
+    $duree_max                  = $deffets['e_dureemax'];
+    $duree                      = $deffets['e_duree'];
+    $reduction                  = $deffets['e_reduction'];
+    $reduction_p                = $deffets['e_reduction_p'];
+    $buff_hpmax                 += nbrpg_reduction_effet($duree_max,$duree,$deffets['e_hpmax'],$reduction,$reduction_p);
+    $buff_hpmax_p               += nbrpg_reduction_effet($duree_max,$duree,$deffets['e_hpmax_p'],$reduction,$reduction_p);
+    $buff_danger                += nbrpg_reduction_effet($duree_max,$duree,$deffets['e_danger'],$reduction,$reduction_p);
+    $buff_danger_p              += nbrpg_reduction_effet($duree_max,$duree,$deffets['e_danger_p'],$reduction,$reduction_p);
+    $buff_physique              += nbrpg_reduction_effet($duree_max,$duree,$deffets['e_physique'],$reduction,$reduction_p);
+    $buff_physique_p            += nbrpg_reduction_effet($duree_max,$duree,$deffets['e_physique_p'],$reduction,$reduction_p);
+    $buff_mental                += nbrpg_reduction_effet($duree_max,$duree,$deffets['e_mental'],$reduction,$reduction_p);
+    $buff_mental_p              += nbrpg_reduction_effet($duree_max,$duree,$deffets['e_mental_p'],$reduction,$reduction_p);
+  }
+
+  // Et reste plus qu'à faire les calculs finaux et formater pour l'affichage
   $session_perso                = ($dsession['p_nom']) ? 1 : 0;
   $session_couleur[$nsession]   = ($session_perso) ? $dsession['p_couleur'] : '#133742';
   $session_joueur[$nsession]    = ($session_perso) ? $dsession['p_pseudo'] : '';
   $session_nom[$nsession]       = ($session_perso) ? $dsession['p_nom'] : $dsession['m_nom'];
   $session_niveau[$nsession]    = ($session_perso) ? $dsession['p_niveau'] : $dsession['m_niveau'];
-  $session_vie[$nsession]       = nbrpg_vierestante($dsession['s_vie'],($session_perso) ? $dsession['p_viemax'] : nbrpg_multiplicateur($dsession['m_viemax'], $dsession['m_niveau']));
-  $session_danger[$nsession]    = $dsession['s_danger'];
-  $session_physique[$nsession]  = $dsession['s_physique'];
-  $session_mental[$nsession]    = $dsession['s_mental'];
+  $session_vie[$nsession]       = nbrpg_vierestante($dsession['s_vie'],($session_perso) ? nbrpg_application_effet($dsession['p_viemax'],$buff_physique,$buff_physique_p,1) : nbrpg_multiplicateur(nbrpg_application_effet($dsession['m_viemax'],$buff_physique,$buff_physique_p,1), $dsession['m_niveau']));
+  $session_danger[$nsession]    = nbrpg_application_effet($dsession['s_danger'],$buff_physique,$buff_physique_p,1);
+  $session_physique[$nsession]  = nbrpg_application_effet($dsession['s_physique'],$buff_physique,$buff_physique_p,1);
+  $session_mental[$nsession]    = nbrpg_application_effet($dsession['s_mental'],$buff_physique,$buff_physique_p,1);
 }
 
 
@@ -174,28 +223,7 @@ for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
           <?=$session_mental[$i]?>
         </td>
         <td class="cadre_gris align_center vspaced">
-          <span class="pointeur tooltip">
-            <img src="./../../img/nbrpg/effet_plus.png" style="border:1px solid #000000;border-radius:4px;filter:sepia(100%)">
-            <div class="petittooltip">
-              <p class="indiv align_center gras">NOM DU PREMIER BUFF</p>
-              <p class="indiv align_center">n tours restants</p>
-              <hr class="points">
-              <p>Description du buff. Blabla je suis la description du buff. C'est technique donc ça prend de la place. Blabla. Je clavarde dans la bulle</p>
-              <hr class="points">
-              <p class="italique">Flavor text du buff. Ici un truc comédique. Haha c'est drôle parce que c'est dans le NBRPG.</p>
-            </div>
-          </span>
-          <span class="pointeur tooltip">
-            <img src="./../../img/nbrpg/effet_moins.png" style="border:1px solid #000000;border-radius:4px;filter:hue-rotate(90deg);">
-            <div class="petittooltip">
-              <p class="indiv align_center gras">NOM DU SECOND BUFF</p>
-              <p class="indiv align_center">n tours restants</p>
-              <hr class="points">
-              <p>Description du buff. Blabla je suis la description du buff. C'est technique donc ça prend de la place. Blabla. Je clavarde dans la bulle</p>
-              <hr class="points">
-              <p class="italique">Flavor text du buff. Ici un truc comédique. Haha c'est drôle parce que c'est dans le NBRPG.</p>
-            </div>
-          </span>
+          <?=$session_effets[$i]?>
         </td>
       </tr>
       <?php } ?>

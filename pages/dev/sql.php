@@ -38,7 +38,9 @@ query(" DROP TABLE IF EXISTS nbrpg_persos ");
 query(" DROP TABLE IF EXISTS nbrpg_monstres ");
 query(" DROP TABLE IF EXISTS nbrpg_session ");
 query(" DROP TABLE IF EXISTS nbrpg_chatlog ");
-$majq .= '<p class="erreur texte_blanc gros gras vspaced">Exécution des tests à supprimer avant de mettre en live</p>';
+query(" DROP TABLE IF EXISTS nbrpg_effets ");
+query(" DROP TABLE IF EXISTS nbrpg_session_effets ");
+$majq .= '<p class="erreur texte_blanc gros gras vspaced" style="padding-top:20px;padding-bottom:20px">Exécution des tests à supprimer avant de mettre en live</p>';
 /********************************NBRPGTEST*DELETEME**********************/
 
 query(" CREATE TABLE IF NOT EXISTS nbrpg_persos (
@@ -67,17 +69,15 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_persos (
         ) ENGINE=MyISAM; ");
 $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_persos</p>';
 
-
 query(" CREATE TABLE IF NOT EXISTS nbrpg_monstres (
-          id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-          nom               MEDIUMTEXT                                            ,
-          max_vie           INT(11) UNSIGNED NOT NULL                             ,
-          physique          INT(11) UNSIGNED NOT NULL                             ,
-          mental            INT(11) UNSIGNED NOT NULL                             ,
-          danger            INT(11) UNSIGNED NOT NULL
+          id        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+          nom       MEDIUMTEXT                                            ,
+          max_vie   INT(11) UNSIGNED NOT NULL                             ,
+          physique  INT(11) UNSIGNED NOT NULL                             ,
+          mental    INT(11) UNSIGNED NOT NULL                             ,
+          danger    INT(11) UNSIGNED NOT NULL
         ) ENGINE=MyISAM; ");
 $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_monstres</p>';
-
 
 query(" CREATE TABLE IF NOT EXISTS nbrpg_session (
           id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
@@ -93,15 +93,50 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_session (
         ) ENGINE=MyISAM; ");
 $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_monstre</p>';
 
-
 query(" CREATE TABLE IF NOT EXISTS nbrpg_chatlog (
-          id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-          timestamp         INT(11) UNSIGNED NOT NULL                             ,
-          FKmembres         INT(11) UNSIGNED NOT NULL                             ,
-          type_chat         TINYTEXT                                              ,
-          message           LONGTEXT
+          id        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+          timestamp INT(11) UNSIGNED NOT NULL                             ,
+          FKmembres INT(11) UNSIGNED NOT NULL                             ,
+          type_chat TINYTEXT                                              ,
+          message   LONGTEXT
         ) ENGINE=MyISAM; ");
 $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_chatlog</p>';
+
+query(" CREATE TABLE IF NOT EXISTS nbrpg_effets (
+          id                                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+          nom                               MEDIUMTEXT                                            ,
+          duree                             INT(11) UNSIGNED NOT NULL                             ,
+          description                       LONGTEXT                                              ,
+          flavortext                        LONGTEXT                                              ,
+          url_icone                         MEDIUMTEXT                                            ,
+          ne_peut_pas_etre_debuff           TINYINT(1) UNSIGNED NOT NULL                          ,
+          reduction_effet_par_tour          INT(11) SIGNED NOT NULL                               ,
+          reduction_effet_par_tour_pourcent INT(11) SIGNED NOT NULL                               ,
+          paralysie                         TINYINT(1) UNSIGNED NOT NULL                          ,
+          degats                            INT(11) SIGNED NOT NULL                               ,
+          ne_peut_pas_tuer                  TINYINT(1) UNSIGNED NOT NULL                          ,
+          buff_degats                       INT(11) SIGNED NOT NULL                               ,
+          buff_degats_pourcent              INT(11) SIGNED NOT NULL                               ,
+          buff_hpmax                        INT(11) SIGNED NOT NULL                               ,
+          buff_hpmax_pourcent               INT(11) SIGNED NOT NULL                               ,
+          buff_danger                       INT(11) SIGNED NOT NULL                               ,
+          buff_danger_pourcent              INT(11) SIGNED NOT NULL                               ,
+          buff_physique                     INT(11) SIGNED NOT NULL                               ,
+          buff_physique_pourcent            INT(11) SIGNED NOT NULL                               ,
+          buff_mental                       INT(11) SIGNED NOT NULL                               ,
+          buff_mental_pourcent              INT(11) SIGNED NOT NULL                               ,
+          reduction_degats                  INT(11) SIGNED NOT NULL                               ,
+          reduction_degats_pourcent         INT(11) SIGNED NOT NULL
+        ) ENGINE=MyISAM; ");
+$majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_effets</p>';
+
+query(" CREATE TABLE IF NOT EXISTS nbrpg_session_effets (
+          id              INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+          FKnbrpg_session INT(11) UNSIGNED NOT NULL                             ,
+          FKnbrpg_effets  INT(11) UNSIGNED NOT NULL                             ,
+          duree_restante  INT(11) UNSIGNED NOT NULL
+        ) ENGINE=MyISAM; ");
+$majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_session_effets</p>';
 
 
 if(!@mysqli_query($GLOBALS['db'], " SELECT nbrpg_activite FROM vars_globales "))
@@ -126,6 +161,14 @@ if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE 
                       visite_url  = 'pages/nbrpg/joueurs_actifs'    ");
 $majq .= '<p class="nobleme_background vspaced">Crée l\'entrée activité : Juge les personnages du NBRPG</p>';
 
+if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'nbrpg' AND page_id LIKE 'client' ")))
+  query(" INSERT INTO pages
+          SET         page_nom    = 'nbrpg'               ,
+                      page_id     = 'client'              ,
+                      visite_page = 'Joue au NoBlemeRPG'  ,
+                      visite_url  = 'pages/nbrpg/client'  ");
+$majq .= '<p class="nobleme_background vspaced">Crée l\'entrée activité : Joue au NoBlemeRPG</p>';
+
 
 /********************************NBRPGTEST*DELETEME**********************/
 query(" INSERT INTO nbrpg_persos SET id = 1 , FKmembres = 47, couleur_chat = '#AAAA66', date_creation = 1394875860, nom = 'Raclette', classe = 'Aventurier', niveau = 1, experience = 28, prochain_niveau = 50, max_vie = 100, max_charges_oracle = 1, physique = 10, mental = 10, danger = 10, FKarme = 0, FKcostume = 0, FKobjet1 = 0, FKobjet2 = 0, FKobjet3 = 0, FKobjet4 = 0 ");
@@ -148,7 +191,21 @@ query(" INSERT INTO nbrpg_session SET id = 5 , FKnbrpg_persos = 0 , FKnbrpg_mons
 query(" INSERT INTO nbrpg_session SET id = 6 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , monstre_niveau = 3 , vie = 98, physique = 12 , mental = 6 , danger = 5 ");
 query(" INSERT INTO nbrpg_session SET id = 7 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 3 , monstre_niveau = 7 , vie = 488, physique = 26 , mental = 26 , danger = 26 ");
 
-$majq .= '<p class="erreur texte_blanc gros gras vspaced">Exécution des tests à supprimer avant de mettre en live</p>';
+query(" INSERT INTO nbrpg_effets SET id = 1 , nom = 'Poison' , duree = 5 , description = 'Un poison qui coule dans les veines, infligeant 1 dégât chaque tour pendant 5 tours et réduisant le physique de 25% tant qu\'il est actif. Ne peut pas tuer la cible.' , flavortext = 'Fabriqué à partir de véritable sang de raclure, garanti 100% douloureux.' , url_icone = 'effet_goutte' , degats = 1 , ne_peut_pas_tuer = 0 , buff_mental_pourcent = -25 ");
+query(" INSERT INTO nbrpg_effets SET id = 2 , nom = 'Bénédiction' , duree = 4 , description = 'Fait briller la lumière divine sur un personnage, le rendant plus fort, plus résistant, et plus dangereux. Il est impossible de retirer ou d\'altérer cet effet positif. L\'effet diminue de 25% chaque tour jusqu\'à ce qu\'il n\'en reste plus rien.' , url_icone = 'effet_plus' , ne_peut_pas_etre_debuff = 1 , reduction_effet_par_tour_pourcent = 25 , buff_degats_pourcent = 40 , buff_danger_pourcent = 40 , buff_hpmax_pourcent = 40 , buff_physique_pourcent = 40 , reduction_degats_pourcent = 20 ");
+query(" INSERT INTO nbrpg_effets SET id = 3 , nom = 'Le buff de test' , duree = 42 , description = 'Pour tester le système de buff/debuff' , flavortext = 'On est fous on remplit tout' , url_icone = 'effet_excla' , ne_peut_pas_etre_debuff = 1 , reduction_effet_par_tour = 3 , reduction_effet_par_tour_pourcent = 30 , paralysie = 1 , degats = -3 , ne_peut_pas_tuer = 1 , buff_degats = -1 , buff_degats_pourcent = -20 , buff_hpmax = 10 , buff_hpmax_pourcent = -10 , buff_danger = -10 , buff_danger_pourcent = 10 , buff_physique = 10 , buff_physique_pourcent = 10 , buff_mental = -10 , buff_mental_pourcent = -10 , reduction_degats = 5 , reduction_degats_pourcent = -10 ");
+query(" INSERT INTO nbrpg_effets SET id = 4 , nom = 'L\'autre buff de test' , duree = 42 , description = 'Pour tester le système de buff/debuff' , flavortext = 'On est fous on remplit tout' , url_icone = 'effet_interro' , ne_peut_pas_etre_debuff = 0 , reduction_effet_par_tour = -3 , reduction_effet_par_tour_pourcent = -30 , paralysie = 0 , degats = 3 , ne_peut_pas_tuer = -1 , buff_degats = 1 , buff_degats_pourcent = 20 , buff_hpmax = -10 , buff_hpmax_pourcent = 10 , buff_danger = 10 , buff_danger_pourcent = -10 , buff_physique = -10 , buff_physique_pourcent = -10 , buff_mental = 10 , buff_mental_pourcent = 10 , reduction_degats = -5 , reduction_degats_pourcent = 10 ");
+
+query(" INSERT INTO nbrpg_session_effets SET id = 1 , FKnbrpg_session = 2 , FKnbrpg_effets = 1 , duree_restante = 2 ");
+query(" INSERT INTO nbrpg_session_effets SET id = 2 , FKnbrpg_session = 3 , FKnbrpg_effets = 1 , duree_restante = 3 ");
+query(" INSERT INTO nbrpg_session_effets SET id = 3 , FKnbrpg_session = 3 , FKnbrpg_effets = 2 , duree_restante = 4 ");
+query(" INSERT INTO nbrpg_session_effets SET id = 4 , FKnbrpg_session = 4 , FKnbrpg_effets = 2 , duree_restante = 1 ");
+query(" INSERT INTO nbrpg_session_effets SET id = 5 , FKnbrpg_session = 6 , FKnbrpg_effets = 3 , duree_restante = 1 ");
+query(" INSERT INTO nbrpg_session_effets SET id = 6 , FKnbrpg_session = 6 , FKnbrpg_effets = 4 , duree_restante = 1 ");
+query(" INSERT INTO nbrpg_session_effets SET id = 7 , FKnbrpg_session = 6 , FKnbrpg_effets = 4 , duree_restante = 42 ");
+query(" INSERT INTO nbrpg_session_effets SET id = 8 , FKnbrpg_session = 6 , FKnbrpg_effets = 4 , duree_restante = 42 ");
+
+$majq .= '<p class="erreur texte_blanc gros gras" style="padding-top:20px;padding-bottom:20px">Exécution des tests à supprimer avant de mettre en live</p>';
 /********************************NBRPGTEST*DELETEME**********************/
 
 
