@@ -93,7 +93,7 @@ while($dchat = mysqli_fetch_array($qchat))
       window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_chat','chat_hrp', 'xhr&type=HRP', 'append','container_chat_hrp','chathrp_onglet') }, 1900);
       window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_session','nbrpg_session', 'xhr'); }, 2900);
       window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_fiche_perso','fiche_perso', 'xhr'); }, 3000);
-      window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_evenements','nbrpg_evenements', '', 'append','container_evenements','evenements_onglet') }, 1900);
+      window.setInterval(function(){ dynamique('<?=$chemin?>','xhr/client_evenements','nbrpg_evenements', 'xhr', 'append','container_evenements','evenements_onglet') }, 1900);
     }, false);
     </script>
 
