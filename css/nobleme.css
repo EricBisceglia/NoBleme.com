@@ -59,6 +59,7 @@ select.intable   { width: 98.7%;                          }
 textarea.intable { width: 98%; margin: 0 0 0 0;           }
 
 .gras            { font-family: 'NoBleme-bold';           }
+.majuscules      { text-transform: uppercase;             }
 .souligne        { text-decoration: underline;            }
 .barre           { text-decoration: line-through;         }
 .maigre          { font-size: 0.75em;                     }
@@ -142,7 +143,7 @@ td.data_input_right { text-align: right; font-family: 'NoBleme-bold'; }
 .tooltip:hover div { display: inline; position: absolute; color: #000000;  text-align: left; background: #FFFFFF      ;
                      border-radius: 5px; border: 1px solid #7F9DB1; box-shadow: 6px 6px 6px #7F9DB1;                  }
 
-.petittooltip { max-width: 200px; }
+.petittooltip { max-width: 250px; }
 .grandtooltip { max-width: 400px; }
 
 /*********************************************************** HEADER ET FOOTER ************************************************************/

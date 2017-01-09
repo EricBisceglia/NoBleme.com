@@ -214,22 +214,95 @@ function nbrpg_application_effet($valeur,$effet,$effet_pourcentage)
 
 function nbrpg_format_effet($effet,$duree)
 {
-  return '<span class="pointeur tooltip">
-            <img src="./../../img/nbrpg/effet_plus.png" style="border:1px solid #000000;border-radius:4px;filter:sepia(100%)">
-            <div class="petittooltip">
-              <p class="indiv align_center gras">NOM DU PREMIER BUFF</p>
-              <p class="indiv align_center">n tours restants</p>
-              <hr class="points">
-              <p>Description du buff. Blabla je suis la description du buff. C\'est technique donc ça prend de la place. Blabla. Je clavarde dans la bulle</p>
-              <hr class="points">
-              <p class="nbrpg_hp_high gras">+5 points de vie max</p>
-              <p class="nbrpg_hp_high gras">+10% mental</p>
-              <p class="nbrpg_hp_low gras">1 dégât par tour</p>
-              <p class="gras">Ne peut pas tuer la cible</p>
-              <hr class="points">
-              <p class="italique">Flavor text du buff. Ici un truc comédique. Haha c\'est drôle parce que c\'est dans le NBRPG.</p>
+  // On va chercher des infos sur l'effet
+  $qeffets  = query(" SELECT  nbrpg_effets.url_icone                          AS 'e_icone'      ,
+                              nbrpg_effets.nom                                AS 'e_nom'        ,
+                              nbrpg_effets.description                        AS 'e_desc'       ,
+                              nbrpg_effets.paralysie                          AS 'e_para'       ,
+                              nbrpg_effets.degats                             AS 'e_dmg'        ,
+                              nbrpg_effets.buff_degats                        AS 'e_degats'     ,
+                              nbrpg_effets.buff_degats_pourcent               AS 'e_degatsp'    ,
+                              nbrpg_effets.buff_hpmax                         AS 'e_hpmax'      ,
+                              nbrpg_effets.buff_hpmax_pourcent                AS 'e_hpmaxp'     ,
+                              nbrpg_effets.buff_danger                        AS 'e_danger'     ,
+                              nbrpg_effets.buff_danger_pourcent               AS 'e_dangerp'    ,
+                              nbrpg_effets.buff_physique                      AS 'e_physique'   ,
+                              nbrpg_effets.buff_physique_pourcent             AS 'e_physiquep'  ,
+                              nbrpg_effets.buff_mental                        AS 'e_mental'     ,
+                              nbrpg_effets.buff_mental_pourcent               AS 'e_mentalp'    ,
+                              nbrpg_effets.reduction_degats                   AS 'e_reduction'  ,
+                              nbrpg_effets.reduction_degats_pourcent          AS 'e_reductionp' ,
+                              nbrpg_effets.ne_peut_pas_tuer                   AS 'e_nppt'       ,
+                              nbrpg_effets.ne_peut_pas_etre_debuff            AS 'e_npped'      ,
+                              nbrpg_effets.reduction_effet_par_tour           AS 'e_reduc'      ,
+                              nbrpg_effets.reduction_effet_par_tour_pourcent  AS 'e_reducp'     ,
+                              nbrpg_effets.flavortext                         AS 'e_flavor'
+                      FROM    nbrpg_effets
+                      WHERE   nbrpg_effets.id = '$effet' ");
+
+  // On prépare les infos nécessaires
+  $deffets  = mysqli_fetch_array($qeffets);
+  $e_icone  = $deffets['e_icone'];
+  $e_nom    = $deffets['e_nom'];
+  $e_duree  = ($duree > 1) ? 'tours restants' : 'tour restant';
+  $e_desc   = $deffets['e_desc'];
+  $e_effets = '';
+
+  // Effets positifs
+  $e_effets .= ($deffets['e_dmg'] < 0) ? "<p class=\"nbrpg_hp_high gras\">+".abs($deffets['e_dmg'])." HP par tour</p>" : '';
+  $e_effets .= ($deffets['e_degats'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_degats']." à la puissance d'attaque</p>" : '';
+  $e_effets .= ($deffets['e_degatsp'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_degatsp']."% à la puissance d'attaque</p>" : '';
+  $e_effets .= ($deffets['e_hpmax'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_hpmax']." HP maximum</p>" : '';
+  $e_effets .= ($deffets['e_hpmaxp'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_hpmaxp']."% HP maximum</p>" : '';
+  $e_effets .= ($deffets['e_danger'] < 0) ? "<p class=\"nbrpg_hp_high gras\">".$deffets['e_danger']." niveau de danger</p>" : '';
+  $e_effets .= ($deffets['e_dangerp'] < 0) ? "<p class=\"nbrpg_hp_high gras\">".$deffets['e_dangerp']."% niveau de danger</p>" : '';
+  $e_effets .= ($deffets['e_physique'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_physique']." physique</p>" : '';
+  $e_effets .= ($deffets['e_physiquep'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_physiquep']."% physique</p>" : '';
+  $e_effets .= ($deffets['e_mental'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_mental']." mental</p>" : '';
+  $e_effets .= ($deffets['e_mentalp'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_mentalp']."% mental</p>" : '';
+  $e_effets .= ($deffets['e_reduction'] > 0) ? "<p class=\"nbrpg_hp_high gras\">Dégâts subis réduits de ".$deffets['e_reduction']."</p>" : '';
+  $e_effets .= ($deffets['e_reductionp'] > 0) ? "<p class=\"nbrpg_hp_high gras\">Dégâts subis réduits de ".$deffets['e_reductionp']."%</p>" : '';
+
+  // Effets négatifs
+  $e_effets .= ($deffets['e_nppt']) ? "<p class=\"nbrpg_hp_low gras\">Empêche toute action</p>" : '';
+  $e_effets .= ($deffets['e_dmg'] > 0) ? "<p class=\"nbrpg_hp_low gras\">-".$deffets['e_dmg']." HP par tour</p>" : '';
+  $e_effets .= ($deffets['e_degats'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_degats']." à la puissance d'attaque</p>" : '';
+  $e_effets .= ($deffets['e_degatsp'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_degatsp']."% à la puissance d'attaque</p>" : '';
+  $e_effets .= ($deffets['e_hpmax'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_hpmax']." HP maximum</p>" : '';
+  $e_effets .= ($deffets['e_hpmaxp'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_hpmaxp']."% HP maximum</p>" : '';
+  $e_effets .= ($deffets['e_danger'] > 0) ? "<p class=\"nbrpg_hp_low gras\">+".$deffets['e_danger']." niveau de danger</p>" : '';
+  $e_effets .= ($deffets['e_dangerp'] > 0) ? "<p class=\"nbrpg_hp_low gras\">+".$deffets['e_dangerp']."% niveau de danger</p>" : '';
+  $e_effets .= ($deffets['e_physique'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_physique']." physique</p>" : '';
+  $e_effets .= ($deffets['e_physiquep'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_physiquep']."% physique</p>" : '';
+  $e_effets .= ($deffets['e_mental'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_mental']." mental</p>" : '';
+  $e_effets .= ($deffets['e_mentalp'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_mentalp']."% mental</p>" : '';
+  $e_effets .= ($deffets['e_reduction'] < 0) ? "<p class=\"nbrpg_hp_low gras\">Dégâts subis augmentés de ".abs($deffets['e_reduction'])."</p>" : '';
+  $e_effets .= ($deffets['e_reductionp'] < 0) ? "<p class=\"nbrpg_hp_low gras\">Dégâts subis augmentés de ".abs($deffets['e_reductionp'])."%</p>" : '';
+
+  // Effets spéciaux
+  $e_effets .= ($deffets['e_nppt']) ? "<p class=\"gras\">Ne peut pas tuer la cible</p>" : '';
+  $e_effets .= ($deffets['e_npped']) ? "<p class=\"gras\">Impossible de retirer cet effet</p>" : '';
+  $e_effets .= ($deffets['e_reduc'] > 0) ? "<p class=\"gras\">L'effet baisse de ".$deffets['e_reduc']." chaque tour</p>" : '';
+  $e_effets .= ($deffets['e_reduc'] < 0) ? "<p class=\"gras\">L'effet augmente de ".abs($deffets['e_reduc'])." chaque tour</p>" : '';
+  $e_effets .= ($deffets['e_reducp'] > 0) ? "<p class=\"gras\">L'effet baisse de ".$deffets['e_reducp']."% chaque tour</p>" : '';
+  $e_effets .= ($deffets['e_reducp'] < 0) ? "<p class=\"gras\">L'effet augmente de ".abs($deffets['e_reducp'])."% chaque tour</p>" : '';
+
+  // Fin de préparation des infos
+  $e_effets = ($e_effets) ? "<hr class=\"points\">".$e_effets : '';
+  $e_flavor = ($deffets['e_flavor']) ? "<hr class=\"points\"><p class=\"italique\">".$deffets['e_flavor']."</p>": '';
+
+  // Et on renvoie une version formattée de l'effet
+  return "<span class=\"pointeur tooltip\">
+            <img src=\"./../../img/nbrpg/$e_icone\" alt=\"X\" style=\"border:1px solid #000000;border-radius:4px\">
+            <div class=\"petittooltip\">
+              <p class=\"indiv align_center gras majuscules\">$e_nom</p>
+              <p class=\"indiv align_center\"><span class=\"gras\">$duree</span> $e_duree</p>
+              <hr class=\"points\">
+              <p>$e_desc</p>
+              $e_effets
+              $e_flavor
             </div>
-          </span>';
+          </span>";
 }
 
 

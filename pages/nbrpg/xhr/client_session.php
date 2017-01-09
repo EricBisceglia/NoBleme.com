@@ -42,9 +42,9 @@ $qsession = query(" SELECT    nbrpg_session.id              AS 's_id'       ,
                     LEFT JOIN nbrpg_persos    ON nbrpg_session.FKnbrpg_persos   = nbrpg_persos.id
                     LEFT JOIN membres         ON nbrpg_persos.FKmembres         = membres.id
                     LEFT JOIN nbrpg_monstres  ON nbrpg_session.FKnbrpg_monstres = nbrpg_monstres.id
-                    ORDER BY  nbrpg_session.danger  DESC ,
-                              nbrpg_persos.nom      DESC ,
-                              nbrpg_monstres.nom    DESC ");
+                    ORDER BY  nbrpg_session.danger_initial  DESC ,
+                              nbrpg_persos.nom              DESC ,
+                              nbrpg_monstres.nom            DESC ");
 
 // Puis on prépare tout ça pour l'affichage
 for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
