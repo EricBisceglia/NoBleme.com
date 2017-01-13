@@ -226,6 +226,8 @@ function nbrpg_format_effet($effet,$duree)
                               nbrpg_effets.degats                             AS 'e_dmg'        ,
                               nbrpg_effets.buff_degats                        AS 'e_degats'     ,
                               nbrpg_effets.buff_degats_pourcent               AS 'e_degatsp'    ,
+                              nbrpg_effets.amplification_soins                AS 'e_asoins'     ,
+                              nbrpg_effets.amplification_soins_pourcent       AS 'e_asoinsp'    ,
                               nbrpg_effets.buff_hpmax                         AS 'e_hpmax'      ,
                               nbrpg_effets.buff_hpmax_pourcent                AS 'e_hpmaxp'     ,
                               nbrpg_effets.buff_danger                        AS 'e_danger'     ,
@@ -236,6 +238,8 @@ function nbrpg_format_effet($effet,$duree)
                               nbrpg_effets.buff_mental_pourcent               AS 'e_mentalp'    ,
                               nbrpg_effets.reduction_degats                   AS 'e_reduction'  ,
                               nbrpg_effets.reduction_degats_pourcent          AS 'e_reductionp' ,
+                              nbrpg_effets.amplification_soins_recus          AS 'e_asoinsr'    ,
+                              nbrpg_effets.amplification_soins_recus_pourcent AS 'e_asoinsrp'   ,
                               nbrpg_effets.ne_peut_pas_tuer                   AS 'e_nppt'       ,
                               nbrpg_effets.ne_peut_pas_etre_debuff            AS 'e_npped'      ,
                               nbrpg_effets.reduction_effet_par_tour           AS 'e_reduc'      ,
@@ -258,6 +262,8 @@ function nbrpg_format_effet($effet,$duree)
   $e_effets .= ($deffets['e_dmg'] < 0) ? "<p class=\"nbrpg_hp_high gras\">+".abs($deffets['e_dmg'])." HP par tour</p>" : '';
   $e_effets .= ($deffets['e_degats'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_degats']." à la puissance d'attaque</p>" : '';
   $e_effets .= ($deffets['e_degatsp'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_degatsp']."% à la puissance d'attaque</p>" : '';
+  $e_effets .= ($deffets['e_asoins'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_asoins']." à l'efficacité des soins</p>" : '';
+  $e_effets .= ($deffets['e_asoinsp'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_asoinsp']."% à l'efficacité des soins</p>" : '';
   $e_effets .= ($deffets['e_hpmax'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_hpmax']." HP maximum</p>" : '';
   $e_effets .= ($deffets['e_hpmaxp'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_hpmaxp']."% HP maximum</p>" : '';
   $e_effets .= ($deffets['e_danger'] < 0) ? "<p class=\"nbrpg_hp_high gras\">".$deffets['e_danger']." niveau de danger</p>" : '';
@@ -268,12 +274,16 @@ function nbrpg_format_effet($effet,$duree)
   $e_effets .= ($deffets['e_mentalp'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_mentalp']."% mental</p>" : '';
   $e_effets .= ($deffets['e_reduction'] > 0) ? "<p class=\"nbrpg_hp_high gras\">Dégâts subis réduits de ".$deffets['e_reduction']."</p>" : '';
   $e_effets .= ($deffets['e_reductionp'] > 0) ? "<p class=\"nbrpg_hp_high gras\">Dégâts subis réduits de ".$deffets['e_reductionp']."%</p>" : '';
+  $e_effets .= ($deffets['e_asoinsr'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_asoinsr']." à l'efficacité des soins reçus</p>" : '';
+  $e_effets .= ($deffets['e_asoinsrp'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_asoinsrp']."% à l'efficacité des soins reçus</p>" : '';
 
   // Effets négatifs
   $e_effets .= ($deffets['e_nppt']) ? "<p class=\"nbrpg_hp_low gras\">Empêche toute action</p>" : '';
   $e_effets .= ($deffets['e_dmg'] > 0) ? "<p class=\"nbrpg_hp_low gras\">-".$deffets['e_dmg']." HP par tour</p>" : '';
   $e_effets .= ($deffets['e_degats'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_degats']." à la puissance d'attaque</p>" : '';
   $e_effets .= ($deffets['e_degatsp'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_degatsp']."% à la puissance d'attaque</p>" : '';
+  $e_effets .= ($deffets['e_asoins'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_asoins']." à l'efficacité des soins</p>" : '';
+  $e_effets .= ($deffets['e_asoinsp'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_asoinsp']."% à l'efficacité des soins</p>" : '';
   $e_effets .= ($deffets['e_hpmax'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_hpmax']." HP maximum</p>" : '';
   $e_effets .= ($deffets['e_hpmaxp'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_hpmaxp']."% HP maximum</p>" : '';
   $e_effets .= ($deffets['e_danger'] > 0) ? "<p class=\"nbrpg_hp_low gras\">+".$deffets['e_danger']." niveau de danger</p>" : '';
@@ -284,6 +294,8 @@ function nbrpg_format_effet($effet,$duree)
   $e_effets .= ($deffets['e_mentalp'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_mentalp']."% mental</p>" : '';
   $e_effets .= ($deffets['e_reduction'] < 0) ? "<p class=\"nbrpg_hp_low gras\">Dégâts subis augmentés de ".abs($deffets['e_reduction'])."</p>" : '';
   $e_effets .= ($deffets['e_reductionp'] < 0) ? "<p class=\"nbrpg_hp_low gras\">Dégâts subis augmentés de ".abs($deffets['e_reductionp'])."%</p>" : '';
+  $e_effets .= ($deffets['e_asoinsr'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_asoinsr']." à l'efficacité des soins reçus</p>" : '';
+  $e_effets .= ($deffets['e_asoinsrp'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_asoinsrp']."% à l'efficacité des soins reçus</p>" : '';
 
   // Effets spéciaux
   $e_effets .= ($deffets['e_nppt']) ? "<p class=\"gras\">Ne peut pas tuer la cible</p>" : '';

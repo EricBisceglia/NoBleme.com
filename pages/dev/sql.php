@@ -134,31 +134,35 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_chatlog (
 $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_chatlog</p>';
 
 query(" CREATE TABLE IF NOT EXISTS nbrpg_effets (
-          id                                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-          nom                               MEDIUMTEXT                                            ,
-          duree                             INT(11) UNSIGNED NOT NULL                             ,
-          description                       LONGTEXT                                              ,
-          flavortext                        LONGTEXT                                              ,
-          url_icone                         MEDIUMTEXT                                            ,
-          supprimer_avant_et_apres_combat   TINYINT(1) UNSIGNED NOT NULL                          ,
-          ne_peut_pas_etre_debuff           TINYINT(1) UNSIGNED NOT NULL                          ,
-          reduction_effet_par_tour          INT(11) SIGNED NOT NULL                               ,
-          reduction_effet_par_tour_pourcent INT(11) SIGNED NOT NULL                               ,
-          paralysie                         TINYINT(1) UNSIGNED NOT NULL                          ,
-          degats                            INT(11) SIGNED NOT NULL                               ,
-          ne_peut_pas_tuer                  TINYINT(1) UNSIGNED NOT NULL                          ,
-          buff_degats                       INT(11) SIGNED NOT NULL                               ,
-          buff_degats_pourcent              INT(11) SIGNED NOT NULL                               ,
-          buff_hpmax                        INT(11) SIGNED NOT NULL                               ,
-          buff_hpmax_pourcent               INT(11) SIGNED NOT NULL                               ,
-          buff_danger                       INT(11) SIGNED NOT NULL                               ,
-          buff_danger_pourcent              INT(11) SIGNED NOT NULL                               ,
-          buff_physique                     INT(11) SIGNED NOT NULL                               ,
-          buff_physique_pourcent            INT(11) SIGNED NOT NULL                               ,
-          buff_mental                       INT(11) SIGNED NOT NULL                               ,
-          buff_mental_pourcent              INT(11) SIGNED NOT NULL                               ,
-          reduction_degats                  INT(11) SIGNED NOT NULL                               ,
-          reduction_degats_pourcent         INT(11) SIGNED NOT NULL
+          id                                  INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+          nom                                 MEDIUMTEXT                                            ,
+          duree                               INT(11) UNSIGNED NOT NULL                             ,
+          description                         LONGTEXT                                              ,
+          flavortext                          LONGTEXT                                              ,
+          url_icone                           MEDIUMTEXT                                            ,
+          supprimer_avant_et_apres_combat     TINYINT(1) UNSIGNED NOT NULL                          ,
+          ne_peut_pas_etre_debuff             TINYINT(1) UNSIGNED NOT NULL                          ,
+          reduction_effet_par_tour            INT(11) SIGNED NOT NULL                               ,
+          reduction_effet_par_tour_pourcent   INT(11) SIGNED NOT NULL                               ,
+          paralysie                           TINYINT(1) UNSIGNED NOT NULL                          ,
+          degats                              INT(11) SIGNED NOT NULL                               ,
+          ne_peut_pas_tuer                    TINYINT(1) UNSIGNED NOT NULL                          ,
+          buff_degats                         INT(11) SIGNED NOT NULL                               ,
+          buff_degats_pourcent                INT(11) SIGNED NOT NULL                               ,
+          buff_hpmax                          INT(11) SIGNED NOT NULL                               ,
+          buff_hpmax_pourcent                 INT(11) SIGNED NOT NULL                               ,
+          buff_danger                         INT(11) SIGNED NOT NULL                               ,
+          buff_danger_pourcent                INT(11) SIGNED NOT NULL                               ,
+          buff_physique                       INT(11) SIGNED NOT NULL                               ,
+          buff_physique_pourcent              INT(11) SIGNED NOT NULL                               ,
+          buff_mental                         INT(11) SIGNED NOT NULL                               ,
+          buff_mental_pourcent                INT(11) SIGNED NOT NULL                               ,
+          reduction_degats                    INT(11) SIGNED NOT NULL                               ,
+          reduction_degats_pourcent           INT(11) SIGNED NOT NULL                               ,
+          amplification_soins                 INT(11) SIGNED NOT NULL                               ,
+          amplification_soins_pourcent        INT(11) SIGNED NOT NULL                               ,
+          amplification_soins_recus           INT(11) SIGNED NOT NULL                               ,
+          amplification_soins_recus_pourcent  INT(11) SIGNED NOT NULL
         ) ENGINE=MyISAM; ");
 $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_effets</p>';
 
@@ -224,8 +228,8 @@ query(" INSERT INTO nbrpg_session SET id = 7 , FKnbrpg_persos = 0 , FKnbrpg_mons
 
 query(" INSERT INTO nbrpg_effets SET id = 1 , nom = 'Poison paralysant' , duree = 5 , description = 'Un poison qui coule dans les veines, infligeant 1 dégât chaque tour pendant 5 tours, paralysant totalement, et réduisant le physique de 25% tant qu\'il est actif. Ne peut pas tuer la cible.' , flavortext = 'Fabriqué à partir de véritable sang de raclure, garanti 100% douloureux.' , url_icone = 'effet_goutte.png' , supprimer_avant_et_apres_combat = 1 , degats = 1 , ne_peut_pas_tuer = 1 , buff_mental_pourcent = -25 ");
 query(" INSERT INTO nbrpg_effets SET id = 2 , nom = 'Bénédiction majeure' , duree = 4 , description = 'Fait briller la lumière divine sur un personnage, le rendant plus fort, plus résistant, et plus dangereux. Il est impossible de retirer ou d\'altérer cet effet positif. L\'effet diminue de 25% chaque tour jusqu\'à ce qu\'il n\'en reste plus rien.' , url_icone = 'effet_plus.png' , supprimer_avant_et_apres_combat = 1 , ne_peut_pas_etre_debuff = 1 , reduction_effet_par_tour_pourcent = 25 , buff_degats_pourcent = 40 , buff_danger_pourcent = 40 , buff_hpmax_pourcent = 40 , buff_physique_pourcent = 40 , reduction_degats_pourcent = 20 ");
-query(" INSERT INTO nbrpg_effets SET id = 3 , nom = 'Le buff de test' , duree = 0 , description = 'Pour tester le système de buff/debuff' , flavortext = 'On est fous on remplit tout' , url_icone = 'effet_excla.png' , supprimer_avant_et_apres_combat = 0 , ne_peut_pas_etre_debuff = 1 , reduction_effet_par_tour = 3 , reduction_effet_par_tour_pourcent = 30 , paralysie = 1 , degats = -3 , ne_peut_pas_tuer = 1 , buff_degats = -1 , buff_degats_pourcent = -20 , buff_hpmax = 10 , buff_hpmax_pourcent = -10 , buff_danger = -10 , buff_danger_pourcent = 10 , buff_physique = 10 , buff_physique_pourcent = 10 , buff_mental = -10 , buff_mental_pourcent = -10 , reduction_degats = 5 , reduction_degats_pourcent = -10 ");
-query(" INSERT INTO nbrpg_effets SET id = 4 , nom = 'L\'autre buff de test' , duree = 42 , description = 'Pour tester le système de buff/debuff' , flavortext = 'On est fous on remplit tout' , url_icone = 'effet_interro.png' , supprimer_avant_et_apres_combat = 0 , ne_peut_pas_etre_debuff = 0 , reduction_effet_par_tour = -3 , reduction_effet_par_tour_pourcent = -30 , paralysie = 0 , degats = 3 , ne_peut_pas_tuer = -1 , buff_degats = 1 , buff_degats_pourcent = 20 , buff_hpmax = -10 , buff_hpmax_pourcent = 10 , buff_danger = 10 , buff_danger_pourcent = -10 , buff_physique = -10 , buff_physique_pourcent = -10 , buff_mental = 10 , buff_mental_pourcent = 10 , reduction_degats = -5 , reduction_degats_pourcent = 10 ");
+query(" INSERT INTO nbrpg_effets SET id = 3 , nom = 'Le buff de test' , duree = 0 , description = 'Pour tester le système de buff/debuff' , flavortext = 'On est fous on remplit tout' , url_icone = 'effet_excla.png' , supprimer_avant_et_apres_combat = 0 , ne_peut_pas_etre_debuff = 1 , reduction_effet_par_tour = 3 , reduction_effet_par_tour_pourcent = 30 , paralysie = 1 , degats = -3 , ne_peut_pas_tuer = 1 , buff_degats = -1 , buff_degats_pourcent = -20 , buff_hpmax = 10 , buff_hpmax_pourcent = -10 , buff_danger = -10 , buff_danger_pourcent = 10 , buff_physique = 10 , buff_physique_pourcent = 10 , buff_mental = -10 , buff_mental_pourcent = -10 , reduction_degats = 5 , reduction_degats_pourcent = -10 , amplification_soins = 5 , amplification_soins_pourcent = 10 , amplification_soins_recus = -10 , amplification_soins_recus_pourcent = -50 ");
+query(" INSERT INTO nbrpg_effets SET id = 4 , nom = 'L\'autre buff de test' , duree = 42 , description = 'Pour tester le système de buff/debuff' , flavortext = 'On est fous on remplit tout' , url_icone = 'effet_interro.png' , supprimer_avant_et_apres_combat = 0 , ne_peut_pas_etre_debuff = 0 , reduction_effet_par_tour = -3 , reduction_effet_par_tour_pourcent = -30 , paralysie = 0 , degats = 3 , ne_peut_pas_tuer = -1 , buff_degats = 1 , buff_degats_pourcent = 20 , buff_hpmax = -10 , buff_hpmax_pourcent = 10 , buff_danger = 10 , buff_danger_pourcent = -10 , buff_physique = -10 , buff_physique_pourcent = -10 , buff_mental = 10 , buff_mental_pourcent = 10 , reduction_degats = -5 , reduction_degats_pourcent = 10 , amplification_soins = -10 , amplification_soins_pourcent = -10 , amplification_soins_recus = 1 , amplification_soins_recus_pourcent = 20 ");
 
 query(" INSERT INTO nbrpg_session_effets SET id = 1 , FKnbrpg_session = 2 , FKnbrpg_effets = 1 , duree_restante = 2 ");
 query(" INSERT INTO nbrpg_session_effets SET id = 2 , FKnbrpg_session = 3 , FKnbrpg_effets = 1 , duree_restante = 3 ");
