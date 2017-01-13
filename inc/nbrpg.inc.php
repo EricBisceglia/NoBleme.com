@@ -170,6 +170,10 @@ function nbrpg_vierestante($vie,$viemax)
 
 function nbrpg_reduction_effet($tours_max,$tours_restants,$effet,$reduction,$reduction_pourcent)
 {
+  // Si c'est un buff à durée infinie, on ne fait pas le calcul
+  if(!$tours_restants)
+    return $effet;
+
   // On commence par calculer combien de tours de réduction à appliquer
   $reduction_tours = $tours_max - $tours_restants;
 
@@ -244,7 +248,9 @@ function nbrpg_format_effet($effet,$duree)
   $deffets  = mysqli_fetch_array($qeffets);
   $e_icone  = $deffets['e_icone'];
   $e_nom    = $deffets['e_nom'];
-  $e_duree  = ($duree > 1) ? 'tours restants' : 'tour restant';
+  $e_durees = ($duree > 1) ? 'tours restants' : 'tour restant';
+  $e_dureet = ($duree > 0) ? "<span class=\"gras\">$duree</span> $e_durees" : 'Durée infinie';
+  $e_duree  = "<p class=\"indiv align_center\">$e_dureet</p>";
   $e_desc   = $deffets['e_desc'];
   $e_effets = '';
 
@@ -296,7 +302,7 @@ function nbrpg_format_effet($effet,$duree)
             <img src=\"./../../img/nbrpg/$e_icone\" alt=\"X\" style=\"border:1px solid #000000;border-radius:4px\">
             <div class=\"petittooltip\">
               <p class=\"indiv align_center gras majuscules\">$e_nom</p>
-              <p class=\"indiv align_center\"><span class=\"gras\">$duree</span> $e_duree</p>
+              $e_duree
               <hr class=\"points\">
               <p>$e_desc</p>
               $e_effets
