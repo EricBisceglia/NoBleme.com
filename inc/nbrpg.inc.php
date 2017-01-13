@@ -288,10 +288,13 @@ function nbrpg_format_effet($effet,$duree)
   // Effets spéciaux
   $e_effets .= ($deffets['e_nppt']) ? "<p class=\"gras\">Ne peut pas tuer la cible</p>" : '';
   $e_effets .= ($deffets['e_npped']) ? "<p class=\"gras\">Impossible de retirer cet effet</p>" : '';
-  $e_effets .= ($deffets['e_reduc'] > 0) ? "<p class=\"gras\">L'effet baisse de ".$deffets['e_reduc']." chaque tour</p>" : '';
-  $e_effets .= ($deffets['e_reduc'] < 0) ? "<p class=\"gras\">L'effet augmente de ".abs($deffets['e_reduc'])." chaque tour</p>" : '';
-  $e_effets .= ($deffets['e_reducp'] > 0) ? "<p class=\"gras\">L'effet baisse de ".$deffets['e_reducp']."% chaque tour</p>" : '';
-  $e_effets .= ($deffets['e_reducp'] < 0) ? "<p class=\"gras\">L'effet augmente de ".abs($deffets['e_reducp'])."% chaque tour</p>" : '';
+  if($duree)
+  {
+    $e_effets .= ($deffets['e_reduc'] > 0) ? "<p class=\"gras\">L'effet baisse de ".$deffets['e_reduc']." chaque tour</p>" : '';
+    $e_effets .= ($deffets['e_reduc'] < 0) ? "<p class=\"gras\">L'effet augmente de ".abs($deffets['e_reduc'])." chaque tour</p>" : '';
+    $e_effets .= ($deffets['e_reducp'] > 0) ? "<p class=\"gras\">L'effet baisse de ".$deffets['e_reducp']."% chaque tour</p>" : '';
+    $e_effets .= ($deffets['e_reducp'] < 0) ? "<p class=\"gras\">L'effet augmente de ".abs($deffets['e_reducp'])."% chaque tour</p>" : '';
+  }
 
   // Fin de préparation des infos
   $e_effets = ($e_effets) ? "<hr class=\"points\">".$e_effets : '';
