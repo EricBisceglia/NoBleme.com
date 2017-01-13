@@ -25,23 +25,41 @@ if(!$id_personnage)
 // Infos sur la session en cours
 
 // On va chercher le contenu de la session
-$qsession = query(" SELECT    nbrpg_session.id              AS 's_id'       ,
-                              nbrpg_persos.couleur_chat     AS 'p_couleur'  ,
-                              nbrpg_persos.nom              AS 'p_nom'      ,
-                              membres.pseudonyme            AS 'p_pseudo'   ,
-                              nbrpg_session.monstre_niveau  AS 'm_niveau'   ,
-                              nbrpg_persos.niveau           AS 'p_niveau'   ,
-                              nbrpg_monstres.nom            AS 'm_nom'      ,
-                              nbrpg_session.vie             AS 's_vie'      ,
-                              nbrpg_persos.max_vie          AS 'p_viemax'   ,
-                              nbrpg_monstres.max_vie        AS 'm_viemax'   ,
-                              nbrpg_session.danger          AS 's_danger'   ,
-                              nbrpg_session.physique        AS 's_physique' ,
-                              nbrpg_session.mental          AS 's_mental'
+$qsession = query(" SELECT    nbrpg_session.id                AS 's_id'         ,
+                              nbrpg_persos.couleur_chat       AS 'p_couleur'    ,
+                              nbrpg_persos.nom                AS 'p_nom'        ,
+                              membres.pseudonyme              AS 'p_pseudo'     ,
+                              nbrpg_session.monstre_niveau    AS 'm_niveau'     ,
+                              nbrpg_persos.niveau             AS 'p_niveau'     ,
+                              nbrpg_monstres.nom              AS 'm_nom'        ,
+                              nbrpg_session.vie               AS 's_vie'        ,
+                              nbrpg_persos.max_vie            AS 'p_viemax'     ,
+                              nbrpg_monstres.max_vie          AS 'm_viemax'     ,
+                              nbrpg_session.danger            AS 's_danger'     ,
+                              nbrpg_session.physique          AS 's_physique'   ,
+                              nbrpg_session.mental            AS 's_mental'     ,
+                              arme.buff_hpmax                 AS 'a_hpmax'      ,
+                              arme.buff_hpmax_pourcent        AS 'a_hpmaxp'     ,
+                              costume.buff_hpmax              AS 'c_hpmax'      ,
+                              costume.buff_hpmax_pourcent     AS 'c_hpmaxp'     ,
+                              arme.buff_danger                AS 'a_danger'     ,
+                              arme.buff_danger_pourcent       AS 'a_dangerp'    ,
+                              costume.buff_danger             AS 'c_danger'     ,
+                              costume.buff_danger_pourcent    AS 'c_dangerp'    ,
+                              arme.buff_physique              AS 'a_physique'   ,
+                              arme.buff_physique_pourcent     AS 'a_physiquep'  ,
+                              costume.buff_physique           AS 'c_physique'   ,
+                              costume.buff_physique_pourcent  AS 'c_physiquep'  ,
+                              arme.buff_mental                AS 'a_mental'     ,
+                              arme.buff_mental_pourcent       AS 'a_mentalp'    ,
+                              costume.buff_mental             AS 'c_mental'     ,
+                              costume.buff_mental_pourcent    AS 'c_mentalp'
                     FROM      nbrpg_session
-                    LEFT JOIN nbrpg_persos    ON nbrpg_session.FKnbrpg_persos   = nbrpg_persos.id
-                    LEFT JOIN membres         ON nbrpg_persos.FKmembres         = membres.id
-                    LEFT JOIN nbrpg_monstres  ON nbrpg_session.FKnbrpg_monstres = nbrpg_monstres.id
+                    LEFT JOIN nbrpg_persos    ON              nbrpg_session.FKnbrpg_persos        = nbrpg_persos.id
+                    LEFT JOIN membres         ON              nbrpg_persos.FKmembres              = membres.id
+                    LEFT JOIN nbrpg_monstres  ON              nbrpg_session.FKnbrpg_monstres      = nbrpg_monstres.id
+                    LEFT JOIN nbrpg_objets    AS arme     ON  nbrpg_persos.FKnbrpg_objets_arme    = arme.id
+                    LEFT JOIN nbrpg_objets    AS costume  ON  nbrpg_persos.FKnbrpg_objets_costume = costume.id
                     ORDER BY  nbrpg_session.danger_initial  DESC ,
                               nbrpg_persos.nom              DESC ,
                               nbrpg_monstres.nom            DESC ");
@@ -49,17 +67,17 @@ $qsession = query(" SELECT    nbrpg_session.id              AS 's_id'       ,
 // Puis on prépare tout ça pour l'affichage
 for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
 {
-  // On a d'abord besoin de chercher certains effets, on prépare le terrain pour ça
+  // On a d'abord besoin de chercher certains effets et certaines armes, on prépare le terrain pour ça
   $session_id                   = $dsession['s_id'];
   $session_effets[$nsession]    = '';
-  $buff_hpmax                   = 0;
-  $buff_hpmax_p                 = 0;
-  $buff_danger                  = 0;
-  $buff_danger_p                = 0;
-  $buff_physique                = 0;
-  $buff_physique_p              = 0;
-  $buff_mental                  = 0;
-  $buff_mental_p                = 0;
+  $buff_hpmax                   = $dsession['a_hpmax'] + $dsession['c_hpmax'];
+  $buff_hpmax_p                 = $dsession['a_hpmaxp'] + $dsession['c_hpmaxp'];
+  $buff_danger                  = $dsession['a_danger'] + $dsession['c_danger'];
+  $buff_danger_p                = $dsession['a_dangerp'] + $dsession['c_dangerp'];
+  $buff_physique                = $dsession['a_physique'] + $dsession['c_physique'];
+  $buff_physique_p              = $dsession['a_physiquep'] + $dsession['c_physiquep'];
+  $buff_mental                  = $dsession['a_mental'] + $dsession['c_mental'];
+  $buff_mental_p                = $dsession['a_mentalp'] + $dsession['c_mentalp'];
 
   // Puis on va chercher les effets
   $qeffets                      = query(" SELECT    nbrpg_session_effets.FKnbrpg_effets             AS 'e_id'           ,
@@ -104,10 +122,10 @@ for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
   $session_joueur[$nsession]    = ($session_perso) ? $dsession['p_pseudo'] : '';
   $session_nom[$nsession]       = ($session_perso) ? $dsession['p_nom'] : $dsession['m_nom'];
   $session_niveau[$nsession]    = ($session_perso) ? $dsession['p_niveau'] : $dsession['m_niveau'];
-  $session_vie[$nsession]       = nbrpg_vierestante($dsession['s_vie'],($session_perso) ? nbrpg_application_effet($dsession['p_viemax'],$buff_physique,$buff_physique_p,1) : nbrpg_multiplicateur(nbrpg_application_effet($dsession['m_viemax'],$buff_physique,$buff_physique_p,1), $dsession['m_niveau']));
-  $session_danger[$nsession]    = nbrpg_application_effet($dsession['s_danger'],$buff_physique,$buff_physique_p,1);
+  $session_vie[$nsession]       = nbrpg_vierestante($dsession['s_vie'],($session_perso) ? nbrpg_application_effet($dsession['p_viemax'],$buff_hpmax,$buff_hpmax_p,1) : nbrpg_multiplicateur(nbrpg_application_effet($dsession['m_viemax'],$buff_hpmax,$buff_hpmax_p,1), $dsession['m_niveau']));
+  $session_danger[$nsession]    = nbrpg_application_effet($dsession['s_danger'],$buff_danger,$buff_danger_p,1);
   $session_physique[$nsession]  = nbrpg_application_effet($dsession['s_physique'],$buff_physique,$buff_physique_p,1);
-  $session_mental[$nsession]    = nbrpg_application_effet($dsession['s_mental'],$buff_physique,$buff_physique_p,1);
+  $session_mental[$nsession]    = nbrpg_application_effet($dsession['s_mental'],$buff_mental,$buff_mental_p,1);
 }
 
 
