@@ -334,9 +334,117 @@ function nbrpg_format_effet($effet,$duree)
 //
 // $cible est l'id de session d'un joueur ou monstre actuellement présent dans une session active
 // $valeur est un nombre positif ou négatif
+// $type est le type de dégâts, si rien n'est rentré il va prendre des dégâts physiques par défaut
 // Utilisation: nbrpg_edithp(2,-4);
 
-function nbrpg_edithp($cible,$valeur)
+function nbrpg_edithp($cible,$valeur,$type=NULL)
 {
-  query(" UPDATE nbrpg_session SET vie = (vie + $valeur) WHERE id = $cible ");
+  // On commence par récupérer les infos nécessaires sur la cible
+  $qedithp = query("  SELECT    nbrpg_session.FKnbrpg_persos        AS 'c_perso'    ,
+                                nbrpg_persos.nom                    AS 'p_nom'      ,
+                                nbrpg_monstres.nom                  AS 'm_nom'      ,
+                                nbrpg_session.vie                   AS 'c_hp'       ,
+                                nbrpg_monstres.resistance_physique  AS 'm_res_p'    ,
+                                nbrpg_monstres.resistance_magique   AS 'm_res_m'    ,
+                                arme.reduction_degats               AS 'p_res'      ,
+                                arme.reduction_degats_pourcent      AS 'p_res_p'    ,
+                                costume.reduction_degats            AS 'p_res2'     ,
+                                costume.reduction_degats_pourcent   AS 'p_res_p2'
+                      FROM      nbrpg_session
+                      LEFT JOIN nbrpg_persos              ON nbrpg_session.FKnbrpg_persos         = nbrpg_persos.id
+                      LEFT JOIN nbrpg_objets  AS arme     ON nbrpg_persos.FKnbrpg_objets_arme     = arme.id
+                      LEFT JOIN nbrpg_objets  AS costume  ON nbrpg_persos.FKnbrpg_objets_costume  = costume.id
+                      LEFT JOIN nbrpg_monstres            ON nbrpg_session.FKnbrpg_monstres       = nbrpg_monstres.id
+                      WHERE     nbrpg_session.id = '$cible' ");
+
+  // On prépare ces données avant de passer à la suite
+  $dedithp                = mysqli_fetch_array($qedithp);
+  $vie                    = $dedithp['c_hp'];
+  $monstre                = ($dedithp['c_perso']) ? 0 : 1;
+  $nom                    = ($monstre) ? $dedithp['m_nom'] : $dedithp['p_nom'];
+  $augmentation_soins     = 0;
+  $augmentation_soins_p   = 0;
+  $reduction_degats       = $dedithp['p_res']+$dedithp['p_res2'];
+  if($monstre)
+  {
+    if(isset($type) && $type == 'mental')
+      $reduction_degats_p = $dedithp['m_res_m'];
+    else
+      $reduction_degats_p = $dedithp['m_res_p'];
+  }
+  else
+    $reduction_degats_p   = $dedithp['p_res_p']+$dedithp['p_res_p2'];
+
+  // On va ensuite chercher les effets qui affectent la réduction des dégâts ou l'amplification des soins
+  $qeffetshp = query("  SELECT    nbrpg_session_effets.duree_restante             AS 'e_duree'        ,
+                                  nbrpg_effets.duree                              AS 'e_dureemax'     ,
+                                  nbrpg_effets.reduction_effet_par_tour           AS 'e_reduction'    ,
+                                  nbrpg_effets.reduction_effet_par_tour_pourcent  AS 'e_reduction_p'  ,
+                                  nbrpg_effets.reduction_degats                   AS 'e_resistance'   ,
+                                  nbrpg_effets.reduction_degats_pourcent          AS 'e_resistance_p' ,
+                                  nbrpg_effets.amplification_soins_recus          AS 'e_extrasoins'   ,
+                                  nbrpg_effets.amplification_soins_recus_pourcent AS 'e_extrasoins_p'
+                        FROM      nbrpg_session_effets
+                        LEFT JOIN nbrpg_effets ON nbrpg_session_effets.FKnbrpg_effets = nbrpg_effets.id
+                        WHERE     nbrpg_session_effets.FKnbrpg_session = '$cible' ");
+
+  // Et on fait des calculs sur ces effets
+  while($deffetshp = mysqli_fetch_array($qeffetshp))
+  {
+    $duree_max                  = $deffetshp['e_dureemax'];
+    $duree                      = $deffetshp['e_duree'];
+    $reduction                  = $deffetshp['e_reduction'];
+    $reduction_p                = $deffetshp['e_reduction_p'];
+    $reduction_degats           += nbrpg_reduction_effet($duree_max,$duree,$deffetshp['e_resistance'],$reduction,$reduction_p);
+    $reduction_degats_p         += nbrpg_reduction_effet($duree_max,$duree,$deffetshp['e_resistance_p'],$reduction,$reduction_p);
+    $augmentation_soins         += nbrpg_reduction_effet($duree_max,$duree,$deffetshp['e_extrasoins'],$reduction,$reduction_p);
+    $augmentation_soins_p       += nbrpg_reduction_effet($duree_max,$duree,$deffetshp['e_extrasoins_p'],$reduction,$reduction_p);
+  }
+
+  // On applique la réduction de dégâts ou l'amplification des soins, on calcule les nouveaux HP, et on prépare le message pour le chatlog
+  if($valeur < 0)
+  {
+    $degats     = 0 - round(($valeur - $reduction_degats) * (1 - ($reduction_degats_p / 100)),0);
+    $degats     = ($degats < 0) ? 0 : $degats;
+    $vie        = $vie - $degats;
+    $pluriel_hp = ($degats <= 1) ? 'point de vie' : 'points de vie';
+    if($reduction_degats || $reduction_degats_p)
+    {
+      $valeur_n = 0 - $valeur;
+      $details  = "($valeur_n";
+      $details .= ($reduction_degats) ? " -$reduction_degats" : '';
+      $details .= ($reduction_degats_p) ? " -$reduction_degats_p%" : '';
+      $details .= ")";
+    }
+    else
+      $details  = '';
+    $message    = postdata("$nom perd $degats $pluriel_hp $details");
+  }
+  else
+  {
+    $degats     = round(($valeur + $augmentation_soins) * (1 + ($augmentation_soins_p / 100)),0);
+    $vie        = $vie + $degats;
+    $pluriel_hp = ($degats <= 1) ? 'point de vie' : 'points de vie';
+    if($augmentation_soins || $augmentation_soins_p)
+    {
+      $details  = "($valeur";
+      $details .= ($augmentation_soins) ? " +$augmentation_soins" : '';
+      $details .= ($augmentation_soins_p) ? " +$augmentation_soins_p%" : '';
+      $details .= ")";
+    }
+    else
+      $details  = '';
+    $message    = postdata("$nom récupère $degats $pluriel_hp $details");
+  }
+
+  // On vérifie qu'on ait pas dépassé les HP max de la cible
+
+  // Puis on met à jour les points de vie restants à la cible
+  query(" UPDATE nbrpg_session SET vie = $vie WHERE id = $cible ");
+
+  // On envoie un message système dans le chatlog RP
+  $timestamp = time();
+  query(" INSERT INTO nbrpg_chatlog SET timestamp = '$timestamp' , FKmembres = 0 , type_chat = 'RP' , message = '$message'");
+
+  // En cas de mort, on retire la cible de la session
 }

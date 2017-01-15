@@ -84,10 +84,10 @@ for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
       <?=$session_vie[$i]?>
     </td>
     <td class="cadre_gris align_center vspaced gras">
-      <input type="button" class="gras" value="-1HP" onClick="dynamique('<?=$chemin_fixed?>','xhr/admin_actions','', 'xhr&amp;action=modifier_hp&amp;cible=<?=$session_id[$i]?>&amp;valeur=-1');">
+      <input type="button" class="gras" value="-10HP" onClick="dynamique('<?=$chemin_fixed?>','xhr/admin_actions','', 'xhr&amp;action=modifier_hp&amp;cible=<?=$session_id[$i]?>&amp;valeur=-10');">
     </td>
     <td class="cadre_gris align_center vspaced gras">
-      <input type="button" class="gras" value="+1HP" onClick="dynamique('<?=$chemin_fixed?>','xhr/admin_actions','', 'xhr&amp;action=modifier_hp&amp;cible=<?=$session_id[$i]?>&amp;valeur=+1');">
+      <input type="button" class="gras" value="+10HP" onClick="dynamique('<?=$chemin_fixed?>','xhr/admin_actions','', 'xhr&amp;action=modifier_hp&amp;cible=<?=$session_id[$i]?>&amp;valeur=+10');">
     </td>
   </tr>
   <?php } ?>

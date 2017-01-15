@@ -84,6 +84,7 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_objets (
           effets_utilisation_probabilite  INT(11) UNSIGNED NOT NULL                             ,
           FKnbrpg_effets_utilisation2     INT(11) UNSIGNED NOT NULL                             ,
           effets_utilisation_probabilite2 INT(11) UNSIGNED NOT NULL                             ,
+          type_degats                     MEDIUMTEXT                                            ,
           degats_pourcent_physique        INT(11) UNSIGNED NOT NULL                             ,
           degats_pourcent_mental          INT(11) UNSIGNED NOT NULL                             ,
           buff_hpmax                      INT(11) SIGNED NOT NULL                               ,
@@ -100,12 +101,14 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_objets (
 $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_objets</p>';
 
 query(" CREATE TABLE IF NOT EXISTS nbrpg_monstres (
-          id        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-          nom       MEDIUMTEXT                                            ,
-          max_vie   INT(11) UNSIGNED NOT NULL                             ,
-          physique  INT(11) UNSIGNED NOT NULL                             ,
-          mental    INT(11) UNSIGNED NOT NULL                             ,
-          danger    INT(11) UNSIGNED NOT NULL
+          id                  INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+          nom                 MEDIUMTEXT                                            ,
+          max_vie             INT(11) UNSIGNED NOT NULL                             ,
+          physique            INT(11) UNSIGNED NOT NULL                             ,
+          mental              INT(11) UNSIGNED NOT NULL                             ,
+          danger              INT(11) UNSIGNED NOT NULL                             ,
+          resistance_physique INT(11) SIGNED NOT NULL                               ,
+          resistance_magique  INT(11) SIGNED NOT NULL
         ) ENGINE=MyISAM; ");
 $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_monstres</p>';
 
@@ -119,8 +122,7 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_session (
           charges_oracle    INT(11) UNSIGNED NOT NULL                             ,
           physique          INT(11) UNSIGNED NOT NULL                             ,
           mental            INT(11) UNSIGNED NOT NULL                             ,
-          danger            INT(11) UNSIGNED NOT NULL                             ,
-          danger_initial    INT(11) UNSIGNED NOT NULL
+          danger            INT(11) UNSIGNED NOT NULL
         ) ENGINE=MyISAM; ");
 $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_session</p>';
 
@@ -128,6 +130,7 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_chatlog (
           id        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
           timestamp INT(11) UNSIGNED NOT NULL                             ,
           FKmembres INT(11) UNSIGNED NOT NULL                             ,
+          nom_perso MEDIUMTEXT                                            ,
           type_chat TINYTEXT                                              ,
           message   LONGTEXT
         ) ENGINE=MyISAM; ");
@@ -209,22 +212,22 @@ query(" INSERT INTO nbrpg_persos SET id = 4 , FKmembres = 236, couleur_chat = '#
 $time = time();
 query(" INSERT INTO nbrpg_persos SET id = 5 , FKmembres = 1, couleur_chat = '#66AA66', date_creation = $time, nom = 'Baderon', classe = 'Aventurier', niveau = 1, experience = 0, prochain_niveau = 25, max_vie = 100, physique = 10, max_charges_oracle = 1, mental = 10, danger = 10, FKnbrpg_objets_arme = 1, FKnbrpg_objets_costume = 2, FKnbrpg_objets_objet3 = 3 ");
 
-query(" INSERT INTO nbrpg_objets SET id = 1 , nom = 'Dague paralysante' , description = 'Une dague unique. Inflige 50% de votre physique en dégâts, et augmente votre niveau de danger de 1. 25% de chances d\'appliquer l\'effet poison', flavortext = 'Ne pas lécher la lame, si vous tenez à la vie', niveau = 6, type = 'Arme', rarete = 'Unique', FKnbrpg_effets_utilisation = 1, effets_utilisation_probabilite = 25, degats_pourcent_physique = 50, buff_danger = 1 ");
+query(" INSERT INTO nbrpg_objets SET id = 1 , nom = 'Dague paralysante' , description = 'Une dague unique. Inflige 50% de votre physique en dégâts, et augmente votre niveau de danger de 1. 25% de chances d\'appliquer l\'effet poison', flavortext = 'Ne pas lécher la lame, si vous tenez à la vie', niveau = 6, type = 'Arme', rarete = 'Unique', FKnbrpg_effets_utilisation = 1, effets_utilisation_probabilite = 25, type_degats = 'physique' , degats_pourcent_physique = 50, buff_danger = 1 ");
 query(" INSERT INTO nbrpg_objets SET id = 2 , nom = 'Armure de poils' , description = 'Couvert de poils, vous êtes 5% plus résistant, mais aussi 5% plus dangereux' , niveau = 1 , type = 'Costume', rarete = 'Commun' , buff_danger_pourcent = 5, reduction_degats_pourcent = 5 ");
-query(" INSERT INTO nbrpg_objets SET id = 3 , nom = 'L\'objet test' , description = 'On teste tout on est fous' , flavortext = 'Ceci n\'est pas un test' , niveau = 42, type = 'Costume' , rarete = 'Unique' , FKnbrpg_effets_passif = 1, FKnbrpg_effets_passif2 = 2, FKnbrpg_effets_utilisation = 3, effets_utilisation_probabilite = 50, FKnbrpg_effets_utilisation2 = 4, effets_utilisation_probabilite2 = 100, degats_pourcent_physique = 250, degats_pourcent_mental = 25, buff_hpmax = 10, buff_hpmax_pourcent = 10, buff_danger = 5, buff_danger_pourcent = 25, buff_physique = -5, buff_physique_pourcent = -15, buff_mental = -1, buff_mental_pourcent = -50, reduction_degats = 5, reduction_degats_pourcent = -10 ");
+query(" INSERT INTO nbrpg_objets SET id = 3 , nom = 'L\'objet test' , description = 'On teste tout on est fous' , flavortext = 'Ceci n\'est pas un test' , niveau = 42, type = 'Costume' , rarete = 'Unique' , FKnbrpg_effets_passif = 1, FKnbrpg_effets_passif2 = 2, FKnbrpg_effets_utilisation = 3, effets_utilisation_probabilite = 50, FKnbrpg_effets_utilisation2 = 4, effets_utilisation_probabilite2 = 100, type_degats = 'magique' , degats_pourcent_physique = 250, degats_pourcent_mental = 25, buff_hpmax = 10, buff_hpmax_pourcent = 10, buff_danger = 5, buff_danger_pourcent = 25, buff_physique = -5, buff_physique_pourcent = -15, buff_mental = -1, buff_mental_pourcent = -50, reduction_degats = 5, reduction_degats_pourcent = -10 ");
 
-query(" INSERT INTO nbrpg_session SET id = 1 , FKnbrpg_persos = 1 , FKnbrpg_monstres = 0 , vie = 100 , energie = 100 , charges_oracle = 1, physique = 10, mental = 10, danger = 10 , danger_initial = 10 ");
-query(" INSERT INTO nbrpg_session SET id = 2 , FKnbrpg_persos = 3 , FKnbrpg_monstres = 0 , vie = 260 , energie = 100 , charges_oracle = 1, physique = 17, mental = 5, danger = 21 , danger_initial = 21 ");
-query(" INSERT INTO nbrpg_session SET id = 3 , FKnbrpg_persos = 4 , FKnbrpg_monstres = 0 , vie = 350 , energie = 100 , charges_oracle = 1, physique = 20, mental = 16, danger = 20 , danger_initial = 20 ");
-query(" INSERT INTO nbrpg_session SET id = 4 , FKnbrpg_persos = 5 , FKnbrpg_monstres = 0 , vie = 100 , energie = 100 , charges_oracle = 1, physique = 10, mental = 10, danger = 10 , danger_initial = 10 ");
+query(" INSERT INTO nbrpg_session SET id = 1 , FKnbrpg_persos = 1 , FKnbrpg_monstres = 0 , vie = 100 , energie = 100 , charges_oracle = 1, physique = 10, mental = 10, danger = 10 ");
+query(" INSERT INTO nbrpg_session SET id = 2 , FKnbrpg_persos = 3 , FKnbrpg_monstres = 0 , vie = 260 , energie = 100 , charges_oracle = 1, physique = 17, mental = 5, danger = 21 ");
+query(" INSERT INTO nbrpg_session SET id = 3 , FKnbrpg_persos = 4 , FKnbrpg_monstres = 0 , vie = 350 , energie = 100 , charges_oracle = 1, physique = 20, mental = 16, danger = 20 ");
+query(" INSERT INTO nbrpg_session SET id = 4 , FKnbrpg_persos = 5 , FKnbrpg_monstres = 0 , vie = 100 , energie = 100 , charges_oracle = 1, physique = 10, mental = 10, danger = 10 ");
 
-query(" INSERT INTO nbrpg_monstres SET id = 1 , nom = 'Bitounette moulée' , max_vie = 80 , physique = 10 , mental = 5 , danger = 10 ");
-query(" INSERT INTO nbrpg_monstres SET id = 2 , nom = 'Clafoutis des forêts' , max_vie = 60 , physique = 10 , mental = 10 , danger = 10 ");
-query(" INSERT INTO nbrpg_monstres SET id = 3 , nom = 'Schnafon' , max_vie = 300 , physique = 20 , mental = 20 , danger = 20 ");
+query(" INSERT INTO nbrpg_monstres SET id = 1 , nom = 'Bitounette moulée' , max_vie = 80 , physique = 10 , mental = 5 , danger = 10 , resistance_physique = 10 , resistance_magique = -10 ");
+query(" INSERT INTO nbrpg_monstres SET id = 2 , nom = 'Clafoutis des forêts' , max_vie = 60 , physique = 10 , mental = 10 , danger = 10 , resistance_physique = 0 , resistance_magique = -40 ");
+query(" INSERT INTO nbrpg_monstres SET id = 3 , nom = 'Schnafon' , max_vie = 300 , physique = 20 , mental = 20 , danger = 20 , resistance_physique = 40 , resistance_magique = 0 ");
 
-query(" INSERT INTO nbrpg_session SET id = 5 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , monstre_niveau = 1 , vie = 80, physique = 10 , mental = 5 , danger = 10 , danger_initial = 10 ");
-query(" INSERT INTO nbrpg_session SET id = 6 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , monstre_niveau = 3 , vie = 98, physique = 12 , mental = 6 , danger = 5 , danger_initial = 5 ");
-query(" INSERT INTO nbrpg_session SET id = 7 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 3 , monstre_niveau = 7 , vie = 488, physique = 26 , mental = 26 , danger = 26 , danger_initial = 26 ");
+query(" INSERT INTO nbrpg_session SET id = 5 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , monstre_niveau = 1 , vie = 80, physique = 10 , mental = 5 , danger = 10 ");
+query(" INSERT INTO nbrpg_session SET id = 6 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , monstre_niveau = 3 , vie = 98, physique = 12 , mental = 6 , danger = 5 ");
+query(" INSERT INTO nbrpg_session SET id = 7 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 3 , monstre_niveau = 7 , vie = 488, physique = 26 , mental = 26 , danger = 26 ");
 
 query(" INSERT INTO nbrpg_effets SET id = 1 , nom = 'Poison paralysant' , duree = 5 , description = 'Un poison qui coule dans les veines, infligeant 1 dégât chaque tour pendant 5 tours, paralysant totalement, et réduisant le physique de 25% tant qu\'il est actif. Ne peut pas tuer la cible.' , flavortext = 'Fabriqué à partir de véritable sang de raclure, garanti 100% douloureux.' , url_icone = 'effet_goutte.png' , supprimer_avant_et_apres_combat = 1 , degats = 1 , ne_peut_pas_tuer = 1 , buff_mental_pourcent = -25 ");
 query(" INSERT INTO nbrpg_effets SET id = 2 , nom = 'Bénédiction majeure' , duree = 4 , description = 'Fait briller la lumière divine sur un personnage, le rendant plus fort, plus résistant, et plus dangereux. Il est impossible de retirer ou d\'altérer cet effet positif. L\'effet diminue de 25% chaque tour jusqu\'à ce qu\'il n\'en reste plus rien.' , url_icone = 'effet_plus.png' , supprimer_avant_et_apres_combat = 1 , ne_peut_pas_etre_debuff = 1 , reduction_effet_par_tour_pourcent = 25 , buff_degats_pourcent = 40 , buff_danger_pourcent = 40 , buff_hpmax_pourcent = 40 , buff_physique_pourcent = 40 , reduction_degats_pourcent = 20 ");

@@ -60,9 +60,9 @@ $qsession = query(" SELECT    nbrpg_session.id                AS 's_id'         
                     LEFT JOIN nbrpg_monstres  ON              nbrpg_session.FKnbrpg_monstres      = nbrpg_monstres.id
                     LEFT JOIN nbrpg_objets    AS arme     ON  nbrpg_persos.FKnbrpg_objets_arme    = arme.id
                     LEFT JOIN nbrpg_objets    AS costume  ON  nbrpg_persos.FKnbrpg_objets_costume = costume.id
-                    ORDER BY  nbrpg_session.danger_initial  DESC ,
-                              nbrpg_persos.nom              DESC ,
-                              nbrpg_monstres.nom            DESC ");
+                    ORDER BY  nbrpg_session.danger  DESC ,
+                              nbrpg_persos.nom      DESC ,
+                              nbrpg_monstres.nom    DESC ");
 
 // Puis on prépare tout ça pour l'affichage
 for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
@@ -122,10 +122,10 @@ for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
   $session_joueur[$nsession]    = ($session_perso) ? $dsession['p_pseudo'] : '';
   $session_nom[$nsession]       = ($session_perso) ? $dsession['p_nom'] : $dsession['m_nom'];
   $session_niveau[$nsession]    = ($session_perso) ? $dsession['p_niveau'] : $dsession['m_niveau'];
-  $session_vie[$nsession]       = nbrpg_vierestante($dsession['s_vie'],($session_perso) ? nbrpg_application_effet($dsession['p_viemax'],$buff_hpmax,$buff_hpmax_p,1) : nbrpg_multiplicateur(nbrpg_application_effet($dsession['m_viemax'],$buff_hpmax,$buff_hpmax_p,1), $dsession['m_niveau']));
-  $session_danger[$nsession]    = nbrpg_application_effet($dsession['s_danger'],$buff_danger,$buff_danger_p,1);
-  $session_physique[$nsession]  = nbrpg_application_effet($dsession['s_physique'],$buff_physique,$buff_physique_p,1);
-  $session_mental[$nsession]    = nbrpg_application_effet($dsession['s_mental'],$buff_mental,$buff_mental_p,1);
+  $session_vie[$nsession]       = nbrpg_vierestante($dsession['s_vie'],($session_perso) ? nbrpg_application_effet($dsession['p_viemax'],$buff_hpmax,$buff_hpmax_p) : nbrpg_multiplicateur(nbrpg_application_effet($dsession['m_viemax'],$buff_hpmax,$buff_hpmax_p), $dsession['m_niveau']));
+  $session_danger[$nsession]    = nbrpg_application_effet($dsession['s_danger'],$buff_danger,$buff_danger_p);
+  $session_physique[$nsession]  = nbrpg_application_effet($dsession['s_physique'],$buff_physique,$buff_physique_p);
+  $session_mental[$nsession]    = nbrpg_application_effet($dsession['s_mental'],$buff_mental,$buff_mental_p);
 }
 
 
