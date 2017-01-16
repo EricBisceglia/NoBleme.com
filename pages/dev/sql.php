@@ -61,6 +61,12 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_persos (
           physique                INT(11) UNSIGNED NOT NULL                             ,
           mental                  INT(11) UNSIGNED NOT NULL                             ,
           danger                  INT(11) UNSIGNED NOT NULL                             ,
+          niveau_non_assigne      INT(11) UNSIGNED NOT NULL                             ,
+          niveau_combat           INT(11) UNSIGNED NOT NULL                             ,
+          niveau_magie            INT(11) UNSIGNED NOT NULL                             ,
+          niveau_strategie        INT(11) UNSIGNED NOT NULL                             ,
+          niveau_medecine         INT(11) UNSIGNED NOT NULL                             ,
+          niveau_aventure         INT(11) UNSIGNED NOT NULL                             ,
           FKnbrpg_objets_arme     INT(11) UNSIGNED NOT NULL                             ,
           FKnbrpg_objets_costume  INT(11) UNSIGNED NOT NULL                             ,
           FKnbrpg_objets_objet1   INT(11) UNSIGNED NOT NULL                             ,
@@ -205,12 +211,12 @@ $majq .= '<p class="nobleme_background vspaced">Crée l\'entrée activité : Jou
 
 
 /********************************NBRPGTEST*DELETEME**********************/
-query(" INSERT INTO nbrpg_persos SET id = 1 , FKmembres = 47, couleur_chat = '#AAAA66', date_creation = 1394875860, nom = 'Raclette', classe = 'Aventurier', niveau = 1, experience = 28, prochain_niveau = 50, max_vie = 100, max_charges_oracle = 1, physique = 10, mental = 10, danger = 10 ");
-query(" INSERT INTO nbrpg_persos SET id = 2 , FKmembres = 234, couleur_chat = '#AA6666', date_creation = 1334875863, nom = 'Bidule', classe = 'Druide', niveau = 3, experience = 0, prochain_niveau = 100, max_vie = 140, max_charges_oracle = 1, physique = 12, mental = 18, danger = 14 ");
-query(" INSERT INTO nbrpg_persos SET id = 3 , FKmembres = 227, couleur_chat = '#66AAAA', date_creation = 1393925460, nom = 'Gorillor', classe = 'Homme-singe', niveau = 3, experience = 74, prochain_niveau = 75, max_vie = 260, max_charges_oracle = 1, physique = 17, mental = 5, danger = 21 ");
-query(" INSERT INTO nbrpg_persos SET id = 4 , FKmembres = 236, couleur_chat = '#AA66AA', date_creation = 1393925460, nom = 'Eorzea', classe = 'Chevalier', niveau = 6, experience = 44, prochain_niveau = 100, max_vie = 350, max_charges_oracle = 1, physique = 20, mental = 16, danger = 20 ");
+query(" INSERT INTO nbrpg_persos SET id = 1 , FKmembres = 47, couleur_chat = '#AAAA66', date_creation = 1394875860, nom = 'Raclette', classe = 'Aventurier', niveau = 1, experience = 28, prochain_niveau = 50, max_vie = 100, max_charges_oracle = 1, physique = 10, mental = 10, danger = 10 , niveau_non_assigne = 1 ");
+query(" INSERT INTO nbrpg_persos SET id = 2 , FKmembres = 234, couleur_chat = '#AA6666', date_creation = 1334875863, nom = 'Bidule', classe = 'Druide', niveau = 3, experience = 0, prochain_niveau = 100, max_vie = 140, max_charges_oracle = 1, physique = 12, mental = 18, danger = 14 , niveau_magie = 2 , niveau_medecine = 1 ");
+query(" INSERT INTO nbrpg_persos SET id = 3 , FKmembres = 227, couleur_chat = '#66AAAA', date_creation = 1393925460, nom = 'Gorillor', classe = 'Homme-singe', niveau = 3, experience = 74, prochain_niveau = 75, max_vie = 260, max_charges_oracle = 1, physique = 17, mental = 5, danger = 21 , niveau_combat = 2 , niveau_aventure = 1 ");
+query(" INSERT INTO nbrpg_persos SET id = 4 , FKmembres = 236, couleur_chat = '#AA66AA', date_creation = 1393925460, nom = 'Eorzea', classe = 'Chevalier', niveau = 6, experience = 44, prochain_niveau = 100, max_vie = 350, max_charges_oracle = 1, physique = 20, mental = 16, danger = 20 , niveau_non_assigne = 1 , niveau_combat = 2 , niveau_strategie = 3 ");
 $time = time();
-query(" INSERT INTO nbrpg_persos SET id = 5 , FKmembres = 1, couleur_chat = '#66AA66', date_creation = $time, nom = 'Baderon', classe = 'Aventurier', niveau = 1, experience = 0, prochain_niveau = 25, max_vie = 100, physique = 10, max_charges_oracle = 1, mental = 10, danger = 10, FKnbrpg_objets_arme = 1, FKnbrpg_objets_costume = 2, FKnbrpg_objets_objet3 = 3 ");
+query(" INSERT INTO nbrpg_persos SET id = 5 , FKmembres = 1, couleur_chat = '#66AA66', date_creation = $time, nom = 'Baderon', classe = 'Aventurier', niveau = 1, experience = 0, prochain_niveau = 25, max_vie = 100, physique = 10, max_charges_oracle = 1, mental = 10, danger = 10, FKnbrpg_objets_arme = 1, FKnbrpg_objets_costume = 2, FKnbrpg_objets_objet3 = 3 , niveau_aventure = 1 ");
 
 query(" INSERT INTO nbrpg_objets SET id = 1 , nom = 'Dague paralysante' , description = 'Une dague unique. Inflige 50% de votre physique en dégâts, et augmente votre niveau de danger de 1. 25% de chances d\'appliquer l\'effet poison', flavortext = 'Ne pas lécher la lame, si vous tenez à la vie', niveau = 6, type = 'Arme', rarete = 'Unique', FKnbrpg_effets_utilisation = 1, effets_utilisation_probabilite = 25, type_degats = 'physique' , degats_pourcent_physique = 50, buff_danger = 1 ");
 query(" INSERT INTO nbrpg_objets SET id = 2 , nom = 'Armure de poils' , description = 'Couvert de poils, vous êtes 5% plus résistant, mais aussi 5% plus dangereux' , niveau = 1 , type = 'Costume', rarete = 'Commun' , buff_danger_pourcent = 5, reduction_degats_pourcent = 5 ");

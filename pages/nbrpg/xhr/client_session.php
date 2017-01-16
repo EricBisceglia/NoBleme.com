@@ -31,7 +31,15 @@ $qsession = query(" SELECT    nbrpg_session.id                AS 's_id'         
                               membres.pseudonyme              AS 'p_pseudo'     ,
                               nbrpg_session.monstre_niveau    AS 'm_niveau'     ,
                               nbrpg_persos.niveau             AS 'p_niveau'     ,
+                              nbrpg_persos.experience         AS 'p_exp'        ,
+                              nbrpg_persos.prochain_niveau    AS 'p_exp_next'   ,
                               nbrpg_monstres.nom              AS 'm_nom'        ,
+                              nbrpg_persos.niveau_non_assigne AS 'p_niv_na'     ,
+                              nbrpg_persos.niveau_combat      AS 'p_niv_combat' ,
+                              nbrpg_persos.niveau_magie       AS 'p_niv_magie'  ,
+                              nbrpg_persos.niveau_strategie   AS 'p_niv_tank'   ,
+                              nbrpg_persos.niveau_medecine    AS 'p_niv_soins'  ,
+                              nbrpg_persos.niveau_aventure    AS 'p_niv_utile'  ,
                               nbrpg_session.vie               AS 's_vie'        ,
                               nbrpg_persos.max_vie            AS 'p_viemax'     ,
                               nbrpg_monstres.max_vie          AS 'm_viemax'     ,
@@ -121,11 +129,27 @@ for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
   $session_couleur[$nsession]   = ($session_perso) ? $dsession['p_couleur'] : '#133742';
   $session_joueur[$nsession]    = ($session_perso) ? $dsession['p_pseudo'] : '';
   $session_nom[$nsession]       = ($session_perso) ? $dsession['p_nom'] : $dsession['m_nom'];
-  $session_niveau[$nsession]    = ($session_perso) ? $dsession['p_niveau'] : $dsession['m_niveau'];
   $session_vie[$nsession]       = nbrpg_vierestante($dsession['s_vie'],($session_perso) ? nbrpg_application_effet($dsession['p_viemax'],$buff_hpmax,$buff_hpmax_p) : nbrpg_multiplicateur(nbrpg_application_effet($dsession['m_viemax'],$buff_hpmax,$buff_hpmax_p), $dsession['m_niveau']));
   $session_danger[$nsession]    = nbrpg_application_effet($dsession['s_danger'],$buff_danger,$buff_danger_p);
   $session_physique[$nsession]  = nbrpg_application_effet($dsession['s_physique'],$buff_physique,$buff_physique_p);
   $session_mental[$nsession]    = nbrpg_application_effet($dsession['s_mental'],$buff_mental,$buff_mental_p);
+  $session_details[$nsession]   = '';
+  if($session_perso)
+  {
+    $session_niveau[$nsession]  = "<span class=\"pointeur tooltip\">".$dsession['p_niveau']."<div class=\"petittooltip\">".$dsession['p_exp']."/".$dsession['p_exp_next']." XP</div></span>";
+    $session_details[$nsession] .= ($dsession['p_niv_na']) ? '<p>'.$dsession['p_niv_na'].' niveaux non assignés</p>' : '';
+    $session_details[$nsession] .= ($dsession['p_niv_combat']) ? '<p>'.$dsession['p_niv_combat'].' niveaux de combat</p>' : '';
+    $session_details[$nsession] .= ($dsession['p_niv_magie']) ? '<p>'.$dsession['p_niv_magie'].' niveaux de magie</p>' : '';
+    $session_details[$nsession] .= ($dsession['p_niv_tank']) ? '<p>'.$dsession['p_niv_tank'].' niveaux de stratégie</p>' : '';
+    $session_details[$nsession] .= ($dsession['p_niv_soins']) ? '<p>'.$dsession['p_niv_soins'].' niveaux de médecine</p>' : '';
+    $session_details[$nsession] .= ($dsession['p_niv_utile']) ? '<p>'.$dsession['p_niv_utile'].' niveaux d\'aventure</p>' : '';
+    $session_details[$nsession] .= '<br><hr><br><p class="gras align_center">TODO :<br><br>Créer une fonction pour gérer ça<br>Ordonner par ordre décroissant<br>Attribuer une classe au perso</p>';
+  }
+  else
+  {
+    $session_niveau[$nsession]  = $dsession['m_niveau'];
+    $session_details[$nsession] = '<p>Placeholder monstre</p>';
+  }
 }
 
 
@@ -139,10 +163,11 @@ for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
 
 <br>
 <br>
-<div class="align_center gras">
-  <p class="plusgros">Session en cours</p>
+<div class="align_center">
+  <p class="plusgros gras">Session en cours</p>
+  <br>
+  <p class="pluspetit">Survolez certains titres et contenus du tableau avec votre souris pour obtenir des informations supplémentaires</p>
 </div>
-<br>
 <br>
 
 <div class="nbrpg_table_session">
@@ -192,8 +217,6 @@ for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
             La forme physique du personnage.<br>
             <br>
             Plus le physique du personnage est élevé, plus les attaques physiques du personnage seront douloureuses.<br>
-            <br>
-            Un physique élevé offre également plus de chances de survivre aux effets qui affectent le physique du personnage (poison, lenteur, etc.)
           </div>
         </td>
         <td class="cadre_gris_sous_titre vspaced moinsgros pointeur tooltip">
@@ -202,8 +225,6 @@ for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
             La capacité mentale du personnage.<br>
             <br>
             Plus le mental du personnage est élevé, plus les attaques magiques du personnage seront douloureuses.<br>
-            <br>
-            Un mental élevé offre également plus de chances de survivre aux effets qui affectent le mental du personnage (contrôle, silence, etc.)
           </div>
         </td>
         <td class="cadre_gris_sous_titre vspaced moinsgros pointeur tooltip">
@@ -222,8 +243,13 @@ for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
         <td class="cadre_gris align_center vspaced gras" style="color:<?=$session_couleur[$i]?>">
           <?=$session_joueur[$i]?>
         </td>
-        <td class="cadre_gris align_center vspaced gras" style="color:<?=$session_couleur[$i]?>">
-          <?=$session_nom[$i]?>
+        <td class="cadre_gris align_center vspaced" style="color:<?=$session_couleur[$i]?>">
+          <span class="pointeur tooltip">
+            <span class="gras"><?=$session_nom[$i]?></span>
+            <div class="petittooltip">
+              <?=$session_details[$i]?>
+            </div>
+          </span>
         </td>
         <td class="cadre_gris align_center vspaced gras">
           <?=$session_niveau[$i]?>
