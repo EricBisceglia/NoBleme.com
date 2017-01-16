@@ -340,15 +340,21 @@ function nbrpg_format_effet($effet,$duree)
 function nbrpg_edithp($cible,$valeur,$type=NULL)
 {
   // On commence par récupérer les infos nécessaires sur la cible
-  $qedithp = query("  SELECT    nbrpg_session.FKnbrpg_persos        AS 'c_perso'    ,
-                                nbrpg_persos.nom                    AS 'p_nom'      ,
-                                nbrpg_monstres.nom                  AS 'm_nom'      ,
-                                nbrpg_session.vie                   AS 'c_hp'       ,
-                                nbrpg_monstres.resistance_physique  AS 'm_res_p'    ,
-                                nbrpg_monstres.resistance_magique   AS 'm_res_m'    ,
-                                arme.reduction_degats               AS 'p_res'      ,
-                                arme.reduction_degats_pourcent      AS 'p_res_p'    ,
-                                costume.reduction_degats            AS 'p_res2'     ,
+  $qedithp = query("  SELECT    nbrpg_session.FKnbrpg_persos        AS 'c_perso'      ,
+                                nbrpg_persos.nom                    AS 'p_nom'        ,
+                                nbrpg_monstres.nom                  AS 'm_nom'        ,
+                                nbrpg_session.vie                   AS 'c_hp'         ,
+                                nbrpg_persos.max_vie                AS 'p_hpmax'      ,
+                                nbrpg_monstres.max_vie              AS 'm_hpmax'      ,
+                                arme.buff_hpmax                     AS 'p_bhpmax'     ,
+                                arme.buff_hpmax_pourcent            AS 'p_bhpmax_p'   ,
+                                costume.buff_hpmax                  AS 'p_bhpmax2'    ,
+                                costume.buff_hpmax_pourcent         AS 'p_bhpmax_p2'  ,
+                                nbrpg_monstres.resistance_physique  AS 'm_res_p'      ,
+                                nbrpg_monstres.resistance_magique   AS 'm_res_m'      ,
+                                arme.reduction_degats               AS 'p_res'        ,
+                                arme.reduction_degats_pourcent      AS 'p_res_p'      ,
+                                costume.reduction_degats            AS 'p_res2'       ,
                                 costume.reduction_degats_pourcent   AS 'p_res_p2'
                       FROM      nbrpg_session
                       LEFT JOIN nbrpg_persos              ON nbrpg_session.FKnbrpg_persos         = nbrpg_persos.id
@@ -362,12 +368,15 @@ function nbrpg_edithp($cible,$valeur,$type=NULL)
   $vie                    = $dedithp['c_hp'];
   $monstre                = ($dedithp['c_perso']) ? 0 : 1;
   $nom                    = ($monstre) ? $dedithp['m_nom'] : $dedithp['p_nom'];
+  $hpmax                  = ($monstre) ? $dedithp['m_hpmax'] : $dedithp['p_hpmax'];
+  $bonus_hpmax            = $dedithp['p_bhpmax']+$dedithp['p_bhpmax2'];
+  $bonus_hpmax_p          = $dedithp['p_bhpmax_p']+$dedithp['p_bhpmax_p2'];
   $augmentation_soins     = 0;
   $augmentation_soins_p   = 0;
   $reduction_degats       = $dedithp['p_res']+$dedithp['p_res2'];
   if($monstre)
   {
-    if(isset($type) && $type == 'mental')
+    if(isset($type) && $type == 'magique')
       $reduction_degats_p = $dedithp['m_res_m'];
     else
       $reduction_degats_p = $dedithp['m_res_p'];
@@ -380,6 +389,8 @@ function nbrpg_edithp($cible,$valeur,$type=NULL)
                                   nbrpg_effets.duree                              AS 'e_dureemax'     ,
                                   nbrpg_effets.reduction_effet_par_tour           AS 'e_reduction'    ,
                                   nbrpg_effets.reduction_effet_par_tour_pourcent  AS 'e_reduction_p'  ,
+                                  nbrpg_effets.buff_hpmax                         AS 'e_hpmax'        ,
+                                  nbrpg_effets.buff_hpmax_pourcent                AS 'e_hpmax_p'      ,
                                   nbrpg_effets.reduction_degats                   AS 'e_resistance'   ,
                                   nbrpg_effets.reduction_degats_pourcent          AS 'e_resistance_p' ,
                                   nbrpg_effets.amplification_soins_recus          AS 'e_extrasoins'   ,
@@ -395,6 +406,8 @@ function nbrpg_edithp($cible,$valeur,$type=NULL)
     $duree                      = $deffetshp['e_duree'];
     $reduction                  = $deffetshp['e_reduction'];
     $reduction_p                = $deffetshp['e_reduction_p'];
+    $bonus_hpmax                += nbrpg_reduction_effet($duree_max,$duree,$deffetshp['e_hpmax'],$reduction,$reduction_p);
+    $bonus_hpmax_p              += nbrpg_reduction_effet($duree_max,$duree,$deffetshp['e_hpmax_p'],$reduction,$reduction_p);
     $reduction_degats           += nbrpg_reduction_effet($duree_max,$duree,$deffetshp['e_resistance'],$reduction,$reduction_p);
     $reduction_degats_p         += nbrpg_reduction_effet($duree_max,$duree,$deffetshp['e_resistance_p'],$reduction,$reduction_p);
     $augmentation_soins         += nbrpg_reduction_effet($duree_max,$duree,$deffetshp['e_extrasoins'],$reduction,$reduction_p);
@@ -412,8 +425,8 @@ function nbrpg_edithp($cible,$valeur,$type=NULL)
     {
       $valeur_n = 0 - $valeur;
       $details  = "($valeur_n";
-      $details .= ($reduction_degats) ? " -$reduction_degats" : '';
-      $details .= ($reduction_degats_p) ? " -$reduction_degats_p%" : '';
+      $details .= ($reduction_degats) ? ($reduction_degats > 0) ? " -$reduction_degats_p" : " +".(0-$reduction_degats) : '';
+      $details .= ($reduction_degats_p) ? ($reduction_degats_p > 0) ? " -$reduction_degats_p%" : " +".(0-$reduction_degats_p)."%" : '';
       $details .= ")";
     }
     else
@@ -422,14 +435,15 @@ function nbrpg_edithp($cible,$valeur,$type=NULL)
   }
   else
   {
-    $degats     = round(($valeur + $augmentation_soins) * (1 + ($augmentation_soins_p / 100)),0);
+    $degats     = ($valeur + $augmentation_soins);
+    $degats     = ($degats <= 0) ? 0 : round($degats * (1 + ($augmentation_soins_p / 100)),0);
     $vie        = $vie + $degats;
     $pluriel_hp = ($degats <= 1) ? 'point de vie' : 'points de vie';
     if($augmentation_soins || $augmentation_soins_p)
     {
       $details  = "($valeur";
-      $details .= ($augmentation_soins) ? " +$augmentation_soins" : '';
-      $details .= ($augmentation_soins_p) ? " +$augmentation_soins_p%" : '';
+      $details .= ($augmentation_soins) ? ($augmentation_soins < 0) ? " $augmentation_soins" : " +$augmentation_soins" : '';
+      $details .= ($augmentation_soins_p) ? ($augmentation_soins_p < 0) ? " $augmentation_soins_p%" : " +$augmentation_soins_p%" : '';
       $details .= ")";
     }
     else
@@ -438,13 +452,21 @@ function nbrpg_edithp($cible,$valeur,$type=NULL)
   }
 
   // On vérifie qu'on ait pas dépassé les HP max de la cible
+  $hpmax_calc = nbrpg_application_effet($hpmax,$bonus_hpmax,$bonus_hpmax_p);
+  $vie        = ($vie > $hpmax_calc) ? $hpmax_calc : $vie;
 
   // Puis on met à jour les points de vie restants à la cible
-  query(" UPDATE nbrpg_session SET vie = $vie WHERE id = $cible ");
+  query(" UPDATE nbrpg_session SET vie = '$vie' WHERE id = '$cible' ");
 
   // On envoie un message système dans le chatlog RP
   $timestamp = time();
   query(" INSERT INTO nbrpg_chatlog SET timestamp = '$timestamp' , FKmembres = 0 , type_chat = 'RP' , message = '$message'");
 
   // En cas de mort, on retire la cible de la session
+  if($vie <= 0)
+  {
+    $message = ($monstre) ? postdata("$nom agonise et finit par périr de ses blessures ! RIP") : postdata("$nom est en train de décéder et quitte la session du jour pour aller se soigner :(");
+    query(" INSERT INTO nbrpg_chatlog SET timestamp = '$timestamp' , FKmembres = 0 , type_chat = 'RP' , message = '$message'");
+    query(" DELETE FROM nbrpg_session WHERE id = '$cible' ");
+  }
 }

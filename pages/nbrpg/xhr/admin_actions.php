@@ -32,5 +32,5 @@ if($do_action == 'modifier_hp')
 {
   $edithp_cible   = postdata($_POST['cible']);
   $edithp_valeur  = postdata($_POST['valeur']);
-  nbrpg_edithp($edithp_cible,$edithp_valeur);
+  nbrpg_edithp($edithp_cible,$edithp_valeur,'magique');
 }
