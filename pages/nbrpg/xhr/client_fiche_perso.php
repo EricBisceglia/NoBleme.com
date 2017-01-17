@@ -29,7 +29,11 @@ if(!$id_session)
 
 // On va chercher les infos du perso
 $qpersonnage = query("  SELECT    nbrpg_persos.nom                AS 'perso_nom'          ,
-                                  nbrpg_persos.classe             AS 'perso_classe'       ,
+                                  nbrpg_persos.niveau_combat      AS 'perso_niv_combat'   ,
+                                  nbrpg_persos.niveau_magie       AS 'perso_niv_magie'    ,
+                                  nbrpg_persos.niveau_strategie   AS 'perso_niv_tank'     ,
+                                  nbrpg_persos.niveau_medecine    AS 'perso_niv_soins'    ,
+                                  nbrpg_persos.niveau_aventure    AS 'perso_niv_aventure' ,
                                   nbrpg_persos.niveau             AS 'perso_niveau'       ,
                                   nbrpg_persos.experience         AS 'perso_xp'           ,
                                   nbrpg_persos.prochain_niveau    AS 'perso_xp_max'       ,
@@ -51,7 +55,8 @@ $qpersonnage = query("  SELECT    nbrpg_persos.nom                AS 'perso_nom'
 // Puis on prépare tout ça pour l'affichage
 $dpersonnage      = mysqli_fetch_array($qpersonnage);
 $perso_nom        = $dpersonnage['perso_nom'];
-$perso_classe     = $dpersonnage['perso_classe'].' niveau '.$dpersonnage['perso_niveau'];
+$perso_classe     = nbrpg_classe($dpersonnage['perso_niv_combat'],$dpersonnage['perso_niv_magie'],$dpersonnage['perso_niv_tank'],$dpersonnage['perso_niv_soins'],$dpersonnage['perso_niv_aventure']);
+$perso_classe    .= ' niveau '.$dpersonnage['perso_niveau'];
 $perso_xp         = $dpersonnage['perso_xp'].'/'.$dpersonnage['perso_xp_max'].' XP';
 $perso_vie        = nbrpg_vierestante($dpersonnage['perso_vie'],$dpersonnage['perso_vie_max']);
 $perso_energie    = $dpersonnage['perso_energie'].'%';

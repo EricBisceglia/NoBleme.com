@@ -4,6 +4,7 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/nbrpg.inc.php';
 
 // Menus du header
 $header_menu      = 'lire';
@@ -31,17 +32,21 @@ $css = array('nbrpg');
 /*****************************************************************************************************************************************/
 
 // On va chercher la liste des personnages
-$qpersos = "    SELECT    nbrpg_persos.couleur_chat     AS 'p_couleur'  ,
-                          nbrpg_persos.nom              AS 'p_nom'      ,
-                          membres.id                    AS 'p_userid'   ,
-                          membres.pseudonyme            AS 'p_pseudo'   ,
-                          nbrpg_persos.date_creation    AS 'p_creation' ,
-                          nbrpg_persos.classe           AS 'p_classe'   ,
-                          nbrpg_persos.niveau           AS 'p_niveau'   ,
-                          nbrpg_persos.max_vie          AS 'p_vie'      ,
-                          nbrpg_persos.physique         AS 'p_physique' ,
-                          nbrpg_persos.mental           AS 'p_mental'   ,
-                          nbrpg_persos.danger           AS 'p_danger'
+$qpersos = "    SELECT    nbrpg_persos.couleur_chat       AS 'p_couleur'  ,
+                          nbrpg_persos.nom                AS 'p_nom'      ,
+                          membres.id                      AS 'p_userid'   ,
+                          membres.pseudonyme              AS 'p_pseudo'   ,
+                          nbrpg_persos.date_creation      AS 'p_creation' ,
+                          nbrpg_persos.niveau_combat      AS 'p_n_combat' ,
+                          nbrpg_persos.niveau_magie       AS 'p_n_magie'  ,
+                          nbrpg_persos.niveau_strategie   AS 'p_n_tank'   ,
+                          nbrpg_persos.niveau_medecine    AS 'p_n_soins'  ,
+                          nbrpg_persos.niveau_aventure    AS 'p_n_avent'  ,
+                          nbrpg_persos.niveau             AS 'p_niveau'   ,
+                          nbrpg_persos.max_vie            AS 'p_vie'      ,
+                          nbrpg_persos.physique           AS 'p_physique' ,
+                          nbrpg_persos.mental             AS 'p_mental'   ,
+                          nbrpg_persos.danger             AS 'p_danger'
                 FROM      nbrpg_persos
                 LEFT JOIN membres ON nbrpg_persos.FKmembres = membres.id ";
 // Ordre de tri
@@ -51,11 +56,6 @@ else if(isset($_GET['joueur']))
   $qpersos .= " ORDER BY  membres.pseudonyme          ASC   ";
 else if(isset($_GET['creation']))
   $qpersos .= " ORDER BY  nbrpg_persos.date_creation  ASC   ";
-else if(isset($_GET['classe']))
-  $qpersos .= " ORDER BY  nbrpg_persos.classe         ASC   ,
-                          nbrpg_persos.niveau         DESC  ,
-                          nbrpg_persos.experience     DESC  ,
-                          nbrpg_persos.date_creation  ASC   ";
 else if(isset($_GET['viemax']))
   $qpersos .= " ORDER BY  nbrpg_persos.max_vie        DESC  ,
                           nbrpg_persos.niveau         DESC  ,
@@ -92,7 +92,7 @@ for($npersos = 0 ; $dpersos = mysqli_fetch_array($qpersos) ; $npersos++)
   $perso_userid[$npersos]   = $dpersos['p_userid'];
   $perso_joueur[$npersos]   = $dpersos['p_pseudo'];
   $perso_creation[$npersos] = ilya($dpersos['p_creation']);
-  $perso_classe[$npersos]   = $dpersos['p_classe'];
+  $perso_classe[$npersos]   = nbrpg_classe($dpersos['p_n_combat'],$dpersos['p_n_magie'],$dpersos['p_n_tank'],$dpersos['p_n_soins'],$dpersos['p_n_avent']);
   $perso_niveau[$npersos]   = $dpersos['p_niveau'];
   $perso_maxvie[$npersos]   = $dpersos['p_vie'];
   $perso_physique[$npersos] = $dpersos['p_physique'];
