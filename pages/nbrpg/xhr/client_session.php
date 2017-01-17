@@ -40,6 +40,7 @@ $qsession = query(" SELECT    nbrpg_session.id                AS 's_id'         
                               nbrpg_persos.niveau_strategie   AS 'p_niv_tank'   ,
                               nbrpg_persos.niveau_medecine    AS 'p_niv_soins'  ,
                               nbrpg_persos.niveau_aventure    AS 'p_niv_utile'  ,
+                              nbrpg_monstres.type             AS 'm_type'       ,
                               nbrpg_session.vie               AS 's_vie'        ,
                               nbrpg_persos.max_vie            AS 'p_viemax'     ,
                               nbrpg_monstres.max_vie          AS 'm_viemax'     ,
@@ -133,22 +134,15 @@ for($nsession = 0 ; $dsession = mysqli_fetch_array($qsession) ; $nsession++)
   $session_danger[$nsession]    = nbrpg_application_effet($dsession['s_danger'],$buff_danger,$buff_danger_p);
   $session_physique[$nsession]  = nbrpg_application_effet($dsession['s_physique'],$buff_physique,$buff_physique_p);
   $session_mental[$nsession]    = nbrpg_application_effet($dsession['s_mental'],$buff_mental,$buff_mental_p);
-  $session_details[$nsession]   = '';
   if($session_perso)
   {
     $session_niveau[$nsession]  = "<span class=\"pointeur tooltip\">".$dsession['p_niveau']."<div class=\"petittooltip\">".$dsession['p_exp']."/".$dsession['p_exp_next']." XP</div></span>";
-    $session_details[$nsession] .= ($dsession['p_niv_na']) ? '<p>'.$dsession['p_niv_na'].' niveaux non assignés</p>' : '';
-    $session_details[$nsession] .= ($dsession['p_niv_combat']) ? '<p>'.$dsession['p_niv_combat'].' niveaux de combat</p>' : '';
-    $session_details[$nsession] .= ($dsession['p_niv_magie']) ? '<p>'.$dsession['p_niv_magie'].' niveaux de magie</p>' : '';
-    $session_details[$nsession] .= ($dsession['p_niv_tank']) ? '<p>'.$dsession['p_niv_tank'].' niveaux de stratégie</p>' : '';
-    $session_details[$nsession] .= ($dsession['p_niv_soins']) ? '<p>'.$dsession['p_niv_soins'].' niveaux de médecine</p>' : '';
-    $session_details[$nsession] .= ($dsession['p_niv_utile']) ? '<p>'.$dsession['p_niv_utile'].' niveaux d\'aventure</p>' : '';
-    $session_details[$nsession] .= '<br><hr><br><p class="gras align_center">TODO :<br><br>Créer une fonction pour gérer ça<br>Ordonner par ordre décroissant<br>Attribuer une classe au perso</p>';
+    $session_details[$nsession]   = nbrpg_classe($dsession['p_niv_combat'],$dsession['p_niv_magie'],$dsession['p_niv_tank'],$dsession['p_niv_soins'],$dsession['p_niv_utile'],$dsession['p_niv_na']);
   }
   else
   {
     $session_niveau[$nsession]  = $dsession['m_niveau'];
-    $session_details[$nsession] = '<p>Placeholder monstre</p>';
+    $session_details[$nsession] = nbrpg_monstre($dsession['m_nom'],$dsession['m_type']);
   }
 }
 

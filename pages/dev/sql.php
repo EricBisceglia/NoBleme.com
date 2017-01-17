@@ -107,14 +107,16 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_objets (
 $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_objets</p>';
 
 query(" CREATE TABLE IF NOT EXISTS nbrpg_monstres (
-          id                  INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-          nom                 MEDIUMTEXT                                            ,
-          max_vie             INT(11) UNSIGNED NOT NULL                             ,
-          physique            INT(11) UNSIGNED NOT NULL                             ,
-          mental              INT(11) UNSIGNED NOT NULL                             ,
-          danger              INT(11) UNSIGNED NOT NULL                             ,
-          resistance_physique INT(11) SIGNED NOT NULL                               ,
-          resistance_magique  INT(11) SIGNED NOT NULL
+          id                    INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+          nom                   MEDIUMTEXT                                            ,
+          type                  MEDIUMTEXT                                            ,
+          description_publique  LONGTEXT                                              ,
+          max_vie               INT(11) UNSIGNED NOT NULL                             ,
+          physique              INT(11) UNSIGNED NOT NULL                             ,
+          mental                INT(11) UNSIGNED NOT NULL                             ,
+          danger                INT(11) UNSIGNED NOT NULL                             ,
+          resistance_physique   INT(11) SIGNED NOT NULL                               ,
+          resistance_magique    INT(11) SIGNED NOT NULL
         ) ENGINE=MyISAM; ");
 $majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_monstres</p>';
 
@@ -227,9 +229,9 @@ query(" INSERT INTO nbrpg_session SET id = 2 , FKnbrpg_persos = 3 , FKnbrpg_mons
 query(" INSERT INTO nbrpg_session SET id = 3 , FKnbrpg_persos = 4 , FKnbrpg_monstres = 0 , vie = 10 , energie = 100 , charges_oracle = 1, physique = 20, mental = 16, danger = 20 ");
 query(" INSERT INTO nbrpg_session SET id = 4 , FKnbrpg_persos = 5 , FKnbrpg_monstres = 0 , vie = 10 , energie = 100 , charges_oracle = 1, physique = 10, mental = 10, danger = 10 ");
 
-query(" INSERT INTO nbrpg_monstres SET id = 1 , nom = 'Bitounette moulée' , max_vie = 80 , physique = 10 , mental = 5 , danger = 10 , resistance_physique = 10 , resistance_magique = -10 ");
-query(" INSERT INTO nbrpg_monstres SET id = 2 , nom = 'Clafoutis des forêts' , max_vie = 60 , physique = 10 , mental = 10 , danger = 10 , resistance_physique = 0 , resistance_magique = -40 ");
-query(" INSERT INTO nbrpg_monstres SET id = 3 , nom = 'Schnafon' , max_vie = 300 , physique = 20 , mental = 20 , danger = 20 , resistance_physique = 40 , resistance_magique = 0 ");
+query(" INSERT INTO nbrpg_monstres SET id = 1 , nom = 'Bitounette moulée' , type = 'Commun' , max_vie = 80 , physique = 10 , mental = 5 , danger = 10 , resistance_physique = 10 , resistance_magique = -10 ");
+query(" INSERT INTO nbrpg_monstres SET id = 2 , nom = 'Clafoutis des forêts' , type = 'Élite' , max_vie = 60 , physique = 10 , mental = 10 , danger = 10 , resistance_physique = 0 , resistance_magique = -40 ");
+query(" INSERT INTO nbrpg_monstres SET id = 3 , nom = 'Schnafon' , type = 'Boss' , max_vie = 300 , physique = 20 , mental = 20 , danger = 20 , resistance_physique = 40 , resistance_magique = 0 ");
 
 query(" INSERT INTO nbrpg_session SET id = 5 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , monstre_niveau = 1 , vie = 10, physique = 10 , mental = 5 , danger = 10 ");
 query(" INSERT INTO nbrpg_session SET id = 6 , FKnbrpg_persos = 0 , FKnbrpg_monstres = 1 , monstre_niveau = 3 , vie = 10, physique = 12 , mental = 6 , danger = 5 ");

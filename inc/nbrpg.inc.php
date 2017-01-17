@@ -12,7 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 //
 // Renvoie l'id du personnage appartenant au joueur, ou 0 si le joueur n'existe pas
 //
-// Exemple d'utilisation:
+// Exemple d'Utilisation :
 // $id_perso = nbrpg();
 
 function nbrpg()
@@ -43,7 +43,7 @@ function nbrpg()
 //
 // Renvoie l'id de session du personnage, ou 0 si le personnage n'est pas dans la session
 //
-// Exemple d'utilisation:
+// Exemple d'Utilisation :
 // $id_session = nbrpg_session(nbrpg());
 
 function nbrpg_session($id_perso)
@@ -67,7 +67,7 @@ function nbrpg_session($id_perso)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction assignant une couleur aléatoire à un nouveau compte
 //
-// Exemple d'utilisation:
+// Exemple d'Utilisation :
 // $rand_couleur = nbrpg_couleur();
 
 function nbrpg_couleur()
@@ -85,7 +85,7 @@ function nbrpg_couleur()
 // $nom est le personnage de l'auteur du message
 // $type est le type de message (RP, HRP, etc)
 // $message est le contenu du message
-// Utilisation: nbrpg_chatlog(1337,'Bad','RP','Bonjour les [b]enfants[/b]');
+// Utilisation : nbrpg_chatlog(1337,'Bad','RP','Bonjour les [b]enfants[/b]');
 
 function nbrpg_chatlog($timestamp,$couleur,$nom,$type,$message)
 {
@@ -107,7 +107,7 @@ function nbrpg_chatlog($timestamp,$couleur,$nom,$type,$message)
 //
 // $valeur est la valeur à multiplier
 // $niveau est le niveau par lequel multiplier la valeur
-// Utilisation: nbrpg_multiplicateur(100,5);
+// Utilisation : nbrpg_multiplicateur(100,5);
 
 function nbrpg_multiplicateur($valeur,$niveau)
 {
@@ -133,7 +133,7 @@ function nbrpg_multiplicateur($valeur,$niveau)
 //
 // $vie est les points de vie actuels
 // $viemax est les poinst de vie max du personnage ou monstre
-// Utilisation: nbrpg_vierestante(10,25);
+// Utilisation : nbrpg_vierestante(10,25);
 
 function nbrpg_vierestante($vie,$viemax)
 {
@@ -335,7 +335,7 @@ function nbrpg_format_effet($effet,$duree)
 // $cible est l'id de session d'un joueur ou monstre actuellement présent dans une session active
 // $valeur est un nombre positif ou négatif
 // $type est le type de dégâts, si rien n'est rentré il va prendre des dégâts physiques par défaut
-// Utilisation: nbrpg_edithp(2,-4);
+// Utilisation : nbrpg_edithp(2,-4);
 
 function nbrpg_edithp($cible,$valeur,$type=NULL)
 {
@@ -469,4 +469,139 @@ function nbrpg_edithp($cible,$valeur,$type=NULL)
     query(" INSERT INTO nbrpg_chatlog SET timestamp = '$timestamp' , FKmembres = 0 , type_chat = 'RP' , message = '$message'");
     query(" DELETE FROM nbrpg_session WHERE id = '$cible' ");
   }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Renvoie le nom de la classe du personnage
+//
+// $combat, $magie, $tank, $soins, $generique sont les niveaux du personnage
+// $non_assignes est un paramètre optionnel qui renvoie des infos détaillées sur la classe du perso s'il est rempli
+// Utilisation : nbrpg_classe(2,0,5,0,1,0)
+
+function nbrpg_classe($combat,$magie,$tank,$soins,$generique,$non_assignes=NULL)
+{
+  // Par défaut, le personnage est un aventurier
+  $classe = 'Aventurier';
+
+  // On va avoir besoin de la somme des niveaux, et du niveau le plus haut du personnage
+  $niveau_total = $combat + $magie + $tank + $soins + $generique;
+  $niveau_max   = max($combat,$magie,$tank,$soins,$generique);
+
+  // On assigne les classes dans un ordre spécifique
+  if($combat == $magie && $combat == $tank && $combat == $soins && $combat == $generique)
+    $classe = 'Aventurier';
+  else if($combat >= 3 && $combat == $niveau_max)
+  {
+    $classe = ($combat > 6) ? 'Guerrier' : 'Combattant';
+    if($tank >= ($combat/2))
+      $classe = 'Gladiateur';
+    else if($generique >= ($combat/2))
+      $classe = 'Trappeur';
+    else if($soins >= ($combat/2))
+      $classe = 'Moine combattant';
+    else if($magie >= ($combat/2))
+      $classe = 'Mage de guerre';
+  }
+  else if($magie >= 3 && $magie == $niveau_max)
+  {
+    $classe = ($magie > 6) ? 'Mage' : 'Magicien';
+    if($soins >= ($magie/2))
+      $classe = 'Mage blanc';
+    else if($generique >= ($magie/2))
+      $classe = 'Prestidigitateur';
+    else if($combat >= ($magie/2))
+      $classe = 'Mage de guerre';
+    else if($tank >= ($magie/2))
+      $classe = 'Érudit';
+  }
+  else if($tank >= 3 && $tank == $niveau_max)
+  {
+    $classe = ($tank > 6) ? 'Chevalier' : 'Stratège';
+    if($combat >= ($tank/2))
+      $classe = 'Gladiateur';
+    else if($generique >= ($tank/2))
+      $classe = 'Survivaliste';
+    else if($soins >= ($tank/2))
+      $classe = 'Protecteur';
+    else if($magie >= ($tank/2))
+      $classe = 'Érudit';
+  }
+  else if($soins >= 3 && $soins == $niveau_max)
+  {
+    $classe = ($soins > 6) ? 'Soigneur' : 'Guérisseur';
+    if($magie >= ($soins/2))
+      $classe = 'Mage blanc';
+    else if($combat >= ($soins/2))
+      $classe = 'Moine combattant';
+    else if($tank >= ($soins/2))
+      $classe = 'Protecteur';
+    else if($generique >= ($soins/2))
+      $classe = 'Druide';
+  }
+  else if($generique >= 3 && $generique == $niveau_max)
+  {
+    $classe = ($generique > 6) ? 'Vagabond' : 'Baroudeur';
+    if($combat >= ($generique/2))
+      $classe = 'Raclure';
+    else if($tank >= ($generique/2))
+      $classe = 'Mercenaire';
+    else if($magie >= ($generique/2))
+      $classe = 'Prestidigitateur';
+    else if($soins >= ($generique/2))
+      $classe = 'Druide';
+  }
+
+  // On renvoie le nom de la classe si on ne demande pas de détails
+  if(!isset($non_assignes))
+    return $classe;
+  else
+  {
+    // Si on veut les détails, on commence par préparer les textes
+    $details_classe     = '<p class="gras">'.$classe.'</p>';
+    $niveaux            = ($combat > 1) ? ' niveaux' : ' niveau';
+    $details_combat     = ($combat) ? '<p>'.$combat.$niveaux.' de combat</p>' : '';
+    $niveaux            = ($magie > 1) ? ' niveaux' : ' niveau';
+    $details_magie      = ($magie) ? '<p>'.$magie.$niveaux.' de magie</p>' : '';
+    $niveaux            = ($tank > 1) ? ' niveaux' : ' niveau';
+    $details_tank       = ($tank) ? '<p>'.$tank.$niveaux.' de stratégie</p>' : '';
+    $niveaux            = ($soins > 1) ? ' niveaux' : ' niveau';
+    $details_soins      = ($soins) ? '<p>'.$soins.$niveaux.' de médecine</p>' : '';
+    $niveaux            = ($generique > 1) ? ' niveaux' : ' niveau';
+    $details_generique  = ($generique) ? '<p>'.$generique.$niveaux.' d\'aventure</p>' : '';
+    $niveaux            = ($non_assignes > 1) ? ' niveaux non assignés' : ' niveau non assigné';
+    $details_manquants  = ($non_assignes) ? '<p>'.$non_assignes.$niveaux.'</p>' : '';
+
+    // Puis on trie les niveaux dans l'ordre décroissant
+    $details_liste = array($details_combat => $combat, $details_magie => $magie, $details_tank => $tank, $details_soins => $soins, $details_generique => $generique, $details_manquants => $non_assignes);
+    arsort($details_liste);
+    $details_tries = '';
+    foreach ($details_liste as $resultat => $niveau)
+      $details_tries .= $resultat;
+
+    // Et on renvoie les infos complètes sur la classe du perso
+    return $details_classe.$details_tries;
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Renvoie des informations sur un ennemi
+//
+// $nom est le nom du monstre
+// $type est le type de monstre
+// Utilisation : nbrpg_monstre('Schnafon','Boss');
+
+function nbrpg_monstre($nom,$type)
+{
+  // On formatte la description
+  $description = '<p class="gras">'.$nom.'</p>';
+  $description .= '<p>'.$type.'</p>';
+
+  // Et on envoie tout ça
+  return $description;
 }
