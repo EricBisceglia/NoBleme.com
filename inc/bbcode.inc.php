@@ -19,6 +19,96 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 function bbcode($post)
 {
+  // Fix temporaire pour les XSS gratuits.
+  // Il faut vraiment que je trouve mieux que ça comme solution... Franchement, si quelqu'un a une solution, je suis preneur.
+  $post = str_replace(".svg",".&zwnj;svg",$post);       # Je ne veux pas de SVG, c'est exploitable avec CDATA
+  $post = str_replace("xmlns","xmlns&zwnj;",$post);     # Troll XMLNS
+  $post = str_replace("onclick","onclick&zwnj;",$post); # Bon bah on va gérer à la main tous les events JS pour le moment... ffffff
+  $post = str_replace("oncontextmenu","oncontextmenu&zwnj;",$post);
+  $post = str_replace("ondblclick","ondblclick&zwnj;",$post);
+  $post = str_replace("onmousedown","onmousedown&zwnj;",$post);
+  $post = str_replace("onmouseenter","onmouseenter&zwnj;",$post);
+  $post = str_replace("onmouseleave","onmouseleave&zwnj;",$post);
+  $post = str_replace("onmousemove","onmousemove&zwnj;",$post);
+  $post = str_replace("onmouseover","onmouseover&zwnj;",$post);
+  $post = str_replace("onmouseout","onmouseout&zwnj;",$post);
+  $post = str_replace("onmouseup","onmouseup&zwnj;",$post);
+  $post = str_replace("onkeydown","onkeydown&zwnj;",$post);
+  $post = str_replace("onkeypress","onkeypress&zwnj;",$post);
+  $post = str_replace("onkeyup","onkeyup&zwnj;",$post);
+  $post = str_replace("onabort","onabort&zwnj;",$post);
+  $post = str_replace("onbeforeunload","onbeforeunload&zwnj;",$post);
+  $post = str_replace("onerror","onerror&zwnj;",$post);
+  $post = str_replace("onhashchange","onhashchange&zwnj;",$post);
+  $post = str_replace("onload","onload&zwnj;",$post);
+  $post = str_replace("onpageshow","onpageshow&zwnj;",$post);
+  $post = str_replace("onpagehide","onpagehide&zwnj;",$post);
+  $post = str_replace("onresize","onresize&zwnj;",$post);
+  $post = str_replace("onscroll","onscroll&zwnj;",$post);
+  $post = str_replace("onunload","onunload&zwnj;",$post);
+  $post = str_replace("onblur","onblur&zwnj;",$post);
+  $post = str_replace("onchange","onchange&zwnj;",$post);
+  $post = str_replace("onfocus","onfocus&zwnj;",$post);
+  $post = str_replace("onfocusin","onfocusin&zwnj;",$post);
+  $post = str_replace("onfocusout","onfocusout&zwnj;",$post);
+  $post = str_replace("oninput","oninput&zwnj;",$post);
+  $post = str_replace("oninvalid","oninvalid&zwnj;",$post);
+  $post = str_replace("onreset","onreset&zwnj;",$post);
+  $post = str_replace("onsearch","onsearch&zwnj;",$post);
+  $post = str_replace("onselect","onselect&zwnj;",$post);
+  $post = str_replace("onsubmit","onsubmit&zwnj;",$post);
+  $post = str_replace("ondrag","ondrag&zwnj;",$post);
+  $post = str_replace("ondragend","ondragend&zwnj;",$post);
+  $post = str_replace("ondragenter","ondragenter&zwnj;",$post);
+  $post = str_replace("ondragleave","ondragleave&zwnj;",$post);
+  $post = str_replace("ondragover","ondragover&zwnj;",$post);
+  $post = str_replace("ondragstart","ondragstart&zwnj;",$post);
+  $post = str_replace("ondrop","ondrop&zwnj;",$post);
+  $post = str_replace("oncopy","oncopy&zwnj;",$post);
+  $post = str_replace("oncut","oncut&zwnj;",$post);
+  $post = str_replace("onpaste","onpaste&zwnj;",$post);
+  $post = str_replace("onafterprint","onafterprint&zwnj;",$post);
+  $post = str_replace("onbeforeprint","onbeforeprint&zwnj;",$post);
+  $post = str_replace("onabort","onabort&zwnj;",$post);
+  $post = str_replace("oncanplay","oncanplay&zwnj;",$post);
+  $post = str_replace("oncanplaythrough","oncanplaythrough&zwnj;",$post);
+  $post = str_replace("ondurationchange","ondurationchange&zwnj;",$post);
+  $post = str_replace("onemptied","onemptied&zwnj;",$post);
+  $post = str_replace("onended","onended&zwnj;",$post);
+  $post = str_replace("onloadeddata","onloadeddata&zwnj;",$post);
+  $post = str_replace("onloadedmetadata","onloadedmetadata&zwnj;",$post);
+  $post = str_replace("onloadstart","onloadstart&zwnj;",$post);
+  $post = str_replace("onpause","onpause&zwnj;",$post);
+  $post = str_replace("onplay","onplay&zwnj;",$post);
+  $post = str_replace("onplaying","onplaying&zwnj;",$post);
+  $post = str_replace("onprogress","onprogress&zwnj;",$post);
+  $post = str_replace("onratechange","onratechange&zwnj;",$post);
+  $post = str_replace("onseeked","onseeked&zwnj;",$post);
+  $post = str_replace("onseeking","onseeking&zwnj;",$post);
+  $post = str_replace("onstalled","onstalled&zwnj;",$post);
+  $post = str_replace("onsuspend","onsuspend&zwnj;",$post);
+  $post = str_replace("ontimeupdate","ontimeupdate&zwnj;",$post);
+  $post = str_replace("onvolumechange","onvolumechange&zwnj;",$post);
+  $post = str_replace("onwaiting","onwaiting&zwnj;",$post);
+  $post = str_replace("animationend","animationend&zwnj;",$post);
+  $post = str_replace("animationiteration","animationiteration&zwnj;",$post);
+  $post = str_replace("animationstart","animationstart&zwnj;",$post);
+  $post = str_replace("transitionend","transitionend&zwnj;",$post);
+  $post = str_replace("onmessage","onmessage&zwnj;",$post);
+  $post = str_replace("onopen","onopen&zwnj;",$post);
+  $post = str_replace("ononline","ononline&zwnj;",$post);
+  $post = str_replace("onoffline","onoffline&zwnj;",$post);
+  $post = str_replace("onpopstate","onpopstate&zwnj;",$post);
+  $post = str_replace("onmousewheel","onmousewheel&zwnj;",$post);
+  $post = str_replace("onshow","onshow&zwnj;",$post);
+  $post = str_replace("onstorage","onstorage&zwnj;",$post);
+  $post = str_replace("ontoggle","ontoggle&zwnj;",$post);
+  $post = str_replace("onwheel","onwheel&zwnj;",$post);
+  $post = str_replace("ontouchcancel","ontouchcancel&zwnj;",$post);
+  $post = str_replace("ontouchend","ontouchend&zwnj;",$post);
+  $post = str_replace("ontouchmove","ontouchmove&zwnj;",$post);
+  $post = str_replace("ontouchstart","ontouchstart&zwnj;",$post);
+
   // [b]Gras[/b]
   $post = str_replace("[b]", "<b>", $post, $open);
   $post = str_replace("[/b]", "</b>", $post, $close);
@@ -74,12 +164,10 @@ function bbcode($post)
   }
 
   // [url=http://www.url.com]Lien[/url]
-  $post = preg_replace(
-    '/\[url\](.*?)\[\/url\]/is','<a class="dark" href="$1">$1</a>', $post);
+  $post = preg_replace('/\[url\](.*?)\[\/url\]/is','<a class="dark" href="$1">$1</a>', $post);
 
   // [url=http://www.url.com]Lien[/url]
-  $post = preg_replace(
-    '/\[url\=(.*?)\](.*?)\[\/url\]/is','<a class="dark" href="$1">$2</a>', $post);
+  $post = preg_replace('/\[url\=(.*?)\](.*?)\[\/url\]/is','<a class="dark" href="$1">$2</a>', $post);
 
   // [img]http://www.image.com/image.jpg[/img]
   $post = preg_replace('/\[img\](.*?)\[\/img\]/is','<img class="bbcodeimg" src="$1" alt="">', $post);
