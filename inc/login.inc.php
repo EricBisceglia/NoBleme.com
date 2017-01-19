@@ -110,9 +110,12 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && loggedin())
 // Exemple d'utilisation:
 // salage("monpass");
 
-function salage($pass)
+function salage($pass,$old=NULL)
 {
-  return crypt($pass,$GLOBALS['salage']);
+  if($old)
+    return crypt($pass,$GLOBALS['salage']);
+  else
+    return sha1($pass.$GLOBALS['salage']);
 }
 
 
