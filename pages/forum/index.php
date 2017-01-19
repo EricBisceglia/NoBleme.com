@@ -41,9 +41,9 @@ $qforumjk = query(" SELECT    forum_loljk.id        AS 'jk_id'      ,
 // Et on prépare à l'affichage
 for($nforumjk = 0 ; $dforumjk = mysqli_fetch_array($qforumjk) ; $nforumjk++)
 {
-  $jk_id[$nforumjk]     = $dforumjk['jk_id'];
-  $jk_titre[$nforumjk]  = $dforumjk['jk_titre'];
-  $jk_auteur[$nforumjk] = $dforumjk['jk_user'];
+  $jk_id[$nforumjk]     = destroy_html($dforumjk['jk_id']);
+  $jk_titre[$nforumjk]  = destroy_html($dforumjk['jk_titre']);
+  $jk_auteur[$nforumjk] = destroy_html($dforumjk['jk_user']);
 }
 
 

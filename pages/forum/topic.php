@@ -100,7 +100,7 @@ if(isset($_GET['id']))
                         FROM      forum_loljk
                         LEFT JOIN membres ON forum_loljk.FKauteur = membres.id
                         WHERE     ( forum_loljk.threadparent  = '$loljk_id'
-                          OR        forum_loljk.id            = '$loljk_id' )
+                        OR          forum_loljk.id            = '$loljk_id' )
                         ORDER BY  forum_loljk.timestamp ASC ");
 
   for($nthreadjk = 0 ; $dthreadjk = mysqli_fetch_array($qthreadjk) ; $nthreadjk++)
@@ -111,7 +111,7 @@ if(isset($_GET['id']))
 
     // Préparation des données
     $jk_auteurid[$nthreadjk]  = $dthreadjk['FKauteur'];
-    $jk_auteur[$nthreadjk]    = $dthreadjk['pseudonyme'];
+    $jk_auteur[$nthreadjk]    = destroy_html($dthreadjk['pseudonyme']);
     $jk_date[$nthreadjk]      = "Le ".date("d/m/y à H:i:s",$dthreadjk['timestamp']);
     $jk_contenu[$nthreadjk]   = nl2br(destroy_html($dthreadjk['contenu']));
 

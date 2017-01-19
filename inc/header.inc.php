@@ -34,6 +34,8 @@ if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0
 // Préparation de l'url complète de la page
 $url_complete = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'] : substr(basename($_SERVER['PHP_SELF']),0,-4);
 $url_logout   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&amp;logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
+$url_complete = destroy_html($url_complete);
+$url_logout   = destroy_html($url_logout);
 
 // Déconnexion
 if(isset($_GET['logout']))
