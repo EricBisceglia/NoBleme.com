@@ -31,7 +31,7 @@ $page_id  = "bbcodes";
 // Remplir la prévisulation des commentaires si nécessaire
 
 $preview_bbcodes  = isset($_POST['bbcodes_test']) ? $_POST['bbcodes_test'] : '';
-$preview_traite   = isset($_POST['bbcodes_test']) ? bbcode(nl2br_fixed($_POST['bbcodes_test'])) : '';
+$preview_traite   = isset($_POST['bbcodes_test']) ? bbcode(destroy_html(nl2br_fixed($_POST['bbcodes_test']))) : '';
 
 
 
