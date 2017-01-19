@@ -415,19 +415,6 @@ $css = array('admin');
             $hash = salage("motdepasse");
           </td>
         </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap mise_a_jour_background">
-            <b>old_salage(</b>"pass"<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced mise_a_jour_background">
-            Hashage et salage du mot de passe, déprécié<br>
-            Utilise la vieille méthode de vbulletin qui est une variante de md5<br>
-            Sert à changer en salage() les users qui ne sont pas venus depuis des plombes
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap mise_a_jour_background">
-            $hash = old_salage("motdepasse");
-          </td>
-        </tr>
 
       </table>
     </div>

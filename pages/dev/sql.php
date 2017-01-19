@@ -74,6 +74,11 @@ if($idmaj == 'v2')
     query(" ALTER TABLE membres DROP bie ");
   $majq .= "<br><br>Suppression du champ membres.bie";
 
+  // Suppression du champ membres.pass_old
+  if(@mysqli_query($GLOBALS['db'], " SELECT pass_old FROM membres "))
+    query(" ALTER TABLE membres DROP pass_old ");
+  $majq .= "<br><br>Suppression du champ membres.pass_old";
+
   // Création de l'enregistrement consulte le CV de Bad
   if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'nobleme' AND page_id LIKE 'cv' ")))
     query(" INSERT INTO pages
