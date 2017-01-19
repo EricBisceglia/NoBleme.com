@@ -50,7 +50,7 @@ if(isset($_POST['nobleme_login_x']))
     else
     {
       // On récupère les pseudos correspondant au pseudo rentré
-      $login = query(" SELECT membres.pass , membres.pass_old , membres.id FROM membres WHERE membres.pseudonyme = '$pseudo' ");
+      $login = query(" SELECT membres.pass , membres.id FROM membres WHERE membres.pseudonyme = '$pseudo' ");
 
       // On s'arrête là si ça ne renvoie pas de résultat
       if (mysqli_num_rows($login) == 0)
@@ -60,36 +60,35 @@ if(isset($_POST['nobleme_login_x']))
 
         // On sale le mot de passe, puis on compare si le pass entré correspond au pass stocké
         $passtest     = postdata(salage($pass));
-        $passtest_old = postdata(old_salage($pass));
+        $passtest_old = postdata(salage($pass,1));
 
         while($logins = mysqli_fetch_array($login))
         {
           // Vérifions s'il y a bruteforce
           $login_id         = postdata($logins['id']);
-          $timecheck        = (time() - 300);
+          $timecheck        = (time() - 60);
           $qcheckbruteforce = query(" SELECT COUNT(*) AS 'num_brute' FROM membres_essais_login WHERE FKmembres = '$login_id' AND timestamp > '$timecheck' ");
           $checkbruteforce  = mysqli_fetch_array($qcheckbruteforce);
 
           // Pas de bruteforce? Allons-y
           $login_ok     = 0;
           $bonpass      = $logins['pass'];
-          $bonpass_old  = $logins['pass_old'];
 
-          if(($bonpass === $passtest || $bonpass_old === $passtest_old ) && $checkbruteforce['num_brute'] < 5)
+          if(($bonpass === $passtest || $bonpass === $passtest_old) && $checkbruteforce['num_brute'] < 5)
           {
             // C'est bon, on peut login
             $login_ok = 1;
 
             // Si on en est encore au vieux pass, on le fait sauter et on met le nouveau pass à la place
-            if($bonpass_old !== 'nope')
-              query(" UPDATE membres SET pass = '$passtest' , pass_old = 'nope' WHERE id = '$login_id' ");
+            if($bonpass !== 'nope')
+              query(" UPDATE membres SET pass = '$passtest' WHERE id = '$login_id' ");
           }
-          else if ($checkbruteforce['num_brute'] >= 14)
-            $erreur = "Trop d'essais de connexion à ce compte dans les 5 dernières minutes<br><a href=\"".$chemin."pages/user/register?oublie\" class=\"dark\">Mot de passe oublié ?</a>";
+          else
+            $erreur = "Trop d'essais de connexion à ce compte dans la dernière minute<br><a href=\"".$chemin."pages/user/register?oublie\" class=\"dark\">Mot de passe oublié ?</a>";
         }
 
         // Si le pass est pas bon, dehors. Et tant qu'on y est, on log l'essai en cas de bruteforce
-        if($login_ok == 0 && $checkbruteforce['num_brute'] < 5)
+        if(!$login_ok && $checkbruteforce['num_brute'] < 5)
         {
           $timestamp  = time();
           query(" INSERT INTO membres_essais_login SET FKmembres = '$login_id' , timestamp = '$timestamp' , ip = '$brute_ip' ");
@@ -101,7 +100,7 @@ if(isset($_POST['nobleme_login_x']))
           if($souvenir == "ok")
           {
             // Si checkbox se souvenir est cochée, on crée un cookie
-            setcookie("nobleme_memory", old_salage($pseudo) , time()+630720000, "/");
+            setcookie("nobleme_memory", salage($pseudo) , time()+630720000, "/");
             $_SESSION['user'] = $login_id;
           }
           else

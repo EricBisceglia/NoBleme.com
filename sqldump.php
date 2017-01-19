@@ -164,7 +164,6 @@ CREATE TABLE IF NOT EXISTS `membres` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pseudonyme` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `pass` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `pass_old` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `admin` tinyint(1) NOT NULL,
   `sysop` int(11) NOT NULL,
   `moderateur` mediumtext COLLATE utf8_unicode_ci,

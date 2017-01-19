@@ -26,7 +26,7 @@ if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
   while($userlist = mysqli_fetch_array($users))
   {
     // On sale l'user à tester
-    $usertest = old_salage($userlist['pseudonyme']);
+    $usertest = salage($userlist['pseudonyme']);
 
     // Et on compare
     if ($usertest == $_COOKIE['nobleme_memory'])
@@ -104,31 +104,18 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && loggedin())
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Vieille fonction de salage d'un mot de passe
-// Renvoie le mot de passe salé
-//
-// Exemple d'utilisation:
-// old_salage("monpass");
-
-function old_salage($pass)
-{
-  // Mercy le legacy de vbulletin qui utilisait juste du md5...
-  return md5("BNK".$pass."N B");
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Nouvelle fonction de salage d'un mot de passe
 // Renvoie le mot de passe salé
 //
 // Exemple d'utilisation:
 // salage("monpass");
 
-function salage($pass)
+function salage($pass,$old=NULL)
 {
-  return crypt($pass,$GLOBALS['salage']);
+  if($old)
+    return crypt($pass,$GLOBALS['salage']);
+  else
+    return sha1($pass.$GLOBALS['salage']);
 }
 
 
