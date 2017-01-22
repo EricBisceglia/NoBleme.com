@@ -224,6 +224,7 @@ function nbrpg_format_effet($effet,$duree)
                               nbrpg_effets.description                        AS 'e_desc'       ,
                               nbrpg_effets.paralysie                          AS 'e_para'       ,
                               nbrpg_effets.degats                             AS 'e_dmg'        ,
+                              nbrpg_effets.buff_precision                     AS 'e_precision'  ,
                               nbrpg_effets.buff_degats                        AS 'e_degats'     ,
                               nbrpg_effets.buff_degats_pourcent               AS 'e_degatsp'    ,
                               nbrpg_effets.amplification_soins                AS 'e_asoins'     ,
@@ -260,6 +261,7 @@ function nbrpg_format_effet($effet,$duree)
 
   // Effets positifs
   $e_effets .= ($deffets['e_dmg'] < 0) ? "<p class=\"nbrpg_hp_high gras\">+".abs($deffets['e_dmg'])." HP par tour</p>" : '';
+  $e_effets .= ($deffets['e_precision'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_precision']."% à la précision des attaques</p>" : '';
   $e_effets .= ($deffets['e_degats'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_degats']." à la puissance d'attaque</p>" : '';
   $e_effets .= ($deffets['e_degatsp'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_degatsp']."% à la puissance d'attaque</p>" : '';
   $e_effets .= ($deffets['e_asoins'] > 0) ? "<p class=\"nbrpg_hp_high gras\">+".$deffets['e_asoins']." à l'efficacité des soins</p>" : '';
@@ -280,6 +282,7 @@ function nbrpg_format_effet($effet,$duree)
   // Effets négatifs
   $e_effets .= ($deffets['e_nppt']) ? "<p class=\"nbrpg_hp_low gras\">Empêche toute action</p>" : '';
   $e_effets .= ($deffets['e_dmg'] > 0) ? "<p class=\"nbrpg_hp_low gras\">-".$deffets['e_dmg']." HP par tour</p>" : '';
+  $e_effets .= ($deffets['e_precision'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_precision']."% à la précision des attaques</p>" : '';
   $e_effets .= ($deffets['e_degats'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_degats']." à la puissance d'attaque</p>" : '';
   $e_effets .= ($deffets['e_degatsp'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_degatsp']."% à la puissance d'attaque</p>" : '';
   $e_effets .= ($deffets['e_asoins'] < 0) ? "<p class=\"nbrpg_hp_low gras\">".$deffets['e_asoins']." à l'efficacité des soins</p>" : '';
