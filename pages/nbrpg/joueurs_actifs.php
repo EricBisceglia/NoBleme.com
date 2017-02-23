@@ -108,12 +108,9 @@ for($npersos = 0 ; $dpersos = mysqli_fetch_array($qpersos) ; $npersos++)
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
     <div class="indiv align_center">
       <img src="<?=$chemin?>img/logos/nbrpg.png" alt="NoBlemeRPG">
     </div>
-    <br>
 
     <div class="body_main midsize">
       <p class="titre">Liste des personnages actifs dans le NoBlemeRPG</p>

@@ -75,17 +75,11 @@ while($dchat = mysqli_fetch_array($qchat))
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <br>
-    <br>
     <div class="indiv align_center">
       <a href="<?=$chemin?>pages/nbrpg/index">
         <img src="<?=$chemin?>img/logos/nbrpg.png" alt="NoBlemeRPG">
       </a>
     </div>
-    <br>
-    <br>
 
     <script>
     window.addEventListener("DOMContentLoaded", function() {

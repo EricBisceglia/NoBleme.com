@@ -26,12 +26,9 @@ $page_id  = "index";
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
     <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/nbrpg.png" alt="NBRPG">
+      <img src="<?=$chemin?>img/logos/nbrpg_full.png" alt="NBRPG">
     </div>
-    <br>
 
     <div class="body_main midsize">
       <p class="titre">Qu'est-ce que le NoBlemeRPG ?</p>
@@ -68,7 +65,10 @@ $page_id  = "index";
     <div class="body_main midsize">
       <p class="titre">Le texte autour du logo, c'est des blagues privées à la con ?</p>
       <br>
-      Oui. Vu la rareté des sessions de jeu du NoBlemeRPG, Bad se fait harrasser en continu pour savoir quand la prochaine aura lieu. Pour calmer les ardeurs des foules armées de fourches, il a tendance à répondre que ça reprend demain. Toutefois, ça ne reprend jamais demain. Pour ce qui est du visage triste accompagné du texte « échec critique », c'est un clin d'œil à la tendance qu'a le hasard du jeu à se retourner contre les joueurs aux pires moments possibles.
+      Oui. Vu la rareté des sessions de jeu du NoBlemeRPG, Bad se fait harrasser en continu pour savoir quand la prochaine aura lieu. Pour calmer les ardeurs des foules armées de fourches, il a tendance à répondre que ça reprend demain. Toutefois, ça ne reprend jamais demain. Pour ce qui est du visage triste accompagné du texte « échec critique », c'est un clin d'œil à la tendance qu'a le hasard du jeu à se retourner contre les joueurs aux pires moments possibles.<br>
+      <br>
+      Et un grand merci à <a href="https://twitter.com/chance_meeting">pins</a> qui a dessiné les logos du NBRPG sans que je lui demande rien, comme ça, juste parce qu'il en avait envie.<br>
+      Allez regarder <a href="https://www.patreon.com/pins">son patreon</a> si vous voulez savoir ce qu'il fait d'autre.
     </div>
 
 <?php /***********************************************************************************************************************************/
