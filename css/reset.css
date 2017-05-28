@@ -27,7 +27,7 @@ table                                                                           
                           body { color: #555555; font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif       ;
                                  font-size: 1.6em; font-weight: 300; letter-spacing: .01em; line-height: 1.45;                    }
                              a { color: #37536B; text-decoration: none;                                                           }
-              a:focus, a:hover { color: #000000;                                                                                  }
+              a:focus, a:hover { color: #78A1BC;                                                                                  }
                          table { width: 100%;                                                                                     }
                         td, th { border-bottom: 0.1rem solid #E1E1E1; padding: 1.2rem 1.5rem;                                     }
 td:first-child, th:first-child { padding-left: 0;                                                                                 }

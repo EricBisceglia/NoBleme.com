@@ -104,6 +104,57 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && loggedin())
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Gestion du langage
+
+// Détermination du langage s'il n'est pas encore déterminé
+if(!isset($_SESSION['lang']))
+{
+  // Par défaut (si on a pas de cookie) en met en français
+  if(!isset($_COOKIE['nobleme_language']))
+  {
+    setcookie("nobleme_language", 'FR' , time()+630720000, "/");
+    $_SESSION['lang'] = 'FR';
+  }
+  // Sinon on lui donne la valeur du cookie
+  else
+    $_SESSION['lang'] = $_COOKIE['nobleme_language'];
+}
+
+// Changement de langage demandé en cliquant sur le drapeau
+if(isset($_GET['changelang']))
+{
+  // On détermine le nouveau langage
+  $changelang = ($_SESSION['lang'] == 'EN') ? 'FR' : 'EN';
+
+  // On change le cookie de langage et la session en cours
+  setcookie("nobleme_language", $changelang , time()+630720000, "/");
+  $_SESSION['lang'] = $changelang;
+}
+
+// Changement de langage imposé par l'URL
+if(isset($_GET['english']) || isset($_GET['anglais']))
+{
+  setcookie("nobleme_language", "EN" , time()+630720000, "/");
+  $_SESSION['lang'] = "EN";
+}
+if(isset($_GET['francais']) || isset($_GET['french']))
+{
+  setcookie("nobleme_language", "FR" , time()+630720000, "/");
+  $_SESSION['lang'] = "FR";
+}
+
+// Si on a changé le langage, on reload pour virer l'url spéciale
+if(isset($_GET['english']) || isset($_GET['anglais']) || isset($_GET['francais']) || isset($_GET['french']) || isset($_GET['changelang']))
+{
+  // On détermine l'URL actuelle, puis on vire tous les paramètres pour pas se prendre la tête
+  $url_complete = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'] : substr(basename($_SERVER['PHP_SELF']),0,-4);
+  header("Location: ".$chemin.strtok($url_complete, '?'));
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Nouvelle fonction de salage d'un mot de passe
 // Renvoie le mot de passe salé
 //

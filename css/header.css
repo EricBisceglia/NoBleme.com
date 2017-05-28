@@ -1,6 +1,6 @@
 /************************************************************* MENU DU HAUT **************************************************************/
 @media (min-width: 650px) {
-.header_topmenu                                         { display: flex; justify-content: space-between; padding: 7px 6px 7px 10px        ;
+.header_topmenu                                         { display: flex; justify-content: space-between; padding: 6px 6px 6px 10px        ;
                                                           background-color: #37536B; font-family: 'NoBleme-header';                       }
 .header_topmenu_titre                                   { padding: 0px 15px; font-size: 18px; font-weight: bold; color: #78A1BC           ;
                                                          cursor: pointer; background-color: #37536B;                                      }
@@ -22,6 +22,7 @@
 .header_topmenu_titre.header_topmenu_selected:hover     { background:#37536B;                                                             }
 .header_topmenu_titre.header_topmenu_selected > a       { text-decoration: none; color: #37536B; width: 100%; display: inline-block;      }
 .header_topmenu_titre.header_topmenu_selected:hover > a { color: #78A1BC;                                                                 }
+.header_topmenu_flagimg                                 { vertical-align: middle;                                                         }
 
 /************************************************** BARRE D'INFORMATIONS SUR LE COMPTE ***************************************************/
 @media(min-width: 650px) { .menu_sub { display: flex; justify-content: space-between; background-color: #78A1BC                           ;
@@ -30,6 +31,7 @@
 @media(max-width: 649px) { .menu_sub { display: flex; justify-content: space-between; background-color: #78A1BC                           ;
                                        border-bottom: 1px solid #37536B; color:#37536B; padding: 3px 8px 2px 8px                          ;
                                        white-space: nowrap; font-size: 10px; font-weight: bold;                                         } }
+.menu_sub_lien:hover                 { color: #37536B;                                                                                    }
 .nouveaux_messages                   { animation-name: blink-relou; animation-iteration-count: infinite; animation-duration: 1337ms;      }
 @keyframes blink-relou               { from { color: #FF0000; } to { color: #37536B; }                                                    }
 .nouveaux_messages:hover             { animation-name: blink-relou-hover; animation-iteration-count: infinite; animation-duration: 1337ms;}
@@ -70,4 +72,4 @@
 @media (max-width: 649px) { .contenu_page { padding-left: 10px; padding-right: 10px;                   } }
 
 /************************************************************* PIED DE PAGE **************************************************************/
-footer { width: 100%; text-align: center; color: #999999; font-size: 14px; margin-top: 80px; margin-bottom: 50px;}
+footer { width: 100%; text-align: center; color: #999999; font-size: 14px; margin-top: 80px; margin-bottom: 40px;}

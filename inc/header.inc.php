@@ -27,13 +27,14 @@ if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                            GESTION DU LOGIN                                                           */
+/*                                                    GESTION DU LOGIN ET DU LANGAGE                                                     */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
 // Préparation de l'url complète de la page
 $url_complete = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'] : substr(basename($_SERVER['PHP_SELF']),0,-4);
 $url_logout   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&amp;logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
+$url_langage  = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&amp;changelang' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang';
 $url_complete = destroy_html($url_complete);
 $url_logout   = destroy_html($url_logout);
 
@@ -394,13 +395,12 @@ if(!isset($header_sidemenu))
 <body id="body" onLoad="ecrire_404();">
   <?php } else { ?>
 <body id="body">
-  <?php }
+  <?php } ?>
 
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                                                                                                     //
-  //                                                           MENU  PRINCIPAL                                                           //
-  //                                                                                                                                     //
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
+
+
+
+<?php ######################################################### MENU PRINCIPAL ######################################################### ?>
 
     <?php if(!isset($_GET["popup"]) && !isset($_GET["popout"])) { ?>
 
@@ -408,31 +408,63 @@ if(!isset($header_sidemenu))
       <div id="header_titres" class="header_topmenu_zone">
 
         <div class="header_topmenu_titre header_topmenu_selected"
-             onclick="window.location.href('<?=$chemin?>index.php');">
-                                   <a href="<?=$chemin?>index.php">NOBLEME</a>
+             onclick="window.location.href('<?=$chemin?>index');">
+                                   <a href="<?=$chemin?>index">NOBLEME</a>
         </div>
-        <div class="header_topmenu_titre"><a href="<?=$chemin?>index.php">DISCUTER</a></div>
-        <div class="header_topmenu_titre"><a href="<?=$chemin?>index.php">JOUER</a></div>
+        <div class="header_topmenu_titre"><a href="<?=$chemin?>index">DISCUTER</a></div>
+        <div class="header_topmenu_titre"><a href="<?=$chemin?>index">JOUER</a></div>
         <div class="header_topmenu_titre">LIRE</div>
 
       </div>
       <div class="header_topmenu_zone header_topmenu_flag">
-        <img src="<?=$chemin?>img/icones/lang_en.png" alt="English">
+        <a href="<?=$url_langage?>">
+          <?php if($_SESSION['lang'] == 'FR') { ?>
+          <img class="header_topmenu_flagimg" src="<?=$chemin?>img/icones/lang_en.png" alt="EN">
+          <?php } else { ?>
+          <img class="header_topmenu_flagimg" src="<?=$chemin?>img/icones/lang_fr.png" alt="FR">
+          <?php } ?>
+        </a>
       </div>
     </div>
 
-    <!-- -->
+
+
+
+<?php ######################################################## GESTION DU LOGIN ######################################################## ?>
 
     <div class="menu_sub">
+      <?php if(loggedin()) {
+            if($notifications) { ?>
       <div class="header_topmenu_zone">
-        MonPseudonymeIci, vous avez reçu un nouveau message !
+        <a class="menu_sub_lien nouveaux_messages" href="<?=$chemin?>pages/user/notifications">
+          <?=getpseudo()?>, vous avez reçu un nouveau message, cliquez ici pour le lire !
+        </a>
       </div>
+      <?php } else { ?>
       <div class="header_topmenu_zone">
-        Déconnexion
+        <a class="menu_sub_lien" href="<?=$chemin?>pages/user/notifications">
+          Vous êtes connecté en tant que <?=getpseudo()?>. Cliquez ici pour modifier votre profil et/ou gérer votre compte.
+        </a>
       </div>
+      <?php } ?>
+      <div class="header_topmenu_zone">
+        <a class="menu_sub_lien" href="<?=$url_logout?>">
+          Déconnexion
+        </a>
+      </div>
+      <?php } else { ?>
+      <div class="header_topmenu_zone">
+        <a class="menu_sub_lien" href="<?=$chemin?>pages/user/login">
+          Vous n'êtes pas connecté : Cliquez ici pour vous identifier ou vous enregistrer
+        </a>
+      </div>
+      <?php } ?>
     </div>
 
-    <!-- -->
+
+
+
+<?php ########################################################## MENU LATÉRAL ########################################################## ?>
 
     <div class="containermenu">
       <div class="header_side_nomenu" id="header_nomenu" onclick="document.getElementById('header_sidemenu').style.display = 'flex'; document.getElementById('header_nomenu').style.display = 'none';">
@@ -446,11 +478,11 @@ if(!isset($header_sidemenu))
             </div>
             <hr class="header_sidemenu_hr header_sidemenu_desktop">
             <div class="header_sidemenu_item"
-                 onclick="window.location.href('<?=$chemin?>index.php');">
-                                       <a href="<?=$chemin?>index.php">Page d'accueil</a>
+                 onclick="window.location.href('<?=$chemin?>index');">
+                                       <a href="<?=$chemin?>index">Page d'accueil</a>
             </div>
-            <div class="header_sidemenu_item"><a href="<?=$chemin?>index.php">Élément du menu latéral</a></div>
-            <div class="header_sidemenu_item"><a href="<?=$chemin?>index.php">Élément du menu latéral</a></div>
+            <div class="header_sidemenu_item"><a href="<?=$chemin?>index">Élément du menu latéral</a></div>
+            <div class="header_sidemenu_item"><a href="<?=$chemin?>index">Élément du menu latéral</a></div>
             <hr class="header_sidemenu_hr">
             <div class="header_sidemenu_titre">Titre du menu latéral</div>
             <div class="header_sidemenu_item">Élément du menu latéral</div>
