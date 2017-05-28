@@ -252,8 +252,10 @@ if (loggedin())
 
 if (isset($css))
 {
-  // Si un CSS perso est défini, on inclut déjà nobleme.css
-  $stylesheets = '<link rel="stylesheet" href="'.$chemin.'css/nobleme.css" type="text/css">';
+  // Si un CSS perso est défini, on inclut déjà reset.css, header.css, et nobleme.css
+  $stylesheets = '<link rel="stylesheet" href="'.$chemin.'css/reset.css" type="text/css">
+    <link rel="stylesheet" href="'.$chemin.'css/header.css" type="text/css">
+    <link rel="stylesheet" href="'.$chemin.'css/nobleme.css" type="text/css">';
 
   // Puis on loope les éléments de $css et on les ajoute aux css à inclure
   for($i=0;$i<count($css);$i++)
@@ -266,9 +268,11 @@ if (isset($css))
 ';
 }
 
-// Sinon, on se contente d'inclure nobleme.css
+// Sinon, on se contente d'inclure reset.css, header.css, et nobleme.css
 else
-  $stylesheets = '<link rel="stylesheet" href="'.$chemin.'css/nobleme.css" type="text/css">
+  $stylesheets = '<link rel="stylesheet" href="'.$chemin.'css/reset.css" type="text/css">
+    <link rel="stylesheet" href="'.$chemin.'css/header.css" type="text/css">
+    <link rel="stylesheet" href="'.$chemin.'css/nobleme.css" type="text/css">
 ';
 
 
@@ -387,639 +391,82 @@ if(!isset($header_sidemenu))
   </head>
 
   <?php if(isset($cette_page_est_404)) { ?>
-  <body id="body" onLoad="ecrire_404();">
+<body id="body" onLoad="ecrire_404();">
   <?php } else { ?>
-  <body id="body">
-  <?php } ?>
+<body id="body">
+  <?php }
 
-    <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //                                                                                                                                   //
-    //                                                          MENU  PRINCIPAL                                                          //
-    //                                                                                                                                   //
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                                                                                                     //
+  //                                                           MENU  PRINCIPAL                                                           //
+  //                                                                                                                                     //
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
 
-    <?php if(!isset($_GET["popup"]) && !isset($_GET["popout"]) && !isset($_GET["dynamique"])) { ?>
+    <?php if(!isset($_GET["popup"]) && !isset($_GET["popout"])) { ?>
 
-    <div class="menu_main">
-      <div class="menu_main_section">
-        <div class="menu_main_item<?=menu_css($header_menu,'',0)?>"
-             onClick="location.href = '<?=$chemin?>'">
-          <a                     href="<?=$chemin?>">NOBLEME.COM</a>
+    <div class="header_topmenu">
+      <div id="header_titres" class="header_topmenu_zone">
+
+        <div class="header_topmenu_titre header_topmenu_selected"
+             onclick="window.location.href('<?=$chemin?>index.php');">
+                                   <a href="<?=$chemin?>index.php">NOBLEME</a>
         </div>
-        <div class="menu_main_item<?=menu_css($header_menu,'communaute',0)?>"
-             onClick="location.href = '<?=$chemin?>pages/nobleme/index'">
-          <a                     href="<?=$chemin?>pages/nobleme/index">COMMUNAUTÉ</a>
-        </div>
-        <div class="menu_main_item<?=menu_css($header_menu,'lire',0)?>"
-             onClick="location.href = '<?=$chemin?>pages/nbdb/index'">
-          <a                     href="<?=$chemin?>pages/nbdb/index">LIRE</a>
-        </div>
-        <div class="menu_main_item<?=menu_css($header_menu,'discuter',0)?>"
-             onClick="location.href = '<?=$chemin?>pages/forum/index'">
-          <a                     href="<?=$chemin?>pages/forum/index">DISCUTER</a>
-        </div>
-        <div class="menu_main_item<?=menu_css($header_menu,'secrets',0)?>"
-             onClick="location.href = '<?=$chemin?>pages/secrets/index'">
-          <a                     href="<?=$chemin?>pages/secrets/index">SECRETS</a>
-        </div>
+        <div class="header_topmenu_titre"><a href="<?=$chemin?>index.php">DISCUTER</a></div>
+        <div class="header_topmenu_titre"><a href="<?=$chemin?>index.php">JOUER</a></div>
+        <div class="header_topmenu_titre">LIRE</div>
+
       </div>
-      <div class="menu_main_section">
-        <?php if(!loggedin()) { ?>
-        <div class="menu_main_item<?=menu_css($header_menu,'connexion',0)?>"
-             onClick="location.href = '<?=$chemin?>pages/user/login'">
-          <a                     href="<?=$chemin?>pages/user/login">CONNEXION</a>
-        </div>
-        <div class="menu_main_item<?=menu_css($header_menu,'inscription',0)?>"
-             onClick="location.href = '<?=$chemin?>pages/user/register'">
-          <a                     href="<?=$chemin?>pages/user/register">S'INSCRIRE</a>
-        </div>
-        <?php } else { ?>
-        <?php if(loggedin() && getsysop($_SESSION['user'])) { ?>
-        <div class="menu_main_item<?=menu_css($header_menu,'admin',0)?>"
-             onClick="location.href = '<?=$chemin?>pages/nobleme/activite?mod'">
-          <a                     href="<?=$chemin?>pages/nobleme/activite?mod">ADMINISTRATION</a>
-        </div>
-        <?php } ?>
-        <div class="menu_main_item<?=menu_css($header_menu,'compte',0)?>"
-             onClick="location.href = '<?=$chemin?>pages/user/notifications'">
-          <a                     href="<?=$chemin?>pages/user/notifications" <?=$notifs_css?>>MON COMPTE<?=$notifs_texte?></a>
-        </div>
-        <?php } ?>
+      <div class="header_topmenu_zone">
+        <img src="<?=$chemin?>img/icones/lang_en.png" alt="English">
       </div>
     </div>
 
+    <!-- -->
 
-    <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //                                                                                                                                   //
-    //                                                          MENU SECONDAIRE                                                          //
-    //                                                                                                                                   //
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
-
-    <?php if ($header_menu == '' || $header_menu == 'connexion' || $header_menu == 'inscription') { ?>
     <div class="menu_sub">
-      <div class="menu_sub_item<?=menu_css($header_submenu,'accueil',1)?>"
-           onClick="location.href = '<?=$chemin?>'">
-        <a                     href="<?=$chemin?>">Page d'accueil</a>
+      <div class="header_topmenu_zone">
+        MonPseudonymeIci, vous avez reçu un nouveau message !
       </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'activite',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/nobleme/activite'">
-        <a                     href="<?=$chemin?>pages/nobleme/activite">Activité récente</a>
-      </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'online',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/nobleme/online'">
-        <a                     href="<?=$chemin?>pages/nobleme/online">Qui est en ligne ?</a>
-      </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'dev',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/nobleme/coulisses'">
-        <a                     href="<?=$chemin?>pages/nobleme/coulisses">Développement</a>
-      </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'aide',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/doc/index'">
-        <a                     href="<?=$chemin?>pages/doc/index">Aide &amp; Infos</a>
+      <div class="header_topmenu_zone">
+        Déconnexion
       </div>
     </div>
 
-    <?php } else if ($header_menu == 'communaute') { ?>
-    <div class="menu_sub">
-      <div class="menu_sub_item<?=menu_css($header_submenu,'membres',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/nobleme/index'">
-        <a                     href="<?=$chemin?>pages/nobleme/index">Membres</a>
-      </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'irl',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/nobleme/irls'">
-        <a                     href="<?=$chemin?>pages/nobleme/irls">Rencontres IRL</a>
-      </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'admins',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/nobleme/admins'">
-        <a                     href="<?=$chemin?>pages/nobleme/admins">Équipe administrative</a>
-      </div>
-    </div>
+    <!-- -->
 
-    <?php } else if ($header_menu == 'lire') { ?>
-    <div class="menu_sub">
-      <div class="menu_sub_item<?=menu_css($header_submenu,'nbdb',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/nbdb/index'">
-        <a                     href="<?=$chemin?>pages/nbdb/index">NBDatabase</a>
+    <div class="containermenu">
+      <div class="header_side_nomenu" id="header_nomenu" onclick="document.getElementById('header_sidemenu').style.display = 'flex'; document.getElementById('header_nomenu').style.display = 'none';">
+        Afficher le menu latéral
       </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'nbrpg',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/nbrpg/index'">
-        <a                     href="<?=$chemin?>pages/nbrpg/index">NoBlemeRPG</a>
-      </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'miscellanees',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/irc/quotes'">
-        <a                     href="<?=$chemin?>pages/irc/quotes">Miscellanees</a>
-      </div>
-    </div>
-
-    <?php } else if ($header_menu == 'discuter') { ?>
-    <div class="menu_sub">
-      <div class="menu_sub_item<?=menu_css($header_submenu,'forum',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/forum/index'">
-        <a                     href="<?=$chemin?>pages/forum/index">Forum NoBleme</a>
-      </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'ecrivains',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/forum/ecrivains'">
-        <a                     href="<?=$chemin?>pages/forum/ecrivains">Le coin des écrivains</a>
-      </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'irc',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/irc/index'">
-        <a                     href="<?=$chemin?>pages/irc/index">Chat IRC</a>
-      </div>
-    </div>
-
-    <?php } else if ($header_menu == 'admin') { ?>
-    <div class="menu_sub">
-      <div class="menu_sub_item<?=menu_css($header_submenu,'mod',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/nobleme/activite?mod'">
-        <a                     href="<?=$chemin?>pages/nobleme/activite?mod">Modération</a>
-      </div>
-      <?php if(getadmin()) { ?>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'admin',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/todo/index?admin'">
-        <a                     href="<?=$chemin?>pages/todo/index?admin">Administration</a>
-      </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'dev',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/dev/formattage'">
-        <a                     href="<?=$chemin?>pages/dev/formattage">Développement</a>
-      </div>
-      <?php } ?>
-    </div>
-
-    <?php } else if ($header_menu == 'secrets') { ?>
-    <div class="menu_sub">
-      <div class="menu_sub_item<?=menu_css($header_submenu,'liste',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/secrets/index'">
-        <a                     href="<?=$chemin?>pages/secrets/index">Liste des secrets</a>
-      </div>
-    </div>
-
-    <?php } else if ($header_menu == 'compte') { ?>
-    <div class="menu_sub">
-      <div class="menu_sub_item<?=menu_css($header_submenu,'messages',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/user/notifications'">
-        <a                     href="<?=$chemin?>pages/user/notifications">Messages privés</a>
-      </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'profil',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/user/user?id=<?=$_SESSION['user']?>'">
-        <a                     href="<?=$chemin?>pages/user/user?id=<?=$_SESSION['user']?>">Profil public</a>
-      </div>
-      <div class="menu_sub_item<?=menu_css($header_submenu,'reglages',1)?>"
-           onClick="location.href = '<?=$chemin?>pages/user/reglages'">
-        <a                     href="<?=$chemin?>pages/user/reglages">Réglages du compte</a>
-      </div>
-      <div class="menu_sub_item"
-           onClick="location.href = '<?=$url_logout?>'">
-        <a                     href="<?=$url_logout?>">Déconnexion</a>
-      </div>
-    </div>
-
-    <?php } ?>
-
-
-    <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //                                                                                                                                   //
-    //                                                           MENU  LATÉRAL                                                           //
-    //                                                                                                                                   //
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
-
-    <div class="body_container">
-      <?php if($header_sidemenu) { ?>
-
-      <?php if($header_menu == '' && $header_submenu == 'dev') { ?>
-      <nav>
-        <div class="menu_side">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'coulisses',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nobleme/coulisses'">
-            <a                     href="<?=$chemin?>pages/nobleme/coulisses">Coulisses de NoBleme</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'source',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nobleme/coulisses?source'">
-            <a                     href="<?=$chemin?>pages/nobleme/coulisses?source">Code source du site</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'roadmap',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/todo/roadmap'">
-            <a                     href="<?=$chemin?>pages/todo/roadmap">Plan de route</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'todo',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/todo/index'">
-            <a                     href="<?=$chemin?>pages/todo/index">Tâches non résolues</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'todo_solved',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/todo/index?solved'">
-            <a                     href="<?=$chemin?>pages/todo/index?solved">Tâches résolues</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'todo_recent',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/todo/index?recent'">
-            <a                     href="<?=$chemin?>pages/todo/index?recent">Tâches récentes</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'ticket',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/todo/add'">
-            <a                     href="<?=$chemin?>pages/todo/add">Ouvrir un ticket</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'todo_rss',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/todo/rss'">
-            <a                     href="<?=$chemin?>pages/todo/rss">Tâches : Flux RSS</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'devblog',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/devblog/index'">
-            <a                     href="<?=$chemin?>pages/devblog/index">Blog de développement</a>
-          </div>
-          <div  class="menu_side_item<?=menu_css($header_sidemenu,'devblog_top',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/devblog/top'">
-            <a                     href="<?=$chemin?>pages/devblog/top">Devblogs populaires</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'devblog_rss',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/devblog/rss'">
-            <a                     href="<?=$chemin?>pages/devblog/rss">Devblogs : Flux RSS</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div  class="menu_side_item<?=menu_css($header_sidemenu,'ticket_bug',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/todo/add?bug'">
-            <a                     href="<?=$chemin?>pages/todo/add?bug">Rapporter un bug</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'ticket_feature',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/todo/add?feature'">
-            <a                     href="<?=$chemin?>pages/todo/add?feature">Quémander un feature</a>
+      <nav id="header_sidemenu" class="header_sidemenu_mobile">
+        <div class="header_sidemenu">
+          <div>
+            <div class="header_sidemenu_item header_sidemenu_desktop" onclick="document.getElementById('header_nomenu').style.display = 'flex'; document.getElementById('header_sidemenu').style.display = 'none';">
+              <a>Masquer le menu latéral</a>
+            </div>
+            <hr class="header_sidemenu_hr header_sidemenu_desktop">
+            <div class="header_sidemenu_item"
+                 onclick="window.location.href('<?=$chemin?>index.php');">
+                                       <a href="<?=$chemin?>index.php">Page d'accueil</a>
+            </div>
+            <div class="header_sidemenu_item"><a href="<?=$chemin?>index.php">Élément du menu latéral</a></div>
+            <div class="header_sidemenu_item"><a href="<?=$chemin?>index.php">Élément du menu latéral</a></div>
+            <hr class="header_sidemenu_hr">
+            <div class="header_sidemenu_titre">Titre du menu latéral</div>
+            <div class="header_sidemenu_item">Élément du menu latéral</div>
+            <div class="header_sidemenu_item header_sidemenu_selected">Élément du menu latéral</div>
+            <div class="header_sidemenu_item">Élément du menu latéral</div>
           </div>
         </div>
       </nav>
 
-      <?php } else if($header_menu == '' && $header_submenu == 'aide') { ?>
-      <nav>
-        <div class="menu_side">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'documentation',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/doc/index'">
-            <a                     href="<?=$chemin?>pages/doc/index">Documentation du site</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'nobleme',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/doc/nobleme'">
-            <a                     href="<?=$chemin?>pages/doc/nobleme">Qu'est-ce que NoBleme</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'coc',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/doc/coc'">
-            <a                     href="<?=$chemin?>pages/doc/coc">Code de conduite</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'bbcodes',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/doc/bbcodes'">
-            <a                     href="<?=$chemin?>pages/doc/bbcodes">Utiliser les BBCodes</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'emotes',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/doc/emotes'">
-            <a                     href="<?=$chemin?>pages/doc/emotes">Liste des émoticônes</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'rss',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/doc/rss'">
-            <a                     href="<?=$chemin?>pages/doc/rss">S'abonner aux flux RSS</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'bug',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/todo/add?bug&amp;doc'">
-            <a                     href="<?=$chemin?>pages/todo/add?bug&amp;doc">Rapporter un bug</a>
-          </div>
+  <?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //                                                                                                                                     //
+  //                                                            FIN DES MENUS                                                            //
+  //                                                                                                                                     //
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
 
-        </div>
-      </nav>
-
-      <?php } else if($header_menu == 'communaute' && $header_submenu == 'membres') { ?>
-      <nav>
-        <div class="menu_side">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'portail',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nobleme/index'">
-            <a                     href="<?=$chemin?>pages/nobleme/index">Portail des membres</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'liste',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nobleme/membres'">
-            <a                     href="<?=$chemin?>pages/nobleme/membres">Liste des membres</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'anniversaires',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nobleme/anniversaires'">
-            <a                     href="<?=$chemin?>pages/nobleme/anniversaires">Anniversaires</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'pilori',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nobleme/pilori'">
-            <a                     href="<?=$chemin?>pages/nobleme/pilori">Pilori des bannis</a>
-          </div>
-        </div>
-      </nav>
-
-      <?php } else if($header_menu == 'lire' && $header_submenu == 'nbrpg') { ?>
-      <nav>
-        <div class="menu_side">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'index',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/index'">
-            <a                     href="<?=$chemin?>pages/nbrpg/index">Qu'est-ce que le NBRPG ?</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'liste_persos',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/joueurs_actifs'">
-            <a                     href="<?=$chemin?>pages/nbrpg/joueurs_actifs">Liste des personnages</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'archive',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/archive'">
-            <a                     href="<?=$chemin?>pages/nbrpg/archive">Archive des sessions</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'caverne',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/caverne'">
-            <a                     href="<?=$chemin?>pages/nbrpg/caverne">La caverne de Liodain</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'historique',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/caverne?historique'">
-            <a                     href="<?=$chemin?>pages/nbrpg/caverne?historique">Caverne : Historique</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'caverne_random',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/caverne?random'">
-            <a                     href="<?=$chemin?>pages/nbrpg/caverne?random">Caverne : Page au hasard</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'client',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/client'">
-            <a                     href="<?=$chemin?>pages/nbrpg/client">Client : Jouer au NBRPG</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'observer',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/client_spectateur'">
-            <a                     href="<?=$chemin?>pages/nbrpg/client_spectateur">Observer le jeu en cours</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'fiche_perso',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/fiche_perso'">
-            <a                     href="<?=$chemin?>pages/nbrpg/fiche_perso">Ma fiche de personnage</a>
-          </div>
-        </div>
-      </nav>
-
-      <?php } else if($header_menu == 'lire' && $header_submenu == 'miscellanees') { ?>
-      <nav>
-        <div class="menu_side">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'paroles',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/quotes'">
-            <a                     href="<?=$chemin?>pages/irc/quotes">Paroles de NoBlemeux</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'hasard',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/quotes?random'">
-            <a                     href="<?=$chemin?>pages/irc/quotes?random">Citation au hasard</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'stats',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/quotes_stats'">
-            <a                     href="<?=$chemin?>pages/irc/quotes_stats">Statistiques des citations</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'proposer',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/quote_add'">
-            <a                     href="<?=$chemin?>pages/irc/quote_add">Proposer une citation</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'rss',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/quotes_rss'">
-            <a                     href="<?=$chemin?>pages/irc/quotes_rss">Flux RSS des citations</a>
-          </div>
-        </div>
-      </nav>
-
-      <?php } else if($header_menu == 'discuter' && $header_submenu == 'irc') { ?>
-      <nav>
-        <div class="menu_side">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'index',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/index'">
-            <a                     href="<?=$chemin?>pages/irc/index">Qu'est-ce que IRC ?</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'clic',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/web'">
-            <a                     href="<?=$chemin?>pages/irc/web">Discuter en un clic</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'traditions',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/traditions'">
-            <a                     href="<?=$chemin?>pages/irc/traditions">Coutumes et traditions</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'canaux',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/canaux'">
-            <a                     href="<?=$chemin?>pages/irc/canaux">Liste des canaux</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'services',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/services'">
-            <a                     href="<?=$chemin?>pages/irc/services">Commandes et services</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'akundo',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/akundo'">
-            <a                     href="<?=$chemin?>pages/irc/akundo">Utilisation d'Akundo</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'client',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/client'">
-            <a                     href="<?=$chemin?>pages/irc/client">Installer un client IRC</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'bouncer',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/bouncer'">
-            <a                     href="<?=$chemin?>pages/irc/bouncer">Utiliser un bouncer</a>
-          </div>
-        </div>
-      </nav>
-
-      <?php } else if($header_menu == 'admin' && $header_submenu == 'mod' && getsysop()) { ?>
-      <nav>
-        <div class="menu_side">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'modlogs',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nobleme/activite?mod'">
-            <a                     href="<?=$chemin?>pages/nobleme/activite?mod">Logs de modération</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'bannir',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/sysop/ban'">
-            <a                     href="<?=$chemin?>pages/sysop/ban">Bannir un utilisateur</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'profil',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/sysop/profil'">
-            <a                     href="<?=$chemin?>pages/sysop/profil">Modifier un profil</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'pass',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/sysop/pass'">
-            <a                     href="<?=$chemin?>pages/sysop/pass">Éditer un mot de passe</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'irl_add',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/sysop/irl?add'">
-            <a                     href="<?=$chemin?>pages/sysop/irl?add">Créer une nouvelle IRL</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'irl_edit',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nobleme/irls?edit'">
-            <a                     href="<?=$chemin?>pages/nobleme/irls?edit">Modifier une IRL</a>
-          </div>
-          <?php if(getadmin()) { ?>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'irl_delete',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nobleme/irls?delete'">
-            <a                     href="<?=$chemin?>pages/nobleme/irls?delete">Supprimer une IRL</a>
-          </div>
-          <?php } ?>
-        </div>
-      </nav>
-
-      <?php } else if($header_menu == 'admin' && $header_submenu == 'admin' && getadmin()) { ?>
-      <nav>
-        <div class="menu_side">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'stats_dop',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/admin/stats_doppelgangers'">
-            <a                     href="<?=$chemin?>pages/admin/stats_doppelgangers">Stats : Doppelgängers</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'stats_views',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/admin/stats_pageviews'">
-            <a                     href="<?=$chemin?>pages/admin/stats_pageviews">Stats : Visites</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'stats_views_evo',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/admin/stats_pageviews_evolution'">
-            <a                     href="<?=$chemin?>pages/admin/stats_pageviews_evolution">Stats : Évolution visites</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'stats_refs',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/admin/stats_referers'">
-            <a                     href="<?=$chemin?>pages/admin/stats_referers">Stats : Referers</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'stats_refs_evo',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/admin/stats_referers_evolution'">
-            <a                     href="<?=$chemin?>pages/admin/stats_referers_evolution">Stats : Évolution referers</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'devblog_add',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/devblog/admin?add'">
-            <a                     href="<?=$chemin?>pages/devblog/admin?add">Devblog : Nouveau</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'todo_add',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/todo/admin?add'">
-            <a                     href="<?=$chemin?>pages/todo/admin?add">Tâches : Nouveau ticket</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'todo_valider',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/todo/index?admin'">
-            <a                     href="<?=$chemin?>pages/todo/index?admin">Tâches : En attente</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'quote_add',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/quote_add?admin'">
-            <a                     href="<?=$chemin?>pages/irc/quote_add?admin">Miscellanées : Nouvelle</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'quote_valider',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/irc/quotes?admin'">
-            <a                     href="<?=$chemin?>pages/irc/quotes?admin">Miscellanées : En attente</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'nbrpg_client',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/admin'">
-            <a                     href="<?=$chemin?>pages/nbrpg/admin">NBRPG : Client admin</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'nbrpg_permissions',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/admin_permissions'">
-            <a                     href="<?=$chemin?>pages/nbrpg/admin_permissions">NBRPG : Permissions</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'nbrpg_monstres',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/admin_monstres'">
-            <a                     href="<?=$chemin?>pages/nbrpg/admin_monstres">NBRPG : Monstres</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'nbrpg_objets',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/admin_objets'">
-            <a                     href="<?=$chemin?>pages/nbrpg/admin_objets">NBRPG : Objets</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'nbrpg_effets',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/nbrpg/admin_effets'">
-            <a                     href="<?=$chemin?>pages/nbrpg/admin_effets">NBRPG : Effets</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'flashanniv',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/dev/flashanniv'">
-            <a                     href="<?=$chemin?>pages/dev/flashanniv">Gestion : Flashs anniv.</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'nompages',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/dev/pages'">
-            <a                     href="<?=$chemin?>pages/dev/pages">Gestion : Nom des pages</a>
-          </div>
-        </div>
-      </nav>
-
-      <?php } else if($header_menu == 'admin' && $header_submenu == 'dev' && getadmin()) { ?>
-      <nav>
-        <div class="menu_side">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'maj',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/dev/maj'">
-            <a                     href="<?=$chemin?>pages/dev/maj">Mise à jour : Checklist</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'sql',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/dev/sql'">
-            <a                     href="<?=$chemin?>pages/dev/sql">Mise à jour : Requêtes</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'ircbot',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/dev/ircbot'">
-            <a                     href="<?=$chemin?>pages/dev/ircbot">Gestion du bot IRC</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'formattage',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/dev/formattage'">
-            <a                     href="<?=$chemin?>pages/dev/formattage">Formattage du code</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'css',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/dev/css'">
-            <a                     href="<?=$chemin?>pages/dev/css">Référence du CSS</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'fonctions',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/dev/fonctions'">
-            <a                     href="<?=$chemin?>pages/dev/fonctions">Liste des fonctions</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'charte',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/dev/images'">
-            <a                     href="<?=$chemin?>pages/dev/images">Charte graphique</a>
-          </div>
-        </div>
-      </nav>
-
-      <?php } else if($header_menu == 'compte' && $header_submenu == 'messages') { ?>
-      <nav>
-        <div class="menu_side">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'ecrire',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/user/pm'">
-            <a                     href="<?=$chemin?>pages/user/pm">Écrire un message</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'inbox',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/user/notifications'">
-            <a                     href="<?=$chemin?>pages/user/notifications">Messages reçus</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'envoyes',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/user/notifications?envoyes'">
-            <a                     href="<?=$chemin?>pages/user/notifications?envoyes">Messages envoyés</a>
-          </div>
-        </div>
-      </nav>
-
-      <?php } else if($header_menu == 'compte' && $header_submenu == 'reglages') { ?>
-      <nav>
-        <div class="menu_side">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'reglages',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/user/reglages'">
-            <a                     href="<?=$chemin?>pages/user/reglages">Réglages généraux</a>
-          </div>
-          <hr class="menu_side_hr">
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'email',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/user/email'">
-            <a                     href="<?=$chemin?>pages/user/email">Changer d'e-mail</a>
-          </div>
-          <div class="menu_side_item<?=menu_css($header_sidemenu,'pass',2)?>"
-               onClick="location.href = '<?=$chemin?>pages/user/pass'">
-            <a                     href="<?=$chemin?>pages/user/pass">Changer de mot de passe</a>
-          </div>
-        </div>
-      </nav>
-
-      <?php } ?>
-      <?php } ?>
-
-      <?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-      //                                                                                                                                 //
-      //                                                          FIN DES MENUS                                                          //
-      //                                                                                                                                 //
-      ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
-
-
-      <div class="body_contenu">
+    <div class="flex_element contenu_page">
 
       <?php } if($alerte_meta != "") { ?>
 

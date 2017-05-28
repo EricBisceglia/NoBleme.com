@@ -20,20 +20,18 @@ $page_views = isset($pageviews) ? "Cette page a été consultée ".$pageviews." 
 
       <?php if(!isset($_GET["popup"]) && !isset($_GET["popout"]) && !isset($_GET["dynamique"])) { ?>
 
-      <div class="footer">
-        <br>
+      <footer>
         <?php if(loggedin() && getadmin($_SESSION['user'])) { ?>
-        <a class="footer_lien" href="<?=$chemin?>pages/admin/stats_pageviews"><?=$page_views?></a><br>
+        <a href="<?=$chemin?>pages/admin/stats_pageviews"><?=$page_views?></a><br>
         <?php } ?>
-        <a class="footer_lien" href="<?=$chemin?>pages/todo/roadmap"><?=$version?></a><br>
-        <a class="footer_lien" href="<?=$chemin?>pages/user/user?id=1">Développé et administré par <span class="gras">Bad</span></a><br>
-        <a class="footer_lien" href="<?=$chemin?>pages/doc/nobleme">NoBleme.com: 2005 - <?=date('Y')?></a><br>
-        <br>
-      </div>
-      </div>
+        <a href="<?=$chemin?>pages/todo/roadmap"><?=$version?></a><br>
+        <a href="<?=$chemin?>pages/user/user?id=1">Développé et administré par <span class="gras">Bad</span></a><br>
+        <a href="<?=$chemin?>pages/doc/nobleme">NoBleme.com: 2005 - <?=date('Y')?></a>
+      </footer>
     </div>
+  </div>
 
-    <?php } ?>
+  <?php } ?>
 
   </body>
 </html>
