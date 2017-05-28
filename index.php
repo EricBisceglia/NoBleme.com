@@ -6,8 +6,8 @@
 include './inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = '';
-$header_submenu   = 'accueil';
+$header_menu      = 'NoBleme';
+$header_submenu   = 'Accueil';
 
 // Identification
 $page_nom = "index";
@@ -55,7 +55,7 @@ if(date('d-m') == '19-03')
 
       <br>
 
-      <?php if($_SESSION['lang'] == 'FR') { ?>
+      <?php if(!isset($_SESSION['lang']) || $_SESSION['lang'] == 'FR') { ?>
 
       <div class="texte">
 

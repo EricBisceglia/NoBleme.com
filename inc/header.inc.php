@@ -364,12 +364,31 @@ else
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Remise à zéro des variables de menu si jamais elles sont vides
 
-if(!isset($header_menu) || $header_menu == 'nobleme')
-  $header_menu = '';
-if(!isset($header_submenu))
-  $header_submenu = '';
+if(!isset($header_menu) || $header_menu == '')
+  $header_menu = 'NoBleme';
 if(!isset($header_sidemenu))
   $header_sidemenu = '';
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction renvoyant le CSS à utiliser pour un élément du header selon s'il est sélectionné ou non
+//
+// Paramètres :
+// $element : l'élément dont on veut renvoyer la classe
+// $actuel : l'élément actuellement sélectionné
+// $menu : le menu dont l'élément fait partie
+//
+// Exemple : header_class('NoBleme','Accueil','top');
+
+function header_class($element, $actuel, $menu)
+{
+  if($menu == 'top')
+    return (strtolower($element) == strtolower($actuel)) ? 'header_topmenu_titre header_topmenu_selected' : 'header_topmenu_titre';
+  else if($menu == 'side')
+    return (strtolower($element) == strtolower($actuel)) ? 'header_sidemenu_item header_sidemenu_selected' : 'header_sidemenu_item';
+}
 
 
 
@@ -407,13 +426,22 @@ if(!isset($header_sidemenu))
     <div class="header_topmenu">
       <div id="header_titres" class="header_topmenu_zone">
 
-        <div class="header_topmenu_titre header_topmenu_selected"
+        <div class="<?=header_class('NoBleme',$header_menu,'top')?>"
              onclick="window.location.href('<?=$chemin?>index');">
                                    <a href="<?=$chemin?>index">NOBLEME</a>
         </div>
-        <div class="header_topmenu_titre"><a href="<?=$chemin?>index">DISCUTER</a></div>
-        <div class="header_topmenu_titre"><a href="<?=$chemin?>index">JOUER</a></div>
-        <div class="header_topmenu_titre">LIRE</div>
+        <div class="<?=header_class('Discuter',$header_menu,'top')?>"
+             onclick="window.location.href('<?=$chemin?>pages/forum/index');">
+                                   <a href="<?=$chemin?>pages/forum/index">DISCUTER</a>
+        </div>
+        <div class="<?=header_class('Jouer',$header_menu,'top')?>"
+             onclick="window.location.href('<?=$chemin?>pages/nbrpg/index');">
+                                   <a href="<?=$chemin?>pages/nbrpg/index">JOUER</a>
+        </div>
+        <div class="<?=header_class('Lire',$header_menu,'top')?>"
+             onclick="window.location.href('<?=$chemin?>pages/irc/quotes');">
+                                   <a href="<?=$chemin?>pages/irc/quotes">LIRE</a>
+        </div>
 
       </div>
       <div class="header_topmenu_zone header_topmenu_flag">
