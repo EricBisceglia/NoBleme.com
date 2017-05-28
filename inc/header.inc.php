@@ -416,7 +416,7 @@ if(!isset($header_sidemenu))
         <div class="header_topmenu_titre">LIRE</div>
 
       </div>
-      <div class="header_topmenu_zone">
+      <div class="header_topmenu_zone header_topmenu_flag">
         <img src="<?=$chemin?>img/icones/lang_en.png" alt="English">
       </div>
     </div>

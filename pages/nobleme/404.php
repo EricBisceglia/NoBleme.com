@@ -35,40 +35,31 @@ $cette_page_est_404 = '';
     <br>
     <br>
     <br>
-    <br>
+
     <div class="indiv align_center">
       <a class="blank" href="<?=$chemin?>">
         <img src="<?=$chemin?>img/logos/404.png" alt="Erreur 404 : Perdus dans l'espace">
       </a>
     </div>
+
+    <br>
     <br>
     <br>
     <br>
     <br>
     <br>
 
-    <div class="margin_auto bigsize">
+    <div class="margin_auto" style="width:1000px">
       <table class="indiv">
         <tr>
-          <td class="img404">
+          <td class="img404 noborder">
             <img class="img404gauche" src="<?=$chemin?>img/divers/404_gauche.png" alt=" ">
           </td>
-          <td>
-            <script type="text/javascript">
-              document.write('<textarea class="indiv texte404" rows="10" id="text404" readonly></textarea>');
-              // Cette ruse est pour que la balise noscript qui suive soit validée WC3 :>
+          <td class="noborder">
+            <textarea class="indiv texte404" rows="10" id="text404" readonly></textarea>
             </script>
-            <noscript>
-              <textarea class="indiv texte404" rows="10" id="text404" readonly>
-
-
-
-
-
-Erreur 404 : 'Zig' introuvable</textarea>
-            </noscript>
           </td>
-          <td class="img404">
+          <td class="img404 noborder">
             <img class="img404droite" src="<?=$chemin?>img/divers/404_droite.gif" alt=" ">
           </td>
         </tr>

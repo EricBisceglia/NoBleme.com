@@ -1,7 +1,0 @@
-/************************************************************** activite.php *************************************************************/
-td.activite_colonne    { width:20px;                    }
-select.activite_limit  { width:84px;                    }
-select.activite_action { font-size:1.10em; width:220px; }
-
-/************************************************************** irlstats.php *************************************************************/
-div.irlstats_frequence { width: 250px; }
