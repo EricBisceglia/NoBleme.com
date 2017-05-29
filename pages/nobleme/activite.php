@@ -6,9 +6,8 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = (!isset($_GET['mod'])) ? '' : 'admin';
-$header_submenu   = (!isset($_GET['mod'])) ? 'activite' : 'mod';
-$header_sidemenu  = (!isset($_GET['mod'])) ? '' : 'modlogs';
+$header_menu      = (!isset($_GET['mod'])) ? 'NoBleme' : 'Admin';
+$header_sidemenu  = (!isset($_GET['mod'])) ? 'Activite' : 'Modlogs';
 
 // Titre et description
 $page_titre = "Activité récente";

@@ -6,9 +6,8 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = 'lire';
-$header_submenu   = 'nbrpg';
-$header_sidemenu  = 'index';
+$header_menu      = 'Jouer';
+$header_sidemenu  = 'NBRPG';
 
 // Titre et description
 $page_titre = "NoBlemeRPG";

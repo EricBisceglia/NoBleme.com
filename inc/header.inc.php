@@ -46,6 +46,9 @@ if(isset($_GET['logout']))
   header("location: ".substr($url_complete,0,-7));
 }
 
+// Détermination du langage utilisé
+$lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
+
 
 
 
@@ -419,9 +422,12 @@ function header_class($element, $actuel, $menu)
 
 
 
-<?php ######################################################### MENU PRINCIPAL ######################################################### ?>
-
-    <?php if(!isset($_GET["popup"]) && !isset($_GET["popout"])) { ?>
+<?php ####################################################### MENU PRINCIPAL ##############################################################
+// Préparation des traductions des titres
+$menu['discuter'] = ($lang == 'FR') ? 'DISCUTER'  : 'TALK';
+$menu['jouer']    = ($lang == 'FR') ? 'JOUER'     : 'PLAY';
+$menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
+/* ########################################################################## */ if(!isset($_GET["popup"]) && !isset($_GET["popout"])) { ?>
 
     <div class="header_topmenu">
       <div id="header_titres" class="header_topmenu_zone">
@@ -431,22 +437,33 @@ function header_class($element, $actuel, $menu)
                                    <a href="<?=$chemin?>index">NOBLEME</a>
         </div>
         <div class="<?=header_class('Discuter',$header_menu,'top')?>"
-             onclick="window.location.href('<?=$chemin?>pages/forum/index');">
-                                   <a href="<?=$chemin?>pages/forum/index">DISCUTER</a>
+             onclick="window.location.href('<?=$chemin?>pages/irc/index');">
+                                   <a href="<?=$chemin?>pages/irc/index"><?=$menu['discuter']?></a>
         </div>
+        <?php if($lang == 'FR') { ?>
         <div class="<?=header_class('Jouer',$header_menu,'top')?>"
              onclick="window.location.href('<?=$chemin?>pages/nbrpg/index');">
-                                   <a href="<?=$chemin?>pages/nbrpg/index">JOUER</a>
+                                   <a href="<?=$chemin?>pages/nbrpg/index"><?=$menu['jouer']?></a>
         </div>
         <div class="<?=header_class('Lire',$header_menu,'top')?>"
              onclick="window.location.href('<?=$chemin?>pages/irc/quotes');">
-                                   <a href="<?=$chemin?>pages/irc/quotes">LIRE</a>
+                                   <a href="<?=$chemin?>pages/irc/quotes"><?=$menu['lire']?></a>
         </div>
-
+        <?php } if(loggedin() && getsysop($_SESSION['user'])) { ?>
+        <div class="<?=header_class('Admin',$header_menu,'top')?>"
+             onclick="window.location.href('<?=$chemin?>pages/nobleme/activite?mod');">
+                                   <a href="<?=$chemin?>pages/nobleme/activite?mod">ADMIN</a>
+        </div>
+        <?php } if(loggedin() && getadmin($_SESSION['user'])) { ?>
+        <div class="<?=header_class('Dev',$header_menu,'top')?>"
+             onclick="window.location.href('<?=$chemin?>pages/dev/formattage');">
+                                   <a href="<?=$chemin?>pages/dev/formattage">DEV</a>
+        </div>
+        <?php } ?>
       </div>
       <div class="header_topmenu_zone header_topmenu_flag">
         <a href="<?=$url_langage?>">
-          <?php if($_SESSION['lang'] == 'FR') { ?>
+          <?php if($lang == 'FR') { ?>
           <img class="header_topmenu_flagimg" src="<?=$chemin?>img/icones/lang_en.png" alt="EN">
           <?php } else { ?>
           <img class="header_topmenu_flagimg" src="<?=$chemin?>img/icones/lang_fr.png" alt="FR">
@@ -458,32 +475,39 @@ function header_class($element, $actuel, $menu)
 
 
 
-<?php ######################################################## GESTION DU LOGIN ######################################################## ?>
+<?php ###################################################### GESTION DU LOGIN #############################################################
+// Préparation des traductions des phrases liées au compte
+$getpseudo              = getpseudo();
+$submenu['message']     = ($lang == 'FR') ? "$getpseudo, vous avez reçu un nouveau message, cliquez ici pour le lire !" : "$getpseudo, you have recieved a new message, click here to read it!";
+$submenu['connecté']    = ($lang == 'FR') ? "Vous êtes connecté en tant que $getpseudo. Cliquez ici pour modifier votre profil et/ou gérer votre compte" : "You are logged in as $getpseudo. Click here to edit your profile and/or manage your account.";
+$submenu['deconnexion'] = ($lang == 'FR') ? "Déconnexion" : "Log out";
+$submenu['connexion']   = ($lang == 'FR') ? "Vous n'êtes pas connecté: Cliquez ici pour vous identifier ou vous enregistrer" : "You are not logged in: Click here to login or register.";
+######################################################################################################################################## ?>
 
     <div class="menu_sub">
       <?php if(loggedin()) {
             if($notifications) { ?>
       <div class="header_topmenu_zone">
         <a class="menu_sub_lien nouveaux_messages" href="<?=$chemin?>pages/user/notifications">
-          <?=getpseudo()?>, vous avez reçu un nouveau message, cliquez ici pour le lire !
+          <?=$submenu['message']?>
         </a>
       </div>
       <?php } else { ?>
       <div class="header_topmenu_zone">
         <a class="menu_sub_lien" href="<?=$chemin?>pages/user/notifications">
-          Vous êtes connecté en tant que <?=getpseudo()?>. Cliquez ici pour modifier votre profil et/ou gérer votre compte.
+          <?=$submenu['connecté']?>
         </a>
       </div>
       <?php } ?>
       <div class="header_topmenu_zone">
         <a class="menu_sub_lien" href="<?=$url_logout?>">
-          Déconnexion
+          <?=$submenu['deconnexion']?>
         </a>
       </div>
       <?php } else { ?>
       <div class="header_topmenu_zone">
         <a class="menu_sub_lien" href="<?=$chemin?>pages/user/login">
-          Vous n'êtes pas connecté : Cliquez ici pour vous identifier ou vous enregistrer
+          <?=$submenu['connexion']?>
         </a>
       </div>
       <?php } ?>
@@ -492,30 +516,138 @@ function header_class($element, $actuel, $menu)
 
 
 
-<?php ########################################################## MENU LATÉRAL ########################################################## ?>
+<?php ######################################################## MENU LATÉRAL ###############################################################
+// Préparation des traductions
+$sidemenu['afficher'] = ($lang == 'FR') ? 'Afficher le menu latéral'  : 'Show the side menu';
+$sidemenu['masquer']  = ($lang == 'FR') ? 'Masquer le menu latéral'   : 'Hide the side menu';
+######################################################################################################################################## ?>
 
     <div class="containermenu">
       <div class="header_side_nomenu" id="header_nomenu" onclick="document.getElementById('header_sidemenu').style.display = 'flex'; document.getElementById('header_nomenu').style.display = 'none';">
-        Afficher le menu latéral
+        <?=$sidemenu['afficher']?>
       </div>
       <nav id="header_sidemenu" class="header_sidemenu_mobile">
         <div class="header_sidemenu">
           <div>
             <div class="header_sidemenu_item header_sidemenu_desktop" onclick="document.getElementById('header_nomenu').style.display = 'flex'; document.getElementById('header_sidemenu').style.display = 'none';">
-              <a>Masquer le menu latéral</a>
+              <a><?=$sidemenu['masquer']?></a>
             </div>
             <hr class="header_sidemenu_hr header_sidemenu_desktop">
-            <div class="header_sidemenu_item"
+
+
+
+
+<?php ################################################### MENU LATÉRAL : NOBLEME ##########################################################
+// Préparation des traductions des titres du menu
+$sidemenu['nb_accueil']   = ($lang == 'FR') ? "Page d'accueil"      : "Home page";
+$sidemenu['nb_membres']   = ($lang == 'FR') ? "Liste des membres"   : "User list";
+/* ################################################################################################## */ if($header_menu == 'NoBleme') { ?>
+
+            <div class="<?=header_class('Accueil',$header_sidemenu,'side')?>"
                  onclick="window.location.href('<?=$chemin?>index');">
-                                       <a href="<?=$chemin?>index">Page d'accueil</a>
+                                       <a href="<?=$chemin?>index"><?=$sidemenu['nb_accueil']?></a>
             </div>
-            <div class="header_sidemenu_item"><a href="<?=$chemin?>index">Élément du menu latéral</a></div>
-            <div class="header_sidemenu_item"><a href="<?=$chemin?>index">Élément du menu latéral</a></div>
             <hr class="header_sidemenu_hr">
-            <div class="header_sidemenu_titre">Titre du menu latéral</div>
-            <div class="header_sidemenu_item">Élément du menu latéral</div>
-            <div class="header_sidemenu_item header_sidemenu_selected">Élément du menu latéral</div>
-            <div class="header_sidemenu_item">Élément du menu latéral</div>
+            <div class="<?=header_class('Liste_membres',$header_sidemenu,'side')?>"
+                 onclick="window.location.href('<?=$chemin?>pages/nobleme/membres');">
+                                       <a href="<?=$chemin?>pages/nobleme/membres"><?=$sidemenu['nb_membres']?></a>
+            </div>
+
+
+
+
+<?php } ################################################ MENU LATÉRAL : DISCUTER ##########################################################
+// Préparation des traductions des titres du menu
+$sidemenu['bla_irc']      = ($lang == 'FR') ? "Serveur de chat IRC" : "IRC chat server";
+$sidemenu['bla_irc_what'] = ($lang == 'FR') ? "Qu'est-ce que IRC ?" : "What is IRC?";
+/* ################################################################################################# */ if($header_menu == 'Discuter') { ?>
+
+            <div class="header_sidemenu_titre">
+              <?=$sidemenu['bla_irc']?>
+            </div>
+            <div class="<?=header_class('IRC',$header_sidemenu,'side')?>"
+                 onclick="window.location.href('<?=$chemin?>pages/irc/index');">
+                                       <a href="<?=$chemin?>pages/irc/index"><?=$sidemenu['bla_irc_what']?></a>
+            </div>
+
+
+
+
+<?php } ################################################## MENU LATÉRAL : JOUER ###########################################################
+// Pas de traductions de titres pour le moment, ça viendra plus tard
+/* #################################################################################################### */ if($header_menu == 'Jouer') { ?>
+
+            <?php if($lang == 'FR') { ?>
+            <div class="header_sidemenu_titre">
+              NoBlemeRPG
+            </div>
+            <div class="<?=header_class('NBRPG',$header_sidemenu,'side')?>"
+                 onclick="window.location.href('<?=$chemin?>pages/nbrpg/index');">
+                                       <a href="<?=$chemin?>pages/nbrpg/index">Qu'est-ce que le NBRPG ?</a>
+            </div>
+
+            <?php } else { ?>
+            <div class="header_sidemenu_titre">
+              This section of the
+            </div>
+            <div class="header_sidemenu_titre">
+              website isn't available
+            </div>
+            <div class="header_sidemenu_titre">
+              in english yet, sorry :(
+            </div>
+            <?php } ?>
+
+
+
+
+<?php } ################################################## MENU LATÉRAL : LIRE ############################################################
+// Pas de traductions de titres pour le moment, ça viendra plus tard
+/* ##################################################################################################### */ if($header_menu == 'Lire') { ?>
+
+            <?php if($lang == 'FR') { ?>
+            <div class="header_sidemenu_titre">
+              Miscellanées
+            </div>
+            <div class="<?=header_class('Misc',$header_sidemenu,'side')?>"
+                 onclick="window.location.href('<?=$chemin?>pages/irc/quotes');">
+                                       <a href="<?=$chemin?>pages/irc/quotes">Petites citations amusantes</a>
+            </div>
+
+            <?php } else { ?>
+            <div class="header_sidemenu_titre">
+              This section of the
+            </div>
+            <div class="header_sidemenu_titre">
+              website isn't available
+            </div>
+            <div class="header_sidemenu_titre">
+              in english yet, sorry :(
+            </div>
+            <?php } ?>
+
+
+
+
+<?php } /* ############################################## MENU LATÉRAL : ADMIN ######################## */ if($header_menu == 'Admin') { ?>
+
+            <div class="<?=header_class('Modlogs',$header_sidemenu,'side')?>"
+                 onclick="window.location.href('<?=$chemin?>pages/nobleme/activite?mod');">
+                                       <a href="<?=$chemin?>pages/nobleme/activite?mod">Logs de modération</a>
+            </div>
+
+
+
+
+<?php } /* ################################################ MENU LATÉRAL : DEV ########################## */ if($header_menu == 'Dev') { ?>
+
+            <div class="<?=header_class('Formattage',$header_sidemenu,'side')?>"
+                 onclick="window.location.href('<?=$chemin?>pages/nobleme/activite?mod');">
+                                       <a href="<?=$chemin?>pages/nobleme/activite?mod">Snippets de code</a>
+            </div>
+
+          <?php } ?>
+
           </div>
         </div>
       </nav>

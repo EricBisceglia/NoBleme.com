@@ -7,7 +7,7 @@ include './inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
 $header_menu      = 'NoBleme';
-$header_submenu   = 'Accueil';
+$header_sidemenu  = 'Accueil';
 
 // Identification
 $page_nom = "index";

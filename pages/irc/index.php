@@ -6,9 +6,8 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = 'discuter';
-$header_submenu   = 'irc';
-$header_sidemenu  = 'index';
+$header_menu      = 'Discuter';
+$header_sidemenu  = 'IRC';
 
 // Titre et description
 $page_titre = "IRC #NoBleme";

@@ -9,9 +9,8 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 adminonly();
 
 // Menus du header
-$header_menu      = 'admin';
-$header_submenu   = 'dev';
-$header_sidemenu  = 'formattage';
+$header_menu      = 'Dev';
+$header_sidemenu  = 'Formattage';
 
 // Titre
 $page_titre = "Dev : Formattage";

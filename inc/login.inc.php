@@ -230,7 +230,7 @@ function getpseudo($id=NULL)
 // Renvoie 1 si l'user est modérateur de la section, 0 s'il ne l'est pas
 //
 // Exemple d'utilisation:
-// getsysop('irl','1');
+// getmod('irl','1');
 
 function getmod($section,$user=NULL)
 {

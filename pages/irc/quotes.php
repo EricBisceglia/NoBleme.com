@@ -6,10 +6,9 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = (!isset($_GET['admin'])) ? 'lire' : 'admin';
-$header_submenu   = (!isset($_GET['admin'])) ? 'miscellanees' : 'admin';
-$header_sidemenu  = (!isset($_GET['admin'])) ? 'paroles' : 'quote_valider';
-$header_sidemenu  = (!isset($_GET['random'])) ? $header_sidemenu : 'hasard';
+$header_menu      = (!isset($_GET['admin'])) ? 'Lire' : 'Admin';
+$header_sidemenu  = (!isset($_GET['admin'])) ? 'Misc' : 'Misc_valider';
+$header_sidemenu  = (!isset($_GET['random'])) ? $header_sidemenu : 'Misc_hasard';
 
 // Titre et description
 $page_titre = "Miscellanées";
