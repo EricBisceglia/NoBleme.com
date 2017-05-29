@@ -522,6 +522,25 @@ $sidemenu['afficher'] = ($lang == 'FR') ? 'Afficher le menu latéral'  : 'Show t
 $sidemenu['masquer']  = ($lang == 'FR') ? 'Masquer le menu latéral'   : 'Hide the side menu';
 ######################################################################################################################################## ?>
 
+    <script>
+    // Faire disparaitre la suggestion de menu latéral quand on scrolle
+    window.addEventListener('scroll', function() {
+
+      // On applique ceci seulement si le menu est caché
+      if(window.getComputedStyle(document.getElementById('header_sidemenu')).display == 'none')
+      {
+        // On détecte où en est le scrolling
+        var currentscroll = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
+
+        // Si on est en haut, on affiche, sinon, on masque
+        if(!currentscroll)
+          document.getElementById('header_nomenu').style.display = 'inline';
+        else
+          document.getElementById('header_nomenu').style.display = 'none';
+      }
+    }, true);
+    </script>
+
     <div class="containermenu">
       <div class="header_side_nomenu" id="header_nomenu" onclick="document.getElementById('header_sidemenu').style.display = 'flex'; document.getElementById('header_nomenu').style.display = 'none';">
         <?=$sidemenu['afficher']?>

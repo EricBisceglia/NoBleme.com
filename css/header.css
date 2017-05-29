@@ -42,7 +42,7 @@
                                                           width: 200px; height: 100%; font-weight: bold; border-right: 1px solid #78A1BC  ;
                                                           padding-top: 7px; min-height: 93vh; font-family: 'NoBleme-sidebar';             }
                             .header_sidemenu_desktop    { display: none;                                                                  }
-                            .header_side_nomenu         { display: none;                                                                  }
+                            .header_side_nomenu         { display: none; color: #FFFFFF                                                   }
                             .header_sidemenu_item       { cursor: pointer; padding: 5px 8px; color: #37536B; font-size: 13px;             }
                             .header_sidemenu_titre      { padding: 5px 10px; margin-left: 5px; margin-right: 5px                          ;
                                                           font-size: 13px; margin-bottom: 1px; color:#000000;                           } }
