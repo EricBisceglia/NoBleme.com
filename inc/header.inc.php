@@ -661,8 +661,8 @@ $sidemenu['bla_irc_what'] = ($lang == 'FR') ? "Qu'est-ce que IRC ?" : "What is I
 <?php } /* ################################################ MENU LATÉRAL : DEV ########################## */ if($header_menu == 'Dev') { ?>
 
             <div class="<?=header_class('Formattage',$header_sidemenu,'side')?>"
-                 onclick="window.location.href('<?=$chemin?>pages/nobleme/activite?mod');">
-                                       <a href="<?=$chemin?>pages/nobleme/activite?mod">Snippets de code</a>
+                 onclick="window.location.href('<?=$chemin?>pages/dev/formattage');">
+                                       <a href="<?=$chemin?>pages/dev/formattage">Snippets de code</a>
             </div>
 
           <?php } ?>
