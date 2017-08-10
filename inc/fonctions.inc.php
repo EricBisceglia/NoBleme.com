@@ -24,7 +24,7 @@ function bfdecho($stuff)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction forçant nl2br() à renvoyer des <br> au lieu de <br /> pour respecter le doctype
+// Fonction forçant nl2br() à renvoyer des <br> au lieu de <br /> pour faire chier Exirel
 //
 // Utilisation: nl2br_fixed($string);
 
@@ -45,6 +45,7 @@ function br2ln($contenu)
 {
   $contenu = str_replace('<br>',"\n",$contenu);
   $contenu = str_replace('<br/>',"\n",$contenu);
+  $contenu = str_replace('<br />',"\n",$contenu);
   $contenu = str_replace('</br>',"\n",$contenu);
   return $contenu;
 }
@@ -161,7 +162,7 @@ function envoyer_notif($en_destinataire,$en_titre,$en_contenu,$sender=NULL,$sile
 function surnom_mignon()
 {
   // Liste de mots (les adjectif1 doivent prendre un espace s'ils ne se collent pas au nom)
-  $adjectif1 = array("Petit ", "Gros ", "Sale ", "Grand ", "Bel ", "Doux ", "L'", "Un ", "Cet ", "Ce ", "Premier ", "Gentil ", "Méchant ", "Bout d'", "Le ", "Capitaine ", "Quel ", "Saint ", "Chétif ", "Président ", "Général ", "Dernier ", "L'unique ", "Ex ", "Archi ", "Méga ", "Micro ", "Fort ", "Demi ", "Cadavre de ", "Âme d'", "Fils du ", "Futur ", "Second ");
+  $adjectif1 = array("Petit ", "Gros ", "Sale ", "Grand ", "Bel ", "Doux ", "L'", "Un ", "Cet ", "Ce ", "Premier ", "Gentil ", "Méchant ", "Bout d'", "Le ", "Capitaine ", "Quel ", "Saint ", "Chétif ", "Président ", "Général ", "Dernier ", "L'unique ", "Ex ", "Archi ", "Méga ", "Micro ", "Fort ", "Demi ", "Cadavre de ", "Âme d'", "Fils du ", "Futur ", "Second ", "Meta-");
 
   $nom = array("ours", "oiseau", "chat", "chien", "canard", "pigeon", "haricot", "arbre", "rongeur", "pot de miel", "indien", "gazon", "paysan", "crouton", "mollusque", "bouc", "éléphant", "sanglier", "journal", "singe", "cœur", "félin", "", "morse", "phoque", "miquet", "kévin", "monstre", "meuble", "frelon", "robot", "slip", "cousin", "frère", "internet", "type", "copain", "raton", "mouton", "VIP");
 

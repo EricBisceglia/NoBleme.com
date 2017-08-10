@@ -73,6 +73,9 @@ hr.separateur_contenu { height: 1px; background:#78A1BC; border: 0px; margin-lef
 
 p.nopadding { padding-top: 0px; }
 
+del { background: #DB4141; text-decoration: none; font-weight: bold; }
+ins { background: #3CE052; text-decoration: none; font-weight: bold; }
+
 table.noresize                       { table-layout: fixed;                                                        }
 table.grid td, table.grid th         { border-right: 0.1rem solid #E1E1E1; padding: 6px 8px 6px 8px;               }
 table.fullgrid td, table.fullgrid th { border: 0.1rem solid #E1E1E1; padding: 6px 8px 6px 8px;                     }

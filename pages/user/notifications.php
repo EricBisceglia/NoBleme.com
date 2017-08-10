@@ -9,9 +9,8 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 useronly();
 
 // Menus du header
-$header_menu      = 'compte';
-$header_submenu   = 'messages';
-$header_sidemenu  = (!isset($_GET['envoyes'])) ? 'inbox' : 'envoyes';
+$header_menu      = 'Compte';
+$header_sidemenu  = (!isset($_GET['envoyes'])) ? 'Inbox' : 'Outbox';
 
 // Titre et description
 $page_titre = "Nofitications";

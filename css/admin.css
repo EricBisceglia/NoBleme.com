@@ -1,0 +1,3 @@
+/************************************************************ RÉFÉRENCES DEV *************************************************************/
+.border_all_blank   { border: 0px !important;                                            }
+.border_right_blank { border: 0px !important; border-right:5px solid #FFFFFF !important; }

@@ -1,6 +1,6 @@
 <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cette page génère une image de type captcha lorsqu'elle est appelée.
-// Un nombre à 5 chiffres est aléatoirement généré et placé dans la variable de session $_SESSION['captcha']
+// Un nombre à 6 chiffres est aléatoirement généré et placé dans la variable de session $_SESSION['captcha']
 //
 // Exemple d'utilisation: <img src="/inc/captcha.inc.php">
 

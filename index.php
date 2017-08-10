@@ -96,11 +96,11 @@ if(date('d-m') == '19-03')
 
         <p>NoBleme was originally created as a french community. This means that some of the website's features have no english translation and are only available in french. It does not mean that english speakers are not desired, as absolutely everyone is welcome on NoBleme, and many if not most of our users speak english.</p>
 
-        <p>When switching from french to english, you will probably have noticed that you have access to less elements on the left side navigation menu. This is because the non translated (french only) pages are removed from the navigation menu when browsing the website in english, for your convenience. Keep in mind that most of these removed pages are about things that do not translate to english, such as the organization of real life meetups in France, written conversations in french forums, blog posts in french, etc.</p>
+        <p>When switching from french to english, you will probably have noticed that you have access to fewer elements on the left side navigation menu. This is because the non translated (french only) pages are removed from the navigation menu when browsing the website in english, for your convenience. Keep in mind that most of these removed pages are about things that do not translate to english, such as the organization of real life meetups in France, written conversations in french forums, blog posts in french, etc.</p>
 
         <h5 class="bigpadding">NoBleme in <?=date('Y')?></h5>
 
-        <p>As of <?=date('Y')?>, NoBleme is going through a transformation phase, where most of the website's contents have been removed and are being remade in a more modern and useful way. During that time, the website is going to be short on features. However, our <a class="gras" href="<?=$chemin?>pages/irc/index">IRC chat server</a> is still open and acts as the current center of activity on NoBleme. Join us on IRC, we are always very welcoming with new faces, even non french ones !</p>
+        <p>As of <?=date('Y')?>, NoBleme is going through a transformation phase, during which most of the website's contents have been removed and are being remade in a more modern and useful way. During that time, the website is going to be short on features. However, our <a class="gras" href="<?=$chemin?>pages/irc/index">IRC chat server</a> is still open and acts as the current center of activity on NoBleme. Join us on IRC, we are always very welcoming with new faces, even non french ones !</p>
 
         <p>Don't be scared of browsing around, the website doesn't bite. At least, not at first.</p>
         <a class="alinea" href="<?=$chemin?>pages/user/user?id=1">- Bad</a>

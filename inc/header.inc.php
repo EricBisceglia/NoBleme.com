@@ -422,6 +422,10 @@ function header_class($element, $actuel, $menu)
 
 
 
+<!-- ######################################################################################################################################
+#                                                                 MENUS                                                                   #
+###################################################################################################################################### !-->
+
 <?php ####################################################### MENU PRINCIPAL ##############################################################
 // Préparation des traductions des titres
 $menu['discuter'] = ($lang == 'FR') ? 'DISCUTER'  : 'TALK';
@@ -648,6 +652,24 @@ $sidemenu['bla_irc_what'] = ($lang == 'FR') ? "Qu'est-ce que IRC ?" : "What is I
 
 
 
+<?php } ################################################# MENU LATÉRAL : COMPTE ###########################################################
+// Préparation des traductions des titres du menu
+$sidemenu['user_notifs']      = ($lang == 'FR') ? "Boite de réception"  : "My inbox";
+$sidemenu['user_notifsenvoi'] = ($lang == 'FR') ? "Messages envoyés"    : "Sent messages";
+/* ################################################################################################### */ if($header_menu == 'Compte') { ?>
+
+            <div class="<?=header_class('Inbox',$header_sidemenu,'side')?>"
+                 onclick="window.location.href('<?=$chemin?>pages/user/notifications');">
+                                       <a href="<?=$chemin?>pages/user/notifications"><?=$sidemenu['user_notifs']?></a>
+            </div>
+            <div class="<?=header_class('Outbox',$header_sidemenu,'side')?>"
+                 onclick="window.location.href('<?=$chemin?>pages/user/notifications?envoyes');">
+                                       <a href="<?=$chemin?>pages/user/notifications?envoyes"><?=$sidemenu['user_notifsenvoi']?></a>
+            </div>
+
+
+
+
 <?php } /* ############################################## MENU LATÉRAL : ADMIN ######################## */ if($header_menu == 'Admin') { ?>
 
             <div class="<?=header_class('Modlogs',$header_sidemenu,'side')?>"
@@ -664,6 +686,10 @@ $sidemenu['bla_irc_what'] = ($lang == 'FR') ? "Qu'est-ce que IRC ?" : "What is I
                  onclick="window.location.href('<?=$chemin?>pages/dev/formattage');">
                                        <a href="<?=$chemin?>pages/dev/formattage">Snippets de code</a>
             </div>
+            <div class="<?=header_class('Fonctions',$header_sidemenu,'side')?>"
+                 onclick="window.location.href('<?=$chemin?>pages/dev/fonctions');">
+                                       <a href="<?=$chemin?>pages/dev/fonctions">Référence des fonctions</a>
+            </div>
 
           <?php } ?>
 
@@ -676,6 +702,10 @@ $sidemenu['bla_irc_what'] = ($lang == 'FR') ? "Qu'est-ce que IRC ?" : "What is I
   //                                                            FIN DES MENUS                                                            //
   //                                                                                                                                     //
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
+
+<!-- ######################################################################################################################################
+#                                                                 CORPS                                                                   #
+###################################################################################################################################### !-->
 
     <div class="flex_element contenu_page">
 

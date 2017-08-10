@@ -85,12 +85,12 @@ function nbrpg_couleur()
 // $nom est le personnage de l'auteur du message
 // $type est le type de message (RP, HRP, etc)
 // $message est le contenu du message
-// Utilisation : nbrpg_chatlog(1337,'Bad','RP','Bonjour les [b]enfants[/b]');
+// Utilisation : nbrpg_chatlog(1337,nbrpg_couleur(),'Bad','RP','Bonjour les [b]enfants[/b]');
 
 function nbrpg_chatlog($timestamp,$couleur,$nom,$type,$message)
 {
   // On définit l'apparence du message
-  $css = ($type == 'narrateur') ? 'class="gras"' : 'style="color:'.$couleur.'"';
+  $css = ($type == 'narrateur') ? 'class="gras" style="padding:0px"' : 'style="color:'.$couleur.';padding:0px"';
 
   // On prépare pour l'affichage
   $date = date('H:i',$timestamp);
@@ -249,6 +249,9 @@ function nbrpg_format_effet($effet,$duree)
                       FROM    nbrpg_effets
                       WHERE   nbrpg_effets.id = '$effet' ");
 
+  if(!mysqli_num_rows($qeffets))
+    return NULL;
+
   // On prépare les infos nécessaires
   $deffets  = mysqli_fetch_array($qeffets);
   $e_icone  = $deffets['e_icone'];
@@ -316,9 +319,9 @@ function nbrpg_format_effet($effet,$duree)
   $e_flavor = ($deffets['e_flavor']) ? "<hr class=\"points\"><p class=\"italique\">".$deffets['e_flavor']."</p>": '';
 
   // Et on renvoie une version formattée de l'effet
-  return "<span class=\"pointeur tooltip\">
+  return "<span class=\"pointeur tooltip-container\">
             <img src=\"./../../img/nbrpg/$e_icone\" alt=\"X\" style=\"border:1px solid #000000;border-radius:4px\">
-            <div class=\"petittooltip\">
+            <div class=\"tooltip\">
               <p class=\"indiv align_center gras majuscules\">$e_nom</p>
               $e_duree
               <hr class=\"points\">

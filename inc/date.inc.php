@@ -22,19 +22,19 @@ $joursfr = array( "Dimanche"  ,
                   "Samedi"    );
 
 // Mois de l'année
-$moisfr = array(  ""          ,
-                  "Janvier"   ,
-                  "Février"   ,
-                  "Mars"      ,
-                  "Avril"     ,
-                  "Mai"       ,
-                  "Juin"      ,
-                  "Juillet"   ,
-                  "Août"      ,
-                  "Septembre" ,
-                  "Octobre"   ,
-                  "Novembre"  ,
-                  "Décembre"  );
+$moisfr = array(  ""            ,
+                  "Janvier"     ,
+                  "Février"     ,
+                  "Mars"        ,
+                  "Avril"       ,
+                  "Mai"         ,
+                  "Juin"        ,
+                  "Juillet"     ,
+                  "Ao&ucirc;t"  ,
+                  "Septembre"   ,
+                  "Octobre"     ,
+                  "Novembre"    ,
+                  "Décembre"    );
 
 
 
@@ -69,19 +69,19 @@ function datefr($date)
                     "Samedi"    );
 
   // Mois de l'année en toutes lettres
-  $moisfr = array(  ""          ,
-                    "Janvier"   ,
-                    "Février"   ,
-                    "Mars"      ,
-                    "Avril"     ,
-                    "Mai"       ,
-                    "Juin"      ,
-                    "Juillet"   ,
-                    "Août"      ,
-                    "Septembre" ,
-                    "Octobre"   ,
-                    "Novembre"  ,
-                    "Décembre"  );
+  $moisfr = array(  ""            ,
+                    "Janvier"     ,
+                    "Février"     ,
+                    "Mars"        ,
+                    "Avril"       ,
+                    "Mai"         ,
+                    "Juin"        ,
+                    "Juillet"     ,
+                    "Ao&ucirc;t"  ,
+                    "Septembre"   ,
+                    "Octobre"     ,
+                    "Novembre"    ,
+                    "Décembre"    );
 
   // Conversion de la date en toutes lettres
   $date_text  = $joursfr[date("w", strtotime($date))]." ";
@@ -108,19 +108,19 @@ function jourfr($date,$stripday=NULL)
 {
 
   // Mois de l'année en toutes lettres
-  $moisfr = array(  ""          ,
-                    "Janvier"   ,
-                    "Février"   ,
-                    "Mars"      ,
-                    "Avril"     ,
-                    "Mai"       ,
-                    "Juin"      ,
-                    "Juillet"   ,
-                    "Août"      ,
-                    "Septembre" ,
-                    "Octobre"   ,
-                    "Novembre"  ,
-                    "Décembre"  );
+  $moisfr = array(  ""            ,
+                    "Janvier"     ,
+                    "Février"     ,
+                    "Mars"        ,
+                    "Avril"       ,
+                    "Mai"         ,
+                    "Juin"        ,
+                    "Juillet"     ,
+                    "Ao&urcirc;t" ,
+                    "Septembre"   ,
+                    "Octobre"     ,
+                    "Novembre"    ,
+                    "Décembre"    );
 
   if(!$stripday)
   {
@@ -174,7 +174,9 @@ function ilya($date)
   $diff = time() - $date;
 
   // Définition en toutes lettres de la différence de temps
-  if ($diff == 0)
+  if($diff < 0)
+    $ilya = "Dans le futur";
+  else if ($diff == 0)
     $ilya = "En ce moment même";
   else if ($diff == 1)
     $ilya = "Il y a 1 seconde";
@@ -221,7 +223,7 @@ function dans($date)
   $diff = $date - time();
 
   // Définition en toutes lettres de la différence de temps
-  if ($diff <= 0)
+  if ($diff < 0)
     $dans = "Dans le passé";
   else if ($diff == 0)
     $dans = "En ce moment même";

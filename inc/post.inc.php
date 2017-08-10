@@ -36,33 +36,9 @@ function postdata($data)
 function postdata_vide($data)
 {
   if(isset($_POST[$data]))
-    $output = mysqli_real_escape_string($GLOBALS['db'],$_POST[$data]);
+    $output = postdata($data);
   else
     $output = "";
-
-  return $output;
-}
-
-
-// Même fonction que postdata_vide mais ne fait AUCUN traitement sur le postdata, à n'utiliser que dans les pages d'admin
-function postdata_vide_dangereux($data)
-{
-  if(isset($_POST[$data]))
-    $output = stripslashes($_POST[$data]);
-  else
-    $output = "";
-
-  return $output;
-}
-
-
-// Fonction similaire à postdata_vide(), mais avec une valeur par défaut s'il n'est pas rempli
-function postdata_vide_defaut($data,$defaut)
-{
-  if(isset($_POST[$data]))
-    $output = mysqli_real_escape_string($$GLOBALS['db'],$_POST[$data]);
-  else
-    $output = $defaut;
 
   return $output;
 }
