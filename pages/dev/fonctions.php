@@ -26,6 +26,7 @@ $js  = array('toggle');
 
 
 
+
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
@@ -98,6 +99,53 @@ $js  = array('toggle');
           <thead>
             <tr>
               <th class="rowaltc moinsgros" colspan="2">
+                CHAÎNES DE CARACTÈRES
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                tronquer_chaine('Héhéhé',4,' [...]');
+              </td>
+              <td class="gras align_center">
+                <?=tronquer_chaine('Héhéhé',4,' [...]');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                changer_casse('Test accentué','maj');
+              </td>
+              <td class="gras align_center">
+                <?=changer_casse('Test accentué','maj');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                changer_casse('TEST ACCENTUÉ','min');
+              </td>
+              <td class="gras align_center">
+                <?=changer_casse('TEST ACCENTUÉ','min');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                changer_casse('éssai avec accent','init');
+              </td>
+              <td class="gras align_center">
+                <?=changer_casse('éssai avec accent','init');?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
                 BBCODES ET EMOTICÔNES
               </th>
             </tr>
@@ -107,7 +155,7 @@ $js  = array('toggle');
               <td class="align_center">
                 bbcode("on [u]souligne[/u] :)");
               </td>
-              <td class="align_center">
+              <td class="gras align_center">
                 <?=bbcode("on [u]souligne[/u] :)");?>
               </td>
             </tr>
@@ -216,6 +264,14 @@ $js  = array('toggle');
             </tr>
             <tr>
               <td class="align_center">
+                $moisfr_courts[2]
+              </td>
+              <td class="gras align_center">
+                <?=$moisfr_courts[2];?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
                 $datefr
               </td>
               <td class="gras align_center">
@@ -267,6 +323,46 @@ $js  = array('toggle');
               </td>
               <td class="gras align_center">
                 <?=ddmmyy('2005-03-19');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                ddmmyy('0000-00-00');
+              </td>
+              <td class="gras align_center">
+                <?=ddmmyy('0000-00-00');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                mysqldate('19/03/2005');
+              </td>
+              <td class="gras align_center">
+                <?=mysqldate('19/03/2005');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                mysqldate('19/03/05');
+              </td>
+              <td class="gras align_center">
+                <?=mysqldate('19/03/05');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                mysqldate('13/14/15');
+              </td>
+              <td class="gras align_center">
+                <?=mysqldate('13/14/15');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                mysqldate('Ceci n\'est pas une date');
+              </td>
+              <td class="gras align_center">
+                <?=mysqldate('Ceci n\'est pas une date');?>
               </td>
             </tr>
           </tbody>
@@ -331,6 +427,120 @@ $js  = array('toggle');
 ###################################################################################################################################### !-->
 
       <div class="hidden" id="liste_fonctions_maths">
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                SIGNE D'UN NOMBRE
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                signe_nombre(1);
+              </td>
+              <td class="gras align_center">
+                <?=signe_nombre(1);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_positif(0);
+              </td>
+              <td class="gras align_center">
+                <?=format_positif(0);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_positif(-1,'hex');
+              </td>
+              <td class="gras align_center" style="color:#<?=format_positif(-1,'hex');?>">
+                <?=format_positif(-1,'hex');?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                FORMATTAGE DES NOMBRES
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                format_nombre(1000000,"prix");
+              </td>
+              <td class="gras align_center">
+                <?=format_nombre(1000000,"prix");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_nombre(1337.42,"centimes");
+              </td>
+              <td class="gras align_center">
+                <?=format_nombre(1337.42,"centimes");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_nombre(12.3,"pourcentage",2);
+              </td>
+              <td class="gras align_center">
+                <?=format_nombre(12.3,"pourcentage",2);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_nombre(3,"point",NULL,"signed");
+              </td>
+              <td class="gras align_center">
+                <?=format_nombre(3,"point",NULL,"signed");?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                CALCUL D'UN POURCENTAGE
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                calcul_pourcentage(42,69);
+              </td>
+              <td class="gras align_center">
+                <?=calcul_pourcentage(42,69);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_nombre(calcul_pourcentage(1,4),"pourcentage",0);
+              </td>
+              <td class="gras align_center">
+                <?=format_nombre(calcul_pourcentage(1,4),"pourcentage",0);?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
       </div>
 
@@ -709,11 +919,13 @@ $js  = array('toggle');
             <tr>
               <td class="align_center">
                 nbrpg_couleur();<br>
+                nbrpg_couleur();<br>
                 nbrpg_couleur();
               </td>
-              <td class="align_center">
-                <?=nbrpg_couleur();?><br>
-                <?=nbrpg_couleur();?>
+              <td class="gras align_center">
+                <span style="color:<?=nbrpg_couleur();?>"><?=nbrpg_couleur();?></span><br>
+                <span style="color:<?=nbrpg_couleur();?>"><?=nbrpg_couleur();?></span><br>
+                <span style="color:<?=nbrpg_couleur();?>"><?=nbrpg_couleur();?></span>
               </td>
             </tr>
           </tbody>
@@ -735,7 +947,7 @@ $js  = array('toggle');
               <td class="align_center">
                 nbrpg_multiplicateur(100,5);
               </td>
-              <td class="align_center">
+              <td class="gras align_center">
                 <?=nbrpg_multiplicateur(100,5);?>
               </td>
             </tr>
@@ -743,7 +955,7 @@ $js  = array('toggle');
               <td class="align_center">
                 nbrpg_reduction_effet(5,3,10,-1,10);
               </td>
-              <td class="align_center">
+              <td class="gras align_center">
                 <?=nbrpg_reduction_effet(5,3,10,-1,10);?>
               </td>
             </tr>
@@ -751,7 +963,7 @@ $js  = array('toggle');
               <td class="align_center">
                 nbrpg_application_effet(10,-1,10);
               </td>
-              <td class="align_center">
+              <td class="gras align_center">
                 <?=nbrpg_application_effet(10,-1,10);?>
               </td>
             </tr>
@@ -897,6 +1109,24 @@ $js  = array('toggle');
           <tbody>
             <tr>
               <td class="align_center">
+                predata("string&lt;hr&gt;HTML");
+              </td>
+              <td class="align_center">
+                <?=predata("string<hr>HTML");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                predata("string&lt;hr&gt;<br>
+                Retour chariot",1);
+              </td>
+              <td class="align_center">
+                <?=predata("string<hr>
+                Retour chariot",1);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
                 destroy_html('&lt;balise onclick="xss"&gt;');
               </td>
               <td class="align_center">
@@ -921,25 +1151,81 @@ $js  = array('toggle');
           <thead>
             <tr>
               <th class="rowaltc moinsgros" colspan="2">
-                TRAITEMENT DU POSTDATA
+                ASSAINISSEMENT DU POSTDATA
               </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="align_center">
-                postdata("Assaini p'our une requête");
+                postdata("hel'lo");
               </td>
               <td class="align_center">
-                <?=postdata("Assaini p'our une requête");?>
+                <?=postdata("hel'lo");?>
               </td>
             </tr>
             <tr>
               <td class="align_center">
-                postdata_vide("post_qui_existe_pas");
+                postdata_vide("post_qui_existe_pas","rien");
               </td>
               <td class="align_center">
-                <?=postdata_vide("post_qui_existe_pas");?>
+                <?=postdata_vide("post_qui_existe_pas","rien");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata("whitespace           ");
+              </td>
+              <td class="align_center">
+                <?=postdata("whitespace           ");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata("string","int");
+              </td>
+              <td class="align_center">
+                <?=postdata("string","int");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata(123.456,"int");
+              </td>
+              <td class="align_center">
+                <?=postdata(123.456,"int");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata(-999.9999,"double",-500.001,500.001);
+              </td>
+              <td class="align_center">
+                <?=postdata(-999.9999,"double",-500.001,500.001);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata(999,"double",-500,500);
+              </td>
+              <td class="align_center">
+                <?=postdata(999,"double",-500,500);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata("longue p'hrase","string",0,10);
+              </td>
+              <td class="align_center">
+                <?=postdata("longue p'hrase","string",0,10);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata("courte p'hrase","string",20);
+              </td>
+              <td class="align_center">
+                <?=postdata("courte p'hrase","string",20);?>
               </td>
             </tr>
           </tbody>

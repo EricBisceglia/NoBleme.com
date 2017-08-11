@@ -24,6 +24,43 @@ function bfdecho($stuff)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Tronque une chaine de caractères pour n'en garder que le début (et optionnellement rajouter quelque chose au niveau de la troncature)
+// $chaine est la chaine de caractères à tronquer
+// $longueur est le nombre de caractères à conserver dans la chaine
+// $suffixe est le contenu à rajouter à la fin de la chaine tronquée
+//
+// Exemple d'utilisation :
+// $titrecourt = tronquer_chaine($titre,20,'...');
+
+function tronquer_chaine($chaine,$longueur,$suffixe)
+{
+  return (mb_strlen($chaine,'UTF-8') > $longueur) ? mb_substr($chaine,0,$longueur,'UTF-8').$suffixe : $chaine;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction changeant la casse d'une chaine de caractères sans massacrer l'encodage
+// $chaine est la chaine de caractères à manipuler
+// $action est l'action à effectuer: 'maj' pour des majuscules, 'min' pour des minuscules, 'init' pour la première lettre en majuscules
+//
+// Utilisation: changer_casse('Test accentué','maj');
+
+function changer_casse($chaine,$action)
+{
+  if($action == 'maj')
+    return mb_convert_case($chaine, MB_CASE_UPPER, "UTF-8");
+  else if($action == 'min')
+    return mb_convert_case($chaine, MB_CASE_LOWER, "UTF-8");
+  else if($action == 'init')
+    return mb_substr(mb_convert_case($chaine, MB_CASE_UPPER, "UTF-8"),0,1,'utf-8').mb_substr($chaine,1,65536,'utf-8');
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction forçant nl2br() à renvoyer des <br> au lieu de <br /> pour faire chier Exirel
 //
 // Utilisation: nl2br_fixed($string);
@@ -149,6 +186,113 @@ function envoyer_notif($en_destinataire,$en_titre,$en_contenu,$sender=NULL,$sile
                         date_consultation       = '$en_consult'       ,
                         titre                   = '$en_titre'         ,
                         contenu                 = '$en_contenu'       ");
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Renvoie un nombre avec le bon signe
+//
+// Exemple d'utilisation :
+// $nombre_signed = signe_nombre($nombre)
+
+function signe_nombre($nombre)
+{
+  if($nombre > 0)
+    return '+'.$nombre;
+  else
+    return $nombre;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Renvoie un style css en fonction d'un contenu selon s'il est positif, neutre, ou négatif
+// Si $hex est rempli, renvoie un hex de couleur au lieu d'une classe css
+//
+// Exemple d'utilisation :
+// $couleur_contenu = format_positif($contenu);
+
+function format_positif($contenu,$hex=NULL)
+{
+  if(!$hex)
+  {
+    if($contenu > 0)
+      return 'positif';
+    else if($contenu == 0)
+      return 'neutre';
+    else
+      return 'negatif';
+  }
+  else
+  {
+    if($contenu > 0)
+      return '339966';
+    else if($contenu == 0)
+      return 'EB8933';
+    else
+      return 'FF0000';
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Formatte un nombre selon plusieurs formats possibles
+// $nombre est le nombre à formatter
+// $format est le type de format à y appliquer
+// Si $decimales est précisé, affiche ce nombre de décimales après la virgule (lorsque c'est possible)
+// Si $signe est précisé, affiche le signe + si le nombre est positif
+//
+// Exemple d'utilisation :
+// $prix = format_nombre($nombre,"prix")
+
+function format_nombre($nombre,$format,$decimales=NULL,$signe=NULL)
+{
+  // Nombre de décimales (en option) pour les pourcentages et les points
+  $decimales = (!is_null($decimales)) ? $decimales : 1;
+
+  // Formater un prix
+  if($format == "prix")
+    $format_nombre = number_format((float)$nombre, 0, ',', ' ')." €";
+
+  // Formater un prix avec centimes
+  if($format == "centimes")
+    $format_nombre = number_format((float)$nombre, 2, ',', ' ')." €";
+
+  // Formater un pourcentage
+  else if($format == "pourcentage")
+    $format_nombre = number_format((float)$nombre, $decimales, ',', '')." %";
+
+  // Formater un point de pourcentage
+  else if($format == "point")
+    $format_nombre = number_format((float)$nombre, $decimales, ',', '')." p%";
+
+  // Application du signe si nécessaire
+  if($signe && $nombre > 0)
+    $format_nombre = '+'.$format_nombre;
+
+  // On renvoie le résultat
+  return $format_nombre;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Calcul le pourcentage qu'un nombre représente d'un autre nombre
+// $nombre est le nombre qui est un pourcent du total
+// $total est le total dont le nombre est un pourcent
+//
+// Exemple d'utilisation :
+// $pourcentage = calcul_pourcentage($nombre,$total);
+
+function calcul_pourcentage($nombre,$total)
+{
+  return ($total) ? (($nombre/$total)*100) : 0;
 }
 
 

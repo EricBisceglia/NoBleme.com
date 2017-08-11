@@ -59,23 +59,20 @@ function erreur($message)
   <br>
   <br>
   <br>
-  <div class="align_center">
-    <img src="<?=$chemin?>img/logos/erreur.png" alt="Erreur !">
-  </div>
+  <br>
   <br>
   <br>
 
-  <div class="margin_auto body_main midsize">
+  <div class="margin_auto align_center" style="width:1000px;">
+    <h3>Vous avez rencontré une erreur !</h3>
     <br>
-    <div class="align_center gros gras">
-      <br>
-      <span class="gras souligne">Vous avez rencontré une erreur en tentant d'accéder à cette page :</span><br>
-      <br>
-      <?=$message?><br>
-      <br>
-    </div>
+    <br>
+     <br>
+    <h3><?=$message?></h3>
   </div>
 
+  <br>
+  <br>
   <br>
 
   <?php

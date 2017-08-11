@@ -36,6 +36,21 @@ $moisfr = array(  ""            ,
                   "Novembre"    ,
                   "Décembre"    );
 
+// Mois de l'année, court
+$moisfr_courts = array( "",
+                        "Jan.",
+                        "Fév.",
+                        "Mars",
+                        "Avr.",
+                        "Mai",
+                        "Juin",
+                        "Juil.",
+                        "Août",
+                        "Sept.",
+                        "Oct.",
+                        "Nov.",
+                        "Déc.");
+
 
 
 
@@ -152,11 +167,45 @@ function jourfr($date,$stripday=NULL)
 
 function ddmmyy($date)
 {
+  // Si la date est NULL ou 0000-00-00 on ne renvoie rien
+  if(!$date || $date == '0000-00-00')
+    return NULL;
+
   // Conversion de la date en toutes lettres
-  $date_ddmmyy = date(date("d", strtotime($date))."/".date("m", strtotime($date))."/".date("y", strtotime($date)));
+  $date_ddmmyy = date('d/m/y',strtotime($date));
 
   // Renvoi de la valeur
   return $date_ddmmyy;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction de conversion d'une date DD/MM/YY ou DD/MM/YYYY vers une date MYSQL
+//
+// Exemple d'utilisation
+// $ma_date_mysql = mysqldate("19/03/2005");
+
+function mysqldate($date)
+{
+  // Format DD/MM/YYYY
+  if(strlen($date) == 10)
+    $date = date('Y-m-d', strtotime(str_replace('/', '-', $date)));
+
+  // Format DD/MM/YY
+  else if(strlen($date) == 8)
+    $date = date('Y-m-d', strtotime(substr($date,6,2).'-'.substr($date,3,2).'-'.substr($date,0,2)));
+
+  // Sinon, on renvoie une date vide
+  else
+    return '0000-00-00';
+
+  // On gère le cas 1970-01-01
+  if($date == '1970-01-01')
+    return '0000-00-00';
+  else
+    return $date;
 }
 
 

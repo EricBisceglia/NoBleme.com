@@ -64,7 +64,7 @@ $majcheck = mysqli_fetch_array($checkmaj);
 
 // Si maj, on ferme la machine (sauf pour les admins)
 if($majcheck['mise_a_jour'] && @getadmin($_SESSION['user']) == 0)
-  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Une mise à jour est en cours, NoBleme est temporairement fermé.<br><br>Revenez dans quelques minutes.</body></html>');
+  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Une mise à jour est en cours, NoBleme est temporairement fermé.<br><br>Revenez dans quelques minutes.<br><br><br><br>An update is in progress, NoBleme is temporarily closed.<br><br>Come back in a few minutes.</body></html>');
 
 // CSS spécial pendant les mises à jour
 if(!$majcheck['mise_a_jour'])
