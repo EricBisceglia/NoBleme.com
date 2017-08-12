@@ -21,7 +21,7 @@ $page_nom = "admin";
 
 // CSS & JS
 $css = array('admin','nbrpg');
-$js  = array('toggle');
+$js  = array('toggle','highlight');
 
 
 

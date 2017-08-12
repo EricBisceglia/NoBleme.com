@@ -690,6 +690,10 @@ $sidemenu['user_notifsenvoi'] = ($lang == 'FR') ? "Messages envoyés"    : "Sent
                  onclick="window.location.href('<?=$chemin?>pages/dev/fonctions');">
                                        <a href="<?=$chemin?>pages/dev/fonctions">Référence des fonctions</a>
             </div>
+            <div class="<?=header_class('CSS',$header_sidemenu,'side')?>"
+                 onclick="window.location.href('<?=$chemin?>pages/dev/css');">
+                                       <a href="<?=$chemin?>pages/dev/css">Référence HTML &amp; CSS &amp; JS</a>
+            </div>
 
           <?php } ?>
 

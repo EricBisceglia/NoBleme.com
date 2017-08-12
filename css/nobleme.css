@@ -1,24 +1,31 @@
 /**************************************************************** COULEURS ***************************************************************/
-.blanc               { background: #FFFFFF;  }
-.grisclair           { background: #EEEEEE;  }
-.grisfonce           { background: #333333;  }
-.noir                { background: #000000;  }
-.nobleme_clair       { background: #78A1BC;  }
-.nobleme_fonce       { background: #37536B;  }
-.positif             { background: #339966;  }
-.neutre              { background: #EB8933;  }
-.negatif             { background: #FF0000;  }
+.blanc                  { background: #FFFFFF;  }
+.grisclair              { background: #EEEEEE;  }
+.grisfonce              { background: #333333;  }
+.noir                   { background: #000000;  }
+.nobleme_clair          { background: #78A1BC;  }
+.nobleme_fonce          { background: #37536B;  }
+.edited                 { background: #47D38D;  }
+.positif                { background: #339966;  }
+.neutre                 { background: #EB8933;  }
+.negatif, .erreur       { background: #FF0000;  }
+.vert_background        { background: #B3E28E;  }
+.vert_background_clair  { background: #DAEEAA;  }
+.mise_a_jour_background { background: #F9E5E5;  }
+.mise_a_jour            { background: #D13030;  }
 
-.texte_blanc         { color: #FFFFFF;       }
-.texte_grisclair     { color: #D0D0D0;       }
-.texte_grisfonce     { color: #333333;       }
-.texte_noir          { color: #000000;       }
-.texte_nobleme_clair { color: #78A1BC;       }
-.texte_nobleme_fonce { color: #37536B;       }
-.texte_edited        { color: #47D38D;       }
-.texte_positif       { color: #339966;       }
-.texte_neutre        { color: #EB8933;       }
-.texte_negatif       { color: #FF0000;       }
+.texte_blanc                  { color: #FFFFFF; }
+.texte_grisclair              { color: #D0D0D0; }
+.texte_grisfonce              { color: #333333; }
+.texte_noir                   { color: #000000; }
+.texte_nobleme_clair          { color: #78A1BC; }
+.texte_nobleme_fonce          { color: #37536B; }
+.texte_edited                 { color: #47D38D; }
+.texte_positif                { color: #339966; }
+.texte_neutre                 { color: #EB8933; }
+.texte_negatif, .texte_erreur { color: #FF0000; }
+.texte_vert_background        { color: #B3E28E; }
+.texte_mise_a_jour            { color: #D13030; }
 
 /************************************************************* TAGS GÉNÉRAUX *************************************************************/
 .align_center    { text-align: center;                        }
@@ -36,6 +43,7 @@
 .gras            { font-weight: bold;                         }
 .souligne        { text-decoration: underline;                }
 .barre           { text-decoration: line-through;             }
+.blank           { text-decoration: none;                     }
 .maigre          { font-size: 0.75em;                         }
 .moinsgros       { font-size: 1.25em;                         }
 .gros            { font-size: 1.5em;                          }
@@ -48,7 +56,6 @@
 .vspaced         { padding-bottom: 6px; padding-top: 6px;     }
 .bigpadding      { padding-top: 5.0rem;                       }
 .nowrap          { white-space: nowrap;                       }
-.wrap            { white-space: pre-wrap;                     }
 .scrollbar       { overflow-x: scroll;                        }
 .vscrollbar      { overflow-y: scroll;                        }
 
@@ -73,8 +80,8 @@ hr.separateur_contenu { height: 1px; background:#78A1BC; border: 0px; margin-lef
 
 p.nopadding { padding-top: 0px; }
 
-del { background: #DB4141; text-decoration: none; font-weight: bold; }
-ins { background: #3CE052; text-decoration: none; font-weight: bold; }
+del { background: #DB4141; text-decoration: none; font-weight: bold; color: #000000; padding-left: 5px; padding-right: 5px; }
+ins { background: #3CE052; text-decoration: none; font-weight: bold; color: #000000; padding-left: 5px; padding-right: 5px; }
 
 table.noresize                       { table-layout: fixed;                                                        }
 table.grid td, table.grid th         { border-right: 0.1rem solid #E1E1E1; padding: 6px 8px 6px 8px;               }
