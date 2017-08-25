@@ -131,7 +131,7 @@ function jourfr($date,$stripday=NULL)
                     "Mai"         ,
                     "Juin"        ,
                     "Juillet"     ,
-                    "Ao&urcirc;t" ,
+                    "Août"        ,
                     "Septembre"   ,
                     "Octobre"     ,
                     "Novembre"    ,

@@ -1166,10 +1166,10 @@ $js  = array('toggle','highlight');
             </tr>
             <tr>
               <td class="align_center">
-                postdata_vide("post_qui_existe_pas","rien");
+                postdata_vide("post_qui_existe_pas");
               </td>
               <td class="align_center">
-                <?=postdata_vide("post_qui_existe_pas","rien");?>
+                <?=postdata_vide("post_qui_existe_pas");?>
               </td>
             </tr>
             <tr>

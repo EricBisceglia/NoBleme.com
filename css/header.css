@@ -1,75 +1,83 @@
 /************************************************************* MENU DU HAUT **************************************************************/
-@media (min-width: 650px) {
-.header_topmenu                                         { display: flex; justify-content: space-between; padding: 6px 6px 6px 10px        ;
-                                                          background-color: #37536B; font-family: 'NoBleme-header';                       }
-.header_topmenu_titre                                   { padding: 0px 15px; font-size: 18px; font-weight: bold; color: #78A1BC           ;
-                                                         cursor: pointer; background-color: #37536B;                                      }
-.header_topmenu_zone                                    { display: flex; align-items: center;                                             }
-.header_topmenu_titre + .header_topmenu_titre           { margin-left: 12px;                                                              }
-.header_topmenu_titre.header_topmenu_selected           { color: #37536B; background-color: #78A1BC; border-radius: 4px;                  }
-.header_topmenu_titre:hover                             { color: #37536B; background-color: #78A1BC; border-radius: 4px;                  }
-} @media (max-width: 649px) {
-.header_topmenu                                         { display: flex; justify-content: space-between; padding: 2px 4px                 ;
-                                                          background-color: #37536B; font-family: 'NoBleme-header';                       }
-.header_topmenu_titre                                   { padding: 0px 5px; font-size: 14px; font-weight: bold; color: #78A1BC            ;
-                                                         cursor: pointer; background-color: #37536B;                                      }
-.header_topmenu_zone                                    { display: flex; align-items: center;                                             }
-.header_topmenu_titre + .header_topmenu_titre           { margin-left: 2px;                                                               }
-.header_topmenu_titre.header_topmenu_selected           { color: #37536B; background-color: #78A1BC; border-radius: 2px;                  }
-.header_topmenu_titre:hover                             { color: #37536B; background-color: #78A1BC; border-radius: 2px;                } }
-.header_topmenu_titre > a                               { text-decoration: none; color: #78A1BC; width: 100%; display: inline-block;      }
-.header_topmenu_titre:hover > a                         { color: #37536B;                                                                 }
-.header_topmenu_titre.header_topmenu_selected:hover     { background:#37536B;                                                             }
-.header_topmenu_titre.header_topmenu_selected > a       { text-decoration: none; color: #37536B; width: 100%; display: inline-block;      }
-.header_topmenu_titre.header_topmenu_selected:hover > a { color: #78A1BC;                                                                 }
-.header_topmenu_flagimg                                 { vertical-align: middle;                                                         }
+.header_topmenu_zone                        { display: flex; align-items: center;                                            }
+.header_topmenu                             { background-color: #37536B; justify-content: space-between                      ;
+                                              display: flex; font-family: 'NoBleme-header';                                  }
+.header_topmenu_titre                       { font-weight: bold; color: #78A1BC; cursor: pointer; background-color: #37536B; }
+.header_topmenu_lien                        { text-decoration: none; color: #78A1BC; width: 100%; display: inline-block;     }
+.header_topmenu_lien:hover                  { color: #37536B;                                                                }
+.header_topmenu_selected                    { color: #37536B; background-color: #78A1BC;                                     }
+.header_topmenu_titre:hover                 { color: #37536B; background-color: #78A1BC;                                     }
+a > .header_topmenu_selected                { text-decoration: none; color: #37536B; width: 100%;                            }
+a:hover > .header_topmenu_selected          { color: #000000;                                                                }
+.header_topmenu_flagimg                     { vertical-align: middle;                                                        }
+
+@media (min-width: 750px) {
+.header_topmenu                             { padding: 6px 6px 6px 10px;          }
+.header_topmenu_titre                       { padding: 0px 15px; font-size: 18px; }
+.header_topmenu_lien + .header_topmenu_lien { margin-left: 8px;                   }
+.header_topmenu_selected                    { border-radius: 4px;                 }
+.header_topmenu_titre:hover                 { border-radius: 4px;               } }
+
+@media (max-width: 749px) {
+.header_topmenu                             { padding: 2px 4px;                   }
+.header_topmenu_titre                       { padding: 0px 5px; font-size: 14px;  }
+.header_topmenu_lien + .header_topmenu_lien { margin-left: 3px;                   }
+.header_topmenu_selected                    { border-radius: 2px;                 }
+.header_topmenu_titre:hover                 { border-radius: 2px;               } }
+
+@media (max-width: 400px) {
+.header_topmenu                             { padding: 2px 4px;                   }
+.header_topmenu_titre                       { padding: 0px 5px; font-size: 10px;  }
+.header_topmenu_lien + .header_topmenu_lien { margin-left: 3px;                   }
+.header_topmenu_selected                    { border-radius: 2px;                 }
+.header_topmenu_titre:hover                 { border-radius: 2px;               } }
 
 /************************************************** BARRE D'INFORMATIONS SUR LE COMPTE ***************************************************/
-@media(min-width: 650px) { .menu_sub { display: flex; justify-content: space-between; background-color: #78A1BC                           ;
-                                       border-bottom: 1px solid #37536B; color:#37536B; padding: 3px 8px 2px 8px                          ;
-                                       white-space: nowrap; font-size: 14px; font-weight: bold;                                         } }
-@media(max-width: 649px) { .menu_sub { display: flex; justify-content: space-between; background-color: #78A1BC                           ;
-                                       border-bottom: 1px solid #37536B; color:#37536B; padding: 3px 8px 2px 8px                          ;
-                                       white-space: nowrap; font-size: 10px; font-weight: bold;                                         } }
-.menu_sub_lien:hover                 { color: #37536B;                                                                                    }
+.menu_sub                            { display: flex; justify-content: space-between; background-color: #78A1BC; white-space: nowrap      ;
+                                       border-bottom: 1px solid #37536B; color:#37536B; padding: 3px 8px 2px 8px; font-weight: bold;      }
+.menu_sub_lien:hover                 { color: #000000;                                                                                    }
 .nouveaux_messages                   { animation-name: blink-relou; animation-iteration-count: infinite; animation-duration: 1337ms;      }
 @keyframes blink-relou               { from { color: #FF0000; } to { color: #37536B; }                                                    }
 .nouveaux_messages:hover             { animation-name: blink-relou-hover; animation-iteration-count: infinite; animation-duration: 1337ms;}
 @keyframes blink-relou-hover         { from { color: #FF0000; } to { color: #37536B; }                                                    }
 
-/************************************************************* MENU DU CÔTÉ **************************************************************/
-@media (min-width: 650px) { .header_sidemenu            { display: flex; flex-direction: column; justify-content: space-between           ;
-                                                          width: 200px; height: 100%; font-weight: bold; border-right: 1px solid #78A1BC  ;
-                                                          padding-top: 7px; min-height: 93vh; font-family: 'NoBleme-sidebar';             }
-                            .header_sidemenu_desktop    { display: none;                                                                  }
-                            .header_side_nomenu         { display: none; color: #FFFFFF                                                   }
-                            .header_sidemenu_item       { cursor: pointer; padding: 5px 8px; color: #37536B; font-size: 13px;             }
-                            .header_sidemenu_titre      { padding: 5px 10px; margin-left: 5px; margin-right: 5px                          ;
-                                                          font-size: 13px; margin-bottom: 1px; color:#000000;                           } }
-@media (max-width: 649px) { .header_sidemenu            { display: flex; flex-direction: column; justify-content: space-between           ;
-                                                          width: 150px; height: 100%; font-weight: bold; border-right: 1px solid #78A1BC  ;
-                                                          padding-top: 4px; min-height: 93vh; font-family: 'NoBleme-sidebar';             }
-                            .header_sidemenu_mobile     { display: none;                                                                  }
-                            .header_side_nomenu         { position:fixed; top:48px; font-weight: bold; font-size: 12px; cursor:pointer    ;
-                                                          color: #78A1BC; padding-top: 2px; padding-bottom: 2px; padding-left: 5px        ;
-                                                          padding-right: 10px; background: #37536B; border-bottom-right-radius: 10px      }
-                            .header_sidemenu_item       { cursor: pointer; padding: 4px 3px; color: #37536B; font-size: 10px;             }
-                            .header_sidemenu_titre      { padding: 5px 5px; margin-left: 0px; margin-right: 0px                           ;
-                                                          font-size: 10px; margin-bottom: 1px; color:#000000;                           } }
-.header_sidemenu_item.header_sidemenu_selected ,
-.header_sidemenu_item:hover                              { background-color: #78A1BC;                                                     }
-.header_sidemenu_item.header_sidemenu_selected:hover     { background-color: #37536B; color: #78A1BC;                                     }
-.header_sidemenu_item > a                                { text-decoration: none; color: #37536B; width: 100%; display: inline-block;     }
-.header_sidemenu_item.header_sidemenu_selected > a       { color: #37536B;                                                                }
-.header_sidemenu_item.header_sidemenu_selected:hover > a { color: #78A1BC;                                                                }
-.header_sidemenu_hr                                      { width: 100%; padding: 0px; border: 0px; height: 1px; background:#78A1BC;       }
-.header_sidemenu_input                                   { margin-left:5%;width:90%;                                                      }
+@media(min-width: 750px) { .menu_sub { font-size: 14px; } }
+@media(max-width: 749px) { .menu_sub { font-size: 10px; } }
+@media(max-width: 400px) { .menu_sub { font-size: 8px;  } }
+
+/************************************************************* MENU LATÉRAL **************************************************************/
+.header_sidemenu                                       { display: flex; flex-direction: column; justify-content: space-between        ;
+                                                          height: 100%; font-weight: bold; border-right: 1px solid #78A1BC            ;
+                                                          min-height: 93vh; font-family: 'NoBleme-sidebar';                           }
+.header_sidemenu_selected ,.header_sidemenu_item:hover { background-color: #78A1BC;                                                   }
+.header_sidemenu_selected:hover                        { background-color: #37536B; color: #78A1BC;                                   }
+.header_sidemenu_item                                  { cursor: pointer; color: #37536B;                                             }
+.header_sidemenu_item > a                              { text-decoration: none; color: #37536B; width: 100%; display: inline-block;   }
+.header_sidemenu_selected > a                          { color: #37536B;                                                              }
+.header_sidemenu_selected:hover > a                    { color: #000000;                                                              }
+.header_sidemenu_titre                                 { margin-bottom: 1px; color:#000000;                                           }
+.header_sidemenu_hr                                    { width: 100%; padding: 0px; border: 0px; height: 1px; background:#78A1BC;     }
+.header_sidemenu_input                                 { margin-left:5%;width:90%;                                                    }
+
+@media (min-width: 750px) { .header_sidemenu           { width: 200px; padding-top: 7px;                                              }
+                            .header_sidemenu_desktop   { display: none;                                                               }
+                            .header_side_nomenu        { display: none; color: #FFFFFF                                                }
+                            .header_sidemenu_item      { padding: 5px 8px; font-size: 13px;                                           }
+                            .header_sidemenu_titre     { padding: 5px 10px; margin-left: 5px; margin-right: 5px; font-size: 13px;   } }
+
+@media (max-width: 749px) { .header_sidemenu           { width: 150px; padding-top: 4px;                                              }
+                            .header_sidemenu_mobile    { display: none;                                                               }
+                            .header_side_nomenu        { position:fixed; top:50px; font-weight: bold; font-size: 12px; cursor:pointer ;
+                                                         color: #78A1BC; padding-top: 2px; padding-bottom: 2px; padding-left: 5px     ;
+                                                         padding-right: 10px; background: #37536B; border-bottom-right-radius: 10px   }
+                            .header_sidemenu_item      { padding: 4px 3px; font-size: 10px;                                           }
+                            .header_sidemenu_titre     { padding: 5px 5px; margin-left: 0px; margin-right: 0px; font-size: 10px;    } }
 
 /************************************************* DÉCOUPAGE DU CORPS ET DU MENU LATÉRAL *************************************************/
 .containermenu                            { display: -webkit-flex; display: flex;                      }
 .flex_element                             { -webkit-flex: 1; flex: 1;                                  }
-@media (min-width: 650px) { .contenu_page { margin-top: 40px; padding-left: 25px; padding-right: 25px; } }
-@media (max-width: 649px) { .contenu_page { padding-left: 10px; padding-right: 10px;                   } }
+@media (min-width: 750px) { .contenu_page { margin-top: 40px; padding-left: 25px; padding-right: 25px; } }
+@media (max-width: 749px) { .contenu_page { margin-top: 20px; padding-left: 10px; padding-right: 10px; } }
 
 /************************************************************* PIED DE PAGE **************************************************************/
 footer { width: 100%; text-align: center; color: #999999; font-size: 14px; margin-top: 80px; margin-bottom: 40px;}

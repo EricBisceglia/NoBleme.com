@@ -68,9 +68,15 @@ if($majcheck['mise_a_jour'] && @getadmin($_SESSION['user']) == 0)
 
 // CSS spécial pendant les mises à jour
 if(!$majcheck['mise_a_jour'])
-  $css_body_maj = "";
+{
+  $css_mise_a_jour  = "";
+  $css_mise_a_jour2 = "";
+}
 else
-  $css_body_maj = ' class="mise_a_jour"';
+{
+  $css_mise_a_jour  = " mise_a_jour";
+  $css_mise_a_jour2 = " mise_a_jour_background";
+}
 
 
 
@@ -349,13 +355,11 @@ if(loggedin() && getadmin($_SESSION['user']))
   {
     $alerte_meta  = "Description meta trop courte (".strlen($page_desc)." <= 25)";
     $css_maj      = "maj";
-    $css_body_maj = ' class="maj"';
   }
   else
   {
     $alerte_meta  = "Description meta trop longue (".strlen($page_desc)." >= 155)";
     $css_maj      = "maj";
-    $css_body_maj = ' class="maj"';
   }
 }
 else
@@ -403,7 +407,7 @@ function header_class($element, $actuel, $menu)
 /**************************************************************************************************************************************/ ?>
 
 <!DOCTYPE html>
-<html<?=$css_body_maj?>>
+<html lang="<?=changer_casse($lang,'min')?>">
   <head>
     <title><?=$page_titre?></title>
     <link rel="shortcut icon" href="<?=$chemin?>img/divers/favicon.ico">
@@ -433,36 +437,35 @@ $menu['jouer']    = ($lang == 'FR') ? 'JOUER'     : 'PLAY';
 $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
 /* ########################################################################## */ if(!isset($_GET["popup"]) && !isset($_GET["popout"])) { ?>
 
-    <div class="header_topmenu">
+    <div class="header_topmenu<?=$css_mise_a_jour?>">
       <div id="header_titres" class="header_topmenu_zone">
 
-        <div class="<?=header_class('NoBleme',$header_menu,'top')?>"
-             onclick="window.location.href('<?=$chemin?>index');">
-                                   <a href="<?=$chemin?>index">NOBLEME</a>
-        </div>
-        <div class="<?=header_class('Discuter',$header_menu,'top')?>"
-             onclick="window.location.href('<?=$chemin?>pages/irc/index');">
-                                   <a href="<?=$chemin?>pages/irc/index"><?=$menu['discuter']?></a>
-        </div>
+        <a class="header_topmenu_lien" href="<?=$chemin?>index">
+          <div class="<?=header_class('NoBleme',$header_menu,'top')?>">NOBLEME</div>
+        </a>
+
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/irc/index">
+          <div class="<?=header_class('Discuter',$header_menu,'top')?>"><?=$menu['discuter']?></div>
+        </a>
+
         <?php if($lang == 'FR') { ?>
-        <div class="<?=header_class('Jouer',$header_menu,'top')?>"
-             onclick="window.location.href('<?=$chemin?>pages/nbrpg/index');">
-                                   <a href="<?=$chemin?>pages/nbrpg/index"><?=$menu['jouer']?></a>
-        </div>
-        <div class="<?=header_class('Lire',$header_menu,'top')?>"
-             onclick="window.location.href('<?=$chemin?>pages/irc/quotes');">
-                                   <a href="<?=$chemin?>pages/irc/quotes"><?=$menu['lire']?></a>
-        </div>
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/nbrpg/index">
+          <div class="<?=header_class('Jouer',$header_menu,'top')?>"><?=$menu['jouer']?></div>
+        </a>
+
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/irc/quotes">
+          <div class="<?=header_class('Lire',$header_menu,'top')?>"><?=$menu['lire']?></div>
+        </a>
+
         <?php } if(loggedin() && getsysop($_SESSION['user'])) { ?>
-        <div class="<?=header_class('Admin',$header_menu,'top')?>"
-             onclick="window.location.href('<?=$chemin?>pages/nobleme/activite?mod');">
-                                   <a href="<?=$chemin?>pages/nobleme/activite?mod">ADMIN</a>
-        </div>
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/nobleme/activite?mod">
+          <div class="<?=header_class('Admin',$header_menu,'top')?>">ADMIN</div>
+        </a>
+
         <?php } if(loggedin() && getadmin($_SESSION['user'])) { ?>
-        <div class="<?=header_class('Dev',$header_menu,'top')?>"
-             onclick="window.location.href('<?=$chemin?>pages/dev/formattage');">
-                                   <a href="<?=$chemin?>pages/dev/formattage">DEV</a>
-        </div>
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/dev/formattage">
+          <div class="<?=header_class('Dev',$header_menu,'top')?>">DEV</div>
+        </a>
         <?php } ?>
       </div>
       <div class="header_topmenu_zone header_topmenu_flag">
@@ -488,7 +491,7 @@ $submenu['deconnexion'] = ($lang == 'FR') ? "Déconnexion" : "Log out";
 $submenu['connexion']   = ($lang == 'FR') ? "Vous n'êtes pas connecté: Cliquez ici pour vous identifier ou vous enregistrer" : "You are not logged in: Click here to login or register.";
 ######################################################################################################################################## ?>
 
-    <div class="menu_sub">
+    <div class="menu_sub<?=$css_mise_a_jour2?>">
       <?php if(loggedin()) {
             if($notifications) { ?>
       <div class="header_topmenu_zone">
@@ -549,7 +552,7 @@ $sidemenu['masquer']  = ($lang == 'FR') ? 'Masquer le menu latéral'   : 'Hide t
       <div class="header_side_nomenu" id="header_nomenu" onclick="document.getElementById('header_sidemenu').style.display = 'flex'; document.getElementById('header_nomenu').style.display = 'none';">
         <?=$sidemenu['afficher']?>
       </div>
-      <nav id="header_sidemenu" class="header_sidemenu_mobile">
+      <nav id="header_sidemenu" class="header_sidemenu_mobile<?=$css_mise_a_jour2?>">
         <div class="header_sidemenu">
           <div>
             <div class="header_sidemenu_item header_sidemenu_desktop" onclick="document.getElementById('header_nomenu').style.display = 'flex'; document.getElementById('header_sidemenu').style.display = 'none';">
@@ -566,14 +569,18 @@ $sidemenu['nb_accueil']   = ($lang == 'FR') ? "Page d'accueil"      : "Home page
 $sidemenu['nb_membres']   = ($lang == 'FR') ? "Liste des membres"   : "User list";
 /* ################################################################################################## */ if($header_menu == 'NoBleme') { ?>
 
-            <div class="<?=header_class('Accueil',$header_sidemenu,'side')?>"
-                 onclick="window.location.href('<?=$chemin?>index');">
-                                       <a href="<?=$chemin?>index"><?=$sidemenu['nb_accueil']?></a>
+            <div class="<?=header_class('Accueil',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>index">
+                <?=$sidemenu['nb_accueil']?>
+              </a>
             </div>
+
             <hr class="header_sidemenu_hr">
-            <div class="<?=header_class('Liste_membres',$header_sidemenu,'side')?>"
-                 onclick="window.location.href('<?=$chemin?>pages/nobleme/membres');">
-                                       <a href="<?=$chemin?>pages/nobleme/membres"><?=$sidemenu['nb_membres']?></a>
+
+            <div class="<?=header_class('Liste_membres',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/nobleme/membres">
+                <?=$sidemenu['nb_membres']?>
+              </a>
             </div>
 
 
@@ -588,9 +595,11 @@ $sidemenu['bla_irc_what'] = ($lang == 'FR') ? "Qu'est-ce que IRC ?" : "What is I
             <div class="header_sidemenu_titre">
               <?=$sidemenu['bla_irc']?>
             </div>
-            <div class="<?=header_class('IRC',$header_sidemenu,'side')?>"
-                 onclick="window.location.href('<?=$chemin?>pages/irc/index');">
-                                       <a href="<?=$chemin?>pages/irc/index"><?=$sidemenu['bla_irc_what']?></a>
+
+            <div class="<?=header_class('IRC',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/irc/index">
+                <?=$sidemenu['bla_irc_what']?>
+              </a>
             </div>
 
 
@@ -604,9 +613,11 @@ $sidemenu['bla_irc_what'] = ($lang == 'FR') ? "Qu'est-ce que IRC ?" : "What is I
             <div class="header_sidemenu_titre">
               NoBlemeRPG
             </div>
-            <div class="<?=header_class('NBRPG',$header_sidemenu,'side')?>"
-                 onclick="window.location.href('<?=$chemin?>pages/nbrpg/index');">
-                                       <a href="<?=$chemin?>pages/nbrpg/index">Qu'est-ce que le NBRPG ?</a>
+
+            <div class="<?=header_class('NBRPG',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/nbrpg/index">
+                Qu'est-ce que le NBRPG ?
+              </a>
             </div>
 
             <?php } else { ?>
@@ -632,9 +643,11 @@ $sidemenu['bla_irc_what'] = ($lang == 'FR') ? "Qu'est-ce que IRC ?" : "What is I
             <div class="header_sidemenu_titre">
               Miscellanées
             </div>
-            <div class="<?=header_class('Misc',$header_sidemenu,'side')?>"
-                 onclick="window.location.href('<?=$chemin?>pages/irc/quotes');">
-                                       <a href="<?=$chemin?>pages/irc/quotes">Petites citations amusantes</a>
+
+            <div class="<?=header_class('Misc',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/irc/quotes">
+                Petites citations amusantes
+              </a>
             </div>
 
             <?php } else { ?>
@@ -658,13 +671,15 @@ $sidemenu['user_notifs']      = ($lang == 'FR') ? "Boite de réception"  : "My i
 $sidemenu['user_notifsenvoi'] = ($lang == 'FR') ? "Messages envoyés"    : "Sent messages";
 /* ################################################################################################### */ if($header_menu == 'Compte') { ?>
 
-            <div class="<?=header_class('Inbox',$header_sidemenu,'side')?>"
-                 onclick="window.location.href('<?=$chemin?>pages/user/notifications');">
-                                       <a href="<?=$chemin?>pages/user/notifications"><?=$sidemenu['user_notifs']?></a>
+            <div class="<?=header_class('Inbox',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/user/notifications">
+                <?=$sidemenu['user_notifs']?>
+              </a>
             </div>
-            <div class="<?=header_class('Outbox',$header_sidemenu,'side')?>"
-                 onclick="window.location.href('<?=$chemin?>pages/user/notifications?envoyes');">
-                                       <a href="<?=$chemin?>pages/user/notifications?envoyes"><?=$sidemenu['user_notifsenvoi']?></a>
+            <div class="<?=header_class('Outbox',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/user/notifications?envoyes">
+                <?=$sidemenu['user_notifsenvoi']?>
+              </a>
             </div>
 
 
@@ -672,9 +687,10 @@ $sidemenu['user_notifsenvoi'] = ($lang == 'FR') ? "Messages envoyés"    : "Sent
 
 <?php } /* ############################################## MENU LATÉRAL : ADMIN ######################## */ if($header_menu == 'Admin') { ?>
 
-            <div class="<?=header_class('Modlogs',$header_sidemenu,'side')?>"
-                 onclick="window.location.href('<?=$chemin?>pages/nobleme/activite?mod');">
-                                       <a href="<?=$chemin?>pages/nobleme/activite?mod">Logs de modération</a>
+            <div class="<?=header_class('Modlogs',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/nobleme/activite?mod">
+                Logs de modération
+              </a>
             </div>
 
 
@@ -682,17 +698,48 @@ $sidemenu['user_notifsenvoi'] = ($lang == 'FR') ? "Messages envoyés"    : "Sent
 
 <?php } /* ################################################ MENU LATÉRAL : DEV ########################## */ if($header_menu == 'Dev') { ?>
 
-            <div class="<?=header_class('Formattage',$header_sidemenu,'side')?>"
-                 onclick="window.location.href('<?=$chemin?>pages/dev/formattage');">
-                                       <a href="<?=$chemin?>pages/dev/formattage">Snippets de code</a>
+            <div class="<?=header_class('Formattage',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/dev/formattage">
+                Snippets de code
+              </a>
             </div>
-            <div class="<?=header_class('Fonctions',$header_sidemenu,'side')?>"
-                 onclick="window.location.href('<?=$chemin?>pages/dev/fonctions');">
-                                       <a href="<?=$chemin?>pages/dev/fonctions">Référence des fonctions</a>
+
+            <div class="<?=header_class('Fonctions',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/dev/fonctions">
+                Référence des fonctions
+              </a>
             </div>
-            <div class="<?=header_class('CSS',$header_sidemenu,'side')?>"
-                 onclick="window.location.href('<?=$chemin?>pages/dev/css');">
-                                       <a href="<?=$chemin?>pages/dev/css">Référence HTML &amp; CSS &amp; JS</a>
+
+            <div class="<?=header_class('CSS',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/dev/css">
+                Référence HTML &amp; CSS &amp; JS
+              </a>
+            </div>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="<?=header_class('MajChecklist',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/dev/maj">
+                Mise à jour: Checklist
+              </a>
+            </div>
+
+            <div class="<?=header_class('MajRequetes',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/dev/sql">
+                Requêtes SQL
+              </a>
+            </div>
+
+            <div class="<?=header_class('MajFermeture',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/dev/fermeture">
+                Ouvrir/fermer le site
+              </a>
+            </div>
+
+            <div class="<?=header_class('MajVersion',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/dev/version">
+                Numéro de version
+              </a>
             </div>
 
           <?php } ?>

@@ -9,15 +9,51 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 adminonly();
 
 // Menus du header
-$header_menu      = 'admin';
-$header_submenu   = 'dev';
-$header_sidemenu  = 'sql';
+$header_menu      = 'Dev';
+$header_sidemenu  = 'MajRequetes';
 
 // Titre et description
-$page_titre = "Dev : Requêtes";
+$page_titre = "Dev: Requêtes SQL";
 
 // Identification
 $page_nom = "admin";
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                         TEMPLATES DE REQUÊTES                                                         */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+/* Ces modèles sont là pour me souvenir d'une version à l'autre de comment écrire mes changements sans me faire chier à aller dig les logs
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Création d'une table
+
+query(" CREATE TABLE IF NOT EXISTS vars_globales (
+          id    INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+          cc    MEDIUMTEXT                                            ,
+          tvvmb INT(11) UNSIGNED NOT NULL
+        ) ENGINE=MyISAM; ");
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Création d'un champ dans une table existante
+
+if(!@mysqli_query(" SELECT mise_a_jour FROM vars_globales ", 'x'))
+  @mysqli_query(" ALTER TABLE vars_globales ADD mise_a_jour MEDIUMTEXT AFTER nbrpg_activite ", 'x');
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Rajout d'une entrée dans un champ
+
+if(!mysqli_num_rows(query(" SELECT id FROM pages WHERE page_nom LIKE 'nobleme' AND page_id LIKE 'activite' ")))
+  query(" INSERT INTO pages
+          SET         page_nom    = 'nobleme'                       ,
+                      page_id     = 'activite'                      ,
+                      visite_page = 'Consulte l\'activité récente'  ,
+                      visite_url  = 'pages/nobleme/activite'        ");
 
 
 
@@ -29,9 +65,7 @@ $page_nom = "admin";
 /*****************************************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Début du string d'affichage
-
-$majq = '<p class="nobleme_fonce texte_blanc gros gras vspaced">Début des requêtes...</p>';
+// Tout le bordel du NBRPG en attente d'être pushé dans la version publique
 
 /********************************NBRPGTEST*DELETEME**********************/
 query(" DROP TABLE IF EXISTS nbrpg_persos ");
@@ -41,7 +75,6 @@ query(" DROP TABLE IF EXISTS nbrpg_session ");
 query(" DROP TABLE IF EXISTS nbrpg_chatlog ");
 query(" DROP TABLE IF EXISTS nbrpg_effets ");
 query(" DROP TABLE IF EXISTS nbrpg_session_effets ");
-$majq .= '<p class="erreur texte_blanc gros gras vspaced" style="padding-top:20px;padding-bottom:20px">Exécution des tests à supprimer avant de mettre en live</p>';
 /********************************NBRPGTEST*DELETEME**********************/
 
 query(" CREATE TABLE IF NOT EXISTS nbrpg_persos (
@@ -73,7 +106,6 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_persos (
           FKnbrpg_objets_objet3   INT(11) UNSIGNED NOT NULL                             ,
           FKnbrpg_objets_objet4   INT(11) UNSIGNED NOT NULL
         ) ENGINE=MyISAM; ");
-$majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_persos</p>';
 
 query(" CREATE TABLE IF NOT EXISTS nbrpg_objets (
           id                              INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
@@ -105,7 +137,6 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_objets (
           reduction_degats                INT(11) SIGNED NOT NULL                               ,
           reduction_degats_pourcent       INT(11) SIGNED NOT NULL
         ) ENGINE=MyISAM; ");
-$majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_objets</p>';
 
 query(" CREATE TABLE IF NOT EXISTS nbrpg_monstres (
           id                        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
@@ -123,7 +154,6 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_monstres (
           resistance_physique       INT(11) SIGNED NOT NULL                               ,
           resistance_magique        INT(11) SIGNED NOT NULL
         ) ENGINE=MyISAM; ");
-$majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_monstres</p>';
 
 query(" CREATE TABLE IF NOT EXISTS nbrpg_session (
           id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
@@ -137,7 +167,6 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_session (
           mental            INT(11) UNSIGNED NOT NULL                             ,
           danger            INT(11) UNSIGNED NOT NULL
         ) ENGINE=MyISAM; ");
-$majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_session</p>';
 
 query(" CREATE TABLE IF NOT EXISTS nbrpg_chatlog (
           id        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
@@ -147,7 +176,6 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_chatlog (
           type_chat TINYTEXT                                              ,
           message   LONGTEXT
         ) ENGINE=MyISAM; ");
-$majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_chatlog</p>';
 
 query(" CREATE TABLE IF NOT EXISTS nbrpg_effets (
           id                                  INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
@@ -181,7 +209,6 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_effets (
           amplification_soins_recus           INT(11) SIGNED NOT NULL                               ,
           amplification_soins_recus_pourcent  INT(11) SIGNED NOT NULL
         ) ENGINE=MyISAM; ");
-$majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_effets</p>';
 
 query(" CREATE TABLE IF NOT EXISTS nbrpg_session_effets (
           id              INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
@@ -189,7 +216,6 @@ query(" CREATE TABLE IF NOT EXISTS nbrpg_session_effets (
           FKnbrpg_effets  INT(11) UNSIGNED NOT NULL                             ,
           duree_restante  INT(11) UNSIGNED NOT NULL
         ) ENGINE=MyISAM; ");
-$majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table nbrpg_session_effets</p>';
 
 
 
@@ -199,7 +225,6 @@ if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE 
                       page_id     = 'index'                     ,
                       visite_page = 'Attend le retour du NBRPG' ,
                       visite_url  = 'pages/nbrpg/index'         ");
-$majq .= '<p class="nobleme_background vspaced">Crée l\'entrée activité : Attend le retour du NBRPG</p>';
 
 if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'nbrpg' AND page_id LIKE 'personnages' ")))
   query(" INSERT INTO pages
@@ -207,7 +232,6 @@ if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE 
                       page_id     = 'personnages'                   ,
                       visite_page = 'Juge les personnages du NBRPG' ,
                       visite_url  = 'pages/nbrpg/joueurs_actifs'    ");
-$majq .= '<p class="nobleme_background vspaced">Crée l\'entrée activité : Juge les personnages du NBRPG</p>';
 
 if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'nbrpg' AND page_id LIKE 'client' ")))
   query(" INSERT INTO pages
@@ -215,7 +239,6 @@ if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE 
                       page_id     = 'client'              ,
                       visite_page = 'Joue au NoBlemeRPG'  ,
                       visite_url  = 'pages/nbrpg/client'  ");
-$majq .= '<p class="nobleme_background vspaced">Crée l\'entrée activité : Joue au NoBlemeRPG</p>';
 
 
 /********************************NBRPGTEST*DELETEME**********************/
@@ -257,60 +280,6 @@ query(" INSERT INTO nbrpg_session_effets SET id = 6 , FKnbrpg_session = 1 , FKnb
 query(" INSERT INTO nbrpg_session_effets SET id = 7 , FKnbrpg_session = 1 , FKnbrpg_effets = 4 , duree_restante = 42 ");
 query(" INSERT INTO nbrpg_session_effets SET id = 8 , FKnbrpg_session = 1 , FKnbrpg_effets = 4 , duree_restante = 42 ");
 
-$majq .= '<p class="erreur texte_blanc gros gras" style="padding-top:20px;padding-bottom:20px">Exécution des tests à supprimer avant de mettre en live</p>';
-/********************************NBRPGTEST*DELETEME**********************/
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fin du string d'affichage
-
-$majq .= '<p class="nobleme_fonce texte_blanc gros gras vspaced">Fini toutes les requêtes !</p>';
-
-
-
-
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                               TEMPLATES                                                               */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
-/* Ces modèles sont là pour me souvenir d'une version à l'autre de comment écrire mes changements sans me faire chier à aller dig les logs
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Création d'une table
-
-query(" CREATE TABLE IF NOT EXISTS cc_tvvmb (
-          id    INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-          cc    MEDIUMTEXT                                            ,
-          tvvmb INT(11) UNSIGNED NOT NULL
-        ) ENGINE=MyISAM; ");
-$majq .= '<p class="vert_background vspaced moinsgros gras">Crée la table cc_tvvmb</p>';
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Création d'un champ dans une table existante
-
-if(!@mysqli_query($GLOBALS['db'], " SELECT tvvmb FROM cc "))
-  query(" ALTER TABLE cc ADD tvvmb INT(11) UNSIGNED NOT NULL AFTER champ_avant_tvvmb ");
-$majq .= '<p class="vert_background_clair vspaced gras">Crée le champ cc.tvvmb</p>';
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Rajout d'une entrée dans un champ
-
-if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'cc' AND page_id LIKE 'tvvmb' ")))
-  query(" INSERT INTO pages
-          SET         page_nom    = 'cc'                  ,
-                      page_id     = 'tvvmb'               ,
-                      visite_page = 'Salue tout le monde' ,
-                      visite_url  = 'pages/cc/tvvmb'      ");
-$majq .= '<p class="nobleme_background vspaced">Crée l\'entrée activité : Salue tout le monde</p>';
-
 
 
 
@@ -320,16 +289,25 @@ $majq .= '<p class="nobleme_background vspaced">Crée l\'entrée activité : Sal
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/administration.png" alt="Administration">
-    </div>
-    <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
 
-    <div class="body_main smallsize align_center">
-      <?=$majq?>
-    </div>
+      <div class="texte">
+
+        <h1 class="positif texte_blanc align_center">LES REQUÊTES ONT ÉTÉ EFFECTUÉES AVEC SUCCÈS</h1>
+
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

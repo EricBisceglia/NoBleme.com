@@ -65,7 +65,7 @@ function postdata($data, $type=NULL, $min=NULL, $max=NULL)
 function postdata_vide($data)
 {
   if(isset($_POST[$data]))
-    $output = postdata($data);
+    $output = postdata($_POST[$data]);
   else
     $output = "";
 

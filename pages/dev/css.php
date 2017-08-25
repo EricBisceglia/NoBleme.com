@@ -305,6 +305,29 @@ $js   = array('toggle','highlight','dynamique','popup','calendrier');
           <thead>
             <tr>
               <th class="rowaltc moinsgros" colspan="2">
+                GESTION DES TEXTES LONGS
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center gras">
+                .nowrap
+              </td>
+              <td class="align_center nowrap">
+                Empêche les retours à la ligne si le contenu est trop long comme ici par exemple
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
                 FORMATTAGE DE TEXTE
               </th>
             </tr>
@@ -372,29 +395,6 @@ $js   = array('toggle','highlight','dynamique','popup','calendrier');
               </td>
               <td class="align_center monospace">
                 Texte monospace
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <br>
-        <br>
-
-        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
-          <thead>
-            <tr>
-              <th class="rowaltc moinsgros" colspan="2">
-                GESTION DES TEXTES LONGS
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="align_center gras">
-                .nowrap
-              </td>
-              <td class="align_center nowrap">
-                Empêche les retours à la ligne si le contenu est trop long comme ici par exemple
               </td>
             </tr>
           </tbody>
@@ -1121,33 +1121,33 @@ $js   = array('toggle','highlight','dynamique','popup','calendrier');
                 <form method="POST">
                   <fieldset>
                     <label for="nomClient">Nom du client</label>
-                    <input id="nomClient" class="indiv" placeholder="Le nom du client va ici" type="text"><br>
+                    <input id="nomClient" name="nomClient" class="indiv" placeholder="Le nom du client va ici" type="text"><br>
                     <br>
                     <label for="nomClient">Genre du client</label>
-                    <input id="genreClient" name="genreClient" type="radio">
-                    <label class="label-inline gras" for="genreClient">M</label>
+                    <input id="genreClientM" name="genreClient" type="radio">
+                    <label class="label-inline gras" for="genreClientM">M</label>
                     &nbsp;
-                    <input id="genreClient" name="genreClient" type="radio">
-                    <label class="label-inline gras" for="genreClient">F</label>
+                    <input id="genreClientF" name="genreClient" type="radio">
+                    <label class="label-inline gras" for="genreClientF">F</label>
                     &nbsp;
-                    <input id="genreClient" name="genreClient" type="radio">
-                    <label class="label-inline gras" for="genreClient">X</label><br>
+                    <input id="genreClientX" name="genreClient" type="radio">
+                    <label class="label-inline gras" for="genreClientX">X</label><br>
                     <br>
                     <label for="ageClient">Âge du client</label>
-                    <select id="ageClient" class="indiv">
+                    <select id="ageClient" name="ageClient" class="indiv">
                       <option value="18-25">18-25</option>
                       <option value="26-40">26-40</option>
                       <option value="41+">41+</option>
                     </select><br>
                     <br>
                     <label for="commClient">Commentaires</label>
-                    <textarea id="commClient" class="indiv" placeholder="Écrire les commentaires ici"></textarea><br>
+                    <textarea id="commClient" name="commClient" class="indiv" placeholder="Écrire les commentaires ici"></textarea><br>
                     <br>
                     <label for="passClient">Mot de passe administratif</label>
-                    <input id="passClient" class="indiv" type="password"><br>
+                    <input id="passClient" name="passClient" class="indiv" type="password"><br>
                     <br>
                     <div class="float-right">
-                      <input id="ccClient" type="checkbox">
+                      <input id="ccClient" name="ccClient" type="checkbox">
                       <label class="label-inline" for="ccClient">Se mettre en cc du mail</label>
                     </div>
                     <input value="Envoyer" type="submit">
@@ -1161,7 +1161,7 @@ $js   = array('toggle','highlight','dynamique','popup','calendrier');
                   echo(htmlspecialchars('<form method="POST">
   <fieldset>
     <label for="nomClient">Nom du client</label>
-    <input id="nomClient" class="indiv" placeholder="Le nom du client va ici" type="text"><br>
+    <input id="nomClient" name="nomClient" class="indiv" placeholder="Le nom du client va ici" type="text"><br>
     <br>
     <label for="nomClient">Genre du client</label>
     <input id="genreClient" name="genreClient" type="radio">
@@ -1174,20 +1174,20 @@ $js   = array('toggle','highlight','dynamique','popup','calendrier');
     <label class="label-inline gras" for="genreClient">X</label><br>
     <br>
     <label for="ageClient">Âge du client</label>
-    <select id="ageClient" class="indiv">
+    <select id="ageClient" name="ageClient" class="indiv">
       <option value="18-25">18-25</option>
       <option value="26-40">26-40</option>
       <option value="41+">41+</option>
     </select><br>
     <br>
     <label for="commClient">Commentaires</label>
-    <textarea id="commClient" class="indiv" placeholder="Écrire les commentaires ici"></textarea><br>
+    <textarea id="commClient" name="commClient" class="indiv" placeholder="Écrire les commentaires ici"></textarea><br>
     <br>
     <label for="passClient">Mot de passe administratif</label>
-    <input id="passClient" class="indiv" type="password"><br>
+    <input id="passClient" name="passClient" class="indiv" type="password"><br>
     <br>
     <div class="float-right">
-      <input id="ccClient" type="checkbox">
+      <input id="ccClient" name="ccClient" type="checkbox">
       <label class="label-inline" for="ccClient">Se mettre en cc du mail</label>
     </div>
     <input value="Envoyer" type="submit">
@@ -1906,7 +1906,7 @@ Retours à la ligne</code></pre>'))
           <tbody>
             <tr>
               <td class="align_center">
-                <div class="pointeur gras texte_nobleme_fonce" onClick="toggle_row('exemple_togglejs')";>
+                <div class="pointeur gras texte_nobleme_fonce" onClick="toggle_row('exemple_togglejs');">
                   Cliquez moi (par id)
                 </div>
                 <div class="gras noir texte_negatif hidden" id="exemple_togglejs">
@@ -1916,7 +1916,7 @@ Retours à la ligne</code></pre>'))
             </tr>
             <tr>
               <td class="align_center">
-                <div class="pointeur gras texte_nobleme_fonce" onClick="toggle_class('exemple_togglejs')";>
+                <div class="pointeur gras texte_nobleme_fonce" onClick="toggle_class('exemple_togglejs');">
                   Cliquez moi (par classe)
                 </div>
                 <div class="gras noir texte_positif hidden exemple_togglejs">
@@ -1933,13 +1933,13 @@ Retours à la ligne</code></pre>'))
             <tr>
               <td>
                 <pre onclick="highlight('refhtml_toggle');" class="monospace spaced scrollbar" id="refhtml_toggle" style="max-width:500px;max-height:80px;margin-bottom:0"><?php
-                  echo(htmlspecialchars('<div class="pointeur gras texte_nobleme_fonce" onClick="toggle_row(\'exemple_togglejs\')";>
+                  echo(htmlspecialchars('<div class="pointeur gras texte_nobleme_fonce" onClick="toggle_row(\'exemple_togglejs\');">
   Cliquez moi (par id)
 </div>
 <div class="gras noir texte_negatif hidden" id="exemple_togglejs">
   Cette section de contenu apparait et disparait
 </div>
-<div class="pointeur gras texte_nobleme_fonce" onClick="toggle_class(\'exemple_togglejs\')";>
+<div class="pointeur gras texte_nobleme_fonce" onClick="toggle_class(\'exemple_togglejs\');">
   Cliquez moi (par classe)
 </div>
 <div class="gras noir texte_positif hidden exemple_togglejs">

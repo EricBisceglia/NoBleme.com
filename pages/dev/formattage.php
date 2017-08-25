@@ -34,8 +34,8 @@ $js  = array('highlight','toggle');
       <script>
         function formattage_tout_fermer()
         {
-          document.getElementById('formattage_separateurs').style.display = "none";
           document.getElementById('formattage_header').style.display = "none";
+          document.getElementById('formattage_separateurs').style.display = "none";
           document.getElementById('formattage_html').style.display = "none";
           document.getElementById('formattage_dynamique').style.display = "none";
         }
@@ -45,12 +45,12 @@ $js  = array('highlight','toggle');
         <thead>
           <tr>
             <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="formattage_tout_fermer();toggle_row('formattage_separateurs');">
-              SÉPARATEURS
-            </th>
-            <th class="rowaltc moinsgros pointeur border_right_blank"
                 onClick="formattage_tout_fermer();toggle_row('formattage_header');">
               HEADER
+            </th>
+            <th class="rowaltc moinsgros pointeur border_right_blank"
+                onClick="formattage_tout_fermer();toggle_row('formattage_separateurs');">
+              SÉPARATEURS
             </th>
             <th class="rowaltc moinsgros pointeur border_right_blank"
                 onClick="formattage_tout_fermer();toggle_row('formattage_html');">
@@ -67,40 +67,7 @@ $js  = array('highlight','toggle');
       <br>
       <br>
 
-      <div class="margin_auto" id="formattage_separateurs" style="width:1150px">
-
-        <pre onclick="highlight('pre_separateur');" class="monospace spaced" id="pre_separateur">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Titre</pre>
-
-        <br>
-
-        <pre onclick="highlight('pre_postdata');" class="monospace spaced" id="pre_postdata">/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                        TRAITEMENT DU POST-DATA                                                        */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/</pre>
-
-        <br>
-
-        <pre onclick="highlight('pre_paration');" class="monospace spaced" id="pre_paration">/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                        PRÉPARATION DES DONNÉES                                                        */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/</pre>
-
-      </div>
-
-      <div class="margin_auto hidden" id="formattage_header" style="width:1150px">
-
-        <pre onclick="highlight('pre_include');" class="monospace spaced" style="overflow-x:scroll;" id="pre_include">&lt;?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                 CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST INCLUDE PAR UNE AUTRE PAGE                                */
-/*                                                                                                                                       */
-// Include only /*************************************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF'])))
-  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Vous n\'êtes pas censé accéder à cette page, dehors!</body></html>');</pre>
-
-        <br>
+      <div class="margin_auto" id="formattage_header" style="width:1150px">
 
         <pre onclick="highlight('pre_init');" class="monospace spaced" id="pre_init">&lt;?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */
@@ -130,6 +97,39 @@ $page_id  = "admin";
 // CSS &amp; JS
 $css = array('admin');
 $js  = array('dynamique');</pre>
+
+        <br>
+
+        <pre onclick="highlight('pre_include');" class="monospace spaced" style="overflow-x:scroll;" id="pre_include">&lt;?php /***********************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                 CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST INCLUDE PAR UNE AUTRE PAGE                                */
+/*                                                                                                                                       */
+// Include only /*************************************************************************************************************************/
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF'])))
+  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Vous n\'êtes pas censé accéder à cette page, dehors!</body></html>');</pre>
+
+      </div>
+
+      <div class="margin_auto hidden" id="formattage_separateurs" style="width:1150px">
+
+        <pre onclick="highlight('pre_separateur');" class="monospace spaced" id="pre_separateur">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Titre</pre>
+
+        <br>
+
+        <pre onclick="highlight('pre_postdata');" class="monospace spaced" id="pre_postdata">/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                        TRAITEMENT DU POST-DATA                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/</pre>
+
+        <br>
+
+        <pre onclick="highlight('pre_paration');" class="monospace spaced" id="pre_paration">/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                        PRÉPARATION DES DONNÉES                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/</pre>
 
       </div>
 
