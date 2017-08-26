@@ -564,3 +564,200 @@ CREATE TABLE `version` (
   `build` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `activite`
+--
+ALTER TABLE `activite`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `activite_diff`
+--
+ALTER TABLE `activite_diff`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `anniv_flash`
+--
+ALTER TABLE `anniv_flash`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `devblog`
+--
+ALTER TABLE `devblog`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `devblog_commentaire`
+--
+ALTER TABLE `devblog_commentaire`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `forum_loljk`
+--
+ALTER TABLE `forum_loljk`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `invites`
+--
+ALTER TABLE `invites`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ip` (`ip`);
+
+--
+-- Index pour la table `irl`
+--
+ALTER TABLE `irl`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `irl_participants`
+--
+ALTER TABLE `irl_participants`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `membres`
+--
+ALTER TABLE `membres`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `membres_essais_login`
+--
+ALTER TABLE `membres_essais_login`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `membres_secrets`
+--
+ALTER TABLE `membres_secrets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `nbrpg_chatlog`
+--
+ALTER TABLE `nbrpg_chatlog`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `nbrpg_effets`
+--
+ALTER TABLE `nbrpg_effets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `nbrpg_monstres`
+--
+ALTER TABLE `nbrpg_monstres`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `nbrpg_objets`
+--
+ALTER TABLE `nbrpg_objets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `nbrpg_persos`
+--
+ALTER TABLE `nbrpg_persos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `nbrpg_session`
+--
+ALTER TABLE `nbrpg_session`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `nbrpg_session_effets`
+--
+ALTER TABLE `nbrpg_session_effets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `pages`
+--
+ALTER TABLE `pages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `quotes`
+--
+ALTER TABLE `quotes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `quotes_membres`
+--
+ALTER TABLE `quotes_membres`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `secrets`
+--
+ALTER TABLE `secrets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `stats_pageviews`
+--
+ALTER TABLE `stats_pageviews`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `stats_referer`
+--
+ALTER TABLE `stats_referer`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `todo`
+--
+ALTER TABLE `todo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `todo_categorie`
+--
+ALTER TABLE `todo_categorie`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `todo_commentaire`
+--
+ALTER TABLE `todo_commentaire`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `todo_roadmap`
+--
+ALTER TABLE `todo_roadmap`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `vars_globales`
+--
+ALTER TABLE `vars_globales`
+  ADD UNIQUE KEY `mise_a_jour` (`mise_a_jour`);
+
+--
+-- Index pour la table `version`
+--
+ALTER TABLE `version`
+  ADD PRIMARY KEY (`id`);

@@ -17,7 +17,7 @@ adminonly();
 
 // Menus du header
 $header_menu      = 'Dev';
-$header_sidemenu  = 'CSS';
+$header_sidemenu  = 'Reference';
 
 // Titre
 $page_titre = "Dev: Référence CSS";

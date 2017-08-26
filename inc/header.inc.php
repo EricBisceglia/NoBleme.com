@@ -463,7 +463,7 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
         </a>
 
         <?php } if(loggedin() && getadmin($_SESSION['user'])) { ?>
-        <a class="header_topmenu_lien" href="<?=$chemin?>pages/dev/formattage">
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/dev/snippets">
           <div class="<?=header_class('Dev',$header_menu,'top')?>">DEV</div>
         </a>
         <?php } ?>
@@ -698,21 +698,21 @@ $sidemenu['user_notifsenvoi'] = ($lang == 'FR') ? "Messages envoyés"    : "Sent
 
 <?php } /* ################################################ MENU LATÉRAL : DEV ########################## */ if($header_menu == 'Dev') { ?>
 
-            <div class="<?=header_class('Formattage',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/dev/formattage">
+            <div class="<?=header_class('Snippets',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/dev/snippets">
                 Snippets de code
+              </a>
+            </div>
+
+            <div class="<?=header_class('Reference',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/dev/reference">
+                Référence HTML / CSS
               </a>
             </div>
 
             <div class="<?=header_class('Fonctions',$header_sidemenu,'side')?>">
               <a href="<?=$chemin?>pages/dev/fonctions">
                 Référence des fonctions
-              </a>
-            </div>
-
-            <div class="<?=header_class('CSS',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/dev/css">
-                Référence HTML &amp; CSS &amp; JS
               </a>
             </div>
 
@@ -739,6 +739,14 @@ $sidemenu['user_notifsenvoi'] = ($lang == 'FR') ? "Messages envoyés"    : "Sent
             <div class="<?=header_class('MajVersion',$header_sidemenu,'side')?>">
               <a href="<?=$chemin?>pages/dev/version">
                 Numéro de version
+              </a>
+            </div>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="<?=header_class('IRCbot',$header_sidemenu,'side')?>">
+              <a href="<?=$chemin?>pages/dev/ircbot">
+                Gestion du bot IRC
               </a>
             </div>
 

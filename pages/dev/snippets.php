@@ -10,7 +10,7 @@ adminonly();
 
 // Menus du header
 $header_menu      = 'Dev';
-$header_sidemenu  = 'Formattage';
+$header_sidemenu  = 'Snippets';
 
 // Titre et description
 $page_titre = "Dev: Formattage";
@@ -185,7 +185,7 @@ if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est inv
 
       <div class="margin_auto hidden" id="formattage_dynamique" style="width:1150px">
 
-        <pre onclick="highlight('pre_init');" class="monospace spaced" id="pre_init">&lt;?php /***********************************************************************************************************************************/
+        <pre onclick="highlight('pre_dynamique_init');" class="monospace spaced" id="pre_dynamique_init">&lt;?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                             INITIALISATION                                                            */
 /*                                                                                                                                       */
