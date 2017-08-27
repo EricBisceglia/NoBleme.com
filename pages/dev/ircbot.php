@@ -99,23 +99,6 @@ else
       <div class="texte">
 
         <p>
-          <h5>Debug: Dernière commande enregistrée</h5>
-        </p>
-
-        <p class="texte_nobleme_fonce gras">
-          <?=$ircbot_debug?>
-        </p>
-
-      </div>
-
-      <br>
-      <br>
-
-      <hr class="separateur_contenu">
-
-      <div class="texte">
-
-        <p>
           <h5>Envoyer un message sur IRC via le bot</h5>
         </p>
 
@@ -160,6 +143,23 @@ else
             <input value="Notifier #Dev" type="submit">
           </fieldset>
         </form>
+
+      </div>
+
+      <br>
+      <br>
+
+      <hr class="separateur_contenu">
+
+      <div class="texte">
+
+        <p>
+          <h5>Debug: Dernière commande enregistrée</h5>
+        </p>
+
+        <p class="texte_nobleme_fonce gras">
+          <?=$ircbot_debug?>
+        </p>
 
       </div>
 
