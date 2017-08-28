@@ -569,19 +569,19 @@ $sidemenu['nb_accueil']   = ($lang == 'FR') ? "Page d'accueil"      : "Home page
 $sidemenu['nb_membres']   = ($lang == 'FR') ? "Liste des membres"   : "User list";
 /* ################################################################################################## */ if($header_menu == 'NoBleme') { ?>
 
-            <div class="<?=header_class('Accueil',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>index">
+            <a href="<?=$chemin?>index">
+              <div class="<?=header_class('Accueil',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_accueil']?>
-              </a>
-            </div>
+              </div>
+            </a>
 
             <hr class="header_sidemenu_hr">
 
-            <div class="<?=header_class('Liste_membres',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/nobleme/membres">
+            <a href="<?=$chemin?>pages/nobleme/membres">
+              <div class="<?=header_class('Liste_membres',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_membres']?>
-              </a>
-            </div>
+              </div>
+            </a>
 
 
 
@@ -596,11 +596,11 @@ $sidemenu['bla_irc_what'] = ($lang == 'FR') ? "Qu'est-ce que IRC ?" : "What is I
               <?=$sidemenu['bla_irc']?>
             </div>
 
-            <div class="<?=header_class('IRC',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/irc/index">
+            <a href="<?=$chemin?>pages/irc/index">
+              <div class="<?=header_class('IRC',$header_sidemenu,'side')?>">
                 <?=$sidemenu['bla_irc_what']?>
-              </a>
-            </div>
+              </div>
+            </a>
 
 
 
@@ -614,11 +614,11 @@ $sidemenu['bla_irc_what'] = ($lang == 'FR') ? "Qu'est-ce que IRC ?" : "What is I
               NoBlemeRPG
             </div>
 
-            <div class="<?=header_class('NBRPG',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/nbrpg/index">
+            <a href="<?=$chemin?>pages/nbrpg/index">
+              <div class="<?=header_class('NBRPG',$header_sidemenu,'side')?>">
                 Qu'est-ce que le NBRPG ?
-              </a>
-            </div>
+              </div>
+            </a>
 
             <?php } else { ?>
             <div class="header_sidemenu_titre">
@@ -644,11 +644,11 @@ $sidemenu['bla_irc_what'] = ($lang == 'FR') ? "Qu'est-ce que IRC ?" : "What is I
               Miscellanées
             </div>
 
-            <div class="<?=header_class('Misc',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/irc/quotes">
+            <a href="<?=$chemin?>pages/irc/quotes">
+              <div class="<?=header_class('Misc',$header_sidemenu,'side')?>">
                 Petites citations amusantes
-              </a>
-            </div>
+              </div>
+            </a>
 
             <?php } else { ?>
             <div class="header_sidemenu_titre">
@@ -671,84 +671,85 @@ $sidemenu['user_notifs']      = ($lang == 'FR') ? "Boite de réception"  : "My i
 $sidemenu['user_notifsenvoi'] = ($lang == 'FR') ? "Messages envoyés"    : "Sent messages";
 /* ################################################################################################### */ if($header_menu == 'Compte') { ?>
 
-            <div class="<?=header_class('Inbox',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/user/notifications">
+            <a href="<?=$chemin?>pages/user/notifications">
+              <div class="<?=header_class('Inbox',$header_sidemenu,'side')?>">
                 <?=$sidemenu['user_notifs']?>
-              </a>
-            </div>
-            <div class="<?=header_class('Outbox',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/user/notifications?envoyes">
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/user/notifications?envoyes">
+              <div class="<?=header_class('Outbox',$header_sidemenu,'side')?>">
                 <?=$sidemenu['user_notifsenvoi']?>
-              </a>
-            </div>
+              </div>
+            </a>
 
 
 
 
 <?php } /* ############################################## MENU LATÉRAL : ADMIN ######################## */ if($header_menu == 'Admin') { ?>
 
-            <div class="<?=header_class('Modlogs',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/nobleme/activite?mod">
+            <a href="<?=$chemin?>pages/nobleme/activite?mod">
+              <div class="<?=header_class('Modlogs',$header_sidemenu,'side')?>">
                 Logs de modération
-              </a>
-            </div>
+              </div>
+            </a>
 
 
 
 
 <?php } /* ################################################ MENU LATÉRAL : DEV ########################## */ if($header_menu == 'Dev') { ?>
 
-            <div class="<?=header_class('Snippets',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/dev/snippets">
+            <a href="<?=$chemin?>pages/dev/snippets">
+              <div class="<?=header_class('Snippets',$header_sidemenu,'side')?>">
                 Snippets de code
-              </a>
-            </div>
+              </div>
+            </a>
 
-            <div class="<?=header_class('Reference',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/dev/reference">
+            <a href="<?=$chemin?>pages/dev/reference">
+              <div class="<?=header_class('Reference',$header_sidemenu,'side')?>">
                 Référence HTML / CSS
-              </a>
-            </div>
+              </div>
+            </a>
 
-            <div class="<?=header_class('Fonctions',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/dev/fonctions">
+            <a href="<?=$chemin?>pages/dev/fonctions">
+              <div class="<?=header_class('Fonctions',$header_sidemenu,'side')?>">
                 Référence des fonctions
-              </a>
-            </div>
+              </div>
+            </a>
 
             <hr class="header_sidemenu_hr">
 
-            <div class="<?=header_class('MajChecklist',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/dev/maj">
+            <a href="<?=$chemin?>pages/dev/maj">
+              <div class="<?=header_class('MajChecklist',$header_sidemenu,'side')?>">
                 Mise à jour: Checklist
-              </a>
-            </div>
+              </div>
+            </a>
 
-            <div class="<?=header_class('MajRequetes',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/dev/sql">
+            <a href="<?=$chemin?>pages/dev/sql">
+              <div class="<?=header_class('MajRequetes',$header_sidemenu,'side')?>">
                 Requêtes SQL
-              </a>
-            </div>
+              </div>
+            </a>
 
-            <div class="<?=header_class('MajFermeture',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/dev/fermeture">
+            <a href="<?=$chemin?>pages/dev/fermeture">
+              <div class="<?=header_class('MajFermeture',$header_sidemenu,'side')?>">
                 Ouvrir/fermer le site
-              </a>
-            </div>
+              </div>
+            </a>
 
-            <div class="<?=header_class('MajVersion',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/dev/version">
+            <a href="<?=$chemin?>pages/dev/version">
+              <div class="<?=header_class('MajVersion',$header_sidemenu,'side')?>">
                 Numéro de version
-              </a>
-            </div>
+              </div>
+            </a>
 
             <hr class="header_sidemenu_hr">
 
-            <div class="<?=header_class('IRCbot',$header_sidemenu,'side')?>">
-              <a href="<?=$chemin?>pages/dev/ircbot">
+            <a href="<?=$chemin?>pages/dev/ircbot">
+              <div class="<?=header_class('IRCbot',$header_sidemenu,'side')?>">
                 Gestion du bot IRC
-              </a>
-            </div>
+              </div>
+            </a>
 
           <?php } ?>
 

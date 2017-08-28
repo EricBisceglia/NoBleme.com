@@ -52,9 +52,6 @@ a:hover > .header_topmenu_selected          { color: #000000;                   
 .header_sidemenu_selected ,.header_sidemenu_item:hover { background-color: #78A1BC;                                                   }
 .header_sidemenu_selected:hover                        { background-color: #37536B; color: #78A1BC;                                   }
 .header_sidemenu_item                                  { cursor: pointer; color: #37536B;                                             }
-.header_sidemenu_item > a                              { text-decoration: none; color: #37536B; width: 100%; display: inline-block;   }
-.header_sidemenu_selected > a                          { color: #37536B;                                                              }
-.header_sidemenu_selected:hover > a                    { color: #000000;                                                              }
 .header_sidemenu_titre                                 { margin-bottom: 1px; color:#000000;                                           }
 .header_sidemenu_hr                                    { width: 100%; padding: 0px; border: 0px; height: 1px; background:#78A1BC;     }
 .header_sidemenu_input                                 { margin-left:5%;width:90%;                                                    }
