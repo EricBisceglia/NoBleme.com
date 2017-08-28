@@ -16,7 +16,7 @@ $header_sidemenu  = 'MajVersion';
 $page_titre = "Dev: Version";
 
 // Identification
-$page_nom = "admin";
+$page_nom = "Administre secrètement le site";
 
 
 

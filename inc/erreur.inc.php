@@ -50,7 +50,7 @@ function erreur($message)
   $page_desc  = "Ceci est une page d'erreur. Vous allez oublier l'existence de cette page. Ne paniquez pas, le flash rouge est normal.";
 
   // Identification
-  $page_nom = "erreur";
+  $page_nom = "Se prend une erreur";
 
   // HTML
   include './../../inc/header.inc.php';

@@ -16,7 +16,7 @@ $header_sidemenu  = 'MajRequetes';
 $page_titre = "Dev: Requêtes SQL";
 
 // Identification
-$page_nom = "admin";
+$page_nom = "Administre secrètement le site";
 
 
 
@@ -41,8 +41,14 @@ query(" CREATE TABLE IF NOT EXISTS vars_globales (
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Création d'un champ dans une table existante
 
-if(!@mysqli_query(" SELECT mise_a_jour FROM vars_globales ", 'x'))
-  @mysqli_query(" ALTER TABLE vars_globales ADD mise_a_jour MEDIUMTEXT AFTER nbrpg_activite ", 'x');
+$temp = query(" DESCRIBE vars_globales ");
+while($temp2 = mysqli_fetch_array($temp))
+{
+  if($temp2['Field'] == 'mise_a_jour')
+    query(" ALTER TABLE vars_globales ADD mise_a_jour MEDIUMTEXT AFTER version ");
+}
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,6 +69,21 @@ if(!mysqli_num_rows(query(" SELECT id FROM pages WHERE page_nom LIKE 'nobleme' A
 /*                                                               REQUÊTES                                                                */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouveau système de pageviews
+
+query(" TRUNCATE TABLE stats_pageviews ");
+
+$temp = query(" DESCRIBE stats_pageviews ");
+while($temp2 = mysqli_fetch_array($temp))
+{
+  if($temp2['Field'] == 'id_page')
+    query(" ALTER TABLE stats_pageviews CHANGE id_page url_page MEDIUMTEXT ");
+}
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Tout le bordel du NBRPG en attente d'être pushé dans la version publique

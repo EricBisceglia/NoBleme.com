@@ -10,8 +10,8 @@ $header_menu      = 'NoBleme';
 $header_sidemenu  = 'Accueil';
 
 // Identification
-$page_nom = "index";
-$page_id  = "index";
+$page_nom = "Traine sur l'index du site";
+$page_url = "index";
 
 
 

@@ -16,7 +16,7 @@ $header_sidemenu  = 'IRCbot';
 $page_titre = "Dev: Bot IRC";
 
 // Identification
-$page_nom = "admin";
+$page_nom = "Administre secrètement le site";
 
 
 

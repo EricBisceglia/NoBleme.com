@@ -6,16 +6,16 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = '';
-$header_submenu   = 'online';
+$header_menu      = 'NoBleme';
+$header_sidemenu  = 'QuiEstEnLigne';
 
 // Titre et description
 $page_titre = "Qui est en ligne ?";
 $page_desc  = "Liste des membres de NoBleme connectés au site dans les dernières 24 heures";
 
 // Identification
-$page_nom = "nobleme";
-$page_id  = "online";
+$page_nom = "Traque qui est en ligne";
+$page_url = "pages/nobleme/online";
 
 // JS
 $js = array('toggle');
@@ -91,12 +91,12 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
     $online_css[$nonline] = 'mise_a_jour texte_blanc gras';
 
   // La page avec ou sans url autour
-  if($donline['url'] == '')
+  if(!$donline['url'])
     $online_page[$nonline] = $donline['page'];
   else if (!$donline['admin'] && !$donline['sysop'])
-    $online_page[$nonline] = '<a class="dark blank gras" href="'.$donline['url'].'">'.$donline['page'].'</a>';
+    $online_page[$nonline] = '<a class="dark blank gras" href="'.$chemin.$donline['url'].'">'.$donline['page'].'</a>';
   else
-    $online_page[$nonline] = '<a class="dark blank gras" href="'.$donline['url'].'"><span class="texte_blanc">'.$donline['page'].'</span></a>';
+    $online_page[$nonline] = '<a class="dark blank gras" href="'.$chemin.$donline['url'].'"><span class="texte_blanc">'.$donline['page'].'</span></a>';
 
   // Et le reste
   $online_date[$nonline]  = ilya($donline['date']);

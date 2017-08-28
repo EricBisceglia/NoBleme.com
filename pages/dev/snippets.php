@@ -16,7 +16,7 @@ $header_sidemenu  = 'Snippets';
 $page_titre = "Dev: Formattage";
 
 // Identification
-$page_nom = "admin";
+$page_nom = "Administre secrètement le site";
 
 // CSS & JS
 $css = array('admin');
@@ -91,8 +91,8 @@ $page_desc  = "Metadescription";
 $langage_page = array('FR','EN');
 
 // Identification
-$page_nom = "admin";
-$page_id  = "admin";
+$page_nom = "Administre secrètement le site";
+$page_url = "pages/nobleme/404";
 
 // CSS &amp; JS
 $css = array('admin');

@@ -90,6 +90,7 @@ else
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Récupération puis création ou incrémentation du pageview count de la page liée
 
+/*
 if(isset($page_nom) && isset($page_id) && !isset($error_mode))
 {
   // Réparation des erreurs au cas où
@@ -130,6 +131,7 @@ if(isset($page_nom) && isset($page_id) && !isset($error_mode))
                         stats_pageviews.vues      = 1           ");
   }
 }
+*/
 
 
 
@@ -137,8 +139,9 @@ if(isset($page_nom) && isset($page_id) && !isset($error_mode))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Traitement de l'activité récente / dernière page visitée
 
-// On laisse pages.inc.php faire le travail préparatoire
-include $chemin."./inc/pages.inc.php";
+// On récupère le nom et l'url de la page s'ils sont précisés
+$activite_page  = (isset($page_nom)) ? $page_nom  : 'Page non listée';
+$activite_url   = (isset($page_url)) ? $page_url  : '';
 
 // On s'assure que l'user soit connecté
 if(loggedin())
@@ -148,8 +151,8 @@ if(loggedin())
   $visite_user      = $_SESSION['user'];
 
   // Nettoyage des données au cas où
-  $visite_page  = postdata($visite_page);
-  $visite_url   = postdata($visite_url);
+  $activite_page  = postdata($activite_page);
+  $activite_url   = postdata($activite_url);
 
   // IP de l'user
   $visite_ip    = postdata($_SERVER["REMOTE_ADDR"]);
@@ -157,8 +160,8 @@ if(loggedin())
   // Puis on fait la requête d'update
   query(" UPDATE  membres
           SET     membres.derniere_visite       = '$visite_timestamp' ,
-                  membres.derniere_visite_page  = '$visite_page'      ,
-                  membres.derniere_visite_url   = '$visite_url'       ,
+                  membres.derniere_visite_page  = '$activite_page'      ,
+                  membres.derniere_visite_url   = '$activite_url'       ,
                   membres.derniere_visite_ip    = '$visite_ip'
           WHERE   membres.id                    = '$visite_user' ");
 }
@@ -181,15 +184,15 @@ else
   }
 
   // Nettoyage des données au cas où
-  $visite_page  = postdata($visite_page);
-  $visite_url   = postdata($visite_url);
+  $activite_page  = postdata($activite_page);
+  $activite_url   = postdata($activite_url);
 
   // Et on met à jour les données
   $guest_timestamp = time();
   query(" UPDATE  invites
           SET     invites.derniere_visite       = '$guest_timestamp'  ,
-                  invites.derniere_visite_page  = '$visite_page'      ,
-                  invites.derniere_visite_url   = '$visite_url'
+                  invites.derniere_visite_page  = '$activite_page'      ,
+                  invites.derniere_visite_url   = '$activite_url'
           WHERE   invites.ip                    = '$guest_ip'         ");
 }
 
@@ -567,6 +570,7 @@ $sidemenu['masquer']  = ($lang == 'FR') ? 'Masquer le menu latéral'   : 'Hide t
 // Préparation des traductions des titres du menu
 $sidemenu['nb_accueil']   = ($lang == 'FR') ? "Page d'accueil"      : "Home page";
 $sidemenu['nb_membres']   = ($lang == 'FR') ? "Liste des membres"   : "User list";
+$sidemenu['nb_enligne']   = ($lang == 'FR') ? "Qui est en ligne"    : "Who's online";
 /* ################################################################################################## */ if($header_menu == 'NoBleme') { ?>
 
             <a href="<?=$chemin?>index">
@@ -577,9 +581,17 @@ $sidemenu['nb_membres']   = ($lang == 'FR') ? "Liste des membres"   : "User list
 
             <hr class="header_sidemenu_hr">
 
+            <!--
             <a href="<?=$chemin?>pages/nobleme/membres">
-              <div class="<?=header_class('Liste_membres',$header_sidemenu,'side')?>">
+              <div class="<?=header_class('ListeMembres',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_membres']?>
+              </div>
+            </a>
+            -->
+
+            <a href="<?=$chemin?>pages/nobleme/online">
+              <div class="<?=header_class('QuiEstEnLigne',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_enligne']?>
               </div>
             </a>
 

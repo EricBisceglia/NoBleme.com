@@ -23,7 +23,7 @@ $header_sidemenu  = 'Reference';
 $page_titre = "Dev: Référence CSS";
 
 // Identification
-$page_nom = "admin";
+$page_nom = "Administre secrètement le site";
 
 // CSS & JS
 $css  = array('admin');

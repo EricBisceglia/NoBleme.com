@@ -16,7 +16,7 @@ $header_sidemenu  = 'MajChecklist';
 $page_titre = "Dev: Mise à jour";
 
 // Identification
-$page_nom = "admin";
+$page_nom = "Administre secrètement le site";
 
 
 

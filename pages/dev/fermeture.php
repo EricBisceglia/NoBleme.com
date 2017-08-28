@@ -16,7 +16,7 @@ $header_sidemenu  = 'MajFermeture';
 $page_titre = "Dev: Ouvrir/fermer le site";
 
 // Identification
-$page_nom = "admin";
+$page_nom = "Administre secrètement le site";
 
 
 

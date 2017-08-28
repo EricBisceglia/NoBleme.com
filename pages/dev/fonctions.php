@@ -17,7 +17,7 @@ $header_sidemenu  = 'Fonctions';
 $page_titre = "Dev: Fonctions";
 
 // Identification
-$page_nom = "admin";
+$page_nom = "Administre secrètement le site";
 
 // CSS & JS
 $css = array('admin','nbrpg');
