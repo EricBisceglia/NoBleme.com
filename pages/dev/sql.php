@@ -49,6 +49,15 @@ while($temp2 = mysqli_fetch_array($temp))
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Renommer un champ dans une table existante
+
+$temp = query(" DESCRIBE stats_pageviews ");
+while($temp2 = mysqli_fetch_array($temp))
+{
+  if($temp2['Field'] == 'id_page')
+    query(" ALTER TABLE stats_pageviews CHANGE id_page url_page MEDIUMTEXT ");
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -60,8 +69,6 @@ if(!mysqli_num_rows(query(" SELECT id FROM pages WHERE page_nom LIKE 'nobleme' A
                       page_id     = 'activite'                      ,
                       visite_page = 'Consulte l\'activité récente'  ,
                       visite_url  = 'pages/nobleme/activite'        ");
-
-
 
 
 /*****************************************************************************************************************************************/

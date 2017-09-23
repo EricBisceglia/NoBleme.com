@@ -9,16 +9,16 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 $header_menu      = 'NoBleme';
 $header_sidemenu  = 'QuiEstEnLigne';
 
-// Titre et description
-$page_titre = "Qui est en ligne ?";
-$page_desc  = "Liste des membres de NoBleme connectés au site dans les dernières 24 heures";
-
 // Identification
 $page_nom = "Traque qui est en ligne";
-$page_url = "pages/nobleme/online";
+$page_url = "pages/nobleme/online?noguest";
 
-// JS
-$js = array('toggle');
+// Langages disponibles
+$langage_page = array('FR','EN');
+
+// Titre et description
+$page_titre = (!isset($_SESSION['lang']) || $_SESSION['lang'] == 'FR') ? "Qui est en ligne ?" : "Who's online?";
+$page_desc  = "Liste des membres de NoBleme connectés au site dans les dernières 48 heures";
 
 
 
@@ -30,13 +30,13 @@ $js = array('toggle');
 /*****************************************************************************************************************************************/
 
 // On va chercher le mix d'invités et de membres qui se baladent sur nobleme
-$maxdate = time() - 86400;
+$maxdate = time() - 172800;
 $qonline =  "  ( SELECT
                   'guest'                       AS 'type'   ,
                   '0'                           AS 'id'     ,
+                  '0'                           AS 'mod'    ,
                   '0'                           AS 'admin'  ,
                   '0'                           AS 'sysop'  ,
-                  '0'                           AS 'mod'    ,
                   invites.surnom                AS 'pseudo' ,
                   invites.derniere_visite       AS 'date'   ,
                   invites.derniere_visite_page  AS 'page'   ,
@@ -44,17 +44,17 @@ $qonline =  "  ( SELECT
                 FROM      invites
                 WHERE     invites.derniere_visite >= '$maxdate'
                 ORDER BY  invites.derniere_visite DESC ";
-if(!isset($_GET['noguest']))
-  $qonline .= " LIMIT     100 ) ";
-else
+if(isset($_GET['noguest']) || !isset($_SESSION['lang']) || $_SESSION['lang'] != 'FR')
   $qonline .= " LIMIT       0 ) ";
+else
+  $qonline .= " LIMIT     1000 ) ";
 $qonline .= " UNION
                 ( SELECT
                   'user'                        AS 'type'   ,
                   membres.id                    AS 'id'     ,
+                  membres.moderateur            AS 'mod'    ,
                   membres.admin                 AS 'admin'  ,
                   membres.sysop                 AS 'sysop'  ,
-                  membres.moderateur            AS 'mod'    ,
                   membres.pseudonyme            AS 'pseudo' ,
                   membres.derniere_visite       AS 'date'   ,
                   membres.derniere_visite_page  AS 'page'   ,
@@ -62,46 +62,68 @@ $qonline .= " UNION
                 FROM      membres
                 WHERE     membres.derniere_visite >= '$maxdate'
                 ORDER BY  membres.derniere_visite DESC
-                LIMIT     100 )
+                LIMIT     1000 )
               ORDER BY date DESC ";
-
 $qonline = query($qonline);
 
-// Et à partir de ça, on se prépare les données
+// Et on prépare tout ça pour l'affichage
 for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
 {
   // L'invité a son surnom mignon, l'user son pseudo
   if ($donline['type'] === 'guest')
     $online_pseudo[$nonline] = $donline['pseudo'];
-  else if (!$donline['admin'] && !$donline['sysop'])
-    $online_pseudo[$nonline] = '<a class="dark blank gras" href="'.$chemin.'pages/user/user?id='.$donline['id'].'">'.$donline['pseudo'].'</a>';
+  else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
+    $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/user/user?id='.$donline['id'].'"><span class="texte_grisfonce">'.$donline['pseudo'].'</span></a>';
   else
-    $online_pseudo[$nonline] = '<a class="blank gras" href="'.$chemin.'pages/user/user?id='.$donline['id'].'"><span class="texte_blanc">'.$donline['pseudo'].'</span></a>';
+    $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/user/user?id='.$donline['id'].'"><span class="texte_blanc">'.$donline['pseudo'].'</span></a>';
 
   // Les couleurs de fond
   if ($donline['type'] === 'guest')
-    $online_css[$nonline] = '';
+    $online_css[$nonline] = 'grisclair';
   else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
-    $online_css[$nonline] = 'nobleme_background gras';
+    $online_css[$nonline] = 'gris texte_grisfonce gras';
   else if ($donline['sysop'])
-    $online_css[$nonline] = 'sysop texte_blanc gras';
+    $online_css[$nonline] = 'neutre texte_blanc gras';
   else if ($donline['mod'])
-    $online_css[$nonline] = 'vert_background gras';
+    $online_css[$nonline] = 'positif texte_blanc gras';
   else
-    $online_css[$nonline] = 'mise_a_jour texte_blanc gras';
+    $online_css[$nonline] = 'negatif texte_blanc gras';
 
   // La page avec ou sans url autour
   if(!$donline['url'])
     $online_page[$nonline] = $donline['page'];
-  else if (!$donline['admin'] && !$donline['sysop'])
-    $online_page[$nonline] = '<a class="dark blank gras" href="'.$chemin.$donline['url'].'">'.$donline['page'].'</a>';
+  else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
+    $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'"><span class="texte_grisfonce">'.$donline['page'].'</span></a>';
   else
-    $online_page[$nonline] = '<a class="dark blank gras" href="'.$chemin.$donline['url'].'"><span class="texte_blanc">'.$donline['page'].'</span></a>';
+    $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'"><span class="texte_blanc">'.$donline['page'].'</span></a>';
 
   // Et le reste
-  $online_date[$nonline]  = ilya($donline['date']);
-  $online_url[$nonline]   = $donline['url'];
+  $online_date[$nonline] = (!isset($_SESSION['lang']) || $_SESSION['lang'] == 'FR') ? ilya($donline['date']) : ilya($donline['date'],'EN');
+  $online_url[$nonline]  = $donline['url'];
 }
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                                                                                                       */
+/***************************************************************************************************/ include './../../inc/header.inc.php';
+
+$traduction['titre']      = ($lang == 'FR') ? "Qui est en ligne ?" : "Who's online right now ?";
+$traduction['soustitre']  = ($lang == 'FR') ? "La page officielle des traqueurs obsessifs et des curieux" : "The official home of obsessive stalkers, curious cats, and other weird animals";
+$traduction['pseudo']     = ($lang == 'FR') ? "PSEUDONYME" : "USER";
+$traduction['activite']   = ($lang == 'FR') ? "ACTIVITE" : "LAST ACTION";
+
+if($lang == 'FR')
+  $traduction['description'] = "Cette page recense les visiteurs connectés ces dernières 48 heures, et la page de NoBleme qu'ils ont visité en dernier. Si plus de 1000 personnes se sont connectées ces dernières 48 heures, seules les 1000 activités les plus récentes apparaitront (sait-on jamais, c'est peut-être le cas dans une ligne temporelle différente).";
+else
+  $traduction['description'] = "This page lists all accounts that were active on NoBleme in the last 48 hours, sorted by latest activity. If more than 1000 people used the website in the last 48 hours, only the 1000 most recent users will appear (you never know, it could be the case in some alternate timeline, better be safe than sorry).";
+
+if($lang == 'FR')
+  $traduction['couleurs'] = "Afin de les distinguer, les <a href=\"".$chemin."pages/nobleme/membres\">membres enregistrés</a> apparaissent sur fond <span class=\"texte_noir gris gras spaced\">gris</span> , les <a href=\"".$chemin."pages/nobleme/admins\">modérateurs</a> sur fond <span class=\"positif texte_blanc gras spaced\">vert</span> , les <a href=\"".$chemin."pages/nobleme/admins\">sysops</a> sur fond <span class=\"neutre texte_blanc gras spaced\">orange</span> , et l'<a href=\"".$chemin."pages/user/user?id=1\">administrateur</a> sur fond <span class=\"negatif texte_blanc gras spaced\">rouge</span>.";
+else
+  $traduction['couleurs'] = "In order to tell them apart from eachother, <a href=\"".$chemin."pages/nobleme/membres\">registered users</a> will appear in <span class=\"texte_noir gris gras spaced\">grey</span> , <a href=\"".$chemin."pages/nobleme/admins\">moderators</a> in <span class=\"positif texte_blanc gras spaced\">green</span> , <a href=\"".$chemin."pages/nobleme/admins\">sysops</a> in <span class=\"neutre texte_blanc gras spaced\">orange</span> , and the <a href=\"".$chemin."pages/user/user?id=1\">administrator</a> in <span class=\"negatif texte_blanc gras spaced\">red</span>.";
 
 
 
@@ -110,72 +132,71 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-/************************************************************************************************/ include './../../inc/header.inc.php'; ?>
+/**************************************************************************************************************************************/ ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/online.png" alt="Qui est en ligne ?">
-    </div>
-    <br>
+      <div class="texte">
 
-    <div class="body_main midsize">
-      <span class="titre">Visiteurs connectés</span><br>
-      <br>
-      Cette page recense les visiteurs connectés dans les dernières 24 heures, et la page de NoBleme qu'ils ont visité en dernier<br>
-      <br>
-      <?php if(!isset($_GET['noguest'])) { ?>
-      Les invités n'ayant pas de pseudonymes, ils sont identifiés par des surnoms idiots. C'est plus rigolo que des adresses IP, non ?<br>
-      Si vous en avez marre de voir tous ces invités : <a class="dark blank gras" href="<?=$chemin?>pages/nobleme/online?noguest">cliquez ici pour masquer les invités et ne voir que les membres enregistrés</a><br>
-      <?php } else { ?>
-      Les invités sont actuellement masqués, <a class="dark blank gras" href="<?=$chemin?>pages/nobleme/online">cliquez ici pour afficher les invités</a><br>
-      <?php } ?>
-      <br>
-      <?php if(!isset($_GET['noguest'])) { ?>
-      Les invités apparaissent en blanc,<br>
-      <?php } ?>
-      les <a href="<?=$chemin?>pages/nobleme/membres">membres enregistrés</a> ont un fond <span class="nobleme_background gras">&nbsp;gris&nbsp;</span>,<br>
-      les <a href="<?=$chemin?>pages/nobleme/admins">modérateurs</a> ont le droit à du <span class="vert_background gras">&nbsp;vert&nbsp;</span>,<br>
-      les <a href="<?=$chemin?>pages/nobleme/admins">sysops</a> (modérateurs globaux) en <span class="sysop texte_blanc gras">&nbsp;orange&nbsp;</span>,<br>
-      et <a href="<?=$chemin?>pages/user/user?id=1">l'administrateur</a> apparait en <span class="mise_a_jour texte_blanc gras">&nbsp;rouge&nbsp;</span>.
-    </div>
+        <h1 class="alinea"><?=$traduction['titre']?></h1>
 
-    <br>
+        <h6 class="alinea texte_nobleme_clair"><?=$traduction['soustitre']?></h6>
 
-    <div class="body_main bigsize">
-      <table class="cadre_gris indiv">
+        <p><?=$traduction['description']?></p>
 
-        <tr>
-          <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-            Dernière activité
-          </td>
-          <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-            Pseudonyme
-          </td>
-          <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-            Dernière action
-          </td>
-        </tr>
+        <p><?=$traduction['couleurs']?></p>
 
-        <?php for($i=0;$i<$nonline;$i++) { ?>
+        <?php if($lang == 'FR') { ?>
 
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center <?=$online_css[$i]?>">
-            <?=$online_date[$i]?>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center <?=$online_css[$i]?>">
-            <?=$online_pseudo[$i]?>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center <?=$online_css[$i]?>">
-            <?=$online_page[$i]?>
-          </td>
-        </tr>
+        <p>Par défaut, les invités (personnes non connectées à un compte) sont masqués car ils sont beaucoup plus nombreux que les utilisateurs et rendent la page difficile à lire. Afin de pouvoir les identifier et suivre leur activité, des surnoms rigolos et généralement mignons sont affectés à chaque invité.</p>
+
+        <?php if(isset($_GET['noguest'])) { ?>
+        <p><a class="gras" href="<?=$chemin?>pages/nobleme/online">Si vous désirez que les invités soient également affichés, cliquez ici.</a></p>
+        <?php } else { ?>
+        <p><a class="gras" href="<?=$chemin?>pages/nobleme/online?noguest">Si vous désirez masquer les invités, cliquez ici.</a></p>
+        <?php } ?>
 
         <?php } ?>
 
-      </table>
-    </div>
+        <br>
+        <br>
 
+        <table class="titresnoirs">
+          <thead>
+            <tr>
+              <th>
+                <?=$traduction['pseudo']?>
+              </th>
+              <th>
+                <?=$traduction['activite']?>
+              </th>
+              <?php if($lang == 'FR') { ?>
+              <th>
+                ACTION
+              </th>
+              <?php } ?>
+            </tr>
+          </thead>
+          <tbody class="align_center">
+
+            <?php for($i=0;$i<$nonline;$i++) { ?>
+            <tr>
+              <td class="<?=$online_css[$i]?>">
+                <?=$online_pseudo[$i]?>
+              </td>
+              <td class="<?=$online_css[$i]?>">
+                <?=$online_date[$i]?>
+              </td>
+              <?php if($lang == 'FR') { ?>
+              <td class="<?=$online_css[$i]?>">
+                <?=$online_page[$i]?>
+              </td>
+              <?php } ?>
+            </tr>
+            <?php } ?>
+
+          </tbody>
+        </table>
+
+      </div>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

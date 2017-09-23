@@ -212,47 +212,51 @@ function mysqldate($date)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Ancienneté d'une action : Prend un timestamp en paramètre, renvoie de quand date l'action en toutes lettres
+// Ancienneté d'une action : Renvoie de quand date l'action en toutes lettres
+//
+// Paramètres:
+// $date est un timestamp
+// $lang est le langage à utiliser (français par défaut)
 //
 // Exemple d'utilisation :
-// $anciennete = ilya($timestamp);
+// $anciennete = ilya($timestamp,"FR");
 
-function ilya($date)
+function ilya($date,$lang="FR")
 {
   // Calcul de la différence de temps entre la date et aujourd'hui
   $diff = time() - $date;
 
   // Définition en toutes lettres de la différence de temps
   if($diff < 0)
-    $ilya = "Dans le futur";
+    $ilya = ($lang == 'FR') ? "Dans le futur" : "In the future";
   else if ($diff == 0)
-    $ilya = "En ce moment même";
+    $ilya = ($lang == 'FR') ? "En ce moment même" : "Right now";
   else if ($diff == 1)
-    $ilya = "Il y a 1 seconde";
+    $ilya = ($lang == 'FR') ? "Il y a 1 seconde" : "A second ago";
   else if ($diff <= 60)
-    $ilya = "Il y a ".$diff." secondes";
+    $ilya = ($lang == 'FR') ? "Il y a ".$diff." secondes" : $diff." seconds ago";
   else if ($diff <= 120)
-    $ilya = "Il y a 1 minute";
+    $ilya = ($lang == 'FR') ? "Il y a 1 minute" : "A minute ago";
   else if ($diff <= 3600)
-    $ilya = "Il y a ".floor($diff/60)." minutes";
+    $ilya = ($lang == 'FR') ? "Il y a ".floor($diff/60)." minutes" : floor($diff/60)." minutes ago";
   else if ($diff <= 7200)
-    $ilya = "Il y a 1 heure";
+    $ilya = ($lang == 'FR') ? "Il y a 1 heure": "An hour ago";
   else if ($diff <= 86400)
-    $ilya = "Il y a ".floor($diff/3600)." heures";
+    $ilya = ($lang == 'FR') ? "Il y a ".floor($diff/3600)." heures" : floor($diff/3600)." hours ago";
   else if ($diff <= 172800)
-    $ilya = "Hier";
+    $ilya = ($lang == 'FR') ? "Hier" : "Yesterday";
   else if ($diff <= 259200)
-    $ilya = "Avant-hier";
+    $ilya = ($lang == 'FR') ? "Avant-hier" : floor($diff/86400)." days ago";
   else if ($diff <= 31536000)
-    $ilya = "Il y a ".floor($diff/86400)." jours";
+    $ilya = ($lang == 'FR') ? "Il y a ".floor($diff/86400)." jours" : floor($diff/86400)." days ago";
   else if ($diff <= 63072000)
-    $ilya = "L'année dernière";
+    $ilya = ($lang == 'FR') ? "L'année dernière" : "A year ago";
   else if ($diff <= 3153600000)
-    $ilya = "Il y a ".floor($diff/31536000)." ans";
+    $ilya = ($lang == 'FR') ? "Il y a ".floor($diff/31536000)." ans" : floor($diff/31536000)." years ago";
   else if ($diff <= 6307200000)
-    $ilya = "... le siècle dernier ? ö_O";
+    $ilya = ($lang == 'FR') ? "... le siècle dernier ? ö_O" : "... a century ago ? ö_O";
   else
-    $ilya = "Fixe ton code mon vieux, il est complètement pété";
+    $ilya = ($lang == 'FR') ? "Fixe ton code mon vieux, il est complètement pété" : "Fix your code my friend, it is broken af";
 
   // Et on renvoie la phrase
   return $ilya;

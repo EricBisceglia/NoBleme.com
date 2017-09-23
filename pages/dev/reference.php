@@ -139,6 +139,19 @@ $js   = array('toggle','highlight','dynamique','popup','calendrier');
             </tr>
             <tr>
               <td class="align_center gras">
+                .gris
+              </td>
+              <td class="align_center gris">
+              </td>
+              <td class="align_center gras">
+                .texte_gris
+              </td>
+              <td class="align_center texte_gris gras">
+                Texte
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center gras">
                 .grisfonce
               </td>
               <td class="align_center grisfonce">

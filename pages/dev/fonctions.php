@@ -390,6 +390,14 @@ $js  = array('toggle','highlight');
             </tr>
             <tr>
               <td class="align_center">
+                ilya(strtotime('2005-03-19'), 'EN');
+              </td>
+              <td class="gras align_center">
+                <?=ilya(strtotime('2005-03-19'), 'EN');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
                 ilya(time());
               </td>
               <td class="gras align_center">

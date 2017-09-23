@@ -559,7 +559,7 @@ $sidemenu['masquer']  = ($lang == 'FR') ? 'Masquer le menu latéral'   : 'Hide t
         <div class="header_sidemenu">
           <div>
             <div class="header_sidemenu_item header_sidemenu_desktop" onclick="document.getElementById('header_nomenu').style.display = 'flex'; document.getElementById('header_sidemenu').style.display = 'none';">
-              <a><?=$sidemenu['masquer']?></a>
+              <?=$sidemenu['masquer']?>
             </div>
             <hr class="header_sidemenu_hr header_sidemenu_desktop">
 
@@ -589,7 +589,7 @@ $sidemenu['nb_enligne']   = ($lang == 'FR') ? "Qui est en ligne"    : "Who's onl
             </a>
             -->
 
-            <a href="<?=$chemin?>pages/nobleme/online">
+            <a href="<?=$chemin?>pages/nobleme/online?noguest">
               <div class="<?=header_class('QuiEstEnLigne',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_enligne']?>
               </div>

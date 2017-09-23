@@ -1,6 +1,7 @@
 /**************************************************************** COULEURS ***************************************************************/
 .blanc                  { background: #FFFFFF;  }
 .grisclair              { background: #EEEEEE;  }
+.gris                   { background: #AAAAAA;  }
 .grisfonce              { background: #333333;  }
 .noir                   { background: #000000;  }
 .nobleme_clair          { background: #78A1BC;  }
@@ -16,6 +17,7 @@
 
 .texte_blanc                  { color: #FFFFFF; }
 .texte_grisclair              { color: #D0D0D0; }
+.texte_gris                   { color: #AAAAAA; }
 .texte_grisfonce              { color: #333333; }
 .texte_noir                   { color: #000000; }
 .texte_nobleme_clair          { color: #78A1BC; }
