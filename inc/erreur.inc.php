@@ -42,15 +42,23 @@ function erreur($message)
       $chemin .= "../";
   }
 
+  // Détermination du langage utilisé
+  $lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
+
   // Erreur
   $error_mode = 1;
 
   // Titre et description
-  $page_titre = "Erreur";
-  $page_desc  = "Ceci est une page d'erreur. Vous allez oublier l'existence de cette page. Ne paniquez pas, le flash rouge est normal.";
+  $langage_page = array('FR','EN');
+  $page_titre   = ($lang == 'FR') ? "Erreur" : "Error";
+  $page_desc    = "Ceci est une page d'erreur. Vous allez oublier l'existence de cette page. Ne paniquez pas, le flash rouge est normal.";
 
   // Identification
   $page_nom = "Se prend une erreur";
+
+  // Contenu multilingue
+  $traduction['ohno'] = ($lang == 'FR') ? "OH NON &nbsp;: (" : "OH NO &nbsp;: (";
+  $traduction['oups'] = ($lang == 'FR') ? "VOUS AVEZ RENCONTRÉ UNE ERREUR" : "YOU HAVE ENCOUNTERED AN ERROR";
 
   // HTML
   include './../../inc/header.inc.php';
@@ -60,11 +68,11 @@ function erreur($message)
   <br>
   <br>
   <br>
-  <br>
-  <br>
 
-  <div class="margin_auto align_center" style="width:1000px;">
-    <h3>Vous avez rencontré une erreur !</h3>
+  <div class="indiv align_center">
+    <h3><?=$traduction['ohno']?></h3>
+    <br>
+    <h3><?=$traduction['oups']?></h3>
     <br>
     <br>
      <br>

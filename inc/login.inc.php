@@ -294,8 +294,11 @@ function getadmin($user=NULL)
 // Exemple d'utilisation:
 // sysoponly('irls');
 
-function sysoponly($section=NULL)
+function sysoponly($section=NULL, $lang='FR')
 {
+  // On prépare le message selon le langage
+  $message = ($lang == 'FR') ? "Cette page est réservée aux administrateurs.<br><br>Ouste !" : 'This page is for admins only<br><br>Shoo!';
+
   // On vérifie si l'user est connecté et est un admin
   if(loggedin())
   {
@@ -303,16 +306,16 @@ function sysoponly($section=NULL)
     if($section == NULL)
     {
       if(!getsysop($_SESSION['user']))
-        erreur("Cette page est réservée aux administrateurs.<br><br>Dehors!");
+        erreur($message);
     }
     else
     {
       if(!getsysop($_SESSION['user']) && !getmod($section,$_SESSION['user']))
-        erreur("Cette page est réservée aux administrateurs.<br><br>Dehors!");
+        erreur($message);
     }
   }
   else
-    erreur("Cette page est réservée aux administrateurs.<br><br>Dehors!");
+    erreur($message);
 }
 
 
@@ -324,17 +327,20 @@ function sysoponly($section=NULL)
 // Exemple d'utilisation:
 // adminonly();
 
-function adminonly()
+function adminonly($lang='FR')
 {
+  // On prépare le message selon le langage
+  $message = ($lang == 'FR') ? "Cette page est réservée aux administrateurs.<br><br>Ouste !" : 'This page is for admins only<br><br>Shoo!';
+
   // On vérifie si l'user est connecté et est un admin
   if(loggedin())
   {
     // On vérifie si l'user est un admin
     if(!getadmin($_SESSION['user']))
-      erreur("Cette page est réservée aux administrateurs.<br><br>Dehors!");
+      erreur($message);
   }
   else
-    erreur("Cette page est réservée aux administrateurs.<br><br>Dehors!");
+    erreur($message);
 }
 
 
@@ -346,7 +352,7 @@ function adminonly()
 // Exemple d'utilisation:
 // useronly();
 
-function useronly()
+function useronly($lang='FR')
 {
   // On vérifie si l'user est connecté
   if(!loggedin())
@@ -375,7 +381,10 @@ function useronly()
         $chemin .= "../";
     }
 
-    erreur("Cette page n'est utilisable que par les utilisateurs connectés.<br><br>Connectez-vous à votre compte en <a class=\"dark\" href=\"".$chemin."pages/user/login\">cliquant ici</a>,<br>ou créez-vous un compte en <a class=\"dark\" href=\"".$chemin."pages/user/register\">cliquant ici</a>.");
+    if($lang == 'FR')
+      erreur("Cette page n'est utilisable que par les utilisateurs connectés.<br><br>Connectez-vous à votre compte en <a href=\"".$chemin."pages/user/login\">cliquant ici</a>,<br>ou créez-vous un compte en <a href=\"".$chemin."pages/user/register\">cliquant ici</a>.");
+    else
+      erreur("This page is for registered users only.<br><br>Log into your account by <a href=\"".$chemin."pages/user/login\">clicking here</a>,<br>or create an account by <a href=\"".$chemin."pages/user/register\">clicking here</a>.");
   }
 }
 
@@ -388,9 +397,12 @@ function useronly()
 // Exemple d'utilisation:
 // guestonly();
 
-function guestonly()
+function guestonly($lang='FR')
 {
+  // On prépare le message selon le langage
+  $message = ($lang == 'FR') ? "Cette page n'est accessible qu'aux invités." : "This page is accessible by guests only.";
+
   // On vérifie si l'user est connecté
   if(loggedin())
-    erreur("Vous ne pouvez pas accéder à cette page.");
+    erreur($message);
 }

@@ -55,7 +55,7 @@ if(date('d-m') == '19-03')
 
       <br>
 
-      <?php if(!isset($_SESSION['lang']) || $_SESSION['lang'] == 'FR') { ?>
+      <?php if($lang == 'FR') { ?>
 
       <div class="texte">
 

@@ -9,7 +9,7 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 guestonly();
 
 // Menus du header
-$header_menu = 'inscription';
+$header_menu = 'NoBleme';
 
 // Titre et description
 $page_titre = "Créer un compte";

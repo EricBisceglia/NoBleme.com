@@ -77,7 +77,7 @@ $js  = array('highlight','toggle');
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-guestonly();
+guestonly($lang);
 
 // Menus du header
 $header_menu      = '';
@@ -91,7 +91,7 @@ $page_url = "pages/nobleme/404";
 $langage_page = array('FR','EN');
 
 // Titre et description
-$page_titre = (!isset($_SESSION['lang']) || $_SESSION['lang'] == 'FR') ? "Titre" : "Title";
+$page_titre = ($lang == 'FR') ? "Titre" : "Title";
 $page_desc  = "Metadescription";
 
 // CSS &amp; JS
@@ -131,33 +131,19 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/</pre>
 
+        <br>
+
+        <pre onclick="highlight('pre_traduction');" class="monospace spaced" id="pre_traduction">/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+$traduction['phrase'] = ($lang == 'FR') ? "Français" : "English";</pre>
+
       </div>
 
       <div class="margin_auto hidden" id="formattage_html" style="width:1150px">
-
-        <pre onclick="highlight('pre_dynamique_top');" class="monospace spaced" id="pre_dynamique_top">/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                         AFFICHAGE DES DONNÉES                                                         */
-/*                                                                                                                                       */
-if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est invoquée par du XHR */ include './../../inc/header.inc.php';?&gt;</pre>
-
-        <br>
-
-        <pre onclick="highlight('pre_dynamique_multilingue');" class="monospace spaced" id="pre_dynamique_multilingue">/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                         AFFICHAGE DES DONNÉES                                                         */
-/*                                                                                                                                       */
-if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est invoquée par du XHR *****************************************/</pre>
-
-        <br>
-
-        <pre onclick="highlight('pre_dynamique_bottom');" class="monospace spaced" id="pre_dynamique_bottom">&lt;?php include './../../inc/footer.inc.php'; /*********************************************************************************************/
-/*                                                                                                                                       */
-/*                                                              FIN DU HTML                                                              */
-/*                                                                                                                                       */
-/***************************************************************************************************************************************/ }</pre>
-
-        <br>
 
         <pre onclick="highlight('pre_html');" class="monospace spaced" id="pre_html">/*****************************************************************************************************************************************/
 /*                                                                                                                                       */
@@ -183,44 +169,27 @@ if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est inv
 
         <br>
 
-        <pre onclick="highlight('pre_multilingue');" class="monospace spaced" id="pre_multilingue">/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
-/*                                                                                                                                       */
-/***************************************************************************************************/ include './../../inc/header.inc.php';
-
-$traduction['titre']      = ($lang == 'FR') ? "Titre" : "Title";
-$traduction['soustitre']  = ($lang == 'FR') ? "Sous-titre" : "Subtitle";
-
-if($lang == 'FR')
-  $traduction['contenu']  = "Contenu";
-else
-  $traduction['contenu']  = "Contents";
-
-
-
-
-/*****************************************************************************************************************************************/
+        <pre onclick="highlight('pre_dynamique');" class="monospace spaced" id="pre_dynamique">/*****************************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-/**************************************************************************************************************************************/ ?&gt;
+if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est invoquée par du XHR */ include './../../inc/header.inc.php';?&gt;
 
-      &lt;div class="texte"&gt;
+      &lt;div class="texte">
 
-        &lt;h1&gt;&lt;?=$traduction['titre']?&gt;&lt;/h1&gt;
+        &lt;h1>Titre&lt;/h1>
 
-       &lt;h5&gt;&lt;?=$traduction['soustitre']?&gt;&lt;/h5&gt;
+        &lt;h5>Sous-titre&lt;/h5>
 
-        &lt;p&gt;&lt;?=$traduction['contenu']?&gt;&lt;/p>
+        &lt;p>Contenu&lt;/p>
 
-      &lt;/div&gt;
+      &lt;/div>
 
-&lt;?php /***********************************************************************************************************************************/
+&lt;?php include './../../inc/footer.inc.php'; /*********************************************************************************************/
 /*                                                                                                                                       */
 /*                                                              FIN DU HTML                                                              */
 /*                                                                                                                                       */
-/***************************************************************************************************/ include './../../inc/footer.inc.php';</pre>
+/***************************************************************************************************************************************/ }</pre>
 
       </div>
 
@@ -234,7 +203,7 @@ else
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-guestonly();</pre>
+guestonly($lang);</pre>
 
         <br>
 

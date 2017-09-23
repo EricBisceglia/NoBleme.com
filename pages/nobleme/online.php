@@ -17,7 +17,7 @@ $page_url = "pages/nobleme/online?noguest";
 $langage_page = array('FR','EN');
 
 // Titre et description
-$page_titre = (!isset($_SESSION['lang']) || $_SESSION['lang'] == 'FR') ? "Qui est en ligne ?" : "Who's online?";
+$page_titre = ($lang == 'FR') ? "Qui est en ligne ?" : "Who's online?";
 $page_desc  = "Liste des membres de NoBleme connectés au site dans les dernières 48 heures";
 
 
@@ -44,7 +44,7 @@ $qonline =  "  ( SELECT
                 FROM      invites
                 WHERE     invites.derniere_visite >= '$maxdate'
                 ORDER BY  invites.derniere_visite DESC ";
-if(isset($_GET['noguest']) || !isset($_SESSION['lang']) || $_SESSION['lang'] != 'FR')
+if(isset($_GET['noguest']) || $lang != 'FR')
   $qonline .= " LIMIT       0 ) ";
 else
   $qonline .= " LIMIT     1000 ) ";
@@ -98,9 +98,10 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
     $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'"><span class="texte_blanc">'.$donline['page'].'</span></a>';
 
   // Et le reste
-  $online_date[$nonline] = (!isset($_SESSION['lang']) || $_SESSION['lang'] == 'FR') ? ilya($donline['date']) : ilya($donline['date'],'EN');
+  $online_date[$nonline] = ($lang == 'FR') ? ilya($donline['date']) : ilya($donline['date'],'EN');
   $online_url[$nonline]  = $donline['url'];
 }
+
 
 
 
@@ -108,7 +109,7 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
 /*                                                                                                                                       */
 /*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
 /*                                                                                                                                       */
-/***************************************************************************************************/ include './../../inc/header.inc.php';
+/*****************************************************************************************************************************************/
 
 $traduction['titre']      = ($lang == 'FR') ? "Qui est en ligne ?" : "Who's online right now ?";
 $traduction['soustitre']  = ($lang == 'FR') ? "La page officielle des traqueurs obsessifs et des curieux" : "The official home of obsessive stalkers, curious cats, and other weird animals";
@@ -132,7 +133,7 @@ else
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-/**************************************************************************************************************************************/ ?>
+/************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
       <div class="texte">
 

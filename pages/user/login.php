@@ -6,23 +6,30 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-guestonly();
+guestonly($lang);
 
 // Menus du header
-$header_menu = 'connexion';
-
-// Titre et description
-$page_titre = "Connexion";
-$page_desc  = "Se connecter à son compte NoBleme.com afin d'accéder à tous les services du site";
-
-// CSS
-$css = array('user');
+$header_menu = 'NoBleme';
 
 // Identification
-$page_nom = "user";
-$page_id  = "login";
+$page_nom = "Se connecte à son compte";
+$page_url = "pages/user/login";
+
+// Langages disponibles
+$langage_page = array('FR','EN');
+
+// Titre et description
+$page_titre = ($lang == 'FR') ? "Connexion" : "Login";
+$page_desc  = "Se connecter à son compte fin d'accéder à tous les services du site";
 
 
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                        TRAITEMENT DU POST-DATA                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Connexion
@@ -31,7 +38,7 @@ $page_id  = "login";
 if(isset($_POST['nobleme_login_x']))
 {
   // Récupération du postdata
-  $login_pseudo   = $_POST['nobleme_pseudo'];
+  $login_pseudo   = predata($_POST['nobleme_pseudo']);
   $login_souvenir = (isset($_POST['nobleme_souvenir'])) ? 'checked' : '';
   $pseudo         = destroy_html(postdata($_POST['nobleme_pseudo']));
   $pass           = destroy_html(postdata($_POST['nobleme_pass']));

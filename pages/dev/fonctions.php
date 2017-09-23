@@ -574,7 +574,7 @@ $js  = array('toggle','highlight');
           <tbody>
             <tr>
               <td class="align_center">
-                guestonly();
+                guestonly($lang);
               </td>
               <td class="align_center">
                 Vire les utilisateurs connectés
@@ -582,7 +582,7 @@ $js  = array('toggle','highlight');
             </tr>
             <tr>
               <td class="align_center">
-                useronly();
+                useronly($lang);
               </td>
               <td class="align_center">
                 Vire les visiteurs non connectés
@@ -590,7 +590,7 @@ $js  = array('toggle','highlight');
             </tr>
             <tr>
               <td class="align_center">
-                sysoponly();
+                sysoponly($lang);
               </td>
               <td class="align_center">
                 Vire ceux qui ne sont pas sysop
@@ -598,7 +598,7 @@ $js  = array('toggle','highlight');
             </tr>
             <tr>
               <td class="align_center">
-                sysoponly('forum');
+                sysoponly('forum', $lang);
               </td>
               <td class="align_center">
                 Vire ceux qui sont ni sysop ni modérateur de la zone
@@ -606,7 +606,7 @@ $js  = array('toggle','highlight');
             </tr>
             <tr>
               <td class="align_center">
-                adminonly();
+                adminonly($lang);
               </td>
               <td class="align_center">
                 Vire ceux qui ne sont pas admin

@@ -46,9 +46,6 @@ if(isset($_GET['logout']))
   header("location: ".substr($url_complete,0,-7));
 }
 
-// Détermination du langage utilisé
-$lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
-
 
 
 
