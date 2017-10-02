@@ -13,6 +13,13 @@ $header_sidemenu  = 'Accueil';
 $page_nom = "Traine sur l'index du site";
 $page_url = "index";
 
+// Langages disponibles
+$langage_page = array('FR','EN');
+
+// Titre et description
+$page_titre = "";
+$page_desc  = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
+
 
 
 

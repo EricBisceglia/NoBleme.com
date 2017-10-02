@@ -41,6 +41,10 @@
 .indiv, .intable { width: 100%;                               }
 .alinea          { padding-left: 20px;                        }
 .texte           { margin: auto; max-width: 50em;             }
+.texte2          { margin: auto; max-width: 60em;             }
+.texte3          { margin: auto; max-width: 70em;             }
+.tableau         { margin: auto; max-width: 80em;             }
+.tableau2        { margin: auto; max-width: 90em;             }
 
 .gras            { font-weight: bold;                         }
 .souligne        { text-decoration: underline;                }

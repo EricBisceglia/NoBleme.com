@@ -46,6 +46,16 @@ if(isset($_GET['logout']))
   header("location: ".substr($url_complete,0,-7));
 }
 
+// On va chercher si le langage choisi est couvert par la page
+if(isset($langage_page))
+  $langage_error = (!in_array($lang, $langage_page)) ? 1 : 0;
+else
+  $langage_error = 0;
+
+// Et on prépare les strings d'erreur selon la langue
+if($langage_error)
+  $langage_error = ($lang == 'FR') ? "Cette page n'est disponible qu'en anglais et n'a pas de traduction française." : "This page is only available in french and does not have an english translation.";
+
 
 
 
@@ -566,8 +576,8 @@ $sidemenu['masquer']  = ($lang == 'FR') ? 'Masquer le menu latéral'   : 'Hide t
 <?php ################################################### MENU LATÉRAL : NOBLEME ##########################################################
 // Préparation des traductions des titres du menu
 $sidemenu['nb_accueil']   = ($lang == 'FR') ? "Page d'accueil"      : "Home page";
-$sidemenu['nb_membres']   = ($lang == 'FR') ? "Liste des membres"   : "User list";
 $sidemenu['nb_enligne']   = ($lang == 'FR') ? "Qui est en ligne"    : "Who's online";
+$sidemenu['nb_activite']  = ($lang == 'FR') ? "Activité récente"    : "Recent activity";
 /* ################################################################################################## */ if($header_menu == 'NoBleme') { ?>
 
             <a href="<?=$chemin?>index">
@@ -578,13 +588,11 @@ $sidemenu['nb_enligne']   = ($lang == 'FR') ? "Qui est en ligne"    : "Who's onl
 
             <hr class="header_sidemenu_hr">
 
-            <!--
-            <a href="<?=$chemin?>pages/nobleme/membres">
-              <div class="<?=header_class('ListeMembres',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_membres']?>
+            <a href="<?=$chemin?>pages/nobleme/activite">
+              <div class="<?=header_class('ActiviteRecente',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_activite']?>
               </div>
             </a>
-            -->
 
             <a href="<?=$chemin?>pages/nobleme/online?noguest">
               <div class="<?=header_class('QuiEstEnLigne',$header_sidemenu,'side')?>">
@@ -785,6 +793,12 @@ $sidemenu['user_notifsenvoi'] = ($lang == 'FR') ? "Messages envoyés"    : "Sent
 
       <div class="gros gras texte_erreur align_center monospace">
         <?=$alerte_meta?>
+      </div>
+
+      <?php } if($langage_error) { ?>
+
+      <div class="gros gras texte_erreur align_center monospace">
+        <?=$langage_error?>
       </div>
 
       <?php } ?>

@@ -73,7 +73,7 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
   if ($donline['type'] === 'guest')
     $online_pseudo[$nonline] = $donline['pseudo'];
   else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
-    $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/user/user?id='.$donline['id'].'"><span class="texte_grisfonce">'.$donline['pseudo'].'</span></a>';
+    $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/user/user?id='.$donline['id'].'">'.$donline['pseudo'].'</a>';
   else
     $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/user/user?id='.$donline['id'].'"><span class="texte_blanc">'.$donline['pseudo'].'</span></a>';
 
@@ -81,7 +81,7 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
   if ($donline['type'] === 'guest')
     $online_css[$nonline] = 'grisclair';
   else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
-    $online_css[$nonline] = 'gris texte_grisfonce gras';
+    $online_css[$nonline] = 'grisclair gras';
   else if ($donline['sysop'])
     $online_css[$nonline] = 'neutre texte_blanc gras';
   else if ($donline['mod'])
@@ -93,7 +93,7 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
   if(!$donline['url'])
     $online_page[$nonline] = $donline['page'];
   else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
-    $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'"><span class="texte_grisfonce">'.$donline['page'].'</span></a>';
+    $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'">'.$donline['page'].'</a>';
   else
     $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'"><span class="texte_blanc">'.$donline['page'].'</span></a>';
 
@@ -122,9 +122,9 @@ else
   $traduction['description'] = "This page lists all accounts that were active on NoBleme in the last 48 hours, sorted by latest activity. If more than 1000 people used the website in the last 48 hours, only the 1000 most recent users will appear (you never know, it could be the case in some alternate timeline, better be safe than sorry).";
 
 if($lang == 'FR')
-  $traduction['couleurs'] = "Afin de les distinguer, les <a href=\"".$chemin."pages/nobleme/membres\">membres enregistrés</a> apparaissent sur fond <span class=\"texte_noir gris gras spaced\">gris</span> , les <a href=\"".$chemin."pages/nobleme/admins\">modérateurs</a> sur fond <span class=\"positif texte_blanc gras spaced\">vert</span> , les <a href=\"".$chemin."pages/nobleme/admins\">sysops</a> sur fond <span class=\"neutre texte_blanc gras spaced\">orange</span> , et l'<a href=\"".$chemin."pages/user/user?id=1\">administrateur</a> sur fond <span class=\"negatif texte_blanc gras spaced\">rouge</span>.";
+  $traduction['couleurs'] = "Afin de les distinguer, les <a href=\"".$chemin."pages/nobleme/membres\">membres enregistrés</a> apparaissent sur fond <span class=\"texte_noir grisclair gras spaced\">gris</span> , les <a href=\"".$chemin."pages/nobleme/admins\">modérateurs</a> sur fond <span class=\"positif texte_blanc gras spaced\">vert</span> , les <a href=\"".$chemin."pages/nobleme/admins\">sysops</a> sur fond <span class=\"neutre texte_blanc gras spaced\">orange</span> , et l'<a href=\"".$chemin."pages/user/user?id=1\">administrateur</a> sur fond <span class=\"negatif texte_blanc gras spaced\">rouge</span>.";
 else
-  $traduction['couleurs'] = "In order to tell them apart from eachother, <a href=\"".$chemin."pages/nobleme/membres\">registered users</a> will appear in <span class=\"texte_noir gris gras spaced\">grey</span> , <a href=\"".$chemin."pages/nobleme/admins\">moderators</a> in <span class=\"positif texte_blanc gras spaced\">green</span> , <a href=\"".$chemin."pages/nobleme/admins\">sysops</a> in <span class=\"neutre texte_blanc gras spaced\">orange</span> , and the <a href=\"".$chemin."pages/user/user?id=1\">administrator</a> in <span class=\"negatif texte_blanc gras spaced\">red</span>.";
+  $traduction['couleurs'] = "In order to tell them apart from eachother, <a href=\"".$chemin."pages/nobleme/membres\">registered users</a> will appear in <span class=\"texte_noir grisclair gras spaced\">grey</span> , <a href=\"".$chemin."pages/nobleme/admins\">moderators</a> in <span class=\"positif texte_blanc gras spaced\">green</span> , <a href=\"".$chemin."pages/nobleme/admins\">sysops</a> in <span class=\"neutre texte_blanc gras spaced\">orange</span> , and the <a href=\"".$chemin."pages/user/user?id=1\">administrator</a> in <span class=\"negatif texte_blanc gras spaced\">red</span>.";
 
 
 
