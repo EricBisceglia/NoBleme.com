@@ -32,7 +32,7 @@ function bfdecho($stuff)
 // Exemple d'utilisation :
 // $titrecourt = tronquer_chaine($titre,20,'...');
 
-function tronquer_chaine($chaine,$longueur,$suffixe)
+function tronquer_chaine($chaine,$longueur,$suffixe='')
 {
   return (mb_strlen($chaine,'UTF-8') > $longueur) ? mb_substr($chaine,0,$longueur,'UTF-8').$suffixe : $chaine;
 }
