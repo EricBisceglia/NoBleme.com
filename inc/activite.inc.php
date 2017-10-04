@@ -4,21 +4,25 @@
 /*                                                                                                                                       */
 // Include only /*************************************************************************************************************************/
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF'])))
-  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Vous n\'êtes pas censé accéder à cette page, dehors!</body></html>');
+  exit('Vous n\'êtes pas censé accéder à cette page, dehors!');
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Page retournant des informations sur un log en particulier pour l'afficher dans l'activité récente et le log de modération
+// Page retournant le tableau des activités récentes du site, sous formes de variables
 //
-// Variables qu'il renvoie pour l'activité récente, dans un array :
-// $description_class[$nactrec]  - CSS de la ligne de l'activité récente
-// $description_action[$nactrec] - Description de l'activité
+// Variables qu'il renvoie pour l'activité récente, dans un tableau :
+// $nactrec                         - Nombre de lignes au tableau renvoyé
+// $activite_id[$nactrec]           - ID dans la table activite
+// $activite_date[$nactrec]         - Ancienneté de l'activité (format texte)
+// $activite_desc[$nactrec][$lang]  - Description de l'activité dans le langage spécifié
+// $activite_href[$nactrec]         - Lien vers lequel l'activité pointe
+// $activite_css[$nactrec]          - CSS à appliquer à l'activité
 //
-// Ainsi que pour le log de modération, toujours dans le même array :
-// $description_diff[$nactrec]   - Différences stockées dans le log, togglable seulement s'il est != ''
-// $description_raison[$nactrec] - Justification du log, togglable seulement s'il est != ''
+// Ainsi que pour le log de modération, toujours dans le même tableau :
+// $activite_raison[$nactrec]       - (optionnel) Justification du log
+// $activite_diff[$nactrec]         - (optionnel) Différences stockées dans le log
 
 // On commence par aller chercher toute l'activité récente
 $qactrec = "    SELECT    activite.id           ,
@@ -32,11 +36,13 @@ $qactrec = "    SELECT    activite.id           ,
                           activite.parent_titre ,
                           activite.justification
                 FROM      activite              ";
+
 // Activité récente ou log de modération
-if(isset($_GET['mod']))
+if(isset($_GET['mod']) && getsysop())
   $qactrec .= " WHERE     activite.log_moderation = 1 ";
 else
   $qactrec .= " WHERE     activite.log_moderation = 0 ";
+
 // On rajoute la recherche si y'en a une
 if(isset($_POST['activite_action']))
 {
@@ -49,8 +55,10 @@ if(isset($_POST['activite_action']))
                   OR        activite.action_type LIKE 'ban'
                   OR        activite.action_type LIKE 'unban' )";
 }
+
 // On trie
 $qactrec .= "   ORDER BY  activite.timestamp DESC ";
+
 // On décide combien on en select
 if(isset($_POST['activite_num']))
 {
@@ -59,45 +67,125 @@ if(isset($_POST['activite_num']))
 }
 else
   $qactrec .= " LIMIT     100 ";
+
 // On balance la requête
 $qactrec = query($qactrec);
 
 // Et on prépare les données comme il se doit
 for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
 {
-  // ID pour suppression et date de l'action
-  $actid[$nactrec]        = $dactrec['id'];
-  $date_action[$nactrec]  = ilya($dactrec['timestamp']);
+  // On va avoir besoin de l'ID pour la suppression, ainsi que de la date de l'action
+  $activite_id[$nactrec]      = $dactrec['id'];
+  $activite_date[$nactrec]    = ilya($dactrec['timestamp']);
 
-  // Puis on passe au traitement au cas par cas...
+  // Par défaut on met toutes les variables à zéro
+  $activite_css[$nactrec]         = "";
+  $activite_href[$nactrec]        = "";
+  $activite_desc[$nactrec]['FR']  = "";
+  $activite_desc[$nactrec]['EN']  = "";
+  $activite_raison[$nactrec]      = "";
+  $activite_diff[$nactrec]        = "";
 
-
-  //*************************************************************************************************************************************//
-  //                                                      ACTIVITÉ GÉNÉRALE DU SITE                                                      //
-  //*************************************************************************************************************************************//
-
-  //*************************************************************************************************************************************//
-  // Nouvelle version
-  if($dactrec['action_type'] === 'version')
-  {
-    $description_class[$nactrec]  = 'gras texte_blanc sysop';
-    $description_action[$nactrec] = 'Nouvelle version de NoBleme.com publiée : <a class="nolink texte_blanc gras" href="'.$chemin.'pages/todo/roadmap">Version '.$dactrec['action_titre'].'</a>';
-  }
+  // Puis on passe au traitement au cas par cas des divers types d'activité...
 
 
 
 
   //*************************************************************************************************************************************//
-  //                                                      ACTIVITÉ LIÉE AUX MEMBRES                                                      //
+  //                                                                                                                                     //
+  //                                                               MEMBRES                                                               //
+  //                                                                                                                                     //
   //*************************************************************************************************************************************//
 
   //*************************************************************************************************************************************//
   // Nouvel utilisateur
-  else if($dactrec['action_type'] === 'register')
+
+  if($dactrec['action_type'] === 'register')
   {
-    $description_class[$nactrec]  = 'nobleme_background';
-    $description_action[$nactrec] = 'Un nouvel utilisateur s\'est inscrit sur NoBleme sous le pseudonyme <a class="dark blank gras" href="'.$chemin.'pages/user/user?id='.$dactrec['FKmembres'].'">'.$dactrec['pseudonyme'].'</a>';
+    $activite_css[$nactrec]         = 'gras texte_blanc nobleme_clair';
+    $activite_href[$nactrec]        = $chemin.'pages/user/user?id='.$dactrec['FKmembres'];
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme']." s'est inscrit(e) sur NoBleme !";
+    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme']." registered on NoBleme!";
   }
+
+
+
+
+  //*************************************************************************************************************************************//
+  //                                                                                                                                     //
+  //                                                                 IRL                                                                 //
+  //                                                                                                                                     //
+  //*************************************************************************************************************************************//
+
+  //*************************************************************************************************************************************//
+  // Nouvelle IRL
+
+  else if($dactrec['action_type'] === 'new_irl' && !isset($_GET['mod']))
+  {
+    $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
+    $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = 'Nouvelle rencontre IRL planifiée: '.$dactrec['action_titre'];
+    $activite_desc[$nactrec]['EN']  = 'New real life meetup planned: '.$dactrec['action_titre'];
+  }
+
+  //*************************************************************************************************************************************//
+  // [MODLOG] Nouvelle IRL
+
+  else if($dactrec['action_type'] === 'new_irl')
+  {
+    $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
+    $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a crée une nouvelle IRL: '.$dactrec['action_titre'];
+  }
+
+
+
+
+  //*************************************************************************************************************************************//
+  //                                                                                                                                     //
+  //                                                            DÉVELOPPEMENT                                                            //
+  //                                                                                                                                     //
+  //*************************************************************************************************************************************//
+
+  //*************************************************************************************************************************************//
+  // Nouvelle version
+
+  else if($dactrec['action_type'] === 'version')
+  {
+    $activite_css[$nactrec]         = 'gras texte_blanc positif';
+    $activite_href[$nactrec]        = $chemin.'pages/todo/roadmap';
+    $activite_desc[$nactrec]['FR']  = "Nouvelle version de NoBleme.com: ".$dactrec['action_titre'];
+    $activite_desc[$nactrec]['EN']  = "New version of NoBleme.com: ".$dactrec['action_titre'];
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   //*************************************************************************************************************************************//
@@ -185,23 +273,6 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   //*************************************************************************************************************************************//
   //                                                    IRLS ET PARTICIPANTS AUX IRLS                                                    //
   //*************************************************************************************************************************************//
-
-  // Nouvelle IRL
-  else if($dactrec['action_type'] === 'new_irl')
-  {
-    if(!isset($_GET['mod']))
-    {
-      // Activité récente
-      $description_class[$nactrec]  = 'vert_background_clair';
-      $description_action[$nactrec] = 'Nouvelle rencontre IRL planifiée : <a class="dark blank gras" href="'.$chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'].'">'.$dactrec['action_titre'].'</a>';
-    } else {
-      // Log de modération
-      $description_class[$nactrec]  = 'vert_background_clair';
-      $description_action[$nactrec] = '<a class="dark blank gras" href="'.$chemin.'pages/user/user?id='.$dactrec['FKmembres'].'">'.$dactrec['pseudonyme'].'</a> a crée une nouvelle IRL: <a class="dark blank gras" href="'.$chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'].'">'.$dactrec['action_titre'].'</a>';
-      $description_diff[$nactrec]   = '';
-      $description_raison[$nactrec] = '';
-    }
-  }
 
 
   // IRL supprimée

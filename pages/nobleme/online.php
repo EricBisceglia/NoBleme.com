@@ -114,7 +114,7 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
 $traduction['titre']      = ($lang == 'FR') ? "Qui est en ligne ?" : "Who's online right now ?";
 $traduction['soustitre']  = ($lang == 'FR') ? "La page officielle des traqueurs obsessifs et des curieux" : "The official home of obsessive stalkers, curious cats, and other weird animals";
 $traduction['pseudo']     = ($lang == 'FR') ? "PSEUDONYME" : "USER";
-$traduction['activite']   = ($lang == 'FR') ? "ACTIVITE" : "LAST ACTION";
+$traduction['activite']   = ($lang == 'FR') ? "ACTIVITÉ" : "LAST ACTION";
 
 if($lang == 'FR')
   $traduction['description'] = "Cette page recense les visiteurs connectés ces dernières 48 heures, et la page de NoBleme qu'ils ont visité en dernier. Si plus de 1000 personnes se sont connectées ces dernières 48 heures, seules les 1000 activités les plus récentes apparaitront (sait-on jamais, c'est peut-être le cas dans une ligne temporelle différente).";

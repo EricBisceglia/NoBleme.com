@@ -33,10 +33,11 @@ if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0
 
 // Préparation de l'url complète de la page
 $url_complete = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'] : substr(basename($_SERVER['PHP_SELF']),0,-4);
-$url_logout   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&amp;logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
-$url_langage  = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&amp;changelang' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang';
+$url_logout   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
+$url_langage  = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang';
 $url_complete = destroy_html($url_complete);
 $url_logout   = destroy_html($url_logout);
+$url_langage  = destroy_html($url_langage);
 
 // Déconnexion
 if(isset($_GET['logout']))
@@ -54,7 +55,7 @@ else
 
 // Et on prépare les strings d'erreur selon la langue
 if($langage_error)
-  $langage_error = ($lang == 'FR') ? "Cette page n'est disponible qu'en anglais et n'a pas de traduction française." : "This page is only available in french and does not have an english translation.";
+  $langage_error = ($lang == 'FR') ? "Cette page n'est disponible qu'en anglais et n'a pas de traduction française." : "Sorry! This page is only available in french and does not have an english translation.";
 
 
 
@@ -800,5 +801,11 @@ $sidemenu['user_notifsenvoi'] = ($lang == 'FR') ? "Messages envoyés"    : "Sent
       <div class="gros gras texte_erreur align_center monospace">
         <?=$langage_error?>
       </div>
+
+      <br>
+
+      <hr class="separateur_contenu">
+
+      <br>
 
       <?php } ?>
