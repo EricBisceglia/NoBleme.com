@@ -6,7 +6,7 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-adminonly();
+adminonly($lang);
 
 // Interdiction de faire tourner le bot si on est sur localhost
 if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1")

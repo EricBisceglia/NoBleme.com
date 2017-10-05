@@ -9,7 +9,8 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 guestonly($lang);
 
 // Menus du header
-$header_menu = 'NoBleme';
+$header_menu      = '';
+$header_sidemenu  = '';
 
 // Identification
 $page_nom = "Se connecte à son compte";
@@ -20,7 +21,7 @@ $langage_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Connexion" : "Login";
-$page_desc  = "Se connecter à son compte fin d'accéder à tous les services du site";
+$page_desc  = "Se connecter à son compte NoBleme pour profiter de tous les services du site";
 
 
 
@@ -31,24 +32,21 @@ $page_desc  = "Se connecter à son compte fin d'accéder à tous les services du
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Connexion
-
-// Login
-if(isset($_POST['nobleme_login_x']))
+// Gestion de la connexion
+if(isset($_POST['login_pseudo']))
 {
   // Récupération du postdata
-  $login_pseudo   = predata($_POST['nobleme_pseudo']);
-  $login_souvenir = (isset($_POST['nobleme_souvenir'])) ? 'checked' : '';
-  $pseudo         = destroy_html(postdata($_POST['nobleme_pseudo']));
-  $pass           = destroy_html(postdata($_POST['nobleme_pass']));
-  $souvenir       = postdata_vide('nobleme_souvenir');
+  $login_pseudo   = predata($_POST['login_pseudo']);
+  $login_souvenir = (isset($_POST['login_souvenir'])) ? ' checked' : '';
+  $pseudo         = destroy_html(postdata($_POST['login_pseudo'], "string"));
+  $pass           = destroy_html(postdata($_POST['login_pass'], "string"));
+  $souvenir       = postdata_vide('login_souvenir');
 
   // Vérification que le pseudo & pass sont bien rentrés
   if($pseudo != "" && $pass != "")
   {
     // On check si la personne tente de bruteforce nobleme
-    $brute_ip     = postdata($_SERVER["REMOTE_ADDR"]);
+    $brute_ip     = postdata($_SERVER["REMOTE_ADDR"], "string");
     $timecheck    = (time() - 3600);
     $qcheckbrute  = query(" SELECT COUNT(*) AS 'num_brute' FROM membres_essais_login WHERE ip = '$brute_ip' AND timestamp > '$timecheck' ");
     $checkbrute   = mysqli_fetch_array($qcheckbrute);
@@ -61,7 +59,7 @@ if(isset($_POST['nobleme_login_x']))
 
       // On s'arrête là si ça ne renvoie pas de résultat
       if (mysqli_num_rows($login) == 0)
-        $erreur = "Ce pseudonyme n'existe pas";
+        $erreur = ($lang == 'FR') ? "Ce pseudonyme n'existe pas" : "This nickname does not exist";
       else
       {
 
@@ -72,7 +70,7 @@ if(isset($_POST['nobleme_login_x']))
         while($logins = mysqli_fetch_array($login))
         {
           // Vérifions s'il y a bruteforce
-          $login_id         = postdata($logins['id']);
+          $login_id         = postdata($logins['id'], "int");
           $timecheck        = (time() - 60);
           $qcheckbruteforce = query(" SELECT COUNT(*) AS 'num_brute' FROM membres_essais_login WHERE FKmembres = '$login_id' AND timestamp > '$timecheck' ");
           $checkbruteforce  = mysqli_fetch_array($qcheckbruteforce);
@@ -91,7 +89,7 @@ if(isset($_POST['nobleme_login_x']))
               query(" UPDATE membres SET pass = '$passtest' WHERE id = '$login_id' ");
           }
           else
-            $erreur = "Trop d'essais de connexion à ce compte dans la dernière minute<br><a href=\"".$chemin."pages/user/register?oublie\" class=\"dark\">Mot de passe oublié ?</a>";
+            $erreur = ($lang == 'FR') ? "Trop d'essais de connexion dans la dernière minute<br><a href=\"".$chemin."pages/user/login?oublie\" class=\"dark\">Mot de passe oublié ?</a>" : "Too many login attempts in the past minute<br><a href=\"".$chemin."pages/user/login?oublie\" class=\"dark\">Forgot your password?</a>";
         }
 
         // Si le pass est pas bon, dehors. Et tant qu'on y est, on log l'essai en cas de bruteforce
@@ -99,7 +97,7 @@ if(isset($_POST['nobleme_login_x']))
         {
           $timestamp  = time();
           query(" INSERT INTO membres_essais_login SET FKmembres = '$login_id' , timestamp = '$timestamp' , ip = '$brute_ip' ");
-          $erreur     = "Mot de passe incorrect<br><a href=\"".$chemin."pages/user/register?oublie\" class=\"dark\">Mot de passe oublié ?</a>";
+          $erreur     = ($lang == 'FR') ? "Mot de passe incorrect<br><a href=\"".$chemin."pages/user/login?oublie\" class=\"dark\">Mot de passe oublié ?</a>" : "Incorrect password<br><a href=\"".$chemin."pages/user/login?oublie\" class=\"dark\">Forgot your password?</a>";
         }
         else if ($checkbruteforce['num_brute'] < 5)
         {
@@ -117,7 +115,6 @@ if(isset($_POST['nobleme_login_x']))
           }
 
           // Validation & redirection
-          $erreur = "Login ok, rechargez la page";
           header("location: ".$chemin."pages/user/notifications");
 
         }
@@ -127,18 +124,42 @@ if(isset($_POST['nobleme_login_x']))
   }
   // Si pseudo & pass ne sont pas correctement entrés, messages d'erreur
   else if ($pseudo != "" && $pass == "")
-    $erreur = "Vous n'avez pas rentré de mot de passe.";
+    $erreur = ($lang == 'FR') ? "Vous n'avez pas rentré de mot de passe" : "You must enter a password";
   else if ($pseudo == "" && $pass != "")
-    $erreur = "Vous n'avez pas rentré de pseudonyme.";
+    $erreur = ($lang == 'FR') ? "Vous n'avez pas rentré de pseudonyme" : "You must enter a nickname";
   else
-    $erreur = "Vous n'avez pas rentré d'identifiants.";
+    $erreur = ($lang == 'FR') ? "Vous n'avez pas rentré d'identifiants" : "You must enter a nickname and a password";
 }
 else
 {
   $login_pseudo   = "";
   $erreur         = "";
-  $login_souvenir = "checked";
+  $login_souvenir = " checked";
 }
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+$traduction['titre']        = ($lang == 'FR') ? "Connexion" : "Login";
+$traduction['titre_oublie'] = ($lang == 'FR') ? "Mot de passe oublié" : "Forgotten password";
+$traduction['register']     = ($lang == 'FR') ? "Vous n'avez pas de compte ? Cliquez ici pour en créer un !" : "Don't have an account? Click here to register one!";
+$traduction['reg_erreur']   = ($lang == 'FR') ? "ERREUR:" : "ERROR:";
+$traduction['reg_nick']     = ($lang == 'FR') ? "Pseudonyme" : "Nickname";
+$traduction['reg_pass']     = ($lang == 'FR') ? "Mot de passe" : "Password";
+$traduction['reg_souvenir'] = ($lang == 'FR') ? "Se souvenir de moi" : "Remember me";
+
+if($lang == 'FR')
+  $traduction['reg_oublie'] = "<p>Pour des raisons de sécurité, NoBleme n'envoie pas les mots de passe en clair par e-mail, et il n'y a pas non plus (pour le moment) de formulaire de récupération de mot de passe.</p><p>Si vous avez perdu l'accès à votre compte, la seule solution est de venir sur le <a class=\"gras\" href=\"".$chemin."pages/irc/index\">serveur de discussionIRC</a> pour demander à un <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">administrateur ou sysop</a> de vous assigner un nouveau mot de passe.</p>";
+else
+  $traduction['reg_oublie'] = "<p>For security reasons, NoBleme account passwords are not sent through e-mail, and there isn't (yet) an automated form to recover your password.</p><p>If you fully lost access to your account, you can come on our <a class=\"gras\" href=\"".$chemin."pages/irc/index\">IRC chat server</a> and ask an <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">admin or sysop</a> to give your account a new password.</p>";
+
+
 
 
 /*****************************************************************************************************************************************/
@@ -147,58 +168,67 @@ else
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="align_center">
-      <img src="<?=$chemin?>img/logos/connexion.png" alt="Connexion">
-    </div>
-    <br>
 
-    <div class="body_main minisize">
-      <form name="login" action="login" method="POST">
-        <table class="indiv">
-          <tr>
-            <td class="align_right gras login_texte">
-              Pseudonyme :&nbsp;
-            </td>
-            <td>
-             <input type="text" name="nobleme_pseudo" class="intable" value="<?=$login_pseudo?>">
-           </td>
-          </tr>
-          <tr>
-            <td class="align_right gras login_texte">
-              Mot de passe :&nbsp;
-            </td>
-            <td>
-              <input type="password" name="nobleme_pass" class="intable">
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" class="align_center gras vspaced">
-              <input type="checkbox" name="nobleme_souvenir" value="ok" <?=$login_souvenir?>> Se souvenir de moi
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2" class="align_center gras">
-              <input type="image" src="<?=$chemin?>img/boutons/connexion.png" name="nobleme_login" alt="Connexion">
-            </td>
-          </tr>
-        </table>
-      </form>
-    </div>
+      <div class="texte">
 
-    <?php if($erreur) { ?>
-    <div class="body_main minisize">
-      <div class="align_center gras">
-        <div class="vspaced">
-          <span class="erreur spaced moinsgros souligne">ERREUR !</span>
-        </div>
-        <?=$erreur?>
+        <?php if(isset($_GET['oublie'])) { ?>
+
+        <h2><?=$traduction['titre_oublie']?></h2>
+
+        <?=$traduction['reg_oublie']?>
+
+        <br>
+
       </div>
-    </div>
-    <?php } ?>
 
+      <hr class="separateur_contenu">
 
+        <div class="texte">
+
+        <br>
+
+        <?php } ?>
+
+        <h1 class="indiv align_center"><?=$traduction['titre']?></h1>
+
+        <p class="align_center gras">
+          <a href="<?=$chemin?>pages/user/register"><?=$traduction['register']?></a>
+        </p>
+
+        <br>
+        <br>
+
+        <?php if($erreur) { ?>
+        <h5 class="texte_negatif gras indiv align_center">
+          <span class="souligne"><?=$traduction['reg_erreur']?></span> <?=$erreur?>
+        </h5>
+        <br>
+        <br>
+        <?php } ?>
+
+      </div>
+
+      <div class="minitexte">
+
+        <form method="POST" action="login">
+          <fieldset>
+            <label for="login_pseudo"><?=$traduction['reg_nick']?></label>
+            <input id="login_pseudo" name="login_pseudo" class="indiv" type="text" value="<?=$login_pseudo?>"><br>
+            <br>
+            <label for="login_pass"><?=$traduction['reg_pass']?></label>
+            <input id="login_pass" name="login_pass" class="indiv" type="password"><br>
+            <br>
+            <div class="float-right">
+              <input id="login_souvenir" name="login_souvenir" type="checkbox"<?=$login_souvenir?>>
+              <label class="label-inline" for="login_souvenir"><?=$traduction['reg_souvenir']?></label>
+            </div>
+            <input value="<?=$traduction['titre']?>" type="submit">
+          </fieldset>
+        </form>
+
+      </div>
+
+      <br>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

@@ -40,6 +40,7 @@
 .margin_auto     { margin: auto;                              }
 .indiv, .intable { width: 100%;                               }
 .alinea          { padding-left: 20px;                        }
+.minitexte       { margin: auto; max-width: 25em;             }
 .texte           { margin: auto; max-width: 50em;             }
 .texte2          { margin: auto; max-width: 60em;             }
 .texte3          { margin: auto; max-width: 70em;             }

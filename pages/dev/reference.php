@@ -13,7 +13,7 @@ if(isset($_POST['dynamique_test']))
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-adminonly();
+adminonly($lang);
 
 // Menus du header
 $header_menu      = 'Dev';

@@ -6,7 +6,7 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-useronly();
+useronly($lang);
 
 // Menus du header
 $header_menu      = 'Compte';
