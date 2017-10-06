@@ -41,6 +41,7 @@
 .indiv, .intable { width: 100%;                               }
 .alinea          { padding-left: 20px;                        }
 .minitexte       { margin: auto; max-width: 25em;             }
+.minitexte2      { margin: auto; max-width: 30em;             }
 .texte           { margin: auto; max-width: 50em;             }
 .texte2          { margin: auto; max-width: 60em;             }
 .texte3          { margin: auto; max-width: 70em;             }

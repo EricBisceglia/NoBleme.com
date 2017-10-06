@@ -8,10 +8,6 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 guestonly($lang);
 
-// Menus du header
-$header_menu      = '';
-$header_sidemenu  = '';
-
 // Identification
 $page_nom = "Se connecte à son compte";
 $page_url = "pages/user/login";
@@ -146,18 +142,29 @@ else
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
+// Titres et messages
 $traduction['titre']        = ($lang == 'FR') ? "Connexion" : "Login";
 $traduction['titre_oublie'] = ($lang == 'FR') ? "Mot de passe oublié" : "Forgotten password";
+$traduction['titre_bien']   = ($lang == 'FR') ? "Bienvenue sur NoBleme !" : "Welcome to NoBleme !";
 $traduction['register']     = ($lang == 'FR') ? "Vous n'avez pas de compte ? Cliquez ici pour en créer un !" : "Don't have an account? Click here to register one!";
 $traduction['reg_erreur']   = ($lang == 'FR') ? "ERREUR:" : "ERROR:";
+
+// Formulaire
 $traduction['reg_nick']     = ($lang == 'FR') ? "Pseudonyme" : "Nickname";
 $traduction['reg_pass']     = ($lang == 'FR') ? "Mot de passe" : "Password";
 $traduction['reg_souvenir'] = ($lang == 'FR') ? "Se souvenir de moi" : "Remember me";
 
+// Mot de passe oublié
 if($lang == 'FR')
   $traduction['reg_oublie'] = "<p>Pour des raisons de sécurité, NoBleme n'envoie pas les mots de passe en clair par e-mail, et il n'y a pas non plus (pour le moment) de formulaire de récupération de mot de passe.</p><p>Si vous avez perdu l'accès à votre compte, la seule solution est de venir sur le <a class=\"gras\" href=\"".$chemin."pages/irc/index\">serveur de discussionIRC</a> pour demander à un <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">administrateur ou sysop</a> de vous assigner un nouveau mot de passe.</p>";
 else
   $traduction['reg_oublie'] = "<p>For security reasons, NoBleme account passwords are not sent through e-mail, and there isn't (yet) an automated form to recover your password.</p><p>If you fully lost access to your account, you can come on our <a class=\"gras\" href=\"".$chemin."pages/irc/index\">IRC chat server</a> and ask an <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">admin or sysop</a> to give your account a new password.</p>";
+
+// Bienvenue sur NoBleme
+if($lang == 'FR')
+  $traduction['reg_bien'] = "<p>Votre compte a été crée, et vous pouvez maintenant vous y connecter en vous servant du formulaire de connexion ci-dessous. Bienvenue parmi nous, et bon séjour sur NoBleme !<br><br>Votre administrateur,<br>Bad</p>";
+else
+  $traduction['reg_bien'] = "<p>Your account has successfully being created. You can now log into your account using the form below. Welcome amongst us, and enjoy your stay on NoBleme!<br><br>Your admin,<br>Bad</p>";
 
 
 
@@ -187,11 +194,27 @@ else
 
         <br>
 
+        <?php } else if(isset($_GET['bienvenue'])) { ?>
+
+        <h2><?=$traduction['titre_bien']?></h2>
+
+        <?=$traduction['reg_bien']?>
+
+        <br>
+
+      </div>
+
+      <hr class="separateur_contenu">
+
+        <div class="texte">
+
+        <br>
+
         <?php } ?>
 
         <h1 class="indiv align_center"><?=$traduction['titre']?></h1>
 
-        <p class="align_center gras">
+        <p class="align_center gras moinsgros">
           <a href="<?=$chemin?>pages/user/register"><?=$traduction['register']?></a>
         </p>
 

@@ -6,21 +6,21 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-guestonly();
-
-// Menus du header
-$header_menu = 'NoBleme';
-
-// Titre et description
-$page_titre = "Créer un compte";
-$page_desc  = "S'inscrire sur NoBleme pour devenir un membre de la communauté";
-
-// CSS
-$css = array('user');
+guestonly($lang);
 
 // Identification
-$page_nom = "user";
-$page_id  = "register";
+$page_nom = "Se crée un compte";
+$page_url = "pages/user/register";
+
+// Langages disponibles
+$langage_page = array('FR','EN');
+
+// Titre et description
+$page_titre = ($lang == 'FR') ? "Créer un compte" : "Register";
+$page_desc  = "Rejoindre la communauté NoBleme en se créant un compte";
+
+// JS
+$js = array('dynamique', '/user/register');
 
 
 
@@ -31,94 +31,57 @@ $page_id  = "register";
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Pas d'erreur pour le moment
-$register_erreur = "";
-
-// On commence par réinitialiser les réponses aux questions, ça servira plus tard
-for($i=1;$i<=3;$i++)
-{
-  $register_check_q1[$i]  = "";
-  $register_check_q2[$i]  = "";
-  $register_check_q3[$i]  = "";
-  $register_check_q4[$i]  = "";
-}
-
 // Vérification et validation des données
-if (isset($_POST["register_go_x"]))
+if (isset($_POST["register_pseudo"]))
 {
-  // Récupération du postdata
-  $register_pseudo  = postdata(destroy_html($_POST["register_pseudo"]));
-  $register_pass_1  = postdata(destroy_html($_POST["register_pass_1"]));
-  $register_pass_2  = postdata(destroy_html($_POST["register_pass_2"]));
-  $register_email   = postdata(destroy_html($_POST["register_email"]));
-  $register_captcha = postdata($_POST["register_captcha"]);
+  // Assainissement du postdata
+  $register_pseudo  = postdata($_POST["register_pseudo"],"string");
+  $register_pass_1  = postdata($_POST["register_pass_1"],"string");
+  $register_pass_2  = postdata($_POST["register_pass_2"],"string");
+  $register_email   = postdata($_POST["register_email"],"string");
+  $register_captcha = postdata($_POST["register_captcha"],"string");
+  $register_erreur  = "";
+
+  // On remet les questions de sécurité là où elles étaient
   $register_q1      = isset($_POST["register_question_1"]) ? postdata($_POST["register_question_1"]) : 0;
   $register_q2      = isset($_POST["register_question_2"]) ? postdata($_POST["register_question_2"]) : 0;
   $register_q3      = isset($_POST["register_question_3"]) ? postdata($_POST["register_question_3"]) : 0;
   $register_q4      = isset($_POST["register_question_4"]) ? postdata($_POST["register_question_4"]) : 0;
-
-  // On remet les questions de sécurité là où elles étaient
   for($i=1;$i<=3;$i++)
   {
-    if($register_q1 == $i)
-      $register_check_q1[$i] = " checked";
-    if($register_q2 == $i)
-      $register_check_q2[$i] = " checked";
-    if($register_q3 == $i)
-      $register_check_q3[$i] = " checked";
-    if($register_q4 == $i)
-      $register_check_q4[$i] = " checked";
+    $register_check_q1[$i] = ($register_q1 == $i) ? " checked" : "";
+    $register_check_q2[$i] = ($register_q2 == $i) ? " checked" : "";
+    $register_check_q3[$i] = ($register_q3 == $i) ? " checked" : "";
+    $register_check_q4[$i] = ($register_q4 == $i) ? " checked" : "";
   }
 
-  // On check si toutes les questions sont remplies
-  if(!$register_q1 || !$register_q2 || !$register_q3 || !$register_q4)
-    $register_erreur = "Il est obligatoire de répondre aux quatre questions sur le règlement de NoBleme<br>Désolé du dérangement, mais ça nous évite 90% des utilisateurs à problèmes";
-
-  // On check si le pseudo est valide
+  // On vérifie si le pseudo est valide
   if($register_erreur == "" && strlen($_POST["register_pseudo"]) < 3)
-    $register_erreur = "Pseudonyme trop court (3 caractères minimum)";
+    $register_erreur = ($lang == 'FR') ? "Pseudonyme trop court" : "Nickname is too short";
   else if($register_erreur == "" && strlen($_POST["register_pseudo"]) > 18)
-    $register_erreur = "Pseudonyme trop long (18 caractères maximum)";
+    $register_erreur = ($lang == 'FR') ? "Pseudonyme trop long" : "Nickname is too long";
+  else if($register_erreur == "" && strlen($_POST["register_pass_1"]) < 6)
+    $register_erreur = ($lang == 'FR') ? "Mot de passe trop court" : "Password is too short";
 
-  // On check l'originalité du pseudo
-  $allnick = query(" SELECT pseudonyme FROM membres ");
-
-  while($allpseudo = mysqli_fetch_array($allnick))
+  // On vérifie l'originalité du pseudo
+  $qallnick = query(" SELECT pseudonyme FROM membres ");
+  while($dallnick = mysqli_fetch_array($qallnick))
   {
-    if(strtoupper($register_pseudo) == strtoupper($allpseudo['pseudonyme']))
+    if(changer_casse($register_pseudo, 'maj') == changer_casse($dallnick['pseudonyme'], 'maj'))
       $register_erreur = "Le pseudonyme choisi existe déjà, merci d'en utiliser un autre";
   }
 
-  // On check si les réponses au QCM sont bonnes
-  if($register_erreur == "" && $register_q1 != 2)
-    $register_erreur = "Mauvaise réponse à la première question sur les conditions d'utilisation";
-  else if($register_erreur == "" && $register_q2 != 1)
-    $register_erreur = "Mauvaise réponse à la seconde question sur les conditions d'utilisation";
-  else if($register_erreur == "" && $register_q3 != 2)
-    $register_erreur = "Mauvaise réponse à la troisième question sur les conditions d'utilisation";
-  else if($register_erreur == "" && $register_q4 != 1)
-    $register_erreur = "Mauvaise réponse à la quatrième question sur les conditions d'utilisation";
-
-  // On check si tous les champs sont remplis
+  // On vérifie que tout soit bien rempli
   if($register_erreur == "" && ($register_pseudo == "" || $register_pass_1 == "" || $register_pass_2 == "" || $register_email == "" || $register_captcha == ""))
-    $register_erreur = "Tous les champs sont obligatoires, merci de les remplir !";
-
-  // On check si les mots de passe saisis sont identiques
-  if($register_erreur == "" && ($register_pass_1 != $register_pass_2))
-    $register_erreur = "Les deux mots de passe saisis ne sont pas identiques";
-
-  // On check si le mot de passe est assez long
-  if($register_erreur == "" && strlen($register_pass_1) < 5)
-    $register_erreur = "Mot de passe trop court (5 caractères minimum)";
+    $register_erreur = ($lang == 'FR') ? "Tous les champs sont obligatoires" : "All fields are mandatory";
 
   // On check si le captcha est bien rempli
   if($register_erreur == "" && ($register_captcha != $_SESSION['captcha']))
-    $register_erreur = "Mauvaise réponse au test anti-robot";
+    $register_erreur = ($lang == 'FR') ? "Mauvaise réponse au test anti-robot" : "You failed the anti-robot test, try again";
 
   // Si pas d'erreur, on peut créer le compte
   if($register_erreur == "")
   {
-    // Préparation des données à insérer
     $register_pass  = postdata(salage($register_pass_1));
     $date_creation  = time();
 
@@ -143,25 +106,135 @@ if (isset($_POST["register_go_x"]))
     ircbot($chemin,"Nouveau membre enregistré sur le site : ".$_POST["register_pseudo"]." - http://www.nobleme.com/pages/user/user?id=".$new_user,"#NoBleme");
 
     // Envoi d'un message de bienvenue
-    envoyer_notif($new_user,"Bienvenue sur NoBleme !",postdata("[size=1.3][b]Bienvenue sur NoBleme ![/b][/size]\r\n\r\nMaintenant que vous êtes inscrit, pourquoi pas rejoindre la communauté là où elle est active :\r\n- Princiaplement [url=".$chemin."pages/irc/index][color=#2F4456][b]sur le serveur IRC[/b][/color][/url], où l'on discute en temps réel\r\n- Parfois sur [url=".$chemin."pages/forum/index][color=#2F4456][b]le forum[/b][/color][/url], où l'on discute en différé\r\n- Et dans tous les endroits actifs dans [url=".$chemin."pages/nobleme/activite][color=#2F4456][b]l'activité récente[/b][/color][/url], où vous aurez une idée de ce qui se passe sur le site\r\n\r\n\r\nBon séjour sur NoBleme,\r\nSi vous avez la moindre question, n'hésitez pas à répondre à ce message.\r\n\r\nVotre administrateur,\r\n[url=".$chemin."pages/user/user?id=1][color=#2F4456][b]Bad[/b][/color][/url]"));
+    if($lang == 'FR')
+      envoyer_notif($new_user,"Bienvenue sur NoBleme !",postdata("[size=1.3][b]Bienvenue sur NoBleme ![/b][/size]\r\n\r\nMaintenant que vous êtes inscrit, pourquoi pas rejoindre la communauté là où elle est active :\r\n- Princiaplement [url=".$chemin."pages/irc/index][color=#2F4456][b]sur le serveur IRC[/b][/color][/url], où l'on discute en temps réel\r\n- Parfois sur [url=".$chemin."pages/forum/index][color=#2F4456][b]le forum[/b][/color][/url], où l'on discute en différé\r\n- Et dans tous les endroits actifs dans [url=".$chemin."pages/nobleme/activite][color=#2F4456][b]l'activité récente[/b][/color][/url], où vous aurez une idée de ce qui se passe sur le site\r\n\r\n\r\nBon séjour sur NoBleme,\r\nSi vous avez la moindre question, n'hésitez pas à répondre à ce message.\r\n\r\nVotre administrateur,\r\n[url=".$chemin."pages/user/user?id=1][color=#2F4456][b]Bad[/b][/color][/url]"));
+    else
+      envoyer_notif($new_user,"Welcome to NoBleme!",postdata("[size=1.3][b]Welcome to NoBleme![/b][/size]\r\n\r\nNow that you have registered, why not join the community where it is most active :\r\n- Mainly on [url=".$chemin."pages/irc/index][color=#2F4456][b]the IRC server[/b][/color][/url], where we chat in real time\r\n- Sometimes on [url=".$chemin."pages/forum/index][color=#2F4456][b]the forum[/b][/color][/url], on which we share things every now and then\r\n- And everywhere that's active in the [url=".$chemin."pages/nobleme/activite][color=#2F4456][b]recent activity[/b][/color][/url], which should show you what's going on on the website\r\n\r\n\r\nEnjoy your stay on NoBleme,\r\nIf you have any questions, feel free to reply to this message.\r\n\r\nYour admin,\r\n[url=".$chemin."pages/user/user?id=1][color=#2F4456][b]Bad[/b][/color][/url]"));
 
     // Redirection vers la page de bienvenue
-    header('Location: ./welcome#bienvenue');
-
+    header('Location: ./login?bienvenue');
   }
+  // Si y'a une erreur, on fixe l'affichage
   else
   {
-    // Pas d'erreur? On fixe le display
-    $register_pseudo  = stripslashes($register_pseudo);
-    $register_email   = stripslashes($register_email);
+    $register_pseudo  = predata(stripslashes($register_pseudo));
+    $register_email   = predata(stripslashes($register_email));
+    $register_pass_1  = predata(stripslashes($register_pass_1));
+    $register_pass_2  = predata(stripslashes($register_pass_2));
   }
 }
+
+// Sinon on remet tout à zéro
 else
 {
-  // Pré-remplissage des champs si pas encore fait
   $register_pseudo  = "";
+  $register_pass_1  = "";
+  $register_pass_2  = "";
   $register_email   = "";
+  $register_erreur  = "";
+  for($i=1;$i<=3;$i++)
+  {
+    $register_check_q1[$i]  = "";
+    $register_check_q2[$i]  = "";
+    $register_check_q3[$i]  = "";
+    $register_check_q4[$i]  = "";
+  }
 }
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+// Titre et intro
+$traduction['titre']      = ($lang == 'FR') ? "Créer un compte" : "Register an account";
+$traduction['soustitre']  = ($lang == 'FR') ? "Code de conduite à respecter sur NoBleme" : "Code of conduct to follow on NoBleme";
+
+// Formulaire d'inscription
+$traduction['reg_pseudo'] = ($lang == 'FR') ? "Choisissez un pseudonyme (3 à 18 caractères)" : "Choose a nickname (3 to 18 characters long)";
+$traduction['reg_pass']   = ($lang == 'FR') ? "Mot de passe (6 caractères minimum)" : "Your password (at least 6 characters long)";
+$traduction['reg_pass2']  = ($lang == 'FR') ? "Entrez à nouveau votre mot de passe" : "Confirm your password by typing it again";
+$traduction['reg_email']  = ($lang == 'FR') ? "Adresse e-mail (utile si vous oubliez votre mot de passe)" : "E-mail address (useful if you forget your password)";
+$traduction['reg_humain'] = ($lang == 'FR') ? "Prouvez que vous êtes humain en recopiant ce nombre" : "Prove you are human by copying this number";
+$traduction['reg_capalt'] = ($lang == 'FR') ? "Vous devez désactiver votre bloqueur d'image pour voir ce captcha !" : "You must turn off your image blocker to see this captcha !";
+$traduction['reg_creer']  = ($lang == 'FR') ? "Créer mon compte" : "Create my account";
+
+// Questionnaire sur le code de conduite
+$traduction['reg_quest1'] = ($lang == 'FR') ? "La pornographie est-elle autorisée ?" : "Is pornography allowed?";
+$traduction['reg_repq11'] = ($lang == 'FR') ? "Oui" : "Yes";
+$traduction['reg_repq12'] = ($lang == 'FR') ? "Non" : "No";
+$traduction['reg_repq13'] = ($lang == 'FR') ? "Ça dépend des cas" : "It depends";
+$traduction['reg_quest2'] = ($lang == 'FR') ? "Les images gores sont-elle tolérées ?" : "Can I post gore images?";
+$traduction['reg_repq21'] = ($lang == 'FR') ? "Oui" : "Yes";
+$traduction['reg_repq22'] = ($lang == 'FR') ? "Non" : "No";
+$traduction['reg_repq23'] = ($lang == 'FR') ? "J'en sais rien, j'ai pas lu" : "Didn't read, don't know lol";
+$traduction['reg_quest3'] = ($lang == 'FR') ? "Si je m'engueule avec quelqu'un, je fais quoi ?" : "If I'm arguing with someone, what should I do?";
+$traduction['reg_repq31'] = ($lang == 'FR') ? "J'étale ça en public" : "Spread it publicly";
+$traduction['reg_repq32'] = ($lang == 'FR') ? "Je résous ça en privé" : "Solve it privately";
+$traduction['reg_quest4'] = ($lang == 'FR') ? "Si je suis aggressif avec les autres, qu'est-ce qui se passe ?" : "If I'm being aggressive towards others, what will happen to me?";
+$traduction['reg_repq41'] = ($lang == 'FR') ? "Je me fais bannir" : "I will get banned";
+$traduction['reg_repq42'] = ($lang == 'FR') ? "Rien, on est dans un pays libre !" : "Nothing, this is a free country!";
+
+// Code de conduite
+if($lang == 'FR')
+  $traduction['reg_coc']  = "
+<p>
+  NoBleme est un site cool où les gens sont relax. Il n'y a pas de restriction d'âge, et peu de restrictions de contenu. Il y a juste un code de conduite minimaliste à respecter, afin de tous cohabiter paisiblement. Pour s'assurer que tout le monde lise le code de conduite (il est court), vous devez répondre à des questions à son sujet lors de la création de votre compte.
+</p>
+<p>
+  <ul>
+    <li>
+      Vu qu'il n'y a pas de restriction d'âge, les <span class=\"gras\">images pornographiques</span> ou suggestives <span class=\"gras\">sont interdites</span>.
+    </li>
+    <li>
+      Les <span class=\"gras\">images gores</span> ou à tendance dégueulasse sont <span class=\"gras\">également interdites</span>. NoBleme n'est pas le lieu pour ça.
+    </li>
+    <li>
+      Tout <span class=\"gras\">contenu illégal</span> sera immédiatement <span class=\"gras\">envoyé à la police</span>. Ne jouez pas avec le feu, ce n'est pas le bon site pour en discuter.
+    </li>
+    <li>
+      Si vous pouvez régler une situation tendue en privé plutôt qu'en public, faites l'effort, sinon vous finirez tous les deux bannis.
+    </li>
+    <li>
+      Les trolls, provocateurs gratuits, et emmerdeurs de service pourront être bannis sans sommation s'ils abusent trop.
+    </li>
+    <li>
+      L'écriture SMS et la grammaire sans effort sont à éviter autant que possible. Prenez le temps de bien écrire, ça sera apprécié.
+    </li>
+  </ul>
+  <br>
+  On est avant tout sur NoBleme pour passer du bon temps. Si vos actions ou votre langage empêchent d'autres personnes de passer du bon temps, c'est un peu nul, non ? Essayez de rester tolérants, ce n'est pas un grand effort, et tout le monde en bénéficie.
+</p>";
+else
+  $traduction['reg_coc']  = "
+<p>
+  NoBleme is a chill community where people are relaxed. There is no restriction on age or content. However, in order to all coexist peacefully, there is a minimalistic code of conduct that everyone should respect. In order to ensure that everyone reads it (it's short), you will have to answer a few questions about it when registering your account.
+</p>
+<p>
+  <ul>
+    <li>
+      Since there is no age restriction <span class=\"gras\">pornography</span> or suggestive content <span class=\"gras\">is forbidden</span>.
+    </li>
+    <li>
+      All <span class=\"gras\">gore images</span> and other disgusting things are <span class=\"gras\">also forbidden</span>. NoBleme is not the right place for it.
+    </li>
+    <li>
+      Obviously, <span class=\"gras\">illegal content</span> will immediately be <span class=\"gras\">sent to the police</span>. Don't play with fire, there are other websites for that.
+    </li>
+    <li>
+      If you have to argue with someone or solve a tense situation, do it privately. If done publicly, you will end up banned.
+    </li>
+    <li>
+      Trolls and other kinds of purposeful agitators will be banned without a warning if they do it excessively.
+    </li>
+  </ul>
+  <br>
+  We are first and foremost on NoBleme to have a good time together. If your actions or your language prevent other people from having a good time, it's a bit silly, isn't it? Try to stay respectful of others and we'll all benefit from it.
+</p>";
 
 
 
@@ -170,248 +243,130 @@ else
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-/************************************************************************************************/ include './../../inc/header.inc.php'; ?>
+if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est invoquée par du XHR */ include './../../inc/header.inc.php';?>
 
-    <br>
-      <br>
-      <div class="align_center">
-        <img src="<?=$chemin?>img/logos/enregistrement.png" alt="Créer un compte">
+      <div class="texte2">
+
+        <h1><?=$traduction['titre']?></h1>
+
+        <h5><?=$traduction['soustitre']?></h5>
+
+        <?=$traduction['reg_coc']?>
+
+        <br>
+
+        <div class="minitexte2">
+
+        <form method="POST" id="register_formulaire" action="register#register_formulaire">
+          <fieldset>
+
+            <label for="register_pseudo" id="label_register_pseudo"><?=$traduction['reg_pseudo']?></label>
+            <input id="register_pseudo" name="register_pseudo" class="indiv" type="text" value="<?=$register_pseudo?>"><br>
+            <br>
+
+            <label for="register_pass_1" id="label_register_pass_1"><?=$traduction['reg_pass']?></label>
+            <input id="register_pass_1" name="register_pass_1" class="indiv" type="password" value="<?=$register_pass_1?>"><br>
+            <br>
+
+            <label for="register_pass_2" id="label_register_pass_2"><?=$traduction['reg_pass2']?></label>
+            <input id="register_pass_2" name="register_pass_2" class="indiv" type="password" value="<?=$register_pass_2?>"><br>
+            <br>
+
+            <label for="register_email" id="label_register_email"><?=$traduction['reg_email']?></label>
+            <input id="register_email" name="register_email" class="indiv" type="text" value="<?=$register_email?>"><br>
+            <br>
+
+            <label for="register_question_1" id="label_register_question_1"><?=$traduction['reg_quest1']?></label>
+            <div class="flexcontainer">
+              <div style="flex:1">
+            <input id="register_question_1" name="register_question_1" value="1" type="radio"<?=$register_check_q1[1]?>>
+            <label class="label-inline" for="register_question_1"><?=$traduction['reg_repq11']?></label>
+              </div>
+              <div style="flex:1">
+            <input id="register_question_1" name="register_question_1" value="2" type="radio"<?=$register_check_q1[2]?>>
+            <label class="label-inline" for="register_question_1"><?=$traduction['reg_repq12']?></label>
+              </div>
+              <div style="flex:3">
+            <input id="register_question_1" name="register_question_1" value="3" type="radio"<?=$register_check_q1[3]?>>
+            <label class="label-inline" for="register_question_1"><?=$traduction['reg_repq13']?></label><br>
+              </div>
+            </div>
+            <br>
+
+            <label for="register_question_2" id="label_register_question_2"><?=$traduction['reg_quest2']?></label>
+            <div class="flexcontainer">
+              <div style="flex:1">
+            <input id="register_question_2" name="register_question_2" value="1" type="radio"<?=$register_check_q2[1]?>>
+            <label class="label-inline" for="register_question_2"><?=$traduction['reg_repq21']?></label>
+              </div>
+              <div style="flex:1">
+            <input id="register_question_2" name="register_question_2" value="2" type="radio"<?=$register_check_q2[2]?>>
+            <label class="label-inline" for="register_question_2"><?=$traduction['reg_repq22']?></label>
+              </div>
+              <div style="flex:3">
+            <input id="register_question_2" name="register_question_2" value="3" type="radio"<?=$register_check_q2[3]?>>
+            <label class="label-inline" for="register_question_2"><?=$traduction['reg_repq23']?></label><br>
+              </div>
+            </div>
+            <br>
+
+            <label for="register_question_3" id="label_register_question_3"><?=$traduction['reg_quest3']?></label>
+            <div class="flexcontainer">
+              <div style="flex:2">
+            <input id="register_question_3" name="register_question_3" value="1" type="radio"<?=$register_check_q3[1]?>>
+            <label class="label-inline" for="register_question_2"><?=$traduction['reg_repq31']?></label>
+              </div>
+              <div style="flex:3">
+            <input id="register_question_3" name="register_question_3" value="2" type="radio"<?=$register_check_q3[2]?>>
+            <label class="label-inline" for="register_question_3"><?=$traduction['reg_repq32']?></label>
+              </div>
+            </div>
+            <br>
+
+            <label for="register_question_4" id="label_register_question_4"><?=$traduction['reg_quest4']?></label>
+            <div class="flexcontainer">
+              <div style="flex:2">
+            <input id="register_question_4" name="register_question_4" value="1" type="radio"<?=$register_check_q4[1]?>>
+            <label class="label-inline" for="register_question_4"><?=$traduction['reg_repq41']?></label>
+              </div>
+              <div style="flex:3">
+            <input id="register_question_4" name="register_question_4" value="2" type="radio"<?=$register_check_q4[2]?>>
+            <label class="label-inline" for="register_question_4"><?=$traduction['reg_repq42']?></label>
+              </div>
+            </div>
+            <br>
+
+            <label for="register_captcha" id="label_register_captcha"><?=$traduction['reg_humain']?></label>
+            <div class="flexcontainer">
+              <div style="flex:1">
+                <img src="<?=$chemin?>inc/captcha.inc.php" alt="<?=$traduction['reg_capalt']?>">
+              </div>
+              <div style="flex:4">
+                <input id="register_captcha" name="register_captcha" class="indiv" type="text"><br>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+
+        <?php if($register_erreur != "") { ?>
+        <p>
+          <span class="texte_blanc negatif spaced moinsgros gras">
+            <?=$register_erreur?>
+          </span>
+        </p>
+        <?php } ?>
+
+        <br>
+
+        <button onclick="creer_compte('<?=$chemin?>');" id="register_formulaire"><?=$traduction['reg_creer']?></button>
+
       </div>
-      <br>
 
-      <?php
-      if(isset($_GET["oublie"]))
-      {
-        ?>
+      </div>
 
-        <div class="body_main midsize">
-
-          <span class="titre">Mot de passe oublié ?</span><br>
-
-          <br>
-          Pour des raisons de sécurité évidentes, NoBleme.com n'envoie pas de mot de passe par e-mail.<br>
-          <br>
-          Il n'y a pas non plus de formulaire de récupération de mot de passe, ou d'envoi de système de réinitialisation de mot de passe par mail, encore une fois pour des raisons de sécurité. Il est trop facile d'exploiter ces systèmes pour voler le compte de quelqu'un.<br>
-          <br>
-          Si vous avez oublié votre mot de passe, une seule solution: Venez en parler avec <a href="<?=$chemin?>pages/user/user?id=1" target="_blank">Bad</a> sur <a href="<?=$chemin?>pages/irc/index" target="_blank">IRC</a>.<br>
-          Je dispose d'une méthode (j'espère) infaillible et très rapide de prouver que vous êtes bien le vrai propriétaire de votre compte.<br>
-          Une fois la vérification faite, n'ayant pas d'accès à votre mot de passe, je vais vous mettre un nouveau mot de passe à la place.<br>
-          Ce sera ensuite à vous de le changer en un mot de passe qui vous convient mieux.<br>
-          <br>
-          La meilleure solution reste encore de ne pas oublier son mot de passe !
-
-        </div>
-
-        <?php
-      }
-      else
-      {
-        ?>
-
-        <div class="body_main midsize">
-
-          <span class="titre">Code de conduite à respecter sur NoBleme</span><br>
-          <br>
-          NoBleme est un site cool où les gens sont relax. Il n'y a pas de limite d'âge, et tout contenu est autorisé, sauf les exceptions suivantes :<br>
-          <br>
-          * Les <b>images pornographiques</b> ou fortement suggestives sont <b>strictement interdites</b>. Elles seront supprimées, et leur auteur banni.<br>
-          * Les <b>images gores</b> ou à tendance dégueulasse sont également <b>interdites</b>, NoBleme n'est pas le lieu pour ça.<br>
-          * Tout <b>contenu illégal</b> sera immédiatement <b>envoyé à la police</b>. Ne jouez pas avec le feu.<br>
-          * Si vous pouvez régler une situation tendue en privé, faites-le. Les auteurs de drames publics seront bannis temporairement.<br>
-          * Les trolls, provocateurs gratuits, et emmerdeurs de service pourront être bannis sans sommation s'ils abusent trop.<br>
-          * L'écriture SMS et la grammaire sans effort sont à éviter autant que possible. Prenez le temps de bien écrire, ça sera apprécié.<br>
-          <br>
-          On est avant tout sur NoBleme pour s'amuser et passer du bon temps. Si vos actions ou votre langage empêchent d'autres membres de passer du bon temps, c'est un peu nul, vous trouvez pas ? On peut rire de tout, mais pas avec n'importe qui.<br>
-          <br>
-          Le pouvoir de bannir est entre les mains de l'administration du site, mais n'est utilisé que très rarement, dans les situations extrêmes.<br>
-          Toutefois, si vous cherchez la merde, vous y passerez. Restez cool et on restera cool, c'est aussi simple que ça :)<br>
-
-        </div>
-
-        <br>
-        <br>
-
-        <div class="body_main midsize">
-
-          <?php
-          // Notification des erreurs
-          if($register_erreur != "")
-          {
-            ?>
-
-            <div class="body_main_title" id="erreur">
-              <span class="texte_erreur moinsgros gras">
-                <u>Erreur</u> : <?=$register_erreur?>
-              </span>
-            </div>
-
-            <?php
-          }
-          else
-          {
-            ?>
-
-            <span class="titre" id="erreur">Créer un nouveau compte</span><br>
-
-            <?php
-          }
-          ?>
-
-          <br>
-
-          <form name="register" method="post" action="register#erreur">
-
-            <table class="data_input indiv">
-
-              <tr>
-                <td class="data_input_right user_register">
-                  Votre pseudonyme :&nbsp;
-                </td>
-                <td colspan="2">
-                  <input class="intable" name="register_pseudo" value="<?=$register_pseudo?>">
-                </td>
-                <td class="data_input_left user_register_big">
-                  &nbsp; Doit faire entre 3 et 18 caractères et ne pas être déjà utilisé
-                </td>
-              </tr>
-
-              <tr>
-                <td colspan="4">
-                  &nbsp;
-                </td>
-              </tr>
-
-              <tr>
-                <td class="data_input_right user_register">
-                  Mot de passe :&nbsp;
-                </td>
-                <td colspan="2">
-                  <input class="intable" type="password" name="register_pass_1">
-                </td>
-                <td class="data_input_left user_register_big">
-                  &nbsp; 5 caractères minimum, caractères spéciaux et espaces autorisés
-                </td>
-              </tr>
-
-              <tr>
-                <td class="data_input_right user_register">
-                  Confirmer :&nbsp;
-                </td>
-                <td colspan="2">
-                  <input class="intable" type="password" name="register_pass_2">
-                </td>
-                <td class="data_input_left user_register_big">
-                  &nbsp; Entrez à nouveau votre mot de passe pour confirmation
-                </td>
-              </tr>
-
-              <tr>
-                <td colspan="4">
-                  &nbsp;
-                </td>
-              </tr>
-
-              <tr>
-                <td class="data_input_right user_register">
-                  Adresse e-mail :&nbsp;
-                </td>
-                <td colspan="2">
-                  <input class="intable" name="register_email" value="<?=$register_email?>">
-                </td>
-                <td class="data_input_left user_register_big">
-                  &nbsp; Pour vérifier votre identité si vous perdez votre mot de passe
-                </td>
-              </tr>
-
-              <tr>
-                <td class="data_input_right user_register">
-                  Test anti-robot :&nbsp;
-                </td>
-                <td>
-                  <img src="<?=$chemin?>inc/captcha.inc.php" alt="Vous devez désactiver votre bloqueur d'image pour voir ce captcha !">
-                </td>
-                <td>
-                  <input class="intable" name="register_captcha" value="">
-                </td>
-                <td class="data_input_left user_register_big">
-                  &nbsp; Prouvez que vous êtes humain en recopiant le nombre affiché
-                </td>
-              </tr>
-
-            </table>
-
-            <br>
-            <br>
-
-            <div class="body_main_title">
-              Et maintenant, prouvez que vous avez bien lu les conditions d'utilisation
-            </div>
-            C'est pas la mort, elles sont courtes à lire. Un petit effort !<br>
-
-            <br>
-
-            <table class="data_input indiv">
-
-              <tr>
-                <td class="data_input_right user_register_questions">
-                  La pornographie est-elle autorisée ?&nbsp;
-                </td>
-                <td class="align_left user_register_questions_big">
-                  <input type="radio" name="register_question_1" value="1"<?=$register_check_q1[1]?>> Oui &nbsp;&nbsp;
-                  <input type="radio" name="register_question_1" value="2"<?=$register_check_q1[2]?>> Non &nbsp;&nbsp;
-                  <input type="radio" name="register_question_1" value="3"<?=$register_check_q1[3]?>> Ça dépend des cas
-                </td>
-              </tr>
-
-              <tr>
-                <td class="data_input_right user_register_questions">
-                  Les images gores sont-elles tolérées ?&nbsp;
-                </td>
-                <td class="align_left user_register_questions_big">
-                  <input type="radio" name="register_question_2" value="1"<?=$register_check_q2[1]?>> Non &nbsp;&nbsp;
-                  <input type="radio" name="register_question_2" value="2"<?=$register_check_q2[2]?>> Oui &nbsp;&nbsp;
-                  <input type="radio" name="register_question_2" value="3"<?=$register_check_q2[3]?>> J'en sais rien, j'ai pas lu
-                </td>
-              </tr>
-
-              <tr>
-                <td class="data_input_right user_register_questions">
-                  Si je m'engueule avec quelqu'un, je fais quoi ?&nbsp;
-                </td>
-                <td class="align_left user_register_questions_big">
-                  <input type="radio" name="register_question_3" value="1"<?=$register_check_q3[1]?>> J'étale ça sur le forum&nbsp;&nbsp;
-                  <input type="radio" name="register_question_3" value="2"<?=$register_check_q3[2]?>> Je résous ça en privé
-                </td>
-              </tr>
-
-              <tr>
-                <td class="data_input_right user_register_questions">
-                  Si je fais chier le monde, qu'est-ce qui se passe ?&nbsp;
-                </td>
-                <td class="align_left user_register_questions_big">
-                  <input type="radio" name="register_question_4" value="1"<?=$register_check_q4[1]?>> Je me fais bannir &nbsp;&nbsp;
-                  <input type="radio" name="register_question_4" value="2"<?=$register_check_q4[2]?>> Rien, on est dans un pays libre !
-                </td>
-              </tr>
-
-            </table>
-
-            <br>
-
-            <p class="align_center">
-              <input type="image" src="<?=$chemin?>img/boutons/creer_mon_compte.png" alt="Créer mon compte" name="register_go">
-            </p>
-
-          </form>
-
-        </div>
-
-        <?php
-      }
-
-
-/*****************************************************************************************************************************************/
+<?php include './../../inc/footer.inc.php'; /*********************************************************************************************/
 /*                                                                                                                                       */
 /*                                                              FIN DU HTML                                                              */
 /*                                                                                                                                       */
-/***************************************************************************************************/ include './../../inc/footer.inc.php';
+/***************************************************************************************************************************************/ }
