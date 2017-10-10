@@ -576,9 +576,11 @@ $sidemenu['masquer']  = ($lang == 'FR') ? 'Masquer le menu latéral'   : 'Hide t
 
 <?php ################################################### MENU LATÉRAL : NOBLEME ##########################################################
 // Préparation des traductions des titres du menu
-$sidemenu['nb_accueil']   = ($lang == 'FR') ? "Page d'accueil"      : "Home page";
-$sidemenu['nb_enligne']   = ($lang == 'FR') ? "Qui est en ligne"    : "Who's online";
-$sidemenu['nb_activite']  = ($lang == 'FR') ? "Activité récente"    : "Recent activity";
+$sidemenu['nb_accueil']     = ($lang == 'FR') ? "Page d'accueil"        : "Home page";
+$sidemenu['nb_activite']    = ($lang == 'FR') ? "Activité récente"      : "Recent activity";
+$sidemenu['nb_communaute']  = ($lang == 'FR') ? "Communauté"            : "Community";
+$sidemenu['nb_enligne']     = ($lang == 'FR') ? "Qui est en ligne"      : "Who's online";
+$sidemenu['nb_admins']      = ($lang == 'FR') ? "Équipe administrative" : "Staff and admins";
 /* ################################################################################################## */ if($header_menu == 'NoBleme') { ?>
 
             <a href="<?=$chemin?>index">
@@ -587,17 +589,27 @@ $sidemenu['nb_activite']  = ($lang == 'FR') ? "Activité récente"    : "Recent 
               </div>
             </a>
 
-            <hr class="header_sidemenu_hr">
-
             <a href="<?=$chemin?>pages/nobleme/activite">
               <div class="<?=header_class('ActiviteRecente',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_activite']?>
               </div>
             </a>
 
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              <?=$sidemenu['nb_communaute']?>
+            </div>
+
             <a href="<?=$chemin?>pages/nobleme/online?noguest">
               <div class="<?=header_class('QuiEstEnLigne',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_enligne']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nobleme/admins">
+              <div class="<?=header_class('EquipeAdmin',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_admins']?>
               </div>
             </a>
 

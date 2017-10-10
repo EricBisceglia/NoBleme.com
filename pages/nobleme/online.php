@@ -97,9 +97,18 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
   else
     $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'"><span class="texte_blanc">'.$donline['page'].'</span></a>';
 
-  // Et le reste
-  $online_date[$nonline] = ($lang == 'FR') ? ilya($donline['date']) : ilya($donline['date'],'EN');
-  $online_url[$nonline]  = $donline['url'];
+  // La date avec ou sans url autour
+  if($lang == 'FR')
+    $online_date[$nonline] = ilya($donline['date']);
+  else
+  {
+    if(!$donline['url'])
+      $online_date[$nonline] = $donline['page'];
+    else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
+      $online_date[$nonline] = '<a href="'.$chemin.$donline['url'].'">'.ilya($donline['date'],'EN').'</a>';
+    else
+      $online_date[$nonline] = '<a href="'.$chemin.$donline['url'].'"><span class="texte_blanc">'.ilya($donline['date'],'EN').'</span></a>';
+  }
 }
 
 

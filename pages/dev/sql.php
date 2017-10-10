@@ -42,11 +42,14 @@ query(" CREATE TABLE IF NOT EXISTS vars_globales (
 // Création d'un champ dans une table existante
 
 $temp = query(" DESCRIBE vars_globales ");
+$temp3 = 0;
 while($temp2 = mysqli_fetch_array($temp))
 {
   if($temp2['Field'] == 'mise_a_jour')
-    query(" ALTER TABLE vars_globales ADD mise_a_jour MEDIUMTEXT AFTER version ");
+    $temp3 = 1;
 }
+if(!$temp3)
+  query(" ALTER TABLE vars_globales ADD mise_a_jour MEDIUMTEXT AFTER version ");
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,6 +91,31 @@ while($temp2 = mysqli_fetch_array($temp))
   if($temp2['Field'] == 'id_page')
     query(" ALTER TABLE stats_pageviews CHANGE id_page url_page MEDIUMTEXT ");
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Description multilingue des modérateurs
+
+$temp = query(" DESCRIBE membres ");
+while($temp2 = mysqli_fetch_array($temp))
+{
+  if($temp2['Field'] == 'moderateur_description')
+    query(" ALTER TABLE membres CHANGE moderateur_description moderateur_description_fr MEDIUMTEXT ");
+}
+
+$temp = query(" DESCRIBE membres ");
+$temp3 = 0;
+while($temp2 = mysqli_fetch_array($temp))
+{
+  if($temp2['Field'] == 'moderateur_description_en')
+    $temp3 = 1;
+}
+if(!$temp3)
+  query(" ALTER TABLE membres ADD moderateur_description_en MEDIUMTEXT AFTER moderateur_description_fr ");
+
+query(" UPDATE membres SET moderateur_description_en = 'Real life meetups' WHERE moderateur_description_fr LIKE 'Rencontres IRL' ");
 
 
 

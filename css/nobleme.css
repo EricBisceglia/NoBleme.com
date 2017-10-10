@@ -52,6 +52,7 @@
 .souligne        { text-decoration: underline;                }
 .barre           { text-decoration: line-through;             }
 .blank           { text-decoration: none;                     }
+.nohover:hover   { color: inherit;                            }
 .maigre          { font-size: 0.75em;                         }
 .moinsgros       { font-size: 1.25em;                         }
 .gros            { font-size: 1.5em;                          }
