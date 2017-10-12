@@ -36,7 +36,6 @@ if(isset($_POST['login_pseudo']))
   $login_souvenir = (isset($_POST['login_souvenir'])) ? ' checked' : '';
   $pseudo         = destroy_html(postdata($_POST['login_pseudo'], "string"));
   $pass           = destroy_html(postdata($_POST['login_pass'], "string"));
-  $souvenir       = postdata_vide('login_souvenir');
 
   // Vérification que le pseudo & pass sont bien rentrés
   if($pseudo != "" && $pass != "")
@@ -98,21 +97,18 @@ if(isset($_POST['login_pseudo']))
         else if ($checkbruteforce['num_brute'] < 5)
         {
           // On est bons, reste plus qu'à se connecter!
-          if($souvenir == "ok")
+          if($login_souvenir)
           {
             // Si checkbox se souvenir est cochée, on crée un cookie
             setcookie("nobleme_memory", salage($pseudo) , time()+630720000, "/");
             $_SESSION['user'] = $login_id;
           }
+          // Sinon, on se contente d'ouvrir une session
           else
-          {
-            // Sinon, on se contente d'ouvrir une session
             $_SESSION['user'] = $login_id;
-          }
 
-          // Validation & redirection
+          // Puis on redirige vers l'inbox
           header("location: ".$chemin."pages/user/notifications");
-
         }
       }
     }
@@ -156,7 +152,7 @@ $traduction['reg_souvenir'] = ($lang == 'FR') ? "Se souvenir de moi" : "Remember
 
 // Mot de passe oublié
 if($lang == 'FR')
-  $traduction['reg_oublie'] = "<p>Pour des raisons de sécurité, NoBleme n'envoie pas les mots de passe en clair par e-mail, et il n'y a pas non plus (pour le moment) de formulaire de récupération de mot de passe.</p><p>Si vous avez perdu l'accès à votre compte, la seule solution est de venir sur le <a class=\"gras\" href=\"".$chemin."pages/irc/index\">serveur de discussionIRC</a> pour demander à un <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">administrateur ou sysop</a> de vous assigner un nouveau mot de passe.</p>";
+  $traduction['reg_oublie'] = "<p>Pour des raisons de sécurité, NoBleme n'envoie pas les mots de passe en clair par e-mail, et il n'y a pas non plus (pour le moment) de formulaire de récupération de mot de passe.</p><p>Si vous avez perdu l'accès à votre compte, la seule solution est de venir sur le <a class=\"gras\" href=\"".$chemin."pages/irc/index\">serveur de discussion IRC</a> pour demander à un <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">administrateur ou sysop</a> de vous assigner un nouveau mot de passe.</p>";
 else
   $traduction['reg_oublie'] = "<p>For security reasons, NoBleme account passwords are not sent through e-mail, and there isn't (yet) an automated form to recover your password.</p><p>If you fully lost access to your account, you can come on our <a class=\"gras\" href=\"".$chemin."pages/irc/index\">IRC chat server</a> and ask an <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">admin or sysop</a> to give your account a new password.</p>";
 

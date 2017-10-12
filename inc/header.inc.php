@@ -91,25 +91,24 @@ else
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                              GESTION DES PAGEVIEWS ET DES STATS REFERER                                               */
+/*                                                         GESTION DES PAGEVIEWS                                                         */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Récupération puis création ou incrémentation du pageview count de la page liée
 
-/*
-if(isset($page_nom) && isset($page_id) && !isset($error_mode))
+if(isset($page_nom) && isset($page_url) && !isset($error_mode))
 {
   // Réparation des erreurs au cas où
   $page_nom = postdata($page_nom);
-  $page_id  = postdata($page_id);
+  $page_url = postdata($page_url);
 
   // Requête pour récupérer les pageviews sur la page courante
   $view_query = query(" SELECT  stats_pageviews.vues
                         FROM    stats_pageviews
                         WHERE   stats_pageviews.nom_page  = '$page_nom'
-                        AND     stats_pageviews.id_page   = '$page_id' ");
+                        AND     stats_pageviews.url_page  = '$page_url' ");
 
   // Si la requête renvoie un résultat, reste plus qu'à incrémenter les pageviews
   if (mysqli_num_rows($view_query) != 0)
@@ -123,7 +122,7 @@ if(isset($page_nom) && isset($page_id) && !isset($error_mode))
       query(" UPDATE  stats_pageviews
               SET     stats_pageviews.vues      = stats_pageviews.vues + 1
               WHERE   stats_pageviews.nom_page  = '$page_nom'
-              AND     stats_pageviews.id_page   = '$page_id' ");
+              AND     stats_pageviews.url_page  = '$page_url' ");
   }
 
   // Sinon, il faut créer l'entrée de la page et lui donner son premier pageview
@@ -135,11 +134,10 @@ if(isset($page_nom) && isset($page_id) && !isset($error_mode))
     // On update la BDD
     query(" INSERT INTO stats_pageviews
             SET         stats_pageviews.nom_page  = '$page_nom' ,
-                        stats_pageviews.id_page   = '$page_id'  ,
+                        stats_pageviews.url_page  = '$page_url' ,
                         stats_pageviews.vues      = 1           ");
   }
 }
-*/
 
 
 
@@ -202,37 +200,6 @@ else
                   invites.derniere_visite_page  = '$activite_page'      ,
                   invites.derniere_visite_url   = '$activite_url'
           WHERE   invites.ip                    = '$guest_ip'         ");
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Si l'user est connecté, mise à jour de son referer
-
-// On ne s'en occupe que si la page a un nom
-if(isset($_SERVER['HTTP_REFERER']))
-{
-  // Abort si le visiteur se balade sur nobleme et ne vient pas de l'extérieur
-  $referer = postdata($_SERVER['HTTP_REFERER']);
-  $origine = parse_url($referer);
-  if($origine['host'] != "www.nobleme.com" AND $origine['host'] != "nobleme.com" AND $origine['host'] != "localhost" AND $origine['host'] != "127.0.0.1")
-  {
-    // Requête pour récupérer le nombre de visiteurs venus par ce referrer
-    $referer_query = query(" SELECT stats_referer.nombre FROM stats_referer WHERE stats_referer.source = '$referer' ");
-
-    // Si la requête renvoie un résultat, reste plus qu'à incrémenter le compte de visiteurs
-    if (mysqli_num_rows($referer_query) != 0)
-      query(" UPDATE  stats_referer
-              SET     stats_referer.nombre  = stats_referer.nombre + 1
-              WHERE   stats_referer.source = '$referer'             ");
-
-    // Sinon, il faut créer l'entrée de la source et lui donner son premier visiteur
-    else
-      query(" INSERT INTO stats_referer
-              SET         stats_referer.source  = '$referer'  ,
-                          stats_referer.nombre  = 1           ");
-  }
 }
 
 
