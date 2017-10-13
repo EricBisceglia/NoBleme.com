@@ -1,9 +1,0 @@
-/************************************************************** client.php ***************************************************************/
-div.nbrpg_container       { height: 450px; overflow: auto;         }
-div.nbrpg_fullcontainer   { height: 483px; overflow: auto;         }
-div.nbrpg_preloader       { padding-top:200px;                     }
-div.nbrpg_table_session   { padding-left:15px; padding-right:15px; }
-input.nbrpg_searchcaverne { width: 450px; margin-top: 5px;         }
-
-.nbrpg_hp_high { color:#008000; }
-.nbrpg_hp_low  { color:#B22222; }
