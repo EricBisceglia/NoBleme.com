@@ -68,44 +68,53 @@ $datefr = $joursfr[date("w")]." ".date("j")." ".strtolower($moisfr[date("n")])."
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction de conversion d'une date mysql vers une date en toutes lettres
 //
+// Le second paramètre, optionnel, contrôle la langue
+//
 // Exemple d'utilisation
 // $ma_date = datefr($date_a_convertir);
 
-function datefr($date)
+function datefr($date, $lang="FR")
 {
+  // En anglais c'est simple
+  if($lang != 'FR')
+    return date('l F j, Y', strtotime($date));
 
-  // Jours de la semaine en toutes lettres
-  $joursfr = array( "Dimanche"  ,
-                    "Lundi"     ,
-                    "Mardi"     ,
-                    "Mercredi"  ,
-                    "Jeudi"     ,
-                    "Vendredi"  ,
-                    "Samedi"    );
+  // En français, moins
+  else
+  {
+    // Jours de la semaine en toutes lettres
+    $joursfr = array( "Dimanche"  ,
+                      "Lundi"     ,
+                      "Mardi"     ,
+                      "Mercredi"  ,
+                      "Jeudi"     ,
+                      "Vendredi"  ,
+                      "Samedi"    );
 
-  // Mois de l'année en toutes lettres
-  $moisfr = array(  ""            ,
-                    "Janvier"     ,
-                    "Février"     ,
-                    "Mars"        ,
-                    "Avril"       ,
-                    "Mai"         ,
-                    "Juin"        ,
-                    "Juillet"     ,
-                    "Ao&ucirc;t"  ,
-                    "Septembre"   ,
-                    "Octobre"     ,
-                    "Novembre"    ,
-                    "Décembre"    );
+    // Mois de l'année en toutes lettres
+    $moisfr = array(  ""            ,
+                      "Janvier"     ,
+                      "Février"     ,
+                      "Mars"        ,
+                      "Avril"       ,
+                      "Mai"         ,
+                      "Juin"        ,
+                      "Juillet"     ,
+                      "Ao&ucirc;t"  ,
+                      "Septembre"   ,
+                      "Octobre"     ,
+                      "Novembre"    ,
+                      "Décembre"    );
 
-  // Conversion de la date en toutes lettres
-  $date_text  = $joursfr[date("w", strtotime($date))]." ";
-  $date_text .= (date("j", strtotime($date)) == '1') ? date("j", strtotime($date))."er " : date("j", strtotime($date))." ";
-  $date_text .= $moisfr[date("n", strtotime($date))]." ";
-  $date_text .= date("Y", strtotime($date));
+    // Conversion de la date en toutes lettres
+    $date_text  = $joursfr[date("w", strtotime($date))]." ";
+    $date_text .= (date("j", strtotime($date)) == '1') ? date("j", strtotime($date))."er " : date("j", strtotime($date))." ";
+    $date_text .= $moisfr[date("n", strtotime($date))]." ";
+    $date_text .= date("Y", strtotime($date));
 
-  // Renvoi de la valeur
-  return $date_text;
+    // Renvoi de la valeur
+    return $date_text;
+  }
 }
 
 
@@ -114,46 +123,59 @@ function datefr($date)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction de conversion d'une date mysql vers une date en toutes lettres, ne renvoie pas de nom de jour
 //
-// Le second paramètre, optionnel, retire le numéro du jour
+// Le second paramètre, optionnel, contrôle la langue
+// Le troisième paramètre, optionnel, retire le numéro du jour
 //
 // Exemple d'utilisation
 // $ma_date = jourfr($date_a_convertir,1);
 
-function jourfr($date,$stripday=NULL)
+function jourfr($date, $lang="FR", $stripday=NULL)
 {
-
-  // Mois de l'année en toutes lettres
-  $moisfr = array(  ""            ,
-                    "Janvier"     ,
-                    "Février"     ,
-                    "Mars"        ,
-                    "Avril"       ,
-                    "Mai"         ,
-                    "Juin"        ,
-                    "Juillet"     ,
-                    "Août"        ,
-                    "Septembre"   ,
-                    "Octobre"     ,
-                    "Novembre"    ,
-                    "Décembre"    );
-
-  if(!$stripday)
+  // En anglais c'est simple
+  if($lang != 'FR')
   {
-    // Conversion de la date en toutes lettres
-    $date_text = date("j", strtotime($date))." ".$moisfr[date("n", strtotime($date))]." ".date("Y", strtotime($date));
-
-    // Transformer 1 en 1er
-    if(substr($date_text,0,2) == '1 ')
-      $date_text = '1er '.substr($date_text,1);
+    if(!$stripday)
+      return date('F j, Y', strtotime($date));
+    else
+      return date('F Y', strtotime($date));
   }
+
+  // En français, moins
   else
   {
-    // Conversion de la date en toutes lettres
-    $date_text = $moisfr[date("n", strtotime($date))]." ".date("Y", strtotime($date));
-  }
+    // Mois de l'année en toutes lettres
+    $moisfr = array(  ""            ,
+                        "Janvier"     ,
+                        "Février"     ,
+                        "Mars"        ,
+                        "Avril"       ,
+                        "Mai"         ,
+                        "Juin"        ,
+                        "Juillet"     ,
+                        "Août"        ,
+                        "Septembre"   ,
+                        "Octobre"     ,
+                        "Novembre"    ,
+                        "Décembre"    );
 
-  // Renvoi de la valeur
-  return $date_text;
+    if(!$stripday)
+    {
+      // Conversion de la date en toutes lettres
+      $date_text = date("j", strtotime($date))." ".$moisfr[date("n", strtotime($date))]." ".date("Y", strtotime($date));
+
+      // Transformer 1 en 1er
+      if(substr($date_text,0,2) == '1 ')
+        $date_text = '1er '.substr($date_text,1);
+    }
+    else
+    {
+      // Conversion de la date en toutes lettres
+      $date_text = $moisfr[date("n", strtotime($date))]." ".date("Y", strtotime($date));
+    }
+
+    // Renvoi de la valeur
+    return $date_text;
+  }
 }
 
 
@@ -221,7 +243,7 @@ function mysqldate($date)
 // Exemple d'utilisation :
 // $anciennete = ilya($timestamp,"FR");
 
-function ilya($date,$lang="FR")
+function ilya($date, $lang="FR")
 {
   // Calcul de la différence de temps entre la date et aujourd'hui
   $diff = time() - $date;
@@ -267,41 +289,45 @@ function ilya($date,$lang="FR")
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Temps à venir avant une action : Prend un timestamp en paramètre, renvoie quand aura lieu l'action en toutes lettres
 //
+// Paramètres:
+// $date est un timestamp
+// $lang est le langage à utiliser (français par défaut)
+//
 // Exemple d'utilisation :
-// $prevision = dans($timestamp);
+// $anciennete = dans($timestamp,"FR");
 
-function dans($date)
+function dans($date, $lang="FR")
 {
   // Calcul de la différence de temps entre aujourd'hui et la date
   $diff = $date - time();
 
   // Définition en toutes lettres de la différence de temps
   if ($diff < 0)
-    $dans = "Dans le passé";
+    $dans = ($lang == 'FR') ? "Dans le passé" : "In the past";
   else if ($diff == 0)
-    $dans = "En ce moment même";
+    $dans = ($lang == 'FR') ? "En ce moment même" : "Right now";
   else if ($diff == 1)
-    $dans = "Dans 1 seconde";
+    $dans = ($lang == 'FR') ? "Dans 1 seconde" : "In 1 second";
   else if ($diff < 60)
-    $dans = "Dans ".$diff." secondes";
+    $dans = ($lang == 'FR') ? "Dans ".$diff." secondes" : "In ".$diff." seconds";
   else if ($diff < 120)
-    $dans = "Dans 1 minute";
+    $dans = ($lang == 'FR') ? "Dans 1 minute" : "In 1 minute";
   else if ($diff < 3600)
-    $dans = "Dans ".floor($diff/60)." minutes";
+    $dans = ($lang == 'FR') ? "Dans ".floor($diff/60)." minutes" : "In ".floor($diff/60)." minutes";
   else if ($diff < 7200)
-    $dans = "Dans 1 heure";
+    $dans = ($lang == 'FR') ? "Dans 1 heure" : "In 1 hour";
   else if ($diff < 172800)
-    $dans = "Dans ".floor($diff/3600)." heures";
+    $dans = ($lang == 'FR') ? "Dans ".floor($diff/3600)." heures" : "In ".floor($diff/3600)." hours";
   else if ($diff < 31536000)
-    $dans = "Dans ".(floor($diff/86400)+1)." jours";
+    $dans = ($lang == 'FR') ? "Dans ".(floor($diff/86400)+1)." jours" : "In ".(floor($diff/86400)+1)." days";
   else if ($diff < 63072000)
-    $dans = "Dans plus d'un an";
+    $dans = ($lang == 'FR') ? "Dans plus d'un an" : "In more than a year";
   else if ($diff < 3153600000)
-    $dans = "Dans ".floor($diff/31536000)." ans";
+    $dans = ($lang == 'FR') ? "Dans ".floor($diff/31536000)." ans" : "In ".floor($diff/31536000)." years";
   else if ($diff < 6307200000)
-    $dans = "Le siècle prochain";
+    $dans = ($lang == 'FR') ? "Le siècle prochain" : "Next century";
   else
-    $dans = "Dans très très longtemps";
+    $dans = ($lang == 'FR') ? "Dans très très longtemps" : "In a very very long time";
 
   // Et on renvoie la phrase
   return $dans;

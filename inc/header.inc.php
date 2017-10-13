@@ -548,6 +548,8 @@ $sidemenu['nb_activite']    = ($lang == 'FR') ? "Activité récente"      : "Rec
 $sidemenu['nb_communaute']  = ($lang == 'FR') ? "Communauté"            : "Community";
 $sidemenu['nb_enligne']     = ($lang == 'FR') ? "Qui est en ligne"      : "Who's online";
 $sidemenu['nb_admins']      = ($lang == 'FR') ? "Équipe administrative" : "Staff and admins";
+$sidemenu['nb_membres']     = ($lang == 'FR') ? "Liste des membres"     : "Registered user list";
+$sidemenu['nb_annivs']      = ($lang == 'FR') ? "Anniversaires"         : "Birthdays";
 /* ################################################################################################## */ if($header_menu == 'NoBleme') { ?>
 
             <a href="<?=$chemin?>index">
@@ -577,6 +579,18 @@ $sidemenu['nb_admins']      = ($lang == 'FR') ? "Équipe administrative" : "Staf
             <a href="<?=$chemin?>pages/nobleme/admins">
               <div class="<?=header_class('EquipeAdmin',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_admins']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nobleme/membres">
+              <div class="<?=header_class('ListeDesMembres',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_membres']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nobleme/anniversaires">
+              <div class="<?=header_class('Anniversaires',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_annivs']?>
               </div>
             </a>
 

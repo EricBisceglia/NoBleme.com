@@ -41,7 +41,6 @@ $js  = array('toggle','highlight');
           document.getElementById('liste_fonctions_maths').style.display    = "none";
           document.getElementById('liste_fonctions_users').style.display    = "none";
           document.getElementById('liste_fonctions_nobleme').style.display  = "none";
-          document.getElementById('liste_fonctions_nbrpg').style.display    = "none";
           document.getElementById('liste_fonctions_divers').style.display   = "none";
         }
       </script>
@@ -68,10 +67,6 @@ $js  = array('toggle','highlight');
             <th class="rowaltc moinsgros pointeur border_right_blank"
                 onClick="fonctions_tout_fermer();toggle_row('liste_fonctions_nobleme');">
               NOBLEME
-            </th>
-            <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="fonctions_tout_fermer();toggle_row('liste_fonctions_nbrpg');">
-              NBRPG
             </th>
             <th class="rowaltc moinsgros pointeur border_all_blank"
                 onClick="fonctions_tout_fermer();toggle_row('liste_fonctions_divers');">
@@ -303,18 +298,42 @@ $js  = array('toggle','highlight');
             </tr>
             <tr>
               <td class="align_center">
-                jourfr('2005-03-19');
+                datefr('2005-03-19', 'EN');
               </td>
               <td class="gras align_center">
-                <?=jourfr('2005-03-19');?>
+                <?=datefr('2005-03-19', 'EN');?>
               </td>
             </tr>
             <tr>
               <td class="align_center">
-                jourfr('2005-03-19',1);
+                jourfr('2005-03-19', 'FR');
               </td>
               <td class="gras align_center">
-                <?=jourfr('2005-03-19',1);?>
+                <?=jourfr('2005-03-19', 'FR');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                jourfr('2005-03-19', 'EN');
+              </td>
+              <td class="gras align_center">
+                <?=jourfr('2005-03-19', 'EN');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                jourfr('2005-03-19', 'FR', 1);
+              </td>
+              <td class="gras align_center">
+                <?=jourfr('2005-03-19', 'FR', 1);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                jourfr('2005-03-19', 'EN', 1);
+              </td>
+              <td class="gras align_center">
+                <?=jourfr('2005-03-19', 'EN', 1);?>
               </td>
             </tr>
             <tr>
@@ -410,6 +429,14 @@ $js  = array('toggle','highlight');
               </td>
               <td class="gras align_center">
                 <?=dans(strtotime((date('Y')+1).date('-m-d')));?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                dans(strtotime((date('Y')+1).date('-m-d')), 'EN');
+              </td>
+              <td class="gras align_center">
+                <?=dans(strtotime((date('Y')+1).date('-m-d')), 'EN');?>
               </td>
             </tr>
             <tr>
@@ -858,217 +885,6 @@ $js  = array('toggle','highlight');
             <tr>
               <td class="align_center">
                 ircbot($chemin,"Message à poster sur dev","#dev");
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-      </div>
-
-
-
-
-<!-- ######################################################################################################################################
-#                                                                                                                                         #
-#                                                                  NBRPG                                                                  #
-#                                                                                                                                         #
-###################################################################################################################################### !-->
-
-      <div class="hidden" id="liste_fonctions_nbrpg">
-
-        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
-          <thead>
-            <tr>
-              <th class="rowaltc moinsgros" colspan="2">
-                PERMISSIONS
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="align_center">
-                nbrpg();
-              </td>
-              <td class="align_center">
-                Accès interdit si l'user n'a pas de perso
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
-                nbrpg_session(nbrpg());
-              </td>
-              <td class="align_center">
-                Accès interdit si l'user n'est pas dans la session
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <br>
-        <br>
-
-        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
-          <thead>
-            <tr>
-              <th class="rowaltc moinsgros" colspan="2">
-                GESTION DES PERSONNAGES
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="align_center">
-                nbrpg();
-              </td>
-              <td class="align_center">
-                Renvoie l'id du personnage
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
-                nbrpg_couleur();<br>
-                nbrpg_couleur();<br>
-                nbrpg_couleur();
-              </td>
-              <td class="gras align_center">
-                <span style="color:<?=nbrpg_couleur();?>"><?=nbrpg_couleur();?></span><br>
-                <span style="color:<?=nbrpg_couleur();?>"><?=nbrpg_couleur();?></span><br>
-                <span style="color:<?=nbrpg_couleur();?>"><?=nbrpg_couleur();?></span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <br>
-        <br>
-
-        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
-          <thead>
-            <tr>
-              <th class="rowaltc moinsgros" colspan="2">
-                CALCULS
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="align_center">
-                nbrpg_multiplicateur(100,5);
-              </td>
-              <td class="gras align_center">
-                <?=nbrpg_multiplicateur(100,5);?>
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
-                nbrpg_reduction_effet(5,3,10,-1,10);
-              </td>
-              <td class="gras align_center">
-                <?=nbrpg_reduction_effet(5,3,10,-1,10);?>
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
-                nbrpg_application_effet(10,-1,10);
-              </td>
-              <td class="gras align_center">
-                <?=nbrpg_application_effet(10,-1,10);?>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <br>
-        <br>
-
-        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
-          <thead>
-            <tr>
-              <th class="rowaltc moinsgros" colspan="2">
-                AFFICHAGE / FORMATTAGE
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="align_center" colspan="2">
-                nbrpg_chatlog(1337,nbrpg_couleur(),'Bad','RP','Bonjour les enfants :)');
-              </td>
-            </tr>
-            <tr>
-              <td class="gras align_center" colspan="2">
-                <?=nbrpg_chatlog(1337,nbrpg_couleur(),'Bad','RP','Bonjour les enfants :)');?>
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
-                nbrpg_vierestante(1,37);
-              </td>
-              <td class="align_center">
-                <?=nbrpg_vierestante(1,37);?>
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
-                nbrpg_vierestante(13,37);
-              </td>
-              <td class="align_center">
-                <?=nbrpg_vierestante(13,37);?>
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
-                nbrpg_vierestante(31,37);
-              </td>
-              <td class="align_center">
-                <?=nbrpg_vierestante(31,37);?>
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
-                nbrpg_format_effet(1,4);
-              </td>
-              <td class="align_center">
-                <?=nbrpg_format_effet(1,4);?>
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
-                nbrpg_monstre('Schnafon','Boss');
-              </td>
-              <td class="align_center">
-                <?=nbrpg_monstre('Schnafon','Boss');?>
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
-                nbrpg_classe(2,0,5,0,1,0);
-              </td>
-              <td class="align_center">
-                <?=nbrpg_classe(2,0,5,0,1,0);?>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <br>
-        <br>
-
-        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
-          <thead>
-            <tr>
-              <th class="rowaltc moinsgros" colspan="2">
-                ACTIONS
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="align_center">
-                nbrpg_edithp(2,-4);
-              </td>
-              <td class="align_center">
-                Le perso id de session 2 pert 4 HP et peut en mourir
               </td>
             </tr>
           </tbody>
