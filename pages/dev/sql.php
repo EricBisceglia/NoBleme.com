@@ -23,121 +23,216 @@ $page_nom = "Administre secrètement le site";
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                         TEMPLATES DE REQUÊTES                                                         */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
-/* Ces modèles sont là pour me souvenir d'une version à l'autre de comment écrire mes changements sans me faire chier à aller dig les logs
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Création d'une table
-
-query(" CREATE TABLE IF NOT EXISTS vars_globales (
-          id    INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-          cc    MEDIUMTEXT                                            ,
-          tvvmb INT(11) UNSIGNED NOT NULL
-        ) ENGINE=MyISAM; ");
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Suppression d'une table
-
-query(" DROP TABLE IF EXISTS vars_globales ");
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Création d'un champ dans une table existante
-
-$temp = query(" DESCRIBE vars_globales ");
-$temp3 = 0;
-while($temp2 = mysqli_fetch_array($temp))
-{
-  if($temp2['Field'] == 'mise_a_jour')
-    $temp3 = 1;
-}
-if(!$temp3)
-  query(" ALTER TABLE vars_globales ADD mise_a_jour MEDIUMTEXT AFTER version ");
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Renommer un champ dans une table existante
-
-$temp = query(" DESCRIBE stats_pageviews ");
-while($temp2 = mysqli_fetch_array($temp))
-{
-  if($temp2['Field'] == 'id_page')
-    query(" ALTER TABLE stats_pageviews CHANGE id_page url_page MEDIUMTEXT ");
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Rajout d'une entrée dans un champ
-
-if(!mysqli_num_rows(query(" SELECT id FROM pages WHERE page_nom LIKE 'nobleme' AND page_id LIKE 'activite' ")))
-  query(" INSERT INTO pages
-          SET         page_nom    = 'nobleme'                       ,
-                      page_id     = 'activite'                      ,
-                      visite_page = 'Consulte l\'activité récente'  ,
-                      visite_url  = 'pages/nobleme/activite'        ");
-
-
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
 /*                                                               REQUÊTES                                                                */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Nouveau système de pageviews
+sql_vider_table('stats_pageviews');
+sql_renommer_champ('stats_pageviews', 'id_page', 'url_page', 'MEDIUMTEXT');
 
-query(" TRUNCATE TABLE stats_pageviews ");
-
-$temp = query(" DESCRIBE stats_pageviews ");
-while($temp2 = mysqli_fetch_array($temp))
-{
-  if($temp2['Field'] == 'id_page')
-    query(" ALTER TABLE stats_pageviews CHANGE id_page url_page MEDIUMTEXT ");
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Description multilingue des modérateurs
-
-$temp = query(" DESCRIBE membres ");
-while($temp2 = mysqli_fetch_array($temp))
-{
-  if($temp2['Field'] == 'moderateur_description')
-    query(" ALTER TABLE membres CHANGE moderateur_description moderateur_description_fr MEDIUMTEXT ");
-}
-
-$temp = query(" DESCRIBE membres ");
-$temp3 = 0;
-while($temp2 = mysqli_fetch_array($temp))
-{
-  if($temp2['Field'] == 'moderateur_description_en')
-    $temp3 = 1;
-}
-if(!$temp3)
-  query(" ALTER TABLE membres ADD moderateur_description_en MEDIUMTEXT AFTER moderateur_description_fr ");
-
+sql_renommer_champ('membres', 'moderateur_description', 'moderateur_description_fr', 'MEDIUMTEXT');
+sql_creer_champ('membres', 'moderateur_description_en', 'MEDIUMTEXT', 'moderateur_description_fr');
 query(" UPDATE membres SET moderateur_description_en = 'Real life meetups' WHERE moderateur_description_fr LIKE 'Rencontres IRL' ");
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Au revoir les stats referer
+sql_supprimer_table('stats_referer');
+sql_supprimer_champ('vars_globales', 'last_referer_check');
 
-query(" DROP TABLE IF EXISTS stats_referer ");
+// RIP les commentaires sur les devblogs et les tickets
+sql_supprimer_table('todo_commentaire');
+query(" DELETE FROM activite WHERE action_type = 'todo_todo_comm' ");
+query(" DELETE FROM activite WHERE action_type = 'edit_todo_comm' ");
+query(" DELETE FROM activite WHERE action_type = 'del_todo_comm' ");
+sql_supprimer_table('devblog_commentaire');
+query(" DELETE FROM activite WHERE action_type = 'todo_devblog_comm' ");
+query(" DELETE FROM activite WHERE action_type = 'edit_devblog_comm' ");
+query(" DELETE FROM activite WHERE action_type = 'del_devblog_comm' ");
+
+// On dégage tout le NBRPG pour le moment
+sql_supprimer_table('nbrpg_chatlog');
+sql_supprimer_table('nbrpg_effets');
+sql_supprimer_table('nbrpg_monstres');
+sql_supprimer_table('nbrpg_objets');
+sql_supprimer_table('nbrpg_persos');
+sql_supprimer_table('nbrpg_session');
+sql_supprimer_table('nbrpg_session_effets');
+sql_supprimer_champ('vars_globales', 'nbrpg_activite');
+
+// Plus besoin de certains contenus devenus legacy
+sql_supprimer_table('anniv_flash');
+sql_supprimer_table('forum_loljk');
+sql_supprimer_table('membres_secrets');
+sql_supprimer_table('pages');
+sql_supprimer_table('secrets');
+sql_supprimer_champ('devblog', 'score_popularite');
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                      FONCTIONS POUR LES REQUÊTES                                                      */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+/*   Ces fonctions permettent d'effectuer des modifications structurelles sur la base de données, à ne pas utiliser hors de ce fichier   */
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/* Liste des fonctions contenues dans ce fichier:                                                                                        */
+/* sql_creer_table($nom_table, $requete);                                                                                                */
+/* sql_vider_table($nom_table);                                                                                                          */
+/* sql_supprimer_table($nom_table);                                                                                                      */
+/* sql_creer_champ($nom_table, $nom_champ, $type_champ, $after_nom_champ);                                                               */
+/* sql_renommer_champ($nom_table, $ancien_nom_champ, $nouveau_nom_champ, $type_champ);                                                   */
+/* sql_supprimer_champ($nom_table, $nom_champ);                                                                                          */
+/* sql_insertion_valeur($condition, $requete);                                                                                           */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Création d'une table
+//
+/* Exemple:
+sql_creer_table("nom_table", "  id    INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+                                cc    MEDIUMTEXT                                            ,
+                                tvvmb INT(11) UNSIGNED NOT NULL                             ");
+*/
+
+function sql_creer_table($nom_table,$requete)
+{
+  return query(" CREATE TABLE IF NOT EXISTS ".$nom_table." ( ".$requete." ) ENGINE=MyISAM;");
+}
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// On dégage tout le NBRPG pour le moment
+// Vidange d'une table
+//
+// Exemple: sql_vider_table("nom_table");
 
-query(" DROP TABLE IF EXISTS nbrpg_chatlog ");
-query(" DROP TABLE IF EXISTS nbrpg_effets ");
-query(" DROP TABLE IF EXISTS nbrpg_monstres ");
-query(" DROP TABLE IF EXISTS nbrpg_objets ");
-query(" DROP TABLE IF EXISTS nbrpg_persos ");
-query(" DROP TABLE IF EXISTS nbrpg_session ");
-query(" DROP TABLE IF EXISTS nbrpg_session_effets ");
+function sql_vider_table($nom_table)
+{
+  query(" TRUNCATE TABLE ".$nom_table);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Suppression d'une table
+//
+// Exemple: sql_supprimer_table("nom_table");
+
+function sql_supprimer_table($nom_table)
+{
+  query(" DROP TABLE IF EXISTS ".$nom_table);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Création d'un champ dans une table existante
+//
+// Exemple: sql_creer_champ("nom_table", "cc2", "MEDIUMTEXT", "cc");
+
+function sql_creer_champ($nom_table, $nom_champ, $type_champ, $after_nom_champ)
+{
+  // On a besoin de la structure de la table
+  $qdescribe = query(" DESCRIBE ".$nom_table);
+
+  // Si le champ après lequel placer ce champ n'existe pas, on s'arrête là
+  $i = 0;
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+    $i = ($ddescribe['Field'] == $after_nom_champ) ? 1 : $i;
+  if(!$i)
+    return;
+
+  // On a besoin une nouvelle fois de la structure de la table
+  $qdescribe = query(" DESCRIBE ".$nom_table);
+
+  // On va tester si le champ existe déjà
+  $i = 0;
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+    $i = ($ddescribe['Field'] == $nom_champ) ? 1 : $i;
+
+  // S'il n'existe pas, on fait la requête
+  if(!$i)
+    query(" ALTER TABLE ".$nom_table." ADD ".$nom_champ." ".$type_champ." AFTER ".$after_nom_champ);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Renommer un champ dans une table existante
+//
+// Exemple: sql_renommer_champ("nom_table", "cc2", "cc3", "MEDIUMTEXT");
+
+function sql_renommer_champ($nom_table, $ancien_nom_champ, $nouveau_nom_champ, $type_champ)
+{
+  // On a besoin de la structure de la table
+  $qdescribe = query(" DESCRIBE ".$nom_table);
+
+  // Si le nouveau nom du champ existe déjà, on s'arrête là
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+  {
+    if ($ddescribe['Field'] == $nouveau_nom_champ)
+      return;
+  }
+
+  // On a besoin une nouvelle fois de la structure de la table
+  $qdescribe = query(" DESCRIBE ".$nom_table);
+
+  // Si le champ existe dans la table, on le renomme
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+  {
+    if($ddescribe['Field'] == $ancien_nom_champ)
+      query(" ALTER TABLE ".$nom_table." CHANGE ".$ancien_nom_champ." ".$nouveau_nom_champ." ".$type_champ);
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Suppression d'un champ dans une table existante
+//
+// Exemple: sql_supprimer_champ("nom_table", "tvvmb");
+
+function sql_supprimer_champ($nom_table, $nom_champ)
+{
+  // On a besoin de la structure de la table
+  $qdescribe = query(" DESCRIBE ".$nom_table);
+
+  // Si le champ existe dans la table, on le supprime
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+  {
+    if($ddescribe['Field'] == $nom_champ)
+      query(" ALTER TABLE ".$nom_table." DROP ".$nom_champ);
+  }
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Ajout d'une entrée dans une table
+//
+/* Exemple :
+sql_insertion_valeur(" SELECT cc, tvvmb FROM nom_table WHERE cc LIKE 'test' AND tvvmb = 1 ",
+" INSERT INTO nom_table
+  SET         cc    = 'test'  ,
+              tvvmb = 1       ");
+*/
+
+function sql_insertion_valeur($condition, $requete)
+{
+  // Si l'entrée n'existe pas déjà, on insère
+  if(!mysqli_num_rows(query($condition)))
+    query($requete);
+}
 
 
 

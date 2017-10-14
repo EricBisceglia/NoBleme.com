@@ -356,34 +356,6 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   }
 
   //***************************************************************************************************************************************
-  // Nouveau commentaire dans un devblog
-
-  else if($dactrec['action_type'] === 'new_devblog_comm')
-  {
-    $activite_href[$nactrec]        = $chemin.'pages/devblog/blog?id='.$dactrec['parent_id'];
-    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a commenté le devblog ".predata(tronquer_chaine($dactrec['parent_titre'], 40, '...'));
-  }
-
-  //***************************************************************************************************************************************
-  // Modification d'un commentaire sur un devblog
-
-  else if($dactrec['action_type'] === 'edit_devblog_comm')
-  {
-    $activite_href[$nactrec]        = $chemin.'pages/devblog/blog?id='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = predata($dactrec['parent_titre']).' a modifié un commentaire de '.predata($dactrec['pseudonyme']).' du devblog '.predata(tronquer_chaine($dactrec['action_titre'], 25, '...'));
-  }
-
-  //***************************************************************************************************************************************
-  // Suppression d'un commentaire sur un devblog
-
-  else if($dactrec['action_type'] === 'del_devblog_comm')
-  {
-    $activite_css[$nactrec]         = 'mise_a_jour_background';
-    $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = predata($dactrec['parent_titre']).' a supprimé un commentaire de '.predata($dactrec['pseudonyme']).' du devblog '.predata(tronquer_chaine($dactrec['action_titre'], 25, '...'));
-  }
-
-  //***************************************************************************************************************************************
   // Nouveau ticket
 
   else if($dactrec['action_type'] === 'new_todo')
@@ -400,34 +372,6 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
     $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
     $activite_href[$nactrec]        = $chemin.'pages/todo/index?id='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = "Ticket résolu: ".predata(tronquer_chaine($dactrec['action_titre'], 70, '...'));
-  }
-
-  //***************************************************************************************************************************************
-  // Nouveau commentaire sur un ticket
-
-  else if($dactrec['action_type'] === 'new_todo_comm')
-  {
-    $activite_href[$nactrec]        = $chemin.'pages/todo/index?id='.$dactrec['parent_id'];
-    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a commenté le ticket ".predata(tronquer_chaine($dactrec['parent_titre'], 40, '...'));
-  }
-
-  //***************************************************************************************************************************************
-  // Modification d'un commentaire sur un ticket
-
-  else if($dactrec['action_type'] === 'edit_todo_comm')
-  {
-    $activite_href[$nactrec]        = $chemin.'pages/todo/index?id='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = predata($dactrec['parent_titre']).' a modifié un commentaire de '.predata($dactrec['pseudonyme']).' du ticket '.predata(tronquer_chaine($dactrec['action_titre'], 25, '...'));
-  }
-
-  //***************************************************************************************************************************************
-  // Suppression d'un commentaire sur un ticket
-
-  else if($dactrec['action_type'] === 'del_todo_comm')
-  {
-    $activite_css[$nactrec]         = 'mise_a_jour_background';
-    $activite_href[$nactrec]        = $chemin.'pages/todo/index?id='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = predata($dactrec['parent_titre']).' a supprimé un commentaire de '.predata($dactrec['pseudonyme']).' du ticket '.predata(tronquer_chaine($dactrec['action_titre'], 25, '...'));
   }
 }
 
