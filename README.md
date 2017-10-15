@@ -38,4 +38,4 @@ Contributing to NoBleme.com's source code
 
 I do not accept contibutions to NoBleme: If you do a pull request, it will be denied. I want to work alone on it, in order to have total control over the direction in which I'm taking things. The time investment is massive, but I'm fine with it.
 
-However, if you do find an issue and want to suggest a solution to it, you can contact Bad on [serveur IRC de NoBleme](http://nobleme.com/pages/irc/index), and your feedback will surely be appreciated.
+However, if you do find an issue and want to suggest a solution to it, you can contact Bad on [NoBleme's IRC server](http://nobleme.com/pages/irc/index), and your feedback will surely be appreciated.
