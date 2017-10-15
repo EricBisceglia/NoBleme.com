@@ -303,7 +303,9 @@ if(date('d-m') == '01-04' && ($_SERVER["SERVER_NAME"] != "localhost" || $_SERVER
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Préparation du titre de la page, sera uniquement NoBleme si aucun titre n'est précisé, et précédé d'un @ en localhost
 
-if (!isset($page_titre))
+if(isset($page_url) && $page_url == "cv")
+  $page_titre = $page_titre;
+else if (!isset($page_titre))
   $page_titre = 'NoBleme';
 else
   $page_titre = 'NoBleme - '.$page_titre;
@@ -552,12 +554,6 @@ $sidemenu['nb_admins']      = ($lang == 'FR') ? "Équipe administrative" : "Staf
 $sidemenu['nb_membres']     = ($lang == 'FR') ? "Liste des membres"     : "Registered user list";
 $sidemenu['nb_annivs']      = ($lang == 'FR') ? "Anniversaires"         : "Birthdays";
 $sidemenu['nb_irls']        = ($lang == 'FR') ? "Rencontres IRL"        : "Real life meetups";
-$sidemenu['nb_dev']         = ($lang == 'FR') ? "Développement"         : "Website development";
-$sidemenu['nb_coulisses']   = ($lang == 'FR') ? "Coulisses de NoBleme"  : "Behind the scenes";
-$sidemenu['nb_devblog']     = ($lang == 'FR') ? "Blog de développement" : "Development blog";
-$sidemenu['nb_todolist']    = ($lang == 'FR') ? "Liste des tâches"      : "Todo list";
-$sidemenu['nb_roadmap']     = ($lang == 'FR') ? "Plan de route"         : "Feature roadmap";
-$sidemenu['nb_bugreport']   = ($lang == 'FR') ? "Rapporter un bug"      : "Report a bug";
 $sidemenu['nb_aide']        = ($lang == 'FR') ? "Aide & Infos"          : "Help & Informations";
 $sidemenu['nb_nobleme']     = ($lang == 'FR') ? "Qu'est-ce que NoBleme" : "What is NoBleme";
 $sidemenu['nb_doc']         = ($lang == 'FR') ? "Documentation du site" : "Website documentation";
@@ -616,42 +612,6 @@ $sidemenu['nb_rss']         = ($lang == 'FR') ? "Flux RSS"              : "RSS f
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['nb_dev']?>
-            </div>
-
-            <a href="<?=$chemin?>pages/nobleme/coulisses">
-              <div class="<?=header_class('Coulisses',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_coulisses']?>
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/devblog/index">
-              <div class="<?=header_class('Devblog',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_devblog']?>
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/todo/index">
-              <div class="<?=header_class('TodoList',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_todolist']?>
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/todo/roadmap">
-              <div class="<?=header_class('Roadmap',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_roadmap']?>
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/todo/add">
-              <div class="<?=header_class('OuvrirTicket',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_bugreport']?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_titre">
               <?=$sidemenu['nb_aide']?>
             </div>
 
@@ -678,6 +638,46 @@ $sidemenu['nb_rss']         = ($lang == 'FR') ? "Flux RSS"              : "RSS f
                 <?=$sidemenu['nb_rss']?>
               </div>
             </a>
+
+            <?php if($lang == 'FR') { ?>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              Développement
+            </div>
+
+            <a href="<?=$chemin?>pages/nobleme/coulisses">
+              <div class="<?=header_class('Coulisses',$header_sidemenu,'side')?>">
+                Coulisses de NoBleme
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/devblog/index">
+              <div class="<?=header_class('Devblog',$header_sidemenu,'side')?>">
+                Blog de développement
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/todo/index">
+              <div class="<?=header_class('TodoList',$header_sidemenu,'side')?>">
+                Liste des tâches
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/todo/roadmap">
+              <div class="<?=header_class('Roadmap',$header_sidemenu,'side')?>">
+                Plan de route
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/todo/add">
+              <div class="<?=header_class('OuvrirTicket',$header_sidemenu,'side')?>">
+                Rapporter un bug
+              </div>
+            </a>
+
+            <?php } ?>
 
 
 
