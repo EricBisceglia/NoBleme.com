@@ -27,7 +27,7 @@ $page_nom = "Administre secrètement le site";
 
 // CSS & JS
 $css  = array('admin');
-$js   = array('toggle','highlight','dynamique','popup','calendrier');
+$js   = array('toggle','highlight','dynamique','popup');
 
 
 
@@ -1964,74 +1964,6 @@ Retours à la ligne</code></pre>'))
 <div class="gras noir texte_blanc hidden exemple_togglejs">
   Ces sections de contenu différentes apparaissent et disparaissent
 </div>'))
-                ?></pre>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <br>
-        <hr class="separateur_contenu">
-        <br>
-
-        <table class="fullgrid titresnoirs" style="width:500px;margin:auto;">
-          <thead>
-            <tr>
-              <th class="rowaltc" style="width:500px">
-                <span class="moinsgros">FENÊTRE POPUP</span><br>
-                popup.js
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="align_center">
-                <a href="#" class="texte_nobleme_fonce gras" onClick="lienpopup('http://www.nobleme.com/',1000,800)">Cliquez-moi pour ouvrir un popup</a>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <pre onclick="highlight('refhtml_popup');" class="monospace spaced scrollbar" id="refhtml_popup" style="max-width:500px;max-height:80px;margin-bottom:0"><?php
-                  echo(htmlspecialchars('<a href="#" class="texte_nobleme_fonce gras" onClick="lienpopup(\'http://www.nobleme.com/\',1000,800)">Cliquez-moi pour ouvrir un popup</a>'))
-                ?></pre>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <br>
-        <hr class="separateur_contenu">
-        <br>
-
-        <table class="fullgrid titresnoirs" style="width:500px;margin:auto;">
-          <thead>
-            <tr>
-              <th class="rowaltc" style="width:500px">
-                <span class="moinsgros">CALENDRIER POPUP</span><br>
-                calendrier.js
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="align_center">
-                <form name="test_calendrier">
-                  <script type="text/javascript">
-                    var cal_test = new CalendarPopup();
-                  </script>
-                  <a href="#" class="texte_nobleme_fonce" id="calendrier_test" onClick="cal_test.select(document.forms['test_calendrier'].test_calendrier_input,'calendrier_test','dd/MM/yyyy'); return false;">Cliquez-moi : </a><input value="<?=date('d/m/Y')?>" id="test_calendrier_input" maxlength="10" style="width:75px">
-                </form>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <pre onclick="highlight('refhtml_calendrier');" class="monospace spaced scrollbar" id="refhtml_calendrier" style="max-width:500px;max-height:80px;margin-bottom:0"><?php
-                  echo(htmlspecialchars('<form name="test_calendrier">
-  <script type="text/javascript">
-    var cal_test = new CalendarPopup();
-  </script>
-  <a href="#" class="texte_nobleme_fonce" id="calendrier_test" onClick="cal_test.select(document.forms[\'test_calendrier\'].test_calendrier_input,\'calendrier_test\',\'dd/MM/yyyy\'); return false;">Cliquez-moi : </a><input value="20/04/2000" id="test_calendrier_input" maxlength="10" style="width:75px">
-</form>'))
                 ?></pre>
               </td>
             </tr>

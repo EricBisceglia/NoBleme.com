@@ -71,8 +71,8 @@ for($nmembres = 0 ; $dmembres = mysqli_fetch_array($qmembres) ; $nmembres++)
 {
   $m_id[$nmembres]      = $dmembres['id'];
   $m_pseudo[$nmembres]  = predata($dmembres['pseudonyme']);
-  $m_inscrit[$nmembres] = predata(ilya($dmembres['date_creation'], $lang));
-  $m_visite[$nmembres]  = predata(ilya($dmembres['derniere_visite'], $lang));
+  $m_inscrit[$nmembres] = ilya($dmembres['date_creation'], $lang);
+  $m_visite[$nmembres]  = ilya($dmembres['derniere_visite'], $lang);
   $m_css[$nmembres]     = ((time() - $dmembres['derniere_visite']) < 864000) ? ' class="gras"' : '';
   $m_css[$nmembres]     = ($dmembres['moderateur']) ? ' class="vert_background gras"' : $m_css[$nmembres];
   $m_css[$nmembres]     = ($dmembres['sysop']) ? ' class="neutre gras"' : $m_css[$nmembres];

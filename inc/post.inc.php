@@ -80,13 +80,14 @@ function postdata_vide($data)
 //
 // Paramètres :
 // $data est le contenu qui doit être préparé par la fonction
-// $breaks (optionnel) préserve les retours à la ligne
+// $breaks  (optionnel) préserve les retours à la ligne
+// $nostrip (optionnel) demande à ne pas faire de stripslashes
 //
 // Exemple d'utilisation :
 // $preparation = predata("string<hr>HTML");
 
-function predata($data,$breaks=NULL)
+function predata($data,$breaks=NULL,$nostrip=NULL)
 {
-  $data = htmlentities($data, ENT_QUOTES, 'utf-8');
+  $data = ($nostrip) ? htmlentities($data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));
   return ($breaks) ? nl2br($data) : $data;
 }

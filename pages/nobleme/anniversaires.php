@@ -65,7 +65,7 @@ while($dannivirl = mysqli_fetch_array($qannivirl))
   {
     // Si c'est bon, on prépare les données pour l'affichage
     $annivirl_id[$nannivirl]      = $dannivirl['id'];
-    $annivirl_pseudo[$nannivirl]  = $dannivirl['pseudonyme'];
+    $annivirl_pseudo[$nannivirl]  = predata($dannivirl['pseudonyme']);
     $annivirl_date[$nannivirl]    = jourfr($dannivirl['anniversaire'], $lang);
     $annivirl_css[$nannivirl]     = ((time() - $dannivirl['derniere_visite']) < 864000) ? ' gras' : ' ';
     $annivirl_linkcss[$nannivirl] = ($dannivirl['admin'] || $dannivirl['sysop']) ? 'texte_blanc nohover' : 'dark blank ';
@@ -140,7 +140,7 @@ while($dannivnb = mysqli_fetch_array($qannivnb))
   {
     // Données de base
     $anb_id[$nannivnb]      = $dannivnb['id'];
-    $anb_user[$nannivnb]    = $dannivnb['pseudonyme'];
+    $anb_user[$nannivnb]    = predata($dannivnb['pseudonyme']);
     $anb_inscr[$nannivnb]   = jourfr($dannivnb['inscr'], $lang);
     $anb_xanniv[$nannivnb]  = $dannivnb['xeme_anniv'];
     $anb_linkcss[$nannivnb] = ($dannivnb['admin'] || $dannivnb['sysop']) ? 'texte_blanc nohover' : 'dark blank ';
@@ -240,12 +240,12 @@ else
       <br>
       <br>
 
-      <div class="texte2">
+      <div class="texte3">
 
         <div class="flexcontainer">
           <div style="flex:1;margin-right:25px;">
 
-            <table class="fullgrid titresnoirs">
+            <table class="fullgrid titresnoirs nowrap">
               <thead>
                 <tr>
                   <th colspan="3" class="moinsgros">
@@ -284,7 +284,7 @@ else
           </div>
           <div style="flex:1;margin-left:25px;">
 
-            <table class="fullgrid titresnoirs">
+            <table class="fullgrid titresnoirs nowrap">
               <thead>
                 <tr>
                   <th colspan="3" class="moinsgros">

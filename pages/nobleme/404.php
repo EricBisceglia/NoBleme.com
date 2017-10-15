@@ -38,7 +38,7 @@ $cette_page_est_404 = '';
 
     <div class="indiv align_center">
       <a class="blank" href="<?=$chemin?>">
-        <img src="<?=$chemin?>img/divers/404_titre.png" alt="Erreur 404 : Perdus dans l'espace">
+        <img src="<?=$chemin?>img/divers/404_titre_<?=$lang?>.png" alt="Erreur 404 : Perdus dans l'espace">
       </a>
     </div>
 

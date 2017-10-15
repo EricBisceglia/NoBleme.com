@@ -73,9 +73,9 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
   if ($donline['type'] === 'guest')
     $online_pseudo[$nonline] = $donline['pseudo'];
   else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
-    $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/user/user?id='.$donline['id'].'">'.$donline['pseudo'].'</a>';
+    $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/user/user?id='.$donline['id'].'">'.predata($donline['pseudo']).'</a>';
   else
-    $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/user/user?id='.$donline['id'].'"><span class="texte_blanc">'.$donline['pseudo'].'</span></a>';
+    $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/user/user?id='.$donline['id'].'"><span class="texte_blanc">'.predata($donline['pseudo']).'</span></a>';
 
   // Les couleurs de fond
   if ($donline['type'] === 'guest')
@@ -91,11 +91,11 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
 
   // La page avec ou sans url autour
   if(!$donline['url'])
-    $online_page[$nonline] = $donline['page'];
+    $online_page[$nonline] = predata($donline['page']);
   else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
-    $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'">'.$donline['page'].'</a>';
+    $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'">'.predata($donline['page']).'</a>';
   else
-    $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'"><span class="texte_blanc">'.$donline['page'].'</span></a>';
+    $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'"><span class="texte_blanc">'.predata($donline['page']).'</span></a>';
 
   // La date avec ou sans url autour
   if($lang == 'FR')
@@ -103,7 +103,7 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
   else
   {
     if(!$donline['url'])
-      $online_date[$nonline] = $donline['page'];
+      $online_date[$nonline] = predata($donline['page']);
     else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
       $online_date[$nonline] = '<a href="'.$chemin.$donline['url'].'">'.ilya($donline['date'],'EN').'</a>';
     else

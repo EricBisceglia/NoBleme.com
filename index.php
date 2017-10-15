@@ -17,7 +17,7 @@ $page_url = "index";
 $langage_page = array('FR','EN');
 
 // Titre et description
-$page_titre = "";
+$page_titre = ($lang == 'FR') ? "Accueil" : "Homepage";
 $page_desc  = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
 
 
