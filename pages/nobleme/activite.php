@@ -39,7 +39,7 @@ $js  = array('dynamique', 'toggle');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Préparation de l'URL dynamique selon si c'est les logs de modération ou la liste des tâches
-$activite_dynamique_url = (!isset($_GET['mod'])) ? "activite?dynamique" : "activite?dynamique&amp;mod";
+$activite_dynamique_url = (!isset($_GET['mod'])) ? "activite" : "activite?mod";
 
 
 
@@ -401,7 +401,7 @@ $traduction['ar_misc']    = ($lang == 'FR') ? "Miscellanées" : "Quotes";
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est invoquée par du XHR */ include './../../inc/header.inc.php';?>
+if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
 
       <div class="texte2">
 
@@ -506,7 +506,7 @@ if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est inv
             </tr>
             <?php } } } ?>
           </tbody>
-          <?php if(!isset($_GET['dynamique'])) { ?>
+          <?php if(!getxhr()) { ?>
         </table>
 
       </div>

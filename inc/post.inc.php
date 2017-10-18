@@ -59,19 +59,23 @@ function postdata($data, $type=NULL, $min=NULL, $max=NULL)
   return $output;
 }
 
-// Fonction de traitement de postdata gérant la non-existence possible du postdata concerné, assigne une valeur par défaut même si le post est NULL
-// Prend en arguments le nom du $_POST et la valeur à assigner s'il n'existe pas.
-// S'utilise ainsi: postdata_vide("mon_postdata");
-function postdata_vide($data)
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction permettant de faire un postdata sur une valeur qui n'existe peut-être pas
+//
+// Paramètres:
+// $postdata  est le nom du $_POST[] à récupérer
+// $type      est le type de variable ('int', 'string', etc.)
+// $defaut    est la valeur par défaut à mettre si le postdata n'existe pas
+//
+// Utilisation: postdata_vide('mon_postdata', 'int', 'rien');
+
+function postdata_vide($postdata, $type, $defaut)
 {
-  if(isset($_POST[$data]))
-    $output = postdata($_POST[$data]);
-  else
-    $output = "";
-
-  return $output;
+  return (isset($_POST[$postdata])) ? postdata($_POST[$postdata], $type) : $defaut;
 }
-
 
 
 

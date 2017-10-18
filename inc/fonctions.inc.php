@@ -24,6 +24,33 @@ function bfdecho($stuff)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Arrête le processus de la page abruptement si elle n'est pas appelée par la fonction js dynamique();
+//
+// Utilisation: xhronly();
+
+function xhronly()
+{
+  if(!isset($_SERVER['HTTP_DYNAMIQUE']))
+    exit();
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Détecte si la page est appelée par du XHR ou non
+//
+// Utilisation: getxhr();
+
+function getxhr()
+{
+  return (isset($_SERVER['HTTP_DYNAMIQUE'])) ? 1 : 0;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Tronque une chaine de caractères pour n'en garder que le début (et optionnellement rajouter quelque chose au niveau de la troncature)
 // $chaine est la chaine de caractères à tronquer
 // $longueur est le nombre de caractères à conserver dans la chaine

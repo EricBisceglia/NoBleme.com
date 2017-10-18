@@ -990,14 +990,6 @@ $js  = array('toggle','highlight');
             </tr>
             <tr>
               <td class="align_center">
-                postdata_vide("post_qui_existe_pas");
-              </td>
-              <td class="align_center">
-                <?=postdata_vide("post_qui_existe_pas");?>
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
                 postdata("whitespace           ");
               </td>
               <td class="align_center">
@@ -1052,6 +1044,14 @@ $js  = array('toggle','highlight');
                 <?=postdata("courte p'hrase","string",20);?>
               </td>
             </tr>
+            <tr>
+              <td class="align_center">
+                postdata_vide("mon_postdata", "string", "rien");
+              </td>
+              <td class="align_center">
+                <?=postdata_vide("mon_postdata", "string", "rien");?>
+              </td>
+            </tr>
           </tbody>
         </table>
 
@@ -1070,6 +1070,26 @@ $js  = array('toggle','highlight');
             <tr>
               <td class="align_center">
                 erreur("On arrête tout (à placer avant le header)");
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros">
+                PAGE NE POUVANT QUE ÊTRE APPELÉE PAR DYNAMIQUE()
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                xhronly();
               </td>
             </tr>
           </tbody>

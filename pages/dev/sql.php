@@ -68,6 +68,10 @@ sql_supprimer_table('pages');
 sql_supprimer_table('secrets');
 sql_supprimer_champ('devblog', 'score_popularite');
 
+// Fix des vieux messages foireux
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&lt;', '<') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&gt;', '>') ");
+
 
 
 

@@ -173,7 +173,7 @@ $traduction['phrase'] = ($lang == 'FR') ? "Français" : "English";</pre>
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est invoquée par du XHR */ include './../../inc/header.inc.php';?&gt;
+if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?&gt;
 
       &lt;div class="texte">
 
@@ -200,9 +200,10 @@ if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est inv
 /*                                                             INITIALISATION                                                            */
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
-include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
+xhronly();
 guestonly($lang);</pre>
 
         <br>

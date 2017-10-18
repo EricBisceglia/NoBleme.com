@@ -1104,6 +1104,181 @@ $js   = array('toggle','highlight','dynamique','popup');
           </tbody>
         </table>
 
+        <br>
+        <hr class="separateur_contenu">
+        <br>
+
+        <table class="grid titresnoirs hiddenaltc2 margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th>
+                TITRE
+              </th>
+              <th>
+                TITRE
+              </th>
+              <th>
+                TITRE
+              </th>
+              <th>
+                TITRE
+              </th>
+            </tr>
+          </thead>
+          <tbody class="align_center">
+            <tr>
+              <td colspan="4" class="noir texte_blanc gras">
+                LIGNE DE HEAD AU TBODY
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Contenu
+              </td>
+              <td>
+                Contenu
+              </td>
+              <td>
+                Contenu
+              </td>
+              <td>
+                Contenu
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                Ligne sous le contenu (faite pour être masquée)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Contenu
+              </td>
+              <td>
+                Contenu
+              </td>
+              <td>
+                Contenu
+              </td>
+              <td>
+                Contenu
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                Ligne sous le contenu (faite pour être masquée)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Contenu
+              </td>
+              <td>
+                Contenu
+              </td>
+              <td>
+                Contenu
+              </td>
+              <td>
+                Contenu
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                Ligne sous le contenu (faite pour être masquée)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Contenu
+              </td>
+              <td>
+                Contenu
+              </td>
+              <td>
+                Contenu
+              </td>
+              <td>
+                Contenu
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                Ligne sous le contenu (faite pour être masquée)
+              </td>
+            </tr>
+            <tr>
+              <td style="max-width:600px;" colspan="4">
+                <pre onclick="highlight('refhtml_gridhiddenaltc2');" class="align_left monospace spaced scrollbar vscrollbar" id="refhtml_gridhiddenaltc2" style="margin-bottom:0;max-height:80px;"><?php
+                  echo(htmlspecialchars('<table class="grid titresnoirs hiddenaltc2">
+  <thead>
+    <tr>
+      <th>
+        TITRE
+      </th>
+      <th>
+        TITRE
+      </th>
+      <th>
+        TITRE
+      </th>
+      <th>
+        TITRE
+      </th>
+    </tr>
+  </thead>
+  <tbody class="align_center">
+    <tr>
+      <td colspan="4" class="noir texte_blanc gras">
+        LIGNE DE HEAD AU TBODY
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Contenu
+      </td>
+      <td>
+        Contenu
+      </td>
+      <td>
+        Contenu
+      </td>
+      <td>
+        Contenu
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        Ligne sous le contenu (faite pour être masquée)
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Contenu
+      </td>
+      <td>
+        Contenu
+      </td>
+      <td>
+        Contenu
+      </td>
+      <td>
+        Contenu
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        Ligne sous le contenu (faite pour être masquée)
+      </td>
+    </tr>
+  </tbody>
+</table>'))
+                ?></pre>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
       </div>
 
 
@@ -1879,7 +2054,7 @@ Retours à la ligne</code></pre>'))
           <tbody>
             <tr>
               <td class="align_center pointeur gras texte_nobleme_fonce"
-                  onClick="dynamique('<?=$chemin?>','css.php?dynamique','exemple_dynamique','dynamique_test=0');">
+                  onClick="dynamique('<?=$chemin?>','css.php','exemple_dynamique','dynamique_test=0');">
                 Cliquez moi
               </td>
             </tr>
@@ -1891,7 +2066,7 @@ Retours à la ligne</code></pre>'))
             <tr>
               <td>
                 <pre onclick="highlight('refhtml_dynamique');" class="monospace spaced scrollbar" id="refhtml_dynamique" style="max-width:500px;max-height:80px;margin-bottom:0"><?php
-                  echo(htmlspecialchars('<div class="align_center pointeur gras texte_nobleme_fonce" onClick="dynamique(\'<?=$chemin?>\',\'ma_page.php?dynamique\',\'mon_id\',\'postdata\');">
+                  echo(htmlspecialchars('<div class="align_center pointeur gras texte_nobleme_fonce" onClick="dynamique(\'<?=$chemin?>\',\'ma_page.php\',\'mon_id\',\'postdata\');">
   Cliquez moi
 </div>
 <div class="align_center gras" id="mon_id">

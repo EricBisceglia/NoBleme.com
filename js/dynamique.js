@@ -23,10 +23,10 @@
 **                                                                                                                                       **
 **  Exemple d'utilisation :                                                                                                              **
 **                                                                                                                                       **
-**  dynamique('<?=$chemin?>','maj.php?dynamique','maj',                                                                                  **
-**    'version='+dynamique_prepare("version")+                                                                                           **
-**    '&build='+dynamique_prepare("build")+                                                                                              **
-**    '&maj=1');                                                                                                                         **
+**  dynamique('<?=$chemin?>','maj.php','maj',                                                                                            **
+**    'version='+dynamique_prepare("version")                                                                                            **
+**   +'&build='+encodeURIComponent('<?=var_php?>')                                                                                       **
+**   +'&maj=1');                                                                                                                         **
 **                                                                                                                                       **
 ******************************************************************************************************************************************/
 
@@ -46,6 +46,7 @@ function dynamique(chemin, page_a_charger, element_cible , postdata, noloadbar, 
   // Envoi de la requête sous forme de postdata
   xhr.open("POST", page_a_charger, true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+  xhr.setRequestHeader("Dynamique", "yup");
   xhr.send(postdata);
 
   // Attente du retour des données

@@ -226,8 +226,6 @@ if (loggedin())
 
   // Préparation des données pour l'affichage
   $notifications  = mysqli_num_rows($qnotif);
-  $notifs_texte   = ($notifications) ? ' (!)' : '';
-  $notifs_css     = ($notifications) ? ' class="nouveaux_messages"' : '';
 }
 
 
@@ -476,13 +474,13 @@ $submenu['connexion']   = ($lang == 'FR') ? "Vous n'êtes pas connecté: Cliquez
       <?php if(loggedin()) {
             if($notifications) { ?>
       <div class="header_topmenu_zone">
-        <a class="menu_sub_lien nouveaux_messages" href="<?=$chemin?>pages/user/notifications">
+        <a id="nouveaux_messages" class="menu_sub_lien nouveaux_messages" href="<?=$chemin?>pages/user/notifications">
           <?=$submenu['message']?>
         </a>
       </div>
       <?php } else { ?>
       <div class="header_topmenu_zone">
-        <a class="menu_sub_lien" href="<?=$chemin?>pages/user/notifications">
+        <a id="nouveaux_messages"  class="menu_sub_lien" href="<?=$chemin?>pages/user/notifications">
           <?=$submenu['connecté']?>
         </a>
       </div>
@@ -876,7 +874,7 @@ $sidemenu['jeu_radikal_hype'] = ($lang == 'FR') ? "Le prochain jeu NoBleme" : "T
 <?php } ################################################# MENU LATÉRAL : COMPTE ###########################################################
 // Préparation des traductions des titres du menu
 $sidemenu['user_notifs']          = ($lang == 'FR') ? "Messagerie privée"       : "Private messages";
-$sidemenu['user_notifs_inbox']    = ($lang == 'FR') ? "Boite de réception"      : "Account inbox";
+$sidemenu['user_notifs_inbox']    = ($lang == 'FR') ? "Boîte de réception"      : "Account inbox";
 $sidemenu['user_notifs_outbox']   = ($lang == 'FR') ? "Messages envoyés"        : "Sent messages";
 $sidemenu['user_notifs_envoyer']  = ($lang == 'FR') ? "Composer un message"     : "Write a message";
 $sidemenu['user_profil']          = ($lang == 'FR') ? "Profil public"           : "Public profile";

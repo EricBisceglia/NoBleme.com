@@ -127,7 +127,7 @@ else
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est invoquée par du XHR */ include './../../inc/header.inc.php';?>
+if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
 
       <div class="texte">
 
@@ -144,8 +144,7 @@ if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est inv
         <fieldset>
           <label for="pseudoMembre"><?=$traduction['labelpseudo']?></label>
           <input id="pseudoMembre" name="pseudoMembr" class="indiv" type="text"
-                 onkeyup="dynamique('<?=$chemin?>', 'membres?dynamique', 'membres_tableau',
-                          'search_pseudo='+dynamique_prepare('pseudoMembre') ,1);">
+                 onkeyup="dynamique('<?=$chemin?>', 'membres', 'membres_tableau', 'search_pseudo='+dynamique_prepare('pseudoMembre') ,1);">
         </fieldset>
 
       </div>
@@ -160,15 +159,15 @@ if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est inv
         <table class="titresnoirs">
           <thead>
             <tr>
-              <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'membres?dynamique', 'membres_tableau',
+              <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'membres', 'membres_tableau',
                   'search_pseudo='+dynamique_prepare('pseudoMembre')+'&search_sort=pseudo', 1);">
                 <?=$traduction['mb_pseudo']?>
               </th>
-              <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'membres?dynamique', 'membres_tableau',
+              <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'membres', 'membres_tableau',
                   'search_pseudo='+dynamique_prepare('pseudoMembre')+'&search_sort=inscrit', 1);">
                 <?=$traduction['mb_inscrit']?>
               </th>
-              <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'membres?dynamique', 'membres_tableau',
+              <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'membres', 'membres_tableau',
                   'search_pseudo='+dynamique_prepare('pseudoMembre')+'&search_sort=visite', 1);">
                 <?=$traduction['mb_visite']?>
               </th>
@@ -199,7 +198,7 @@ if(!isset($_GET['dynamique'])){ /* Ne pas afficher toute la page si elle est inv
                 <?=$traduction['mb_vide']?>
               </td>
             </tr>
-            <?php } if(!isset($_GET['dynamique'])) { ?>
+            <?php } if(!getxhr()) { ?>
           </tbody>
         </table>
 

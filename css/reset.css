@@ -76,6 +76,7 @@ input[type='password'], input[type='text'], textarea, select
     box-sizing: inherit ; height: 3.4rem; padding: .6rem 1.0rem;                                        }
 input[type='password']:focus, input[type='text']:focus, textarea:focus, select:focus
   { border-color: #37536B; outline: 0;                                                                  }
+input[type='text'][disabled] { background-color: #F0F0F0;                                               }
 .button, button, input[type='reset'], input[type='submit']
   { background-color: #37536B; border: 0.1rem solid #37536B; border-radius: .4rem; color: #FFFFFF       ;
    cursor: pointer; display: inline-block; font-size: 1.1rem; font-weight: 700; height: 3.8rem          ;

@@ -15,9 +15,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Détecte les tags non fermés et les corrige
 // Requiret nobleme.css pour fonctionner correctement
 //
+// $xhr est un paramètre optionnel qui permet d'utiliser un chemin différent pour les URL
+//
 // Exemple d'utilisation: bbcode($post)
 
-function bbcode($post)
+function bbcode($post, $xhr=NULL)
 {
   // Fix temporaire pour les XSS gratuits.
   // Il faut vraiment que je trouve mieux que ça comme solution... Franchement, si quelqu'un a une solution, je suis preneur.
@@ -220,7 +222,8 @@ function bbcode($post)
   else
   {
     $chemin = "./";
-    for ($i=0 ; $i<($longueur-$count_base) ; $i++)
+    $start = ($xhr) ? 1 : 0;
+    for ($i=$start ; $i<($longueur-$count_base) ; $i++)
       $chemin .= "../";
   }
 

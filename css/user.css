@@ -1,0 +1,9 @@
+/************************************************************* NOTIFICATIONS *************************************************************/
+div.notif_cadre             { border: 1px solid #CACACA; padding: 10px;                         }
+div.notif_grand_cadre       { margin-bottom: 5px;                                               }
+div.notif_cadre_gauche      { margin-right: 3px;                                                }
+div.notif_cadre_milieu      { margin-left: 3px; margin-right: 3px;                              }
+div.notif_cadre_droite      { margin-left: 3px;                                                 }
+button.notif_cadre_bouton   { margin-top: 10px; margin-bottom: 10px;                            }
+textarea.notif_message      { height: 250px;                                                    }
+div.notif_previsualisation  { max-height: 250px; border: 1px solid #CACACA; padding-top: 10px;  }
