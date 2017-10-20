@@ -115,7 +115,7 @@ $js   = array('toggle','highlight','dynamique','popup');
               </td>
               <td class="align_center blanc" style="width:150px">
               </td>
-              <td style="width:50px" rowspan="14">
+              <td style="width:50px" rowspan="15">
               </td>
               <td class="align_center gras">
                 .texte_blanc

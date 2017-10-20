@@ -65,6 +65,7 @@
 .vspaced         { padding-bottom: 6px; padding-top: 6px;     }
 .bigpadding      { padding-top: 5.0rem;                       }
 .nowrap          { white-space: nowrap;                       }
+.wrap            { white-space: pre-wrap;                     }
 .scrollbar       { overflow-x: scroll;                        }
 .vscrollbar      { overflow-y: scroll;                        }
 
@@ -76,6 +77,15 @@
 .clearfix:after  { clear: both; content: ' '; display: table; }
 .float-left      { float: left;                               }
 .float-right     { float: right;                              }
+
+/**************************************************************** BBCODES ****************************************************************/
+.bbcodeimg      { max-width: 100%;                                                                                                      }
+.flou           { text-shadow: 0 0 10px #000000; color: rgba(255,255,255,0); transition: 2s text-shadow linear;                         }
+.flou:hover     { text-shadow: none; color: #000000;                                                                                    }
+.citation_titre { border-bottom: 1px solid #CCCCCC; margin-bottom: 3px; font-weight: bold;                                              }
+.citation_corps { padding: 3px; background-color: #FFFFFF; border: 1px solid #D6D6D6;                                                   }
+.spoiler_titre  { text-transform: uppercase; border-bottom: 1px solid #CCCCCC; margin-bottom: 3px; font-weight: bold; }
+.spoiler_corps  { padding: 3px; background-color: #FFFFFF; border: 1px solid #d8d8d8;                                   }
 
 /************************************************************** INFOBULLES ***************************************************************/
 .tooltip-container                { cursor: pointer;                                                                            }

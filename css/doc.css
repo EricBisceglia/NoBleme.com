@@ -1,0 +1,4 @@
+/******************************************************* PRÉVISUALISER DES BBCODES *******************************************************/
+div.bbcodes_cadre             { border: 1px solid #CACACA; padding: 10px;                         }
+textarea.bbcodes_message      { height: 200px;                                                    }
+div.bbcodes_previsualisation  { max-height: 350px; border: 1px solid #CACACA; padding-top: 10px;  }
