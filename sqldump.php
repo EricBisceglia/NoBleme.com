@@ -4,8 +4,8 @@
 /*                                                                                                                                       */
 /******************************************************************************************************************************************
 
-CREATE TABLE `activite` (
-  `id` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `activite` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `timestamp` int(11) UNSIGNED NOT NULL,
   `log_moderation` tinyint(1) NOT NULL,
   `FKmembres` int(11) NOT NULL,
@@ -15,55 +15,62 @@ CREATE TABLE `activite` (
   `action_titre` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `parent_id` int(11) NOT NULL,
   `parent_titre` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `justification` text COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `justification` text COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=20423 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `activite_diff` (
-  `id` bigint(20) NOT NULL,
+CREATE TABLE IF NOT EXISTS `activite_diff` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `FKactivite` bigint(20) NOT NULL,
   `titre_diff` tinytext NOT NULL,
-  `diff` longtext NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `diff` longtext NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=479 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `devblog` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `devblog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `timestamp` int(11) UNSIGNED NOT NULL,
   `titre` mediumtext,
   `resume` mediumtext,
-  `contenu` longtext
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `contenu` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `invites` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `invites` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ip` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `surnom` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `derniere_visite` int(11) NOT NULL,
   `derniere_visite_page` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `derniere_visite_url` mediumtext COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `derniere_visite_url` mediumtext COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ip` (`ip`)
+) ENGINE=MyISAM AUTO_INCREMENT=90638 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `irl` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `irl` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `lieu` tinytext NOT NULL,
   `raison` text NOT NULL,
   `details_pourquoi` text NOT NULL,
   `details_ou` text NOT NULL,
   `details_quand` text NOT NULL,
-  `details_quoi` text NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `details_quoi` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `irl_participants` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `irl_participants` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `FKirl` int(11) NOT NULL,
   `FKmembres` int(11) NOT NULL,
   `pseudonyme` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `confirme` tinyint(1) NOT NULL,
-  `details` tinytext CHARACTER SET utf8 NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `details` tinytext CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=335 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `membres` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `membres` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `pseudonyme` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `pass` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `admin` tinyint(1) NOT NULL,
@@ -84,50 +91,56 @@ CREATE TABLE `membres` (
   `region` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `metier` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `profil` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `profil_last_edit` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `profil_last_edit` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=415 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `membres_essais_login` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `membres_essais_login` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `FKmembres` int(11) NOT NULL,
   `timestamp` int(11) NOT NULL,
-  `ip` tinytext COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `ip` tinytext COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=88 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `notifications` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `notifications` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `FKmembres_destinataire` int(11) NOT NULL,
   `FKmembres_envoyeur` int(11) NOT NULL,
   `date_envoi` int(11) NOT NULL,
   `date_consultation` int(11) NOT NULL,
   `titre` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `contenu` longtext COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `contenu` longtext COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=865 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `quotes` (
-  `id` int(11) NOT NULL,
-  `timestamp` int(11) UNSIGNED NOT NULL,
-  `contenu` longtext,
-  `FKauteur` int(11) NOT NULL,
-  `valide_admin` tinyint(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-CREATE TABLE `quotes_membres` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `FKquotes` int(11) UNSIGNED NOT NULL,
-  `FKmembres` int(11) UNSIGNED NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-CREATE TABLE `stats_pageviews` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `pageviews` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom_page` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `url_page` mediumtext COLLATE utf8_unicode_ci,
   `vues` bigint(20) NOT NULL,
-  `vues_lastvisit` bigint(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `vues_lastvisit` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `todo` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `quotes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` int(11) UNSIGNED NOT NULL,
+  `contenu` longtext,
+  `FKauteur` int(11) NOT NULL,
+  `valide_admin` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=245 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `quotes_membres` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `FKquotes` int(11) UNSIGNED NOT NULL,
+  `FKmembres` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=136 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `todo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `FKmembres` int(11) DEFAULT NULL,
   `timestamp` int(11) DEFAULT NULL,
   `importance` int(11) DEFAULT NULL,
@@ -138,82 +151,34 @@ CREATE TABLE `todo` (
   `valide_admin` tinyint(1) DEFAULT NULL,
   `public` tinyint(1) DEFAULT NULL,
   `timestamp_fini` int(11) DEFAULT NULL,
-  `source` mediumtext
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `source` mediumtext,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=374 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `todo_categorie` (
-  `id` int(11) NOT NULL,
-  `categorie` tinytext
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `todo_categorie` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `categorie` tinytext,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `todo_roadmap` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `todo_roadmap` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_classement` int(11) DEFAULT NULL,
   `version` tinytext,
-  `description` mediumtext
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `description` mediumtext,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `vars_globales` (
+CREATE TABLE IF NOT EXISTS `vars_globales` (
   `mise_a_jour` tinyint(1) NOT NULL,
-  `last_pageview_check` int(11) NOT NULL
+  `last_pageview_check` int(11) NOT NULL,
+  UNIQUE KEY `mise_a_jour` (`mise_a_jour`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `version` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `version` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `version` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `build` tinytext COLLATE utf8_unicode_ci NOT NULL,
-  `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-ALTER TABLE `activite`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `activite_diff`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `devblog`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `invites`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `ip` (`ip`);
-
-ALTER TABLE `irl`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `irl_participants`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `membres`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `membres_essais_login`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `quotes`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `quotes_membres`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `stats_pageviews`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `todo`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `todo_categorie`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `todo_roadmap`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `vars_globales`
-  ADD UNIQUE KEY `mise_a_jour` (`mise_a_jour`);
-
-ALTER TABLE `version`
-  ADD PRIMARY KEY (`id`);
+  `date` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

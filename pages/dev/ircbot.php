@@ -98,9 +98,9 @@ else
 
       <div class="texte">
 
-        <p>
-          <h5>Envoyer un message sur IRC via le bot</h5>
-        </p>
+        <br>
+        <h5>Envoyer un message sur IRC via le bot</h5>
+        <br>
 
         <form method="POST">
           <fieldset>
@@ -128,9 +128,9 @@ else
 
       <div class="texte">
 
-        <p>
-          <h5>Notifier #dev d'un nouveau commit</h5>
-        </p>
+        <br>
+        <h5>Notifier #dev d'un nouveau commit</h5>
+        <br>
 
         <form method="POST">
           <fieldset>
@@ -153,9 +153,9 @@ else
 
       <div class="texte">
 
-        <p>
-          <h5>Debug: Dernière commande enregistrée</h5>
-        </p>
+        <br>
+        <h5>Debug: Dernière commande enregistrée</h5>
+        <br>
 
         <p class="texte_nobleme_fonce gras">
           <?=$ircbot_debug?>
@@ -170,9 +170,9 @@ else
 
       <div class="texte">
 
-        <p>
-          <h5>Démarrer le bot</h5>
-        </p>
+        <br>
+        <h5>Démarrer le bot</h5>
+        <br>
 
         <p class="align_center gros gras texte_negatif">
           Surtout ne pas démarrer le bot s'il est déja démarré !
@@ -193,9 +193,9 @@ else
 
       <div class="texte">
 
-        <p>
-          <h5>Arrêter le bot</h5>
-        </p>
+        <br>
+        <h5>Arrêter le bot</h5>
+        <br>
 
         <form method="POST">
           <p class="align_center">

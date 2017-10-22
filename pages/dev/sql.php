@@ -28,8 +28,9 @@ $page_nom = "Administre secrètement le site";
 /*****************************************************************************************************************************************/
 
 // Nouveau système de pageviews
-sql_vider_table('stats_pageviews');
-sql_renommer_champ('stats_pageviews', 'id_page', 'url_page', 'MEDIUMTEXT');
+sql_renommer_table('stats_pageviews', 'pageviews');
+sql_vider_table('pageviews');
+sql_renommer_champ('pageviews', 'id_page', 'url_page', 'MEDIUMTEXT');
 
 // Description multilingue des modérateurs
 sql_renommer_champ('membres', 'moderateur_description', 'moderateur_description_fr', 'MEDIUMTEXT');
@@ -85,6 +86,7 @@ query(" UPDATE notifications SET contenu = REPLACE (contenu, '&gt;', '>') ");
 /*                                                                                                                                       */
 /* Liste des fonctions contenues dans ce fichier:                                                                                        */
 /* sql_creer_table($nom_table, $requete);                                                                                                */
+/* sql_renommer_table($nom_table, $nouveau_nom);                                                                                         */
 /* sql_vider_table($nom_table);                                                                                                          */
 /* sql_supprimer_table($nom_table);                                                                                                      */
 /* sql_creer_champ($nom_table, $nom_champ, $type_champ, $after_nom_champ);                                                               */
@@ -103,9 +105,24 @@ sql_creer_table("nom_table", "  id    INT(11) UNSIGNED NOT NULL AUTO_INCREMENT P
                                 tvvmb INT(11) UNSIGNED NOT NULL                             ");
 */
 
-function sql_creer_table($nom_table,$requete)
+function sql_creer_table($nom_table, $requete)
 {
   return query(" CREATE TABLE IF NOT EXISTS ".$nom_table." ( ".$requete." ) ENGINE=MyISAM;");
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Renommer une table
+//
+// Exemple: sql_renommer_table("nom_table", "nouveau_nom");
+
+function sql_renommer_table($nom_table, $nouveau_nom)
+{
+  // Si la table existe, on la renomme
+  if(query(" DESCRIBE ".$nom_table, 1))
+    query(" ALTER TABLE $nom_table RENAME $nouveau_nom ");
 }
 
 
@@ -118,6 +135,11 @@ function sql_creer_table($nom_table,$requete)
 
 function sql_vider_table($nom_table)
 {
+  // On vérifie que la table existe
+  if(!query(" DESCRIBE ".$nom_table, 1))
+    return;
+
+  // Puis on la vide
   query(" TRUNCATE TABLE ".$nom_table);
 }
 
@@ -144,6 +166,10 @@ function sql_supprimer_table($nom_table)
 
 function sql_creer_champ($nom_table, $nom_champ, $type_champ, $after_nom_champ)
 {
+  // On vérifie que la table existe
+  if(!query(" DESCRIBE ".$nom_table, 1))
+    return;
+
   // On a besoin de la structure de la table
   $qdescribe = query(" DESCRIBE ".$nom_table);
 
@@ -177,6 +203,10 @@ function sql_creer_champ($nom_table, $nom_champ, $type_champ, $after_nom_champ)
 
 function sql_renommer_champ($nom_table, $ancien_nom_champ, $nouveau_nom_champ, $type_champ)
 {
+  // On vérifie que la table existe
+  if(!query(" DESCRIBE ".$nom_table, 1))
+    return;
+
   // On a besoin de la structure de la table
   $qdescribe = query(" DESCRIBE ".$nom_table);
 
@@ -208,6 +238,10 @@ function sql_renommer_champ($nom_table, $ancien_nom_champ, $nouveau_nom_champ, $
 
 function sql_supprimer_champ($nom_table, $nom_champ)
 {
+  // On vérifie que la table existe
+  if(!query(" DESCRIBE ".$nom_table, 1))
+    return;
+
   // On a besoin de la structure de la table
   $qdescribe = query(" DESCRIBE ".$nom_table);
 

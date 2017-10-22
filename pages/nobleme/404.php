@@ -57,7 +57,6 @@ $cette_page_est_404 = '';
           </td>
           <td class="noborder">
             <textarea class="indiv texte404" rows="10" id="text404" readonly></textarea>
-            </script>
           </td>
           <td class="img404 noborder">
             <img class="img404droite" src="<?=$chemin?>img/divers/404_droite.gif" alt=" ">

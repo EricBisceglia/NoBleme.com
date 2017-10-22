@@ -77,6 +77,9 @@ $header_sidemenu  = '';
 $page_nom = "Administre secrètement le site";
 $page_url = "pages/nobleme/404";
 
+// Lien court
+$shorturl = "raccourcis";
+
 // Langages disponibles
 $langage_page = array('FR','EN');
 
@@ -207,6 +210,9 @@ $header_sidemenu  = '';
 // Identification
 $page_nom = "Administre secrètement le site";
 $page_url = "pages/nobleme/404";
+
+// Lien court
+$shorturl = "raccourcis";
 
 // Langages disponibles
 $langage_page = array('FR','EN');

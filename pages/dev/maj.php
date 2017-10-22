@@ -37,6 +37,7 @@ $page_nom = "Administre secrètement le site";
           <input type="checkbox"> Tester les permissions du nouveau contenu en tant que invité, user, mod, sysop, admin<br>
           <input type="checkbox"> Vérifier que les nouvelles pages apparaissent bien dans <a href="<?=$chemin?>pages/nobleme/online">qui est en ligne</a><br>
           <input type="checkbox"> Est-ce que le nouveau contenu génére bien des logs dans l'<a href="<?=$chemin?>pages/nobleme/activite">activité recente</a> et les <a href="<?=$chemin?>pages/nobleme/activite?mod">logs de modération</a><br>
+          <input type="checkbox"> Est-ce que les nouveaux raccourcis ont bien été ajoutés dans la <a href="<?=$chemin?>pages/doc/raccourcis">référence des liens courts</a><br>
           <input type="checkbox"> Vérifier que les nouveaux tags CSS soient bien rentrés dans la <a href="<?=$chemin?>pages/dev/reference">référence du CSS</a><br>
           <input type="checkbox"> Vérifier que les nouvelles fonctions soient bien rentrées dans la <a href="<?=$chemin?>pages/dev/fonctions">référence des fonctions</a>
         </p>

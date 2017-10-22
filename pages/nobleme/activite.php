@@ -17,6 +17,9 @@ $header_sidemenu  = (!isset($_GET['mod'])) ? 'ActiviteRecente' : 'ModLogs';
 $page_nom = "Consulte l'activité récente";
 $page_url = "pages/nobleme/activite";
 
+// Lien court
+$shorturl = "a";
+
 // Langages disponibles
 $langage_page = (!isset($_GET['mod'])) ? array('FR','EN') : array('FR');
 

@@ -186,30 +186,30 @@ if($lang == 'FR')
 <p>
   NoBleme est un site cool où les gens sont relax. Il n'y a pas de restriction d'âge, et peu de restrictions de contenu. Il y a juste un code de conduite minimaliste à respecter, afin de tous cohabiter paisiblement. Pour s'assurer que tout le monde lise le code de conduite (il est court), vous devez répondre à des questions à son sujet lors de la création de votre compte.
 </p>
-<p>
-  <ul>
-    <li>
-      Vu qu'il n'y a pas de restriction d'âge, les <span class="gras">images pornographiques</span> ou suggestives <span class="gras">sont interdites</span>.
-    </li>
-    <li>
-      Les <span class="gras">images gores</span> ou à tendance dégueulasse sont <span class="gras">également interdites</span>. NoBleme n'est pas le lieu pour ça.
-    </li>
-    <li>
-      Tout <span class="gras">contenu illégal</span> sera immédiatement <span class="gras">envoyé à la police</span>. Ne jouez pas avec le feu, ce n'est pas le bon site pour en discuter.
-    </li>
-    <li>
-      Si vous pouvez régler une situation tendue en privé plutôt qu'en public, faites l'effort, sinon vous finirez tous les deux bannis.
-    </li>
-    <li>
-      Les trolls, provocateurs gratuits, et emmerdeurs de service pourront être bannis sans sommation s'ils abusent trop.
-    </li>
-    <li>
-      L'écriture SMS et la grammaire sans effort sont à éviter autant que possible. Prenez le temps de bien écrire, ça sera apprécié.
-    </li>
-  </ul>
-  <br>
-  On est avant tout sur NoBleme pour passer du bon temps. Si vos actions ou votre langage empêchent d'autres personnes de passer du bon temps, c'est un peu nul, non ? Essayez de rester tolérants, ce n'est pas un grand effort, et tout le monde en bénéficie.
-</p>
+<br>
+<ul>
+  <li>
+    Vu qu'il n'y a pas de restriction d'âge, les <span class="gras">images pornographiques</span> ou suggestives <span class="gras">sont interdites</span>.
+  </li>
+  <li>
+    Les <span class="gras">images gores</span> ou à tendance dégueulasse sont <span class="gras">également interdites</span>. NoBleme n'est pas le lieu pour ça.
+  </li>
+  <li>
+    Tout <span class="gras">contenu illégal</span> sera immédiatement <span class="gras">envoyé à la police</span>. Ne jouez pas avec le feu, ce n'est pas le bon site pour en discuter.
+  </li>
+  <li>
+    Si vous pouvez régler une situation tendue en privé plutôt qu'en public, faites l'effort, sinon vous finirez tous les deux bannis.
+  </li>
+  <li>
+    Les trolls, provocateurs gratuits, et emmerdeurs de service pourront être bannis sans sommation s'ils abusent trop.
+  </li>
+  <li>
+    L'écriture SMS et la grammaire sans effort sont à éviter autant que possible. Prenez le temps de bien écrire, ça sera apprécié.
+  </li>
+</ul>
+<br>
+On est avant tout sur NoBleme pour passer du bon temps. Si vos actions ou votre langage empêchent d'autres personnes de passer du bon temps, c'est un peu nul, non ? Essayez de rester tolérants, ce n'est pas un grand effort, et tout le monde en bénéficie.<br>
+<br>
 EOD;
 }
 
@@ -252,27 +252,27 @@ else if($lang == 'EN')
 <p>
   NoBleme is a chill community where people are relaxed. There is no restriction on age or content. However, in order to all coexist peacefully, there is a minimalistic code of conduct that everyone should respect. In order to ensure that everyone reads it (it's short), you will have to answer a few questions about it when registering your account.
 </p>
-<p>
-  <ul>
-    <li>
-      Since there is no age restriction <span class="gras">pornography</span> or suggestive content <span class="gras">is forbidden</span>.
-    </li>
-    <li>
-      All <span class="gras">gore images</span> and other disgusting things are <span class="gras">also forbidden</span>. NoBleme is not the right place for it.
-    </li>
-    <li>
-      Obviously, <span class="gras">illegal content</span> will immediately be <span class="gras">sent to the police</span>. Don't play with fire, there are other websites for that.
-    </li>
-    <li>
-      If you have to argue with someone or solve a tense situation, do it privately. If done publicly, you will end up banned.
-    </li>
-    <li>
-      Trolls and other kinds of purposeful agitators will be banned without a warning if they do it excessively.
-    </li>
-  </ul>
-  <br>
-  We are first and foremost on NoBleme to have a good time together. If your actions or your language prevent other people from having a good time, it's a bit silly, isn't it? Try to stay respectful of others and we'll all benefit from it.
-</p>
+<br>
+<ul>
+  <li>
+    Since there is no age restriction <span class="gras">pornography</span> or suggestive content <span class="gras">is forbidden</span>.
+  </li>
+  <li>
+    All <span class="gras">gore images</span> and other disgusting things are <span class="gras">also forbidden</span>. NoBleme is not the right place for it.
+  </li>
+  <li>
+    Obviously, <span class="gras">illegal content</span> will immediately be <span class="gras">sent to the police</span>. Don't play with fire, there are other websites for that.
+  </li>
+  <li>
+    If you have to argue with someone or solve a tense situation, do it privately. If done publicly, you will end up banned.
+  </li>
+  <li>
+    Trolls and other kinds of purposeful agitators will be banned without a warning if they do it excessively.
+  </li>
+</ul>
+<br>
+We are first and foremost on NoBleme to have a good time together. If your actions or your language prevent other people from having a good time, it's a bit silly, isn't it? Try to stay respectful of others and we'll all benefit from it.<br>
+<br>
 EOD;
 }
 
@@ -323,11 +323,11 @@ EOD;
             <label class="label-inline" for="register_question_1"><?=$trad['reg_repq11']?></label>
               </div>
               <div style="flex:1">
-            <input id="register_question_1" name="register_question_1" value="2" type="radio"<?=$register_check_q1[2]?>>
+            <input name="register_question_1" value="2" type="radio"<?=$register_check_q1[2]?>>
             <label class="label-inline" for="register_question_1"><?=$trad['reg_repq12']?></label>
               </div>
               <div style="flex:3">
-            <input id="register_question_1" name="register_question_1" value="3" type="radio"<?=$register_check_q1[3]?>>
+            <input name="register_question_1" value="3" type="radio"<?=$register_check_q1[3]?>>
             <label class="label-inline" for="register_question_1"><?=$trad['reg_repq13']?></label><br>
               </div>
             </div>
@@ -340,11 +340,11 @@ EOD;
             <label class="label-inline" for="register_question_2"><?=$trad['reg_repq21']?></label>
               </div>
               <div style="flex:1">
-            <input id="register_question_2" name="register_question_2" value="2" type="radio"<?=$register_check_q2[2]?>>
+            <input name="register_question_2" value="2" type="radio"<?=$register_check_q2[2]?>>
             <label class="label-inline" for="register_question_2"><?=$trad['reg_repq22']?></label>
               </div>
               <div style="flex:3">
-            <input id="register_question_2" name="register_question_2" value="3" type="radio"<?=$register_check_q2[3]?>>
+            <input name="register_question_2" value="3" type="radio"<?=$register_check_q2[3]?>>
             <label class="label-inline" for="register_question_2"><?=$trad['reg_repq23']?></label><br>
               </div>
             </div>
@@ -357,7 +357,7 @@ EOD;
             <label class="label-inline" for="register_question_2"><?=$trad['reg_repq31']?></label>
               </div>
               <div style="flex:3">
-            <input id="register_question_3" name="register_question_3" value="2" type="radio"<?=$register_check_q3[2]?>>
+            <input name="register_question_3" value="2" type="radio"<?=$register_check_q3[2]?>>
             <label class="label-inline" for="register_question_3"><?=$trad['reg_repq32']?></label>
               </div>
             </div>
@@ -370,7 +370,7 @@ EOD;
             <label class="label-inline" for="register_question_4"><?=$trad['reg_repq41']?></label>
               </div>
               <div style="flex:3">
-            <input id="register_question_4" name="register_question_4" value="2" type="radio"<?=$register_check_q4[2]?>>
+            <input name="register_question_4" value="2" type="radio"<?=$register_check_q4[2]?>>
             <label class="label-inline" for="register_question_4"><?=$trad['reg_repq42']?></label>
               </div>
             </div>
@@ -399,7 +399,7 @@ EOD;
 
         <br>
 
-        <button onclick="creer_compte('<?=$chemin?>');" id="register_formulaire"><?=$trad['reg_creer']?></button>
+        <button onclick="creer_compte('<?=$chemin?>');"><?=$trad['reg_creer']?></button>
 
       </div>
 

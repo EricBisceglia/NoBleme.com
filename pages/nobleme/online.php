@@ -13,6 +13,9 @@ $header_sidemenu  = 'QuiEstEnLigne';
 $page_nom = "Traque qui est en ligne";
 $page_url = "pages/nobleme/online?noguest";
 
+// Lien court
+$shorturl = "o";
+
 // Langages disponibles
 $langage_page = array('FR','EN');
 
@@ -79,7 +82,7 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
 
   // Les couleurs de fond
   if ($donline['type'] === 'guest')
-    $online_css[$nonline] = 'grisclair';
+    $online_css[$nonline] = '';
   else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
     $online_css[$nonline] = 'grisclair gras';
   else if ($donline['sysop'])

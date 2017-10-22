@@ -7,7 +7,7 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
 $header_menu      = 'NoBleme';
-$header_sidemenu  = 'Documentation';
+$header_sidemenu  = 'Doc';
 
 // Identification
 $page_nom = "Contemple les émoticônes";

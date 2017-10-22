@@ -36,7 +36,9 @@ $trad['footer_dev'] = ($lang == 'FR') ? "Développé et administré par " : "Dev
       <?php if(!isset($_GET["popup"]) && !isset($_GET["popout"]) && !isset($_GET["dynamique"])) { ?>
 
       <footer>
-        <?php if(loggedin() && getadmin($_SESSION['user'])) { ?>
+        <?php if(isset($shorturl)) { ?>
+        <a href="<?=$chemin?>s?<?=$shorturl?>">Lien court vers cette page</a><br>
+        <?php } if(loggedin() && getadmin($_SESSION['user'])) { ?>
         <a href="<?=$chemin?>pages/admin/stats_pageviews"><?=$page_views?></a><br>
         <?php } ?>
         <a href="<?=$chemin?>pages/todo/roadmap"><?=$version?></a><br>

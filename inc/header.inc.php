@@ -105,10 +105,10 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
   $page_url = postdata($page_url);
 
   // Requête pour récupérer les pageviews sur la page courante
-  $view_query = query(" SELECT  stats_pageviews.vues
-                        FROM    stats_pageviews
-                        WHERE   stats_pageviews.nom_page  = '$page_nom'
-                        AND     stats_pageviews.url_page  = '$page_url' ");
+  $view_query = query(" SELECT  pageviews.vues
+                        FROM    pageviews
+                        WHERE   pageviews.nom_page  = '$page_nom'
+                        AND     pageviews.url_page  = '$page_url' ");
 
   // Si la requête renvoie un résultat, reste plus qu'à incrémenter les pageviews
   if (mysqli_num_rows($view_query) != 0)
@@ -119,10 +119,10 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
 
     // On update la BDD si l'user n'est pas un admin
     if(((loggedin() && !getadmin($_SESSION['user'])) || !loggedin()))
-      query(" UPDATE  stats_pageviews
-              SET     stats_pageviews.vues      = stats_pageviews.vues + 1
-              WHERE   stats_pageviews.nom_page  = '$page_nom'
-              AND     stats_pageviews.url_page  = '$page_url' ");
+      query(" UPDATE  pageviews
+              SET     pageviews.vues      = pageviews.vues + 1
+              WHERE   pageviews.nom_page  = '$page_nom'
+              AND     pageviews.url_page  = '$page_url' ");
   }
 
   // Sinon, il faut créer l'entrée de la page et lui donner son premier pageview
@@ -132,10 +132,10 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
     $pageviews = 1;
 
     // On update la BDD
-    query(" INSERT INTO stats_pageviews
-            SET         stats_pageviews.nom_page  = '$page_nom' ,
-                        stats_pageviews.url_page  = '$page_url' ,
-                        stats_pageviews.vues      = 1           ");
+    query(" INSERT INTO pageviews
+            SET         pageviews.nom_page  = '$page_nom' ,
+                        pageviews.url_page  = '$page_url' ,
+                        pageviews.vues      = 1           ");
   }
 }
 
@@ -680,7 +680,7 @@ $sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Requ
 
             <?php } ?>
 
-            <a href="<?=$chemin?>pages/nobleme/api">
+            <a href="<?=$chemin?>pages/doc/api">
               <div class="<?=header_class('API',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_api']?>
               </div>
@@ -1003,6 +1003,14 @@ $sidemenu['user_reglages_pass']   = ($lang == 'FR') ? "Changer de mot de passe" 
               </div>
             </a>
 
+            <?php if(getadmin()) { ?>
+
+            <a href="<?=$chemin?>pages/admin/permissions">
+              <div class="<?=header_class('Permissions',$header_sidemenu,'side')?>">
+                Changer les permissions
+              </div>
+            </a>
+
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
@@ -1038,6 +1046,8 @@ $sidemenu['user_reglages_pass']   = ($lang == 'FR') ? "Changer de mot de passe" 
                 Doppelgangers
               </div>
             </a>
+
+            <?php } ?>
 
 
 

@@ -7,7 +7,7 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
 $header_menu      = 'NoBleme';
-$header_sidemenu  = 'Documentation';
+$header_sidemenu  = 'Doc';
 
 // Identification
 $page_nom = "Apprend à utiliser les BBCodes";
@@ -483,17 +483,16 @@ EOD;
         <h3><?=$trad['details_titre']?></h3>
 
         <p class="moinsgros gras alinea"><?=$trad['details_combine']?></p>
-        <p>
-          <pre class="alinea"><?=$trad['details_combinex']?></pre><br>
-          <?=bbcode($trad['details_combinex'])?>
-        </p>
+        <br>
+        <pre class="alinea"><?=$trad['details_combinex']?></pre><br>
+        <?=bbcode($trad['details_combinex'])?><br>
+        <br>
 
         <p class="moinsgros gras alinea"><?=$trad['details_quote']?></p>
-        <p>
-          <pre class="alinea"><?=$trad['details_quotex']?></pre><br>
-          <?=bbcode($trad['details_quotex'])?>
-        </p>
-
+        <br>
+        <pre class="alinea"><?=$trad['details_quotex']?></pre><br>
+        <?=bbcode($trad['details_quotex'])?><br>
+        <br>
         <br>
         <br>
         <br>

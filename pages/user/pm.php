@@ -192,7 +192,7 @@ EOD;
             </div>
 
             <div class="indiv align_center">
-              <input type="submit" class="button" value="<?=$trad['m_envoyer']?>" name="message_envoyer"></button>
+              <input type="submit" class="button" value="<?=$trad['m_envoyer']?>" name="message_envoyer">
             </div>
 
           </fieldset>
