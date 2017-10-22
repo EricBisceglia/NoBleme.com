@@ -1,7 +1,6 @@
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                             INITIALISATION                                                            */
-/*                                                                                                                                       */
+/*                             CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST APPELÉE DYNAMIQUEMENT PAR DU XHR                              *//*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../../inc/includes.inc.php'; // Inclusions communes
 
@@ -92,32 +91,72 @@ if(!$dmessage['m_lu'] && !isset($_POST['envoye']))
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-if(!isset($_POST['envoye']))
+if($lang == 'FR')
 {
-  $traduction['m_envoye']       = ($lang == 'FR') ? "Message envoyé par $message_de le $message_date à $message_heure ($message_ilya)" : "Message sent by $message_de on $message_date at $message_heure ($message_ilya)";
-  $traduction['m_lu']           = ($lang == 'FR') ? "Vous avez lu ce message le $message_lu à $message_lu_h" : "You have read this message on $message_lu at $message_lu_h";
+  // Message
+  if(!isset($_POST['envoye']))
+  {
+    $trad['m_envoye']     = "Message envoyé par $message_de le $message_date à $message_heure ($message_ilya)";
+    $trad['m_lu']         = "Vous avez lu ce message le $message_lu à $message_lu_h";
+  }
+  else
+  {
+    $trad['m_envoye']     = "Message envoyé à $message_de le $message_date à $message_heure ($message_ilya)";
+    $trad['m_lu']         = "$message_envoyeur a lu ce message le $message_lu à $message_lu_h";
+  }
+
+  // Actions liées au le message
+  $trad['m_rep_citer']    = "RÉPONDRE AVEC CITATION";
+  $trad['m_rep_non']      = "RÉPONDRE SANS CITATION";
+  $trad['m_supprimer']    = "SUPPRIMER LE MESSAGE";
+
+  // Formulaire de réponse
+  $trad['m_destinataire'] = "Destinataire";
+  $trad['m_sujet']        = "Sujet du message";
+  $trad['m_corps']        = <<<EOD
+Corps du message (vous pouvez utiliser des <a href="{$chemin_xhr}pages/doc/emotes">émoticônes</a> et des <a href="{$chemin_xhr}pages/doc/bbcodes">BBCodes</a>)
+EOD;
+  $trad['m_preview']      = "Prévisualisation du message";
+  $trad['m_envoyer']      = "ENVOYER LE MESSAGE PRIVÉ";
+  $trad['m_confirm']      = "Êtes-vous sûr de vouloir supprimer définitivement ce message ?";
 }
-else
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
 {
-  $traduction['m_envoye']       = ($lang == 'FR') ? "Message envoyé à $message_de le $message_date à $message_heure ($message_ilya)" : "Message sent to $message_de on $message_date at $message_heure ($message_ilya)";
-  $traduction['m_lu']           = ($lang == 'FR') ? "$message_envoyeur a lu ce message le $message_lu à $message_lu_h" : "$message_envoyeur read this message on $message_lu at $message_lu_h";
+  // Message
+  if(!isset($_POST['envoye']))
+  {
+    $trad['m_envoye']     = "Message sent by $message_de on $message_date at $message_heure ($message_ilya)";
+    $trad['m_lu']         = "You have read this message on $message_lu at $message_lu_h";
+  }
+  else
+  {
+    $trad['m_envoye']     = "Message sent to $message_de on $message_date at $message_heure ($message_ilya)";
+    $trad['m_lu']         = "$message_envoyeur read this message on $message_lu at $message_lu_h";
+  }
+
+  // Actions liées au le message
+  $trad['m_rep_citer']    = "REPLY AND QUOTE MESSAGE";
+  $trad['m_rep_non']      = "REPLY WITHOUT QUOTING";
+  $trad['m_supprimer']    = "DELETE THIS MESSAGE";
+
+  // Formulaire de réponse
+  $trad['m_destinataire'] = "Message to";
+  $trad['m_sujet']        = "Message title";
+  $trad['m_corps']        = <<<EOD
+Message body (you can use <a href="{$chemin_xhr}pages/doc/emotes">emotes</a> and <a href="{$chemin_xhr}pages/doc/bbcodes">BBCodes</a>)
+EOD;
+  $trad['m_preview']      = "Formatted message preview";
+  $trad['m_envoyer']      = "SEND PRIVATE MESSAGE";
+  $trad['m_confirm']      = "Are you sure you want to delete this message? It will be forever lost.";
 }
-
-
-$traduction['m_destinataire'] = ($lang == 'FR') ? "Destinataire" : "Message to";
-$traduction['m_sujet']        = ($lang == 'FR') ? "Sujet du message" : "Message title";
-$traduction['m_corps']        = ($lang == 'FR') ? "Corps du message (vous pouvez utiliser des <a href=\"".$chemin_xhr."pages/doc/emotes\">émoticônes</a> et des <a href=\"".$chemin_xhr."pages/doc/bbcodes\">BBCodes</a>)" : "Message body (you can use <a href=\"".$chemin_xhr."pages/doc/emotes\">emotes</a> and <a href=\"".$chemin_xhr."pages/doc/bbcodes\">BBCodes</a>)";
-$traduction['m_preview']      = ($lang == 'FR') ? "Prévisualisation du message" : "Formatted message preview";
-$traduction['m_envoyer']      = ($lang == 'FR') ? "ENVOYER LE MESSAGE PRIVÉ" : "SEND PRIVATE MESSAGE";
-$traduction['m_rep_citer']    = ($lang == 'FR') ? "RÉPONDRE AVEC CITATION" : "REPLY AND QUOTE MESSAGE";
-$traduction['m_rep_non']      = ($lang == 'FR') ? "RÉPONDRE SANS CITATION" : "REPLY WITHOUT QUOTING";
-$traduction['m_supprimer']    = ($lang == 'FR') ? "SUPPRIMER LE MESSAGE" : "DELETE THIS MESSAGE";
-$traduction['m_confirm']      = ($lang == 'FR') ? "Êtes-vous sûr de vouloir supprimer définitivement ce message ?" : "Are you sure you want to delete this message? It will be forever lost."
-
 
 
 
@@ -131,9 +170,9 @@ $traduction['m_confirm']      = ($lang == 'FR') ? "Êtes-vous sûr de vouloir su
   <br>
   <span class="alinea gras souligne"><?=$message_titre?></span><br>
   <br>
-  <span class="italique"><?=$traduction['m_envoye']?></span><br>
+  <span class="italique"><?=$trad['m_envoye']?></span><br>
   <?php if($message_lu) { ?>
-  <span class="italique texte_nobleme_clair"><?=$traduction['m_lu']?></span>
+  <span class="italique texte_nobleme_clair"><?=$trad['m_lu']?></span>
   <?php } ?>
 </div>
 
@@ -148,15 +187,15 @@ $traduction['m_confirm']      = ($lang == 'FR') ? "Êtes-vous sûr de vouloir su
 <div class="indiv align_left notif_cadre notif_grand_cadre hidden" id="message_reponse_<?=$message_id?>">
   <fieldset>
 
-    <label for="message_destinataire_<?=$message_id?>"><?=$traduction['m_destinataire']?></label>
+    <label for="message_destinataire_<?=$message_id?>"><?=$trad['m_destinataire']?></label>
     <input id="message_destinataire_<?=$message_id?>" name="message_destinataire_<?=$message_id?>" class="indiv" type="text" value="<?=$message_reponse?>" disabled><br>
     <br>
 
-    <label for="message_sujet_<?=$message_id?>"><?=$traduction['m_sujet']?></label>
+    <label for="message_sujet_<?=$message_id?>"><?=$trad['m_sujet']?></label>
     <input id="message_sujet_<?=$message_id?>" name="message_sujet_<?=$message_id?>" class="indiv" type="text" value="<?=$message_re?>" maxlength="80" disabled><br>
     <br>
 
-    <label for="message_textarea_<?=$message_id?>"><?=$traduction['m_corps']?></label>
+    <label for="message_textarea_<?=$message_id?>"><?=$trad['m_corps']?></label>
     <textarea id="message_textarea_<?=$message_id?>" name="message_textarea_<?=$message_id?>" class="indiv notif_message"
               onkeyup=" notification_previsualiser('<?=$chemin?>', '<?=$message_id?>');">[quote=<?=$message_envoyeur?>]
 <?=$message_corps?>
@@ -165,7 +204,7 @@ $traduction['m_confirm']      = ($lang == 'FR') ? "Êtes-vous sûr de vouloir su
     <br>
 
     <div id="message_previsualisation_container_<?=$message_id?>">
-      <label><?=$traduction['m_preview']?>:</label>
+      <label><?=$trad['m_preview']?>:</label>
       <div id="message_previsualisation_<?=$message_id?>" class="vscrollbar notif_previsualisation notif_cadre">
         <?=$message_texte?>
       </div>
@@ -173,7 +212,7 @@ $traduction['m_confirm']      = ($lang == 'FR') ? "Êtes-vous sûr de vouloir su
     </div>
 
     <div class="indiv align_center">
-      <button class="button" onclick="notification_envoyer_reponse('<?=$chemin?>', '<?=$message_id?>');"><?=$traduction['m_envoyer']?></button>
+      <button class="button" onclick="notification_envoyer_reponse('<?=$chemin?>', '<?=$message_id?>');"><?=$trad['m_envoyer']?></button>
     </div>
 
   </fieldset>
@@ -182,15 +221,15 @@ $traduction['m_confirm']      = ($lang == 'FR') ? "Êtes-vous sûr de vouloir su
 <div class="flexcontainer" id="message_actions_<?=$message_id?>">
 
   <div  class="pointeur notif_cadre notif_cadre_gauche" style="flex:1;" onclick="notification_formulaire_reponse('<?=$message_id?>', 1);">
-    <button class="button button-outline notif_cadre_bouton"><?=$traduction['m_rep_citer']?></button>
+    <button class="button button-outline notif_cadre_bouton"><?=$trad['m_rep_citer']?></button>
   </div>
 
   <div  class="pointeur notif_cadre notif_cadre_milieu" style="flex:1;" onclick="notification_formulaire_reponse('<?=$message_id?>');">
-    <button class="button button-outline notif_cadre_bouton"><?=$traduction['m_rep_non']?></button>
+    <button class="button button-outline notif_cadre_bouton"><?=$trad['m_rep_non']?></button>
   </div>
 
-  <div  class="pointeur notif_cadre notif_cadre_droite" style="flex:1;" onclick="notification_supprimer('<?=$chemin?>', '<?=$message_id?>', '<?=$traduction['m_confirm']?>')">
-    <button class="button notif_cadre_bouton"><?=$traduction['m_supprimer']?></button>
+  <div  class="pointeur notif_cadre notif_cadre_droite" style="flex:1;" onclick="notification_supprimer('<?=$chemin?>', '<?=$message_id?>', '<?=$trad['m_confirm']?>')">
+    <button class="button notif_cadre_bouton"><?=$trad['m_supprimer']?></button>
   </div>
 
 </div>

@@ -25,67 +25,109 @@ $page_desc  = "Liste des émoticônes disponibles sur NoBleme";
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Description
-$traduction['titre']      = ($lang == 'FR') ? "Émoticônes" : "Emotes";
-$traduction['soustitre']  = ($lang == 'FR') ? "Pour donner de la vie aux messages" : "Making your messages feel alive";
 if($lang == 'FR')
-  $traduction['description'] = "<p>
+{
+
+  // Description
+  $trad['titre']            = "Émoticônes";
+  $trad['soustitre']        = "Pour donner de la vie aux messages";
+  $temp_bbcode              = bbcode("XD");
+  $trad['description']      = <<<EOD
+<p>
   Les émoticônes sont des petites images amusantes qui remplacent automatiquement certaines combinaisons de caractères dans vos messages. Elles expriment diverses émotions, et vous permettent de rendre vos messages un peu plus vivants, si vous le désirez.
 </p>
 <p>
   Par exemple, si vous écrivez ceci: &laquo; Je me marre XD &raquo;<br>
-  Votre phrase sera remplacée par: &laquo; Je me marre ".bbcode("XD")." &raquo;
-</p>";
-else
-  $traduction['description'] = "<p>
+  Votre phrase sera remplacée par: &laquo; Je me marre {$temp_bbcode} &raquo;
+</p>
+EOD;
+  $trad['source']           = "Source des émoticônes de NoBleme";
+  $trad['source_desc']      = <<<EOD
+<p>
+  Toutes les émoticônes utilisées sur NoBleme sont prises au projet <a class="gras" href="http://chatzilla.hacksrus.com/">ChatZilla</a>. Ce choix est le produit d'une ancienne tradition NoBlemeuse d'utiliser ces émoticônes particulièrement amusants à l'époque où la majorité d'entre nous utilisaient ChatZilla pour se conneter à <a class="gras" href="{$chemin}pages/irc/index">notre serveur IRC</a>.
+</p>
+<p>
+  ChatZilla, ainsi que le contenu qui lui est lié (incluant les émoticônes) sont protégés par la MPL (Mozilla Public Licence), qui autorise la réutilisation de son contenu sous diverses <a class="gras" href="https://www.mozilla.org/en-US/MPL/2.0/FAQ/">conditions et clauses</a>, que NoBleme s'efforce de respecter. L'équipe de développement de ChatZilla a été contactée au sujet de l'utilisation de ces émoticônes, et a donné son autorisation tant que la licence MPL est respectée.
+</p>
+EOD;
+
+  // Tableau
+  $trad['table_emote']      = 'ÉMOTICÔNE';
+  $trad['table_texte']      = 'TEXTE';
+  $trad['table_nom']        = 'NOM';
+  $trad['table_sourire']    = 'Sourire';
+  $trad['table_heureux']    = 'Heureux';
+  $trad['table_jouissif']   = 'Jouissif';
+  $trad['table_rire']       = 'Rire';
+  $trad['table_coquin']     = 'Coquin';
+  $trad['table_triste']     = 'Triste';
+  $trad['table_pleure']     = 'Pleure';
+  $trad['table_mecontent']  = 'Mécontent';
+  $trad['table_colere']     = 'Colère';
+  $trad['table_cool']       = 'Cool';
+  $trad['table_complice']   = 'Complice';
+  $trad['table_honte']      = 'Honte';
+  $trad['table_reveur']     = 'Rêveur';
+  $trad['table_blase']      = 'Blasé';
+  $trad['table_gene']       = 'Gêné';
+  $trad['table_surprise']   = 'Surprise';
+  $trad['table_perplexe']   = 'Perplexe';
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Description
+  $trad['titre']            = "Emotes";
+  $trad['soustitre']        = "Making your messages feel alive";
+  $temp_bbcode              = bbcode("XD");
+  $trad['description']      = <<<EOD
+<p>
   Emotes are amusing little images that will automatically replace certain character combinations in your messages. They allow you to show a range of emotions through simple images, and can be used to make your message feel a bit more alive if you so desire.
 </p>
 <p>
   For example, if you typed this: &laquo; I'm laughing XD &raquo;<br>
-  It would get replaced with this: &laquo; I'm laughing ".bbcode("XD")." &raquo;
-</p>";
-$traduction['source'] = ($lang == 'FR') ? "Source des émoticônes de NoBleme" : "Source of NoBleme's emotes";
-if($lang == 'FR')
-  $traduction['source_description'] = "<p>
-   Toutes les émoticônes utilisées sur NoBleme sont prises au projet <a class=\"gras\" href=\"http://chatzilla.hacksrus.com/\">ChatZilla</a>. Ce choix est le produit d'une ancienne tradition NoBlemeuse d'utiliser ces émoticônes particulièrement amusants à l'époque où la majorité d'entre nous utilisaient ChatZilla pour se conneter à <a class=\"gras\" href=\"".$chemin."pages/irc/index\">notre serveur IRC</a>.
+  It would get replaced with this: &laquo; I'm laughing {$temp_bbcode} &raquo;
+</p>
+EOD;
+  $trad['source']           = "Source of NoBleme's emotes";
+  $trad['source_desc']      = <<<EOD
+<p>
+  All the emotes used on NoBleme were taken from the <a class="gras" href="http://chatzilla.hacksrus.com/">ChatZilla</a> project. This choice is the product of a long standing NoBleme tradition of loving these funny little exaggerated emotes, back in the day when most of us used ChatZilla to connect to <a class="gras" href="{$chemin}pages/irc/index">our IRC server</a>.
 </p>
 <p>
-  ChatZilla, ainsi que le contenu qui lui est lié (incluant les émoticônes) sont protégés par la MPL (Mozilla Public Licence), qui autorise la réutilisation de son contenu sous diverses <a class=\"gras\" href=\"https://www.mozilla.org/en-US/MPL/2.0/FAQ/\">conditions et clauses</a>, que NoBleme s'efforce de respecter. L'équipe de développement de ChatZilla a été contactée au sujet de l'utilisation de ces émoticônes, et a donné son autorisation tant que la licence MPL est respectée.
-</p>";
-else
-  $traduction['source_description'] = "<p>
-   All the emotes used on NoBleme were taken from the <a class=\"gras\" href=\"http://chatzilla.hacksrus.com/\">ChatZilla</a> project. This choice is the product of a long standing NoBleme tradition of loving these funny little exaggerated emotes, back in the day when most of us used ChatZilla to connect to <a class=\"gras\" href=\"".$chemin."pages/irc/index\">our IRC server</a>.
+  ChatZilla, aswell as the contents linked to it, are protected by the MPL (Mozilla Public Licence), which allows reuse of its contents as long as <a class="gras" href="https://www.mozilla.org/en-US/MPL/2.0/FAQ/">certain conditions</a> are respected, which NoBleme obviously does its best to respect. The ChatZilla development team was contacted aswell, and gave us their approval for emote reuse as long as we keep respecting the MPL licence.
 </p>
-<p>
-  ChatZilla, aswell as the contents linked to it, are protected by the MPL (Mozilla Public Licence), which allows reuse of its contents as long as <a class=\"gras\" href=\"https://www.mozilla.org/en-US/MPL/2.0/FAQ/\">certain conditions</a> are respected, which NoBleme obviously does its best to respect. The ChatZilla development team was contacted aswell, and gave us their approval for emote reuse as long as we keep respecting the MPL licence.
-</p>";
+EOD;
 
-// Tableau
-$traduction['table_emote']      = ($lang == 'FR') ? 'ÉMOTICÔNE' : 'EMOTE';
-$traduction['table_texte']      = ($lang == 'FR') ? 'TEXTE' : 'TEXT';
-$traduction['table_nom']        = ($lang == 'FR') ? 'NOM' : 'NAME';
-$traduction['table_sourire']    = ($lang == 'FR') ? 'Sourire' : 'Smiling';
-$traduction['table_heureux']    = ($lang == 'FR') ? 'Heureux' : 'Happy';
-$traduction['table_jouissif']   = ($lang == 'FR') ? 'Jouissif' : 'Nirvana';
-$traduction['table_rire']       = ($lang == 'FR') ? 'Rire' : 'Lauhging';
-$traduction['table_coquin']     = ($lang == 'FR') ? 'Coquin' : 'Rascal';
-$traduction['table_triste']     = ($lang == 'FR') ? 'Triste' : 'Sad';
-$traduction['table_pleure']     = ($lang == 'FR') ? 'Pleure' : 'Crying';
-$traduction['table_mecontent']  = ($lang == 'FR') ? 'Mécontent' : 'Angry';
-$traduction['table_colere']     = ($lang == 'FR') ? 'Colère' : 'Pissed';
-$traduction['table_cool']       = ($lang == 'FR') ? 'Cool' : 'Cool';
-$traduction['table_complice']   = ($lang == 'FR') ? 'Complice' : 'Complicit';
-$traduction['table_honte']      = ($lang == 'FR') ? 'Honte' : 'Ashamed';
-$traduction['table_reveur']     = ($lang == 'FR') ? 'Rêveur' : 'Dreamy';
-$traduction['table_blase']      = ($lang == 'FR') ? 'Blasé' : 'Blasé';
-$traduction['table_gene']       = ($lang == 'FR') ? 'Gêné' : 'Awkward';
-$traduction['table_surprise']   = ($lang == 'FR') ? 'Surprise' : 'Surprised';
-$traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
-
+  // Tableau
+  $trad['table_emote']      = 'EMOTE';
+  $trad['table_texte']      = 'TEXT';
+  $trad['table_nom']        = 'NAME';
+  $trad['table_sourire']    = 'Smiling';
+  $trad['table_heureux']    = 'Happy';
+  $trad['table_jouissif']   = 'Nirvana';
+  $trad['table_rire']       = 'Lauhging';
+  $trad['table_coquin']     = 'Rascal';
+  $trad['table_triste']     = 'Sad';
+  $trad['table_pleure']     = 'Crying';
+  $trad['table_mecontent']  = 'Angry';
+  $trad['table_colere']     = 'Pissed';
+  $trad['table_cool']       = 'Cool';
+  $trad['table_complice']   = 'Complicit';
+  $trad['table_honte']      = 'Ashamed';
+  $trad['table_reveur']     = 'Dreamy';
+  $trad['table_blase']      = 'Blasé';
+  $trad['table_gene']       = 'Awkward';
+  $trad['table_surprise']   = 'Surprised';
+  $trad['table_perplexe']   = 'Perplexed';
+}
 
 
 
@@ -98,17 +140,18 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
 
       <div class="texte">
 
-        <h1><?=$traduction['titre']?></h1>
+        <h1><?=$trad['titre']?></h1>
 
-        <h5><?=$traduction['soustitre']?></h5>
+        <h5><?=$trad['soustitre']?></h5>
 
-        <?=$traduction['description']?>
+        <?=$trad['description']?>
 
         <br>
+        <br>
 
-        <h5><?=$traduction['source']?></h5>
+        <h5><?=$trad['source']?></h5>
 
-        <?=$traduction['source_description']?>
+        <?=$trad['source_desc']?>
 
       </div>
 
@@ -121,13 +164,13 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
           <thead>
             <tr>
               <th>
-                <?=$traduction['table_emote']?>
+                <?=$trad['table_emote']?>
               </th>
               <th>
-                <?=$traduction['table_texte']?>
+                <?=$trad['table_texte']?>
               </th>
               <th>
-                <?=$traduction['table_nom']?>
+                <?=$trad['table_nom']?>
               </th>
             </tr>
           </thead>
@@ -142,7 +185,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 :)
               </td>
               <td>
-                <?=$traduction['table_sourire']?>
+                <?=$trad['table_sourire']?>
               </td>
             </tr>
 
@@ -154,7 +197,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 :D
               </td>
               <td>
-                <?=$traduction['table_heureux']?>
+                <?=$trad['table_heureux']?>
               </td>
             </tr>
 
@@ -166,7 +209,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 :DD
               </td>
               <td>
-                <?=$traduction['table_jouissif']?>
+                <?=$trad['table_jouissif']?>
               </td>
             </tr>
 
@@ -178,7 +221,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 XD
               </td>
               <td rowspan="2">
-                <?=$traduction['table_rire']?>
+                <?=$trad['table_rire']?>
               </td>
             </tr>
             <tr>
@@ -195,7 +238,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 :P
               </td>
               <td rowspan="2">
-                <?=$traduction['table_coquin']?>
+                <?=$trad['table_coquin']?>
               </td>
             </tr>
             <tr>
@@ -212,7 +255,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 :(
               </td>
               <td>
-                <?=$traduction['table_triste']?>
+                <?=$trad['table_triste']?>
               </td>
             </tr>
 
@@ -224,7 +267,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 :'(
               </td>
               <td rowspan="2">
-                <?=$traduction['table_pleure']?>
+                <?=$trad['table_pleure']?>
               </td>
             </tr>
             <tr>
@@ -241,7 +284,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 ):C
               </td>
               <td>
-                <?=$traduction['table_mecontent']?>
+                <?=$trad['table_mecontent']?>
               </td>
             </tr>
 
@@ -253,7 +296,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 ):(
               </td>
               <td>
-                <?=$traduction['table_colere']?>
+                <?=$trad['table_colere']?>
               </td>
             </tr>
 
@@ -265,7 +308,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 B-)
               </td>
               <td rowspan="2">
-                <?=$traduction['table_cool']?>
+                <?=$trad['table_cool']?>
               </td>
             </tr>
             <tr>
@@ -282,7 +325,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 ;-)
               </td>
               <td>
-                <?=$traduction['table_complice']?>
+                <?=$trad['table_complice']?>
               </td>
             </tr>
 
@@ -294,7 +337,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 :")
               </td>
               <td rowspan="2">
-                <?=$traduction['table_honte']?>
+                <?=$trad['table_honte']?>
               </td>
             </tr>
             <tr>
@@ -311,7 +354,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 9_9
               </td>
               <td>
-                <?=$traduction['table_reveur']?>
+                <?=$trad['table_reveur']?>
               </td>
             </tr>
 
@@ -323,7 +366,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 :|
               </td>
               <td>
-                <?=$traduction['table_blase']?>
+                <?=$trad['table_blase']?>
               </td>
             </tr>
 
@@ -335,7 +378,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 :S
               </td>
               <td rowspan="2">
-                <?=$traduction['table_gene']?>
+                <?=$trad['table_gene']?>
               </td>
             </tr>
             <tr>
@@ -352,7 +395,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 :O
               </td>
               <td rowspan="2">
-                <?=$traduction['table_surprise']?>
+                <?=$trad['table_surprise']?>
               </td>
             </tr>
             <tr>
@@ -369,7 +412,7 @@ $traduction['table_perplexe']   = ($lang == 'FR') ? 'Perplexe' : 'Perplexed';
                 o_O
               </td>
               <td rowspan="4">
-                <?=$traduction['table_perplexe']?>
+                <?=$trad['table_perplexe']?>
               </td>
             </tr>
             <tr>

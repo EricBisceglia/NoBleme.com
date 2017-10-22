@@ -75,44 +75,89 @@ for($nmessages = 0 ; $dmessages = mysqli_fetch_array($qmessages) ; $nmessages++)
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Titres et description
-if(!isset($_GET['envoyes']))
+if($lang == 'FR')
 {
-  $traduction['titre']        = ($lang == 'FR') ? "Boîte de réception" : "Inbox";
-  $traduction['soustitre']    = ($lang == 'FR') ? "Notifications systèmes et messages privés" : "Notifications and private messages";
-  $traduction['description']  = ($lang == 'FR') ? "Pour consulter le contenu d'un message et/ou y répondre, cliquez dessus. Les messages non lus apparaissent en gras. La suppression d'un message est définitive, les messages ne sont pas archivés sur le serveur." : "Click on a message to read it and/or reply to it. Unread messages appear in bold in the message list. Once a message is deleted, it cannot be restored, as messages are not archived on the server.";
-}
-else
-{
-  $traduction['titre']        = ($lang == 'FR') ? "Boîte d'envoi" : "Outbox";
-  $traduction['soustitre']    = ($lang == 'FR') ? "Notifications systèmes et messages privés" : "Notifications and private messages";
-  $traduction['description']  = ($lang == 'FR') ? "Pour consulter le contenu d'un message, cliquez dessus. Les messages apparaissent en gras si leur destinataire ne les a pas encore lu. Vous ne pouvez pas supprimer un message envoyé, et le message disparaitra de vos messages envoyés si son destinataire le supprime de sa boîte de réception." : "Click on a message to read it. Messages that appear in bold mean that they have not been read by threir recipient yet. You can not delete a message that you have sent, and the message will disappear from your outbox if its recipient deletes it from his personal inbox.";
+  // Titres et description
+  if(!isset($_GET['envoyes']))
+  {
+    $trad['titre']        = "Boîte de réception";
+    $trad['soustitre']    = "Notifications systèmes et messages privés";
+    $trad['description']  = "Pour consulter le contenu d'un message et/ou y répondre, cliquez dessus. Les messages non lus apparaissent en gras. La suppression d'un message est définitive, les messages ne sont pas archivés sur le serveur.";
+  }
+  else
+  {
+    $trad['titre']        = "Boîte d'envoi";
+    $trad['soustitre']    = "Notifications systèmes et messages privés";
+    $trad['description']  = "Pour consulter le contenu d'un message, cliquez dessus. Les messages apparaissent en gras si leur destinataire ne les a pas encore lu. Vous ne pouvez pas supprimer un message envoyé, et le message disparaitra de vos messages envoyés si son destinataire le supprime de sa boîte de réception.";
+  }
+
+  // Actions globales
+  $trad['readall']        = "MARQUER TOUS LES MESSAGES COMME LUS";
+  $trad['deleteall']      = "SUPPRIMER TOUS LES MESSAGES";
+  $trad['confirmlire']    = "Êtes-vous sûr de vouloir marquer tous vos messages comme lus ?";
+  $trad['confirmdel']     = "Êtes-vous sûr de vouloir supprimer définitivement tous vos messages ?";
+
+  // Liste des messages
+  if(!isset($_GET['envoyes']))
+  {
+    $trad['notif_date']   = "REÇU";
+    $trad['notif_de']     = "MESSAGE DE";
+    $trad['notif_sujet']  = "SUJET DU MESSAGE";
+    $trad['notif_vide']   = "VOUS N'AVEZ AUCUN MESSAGE DANS VOTRE BOÎTE DE RÉCEPTION";
+  }
+  else
+  {
+    $trad['notif_date']   = "ENVOYÉ";
+    $trad['notif_de']     = "DESTINATAIRE";
+    $trad['notif_sujet']  = "SUJET DU MESSAGE";
+    $trad['notif_vide']   = "VOUS N'AVEZ AUCUN MESSAGE DANS VOTRE BOÎTE D'ENVOI";
+  }
 }
 
-// Actions globales
-$traduction['readall']      = ($lang == 'FR') ? "MARQUER TOUS LES MESSAGES COMME LUS" : "MARK ALL UNREAD MESSAGES AS READ";
-$traduction['deleteall']    = ($lang == 'FR') ? "SUPPRIMER TOUS LES MESSAGES" : "DELETE ALL MESSAGES IN INBOX";
-$traduction['confirmlire']  = ($lang == 'FR') ? "Êtes-vous sûr de vouloir marquer tous vos messages comme lus ?" : "Are you sure you want to mark all your messages as read?";
-$traduction['confirmdel']   = ($lang == 'FR') ? "Êtes-vous sûr de vouloir supprimer définitivement tous vos messages ?" : "Are you sure you want to delete all your messages? They will be forever lost.";
 
-// Liste des messages
-if(!isset($_GET['envoyes']))
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
 {
-  $traduction['notif_date']   = ($lang == 'FR') ? "REÇU" : "DATE";
-  $traduction['notif_de']     = ($lang == 'FR') ? "MESSAGE DE" : "SENT BY";
-  $traduction['notif_sujet']  = ($lang == 'FR') ? "SUJET DU MESSAGE" : "MESSAGE TITLE";
-  $traduction['notif_vide']   = ($lang == 'FR') ? "VOUS N'AVEZ AUCUN MESSAGE DANS VOTRE BOÎTE DE RÉCEPTION" : "YOU CURRENTLY HAVE NO MESSAGES IN YOUR INBOX";
-}
-else
-{
-  $traduction['notif_date']   = ($lang == 'FR') ? "ENVOYÉ" : "DATE";
-  $traduction['notif_de']     = ($lang == 'FR') ? "DESTINATAIRE" : "SENT TO";
-  $traduction['notif_sujet']  = ($lang == 'FR') ? "SUJET DU MESSAGE" : "MESSAGE TITLE";
-  $traduction['notif_vide']   = ($lang == 'FR') ? "VOUS N'AVEZ AUCUN MESSAGE DANS VOTRE BOÎTE D'ENVOI'" : "YOU CURRENTLY HAVE NO MESSAGES IN YOUR OUTBOX";
+  // Titres et description
+  if(!isset($_GET['envoyes']))
+  {
+    $trad['titre']        = "Inbox";
+    $trad['soustitre']    = "Notifications and private messages";
+    $trad['description']  = "Click on a message to read it and/or reply to it. Unread messages appear in bold in the message list. Once a message is deleted, it cannot be restored, as messages are not archived on the server.";
+  }
+  else
+  {
+    $trad['titre']        = "Outbox";
+    $trad['soustitre']    = "Notifications and private messages";
+    $trad['description']  = "Click on a message to read it. Messages that appear in bold mean that they have not been read by threir recipient yet. You can not delete a message that you have sent, and the message will disappear from your outbox if its recipient deletes it from his personal inbox.";
+  }
+
+  // Actions globales
+  $trad['readall']        = "MARK ALL UNREAD MESSAGES AS READ";
+  $trad['deleteall']      = "DELETE ALL MESSAGES IN INBOX";
+  $trad['confirmlire']    = "Are you sure you want to mark all your messages as read?";
+  $trad['confirmdel']     = "Are you sure you want to delete all your messages? They will be forever lost.";
+
+  // Liste des messages
+  if(!isset($_GET['envoyes']))
+  {
+    $trad['notif_date']   = "DATE";
+    $trad['notif_de']     = "SENT BY";
+    $trad['notif_sujet']  = "MESSAGE TITLE";
+    $trad['notif_vide']   = "YOU CURRENTLY HAVE NO MESSAGES IN YOUR INBOX";
+  }
+  else
+  {
+    $trad['notif_date']   = "DATE";
+    $trad['notif_de']     = "SENT TO";
+    $trad['notif_sujet']  = "MESSAGE TITLE";
+    $trad['notif_vide']   = "YOU CURRENTLY HAVE NO MESSAGES IN YOUR OUTBOX";
+  }
 }
 
 
@@ -126,11 +171,11 @@ else
 
       <div class="texte">
 
-        <h1><?=$traduction['titre']?></h1>
+        <h1><?=$trad['titre']?></h1>
 
-        <h5><?=$traduction['soustitre']?></h5>
+        <h5><?=$trad['soustitre']?></h5>
 
-        <p><?=$traduction['description']?></p>
+        <p><?=$trad['description']?></p>
 
         <?php if(!isset($_GET['envoyes'])) { ?>
 
@@ -147,15 +192,15 @@ else
 
           <?php if($messages_non_lus > 1) { ?>
           <div style="flex:1" id="messages_nonlus">
-            <button class="button-outline" onclick="notifications_boutons('<?=$chemin?>', '<?=$traduction['confirmlire']?>', 'lire');">
-              <?=$traduction['readall']?>
+            <button class="button-outline" onclick="notifications_boutons('<?=$chemin?>', '<?=$trad['confirmlire']?>', 'lire');">
+              <?=$trad['readall']?>
             </button>
           </div>
 
           <?php } ?>
           <div style="flex:1">
-            <button class="button-outline" onclick="notifications_boutons('<?=$chemin?>', '<?=$traduction['confirmdel']?>', 'supprimer');">
-              <?=$traduction['deleteall']?>
+            <button class="button-outline" onclick="notifications_boutons('<?=$chemin?>', '<?=$trad['confirmdel']?>', 'supprimer');">
+              <?=$trad['deleteall']?>
             </button>
           </div>
 
@@ -174,13 +219,13 @@ else
           <thead>
             <tr>
               <th>
-                <?=$traduction['notif_date']?>
+                <?=$trad['notif_date']?>
               </th>
               <th>
-                <?=$traduction['notif_de']?>
+                <?=$trad['notif_de']?>
               </th>
               <th>
-                <?=$traduction['notif_sujet']?>
+                <?=$trad['notif_sujet']?>
               </th>
             </tr>
           </thead>
@@ -188,7 +233,7 @@ else
             <?php if(!$nmessages) { ?>
             <tr>
               <td colspan="3" class="grisfonce moinsgros gras texte_blanc">
-                <?=$traduction['notif_vide']?>
+                <?=$trad['notif_vide']?>
               </td>
             </tr>
             <?php } else { ?>

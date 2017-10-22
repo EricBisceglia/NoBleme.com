@@ -11,14 +11,14 @@ a > .header_topmenu_selected                { text-decoration: none; color: #375
 a:hover > .header_topmenu_selected          { color: #000000;                                                                }
 .header_topmenu_flagimg                     { vertical-align: middle;                                                        }
 
-@media (min-width: 750px) {
+@media (min-width: 1025px) {
 .header_topmenu                             { padding: 6px 6px 6px 10px;          }
 .header_topmenu_titre                       { padding: 0px 15px; font-size: 18px; }
 .header_topmenu_lien + .header_topmenu_lien { margin-left: 8px;                   }
 .header_topmenu_selected                    { border-radius: 4px;                 }
 .header_topmenu_titre:hover                 { border-radius: 4px;               } }
 
-@media (max-width: 749px) {
+@media (max-width: 1024px) {
 .header_topmenu                             { padding: 2px 4px;                   }
 .header_topmenu_titre                       { padding: 0px 5px; font-size: 14px;  }
 .header_topmenu_lien + .header_topmenu_lien { margin-left: 3px;                   }
@@ -41,8 +41,8 @@ a:hover > .header_topmenu_selected          { color: #000000;                   
 .nouveaux_messages:hover             { animation-name: blink-relou-hover; animation-iteration-count: infinite; animation-duration: 1337ms;}
 @keyframes blink-relou-hover         { from { color: #FF0000; } to { color: #37536B; }                                                    }
 
-@media(min-width: 750px) { .menu_sub { font-size: 14px; } }
-@media(max-width: 749px) { .menu_sub { font-size: 10px; } }
+@media(min-width: 1025px) { .menu_sub { font-size: 14px; } }
+@media(max-width: 1024px) { .menu_sub { font-size: 10px; } }
 @media(max-width: 400px) { .menu_sub { font-size: 8px;  } }
 
 /************************************************************* MENU LATÉRAL **************************************************************/
@@ -56,13 +56,13 @@ a:hover > .header_topmenu_selected          { color: #000000;                   
 .header_sidemenu_hr                                    { width: 100%; padding: 0px; border: 0px; height: 1px; background:#78A1BC;     }
 .header_sidemenu_input                                 { margin-left:5%;width:90%;                                                    }
 
-@media (min-width: 750px) { .header_sidemenu           { width: 200px; padding-top: 7px;                                              }
+@media (min-width: 1025px) { .header_sidemenu           { width: 200px; padding-top: 7px;                                              }
                             .header_sidemenu_desktop   { display: none;                                                               }
                             .header_side_nomenu        { display: none; color: #FFFFFF                                                }
                             .header_sidemenu_item      { padding: 5px 8px; font-size: 13px;                                           }
                             .header_sidemenu_titre     { padding: 5px 10px; margin-left: 5px; margin-right: 5px; font-size: 13px;   } }
 
-@media (max-width: 749px) { .header_sidemenu           { width: 150px; padding-top: 4px;                                              }
+@media (max-width: 1024px) { .header_sidemenu           { width: 150px; padding-top: 4px;                                              }
                             .header_sidemenu_mobile    { display: none;                                                               }
                             .header_side_nomenu        { position:fixed; top:50px; font-weight: bold; font-size: 12px; cursor:pointer ;
                                                          color: #78A1BC; padding-top: 2px; padding-bottom: 2px; padding-left: 5px     ;
@@ -73,8 +73,8 @@ a:hover > .header_topmenu_selected          { color: #000000;                   
 /************************************************* DÉCOUPAGE DU CORPS ET DU MENU LATÉRAL *************************************************/
 .containermenu                            { display: -webkit-flex; display: flex;                      }
 .flex_element                             { -webkit-flex: 1; flex: 1;                                  }
-@media (min-width: 750px) { .contenu_page { margin-top: 40px; padding-left: 25px; padding-right: 25px; } }
-@media (max-width: 749px) { .contenu_page { margin-top: 20px; padding-left: 10px; padding-right: 10px; } }
+@media (min-width: 1025px) { .contenu_page { margin-top: 40px; padding-left: 25px; padding-right: 25px; } }
+@media (max-width: 1024px) { .contenu_page { margin-top: 20px; padding-left: 10px; padding-right: 10px; } }
 
 /************************************************************* PIED DE PAGE **************************************************************/
 footer { width: 100%; text-align: center; color: #999999; font-size: 14px; margin-top: 80px; margin-bottom: 40px;}

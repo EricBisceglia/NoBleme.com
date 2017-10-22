@@ -86,39 +86,62 @@ for($nmembres = 0 ; $dmembres = mysqli_fetch_array($qmembres) ; $nmembres++)
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-$traduction['titre']        = ($lang == 'FR') ? "Liste des membres" : "Registered user list";
-$traduction['labelpseudo']  = ($lang == 'FR') ? "Recherche d'un membre:" : "Search by nickname:";
-$traduction['mb_pseudo']    = ($lang == 'FR') ? "PSEUDONYME" : "NICKNAME";
-$traduction['mb_inscrit']   = ($lang == 'FR') ? "INSCRIPTION" : "REGISTERED";
-$traduction['mb_visite']    = ($lang == 'FR') ? "DERNIÈRE CONNEXION" : "LAST LOGIN";
-$traduction['mb_vide']      = ($lang == 'FR') ? "AUCUN MEMBRE TROUVÉ" : "NO USERS FOUND";
-
 if($lang == 'FR')
-  $traduction['description'] = "<p>
+{
+  // Header
+  $trad['titre']        = "Liste des membres";
+  $trad['description']  = <<<EOD
+<p>
   Le tableau ci-dessous recense tous les utilisateurs inscrits sur NoBleme, du plus récent au plus ancien. Vous pouvez cliquer sur le titre d'une colonne pour changer l'ordre de tri. Afin de les distinguer du reste, certains membres apparaissent dans des styles ou des couleurs différents:
 </p>
 <p>
-  Les utilisateurs qui se sont <a href=\"".$chemin."pages/nobleme/online?noguest\">connectés récemment</a> à leur compte apparaissent en <span class=\"gras texte_noir\">gras</span><br>
-  Les membres de <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">l'équipe administrative</a> apparaissent dans leurs couleurs respectives.<br>
+  Les utilisateurs qui se sont <a href="{$chemin}pages/nobleme/online?noguest">connectés récemment</a> à leur compte apparaissent en <span class="gras texte_noir">gras</span><br>
+  Les membres de <a class="gras" href="{$chemin}pages/nobleme/admins">l'équipe administrative</a> apparaissent dans leurs couleurs respectives.<br>
 </p>
 <p>
   Cliquez sur un membre dans le tableau pour voir sa page de profil. Si vous cherchez un membre en particulier, entrez son pseudonyme dans le formulaire de recherche ci-dessous:
-</p>";
-else
-  $traduction['description'] = "<p>
+</p>
+EOD;
+  $trad['labelpseudo']  = "Recherche d'un membre:";
+
+  // Tableau
+  $trad['mb_pseudo']    = "PSEUDONYME";
+  $trad['mb_inscrit']   = "INSCRIPTION";
+  $trad['mb_visite']    = "DERNIÈRE CONNEXION";
+  $trad['mb_vide']      = "AUCUN MEMBRE TROUVÉ";
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Header
+  $trad['titre']        = "Registered user list";
+  $trad['description']  = <<<EOD
+<p>
   The table below lists all users that have registered on NoBleme, from the most recent to the oldest. You can click on the title of a column to sort the table by that column's contents. In order to tell them apart from the others, some users appear in the list with different formatting or colors:
 </p>
 <p>
-  Users that have <a href=\"".$chemin."pages/nobleme/online\">recently logged into their account</a> will appear in <span class=\"gras texte_noir\">bold</span><br>
-  Members of the <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">administrative team</a> will appear each in their respective formatting<br>
+  Users that have <a href="{$chemin}pages/nobleme/online">recently logged into their account</a> will appear in <span class="gras texte_noir">bold</span><br>
+  Members of the <a class="gras" href="{$chemin}pages/nobleme/admins">administrative team</a> will appear each in their respective formatting<br>
 </p>
 <p>
   Click on a user in the list to see its profile page, which contains more info on said user. If you are looking for a specific user, enter part or all of his nickname in the search box below:
-</p>";
+</p>
+EOD;
+  $trad['labelpseudo']  = ($lang == 'FR') ? "Recherche d'un membre:" : "Search by nickname:";
+
+  // Tableau
+  $trad['mb_pseudo']    = "NICKNAME";
+  $trad['mb_inscrit']   = "REGISTERED";
+  $trad['mb_visite']    = "LAST LOGIN";
+  $trad['mb_vide']      = "NO USERS FOUND";
+}
 
 
 
@@ -131,9 +154,9 @@ if(!getxhr()) { /***************************************************************
 
       <div class="texte">
 
-        <h1><?=$traduction['titre']?></h1>
+        <h1><?=$trad['titre']?></h1>
 
-        <?=$traduction['description']?>
+        <?=$trad['description']?>
 
         <br>
 
@@ -142,7 +165,7 @@ if(!getxhr()) { /***************************************************************
       <div class="minitexte2">
 
         <fieldset>
-          <label for="pseudoMembre"><?=$traduction['labelpseudo']?></label>
+          <label for="pseudoMembre"><?=$trad['labelpseudo']?></label>
           <input id="pseudoMembre" name="pseudoMembr" class="indiv" type="text"
                  onkeyup="dynamique('<?=$chemin?>', 'membres', 'membres_tableau', 'search_pseudo='+dynamique_prepare('pseudoMembre') ,1);">
         </fieldset>
@@ -161,15 +184,15 @@ if(!getxhr()) { /***************************************************************
             <tr>
               <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'membres', 'membres_tableau',
                   'search_pseudo='+dynamique_prepare('pseudoMembre')+'&search_sort=pseudo', 1);">
-                <?=$traduction['mb_pseudo']?>
+                <?=$trad['mb_pseudo']?>
               </th>
               <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'membres', 'membres_tableau',
                   'search_pseudo='+dynamique_prepare('pseudoMembre')+'&search_sort=inscrit', 1);">
-                <?=$traduction['mb_inscrit']?>
+                <?=$trad['mb_inscrit']?>
               </th>
               <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'membres', 'membres_tableau',
                   'search_pseudo='+dynamique_prepare('pseudoMembre')+'&search_sort=visite', 1);">
-                <?=$traduction['mb_visite']?>
+                <?=$trad['mb_visite']?>
               </th>
             </tr>
           </thead>
@@ -195,7 +218,7 @@ if(!getxhr()) { /***************************************************************
             <?php } if(!$nmembres) { ?>
             <tr>
               <td colspan="3" class="negatif texte_blanc gras">
-                <?=$traduction['mb_vide']?>
+                <?=$trad['mb_vide']?>
               </td>
             </tr>
             <?php } if(!getxhr()) { ?>

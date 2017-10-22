@@ -146,55 +146,56 @@ else
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Titre et intro
-$traduction['titre']      = ($lang == 'FR') ? "Créer un compte" : "Register an account";
-$traduction['soustitre']  = ($lang == 'FR') ? "Code de conduite à respecter sur NoBleme" : "Code of conduct to follow on NoBleme";
-
-// Formulaire d'inscription
-$traduction['reg_pseudo'] = ($lang == 'FR') ? "Choisissez un pseudonyme (3 à 18 caractères)" : "Choose a nickname (3 to 18 characters long)";
-$traduction['reg_pass']   = ($lang == 'FR') ? "Mot de passe (6 caractères minimum)" : "Your password (at least 6 characters long)";
-$traduction['reg_pass2']  = ($lang == 'FR') ? "Entrez à nouveau votre mot de passe" : "Confirm your password by typing it again";
-$traduction['reg_email']  = ($lang == 'FR') ? "Adresse e-mail (utile si vous oubliez votre mot de passe)" : "E-mail address (useful if you forget your password)";
-$traduction['reg_humain'] = ($lang == 'FR') ? "Prouvez que vous êtes humain en recopiant ce nombre" : "Prove you are human by copying this number";
-$traduction['reg_capalt'] = ($lang == 'FR') ? "Vous devez désactiver votre bloqueur d'image pour voir ce captcha !" : "You must turn off your image blocker to see this captcha !";
-$traduction['reg_creer']  = ($lang == 'FR') ? "Créer mon compte" : "Create my account";
-
-// Questionnaire sur le code de conduite
-$traduction['reg_quest1'] = ($lang == 'FR') ? "La pornographie est-elle autorisée ?" : "Is pornography allowed?";
-$traduction['reg_repq11'] = ($lang == 'FR') ? "Oui" : "Yes";
-$traduction['reg_repq12'] = ($lang == 'FR') ? "Non" : "No";
-$traduction['reg_repq13'] = ($lang == 'FR') ? "Ça dépend des cas" : "It depends";
-$traduction['reg_quest2'] = ($lang == 'FR') ? "Les images gores sont-elle tolérées ?" : "Can I post gore images?";
-$traduction['reg_repq21'] = ($lang == 'FR') ? "Oui" : "Yes";
-$traduction['reg_repq22'] = ($lang == 'FR') ? "Non" : "No";
-$traduction['reg_repq23'] = ($lang == 'FR') ? "J'en sais rien, j'ai pas lu" : "Didn't read, don't know lol";
-$traduction['reg_quest3'] = ($lang == 'FR') ? "Si je m'engueule avec quelqu'un, je fais quoi ?" : "If I'm arguing with someone, what should I do?";
-$traduction['reg_repq31'] = ($lang == 'FR') ? "J'étale ça en public" : "Spread it publicly";
-$traduction['reg_repq32'] = ($lang == 'FR') ? "Je résous ça en privé" : "Solve it privately";
-$traduction['reg_quest4'] = ($lang == 'FR') ? "Si je suis aggressif avec les autres, qu'est-ce qui se passe ?" : "If I'm being aggressive towards others, what will happen to me?";
-$traduction['reg_repq41'] = ($lang == 'FR') ? "Je me fais bannir" : "I will get banned";
-$traduction['reg_repq42'] = ($lang == 'FR') ? "Rien, on est dans un pays libre !" : "Nothing, this is a free country!";
-
-// Code de conduite
 if($lang == 'FR')
-  $traduction['reg_coc']  = "
+{
+  // Titre et intro
+  $trad['titre']      = "Créer un compte";
+  $trad['soustitre']  = "Code de conduite à respecter sur NoBleme";
+
+  // Formulaire d'inscription
+  $trad['reg_pseudo'] = "Choisissez un pseudonyme (3 à 18 caractères)";
+  $trad['reg_pass']   = "Mot de passe (6 caractères minimum)";
+  $trad['reg_pass2']  = "Entrez à nouveau votre mot de passe";
+  $trad['reg_email']  = "Adresse e-mail (utile si vous oubliez votre mot de passe)";
+  $trad['reg_humain'] = "Prouvez que vous êtes humain en recopiant ce nombre";
+  $trad['reg_capalt'] = "Vous devez désactiver votre bloqueur d'image pour voir ce captcha !";
+  $trad['reg_creer']  = "Créer mon compte";
+
+  // Questionnaire sur le code de conduite
+  $trad['reg_quest1'] = "La pornographie est-elle autorisée ?";
+  $trad['reg_repq11'] = "Oui";
+  $trad['reg_repq12'] = "Non";
+  $trad['reg_repq13'] = "Ça dépend des cas";
+  $trad['reg_quest2'] = "Les images gores sont-elle tolérées ?";
+  $trad['reg_repq21'] = "Oui";
+  $trad['reg_repq22'] = "Non";
+  $trad['reg_repq23'] = "J'en sais rien, j'ai pas lu";
+  $trad['reg_quest3'] = "Si je m'engueule avec quelqu'un, je fais quoi ?";
+  $trad['reg_repq31'] = "J'étale ça en public";
+  $trad['reg_repq32'] = "Je résous ça en privé";
+  $trad['reg_quest4'] = "Si je suis aggressif avec les autres, qu'est-ce qui se passe ?";
+  $trad['reg_repq41'] = "Je me fais bannir";
+  $trad['reg_repq42'] = "Rien, on est dans un pays libre !";
+
+  // Code de conduite
+  $trad['reg_coc']    = <<<EOD
 <p>
   NoBleme est un site cool où les gens sont relax. Il n'y a pas de restriction d'âge, et peu de restrictions de contenu. Il y a juste un code de conduite minimaliste à respecter, afin de tous cohabiter paisiblement. Pour s'assurer que tout le monde lise le code de conduite (il est court), vous devez répondre à des questions à son sujet lors de la création de votre compte.
 </p>
 <p>
   <ul>
     <li>
-      Vu qu'il n'y a pas de restriction d'âge, les <span class=\"gras\">images pornographiques</span> ou suggestives <span class=\"gras\">sont interdites</span>.
+      Vu qu'il n'y a pas de restriction d'âge, les <span class="gras">images pornographiques</span> ou suggestives <span class="gras">sont interdites</span>.
     </li>
     <li>
-      Les <span class=\"gras\">images gores</span> ou à tendance dégueulasse sont <span class=\"gras\">également interdites</span>. NoBleme n'est pas le lieu pour ça.
+      Les <span class="gras">images gores</span> ou à tendance dégueulasse sont <span class="gras">également interdites</span>. NoBleme n'est pas le lieu pour ça.
     </li>
     <li>
-      Tout <span class=\"gras\">contenu illégal</span> sera immédiatement <span class=\"gras\">envoyé à la police</span>. Ne jouez pas avec le feu, ce n'est pas le bon site pour en discuter.
+      Tout <span class="gras">contenu illégal</span> sera immédiatement <span class="gras">envoyé à la police</span>. Ne jouez pas avec le feu, ce n'est pas le bon site pour en discuter.
     </li>
     <li>
       Si vous pouvez régler une situation tendue en privé plutôt qu'en public, faites l'effort, sinon vous finirez tous les deux bannis.
@@ -208,22 +209,59 @@ if($lang == 'FR')
   </ul>
   <br>
   On est avant tout sur NoBleme pour passer du bon temps. Si vos actions ou votre langage empêchent d'autres personnes de passer du bon temps, c'est un peu nul, non ? Essayez de rester tolérants, ce n'est pas un grand effort, et tout le monde en bénéficie.
-</p>";
-else
-  $traduction['reg_coc']  = "
+</p>
+EOD;
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Titre et intro
+  $trad['titre']      = "Register an account";
+  $trad['soustitre']  = "Code of conduct to follow on NoBleme";
+
+  // Formulaire d'inscription
+  $trad['reg_pseudo'] = "Choose a nickname (3 to 18 characters long)";
+  $trad['reg_pass']   = "Your password (at least 6 characters long)";
+  $trad['reg_pass2']  = "Confirm your password by typing it again";
+  $trad['reg_email']  = "E-mail address (useful if you forget your password)";
+  $trad['reg_humain'] = "Prove you are human by copying this number";
+  $trad['reg_capalt'] = "You must turn off your image blocker to see this captcha !";
+  $trad['reg_creer']  = "Create my account";
+
+  // Questionnaire sur le code de conduite
+  $trad['reg_quest1'] = "Is pornography allowed?";
+  $trad['reg_repq11'] = "Yes";
+  $trad['reg_repq12'] = "No";
+  $trad['reg_repq13'] = "It depends";
+  $trad['reg_quest2'] = "Can I post gore images?";
+  $trad['reg_repq21'] = "Yes";
+  $trad['reg_repq22'] = "No";
+  $trad['reg_repq23'] = "Didn't read, don't know lol";
+  $trad['reg_quest3'] = "If I'm arguing with someone, what should I do?";
+  $trad['reg_repq31'] = "Spread it publicly";
+  $trad['reg_repq32'] = "Solve it privately";
+  $trad['reg_quest4'] = "If I'm being aggressive towards others, what will happen to me?";
+  $trad['reg_repq41'] = "I will get banned";
+  $trad['reg_repq42'] = "Nothing, this is a free country!";
+
+  // Code de conduite
+  $trad['reg_coc']    = <<<EOD
 <p>
   NoBleme is a chill community where people are relaxed. There is no restriction on age or content. However, in order to all coexist peacefully, there is a minimalistic code of conduct that everyone should respect. In order to ensure that everyone reads it (it's short), you will have to answer a few questions about it when registering your account.
 </p>
 <p>
   <ul>
     <li>
-      Since there is no age restriction <span class=\"gras\">pornography</span> or suggestive content <span class=\"gras\">is forbidden</span>.
+      Since there is no age restriction <span class="gras">pornography</span> or suggestive content <span class="gras">is forbidden</span>.
     </li>
     <li>
-      All <span class=\"gras\">gore images</span> and other disgusting things are <span class=\"gras\">also forbidden</span>. NoBleme is not the right place for it.
+      All <span class="gras">gore images</span> and other disgusting things are <span class="gras">also forbidden</span>. NoBleme is not the right place for it.
     </li>
     <li>
-      Obviously, <span class=\"gras\">illegal content</span> will immediately be <span class=\"gras\">sent to the police</span>. Don't play with fire, there are other websites for that.
+      Obviously, <span class="gras">illegal content</span> will immediately be <span class="gras">sent to the police</span>. Don't play with fire, there are other websites for that.
     </li>
     <li>
       If you have to argue with someone or solve a tense situation, do it privately. If done publicly, you will end up banned.
@@ -234,7 +272,9 @@ else
   </ul>
   <br>
   We are first and foremost on NoBleme to have a good time together. If your actions or your language prevent other people from having a good time, it's a bit silly, isn't it? Try to stay respectful of others and we'll all benefit from it.
-</p>";
+</p>
+EOD;
+}
 
 
 
@@ -247,11 +287,11 @@ else
 
       <div class="texte2">
 
-        <h1><?=$traduction['titre']?></h1>
+        <h1><?=$trad['titre']?></h1>
 
-        <h5><?=$traduction['soustitre']?></h5>
+        <h5><?=$trad['soustitre']?></h5>
 
-        <?=$traduction['reg_coc']?>
+        <?=$trad['reg_coc']?>
 
         <br>
 
@@ -260,86 +300,86 @@ else
         <form method="POST" id="register_formulaire" action="register#register_formulaire">
           <fieldset>
 
-            <label for="register_pseudo" id="label_register_pseudo"><?=$traduction['reg_pseudo']?></label>
+            <label for="register_pseudo" id="label_register_pseudo"><?=$trad['reg_pseudo']?></label>
             <input id="register_pseudo" name="register_pseudo" class="indiv" type="text" value="<?=$register_pseudo?>"><br>
             <br>
 
-            <label for="register_pass_1" id="label_register_pass_1"><?=$traduction['reg_pass']?></label>
+            <label for="register_pass_1" id="label_register_pass_1"><?=$trad['reg_pass']?></label>
             <input id="register_pass_1" name="register_pass_1" class="indiv" type="password" value="<?=$register_pass_1?>"><br>
             <br>
 
-            <label for="register_pass_2" id="label_register_pass_2"><?=$traduction['reg_pass2']?></label>
+            <label for="register_pass_2" id="label_register_pass_2"><?=$trad['reg_pass2']?></label>
             <input id="register_pass_2" name="register_pass_2" class="indiv" type="password" value="<?=$register_pass_2?>"><br>
             <br>
 
-            <label for="register_email" id="label_register_email"><?=$traduction['reg_email']?></label>
+            <label for="register_email" id="label_register_email"><?=$trad['reg_email']?></label>
             <input id="register_email" name="register_email" class="indiv" type="text" value="<?=$register_email?>"><br>
             <br>
 
-            <label for="register_question_1" id="label_register_question_1"><?=$traduction['reg_quest1']?></label>
+            <label for="register_question_1" id="label_register_question_1"><?=$trad['reg_quest1']?></label>
             <div class="flexcontainer">
               <div style="flex:1">
             <input id="register_question_1" name="register_question_1" value="1" type="radio"<?=$register_check_q1[1]?>>
-            <label class="label-inline" for="register_question_1"><?=$traduction['reg_repq11']?></label>
+            <label class="label-inline" for="register_question_1"><?=$trad['reg_repq11']?></label>
               </div>
               <div style="flex:1">
             <input id="register_question_1" name="register_question_1" value="2" type="radio"<?=$register_check_q1[2]?>>
-            <label class="label-inline" for="register_question_1"><?=$traduction['reg_repq12']?></label>
+            <label class="label-inline" for="register_question_1"><?=$trad['reg_repq12']?></label>
               </div>
               <div style="flex:3">
             <input id="register_question_1" name="register_question_1" value="3" type="radio"<?=$register_check_q1[3]?>>
-            <label class="label-inline" for="register_question_1"><?=$traduction['reg_repq13']?></label><br>
+            <label class="label-inline" for="register_question_1"><?=$trad['reg_repq13']?></label><br>
               </div>
             </div>
             <br>
 
-            <label for="register_question_2" id="label_register_question_2"><?=$traduction['reg_quest2']?></label>
+            <label for="register_question_2" id="label_register_question_2"><?=$trad['reg_quest2']?></label>
             <div class="flexcontainer">
               <div style="flex:1">
             <input id="register_question_2" name="register_question_2" value="1" type="radio"<?=$register_check_q2[1]?>>
-            <label class="label-inline" for="register_question_2"><?=$traduction['reg_repq21']?></label>
+            <label class="label-inline" for="register_question_2"><?=$trad['reg_repq21']?></label>
               </div>
               <div style="flex:1">
             <input id="register_question_2" name="register_question_2" value="2" type="radio"<?=$register_check_q2[2]?>>
-            <label class="label-inline" for="register_question_2"><?=$traduction['reg_repq22']?></label>
+            <label class="label-inline" for="register_question_2"><?=$trad['reg_repq22']?></label>
               </div>
               <div style="flex:3">
             <input id="register_question_2" name="register_question_2" value="3" type="radio"<?=$register_check_q2[3]?>>
-            <label class="label-inline" for="register_question_2"><?=$traduction['reg_repq23']?></label><br>
+            <label class="label-inline" for="register_question_2"><?=$trad['reg_repq23']?></label><br>
               </div>
             </div>
             <br>
 
-            <label for="register_question_3" id="label_register_question_3"><?=$traduction['reg_quest3']?></label>
+            <label for="register_question_3" id="label_register_question_3"><?=$trad['reg_quest3']?></label>
             <div class="flexcontainer">
               <div style="flex:2">
             <input id="register_question_3" name="register_question_3" value="1" type="radio"<?=$register_check_q3[1]?>>
-            <label class="label-inline" for="register_question_2"><?=$traduction['reg_repq31']?></label>
+            <label class="label-inline" for="register_question_2"><?=$trad['reg_repq31']?></label>
               </div>
               <div style="flex:3">
             <input id="register_question_3" name="register_question_3" value="2" type="radio"<?=$register_check_q3[2]?>>
-            <label class="label-inline" for="register_question_3"><?=$traduction['reg_repq32']?></label>
+            <label class="label-inline" for="register_question_3"><?=$trad['reg_repq32']?></label>
               </div>
             </div>
             <br>
 
-            <label for="register_question_4" id="label_register_question_4"><?=$traduction['reg_quest4']?></label>
+            <label for="register_question_4" id="label_register_question_4"><?=$trad['reg_quest4']?></label>
             <div class="flexcontainer">
               <div style="flex:2">
             <input id="register_question_4" name="register_question_4" value="1" type="radio"<?=$register_check_q4[1]?>>
-            <label class="label-inline" for="register_question_4"><?=$traduction['reg_repq41']?></label>
+            <label class="label-inline" for="register_question_4"><?=$trad['reg_repq41']?></label>
               </div>
               <div style="flex:3">
             <input id="register_question_4" name="register_question_4" value="2" type="radio"<?=$register_check_q4[2]?>>
-            <label class="label-inline" for="register_question_4"><?=$traduction['reg_repq42']?></label>
+            <label class="label-inline" for="register_question_4"><?=$trad['reg_repq42']?></label>
               </div>
             </div>
             <br>
 
-            <label for="register_captcha" id="label_register_captcha"><?=$traduction['reg_humain']?></label>
+            <label for="register_captcha" id="label_register_captcha"><?=$trad['reg_humain']?></label>
             <div class="flexcontainer">
               <div style="flex:1">
-                <img src="<?=$chemin?>inc/captcha.inc.php" alt="<?=$traduction['reg_capalt']?>">
+                <img src="<?=$chemin?>inc/captcha.inc.php" alt="<?=$trad['reg_capalt']?>">
               </div>
               <div style="flex:4">
                 <input id="register_captcha" name="register_captcha" class="indiv" type="text"><br>
@@ -359,7 +399,7 @@ else
 
         <br>
 
-        <button onclick="creer_compte('<?=$chemin?>');" id="register_formulaire"><?=$traduction['reg_creer']?></button>
+        <button onclick="creer_compte('<?=$chemin?>');" id="register_formulaire"><?=$trad['reg_creer']?></button>
 
       </div>
 

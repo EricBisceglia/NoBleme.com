@@ -187,35 +187,60 @@ while($dannivnb = mysqli_fetch_array($qannivnb))
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-$traduction['titre']        = ($lang == 'FR') ? "Anniversaires" : "Birthdays";
-$traduction['soustitre']    = ($lang == 'FR') ? "Prochains anniversaires réels et NoBlemeux" : "Upcoming real life and virtual birthdays";
-$traduction['ann_reels']    = ($lang == 'FR') ? "ANNIVERSAIRES RÉELS" : "REAL LIFE BIRTHDAYS";
-$traduction['ann_nobleme']  = ($lang == 'FR') ? "ANNIVERSAIRES NOBLEMEUX" : "NOBLEME ANNIVERSARIES";
-$traduction['ann_pseudo']   = ($lang == 'FR') ? "PSEUDONYME" : "NICKNAME";
-$traduction['ann_naiss']    = ($lang == 'FR') ? "DATE DE NAISSANCE" : "BIRTHDAY";
-$traduction['ann_inscr']    = ($lang == 'FR') ? "DATE D'INSCRIPTION" : "REGISTRATION";
-$traduction['ann_iv']       = ($lang == 'FR') ? "ANNIVERSAIRE" : "BIRTHDAY";
-
 if($lang == 'FR')
-  $traduction['description'] = "<p>
-  Cette page contient deux tableaux permettant de voir deux types d'anniversaires à venir:<br>Le premier liste les <span class=\"gras\">anniversaires réels</span> (vous pouvez remplir le votre dans les <a href=\"".$chemin."pages/user/public\">réglages de votre compte</a>).<br>Le second liste les <span class=\"gras\">anniversaires NoBlemeux</span>, basés sur la date de création des comptes.
+{
+  // Header
+  $trad['titre']        = "Anniversaires";
+  $trad['soustitre']    = "Prochains anniversaires réels et NoBlemeux";
+  $trad['description']  = <<<EOD
+<p>
+  Cette page contient deux tableaux permettant de voir deux types d'anniversaires à venir:<br>Le premier liste les <span class="gras">anniversaires réels</span> (vous pouvez remplir le votre dans les <a href="{$chemin}pages/user/public">réglages de votre compte</a>).<br>Le second liste les <span class="gras">anniversaires NoBlemeux</span>, basés sur la date de création des comptes.
 </p>
 <p>
-  Les utilisateurs qui se sont <a href=\"".$chemin."pages/nobleme/online?noguest\">connectés récemment</a> à leur compte apparaissent en <span class=\"gras\">gras</span><br>
-  Les membres de <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">l'équipe administrative</a> apparaissent dans leurs couleurs respectives.<br>
-</p>";
-else
-  $traduction['description'] = "<p>
-  Below are two tables which contain two different types of upcoming birthdays:<br>The first one lists <span class=\"gras\">real life birthdays</span> (you can set yours in your <a href=\"".$chemin."pages/user/public\">account settings</a>).<br>The second one lists <span class=\"gras\">NoBleme anniversaries</span>, based on the registration date of accounts.
+  Les utilisateurs qui se sont <a href="{$chemin}pages/nobleme/online?noguest">connectés récemment</a> à leur compte apparaissent en <span class="gras">gras</span><br>
+  Les membres de <a class="gras" href="{$chemin}pages/nobleme/admins">l'équipe administrative</a> apparaissent dans leurs couleurs respectives.<br>
+</p>
+EOD;
+
+  // Tableaux
+  $trad['ann_reels']    = "ANNIVERSAIRES RÉELS";
+  $trad['ann_nobleme']  = "ANNIVERSAIRES NOBLEMEUX";
+  $trad['ann_pseudo']   = "PSEUDONYME";
+  $trad['ann_naiss']    = "DATE DE NAISSANCE";
+  $trad['ann_inscr']    = "DATE D'INSCRIPTION";
+  $trad['ann_iv']       = "ANNIVERSAIRE";
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Header
+  $trad['titre']        = "Birthdays";
+  $trad['soustitre']    = "Upcoming real life and virtual birthdays";
+  $trad['description']  = <<<EOD
+<p>
+  Below are two tables which contain two different types of upcoming birthdays:<br>The first one lists <span class="gras">real life birthdays</span> (you can set yours in your <a href="{$chemin}pages/user/public">account settings</a>).<br>The second one lists <span class="gras">NoBleme anniversaries</span>, based on the registration date of accounts.
 </p>
 <p>
-  Users that have <a href=\"".$chemin."pages/nobleme/online\">recently logged into their account</a> will appear in <span class=\"gras\">bold</span><br>
-  Members of the <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">administrative team</a> will appear each in their respective formatting<br>
-</p>";
+  Users that have <a href="{$chemin}pages/nobleme/online">recently logged into their account</a> will appear in <span class="gras">bold</span><br>
+  Members of the <a class="gras" href="{$chemin}pages/nobleme/admins">administrative team</a> will appear each in their respective formatting<br>
+</p>
+EOD;
+
+  // Tableaux
+  $trad['ann_reels']    = "REAL LIFE BIRTHDAYS";
+  $trad['ann_nobleme']  = "NOBLEME ANNIVERSARIES";
+  $trad['ann_pseudo']   = "NICKNAME";
+  $trad['ann_naiss']    = "BIRTHDAY";
+  $trad['ann_inscr']    = "REGISTRATION";
+  $trad['ann_iv']       = "BIRTHDAY";
+}
 
 
 
@@ -229,11 +254,11 @@ else
 
       <div class="texte">
 
-        <h1><?=$traduction['titre']?></h1>
+        <h1><?=$trad['titre']?></h1>
 
-        <h5><?=$traduction['soustitre']?></h5>
+        <h5><?=$trad['soustitre']?></h5>
 
-        <?=$traduction['description']?>
+        <?=$trad['description']?>
 
       </div>
 
@@ -249,18 +274,18 @@ else
               <thead>
                 <tr>
                   <th colspan="3" class="moinsgros">
-                    <?=$traduction['ann_reels']?>
+                    <?=$trad['ann_reels']?>
                   </th>
                 </tr>
                 <tr>
                   <th>
-                    <?=$traduction['ann_pseudo']?>
+                    <?=$trad['ann_pseudo']?>
                   </th>
                   <th>
-                    <?=$traduction['ann_naiss']?>
+                    <?=$trad['ann_naiss']?>
                   </th>
                   <th>
-                    <?=$traduction['ann_iv']?>
+                    <?=$trad['ann_iv']?>
                   </th>
                 </tr>
               </thead>
@@ -288,18 +313,18 @@ else
               <thead>
                 <tr>
                   <th colspan="3" class="moinsgros">
-                    <?=$traduction['ann_nobleme']?>
+                    <?=$trad['ann_nobleme']?>
                   </th>
                 </tr>
                 <tr>
                   <th>
-                    <?=$traduction['ann_pseudo']?>
+                    <?=$trad['ann_pseudo']?>
                   </th>
                   <th>
-                    <?=$traduction['ann_inscr']?>
+                    <?=$trad['ann_inscr']?>
                   </th>
                   <th>
-                    <?=$traduction['ann_iv']?>
+                    <?=$trad['ann_iv']?>
                   </th>
                 </tr>
               </thead>

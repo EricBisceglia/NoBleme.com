@@ -17,7 +17,7 @@ $version .= ($lang == 'FR') ? " du ".jourfr($qversion['date'], 'FR') : " - ".jou
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Contenu multilingue
 
-$traduction['footer_dev'] = ($lang == 'FR') ? "Développé et administré par " : "Developed and administered by ";
+$trad['footer_dev'] = ($lang == 'FR') ? "Développé et administré par " : "Developed and administered by ";
 
 
 
@@ -40,7 +40,7 @@ $traduction['footer_dev'] = ($lang == 'FR') ? "Développé et administré par " 
         <a href="<?=$chemin?>pages/admin/stats_pageviews"><?=$page_views?></a><br>
         <?php } ?>
         <a href="<?=$chemin?>pages/todo/roadmap"><?=$version?></a><br>
-        <a href="<?=$chemin?>pages/user/user?id=1"><?=$traduction['footer_dev']?> <span class="gras">Bad</span></a><br>
+        <a href="<?=$chemin?>pages/user/user?id=1"><?=$trad['footer_dev']?> <span class="gras">Bad</span></a><br>
         <a href="<?=$chemin?>pages/doc/nobleme">NoBleme.com: 2005 - <?=date('Y')?></a>
       </footer>
     </div>

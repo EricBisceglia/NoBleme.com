@@ -442,7 +442,7 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
         </a>
 
         <?php } if(loggedin() && getadmin($_SESSION['user'])) { ?>
-        <a class="header_topmenu_lien" href="<?=$chemin?>pages/dev/snippets">
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/dev/ircbot">
           <div class="<?=header_class('Dev',$header_menu,'top')?>">DEV</div>
         </a>
         <?php } ?>
@@ -553,11 +553,20 @@ $sidemenu['nb_membres']     = ($lang == 'FR') ? "Liste des membres"     : "Regis
 $sidemenu['nb_annivs']      = ($lang == 'FR') ? "Anniversaires"         : "Birthdays";
 $sidemenu['nb_irls']        = ($lang == 'FR') ? "Rencontres IRL"        : "Real life meetups";
 $sidemenu['nb_aide']        = ($lang == 'FR') ? "Aide & Infos"          : "Help & Informations";
-$sidemenu['nb_nobleme']     = ($lang == 'FR') ? "Qu'est-ce que NoBleme" : "What is NoBleme";
 $sidemenu['nb_doc']         = ($lang == 'FR') ? "Documentation du site" : "Website documentation";
+$sidemenu['nb_nobleme']     = ($lang == 'FR') ? "Qu'est-ce que NoBleme" : "What is NoBleme";
 $sidemenu['nb_coc']         = ($lang == 'FR') ? "Code de conduite"      : "Code of conduct";
 $sidemenu['nb_rss']         = ($lang == 'FR') ? "Flux RSS"              : "RSS feeds";
+$sidemenu['nb_dev']         = ($lang == 'FR') ? "Développement"         : "Development";
+$sidemenu['nb_coulisses']   = ($lang == 'FR') ? "Coulisses de NoBleme"  : "Behind the scenes";
+$sidemenu['nb_api']         = ($lang == 'FR') ? "API publique"          : "Public API";
+$sidemenu['nb_bug']         = ($lang == 'FR') ? "Rapporter un bug"      : "Report a bug";
+$sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Request a feature";
 /* ################################################################################################## */ if($header_menu == 'NoBleme') { ?>
+
+            <div class="header_sidemenu_titre">
+              NoBleme.com
+            </div>
 
             <a href="<?=$chemin?>index">
               <div class="<?=header_class('Accueil',$header_sidemenu,'side')?>">
@@ -613,15 +622,15 @@ $sidemenu['nb_rss']         = ($lang == 'FR') ? "Flux RSS"              : "RSS f
               <?=$sidemenu['nb_aide']?>
             </div>
 
-            <a href="<?=$chemin?>pages/doc/nobleme">
-              <div class="<?=header_class('QuEstCeQueNoBleme',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_nobleme']?>
-              </div>
-            </a>
-
             <a href="<?=$chemin?>pages/doc/index">
               <div class="<?=header_class('Doc',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_doc']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/doc/nobleme">
+              <div class="<?=header_class('QuEstCeQueNoBleme',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_nobleme']?>
               </div>
             </a>
 
@@ -637,19 +646,19 @@ $sidemenu['nb_rss']         = ($lang == 'FR') ? "Flux RSS"              : "RSS f
               </div>
             </a>
 
-            <?php if($lang == 'FR') { ?>
-
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              Développement
+              <?=$sidemenu['nb_dev']?>
             </div>
 
             <a href="<?=$chemin?>pages/nobleme/coulisses">
               <div class="<?=header_class('Coulisses',$header_sidemenu,'side')?>">
-                Coulisses de NoBleme
+                <?=$sidemenu['nb_coulisses']?>
               </div>
             </a>
+
+            <?php if($lang == 'FR') { ?>
 
             <a href="<?=$chemin?>pages/devblog/index">
               <div class="<?=header_class('Devblog',$header_sidemenu,'side')?>">
@@ -669,13 +678,25 @@ $sidemenu['nb_rss']         = ($lang == 'FR') ? "Flux RSS"              : "RSS f
               </div>
             </a>
 
-            <a href="<?=$chemin?>pages/todo/add">
-              <div class="<?=header_class('OuvrirTicket',$header_sidemenu,'side')?>">
-                Rapporter un bug
+            <?php } ?>
+
+            <a href="<?=$chemin?>pages/nobleme/api">
+              <div class="<?=header_class('API',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_api']?>
               </div>
             </a>
 
-            <?php } ?>
+            <a href="<?=$chemin?>pages/todo/add">
+              <div class="<?=header_class('OuvrirTicket',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_feature']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/todo/add?bug">
+              <div class="<?=header_class('OuvrirTicket',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_bug']?>
+              </div>
+            </a>
 
 
 
@@ -948,6 +969,10 @@ $sidemenu['user_reglages_pass']   = ($lang == 'FR') ? "Changer de mot de passe" 
 
 <?php } /* ############################################## MENU LATÉRAL : ADMIN ######################## */ if($header_menu == 'Admin') { ?>
 
+            <div class="header_sidemenu_titre">
+              Activité récente
+            </div>
+
             <a href="<?=$chemin?>pages/nobleme/activite?mod">
               <div class="<?=header_class('Modlogs',$header_sidemenu,'side')?>">
                 Logs de modération
@@ -955,6 +980,10 @@ $sidemenu['user_reglages_pass']   = ($lang == 'FR') ? "Changer de mot de passe" 
             </a>
 
             <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              Gestion des membres
+            </div>
 
             <a href="<?=$chemin?>pages/sysop/ban">
               <div class="<?=header_class('Bannir',$header_sidemenu,'side')?>">
@@ -974,30 +1003,62 @@ $sidemenu['user_reglages_pass']   = ($lang == 'FR') ? "Changer de mot de passe" 
               </div>
             </a>
 
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              Outils administratifs
+            </div>
+
+            <a href="<?=$chemin?>pages/admin/todo">
+              <div class="<?=header_class('TodoBacklog',$header_sidemenu,'side')?>">
+                Tickets non validés
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/admin/quotes">
+              <div class="<?=header_class('QuotesBacklog',$header_sidemenu,'side')?>">
+                Miscellanées en attente
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              Statistiques
+            </div>
+
+            <a href="<?=$chemin?>pages/admin/pageviews">
+              <div class="<?=header_class('Pageviews',$header_sidemenu,'side')?>">
+                Popularité des pages
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/admin/doppelgangers">
+              <div class="<?=header_class('Doppelgangers',$header_sidemenu,'side')?>">
+                Doppelgangers
+              </div>
+            </a>
+
 
 
 
 <?php } /* ################################################ MENU LATÉRAL : DEV ########################## */ if($header_menu == 'Dev') { ?>
 
-            <a href="<?=$chemin?>pages/dev/snippets">
-              <div class="<?=header_class('Snippets',$header_sidemenu,'side')?>">
-                Snippets de code
-              </div>
-            </a>
+            <div class="header_sidemenu_titre">
+              Bot IRC NoBleme
+            </div>
 
-            <a href="<?=$chemin?>pages/dev/reference">
-              <div class="<?=header_class('Reference',$header_sidemenu,'side')?>">
-                Référence HTML / CSS
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/dev/fonctions">
-              <div class="<?=header_class('Fonctions',$header_sidemenu,'side')?>">
-                Référence des fonctions
+            <a href="<?=$chemin?>pages/dev/ircbot">
+              <div class="<?=header_class('IRCbot',$header_sidemenu,'side')?>">
+                Gestion du bot IRC
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              Gestion du site
+            </div>
 
             <a href="<?=$chemin?>pages/dev/maj">
               <div class="<?=header_class('MajChecklist',$header_sidemenu,'side')?>">
@@ -1025,11 +1086,28 @@ $sidemenu['user_reglages_pass']   = ($lang == 'FR') ? "Changer de mot de passe" 
 
             <hr class="header_sidemenu_hr">
 
-            <a href="<?=$chemin?>pages/dev/ircbot">
-              <div class="<?=header_class('IRCbot',$header_sidemenu,'side')?>">
-                Gestion du bot IRC
+            <div class="header_sidemenu_titre">
+              Références de code
+            </div>
+
+            <a href="<?=$chemin?>pages/dev/snippets">
+              <div class="<?=header_class('Snippets',$header_sidemenu,'side')?>">
+                Snippets de code
               </div>
             </a>
+
+            <a href="<?=$chemin?>pages/dev/reference">
+              <div class="<?=header_class('Reference',$header_sidemenu,'side')?>">
+                Référence HTML / CSS
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/dev/fonctions">
+              <div class="<?=header_class('Fonctions',$header_sidemenu,'side')?>">
+                Référence des fonctions
+              </div>
+            </a>
+
 
           <?php } ?>
 

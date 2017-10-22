@@ -44,6 +44,7 @@ function erreur($message)
 
   // Détermination du langage utilisé
   $lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
+  $trad = array();
 
   // Erreur
   $error_mode = 1;
@@ -57,8 +58,8 @@ function erreur($message)
   $page_nom = "Se prend une erreur";
 
   // Contenu multilingue
-  $traduction['ohno'] = ($lang == 'FR') ? "OH NON &nbsp;: (" : "OH NO &nbsp;: (";
-  $traduction['oups'] = ($lang == 'FR') ? "VOUS AVEZ RENCONTRÉ UNE ERREUR" : "YOU HAVE ENCOUNTERED AN ERROR";
+  $trad['ohno'] = ($lang == 'FR') ? "OH NON &nbsp;: (" : "OH NO &nbsp;: (";
+  $trad['oups'] = ($lang == 'FR') ? "VOUS AVEZ RENCONTRÉ UNE ERREUR" : "YOU HAVE ENCOUNTERED AN ERROR";
 
   // HTML
   include './../../inc/header.inc.php';
@@ -70,9 +71,9 @@ function erreur($message)
   <br>
 
   <div class="indiv align_center">
-    <h3><?=$traduction['ohno']?></h3>
+    <h3><?=$trad['ohno']?></h3>
     <br>
-    <h3><?=$traduction['oups']?></h3>
+    <h3><?=$trad['oups']?></h3>
     <br>
     <br>
      <br>

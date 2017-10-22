@@ -107,16 +107,42 @@ if(isset($_POST['message_envoyer']))
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-$traduction['m_titre']        = ($lang == 'FR') ? "Message privé" : "Private message";
-$traduction['m_destinataire'] = ($lang == 'FR') ? "Pseudonyme du destinataire" : "Recipient nickname";
-$traduction['m_sujet']        = ($lang == 'FR') ? "Sujet du message" : "Message title";
-$traduction['m_corps']        = ($lang == 'FR') ? "Corps du message (vous pouvez utiliser des <a href=\"".$chemin."pages/doc/emotes\">émoticônes</a> et des <a href=\"".$chemin."pages/doc/bbcodes\">BBCodes</a>)" : "Message body (you can use <a href=\"".$chemin."pages/doc/emotes\">emotes</a> and <a href=\"".$chemin."pages/doc/bbcodes\">BBCodes</a>)";
-$traduction['m_preview']      = ($lang == 'FR') ? "Prévisualisation du message" : "Formatted message preview";
-$traduction['m_envoyer']      = ($lang == 'FR') ? "ENVOYER LE MESSAGE PRIVÉ" : "SEND PRIVATE MESSAGE";
+if($lang == 'FR')
+{
+  // Header
+  $trad['m_titre']    = "Message privé";
+
+  // Formulaire
+  $trad['m_dest']     = "Pseudonyme du destinataire";
+  $trad['m_sujet']    = "Sujet du message";
+  $trad['m_corps']    = <<<EOD
+Corps du message (vous pouvez utiliser des <a href="{$chemin}pages/doc/emotes">émoticônes</a> et des <a href="{$chemin}pages/doc/bbcodes">BBCodes</a>)
+EOD;
+  $trad['m_preview']  = "Prévisualisation du message";
+  $trad['m_envoyer']  = "ENVOYER LE MESSAGE PRIVÉ";
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Header
+  $trad['m_titre']    = "Private message";
+
+  // Formulaire
+  $trad['m_dest']     = "Recipient nickname";
+  $trad['m_sujet']    = "Message title";
+  $trad['m_corps']    = <<<EOD
+Message body (you can use <a href="{$chemin}pages/doc/emotes">emotes</a> and <a href="{$chemin}pages/doc/bbcodes">BBCodes</a>)
+EOD;
+  $trad['m_preview']  = "Formatted message preview";
+  $trad['m_envoyer']  = "SEND PRIVATE MESSAGE";
+}
 
 
 
@@ -129,7 +155,7 @@ $traduction['m_envoyer']      = ($lang == 'FR') ? "ENVOYER LE MESSAGE PRIVÉ" : 
 
       <div class="texte">
 
-        <h1><?=$traduction['m_titre']?></h1>
+        <h1><?=$trad['m_titre']?></h1>
 
         <br>
         <br>
@@ -145,20 +171,20 @@ $traduction['m_envoyer']      = ($lang == 'FR') ? "ENVOYER LE MESSAGE PRIVÉ" : 
         <form method="POST">
           <fieldset>
 
-            <label for="message_destinataire"><?=$traduction['m_destinataire']?></label>
+            <label for="message_destinataire"><?=$trad['m_dest']?></label>
             <input id="message_destinataire" name="message_destinataire" class="indiv" type="text" value="<?=$message_pseudo?>"><br>
             <br>
 
-            <label for="message_sujet"><?=$traduction['m_sujet']?></label>
+            <label for="message_sujet"><?=$trad['m_sujet']?></label>
             <input id="message_sujet" name="message_sujet" class="indiv" type="text" maxlength="80" value="<?=$message_sujet?>"><br>
             <br>
 
-            <label for="message_textarea"><?=$traduction['m_corps']?></label>
+            <label for="message_textarea"><?=$trad['m_corps']?></label>
             <textarea id="message_textarea" name="message_textarea" class="indiv notif_message" onkeyup="notification_previsualiser('<?=$chemin?>');"><?=$message_corps?></textarea><br>
             <br>
 
             <div id="message_previsualisation_container"<?=$message_hidden?>>
-              <label><?=$traduction['m_preview']?>:</label>
+              <label><?=$trad['m_preview']?>:</label>
               <div id="message_previsualisation" class="vscrollbar notif_previsualisation notif_cadre">
                 <?=$message_prev?>
               </div>
@@ -166,7 +192,7 @@ $traduction['m_envoyer']      = ($lang == 'FR') ? "ENVOYER LE MESSAGE PRIVÉ" : 
             </div>
 
             <div class="indiv align_center">
-              <input type="submit" class="button" value="<?=$traduction['m_envoyer']?>" name="message_envoyer"></button>
+              <input type="submit" class="button" value="<?=$trad['m_envoyer']?>" name="message_envoyer"></button>
             </div>
 
           </fieldset>

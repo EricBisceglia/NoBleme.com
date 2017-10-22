@@ -79,46 +79,66 @@ for($nadmins = 0 ; $dadmins = mysqli_fetch_array($qadmins) ; $nadmins++)
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-$traduction['admins_titre']         = ($lang == 'FR') ? "Équipe administrative" : "Administrative team";
-$traduction['admins_soustitre']     = ($lang == 'FR') ? "Mais qui donc gère NoBleme ?" : "By whom is this website managed?";
-$traduction['admins_table_pseudo']  = ($lang == 'FR') ? "PSEUDONYME" : "NICKNAME";
-$traduction['admins_table_role']    = ($lang == 'FR') ? "RÔLE" : "ROLE";
-$traduction['admins_table_modzone'] = ($lang == 'FR') ? "ZONES MODÉRÉES" : "MODERATED ZONES";
-
 if($lang == 'FR')
-  $traduction['admins_texte'] = "
+{
+  // Header
+  $trad['admins_titre']         = "Équipe administrative";
+  $trad['admins_soustitre']     = "Mais qui donc gère NoBleme ?";
+  $trad['admins_texte']         = <<<EOD
 <p>
   Tout site internet ayant une communauté se doit d'avoir une équipe administrative que tout le monde déteste. Une bande de radicaux emmerdeurs qui n'ont aucun sens de l'humour et dont le seul rôle dans la vie semble être de pourrir votre expérience au sein de ladite commaunauté. Bien entendu, l'équipe de NoBleme a été méticuleusement choisie pour correspondre parfaitement à cette description.
 </p>
 
 <p>
-  <span class=\"gras negatif texte_blanc spaced\">L'administrateur</span> possède tous les pouvoirs et en fait un usage aussi néfaste que possible.<br>
-  <span class=\"gras neutre texte_blanc spaced\">Les sysops</span> sont des modérateurs globaux, ils peuvent à peu près tout faire sur le site.<br>
-  <span class=\"gras vert_background texte_nobleme_fonce spaced\">Les modérateurs</span> ont du pouvoir uniquement sur une zone spécifique du site.<br>
+  <span class="gras negatif texte_blanc spaced">L'administrateur</span> possède tous les pouvoirs et en fait un usage aussi néfaste que possible.<br>
+  <span class="gras neutre texte_blanc spaced">Les sysops</span> sont des modérateurs globaux, ils peuvent à peu près tout faire sur le site.<br>
+  <span class="gras vert_background texte_nobleme_fonce spaced">Les modérateurs</span> ont du pouvoir uniquement sur une zone spécifique du site.<br>
 </p>
 
 <p>
   Vous trouverez la liste des administratifs de NoBleme ainsi que leur rôle dans le tableau ci-dessous. Si vous êtes curieux de voir le profil d'un des membres dans le tableau, cliquez sur son pseudonyme. N'hésitez pas à les contacter par message privé si vous avez un problème qu'ils pourraient vous aider à régler.
-</p>";
-else
-  $traduction['admins_texte'] = "
+</p>
+EOD;
+
+  // Tableau
+  $trad['admins_table_pseudo']  = "PSEUDONYME";
+  $trad['admins_table_role']    = "RÔLE";
+  $trad['admins_table_modzone'] = "ZONES MODÉRÉES";
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Header
+  $trad['admins_titre']         = "Administrative team";
+  $trad['admins_soustitre']     = "By whom is this website managed?";
+  $trad['admins_texte']         = <<<EOD
 <p>
   If a website has a community, it must also have a team of power hungry moderators and administrators that everyone loathes. A group of radical hatemongerers who abuse their powers in the most creative ways and ruin your experience within that community. As we want to adhere to high quality standards, NoBleme's administrative team has been especially selected to fit those criteria.
 </p>
 
 <p>
-  <span class=\"gras negatif texte_blanc spaced\">The administrator</span> is omnipotent and has the terrifying power to do anything he wishes.<br>
-  <span class=\"gras neutre texte_blanc spaced\">The sysops</span> are global moderators, they have power over the whole website.<br>
-  <span class=\"gras vert_background texte_nobleme_fonce spaced\">Moderators</span> have limited power over specific areas of the website.<br>
+  <span class="gras negatif texte_blanc spaced">The administrator</span> is omnipotent and has the terrifying power to do anything he wishes.<br>
+  <span class="gras neutre texte_blanc spaced">The sysops</span> are global moderators, they have power over the whole website.<br>
+  <span class="gras vert_background texte_nobleme_fonce spaced">Moderators</span> have limited power over specific areas of the website.<br>
 </p>
 
 <p>
   In the table below, you will find a list of all the members of the administrative team. If you have any issue that we can help you with, feel free to click on the nickname of any of us and send us a private message.
-</p>";
+</p>
+EOD;
+
+  // Tableau
+  $trad['admins_table_pseudo']  = "NICKNAME";
+  $trad['admins_table_role']    = "ROLE";
+  $trad['admins_table_modzone'] = "MODERATED ZONES";
+}
 
 
 
@@ -131,11 +151,11 @@ else
 
       <div class="texte">
 
-        <h1><?=$traduction['admins_titre']?></h1>
+        <h1><?=$trad['admins_titre']?></h1>
 
-        <h5><?=$traduction['admins_soustitre']?></h5>
+        <h5><?=$trad['admins_soustitre']?></h5>
 
-        <?=$traduction['admins_texte']?>
+        <?=$trad['admins_texte']?>
 
         <br>
         <br>
@@ -144,13 +164,13 @@ else
           <thead>
             <tr>
               <th>
-                <?=$traduction['admins_table_pseudo']?>
+                <?=$trad['admins_table_pseudo']?>
               </th>
               <th>
-                <?=$traduction['admins_table_role']?>
+                <?=$trad['admins_table_role']?>
               </th>
               <th>
-                <?=$traduction['admins_table_modzone']?>
+                <?=$trad['admins_table_modzone']?>
               </th>
             </tr>
           </thead>

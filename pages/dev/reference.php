@@ -26,8 +26,8 @@ $page_titre = "Dev: Référence CSS";
 $page_nom = "Administre secrètement le site";
 
 // CSS & JS
-$css  = array('admin');
-$js   = array('toggle','highlight','dynamique','popup');
+$css  = array('dev');
+$js   = array('toggle', 'highlight', 'dynamique', 'popup', 'dev/reference');
 
 
 
@@ -37,19 +37,6 @@ $js   = array('toggle','highlight','dynamique','popup');
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
-
-      <script>
-        function reference_css_tout_fermer()
-        {
-          document.getElementById('reference_css_couleurs').style.display     = "none";
-          document.getElementById('reference_css_texte').style.display        = "none";
-          document.getElementById('reference_css_tableaux').style.display     = "none";
-          document.getElementById('reference_css_formulaires').style.display  = "none";
-          document.getElementById('reference_css_elements').style.display     = "none";
-          document.getElementById('reference_css_divers').style.display       = "none";
-          document.getElementById('reference_css_scripts').style.display      = "none";
-        }
-      </script>
 
       <table class="fullgrid titresnoirs margin_auto noresize" style="width:1300px;">
         <thead>

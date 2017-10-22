@@ -380,19 +380,38 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-$traduction['titre']      = ($lang == 'FR') ? "Activité récente" : "Recent activity";
-$traduction['soustitre']  = ($lang == 'FR') ? "Pour ceux qui ne veulent rien rater et tout traquer" : "For those of us who don't want to miss a thing";
-$traduction['titre_mod']  = ($lang == 'FR') ? "Logs de modération" : "Mod logs";
-$traduction['titretable'] = ($lang == 'FR') ? "DERNIÈRES ACTIONS" : "LATEST ACTIONS";
-$traduction['ar_tout']    = ($lang == 'FR') ? "Voir tout" : "Everything";
-$traduction['ar_user']    = ($lang == 'FR') ? "Membres" : "Users";
-$traduction['ar_irl']     = ($lang == 'FR') ? "IRL" : "Meetups";
-$traduction['ar_dev']     = ($lang == 'FR') ? "Développement" : "Internals";
-$traduction['ar_misc']    = ($lang == 'FR') ? "Miscellanées" : "Quotes";
+if($lang == 'FR')
+{
+  $trad['titre']      = "Activité récente";
+  $trad['soustitre']  = "Pour ceux qui ne veulent rien rater et tout traquer";
+  $trad['titre_mod']  = "Logs de modération";
+  $trad['titretable'] = "DERNIÈRES ACTIONS";
+  $trad['ar_tout']    = "Voir tout";
+  $trad['ar_user']    = "Membres";
+  $trad['ar_irl']     = "IRL";
+  $trad['ar_dev']     = "Développement";
+  $trad['ar_misc']    = "Miscellanées";
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  $trad['titre']      = "Recent activity";
+  $trad['soustitre']  = "For those of us who don't want to miss a thing";
+  $trad['titre_mod']  = "Mod logs";
+  $trad['titretable'] = "LATEST ACTIONS";
+  $trad['ar_tout']    = "Everything";
+  $trad['ar_user']    = "Users";
+  $trad['ar_irl']     = "Meetups";
+  $trad['ar_dev']     = "Internals";
+  $trad['ar_misc']    = "Quotes";
+}
 
 
 
@@ -406,10 +425,10 @@ if(!getxhr()) { /***************************************************************
       <div class="texte2">
 
         <?php if(!isset($_GET['mod'])) { ?>
-        <h1 class="indiv align_center"><?=$traduction['titre']?></h1>
-        <h6 class="indiv align_center texte_nobleme_clair"><?=$traduction['soustitre']?></h6>
+        <h1 class="indiv align_center"><?=$trad['titre']?></h1>
+        <h6 class="indiv align_center texte_nobleme_clair"><?=$trad['soustitre']?></h6>
         <?php } else { ?>
-        <h1 class="indiv align_center"><?=$traduction['titre_mod']?></h1>
+        <h1 class="indiv align_center"><?=$trad['titre_mod']?></h1>
         <br>
         <p>
           Certains logs de modération ont des icônes à droite de la ligne ( <img height="20" width="20" class="valign_bottom" src="<?=$chemin?>img/icones/pourquoi.png" alt="?"> et <img height="20" width="20" class="valign_bottom" src="<?=$chemin?>img/icones/details.png" alt="?"> ).<br>
@@ -428,16 +447,16 @@ if(!getxhr()) { /***************************************************************
             <option value="250">250</option>
             <option value="1000">1000</option>
           </select>
-          <span class="gros gras spaced valign_bottom"><?=$traduction['titretable']?></span>
+          <span class="gros gras spaced valign_bottom"><?=$trad['titretable']?></span>
           <select id="activite_type"
                   onchange="dynamique('<?=$chemin?>', '<?=$activite_dynamique_url?>', 'activite_table',
                   'activite_num='+dynamique_prepare('activite_num')+
                   '&activite_type='+dynamique_prepare('activite_type'), 1);">
-            <option value="tout"><?=$traduction['ar_tout']?></option>
-            <option value="membres"><?=$traduction['ar_user']?></option>
-            <option value="irl"><?=$traduction['ar_irl']?></option>
-            <option value="misc"><?=$traduction['ar_misc']?></option>
-            <option value="dev"><?=$traduction['ar_dev']?></option>
+            <option value="tout"><?=$trad['ar_tout']?></option>
+            <option value="membres"><?=$trad['ar_user']?></option>
+            <option value="irl"><?=$trad['ar_irl']?></option>
+            <option value="misc"><?=$trad['ar_misc']?></option>
+            <option value="dev"><?=$trad['ar_dev']?></option>
           </select>
         </p>
 

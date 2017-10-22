@@ -47,76 +47,138 @@ if(isset($_GET['fr']))
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// CV: Titres
-$traduction['soustitre']      = ($lang == 'FR') ? "Développeur informatique" : "Senior developer";
-$traduction['langlink']       = ($lang == 'FR') ? "en" : "fr";
-$traduction['langswitch']     = ($lang == 'FR') ? "Click here for the english version" : "Click here for the french version";
-$traduction['domicile']       = ($lang == 'FR') ? "Habite Paris, France" : "Lives in Paris, France";
-$temp_age                     = floor((strtotime(date('Y-m-d'))-strtotime('1988-08-26'))/31556926);
-$traduction['naissance']      = ($lang == 'FR') ? "Né le 26 août 1988 ($temp_age ans)" : "Born august 26, 1988 (age $temp_age)";
-$traduction['active']         = ($lang == 'FR') ? "Développeur depuis 2007" : "Developer since 2007";
-
-// CV: Parcours professionel
-$traduction['parcours']       = ($lang == 'FR') ? "Parcours professionel" : "Work experience";
-$traduction['aujourdhui']     = ($lang == 'FR') ? "Aujourd'hui" : "Today";
-$traduction['work_mtd2']      = ($lang == 'FR') ? "CTO (Directeur informatique)" : "CTO + lead developer";
-$traduction['work_free2']     = ($lang == 'FR') ? "Sous secret professionel" : "Details protected by a NDA";
-$traduction['work_mtd']       = ($lang == 'FR') ? "Développeur de l'intranet" : "Intranet development";
-$traduction['work_meca']      = ($lang == 'FR') ? "Développement logiciel interne" : "Custom software development";
-$traduction['work_free']      = ($lang == 'FR') ? "Développement de jeux en flash" : "Flash game development";
-
-// CV: Projets personnels
-$traduction['projets']        = ($lang == 'FR') ? "Projets personnels" : "Personal projets";
-$traduction['perso_nobleme']  = ($lang == 'FR') ? "Site internet et communauté" : "Website and community";
-$traduction['perso_steeldb']  = ($lang == 'FR') ? "Base de données à usage commercial" : "Database for commercial use";
-$traduction['perso_dix']      = ($lang == 'FR') ? "Exploitation d'un format propriétaire" : "Proprietary format analysis tool";
-$traduction['perso_nrm']      = ($lang == 'FR') ? "MMO de stratégie via navigateur" : "Browser based strategy MMO";
-$traduction['perso_nbrpg']    = ($lang == 'FR') ? "Jeu de rôle multijoueur via IRC" : "Multiplayer game played through IRC";
-
-// CV: Compétences techniques
-$traduction['skill']          = ($lang == 'FR') ? "Compétences techniques" : "Technical skills";
-$traduction['skill_maitre']   = ($lang == 'FR') ? "Languages maîtrisés" : "Mastered languages";
-$traduction['skill_partiel']  = ($lang == 'FR') ? "Maîtrise partielle" : "Strong knowledge";
-$traduction['skill_os']       = ($lang == 'FR') ? "Systèmes d'exploitation" : "Operating systems";
-$traduction['skill_bdd']      = ($lang == 'FR') ? "Bases de données" : "Databases";
-$traduction['skill_soft']     = ($lang == 'FR') ? "Logiciels" : "Software";
-
-// CV: Compatences linguistiques
-$traduction['lang']           = ($lang == 'FR') ? "Langages" : "Languages";
-$traduction['lang_cefr']      = ($lang == 'FR') ? "Échelle CEFR" : "CEFR scale";
-$traduction['lang_cefr_href'] = ($lang == 'FR') ? "https://fr.wikipedia.org/wiki/Cadre_europ%C3%A9en_commun_de_r%C3%A9f%C3%A9rence_pour_les_langues#.C3.89chelle_globale" : "https://en.wikipedia.org/wiki/Common_European_Framework_of_Reference_for_Languages#Common_reference_levels";
-$traduction['lang_resume']    = ($lang == 'FR') ? "Français natif ; Bilingue anglais ; Allemand correct ; Bases de russe, espagnol, et autres langages" : "French native ; Fluent english ; Decent german ; Bases of russian, spanish, and other languages";
-$traduction['lang_oral']      = ($lang == 'FR') ? "Oral" : "Spoken";
-$traduction['lang_lecture']   = ($lang == 'FR') ? "Lecture" : "Read";
-$traduction['lang_ecriture']  = ($lang == 'FR') ? "Écriture" : "Written";
-$traduction['lang_fr']        = ($lang == 'FR') ? "Français" : "French";
-$traduction['lang_en']        = ($lang == 'FR') ? "Anglais" : "English";
-$traduction['lang_de']        = ($lang == 'FR') ? "Allemand" : "German";
-$traduction['lang_ru']        = ($lang == 'FR') ? "Russe" : "Russian";
-$traduction['lang_es']        = ($lang == 'FR') ? "Espagnol" : "Spanish";
-
-// CV: Informations complémentaires
-$traduction['extra']          = ($lang == 'FR') ? "Informations complémentaires" : "Extra information";
 if($lang == 'FR')
-  $traduction['extra_text'] = "Vous trouverez des exemples illustrés de mes compétences dans le <a class=\"gras souligne\" href=\"cv?portfolio#portfolio\">portfolio</a> qui accompagne ce CV.<br>
+{
+  // CV: Titres
+  $trad['soustitre']      = "Développeur informatique";
+  $trad['langlink']       = "en";
+  $trad['langswitch']     = "Click here for the english version";
+  $trad['domicile']       = "Habite Paris, France";
+  $temp_age               = floor((strtotime(date('Y-m-d'))-strtotime('1988-08-26'))/31556926);
+  $trad['naissance']      = "Né le 26 août 1988 ($temp_age ans)";
+  $trad['active']         = "Développeur depuis 2007";
+
+  // CV: Parcours professionel
+  $trad['parcours']       = "Parcours professionel";
+  $trad['aujourdhui']     = "Aujourd'hui";
+  $trad['work_mtd2']      = "CTO (Directeur informatique)";
+  $trad['work_free2']     = "Sous secret professionel";
+  $trad['work_mtd']       = "Développeur de l'intranet";
+  $trad['work_meca']      = "Développement logiciel interne";
+  $trad['work_free']      = "Développement de jeux en flash";
+
+  // CV: Projets personnels
+  $trad['projets']        = "Projets personnels";
+  $trad['perso_nobleme']  = "Site internet et communauté";
+  $trad['perso_steeldb']  = "Base de données à usage commercial";
+  $trad['perso_dix']      = "Exploitation d'un format propriétaire";
+  $trad['perso_nrm']      = "MMO de stratégie via navigateur";
+  $trad['perso_nbrpg']    = "Jeu de rôle multijoueur via IRC";
+
+  // CV: Compétences techniques
+  $trad['skill']          = "Compétences techniques";
+  $trad['skill_maitre']   = "Languages maîtrisés";
+  $trad['skill_partiel']  = "Maîtrise partielle";
+  $trad['skill_os']       = "Systèmes d'exploitation";
+  $trad['skill_bdd']      = "Bases de données";
+  $trad['skill_soft']     = "Logiciels";
+
+  // CV: Compatences linguistiques
+  $trad['lang']           = "Langages";
+  $trad['lang_cefr']      = "Échelle CEFR";
+  $trad['lang_cefr_href'] = "https://fr.wikipedia.org/wiki/Cadre_europ%C3%A9en_commun_de_r%C3%A9f%C3%A9rence_pour_les_langues#.C3.89chelle_globale";
+  $trad['lang_resume']    = "Français natif ; Bilingue anglais ; Allemand correct ; Bases de russe, espagnol, et autres langages";
+  $trad['lang_oral']      = "Oral";
+  $trad['lang_lecture']   = "Lecture";
+  $trad['lang_ecriture']  = "Écriture";
+  $trad['lang_fr']        = "Français";
+  $trad['lang_en']        = "Anglais";
+  $trad['lang_de']        = "Allemand";
+  $trad['lang_ru']        = "Russe";
+  $trad['lang_es']        = "Espagnol";
+
+  // CV: Informations complémentaires
+  $trad['extra']          = "Informations complémentaires";
+  $trad['extra_text']     = <<<EOD
+Vous trouverez des exemples illustrés de mes compétences dans le <a class="gras souligne" href="cv?portfolio#portfolio">portfolio</a> qui accompagne ce CV.<br>
 <br>
 Outre le développement informatique (ma passion principale), je suis un passionné de littérature, histoire, sociologie, game design, science-fiction, et musique moderne.<br>
-Je gère l'héritage culturel de la collection <a class=\"gras\" href=\"http://www.jazzhot.net/PBEvents.asp?ItmID=23592\">photographique</a> et <a class=\"gras\" href=\"http://bdzoom.com/60445/actualites/deces-de-jacques-bisceglia/\">littéraire</a> de mon défunt père, <a class=\"gras\" href=\"https://www.citizenjazz.com/Jacques-Bisceglia-par-Jerome-Merli.html\">Jacques Bisceglia</a>.<br>
+Je gère l'héritage culturel de la collection <a class="gras" href="http://www.jazzhot.net/PBEvents.asp?ItmID=23592">photographique</a> et <a class="gras" href="http://bdzoom.com/60445/actualites/deces-de-jacques-bisceglia/">littéraire</a> de mon défunt père, <a class="gras" href="https://www.citizenjazz.com/Jacques-Bisceglia-par-Jerome-Merli.html">Jacques Bisceglia</a>.<br>
 J'ai pratiqué le roller de vitesse en compétition de 2003 à 2005, et je continue à le pratiquer en amateur.<br>
 <br>
-N'hésitez pas à me contacter via mon email <a href=\"mailto:bisceglia.eric@gmail.com\">bisceglia.eric@gmail.com</a> ou sur <a class=\"gras\" href=\"".$chemin."pages/irc/index\">IRC</a>.";
-else
-  $traduction['extra_text'] = "You will find illustrated examples of my skills in the <a class=\"gras souligne\" href=\"cv?portfolio#portfolio\">portfolio</a> which accompanies this CV.<br>
+N'hésitez pas à me contacter via mon email <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> ou sur <a class="gras" href="{$chemin}pages/irc/index">IRC</a>.
+EOD;
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // CV: Titres
+  $trad['soustitre']      = "Senior developer";
+  $trad['langlink']       = "fr";
+  $trad['langswitch']     = "Click here for the french version";
+  $trad['domicile']       = "Lives in Paris, France";
+  $temp_age               = floor((strtotime(date('Y-m-d'))-strtotime('1988-08-26'))/31556926);
+  $trad['naissance']      = "Born august 26, 1988 (age $temp_age)";
+  $trad['active']         = "Developer since 2007";
+
+  // CV: Parcours professionel
+  $trad['parcours']       = "Work experience";
+  $trad['aujourdhui']     = "Today";
+  $trad['work_mtd2']      = "CTO + lead developer";
+  $trad['work_free2']     = "Details protected by a NDA";
+  $trad['work_mtd']       = "Intranet development";
+  $trad['work_meca']      = "Custom software development";
+  $trad['work_free']      = "Flash game development";
+
+  // CV: Projets personnels
+  $trad['projets']        = "Personal projets";
+  $trad['perso_nobleme']  = "Website and community";
+  $trad['perso_steeldb']  = "Database for commercial use";
+  $trad['perso_dix']      = "Proprietary format analysis tool";
+  $trad['perso_nrm']      = "Browser based strategy MMO";
+  $trad['perso_nbrpg']    = "Multiplayer game played through IRC";
+
+  // CV: Compétences techniques
+  $trad['skill']          = "Technical skills";
+  $trad['skill_maitre']   = "Mastered languages";
+  $trad['skill_partiel']  = "Strong knowledge";
+  $trad['skill_os']       = "Operating systems";
+  $trad['skill_bdd']      = "Databases";
+  $trad['skill_soft']     = "Software";
+
+  // CV: Compatences linguistiques
+  $trad['lang']           = "Languages";
+  $trad['lang_cefr']      = "CEFR scale";
+  $trad['lang_cefr_href'] = "https://en.wikipedia.org/wiki/Common_European_Framework_of_Reference_for_Languages#Common_reference_levels";
+  $trad['lang_resume']    = "French native ; Fluent english ; Decent german ; Bases of russian, spanish, and other languages";
+  $trad['lang_oral']      = "Spoken";
+  $trad['lang_lecture']   = "Read";
+  $trad['lang_ecriture']  = "Written";
+  $trad['lang_fr']        = "French";
+  $trad['lang_en']        = "English";
+  $trad['lang_de']        = "German";
+  $trad['lang_ru']        = "Russian";
+  $trad['lang_es']        = "Spanish";
+
+  // CV: Informations complémentaires
+  $trad['extra']          = "Extra information";
+  $trad['extra_text']     = <<<EOD
+You will find illustrated examples of my skills in the <a class="gras souligne" href="cv?portfolio#portfolio">portfolio</a> which accompanies this CV.<br>
 <br>
 Other than computer programming (my main passion), I am passionate about literature, history, sociology, game design, science fiction, and modern music.<br>
-I manage the cultural inheritance (photographs and books) of my deceased father, <a class=\"gras\" href=\"http://inconstantsol.blogspot.fr/2013/03/jacques-bisceglia-1940-2013.html\">Jacques Bisceglia</a>.<br>
+I manage the cultural inheritance (photographs and books) of my deceased father, <a class="gras" href="http://inconstantsol.blogspot.fr/2013/03/jacques-bisceglia-1940-2013.html">Jacques Bisceglia</a>.<br>
 I've practiced competitive rollerblading from 2003 to 2005, and still practice it as an amateur.<br>
 <br>
-Do not hesitate to contact me by e-mail at <a href=\"mailto:bisceglia.eric@gmail.com\">bisceglia.eric@gmail.com</a> or through <a class=\"gras\" href=\"".$chemin."pages/irc/index\">IRC</a>.";
+Do not hesitate to contact me by e-mail at <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> or through <a class="gras" href="{$chemin}pages/irc/index">IRC</a>.
+EOD;
+}
 
 
 
@@ -136,15 +198,15 @@ Do not hesitate to contact me by e-mail at <a href=\"mailto:bisceglia.eric@gmail
 
           <div style="flex:1">
             <h1>Éric Bisceglia</h1>
-            <h5><?=$traduction['soustitre']?></h5>
-            <a class="gras souligne" href="cv?<?=$traduction['langlink']?>"><?=$traduction['langswitch']?></a>
+            <h5><?=$trad['soustitre']?></h5>
+            <a class="gras souligne" href="cv?<?=$trad['langlink']?>"><?=$trad['langswitch']?></a>
           </div>
 
           <div class="align_right" style="flex:1;">
             <p>
-              <?=$traduction['domicile']?><br>
-              <?=$traduction['active']?><br>
-              <?=$traduction['naissance']?><br>
+              <?=$trad['domicile']?><br>
+              <?=$trad['active']?><br>
+              <?=$trad['naissance']?><br>
               E-mail: <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a>
             </p>
           </div>
@@ -154,13 +216,13 @@ Do not hesitate to contact me by e-mail at <a href=\"mailto:bisceglia.eric@gmail
         <br>
         <hr>
         <br>
-        <h5 class="alinea"><?=$traduction['parcours']?>:</h5>
+        <h5 class="alinea"><?=$trad['parcours']?>:</h5>
         <br>
 
         <div class="flexcontainer">
 
           <div style="flex:auto">
-            2016 - <?=$traduction['aujourdhui']?><br>
+            2016 - <?=$trad['aujourdhui']?><br>
             2015 - 2016<br>
             2010 - 2015<br>
             2009 - 2010<br>
@@ -168,11 +230,11 @@ Do not hesitate to contact me by e-mail at <a href=\"mailto:bisceglia.eric@gmail
           </div>
 
           <div style="flex:auto">
-            <a class="gras" href="http://www.mtd-finance.fr">MTD Finance</a>: <?=$traduction['work_mtd2']?><br>
-            <span class="gras texte_noir">Freelance</span>: <?=$traduction['work_free2']?><br>
-            <a class="gras" href="http://www.mtd-finance.fr">MTD Finance</a>: <?=$traduction['work_mtd']?><br>
-            <a class="gras" href="http://www.mecamatic.fr">Mécamatic</a>: <?=$traduction['work_meca']?><br>
-            <span class="gras texte_noir">Freelance</span>: <?=$traduction['work_free']?>
+            <a class="gras" href="http://www.mtd-finance.fr">MTD Finance</a>: <?=$trad['work_mtd2']?><br>
+            <span class="gras texte_noir">Freelance</span>: <?=$trad['work_free2']?><br>
+            <a class="gras" href="http://www.mtd-finance.fr">MTD Finance</a>: <?=$trad['work_mtd']?><br>
+            <a class="gras" href="http://www.mecamatic.fr">Mécamatic</a>: <?=$trad['work_meca']?><br>
+            <span class="gras texte_noir">Freelance</span>: <?=$trad['work_free']?>
           </div>
 
           <div style="flex:auto">
@@ -188,13 +250,13 @@ Do not hesitate to contact me by e-mail at <a href=\"mailto:bisceglia.eric@gmail
         <br>
         <hr>
         <br>
-        <h5 class="alinea"><?=$traduction['projets']?>:</h5>
+        <h5 class="alinea"><?=$trad['projets']?>:</h5>
         <br>
 
         <div class="flexcontainer">
 
           <div style="flex:auto">
-            2005 - <?=$traduction['aujourdhui']?><br>
+            2005 - <?=$trad['aujourdhui']?><br>
             2010 - 2011<br>
             2011 - 2012<br>
             2006 - 2009<br>
@@ -202,11 +264,11 @@ Do not hesitate to contact me by e-mail at <a href=\"mailto:bisceglia.eric@gmail
           </div>
 
           <div style="flex:auto">
-            <a class="gras" href="http://www.nobleme.com/">NoBleme</a>: <?=$traduction['perso_nobleme']?><br>
-            <span class="gras texte_noir">SteelDB</span>: <?=$traduction['perso_steeldb']?><br>
-            <span class="gras texte_noir">Dix</span>: <?=$traduction['perso_dix']?><br>
-            <span class="gras texte_noir">NRM Online</span>: <?=$traduction['perso_nrm']?><br>
-            <span class="gras texte_noir">NBRPG</span>: <?=$traduction['perso_nbrpg']?>
+            <a class="gras" href="http://www.nobleme.com/">NoBleme</a>: <?=$trad['perso_nobleme']?><br>
+            <span class="gras texte_noir">SteelDB</span>: <?=$trad['perso_steeldb']?><br>
+            <span class="gras texte_noir">Dix</span>: <?=$trad['perso_dix']?><br>
+            <span class="gras texte_noir">NRM Online</span>: <?=$trad['perso_nrm']?><br>
+            <span class="gras texte_noir">NBRPG</span>: <?=$trad['perso_nbrpg']?>
           </div>
 
           <div style="flex:auto">
@@ -230,17 +292,17 @@ Do not hesitate to contact me by e-mail at <a href=\"mailto:bisceglia.eric@gmail
         <br>
         <hr>
         <br>
-        <h5 class="alinea"><?=$traduction['skill']?>:</h5>
+        <h5 class="alinea"><?=$trad['skill']?>:</h5>
         <br>
 
         <div class="flexcontainer">
 
           <div style="flex:1">
-            <?=$traduction['skill_maitre']?><br>
-            <?=$traduction['skill_partiel']?><br>
-            <?=$traduction['skill_os']?><br>
-            <?=$traduction['skill_bdd']?><br>
-            <?=$traduction['skill_soft']?>
+            <?=$trad['skill_maitre']?><br>
+            <?=$trad['skill_partiel']?><br>
+            <?=$trad['skill_os']?><br>
+            <?=$trad['skill_bdd']?><br>
+            <?=$trad['skill_soft']?>
           </div>
 
           <div style="flex:3">
@@ -256,47 +318,47 @@ Do not hesitate to contact me by e-mail at <a href=\"mailto:bisceglia.eric@gmail
         <br>
         <hr>
         <br>
-        <h5 class="alinea"><?=$traduction['lang']?> (<a href="<?=$traduction['lang_cefr_href']?>"><?=$traduction['lang_cefr']?></a>):</h5>
+        <h5 class="alinea"><?=$trad['lang']?> (<a href="<?=$trad['lang_cefr_href']?>"><?=$trad['lang_cefr']?></a>):</h5>
         <br>
-        <span class="gras"><?=$traduction['lang_resume']?></span><br>
+        <span class="gras"><?=$trad['lang_resume']?></span><br>
         <br>
 
         <div class="flexcontainer">
 
           <div style="flex:1">
-            <?=$traduction['lang_oral']?><br>
-            <?=$traduction['lang_lecture']?><br>
-            <?=$traduction['lang_ecriture']?>
+            <?=$trad['lang_oral']?><br>
+            <?=$trad['lang_lecture']?><br>
+            <?=$trad['lang_ecriture']?>
           </div>
 
           <div style="flex:1">
-            <?=$traduction['lang_fr']?> C2<br>
-            <?=$traduction['lang_fr']?> C2<br>
-            <?=$traduction['lang_fr']?> C2
+            <?=$trad['lang_fr']?> C2<br>
+            <?=$trad['lang_fr']?> C2<br>
+            <?=$trad['lang_fr']?> C2
           </div>
 
           <div style="flex:1">
-            <?=$traduction['lang_en']?> C2<br>
-            <?=$traduction['lang_en']?> C2<br>
-            <?=$traduction['lang_en']?> C2
+            <?=$trad['lang_en']?> C2<br>
+            <?=$trad['lang_en']?> C2<br>
+            <?=$trad['lang_en']?> C2
           </div>
 
           <div style="flex:1">
-            <?=$traduction['lang_de']?> A2<br>
-            <?=$traduction['lang_de']?> B1<br>
-            <?=$traduction['lang_de']?> A2
+            <?=$trad['lang_de']?> A2<br>
+            <?=$trad['lang_de']?> B1<br>
+            <?=$trad['lang_de']?> A2
           </div>
 
           <div style="flex:1">
-            <?=$traduction['lang_ru']?> A1<br>
-            <?=$traduction['lang_ru']?> A2<br>
-            <?=$traduction['lang_ru']?> A1
+            <?=$trad['lang_ru']?> A1<br>
+            <?=$trad['lang_ru']?> A2<br>
+            <?=$trad['lang_ru']?> A1
           </div>
 
           <div style="flex:1">
-            <?=$traduction['lang_es']?> A1<br>
-            <?=$traduction['lang_es']?> A2<br>
-            <?=$traduction['lang_es']?> A1
+            <?=$trad['lang_es']?> A1<br>
+            <?=$trad['lang_es']?> A2<br>
+            <?=$trad['lang_es']?> A1
           </div>
 
         </div>
@@ -304,10 +366,10 @@ Do not hesitate to contact me by e-mail at <a href=\"mailto:bisceglia.eric@gmail
         <br>
         <hr>
         <br>
-        <h5 class="alinea"><?=$traduction['extra']?></h5>
+        <h5 class="alinea"><?=$trad['extra']?></h5>
 
         <p>
-          <?=$traduction['extra_text']?>
+          <?=$trad['extra_text']?>
         </p>
 
       </div>

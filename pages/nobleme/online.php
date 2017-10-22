@@ -116,24 +116,42 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-$traduction['titre']      = ($lang == 'FR') ? "Qui est en ligne ?" : "Who's online right now ?";
-$traduction['soustitre']  = ($lang == 'FR') ? "La page officielle des traqueurs obsessifs et des curieux" : "The official home of obsessive stalkers, curious cats, and other weird animals";
-$traduction['pseudo']     = ($lang == 'FR') ? "PSEUDONYME" : "USER";
-$traduction['activite']   = ($lang == 'FR') ? "ACTIVITÉ" : "LAST ACTION";
-
 if($lang == 'FR')
-  $traduction['description'] = "Cette page recense les visiteurs connectés ces dernières 48 heures, et la page de NoBleme qu'ils ont visité en dernier. Si plus de 1000 personnes se sont connectées ces dernières 48 heures, seules les 1000 activités les plus récentes apparaitront (sait-on jamais, c'est peut-être le cas dans une ligne temporelle différente).";
-else
-  $traduction['description'] = "This page lists all accounts that were active on NoBleme in the last 48 hours, sorted by latest activity. If more than 1000 people used the website in the last 48 hours, only the 1000 most recent users will appear (you never know, it could be the case in some alternate timeline, better be safe than sorry).";
+{
+  // Header
+  $trad['titre']        = "Qui est en ligne ?";
+  $trad['soustitre']    = "La page officielle des traqueurs obsessifs et des curieux";
+  $trad['description']  = "Cette page recense les visiteurs connectés ces dernières 48 heures, et la page de NoBleme qu'ils ont visité en dernier. Si plus de 1000 personnes se sont connectées ces dernières 48 heures, seules les 1000 activités les plus récentes apparaitront (sait-on jamais, c'est peut-être le cas dans une ligne temporelle différente).";
+  $trad['couleurs']     = <<<EOD
+Afin de les distinguer, les <a href="{$chemin}pages/nobleme/membres">membres enregistrés</a> apparaissent sur fond <span class="texte_noir grisclair gras spaced">gris</span> , les <a href="{$chemin}pages/nobleme/admins">modérateurs</a> sur fond <span class="positif texte_blanc gras spaced">vert</span> , les <a href="{$chemin}pages/nobleme/admins">sysops</a> sur fond <span class="neutre texte_blanc gras spaced">orange</span> , et l'<a href="{$chemin}pages/user/user?id=1">administrateur</a> sur fond <span class="negatif texte_blanc gras spaced">rouge</span>.
+EOD;
 
-if($lang == 'FR')
-  $traduction['couleurs'] = "Afin de les distinguer, les <a href=\"".$chemin."pages/nobleme/membres\">membres enregistrés</a> apparaissent sur fond <span class=\"texte_noir grisclair gras spaced\">gris</span> , les <a href=\"".$chemin."pages/nobleme/admins\">modérateurs</a> sur fond <span class=\"positif texte_blanc gras spaced\">vert</span> , les <a href=\"".$chemin."pages/nobleme/admins\">sysops</a> sur fond <span class=\"neutre texte_blanc gras spaced\">orange</span> , et l'<a href=\"".$chemin."pages/user/user?id=1\">administrateur</a> sur fond <span class=\"negatif texte_blanc gras spaced\">rouge</span>.";
-else
-  $traduction['couleurs'] = "In order to tell them apart from eachother, <a href=\"".$chemin."pages/nobleme/membres\">registered users</a> will appear in <span class=\"texte_noir grisclair gras spaced\">grey</span> , <a href=\"".$chemin."pages/nobleme/admins\">moderators</a> in <span class=\"positif texte_blanc gras spaced\">green</span> , <a href=\"".$chemin."pages/nobleme/admins\">sysops</a> in <span class=\"neutre texte_blanc gras spaced\">orange</span> , and the <a href=\"".$chemin."pages/user/user?id=1\">administrator</a> in <span class=\"negatif texte_blanc gras spaced\">red</span>.";
+  // Tableau
+  $trad['pseudo']       = "PSEUDONYME";
+  $trad['activite']     = "ACTIVITÉ";
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Header
+  $trad['titre']        = "Who's online right now ?";
+  $trad['soustitre']    = "The official home of obsessive stalkers, curious cats, and other weird animals";
+  $trad['description']  = "This page lists all accounts that were active on NoBleme in the last 48 hours, sorted by latest activity. If more than 1000 people used the website in the last 48 hours, only the 1000 most recent users will appear (you never know, it could be the case in some alternate timeline, better be safe than sorry).";
+  $trad['couleurs']     = <<<EOD
+In order to tell them apart from eachother, <a href="{$chemin}pages/nobleme/membres">registered users</a> will appear in <span class="texte_noir grisclair gras spaced">grey</span> , <a href="{$chemin}pages/nobleme/admins">moderators</a> in <span class="positif texte_blanc gras spaced">green</span> , <a href="{$chemin}pages/nobleme/admins">sysops</a> in <span class="neutre texte_blanc gras spaced">orange</span> , and the <a href="{$chemin}pages/user/user?id=1">administrator</a> in <span class="negatif texte_blanc gras spaced">red</span>.
+EOD;
+
+  // Tableau
+  $trad['pseudo']       = "USER";
+  $trad['activite']     = "LAST ACTION";
+}
 
 
 
@@ -146,13 +164,13 @@ else
 
       <div class="texte">
 
-        <h1 class="alinea"><?=$traduction['titre']?></h1>
+        <h1 class="alinea"><?=$trad['titre']?></h1>
 
-        <h6 class="alinea texte_nobleme_clair"><?=$traduction['soustitre']?></h6>
+        <h6 class="alinea texte_nobleme_clair"><?=$trad['soustitre']?></h6>
 
-        <p><?=$traduction['description']?></p>
+        <p><?=$trad['description']?></p>
 
-        <p><?=$traduction['couleurs']?></p>
+        <p><?=$trad['couleurs']?></p>
 
         <?php if($lang == 'FR') { ?>
 
@@ -173,10 +191,10 @@ else
           <thead>
             <tr>
               <th>
-                <?=$traduction['pseudo']?>
+                <?=$trad['pseudo']?>
               </th>
               <th>
-                <?=$traduction['activite']?>
+                <?=$trad['activite']?>
               </th>
               <?php if($lang == 'FR') { ?>
               <th>

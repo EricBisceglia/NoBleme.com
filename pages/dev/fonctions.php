@@ -20,8 +20,8 @@ $page_titre = "Dev: Fonctions";
 $page_nom = "Administre secrètement le site";
 
 // CSS & JS
-$css = array('admin','nbrpg');
-$js  = array('toggle','highlight');
+$css = array('dev');
+$js  = array('toggle', 'highlight', 'dev/reference');
 
 
 
@@ -32,18 +32,6 @@ $js  = array('toggle','highlight');
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
-
-      <script>
-        function fonctions_tout_fermer()
-        {
-          document.getElementById('liste_fonctions_texte').style.display    = "none";
-          document.getElementById('liste_fonctions_dates').style.display    = "none";
-          document.getElementById('liste_fonctions_maths').style.display    = "none";
-          document.getElementById('liste_fonctions_users').style.display    = "none";
-          document.getElementById('liste_fonctions_nobleme').style.display  = "none";
-          document.getElementById('liste_fonctions_divers').style.display   = "none";
-        }
-      </script>
 
       <table class="fullgrid titresnoirs margin_auto noresize" style="width:1250px;">
         <thead>

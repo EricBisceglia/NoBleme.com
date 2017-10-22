@@ -134,33 +134,72 @@ else
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                   TRADUTION DU CONTENU MULTILINGUE                                                    */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Titres et messages
-$traduction['titre']        = ($lang == 'FR') ? "Connexion" : "Login";
-$traduction['titre_oublie'] = ($lang == 'FR') ? "Mot de passe oublié" : "Forgotten password";
-$traduction['titre_bien']   = ($lang == 'FR') ? "Bienvenue sur NoBleme !" : "Welcome to NoBleme !";
-$traduction['register']     = ($lang == 'FR') ? "Vous n'avez pas de compte ? Cliquez ici pour en créer un !" : "Don't have an account? Click here to register one!";
-$traduction['reg_erreur']   = ($lang == 'FR') ? "ERREUR:" : "ERROR:";
-
-// Formulaire
-$traduction['reg_nick']     = ($lang == 'FR') ? "Pseudonyme" : "Nickname";
-$traduction['reg_pass']     = ($lang == 'FR') ? "Mot de passe" : "Password";
-$traduction['reg_souvenir'] = ($lang == 'FR') ? "Se souvenir de moi" : "Remember me";
-
-// Mot de passe oublié
 if($lang == 'FR')
-  $traduction['reg_oublie'] = "<p>Pour des raisons de sécurité, NoBleme n'envoie pas les mots de passe en clair par e-mail, et il n'y a pas non plus (pour le moment) de formulaire de récupération de mot de passe.</p><p>Si vous avez perdu l'accès à votre compte, la seule solution est de venir sur le <a class=\"gras\" href=\"".$chemin."pages/irc/index\">serveur de discussion IRC</a> pour demander à un <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">administrateur ou sysop</a> de vous assigner un nouveau mot de passe.</p>";
-else
-  $traduction['reg_oublie'] = "<p>For security reasons, NoBleme account passwords are not sent through e-mail, and there isn't (yet) an automated form to recover your password.</p><p>If you fully lost access to your account, you can come on our <a class=\"gras\" href=\"".$chemin."pages/irc/index\">IRC chat server</a> and ask an <a class=\"gras\" href=\"".$chemin."pages/nobleme/admins\">admin or sysop</a> to give your account a new password.</p>";
+{
+  // Titres et messages
+  $trad['titre']        = "Connexion";
+  $trad['titre_oublie'] = "Mot de passe oublié";
+  $trad['titre_bien']   = "Bienvenue sur NoBleme !";
+  $trad['register']     = "Vous n'avez pas de compte ? Cliquez ici pour en créer un !";
+  $trad['reg_erreur']   = "ERREUR:";
 
-// Bienvenue sur NoBleme
-if($lang == 'FR')
-  $traduction['reg_bien'] = "<p>Votre compte a été crée, et vous pouvez maintenant vous y connecter en vous servant du formulaire de connexion ci-dessous. Bienvenue parmi nous, et bon séjour sur NoBleme !<br><br>Votre administrateur,<br>Bad</p>";
-else
-  $traduction['reg_bien'] = "<p>Your account has successfully being created. You can now log into your account using the form below. Welcome amongst us, and enjoy your stay on NoBleme!<br><br>Your admin,<br>Bad</p>";
+  // Formulaire
+  $trad['reg_nick']     = "Pseudonyme";
+  $trad['reg_pass']     = "Mot de passe";
+  $trad['reg_souvenir'] = "Se souvenir de moi";
+
+  // Mot de passe oublié
+  $trad['reg_oublie']   = <<<EOD
+<p>
+  Pour des raisons de sécurité, NoBleme n'envoie pas les mots de passe en clair par e-mail, et il n'y a pas non plus (pour le moment) de formulaire de récupération de mot de passe.</p><p>Si vous avez perdu l'accès à votre compte, la seule solution est de venir sur le <a class="gras" href="{$chemin}pages/irc/index">serveur de discussion IRC</a> pour demander à un <a class="gras" href="{$chemin}pages/nobleme/admins">administrateur ou sysop</a> de vous assigner un nouveau mot de passe.
+</p>
+EOD;
+
+  // Bienvenue sur NoBleme
+  $trad['reg_bien']     = <<<EOD
+<p>
+  Votre compte a été crée, et vous pouvez maintenant vous y connecter en vous servant du formulaire de connexion ci-dessous. Bienvenue parmi nous, et bon séjour sur NoBleme !<br><br>Votre administrateur,<br>
+  Bad
+</p>
+EOD;
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Titres et messages
+  $trad['titre']        = "Login";
+  $trad['titre_oublie'] = "Forgotten password";
+  $trad['titre_bien']   = "Welcome to NoBleme !";
+  $trad['register']     = "Don't have an account? Click here to register one!";
+  $trad['reg_erreur']   = "ERROR:";
+
+  // Formulaire
+  $trad['reg_nick']     = "Nickname";
+  $trad['reg_pass']     = "Password";
+  $trad['reg_souvenir'] = "Remember me";
+
+  // Mot de passe oublié
+  $trad['reg_oublie']   = <<<EOD
+<p>
+  For security reasons, NoBleme account passwords are not sent through e-mail, and there isn't (yet) an automated form to recover your password.</p><p>If you fully lost access to your account, you can come on our <a class="gras" href="{$chemin}pages/irc/index">IRC chat server</a> and ask an <a class="gras" href="{$chemin}pages/nobleme/admins">admin or sysop</a> to give your account a new password.
+</p>
+EOD;
+
+  // Bienvenue sur NoBleme
+  $trad['reg_bien']     = <<<EOD
+<p>
+  Your account has successfully being created. You can now log into your account using the form below. Welcome amongst us, and enjoy your stay on NoBleme!<br><br>Your admin,<br>
+  Bad
+</p>
+EOD;
+}
 
 
 
@@ -176,9 +215,9 @@ else
 
         <?php if(isset($_GET['oublie'])) { ?>
 
-        <h2><?=$traduction['titre_oublie']?></h2>
+        <h2><?=$trad['titre_oublie']?></h2>
 
-        <?=$traduction['reg_oublie']?>
+        <?=$trad['reg_oublie']?>
 
         <br>
 
@@ -192,9 +231,9 @@ else
 
         <?php } else if(isset($_GET['bienvenue'])) { ?>
 
-        <h2><?=$traduction['titre_bien']?></h2>
+        <h2><?=$trad['titre_bien']?></h2>
 
-        <?=$traduction['reg_bien']?>
+        <?=$trad['reg_bien']?>
 
         <br>
 
@@ -208,10 +247,10 @@ else
 
         <?php } ?>
 
-        <h1 class="indiv align_center"><?=$traduction['titre']?></h1>
+        <h1 class="indiv align_center"><?=$trad['titre']?></h1>
 
         <p class="align_center gras moinsgros">
-          <a href="<?=$chemin?>pages/user/register"><?=$traduction['register']?></a>
+          <a href="<?=$chemin?>pages/user/register"><?=$trad['register']?></a>
         </p>
 
         <br>
@@ -219,7 +258,7 @@ else
 
         <?php if($erreur) { ?>
         <h5 class="texte_negatif gras indiv align_center">
-          <span class="souligne"><?=$traduction['reg_erreur']?></span> <?=$erreur?>
+          <span class="souligne"><?=$trad['reg_erreur']?></span> <?=$erreur?>
         </h5>
         <br>
         <br>
@@ -231,17 +270,17 @@ else
 
         <form method="POST" action="login">
           <fieldset>
-            <label for="login_pseudo"><?=$traduction['reg_nick']?></label>
+            <label for="login_pseudo"><?=$trad['reg_nick']?></label>
             <input id="login_pseudo" name="login_pseudo" class="indiv" type="text" value="<?=$login_pseudo?>"><br>
             <br>
-            <label for="login_pass"><?=$traduction['reg_pass']?></label>
+            <label for="login_pass"><?=$trad['reg_pass']?></label>
             <input id="login_pass" name="login_pass" class="indiv" type="password"><br>
             <br>
             <div class="float-right">
               <input id="login_souvenir" name="login_souvenir" type="checkbox"<?=$login_souvenir?>>
-              <label class="label-inline" for="login_souvenir"><?=$traduction['reg_souvenir']?></label>
+              <label class="label-inline" for="login_souvenir"><?=$trad['reg_souvenir']?></label>
             </div>
-            <input value="<?=$traduction['titre']?>" type="submit">
+            <input value="<?=$trad['titre']?>" type="submit">
           </fieldset>
         </form>
 
