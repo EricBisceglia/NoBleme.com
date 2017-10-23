@@ -1,3 +1,8 @@
+/************************************************************* PROFIL PUBLIC *************************************************************/
+.profil_cadre  { border: 1px solid #CACACA; height: 500px; padding: 10px; overflow-y: auto; word-break: break-all; }
+.profil_hr     { height: 1px; background: #CACACA; border: 0px; margin-left: -10px; margin-right: -10px;           }
+.profil_bouton { margin-top: 5px; margin-bottom: 5px;                                                              }
+
 /************************************************************* NOTIFICATIONS *************************************************************/
 div.notif_cadre             { border: 1px solid #CACACA; padding: 10px;                         }
 div.notif_grand_cadre       { margin-bottom: 5px;                                               }

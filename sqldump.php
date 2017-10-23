@@ -13,8 +13,7 @@ CREATE TABLE IF NOT EXISTS `activite` (
   `action_type` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `action_id` int(11) NOT NULL,
   `action_titre` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `parent_id` int(11) NOT NULL,
-  `parent_titre` mediumtext COLLATE utf8_unicode_ci NOT NULL,
+  `parent` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `justification` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=20423 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -88,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `membres` (
   `banni_raison` mediumtext COLLATE utf8_unicode_ci NOT NULL,
   `sexe` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `anniversaire` date NOT NULL,
-  `region` tinytext COLLATE utf8_unicode_ci NOT NULL,
+  `habite` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `metier` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `profil` longtext COLLATE utf8_unicode_ci NOT NULL,
   `profil_last_edit` int(11) NOT NULL,

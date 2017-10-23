@@ -124,8 +124,9 @@ $js  = array('dynamique');
 if($lang == 'FR')
 {
   // Header
-  $trad['titre']  = "Message privé";
-  $trad['desc']   = &lt;&lt;&lt;EOD
+  $trad['titre']      = "Titre";
+  $trad['soustitre']  = "Sous-titre";
+  $trad['desc']       = &lt;&lt;&lt;EOD
 Description de la page incluant mais ne se limitant pas à un &lt;a href="{$chemin}pages/dev/snippets"&gt;lien&lt;/a&gt;
 EOD;
 }
@@ -135,11 +136,6 @@ EOD;
 
 else if($lang == 'EN')
 {
-  // Header
-  $trad['titre']  = "Private message";
-  $trad['desc']   = &lt;&lt;&lt;EOD
-Page description including but not limited to a &lt;a href="{$chemin}pages/dev/snippets">link&gt;link&lt;/a&gt;
-EOD;
 }
 
 
@@ -153,11 +149,11 @@ EOD;
 
       &lt;div class="texte">
 
-        &lt;h1>Titre&lt;/h1>
+        &lt;h1>&lt;?=$trad['titre']?&gt;&lt;/h1>
 
-        &lt;h5>Sous-titre&lt;/h5>
+        &lt;h5>&lt;?=$trad['soustitre']?&gt;&lt;/h5>
 
-        &lt;p>Contenu&lt;/p>
+        &lt;p>&lt;?=$trad['desc']?&gt;&lt;/p>
 
       &lt;/div>
 
@@ -285,8 +281,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 if($lang == 'FR')
 {
   // Header
-  $trad['titre']  = "Message privé";
-  $trad['desc']   = &lt;&lt;&lt;EOD
+  $trad['titre']      = "Titre";
+  $trad['soustitre']  = "Sous-titre";
+  $trad['desc']       = &lt;&lt;&lt;EOD
 Description de la page incluant mais ne se limitant pas à un &lt;a href="{$chemin}pages/dev/snippets"&gt;lien&lt;/a&gt;
 EOD;
 }
@@ -296,11 +293,6 @@ EOD;
 
 else if($lang == 'EN')
 {
-  // Header
-  $trad['titre']  = "Private message";
-  $trad['desc']   = &lt;&lt;&lt;EOD
-Page description including but not limited to a &lt;a href="{$chemin}pages/dev/snippets">link&gt;link&lt;/a&gt;
-EOD;
 }
 
 
@@ -310,15 +302,15 @@ EOD;
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?&gt;
+/************************************************************************************************/ include './../../inc/header.inc.php'; ?&gt;
 
       &lt;div class="texte">
 
-        &lt;h1>Titre&lt;/h1>
+        &lt;h1>&lt;?=$trad['titre']?&gt;&lt;/h1>
 
-        &lt;h5>Sous-titre&lt;/h5>
+        &lt;h5>&lt;?=$trad['soustitre']?&gt;&lt;/h5>
 
-        &lt;p>Contenu&lt;/p>
+        &lt;p>&lt;?=$trad['desc']?&gt;&lt;/p>
 
       &lt;/div>
 

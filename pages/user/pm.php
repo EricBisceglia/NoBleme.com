@@ -44,13 +44,21 @@ if(isset($_POST['message_envoyer']))
   $envoyer_corps  = postdata_vide('message_textarea',     'string', '');
 }
 
+// Si on demande un destinataire spécifique, on le prend et on le remplit
+if(isset($_GET['user']))
+{
+  $message_id     = postdata($_GET['user']);
+  $message_pseudo = getpseudo($message_id);
+}
+
 // Récupération du post raw pour pré-remplir le formulaire
-$message_pseudo = isset($_POST['message_destinataire']) ? predata($_POST['message_destinataire']) : '';
-$message_sujet  = isset($_POST['message_sujet'])        ? predata($_POST['message_sujet'])        : '';
-$message_corps  = isset($_POST['message_textarea'])     ? predata($_POST['message_textarea'])     : '';
-$message_hidden = (!$message_corps) ? ' class="hidden"' : '';
-$message_prev   = bbcode(predata($message_corps, 1));
-$erreur         = '';
+if(!isset($_GET['user']) || isset($_POST['message_envoyer']))
+  $message_pseudo = isset($_POST['message_destinataire']) ? predata($_POST['message_destinataire']) : '';
+$message_sujet    = isset($_POST['message_sujet'])        ? predata($_POST['message_sujet'])        : '';
+$message_corps    = isset($_POST['message_textarea'])     ? predata($_POST['message_textarea'])     : '';
+$message_hidden   = (!$message_corps) ? ' class="hidden"' : '';
+$message_prev     = bbcode(predata($message_corps, 1));
+$erreur           = '';
 
 
 

@@ -42,6 +42,7 @@ if($lang == 'FR')
   $trad['rac_page']       = "PAGE";
   $trad['rac_raccourci']  = "RACCOURCI";
   $trad['rac_raccourcis'] = "Liens courts";
+  $trad['rac_profil']     = "Profil d'un utilisateur";
   $trad['rac_activite']   = "Activité récente";
   $trad['rac_online']     = "Qui est en ligne";
 }
@@ -59,6 +60,7 @@ else if($lang == 'EN')
   $trad['rac_page']       = "PAGE";
   $trad['rac_raccourci']  = "SHORTCUT";
   $trad['rac_raccourcis'] = "Short links";
+  $trad['rac_profil']     = "User profile";
   $trad['rac_activite']   = "Recent activity";
   $trad['rac_online']     = "Who's online";
 }
@@ -103,6 +105,14 @@ else if($lang == 'EN')
               </td>
               <td>
                 <a href="<?=$chemin?>s">s</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_profil']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?u=1">u=x</a>
               </td>
             </tr>
             <tr>

@@ -934,7 +934,7 @@ $sidemenu['user_reglages_pass']   = ($lang == 'FR') ? "Changer de mot de passe" 
               <?=$sidemenu['user_profil']?>
             </div>
 
-            <a href="<?=$chemin?>pages/user/user?self">
+            <a href="<?=$chemin?>pages/user/user">
               <div class="<?=header_class('MonProfil',$header_sidemenu,'side')?>">
                 <?=$sidemenu['user_profil_self']?>
               </div>
@@ -984,6 +984,12 @@ $sidemenu['user_reglages_pass']   = ($lang == 'FR') ? "Changer de mot de passe" 
             <div class="header_sidemenu_titre">
               Gestion des membres
             </div>
+
+            <a href="<?=$chemin?>pages/sysop/pilori">
+              <div class="<?=header_class('Pilori',$header_sidemenu,'side')?>">
+                Pilori des bannis
+              </div>
+            </a>
 
             <a href="<?=$chemin?>pages/sysop/ban">
               <div class="<?=header_class('Bannir',$header_sidemenu,'side')?>">
