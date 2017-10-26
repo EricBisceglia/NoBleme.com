@@ -70,8 +70,12 @@ sql_supprimer_table('secrets');
 sql_supprimer_champ('devblog', 'score_popularite');
 sql_supprimer_champ('membres', 'profil_last_edit');
 sql_supprimer_champ('activite', 'parent_id');
+
+// On change certains contenus
 sql_renommer_champ('activite', 'parent_titre', 'parent', 'MEDIUMTEXT');
 sql_renommer_champ('membres', 'region', 'habite', 'TINYTEXT');
+sql_renommer_champ('membres', 'sexe', 'genre', 'TINYTEXT');
+query(" UPDATE activite SET log_moderation = 1 WHERE action_type LIKE 'profil' ");
 
 // Fix des vieux messages foireux
 query(" UPDATE notifications SET contenu = REPLACE (contenu, '&lt;', '<') ");

@@ -904,6 +904,8 @@ $sidemenu['user_profil_edit']     = ($lang == 'FR') ? "Modifier mon profil"     
 $sidemenu['user_reglages']        = ($lang == 'FR') ? "Réglages du compte"      : "Account settings";
 $sidemenu['user_reglages_email']  = ($lang == 'FR') ? "Changer d'e-mail"        : "Change my e-mail";
 $sidemenu['user_reglages_pass']   = ($lang == 'FR') ? "Changer de mot de passe" : "Change my password";
+$sidemenu['user_reglages_pseudo'] = ($lang == 'FR') ? "Changer de pseudonyme"   : "Change my nickname";
+$sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    : "Delete my account";
 /* ################################################################################################### */ if($header_menu == 'Compte') { ?>
 
             <div class="header_sidemenu_titre">
@@ -961,6 +963,18 @@ $sidemenu['user_reglages_pass']   = ($lang == 'FR') ? "Changer de mot de passe" 
             <a href="<?=$chemin?>pages/user/pass">
               <div class="<?=header_class('ChangerPass',$header_sidemenu,'side')?>">
                 <?=$sidemenu['user_reglages_pass']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/user/pseudo">
+              <div class="<?=header_class('ChangerPseudo',$header_sidemenu,'side')?>">
+                <?=$sidemenu['user_reglages_pseudo']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/user/delete">
+              <div class="<?=header_class('SupprimerCompte',$header_sidemenu,'side')?>">
+                <?=$sidemenu['user_reglages_delete']?>
               </div>
             </a>
 

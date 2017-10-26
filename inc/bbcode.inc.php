@@ -169,10 +169,10 @@ function bbcode($post, $xhr=NULL)
   }
 
   // [url=http://www.url.com]Lien[/url]
-  $post = preg_replace('/\[url\](.*?)\[\/url\]/is','<a class="dark" href="$1">$1</a>', $post);
+  $post = preg_replace('/\[url\](.*?)\[\/url\]/is','<a class="gras" href="$1">$1</a>', $post);
 
   // [url=http://www.url.com]Lien[/url]
-  $post = preg_replace('/\[url\=(.*?)\](.*?)\[\/url\]/is','<a class="dark" href="$1">$2</a>', $post);
+  $post = preg_replace('/\[url\=(.*?)\](.*?)\[\/url\]/is','<a class="gras" href="$1">$2</a>', $post);
 
   // [img]http://www.image.com/image.jpg[/img]
   $post = preg_replace('/\[img\](.*?)\[\/img\]/is','<img class="bbcodeimg" src="$1" alt="">', $post);

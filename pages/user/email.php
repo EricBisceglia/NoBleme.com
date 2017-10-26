@@ -10,16 +10,41 @@ useronly($lang);
 
 // Menus du header
 $header_menu      = 'Compte';
-$header_sidemenu  = 'MonProfil';
+$header_sidemenu  = 'ChangerEmail';
 
 // Identification
-$page_nom = "Déprime parce qu'il est banni";
+$page_nom = "En a marre de son adresse e-mail";
+$page_url = "pages/user/email";
 
 // Langages disponibles
 $langage_page = array('FR','EN');
 
 // Titre et description
-$page_titre = ($lang == 'FR') ? "Banni !" : "Banned!";
+$page_titre = ($lang == 'FR') ? "Changer d'e-mail" : "Change my e-mail";
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                        TRAITEMENT DU POST-DATA                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+// On chope l'userid, si y'en a pas on arrête tout
+$user_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateur invalide');
+
+// Modifier l'adresse e-mail
+if(isset($_POST['emailModifier']))
+{
+  $email = postdata_vide('emailCompte', 'string', '');
+  query(" UPDATE  membres
+          SET     membres.email = '$email'
+          WHERE   membres.id    = '$user_id' ");
+  $email_css = ' texte_positif gras';
+}
+else
+  $email_css = '';
 
 
 
@@ -30,33 +55,13 @@ $page_titre = ($lang == 'FR') ? "Banni !" : "Banned!";
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// On va chercher la raison et la date de fin du ban
-$user_id = $_SESSION['user'];
-$qbanned = mysqli_fetch_array(query(" SELECT  membres.banni_date ,
-                                              membres.banni_raison
+// On va chercher l'e-mail actuel
+$qemail = mysqli_fetch_array(query("  SELECT  membres.email
                                       FROM    membres
                                       WHERE   membres.id = '$user_id' "));
 
-// Si l'user est pas banni, on le redirige
-if(!$qbanned['banni_date'])
-  exit(header("Location: ".$chemin."pages/user/user"));
-
-// Si l'user a purgé son ban, on le retire et on le redirige
-$timestamp = time();
-if($timestamp > $qbanned['banni_date'])
-{
-  query(" UPDATE  membres
-          SET     membres.banni_date    = 0 ,
-                  membres.banni_raison  = ''
-          WHERE   membres.id = '$user_id' ");
-  exit(header("Location: ".$chemin."pages/user/user"));
-}
-
-// On prépare les infos pour l'affichage
-$ban_raison = predata($qbanned['banni_raison']);
-$ban_date   = datefr(date('Y-m-d', $qbanned['banni_date']), $lang);
-$ban_heure  = date('H:i', $qbanned['banni_date']);
-$ban_dans   = changer_casse(dans($qbanned['banni_date'], $lang), 'min');
+// Et on le prépare pour l'affichage
+$email = predata($qemail['email']);
 
 
 
@@ -70,20 +75,12 @@ $ban_dans   = changer_casse(dans($qbanned['banni_date'], $lang), 'min');
 if($lang == 'FR')
 {
   // Header
-  $trad['titre']      = "Banni !";
+  $trad['titre']        = "Changer d'adresse e-mail";
+  $trad['desc']         = "Votre compte est lié à une adresse e-mail, dont NoBleme ne devrait normalement presque jamais se servir. Vous êtes même libre de supprimer l'adresse stockée et de n'avoir aucune adresse mail liée à votre compte, si vous le désirez. Toutefois, en cas de perte de votre mot de passe, posséder votre e-mail pourrait être un outil pratique pour récupérer l'accès à votre compte. À vous de voir !";
 
-  // Corps
-  $temp_raison        = ($ban_raison) ? $ban_raison : 'Raison non spécifiée';
-  $trad['desc']       = <<<EOD
-Félicitations, à force d'enfreindre le code de conduite du site, vous avez été banni de NoBleme !<br>
-<br>
-La raison de votre bannissement est: <span class="texte_negatif gras">$ban_raison</span><br>
-Vous êtes banni jusqu'au <span class="texte_negatif gras">$ban_date à $ban_heure ($ban_dans)</span><br>
-<br>
-Si vous trouvez ce ban injuste et désirez le contester, vous pouvez venir en discuter poliment avec l'équipe administrative du site sur notre serveur IRC en <a class="gras" href="https://client00.chat.mibbit.com/?url=irc%3A%2F%2Firc.nobleme.com%2FNoBleme&charset=UTF-8">cliquant ici</a>.<br>
-<br>
-En attendant, vous pouvez continuer à naviguer sur le site en tant qu'invité, <a class="gras" href="<?=$chemin?>pages/user/banned?logout">cliquez ici</a> pour vous déconnecter de votre compte. Si vous voulez jouer au plus malin et vous créer un nouveau compte pour contourner le ban, vous vous prendrez un bannissement par adresse IP.
-EOD;
+  // Formulaire
+  $trad['form_titre']   = "Adresse e-mail liée à votre compte";
+  $trad['form_submit']  = "CHANGER MON ADRESSE E-MAIL";
 }
 
 
@@ -92,18 +89,12 @@ EOD;
 else if($lang == 'EN')
 {
   // Header
-  $trad['titre']      = "Banned!";
+  $trad['titre']        = "Change my e-mail address";
+  $trad['desc']         = "Your account is linked to an e-mail address, which NoBleme will barely ever make use of. You are even free to delete the address and not have any e-mail linked to your account if you want to. However, if you ever lose your password, having a valid e-mail address could be a helpful tool to recover your account. You decide!";
 
-  // Corps
-  $trad['desc']       = <<<EOD
-Congratulations, you managed to break NoBleme's code of conduct hard enough to get yourself banned!<br>
-<br>
-Your account will be banned until <span class="texte_negatif gras">$ban_date à $ban_heure ($ban_dans)</span><br>
-<br>
-If you do not believe that you deserved a ban, you can come and politiely appeal to NoBleme's administrative staff on our IRC server by <a class="gras" href="https://client00.chat.mibbit.com/?url=irc%3A%2F%2Firc.nobleme.com%2Fenglish&charset=UTF-8">clicking here</a>.<br>
-<br>
-Meanwhile, you are free to browse the website as a guest, <a class="gras" href="<?=$chemin?>pages/user/banned?logout">click here</a> to log out of your account.<br>If you want to play clever kid and create a new account to go around the ban, you will end up IP banned.
-EOD;
+  // Formulaire
+  $trad['form_titre']   = "E-mail address tied to your account";
+  $trad['form_submit']  = "CHANGE MY E-MAIL ADDRESS";
 }
 
 
@@ -117,9 +108,21 @@ EOD;
 
       <div class="texte">
 
-        <h1 class="texte_negatif"><?=$trad['titre']?></h1>
+        <h1><?=$trad['titre']?></h1>
 
         <p><?=$trad['desc']?></p>
+
+        <br>
+        <br>
+
+        <form method="POST">
+          <fieldset>
+            <label for="emailCompte"><?=$trad['form_titre']?></label>
+            <input id="emailCompte" name="emailCompte" class="indiv<?=$email_css?>" type="text" value="<?=$email?>"><br>
+            <br>
+            <input value="<?=$trad['form_submit']?>" type="submit" name="emailModifier">
+          </fieldset>
+        </form>
 
       </div>
 

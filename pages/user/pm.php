@@ -47,7 +47,7 @@ if(isset($_POST['message_envoyer']))
 // Si on demande un destinataire spécifique, on le prend et on le remplit
 if(isset($_GET['user']))
 {
-  $message_id     = postdata($_GET['user']);
+  $message_id     = postdata($_GET['user'], 'int');
   $message_pseudo = getpseudo($message_id);
 }
 

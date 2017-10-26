@@ -39,7 +39,7 @@ $css = array('user');
 if(!isset($_GET['id']) && !isset($_GET['pseudo']))
 {
   if(!loggedin())
-    useronly();
+    useronly($lang);
   else
     $user_id = $_SESSION['user'];
 }
@@ -85,7 +85,7 @@ $qprofil = query("  SELECT      membres.pseudonyme      AS 'u_pseudo'     ,
                                 membres.derniere_visite AS 'u_activite'   ,
                                 membres.banni_date      AS 'u_ban_date'   ,
                                 membres.banni_raison    AS 'u_ban_raison' ,
-                                membres.sexe            AS 'u_sexe'       ,
+                                membres.genre           AS 'u_genre'       ,
                                 membres.anniversaire    AS 'u_anniv'      ,
                                 membres.habite          AS 'u_habite'     ,
                                 membres.metier          AS 'u_metier'     ,
@@ -101,12 +101,18 @@ if(!mysqli_num_rows($qprofil))
 }
 
 // On va commencer par compléter les infos internes de la page
-$dprofil          = mysqli_fetch_array($qprofil);
-$page_nom         = $page_nom.predata($dprofil['u_pseudo']);
-$page_url         = $page_url.$user_id;
-$shorturl         = $shorturl.$user_id;
-$page_titre       = ($lang == 'FR') ? $page_titre.predata($dprofil['u_pseudo']) : predata($dprofil['u_pseudo']).'\'s profile';
-$page_desc        = $page_desc.predata($dprofil['u_pseudo']);
+if(loggedin() && $user_id == $_SESSION['user'])
+{
+  $header_menu      = 'Compte';
+  $header_sidemenu  = 'MonProfil';
+}
+$dprofil            = mysqli_fetch_array($qprofil);
+$page_nom           = $page_nom.predata($dprofil['u_pseudo']);
+$page_url           = $page_url.$user_id;
+$shorturl           = $shorturl.$user_id;
+$page_titre         = ($lang == 'FR') ? $page_titre.predata($dprofil['u_pseudo']) : predata($dprofil['u_pseudo']).'\'s profile';
+$page_desc          = $page_desc.predata($dprofil['u_pseudo']);
+
 
 // On va aller chercher d'autres infos sur le membre
 $temp_date        = date('Y-m-d');
@@ -145,7 +151,7 @@ $profil_banraison = predata($dprofil['u_ban_raison']);
 $profil_contenu   = ($dprofil['u_profil']) ? bbcode(predata($dprofil['u_profil'], 1), 1) : '';
 $profil_creation  = jourfr(date('Y-m-d', $dprofil['u_creation']), $lang).' ('.ilya($dprofil['u_creation'], $lang).')';
 $profil_activite  = ilya($dprofil['u_activite'], $lang);
-$profil_sexe      = predata($dprofil['u_sexe']);
+$profil_genre     = predata($dprofil['u_genre']);
 $profil_age       = ($dprofil['u_anniv'] != '0000-00-00') ? floor((time() - strtotime($dprofil['u_anniv'])) / 31556926) : '';
 $profil_anniv     = ($dprofil['u_anniv'] != '0000-00-00') ? jourfr($dprofil['u_anniv'], $lang) : '';
 $profil_lieu      = predata($dprofil['u_habite']);
@@ -179,7 +185,7 @@ if($lang == 'FR')
   $trad['user_creation']  = "Création du compte";
   $trad['usert_creation'] = "Le ";
   $trad['user_activite']  = "Dernière visite";
-  $trad['user_sexe']      = "Sexe";
+  $trad['user_genre']     = "Genre";
   $trad['user_age']       = "Âge / Anniversaire";
   $trad['user_anniv']     = " ans / Né le ";
   $trad['user_lieu']      = "Ville / Pays";
@@ -206,7 +212,7 @@ else if($lang == 'EN')
   $trad['user_creation']  = "Account creation";
   $trad['usert_creation'] = "";
   $trad['user_activite']  = "Latest visit";
-  $trad['user_sexe']      = "Gender";
+  $trad['user_genre']     = "Gender";
   $trad['user_age']       = "Age / Birthday";
   $trad['user_anniv']     = " years old / Born ";
   $trad['user_lieu']      = "City / Country";
@@ -279,10 +285,10 @@ else if($lang == 'EN')
                 <?=$profil_activite?>
               </div>
 
-              <?php if($profil_sexe) { ?>
+              <?php if($profil_genre) { ?>
               <hr class="profil_hr">
-              <span class="gras"><?=$trad['user_sexe']?></span><br>
-              <?=$profil_sexe?>
+              <span class="gras"><?=$trad['user_genre']?></span><br>
+              <?=$profil_genre?>
 
               <?php } if($profil_anniv) { ?>
               <hr class="profil_hr">
@@ -342,7 +348,7 @@ else if($lang == 'EN')
 
           <div style="flex:20">
 
-            <div class="profil_cadre wrap"><?=$profil_contenu?></div>
+            <div class="profil_cadre"><?=$profil_contenu?></div>
 
           </div>
         </div>

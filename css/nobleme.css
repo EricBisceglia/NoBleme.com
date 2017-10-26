@@ -65,7 +65,6 @@
 .vspaced         { padding-bottom: 6px; padding-top: 6px;     }
 .bigpadding      { padding-top: 5.0rem;                       }
 .nowrap          { white-space: nowrap;                       }
-.wrap            { white-space: pre-wrap;                     }
 .scrollbar       { overflow-x: scroll;                        }
 .vscrollbar      { overflow-y: scroll;                        }
 

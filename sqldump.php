@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `membres` (
   `derniere_visite_ip` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `banni_date` int(11) NOT NULL,
   `banni_raison` mediumtext COLLATE utf8_unicode_ci NOT NULL,
-  `sexe` tinytext COLLATE utf8_unicode_ci NOT NULL,
+  `genre` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `anniversaire` date NOT NULL,
   `habite` tinytext COLLATE utf8_unicode_ci NOT NULL,
   `metier` tinytext COLLATE utf8_unicode_ci NOT NULL,
