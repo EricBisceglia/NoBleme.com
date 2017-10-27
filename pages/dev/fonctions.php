@@ -4,7 +4,6 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
-include './../../inc/nbrpg.inc.php';
 
 // Permissions
 adminonly($lang);
@@ -613,7 +612,7 @@ $js  = array('toggle', 'highlight', 'dev/reference');
             </tr>
             <tr>
               <td class="align_center">
-                sysoponly('forum', $lang);
+                sysoponly($lang, 'forum');
               </td>
               <td class="align_center">
                 Vire ceux qui sont ni sysop ni modérateur de la zone

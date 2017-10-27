@@ -101,8 +101,8 @@ else
 if(isset($page_nom) && isset($page_url) && !isset($error_mode))
 {
   // Réparation des erreurs au cas où
-  $page_nom = postdata($page_nom);
-  $page_url = postdata($page_url);
+  $page_nom = postdata($page_nom, 'string');
+  $page_url = postdata($page_url, 'string');
 
   // Requête pour récupérer les pageviews sur la page courante
   $view_query = query(" SELECT  pageviews.vues
@@ -157,11 +157,11 @@ if(loggedin())
   $visite_user      = $_SESSION['user'];
 
   // Nettoyage des données au cas où
-  $activite_page  = postdata($activite_page);
-  $activite_url   = postdata($activite_url);
+  $activite_page  = postdata($activite_page, 'string');
+  $activite_url   = postdata($activite_url, 'string');
 
   // IP de l'user
-  $visite_ip    = postdata($_SERVER["REMOTE_ADDR"]);
+  $visite_ip    = postdata($_SERVER["REMOTE_ADDR"], 'string');
 
   // Puis on fait la requête d'update
   query(" UPDATE  membres
@@ -179,19 +179,19 @@ else
   query(" DELETE FROM invites WHERE invites.derniere_visite < '$guest_limit' ");
 
   // On va chercher s'il existe
-  $guest_ip = postdata($_SERVER["REMOTE_ADDR"]);
+  $guest_ip = postdata($_SERVER["REMOTE_ADDR"], 'string');
   $qguest   = query(" SELECT invites.ip FROM invites WHERE invites.ip = '$guest_ip' ");
 
   // On crée l'invité si nécessaire
   if(!mysqli_num_rows($qguest))
   {
-    $guest_nom = postdata(surnom_mignon());
+    $guest_nom = postdata(surnom_mignon(), 'string');
     query(" INSERT INTO invites SET invites.ip = '$guest_ip', invites.surnom = '$guest_nom' ");
   }
 
   // Nettoyage des données au cas où
-  $activite_page  = postdata($activite_page);
-  $activite_url   = postdata($activite_url);
+  $activite_page  = postdata($activite_page, 'string');
+  $activite_url   = postdata($activite_url, 'string');
 
   // Et on met à jour les données
   $guest_timestamp = time();

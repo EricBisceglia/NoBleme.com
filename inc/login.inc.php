@@ -294,7 +294,7 @@ function getadmin($user=NULL)
 // Exemple d'utilisation:
 // sysoponly('irls');
 
-function sysoponly($section=NULL, $lang='FR')
+function sysoponly($lang='FR', $section=NULL)
 {
   // On prépare le message selon le langage
   $message = ($lang == 'FR') ? "Cette page est réservée aux administrateurs.<br><br>Ouste !" : 'This page is for admins only<br><br>Shoo!';

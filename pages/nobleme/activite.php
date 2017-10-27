@@ -181,7 +181,6 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   {
     $activite_href[$nactrec]        = $chemin.'pages/user/user?id='.$dactrec['FKmembres'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a modifié son profil public';
-    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' edited his/her public profile';
   }
 
   //***************************************************************************************************************************************
@@ -209,7 +208,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   else if($dactrec['action_type'] === 'ban' && !isset($_GET['mod']))
   {
     $activite_css[$nactrec]         = 'negatif texte_blanc gras';
-    $activite_href[$nactrec]        = $chemin.'pages/nobleme/pilori';
+    $activite_href[$nactrec]        = $chemin.'pages/user/user?id='.$dactrec['FKmembres'];
     $temp                           = ($dactrec['action_id'] > 1) ? 's' : '';
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a été banni(e) pendant '.$dactrec['action_id'].' jour'.$temp;
     $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' has been banned for '.$dactrec['action_id'].' day'.$temp;
@@ -217,6 +216,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   else if($dactrec['action_type'] == 'ban')
   {
     $activite_css[$nactrec]         = 'negatif texte_blanc gras';
+    $activite_href[$nactrec]        = $chemin.'pages/sysop/pilori';
     $temp                           = ($dactrec['action_id'] > 1) ? 's' : '';
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a banni '.predata($dactrec['pseudonyme']).' pendant '.$dactrec['action_id'].' jour'.$temp;
   }
