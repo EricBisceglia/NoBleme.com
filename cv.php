@@ -264,7 +264,7 @@ EOD;
           </div>
 
           <div style="flex:auto">
-            <a class="gras" href="http://www.nobleme.com/">NoBleme</a>: <?=$trad['perso_nobleme']?><br>
+            <a class="gras" href="http://nobleme.com/">NoBleme</a>: <?=$trad['perso_nobleme']?><br>
             <span class="gras texte_noir">SteelDB</span>: <?=$trad['perso_steeldb']?><br>
             <span class="gras texte_noir">Dix</span>: <?=$trad['perso_dix']?><br>
             <span class="gras texte_noir">NRM Online</span>: <?=$trad['perso_nrm']?><br>

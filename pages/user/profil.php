@@ -53,9 +53,9 @@ if(isset($_POST['profil_modifier']))
   $edit_naissance_m = str_pad(postdata_vide('profilNaissanceMois', 'int', 0), 2, '0', STR_PAD_LEFT);
   $edit_naissance_y = str_pad(postdata_vide('profilNaissanceAnnee', 'int', 0), 4, '0', STR_PAD_LEFT);
   $edit_naissance   = ($edit_naissance_d != '00' && $edit_naissance_m != '00' && $edit_naissance_y != '0000' ) ? $edit_naissance_y.'-'.$edit_naissance_m.'-'.$edit_naissance_d : '0000-00-00';
-  $edit_genre       = tronquer_chaine(postdata_vide('profilGenre', 'string', ''), 35);
-  $edit_habite      = tronquer_chaine(postdata_vide('profilHabite', 'string', ''), 35);
-  $edit_metier      = tronquer_chaine(postdata_vide('profilMetier', 'string', ''), 35);
+  $edit_genre       = postdata_vide('profilGenre', 'string', '', 35);
+  $edit_habite      = postdata_vide('profilHabite', 'string', '', 35);
+  $edit_metier      = postdata_vide('profilMetier', 'string', '', 35);
   $edit_texte       = postdata_vide('profilTexte', 'string', '');
 
   // On met à jour le profil
@@ -76,6 +76,9 @@ if(isset($_POST['profil_modifier']))
                       activite.FKmembres      = '$profil_id'  ,
                       activite.pseudonyme     = '$pseudonyme' ,
                       activite.action_type    = 'profil'      ");
+
+  // On envoie un message sur #sysop avec le bot IRC pour qu'un sysop vérifie que ça soit pas du contenu abusif
+  ircbot($chemin, getpseudo($profil_id)." a modifié son profil public - ".$GLOBALS['url_site']."pages/user/user?id=".$profil_id, "#sysop");
 
   // Et on redirige vers le profil public
   exit(header("Location: ".$chemin."pages/user/user"));
@@ -108,7 +111,7 @@ $profil_habite  = predata($qprofil['u_habite']);
 $profil_metier  = predata($qprofil['u_metier']);
 $profil_texte   = predata($qprofil['u_profil']);
 $profil_hidden  = (!$qprofil['u_profil']) ? ' class="hidden"' : '';
-$profil_preview = bbcode(predata($qprofil['u_profil'], 1), 1);
+$profil_preview = bbcode(predata($qprofil['u_profil'], 1));
 
 
 

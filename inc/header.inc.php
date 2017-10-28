@@ -1025,17 +1025,17 @@ $sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    
 
             <?php if(getadmin()) { ?>
 
-            <a href="<?=$chemin?>pages/admin/permissions">
-              <div class="<?=header_class('Permissions',$header_sidemenu,'side')?>">
-                Changer les permissions
-              </div>
-            </a>
-
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
               Outils administratifs
             </div>
+
+            <a href="<?=$chemin?>pages/admin/permissions">
+              <div class="<?=header_class('Permissions',$header_sidemenu,'side')?>">
+                Changer les permissions
+              </div>
+            </a>
 
             <a href="<?=$chemin?>pages/admin/todo">
               <div class="<?=header_class('TodoBacklog',$header_sidemenu,'side')?>">

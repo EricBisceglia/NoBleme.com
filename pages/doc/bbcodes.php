@@ -62,7 +62,7 @@ EOD;
   $trad['table_barre']      = "Barré";
   $trad['tablex_barre']     = "[s]Barrons[/s] du contenu";
   $trad['table_lien']       = "Lien";
-  $trad['tablex_lien']      = "[url=http://www.nobleme.com]NoBleme[/url] est cool";
+  $trad['tablex_lien']      = "[url=".$GLOBALS['url_site']."]NoBleme[/url] est cool";
   $trad['table_align']      = "Alignement";
   $trad['tablex_align_1']   = "[align=left]À gauche[/align]";
   $trad['tablex_align_2']   = "[align=center]Au milieu[/align]";
@@ -134,7 +134,7 @@ EOD;
   $trad['table_barre']      = "Strikethrough";
   $trad['tablex_barre']     = "Let's [s]strike through[/s] some stuff";
   $trad['table_lien']       = "Link";
-  $trad['tablex_lien']      = "[url=http://www.nobleme.com]NoBleme[/url] is cool";
+  $trad['tablex_lien']      = "[url=".$GLOBALS['url_site']."]NoBleme[/url] is cool";
   $trad['table_align']      = "Alignment";
   $trad['tablex_align_1']   = "[align=left]To the left[/align]";
   $trad['tablex_align_2']   = "[align=center]To the middle[/align]";
@@ -286,10 +286,10 @@ EOD;
                 [url] [/url]
               </td>
               <td>
-                [url]http://www.nobleme.com[/url]
+                [url]<?=$GLOBALS['url_site']?>[/url]
               </td>
               <td>
-                <?=bbcode("[url]http://www.nobleme.com[/url]")?>
+                <?=bbcode("[url]".$GLOBALS['url_site']."[/url]")?>
               </td>
             </tr>
             <tr>

@@ -103,13 +103,43 @@ if (isset($_POST["register_pseudo"]))
                         action_type = 'register'          ");
 
     // Bot IRC NoBleme
-    ircbot($chemin,"Nouveau membre enregistré sur le site : ".$_POST["register_pseudo"]." - http://www.nobleme.com/pages/user/user?id=".$new_user,"#NoBleme");
+    ircbot($chemin, "Nouveau membre enregistré sur le site : ".$_POST["register_pseudo"]." - ".$GLOBALS['url_site']."pages/user/user?id=".$new_user, "#NoBleme");
 
-    // Envoi d'un message de bienvenue
+    // Préparation du message de bienvenue
     if($lang == 'FR')
-      envoyer_notif($new_user,"Bienvenue sur NoBleme !",postdata("[size=1.3][b]Bienvenue sur NoBleme ![/b][/size]\r\n\r\nMaintenant que vous êtes inscrit, pourquoi pas rejoindre la communauté là où elle est active :\r\n- Princiaplement [url=".$chemin."pages/irc/index][color=#2F4456][b]sur le serveur IRC[/b][/color][/url], où l'on discute en temps réel\r\n- Parfois sur [url=".$chemin."pages/forum/index][color=#2F4456][b]le forum[/b][/color][/url], où l'on discute en différé\r\n- Et dans tous les endroits actifs dans [url=".$chemin."pages/nobleme/activite][color=#2F4456][b]l'activité récente[/b][/color][/url], où vous aurez une idée de ce qui se passe sur le site\r\n\r\n\r\nBon séjour sur NoBleme,\r\nSi vous avez la moindre question, n'hésitez pas à répondre à ce message.\r\n\r\nVotre administrateur,\r\n[url=".$chemin."pages/user/user?id=1][color=#2F4456][b]Bad[/b][/color][/url]"));
+      $temp_contenu = <<<EOD
+[size=1.3][b]Bienvenue sur NoBleme ![/b][/size]
+
+Maintenant que vous êtes inscrit, pourquoi pas rejoindre la communauté là où elle est active :
+- Princiaplement [url={$chemin}pages/irc/index]sur le serveur IRC[/url], où l'on discute en temps réel
+- Parfois sur [url={$chemin}pages/forum/index]le forum[/url], où l'on discute en différé
+- Et dans tous les endroits actifs dans [url={$chemin}pages/nobleme/activite]l'activité récente[/url], où vous aurez une idée de ce qui se passe sur le site
+
+Bon séjour sur NoBleme !
+Si vous avez la moindre question, n'hésitez pas à répondre à ce message.
+
+Votre administrateur,
+[url={$chemin}pages/user/user?id=1]Bad[/url]
+EOD;
     else
-      envoyer_notif($new_user,"Welcome to NoBleme!",postdata("[size=1.3][b]Welcome to NoBleme![/b][/size]\r\n\r\nNow that you have registered, why not join the community where it is most active :\r\n- Mainly on [url=".$chemin."pages/irc/index][color=#2F4456][b]the IRC server[/b][/color][/url], where we chat in real time\r\n- Sometimes on [url=".$chemin."pages/forum/index][color=#2F4456][b]the forum[/b][/color][/url], on which we share things every now and then\r\n- And everywhere that's active in the [url=".$chemin."pages/nobleme/activite][color=#2F4456][b]recent activity[/b][/color][/url], which should show you what's going on on the website\r\n\r\n\r\nEnjoy your stay on NoBleme,\r\nIf you have any questions, feel free to reply to this message.\r\n\r\nYour admin,\r\n[url=".$chemin."pages/user/user?id=1][color=#2F4456][b]Bad[/b][/color][/url]"));
+      $temp_contenu = <<<EOD
+"[size=1.3][b]Welcome to NoBleme![/b][/size]
+
+Now that you have registered, why not join the community where it is most active :
+- Mainly on [url={$chemin}pages/irc/index]the IRC server[/url], where we chat in real time
+- Sometimes on [url={$chemin}pages/forum/index]the forum[/url], on which we share things every now and then
+- And everywhere that's active in the [url={$chemin}pages/nobleme/activite]recent activity[/url], which should show you what's going on on the website
+
+Enjoy your stay on NoBleme!
+If you have any questions, feel free to reply to this message.
+
+Your admin,
+[url={$chemin}pages/user/user?id=1]Bad[/url]
+EOD;
+
+    // Envoi du message de bienvenue
+    $temp_titre = ($lang == 'FR') ? "Bienvenue sur NoBleme !" : "Welcome to NoBleme!";
+    envoyer_notif($new_user, $temp_titre, postdata($temp_contenu));
 
     // Redirection vers la page de bienvenue
     header('Location: ./login?bienvenue');

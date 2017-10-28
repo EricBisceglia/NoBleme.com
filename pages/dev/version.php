@@ -44,7 +44,7 @@ if(isset($_POST['majVersion']))
   query(" INSERT INTO activite SET activite.timestamp = '$timestamp', activite.action_type = 'version', activite.action_titre = '$maj_activite' ");
 
   // Bot IRC NoBleme
-  ircbot($chemin,"Nouvelle version de NoBleme: Version ".$maj_version." build ".$maj_build." - http://nobleme.com/pages/todo/roadmap","#dev");
+  ircbot($chemin,"Nouvelle version de NoBleme: Version ".$maj_version." build ".$maj_build." - ".$GLOBALS['url_site']."pages/todo/roadmap","#dev");
 }
 
 

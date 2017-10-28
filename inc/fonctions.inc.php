@@ -373,27 +373,20 @@ function diff_raw($old, $new)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction renvoyant une différence formatée et lisible entre deux strings
 //
-// Utilisation: diff("Mon texte","Nouveau texte",1,1);
+// Utilisation: diff("Mon texte", "Nouveau texte");
 
-function diff($old, $new, $bbcodes=NULL, $table=NULL)
+function diff($old, $new)
 {
-  if($table)
-    $ret = '<table class="cadre_gris indiv"><tr><td class="cadre_gris align_center gras souligne">Différences entre les versions : En <del>&nbsp;rouge&nbsp;</del> ce qui a été retiré, en <ins>&nbsp;vert&nbsp;</ins> ce qui a été ajouté</td></tr><tr><td class="cadre_gris nobleme_background"><br>';
-  else
-    $ret = '';
+  $return = '';
   $diff = diff_raw(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
-  foreach($diff as $k){
-    if(is_array($k)){
-      if($bbcodes && !$table)
-        $ret .= (!empty($k['d'])?"&nbsp;[del]&nbsp;".implode(' ',$k['d'])."&nbsp;[/del]&nbsp;":'').(!empty($k['i'])?"&nbsp;[ins]&nbsp;".implode(' ',$k['i'])."&nbsp;[/ins]&nbsp;":'');
-      else
-        $ret .= (!empty($k['d'])?"&nbsp;<del>&nbsp;".implode(' ',$k['d'])."&nbsp;</del>&nbsp;":'').(!empty($k['i'])?"&nbsp;<ins>&nbsp;".implode(' ',$k['i'])."&nbsp;</ins>&nbsp;":'');
-      }
-    else $ret .= $k . ' ';
+  foreach($diff as $k)
+  {
+    if(is_array($k))
+        $return .= (!empty($k['d'])?"&nbsp;<del>&nbsp;".implode(' ',$k['d'])."&nbsp;</del>&nbsp;":'').(!empty($k['i'])?"&nbsp;<ins>&nbsp;".implode(' ',$k['i'])."&nbsp;</ins>&nbsp;":'');
+    else
+      $return .= $k . ' ';
   }
-  if($table)
-    $ret .= '<br><br></td></tr></table>';
-  return $ret;
+  return $return;
 }
 
 

@@ -32,34 +32,49 @@ sql_renommer_table('stats_pageviews', 'pageviews');
 sql_vider_table('pageviews');
 sql_renommer_champ('pageviews', 'id_page', 'url_page', 'MEDIUMTEXT');
 
-// Description multilingue des modérateurs
-sql_renommer_champ('membres', 'moderateur_description', 'moderateur_description_fr', 'MEDIUMTEXT');
-sql_creer_champ('membres', 'moderateur_description_en', 'MEDIUMTEXT', 'moderateur_description_fr');
-query(" UPDATE membres SET moderateur_description_en = 'Real life meetups' WHERE moderateur_description_fr LIKE 'Rencontres IRL' ");
-
 // Au revoir les stats referer
 sql_supprimer_table('stats_referer');
 sql_supprimer_champ('vars_globales', 'last_referer_check');
 
+// Nouveau système d'activité
+sql_vider_table('activite_diff');
+sql_renommer_champ('activite', 'parent_titre', 'parent', 'MEDIUMTEXT');
+sql_renommer_champ('activite_diff', 'diff', 'diff_avant', 'LONGTEXT');
+sql_creer_champ('activite_diff', 'diff_apres', 'LONGTEXT', 'diff_avant');
+query(" UPDATE activite SET log_moderation = 1 WHERE action_type LIKE 'profil' ");
+query(" UPDATE activite SET action_type = 'quote' WHERE action_type LIKE 'quote_add' ");
+query(" UPDATE activite SET action_type = 'devblog' WHERE action_type LIKE 'new_devblog' ");
+query(" UPDATE activite SET action_type = 'todo_new' WHERE action_type LIKE 'new_todo' ");
+query(" UPDATE activite SET action_type = 'todo_fini' WHERE action_type LIKE 'fini_todo' ");
+query(" UPDATE activite SET action_type = 'irl_new' WHERE action_type LIKE 'new_irl' ");
+query(" UPDATE activite SET action_type = 'irl_edit' WHERE action_type LIKE 'edit_irl' ");
+query(" UPDATE activite SET action_type = 'irl_delete' WHERE action_type LIKE 'delete_irl' ");
+query(" UPDATE activite SET action_type = 'irl_add_participant' WHERE action_type LIKE 'add_irl_participant' ");
+query(" UPDATE activite SET action_type = 'irl_edit_participant' WHERE action_type LIKE 'edit_irl_participant' ");
+query(" UPDATE activite SET action_type = 'irl_del_participant' WHERE action_type LIKE 'del_irl_participant' ");
+
 // RIP les commentaires sur les devblogs et les tickets
 sql_supprimer_table('todo_commentaire');
+query(" DELETE FROM activite WHERE action_type = 'new_todo_comm' ");
 query(" DELETE FROM activite WHERE action_type = 'todo_todo_comm' ");
 query(" DELETE FROM activite WHERE action_type = 'edit_todo_comm' ");
 query(" DELETE FROM activite WHERE action_type = 'del_todo_comm' ");
 sql_supprimer_table('devblog_commentaire');
+query(" DELETE FROM activite WHERE action_type = 'new_devblog_comm' ");
 query(" DELETE FROM activite WHERE action_type = 'todo_devblog_comm' ");
 query(" DELETE FROM activite WHERE action_type = 'edit_devblog_comm' ");
 query(" DELETE FROM activite WHERE action_type = 'del_devblog_comm' ");
 
-// On dégage tout le NBRPG pour le moment
-sql_supprimer_table('nbrpg_chatlog');
-sql_supprimer_table('nbrpg_effets');
-sql_supprimer_table('nbrpg_monstres');
-sql_supprimer_table('nbrpg_objets');
-sql_supprimer_table('nbrpg_persos');
-sql_supprimer_table('nbrpg_session');
-sql_supprimer_table('nbrpg_session_effets');
-sql_supprimer_champ('vars_globales', 'nbrpg_activite');
+// Changement de la structure de la table membres
+sql_renommer_champ('membres', 'region', 'habite', 'TINYTEXT');
+sql_renommer_champ('membres', 'sexe', 'genre', 'TINYTEXT');
+sql_renommer_champ('membres', 'moderateur_description', 'moderateur_description_fr', 'MEDIUMTEXT');
+sql_creer_champ('membres', 'moderateur_description_en', 'MEDIUMTEXT', 'moderateur_description_fr');
+query(" UPDATE membres SET moderateur_description_en = 'Real life meetups' WHERE moderateur_description_fr LIKE 'Rencontres IRL' ");
+
+// Fix des vieux messages privés foireux
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&lt;', '<') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&gt;', '>') ");
 
 // Plus besoin de certains contenus devenus legacy
 sql_supprimer_table('anniv_flash');
@@ -71,15 +86,15 @@ sql_supprimer_champ('devblog', 'score_popularite');
 sql_supprimer_champ('membres', 'profil_last_edit');
 sql_supprimer_champ('activite', 'parent_id');
 
-// On change certains contenus
-sql_renommer_champ('activite', 'parent_titre', 'parent', 'MEDIUMTEXT');
-sql_renommer_champ('membres', 'region', 'habite', 'TINYTEXT');
-sql_renommer_champ('membres', 'sexe', 'genre', 'TINYTEXT');
-query(" UPDATE activite SET log_moderation = 1 WHERE action_type LIKE 'profil' ");
-
-// Fix des vieux messages foireux
-query(" UPDATE notifications SET contenu = REPLACE (contenu, '&lt;', '<') ");
-query(" UPDATE notifications SET contenu = REPLACE (contenu, '&gt;', '>') ");
+// On dégage tout le NBRPG pour le moment (il reviendra, promis)
+sql_supprimer_table('nbrpg_chatlog');
+sql_supprimer_table('nbrpg_effets');
+sql_supprimer_table('nbrpg_monstres');
+sql_supprimer_table('nbrpg_objets');
+sql_supprimer_table('nbrpg_persos');
+sql_supprimer_table('nbrpg_session');
+sql_supprimer_table('nbrpg_session_effets');
+sql_supprimer_champ('vars_globales', 'nbrpg_activite');
 
 
 

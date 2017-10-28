@@ -11,6 +11,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Configuration des trucs secrets qui doivent pas apparaitre dans le dépot public
 
-$GLOBALS['mysql_pass']  = 'mon mot de passe'; // Mot de passe de la base de données
-$GLOBALS['salage']      = '$6$mon string$';   // String utilisé par crypt() pour saler les mots de passe
-$GLOBALS['bot_pass']    = 'pass du bot irc';  // Mot de passe du bot IRC
+$GLOBALS['url_site']    = 'http://nobleme.com/';  // URL du site web en production
+$GLOBALS['mysql_pass']  = 'password';             // Mot de passe de la base de données
+$GLOBALS['salage']      = '$6$somestring$';       // String utilisé par crypt() pour saler les mots de passe
+$GLOBALS['bot_pass']    = 'password';             // Mot de passe du bot IRC

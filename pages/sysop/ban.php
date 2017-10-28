@@ -33,12 +33,12 @@ $js = array('dynamique', 'sysop/chercher_user');
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Si on est en train de bannir un utilisateur...
+// Si on est en train de bannir un utilisateur
 if(isset($_POST['ban_go']) && isset($_POST['ban_raison']) && $_POST['ban_raison'])
 {
   // On nettoie le postdata
   $ban_id     = postdata($_GET['id'], 'int', 0);
-  $ban_raison = postdata(tronquer_chaine($_POST['ban_raison'],50), 'string');
+  $ban_raison = postdata(tronquer_chaine($_POST['ban_raison'], 50), 'string');
   $ban_duree  = ((postdata_vide('ban_duree', 'int', '') * 86400) + time());
 
   // On vérifie que l'user existe, sinon on dégage
@@ -74,12 +74,13 @@ if(isset($_POST['ban_go']) && isset($_POST['ban_raison']) && $_POST['ban_raison'
                       pseudonyme      = '$ban_pseudo' ,
                       action_type     = 'ban'         ,
                       action_id       = '$ban_jours'  ,
-                      parent          = '$ban_sysop'  ");
+                      parent          = '$ban_sysop'  ,
+                      justification   = '$ban_raison' ");
 
   // On prépare le message privé à envoyer à l'user banni
   $ban_duree_raw  = $_POST['ban_duree'];
-  $ban_raison_raw = tronquer_chaine($_POST['ban_raison'],50);
-  $ban_pm = <<<EOF
+  $ban_raison_raw = tronquer_chaine($_POST['ban_raison'], 50);
+  $ban_pm = <<<EOD
 Vous avez été banni de NoBleme pendant {$ban_duree_raw} jour(s)
 [b]Raison du ban:[/b] {$ban_raison_raw}
 
@@ -90,13 +91,84 @@ Vous avez été banni de NoBleme pendant {$ban_duree_raw} jour(s)
 You have been banned from NoBleme for {$_POST['ban_duree']} day(s)
 
 In the future, respect NoBleme's [url={$chemin}pages/doc/coc]code of conduct[/url].
-EOF;
+EOD;
 
   // On envoie un message privé à l'user qui s'est fait bannir
   envoyer_notif($ban_id, "Vous avez été banni / You have been banned", postdata($ban_pm));
 
+  // On notifie #sysop de l'action
+  ircbot($chemin, getpseudo()." a banni ".getpseudo($ban_id)." pendant ".$ban_jours." jours - ".$GLOBALS['url_site']."pages/sysop/pilori", "#sysop");
+
   // Et on redirige vers le profil de l'user
   header("Location: ".$chemin."pages/user/user?id=".$ban_id);
+}
+
+
+
+
+// Si on est en train de débannir un utilisateur
+if(isset($_POST['deban_go']) && isset($_POST['deban_raison']) && $_POST['deban_raison'])
+{
+  // On nettoie le postdata
+  $deban_id     = postdata($_GET['id'], 'int', 0);
+  $deban_raison = postdata(tronquer_chaine($_POST['deban_raison'], 50), 'string');
+
+  // On vérifie que l'user existe, sinon on dégage
+  $qtestdeban = mysqli_fetch_array(query("  SELECT  membres.id
+                                          FROM    membres
+                                          WHERE   membres.id = '$deban_id' "));
+  if(!$qtestdeban['id'])
+    header("Location: ".$chemin."pages/sysop/ban");
+
+  // On débannit l'user
+  query(" UPDATE  membres
+          SET     banni_date    = 0 ,
+                  banni_raison  = ''
+          WHERE   membres.id    = '$deban_id' ");
+
+  // On ajoute le ban à l'activité récente
+  $timestamp    = time();
+  $deban_pseudo = postdata(getpseudo($deban_id), 'string');
+  query(" INSERT INTO activite
+          SET         timestamp   = '$timestamp'    ,
+                      FKmembres   = '$deban_id'     ,
+                      pseudonyme  = '$deban_pseudo' ,
+                      action_type = 'deban'         ");
+
+  // Ainsi qu'aux logs de modération
+  $deban_sysop = postdata(getpseudo(), 'string');
+  query(" INSERT INTO activite
+          SET         timestamp       = '$timestamp'    ,
+                      log_moderation  = 1               ,
+                      FKmembres       = '$deban_id'     ,
+                      pseudonyme      = '$deban_pseudo' ,
+                      action_type     = 'deban'         ,
+                      parent          = '$deban_sysop'  ,
+                      justification   = '$deban_raison' ");
+
+  // On prépare le message privé à envoyer à l'user banni
+  $deban_raison_raw = tronquer_chaine($_POST['deban_raison'], 50);
+  $deban_pm = <<<EOD
+Votre bannissement a été levé, vous pouvez utiliser votre compte à nouveau.
+[b]Raison du débannissement:[/b] {$deban_raison_raw}
+
+À l'avenir, respectez le [url={$chemin}pages/doc/coc]code de conduite[/url] de NoBleme.
+
+
+
+Your banishment has been lifted, you can use your account again
+
+In the future, respect NoBleme's [url={$chemin}pages/doc/coc]code of conduct[/url].
+EOD;
+
+  // On envoie un message privé à l'user qui s'est fait bannir
+  envoyer_notif($deban_id, "Vous avez été débanni / You have been unbanned", postdata($deban_pm));
+
+  // On notifie #sysop de l'action
+  ircbot($chemin, getpseudo()." a débanni ".getpseudo($deban_id)." - ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
+
+  // Et on redirige vers le profil de l'user
+  header("Location: ".$chemin."pages/user/user?id=".$deban_id);
 }
 
 
@@ -116,13 +188,15 @@ if(isset($_GET['id']))
 
   // On va chercher les données liées à l'user
   $qbanuser = mysqli_fetch_array(query("  SELECT  membres.pseudonyme  ,
-                                                  membres.banni_date  ,
-                                                  membres.banni_raison
+                                                  membres.banni_date
                                           FROM    membres
                                           WHERE   membres.id = '$ban_id' "));
+  $ban_etat   = $qbanuser['banni_date'];
+  $ban_pseudo = predata($qbanuser['pseudonyme']);
 
   // Si l'user existe pas, on dégage
-  $ban_pseudo = predata($qbanuser['pseudonyme']);
+  if(!$ban_pseudo)
+    $_GET['id'] = 0;
 }
 
 
@@ -145,6 +219,20 @@ if(isset($_GET['id']))
         <?php if(isset($_GET['id']) && $ban_pseudo && $ban_id == 1) { ?>
 
         <h5>On ne bannit pas le patron. Bien essayé.</h5>
+
+        <?php } else if(isset($_GET['id']) && $ban_pseudo && $ban_etat) { ?>
+
+        <h5>Débannir <a href="<?=$chemin?>pages/user/user?id=<?=$ban_id?>"><?=$ban_pseudo?></a> de NoBleme</h5>
+        <br>
+
+        <form method="POST">
+          <fieldset>
+            <label for="deban_raison">Justification du deban (doit être impérativement rempli, en résumé, 50 caractères max):</label>
+            <input id="deban_raison" name="deban_raison" class="indiv" type="text" maxlength="50"><br>
+            <br>
+            <input value="Débannir <?=$ban_pseudo?>" type="submit" name="deban_go">
+          </fieldset>
+        </form>
 
         <?php } else if(isset($_GET['id']) && $ban_pseudo) { ?>
 

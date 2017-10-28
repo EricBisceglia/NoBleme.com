@@ -66,16 +66,22 @@ function postdata($data, $type=NULL, $min=NULL, $max=NULL)
 // Fonction permettant de faire un postdata sur une valeur qui n'existe peut-être pas
 //
 // Paramètres:
-// $postdata  est le nom du $_POST[] à récupérer
-// $type      est le type de variable ('int', 'string', etc.)
-// $defaut    est la valeur par défaut à mettre si le postdata n'existe pas
+// $postdata        est le nom du $_POST[] à récupérer
+// $type            est le type de variable ('int', 'string', etc.)
+// $defaut          (optionnel) est la valeur par défaut à mettre si le postdata n'existe pas
+// $longueur_max    (optionnel) est la longueur maximum des chaines de caractères parsées par postdata_vide
+// $caracteres_max  (optionnel) est la chaine de caractères à appliquer à la fin si $longueur_max est dépassé
 //
 // Utilisation: postdata_vide('mon_postdata', 'int', 'rien');
 
-function postdata_vide($postdata, $type, $defaut)
+function postdata_vide($postdata, $type, $defaut=NULL, $longueur_max=NULL, $caracteres_max='')
 {
-  return (isset($_POST[$postdata])) ? postdata($_POST[$postdata], $type) : $defaut;
+  if(!$longueur_max)
+    return (isset($_POST[$postdata])) ? postdata($_POST[$postdata], $type) : $defaut;
+  else
+    return (isset($_POST[$postdata])) ? postdata(tronquer_chaine($_POST[$postdata], $longueur_max), $type, $caracteres_max) : $defaut;
 }
+
 
 
 

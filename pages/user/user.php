@@ -85,10 +85,11 @@ $qprofil = query("  SELECT      membres.pseudonyme      AS 'u_pseudo'     ,
                                 membres.derniere_visite AS 'u_activite'   ,
                                 membres.banni_date      AS 'u_ban_date'   ,
                                 membres.banni_raison    AS 'u_ban_raison' ,
-                                membres.genre           AS 'u_genre'       ,
+                                membres.genre           AS 'u_genre'      ,
                                 membres.anniversaire    AS 'u_anniv'      ,
                                 membres.habite          AS 'u_habite'     ,
                                 membres.metier          AS 'u_metier'     ,
+                                membres.email           AS 'u_email'      ,
                                 membres.profil          AS 'u_profil'
                     FROM        membres
                     WHERE       membres.id = '$user_id' ");
@@ -146,9 +147,10 @@ $profil_admin     = $dprofil['u_admin'];
 $profil_sysop     = $dprofil['u_sysop'];
 $profil_mod       = $dprofil['u_mod'];
 $profil_banni     = ($dprofil['u_ban_date']) ? jourfr(date('Y-m-d', $dprofil['u_ban_date']), $lang) : 0;
+$profil_sysop_ban = (!$dprofil['u_ban_date']) ? 'BANNIR' : 'DÉBANNIR';
 $profil_bannidans = changer_casse(dans($dprofil['u_ban_date'], $lang), 'min');
 $profil_banraison = predata($dprofil['u_ban_raison']);
-$profil_contenu   = ($dprofil['u_profil']) ? bbcode(predata($dprofil['u_profil'], 1), 1) : '';
+$profil_contenu   = ($dprofil['u_profil']) ? bbcode(predata($dprofil['u_profil'], 1)) : '';
 $profil_creation  = jourfr(date('Y-m-d', $dprofil['u_creation']), $lang).' ('.ilya($dprofil['u_creation'], $lang).')';
 $profil_activite  = ilya($dprofil['u_activite'], $lang);
 $profil_genre     = predata($dprofil['u_genre']);
@@ -156,6 +158,7 @@ $profil_age       = ($dprofil['u_anniv'] != '0000-00-00') ? floor((time() - strt
 $profil_anniv     = ($dprofil['u_anniv'] != '0000-00-00') ? jourfr($dprofil['u_anniv'], $lang) : '';
 $profil_lieu      = predata($dprofil['u_habite']);
 $profil_metier    = predata($dprofil['u_metier']);
+$profil_email     = predata($dprofil['u_email']);
 $profil_irl       = $qprofil_irl['num_irls'];
 $profil_quotes    = $qprofil_quotes['num_quotes'];
 $profil_quotesub  = $qprofil_quotesub['num_quotes'];
@@ -264,7 +267,7 @@ else if($lang == 'EN')
               <?php if(getsysop()) { ?>
               <button class="profil_bouton button-outline" onclick="window.location.href = '<?=$chemin?>pages/sysop/profil?id=<?=$user_id?>';">MODIFIER LE PROFIL</button>
               &nbsp;
-              <button class="profil_bouton button-outline" onclick="window.location.href = '<?=$chemin?>pages/sysop/ban?id=<?=$user_id?>';">BANNIR</button>
+              <button class="profil_bouton button-outline" onclick="window.location.href = '<?=$chemin?>pages/sysop/ban?id=<?=$user_id?>';"><?=$profil_sysop_ban?></button>
 
               <hr class="profil_hr">
               <?php } if (loggedin() && $user_id == $_SESSION['user']) { ?>
@@ -334,6 +337,11 @@ else if($lang == 'EN')
                 <span class="gras">Tickets ouverts</span><br>
                 <span class="gras texte_noir"><?=$profil_todo?></span>
               </div>
+
+              <?php } if($profil_email && getadmin()) { ?>
+              <hr class="profil_hr">
+              <span class="gras">E-mail du compte</span><br>
+              <?=$profil_email?>
 
               <?php } ?>
               <hr class="profil_hr">

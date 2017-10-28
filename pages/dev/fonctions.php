@@ -158,26 +158,10 @@ $js  = array('toggle', 'highlight', 'dev/reference');
           <tbody>
             <tr>
               <td class="align_center">
-                diff("Avant","Après");
+                diff("123 Avant xx", "123 Après xx");
               </td>
               <td class="align_center">
-                <?=diff("Avant","Après");?>
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
-                diff("Avant","Après",1);
-              </td>
-              <td class="align_center">
-                <?=diff("Avant","Après",1);?>
-              </td>
-            </tr>
-            <tr>
-              <td class="align_center">
-                diff("Avant","Après",0,1);
-              </td>
-              <td class="align_center">
-                <?=diff("Avant","Après",0,1);?>
+                <?=diff("123 Avant xx", "123 Après xx");?>
               </td>
             </tr>
           </tbody>
@@ -1037,6 +1021,14 @@ $js  = array('toggle', 'highlight', 'dev/reference');
               </td>
               <td class="align_center">
                 <?=postdata_vide("mon_postdata", "string", "rien");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata_vide("texte", "string", "", 4, '...');
+              </td>
+              <td class="align_center">
+                text...
               </td>
             </tr>
           </tbody>

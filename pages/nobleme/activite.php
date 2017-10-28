@@ -101,20 +101,20 @@ if(isset($_POST['activite_type']))
   $activite_type = postdata($_POST['activite_type']);
   if($activite_type == 'membres')
     $qactrec .= " AND     ( activite.action_type LIKE 'register'
-                  OR        activite.action_type LIKE 'profil%'
+                  OR        activite.action_type LIKE 'profil'
+                  OR        activite.action_type LIKE 'profil_%'
+                  OR        activite.action_type LIKE 'droits_%'
                   OR        activite.action_type LIKE 'ban'
                   OR        activite.action_type LIKE 'deban'
                   OR        activite.action_type LIKE 'editpass' ) ";
   else if($activite_type == 'irl')
-    $qactrec .= " AND     ( activite.action_type LIKE '%irl_%'
-                  OR        activite.action_type LIKE '%_irl%' ) ";
+    $qactrec .= " AND       activite.action_type LIKE 'irl_%' ";
   else if($activite_type == 'dev')
     $qactrec .= " AND     ( activite.action_type LIKE 'version'
-                  OR        activite.action_type LIKE '%devblog%'
-                  OR        activite.action_type LIKE '%todo_%'
-                  OR        activite.action_type LIKE '%_todo%' ) ";
+                  OR        activite.action_type LIKE 'devblog'
+                  OR        activite.action_type LIKE 'todo_%' )";
   else if($activite_type == 'misc')
-    $qactrec .= " AND       activite.action_type LIKE '%quote_%' ";
+    $qactrec .= " AND       activite.action_type LIKE 'quote' ";
 }
 
 // On trie
@@ -149,13 +149,23 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   $activite_diff[$nactrec]        = "";
 
   // On va chercher les diffs s'il y en a
-  $qdiff = query(" SELECT titre_diff, diff FROM activite_diff WHERE FKactivite = '".$dactrec['id']."' ORDER BY id ASC ");
+  $qdiff = query("  SELECT    activite_diff.titre_diff  ,
+                              activite_diff.diff_avant  ,
+                              activite_diff.diff_apres
+                    FROM      activite_diff
+                    WHERE     activite_diff.FKactivite = '".$dactrec['id']."'
+                    ORDER BY  activite_diff.id ASC ");
   while($ddiff = mysqli_fetch_array($qdiff))
   {
     if($ddiff['titre_diff'])
-      $activite_diff[$nactrec] .= '<span class="gras">'.$ddiff['titre_diff'].' :</span> '.bbcode($ddiff['diff']).'<br>';
+    {
+      if($ddiff['diff_apres'])
+        $activite_diff[$nactrec] .= '<span class="gras">'.predata($ddiff['titre_diff']).' :</span> '.bbcode(diff(predata($ddiff['diff_avant'], 1), predata($ddiff['diff_apres'], 1))).'<br>';
+      else
+        $activite_diff[$nactrec] .= '<span class="gras">'.predata($ddiff['titre_diff']).' :</span> '.bbcode(predata($ddiff['diff_avant'], 1)).'<br>';
+    }
     else
-      $activite_diff[$nactrec] .= bbcode($ddiff['diff']).'<br>';
+      $activite_diff[$nactrec] .= bbcode(predata($ddiff['diff_avant'])).'<br>';
   }
 
   // Puis on passe au traitement au cas par cas des divers types d'activité...
@@ -189,8 +199,8 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   else if($dactrec['action_type'] === 'profil_edit')
   {
     $activite_css[$nactrec]         = 'neutre texte_blanc';
+    $activite_href[$nactrec]        = $chemin.'pages/user/user?id='.$dactrec['FKmembres'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a modifié le profil public de '.predata($dactrec['pseudonyme']);
-    $activite_diff[$nactrec]        = ($activite_diff[$nactrec]) ? $activite_diff[$nactrec] : 'Aucune modification apparente. Il est possible que '.predata($dactrec['parent']).' ait juste appuyé sur Modifer sans rien changer. C\'est pas super malin, parce que '.predata($dactrec['pseudonyme']).' a reçu une notification lui disant que son profil a été changé. Au cas où, on crée quand même un log de modération.';
   }
 
   //***************************************************************************************************************************************
@@ -199,6 +209,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   else if($dactrec['action_type'] === 'editpass')
   {
     $activite_css[$nactrec]         = 'neutre texte_blanc';
+    $activite_href[$nactrec]        = $chemin.'pages/user/user?id='.$dactrec['FKmembres'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a modifié le mot de passe de '.predata($dactrec['pseudonyme']);
   }
 
@@ -227,14 +238,45 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   else if($dactrec['action_type'] === 'deban' && !isset($_GET['mod']))
   {
     $activite_css[$nactrec]         = 'positif texte_blanc gras';
-    $activite_href[$nactrec]        = $chemin.'pages/nobleme/pilori';
+    $activite_href[$nactrec]        = $chemin.'pages/user/user?id='.$dactrec['FKmembres'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a été débanni(e)';
     $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' has been unbanned';
   }
   else if($dactrec['action_type'] == 'deban')
   {
     $activite_css[$nactrec]         = 'positif texte_blanc gras';
+    $activite_href[$nactrec]        = $chemin.'pages/sysop/pilori';
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a débanni '.predata($dactrec['pseudonyme']);
+  }
+
+  //***************************************************************************************************************************************
+  // Permissions: Plus aucun droit
+
+  else if($dactrec['action_type'] === 'droits_delete')
+  {
+    $activite_css[$nactrec]         = 'negatif texte_blanc gras';
+    $activite_href[$nactrec]        = $chemin.'pages/nobleme/admins';
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." ne fait plus partie de l'équipe administrative";
+  }
+
+  //***************************************************************************************************************************************
+  // Permissions: Plus aucun droit
+
+  else if($dactrec['action_type'] === 'droits_mod')
+  {
+    $activite_css[$nactrec]         = 'vert_background texte_noir';
+    $activite_href[$nactrec]        = $chemin.'pages/nobleme/admins';
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a rejoint l'équipe administrative en tant que modérateur";
+  }
+
+  //***************************************************************************************************************************************
+  // Permissions: Plus aucun droit
+
+  else if($dactrec['action_type'] === 'droits_sysop')
+  {
+    $activite_css[$nactrec]         = 'neutre texte_blanc gras';
+    $activite_href[$nactrec]        = $chemin.'pages/nobleme/admins';
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a rejoint l'équipe administrative en tant que sysop";
   }
 
 
@@ -245,76 +287,88 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   //*************************************************************************************************************************************//
   // Nouvelle IRL
 
-  else if($dactrec['action_type'] === 'new_irl' && !isset($_GET['mod']))
+  /*
+  else if($dactrec['action_type'] === 'irl_new' && !isset($_GET['mod']))
   {
     $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
     $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = 'Nouvelle rencontre IRL planifiée: '.predata($dactrec['action_titre']);
     $activite_desc[$nactrec]['EN']  = 'New real life meetup planned: '.predata($dactrec['action_titre']);
   }
-  else if($dactrec['action_type'] === 'new_irl')
+  else if($dactrec['action_type'] === 'irl_new')
   {
     $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
     $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a crée une nouvelle IRL: '.predata($dactrec['action_titre']);
   }
+  */
 
   //***************************************************************************************************************************************
   // IRL modifiée
 
-  else if($dactrec['action_type'] === 'edit_irl')
+  /*
+  else if($dactrec['action_type'] === 'irl_edit')
   {
     $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a modifié une IRL: '.predata($dactrec['action_titre']);
   }
+  */
 
   //***************************************************************************************************************************************
   // Suppression d'une IRL
 
-  else if($dactrec['action_type'] === 'delete_irl')
+  /*
+  else if($dactrec['action_type'] === 'irl_delete')
   {
     $activite_css[$nactrec]         = 'mise_a_jour texte_blanc';
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a supprimé une IRL: ".predata($dactrec['action_titre']);
   }
+  */
 
   //***************************************************************************************************************************************
   // Nouveau participant à une IRL
 
-  else if($dactrec['action_type'] === 'add_irl_participant' && !isset($_GET['mod']))
+  /*
+  else if($dactrec['action_type'] === 'irl_add_participant' && !isset($_GET['mod']))
   {
     $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a rejoint l\'IRL du '.predata($dactrec['action_titre']);
     $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' joined the meetup '.predata($dactrec['action_titre']);
   }
-  else if($dactrec['action_type'] === 'add_irl_participant')
+  else if($dactrec['action_type'] === 'irl_add_participant')
   {
     $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a ajouté '.predata($dactrec['pseudonyme']).' à l\'IRL du '.predata($dactrec['action_titre']);
   }
+  */
 
   //***************************************************************************************************************************************
   // Participant modifié dans une IRL
 
-  else if($dactrec['action_type'] === 'edit_irl_participant')
+  /*
+  else if($dactrec['action_type'] === 'irl_edit_participant')
   {
     $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a modifié les infos de '.predata($dactrec['pseudonyme']).' dans l\'IRL du '.predata($dactrec['action_titre']);
   }
+  */
 
   //***************************************************************************************************************************************
   // Participant supprimé d'une IRL
 
-  else if($dactrec['action_type'] === 'del_irl_participant' && !isset($_GET['mod']))
+  /*
+  else if($dactrec['action_type'] === 'irl_del_participant' && !isset($_GET['mod']))
   {
     $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a quitté l\'IRL du '.predata($dactrec['action_titre']);
     $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' left the meetup '.predata($dactrec['action_titre']);
   }
-  else if($dactrec['action_type'] === 'del_irl_participant')
+  else if($dactrec['action_type'] === 'irl_del_participant')
   {
     $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a supprimé '.predata($dactrec['pseudonyme']).' de l\'IRL du '.predata($dactrec['action_titre']);
   }
+  */
 
 
 
@@ -324,12 +378,14 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   //*************************************************************************************************************************************//
   // Nouvelle miscellanée
 
-  else if($dactrec['action_type'] === 'quote_add')
+  /*
+  else if($dactrec['action_type'] === 'quote')
   {
     $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
     $activite_href[$nactrec]        = $chemin.'pages/irc/quotes?id='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = 'Miscellanée #'.$dactrec['action_id'].' ajoutée à la collection';
   }
+  */
 
 
 
@@ -350,30 +406,50 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   //***************************************************************************************************************************************
   // Nouveau devblog
 
-  else if($dactrec['action_type'] === 'new_devblog')
+  /*
+  else if($dactrec['action_type'] === 'devblog')
   {
     $activite_css[$nactrec]         = 'texte_noir gras vert_background';
     $activite_href[$nactrec]        = $chemin.'pages/devblog/blog?id='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = "Nouveau devblog publié: ".predata(tronquer_chaine($dactrec['action_titre'], 50, '...'));
   }
+  */
 
   //***************************************************************************************************************************************
   // Nouveau ticket
 
-  else if($dactrec['action_type'] === 'new_todo')
+  /*
+  else if($dactrec['action_type'] === 'todo_new')
   {
     $activite_href[$nactrec]        = $chemin.'pages/todo/index?id='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a ouvert un ticket: ".predata(tronquer_chaine($dactrec['action_titre'], 50, '...'));
   }
+  */
 
   //***************************************************************************************************************************************
   // Ticket fini
 
-  else if($dactrec['action_type'] === 'fini_todo')
+  /*
+  else if($dactrec['action_type'] === 'todo_fini')
   {
     $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
     $activite_href[$nactrec]        = $chemin.'pages/todo/index?id='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = "Ticket résolu: ".predata(tronquer_chaine($dactrec['action_titre'], 70, '...'));
+  }
+  */
+
+
+
+
+  //*************************************************************************************************************************************//
+  //                                                            DÉVELOPPEMENT                                                            //
+  //*************************************************************************************************************************************//
+  // Cas par défaut
+
+  else
+  {
+    $activite_desc[$nactrec]['FR']  = "Ceci ne devrait pas apparaitre ici, oups (".$dactrec['action_type'].")";
+    $activite_desc[$nactrec]['EN']  = "This should not appear here, oops (".$dactrec['action_type'].")";
   }
 }
 

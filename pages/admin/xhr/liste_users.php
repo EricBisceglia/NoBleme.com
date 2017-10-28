@@ -20,21 +20,14 @@ sysoponly($lang);
 
 // On récupère la recherche et l'action
 $userlist_recherche = postdata_vide('pseudo', 'string', '');
-$userlist_action    = postdata_vide('action', 'string', '');
-$userlist_lien      = postdata_vide('lien', 'string', '');
 $userlist_chemin    = postdata_vide('chemin', 'string', '');
-
-// On commence par libérer de leurs bans les users qui ne sont plus bannis
-$timestamp = time();
-query(" UPDATE  membres
-        SET     banni_date    = 0  ,
-                banni_raison  = ''
-        WHERE   banni_date   <= '$timestamp' ");
 
 // On va chercher la liste d'users
 $quserlist = query("  SELECT    membres.id          ,
                                 membres.pseudonyme  ,
-                                membres.banni_date
+                                membres.admin       ,
+                                membres.sysop       ,
+                                membres.moderateur
                       FROM      membres
                       WHERE     membres.pseudonyme LIKE '%$userlist_recherche%'
                       ORDER BY  membres.pseudonyme ASC ");
@@ -44,10 +37,10 @@ for($nuserlist = 0; $duserlist = mysqli_fetch_array($quserlist) ; $nuserlist++)
 {
   $userlist_id[$nuserlist]      = $duserlist['id'];
   $userlist_pseudo[$nuserlist]  = predata($duserlist['pseudonyme']);
-  if($userlist_action == 'Bannir')
-    $userlist_texte[$nuserlist] = ($duserlist['banni_date']) ? 'Débannir' : 'Bannir';
-  else
-    $userlist_texte[$nuserlist] = $userlist_action;
+  $userlist_css[$nuserlist]     = ($duserlist['admin']) ? ' class="negatif"' : '';
+  $userlist_css[$nuserlist]     = ($duserlist['sysop']) ? ' class="neutre"' : $userlist_css[$nuserlist];
+  $userlist_css[$nuserlist]     = ($duserlist['moderateur']) ? ' class="vert_background"' : $userlist_css[$nuserlist];
+  $userlist_acss[$nuserlist]    = ($duserlist['admin'] || $duserlist['sysop']) ? ' texte_blanc' : '';
 }
 
 
@@ -78,12 +71,12 @@ for($nuserlist = 0; $duserlist = mysqli_fetch_array($quserlist) ; $nuserlist++)
 
   <tbody class="align_center">
     <?php for($i=0;$i<$nuserlist;$i++) { ?>
-    <tr>
+    <tr<?=$userlist_css[$i]?>>
       <td>
-        <a class="gras" href="<?=$userlist_chemin?>pages/user/user?id=<?=$userlist_id[$i]?>"><?=$userlist_pseudo[$i]?></a>
+        <a class="gras<?=$userlist_acss[$i]?>" href="<?=$userlist_chemin?>pages/user/user?id=<?=$userlist_id[$i]?>"><?=$userlist_pseudo[$i]?></a>
       </td>
       <td>
-        <a class="gras" href="<?=$userlist_chemin?>pages/sysop/<?=$userlist_lien?>?id=<?=$userlist_id[$i]?>"><?=$userlist_texte[$i]?></a>
+        <a class="gras<?=$userlist_acss[$i]?>" href="<?=$userlist_chemin?>pages/admin/permissions?id=<?=$userlist_id[$i]?>">Changer les permissions</a>
       </td>
     </tr>
     <?php } ?>
