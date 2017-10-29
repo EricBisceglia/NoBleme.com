@@ -45,6 +45,7 @@ if($lang == 'FR')
   $trad['rac_profil']     = "Profil d'un utilisateur";
   $trad['rac_activite']   = "Activité récente";
   $trad['rac_online']     = "Qui est en ligne";
+  $trad['rac_coc']        = "Code de conduite";
 }
 
 
@@ -63,6 +64,7 @@ else if($lang == 'EN')
   $trad['rac_profil']     = "User profile";
   $trad['rac_activite']   = "Recent activity";
   $trad['rac_online']     = "Who's online";
+  $trad['rac_coc']        = "Code of conduct";
 }
 
 
@@ -112,7 +114,7 @@ else if($lang == 'EN')
                 <?=$trad['rac_profil']?>
               </td>
               <td>
-                <a href="<?=$chemin?>s?u=1">u=x</a>
+                <a href="<?=$chemin?>s?u=1">u=?</a>
               </td>
             </tr>
             <tr>
@@ -129,6 +131,14 @@ else if($lang == 'EN')
               </td>
               <td>
                 <a href="<?=$chemin?>s?o">o</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_coc']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?coc">coc</a>
               </td>
             </tr>
           </tbody>

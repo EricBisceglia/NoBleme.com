@@ -294,10 +294,10 @@ else if($lang == 'EN')
     Obviously, <span class="gras">illegal content</span> will immediately be <span class="gras">sent to the police</span>. Don't play with fire, there are other websites for that.
   </li>
   <li>
-    If you have to argue with someone or solve a tense situation, do it privately. If done publicly, you will end up banned.
+    If you have to argue with someone or must solve a tense situation, do it privately. If done publicly, you will end up banned.
   </li>
   <li>
-    Trolls and other kinds of purposeful agitators will be banned without a warning if they do it excessively.
+    Trolls and other kinds of purposeful agitators will be banned without a warning if they try to test boundaries.
   </li>
 </ul>
 <br>
