@@ -39,9 +39,9 @@ if(isset($_POST['profil_go']))
 {
   // On nettoie le postdata
   $profil_id      = postdata($_GET['id'], 'int', 0);
-  $profil_genre   = postdata_vide('profil_genre', 'string', '');
-  $profil_habite  = postdata_vide('profil_habite', 'string', '');
-  $profil_metier  = postdata_vide('profil_metier', 'string', '');
+  $profil_genre   = postdata_vide('profil_genre', 'string', '', 35);
+  $profil_habite  = postdata_vide('profil_habite', 'string', '', 35);
+  $profil_metier  = postdata_vide('profil_metier', 'string', '', 35);
   $profil_texte   = postdata_vide('profil_texte', 'string', '');
 
   // On vérifie que l'user existe, sinon on dégage
@@ -167,6 +167,7 @@ if(isset($_GET['id']))
   if(!$profil_pseudo)
     $_GET['id'] = 0;
 }
+
 
 
 

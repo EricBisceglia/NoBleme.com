@@ -484,34 +484,42 @@ $js  = array('toggle', 'highlight', 'dev/reference');
           <tbody>
             <tr>
               <td class="align_center">
-                format_nombre(1000000,"prix");
+                format_nombre(1234567, "nombre");
               </td>
               <td class="gras align_center">
-                <?=format_nombre(1000000,"prix");?>
+                <?=format_nombre(1234567, "nombre");?>
               </td>
             </tr>
             <tr>
               <td class="align_center">
-                format_nombre(1337.42,"centimes");
+                format_nombre(1000000, "prix");
               </td>
               <td class="gras align_center">
-                <?=format_nombre(1337.42,"centimes");?>
+                <?=format_nombre(1000000, "prix");?>
               </td>
             </tr>
             <tr>
               <td class="align_center">
-                format_nombre(12.3,"pourcentage",2);
+                format_nombre(1337.42, "centimes");
               </td>
               <td class="gras align_center">
-                <?=format_nombre(12.3,"pourcentage",2);?>
+                <?=format_nombre(1337.42, "centimes");?>
               </td>
             </tr>
             <tr>
               <td class="align_center">
-                format_nombre(3,"point",NULL,"signed");
+                format_nombre(12.3, "pourcentage",2);
               </td>
               <td class="gras align_center">
-                <?=format_nombre(3,"point",NULL,"signed");?>
+                <?=format_nombre(12.3, "pourcentage",2);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_nombre(3, "point", NULL, "signed");
+              </td>
+              <td class="gras align_center">
+                <?=format_nombre(3, "point", NULL, "signed");?>
               </td>
             </tr>
           </tbody>

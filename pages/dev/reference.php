@@ -863,52 +863,52 @@ $js   = array('toggle', 'highlight', 'dynamique', 'popup', 'dev/reference');
               <td style="max-width:600px;" colspan="4">
                 <pre onclick="highlight('refhtml_gridaltc');" class="align_left monospace spaced scrollbar vscrollbar" id="refhtml_gridaltc" style="margin-bottom:0;max-height:80px;"><?php
                   echo(htmlspecialchars('<table class="grid titresnoirs altc">
-<thead>
-  <tr>
-    <th>
-      Colonne
-    </th>
-    <th>
-      Colonne
-    </th>
-    <th>
-      Colonne
-    </th>
-    <th>
-      Colonne
-    </th>
-  </tr>
-</thead>
-<tbody class="align_center">
-  <tr>
-    <td>
-      Contenu
-    </td>
-    <td>
-      Contenu
-    </td>
-    <td>
-      Contenu
-    </td>
-    <td>
-      Contenu
-    </td>
-  </tr>
-  <tr>
-    <td>
-      Contenu
-    </td>
-    <td>
-      Contenu
-    </td>
-    <td>
-      Contenu
-    </td>
-    <td>
-      Contenu
-    </td>
-  </tr>
-</tbody>
+  <thead>
+    <tr>
+      <th>
+        Colonne
+      </th>
+      <th>
+        Colonne
+      </th>
+      <th>
+        Colonne
+      </th>
+      <th>
+        Colonne
+      </th>
+    </tr>
+  </thead>
+  <tbody class="align_center">
+    <tr>
+      <td>
+        Contenu
+      </td>
+      <td>
+        Contenu
+      </td>
+      <td>
+        Contenu
+      </td>
+      <td>
+        Contenu
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Contenu
+      </td>
+      <td>
+        Contenu
+      </td>
+      <td>
+        Contenu
+      </td>
+      <td>
+        Contenu
+      </td>
+    </tr>
+  </tbody>
 </table>'))
                 ?></pre>
               </td>
@@ -1839,6 +1839,21 @@ Retours à la ligne</code></pre>'))
               <td class="align_center">
                 <pre onclick="highlight('refhtml_valign');" class="monospace spaced" id="refhtml_valign" style="margin-bottom:0"><?php
                   echo(htmlspecialchars('<td class="valign_middle">'))
+                ?></pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center gras">
+                .valign_table
+              </td>
+              <td style="height:100%" class="align_center">
+                <div style="height:100%" class="valign_table">
+                  Contenu centré verticalement dans un td
+                </div>
+              </td>
+              <td class="align_center">
+                <pre onclick="highlight('refhtml_valign_table');" class="monospace spaced" id="refhtml_valign_table" style="margin-bottom:0"><?php
+                  echo(htmlspecialchars('<td class="valign_table">'))
                 ?></pre>
               </td>
             </tr>

@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction permettant de chercher un utilisateur par son pseudonyme
 //
-// chemin est le chemin jusqu'à la racine de l'intranet
+// chemin est le chemin jusqu'à la racine du site
 // action est l'action à afficher dans le tableau renvoyé
 // lien   est le lien vers lequel l'action doit pointer
 

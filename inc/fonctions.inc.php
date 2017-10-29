@@ -270,6 +270,10 @@ function format_nombre($nombre,$format,$decimales=NULL,$signe=NULL)
   $decimales = (!is_null($decimales)) ? $decimales : 1;
 
   // Formater un prix
+  if($format == "nombre")
+    $format_nombre = number_format((float)$nombre, 0, ',', ' ');
+
+  // Formater un prix
   if($format == "prix")
     $format_nombre = number_format((float)$nombre, 0, ',', ' ')." €";
 
@@ -300,13 +304,17 @@ function format_nombre($nombre,$format,$decimales=NULL,$signe=NULL)
 // Calcul le pourcentage qu'un nombre représente d'un autre nombre
 // $nombre est le nombre qui est un pourcent du total
 // $total est le total dont le nombre est un pourcent
+// Si $croissance est rempli, calcule une croissance au lieu d'un pourcentage d'un nombre
 //
 // Exemple d'utilisation :
 // $pourcentage = calcul_pourcentage($nombre,$total);
 
-function calcul_pourcentage($nombre,$total)
+function calcul_pourcentage($nombre, $total, $croissance=NULL)
 {
-  return ($total) ? (($nombre/$total)*100) : 0;
+  if(!$croissance)
+    return ($total) ? (($nombre/$total)*100) : 0;
+  else
+    return ($total) ? (($nombre/$total)*100)-100 : 0;
 }
 
 

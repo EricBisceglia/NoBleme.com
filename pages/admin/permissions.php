@@ -15,9 +15,6 @@ $header_sidemenu  = 'Permissions';
 // Identification
 $page_nom = "Administre secrètement le site";
 
-// Langages disponibles
-$langage_page = array('FR');
-
 // Titre et description
 $page_titre = "Changer les permissions";
 

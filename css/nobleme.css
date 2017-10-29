@@ -36,6 +36,7 @@
 .valign_top      { vertical-align: top;                       }
 .valign_middle   { vertical-align: middle;                    }
 .valign_bottom   { vertical-align: bottom;                    }
+.valign_table    { display: block; margin: 0 auto;            }
 
 .margin_auto     { margin: auto;                              }
 .indiv, .intable { width: 100%;                               }

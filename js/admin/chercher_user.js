@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction permettant de chercher un utilisateur par son pseudonyme afin de modifier ses permissions
 //
-// chemin est le chemin jusqu'à la racine de l'intranet
+// chemin est le chemin jusqu'à la racine du site
 
 function admin_chercher_user(chemin)
 {

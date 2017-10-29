@@ -107,8 +107,7 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
   // Requête pour récupérer les pageviews sur la page courante
   $view_query = query(" SELECT  pageviews.vues
                         FROM    pageviews
-                        WHERE   pageviews.nom_page  = '$page_nom'
-                        AND     pageviews.url_page  = '$page_url' ");
+                        WHERE   pageviews.url_page  = '$page_url' ");
 
   // Si la requête renvoie un résultat, reste plus qu'à incrémenter les pageviews
   if (mysqli_num_rows($view_query) != 0)
@@ -120,9 +119,9 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
     // On update la BDD si l'user n'est pas un admin
     if(((loggedin() && !getadmin($_SESSION['user'])) || !loggedin()))
       query(" UPDATE  pageviews
-              SET     pageviews.vues      = pageviews.vues + 1
-              WHERE   pageviews.nom_page  = '$page_nom'
-              AND     pageviews.url_page  = '$page_url' ");
+              SET     pageviews.vues      = pageviews.vues + 1 ,
+                      pageviews.nom_page  = '$page_nom'
+              WHERE   pageviews.url_page  = '$page_url' ");
   }
 
   // Sinon, il faut créer l'entrée de la page et lui donner son premier pageview
@@ -1061,9 +1060,9 @@ $sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    
               </div>
             </a>
 
-            <a href="<?=$chemin?>pages/admin/doppelgangers">
-              <div class="<?=header_class('Doppelgangers',$header_sidemenu,'side')?>">
-                Doppelgangers
+            <a href="<?=$chemin?>pages/admin/doppelganger">
+              <div class="<?=header_class('Doppelganger',$header_sidemenu,'side')?>">
+                Doppelgänger
               </div>
             </a>
 

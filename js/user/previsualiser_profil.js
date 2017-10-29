@@ -7,7 +7,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction permettant de prévisualiser en direct le profil public pendant qu'on le modifie
-// chemin est le chemin jusqu'à la racine de l'intranet
+// chemin est le chemin jusqu'à la racine du site
 
 function previsualiser_profil(chemin)
 {
