@@ -31,11 +31,9 @@ if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Préparation de l'url complète de la page
-$url_complete = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'] : substr(basename($_SERVER['PHP_SELF']),0,-4);
+// Préparation des URLs pour la déconnexion et le changement de langue
 $url_logout   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
-$url_langage  = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang';
-$url_complete = destroy_html($url_complete);
+$url_langage  = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
 $url_logout   = destroy_html($url_logout);
 $url_langage  = destroy_html($url_langage);
 
@@ -44,7 +42,11 @@ if(isset($_GET['logout']))
 {
   // Déconnexion & redirection
   logout();
-  header("location: ".substr($url_complete,0,-7));
+  unset($_GET['logout']);
+  $url_self     = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
+  $url_rebuild  = urldecode(http_build_query($_GET));
+  $url_rebuild  = ($url_rebuild) ? $url_self.'?'.$url_rebuild : $url_self;
+  exit(header("Location: ".$url_rebuild));
 }
 
 // On va chercher si le langage choisi est couvert par la page
@@ -549,8 +551,9 @@ $sidemenu['nb_communaute']  = ($lang == 'FR') ? "Communauté"            : "Comm
 $sidemenu['nb_enligne']     = ($lang == 'FR') ? "Qui est en ligne"      : "Who's online";
 $sidemenu['nb_admins']      = ($lang == 'FR') ? "Équipe administrative" : "Staff and admins";
 $sidemenu['nb_membres']     = ($lang == 'FR') ? "Liste des membres"     : "Registered user list";
-$sidemenu['nb_annivs']      = ($lang == 'FR') ? "Anniversaires"         : "Birthdays";
+$sidemenu['nb_annivs']      = ($lang == 'FR') ? "Anniversaires"         : "Member birthdays";
 $sidemenu['nb_irls']        = ($lang == 'FR') ? "Rencontres IRL"        : "Real life meetups";
+$sidemenu['nb_irlstats']    = ($lang == 'FR') ? "Statistiques des IRL"  : "RL meetup stats";
 $sidemenu['nb_aide']        = ($lang == 'FR') ? "Aide & Infos"          : "Help & Informations";
 $sidemenu['nb_doc']         = ($lang == 'FR') ? "Documentation du site" : "Website documentation";
 $sidemenu['nb_nobleme']     = ($lang == 'FR') ? "Qu'est-ce que NoBleme" : "What is NoBleme";
@@ -603,15 +606,21 @@ $sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Requ
               </div>
             </a>
 
-            <a href="<?=$chemin?>pages/nobleme/irl">
+            <a href="<?=$chemin?>pages/nobleme/anniversaires">
+              <div class="<?=header_class('Anniversaires',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_annivs']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/irl/index">
               <div class="<?=header_class('IRL',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_irls']?>
               </div>
             </a>
 
-            <a href="<?=$chemin?>pages/nobleme/anniversaires">
-              <div class="<?=header_class('Anniversaires',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_annivs']?>
+            <a href="<?=$chemin?>pages/irl/stats">
+              <div class="<?=header_class('IRLstats',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_irlstats']?>
               </div>
             </a>
 
@@ -813,6 +822,12 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
             <a href="<?=$chemin?>pages/quotes/quote?random">
               <div class="<?=header_class('MiscRandom',$header_sidemenu,'side')?>">
                 Citation au hasard
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/quotes/stats">
+              <div class="<?=header_class('MiscStats',$header_sidemenu,'side')?>">
+                Stats des miscellanées
               </div>
             </a>
 

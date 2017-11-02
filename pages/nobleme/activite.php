@@ -287,88 +287,76 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   //*************************************************************************************************************************************//
   // Nouvelle IRL
 
-  /*
   else if($dactrec['action_type'] === 'irl_new' && !isset($_GET['mod']))
   {
     $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
-    $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = 'Nouvelle rencontre IRL planifiée: '.predata($dactrec['action_titre']);
-    $activite_desc[$nactrec]['EN']  = 'New real life meetup planned: '.predata($dactrec['action_titre']);
+    $activite_href[$nactrec]        = $chemin.'pages/irl/irl?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = 'Nouvelle rencontre IRL planifiée le '.predata($dactrec['action_titre']);
+    $activite_desc[$nactrec]['EN']  = 'New real life meetup planned';
   }
   else if($dactrec['action_type'] === 'irl_new')
   {
     $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
-    $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a crée une nouvelle IRL: '.predata($dactrec['action_titre']);
+    $activite_href[$nactrec]        = $chemin.'pages/irl/irl?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a crée une nouvelle IRL le '.predata($dactrec['action_titre']);
   }
-  */
 
   //***************************************************************************************************************************************
   // IRL modifiée
 
-  /*
   else if($dactrec['action_type'] === 'irl_edit')
   {
-    $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a modifié une IRL: '.predata($dactrec['action_titre']);
+    $activite_href[$nactrec]        = $chemin.'pages/irl/irl?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a modifié l\'IRL du '.predata($dactrec['action_titre']);
   }
-  */
 
   //***************************************************************************************************************************************
   // Suppression d'une IRL
 
-  /*
   else if($dactrec['action_type'] === 'irl_delete')
   {
     $activite_css[$nactrec]         = 'mise_a_jour texte_blanc';
-    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a supprimé une IRL: ".predata($dactrec['action_titre']);
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a supprimé l'IRL du ".predata($dactrec['action_titre']);
   }
-  */
 
   //***************************************************************************************************************************************
   // Nouveau participant à une IRL
 
-  /*
   else if($dactrec['action_type'] === 'irl_add_participant' && !isset($_GET['mod']))
   {
-    $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
+    $activite_href[$nactrec]        = $chemin.'pages/irl/irl?id='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a rejoint l\'IRL du '.predata($dactrec['action_titre']);
-    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' joined the meetup '.predata($dactrec['action_titre']);
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' joined a real life meetup';
   }
   else if($dactrec['action_type'] === 'irl_add_participant')
   {
-    $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
+    $activite_href[$nactrec]        = $chemin.'pages/irl/irl?id='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a ajouté '.predata($dactrec['pseudonyme']).' à l\'IRL du '.predata($dactrec['action_titre']);
   }
-  */
 
   //***************************************************************************************************************************************
   // Participant modifié dans une IRL
 
-  /*
   else if($dactrec['action_type'] === 'irl_edit_participant')
   {
-    $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
+    $activite_href[$nactrec]        = $chemin.'pages/irl/irl?id='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a modifié les infos de '.predata($dactrec['pseudonyme']).' dans l\'IRL du '.predata($dactrec['action_titre']);
   }
-  */
 
   //***************************************************************************************************************************************
   // Participant supprimé d'une IRL
 
-  /*
   else if($dactrec['action_type'] === 'irl_del_participant' && !isset($_GET['mod']))
   {
-    $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
+    $activite_href[$nactrec]        = $chemin.'pages/irl/irl?id='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a quitté l\'IRL du '.predata($dactrec['action_titre']);
-    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' left the meetup '.predata($dactrec['action_titre']);
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' left a real life meetup';
   }
   else if($dactrec['action_type'] === 'irl_del_participant')
   {
-    $activite_href[$nactrec]        = $chemin.'pages/nobleme/irl?irl='.$dactrec['action_id'];
+    $activite_href[$nactrec]        = $chemin.'pages/irl/irl?id='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a supprimé '.predata($dactrec['pseudonyme']).' de l\'IRL du '.predata($dactrec['action_titre']);
   }
-  */
 
 
 

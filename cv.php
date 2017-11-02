@@ -418,7 +418,7 @@ EOD;
           <br>
           À l'origine, NoBleme devait servir à héberger les vidéos d'un ami étudiant en cinéma, aspirant à devenir réalisateur. Le défi technologique était énorme, à une époque où les sites de streaming vidéo publics et gratuits (tels YouTube) n'existaient pas encore.<br>
           <br>
-          Au fur et à mesure des années, une communauté internet s'est crée autour de NoBleme. La partie streaming vidéo a rapidement disparu (trop intense en ressources serveur pour la conserver), et NoBleme est devenu un site généraliste centré sur sa communauté, qui organise régulièrement des <a class="gras" href="<?=$chemin?>pages/nobleme/irl">rencontres IRL</a>.
+          Au fur et à mesure des années, une communauté internet s'est crée autour de NoBleme. La partie streaming vidéo a rapidement disparu (trop intense en ressources serveur pour la conserver), et NoBleme est devenu un site généraliste centré sur sa communauté, qui organise régulièrement des <a class="gras" href="<?=$chemin?>pages/irl/index">rencontres IRL</a>.
         </p>
 
         <p>
@@ -686,7 +686,7 @@ EOD;
           <br>
           Originally, NoBleme was meant to be a video streaming platform for content made by a friend who was studying movie making. The technological challenge was huge back in the day, as free streaming websites (such as YouTube) weren't a common thing yet.<br>
           <br>
-          Time passed, and an internet community appeared on NoBleme. The video streaming part quickly disappeared (too ressource intensive for the server), and NoBleme became a general purpose website centered on its community, which regularly organized <a class="gras" href="<?=$chemin?>pages/nobleme/irl">real life meetups</a>.
+          Time passed, and an internet community appeared on NoBleme. The video streaming part quickly disappeared (too ressource intensive for the server), and NoBleme became a general purpose website centered on its community, which regularly organized <a class="gras" href="<?=$chemin?>pages/irl/index">real life meetups</a>.
         </p>
 
         <p>

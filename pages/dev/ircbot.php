@@ -72,7 +72,7 @@ if(isset($_POST['botQuit']))
 
 // Dernière commande effectuée par le bot
 if(file_exists($chemin."ircbot.txt"))
-  $ircbot_debug = substr(file_get_contents($chemin."ircbot.txt"),11);
+  $ircbot_debug = predata(substr(file_get_contents($chemin."ircbot.txt"),11));
 else
   $ircbot_debug = "Le fichier .txt du bot IRC n'existe pas ou est mal configuré";
 

@@ -146,9 +146,20 @@ if(isset($_GET['francais']) || isset($_GET['french']))
 // Si on a changé le langage, on reload pour virer l'url spéciale
 if(isset($_GET['english']) || isset($_GET['anglais']) || isset($_GET['francais']) || isset($_GET['french']) || isset($_GET['changelang']))
 {
-  // On détermine l'URL actuelle, puis on vire tous les paramètres pour pas se prendre la tête
-  $url_complete = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'] : substr(basename($_SERVER['PHP_SELF']),0,-4);
-  header("Location: ".$chemin.strtok($url_complete, '?'));
+  // On vire les paramètres dont on ne veut plus dans l'url
+  unset($_GET['english']);
+  unset($_GET['anglais']);
+  unset($_GET['francais']);
+  unset($_GET['french']);
+  unset($_GET['changelang']);
+
+  // On reconstruit l'URL
+  $url_self     = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
+  $url_rebuild  = urldecode(http_build_query($_GET));
+  $url_rebuild  = ($url_rebuild) ? $url_self.'?'.$url_rebuild : $url_self;
+
+  // Et on recharge la page
+  exit(header("Location: ".$url_rebuild));
 }
 
 
@@ -215,11 +226,17 @@ function loggedin()
 
 function getpseudo($id=NULL)
 {
-  if($id === NULL && isset($_SESSION['user']))
+  // Si on spécifie pas d'id, on prend la session en cours
+  if(!$id && isset($_SESSION['user']))
     $id = $_SESSION['user'];
-  $users = query(" SELECT membres.pseudonyme FROM membres WHERE id = '$id' ");
-  $getpseudo = mysqli_fetch_array($users);
-  return $getpseudo['pseudonyme'];
+
+  // Si on a pas d'id, on renvoie rien
+  if(!$id)
+    return '';
+
+  // On renvoie le pseudonyme
+  $qpseudo = mysqli_fetch_array(query(" SELECT membres.pseudonyme FROM membres WHERE id = '$id' "));
+    return $qpseudo['pseudonyme'];
 }
 
 
@@ -234,14 +251,26 @@ function getpseudo($id=NULL)
 
 function getmod($section,$user=NULL)
 {
-  if($user === NULL && isset($_SESSION['user']))
+  // Si on spécifie pas d'user, on prend la session en cours
+  if(!$user && isset($_SESSION['user']))
     $user = $_SESSION['user'];
-  $modos = query(" SELECT membres.moderateur FROM membres WHERE id = '$user' AND moderateur LIKE '%$section%' ");
-  $modo = mysqli_fetch_array($modos);
-  if($modo['moderateur'])
-    return 1;
-  else
+
+  // Si on a pas d'user, on renvoie 0
+  if(!$user)
     return 0;
+
+  // Si c'est un mod de la section concernée, on renvoie 1
+  $qdroits = mysqli_fetch_array(query(" SELECT membres.moderateur FROM membres WHERE id = '$user' AND moderateur LIKE '%$section%' "));
+  if($qdroits['moderateur'])
+    return 1;
+
+  // Si c'est un sysop ou un admin, on renvoie aussi 1
+  $qdroits = mysqli_fetch_array(query(" SELECT membres.sysop, membres.admin FROM membres WHERE id = '$user' "));
+  if($qdroits['sysop'] || $qdroits['admin'])
+    return 1;
+
+  // Sinon on renvoie 0
+  return 0;
 }
 
 
@@ -256,11 +285,17 @@ function getmod($section,$user=NULL)
 
 function getsysop($user=NULL)
 {
-  if($user === NULL && isset($_SESSION['user']))
+  // Si on spécifie pas d'user, on prend la session en cours
+  if(!$user && isset($_SESSION['user']))
     $user = $_SESSION['user'];
-  $sysops = query(" SELECT membres.sysop, membres.admin FROM membres WHERE id = '$user' ");
-  $sysop = mysqli_fetch_array($sysops);
-  if($sysop['sysop'] || $sysop['admin'])
+
+  // Si on a pas d'user, on renvoie 0
+  if(!$user)
+    return 0;
+
+  // On vérifie si l'user est sysop ou admin
+  $qdroits = mysqli_fetch_array(query(" SELECT membres.sysop, membres.admin FROM membres WHERE id = '$user' "));
+  if($qdroits['sysop'] || $qdroits['admin'])
     return 1;
   else
     return 0;
@@ -278,21 +313,28 @@ function getsysop($user=NULL)
 
 function getadmin($user=NULL)
 {
-  if($user === NULL && isset($_SESSION['user']))
+  // Si on spécifie pas d'user, on prend la session en cours
+  if(!$user && isset($_SESSION['user']))
     $user = $_SESSION['user'];
-  $admins = query(" SELECT membres.admin FROM membres WHERE id = '$user' ");
-  $admin = mysqli_fetch_array($admins);
-  return $admin['admin'];
+
+  // Si on a pas d'user, on renvoie 0
+  if(!$user)
+    return 0;
+
+  // On vérifie si l'user est admin
+  $qdroits = mysqli_fetch_array(query(" SELECT membres.admin FROM membres WHERE id = '$user' "));
+    return $qdroits['admin'];
 }
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction interdisant l'accès à une page si l'utilisateur n'est pas un sysop ou un modérateur d'une section spécifique
+// Fonction interdisant l'accès à une page si l'utilisateur n'est pas un sysop
+// Si le second paramètre est rempli, autorise également les modérateurs d'une section spécifique
 //
 // Exemple d'utilisation:
-// sysoponly('irls');
+// sysoponly('FR', 'irls');
 
 function sysoponly($lang='FR', $section=NULL)
 {
@@ -303,7 +345,7 @@ function sysoponly($lang='FR', $section=NULL)
   if(loggedin())
   {
     // On vérifie si l'user est un admin
-    if($section == NULL)
+    if(!$section)
     {
       if(!getsysop($_SESSION['user']))
         erreur($message);

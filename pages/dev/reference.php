@@ -26,8 +26,8 @@ $page_titre = "Dev: Référence CSS";
 $page_nom = "Administre secrètement le site";
 
 // CSS & JS
-$css  = array('dev');
-$js   = array('toggle', 'highlight', 'dynamique', 'popup', 'dev/reference');
+$css  = array('onglets', 'dev');
+$js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'popup', 'dev/reference');
 
 
 
@@ -1387,7 +1387,7 @@ $js   = array('toggle', 'highlight', 'dynamique', 'popup', 'dev/reference');
             </tr>
             <tr>
               <th>
-                <input class="intable">
+                <input class="intable" size="1">
               </th>
               <th>
                 <select class="table_search intable">
@@ -1396,7 +1396,7 @@ $js   = array('toggle', 'highlight', 'dynamique', 'popup', 'dev/reference');
                 </select>
               </th>
               <th>
-                <input class="intable">
+                <input class="intable" size="1">
               </th>
               <th>
                 <select class="table_search intable">
@@ -1412,7 +1412,7 @@ $js   = array('toggle', 'highlight', 'dynamique', 'popup', 'dev/reference');
                 <pre onclick="highlight('refhtml_select');" class="monospace spaced vscrollbar" id="refhtml_select" style="margin-bottom:0;max-height:80px;"><?php
                   echo(htmlspecialchars('<tr>
   <th>
-    <input class="intable">
+    <input class="intable" size="1">
   </th>
   <th>
     <select class="table_search intable">
@@ -1684,6 +1684,72 @@ $js   = array('toggle', 'highlight', 'dynamique', 'popup', 'dev/reference');
           <thead>
             <tr>
               <th class="rowaltc moinsgros" style="width:500px">
+                ONGLETS
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="max-width:500px">
+                <ul class="onglet">
+                  <li>
+                    <a id="onglet1_onglet" class="bouton_onglet onglet_actif" onclick="ouvrirOnglet(event, 'onglet1')">TITRE</a>
+                  </li>
+                  <li>
+                    <a id="onglet2_onglet" class="bouton_onglet" onclick="ouvrirOnglet(event, 'onglet2')">TITRE</a>
+                  </li>
+                  <li>
+                    <a id="onglet3_onglet" class="bouton_onglet onglet_blink" onclick="ouvrirOnglet(event, 'onglet3')">TITRE</a>
+                  </li>
+                </ul>
+                <div id="onglet1" class="contenu_onglet">
+                  Contenu
+                </div>
+                <div id="onglet2" class="hidden contenu_onglet">
+                  Contenu 2
+                </div>
+                <div id="onglet3" class="hidden contenu_onglet">
+                  Contenu 3
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td style="max-width:500px">
+                <pre onclick="highlight('refhtml_onglets');" class="monospace spaced vscrollbar" id="refhtml_onglets" style="margin-bottom:0;max-height:80px;"><?php
+                  echo(htmlspecialchars('<ul class="onglet">
+  <li>
+    <a id="onglet1_onglet" class="bouton_onglet onglet_actif" onclick="ouvrirOnglet(event, \'onglet1\')">TITRE</a>
+  </li>
+  <li>
+    <a id="onglet2_onglet" class="bouton_onglet" onclick="ouvrirOnglet(event, \'onglet2\')">TITRE</a>
+  </li>
+  <li>
+    <a id="onglet3_onglet" class="bouton_onglet onglet_blink" onclick="ouvrirOnglet(event, \'onglet3\')">TITRE</a>
+  </li>
+</ul>
+<div id="onglet1" class="contenu_onglet">
+  Contenu
+</div>
+<div id="onglet2" class="hidden contenu_onglet">
+  Contenu 2
+</div>
+<div id="onglet3" class="hidden contenu_onglet">
+  Contenu 3
+</div>'))
+                ?></pre>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <hr class="separateur_contenu">
+        <br>
+
+        <table class="fullgrid titresnoirs" style="width:500px;margin:auto;">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" style="width:500px">
                 LISTE
               </th>
             </tr>
@@ -1773,6 +1839,59 @@ Retours à la ligne</code></pre>'))
             </tr>
           </tbody>
         </table>
+
+        <br>
+        <hr class="separateur_contenu">
+        <br>
+
+        <table class="indiv fullgrid titresnoirs">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros">
+                TAILLES D'ÉLÉMENTS
+              </th>
+            </tr>
+          </thead>
+          <tbody class="align_center moinsgros gras texte_blanc">
+            <tr>
+              <td>
+                <br>
+                <div class="microtexte grisfonce">
+                  .microtexte
+                </div>
+                <br>
+                <div class="minitexte grisfonce">
+                  .minitexte
+                </div>
+                <br>
+                <div class="minitexte2 grisfonce">
+                  .minitexte2
+                </div>
+                <br>
+                <div class="texte grisfonce">
+                  .texte
+                </div>
+                <br>
+                <div class="texte2 grisfonce">
+                  .texte2
+                </div>
+                <br>
+                <div class="texte3 grisfonce">
+                  .texte3
+                </div>
+                <br>
+                <div class="tableau grisfonce">
+                  .tableau
+                </div>
+                <br>
+                <div class="tableau2 grisfonce">
+                  .tableau2
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
 
       </div>
 

@@ -119,7 +119,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         <h5>Acte III: Des mechas et un gros drame (2006)</h5>
 
         <p>
-          Malgré les heurts et les départs de fin 2005, le forum NoBleme reste actif et continue à grandir en 2006. Pendant ce temps, quelques NoBlemeux discutent régulièrement sur le <a class="gras" href="<?=$chemin?>pages/irc/index">canal IRC #NoBleme</a>, qui existait depuis 2005 mais n'était presque pas utilisé. Sur IRC, BadFurDay, Gromitflash, et Maxleouf (qui est revenu au cours de l'année), ainsi que quelques visiteurs occasionels, forment la première véritable communauté NoBleme, formant des liens d'amitié et organisant des <a class="gras" href="<?=$chemin?>pages/nobleme/irls">rencontres IRL</a>.
+          Malgré les heurts et les départs de fin 2005, le forum NoBleme reste actif et continue à grandir en 2006. Pendant ce temps, quelques NoBlemeux discutent régulièrement sur le <a class="gras" href="<?=$chemin?>pages/irc/index">canal IRC #NoBleme</a>, qui existait depuis 2005 mais n'était presque pas utilisé. Sur IRC, BadFurDay, Gromitflash, et Maxleouf (qui est revenu au cours de l'année), ainsi que quelques visiteurs occasionels, forment la première véritable communauté NoBleme, formant des liens d'amitié et organisant des <a class="gras" href="<?=$chemin?>pages/irl/index">rencontres IRL</a>.
         </p>
 
         <p>
@@ -381,7 +381,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         </p>
 
         <p>
-          After several rocky years of poorly managed constant teenage drama, the website changed its direction. Instead of an open discussion forum with no rules, it started focusing on its community. Gone were the days of arguing with each other through ad hominems, Bad was growing older and so was the website. Members of the NoBleme community started communicating mostly through <a class="gras" href="<?=$chemin?>pages/irc/index">its IRC server</a>, got to become friends, organized regular <a class="gras" href="<?=$chemin?>pages/nobleme/irls">real life meetups</a>, and thus the current day NoBleme community was born.
+          After several rocky years of poorly managed constant teenage drama, the website changed its direction. Instead of an open discussion forum with no rules, it started focusing on its community. Gone were the days of arguing with each other through ad hominems, Bad was growing older and so was the website. Members of the NoBleme community started communicating mostly through <a class="gras" href="<?=$chemin?>pages/irc/index">its IRC server</a>, got to become friends, organized regular <a class="gras" href="<?=$chemin?>pages/irl/index">real life meetups</a>, and thus the current day NoBleme community was born.
         </p>
 
         <p>

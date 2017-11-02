@@ -33,6 +33,7 @@ $page_nom = "Administre secrètement le site";
 
         <p>
           <input type="checkbox"> S'il y a eu des changements structurels SQL, faire un dump de la structure dans sqldump.php<br>
+          <input type="checkbox"> Si le contenu supprime du contenu dans la BDD, penser à supprimer l'activité et les pageviews liés<br>
           <input type="checkbox"> Passer le rendu HTML du nouveau contenu au <a href="https://validator.w3.org/#validate_by_input">validateur W3C</a><br>
           <input type="checkbox"> Tester les permissions du nouveau contenu en tant que invité, user, mod, sysop, admin<br>
           <input type="checkbox"> Vérifier que les nouvelles pages apparaissent bien dans <a href="<?=$chemin?>pages/nobleme/online">qui est en ligne</a><br>

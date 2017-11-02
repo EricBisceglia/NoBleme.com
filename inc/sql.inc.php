@@ -20,6 +20,7 @@ else
   $GLOBALS['db'] = @mysqli_connect('localhost', 'root', $GLOBALS['mysql_pass'], 'nobleme') or die ('Erreur SQL ! Connexion &agrave; la base de donn&eacute;es impossible');
 
 mysqli_set_charset($GLOBALS['db'], "utf8");
+$GLOBALS['query'] = 0;
 
 
 
@@ -34,6 +35,7 @@ mysqli_set_charset($GLOBALS['db'], "utf8");
 
 function query($requete, $ignore=NULL)
 {
+  $GLOBALS['query']++;
   if($ignore)
     $query = mysqli_query($GLOBALS['db'],$requete);
   else

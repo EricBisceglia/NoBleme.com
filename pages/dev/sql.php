@@ -72,6 +72,41 @@ sql_renommer_champ('membres', 'moderateur_description', 'moderateur_description_
 sql_creer_champ('membres', 'moderateur_description_en', 'MEDIUMTEXT', 'moderateur_description_fr');
 query(" UPDATE membres SET moderateur_description_en = 'Real life meetups' WHERE moderateur_description_fr LIKE 'Rencontres IRL' ");
 
+// Changement de la structure de la table irl
+sql_renommer_champ('irl', 'raison', 'raison_fr', 'TINYTEXT NOT NULL');
+sql_creer_champ('irl', 'raison_en', 'TINYTEXT NOT NULL', 'raison_fr');
+sql_creer_champ('irl', 'details_fr', 'LONGTEXT NOT NULL', 'raison_en');
+sql_creer_champ('irl', 'details_en', 'LONGTEXT NOT NULL', 'details_fr');
+sql_renommer_champ('irl_participants', 'details', 'details_fr', 'TINYTEXT NOT NULL');
+sql_creer_champ('irl_participants', 'details_en', 'TINYTEXT NOT NULL', 'details_fr');
+$qdescribe = query(" DESCRIBE irl ");
+while($ddescribe = mysqli_fetch_array($qdescribe))
+{
+  if($ddescribe['Field'] == "details_pourquoi")
+    query(" UPDATE irl SET details_fr = CONCAT('[b][u]Pourquoi:[/u][/b] ', details_pourquoi, '\r\n\r\n[b][u]Où:[/u][/b] ', details_ou, '\r\n\r\n[b][u]Quand:[/u][/b] ', details_quand, '\r\n\r\n[b][u]Quoi:[/u][/b] ', details_quoi) ");
+}
+sql_supprimer_champ('irl', 'details_pourquoi');
+sql_supprimer_champ('irl', 'details_ou');
+sql_supprimer_champ('irl', 'details_quand');
+sql_supprimer_champ('irl', 'details_quoi');
+query(" UPDATE irl SET raison_fr = '' WHERE raison_fr LIKE 'Il faut une raison ?' ");
+query(" UPDATE irl SET raison_fr = '' WHERE raison_fr LIKE 'Parce que' ");
+query(" UPDATE irl SET raison_fr = '' WHERE raison_fr LIKE 'Comme ça' ");
+query(" UPDATE irl SET raison_fr = '' WHERE raison_fr LIKE 'Parce que Shalena l\'a réclamé' ");
+query(" UPDATE irl SET raison_fr = 'Anniversaire de Trucy' WHERE raison_fr LIKE 'Anniversaire de Wan' ");
+query(" UPDATE irl SET raison_en = 'Trucy\'s graduation' WHERE raison_fr LIKE 'RDD de Trucy' ");
+query(" UPDATE irl SET raison_en = 'Trucy\'s done studying' WHERE raison_fr LIKE 'Fin des études de Trucy' ");
+query(" UPDATE irl SET raison_en = 'Plow is leaving :\'(' WHERE raison_fr LIKE 'Plow s\'en va :\'(' ");
+query(" UPDATE irl SET raison_en = 'Exanis is visiting Paris' WHERE raison_fr LIKE 'Passage d\'Exanis à Paris' ");
+query(" UPDATE irl SET raison_en = 'NoBleme\'s 11th birthday' WHERE raison_fr LIKE 'Les 11 ans de NoBleme !' ");
+query(" UPDATE irl SET raison_en = 'Trucy\'s birthday' WHERE raison_fr LIKE 'Anniversaire de Trucy' ");
+query(" UPDATE irl SET raison_en = 'Odin is leaving Paris' WHERE raison_fr LIKE 'Parce que Odin s\'en va de Paris' ");
+query(" UPDATE irl SET raison_en = 'Kutz is visiting Paris' WHERE raison_fr LIKE 'Passage de Kutz à Paris' ");
+query(" UPDATE irl SET raison_en = 'NoBleme\'s 10th birthday mini-meetup' WHERE raison_fr LIKE 'Mini-irl des 10 ans de NoBleme' ");
+query(" UPDATE irl SET raison_en = 'SiHn is visiting paris' WHERE raison_fr LIKE 'Passage de SiHn à Paris' ");
+query(" UPDATE irl SET raison_en = 'Sofly\'s birthday' WHERE raison_fr LIKE 'Anniversaire de Sofly' ");
+query(" UPDATE irl SET raison_en = 'ThArGos is visiting paris' WHERE raison_fr LIKE 'Passage de ThArGos à Paris' ");
+
 // Fix des vieux messages privés foireux
 query(" UPDATE notifications SET contenu = REPLACE (contenu, '&lt;', '<') ");
 query(" UPDATE notifications SET contenu = REPLACE (contenu, '&gt;', '>') ");
@@ -114,6 +149,7 @@ sql_supprimer_champ('vars_globales', 'nbrpg_activite');
 /* sql_supprimer_table($nom_table);                                                                                                      */
 /* sql_creer_champ($nom_table, $nom_champ, $type_champ, $after_nom_champ);                                                               */
 /* sql_renommer_champ($nom_table, $ancien_nom_champ, $nouveau_nom_champ, $type_champ);                                                   */
+/* sql_changer_type_champ($nom_table, $nom_champ, $type_champ)                                                                           */
 /* sql_supprimer_champ($nom_table, $nom_champ);                                                                                          */
 /* sql_insertion_valeur($condition, $requete);                                                                                           */
 /*                                                                                                                                       */
@@ -248,6 +284,31 @@ function sql_renommer_champ($nom_table, $ancien_nom_champ, $nouveau_nom_champ, $
   {
     if($ddescribe['Field'] == $ancien_nom_champ)
       query(" ALTER TABLE ".$nom_table." CHANGE ".$ancien_nom_champ." ".$nouveau_nom_champ." ".$type_champ);
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Changer le type d'un champ dans une table existante
+//
+// Exemple: sql_changer_type_champ("nom_table", "cc2", "MEDIUMTEXT");
+
+function sql_changer_type_champ($nom_table, $nom_champ, $type_champ)
+{
+  // On vérifie que la table existe
+  if(!query(" DESCRIBE ".$nom_table, 1))
+    return;
+
+  // On a besoin une nouvelle fois de la structure de la table
+  $qdescribe = query(" DESCRIBE ".$nom_table);
+
+  // Si le champ existe dans la table, on le renomme
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+  {
+    if($ddescribe['Field'] == $nom_champ)
+      query(" ALTER TABLE ".$nom_table." MODIFY ".$nom_champ." ".$type_champ);
   }
 }
 

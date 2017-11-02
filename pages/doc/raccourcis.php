@@ -45,6 +45,8 @@ if($lang == 'FR')
   $trad['rac_profil']     = "Profil d'un utilisateur";
   $trad['rac_activite']   = "Activité récente";
   $trad['rac_online']     = "Qui est en ligne";
+  $trad['rac_irl']        = "Rencontres IRL";
+  $trad['rac_irl_id']     = "IRL spécifique";
   $trad['rac_coc']        = "Code de conduite";
 }
 
@@ -64,6 +66,8 @@ else if($lang == 'EN')
   $trad['rac_profil']     = "User profile";
   $trad['rac_activite']   = "Recent activity";
   $trad['rac_online']     = "Who's online";
+  $trad['rac_irl']        = "Real life meetups";
+  $trad['rac_irl_id']     = "Specific meetup";
   $trad['rac_coc']        = "Code of conduct";
 }
 
@@ -131,6 +135,22 @@ else if($lang == 'EN')
               </td>
               <td>
                 <a href="<?=$chemin?>s?o">o</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_irl']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?irl">irl</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_irl_id']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?irl=49">irl=?</a>
               </td>
             </tr>
             <tr>

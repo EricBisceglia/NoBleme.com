@@ -20,6 +20,12 @@ $version .= ($lang == 'FR') ? " du ".jourfr($qversion['date'], 'FR') : " - ".jou
 $trad['footer_dev'] = ($lang == 'FR') ? "Développé et administré par " : "Developed and administered by ";
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Temps de chargement
+
+$time_chargement  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
+
+
 
 
 
@@ -39,7 +45,8 @@ $trad['footer_dev'] = ($lang == 'FR') ? "Développé et administré par " : "Dev
         <?php if(isset($shorturl)) { ?>
         <a href="<?=$chemin?>s?<?=$shorturl?>">Lien court vers cette page</a><br>
         <?php } if(loggedin() && getadmin($_SESSION['user'])) { ?>
-        <a href="<?=$chemin?>pages/admin/stats_pageviews"><?=$page_views?></a><br>
+        <a href="<?=$chemin?>pages/admin/pageviews"><?=$page_views?></a><br>
+        <a>Page chargée en <?=$time_chargement?>s avec <?=$GLOBALS['query']?> requêtes</a><br>
         <?php } ?>
         <a href="<?=$chemin?>pages/todo/roadmap"><?=$version?></a><br>
         <a href="<?=$chemin?>pages/user/user?id=1"><?=$trad['footer_dev']?> <span class="gras">Bad</span></a><br>

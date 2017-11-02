@@ -312,7 +312,7 @@ else if($lang == 'EN')
 
               <?php } if($profil_irl) { ?>
               <hr class="profil_hr">
-              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/nobleme/irl';">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/irl/index';">
                 <span class="gras"><?=$trad['user_irl']?></span><br>
                 <?=$trad['usert_irl']?>
               </div>

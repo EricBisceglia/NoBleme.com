@@ -55,7 +55,7 @@ for($nuserlist = 0; $duserlist = mysqli_fetch_array($quserlist) ; $nuserlist++)
 <br>
 <br>
 
-<table class="grid fullgrid titresnoirs">
+<table class="fullgrid titresnoirs">
   <thead>
     <tr>
       <th>
