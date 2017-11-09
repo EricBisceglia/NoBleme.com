@@ -47,6 +47,7 @@ if($lang == 'FR')
   $trad['rac_online']     = "Qui est en ligne";
   $trad['rac_irl']        = "Rencontres IRL";
   $trad['rac_irl_id']     = "IRL spécifique";
+  $trad['rac_misc']       = "Miscellanée spécifique";
   $trad['rac_coc']        = "Code de conduite";
 }
 
@@ -153,6 +154,16 @@ else if($lang == 'EN')
                 <a href="<?=$chemin?>s?irl=49">irl=?</a>
               </td>
             </tr>
+            <?php if($lang == 'FR') { ?>
+            <tr>
+              <td>
+                <?=$trad['rac_misc']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?m=210">m=?</a>
+              </td>
+            </tr>
+            <?php } ?>
             <tr>
               <td>
                 <?=$trad['rac_coc']?>

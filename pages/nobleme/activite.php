@@ -366,14 +366,12 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   //*************************************************************************************************************************************//
   // Nouvelle miscellanée
 
-  /*
   else if($dactrec['action_type'] === 'quote')
   {
     $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
-    $activite_href[$nactrec]        = $chemin.'pages/irc/quotes?id='.$dactrec['action_id'];
+    $activite_href[$nactrec]        = $chemin.'pages/quotes/quote?id='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = 'Miscellanée #'.$dactrec['action_id'].' ajoutée à la collection';
   }
-  */
 
 
 
@@ -387,7 +385,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   {
     $activite_css[$nactrec]         = 'gras texte_blanc positif';
     $activite_href[$nactrec]        = $chemin.'pages/todo/roadmap';
-    $activite_desc[$nactrec]['FR']  = "Nouvelle version de NoBleme.com: ".predata($dactrec['action_titre']);
+    $activite_desc[$nactrec]['FR']  = "Nouvelle version de NoBleme.com : ".predata($dactrec['action_titre']);
     $activite_desc[$nactrec]['EN']  = "New version of NoBleme.com: ".predata($dactrec['action_titre']);
   }
 

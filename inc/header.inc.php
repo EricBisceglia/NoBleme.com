@@ -821,13 +821,19 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
 
             <a href="<?=$chemin?>pages/quotes/quote?random">
               <div class="<?=header_class('MiscRandom',$header_sidemenu,'side')?>">
-                Citation au hasard
+                Miscellanée au hasard
               </div>
             </a>
 
             <a href="<?=$chemin?>pages/quotes/stats">
               <div class="<?=header_class('MiscStats',$header_sidemenu,'side')?>">
                 Stats des miscellanées
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/quotes/add">
+              <div class="<?=header_class('MiscAdd',$header_sidemenu,'side')?>">
+                Proposer une miscellanée
               </div>
             </a>
 
@@ -1051,13 +1057,13 @@ $sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    
               </div>
             </a>
 
-            <a href="<?=$chemin?>pages/admin/todo">
+            <a href="<?=$chemin?>pages/todo/index?admin">
               <div class="<?=header_class('TodoBacklog',$header_sidemenu,'side')?>">
                 Tickets non validés
               </div>
             </a>
 
-            <a href="<?=$chemin?>pages/admin/quotes">
+            <a href="<?=$chemin?>pages/quotes/index?admin">
               <div class="<?=header_class('QuotesBacklog',$header_sidemenu,'side')?>">
                 Miscellanées en attente
               </div>
@@ -1106,7 +1112,7 @@ $sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    
 
             <a href="<?=$chemin?>pages/dev/maj">
               <div class="<?=header_class('MajChecklist',$header_sidemenu,'side')?>">
-                Mise à jour: Checklist
+                Mise à jour : Checklist
               </div>
             </a>
 

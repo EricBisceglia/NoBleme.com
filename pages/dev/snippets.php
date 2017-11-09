@@ -19,8 +19,8 @@ $page_titre = "Dev: Formattage";
 $page_nom = "Administre secrètement le site";
 
 // CSS & JS
-$css = array('dev');
-$js  = array('highlight', 'toggle', 'dev/reference');
+$css  = array('dev');
+$js   = array('highlight', 'toggle', 'dev/reference');
 
 
 
@@ -88,8 +88,8 @@ $page_titre = ($lang == 'FR') ? "Titre" : "Title";
 $page_desc  = "Metadescription";
 
 // CSS &amp; JS
-$css = array('admin');
-$js  = array('dynamique');
+$css  = array('admin');
+$js   = array('dynamique');
 
 
 
@@ -218,8 +218,8 @@ $page_titre = ($lang == 'FR') ? "Titre" : "Title";
 $page_desc  = "Metadescription";
 
 // CSS &amp; JS
-$css = array('admin');
-$js  = array('dynamique');</pre>
+$css  = array('admin');
+$js   = array('dynamique');</pre>
 
         <br>
 

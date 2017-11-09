@@ -40,7 +40,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         </p>
 
         <p>
-          Pour mieux comprendre ce qu'est NoBleme, il faut commencer par comprendre son histoire. Elle a lieu en plusieurs actes, que je vais vous conter. Une fois que j'aurai fini de vous parler du passé, on pourra se tourner vers le présent et l'avenir, et se poser ensemble des questions existentielles: À quoi sert NoBleme ? Quel est l'avenir de NoBleme ? Est-il trop tard pour faire partie de NoBleme ?
+          Pour mieux comprendre ce qu'est NoBleme, il faut commencer par comprendre son histoire. Elle a lieu en plusieurs actes, que je vais vous conter. Une fois que j'aurai fini de vous parler du passé, on pourra se tourner vers le présent et l'avenir, et se poser ensemble des questions existentielles : À quoi sert NoBleme ? Quel est l'avenir de NoBleme ? Est-il trop tard pour faire partie de NoBleme ?
         </p>
 
         <br>
@@ -51,10 +51,10 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
 
         <br>
 
-        <h5>Acte I: Avant NoBleme (2000-2005)</h5>
+        <h5>Acte I : Avant NoBleme (2000-2005)</h5>
 
         <p>
-          Remontons dans le temps jusqu'à l'âge sombre d'internet. Nous sommes au début des années 2000, peu de français ont internet à domicile. Un lieu toutefois permet à tous d'accéder à internet: les cyber cafés. Dans ces boutiques, les gens vont payer pour jouer à des jeux vidéos, et certains de ces jeux requièrent internet pour accéder à leur contenu multijoueur. Parmi ces gamers de la première heure, le futur administrateur de NoBleme, <a class="gras" href="<?=$chemin?>pages/user/user?id=1">Bad</a>, fait du commerce de <a class="gras" href="https://fr.wikipedia.org/wiki/Magic_:_L%27Assembl%C3%A9e">cartes Magic</a> dans son collège, et se sert des bénéfices pour aller jouer à <a class="gras" href="https://fr.wikipedia.org/wiki/Quake_III_Arena">Quake</a> et <a class="gras" href="https://fr.wikipedia.org/wiki/StarCraft:_Brood_War">StarCraft</a> au cyber café du coin. Pour jouer compétitivement à ces jeux, il fallait nécessairement passer par des serveurs IRC et des forums, dans lesquels des communautés internet se développaient inévitablement à force de se fréquenter.
+          Remontons dans le temps jusqu'à l'âge sombre d'internet. Nous sommes au début des années 2000, peu de français ont internet à domicile. Un lieu toutefois permet à tous d'accéder à internet : les cyber cafés. Dans ces boutiques, les gens vont payer pour jouer à des jeux vidéos, et certains de ces jeux requièrent internet pour accéder à leur contenu multijoueur. Parmi ces gamers de la première heure, le futur administrateur de NoBleme, <a class="gras" href="<?=$chemin?>pages/user/user?id=1">Bad</a>, fait du commerce de <a class="gras" href="https://fr.wikipedia.org/wiki/Magic_:_L%27Assembl%C3%A9e">cartes Magic</a> dans son collège, et se sert des bénéfices pour aller jouer à <a class="gras" href="https://fr.wikipedia.org/wiki/Quake_III_Arena">Quake</a> et <a class="gras" href="https://fr.wikipedia.org/wiki/StarCraft:_Brood_War">StarCraft</a> au cyber café du coin. Pour jouer compétitivement à ces jeux, il fallait nécessairement passer par des serveurs IRC et des forums, dans lesquels des communautés internet se développaient inévitablement à force de se fréquenter.
         </p>
 
         <p>
@@ -62,7 +62,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         </p>
 
         <p>
-          Pendant ce temps, des éléments de la future communauté NoBleme s'assemblent un peu partout. Dans la vie réelle, Bad se fait des amis au lycée qui contribueront aux débuts de NoBleme: Piratmac, Maxleouf, et Gromitflash. Sur internet, Bad crée du contenu pour le jeu <a class="gras" href="https://fr.wikipedia.org/wiki/Warcraft_III:_Reign_of_Chaos">Warcraft 3</a> et aide d'autres créateurs de contenu avec leurs problèmes techniques sur un site nommé WC3Campaigns, que fréquentent alors des futurs membres de NoBleme: Tenshi, StormrageJunior, et Kalkhran (les deux derniers fréquentant le site Metalplanet où ils côtoient deux futurs NoBlemeux, Planeshift et Pins). Encore ailleurs sur internet, Bad joue à un jeu en ligne nommé Super Robot Wars Online, qui servira plus tard d'inspiration pour un futur jeu hébergé sur NoBleme qui ramènera de nombreux membres sur le site.
+          Pendant ce temps, des éléments de la future communauté NoBleme s'assemblent un peu partout. Dans la vie réelle, Bad se fait des amis au lycée qui contribueront aux débuts de NoBleme : Piratmac, Maxleouf, et Gromitflash. Sur internet, Bad crée du contenu pour le jeu <a class="gras" href="https://fr.wikipedia.org/wiki/Warcraft_III:_Reign_of_Chaos">Warcraft 3</a> et aide d'autres créateurs de contenu avec leurs problèmes techniques sur un site nommé WC3Campaigns, que fréquentent alors des futurs membres de NoBleme : Tenshi, StormrageJunior, et Kalkhran (les deux derniers fréquentant le site Metalplanet où ils côtoient deux futurs NoBlemeux, Planeshift et Pins). Encore ailleurs sur internet, Bad joue à un jeu en ligne nommé Super Robot Wars Online, qui servira plus tard d'inspiration pour un futur jeu hébergé sur NoBleme qui ramènera de nombreux membres sur le site.
         </p>
 
         <br>
@@ -70,14 +70,14 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         <br>
         <br>
 
-        <h5>Acte II: L'enfance de NoBleme (2005)</h5>
+        <h5>Acte II : L'enfance de NoBleme (2005)</h5>
 
         <p>
           Début 2005, les étoiles s'alignent. Un ami de lycée de Bad, Maxleouf, se lance dans la réalisation de films amateur. Il aimerait bien une plateforme pour pouvoir partager ses films sur internet. Comme à cette époque Bad est en plein apprentissage du développement informatique, Maxleouf se dit que c'est une bonne idée de lui en parler. Justement, Bad a toujours cette envie de faire partie d'une communauté internet, et l'apport humain de Maxleouf pourrait se combiner avec l'apport technique de Bad.
         </p>
 
         <p>
-          En mars 2005, un groupe de trois personnes engage une conversation via internet pour parler de ce projet. Il s'agit des membres fondateurs de NoBleme: BadFurDay (pseudonyme de Bad à l'époque), Maxleouf, et ThomYorke. À l'issue de cette conversation, le nom de domaine « nobleme.com » est choisi, et il est décidé que le site sera centré sur un forum généraliste où tout le monde sera accueilli peu importe leurs opinions ou leur personnalité (magistrale erreur, mais les adolescents ont tendance à être naïfs). C'est un lieu où il n'y aura pas de problème (si seulement), donc No[Pro]Blème, le nom est choisi !
+          En mars 2005, un groupe de trois personnes engage une conversation via internet pour parler de ce projet. Il s'agit des membres fondateurs de NoBleme : BadFurDay (pseudonyme de Bad à l'époque), Maxleouf, et ThomYorke. À l'issue de cette conversation, le nom de domaine « nobleme.com » est choisi, et il est décidé que le site sera centré sur un forum généraliste où tout le monde sera accueilli peu importe leurs opinions ou leur personnalité (magistrale erreur, mais les adolescents ont tendance à être naïfs). C'est un lieu où il n'y aura pas de problème (si seulement), donc No[Pro]Blème, le nom est choisi !
         </p>
 
         <p>
@@ -93,7 +93,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         </p>
 
         <p>
-          Voici des images de NoBleme en avril 2005 (cliquez dessus pour les voir en taille normale):
+          Voici des images de NoBleme en avril 2005 (cliquez dessus pour les voir en taille normale) :
         </p>
 
         <p class="align_center">
@@ -116,7 +116,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         <br>
         <br>
 
-        <h5>Acte III: Des mechas et un gros drame (2006)</h5>
+        <h5>Acte III : Des mechas et un gros drame (2006)</h5>
 
         <p>
           Malgré les heurts et les départs de fin 2005, le forum NoBleme reste actif et continue à grandir en 2006. Pendant ce temps, quelques NoBlemeux discutent régulièrement sur le <a class="gras" href="<?=$chemin?>pages/irc/index">canal IRC #NoBleme</a>, qui existait depuis 2005 mais n'était presque pas utilisé. Sur IRC, BadFurDay, Gromitflash, et Maxleouf (qui est revenu au cours de l'année), ainsi que quelques visiteurs occasionels, forment la première véritable communauté NoBleme, formant des liens d'amitié et organisant des <a class="gras" href="<?=$chemin?>pages/irl/index">rencontres IRL</a>.
@@ -131,11 +131,11 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         </p>
 
         <p>
-          Le succès du NRM Online n'est pas immédiat, le jeu a du mal à convaincre les joueurs de Super Robot Wars Online qu'il est plus intéressant que l'original (et ils n'ont pas tort, le NRM est mal équilibré et plein de bugs). Le nombre de joueurs actifs en 2006 est en général de l'ordre de 20 à 40 par saison, et ce type de jeu n'est vraiment intéressant que s'il y a au moins une cinquantaine de joueurs actifs. Malgré tout, une partie des joueurs rejoignent le forum NoBleme, et s'intègrent rapidement. Les nouveaux réguliers de NoBleme arrivés via le NRM en 2006 incluent (dans leur ordre d'arrivée): Les Granges, Super Concombre, Krakefer, Screamers, InnerKollaps, Gargoyle, Aldaris, MortifeR, et ThArGos (ce dernier ne venant pas de Super Robot Wars Online, il avait trouvé le NRM en se baladant sur internet). Ils sont la seconde génération de NoBlemeux.
+          Le succès du NRM Online n'est pas immédiat, le jeu a du mal à convaincre les joueurs de Super Robot Wars Online qu'il est plus intéressant que l'original (et ils n'ont pas tort, le NRM est mal équilibré et plein de bugs). Le nombre de joueurs actifs en 2006 est en général de l'ordre de 20 à 40 par saison, et ce type de jeu n'est vraiment intéressant que s'il y a au moins une cinquantaine de joueurs actifs. Malgré tout, une partie des joueurs rejoignent le forum NoBleme, et s'intègrent rapidement. Les nouveaux réguliers de NoBleme arrivés via le NRM en 2006 incluent (dans leur ordre d'arrivée) : Les Granges, Super Concombre, Krakefer, Screamers, InnerKollaps, Gargoyle, Aldaris, MortifeR, et ThArGos (ce dernier ne venant pas de Super Robot Wars Online, il avait trouvé le NRM en se baladant sur internet). Ils sont la seconde génération de NoBlemeux.
         </p>
 
         <p>
-          Du côté du forum, cet influx de nouveaux membres en attire d'autres venus d'un peu partout sur internet. Inévitablement, le problème initial se répète: Un grand nombre d'adolescents et de jeunes adultes, ne se connaissant pas auparavant, se retrouvant ensemble sur un forum sans règles où la modération est quasi inexistante. La tension monte à nouveau pendant l'été 2006, opposant deux camps. D'un côté, StormrageJunior et Kalkhran, qui deviennent de plus en plus aggressifs et toxiques. En face, la majorité des membres du forum, qui sont lassés de la façon dont ces deux derniers polluent le lieu.
+          Du côté du forum, cet influx de nouveaux membres en attire d'autres venus d'un peu partout sur internet. Inévitablement, le problème initial se répète : Un grand nombre d'adolescents et de jeunes adultes, ne se connaissant pas auparavant, se retrouvant ensemble sur un forum sans règles où la modération est quasi inexistante. La tension monte à nouveau pendant l'été 2006, opposant deux camps. D'un côté, StormrageJunior et Kalkhran, qui deviennent de plus en plus aggressifs et toxiques. En face, la majorité des membres du forum, qui sont lassés de la façon dont ces deux derniers polluent le lieu.
         </p>
 
         <p>
@@ -147,7 +147,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         </p>
 
         <p>
-          Voici des images de NoBleme en septembre 2006 (cliquez dessus pour les voir en taille normale):
+          Voici des images de NoBleme en septembre 2006 (cliquez dessus pour les voir en taille normale) :
         </p>
 
         <p class="align_center">
@@ -175,7 +175,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         <br>
         <br>
 
-        <h5>Acte IV: Mort du site et naissance de la communauté (2007-2009)</h5>
+        <h5>Acte IV : Mort du site et naissance de la communauté (2007-2009)</h5>
 
         <p>
           Ce que le forum surnomme maintenant « L'affaire StormKal » n'est plus qu'un mauvais souvenir. Hélas, Bad n'ayant pas agi, la communauté s'est beaucoup trop fragmentée autour de cette histoire, et les membres les plus actifs du forum sont partis. La mort lente de NoBleme a irréversiblement commencé.
@@ -194,7 +194,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         </p>
 
         <p>
-          Sans vie dans son forum, sans son jeu en ligne, il ne reste plus qu'une chose à NoBleme: une section du site crée en 2006, le Wiki NoBleme. À l'origine fait pour documenter du contenu lié au site, Bad le transforme progressivement en une encyclopédie francophone des phénomènes internet. À l'époque unique en son genre, le Wiki NoBleme attire de nombreux visiteurs, jusqu'à 2500 par jour en 2009. Hélas, ces visiteurs ne viennent pas pour les bonnes raisons, et le forum comme IRC se retrouvent occasionellement en présence de gamins venus parce qu'ils ont cherché « Pedobear » ou « fgsfds » sur internet. Oups.
+          Sans vie dans son forum, sans son jeu en ligne, il ne reste plus qu'une chose à NoBleme : une section du site crée en 2006, le Wiki NoBleme. À l'origine fait pour documenter du contenu lié au site, Bad le transforme progressivement en une encyclopédie francophone des phénomènes internet. À l'époque unique en son genre, le Wiki NoBleme attire de nombreux visiteurs, jusqu'à 2500 par jour en 2009. Hélas, ces visiteurs ne viennent pas pour les bonnes raisons, et le forum comme IRC se retrouvent occasionellement en présence de gamins venus parce qu'ils ont cherché « Pedobear » ou « fgsfds » sur internet. Oups.
         </p>
 
         <p>
@@ -206,7 +206,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         </p>
 
         <p>
-          Voici des images (hélas incomplètes par manque d'archives de l'époque) de NoBleme en décembre 2008 (cliquez dessus pour les voir en taille normale):
+          Voici des images (hélas incomplètes par manque d'archives de l'époque) de NoBleme en décembre 2008 (cliquez dessus pour les voir en taille normale) :
         </p>
 
         <p class="align_center">
@@ -249,14 +249,14 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         <br>
         <br>
 
-        <h5>Acte V: Blackout et nouveau NoBleme (2010-Aujourd'hui)</h5>
+        <h5>Acte V : Blackout et nouveau NoBleme (2010-Aujourd'hui)</h5>
 
         <p>
           En 2010, Bad décide que vu que seul IRC est actif, le site ne sert plus à rien. L'intégralité du site est remplacé par une page noire avec un compte à rebours jusqu'au 19 mars 2010, jour des 5 ans de NoBleme. Une fois le compte à rebours fini, NoBleme est remplacé par... rien. Le forum et le wiki sont toujours là, mais inactifs et pas mis à jour. La seule différence est que NoBleme tourne sur un nouveau serveur plus rapide, qui peut tenir la charge des milliers de visiteurs quotidiens du wiki. Bravo hein, Bad, c'est tout un talent de savoir décevoir les gens à ce point là. Limite c'en est respectable.
         </p>
 
         <p>
-          Heureusement, l'histoire ne s'arrête pas là. Maintenant qu'il est établi que NoBleme est une communauté et non pas des gens qui se mettent dessus sur un forum ou des joueurs de jeu de stratégie en ligne, il reste à lui développer une identité. Par chance, il n'y a aucun effort à faire, la période est propice: le web, qui était au début des années 2000 composé de plein de petites communautés, est en pleine centralisation. Les gens ne se retrouvent plus sur des petits sites, mais plutôt sur Facebook, Twitter, ou autres gigantesques réseaux sociaux. En ayant survécu à la mort des petites communautés, Bad décide que NoBleme sera un vestige des temps passés d'internet, une communauté chaleureuse où l'ambiance est aussi positive que possible.
+          Heureusement, l'histoire ne s'arrête pas là. Maintenant qu'il est établi que NoBleme est une communauté et non pas des gens qui se mettent dessus sur un forum ou des joueurs de jeu de stratégie en ligne, il reste à lui développer une identité. Par chance, il n'y a aucun effort à faire, la période est propice : le web, qui était au début des années 2000 composé de plein de petites communautés, est en pleine centralisation. Les gens ne se retrouvent plus sur des petits sites, mais plutôt sur Facebook, Twitter, ou autres gigantesques réseaux sociaux. En ayant survécu à la mort des petites communautés, Bad décide que NoBleme sera un vestige des temps passés d'internet, une communauté chaleureuse où l'ambiance est aussi positive que possible.
         </p>
 
         <p>
@@ -272,7 +272,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         </p>
 
         <p>
-          Voici des images de l'évolution progressive de l'index de NoBleme de 2010 à 2017 (cliquez dessus pour les voir en taille normale):
+          Voici des images de l'évolution progressive de l'index de NoBleme de 2010 à 2017 (cliquez dessus pour les voir en taille normale) :
         </p>
 
         <p class="align_center">
@@ -314,10 +314,10 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
 
         <br>
 
-        <h5>Le présent: À quoi sert NoBleme ?</h5>
+        <h5>Le présent : À quoi sert NoBleme ?</h5>
 
         <p>
-          Maintenant que vous avez compris d'où vient NoBleme, il est plus facile d'expliquer où on est aujourd'hui. NoBleme sert à une chose: préserver l'ambiance disparue des petites communautés internet. L'objectif n'est pas de rester coincé dans le passé, c'est plutôt d'être tourné vers le futur, sans oublier d'où on vient.
+          Maintenant que vous avez compris d'où vient NoBleme, il est plus facile d'expliquer où on est aujourd'hui. NoBleme sert à une chose : préserver l'ambiance disparue des petites communautés internet. L'objectif n'est pas de rester coincé dans le passé, c'est plutôt d'être tourné vers le futur, sans oublier d'où on vient.
         </p>
 
         <p>
@@ -327,14 +327,14 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         <br>
         <br>
 
-        <h5>Le futur: Quel est l'avenir de NoBleme ?</h5>
+        <h5>Le futur : Quel est l'avenir de NoBleme ?</h5>
 
         <p>
           Pour ne pas répéter les erreurs du passé, il est important que NoBleme ait une direction qui ne clashe pas avec l'état d'esprit de sa communauté. Il serait facile de juste faire revenir le NRM ou le Wiki pour faire grandir rapidement NoBleme, mais si c'est pour qu'ils attirent des gens dont la présence écraserait la communautés en place, ce ne serait pas intéressant.
         </p>
 
         <p>
-          La direction prise par NoBleme est réactive: Bad développe des nouveaux contenus sur le site. Si ces contenus sont utiles à la communauté existante et n'attirent personne de nouveau, tant mieux. Si ces contenus attirent des nouveaux membres qui s'intègrent bien dans la communauté, tant mieux. Si ces contenus attirent des nouveaux membres indésirables, toxiques, ou dont l'état d'esprit ne se mélange pas bien avec celui des NoBlemeux d'aujourd'hui, tant pis, le contenu va à la poubelle.
+          La direction prise par NoBleme est réactive : Bad développe des nouveaux contenus sur le site. Si ces contenus sont utiles à la communauté existante et n'attirent personne de nouveau, tant mieux. Si ces contenus attirent des nouveaux membres qui s'intègrent bien dans la communauté, tant mieux. Si ces contenus attirent des nouveaux membres indésirables, toxiques, ou dont l'état d'esprit ne se mélange pas bien avec celui des NoBlemeux d'aujourd'hui, tant pis, le contenu va à la poubelle.
         </p>
 
         <p>
@@ -344,7 +344,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         <br>
         <br>
 
-        <h5>La question: Est-il trop tard pour faire partie de NoBleme ?</h5>
+        <h5>La question : Est-il trop tard pour faire partie de NoBleme ?</h5>
 
         <p>
           Bien sûr que non ! Si après avoir lu tout ce que vous venez de lire sur cette page vous arrivez à la conclusion que NoBleme est une communauté fermée, c'est que je me suis mal exprimé ou que vous avez mal compris. La raison d'être de NoBleme, c'est d'intégrer avec les bras ouverts tous ceux qui ont envie de partager les valeurs que la communauté représente.

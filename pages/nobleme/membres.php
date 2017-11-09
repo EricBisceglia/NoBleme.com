@@ -46,7 +46,7 @@ $qmembres = "       SELECT    membres.id            ,
 if(isset($_POST['search_pseudo']))
 {
   $search_pseudo = postdata($_POST['search_pseudo'], "string");
-  $qmembres .= "    WHERE     membres.pseudonyme LIKE '%$search_pseudo%' ";
+  $qmembres .= "    WHERE     membres.pseudonyme LIKE '%$search_pseudo%' collate utf8_bin ";
 }
 
 // Tri
@@ -96,14 +96,14 @@ if($lang == 'FR')
   $trad['titre']        = "Liste des membres";
   $trad['description']  = <<<EOD
 <p>
-  Le tableau ci-dessous recense tous les utilisateurs inscrits sur NoBleme, du plus récent au plus ancien. Vous pouvez cliquer sur le titre d'une colonne pour changer l'ordre de tri. Afin de les distinguer du reste, certains membres apparaissent dans des styles ou des couleurs différents:
+  Le tableau ci-dessous recense tous les utilisateurs inscrits sur NoBleme, du plus récent au plus ancien. Vous pouvez cliquer sur le titre d'une colonne pour changer l'ordre de tri. Afin de les distinguer du reste, certains membres apparaissent dans des styles ou des couleurs différents.
 </p>
 <p>
   Les utilisateurs qui se sont <a href="{$chemin}pages/nobleme/online?noguest">connectés récemment</a> à leur compte apparaissent en <span class="gras texte_noir">gras</span><br>
   Les membres de <a class="gras" href="{$chemin}pages/nobleme/admins">l'équipe administrative</a> apparaissent dans leurs couleurs respectives.<br>
 </p>
 <p>
-  Cliquez sur un membre dans le tableau pour voir sa page de profil. Si vous cherchez un membre en particulier, entrez son pseudonyme dans le formulaire de recherche ci-dessous:
+  Cliquez sur un membre dans le tableau pour voir sa page de profil. Si vous cherchez un membre en particulier, entrez son pseudonyme dans le formulaire de recherche ci-dessous :
 </p>
 EOD;
   $trad['labelpseudo']  = "Recherche d'un membre:";
@@ -124,7 +124,7 @@ else if($lang == 'EN')
   $trad['titre']        = "Registered user list";
   $trad['description']  = <<<EOD
 <p>
-  The table below lists all users that have registered on NoBleme, from the most recent to the oldest. You can click on the title of a column to sort the table by that column's contents. In order to tell them apart from the others, some users appear in the list with different formatting or colors:
+  The table below lists all users that have registered on NoBleme, from the most recent to the oldest. You can click on the title of a column to sort the table by that column's contents. In order to tell them apart from the others, some users appear in the list with different formatting or colors.
 </p>
 <p>
   Users that have <a href="{$chemin}pages/nobleme/online">recently logged into their account</a> will appear in <span class="gras texte_noir">bold</span><br>

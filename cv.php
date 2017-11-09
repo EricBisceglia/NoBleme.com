@@ -207,7 +207,7 @@ EOD;
               <?=$trad['domicile']?><br>
               <?=$trad['active']?><br>
               <?=$trad['naissance']?><br>
-              E-mail: <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a>
+              E-mail : <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a>
             </p>
           </div>
 
@@ -216,7 +216,7 @@ EOD;
         <br>
         <hr>
         <br>
-        <h5 class="alinea"><?=$trad['parcours']?>:</h5>
+        <h5 class="alinea"><?=$trad['parcours']?></h5>
         <br>
 
         <div class="flexcontainer">
@@ -230,11 +230,11 @@ EOD;
           </div>
 
           <div style="flex:auto">
-            <a class="gras" href="http://www.mtd-finance.fr">MTD Finance</a>: <?=$trad['work_mtd2']?><br>
-            <span class="gras texte_noir">Freelance</span>: <?=$trad['work_free2']?><br>
-            <a class="gras" href="http://www.mtd-finance.fr">MTD Finance</a>: <?=$trad['work_mtd']?><br>
-            <a class="gras" href="http://www.mecamatic.fr">Mécamatic</a>: <?=$trad['work_meca']?><br>
-            <span class="gras texte_noir">Freelance</span>: <?=$trad['work_free']?>
+            <a class="gras" href="http://www.mtd-finance.fr">MTD Finance</a> - <?=$trad['work_mtd2']?><br>
+            <span class="gras texte_noir">Freelance</span> - <?=$trad['work_free2']?><br>
+            <a class="gras" href="http://www.mtd-finance.fr">MTD Finance</a> - <?=$trad['work_mtd']?><br>
+            <a class="gras" href="http://www.mecamatic.fr">Mécamatic</a> - <?=$trad['work_meca']?><br>
+            <span class="gras texte_noir">Freelance</span> - <?=$trad['work_free']?>
           </div>
 
           <div style="flex:auto">
@@ -250,7 +250,7 @@ EOD;
         <br>
         <hr>
         <br>
-        <h5 class="alinea"><?=$trad['projets']?>:</h5>
+        <h5 class="alinea"><?=$trad['projets']?></h5>
         <br>
 
         <div class="flexcontainer">
@@ -264,11 +264,11 @@ EOD;
           </div>
 
           <div style="flex:auto">
-            <a class="gras" href="http://nobleme.com/">NoBleme</a>: <?=$trad['perso_nobleme']?><br>
-            <span class="gras texte_noir">SteelDB</span>: <?=$trad['perso_steeldb']?><br>
-            <span class="gras texte_noir">Dix</span>: <?=$trad['perso_dix']?><br>
-            <span class="gras texte_noir">NRM Online</span>: <?=$trad['perso_nrm']?><br>
-            <span class="gras texte_noir">NBRPG</span>: <?=$trad['perso_nbrpg']?>
+            <a class="gras" href="http://nobleme.com/">NoBleme</a> - <?=$trad['perso_nobleme']?><br>
+            <span class="gras texte_noir">SteelDB</span> - <?=$trad['perso_steeldb']?><br>
+            <span class="gras texte_noir">Dix</span> - <?=$trad['perso_dix']?><br>
+            <span class="gras texte_noir">NRM Online</span> - <?=$trad['perso_nrm']?><br>
+            <span class="gras texte_noir">NBRPG</span> - <?=$trad['perso_nbrpg']?>
           </div>
 
           <div style="flex:auto">
@@ -280,11 +280,11 @@ EOD;
           </div>
 
           <div style="flex:auto">
-            <a class="gras" href="cv?portfolio#nobleme">Portfolio: NoBleme</a><br>
-            <a class="gras" href="cv?portfolio#steeldb">Portfolio: SteelDB</a><br>
-            <a class="gras" href="cv?portfolio#dix">Portfolio: Dix</a><br>
-            <a class="gras" href="cv?portfolio#nrm">Portfolio: NRM Online</a><br>
-            <a class="gras" href="cv?portfolio#nbrpg">Portfolio: NBRPG</a>
+            <a class="gras" href="cv?portfolio#nobleme">Portfolio : NoBleme</a><br>
+            <a class="gras" href="cv?portfolio#steeldb">Portfolio : SteelDB</a><br>
+            <a class="gras" href="cv?portfolio#dix">Portfolio : Dix</a><br>
+            <a class="gras" href="cv?portfolio#nrm">Portfolio : NRM Online</a><br>
+            <a class="gras" href="cv?portfolio#nbrpg">Portfolio : NBRPG</a>
           </div>
 
         </div>
@@ -292,7 +292,7 @@ EOD;
         <br>
         <hr>
         <br>
-        <h5 class="alinea"><?=$trad['skill']?>:</h5>
+        <h5 class="alinea"><?=$trad['skill']?></h5>
         <br>
 
         <div class="flexcontainer">
@@ -318,7 +318,7 @@ EOD;
         <br>
         <hr>
         <br>
-        <h5 class="alinea"><?=$trad['lang']?> (<a href="<?=$trad['lang_cefr_href']?>"><?=$trad['lang_cefr']?></a>):</h5>
+        <h5 class="alinea"><?=$trad['lang']?> (<a href="<?=$trad['lang_cefr_href']?>"><?=$trad['lang_cefr']?></a>)</h5>
         <br>
         <span class="gras"><?=$trad['lang_resume']?></span><br>
         <br>
@@ -410,7 +410,7 @@ EOD;
         <hr>
         <br id="nobleme">
 
-        <h5 class="alinea">NoBleme.com: Site internet et communauté depuis 2005</h5>
+        <h5 class="alinea">NoBleme.com : Site internet et communauté depuis 2005</h5>
         <span class="alinea">PHP - MySQL - JavaScript - Entièrement open source</span>
 
         <p>
@@ -422,7 +422,7 @@ EOD;
         </p>
 
         <p>
-          Le code source de NoBleme est entièrement libre et open source, publié sous une license permissive qui permet de le réutiliser. Il est visible publiquement sur Bitbucket: <a class="gras" href="https://bitbucket.org/EricBisceglia/nobleme.com/overview">voir le code source de NoBleme.com</a><br>
+          Le code source de NoBleme est entièrement libre et open source, publié sous une license permissive qui permet de le réutiliser. Il est visible publiquement sur Bitbucket : <a class="gras" href="https://bitbucket.org/EricBisceglia/nobleme.com/overview">voir le code source de NoBleme.com</a><br>
           <br>
           Vous trouverez plus d'informations sur les aspects techniques du développement de NoBleme.com et sur mes convictions de développeur en visitant les <a class="gras" href="<?=$chemin?>pages/nobleme/coulisses">coulisses de NoBleme</a>
         </p>
@@ -434,15 +434,15 @@ EOD;
         <hr>
         <br id="steeldb">
 
-        <h5 class="alinea">SteelDB: Logiciel de traduction pour l'industrie lourde</h5>
+        <h5 class="alinea">SteelDB : Logiciel de traduction pour l'industrie lourde</h5>
         <span class="alinea">Perl - FileMaker - AppleScript - Développé de 2010 à 2011</span>
 
         <p>
-          SteelDB est le nom de code interne d'un projet commercial que j'ai réalisé en 2010 et continué à maintenir jusqu'en 2011. Il s'agit d'un logiciel interne répondant à une problématique spécifique: Une entreprise ayant un environnement Mac OSX, et désirant utiliser le logiciel (très limité) Filemaker pour leur outil interne.<br>
+          SteelDB est le nom de code interne d'un projet commercial que j'ai réalisé en 2010 et continué à maintenir jusqu'en 2011. Il s'agit d'un logiciel interne répondant à une problématique spécifique : Une entreprise ayant un environnement Mac OSX, et désirant utiliser le logiciel (très limité) Filemaker pour leur outil interne.<br>
           <br>
           Étant à l'époque un des seuls développeurs sur Paris ayant à la fois de l'expérience avec Filemaker, OSX, et l'industrie lourde, j'ai décidé de tenter ma chance. Sur mon temps libre, j'ai assemblé un prototype d'outil utilisant des hooks système en AppleScript permettant d'appeler des scripts en Perl depuis Filemaker afin de contourner les limitations du logiciel. Certaines actions impossibles à l'époque depuis Filemaker (envoyer un e-mail, exporter un PDF, etc.) deviennent ainsi relativement simples à réaliser.<br>
           <br>
-          L'objectif de SteelDB est de gérer tous les éléments suivants:<br>
+          L'objectif de SteelDB est de gérer tous les éléments suivants :<br>
           - Un carnet d'adresses de contacts, clients et fournisseurs<br>
           - Un utilitaire de traductions techniques pointues automatisées<br>
           - Un suivi du processus allant de la commande au suivi après vente<br>
@@ -493,7 +493,7 @@ EOD;
         <hr>
         <br id="dix">
 
-        <h5 class="alinea">Starcraft Dix: Génération de statistiques à partir de fichiers .MPQ</h5>
+        <h5 class="alinea">Starcraft Dix : Génération de statistiques à partir de fichiers .MPQ</h5>
         <span class="alinea">C - Bash - PHP - MySQL - JavaScript - Developpé de 2011 à 2012</span>
 
         <p>
@@ -534,7 +534,7 @@ EOD;
         <hr>
         <br id="nrm">
 
-        <h5 class="alinea">NRM Online: Jeu de stratégie multijoueur par navigateur</h5>
+        <h5 class="alinea">NRM Online : Jeu de stratégie multijoueur par navigateur</h5>
         <span class="alinea">PHP - MySQL - JavaScript - Développé de 2006 à 2009</span>
 
         <p>
@@ -579,7 +579,7 @@ EOD;
         <hr>
         <br id="nbrpg">
 
-        <h5 class="alinea">NoBlemeRPG: Jeu de rôle multijoueur via IRC</h5>
+        <h5 class="alinea">NoBlemeRPG : Jeu de rôle multijoueur via IRC</h5>
         <span class="alinea">C - MySQL - Bash - IRC - Développé par intermittence de 2006 à 2015</span>
 
         <p>
@@ -633,7 +633,7 @@ EOD;
         <br>
         <img src="<?=$chemin?>img/portfolio/nbrpg_monstre.png" alt="NoBlemeRPG"><br>
         <br>
-        <hr>T
+        <hr>
         <br>
         <img src="<?=$chemin?>img/portfolio/nbrpg_search.png" alt="NoBlemeRPG"><br>
         <br>
@@ -899,7 +899,7 @@ EOD;
         <br>
         <img src="<?=$chemin?>img/portfolio/nbrpg_monstre.png" alt="NoBlemeRPG"><br>
         <br>
-        <hr>T
+        <hr>
         <br>
         <img src="<?=$chemin?>img/portfolio/nbrpg_search.png" alt="NoBlemeRPG"><br>
         <br>

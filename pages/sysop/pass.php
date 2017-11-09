@@ -141,7 +141,7 @@ if(isset($_GET['id']))
         <?php } else { ?>
 
         <fieldset>
-          <label for="sysop_pseudo_user">Entrez une partie du pseudonyme de l'utilisateur dont vous souhaitez changer le mot de passe:</label>
+          <label for="sysop_pseudo_user">Entrez une partie du pseudonyme de l'utilisateur dont vous souhaitez changer le mot de passe :</label>
           <input  id="sysop_pseudo_user" name="sysop_pseudo_user" class="indiv" type="text"
                   onkeyup="sysop_chercher_user('<?=$chemin?>', 'Changer pass', 'pass')";><br>
         </fieldset>

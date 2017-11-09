@@ -86,13 +86,13 @@ $maj_datefull = jourfr($maj_date);
 
         <form method="POST">
           <fieldset>
-            <label for="majVersion">Version :</label>
+            <label for="majVersion">Version</label>
             <input id="majVersion" name="majVersion" class="indiv" type="text" value="<?=$maj_version?>"><br>
             <br>
-            <label for="majBuild">Build :</label>
+            <label for="majBuild">Build</label>
             <input id="majBuild" name="majBuild" class="indiv" type="text" value="<?=$maj_build?>"><br>
             <br>
-            <label for="majDate">Date :</label>
+            <label for="majDate">Date</label>
             <input id="majDate" name="majDate" class="indiv" type="text" value="<?=$maj_date?>"><br>
             <br>
             <input value="Mettre à jour le numéro de version" type="submit">

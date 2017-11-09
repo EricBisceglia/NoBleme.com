@@ -50,7 +50,7 @@ $time_chargement  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
         <?php } ?>
         <a href="<?=$chemin?>pages/todo/roadmap"><?=$version?></a><br>
         <a href="<?=$chemin?>pages/user/user?id=1"><?=$trad['footer_dev']?> <span class="gras">Bad</span></a><br>
-        <a href="<?=$chemin?>pages/doc/nobleme">NoBleme.com: 2005 - <?=date('Y')?></a>
+        <a href="<?=$chemin?>pages/doc/nobleme">NoBleme.com : 2005 - <?=date('Y')?></a>
       </footer>
     </div>
   </div>

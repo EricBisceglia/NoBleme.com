@@ -262,7 +262,7 @@ if(isset($_GET['id']))
         <?php } else { ?>
 
         <fieldset>
-          <label for="sysop_pseudo_user">Entrez une partie du pseudonyme de l'utilisateur que vous souhaitez bannir:</label>
+          <label for="sysop_pseudo_user">Entrez une partie du pseudonyme de l'utilisateur que vous souhaitez bannir :</label>
           <input  id="sysop_pseudo_user" name="sysop_pseudo_user" class="indiv" type="text"
                   onkeyup="sysop_chercher_user('<?=$chemin?>', 'Bannir', 'ban')";><br>
         </fieldset>

@@ -29,7 +29,7 @@ $page_nom = "Administre secrètement le site";
 
       <div class="texte">
 
-        <h4>Avant de faire une mise à jour:</h4>
+        <h4>Avant de faire une mise à jour</h4>
 
         <p>
           <input type="checkbox"> S'il y a eu des changements structurels SQL, faire un dump de la structure dans sqldump.php<br>
@@ -47,7 +47,7 @@ $page_nom = "Administre secrètement le site";
         <br>
         <br>
 
-        <h4>Faire une mise à jour:</h4>
+        <h4>Faire une mise à jour</h4>
 
         <p>
           <input type="checkbox"> Commit les changements et vérifier que le commit ait bien été push dans <a href="https://bitbucket.org/EricBisceglia/nobleme.com/commits/all">le dépôt public</a><br>
@@ -65,7 +65,7 @@ $page_nom = "Administre secrètement le site";
         <br>
         <br>
 
-        <h4>Après une mise à jour:</h4>
+        <h4>Après une mise à jour</h4>
 
         <p>
           <input type="checkbox"> Choper l'url du dernier commit dans <a href="https://bitbucket.org/EricBisceglia/nobleme.com/commits/all">le dépôt public</a> et le partager publiquement sur #dev via <a href="<?=$chemin?>pages/dev/ircbot">le bot IRC</a><br>

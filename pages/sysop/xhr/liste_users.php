@@ -36,7 +36,7 @@ $quserlist = query("  SELECT    membres.id          ,
                                 membres.pseudonyme  ,
                                 membres.banni_date
                       FROM      membres
-                      WHERE     membres.pseudonyme LIKE '%$userlist_recherche%'
+                      WHERE     membres.pseudonyme LIKE '%$userlist_recherche%' collate utf8_bin
                       ORDER BY  membres.pseudonyme ASC ");
 
 // On les prépare pour l'affiche

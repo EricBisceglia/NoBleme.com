@@ -110,6 +110,52 @@ query(" UPDATE irl SET raison_en = 'ThArGos is visiting paris' WHERE raison_fr L
 // Fix des vieux messages privés foireux
 query(" UPDATE notifications SET contenu = REPLACE (contenu, '&lt;', '<') ");
 query(" UPDATE notifications SET contenu = REPLACE (contenu, '&gt;', '>') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&#62;', '>') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&amp;', '&') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&quot;', '\"') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&Agrave;', 'À') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&agrave;', 'à') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&acirc;', 'â') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&auml;', 'ä') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&Ccedil;', 'Ç') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&ccedil;', 'ç') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&eacute;', 'é') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&egrave;', 'è') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&ecirc;', 'ê') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&euml;', 'ë') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&icirc;', 'î') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&iuml;', 'ï') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&ocirc;', 'ô') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&oacute;', 'ó') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&ouml;', 'ö') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&ugrave;', 'ù') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&ucirc;', 'û') ");
+query(" UPDATE notifications SET contenu = REPLACE (contenu, '&uuml;', 'ü') ");
+
+// Fix des vieilles miscellanées foireuses
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&lt;', '<') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&gt;', '>') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&#62;', '>') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&amp;', '&') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&quot;', '\"') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&Agrave;', 'À') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&agrave;', 'à') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&acirc;', 'â') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&auml;', 'ä') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&Ccedil;', 'Ç') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&ccedil;', 'ç') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&eacute;', 'é') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&egrave;', 'è') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&ecirc;', 'ê') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&euml;', 'ë') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&icirc;', 'î') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&iuml;', 'ï') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&ocirc;', 'ô') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&oacute;', 'ó') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&ouml;', 'ö') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&ugrave;', 'ù') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&ucirc;', 'û') ");
+query(" UPDATE quotes SET contenu = REPLACE (contenu, '&uuml;', 'ü') ");
 
 // Plus besoin de certains contenus devenus legacy
 sql_supprimer_table('anniv_flash');

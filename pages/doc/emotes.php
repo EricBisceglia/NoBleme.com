@@ -41,8 +41,8 @@ if($lang == 'FR')
   Les émoticônes sont des petites images amusantes qui remplacent automatiquement certaines combinaisons de caractères dans vos messages. Elles expriment diverses émotions, et vous permettent de rendre vos messages un peu plus vivants, si vous le désirez.
 </p>
 <p>
-  Par exemple, si vous écrivez ceci: &laquo; Je me marre XD &raquo;<br>
-  Votre phrase sera remplacée par: &laquo; Je me marre {$temp_bbcode} &raquo;
+  Par exemple, si vous écrivez ceci : &laquo; Je me marre XD &raquo;<br>
+  Votre phrase sera remplacée par : &laquo; Je me marre {$temp_bbcode} &raquo;
 </p>
 EOD;
   $trad['source']           = "Source des émoticônes de NoBleme";

@@ -198,7 +198,9 @@ if($lang == 'FR')
   $trad['soustitre']    = "Prochains anniversaires réels et NoBlemeux";
   $trad['description']  = <<<EOD
 <p>
-  Cette page contient deux tableaux permettant de voir deux types d'anniversaires à venir:<br>Le premier liste les <span class="gras">anniversaires réels</span> (vous pouvez remplir le votre dans les <a href="{$chemin}pages/user/public">réglages de votre compte</a>).<br>Le second liste les <span class="gras">anniversaires NoBlemeux</span>, basés sur la date de création des comptes.
+  Cette page contient deux tableaux permettant de voir deux types d'anniversaires à venir :<br>
+  Le premier liste les <span class="gras">anniversaires réels</span> (vous pouvez remplir le votre dans les <a href="{$chemin}pages/user/public">réglages de votre compte</a>).<br>
+  Le second liste les <span class="gras">anniversaires NoBlemeux</span>, basés sur la date de création des comptes.
 </p>
 <p>
   Les utilisateurs qui se sont <a href="{$chemin}pages/nobleme/online?noguest">connectés récemment</a> à leur compte apparaissent en <span class="gras">gras</span><br>
@@ -225,7 +227,9 @@ else if($lang == 'EN')
   $trad['soustitre']    = "Upcoming real life and virtual birthdays";
   $trad['description']  = <<<EOD
 <p>
-  Below are two tables which contain two different types of upcoming birthdays:<br>The first one lists <span class="gras">real life birthdays</span> (you can set yours in your <a href="{$chemin}pages/user/public">account settings</a>).<br>The second one lists <span class="gras">NoBleme anniversaries</span>, based on the registration date of accounts.
+  Below are two tables which contain two different types of upcoming birthdays:<br>
+  The first one lists <span class="gras">real life birthdays</span> (you can set yours in your <a href="{$chemin}pages/user/public">account settings</a>).<br>
+  The second one lists <span class="gras">NoBleme anniversaries</span>, based on the registration date of accounts.
 </p>
 <p>
   Users that have <a href="{$chemin}pages/nobleme/online">recently logged into their account</a> will appear in <span class="gras">bold</span><br>

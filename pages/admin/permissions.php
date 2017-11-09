@@ -191,7 +191,7 @@ if(isset($_GET['id']))
         <?php } else { ?>
 
         <fieldset>
-          <label for="admin_pseudo_user">Entrez une partie du pseudonyme de l'utilisateur dont les privilèges seront modifiés:</label>
+          <label for="admin_pseudo_user">Entrez une partie du pseudonyme de l'utilisateur dont les privilèges seront modifiés :</label>
           <input  id="admin_pseudo_user" name="admin_pseudo_user" class="indiv" type="text" onkeyup="admin_chercher_user('<?=$chemin?>')";><br>
         </fieldset>
 

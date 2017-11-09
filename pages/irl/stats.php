@@ -21,8 +21,8 @@ $page_titre = ($lang == 'FR') ? "Statistiques des IRL" : "Real life meetup stats
 $page_desc  = "Statistiques des rencontres IRL des NoBlemeux";
 
 // CSS & JS
-$css  = array('onglets');
-$js   = array('onglets');
+$css = array('onglets');
+$js  = array('onglets');
 
 
 
@@ -66,7 +66,7 @@ $qhabitues = query("  SELECT    membres.id                  AS 'irlstat_id'     
 // On va chercher les infos supplémentaires et préparer pour l'affichage
 for($nhabitues = 0 ; $dhabitues = mysqli_fetch_array($qhabitues) ; $nhabitues++)
 {
-  // PremièreIRL
+  // Première IRL
   $temp_id = $dhabitues['irlstat_id'];
   $qpremiereirl = mysqli_fetch_array(query("  SELECT    irl.id    AS 'irlid' ,
                                                         irl.date  AS 'irldate'
@@ -121,7 +121,7 @@ $qirliste = query(" SELECT    membres.id                  AS 'irlstat_id'     ,
 // On va chercher les infos supplémentaires et préparer pour l'affichage
 for($nirliste = 0 ; $dirliste = mysqli_fetch_array($qirliste) ; $nirliste++)
 {
-  // PremièreIRL
+  // Première IRL
   $temp_id = $dirliste['irlstat_id'];
   $qpremiereirl = mysqli_fetch_array(query("  SELECT    irl.id    AS 'irlid' ,
                                                         irl.date  AS 'irldate'
@@ -188,7 +188,7 @@ if($lang == 'FR')
   $trad['titre']            = "Statistiques des IRL";
   $trad['soustitre']        = "Les rencontres entre NoBlemeux, en chiffres";
   $trad['desc']             = <<<EOD
-Cette page contient divers statistiques portant sur les <a class="gras" href="{$chemin}pages/irl/index">rencontres IRL</a> entre NoBlemeux. Les IRL ont eu lieu régulièrement depuis 2005, mais ce n'est que depuis fin 2012 qu'elles sont organisées et listées sur le site internet. Par conséquent, les stats ne commencent qu'en automne 2012.
+Cette page contient diverses statistiques portant sur les <a class="gras" href="{$chemin}pages/irl/index">rencontres IRL</a> entre NoBlemeux. Les IRL ont eu lieu régulièrement depuis 2005, mais ce n'est que depuis fin 2012 qu'elles sont organisées et listées sur le site internet. Par conséquent, les stats ne commencent qu'en automne 2012.
 EOD;
 
   // Onglets

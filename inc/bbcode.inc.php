@@ -190,14 +190,14 @@ function bbcode($post, $xhr=NULL)
   $post = preg_replace('/\[code\](.*?)\[\/code\]/is','<pre class="monospace alinea wrap">$1</pre>', $post);
 
   // [quote]Citation[/quote]
-  $temp = ($lang == 'FR') ? 'Citation:' : 'Quote:';
+  $temp = ($lang == 'FR') ? 'Citation :' : 'Quote:';
   while(preg_match('/\[quote\](.*?)\[\/quote\]/is',$post))
     $post = preg_replace('/\[quote\](.*?)\[\/quote\]/is',"<div class=\"citation_corps\"><div class=\"citation_titre\">$temp</div>$1</div>", $post);
 
   // [quote=Machin]Citation par Machin[/quote]
   $temp = ($lang == 'FR') ? 'Citation de' : 'Quote by';
   while(preg_match('/\[quote=(.*?)\](.*?)\[\/quote\]/is',$post))
-    $post = preg_replace('/\[quote=(.*?)\](.*?)\[\/quote\]/is',"<div class=\"citation_corps\"><div class=\"citation_titre\">$temp $1:</div>$2</div>", $post);
+    $post = preg_replace('/\[quote=(.*?)\](.*?)\[\/quote\]/is',"<div class=\"citation_corps\"><div class=\"citation_titre\">$temp $1 :</div>$2</div>", $post);
 
   // [spoiler]Contenu caché[/spoiler]
   $temp = ($lang == 'FR') ? 'MASQUER LE CONTENU CACHÉ' : 'HIDE SPOILER CONTENTS';

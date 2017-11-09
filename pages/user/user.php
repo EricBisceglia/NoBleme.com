@@ -312,21 +312,21 @@ else if($lang == 'EN')
 
               <?php } if($profil_irl) { ?>
               <hr class="profil_hr">
-              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/irl/index';">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/irl/stats';">
                 <span class="gras"><?=$trad['user_irl']?></span><br>
                 <?=$trad['usert_irl']?>
               </div>
 
               <?php } if($profil_quotes && $lang == 'FR') { ?>
               <hr class="profil_hr">
-              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/quotes/index';">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/quotes/stats';">
                 <span class="gras">Apparitions dans les miscellanées</span><br>
                 <span class="gras texte_noir"><?=$profil_quotes?></span>
               </div>
 
               <?php } if($profil_quotesub && $lang == 'FR') { ?>
               <hr class="profil_hr">
-              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/quotes/index';">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/quotes/stats';">
                 <span class="gras">Miscellanées proposées</span><br>
                 <span class="gras texte_noir"><?=$profil_quotesub?></span>
               </div>

@@ -165,17 +165,17 @@ Cette page vous permet de modifier les éléments qui apparaissent sur votre <a 
 EOD;
 
   // Colonne de gauche
-  $trad['gauche_titre']   = "Colonne de gauche: Informations personnelles";
-  $trad['gauche_anniv']   = "Date de naissance:";
-  $trad['gauche_genre']   = "Genre:";
+  $trad['gauche_titre']   = "Colonne de gauche : Informations personnelles";
+  $trad['gauche_anniv']   = "Date de naissance";
+  $trad['gauche_genre']   = "Genre";
   $trad['gauche_tgenre']  = "Masculin, féminin, etc.     35 caractères maximum";
-  $trad['gauche_habite']  = "Ville / Région / Pays:";
+  $trad['gauche_habite']  = "Ville / Région / Pays";
   $trad['gauche_thabite'] = "L'endroit où vous vivez     35 caractères maximum";
-  $trad['gauche_metier']  = "Métier / Occupation:";
+  $trad['gauche_metier']  = "Métier / Occupation";
   $trad['gauche_tmetier'] = "Ce que vous faites dans la vie     35 caractères maximum";
 
   // Colonne de droite
-  $trad['droite_titre']   = "Colonne de droite: Espace personnalisable";
+  $trad['droite_titre']   = "Colonne de droite : Espace personnalisable";
   $trad['droite_desc']    = <<<EOD
 Cet espace est à votre disposition pour y mettre tout ce dont vous avez envie, bien entendu tout en respectant le <a class="gras" href="{$chemin}pages/doc/coc">code de conduite</a> de NoBleme. Vous pouvez utiliser des <a class="gras" href="{$chemin}pages/doc/emotes">émoticônes</a> et des <a class="gras" href="{$chemin}pages/doc/bbcodes">BBCodes</a> sur votre profil.
 EOD;
@@ -196,12 +196,12 @@ EOD;
 
   // Colonne de gauche
   $trad['gauche_titre']   = "Left side: Personal information";
-  $trad['gauche_anniv']   = "Date of birth:";
-  $trad['gauche_genre']   = "Gender:";
+  $trad['gauche_anniv']   = "Date of birth";
+  $trad['gauche_genre']   = "Gender";
   $trad['gauche_tgenre']  = "Male, female, etc.     35 character limit";
-  $trad['gauche_habite']  = "City / Country:";
+  $trad['gauche_habite']  = "City / Countr:";
   $trad['gauche_thabite'] = "The place where you live     35 character limit";
-  $trad['gauche_metier']  = "Job / Occupation:";
+  $trad['gauche_metier']  = "Job / Occupation";
   $trad['gauche_tmetier'] = "Your life's main activity     35 character limit";
 
   // Colonne de droite
