@@ -392,14 +392,12 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   //***************************************************************************************************************************************
   // Nouveau devblog
 
-  /*
   else if($dactrec['action_type'] === 'devblog')
   {
-    $activite_css[$nactrec]         = 'texte_noir gras vert_background';
-    $activite_href[$nactrec]        = $chemin.'pages/devblog/blog?id='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = "Nouveau devblog publié: ".predata(tronquer_chaine($dactrec['action_titre'], 50, '...'));
+    $activite_css[$nactrec]         = 'texte_noir vert_background';
+    $activite_href[$nactrec]        = $chemin.'pages/devblog/devblog?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = "Nouveau devblog publié : ".predata(tronquer_chaine($dactrec['action_titre'], 50, '...'));
   }
-  */
 
   //***************************************************************************************************************************************
   // Nouveau ticket

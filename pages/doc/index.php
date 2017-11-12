@@ -51,8 +51,6 @@ if($lang == 'FR')
   $trad['docd_bbcodes']   = "Système de mots-clés permettant de formatter le contenu de vos messages";
   $trad['doct_shorturl']  = "URLs raccourcies";
   $trad['docd_shorturl']  = "Vous trouvez que les adresses des pages de NoBleme sont trop longues ? Dans ce cas, cette page est pour vous";
-  $trad['doct_api']       = "API publique";
-  $trad['docd_api']       = "Utilitaire pour les développeurs qui souhaiteraient créer des programmes interconnectés avec NoBleme";
   $trad['doct_admin']     = "Contacter l'administration";
   $trad['docd_admin']     = "Vous avez un problème ou une situation qui nécessite l'intervention d'un administrateur ? Cliquez ici";
 }
@@ -79,8 +77,6 @@ else if($lang == 'EN')
   $trad['docd_bbcodes']   = "Keyword system which allows you to format the messages you post";
   $trad['doct_shorturl']  = "Short URLs";
   $trad['docd_shorturl']  = "Have you ever wanted to link a page on NoBleme but thought that the URL was too long? Then this page is for you";
-  $trad['doct_api']       = "Public API";
-  $trad['docd_api']       = "Tool for developers wishing to integrate content from NoBleme into a program they have assembled";
   $trad['doct_admin']     = "Contact the administrative staff";
   $trad['docd_admin']     = "Do you have an issue or a situation which requires the intervention of an administrator? Click here";
 }
@@ -187,19 +183,6 @@ else if($lang == 'EN')
             </h5>
             <span class="doc_minipadding">
               <?=$trad['docd_shorturl']?>
-            </span>
-          </div>
-        </div>
-
-        <br>
-
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/api';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
-              <?=$trad['doct_api']?>
-            </h5>
-            <span class="doc_minipadding">
-              <?=$trad['docd_api']?>
             </span>
           </div>
         </div>

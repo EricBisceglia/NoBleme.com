@@ -94,8 +94,19 @@ while(1) {
   // On check s'il y a un nouveau message à poster dans le fichier .txt
   if($dernier_message != file_get_contents($fichier_bot))
   {
+    // On met le contenu du fichier en mémoire
     $dernier_message = file_get_contents($fichier_bot);
-    fputs($socket_irc,substr($dernier_message,11)."\r\n");
+
+    // On balance la première ligne
+    $fichier_bot_contenu = fopen($fichier_bot, 'r');
+    $ligne_bot = fgets($fichier_bot_contenu);
+    fputs($socket_irc, substr($ligne_bot, 11).PHP_EOL);
+    fclose($fichier_bot_contenu);
+
+    // On vire la première ligne du fichier
+    $contents = file($fichier_bot, FILE_IGNORE_NEW_LINES);
+    $first_line = array_shift($contents);
+    file_put_contents($fichier_bot, implode("\r\n", $contents));
   }
 
   // Et on évite le memory leak exponentiel en flushant le buffer puis collectant de force le garbage

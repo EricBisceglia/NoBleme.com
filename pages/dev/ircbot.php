@@ -32,7 +32,7 @@ $page_nom = "Administre secrètement le site";
 
 if(isset($_POST['botMessage']) && $_POST['botMessage'])
 {
-  if($ircbot_canal == 'aucun')
+  if($_POST['botCanal'] == 'aucun')
     ircbot($chemin,$_POST['botMessage']);
   else
     ircbot($chemin,$_POST['botMessage'],$_POST['botCanal'],1);
@@ -56,6 +56,19 @@ if(isset($_POST['botCommit']) && $_POST['botCommit'])
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Purger le log ircbot
+
+if(isset($_POST['botPurge']))
+{
+  $ircbot_fichier = fopen($chemin."ircbot.txt", "r+");
+  ftruncate($ircbot_fichier, 0);
+  fclose($ircbot_fichier);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Tuer le bot... bonne nuit doux prince
 
 if(isset($_POST['botQuit']))
@@ -70,9 +83,14 @@ if(isset($_POST['botQuit']))
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Dernière commande effectuée par le bot
+// Log de commandes ircbot
 if(file_exists($chemin."ircbot.txt"))
-  $ircbot_debug = predata(substr(file_get_contents($chemin."ircbot.txt"),11));
+{
+  $ircbot_debug     = '';
+  $ircbot_fichier   = fopen($chemin."ircbot.txt", "r");
+  while(!feof($ircbot_fichier))
+    $ircbot_debug  .= predata(substr(fgets($ircbot_fichier),11)).'<br>';
+}
 else
   $ircbot_debug = "Le fichier .txt du bot IRC n'existe pas ou est mal configuré";
 
@@ -154,12 +172,18 @@ else
       <div class="texte">
 
         <br>
-        <h5>Debug: Dernière commande enregistrée</h5>
+        <h5>Debug: Log de commandes ircbot</h5>
         <br>
 
         <p class="texte_nobleme_fonce gras">
-          <?=$ircbot_debug?>
+          <?=$ircbot_debug?><br>
         </p>
+
+        <form method="POST">
+          <fieldset>
+            <input value="Purger le log ircbot" type="submit" name="botPurge">
+          </fieldset>
+        </form>
 
       </div>
 

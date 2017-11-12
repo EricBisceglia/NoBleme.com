@@ -5,17 +5,13 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 
-// Permissions
-if(isset($_GET['admin']))
-  adminonly();
-
 // Menus du header
-$header_menu      = (isset($_GET['admin'])) ? 'Admin' : 'Lire';
-$header_sidemenu  = (isset($_GET['admin'])) ? 'QuotesBacklog' : 'MiscIndex';
+$header_menu      = 'Lire';
+$header_sidemenu  = 'MiscIndex';
 
 // Identification
-$page_nom = (isset($_GET['admin'])) ? "Administre secrètement le site" : "Se marre devant les miscellanées";
-$page_url = (isset($_GET['admin'])) ? "" : "pages/quotes/index";
+$page_nom = "Se marre devant les miscellanées";
+$page_url = "pages/quotes/index";
 
 // Langages disponibles
 $langage_page = array('FR');
@@ -37,15 +33,14 @@ $js = array('dynamique');
 /*****************************************************************************************************************************************/
 
 // On va chercher les citations
-$qmisc = "    SELECT    quotes.id         AS 'q_id'   ,
-                        quotes.timestamp  AS 'q_time' ,
-                        quotes.contenu    AS 'q_contenu'
+$qmisc = "    SELECT    quotes.id           AS 'q_id'       ,
+                        quotes.timestamp    AS 'q_time'     ,
+                        quotes.contenu      AS 'q_contenu'  ,
+                        quotes.valide_admin AS 'q_valide'
               FROM      quotes ";
 
 // Version admin ou non
-if(isset($_GET['admin']))
-  $qmisc .= " WHERE     quotes.valide_admin = 0 ";
-else
+if(!getadmin())
   $qmisc .= " WHERE     quotes.valide_admin = 1 ";
 
 // Recherche
@@ -56,18 +51,22 @@ if(isset($_POST['misc_recherche']))
 }
 
 // Tri
-$qmisc .= "   ORDER BY  quotes.timestamp  DESC  ,
-                        quotes.id         DESC  ";
+$qmisc .= "   ORDER BY  quotes.valide_admin ASC   ,
+                        quotes.timestamp    DESC  ,
+                        quotes.id           DESC  ";
 
 // On envoie la requête
 $qmisc = query($qmisc);
 
 // Préparation des données pour l'affichage
+$misc_admin = getadmin();
 for($nmisc = 0; $dmisc = mysqli_fetch_array($qmisc); $nmisc++)
 {
   $misc_id[$nmisc]      = $dmisc['q_id'];
   $misc_date[$nmisc]    = ($dmisc['q_time']) ? '<span class="gras">du '.predata(jourfr(date('Y-m-d', $dmisc['q_time']))).'</span>' : '';
-  $misc_contenu[$nmisc] = predata($dmisc['q_contenu'], 1);
+  $misc_contenu[$nmisc] = ($dmisc['q_valide']) ? '' : '<span class="texte_negatif">---- MISCELLANÉE NON VALIDÉE ! ----<br>';
+  $misc_contenu[$nmisc] .= predata($dmisc['q_contenu'], 1);
+  $misc_contenu[$nmisc] .= ($dmisc['q_valide']) ? '' : '<br>---- MISCELLANÉE NON VALIDÉE ! ----</span>';
 
   // On a aussi besoin des membres liés à la miscellanée
   $tempid               = $dmisc['q_id'];
@@ -97,12 +96,6 @@ if(!getxhr()) { /***************************************************************
 
       <div class="texte2">
 
-        <?php if(isset($_GET['admin'])) { ?>
-
-        <h1>Miscellanées en attente</h1>
-
-        <?php } else { ?>
-
         <h1>Miscellanées</h1>
 
         <h5>Petites citations amusantes</h5>
@@ -129,8 +122,6 @@ if(!getxhr()) { /***************************************************************
 
         <br>
 
-        <?php } ?>
-
         <div id="misc_quotes">
 
           <h5>Liste des <?=$nmisc?> miscellanées :</h5>
@@ -147,7 +138,7 @@ if(!getxhr()) { /***************************************************************
 
           <p class="monospace">
             <a class="gras" href="<?=$chemin?>pages/quotes/quote?id=<?=$misc_id[$i]?>">Miscellanée #<?=$misc_id[$i]?></a> <?=$misc_date[$i]?> <?=$misc_pseudos[$i]?>
-            <?php if(getadmin()) { ?>
+            <?php if($misc_admin) { ?>
             - <a class="gras" href="<?=$chemin?>pages/quotes/edit?id=<?=$misc_id[$i]?>">Modifier</a> - <a class="gras" href="<?=$chemin?>pages/quotes/delete?id=<?=$misc_id[$i]?>">Supprimer</a>
             <?php } ?>
             <br>

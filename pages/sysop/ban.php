@@ -96,8 +96,10 @@ EOD;
   // On envoie un message privé à l'user qui s'est fait bannir
   envoyer_notif($ban_id, "Vous avez été banni / You have been banned", postdata($ban_pm));
 
-  // On notifie #sysop de l'action
-  ircbot($chemin, getpseudo()." a banni ".getpseudo($ban_id)." pendant ".$ban_jours." jours - ".$GLOBALS['url_site']."pages/sysop/pilori", "#sysop");
+  // On notifie #NoBleme et #sysop de l'action
+  $temp_jour = ($ban_jours == 1) ? ' jour' : ' jours';
+  ircbot($chemin, getpseudo($ban_id)." a été banni de NoBleme pendant ".$ban_jours.$temp_jour." - ".$GLOBALS['url_site']."pages/user/user?id=".$ban_id, "#nobleme");
+  ircbot($chemin, getpseudo()." a banni ".getpseudo($ban_id)." pendant ".$ban_jours.$temp_jour." - ".$GLOBALS['url_site']."pages/sysop/pilori", "#sysop");
 
   // Et on redirige vers le profil de l'user
   header("Location: ".$chemin."pages/user/user?id=".$ban_id);

@@ -285,13 +285,13 @@ function getmod($section,$user=NULL)
 
 function getsysop($user=NULL)
 {
+  // Si on a pas de session en cours, on renvoie 0
+  if(!$user && !isset($_SESSION['user']))
+    return 0;
+
   // Si on spécifie pas d'user, on prend la session en cours
   if(!$user && isset($_SESSION['user']))
     $user = $_SESSION['user'];
-
-  // Si on a pas d'user, on renvoie 0
-  if(!$user)
-    return 0;
 
   // On vérifie si l'user est sysop ou admin
   $qdroits = mysqli_fetch_array(query(" SELECT membres.sysop, membres.admin FROM membres WHERE id = '$user' "));
@@ -378,7 +378,7 @@ function adminonly($lang='FR')
   if(loggedin())
   {
     // On vérifie si l'user est un admin
-    if(!getadmin($_SESSION['user']))
+    if(!getadmin())
       erreur($message);
   }
   else

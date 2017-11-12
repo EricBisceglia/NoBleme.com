@@ -494,12 +494,12 @@ function ircbot($chemin,$message_irc,$canal_irc=NULL,$formattage=NULL)
   }
 
   // Si on peut écrire dans le fichier, on remplace son contenu par le message
-  if($fichier_ircbot = fopen($chemin.'ircbot.txt', "w+"))
+  if($fichier_ircbot = fopen($chemin.'ircbot.txt', "a"))
   {
     if(!$canal_irc)
-      fwrite($fichier_ircbot, time()." ".substr($message_irc,0,450)."\r\n");
+      file_put_contents($chemin.'ircbot.txt', time()." ".substr($message_irc,0,450).PHP_EOL, FILE_APPEND);
     else
-      fwrite($fichier_ircbot, time()." PRIVMSG ".$canal_irc." :".substr($message_irc,0,450)."\r\n");
+      file_put_contents($chemin.'ircbot.txt', time()." PRIVMSG ".$canal_irc." :".substr($message_irc,0,450).PHP_EOL, FILE_APPEND);
     fclose($fichier_ircbot);
     return 1;
   }

@@ -73,7 +73,7 @@ $checkmaj = query(" SELECT vars_globales.mise_a_jour FROM vars_globales ");
 $majcheck = mysqli_fetch_array($checkmaj);
 
 // Si maj, on ferme la machine (sauf pour les admins)
-if($majcheck['mise_a_jour'] && @getadmin($_SESSION['user']) == 0)
+if($majcheck['mise_a_jour'] && !getadmin())
   exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Une mise à jour est en cours, NoBleme est temporairement fermé.<br><br>Revenez dans quelques minutes.<br><br><br><br>An update is in progress, NoBleme is temporarily closed.<br><br>Come back in a few minutes.</body></html>');
 
 // CSS spécial pendant les mises à jour
@@ -119,7 +119,7 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
     $pageviews = $pageviews_array["vues"] + 1;
 
     // On update la BDD si l'user n'est pas un admin
-    if(((loggedin() && !getadmin($_SESSION['user'])) || !loggedin()))
+    if(((loggedin() && !getadmin()) || !loggedin()))
       query(" UPDATE  pageviews
               SET     pageviews.vues      = pageviews.vues + 1 ,
                       pageviews.nom_page  = '$page_nom'
@@ -326,7 +326,7 @@ if (!isset($page_desc))
 $page_desc = meta_fix($page_desc);
 
 // Si admin, alerte si la longueur est > les 158 caractères max ou < les 25 caractères min
-if(loggedin() && getadmin($_SESSION['user']))
+if(loggedin() && getadmin())
 {
   if(strlen($page_desc) > 25 && strlen($page_desc) < 155)
     $alerte_meta = "";
@@ -437,12 +437,12 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
           <div class="<?=header_class('Jouer',$header_menu,'top')?>"><?=$menu['jouer']?></div>
         </a>
 
-        <?php if(loggedin() && getsysop($_SESSION['user'])) { ?>
+        <?php if(loggedin() && getsysop()) { ?>
         <a class="header_topmenu_lien" href="<?=$chemin?>pages/nobleme/activite?mod">
           <div class="<?=header_class('Admin',$header_menu,'top')?>">ADMIN</div>
         </a>
 
-        <?php } if(loggedin() && getadmin($_SESSION['user'])) { ?>
+        <?php } if(loggedin() && getadmin()) { ?>
         <a class="header_topmenu_lien" href="<?=$chemin?>pages/dev/ircbot">
           <div class="<?=header_class('Dev',$header_menu,'top')?>">DEV</div>
         </a>
@@ -561,7 +561,6 @@ $sidemenu['nb_coc']         = ($lang == 'FR') ? "Code de conduite"      : "Code 
 $sidemenu['nb_rss']         = ($lang == 'FR') ? "Flux RSS"              : "RSS feeds";
 $sidemenu['nb_dev']         = ($lang == 'FR') ? "Développement"         : "Development";
 $sidemenu['nb_coulisses']   = ($lang == 'FR') ? "Coulisses de NoBleme"  : "Behind the scenes";
-$sidemenu['nb_api']         = ($lang == 'FR') ? "API publique"          : "Public API";
 $sidemenu['nb_bug']         = ($lang == 'FR') ? "Rapporter un bug"      : "Report a bug";
 $sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Request a feature";
 /* ################################################################################################## */ if($header_menu == 'NoBleme') { ?>
@@ -687,12 +686,6 @@ $sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Requ
             </a>
 
             <?php } ?>
-
-            <a href="<?=$chemin?>pages/doc/api">
-              <div class="<?=header_class('API',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_api']?>
-              </div>
-            </a>
 
             <a href="<?=$chemin?>pages/todo/add">
               <div class="<?=header_class('OuvrirTicket',$header_sidemenu,'side')?>">
@@ -1054,18 +1047,6 @@ $sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    
             <a href="<?=$chemin?>pages/admin/permissions">
               <div class="<?=header_class('Permissions',$header_sidemenu,'side')?>">
                 Changer les permissions
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/todo/index?admin">
-              <div class="<?=header_class('TodoBacklog',$header_sidemenu,'side')?>">
-                Tickets non validés
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/quotes/index?admin">
-              <div class="<?=header_class('QuotesBacklog',$header_sidemenu,'side')?>">
-                Miscellanées en attente
               </div>
             </a>
 

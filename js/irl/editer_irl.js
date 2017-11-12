@@ -71,7 +71,7 @@ function irl_modifier_participant(chemin, irl, participant)
 function irl_supprimer_participant(chemin, irl, participant)
 {
   // On confirme l'action
-  if(!confirm('Confirmer la suppression du participant à l \'IRL? '))
+  if(!confirm('Confirmer la suppression du participant à l\'IRL? '))
     return;
 
   // Puis on supprime le participant en XHR
