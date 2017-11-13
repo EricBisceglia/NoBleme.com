@@ -70,7 +70,7 @@ $page_nom = "Administre secrètement le site";
         <p>
           <input type="checkbox"> Choper l'url du dernier commit dans <a href="https://bitbucket.org/EricBisceglia/nobleme.com/commits/all">le dépôt public</a> et le partager publiquement sur #dev via <a href="<?=$chemin?>pages/dev/ircbot">le bot IRC</a><br>
           <input type="checkbox"> Archiver les backups du www et du sql et en faire une copie de sauvegarde sur HDD externe<br>
-          <input type="checkbox"> Supprimer les requêtes qui ne sont plus nécessaires dans la source de /pages/dev/maj.php<br>
+          <input type="checkbox"> Supprimer les requêtes qui ne sont plus nécessaires dans la source de /pages/dev/sql.php<br>
           <input type="checkbox"> Félicitations, la mise à jour est finie et tout s'est bien passé <?=bbcode(":)")?>
         </p>
 

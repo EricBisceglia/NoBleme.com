@@ -1295,37 +1295,37 @@ $js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'popup', 'dev/refer
               <td>
                 <form method="POST">
                   <fieldset>
-                    <label for="nomClient">Nom du client</label>
-                    <input id="nomClient" name="nomClient" class="indiv" placeholder="Le nom du client va ici" type="text"><br>
+                    <label for="form_input">Input</label>
+                    <input id="form_input" name="form_input" class="indiv" type="text" placeholder="Du texte va ici"><br>
                     <br>
-                    <label for="nomClient">Genre du client</label>
-                    <input id="genreClientM" name="genreClient" type="radio">
-                    <label class="label-inline gras" for="genreClientM">M</label>
-                    &nbsp;
-                    <input id="genreClientF" name="genreClient" type="radio">
-                    <label class="label-inline gras" for="genreClientF">F</label>
-                    &nbsp;
-                    <input id="genreClientX" name="genreClient" type="radio">
-                    <label class="label-inline gras" for="genreClientX">X</label><br>
-                    <br>
-                    <label for="ageClient">Âge du client</label>
-                    <select id="ageClient" name="ageClient" class="indiv">
-                      <option value="18-25">18-25</option>
-                      <option value="26-40">26-40</option>
-                      <option value="41+">41+</option>
+                    <label for="form_dropdown">Menu déroulant</label>
+                    <select id="form_dropdown" name="form_dropdown" class="indiv">
+                      <option value="1" selected>Option 1</option>
+                      <option value="2">Option 2</option>
+                      <option value="3">Option 3</option>
                     </select><br>
                     <br>
-                    <label for="commClient">Commentaires</label>
-                    <textarea id="commClient" name="commClient" class="indiv" placeholder="Écrire les commentaires ici"></textarea><br>
+                    <label for="form_textarea">Textarea</label>
+                    <textarea id="form_textarea" name="form_textarea" class="indiv" placeholder="Du texte va ici"></textarea><br>
                     <br>
-                    <label for="passClient">Mot de passe administratif</label>
-                    <input id="passClient" name="passClient" class="indiv" type="password"><br>
+                    <label for="form_radio">Radio buttons</label>
+                    <input id="form_radio_1" name="form_radio_1" type="radio">
+                    <label class="label-inline gras" for="form_radio_1">1</label>
+                    &nbsp;
+                    <input id="form_radio_2" name="form_radio_2" type="radio">
+                    <label class="label-inline gras" for="form_radio_2">2</label>
+                    &nbsp;
+                    <input id="form_radio_3" name="form_radio_3" type="radio">
+                    <label class="label-inline gras" for="form_radio_3">3</label><br>
+                    <br>
+                    <label for="form_pass">Mot de passe</label>
+                    <input id="form_pass" name="form_pass" class="indiv" type="password"><br>
                     <br>
                     <div class="float-right">
-                      <input id="ccClient" name="ccClient" type="checkbox">
-                      <label class="label-inline" for="ccClient">Se mettre en cc du mail</label>
+                      <input id="form_checkbox" name="form_checkbox" type="checkbox">
+                      <label class="label-inline" for="form_checkbox">Checkbox à côté du bouton</label>
                     </div>
-                    <input value="Envoyer" type="submit">
+                    <input value="VALIDER" type="submit" name="form_go">
                   </fieldset>
                 </form>
               </td>
@@ -1335,37 +1335,37 @@ $js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'popup', 'dev/refer
                 <pre onclick="highlight('refhtml_formulaire');" class="monospace spaced scrollbar" id="refhtml_formulaire" style="margin-bottom:0;max-height:80px;"><?php
                   echo(htmlspecialchars('<form method="POST">
   <fieldset>
-    <label for="nomClient">Nom du client</label>
-    <input id="nomClient" name="nomClient" class="indiv" placeholder="Le nom du client va ici" type="text"><br>
+    <label for="form_input">Input</label>
+    <input id="form_input" name="form_input" class="indiv" type="text" placeholder="Du texte va ici"><br>
     <br>
-    <label for="nomClient">Genre du client</label>
-    <input id="genreClient" name="genreClient" type="radio">
-    <label class="label-inline gras" for="genreClient">M</label>
-    &nbsp;
-    <input id="genreClient" name="genreClient" type="radio">
-    <label class="label-inline gras" for="genreClient">F</label>
-    &nbsp;
-    <input id="genreClient" name="genreClient" type="radio">
-    <label class="label-inline gras" for="genreClient">X</label><br>
-    <br>
-    <label for="ageClient">Âge du client</label>
-    <select id="ageClient" name="ageClient" class="indiv">
-      <option value="18-25">18-25</option>
-      <option value="26-40">26-40</option>
-      <option value="41+">41+</option>
+    <label for="form_dropdown">Menu déroulant</label>
+    <select id="form_dropdown" name="form_dropdown" class="indiv">
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
     </select><br>
     <br>
-    <label for="commClient">Commentaires</label>
-    <textarea id="commClient" name="commClient" class="indiv" placeholder="Écrire les commentaires ici"></textarea><br>
+    <label for="form_textarea">Textarea</label>
+    <textarea id="form_textarea" name="form_textarea" class="indiv" placeholder="Du texte va ici"></textarea><br>
     <br>
-    <label for="passClient">Mot de passe administratif</label>
-    <input id="passClient" name="passClient" class="indiv" type="password"><br>
+    <label for="form_radio">Radio buttons</label>
+    <input id="form_radio_1" name="form_radio_1" type="radio">
+    <label class="label-inline gras" for="form_radio_1">1</label>
+    &nbsp;
+    <input id="form_radio_2" name="form_radio_2" type="radio">
+    <label class="label-inline gras" for="form_radio_2">2</label>
+    &nbsp;
+    <input id="form_radio_3" name="form_radio_3" type="radio">
+    <label class="label-inline gras" for="form_radio_3">3</label><br>
+    <br>
+    <label for="form_pass">Mot de passe</label>
+    <input id="form_pass" name="form_pass" class="indiv" type="password"><br>
     <br>
     <div class="float-right">
-      <input id="ccClient" name="ccClient" type="checkbox">
-      <label class="label-inline" for="ccClient">Se mettre en cc du mail</label>
+      <input id="form_checkbox" name="form_checkbox" type="checkbox">
+      <label class="label-inline" for="form_checkbox">Checkbox à côté du bouton</label>
     </div>
-    <input value="Envoyer" type="submit">
+    <input value="VALIDER" type="submit" name="form_go">
   </fieldset>
 </form>'))
                 ?></pre>

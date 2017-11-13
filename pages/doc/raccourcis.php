@@ -48,6 +48,7 @@ if($lang == 'FR')
   $trad['rac_irl']        = "Rencontres IRL";
   $trad['rac_irl_id']     = "IRL spécifique";
   $trad['rac_misc']       = "Miscellanée spécifique";
+  $trad['rac_todo']       = "Tâche spécifique";
   $trad['rac_devblog']    = "Devblog spécifique";
   $trad['rac_coc']        = "Code de conduite";
 }
@@ -162,6 +163,14 @@ else if($lang == 'EN')
               </td>
               <td>
                 <a href="<?=$chemin?>s?m=210">m=?</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_todo']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?t=358">t=?</a>
               </td>
             </tr>
             <tr>
