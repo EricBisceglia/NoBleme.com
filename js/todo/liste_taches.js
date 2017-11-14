@@ -6,7 +6,7 @@
 ******************************************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction permettant de faire des tris et des recherches dans le tableau des tâches
+// Faire des tris et des recherches dans le tableau des tâches
 //
 // chemin             est le chemin jusqu'à la racine du site
 // tri    (optionnel) est le tri à appliquer au tableau, sa la valeur est raz, remet à zéro la recherche et le tri
@@ -57,7 +57,25 @@ function todolist_tableau(chemin, tri)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction permettant d'afficher une tâche dans la liste des tâches
+// Afficher le formulaire d'ajout de tâche
+//
+// chemin est le chemin jusqu'à la racine du site
+// id     est l'id de la tâche à afficher
+
+function todolist_ajouter_tache()
+{
+  // On wipe le formulaire
+  document.getElementById('todolist_add_form').reset();
+
+  // Et on l'affiche
+  toggle_row('todolist_add');
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Afficher une tâche dans la liste des tâches
 //
 // chemin est le chemin jusqu'à la racine du site
 // id     est l'id de la tâche à afficher

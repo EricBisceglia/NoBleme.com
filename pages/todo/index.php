@@ -29,6 +29,66 @@ $js   = array('toggle', 'dynamique', 'todo/liste_taches');
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
+/*                                                        TRAITEMENT DU POST-DATA                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Ajouter une nouvelle tâche
+
+if(isset($_POST['todo_add_go']) && getadmin())
+{
+  // Assainissement du postdata
+  $todo_add_titre       = postdata_vide('todo_add_titre', 'string', '');
+  $todo_add_description = postdata_vide('todo_add_description', 'string', '');
+  $todo_add_categorie   = postdata_vide('todo_add_categorie', 'int', 0);
+  $todo_add_objectif    = postdata_vide('todo_add_objectif', 'int', 0);
+  $todo_add_importance  = postdata_vide('todo_add_importance', 'int', 0);
+  $todo_add_public      = postdata_vide('todo_add_public', 'int', 0);
+
+  // Création de la tâche
+  $timestamp = time();
+  query(" INSERT INTO todo
+          SET         todo.FKmembres        = 1                       ,
+                      todo.timestamp        = '$timestamp'            ,
+                      todo.importance       = '$todo_add_importance'  ,
+                      todo.titre            = '$todo_add_titre'       ,
+                      todo.contenu          = '$todo_add_description' ,
+                      todo.FKtodo_categorie = '$todo_add_categorie'   ,
+                      todo.FKtodo_roadmap   = '$todo_add_objectif'    ,
+                      todo.valide_admin     = 1                       ,
+                      todo.public           = '$todo_add_public'      ,
+                      todo.timestamp_fini   = 0                       ,
+                      todo.source           = ''                      ");
+
+  // Si la tâche est publique, on notifie
+  if($todo_add_public)
+  {
+    // Activité récente
+    $todo_add_id      = mysqli_insert_id($db);
+    $todo_add_pseudo  = postdata(getpseudo(), 'string');
+    query(" INSERT INTO activite
+            SET         activite.timestamp    = '$timestamp'        ,
+                        activite.FKmembres    = 1                   ,
+                        activite.pseudonyme   = '$todo_add_pseudo'  ,
+                        activite.action_type  = 'todo_new'          ,
+                        activite.action_id    = '$todo_add_id'      ,
+                        activite.action_titre = '$todo_add_titre'   ");
+
+    // Bot IRC
+    $todo_add_pseudo_raw  = getpseudo();
+    $todo_add_titre_raw   = $_POST['todo_add_titre'];
+    ircbot($chemin, $todo_add_pseudo_raw." a ouvert un ticket : ".$todo_add_titre_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_add_id, "#dev");
+  }
+}
+
+
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
 /*                                                        PRÉPARATION DES DONNÉES                                                        */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
@@ -116,6 +176,7 @@ else if($todo_tri == 'prive')
                         (todo.timestamp_fini != 0)        ,
                         todo.timestamp_fini         DESC  ,
                         todo.importance             DESC  ,
+                        (todo.FKtodo_roadmap = 0)         ,
                         todo_roadmap.id_classement  ASC   ,
                         todo.timestamp              DESC  ";
 else if($todo_tri == 'creation')
@@ -127,6 +188,7 @@ else if($todo_tri == 'createur')
                         (todo.timestamp_fini != 0)        ,
                         todo.timestamp_fini         DESC  ,
                         todo.importance             DESC  ,
+                        (todo.FKtodo_roadmap = 0)         ,
                         todo_roadmap.id_classement  ASC   ,
                         todo.timestamp              DESC  ";
 else if($todo_tri == 'categorie')
@@ -136,6 +198,7 @@ else if($todo_tri == 'categorie')
                         (todo.timestamp_fini != 0)        ,
                         todo.timestamp_fini         DESC  ,
                         todo.importance             DESC  ,
+                        (todo.FKtodo_roadmap = 0)         ,
                         todo_roadmap.id_classement  ASC   ,
                         todo.timestamp              DESC  ";
 else if($todo_tri == 'description')
@@ -149,13 +212,13 @@ else if($todo_tri == 'objectif')
                         (todo.timestamp_fini != 0)        ,
                         todo.timestamp_fini         DESC  ,
                         todo.importance             DESC  ,
-                        todo_roadmap.id_classement  ASC   ,
                         todo.timestamp              DESC  ";
 else if($todo_tri == 'resolution')
   $qtodo .= " ORDER BY  todo.valide_admin           ASC   ,
                         (todo.timestamp_fini = 0)         ,
                         todo.timestamp_fini         DESC  ,
                         todo.importance             DESC  ,
+                        (todo.FKtodo_roadmap = 0)         ,
                         todo_roadmap.id_classement  ASC   ,
                         todo.timestamp              DESC  ";
 else
@@ -163,6 +226,7 @@ else
                         (todo.timestamp_fini != 0)        ,
                         todo.timestamp_fini         DESC  ,
                         todo.importance             DESC  ,
+                        (todo.FKtodo_roadmap = 0)         ,
                         todo_roadmap.id_classement  ASC   ,
                         todo.timestamp              DESC  ";
 
@@ -218,14 +282,14 @@ $todo_resolues  = format_nombre(calcul_pourcentage($todo_finies, $ntodo),"pource
 // Menus déroulants pour la recherche
 
 // Années depuis 2012
-$select_annees = '<option value="0"></option>';
+$select_annees = '<option value="0">&nbsp;</option>';
 for($i=date('Y');$i>=2012;$i--)
   $select_annees .= '<option value="'.$i.'">'.$i.'</option>';
 
 
 // Importance
-$select_importance = '<option value="-1"></option>';
-for($i=5;$i>=0;$i--)
+$select_importance = '';
+for($i=0;$i<=5;$i++)
   $select_importance .= '<option value="'.$i.'">'.todo_importance($i).'</option>';
 
 
@@ -234,8 +298,7 @@ $qcategories = query("  SELECT    todo_categorie.id ,
                                   todo_categorie.categorie
                         FROM      todo_categorie
                         ORDER BY  todo_categorie.categorie ASC ");
-$select_categorie = '<option value="-1"></option>';
-$select_categorie .= '<option value="0">Aucune catégorie</option>';
+$select_categorie = '<option value="0">Aucune catégorie</option>';
 while($dcategories = mysqli_fetch_array($qcategories))
   $select_categorie .= '<option value="'.$dcategories['id'].'">'.predata($dcategories['categorie']).'</option>';
 
@@ -245,8 +308,7 @@ $qobjectifs = query(" SELECT    todo_roadmap.id ,
                                 todo_roadmap.version
                       FROM      todo_roadmap
                       ORDER BY  todo_roadmap.id_classement DESC ");
-$select_objectif = '<option value="-1"></option>';
-$select_objectif .= '<option value="0">Aucun objectif</option>';
+$select_objectif = '<option value="0">Aucun objectif</option>';
 while($dobjectifs = mysqli_fetch_array($qobjectifs))
   $select_objectif .= '<option value="'.$dobjectifs['id'].'">'.predata($dobjectifs['version']).'</option>';
 
@@ -263,11 +325,13 @@ if(!getxhr()) { /***************************************************************
       <div class="texte">
 
         <h1>
+          <?php if(isset($_GET['id'])) { ?>
+          <a href="<?=$chemin?>pages/todo/index">Liste des tâches</a>
+          <?php } else { ?>
           Liste des tâches
+          <?php } ?>
           <?php if($todo_admin) { ?>
-          <a href="<?=$chemin?>pages/todo/add">
-            <img src="<?=$chemin?>img/icones/ajouter.png" alt="+">
-          </a>
+          <img src="<?=$chemin?>img/icones/ajouter.png" alt="+" onclick="todolist_ajouter_tache();">
           <?php } ?>
         </h1>
 
@@ -278,11 +342,90 @@ if(!getxhr()) { /***************************************************************
         </p>
 
         <p>
-          Si vous avez trouvé un bug sur NoBleme, vous pouvez ouvrir un ticket et <a class="gras" href="<?=$chemin?>pages/ticket/add?bug">rapporter un bug</a>.<br>
-          Si vous avez une idée de fonctionnalité qui pourrait être ajoutée au site, vous pouvez <a class="gras" href="<?=$chemin?>pages/ticket/add">quémander un feature</a>.<br>
+          Si vous avez trouvé un bug sur NoBleme, vous pouvez ouvrir un ticket et <a class="gras" href="<?=$chemin?>pages/ticket/request?bug">rapporter un bug</a>.<br>
+          Si vous avez une idée de fonctionnalité qui pourrait être ajoutée au site, vous pouvez <a class="gras" href="<?=$chemin?>pages/ticket/request">quémander un feature</a>.<br>
         </p>
 
       </div>
+
+      <?php if($todo_admin) { ?>
+
+      <div class="hidden" id="todolist_add">
+
+        <br>
+        <hr class="separateur_contenu">
+        <br>
+
+        <div class="texte">
+
+          <form method="POST" id="todolist_add_form">
+            <fieldset>
+
+              <label for="todo_add_titre">Titre de la tâche</label>
+              <input id="todo_add_titre" name="todo_add_titre" class="indiv" type="text"><br>
+              <br>
+
+              <label for="todo_add_description">Description</label>
+              <textarea id="todo_add_description" name="todo_add_description" class="indiv" style="height:100px"></textarea><br>
+              <br>
+
+              <label for="todo_add_categorie">Catégorie</label>
+              <div class="flexcontainer">
+                <div style="flex:15">
+                  <select id="todo_add_categorie" name="todo_add_categorie" class="indiv">
+                    <?=$select_categorie?>
+                  </select><br>
+                </div>
+                <div style="flex:1" class="align_right">
+                  <a href="<?=$chemin?>pages/todo/edit_categories">
+                    <img src="<?=$chemin?>img/icones/modifier.png" alt="M">
+                  </a>
+                </div>
+              </div>
+              <br>
+
+              <label for="todo_add_objectif">Objectif</label>
+              <div class="flexcontainer">
+                <div style="flex:15">
+                  <select id="todo_add_objectif" name="todo_add_objectif" class="indiv">
+                    <?=$select_objectif?>
+                  </select><br>
+                </div>
+                <div style="flex:1" class="align_right">
+                  <a href="<?=$chemin?>pages/todo/edit_roadmaps">
+                    <img src="<?=$chemin?>img/icones/modifier.png" alt="M">
+                  </a>
+                </div>
+              </div>
+              <br>
+
+              <label for="todo_add_importance">Importance</label>
+              <select id="todo_add_importance" name="todo_add_importance" class="indiv">
+                <?=$select_importance?>
+              </select><br>
+              <br>
+
+              <label for="todo_add_public">Visibilité</label>
+              <select id="todo_add_public" name="todo_add_public" class="indiv">
+                <option value="1">Public</option>
+                <option value="0">Privé</option>
+              </select><br>
+              <br>
+
+              <br>
+              <input value="CRÉER LA TÂCHE" type="submit" name="todo_add_go"><br>
+
+            </fieldset>
+          </form>
+
+        </div>
+
+        <br>
+        <hr class="separateur_contenu">
+
+      </div>
+
+      <?php } ?>
 
       <br>
       <br>
@@ -290,6 +433,9 @@ if(!getxhr()) { /***************************************************************
       <div class="tableau2 nowrap">
 
         <input type="hidden" value="" id="todo_tri">
+        <?php if(!$todo_admin) { ?>
+        <input type="hidden" value="-1" id="todo_search_prive">
+        <?php } ?>
 
         <table class="grid fullgrid texte_noir">
           <thead>
@@ -335,7 +481,7 @@ if(!getxhr()) { /***************************************************************
               <?php if($todo_admin) { ?>
               <th>
                 <select class="table_search intable" id="todo_search_prive" onchange="todolist_tableau('<?=$chemin?>');">
-                  <option value="-1"></option>
+                  <option value="-1">&nbsp;</option>
                   <option value="1">Public</option>
                   <option value="0">Privé</option>
                 </select>
@@ -344,6 +490,7 @@ if(!getxhr()) { /***************************************************************
 
               <th>
                 <select class="table_search intable" id="todo_search_importance" onchange="todolist_tableau('<?=$chemin?>');">
+                  <option value="-1">&nbsp;</option>
                   <?=$select_importance?>
                 </select>
               </th>
@@ -360,6 +507,7 @@ if(!getxhr()) { /***************************************************************
 
               <th>
                 <select class="table_search intable" id="todo_search_categorie" onchange="todolist_tableau('<?=$chemin?>');">
+                  <option value="-1">&nbsp;</option>
                   <?=$select_categorie?>
                 </select>
               </th>
@@ -370,13 +518,14 @@ if(!getxhr()) { /***************************************************************
 
               <th>
                 <select class="table_search intable" id="todo_search_objectif" onchange="todolist_tableau('<?=$chemin?>');">
+                  <option value="-1">&nbsp;</option>
                   <?=$select_objectif?>
                 </select>
               </th>
 
               <th>
                 <select class="table_search intable" id="todo_search_etat" onchange="todolist_tableau('<?=$chemin?>');">
-                  <option value="-1"></option>
+                  <option value="-1">&nbsp;</option>
                   <option value="1">Résolu</option>
                   <option value="0">Non résolu</option>
                 </select>
@@ -400,7 +549,11 @@ if(!getxhr()) { /***************************************************************
               <?php } else { ?>
               <td colspan="9" class="noir texte_blanc gras">
               <?php } ?>
+                <?php if($ntodo > 1) { ?>
                 <?=$ntodo?> TÂCHES TROUVÉES
+                <?php } else { ?>
+                <?=$ntodo?> TÂCHE TROUVÉE
+                <?php } ?>
                 &nbsp;<span class="texte_positif">DONT <?=$todo_finies?> FINIES</span>
                 &nbsp;<span class="texte_negatif">ET <?=$todo_a_faire?> À FAIRE</span>
                 &nbsp;<span class="texte_neutre">SOIT <?=$todo_resolues?> RÉSOLUES</span>

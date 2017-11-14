@@ -29,7 +29,7 @@ Contribuer au code source de NoBleme.com
 
 Je n'accepte pas les contributions à la source de NoBleme : Si vous proposez une pull request, elle sera refusée. Je tiens à travailler seul dessus, afin d'avoir le contrôle total sur ce que je fais. L'investissement temporel est conséquent, mais j'en assume la responsabilité.
 
-Toutefois, si vous trouvez un problème et voulez proposer une solution, ou si vous avez des propositions d'améliorations, [ouvrez un ticket sur NoBleme](http://nobleme.com/pages/todo/add) ou venez en discuter sur le canal #dev du [serveur IRC de NoBleme](http://nobleme.com/pages/irc/index).
+Toutefois, si vous trouvez un problème et voulez proposer une solution, ou si vous avez des propositions d'améliorations, [utilisez le formulaire sur NoBleme](http://nobleme.com/pages/todo/request) ou venez en discuter sur le canal #dev du [serveur IRC de NoBleme](http://nobleme.com/pages/irc/index).
 
 - - -
 
@@ -38,4 +38,4 @@ Contributing to NoBleme.com's source code
 
 I do not accept contibutions to NoBleme: If you do a pull request, it will be denied. I want to work alone on it, in order to have total control over the direction in which I'm taking things. The time investment is massive, but I'm fine with it.
 
-However, if you do find an issue and want to suggest a solution to it, you can contact Bad on [NoBleme's IRC server](http://nobleme.com/pages/irc/index), and your feedback will surely be appreciated.
+However, if you do find an issue and want to suggest a solution to it, you can [use the bug report form on NoBleme](http://nobleme.com/pages/todo/request) or contact Bad on [NoBleme's IRC server](http://nobleme.com/pages/irc/index), and your feedback will surely be appreciated.

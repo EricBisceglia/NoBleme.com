@@ -38,7 +38,7 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
         <h5>Une plongée publique dans les entrailles du site</h5>
 
         <p>
-          Depuis le <a class="gras" href="<?=$chemin?>pages/doc/nobleme">redesign de NoBleme en 2012</a>, j'ai décidé de rendre le développement de NoBleme aussi transparent que possible. Pour ce faire, j'ai rendu publics les plans de développement du site via la <a class="gras" href="<?=$chemin?>pages/todo/index">liste des tâches</a> et son <a class="gras" href="<?=$chemin?>pages/todo/roadmap">plan de route</a>, tout en proposant aux utilisateurs de soumettre leurs idées en <a class="gras" href="<?=$chemin?>pages/todo/add">ouvrant un ticket</a>. En parallèle, je discute de sujets touchant parfois au développement du site sur le <a class="gras" href="<?=$chemin?>pages/devblog/index">blog de développement</a>. Pour accompagner tout ça, j'ai également rendu public l'intégralité du code source du site.
+          Depuis le <a class="gras" href="<?=$chemin?>pages/doc/nobleme">redesign de NoBleme en 2012</a>, j'ai décidé de rendre le développement de NoBleme aussi transparent que possible. Pour ce faire, j'ai rendu publics les plans de développement du site via la <a class="gras" href="<?=$chemin?>pages/todo/index">liste des tâches</a> et son <a class="gras" href="<?=$chemin?>pages/todo/roadmap">plan de route</a>, tout en proposant aux utilisateurs de soumettre leurs idées en <a class="gras" href="<?=$chemin?>pages/todo/request">ouvrant un ticket</a>. En parallèle, je discute de sujets touchant parfois au développement du site sur le <a class="gras" href="<?=$chemin?>pages/devblog/index">blog de développement</a>. Pour accompagner tout ça, j'ai également rendu public l'intégralité du code source du site.
         </p>
 
         <p>
@@ -89,7 +89,7 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
         </p>
 
         <p>
-          Si vous avez repéré un problème dans le code source de NoBleme ou que vous avez des ajouts constructifs à y faire, vous pouvez <a class="gras" href="<?=$chemin?>pages/todo/add?bug">ouvrir un ticket</a> et/ou venir en discuter <a class="gras" href="<?=$chemin?>pages/irc/index">sur IRC</a>. Même si je rejette les contributions directes, ce type de contributions indirectes est toujours très fortement apprécié.
+          Si vous avez repéré un problème dans le code source de NoBleme ou que vous avez des ajouts constructifs à y faire, vous pouvez <a class="gras" href="<?=$chemin?>pages/todo/request?bug">ouvrir un ticket</a> et/ou venir en discuter <a class="gras" href="<?=$chemin?>pages/irc/index">sur IRC</a>. Même si je rejette les contributions directes, ce type de contributions indirectes est toujours très fortement apprécié.
         </p>
 
         <br>
@@ -239,7 +239,7 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
         </p>
 
         <p>
-          If you have found an issue in NoBleme's source code or want to do some constructive criticism, you can <a class="gras" href="<?=$chemin?>pages/todo/add?bug">open a ticket</a> and/or come talk about it <a class="gras" href="<?=$chemin?>pages/irc/index">on IRC</a>. Even though I do not accept direct contributions, this kind of indirect contribution through feedback is highly appreciated.
+          If you have found an issue in NoBleme's source code or want to do some constructive criticism, you can <a class="gras" href="<?=$chemin?>pages/todo/request?bug">open a ticket</a> and/or come talk about it <a class="gras" href="<?=$chemin?>pages/irc/index">on IRC</a>. Even though I do not accept direct contributions, this kind of indirect contribution through feedback is highly appreciated.
         </p>
 
         <br>

@@ -73,11 +73,8 @@ label, legend
 .label-inline
   { display: inline-block; font-weight: normal; margin-left: .2rem;                                     }
 select
-  { background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 29 14" width="29"><path fill="#d1d1d1" d="M9.37727 3.625l5.08154 6.93523L19.54036 3.625"/></svg>') center right no-repeat   ;
-  color: #555555; font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif             ;
+  { color: #555555; font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif          ;
   font-size: 1.0em; font-weight: bold; letter-spacing: .01em; line-height: 1.6;                         }
-select:focus
-  { background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="14" viewBox="0 0 29 14" width="29"><path fill="#37536B" d="M9.37727 3.625l5.08154 6.93523L19.54036 3.625"/></svg>');                    }
 input[type='checkbox'], input[type='radio']
   { display: inline;                                                                                    }
 input[type='password'], input[type='text'], textarea, select

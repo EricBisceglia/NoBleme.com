@@ -402,13 +402,11 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   //***************************************************************************************************************************************
   // Nouveau ticket
 
-  /*
   else if($dactrec['action_type'] === 'todo_new')
   {
     $activite_href[$nactrec]        = $chemin.'pages/todo/index?id='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a ouvert un ticket: ".predata(tronquer_chaine($dactrec['action_titre'], 50, '...'));
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a ouvert un ticket : ".predata(tronquer_chaine($dactrec['action_titre'], 50, '...'));
   }
-  */
 
   //***************************************************************************************************************************************
   // Ticket fini

@@ -687,13 +687,13 @@ $sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Requ
 
             <?php } ?>
 
-            <a href="<?=$chemin?>pages/todo/add">
+            <a href="<?=$chemin?>pages/todo/request">
               <div class="<?=header_class('OuvrirTicket',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_feature']?>
               </div>
             </a>
 
-            <a href="<?=$chemin?>pages/todo/add?bug">
+            <a href="<?=$chemin?>pages/todo/request?bug">
               <div class="<?=header_class('OuvrirTicket',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_bug']?>
               </div>
