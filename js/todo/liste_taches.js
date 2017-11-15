@@ -58,9 +58,6 @@ function todolist_tableau(chemin, tri)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Afficher le formulaire d'ajout de tâche
-//
-// chemin est le chemin jusqu'à la racine du site
-// id     est l'id de la tâche à afficher
 
 function todolist_ajouter_tache()
 {

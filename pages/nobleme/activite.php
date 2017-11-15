@@ -400,25 +400,23 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   }
 
   //***************************************************************************************************************************************
-  // Nouveau ticket
+  // Nouvelle tâche
 
   else if($dactrec['action_type'] === 'todo_new')
   {
     $activite_href[$nactrec]        = $chemin.'pages/todo/index?id='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a ouvert un ticket : ".predata(tronquer_chaine($dactrec['action_titre'], 50, '...'));
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a ouvert une tâche : ".predata(tronquer_chaine($dactrec['action_titre'], 50, '...'));
   }
 
   //***************************************************************************************************************************************
-  // Ticket fini
+  // Tâche résolue
 
-  /*
   else if($dactrec['action_type'] === 'todo_fini')
   {
     $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
     $activite_href[$nactrec]        = $chemin.'pages/todo/index?id='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = "Ticket résolu: ".predata(tronquer_chaine($dactrec['action_titre'], 70, '...'));
+    $activite_desc[$nactrec]['FR']  = "Tache résolue : ".predata(tronquer_chaine($dactrec['action_titre'], 70, '...'));
   }
-  */
 
 
 

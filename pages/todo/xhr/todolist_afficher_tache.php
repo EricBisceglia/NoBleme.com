@@ -38,7 +38,7 @@ $todo_chemin  = postdata_vide('todo_chemin', 'string', $chemin);
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// On va chercher les infos sur le ticket
+// On va chercher les infos sur la tâche
 $qtodo = mysqli_fetch_array(query(" SELECT    todo.titre          AS 't_titre'    ,
                                               todo.timestamp      AS 't_soumis'   ,
                                               todo.timestamp_fini AS 't_resolu'   ,
@@ -51,7 +51,7 @@ $qtodo = mysqli_fetch_array(query(" SELECT    todo.titre          AS 't_titre'  
                                     LEFT JOIN membres ON todo.FKmembres = membres.id
                                     WHERE     todo.id = '$todo_id' "));
 
-// Si le ticket existe pas, on dégage
+// Si la tâche existe pas, on dégage
 if($qtodo['t_titre'] === NULL)
   exit();
 
@@ -108,13 +108,11 @@ $todo_supprimer   = ($qtodo['t_valide']) ? 'SUPPRIMER' : 'REJETER';
     <br>
     <br>
 
-    <?php if(!$todo_resolu) { ?>
     <a class="spaced" href="<?=$todo_chemin?>pages/todo/resolu?id=<?=$todo_id?>">
       <button class="button button-outline">RÉSOLU</button>
     </a>
     &nbsp;
 
-    <?php } ?>
     <a class="spaced" href="<?=$todo_chemin?>pages/todo/edit?id=<?=$todo_id?>">
       <button class="button button-outline"><?=$todo_modifier?></button>
     </a>

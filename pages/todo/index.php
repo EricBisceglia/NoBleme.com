@@ -78,7 +78,7 @@ if(isset($_POST['todo_add_go']) && getadmin())
     // Bot IRC
     $todo_add_pseudo_raw  = getpseudo();
     $todo_add_titre_raw   = $_POST['todo_add_titre'];
-    ircbot($chemin, $todo_add_pseudo_raw." a ouvert un ticket : ".$todo_add_titre_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_add_id, "#dev");
+    ircbot($chemin, $todo_add_pseudo_raw." a ouvert une tâche : ".$todo_add_titre_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_add_id, "#dev");
   }
 }
 
@@ -254,7 +254,7 @@ for($ntodo = 0; $dtodo = mysqli_fetch_array($qtodo); $ntodo++)
   $todo_prive[$ntodo]       = (!$dtodo['t_public']) ? 'PRIVÉ' : '';
 }
 
-// Si c'est un ticket seul, on prépare le contenu des détails du ticket
+// Si c'est une tâche seule, on prépare le contenu des détails de la tâche
 if($todo_search_id && $ntodo == 1)
 {
   mysqli_data_seek($qtodo, 0);
@@ -342,8 +342,8 @@ if(!getxhr()) { /***************************************************************
         </p>
 
         <p>
-          Si vous avez trouvé un bug sur NoBleme, vous pouvez ouvrir un ticket et <a class="gras" href="<?=$chemin?>pages/ticket/request?bug">rapporter un bug</a>.<br>
-          Si vous avez une idée de fonctionnalité qui pourrait être ajoutée au site, vous pouvez <a class="gras" href="<?=$chemin?>pages/ticket/request">quémander un feature</a>.<br>
+          Si vous avez trouvé un bug sur NoBleme, vous pouvez <a class="gras" href="<?=$chemin?>pages/todo/request?bug">soumettre un rapport de bug</a>.<br>
+          Si vous avez une idée de fonctionnalité qui pourrait être ajoutée au site, vous pouvez <a class="gras" href="<?=$chemin?>pages/todo/request">quémander un feature</a>.<br>
         </p>
 
       </div>
@@ -637,12 +637,10 @@ if(!getxhr()) { /***************************************************************
                   <br>
                   <br>
 
-                  <?php if(!$todo_resolu) { ?>
                   <a class="spaced" href="<?=$chemin?>pages/todo/resolu?id=<?=$todo_id[$i]?>">
                     <button class="button button-outline">RÉSOLU</button>
                   </a>
                   &nbsp;
-                  <?php } ?>
 
                   <a class="spaced" href="<?=$chemin?>pages/todo/edit?id=<?=$todo_id[$i]?>">
                     <button class="button button-outline"><?=$todo_modifier?></button>

@@ -53,7 +53,7 @@ query(" UPDATE activite SET action_type = 'irl_add_participant' WHERE action_typ
 query(" UPDATE activite SET action_type = 'irl_edit_participant' WHERE action_type LIKE 'edit_irl_participant' ");
 query(" UPDATE activite SET action_type = 'irl_del_participant' WHERE action_type LIKE 'del_irl_participant' ");
 
-// RIP les commentaires sur les devblogs et les tickets
+// RIP les commentaires sur les devblogs et les tâches
 sql_supprimer_table('todo_commentaire');
 query(" DELETE FROM activite WHERE action_type = 'new_todo_comm' ");
 query(" DELETE FROM activite WHERE action_type = 'todo_todo_comm' ");

@@ -334,7 +334,7 @@ else if($lang == 'EN')
               <?php } if($profil_todo && $lang == 'FR') { ?>
               <hr class="profil_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/todo/index';">
-                <span class="gras">Tickets ouverts</span><br>
+                <span class="gras">Tâches proposées</span><br>
                 <span class="gras texte_noir"><?=$profil_todo?></span>
               </div>
 

@@ -239,7 +239,7 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
         </p>
 
         <p>
-          If you have found an issue in NoBleme's source code or want to do some constructive criticism, you can <a class="gras" href="<?=$chemin?>pages/todo/request?bug">open a ticket</a> and/or come talk about it <a class="gras" href="<?=$chemin?>pages/irc/index">on IRC</a>. Even though I do not accept direct contributions, this kind of indirect contribution through feedback is highly appreciated.
+          If you have found an issue in NoBleme's source code or want to do some constructive criticism, you can <a class="gras" href="<?=$chemin?>pages/todo/request?bug">make a proposal</a> and/or come talk about it <a class="gras" href="<?=$chemin?>pages/irc/index">on IRC</a>. Even though I do not accept direct contributions, this kind of indirect contribution through feedback is highly appreciated.
         </p>
 
         <br>

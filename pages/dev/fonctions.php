@@ -796,7 +796,7 @@ $js  = array('toggle', 'highlight', 'dev/reference');
           <thead>
             <tr>
               <th class="rowaltc moinsgros" colspan="2">
-                IMPORTANCE D'UN TICKET
+                IMPORTANCE D'UNE TÂCHE
               </th>
             </tr>
           </thead>

@@ -694,7 +694,7 @@ $sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Requ
             </a>
 
             <a href="<?=$chemin?>pages/todo/request?bug">
-              <div class="<?=header_class('OuvrirTicket',$header_sidemenu,'side')?>">
+              <div class="<?=header_class('OuvrirTicketBug',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_bug']?>
               </div>
             </a>
