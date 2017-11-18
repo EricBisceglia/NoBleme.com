@@ -554,7 +554,7 @@ $sidemenu['nb_membres']     = ($lang == 'FR') ? "Liste des membres"     : "Regis
 $sidemenu['nb_annivs']      = ($lang == 'FR') ? "Anniversaires"         : "Member birthdays";
 $sidemenu['nb_irls']        = ($lang == 'FR') ? "Rencontres IRL"        : "Real life meetups";
 $sidemenu['nb_irlstats']    = ($lang == 'FR') ? "Statistiques des IRL"  : "RL meetup stats";
-$sidemenu['nb_aide']        = ($lang == 'FR') ? "Aide & Infos"          : "Help & Informations";
+$sidemenu['nb_aide']        = ($lang == 'FR') ? "Aide & Informations"   : "Help / Documentation";
 $sidemenu['nb_doc']         = ($lang == 'FR') ? "Documentation du site" : "Website documentation";
 $sidemenu['nb_nobleme']     = ($lang == 'FR') ? "Qu'est-ce que NoBleme" : "What is NoBleme";
 $sidemenu['nb_coc']         = ($lang == 'FR') ? "Code de conduite"      : "Code of conduct";

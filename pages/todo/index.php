@@ -330,6 +330,9 @@ if(!getxhr()) { /***************************************************************
           <?php } else { ?>
           Liste des tâches
           <?php } ?>
+          <a href="<?=$chemin?>pages/doc/rss">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.png" alt="RSS">
+          </a>
           <?php if($todo_admin) { ?>
           <img src="<?=$chemin?>img/icones/ajouter.png" alt="+" onclick="todolist_ajouter_tache();">
           <?php } ?>

@@ -200,8 +200,13 @@ if(!getxhr()) { /***************************************************************
 
         <h1>
           <?=$trad['titre']?>
+          <a href="<?=$chemin?>pages/doc/rss">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.png" alt="RSS">
+          </a>
           <?php if(getmod('irl')) { ?>
-          <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="+" onclick="document.location.href = '<?=$chemin?>pages/irl/irl_modifier';">
+          <a href="<?=$chemin?>pages/irl/irl_modifier">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="+">
+          </a>
           <?php } ?>
         </h1>
 

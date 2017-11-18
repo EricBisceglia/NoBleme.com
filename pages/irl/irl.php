@@ -551,7 +551,9 @@ if(!getxhr()) { /***************************************************************
         <h3 id="irl_titre">
           <?=$trad['titre']?>
           <?php if($irl_mod) { ?>
-          <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.png" alt="M" onclick="document.location.href = '<?=$chemin?>pages/irl/irl_modifier?id=<?=$irl_id?>';">
+          <a href="<?=$chemin?>pages/irl/irl_modifier?id=<?=$irl_id?>">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.png" alt="M">
+          </a>
           <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/supprimer.png" alt="X" onclick="irl_supprimer('<?=$chemin?>', <?=$irl_id?>);">
           <?php } ?>
         </h3>

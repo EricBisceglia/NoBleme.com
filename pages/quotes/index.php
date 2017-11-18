@@ -96,7 +96,12 @@ if(!getxhr()) { /***************************************************************
 
       <div class="texte2">
 
-        <h1>Miscellanées</h1>
+        <h1>
+          Miscellanées
+          <a href="<?=$chemin?>pages/doc/rss">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.png" alt="RSS">
+          </a>
+        </h1>
 
         <h5>Petites citations amusantes</h5>
 

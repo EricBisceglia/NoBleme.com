@@ -57,6 +57,9 @@ for($ndevblogs = 0; $ddevblogs = mysqli_fetch_array($qdevblogs); $ndevblogs++)
 
         <h1>
           Blogs de développement
+          <a href="<?=$chemin?>pages/doc/rss">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.png" alt="RSS">
+          </a>
           <?php if(getadmin()) { ?>
           <a href="<?=$chemin?>pages/devblog/add">
             <img src="<?=$chemin?>img/icones/ajouter.png" alt="+" class="pointeur">
