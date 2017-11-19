@@ -8,12 +8,13 @@
 **                                                                                                                                       **
 **  Paramètres :                                                                                                                         **
 **                                                                                                                                       **
-**  eventOnglet : L'évènement (généralement le clic) qui a déclenché le script                                                           **
-**    nomOnglet : Le nom de l'élément qui sera affiché lorsque le script est délenché (les autres éléments seront masqués)               **
+**  eventOnglet     : L'évènement (généralement le clic) qui a déclenché le script                                                       **
+**    nomOnglet     : Le nom de l'élément qui sera affiché lorsque le script est délenché (les autres éléments seront masqués)           **
+**  elementAGriser  : (optionnel) Grise un élément différent de celui sur lequel on clique                                               **
 **                                                                                                                                       **
 ******************************************************************************************************************************************/
 
-function ouvrirOnglet(eventOnglet, nomOnglet) {
+function ouvrirOnglet(eventOnglet, nomOnglet, elementAGriser) {
 
   // On commence par cacher le contenu de tous les onglets
   contenu_onglet = document.getElementsByClassName("contenu_onglet");
@@ -31,7 +32,10 @@ function ouvrirOnglet(eventOnglet, nomOnglet) {
   document.getElementById(nomOnglet).style.display = "block";
 
   // On met en évidence le bouton de l'onglet
-  eventOnglet.currentTarget.classList.add('onglet_actif');
+  if(typeof(elementAGriser) === 'undefined')
+    eventOnglet.currentTarget.classList.add('onglet_actif');
+  else
+    document.getElementById(elementAGriser).classList.add('onglet_actif');
 
   // On vire le flash sur l'onglet s'il y en a un
   document.getElementById(nomOnglet+'_onglet').classList.remove('onglet_blink');

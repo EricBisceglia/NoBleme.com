@@ -10,7 +10,7 @@ header("Content-Type: application/rss+xml; charset=UTF-8");
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Flux des tâches ouvertes
+// Assemblage du flux RSS
 
 // On va chercher les tâches, selon ce qui est demandé
 $qrss = "   ( SELECT    ''                        AS 'rss_id'       ,
@@ -165,6 +165,8 @@ for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
     $rss_contenu[$nrss] = '<u>'.predata($drss['rss_titre']).'</u><br><br>'.bbcode(predata($drss['rss_contenu'], 1));
   }
 }
+
+
 
 
 /*****************************************************************************************************************************************/
