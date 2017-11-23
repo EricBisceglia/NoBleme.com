@@ -38,6 +38,9 @@ $js   = array('toggle', 'dynamique', 'todo/liste_taches');
 
 if(isset($_POST['todo_add_go']) && getadmin())
 {
+  // Permissions
+  adminonly($lang);
+
   // Assainissement du postdata
   $todo_add_titre       = postdata_vide('todo_add_titre', 'string', '');
   $todo_add_description = postdata_vide('todo_add_description', 'string', '');

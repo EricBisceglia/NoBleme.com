@@ -77,13 +77,13 @@ else if($lang == 'EN')
   $trad['choisir_titre']  = "Choose one of two options";
   $trad['choisir_desc']   = <<<EOD
 <p class="spaced">
-  In order to come chat on <a class="gras" href="{$chemin}pages/irc/index">NoBleme's IRC server</a>, you will need to use an IRC client, a software or website that works as an interface between you and the IRC server. In order to make things as simple as possible, I am offering you two options, depending on your needs.
+  In order to come chat on <a class="gras" href="{$chemin}pages/irc/index">NoBleme's IRC server</a>, you will need to use an IRC client, a software or website that works as an interface between you and the IRC server. I made things as simple as possible by offering you two options, one that requires no setup but isn't very flexible and one that's flexible but requires a bit of setup time.
 </p>
 <p class="spaced">
   The first option is the simplest one: you have nothing to intall, nothing to customize. All you have to do is enter your nickname, press a button, and you will be connected on NoBleme's IRC server and ready to chat. It's the ideal solution if you don't want to waste time customizing your experience and just want to get chatting right away. If you want to follow that option, press the « Joining IRC in one click » tab (or <a class="gras pointeur" onclick="ouvrirOnglet(event, 'un_clic', 'un_clic_onglet')">click here</a>).
 </p>
 <p class="spaced">
-  The second option is the most convenient one: you will only need 5 to 10 minutes of setup time in order to create a (free) account on a website and change a few settings. In return, you will get the ability to fully customize the appearance of IRC, will have a service that memorizes what channels you want to join, will be able to follow conversations that happen when you are gone, and will be able to keep the conversation going on your smarthone when you aren't home. If you want to follow that option, press the « Customizable IRC client » tab (or <a class="gras pointeur" onclick="ouvrirOnglet(event, 'custom', 'custom_onglet')">click here</a>), then follow the tutorial's instructions (simple and illustrated).
+  The second option is the most convenient one: you will only need 5 to 10 minutes of setup time in order to create a (free) account on a website and change a few settings. In return, you will get the ability to fully customize the appearance of IRC, will have a service that memorizes what channels you are in, will be able to follow conversations that happen while you are gone, and will be able to keep the conversation going on your smarthone when you aren't home. If you want to follow that option, press the « Customizable IRC client » tab (or <a class="gras pointeur" onclick="ouvrirOnglet(event, 'custom', 'custom_onglet')">click here</a>), then follow the tutorial's instructions (simple and illustrated).
 </p>
 EOD;
 }
@@ -513,7 +513,7 @@ EOD;
           </p>
 
           <p class="spaced">
-            In order to make the best of your experience on NoBleme's IRC server, I would suggest you register your nickname so that it doesn't get squatted by someone else (you can find out how to do that on the <a class="gras" href="<?=$chemin?>pages/irc/services">commands et services</a> page). I would also suggest checking out the <a class="gras" href="<?=$chemin?>pages/irc/canaux">channel list</a> to see if channels other than #english might interest you. If you have any questions regarding IRC, feel free to ask them in chat, someone should eventually answer them (if nobody does be patient, everyone might be busy, but someone should eventually show up and answer).
+            In order to make the best of your experience on NoBleme's IRC server, I would suggest you register your nickname so that it doesn't get squatted by someone else (you can find out how to do that on the <a class="gras" href="<?=$chemin?>pages/irc/services">commands and services</a> page). I would also suggest checking out the <a class="gras" href="<?=$chemin?>pages/irc/canaux">channel list</a> to see if channels other than #english might interest you. If you have any questions regarding IRC, feel free to ask them in chat, someone should eventually answer them (if nobody does be patient, everyone might be busy, but someone should eventually show up and answer).
           </p>
 
           <br>

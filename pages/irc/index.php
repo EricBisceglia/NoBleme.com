@@ -13,6 +13,9 @@ $header_sidemenu  = 'IRC';
 $page_nom = "Découvre le chat IRC";
 $page_url = "pages/irc/index";
 
+// URL courte
+$shorturl = "irc";
+
 // Langages disponibles
 $langage_page = array('FR','EN');
 
@@ -125,7 +128,7 @@ EOD;
 EOD;
 
   // Créer un canal
-  $trad['canal_titre']  = "Can I create my own channel on NoBleme's IRC server ?";
+  $trad['canal_titre']  = "May I create my own channel on NoBleme's IRC server ?";
   $trad['canal_desc']   = <<<EOD
 <p>
   If you want to create your own channel on the server, even if it is for your friends who don't use NoBleme, that's fine by me, you can do it without asking. The only conditions are that you must yourself be a part of the NoBleme community, and that you enforce NoBleme's <a class="gras" href="{$chemin}pages/doc/coc">code of conduct</a> on the channel you create.

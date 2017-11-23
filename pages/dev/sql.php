@@ -270,6 +270,98 @@ sql_supprimer_table('nbrpg_session');
 sql_supprimer_table('nbrpg_session_effets');
 sql_supprimer_champ('vars_globales', 'nbrpg_activite');
 
+// Création de la liste des canaux IRC
+sql_creer_table("irc_canaux", " id              INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+                                canal           TINYTEXT                                              ,
+                                langue          TINYTEXT                                              ,
+                                importance      TINYINT(1) NOT NULL                                   ,
+                                description_fr  MEDIUMTEXT                                            ,
+                                description_en  MEDIUMTEXT                                            ");
+sql_insertion_valeur(" SELECT canal FROM irc_canaux WHERE canal LIKE '#NoBleme' ",
+" INSERT INTO irc_canaux
+  SET         canal           = '#NoBleme'                                                                  ,
+              langue          = 'FR'                                                                        ,
+              importance      = 10                                                                          ,
+              description_fr  = 'Canal francophone principal du serveur, conversations sur tous les sujets' ,
+              description_en  = 'Central french speaking hub of the server'                                 ");
+sql_insertion_valeur(" SELECT canal FROM irc_canaux WHERE canal LIKE '#english' ",
+" INSERT INTO irc_canaux
+  SET         canal           = '#english'                                                                  ,
+              langue          = 'EN'                                                                        ,
+              importance      = 5                                                                           ,
+              description_fr  = 'Canal anglophone principal du serveur, conversations sur tous les sujets'  ,
+              description_en  = 'Central english speaking hub of the server'                                ");
+sql_insertion_valeur(" SELECT canal FROM irc_canaux WHERE canal LIKE '#dev' ",
+" INSERT INTO irc_canaux
+  SET         canal           = '#dev'                                                      ,
+              langue          = 'FREN'                                                      ,
+              importance      = 3                                                           ,
+              description_fr  = 'Le coin des informaticiens, développeurs, sysadmins, etc.' ,
+              description_en  = 'Computer science talk. For developers, sysadmins, etc.'    ");
+sql_insertion_valeur(" SELECT canal FROM irc_canaux WHERE canal LIKE '#musique' ",
+" INSERT INTO irc_canaux
+  SET         canal           = '#musique'                                                            ,
+              langue          = 'FREN'                                                                ,
+              importance      = 1                                                                     ,
+              description_fr  = 'Pour partager ce que l\'on écoute et découvrir de nouveaux artistes' ,
+              description_en  = 'A place to share music and discover new artists'                     ");
+sql_insertion_valeur(" SELECT canal FROM irc_canaux WHERE canal LIKE '#jdr' ",
+" INSERT INTO irc_canaux
+  SET         canal           = '#jdr'                                                                      ,
+              langue          = 'FR'                                                                        ,
+              importance      = 0                                                                           ,
+              description_fr  = 'Pour discuter de jeux de rôles et/ou faire des jeux de rôles par internet' ,
+              description_en  = 'Where we discuss role playing games and/or play role playing games online' ");
+sql_insertion_valeur(" SELECT canal FROM irc_canaux WHERE canal LIKE '#write' ",
+" INSERT INTO irc_canaux
+  SET         canal           = '#write'                          ,
+              langue          = 'FR'                              ,
+              importance      = 0                                 ,
+              description_fr  = 'Le coin des écrivains amateurs'  ,
+              description_en  = 'The home of amateur writers'     ");
+sql_insertion_valeur(" SELECT canal FROM irc_canaux WHERE canal LIKE '#cuisine' ",
+" INSERT INTO irc_canaux
+  SET         canal           = '#cuisine'                                                  ,
+              langue          = 'FR'                                                        ,
+              importance      = 0                                                           ,
+              description_fr  = 'Où l\'on parle nourriture, cuisine, et choses comestibles' ,
+              description_en  = 'Where we discuss cooking, food, and other edible things'   ");
+sql_insertion_valeur(" SELECT canal FROM irc_canaux WHERE canal LIKE '#overwatch' ",
+" INSERT INTO irc_canaux
+  SET         canal           = '#overwatch'                                                ,
+              langue          = 'EN'                                                        ,
+              importance      = 0                                                           ,
+              description_fr  = 'Pour les joueurs et/ou spectateurs du jeu vidéo Overwatch' ,
+              description_en  = 'For players and/or viewers of the video game Overwatch'    ");
+sql_insertion_valeur(" SELECT canal FROM irc_canaux WHERE canal LIKE '#starcraft' ",
+" INSERT INTO irc_canaux
+  SET         canal           = '#starcraft'                                                              ,
+              langue          = 'FREN'                                                                    ,
+              importance      = 0                                                                         ,
+              description_fr  = 'Pour les joueurs et/ou spectateurs de jeux vidéos de la série Starcraft' ,
+              description_en  = 'For players and/or viewers of the video game series Starcraft'           ");
+sql_insertion_valeur(" SELECT canal FROM irc_canaux WHERE canal LIKE '#hots' ",
+" INSERT INTO irc_canaux
+  SET         canal           = '#hots'                                             ,
+              langue          = 'FREN'                                              ,
+              importance      = 0                                                   ,
+              description_fr  = 'Pour les joueurs du jeu vidéo Heroes of the Storm' ,
+              description_en  = 'For players of the video game Heroes of the Storm' ");
+sql_insertion_valeur(" SELECT canal FROM irc_canaux WHERE canal LIKE '#FFXIV' ",
+" INSERT INTO irc_canaux
+  SET         canal           = '#FFXIV'                                           ,
+              langue          = 'FREN'                                            ,
+              importance      = 0                                                 ,
+              description_fr  = 'Pour les joueurs du jeu vidéo Final Fantasy XIV' ,
+              description_en  = 'For players of the video game Final Fantasy XIV' ");
+sql_insertion_valeur(" SELECT canal FROM irc_canaux WHERE canal LIKE '#urt' ",
+" INSERT INTO irc_canaux
+  SET         canal           = '#urt'                                        ,
+              langue          = 'FREN'                                        ,
+              importance      = 0                                             ,
+              description_fr  = 'Pour les joueurs du jeu vidéo Urban Terror'  ,
+              description_en  = 'For players of the video game Urban Terror'  ");
+
 
 
 
