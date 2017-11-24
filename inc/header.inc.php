@@ -798,7 +798,7 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
 
             <a href="<?=$chemin?>pages/nbdb/index">
               <div class="<?=header_class('NBDBIndex',$header_sidemenu,'side')?>">
-                Qu'est-ce que la NBDB
+                Travaux en cours
               </div>
             </a>
 

@@ -88,8 +88,8 @@ $qpageviews = "     SELECT    pageviews.id              ,
 
 // Recherche dans le tableau
 if($pageviews_recherche)
-  $qpageviews .= "  AND     ( pageviews.nom_page LIKE '%$pageviews_recherche%' collate utf8_bin
-                    OR        pageviews.url_page LIKE '%$pageviews_recherche%' collate utf8_bin ) ";
+  $qpageviews .= "  AND     ( pageviews.nom_page LIKE '%$pageviews_recherche%'
+                    OR        pageviews.url_page LIKE '%$pageviews_recherche%' ) ";
 
 // Tri du tableau
 if($pageviews_tri == 'nom')

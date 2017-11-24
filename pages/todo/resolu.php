@@ -160,13 +160,6 @@ $selected           = ($qtodo['t_public']) ? '' : ' selected';
 $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
 
 
-// Résolu
-$selected       = (!$qtodo['t_fini']) ? ' selected' : '';
-$select_resolu  = '<option value="0"'.$selected.'>Tâche à faire</option>';
-$selected       = ($qtodo['t_fini']) ? ' selected' : '';
-$select_resolu .= '<option value="1"'.$selected.'>Tâche résolue</option>';
-
-
 
 
 /*****************************************************************************************************************************************/
@@ -188,7 +181,8 @@ $select_resolu .= '<option value="1"'.$selected.'>Tâche résolue</option>';
 
             <label for="todo_edit_resolu">Résolution</label>
             <select id="todo_edit_resolu" name="todo_edit_resolu" class="indiv">
-              <?=$select_resolu?>
+              <option value="0">Tâche à faire</option>
+              <option value="1" selected>Tâche résolue</option>
             </select><br>
             <br>
 

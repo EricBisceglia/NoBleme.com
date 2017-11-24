@@ -57,11 +57,12 @@ if(isset($_POST['majVersion']))
 /*****************************************************************************************************************************************/
 
 // Version et builds actuels
-$qmajversion  = mysqli_fetch_array(query("SELECT version.version, version.build FROM version ORDER BY version.id DESC LIMIT 1"));
-$maj_version  = $qmajversion['version'];
-$maj_build    = $qmajversion['build'] + 1;
-$maj_date     = date('Y-m-d');
-$maj_datefull = jourfr($maj_date);
+$qmajversion    = mysqli_fetch_array(query("SELECT version.version, version.build FROM version ORDER BY version.id DESC LIMIT 1"));
+$maj_version    = $qmajversion['version'];
+$maj_truebuild  = $qmajversion['build'];
+$maj_build      = $qmajversion['build'] + 1;
+$maj_date       = date('Y-m-d');
+$maj_datefull   = jourfr($maj_date);
 
 
 
@@ -119,7 +120,7 @@ $maj_datefull = jourfr($maj_date);
           <br>
           <br>
 
-          <h5>Version <?=$maj_version?> build <?=$maj_build?> du <?=$maj_datefull?></h5>
+          <h5>Version <?=$maj_version?> build <?=$maj_truebuild?> du <?=$maj_datefull?></h5>
 
         </div>
 

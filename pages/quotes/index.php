@@ -37,11 +37,12 @@ $qmisc = "    SELECT    quotes.id           AS 'q_id'       ,
                         quotes.timestamp    AS 'q_time'     ,
                         quotes.contenu      AS 'q_contenu'  ,
                         quotes.valide_admin AS 'q_valide'
-              FROM      quotes ";
+              FROM      quotes
+              WHERE     1 = 1 ";
 
 // Version admin ou non
 if(!getadmin())
-  $qmisc .= " WHERE     quotes.valide_admin = 1 ";
+  $qmisc .= " AND       quotes.valide_admin = 1 ";
 
 // Recherche
 if(isset($_POST['misc_recherche']))

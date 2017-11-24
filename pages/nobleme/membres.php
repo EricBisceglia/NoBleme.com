@@ -46,7 +46,7 @@ $qmembres = "       SELECT    membres.id            ,
 if(isset($_POST['search_pseudo']))
 {
   $search_pseudo = postdata($_POST['search_pseudo'], "string");
-  $qmembres .= "    WHERE     membres.pseudonyme LIKE '%$search_pseudo%' collate utf8_bin ";
+  $qmembres .= "    WHERE     membres.pseudonyme LIKE '%$search_pseudo%' ";
 }
 
 // Tri

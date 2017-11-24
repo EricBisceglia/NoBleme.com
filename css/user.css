@@ -1,7 +1,7 @@
 /************************************************************* PROFIL PUBLIC *************************************************************/
-.profil_cadre  { border: 1px solid #CACACA; height: 500px; padding: 10px; overflow-y: auto; word-break: break-all; }
-.profil_hr     { height: 1px; background: #CACACA; border: 0px; margin-left: -10px; margin-right: -10px;           }
-.profil_bouton { margin-top: 5px; margin-bottom: 5px;                                                              }
+.profil_cadre  { border: 1px solid #CACACA; height: 500px; padding: 10px; overflow-y: auto; word-break: normal; }
+.profil_hr     { height: 1px; background: #CACACA; border: 0px; margin-left: -10px; margin-right: -10px;        }
+.profil_bouton { margin-top: 5px; margin-bottom: 5px;                                                           }
 
 /******************************************************* MODIFIER LE PROFIL PUBLIC *******************************************************/
 .profil_textarea         { height: 250px; }

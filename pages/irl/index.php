@@ -258,7 +258,7 @@ if(!getxhr()) { /***************************************************************
           <tbody class="align_center" id="irl_tbody">
             <?php } ?>
             <?php for($i=0;$i<$nirls;$i++) { ?>
-            <tr class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/irl/irl?id=<?=$irl_id[$i]?>';">
+            <tr class="pointeur" onclick="window.open('<?=$chemin?>pages/irl/irl?id=<?=$irl_id[$i]?>', '_blank');">
               <td<?=$irl_css[$i]?>>
                 <?=$irl_date[$i]?>
               </td>

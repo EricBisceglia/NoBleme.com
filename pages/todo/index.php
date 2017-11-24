@@ -150,13 +150,13 @@ if($todo_search_importance >= 0)
 if($todo_search_creation)
   $qtodo .= " AND       YEAR(FROM_UNIXTIME(todo.timestamp))       = '$todo_search_creation' ";
 if($todo_search_createur)
-  $qtodo .= " AND       membres.pseudonyme                        LIKE '%$todo_search_createur%' collate utf8_bin ";
+  $qtodo .= " AND       membres.pseudonyme                        LIKE '%$todo_search_createur%' ";
 if($todo_search_categorie == 0)
   $qtodo .= " AND       todo.FKtodo_categorie                     = 0 ";
 if($todo_search_categorie > 0)
   $qtodo .= " AND       todo.FKtodo_categorie                     = '$todo_search_categorie' ";
 if($todo_search_description)
-  $qtodo .= " AND       todo.titre                                LIKE '%$todo_search_description%' collate utf8_bin ";
+  $qtodo .= " AND       todo.titre                                LIKE '%$todo_search_description%' ";
 if($todo_search_objectif == 0)
   $qtodo .= " AND       todo.FKtodo_roadmap                       = 0 ";
 if($todo_search_objectif > 0)
@@ -337,7 +337,7 @@ if(!getxhr()) { /***************************************************************
             <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.png" alt="RSS">
           </a>
           <?php if($todo_admin) { ?>
-          <img src="<?=$chemin?>img/icones/ajouter.png" alt="+" onclick="todolist_ajouter_tache();">
+          <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="+" onclick="todolist_ajouter_tache();">
           <?php } ?>
         </h1>
 
@@ -436,7 +436,7 @@ if(!getxhr()) { /***************************************************************
       <br>
       <br>
 
-      <div class="tableau2 nowrap">
+      <div class="tableau2">
 
         <input type="hidden" value="" id="todo_tri">
         <?php if(!$todo_admin) { ?>
@@ -444,7 +444,7 @@ if(!getxhr()) { /***************************************************************
         <?php } ?>
 
         <table class="grid fullgrid texte_noir">
-          <thead>
+          <thead class="nowrap">
 
             <tr class="grisclair gras pointeur">
               <th onclick="todolist_tableau('<?=$chemin?>', 'id');">
@@ -549,7 +549,7 @@ if(!getxhr()) { /***************************************************************
 
             <?php } ?>
 
-            <tr class="pointeur" onclick="todolist_tableau('<?=$chemin?>', 'raz');">
+            <tr class="pointeur nowrap" onclick="todolist_tableau('<?=$chemin?>', 'raz');">
               <?php if($todo_admin) { ?>
               <td colspan="10" class="noir texte_blanc gras">
               <?php } else { ?>
@@ -571,7 +571,7 @@ if(!getxhr()) { /***************************************************************
 
             <?php for($i=0;$i<$ntodo;$i++) { ?>
 
-            <tr class="<?=$todo_css[$i]?> pointeur" onclick="todolist_afficher_tache('<?=$chemin?>', <?=$todo_id[$i]?>);">
+            <tr class="nowrap <?=$todo_css[$i]?> pointeur" onclick="todolist_afficher_tache('<?=$chemin?>', <?=$todo_id[$i]?>);">
               <td>
                 <?=$todo_id[$i]?>
               </td>

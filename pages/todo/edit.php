@@ -216,7 +216,7 @@ $select_importance = '';
 for($i=0;$i<=5;$i++)
 {
   $selected           = ($i == $qtodo['t_importance']) ? ' selected' : '';
-  $select_importance .= '<option value="'.$i.'">'.todo_importance($i).'</option>';
+  $select_importance .= '<option value="'.$i.'"'.$selected.'>'.todo_importance($i).'</option>';
 }
 
 
