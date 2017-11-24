@@ -6,12 +6,19 @@
 include './inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = '';
-$header_submenu   = 'accueil';
+$header_menu      = 'NoBleme';
+$header_sidemenu  = 'Accueil';
 
 // Identification
-$page_nom = "index";
-$page_id  = "index";
+$page_nom = "Traine sur l'index du site";
+$page_url = "index";
+
+// Langages disponibles
+$langage_page = array('FR','EN');
+
+// Titre et description
+$page_titre = ($lang == 'FR') ? "Accueil" : "Homepage";
+$page_desc  = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
 
 
 
@@ -51,74 +58,63 @@ if(date('d-m') == '19-03')
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-/*********************************************************************************************************/ include './inc/header.inc.php';
+/******************************************************************************************************/ include './inc/header.inc.php'; ?>
 
-    if(date('d-m') == '19-03') { ?>
-
-    <br>
-    <br>
-    <br>
-
-    <div class="moinsgros gras align_center">
-      Joyeux anniversaire NoBleme.com !<br>
-      <?=$agenobleme?> ans de bons moments<br>
-      2005 - <?=date('Y')?><br>
-      <a class="dark blank gros gras" href="">F5 !</a><br>
-    </div>
-    <br>
-    <div class="align_center">
-      <embed src="<?=$chemin?>img/swf/anniv_<?=$annivflash?>.swf" width="<?=$annivsize?>px"> </embed>
-    </div>
-
-    <br>
-    <br>
-
-    <?php } ?>
-
-    <br>
-    <br>
-    <div class="align_center">
-      <img src="./img/logos/index.png" alt="NoBleme.com">
-    </div>
-    <br>
-
-    <div class="body_main midsize">
-      <span class="titre">Bienvenue sur NoBleme. Que trouverai-je par ici ?</span><br>
       <br>
-      Existant dans son coin depuis plus de <?=$agenobleme?> ans, NoBleme est un vestige du passé d'internet.<br>
-      <br>
-      Avant l'ère des réseaux sociaux, le web était décentralisé : composé de plein de petites communautés qui n'avaient pas spécialement de thème ou de raison d'être. Aujourd'hui, NoBleme continue à préserver l'esprit quasi-familial de ces petites commaunatés d'antan.<br>
-      <br>
-      Toutefois, NoBleme n'est pas fait pour être un musée. C'est une communauté vivante, activement développée, qui continue à accueillir les nouveaux à bras ouverts et à éjecter les causeurs de drames afin de préserver l'ambiance amicale qui fait son charme.<br>
-      <br>
-      Voici une liste non exhaustive des pages plus ou moins utiles que vous trouverez sur NoBleme :<br>
-      <ul>
-        <li class="spaced">
-          <a class="dark blank gras" href="<?=$chemin?>pages/irc/index">Le serveur IRC</a>, où les NoBlemeux discutent entre eux en temps réel
-        </li>
-        <li class="spaced">
-          <span class="barre"><a class="dark blank gras" href="<?=$chemin?>pages/forum/index">Le forum NoBleme</a></span> [travaux en cours], où les NoBlemeux discutent entre eux en différé
-        </li>
-        <li class="spaced">
-          <span class="barre"><a class="dark blank gras" href="<?=$chemin?>pages/nbdb/index">La NBDatabase</a></span> [travaux en cours], où l'on découvre (entre autres) le monde de la culture internet
-        </li>
-        <li class="spaced">
-          <a class="dark blank gras" href="<?=$chemin?>pages/nobleme/activite">L'activité récente</a>, où l'on suit ce qui se passe un peu partout sur le site
-        </li>
-        <li class="spaced">
-          <a class="dark blank gras" href="<?=$chemin?>pages/doc/index">La documentation</a>, où l'on comprend mieux le fonctionnement du site
-        </li>
-        <li class="spaced">
-          <a class="dark blank gras" href="<?=$chemin?>pages/irc/quotes">Les miscellanées</a>, où l'on rigole des idioties écrites par les NoBlemeux sur <a class="dark blank gras" href="<?=$chemin?>pages/irc/index">IRC</a>
-        </li>
-        <li class="spaced">
-          <a class="dark blank gras" href="<?=$chemin?>pages/nobleme/coulisses">Les coulisses</a>, où l'on s'informe sur le passé, le présent et le futur du site
-        </li>
-      </ul>
-      <br>
-      N'ayez pas peur, le site ne mord pas. En tout cas, pas la première fois. Pour la suite, je ne peux rien garantir.<br>
-      <a class="alinea" href="<?=$chemin?>pages/user/user?id=1">- Bad</a>
-    </div>
+
+      <?php if($lang == 'FR') { ?>
+
+      <div class="texte">
+
+        <h1>NoBleme.com</h1>
+
+        <h5>Bienvenue sur NoBleme. Que trouverai-je par ici ?</h5>
+
+        <p>Existant dans son coin depuis plus de <?=$agenobleme?> ans, NoBleme est un vestige du passé d'internet.</p>
+
+        <p>Avant l'ère des réseaux sociaux, le web était décentralisé : composé de plein de petites communautés qui n'avaient pas spécialement de thème ou de raison d'être. Aujourd'hui, NoBleme continue à préserver l'esprit quasi-familial de ces petites commaunatés d'antan.</p>
+
+        <p>Toutefois, NoBleme n'est pas fait pour être un musée. C'est une communauté vivante, activement développée, qui continue à accueillir les nouveaux à bras ouverts et à éjecter les causeurs de drames afin de préserver l'ambiance amicale qui fait son charme.</p>
+
+        <h5 class="bigpadding">NoBleme en <?=date('Y')?></h5>
+
+        <p>En ce moment, NoBleme traverse une phase de travaux où la plupart du contenu du site est en réfection. Toutefois, la communauté est toujours présente sur <a class="gras" href="<?=$chemin?>pages/irc/index">le serveur de discussion IRC</a>. Rejoignez-nous et venez discuter sur IRC, nous accueillons toujours les nouveaux visiteurs à bras ouverts.</p>
+
+        <p>N'ayez pas peur, le site ne mord pas. En tout cas, pas la première fois. Pour la suite, je ne peux rien garantir.</p>
+        <a class="alinea" href="<?=$chemin?>pages/user/user?id=1">- Bad</a>
+
+      </div>
+
+      <?php } else { ?>
+
+      <div class="texte">
+
+        <h1>NoBleme.com</h1>
+
+        <h5>Welcome to NoBleme. What's this place all about?</h5>
+
+        <p>A relic of the internet's past, NoBleme is a french community which has been online for over 12 years.</p>
+
+        <p>Before the days of social networks, the internet was decentralized: split into a lot of small communities, most of them without a specific theme or purpose. NoBleme is an attempt to preserve the almost familial spirit of those small communities of the past.</p>
+
+        <p>However, NoBleme is not meant to be a museum. It is a living place, the website is still being developed, and the community is continuously accepting new members with open arms whilst making sure to get rid of any source of drama in order to preserve its friendly atmosphere.</p>
+
+        <h5 class="bigpadding">NoBleme for english speakers</h5>
+
+        <p>NoBleme was originally created as a french community. This means that some of the website's features have no english translation and are only available in french. It does not mean that english speakers are not desired, as absolutely everyone is welcome on NoBleme, and many if not most of our users speak english.</p>
+
+        <p>When switching from french to english, you will probably have noticed that you have access to fewer elements on the left side navigation menu. This is because the non translated (french only) pages are removed from the navigation menu when browsing the website in english, for your convenience. Keep in mind that most of these removed pages are about things that do not translate to english, such as the organization of real life meetups in France, written conversations in french forums, blog posts in french, etc.</p>
+
+        <h5 class="bigpadding">NoBleme in <?=date('Y')?></h5>
+
+        <p>As of <?=date('Y')?>, NoBleme is going through a transformation phase, during which most of the website's contents have been removed and are being remade in a more modern and useful way. During that time, the website is going to be short on features. However, our <a class="gras" href="<?=$chemin?>pages/irc/index">IRC chat server</a> is still open and acts as the current center of activity on NoBleme. Join us on IRC, we are always very welcoming with new faces, even non french ones !</p>
+
+        <p>Don't be scared of browsing around, the website doesn't bite. At least, not at first.</p>
+        <a class="alinea" href="<?=$chemin?>pages/user/user?id=1">- Bad</a>
+
+      </div>
+
+      <?php } ?>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

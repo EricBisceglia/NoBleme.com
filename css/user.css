@@ -1,30 +1,18 @@
-/*************************************************************** login.php ***************************************************************/
-td.login_texte { width: 130px; }
+/************************************************************* PROFIL PUBLIC *************************************************************/
+.profil_cadre  { border: 1px solid #CACACA; height: 500px; padding: 10px; overflow-y: auto; word-break: normal; }
+.profil_hr     { height: 1px; background: #CACACA; border: 0px; margin-left: -10px; margin-right: -10px;        }
+.profil_bouton { margin-top: 5px; margin-bottom: 5px;                                                           }
 
-/**************************************************************** pm.php *****************************************************************/
-td.titres_pm { width: 100px; }
+/******************************************************* MODIFIER LE PROFIL PUBLIC *******************************************************/
+.profil_textarea         { height: 250px; }
+.profil_previsualisation { border: 1px solid #CACACA; padding: 10px; height: 500px; width:533px; padding-top: 10px; }
 
-/************************************************************** profil.php ***************************************************************/
-  td.profil_colonnegauche { width: 155px; }
-td.profil_minixeplication { font-size: 0.6em; }
-
-/************************************************************* register.php **************************************************************/
-              td.user_register { width:140px; }
-          td.user_register_big { width:400px; }
-    td.user_register_questions { width:450px; }
-td.user_register_questions_big { width:500px; }
-
-/*************************************************************** user.php ****************************************************************/
-               table.userprofil_titre { width: 1050px;                 }
-              table.userprofil_gauche { height: 500px; width: 420px;   }
-                 td.userprofil_milieu { height: 500px; width: 20px;    }
-              table.userprofil_droite { height: 500px; width: 610px;   }
-                    div.userprofil_pm { height: 60px;                  }
-                  div.userprofil_info { height: 385px; overflow: auto; }
-                div.userprofil_custom { height: 500px; overflow: auto; }
-div.userprofil_custom > img.bbcodeimg { max-width: 550px;              }
-
-span.user_pseudo { font-size: 2.0em; font-weight: bold; }
-span.user_titre  { font-size: 1.2em; font-weight: bold; }
-
-hr.separateur_profil { border:1px dashed #888888; }
+/************************************************************* NOTIFICATIONS *************************************************************/
+div.notif_cadre             { border: 1px solid #CACACA; padding: 10px;                         }
+div.notif_grand_cadre       { margin-bottom: 5px;                                               }
+div.notif_cadre_gauche      { margin-right: 3px;                                                }
+div.notif_cadre_milieu      { margin-left: 3px; margin-right: 3px;                              }
+div.notif_cadre_droite      { margin-left: 3px;                                                 }
+button.notif_cadre_bouton   { margin-top: 10px; margin-bottom: 10px;                            }
+textarea.notif_message      { height: 250px;                                                    }
+div.notif_previsualisation  { max-height: 250px; border: 1px solid #CACACA; padding-top: 10px;  }

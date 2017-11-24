@@ -6,32 +6,173 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = '';
-$header_submenu   = 'aide';
-$header_sidemenu  = 'bbcodes';
-
-// Titre et description
-$page_titre = "Doc : BBCodes";
-$page_desc  = "Documentation illustrée des balises de formatage de texte sur NoBleme";
+$header_menu      = 'NoBleme';
+$header_sidemenu  = 'Doc';
 
 // Identification
-$page_nom = "doc";
-$page_id  = "bbcodes";
+$page_nom = "Apprend à utiliser les BBCodes";
+$page_url = "pages/doc/bbcodes";
+
+// Langages disponibles
+$langage_page = array('FR','EN');
+
+// Titre et description
+$page_titre = "BBCodes";
+$page_desc  = "Documentation illustrée des balises de formatage de contenu sur NoBleme";
+
+// CSS & JS
+$css  = array('doc');
+$js   = array('dynamique');
 
 
 
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                        TRAITEMENT DU POST-DATA                                                        */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Remplir la prévisulation des commentaires si nécessaire
+if($lang == 'FR')
+{
+  // Description
+  $trad['soustitre']        = "Formater vos messages";
+  $trad['description']      = <<<EOD
+<p>
+  Les messages postés sur NoBleme peuvent être formatés à l'aide d'un système nommé <a href="https://fr.wikipedia.org/wiki/BBCode" class="gras">BBcode</a>.
+</p>
+<p>
+  À l'aide d'instruction placées entre crochets avant et après des morceaux de vos messages, vous pouvez transformer des passages en les rendant gras, italiques, en créant des liens, en insérant des images, etc.
+</p>
+<p>
+  Sur cette page, vous trouverez une liste de tous les BBCodes existant sur NoBleme, ainsi que d'un exemple d'utilisation pour chacun d'entre eux. Tout en bas de la page, vous trouverez une <a href="#bbcodes_testarea">zone de tests</a> vous permettant d'expérimenter avec les BBCodes de NoBleme.
+</p>
+EOD;
 
-$preview_bbcodes  = isset($_POST['bbcodes_test']) ? $_POST['bbcodes_test'] : '';
-$preview_traite   = isset($_POST['bbcodes_test']) ? bbcode(destroy_html(nl2br_fixed($_POST['bbcodes_test']))) : '';
+  // Tableau
+  $trad['table_effet']      = "Effet";
+  $trad['table_exemple']    = "Exemple d'utilisation";
+  $trad['table_resultat']   = "Résultat formaté";
+  $trad['table_gras']       = "Gras";
+  $trad['tablex_gras']      = "Mon texte [b]en gras[/b]";
+  $trad['table_italique']   = "Italique";
+  $trad['tablex_italique']  = "Un peu [i]d'italiques[/i] ici";
+  $trad['table_souligne']   = "Souligné";
+  $trad['tablex_souligne']  = "Je [u]souligne[/u] mon texte";
+  $trad['table_barre']      = "Barré";
+  $trad['tablex_barre']     = "[s]Barrons[/s] du contenu";
+  $trad['table_lien']       = "Lien";
+  $trad['tablex_lien']      = "[url=".$GLOBALS['url_site']."]NoBleme[/url] est cool";
+  $trad['table_align']      = "Alignement";
+  $trad['tablex_align_1']   = "[align=left]À gauche[/align]";
+  $trad['tablex_align_2']   = "[align=center]Au milieu[/align]";
+  $trad['tablex_align_3']   = "[align=right]À droite[/align]";
+  $trad['table_couleur']    = "Couleur";
+  $trad['tablex_couleur_1'] = "[color=green]Couleur (en anglais)[/color]";
+  $trad['tablex_couleur_2'] = "[color=#A15F8E]Ou en hexadécimal[/color]";
+  $trad['table_taille']     = "Taille";
+  $trad['tablex_taille_1']  = "[size=0.7]70% de la taille normale[/size]";
+  $trad['tablex_taille_2']  = "[size=1.3]30% plus gros[/size]";
+  $trad['table_flou']       = "Flou";
+  $trad['tablex_flou']      = "[blur]Passez la souris sur ce texte[/blur]";
+  $trad['table_spoiler']    = "Texte caché";
+  $trad['tablex_spoiler_1'] = "[spoiler]L'assassin est le juge[/spoiler]";
+  $trad['tablex_spoiler_2'] = "[spoiler=Star Wars]Han Solo a tiré le premier[/spoiler]";
+  $trad['table_quote']      = "Citation";
+  $trad['tablex_quote_1']   = "[quote]Quelqu'un a dit quelque chose[/quote]";
+  $trad['tablex_quote_2']   = "[quote=ThArGos]J'aime les citations qui tournent[/quote]";
+  $trad['tablex_code']      = "[code]Préserve        l'espacement[/code]";
+
+  // Détails bons à savoir
+  $trad['details_titre']    = "Détails bons à savoir sur les BBCodes";
+  $trad['details_combine']  = "Les BBCodes peuvent se combiner";
+  $trad['details_combinex'] = "Texte en [b]gras et [i]italique et [u]souligné[/u][/i][/b]";
+  $trad['details_quote']    = "Les citations et les spoilers peuvent être imbriquées à l'infini";
+  $trad['details_quotex']   = <<<EOD
+[quote=Personne A]Comme l'a dit Personne B,
+[quote=Personne B]Pour citer Personne C,
+[spoiler=Personne C]Le fond de l'air est frais
+[spoiler=Personne D]Tout à fait[/spoiler]C'est bien ça[/spoiler]Eh ouais.[/quote]Fou, non?[/quote]
+EOD;
+
+  // Zone d'expérimentation
+  $trad['experimentation']  = "Zone d'expérimentation";
+  $trad['exp_instructions'] = "Testez les BBCodes en écrivant un message dans l'encadré ci-dessous:";
+  $trad['exp_default']      = "[u]Zone de test des [b]BBcodes[/b][/u]";
+  $trad['exp_previs']       = "Prévisualisation en direct du résultat formaté:";
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Description
+  $trad['soustitre']        = "Formatting your messages";
+  $trad['description']      = <<<EOD
+<p>
+  Messages posted on NoBleme are formatted using a system called <a href="https://en.wikipedia.org/wiki/BBCode" class="gras">BBcode</a>.
+</p>
+<p>
+  Using instructions placed between brackets before and after bits of your message, you can turn those bits bold, underline them, create links, post images, etc.
+</p>
+<p>
+  On this page, you will find a list of all BBCodes that are available on NoBleme, aswell as an usage example for each one of them. At the bottom of the page, you will find an <a href="#bbcodes_testarea">experimentation zone</a> allowing you to try your hand at formatting messages using NoBleme's BBCodes.
+</p>
+EOD;
+
+  // Tableau
+  $trad['table_effet']      = "Effect";
+  $trad['table_exemple']    = "Usage example";
+  $trad['table_resultat']   = "Formatted result";
+  $trad['table_gras']       = "Bold";
+  $trad['tablex_gras']      = "My [b]bolded[/b] text";
+  $trad['table_italique']   = "Italics";
+  $trad['tablex_italique']  = "Here be [i]italics[/i]";
+  $trad['table_souligne']   = "Underlined";
+  $trad['tablex_souligne']  = "I [u]underline[/u] my text";
+  $trad['table_barre']      = "Strikethrough";
+  $trad['tablex_barre']     = "Let's [s]strike through[/s] some stuff";
+  $trad['table_lien']       = "Link";
+  $trad['tablex_lien']      = "[url=".$GLOBALS['url_site']."]NoBleme[/url] is cool";
+  $trad['table_align']      = "Alignment";
+  $trad['tablex_align_1']   = "[align=left]To the left[/align]";
+  $trad['tablex_align_2']   = "[align=center]To the middle[/align]";
+  $trad['tablex_align_3']   = "[align=right]To the right[/align]";
+  $trad['table_couleur']    = "Color";
+  $trad['tablex_couleur_1'] = "[color=green]Please color me[/color]";
+  $trad['tablex_couleur_2'] = "[color=#A15F8E]Works with hex codes[/color]";
+  $trad['table_taille']     = "Size";
+  $trad['tablex_taille_1']  = "[size=0.7]70% smaller than normal[/size]";
+  $trad['tablex_taille_2']  = "[size=1.3]30% bigger text[/size]";
+  $trad['table_flou']       = "Blur";
+  $trad['tablex_flou']      = "[blur]Hover your mouse over this text[/blur]";
+  $trad['table_spoiler']    = "Spoiler";
+  $trad['tablex_spoiler_1'] = "[spoiler]The assassin is the judge[/spoiler]";
+  $trad['tablex_spoiler_2'] = "[spoiler=Star Wars]Han shot first[/spoiler]";
+  $trad['table_quote']      = "Quote";
+  $trad['tablex_quote_1']   = "[quote]Somebody once told me[/quote]";
+  $trad['tablex_quote_2']   = "[quote=Smash Mouth]The world is gonna roll me[/quote]";
+  $trad['tablex_code']      = "[code]Preserves        spacing[/code]";
+
+  // Détails bons à savoir
+  $trad['details_titre']    = "Useful extra info about BBCodes";
+  $trad['details_combine']  = "You can mix BBCodes with eachother";
+  $trad['details_combinex'] = "This text is [b]bolded, [i]in italics, [u]and underlined[/u][/i][/b]";
+  $trad['details_quote']    = "You can stack spoilers and quotes";
+  $trad['details_quotex']   = <<<EOD
+[quote=Person A]As person B said,
+[quote=Person B]To quote person B,
+[spoiler=Person C]The weather is nice today
+[spoiler=Person D]Quite so[/spoiler]Absolutely[/spoiler]Innit?[/quote]Amirite[/quote]
+EOD;
+
+  // Zone d'expérimentation
+  $trad['experimentation']  = "Experimentation zone";
+  $trad['exp_instructions'] = "Experiment with BBCodes by writing a message in the form below:";
+  $trad['exp_default']      = "[u][b]BBCode[/b] test zone[/u]";
+  $trad['exp_previs']       = "Live preview of the formatted results:";
+}
 
 
 
@@ -42,384 +183,334 @@ $preview_traite   = isset($_POST['bbcodes_test']) ? bbcode(destroy_html(nl2br_fi
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <a href="<?=$chemin?>pages/doc/">
-        <img src="<?=$chemin?>img/logos/documentation.png" alt="Documentation">
-      </a>
-    </div>
-    <br>
+      <div class="texte">
 
+        <h1>BBCodes</h1>
 
+        <h5><?=$trad['soustitre']?></h5>
 
-    <div class="body_main midsize">
-      <span class="titre">Utilisation des BBCodes</span><br>
+        <?=$trad['description']?>
+
+      </div>
+
       <br>
-      Le système de balises que les messages postés sur NoBleme utilisent pour la mise en forme s'appellent des <a href="https://fr.wikipedia.org/wiki/Bbcode">BBCodes</a>.<br>
-      <br>
-      A l'instar du <a href="https://fr.wikipedia.org/wiki/HTML" target="_blank">HTML</a> ou d'autres <a href="https://fr.wikipedia.org/wiki/Langage_de_balisage" target="_blank">langages de balisage</a>, un texte est mis en forme en mettant une balise de BBCode avant le début du texte que vous voulez mettre en forme, puis une seconde balise à la fin du texte.<br>
-      <br>
-      Ci-dessous, une liste des BBCodes disponibles sur NoBleme, avec un ou plusieurs exemples pour chacun d'entre eux.
-    </div>
-
-    <br>
-    <br>
-
-    <div class="body_main midsize margin_auto">
-      <table class="cadre_gris indiv">
-
-        <tr>
-          <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-            Effet
-          </td>
-          <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-            Balises
-          </td>
-          <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-            Exemple d'utilisation des balises
-          </td>
-          <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-            Résultat de l'exemple
-          </td>
-        </tr>
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras">
-            Gras
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [b] [/b]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            Mon texte [b]en gras[/b]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("Mon texte [b]en gras[/b]")?>
-          </td>
-        </tr>
-
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras">
-            Italique
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [i] [/i]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            Un peu [i]d'italique[/i] ici
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("Un peu [i]d'italique[/i] ici")?>
-          </td>
-        </tr>
-
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras">
-            Souligné
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [u] [/u]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [u]Je souligne[/u] ma phrase
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[u]Je souligne[/u] ma phrase")?>
-          </td>
-        </tr>
-
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras">
-            Barré
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [s] [/s]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [s]Je barre ceci[/s]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[s]Je barre ceci[/s]")?>
-          </td>
-        </tr>
-
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras" rowspan="2">
-            Lien
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center" rowspan="2">
-            [url] [/url]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [url]http://www.nobleme.com[/url]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[url]http://www.nobleme.com[/url]")?>
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [url=http://www.nobleme.com] NoBleme [/url] est cool
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[url=http://www.nobleme.com]NoBleme[/url] est cool")?>
-          </td>
-        </tr>
-
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras">
-            Image
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [img] [/img]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [img]http://nobleme.com/favicon.ico[/img]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[img]http://nobleme.com/favicon.ico[/img]")?>
-          </td>
-        </tr>
-
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras" rowspan="3">
-            Alignement
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center" rowspan="3">
-            [align] [/align]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [align=left]À gauche[/align]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[align=left]À gauche[/align]")?>
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [align=center]Au centre[/align]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[align=center]Au centre[/align]")?>
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [align=right]À droite[/align]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[align=right]À droite[/align]")?>
-          </td>
-        </tr>
-
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras" rowspan="2">
-            Couleur
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center" rowspan="2">
-            [color] [/color]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [color=green]Nom de couleur en anglais[/color]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[color=green]Nom de couleur en anglais[/color]")?>
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [color=#7F9DB1]Ou en hexadécimal[/color]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[color=#7F9DB1]Ou en hexadécimal[/color]")?>
-          </td>
-        </tr>
-
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras" rowspan="2">
-            Taille
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center" rowspan="2">
-            [size] [/size]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [size=0.7]70% de la taille normale[/size]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[size=0.7]70% de la taille normale[/size]")?>
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [size=1.3]130% de la taille normale[/size]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[size=1.3]130% de la taille normale[/size]")?>
-          </td>
-        </tr>
-
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras">
-            Texte flouté
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [flou] [/flou]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [flou]Passez la souris sur ce texte[/flou]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[flou]Passez la souris sur ce texte[/flou]")?>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras" rowspan="2">
-            Texte caché
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center" rowspan="2">
-            [spoiler] [/spoiler]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [spoiler]L'assassin est le juge[/spoiler]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[spoiler]L'assassin est le juge[/spoiler]")?>
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [spoiler=Star Wars]Han Solo a tiré le premier[/spoiler]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[spoiler=Star Wars]Han Solo a tiré le premier[/spoiler]")?>
-          </td>
-        </tr>
-
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras" rowspan="2">
-            Citation
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center" rowspan="2">
-            [quote] [/quote]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [quote]Un tiens vaut mieux que deux tu l'auras[/quote]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[quote]Un tiens vaut mieux que deux tu l'auras[/quote]")?>
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [quote=Bad]Ceci a été écrit par Bad[/quote]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[quote=Bad]Ceci a été écrit par Bad[/quote]")?>
-          </td>
-        </tr>
-
-
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_center gras">
-            Code
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            [code] [/code]
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <pre>[code]Préserve        l'espacement[/code]</pre>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center">
-            <?=bbcode("[code]Préserve        l'espacement[/code]")?>
-          </td>
-        </tr>
-
-      </table>
-    </div>
-
-    <br>
-    <br>
-
-    <div class="body_main bigsize">
-      <span class="titre">Détails bons à savoir sur les BBCodes</span><br>
-      <br>
-      <hr>
-      <br>
-      <span class="soustitre">Les BBCodes peuvent se combiner</span><br>
-      <br>
-      Texte en [b]gras et [i]italique et [u]souligné[/u][/i][/b]<br>
-      <?=bbcode("Texte en [b]gras et [i]italique et [u]souligné[/u][/i][/b]")?><br>
-      <br>
-      <hr>
-      <br>
-      <span class="soustitre">Les citations peuvent être imbriquées à l'infini</span><br>
-      <br>
-      [quote=Personne A]Comme l'a dit Personne B, [quote=Personne B]Pour citer Personne C, [quote=Personne C]Le fond de l'air est frais[/quote][/quote]Fou, non?[/quote]<br>
-      <br>
-      <?=bbcode("[quote=Personne A]Comme l'a dit Personne B, [quote=Personne B]Pour citer Personne C, [quote=Personne C]Le fond de l'air est frais[/quote][/quote]Fou, non?[/quote]")?>
-      <br>
-      <hr>
-      <br>
-      <span class="soustitre">Les spoilers ne peuvent pas s'imbriquer</span><br>
-      <br>
-      [spoiler]Spoiler dans un[spoiler]spoiler[/spoiler]ne marche pas[/spoiler]<br>
-      <br>
-      <?=bbcode("[spoiler]Spoiler dans un[spoiler]spoiler[/spoiler]ne marche pas[/spoiler]")?><br>
-      <br>
-      [spoiler]Mais une citation dans un spoiler [quote]fonctionne correctement[/quote][/spoiler]<br>
-      <br>
-      <?=bbcode("[spoiler]Mais une citation dans un spoiler [quote]fonctionne correctement[/quote][/spoiler]")?><br>
-      Ce comportement devrait être changé tôt ou tard et les spoilers pourront s'imbriquer les uns dans les autres. Ce n'est pas une urgence, mais ce sera fait un jour.
-    </div>
-
-    <br>
-    <br>
-
-    <?php if(isset($_POST["bbcodes_go_x"]) && $preview_bbcodes != "") { ?>
-
-    <div class="body_main midsize margin_auto" id="test">
-      <span class="moinsgros gras alinea">Résultat de l'expérimentation :</span><br>
-      <br>
-      <?=$preview_traite?>
-    </div>
-
-    <br>
-    <br>
-
-    <?php } ?>
-
-    <div class="body_main midsize">
-      <span class="titre">Espace d'expérimentation</span><br>
       <br>
 
-      Vous pouvez vous servir de la zone de texte ci-dessous pour expérimenter avec les BBCodes.<br>
-      Écrivez-y du texte entouré de BBCodes, appuyez sur prévisualiser, et voyez le résultat.<br>
-      <br>
-      Si vous manquez d'inspiration, reprenez par exemple les utilisations des BBCodes dans le tableau en haut de la page.
+      <div class="texte3">
 
-      <form name="todo_commentaire" method="post" action="bbcodes#test">
+        <table class="fullgrid titresnoirs">
+          <thead>
+            <tr>
+              <th>
+                <?=$trad['table_effet']?>
+              </th>
+              <th>
+                BBcode
+              </th>
+              <th>
+                <?=$trad['table_exemple']?>
+              </th>
+              <th>
+                <?=$trad['table_resultat']?>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody class="align_center">
+
+            <tr>
+              <td>
+                <?=$trad['table_gras']?>
+              </td>
+              <td>
+                [b] [/b]
+              </td>
+              <td>
+                <?=$trad['tablex_gras']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_gras'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <?=$trad['table_italique']?>
+              </td>
+              <td>
+                [i] [/i]
+              </td>
+              <td>
+                <?=$trad['tablex_italique']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_italique'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <?=$trad['table_souligne']?>
+              </td>
+              <td>
+                [u] [/u]
+              </td>
+              <td>
+                <?=$trad['tablex_souligne']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_souligne'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <?=$trad['table_barre']?>
+              </td>
+              <td>
+                [s] [/s]
+              </td>
+              <td>
+                <?=$trad['tablex_barre']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_barre'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td rowspan="2">
+                <?=$trad['table_lien']?>
+              </td>
+              <td rowspan="2">
+                [url] [/url]
+              </td>
+              <td>
+                [url]<?=$GLOBALS['url_site']?>[/url]
+              </td>
+              <td>
+                <?=bbcode("[url]".$GLOBALS['url_site']."[/url]")?>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['tablex_lien']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_lien'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                Image
+              </td>
+              <td>
+                [img] [/img]
+              </td>
+              <td>
+                [img]http://www.nobleme.com/favicon.ico[/img]
+              </td>
+              <td>
+                <?=bbcode("[img]http://www.nobleme.com/favicon.ico[/img]")?>
+              </td>
+            </tr>
+
+            <tr>
+              <td rowspan="3">
+                <?=$trad['table_align']?>
+              </td>
+              <td rowspan="3">
+                [align] [/align]
+              </td>
+              <td>
+                <?=$trad['tablex_align_1']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_align_1'])?>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['tablex_align_2']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_align_2'])?>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['tablex_align_3']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_align_3'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td rowspan="2">
+                <?=$trad['table_couleur']?>
+              </td>
+              <td rowspan="2">
+                [color] [/color]
+              </td>
+              <td>
+                <?=$trad['tablex_couleur_1']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_couleur_1'])?>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['tablex_couleur_2']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_couleur_2'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td rowspan="2">
+                <?=$trad['table_taille']?>
+              </td>
+              <td rowspan="2">
+                [size] [/size]
+              </td>
+              <td>
+                <?=$trad['tablex_taille_1']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_taille_1'])?>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['tablex_taille_2']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_taille_2'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <?=$trad['table_flou']?>
+              </td>
+              <td>
+                [blur] [/blur]
+              </td>
+              <td>
+                <?=$trad['tablex_flou']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_flou'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td rowspan="2">
+                <?=$trad['table_spoiler']?>
+              </td>
+              <td rowspan="2">
+                [spoiler] [/spoiler]
+              </td>
+              <td>
+                <?=$trad['tablex_spoiler_1']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_spoiler_1'])?>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['tablex_spoiler_2']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_spoiler_2'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td rowspan="2">
+                <?=$trad['table_quote']?>
+              </td>
+              <td rowspan="2">
+                [quote] [/quote]
+              </td>
+              <td>
+                <?=$trad['tablex_quote_1']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_quote_1'])?>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['tablex_quote_2']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_quote_2'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                Code
+              </td>
+              <td>
+                [code] [/code]
+              </td>
+              <td>
+                <pre><?=$trad['tablex_code']?></pre>
+              </td>
+              <td class="align_left">
+                <?=bbcode($trad['tablex_code'])?>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+
+      <br>
+      <br>
+      <br>
+
+      <div class="texte">
+
+        <h3><?=$trad['details_titre']?></h3>
+
+        <p class="moinsgros gras alinea"><?=$trad['details_combine']?></p>
         <br>
-        <textarea class="intable" name="bbcodes_test" rows="10"><?=$preview_bbcodes?></textarea><br>
+        <pre class="alinea"><?=$trad['details_combinex']?></pre><br>
+        <?=bbcode($trad['details_combinex'])?><br>
         <br>
-        <div class="align_center">
-          <input type="image" src="<?=$chemin?>img/boutons/previsualiser.png" alt="PRÉVISUALISER" name="bbcodes_go">
+
+        <p class="moinsgros gras alinea"><?=$trad['details_quote']?></p>
+        <br>
+        <pre class="alinea"><?=$trad['details_quotex']?></pre><br>
+        <?=bbcode($trad['details_quotex'])?><br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <h3><?=$trad['experimentation']?></h3>
+
+        <br>
+
+        <label for="bbcodes_testarea"><?=$trad['exp_instructions']?></label>
+        <textarea id="bbcodes_testarea" name="bbcodes_testarea" class="indiv bbcodes_cadre bbcodes_message" onkeyup="dynamique('<?=$chemin?>', './../user/xhr/previsualiser_bbcodes.php', 'bbcodes_previsualisation', 'message=' + dynamique_prepare('bbcodes_testarea'), 1 );"><?=$trad['exp_default']?></textarea><br>
+        <br>
+
+        <label><?=$trad['exp_previs']?></label>
+        <div id="bbcodes_previsualisation" class="vscrollbar bbcodes_cadre bbcodes_previsualisation">
+          <?=bbcode($trad['exp_default'])?>
         </div>
-      </form>
 
-    </div>
-
+      </div>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

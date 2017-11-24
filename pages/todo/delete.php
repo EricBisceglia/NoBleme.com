@@ -6,22 +6,17 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-adminonly();
+adminonly($lang);
 
 // Menus du header
-$header_menu      = '';
-$header_submenu   = 'dev';
-$header_sidemenu  = 'todo_solved';
-
-// Titre et description
-$page_titre = "Supprimer un ticket";
+$header_menu      = 'NoBleme';
+$header_sidemenu  = 'Todolist';
 
 // Identification
-$page_nom = "admin";
-$page_id  = "admin";
+$page_nom = "Administre secrètement le site";
 
-// CSS
-$css = array('todo');
+// Titre et description
+$page_titre = "Supprimer une tâche";
 
 
 
@@ -33,51 +28,93 @@ $css = array('todo');
 /*****************************************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// On récupère l'ID du ticket à supprimer
+// Récupération de l'id
 
-if(!isset($_GET['id']) || !is_numeric($_GET['id']))
-  erreur('ID ticket invalide');
-else
-  $todoid = postdata($_GET['id']);
+// Si y'a pas d'id, on sort
+if(!isset($_GET['id']))
+  exit(header("Location: ".$chemin."pages/todo/index"));
+
+// Sinon, on récupère l'id
+$todo_id = postdata($_GET['id'], 'int');
+
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Suppression d'un ticket
+// Suppression de la tâche
 
-if(isset($_POST['todo_supprimer_x']))
+if(isset($_POST['todo_delete']) || isset($_POST['todo_reject']))
 {
-  // On a besoin d'infos sur le ticket pour la suite
-  $dtodo = mysqli_fetch_array(query(" SELECT FKmembres, titre, valide_admin FROM todo WHERE todo.id = '$todoid' "));
-
-  // On delete le ticket et ses commentaires
-  query(" DELETE FROM todo WHERE todo.id = '$todoid' ");
-  query(" DELETE FROM todo_commentaire WHERE todo_commentaire.FKtodo = '$todoid' ");
-
-  // Ainsi que les entrées de l'activité récente et du log de modération
-  query(" DELETE FROM activite WHERE action_type = 'new_todo' AND action_id = '$todoid' ");
-  query(" DELETE FROM activite WHERE action_type = 'fini_todo' AND action_id = '$todoid' ");
-  query(" DELETE FROM activite WHERE action_type = 'new_todo_comm' AND parent_id = '$todoid' ");
-  query(" DELETE FROM activite WHERE action_type = 'edit_todo_comm' AND action_id = '$todoid' ");
-  query(" DELETE FROM activite WHERE action_type = 'del_todo_comm' AND action_id = '$todoid' ");
-
-  // Si le ticket n'était pas encore validé, on message le submitteur pour s'excuser
-  if(!$dtodo['valide_admin'])
+  if(isset($_POST['todo_reject']))
   {
-    $del_titre    = (strlen(html_entity_decode($dtodo['titre'])) > 25) ? substr(html_entity_decode($dtodo['titre']),0,24).'...' : $dtodo['titre'];
-    $del_message  = "[b]Votre proposition de ticket a été refusée.[/b]\r\n\r\n";
-    $del_message .= "[b]Ticket proposé :[/b] ".$dtodo['titre']."\r\n";
-    if($_POST['todo_raison'])
-      $del_message .= "[b]Raison du refus :[/b] ".$_POST['todo_raison']."\r\n";
-    $del_message .= "\r\n";
-    $del_message .= "Même si votre ticket a été refusé, votre tentative de contribution au développement de NoBleme est appréciée.\r\n";
-    $del_message .= "Si vous pensez que le refus de ce ticket est injuste, vous pouvez répondre à ce message privé pour contester la décision.\r\n";
-    $del_message .= "N'hésitez pas à soumettre d'autres propositions de tickets dans le futur.";
-    envoyer_notif($dtodo['FKmembres'] , 'Ticket refusé : '.postdata($del_titre) , postdata($del_message));
+    // On a besoin de choper des infos sur la tâche avant de la supprimer
+    $qtodo = mysqli_fetch_array(query(" SELECT    todo.contenu        AS 't_contenu'  ,
+                                                  membres.id          AS 'm_id'
+                                        FROM      todo
+                                        LEFT JOIN membres ON todo.FKmembres = membres.id
+                                        WHERE     todo.id = '$todo_id' "));
   }
 
-  // Reste plus qu'à rediriger
-  header("Location: ".$chemin."pages/todo/index?admin");
+  // On supprime la tâche
+  query(" DELETE FROM todo
+          WHERE       todo.id = '$todo_id' ");
+
+  // Ainsi que l'entrée dans l'activité récente
+  query(" DELETE FROM activite
+          WHERE     ( activite.action_type  = 'todo_new'
+          OR          activite.action_type  = 'todo_fini' )
+          AND         activite.action_id    = '$todo_id' ");
+
+  if(isset($_POST['todo_reject']))
+  {
+    // On récupère le postdata
+    $todo_delete_lang   = postdata_vide('todo_delete_lang', 'string', 'FR');
+    $todo_delete_raison = $_POST['todo_delete_raison'];
+
+    // On envoie un message de rejet à l'auteur
+    $todo_auteur      = $qtodo['m_id'];
+    $todo_contenu_raw = $qtodo['t_contenu'];
+
+    // Selon si on veut l'envoyer en français...
+    if($todo_delete_lang == 'FR')
+    {
+      $todo_titre_message = "Proposition refusée";
+      $todo_raison        = ($todo_delete_raison) ? $todo_delete_raison : "Aucune raison spécifiée";
+      $todo_message       = <<<EOD
+[b]Votre proposition a été refusée.[/b]
+
+[b]Raison du refus :[/b] {$todo_raison}
+
+[b]Contenu de la proposition :[/b]
+[quote]{$todo_contenu_raw}[/quote]
+
+Même si votre proposition a été refusée, votre contribution à NoBleme est appréciée.
+N'hésitez pas à continuer à contribuer dans le futur !
+EOD;
+    }
+    else
+    {
+      $todo_titre_message = "Proposal rejected";
+      $todo_raison        = ($todo_delete_raison) ? $todo_delete_raison : "No reason specified";
+      $todo_message       = <<<EOD
+[b]Your proposal has been rejected.[/b]
+
+[b]Reason for refusal:[/b] {$todo_raison}
+
+[b]Your proposal was:[/b]
+[quote]{$todo_contenu_raw}[/quote]
+
+Even though your proposal was rejected, your contribution to NoBleme is appreciated.
+Don't hesitate to continue contributing in the future !
+EOD;
+    }
+
+    // Et on envoie ce message
+    envoyer_notif($todo_auteur, postdata($todo_titre_message), postdata($todo_message));
+  }
+
+  // Redirection vers la liste des tâches
+  exit(header("Location: ".$chemin."pages/todo/index"));
 }
 
 
@@ -89,26 +126,24 @@ if(isset($_POST['todo_supprimer_x']))
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Récupération des infos du ticket
-
-// On va le chercher
-$dtodo = mysqli_fetch_array(query(" SELECT    todo.id           ,
-                                              todo.titre        ,
-                                              todo.valide_admin ,
-                                              COUNT(todo_commentaire.id) AS 'commentaires'
+// On a besoin de quelques infos sur la tâche
+$qtodo = mysqli_fetch_array(query(" SELECT    membres.pseudonyme  AS 'm_pseudo' ,
+                                              todo.valide_admin   AS 't_valide' ,
+                                              todo.titre          AS 't_titre'  ,
+                                              todo.contenu        AS 't_contenu'
                                     FROM      todo
-                                    LEFT JOIN todo_commentaire ON todo.id = todo_commentaire.FKtodo
-                                    WHERE     todo.id = '$todoid' "));
+                                    LEFT JOIN membres ON todo.FKmembres = membres.id
+                                    WHERE     todo.id = '$todo_id' "));
 
-// S'il existe pas, dehors
-if(!$dtodo['id'])
-  erreur('Ticket inexistant');
+// Si la tâche existe pas, on sort
+if($qtodo['t_titre'] === NULL)
+  exit(header("Location: ".$chemin."pages/todo/index"));
 
-// Préparation pour l'affichage
-$todo_titre         = $dtodo['titre'];
-$todo_valide        = $dtodo['valide_admin'];
-$todo_commentaires  = $dtodo['commentaires'];
+// On prépare tout ça pour l'affichage
+$todo_titre         = predata($qtodo['t_titre']);
+$todo_contenu       = bbcode(predata($qtodo['t_contenu'], 1));
+$todo_valide_admin  = $qtodo['t_valide'];
+$todo_pseudonyme    = predata($qtodo['m_pseudo']);
 
 
 
@@ -119,46 +154,59 @@ $todo_commentaires  = $dtodo['commentaires'];
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/administration.png" alt="ADMINISTRATION">
-    </div>
-    <br>
+      <div class="texte">
 
-    <div class="body_main smallsize">
-      <span class="titre">Confirmer la suppression du ticket :</span><br>
-      <br>
-      <span class="gras">Titre :</span> <?=$todo_titre?><br>
-      <br>
-      <?php if($todo_commentaires) { ?>
-      <span class="gras"><?=$todo_commentaires?> commentaires seront également supprimés</span><br>
-      <br>
-      <?php } ?>
-      <form id="todo" method="POST" action="<?=$url_complete?>">
-        <?php if(!$todo_valide) { ?>
+        <h1>Supprimer une tâche</h1>
+
         <br>
-        <table class="indiv">
-          <tr>
-            <td class="data_input_right spaced todo_delete">
-              Raison du refus :
-            </td>
-            <td>
-              <input class="intable" name="todo_raison">
-            </td>
-          </tr>
-        </table>
+
+        <?php if($todo_valide_admin) { ?>
+
+        <h5>Confirmer la suppression de la tâche suivante :</h5>
+
+        <h5 class="texte_negatif"><?=$todo_titre?></h5>
         <br>
+
+        <?php } else { ?>
+
+        <h5>Confirmer le rejet de la proposition de <?=$todo_pseudonyme?> :</h5>
+
+        <br>
+        <?=$todo_contenu?><br>
+        <br>
+
         <?php } ?>
-        <br>
-        <div class="indiv align_center">
-          <input type="image" src="<?=$chemin?>img/boutons/supprimer.png" alt="SUPPRIMER" name="todo_supprimer">
-        </div>
-      </form>
-    </div>
 
+        <form method="POST">
+          <fieldset>
 
+            <?php if(!$todo_valide_admin) { ?>
 
+            <label for="todo_delete_lang">Langue de la notification</label>
+            <select id="todo_delete_lang" name="todo_delete_lang" class="indiv">
+              <option value="FR">Français</option>
+              <option value="EN">English</option>
+            </select><br>
+            <br>
+
+            <label for="todo_delete_raison">Raison du refus</label>
+            <input id="todo_delete_raison" name="todo_delete_raison" class="indiv" type="text"><br>
+            <br>
+
+            <?php } ?>
+
+            <br>
+
+            <?php if($todo_valide_admin) { ?>
+            <input value="SUPPRIMER LA TÂCHE" type="submit" name="todo_delete">
+            <?php } else { ?>
+            <input value="REJETER LA PROPOSITION" type="submit" name="todo_reject">
+            <?php } ?>
+
+          </fieldset>
+        </form>
+
+      </div>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

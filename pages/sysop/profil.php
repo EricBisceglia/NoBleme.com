@@ -6,19 +6,24 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-sysoponly();
+sysoponly($lang);
 
 // Menus du header
-$header_menu      = 'admin';
-$header_submenu   = 'mod';
-$header_sidemenu  = 'profil';
+$header_menu      = 'Admin';
+$header_sidemenu  = 'ModifierProfil';
+
+// Identification
+$page_nom = "Administre secrètement le site";
+
+// Langages disponibles
+$langage_page = array('FR');
 
 // Titre et description
 $page_titre = "Modifier un profil";
-$page_desc  = "Administration - Modifier le profil public d'un utilisateur";
 
-// Identification
-$page_nom = "sysop";
+// CSS & JS
+$css  = array('user');
+$js   = array('dynamique', 'sysop/chercher_user');
 
 
 
@@ -29,119 +34,106 @@ $page_nom = "sysop";
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Récupération de l'ID
-
-if(isset($_GET['id']))
+// Si on change le profil d'un utilisateur
+if(isset($_POST['profil_go']))
 {
-  // On assainit avant tout
-  $idprofil = postdata($_GET['id']);
+  // On nettoie le postdata
+  $profil_id      = postdata($_GET['id'], 'int', 0);
+  $profil_genre   = postdata_vide('profil_genre', 'string', '', 35);
+  $profil_habite  = postdata_vide('profil_habite', 'string', '', 35);
+  $profil_metier  = postdata_vide('profil_metier', 'string', '', 35);
+  $profil_texte   = postdata_vide('profil_texte', 'string', '');
 
-  // Si c'est pas un nombre, dehors
-  if(!is_numeric($_GET['id']))
-    erreur('ID invalide');
+  // On vérifie que l'user existe, sinon on dégage
+  $qtestprofil = mysqli_fetch_array(query(" SELECT  membres.id
+                                            FROM    membres
+                                            WHERE   membres.id = '$profil_id' "));
+  if(!$qtestprofil['id'])
+    header("Location: ".$chemin."pages/sysop/profil");
 
-  // Si l'utilisateur n'existe pas, dehors
-  if(!mysqli_num_rows(query(" SELECT membres.id FROM membres WHERE membres.id = '$idprofil' ")))
-    erreur("Impossible de modifier un utilisateur qui n'existe pas");
-}
+  // On récupère le profil actuel de l'user pour le diff
+  $qprofiluser = mysqli_fetch_array(query(" SELECT  membres.pseudonyme  ,
+                                                    membres.genre       ,
+                                                    membres.habite      ,
+                                                    membres.metier      ,
+                                                    membres.profil
+                                            FROM    membres
+                                            WHERE   membres.id = '$profil_id' "));
 
+  // On met à jour le profil
+  query(" UPDATE  membres
+          SET     membres.genre   = '$profil_genre'   ,
+                  membres.habite  = '$profil_habite'  ,
+                  membres.metier  = '$profil_metier'  ,
+                  membres.profil  = '$profil_texte'
+          WHERE   membres.id      = '$profil_id'      ");
 
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Chercher un utilisateur
-
-if(isset($_POST['sysop_chercher_x']) && $_POST['sysop_profil'])
-{
-  // Assainissement du postdata
-  $profil_chercher = postdata($_POST['sysop_profil']);
-
-  // On va chercher une liste de tous les membres contenant la chaine de caractères
-  $qpchercher = query(" SELECT id, pseudonyme FROM membres WHERE pseudonyme LIKE '%$profil_chercher%' ORDER BY pseudonyme ASC ");
-
-  // S'il n'y a qu'un seul résultat on redirige
-  if(mysqli_num_rows($qpchercher) == 1)
-  {
-    $dpchercher = mysqli_fetch_array($qpchercher);
-    header('Location: '.$chemin.'pages/sysop/profil?id='.$dpchercher['id']);
-  }
-
-  // Sinon on prépare ça pour l'affichage
-  for($npchercher = 0 ; $dpchercher = mysqli_fetch_array($qpchercher) ; $npchercher++)
-  {
-    $pchercher_id[$npchercher]      = $dpchercher['id'];
-    $pchercher_pseudo[$npchercher]  = $dpchercher['pseudonyme'];
-    $pchercher_css[$npchercher]     = ($npchercher%2) ? ' nobleme_background' : '' ;
-  }
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Modifier un profil
-
-if(isset($_POST['sysop_modifier_x']))
-{
-  // On va chercher les données avant modification pour comparer si y'a changement
-  $qprofiledit = mysqli_fetch_array(query(" SELECT region, metier, profil FROM membres WHERE membres.id = '$idprofil' "));
-
-  // On commence par assainir le postdata
-  $sysop_region = postdata($_POST['sysop_region']);
-  $sysop_metier = postdata($_POST['sysop_metier']);
-  $sysop_profil = postdata($_POST['sysop_texte']);
-  $sysop_raison = postdata($_POST['sysop_raison']);
-
-  // On effectue le changement
-  query(" UPDATE membres SET region = '$sysop_region', metier = '$sysop_metier', profil = '$sysop_profil' WHERE membres.id = '$idprofil'");
-
-  // On envoie un message à la personne concernée
-  $sysopm_contenu    = "[b]L'administration du site a modifié votre [url=".$chemin."pages/user/user?id=".$idprofil."]profil public[/url][/b]\r\n\r\n";
-  if($sysop_raison  != '')
-    $sysopm_contenu .= "La raison spécifiée pour la modification est la suivante : ".$_POST['sysop_raison']."\r\n\r\n";
-  $sysopm_contenu   .= "Dans le futur, assurez-vous que votre profil public respecte le [url=".$chemin."pages/doc/coc]code de conduite[/url] de NoBleme.";
-  envoyer_notif($idprofil , 'Votre profil public a été modifié' , postdata($sysopm_contenu));
-
-  // Log de modération
+  // On ajoute le changement aux logs de modération
   $timestamp      = time();
-  $membre_pseudo  = postdata(getpseudo($idprofil));
-  $admin_id       = $_SESSION['user'];
-  $admin_pseudo   = postdata(getpseudo());
+  $profil_pseudo  = postdata(getpseudo($profil_id), 'string');
+  $profil_sysop   = postdata(getpseudo(), 'string');
   query(" INSERT INTO activite
           SET         timestamp       = '$timestamp'      ,
                       log_moderation  = 1                 ,
-                      FKmembres       = '$idprofil'       ,
-                      pseudonyme      = '$membre_pseudo'  ,
+                      FKmembres       = '$profil_id'      ,
+                      pseudonyme      = '$profil_pseudo'  ,
                       action_type     = 'profil_edit'     ,
-                      parent_id       = '$admin_id'       ,
-                      parent_titre    = '$admin_pseudo'   ,
-                      justification   = '$sysop_raison'   ");
+                      parent          = '$profil_sysop'   ");
 
-  // Diff
-  $id_diff      = mysqli_insert_id($db);
-  if($_POST['sysop_region'] != $qprofiledit['region'])
+  // On crée les diff pour aller avec le log
+  $id_activite        = mysqli_insert_id($db);
+  $old_profil_genre   = postdata($qprofiluser['genre'], 'string');
+  $old_profil_habite  = postdata($qprofiluser['habite'], 'string');
+  $old_profil_metier  = postdata($qprofiluser['metier'], 'string');
+  $old_profil_texte   = postdata($qprofiluser['profil'], 'string');
+  if($profil_genre != $old_profil_genre)
     query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$id_diff'              ,
-                        titre_diff  = 'Ville / Région / Pays' ,
-                        diff        = '".postdata(diff($qprofiledit['region'],$_POST['sysop_region'],1))."' ");
-  if($_POST['sysop_metier'] != $qprofiledit['metier'])
+            SET         FKactivite      = '$id_activite'      ,
+                        titre_diff      = 'Genre'             ,
+                        diff_avant      = '$old_profil_genre' ,
+                        diff_apres      = '$profil_genre'     ");
+  if($profil_habite != $old_profil_habite)
     query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$id_diff'            ,
-                        titre_diff  = 'Métier / Occupation' ,
-                        diff        = '".postdata(diff($qprofiledit['metier'],$_POST['sysop_metier'],1))."' ");
-  if($_POST['sysop_texte'] != $qprofiledit['profil'])
+            SET         FKactivite      = '$id_activite'          ,
+                        titre_diff      = 'Ville / Région / Pays' ,
+                        diff_avant      = '$old_profil_habite'    ,
+                        diff_apres      = '$profil_habite'        ");
+  if($profil_metier != $old_profil_metier)
     query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$id_diff'        ,
-                        titre_diff  = 'Texte de profil' ,
-                        diff        = '".postdata(diff($qprofiledit['profil'],$_POST['sysop_texte'],1))."' ");
+            SET         FKactivite      = '$id_activite'        ,
+                        titre_diff      = 'Métier / Occupation' ,
+                        diff_avant      = '$old_profil_metier'  ,
+                        diff_apres      = '$profil_metier'      ");
+  if($profil_texte != $old_profil_texte)
+    query(" INSERT INTO activite_diff
+            SET         FKactivite      = '$id_activite'      ,
+                        titre_diff      = 'Texte libre'       ,
+                        diff_avant      = '$old_profil_texte' ,
+                        diff_apres      = '$profil_texte'     ");
 
-  // Bot IRC NoBleme
-  ircbot($chemin,"http://nobleme.com/pages/nobleme/activite?mod : ".getpseudo()." a modifié le profil public de ".getpseudo($idprofil),"#sysop");
+  // On prépare le message privé à envoyer à l'user dont le profil a été changé
+  $profil_pm = <<<EOD
+[url={$chemin}pages/user/user]Votre profil public[/url] a été modifié par un membre de [url={$chemin}pages/nobleme/admins]l'équipe administrative[/url].
 
-  // Puis on redirige vers le profil modifié
-  header('Location: '.$chemin.'pages/user/user?id='.$idprofil.'#profil_haut');
+À l'avenir, assurez vous que le contenu de votre profil respecte le [url={$chemin}pages/doc/coc]code de conduite[/url] de NoBleme.
+
+
+
+A member of the [url={$chemin}pages/nobleme/admins]administrative team[/url] modified your [url={$chemin}pages/user/user]public profile[/url].
+
+In the future, make sure that your public profile respects NoBleme's [url={$chemin}pages/doc/coc]code of conduct[/url].
+EOD;
+
+  // On envoie un message privé à l'user qui s'est fait bannir
+  envoyer_notif($profil_id, "Profil public modifié / Public profile edited", postdata($profil_pm));
+
+  // On notifie #sysop de l'action
+  ircbot($chemin, getpseudo()." a modifié le profil public de ".getpseudo($profil_id)." - ".$GLOBALS['url_site']."pages/user/user?id=".$profil_id, "#sysop");
+
+  // Et on redirige vers le profil de l'user
+  header("Location: ".$chemin."pages/user/user?id=".$profil_id);
 }
+
 
 
 
@@ -151,13 +143,29 @@ if(isset($_POST['sysop_modifier_x']))
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// On a besoin des infos du profil pour pouvoir les éditer
+// Si on a choisi l'user, on prépare ses infos
 if(isset($_GET['id']))
 {
-  $qprofil        = mysqli_fetch_array(query(" SELECT region, metier, profil FROM membres WHERE membres.id = '$idprofil' "));
-  $profil_metier  = destroy_html($qprofil['metier']);
-  $profil_region  = destroy_html($qprofil['region']);
-  $profil_texte   = destroy_html($qprofil['profil']);
+  // On commence par récupérer l'ID
+  $profil_id = postdata($_GET['id'], 'int', 0);
+
+  // On va chercher les données liées à l'user
+  $qprofiluser = mysqli_fetch_array(query(" SELECT  membres.pseudonyme  ,
+                                                    membres.genre       ,
+                                                    membres.habite      ,
+                                                    membres.metier      ,
+                                                    membres.profil
+                                            FROM    membres
+                                            WHERE   membres.id = '$profil_id' "));
+  $profil_pseudo  = predata($qprofiluser['pseudonyme']);
+  $profil_genre   = predata($qprofiluser['genre']);
+  $profil_habite  = predata($qprofiluser['habite']);
+  $profil_metier  = predata($qprofiluser['metier']);
+  $profil_texte   = predata($qprofiluser['profil']);
+
+  // Si l'user existe pas, on dégage
+  if(!$profil_pseudo)
+    $_GET['id'] = 0;
 }
 
 
@@ -169,97 +177,58 @@ if(isset($_GET['id']))
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/administration.png" alt="Administration">
-    </div>
-    <br>
+      <div class="texte">
 
-    <div class="body_main smallsize">
-      <span class="titre">Modifier un profil public</span><br>
-      <br>
-      Cet outil n'est pas fait pour troller ou s'amuser.<br>
-      Il sert <span class="gras">uniquement</span> à retirer des profils publics le contenu brisant les règles de NoBleme.<br>
-      <br>
-      Les modifications que vous faites apparaitront en détail dans le <a href="<?=$chemin?>pages/nobleme/activite?mod">log de modération</a>, et les membres dont le profil public se fait modifier auront une notification les informant de la modification.
-    </div>
+        <h1>Modifier un profil public</h1>
 
-    <?php if(!isset($_GET['id'])) { ?>
+        <p>Évitez de vous servir de cet outil pour vous amuser à troller. Son but est de nettoyer le contenu des profils qui ne respectent pas le <a class="gras" href="<?=$chemin?>pages/doc/coc">code de conduite</a> ou d'aider les membres qui se galèrent à faire leur profil tout seul.</p>
 
-    <div class="body_main smallsize align_center" id="resultats">
-      <span class="gras">Rechercher le pseudonyme de l'utilisateur à modifier :</span><br>
-      (Vous pouvez rentrer seulement une partie du pseudonyme, la magie de NoBleme fera le reste)<br>
-      <br>
-      <form name="sysop_profil_chercher" method="post" action="profil#resultats">
-        <input class="indiv" name="sysop_profil"><br>
-        <input type="image" src="<?=$chemin?>img/boutons/chercher.png" alt="Chercher" name="sysop_chercher">
-      </form>
-    </div>
+        <br>
+        <br>
 
-    <?php if(isset($_POST['sysop_chercher_x']) && $_POST['sysop_profil']) { ?>
+        <?php if(isset($_GET['id']) && $profil_pseudo && $profil_id == 1) { ?>
 
-    <div class="body_main smallsize">
-      <table class="cadre_gris indiv">
-        <tr>
-          <td colspan="2" class="cadre_gris_titre moinsgros">
-            RÉSULTATS DE LA RECHERCHE
-          </td>
-        </tr>
-        <?php if($npchercher) { ?>
-        <tr>
-          <td class="cadre_gris_sous_titre">
-            Pseudonyme
-          </td>
-          <td class="cadre_gris_sous_titre">
-            Action
-          </td>
-        </tr>
-        <?php for($i=0;$i<$npchercher;$i++) { ?>
-        <tr>
-          <td class="cadre_gris spaced align_center<?=$pchercher_css[$i]?>">
-            <a class="dark blank gras" href="<?=$chemin?>pages/user/user?id=<?=$pchercher_id[$i]?>"><?=$pchercher_pseudo[$i]?></a>
-          </td>
-          <td class="cadre_gris spaced align_center<?=$pchercher_css[$i]?>">
-            <a class="dark blank" href="<?=$chemin?>pages/sysop/profil?id=<?=$pchercher_id[$i]?>">Modifier le profil public</a>
-          </td>
-        </tr>
-        <?php } ?>
+        <h5>On ne change pas le profil du patron. Bien essayé.</h5>
+
+        <?php } else if(isset($_GET['id']) && $profil_pseudo) { ?>
+
+        <h5>Modifier le profil de <a href="<?=$chemin?>pages/user/user?id=<?=$profil_id?>"><?=$profil_pseudo?></a></h5>
+        <br>
+
+        <form method="POST">
+          <fieldset>
+            <label for="profil_genre">Genre:</label>
+            <input id="profil_genre" name="profil_genre" class="indiv" type="text" value="<?=$profil_genre?>" maxlength="35"><br>
+            <br>
+            <label for="profil_habite">Ville / Région / Pays:</label>
+            <input id="profil_habite" name="profil_habite" class="indiv" type="text" value="<?=$profil_habite?>" maxlength="35"><br>
+            <br>
+            <label for="profil_metier">Métier / Occupation:</label>
+            <input id="profil_metier" name="profil_metier" class="indiv" type="text" value="<?=$profil_metier?>" maxlength="35"><br>
+            <br>
+            <label for="profil_texte">Texte libre (partie droite):</label>
+            <textarea id="profil_texte" name="profil_texte" class="indiv profil_textarea" lines="20"><?=$profil_texte?></textarea><br>
+            <br>
+            <input value="Modifier le profil de <?=$profil_pseudo?>" type="submit" name="profil_go">
+          </fieldset>
+        </form>
+
         <?php } else { ?>
-        <tr>
-          <td colspan="3" class="align_center moinsgros gras cadre_gris_haut mise_a_jour texte_blanc">
-            Aucun utilisateur trouvé, cherchez mieux
-          </td>
-        </tr>
-        <?php } ?>
-      </table>
+
+        <fieldset>
+          <label for="sysop_pseudo_user">Entrez une partie du pseudonyme de l'utilisateur dont vous souhaitez modifier le profil :</label>
+          <input  id="sysop_pseudo_user" name="sysop_pseudo_user" class="indiv" type="text"
+                  onkeyup="sysop_chercher_user('<?=$chemin?>', 'Modifier le profil', 'profil')";><br>
+        </fieldset>
+
+      </div>
+
+      <div class="minitexte" id="sysop_liste_users">
+        &nbsp;
+
+      <?php } ?>
+
     </div>
-
-    <?php } ?>
-
-    <?php } else { ?>
-
-    <div class="body_main smallsize">
-      <form name="sysop_editer_profil" method="post" action="profil?id=<?=$idprofil?>">
-        <span class="gras alinea">Ville / Région / Pays :</span><br>
-        <input class="indiv" name="sysop_region" value="<?=$profil_region?>" maxlength="35"><br>
-        <br>
-        <span class="gras alinea">Métier / Occupation :</span><br>
-        <input class="indiv" name="sysop_metier" value="<?=$profil_metier?>" maxlength="35"><br>
-        <br>
-        <span class="gras alinea">Profil personnalisé :</span><br>
-        <textarea class="indiv" rows="15" name="sysop_texte"><?=$profil_texte?></textarea><br>
-        <br>
-        <span class="moinsgros gras alinea">Raison de la modification (impératif) :</span><br>
-        <input class="indiv" name="sysop_raison"><br>
-        <br>
-        <div class="align_center indiv">
-          <input type="image" src="<?=$chemin?>img/boutons/modifier.png" alt="Modifier" name="sysop_modifier">
-        </div>
-      </form>
-    </div>
-
-    <?php } ?>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

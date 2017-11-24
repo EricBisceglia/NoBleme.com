@@ -24,13 +24,64 @@ function bfdecho($stuff)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction forçant nl2br() à renvoyer des <br> au lieu de <br /> pour respecter le doctype
+// Arrête le processus de la page abruptement si elle n'est pas appelée par la fonction js dynamique();
 //
-// Utilisation: nl2br_fixed($string);
+// Utilisation: xhronly();
 
-function nl2br_fixed($contenu)
+function xhronly()
 {
-  return preg_replace("/\r\n|\n|\r/", "<br>", $contenu);
+  if(!isset($_SERVER['HTTP_DYNAMIQUE']))
+    exit();
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Détecte si la page est appelée par du XHR ou non
+//
+// Utilisation: getxhr();
+
+function getxhr()
+{
+  return (isset($_SERVER['HTTP_DYNAMIQUE'])) ? 1 : 0;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Tronque une chaine de caractères pour n'en garder que le début (et optionnellement rajouter quelque chose au niveau de la troncature)
+// $chaine est la chaine de caractères à tronquer
+// $longueur est le nombre de caractères à conserver dans la chaine
+// $suffixe est le contenu à rajouter à la fin de la chaine tronquée
+//
+// Exemple d'utilisation :
+// $titrecourt = tronquer_chaine($titre,20,'...');
+
+function tronquer_chaine($chaine,$longueur,$suffixe='')
+{
+  return (mb_strlen($chaine,'UTF-8') > $longueur) ? mb_substr($chaine,0,$longueur,'UTF-8').$suffixe : $chaine;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction changeant la casse d'une chaine de caractères sans massacrer l'encodage
+// $chaine est la chaine de caractères à manipuler
+// $action est l'action à effectuer: 'maj' pour des majuscules, 'min' pour des minuscules, 'init' pour la première lettre en majuscules
+//
+// Utilisation: changer_casse('Test accentué','maj');
+
+function changer_casse($chaine,$action)
+{
+  if($action == 'maj')
+    return mb_convert_case($chaine, MB_CASE_UPPER, "UTF-8");
+  else if($action == 'min')
+    return mb_convert_case($chaine, MB_CASE_LOWER, "UTF-8");
+  else if($action == 'init')
+    return mb_substr(mb_convert_case($chaine, MB_CASE_UPPER, "UTF-8"),0,1,'utf-8').mb_substr($chaine,1,65536,'utf-8');
 }
 
 
@@ -45,6 +96,7 @@ function br2ln($contenu)
 {
   $contenu = str_replace('<br>',"\n",$contenu);
   $contenu = str_replace('<br/>',"\n",$contenu);
+  $contenu = str_replace('<br />',"\n",$contenu);
   $contenu = str_replace('</br>',"\n",$contenu);
   return $contenu;
 }
@@ -154,6 +206,121 @@ function envoyer_notif($en_destinataire,$en_titre,$en_contenu,$sender=NULL,$sile
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Renvoie un nombre avec le bon signe
+//
+// Exemple d'utilisation :
+// $nombre_signed = signe_nombre($nombre)
+
+function signe_nombre($nombre)
+{
+  if($nombre > 0)
+    return '+'.$nombre;
+  else
+    return $nombre;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Renvoie un style css en fonction d'un contenu selon s'il est positif, neutre, ou négatif
+// Si $hex est rempli, renvoie un hex de couleur au lieu d'une classe css
+//
+// Exemple d'utilisation :
+// $couleur_contenu = format_positif($contenu);
+
+function format_positif($contenu,$hex=NULL)
+{
+  if(!$hex)
+  {
+    if($contenu > 0)
+      return 'positif';
+    else if($contenu == 0)
+      return 'neutre';
+    else
+      return 'negatif';
+  }
+  else
+  {
+    if($contenu > 0)
+      return '339966';
+    else if($contenu == 0)
+      return 'EB8933';
+    else
+      return 'FF0000';
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Formatte un nombre selon plusieurs formats possibles
+// $nombre est le nombre à formatter
+// $format est le type de format à y appliquer
+// Si $decimales est précisé, affiche ce nombre de décimales après la virgule (lorsque c'est possible)
+// Si $signe est précisé, affiche le signe + si le nombre est positif
+//
+// Exemple d'utilisation :
+// $prix = format_nombre($nombre,"prix")
+
+function format_nombre($nombre,$format,$decimales=NULL,$signe=NULL)
+{
+  // Nombre de décimales (en option) pour les pourcentages et les points
+  $decimales = (!is_null($decimales)) ? $decimales : 1;
+
+  // Formater un prix
+  if($format == "nombre")
+    $format_nombre = number_format((float)$nombre, 0, ',', ' ');
+
+  // Formater un prix
+  if($format == "prix")
+    $format_nombre = number_format((float)$nombre, 0, ',', ' ')." €";
+
+  // Formater un prix avec centimes
+  if($format == "centimes")
+    $format_nombre = number_format((float)$nombre, 2, ',', ' ')." €";
+
+  // Formater un pourcentage
+  else if($format == "pourcentage")
+    $format_nombre = number_format((float)$nombre, $decimales, ',', '')." %";
+
+  // Formater un point de pourcentage
+  else if($format == "point")
+    $format_nombre = number_format((float)$nombre, $decimales, ',', '')." p%";
+
+  // Application du signe si nécessaire
+  if($signe && $nombre > 0)
+    $format_nombre = '+'.$format_nombre;
+
+  // On renvoie le résultat
+  return $format_nombre;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Calcul le pourcentage qu'un nombre représente d'un autre nombre
+// $nombre est le nombre qui est un pourcent du total
+// $total est le total dont le nombre est un pourcent
+// Si $croissance est rempli, calcule une croissance au lieu d'un pourcentage d'un nombre
+//
+// Exemple d'utilisation :
+// $pourcentage = calcul_pourcentage($nombre,$total);
+
+function calcul_pourcentage($nombre, $total, $croissance=NULL)
+{
+  if(!$croissance)
+    return ($total) ? (($nombre/$total)*100) : 0;
+  else
+    return ($total) ? (($nombre/$total)*100)-100 : 0;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction générant un surnom aléatoire pour un unvité
 //
 // Utilisation: surnom_mignon();
@@ -161,7 +328,7 @@ function envoyer_notif($en_destinataire,$en_titre,$en_contenu,$sender=NULL,$sile
 function surnom_mignon()
 {
   // Liste de mots (les adjectif1 doivent prendre un espace s'ils ne se collent pas au nom)
-  $adjectif1 = array("Petit ", "Gros ", "Sale ", "Grand ", "Bel ", "Doux ", "L'", "Un ", "Cet ", "Ce ", "Premier ", "Gentil ", "Méchant ", "Bout d'", "Le ", "Capitaine ", "Quel ", "Saint ", "Chétif ", "Président ", "Général ", "Dernier ", "L'unique ", "Ex ", "Archi ", "Méga ", "Micro ", "Fort ", "Demi ", "Cadavre de ", "Âme d'", "Fils du ", "Futur ", "Second ");
+  $adjectif1 = array("Petit ", "Gros ", "Sale ", "Grand ", "Bel ", "Doux ", "L'", "Un ", "Cet ", "Ce ", "Premier ", "Gentil ", "Méchant ", "Bout d'", "Le ", "Capitaine ", "Quel ", "Saint ", "Chétif ", "Président ", "Général ", "Dernier ", "L'unique ", "Ex ", "Archi ", "Méga ", "Micro ", "Fort ", "Demi ", "Cadavre de ", "Âme d'", "Fils du ", "Futur ", "Second ", "Meta-");
 
   $nom = array("ours", "oiseau", "chat", "chien", "canard", "pigeon", "haricot", "arbre", "rongeur", "pot de miel", "indien", "gazon", "paysan", "crouton", "mollusque", "bouc", "éléphant", "sanglier", "journal", "singe", "cœur", "félin", "", "morse", "phoque", "miquet", "kévin", "monstre", "meuble", "frelon", "robot", "slip", "cousin", "frère", "internet", "type", "copain", "raton", "mouton", "VIP");
 
@@ -214,27 +381,20 @@ function diff_raw($old, $new)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction renvoyant une différence formatée et lisible entre deux strings
 //
-// Utilisation: diff("Mon texte","Nouveau texte",1,1);
+// Utilisation: diff("Mon texte", "Nouveau texte");
 
-function diff($old, $new, $bbcodes=NULL, $table=NULL)
+function diff($old, $new)
 {
-  if($table)
-    $ret = '<table class="cadre_gris indiv"><tr><td class="cadre_gris align_center gras souligne">Différences entre les versions : En <del>&nbsp;rouge&nbsp;</del> ce qui a été retiré, en <ins>&nbsp;vert&nbsp;</ins> ce qui a été ajouté</td></tr><tr><td class="cadre_gris nobleme_background"><br>';
-  else
-    $ret = '';
+  $return = '';
   $diff = diff_raw(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
-  foreach($diff as $k){
-    if(is_array($k)){
-      if($bbcodes && !$table)
-        $ret .= (!empty($k['d'])?"&nbsp;[del]&nbsp;".implode(' ',$k['d'])."&nbsp;[/del]&nbsp;":'').(!empty($k['i'])?"&nbsp;[ins]&nbsp;".implode(' ',$k['i'])."&nbsp;[/ins]&nbsp;":'');
-      else
-        $ret .= (!empty($k['d'])?"&nbsp;<del>&nbsp;".implode(' ',$k['d'])."&nbsp;</del>&nbsp;":'').(!empty($k['i'])?"&nbsp;<ins>&nbsp;".implode(' ',$k['i'])."&nbsp;</ins>&nbsp;":'');
-      }
-    else $ret .= $k . ' ';
+  foreach($diff as $k)
+  {
+    if(is_array($k))
+        $return .= (!empty($k['d'])?"&nbsp;<del>&nbsp;".implode(' ',$k['d'])."&nbsp;</del>&nbsp;":'').(!empty($k['i'])?"&nbsp;<ins>&nbsp;".implode(' ',$k['i'])."&nbsp;</ins>&nbsp;":'');
+    else
+      $return .= $k . ' ';
   }
-  if($table)
-    $ret .= '<br><br></td></tr></table>';
-  return $ret;
+  return $return;
 }
 
 
@@ -334,15 +494,50 @@ function ircbot($chemin,$message_irc,$canal_irc=NULL,$formattage=NULL)
   }
 
   // Si on peut écrire dans le fichier, on remplace son contenu par le message
-  if($fichier_ircbot = fopen($chemin.'ircbot.txt', "w+"))
+  if($fichier_ircbot = fopen($chemin.'ircbot.txt', "a"))
   {
     if(!$canal_irc)
-      fwrite($fichier_ircbot, time()." ".substr($message_irc,0,450)."\r\n");
+      file_put_contents($chemin.'ircbot.txt', time()." ".substr($message_irc,0,450).PHP_EOL, FILE_APPEND);
     else
-      fwrite($fichier_ircbot, time()." PRIVMSG ".$canal_irc." :".substr($message_irc,0,450)."\r\n");
+      file_put_contents($chemin.'ircbot.txt', time()." PRIVMSG ".$canal_irc." :".substr($message_irc,0,450).PHP_EOL, FILE_APPEND);
     fclose($fichier_ircbot);
     return 1;
   }
   else
     return 0;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Renvoie une (ou aucune) propriété CSS correspondant à un menu de navigation du header, selon si l'option est sélectionnée ou non
+//
+// Le premier paramètre est l'option de menu actuellement sélectionnée
+// Le second paramètre est l'option de menu dont on veut récupérer le CSS
+// Le troisième paramètre est le type de menu (0 -> menu principal / 1 -> sous-menu / 2 -> menu latéral)
+//
+// Utilisation: menu_css($header_menu,'communaute',0)
+
+function menu_css($menu_postdata, $menu_objet, $menu_type)
+{
+  // Si l'entrée est sélectionnée, on renvoie le CSS approprié
+  if($menu_postdata == $menu_objet)
+  {
+    if($menu_type == 0)
+      return ' menu_main_item_selected';
+    else if($menu_type == 1)
+      return ' menu_sub_item_selected';
+    else if($menu_type == 2)
+      return ' menu_side_item_selected';
+  }
+
+  // Si elle n'est pas sélectionnée, on ne renvoie rien, sauf dans le cas du menu secret
+  else
+  {
+    if($menu_objet == 'secrets' && $menu_type == 0)
+      return ' menu_main_item_secrets';
+    else
+      return '';
+  }
 }

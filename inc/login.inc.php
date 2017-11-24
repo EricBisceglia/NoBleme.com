@@ -104,6 +104,68 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && loggedin())
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Gestion du langage
+
+// Détermination du langage s'il n'est pas encore déterminé
+if(!isset($_SESSION['lang']))
+{
+  // Par défaut (si on a pas de cookie) en met en français
+  if(!isset($_COOKIE['nobleme_language']))
+  {
+    setcookie("nobleme_language", 'FR' , time()+630720000, "/");
+    $_SESSION['lang'] = 'FR';
+  }
+  // Sinon on lui donne la valeur du cookie
+  else
+    $_SESSION['lang'] = $_COOKIE['nobleme_language'];
+}
+
+// Changement de langage demandé en cliquant sur le drapeau
+if(isset($_GET['changelang']))
+{
+  // On détermine le nouveau langage
+  $changelang = ($_SESSION['lang'] == 'EN') ? 'FR' : 'EN';
+
+  // On change le cookie de langage et la session en cours
+  setcookie("nobleme_language", $changelang , time()+630720000, "/");
+  $_SESSION['lang'] = $changelang;
+}
+
+// Changement de langage imposé par l'URL
+if(isset($_GET['english']) || isset($_GET['anglais']))
+{
+  setcookie("nobleme_language", "EN" , time()+630720000, "/");
+  $_SESSION['lang'] = "EN";
+}
+if(isset($_GET['francais']) || isset($_GET['french']))
+{
+  setcookie("nobleme_language", "FR" , time()+630720000, "/");
+  $_SESSION['lang'] = "FR";
+}
+
+// Si on a changé le langage, on reload pour virer l'url spéciale
+if(isset($_GET['english']) || isset($_GET['anglais']) || isset($_GET['francais']) || isset($_GET['french']) || isset($_GET['changelang']))
+{
+  // On vire les paramètres dont on ne veut plus dans l'url
+  unset($_GET['english']);
+  unset($_GET['anglais']);
+  unset($_GET['francais']);
+  unset($_GET['french']);
+  unset($_GET['changelang']);
+
+  // On reconstruit l'URL
+  $url_self     = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
+  $url_rebuild  = urldecode(http_build_query($_GET));
+  $url_rebuild  = ($url_rebuild) ? $url_self.'?'.$url_rebuild : $url_self;
+
+  // Et on recharge la page
+  exit(header("Location: ".$url_rebuild));
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Nouvelle fonction de salage d'un mot de passe
 // Renvoie le mot de passe salé
 //
@@ -164,11 +226,17 @@ function loggedin()
 
 function getpseudo($id=NULL)
 {
-  if($id === NULL && isset($_SESSION['user']))
+  // Si on spécifie pas d'id, on prend la session en cours
+  if(!$id && isset($_SESSION['user']))
     $id = $_SESSION['user'];
-  $users = query(" SELECT membres.pseudonyme FROM membres WHERE id = '$id' ");
-  $getpseudo = mysqli_fetch_array($users);
-  return $getpseudo['pseudonyme'];
+
+  // Si on a pas d'id, on renvoie rien
+  if(!$id)
+    return '';
+
+  // On renvoie le pseudonyme
+  $qpseudo = mysqli_fetch_array(query(" SELECT membres.pseudonyme FROM membres WHERE id = '$id' "));
+    return $qpseudo['pseudonyme'];
 }
 
 
@@ -179,18 +247,30 @@ function getpseudo($id=NULL)
 // Renvoie 1 si l'user est modérateur de la section, 0 s'il ne l'est pas
 //
 // Exemple d'utilisation:
-// getsysop('irl','1');
+// getmod('irl','1');
 
 function getmod($section,$user=NULL)
 {
-  if($user === NULL && isset($_SESSION['user']))
+  // Si on spécifie pas d'user, on prend la session en cours
+  if(!$user && isset($_SESSION['user']))
     $user = $_SESSION['user'];
-  $modos = query(" SELECT membres.moderateur FROM membres WHERE id = '$user' AND moderateur LIKE '%$section%' ");
-  $modo = mysqli_fetch_array($modos);
-  if($modo['moderateur'])
-    return 1;
-  else
+
+  // Si on a pas d'user, on renvoie 0
+  if(!$user)
     return 0;
+
+  // Si c'est un mod de la section concernée, on renvoie 1
+  $qdroits = mysqli_fetch_array(query(" SELECT membres.moderateur FROM membres WHERE id = '$user' AND moderateur LIKE '%$section%' "));
+  if($qdroits['moderateur'])
+    return 1;
+
+  // Si c'est un sysop ou un admin, on renvoie aussi 1
+  $qdroits = mysqli_fetch_array(query(" SELECT membres.sysop, membres.admin FROM membres WHERE id = '$user' "));
+  if($qdroits['sysop'] || $qdroits['admin'])
+    return 1;
+
+  // Sinon on renvoie 0
+  return 0;
 }
 
 
@@ -205,11 +285,17 @@ function getmod($section,$user=NULL)
 
 function getsysop($user=NULL)
 {
-  if($user === NULL && isset($_SESSION['user']))
+  // Si on a pas de session en cours, on renvoie 0
+  if(!$user && !isset($_SESSION['user']))
+    return 0;
+
+  // Si on spécifie pas d'user, on prend la session en cours
+  if(!$user && isset($_SESSION['user']))
     $user = $_SESSION['user'];
-  $sysops = query(" SELECT membres.sysop, membres.admin FROM membres WHERE id = '$user' ");
-  $sysop = mysqli_fetch_array($sysops);
-  if($sysop['sysop'] || $sysop['admin'])
+
+  // On vérifie si l'user est sysop ou admin
+  $qdroits = mysqli_fetch_array(query(" SELECT membres.sysop, membres.admin FROM membres WHERE id = '$user' "));
+  if($qdroits['sysop'] || $qdroits['admin'])
     return 1;
   else
     return 0;
@@ -227,41 +313,51 @@ function getsysop($user=NULL)
 
 function getadmin($user=NULL)
 {
-  if($user === NULL && isset($_SESSION['user']))
+  // Si on spécifie pas d'user, on prend la session en cours
+  if(!$user && isset($_SESSION['user']))
     $user = $_SESSION['user'];
-  $admins = query(" SELECT membres.admin FROM membres WHERE id = '$user' ");
-  $admin = mysqli_fetch_array($admins);
-  return $admin['admin'];
+
+  // Si on a pas d'user, on renvoie 0
+  if(!$user)
+    return 0;
+
+  // On vérifie si l'user est admin
+  $qdroits = mysqli_fetch_array(query(" SELECT membres.admin FROM membres WHERE id = '$user' "));
+    return $qdroits['admin'];
 }
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction interdisant l'accès à une page si l'utilisateur n'est pas un sysop ou un modérateur d'une section spécifique
+// Fonction interdisant l'accès à une page si l'utilisateur n'est pas un sysop
+// Si le second paramètre est rempli, autorise également les modérateurs d'une section spécifique
 //
 // Exemple d'utilisation:
-// sysoponly('irls');
+// sysoponly('FR', 'irls');
 
-function sysoponly($section=NULL)
+function sysoponly($lang='FR', $section=NULL)
 {
+  // On prépare le message selon le langage
+  $message = ($lang == 'FR') ? "Cette page est réservée aux administrateurs.<br><br>Ouste !" : 'This page is for admins only<br><br>Shoo!';
+
   // On vérifie si l'user est connecté et est un admin
   if(loggedin())
   {
     // On vérifie si l'user est un admin
-    if($section == NULL)
+    if(!$section)
     {
       if(!getsysop($_SESSION['user']))
-        erreur("Cette page est réservée aux administrateurs.<br><br>Dehors!");
+        erreur($message);
     }
     else
     {
       if(!getsysop($_SESSION['user']) && !getmod($section,$_SESSION['user']))
-        erreur("Cette page est réservée aux administrateurs.<br><br>Dehors!");
+        erreur($message);
     }
   }
   else
-    erreur("Cette page est réservée aux administrateurs.<br><br>Dehors!");
+    erreur($message);
 }
 
 
@@ -273,17 +369,20 @@ function sysoponly($section=NULL)
 // Exemple d'utilisation:
 // adminonly();
 
-function adminonly()
+function adminonly($lang='FR')
 {
+  // On prépare le message selon le langage
+  $message = ($lang == 'FR') ? "Cette page est réservée aux administrateurs.<br><br>Ouste !" : 'This page is for admins only<br><br>Shoo!';
+
   // On vérifie si l'user est connecté et est un admin
   if(loggedin())
   {
     // On vérifie si l'user est un admin
-    if(!getadmin($_SESSION['user']))
-      erreur("Cette page est réservée aux administrateurs.<br><br>Dehors!");
+    if(!getadmin())
+      erreur($message);
   }
   else
-    erreur("Cette page est réservée aux administrateurs.<br><br>Dehors!");
+    erreur($message);
 }
 
 
@@ -295,7 +394,7 @@ function adminonly()
 // Exemple d'utilisation:
 // useronly();
 
-function useronly()
+function useronly($lang='FR')
 {
   // On vérifie si l'user est connecté
   if(!loggedin())
@@ -324,7 +423,10 @@ function useronly()
         $chemin .= "../";
     }
 
-    erreur("Cette page n'est utilisable que par les utilisateurs connectés.<br><br>Connectez-vous à votre compte en <a class=\"dark\" href=\"".$chemin."pages/user/login\">cliquant ici</a>,<br>ou créez-vous un compte en <a class=\"dark\" href=\"".$chemin."pages/user/register\">cliquant ici</a>.");
+    if($lang == 'FR')
+      erreur("Cette page n'est utilisable que par les utilisateurs connectés.<br><br>Connectez-vous à votre compte en <a href=\"".$chemin."pages/user/login\">cliquant ici</a>,<br>ou créez-vous un compte en <a href=\"".$chemin."pages/user/register\">cliquant ici</a>.");
+    else
+      erreur("This page is for registered users only.<br><br>Log into your account by <a href=\"".$chemin."pages/user/login\">clicking here</a>,<br>or create an account by <a href=\"".$chemin."pages/user/register\">clicking here</a>.");
   }
 }
 
@@ -337,9 +439,12 @@ function useronly()
 // Exemple d'utilisation:
 // guestonly();
 
-function guestonly()
+function guestonly($lang='FR')
 {
+  // On prépare le message selon le langage
+  $message = ($lang == 'FR') ? "Cette page n'est accessible qu'aux invités." : "This page is accessible by guests only.";
+
   // On vérifie si l'user est connecté
   if(loggedin())
-    erreur("Vous ne pouvez pas accéder à cette page.");
+    erreur($message);
 }

@@ -6,22 +6,25 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-useronly();
+useronly($lang);
 
 // Menus du header
-$header_menu      = 'compte';
-$header_submenu   = 'profil';
-
-// Titre et description
-$page_titre = "Modifier mon profil";
-$page_desc  = "Modification de votre profil public";
+$header_menu      = 'Compte';
+$header_sidemenu  = 'ModifierProfil';
 
 // Identification
-$page_nom = "user";
-$page_id  = "profil";
+$page_nom = "Modifie son profil public";
+$page_url = "pages/user/profil";
 
-// CSS et JS
+// Langages disponibles
+$langage_page = array('FR','EN');
+
+// Titre et description
+$page_titre = ($lang == 'FR') ? "Modifier mon profil public" : "Edit my public profile";
+
+// CSS & JS
 $css = array('user');
+$js  = array('dynamique', 'user/previsualiser_profil');
 
 
 
@@ -33,81 +36,53 @@ $css = array('user');
 /*****************************************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Modifier le profil
+// Récupération des données
 
-// La partie de gauche du profil
-if(isset($_POST['profil_gauche_modifier_x']))
-{
-  // Assainissement du postdata
-  $edit_sexe        = postdata($_POST['profil_sexe']);
-  $edit_anniv_annee = postdata($_POST['profil_naissance_annee']);
-  $edit_anniv_mois  = (strlen($_POST['profil_naissance_mois'])== 1)? '0'.$_POST['profil_naissance_mois'] : $_POST['profil_naissance_mois'];
-  $edit_anniv_jour  = (strlen($_POST['profil_naissance_jour'])== 1)? '0'.$_POST['profil_naissance_jour'] : $_POST['profil_naissance_jour'];
-  $edit_anniv       = postdata($edit_anniv_annee.'-'.$edit_anniv_mois.'-'.$edit_anniv_jour);
-  $edit_region      = postdata((strlen($_POST['profil_region']) > 36) ? substr($_POST['profil_region'],0,36) : $_POST['profil_region']);
-  $edit_metier      = postdata((strlen($_POST['profil_metier']) > 36) ? substr($_POST['profil_metier'],0,36) : $_POST['profil_metier']);
-
-  // On limite les choix de sexe pour pas que ça soit abusable via le postdata
-  if($edit_sexe != '' && $edit_sexe != 'Masculin' && $edit_sexe != 'Féminin' && $edit_sexe != 'Neutre' && $edit_sexe != 'Indéfini')
-    $edit_sexe = '';
-
-  // Modification du profil
-  $edit_user = $_SESSION['user'];
-  query(" UPDATE  membres
-          SET     membres.sexe          = '$edit_sexe'    ,
-                  membres.anniversaire  = '$edit_anniv'   ,
-                  membres.region        = '$edit_region'  ,
-                  membres.metier        = '$edit_metier'
-          WHERE   membres.id            = '$edit_user'    ");
-}
-
-
-// La partie de droite du profil
-if(isset($_POST['profil_droite_modifier_x']))
-{
-  // Assainissement du postdata
-  $edit_texte = postdata($_POST['profil_texte']);
-
-  // Modification du profil
-  $edit_user = $_SESSION['user'];
-  query(" UPDATE membres SET membres.profil = '$edit_texte' WHERE membres.id = '$edit_user' ");
-}
-
-
-// Peu importe quelle partie a été modifiée, activité récente + redirection
-if(isset($_POST['profil_gauche_modifier_x']) || isset($_POST['profil_droite_modifier_x']))
-{
-  // Détection du flood pour l'activité récente (une heure avant de refaire un log)
-  $maxtimestamp = time()-3600;
-  $qfloodactivite = query(" SELECT id FROM activite WHERE activite.timestamp > '$maxtimestamp' AND activite.FKmembres = '$edit_user' AND activite.action_type LIKE 'profil' ");
-  if(!mysqli_num_rows($qfloodactivite))
-  {
-    // S'il y a pas de flood, on crée le log dans l'activité récente
-    $timestamp  = time();
-    $edit_nick  = postdata(getpseudo($edit_user));
-    query(" INSERT INTO activite
-            SET         timestamp   = '$timestamp'  ,
-                        FKmembres   = '$edit_user'  ,
-                        pseudonyme  = '$edit_nick'  ,
-                        action_type = 'profil'      ");
-  }
-
-  // Redirection vers le profil
-  header('Location: '.$chemin.'pages/user/user?id='.$edit_user.'#profil_haut');
-}
-
+// On chope l'userid, si y'en a pas on arrête tout
+$profil_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateur invalide');
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Prévisualisation
+// Modifier le profil
 
-// Par défaut on met rien dans la prévisualisation
-$profil_previsualisation = '';
+if(isset($_POST['profil_modifier']))
+{
+  // Assainissement du postdata
+  $edit_naissance_d = str_pad(postdata_vide('profilNaissanceJour', 'int', 0), 2, '0', STR_PAD_LEFT);
+  $edit_naissance_m = str_pad(postdata_vide('profilNaissanceMois', 'int', 0), 2, '0', STR_PAD_LEFT);
+  $edit_naissance_y = str_pad(postdata_vide('profilNaissanceAnnee', 'int', 0), 4, '0', STR_PAD_LEFT);
+  $edit_naissance   = ($edit_naissance_d != '00' && $edit_naissance_m != '00' && $edit_naissance_y != '0000' ) ? $edit_naissance_y.'-'.$edit_naissance_m.'-'.$edit_naissance_d : '0000-00-00';
+  $edit_genre       = postdata_vide('profilGenre', 'string', '', 35);
+  $edit_habite      = postdata_vide('profilHabite', 'string', '', 35);
+  $edit_metier      = postdata_vide('profilMetier', 'string', '', 35);
+  $edit_texte       = postdata_vide('profilTexte', 'string', '');
 
-// Si elle est remplie, on l'affiche
-if(isset($_POST['profil_droite_previsualiser_x']))
-  $profil_previsualisation = nl2br_fixed(bbcode(destroy_html($_POST['profil_texte'])));
+  // On met à jour le profil
+  query(" UPDATE  membres
+          SET     membres.anniversaire  = '$edit_naissance' ,
+                  membres.genre         = '$edit_genre'     ,
+                  membres.habite        = '$edit_habite'    ,
+                  membres.metier        = '$edit_metier'    ,
+                  membres.profil        = '$edit_texte'
+          WHERE   membres.id = '$profil_id' ");
+
+  // On met une notification dans le log de modération
+  $timestamp  = time();
+  $pseudonyme = postdata(getpseudo($profil_id), 'string');
+  query(" INSERT INTO activite
+          SET         activite.timestamp      = '$timestamp'  ,
+                      activite.log_moderation = 1             ,
+                      activite.FKmembres      = '$profil_id'  ,
+                      activite.pseudonyme     = '$pseudonyme' ,
+                      activite.action_type    = 'profil'      ");
+
+  // On envoie un message sur #sysop avec le bot IRC pour qu'un sysop vérifie que ça soit pas du contenu abusif
+  ircbot($chemin, getpseudo($profil_id)." a modifié son profil public - ".$GLOBALS['url_site']."pages/user/user?id=".$profil_id, "#sysop");
+
+  // Et on redirige vers le profil public
+  exit(header("Location: ".$chemin."pages/user/user"));
+}
 
 
 
@@ -119,95 +94,123 @@ if(isset($_POST['profil_droite_previsualiser_x']))
 /*****************************************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// On récupère les infos pour pré-remplir la page
+// Données du profil pour pré-remplir les champs
 
-$edit_user      = $_SESSION['user'];
-$dprofiledit    = mysqli_fetch_array(query(" SELECT sexe, anniversaire, region, metier, profil FROM membres WHERE id = '$edit_user' "));
-$profil_metier  = destroy_html($dprofiledit['metier']);
-$profil_region  = destroy_html($dprofiledit['region']);
-$profil_texte   = destroy_html((!isset($_POST['profil_droite_previsualiser_x'])) ? $dprofiledit['profil'] : $_POST['profil_texte']);
+// On commence par aller chercher les données
+$qprofil = mysqli_fetch_array(query(" SELECT  membres.anniversaire  AS 'u_anniv'  ,
+                                              membres.genre         AS 'u_genre'   ,
+                                              membres.habite        AS 'u_habite' ,
+                                              membres.metier        AS 'u_metier' ,
+                                              membres.profil        AS 'u_profil'
+                                      FROM    membres
+                                      WHERE   membres.id = '$profil_id' "));
 
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Menu déroulant: Sexe
-
-if(!$dprofiledit['sexe'])
-  $menu_sexe  = '<option value="0" selected>&nbsp;</option>';
-else
-  $menu_sexe  = '<option value="">&nbsp;</option>';
-if($dprofiledit['sexe'] == 'Masculin')
-  $menu_sexe .= '<option value="Masculin" selected>Masculin</option>';
-else
-  $menu_sexe .= '<option value="Masculin">Masculin</option>';
-if($dprofiledit['sexe'] == 'Féminin')
-  $menu_sexe .= '<option value="Féminin" selected>Féminin</option>';
-else
-  $menu_sexe .= '<option value="Féminin">Féminin</option>';
-if($dprofiledit['sexe'] == 'Neutre')
-  $menu_sexe .= '<option value="Neutre" selected>Neutre</option>';
-else
-  $menu_sexe .= '<option value="Neutre">Neutre</option>';
-if($dprofiledit['sexe'] == 'Indéfini')
-  $menu_sexe .= '<option value="Indéfini" selected>Indéfini</option>';
-else
-  $menu_sexe .= '<option value="Indéfini">Indéfini</option>';
+// Et on les prépare pour l'affichage
+$profil_genre   = predata($qprofil['u_genre']);
+$profil_habite  = predata($qprofil['u_habite']);
+$profil_metier  = predata($qprofil['u_metier']);
+$profil_texte   = predata($qprofil['u_profil']);
+$profil_hidden  = (!$qprofil['u_profil']) ? ' class="hidden"' : '';
+$profil_preview = bbcode(predata($qprofil['u_profil'], 1));
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Menu déroulant: Jour de naissance
+// Menus déroulants pour la date de naissance
 
-$jouranniv = substr($dprofiledit['anniversaire'],8,2);
-if($jouranniv == '00')
-  $menu_naissance_jour = '<option value="00" selected>&nbsp;</option>';
-else
-  $menu_naissance_jour = '<option value="00">&nbsp;</option>';
-for($i=1;$i<31;$i++)
+// Jour de naissance
+$profil_anniv_jour  = ($qprofil['u_anniv'] != '0000-00-00') ? intval(substr($qprofil['u_anniv'],8,2)) : 0;
+$select_anniv_jour  = '<option value=""></option>';
+for($i = 1; $i <= 31; $i++)
 {
-  if($jouranniv == $i)
-    $menu_naissance_jour .= '<option value="'.$i.'" selected>'.$i.'</option>';
-  else
-    $menu_naissance_jour .= '<option value="'.$i.'">'.$i.'</option>';
+  $selected           = ($profil_anniv_jour == $i) ? ' selected' : '';
+  $select_anniv_jour .= '<option value="'.$i.'"'.$selected.'>'.$i.'</option>';
+}
+
+// Mois de naissance
+$profil_anniv_mois  = ($qprofil['u_anniv'] != '0000-00-00') ? intval(substr($qprofil['u_anniv'],5,2)) : 0;
+$select_anniv_mois  = '<option value=""></option>';
+for($i = 1; $i <= 12; $i++)
+{
+  $selected           = ($profil_anniv_mois == $i) ? ' selected' : '';
+  $temp_mois          = ($lang == 'FR') ? $moisfr[$i] : date("F", mktime(0, 0, 0, $i, 10));
+  $select_anniv_mois .= '<option value="'.$i.'"'.$selected.'>'.$temp_mois.'</option>';
+}
+
+// Année de naissance
+$profil_anniv_annee = ($qprofil['u_anniv'] != '0000-00-00') ? intval(substr($qprofil['u_anniv'],0,4)) : 0;
+$select_anniv_annee = '<option value=""></option>';
+for($i = date('Y'); $i > 1900; $i--)
+{
+  $selected             = ($profil_anniv_annee == $i) ? ' selected' : '';
+  $select_anniv_annee  .= '<option value="'.$i.'"'.$selected.'>'.$i.'</option>';
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Menu déroulant: Mois de naissance
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
 
-$moisanniv = substr($dprofiledit['anniversaire'],5,2);
-if($moisanniv == '00')
-  $menu_naissance_mois = '<option value="00" selected>&nbsp;</option>';
-else
-  $menu_naissance_mois = '<option value="00">&nbsp;</option>';
-for($i=1;$i<=12;$i++)
+if($lang == 'FR')
 {
-  if($moisanniv == $i)
-    $menu_naissance_mois .= '<option value="'.$i.'" selected>'.$moisfr[$i].'</option>';
-  else
-    $menu_naissance_mois .= '<option value="'.$i.'">'.$moisfr[$i].'</option>';
+  // Header
+  $trad['titre']          = "Modifier mon profil public";
+  $trad['desc']           = <<<EOD
+Cette page vous permet de modifier les éléments qui apparaissent sur votre <a href="{$chemin}pages/user/user" class="gras">profil public</a>. Bien entendu, l'intégralité de ces champs sont optionnels, c'est à vous de décider si vous voulez ou non que ces choses apparaissent publiquement. Si vous préférez rester anonyme, il n'y a aucune conséquence négative à laisser votre profil entièrement vide.
+EOD;
+
+  // Colonne de gauche
+  $trad['gauche_titre']   = "Colonne de gauche : Informations personnelles";
+  $trad['gauche_anniv']   = "Date de naissance";
+  $trad['gauche_genre']   = "Genre";
+  $trad['gauche_tgenre']  = "Masculin, féminin, etc.     35 caractères maximum";
+  $trad['gauche_habite']  = "Ville / Région / Pays";
+  $trad['gauche_thabite'] = "L'endroit où vous vivez     35 caractères maximum";
+  $trad['gauche_metier']  = "Métier / Occupation";
+  $trad['gauche_tmetier'] = "Ce que vous faites dans la vie     35 caractères maximum";
+
+  // Colonne de droite
+  $trad['droite_titre']   = "Colonne de droite : Espace personnalisable";
+  $trad['droite_desc']    = <<<EOD
+Cet espace est à votre disposition pour y mettre tout ce dont vous avez envie, bien entendu tout en respectant le <a class="gras" href="{$chemin}pages/doc/coc">code de conduite</a> de NoBleme. Vous pouvez utiliser des <a class="gras" href="{$chemin}pages/doc/emotes">émoticônes</a> et des <a class="gras" href="{$chemin}pages/doc/bbcodes">BBCodes</a> sur votre profil.
+EOD;
+  $trad['droite_prev']    = "Prévisualisation du profil";
+  $trad['droite_valider'] = "MODIFIER MON PROFIL PUBLIC";
 }
 
 
+/*****************************************************************************************************************************************/
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Menu déroulant: Année de naissance
-
-$anneeanniv = substr($dprofiledit['anniversaire'],0,4);
-if($anneeanniv == '0000')
-  $menu_naissance_annee = '<option value="0000" selected>&nbsp;</option>';
-else
-  $menu_naissance_annee = '<option value="0000">&nbsp;</option>';
-for($i=date('Y');$i>1900;$i--)
+else if($lang == 'EN')
 {
-  if($anneeanniv == $i)
-    $menu_naissance_annee .= '<option value="'.$i.'" selected>'.$i.'</option>';
-  else
-    $menu_naissance_annee .= '<option value="'.$i.'">'.$i.'</option>';
+  // Header
+  $trad['titre']          = "Edit my public profile";
+  $trad['desc']           = <<<EOD
+This page allows you to edit the contents of elements that appear on your <a href="{$chemin}pages/user/user" class="gras">public profile</a>. Of course, all of those fields are optional, it's up to you to decide whether you want to share those things publicly or not. If you would rather stay fully anonymous, there are no consequences to leaving your public profile empty.
+EOD;
+
+  // Colonne de gauche
+  $trad['gauche_titre']   = "Left side: Personal information";
+  $trad['gauche_anniv']   = "Date of birth";
+  $trad['gauche_genre']   = "Gender";
+  $trad['gauche_tgenre']  = "Male, female, etc.     35 character limit";
+  $trad['gauche_habite']  = "City / Countr:";
+  $trad['gauche_thabite'] = "The place where you live     35 character limit";
+  $trad['gauche_metier']  = "Job / Occupation";
+  $trad['gauche_tmetier'] = "Your life's main activity     35 character limit";
+
+  // Colonne de droite
+  $trad['droite_titre']   = "Right side: Customizable area";
+  $trad['droite_desc']    = <<<EOD
+You are free to put whatever you want in this area of your public profile, as long as it follows NoBleme's <a class="gras" href="{$chemin}pages/doc/coc">code of conduct</a> obviously. You can use <a class="gras" href="{$chemin}pages/doc/emotes">emotes</a> and <a class="gras" href="{$chemin}pages/doc/bbcodes">BBCodes</a> on your public profile.
+EOD;
+  $trad['droite_prev']    = "Profile preview";
+  $trad['droite_valider'] = "EDIT MY PUBLIC PROFILE";
 }
 
 
@@ -219,129 +222,106 @@ for($i=date('Y');$i>1900;$i--)
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/profil.png" alt="Logo">
-    </div>
-    <br>
+      <div class="texte">
 
-    <form name="editprofil" method="post" action="profil#profil_previs">
+        <h1><?=$trad['titre']?></h1>
 
-      <div class="body_main smallsize">
+        <p><?=$trad['desc']?></p>
 
-        <span class="titre">Modifier mon profil public</span><br>
         <br>
-        Tout ce que vous ajoutez ou modifiez sur cette page apparaitra sur votre <a href="<?=$chemin?>pages/user/user?id=<?=$_SESSION['user']?>">profil public</a>.<br>
         <br>
-        Bien entendu, l'intégralité des informations sont optionnelles.<br>
-        Vous pouvez choisir de n'en remplir qu'une partie ou même de ne rien remplir du tout.<br>
-        Il n'y aura aucune conséquence négative si vous faites le choix d'avoir un profil non personnalisé.<br>
-      </div>
 
-      <br>
+        <h5><?=$trad['gauche_titre']?></h5>
 
-      <div class="body_main smallsize">
-        <span class="soustitre">Colonne de gauche : Informations personnelles</span><br>
         <br>
-        <table class="indiv">
-          <tr>
-            <td class="align_right spaced gras profil_colonnegauche">
-              Sexe :
-            </td>
-            <td class="align_left" colspan="3">
-              <select class="intable" name="profil_sexe">
-                <?=$menu_sexe?>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="4" class="profil_minixeplication">
-              Note de l'administrateur: Le choix d'utiliser sexe au lieu de genre n'a pas été fait dans un objectif discriminatoire. Tout simplement c'est parce que, en <?=date('Y')?>, la personne moyenne comprend très bien ce que signifie sexe mais pas forcément ce que signifie genre. J'ai choisi la clarté plutôt que la précision. Si le mot sexe ne vous convient pas, contentez vous de ne pas remplir ce champ de votre profil public. Je comprends parfaitement le problème que ce choix de vocabulaire peut poser, mais c'est une situation où les deux choix ont le potentiel de lancer des débats stériles car la plupart des gens ne comprennent pas bien les implications des mots sexe et genre.<br>
+
+        <form method="POST">
+          <fieldset>
+
+            <label for="profilNaissanceJour"><?=$trad['gauche_anniv']?></label>
+            <div class="flexcontainer">
+
+              <?php if($lang == 'FR') { ?>
+              <div style="flex:10">
+                <select id="profilNaissanceJour" name="profilNaissanceJour" class="indiv">
+                  <?=$select_anniv_jour?>
+                </select>
+              </div>
+              <div style="flex:1">
+                &nbsp;
+              </div>
+              <div style="flex:15">
+                <select id="profilNaissanceMois" name="profilNaissanceMois" class="indiv">
+                  <?=$select_anniv_mois?>
+                </select>
+              </div>
+
+              <?php } else { ?>
+              <div style="flex:15">
+                <select id="profilNaissanceMois" name="profilNaissanceMois" class="indiv">
+                  <?=$select_anniv_mois?>
+                </select>
+              </div>
+              <div style="flex:1">
+                &nbsp;
+              </div>
+              <div style="flex:10">
+                <select id="profilNaissanceJour" name="profilNaissanceJour" class="indiv">
+                  <?=$select_anniv_jour?>
+                </select>
+              </div>
+              <?php } ?>
+
+              <div style="flex:1">
+                &nbsp;
+              </div>
+              <div style="flex:10">
+                <select id="profilNaissanceAnnee" name="profilNaissanceAnnee" class="indiv">
+                  <?=$select_anniv_annee?>
+                </select>
+              </div>
+              <div style="flex:50">
+                &nbsp;
+              </div>
+
+            </div>
+            <br>
+
+            <label for="profilGenre"><?=$trad['gauche_genre']?></label>
+            <input id="profilGenre" name="profilGenre" class="indiv" placeholder="<?=$trad['gauche_tgenre']?>" type="text" maxlength="35" value="<?=$profil_genre?>"><br>
+            <br>
+
+            <label for="profilHabite"><?=$trad['gauche_habite']?></label>
+            <input id="profilHabite" name="profilHabite" class="indiv" placeholder="<?=$trad['gauche_thabite']?>" type="text" maxlength="35" value="<?=$profil_habite?>"><br>
+            <br>
+
+            <label for="profilMetier"><?=$trad['gauche_metier']?></label>
+            <input id="profilMetier" name="profilMetier" class="indiv" placeholder="<?=$trad['gauche_tmetier']?>" type="text" maxlength="35" value="<?=$profil_metier?>"><br>
+
+            <br>
+            <br>
+
+            <h5><?=$trad['droite_titre']?></h5>
+
+            <p><?=$trad['droite_desc']?></p>
+
+            <br>
+
+            <textarea id="profilTexte" name="profilTexte" class="indiv profil_textarea" lines="20" onkeyup="previsualiser_profil('<?=$chemin?>');"><?=$profil_texte?></textarea><br>
+            <br>
+            <div id="profil_previsualisation_container"<?=$profil_hidden?>>
+              <label><?=$trad['droite_prev']?>:</label>
+              <div id="profil_previsualisation" class="vscrollbar profil_previsualisation">
+                <?=$profil_preview?>
+              </div>
               <br>
-            </td>
-          </tr>
-          <tr>
-            <td class="align_right spaced gras profil_colonnegauche">
-              Date de naissance :
-            </td>
-            <td class="align_left">
-              <select class="intable align_center" name="profil_naissance_jour">
-                <?=$menu_naissance_jour?>
-              </select>
-            </td>
-            <td class="align_left">
-              <select class="intable align_center" name="profil_naissance_mois">
-                <?=$menu_naissance_mois?>
-              </select>
-            </td>
-            <td class="align_left">
-              <select class="intable align_center" name="profil_naissance_annee">
-                <?=$menu_naissance_annee?>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="4">
-              <br>
-            </td>
-          </tr>
-          <tr>
-            <td class="align_right spaced gras profil_colonnegauche">
-              Ville / Région / Pays :
-            </td>
-            <td class="align_left" colspan="3">
-              <input class="intable" maxlength="35" name="profil_region" value="<?=$profil_region?>">
-            </td>
-          </tr>
-          <tr>
-            <td colspan="4">
-              <br>
-            </td>
-          </tr>
-          <tr>
-            <td class="align_right spaced gras profil_colonnegauche">
-              Métier / Occupation :
-            </td>
-            <td class="align_left" colspan="3">
-              <input class="intable" maxlength="35" name="profil_metier" value="<?=$profil_metier?>">
-            </td>
-          </tr>
-        </table>
-        <br>
-        <div class="indiv align_center">
-          <input type="image" src="<?=$chemin?>img/boutons/modifier.png" name="profil_gauche_modifier" alt="Modifier">
-        </div>
+            </div>
+
+            <input value="<?=$trad['droite_valider']?>" name="profil_modifier" type="submit">
+          </fieldset>
+        </form>
+
       </div>
-
-      <br>
-
-      <?php if(isset($_POST['profil_droite_previsualiser_x'])) { ?>
-      <div class="body_main smallsize" id="profil_previs">
-        <div class="gras indiv align_center">Prévisualisation de votre profil public :</div><br>
-        <hr>
-        <br>
-        <?=$profil_previsualisation?>
-      </div>
-      <?php } ?>
-
-      <div class="body_main smallsize">
-        <span class="soustitre">Colonne de droite : Espace personnalisable</span><br>
-        <br>
-        Cet espace est à votre disposition pour afficher ce dont vous avez envie, bien entendu dans la limite de ce qui est acceptable selon les <a href="<?=$chemin?>pages/doc/eula">termes et conditions</a> de NoBleme.<br>
-        <br>
-        Vous pouvez utiliser des <a href="<?=$chemin?>pages/doc/emotes">emoticones</a> et des <a href="<?=$chemin?>pages/doc/bbcodes">bbcodes</a> dans le texte de votre profil public.<br>
-        <br>
-        <textarea class="indiv" rows="15" name="profil_texte"><?=$profil_texte?></textarea>
-        <br>
-        <div class="indiv align_center">
-          <input type="image" src="<?=$chemin?>img/boutons/previsualiser.png" name="profil_droite_previsualiser" alt="Prévisualiser">
-          <img src="<?=$chemin?>img/boutons/separateur.png" alt="|">
-          <input type="image" src="<?=$chemin?>img/boutons/modifier.png" name="profil_droite_modifier" alt="Modifier">
-        </div>
-      </div>
-
-    </form>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

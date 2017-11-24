@@ -6,18 +6,6 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF'])))
   exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Vous n\'êtes pas censé accéder à cette page, dehors!</body></html>');
 
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// On stoppe le script si le php.ini n'est pas bien configuré
-
-if(!get_cfg_var('short_open_tag'))
-  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>La configuration n\'est pas bonne, le script ne fonctionnera pas.</body></html>');
-
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Inclusion de la config, on exit si elle est pas faite
 
@@ -39,6 +27,15 @@ include 'post.inc.php';       // Traitement du postdata
 include 'date.inc.php';       // Fonctions de traitement de la date
 include 'bbcode.inc.php';     // BBCodes et émoticones
 include 'fonctions.inc.php';  // Fonctions génériques
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Détermination du langage utilisé
+
+$lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
+$trad = array();
 
 
 

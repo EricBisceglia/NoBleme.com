@@ -1,24 +1,4 @@
-/**************************************************************** add.php ****************************************************************/
-td.todo_add         { width:90px; }
-td.todo_add_legende { width:200px; }
-
-/*************************************************************** admin.php ***************************************************************/
-td.admin_gauche { width:75px; }
-td.admin_reload { width:20px; }
-td.admin_droite { width:75px; }
-
-/************************************************************ categories.php *************************************************************/
-div.admin_microsize { width: 200px; }
-
-/************************************************************** delete.php ***************************************************************/
-td.todo_delete { width:120px; }
-
-/************************************************************* roadmaps.php **************************************************************/
-div.admin_roadmap     { width: 400px; }
-td.roadmap_classement { width: 150px; }
-td.roadmap_action     { width: 20px;  }
-
-/*************************************************************** todo.php ****************************************************************/
+/*********************************************************** LISTE DES TÂCHES ************************************************************/
 .todo_importance_0 { background:#FFECEC; }
 .todo_importance_1 { background:#FFCACA; }
 .todo_importance_2 { background:#FFA8A8; }
@@ -26,6 +6,3 @@ td.roadmap_action     { width: 20px;  }
 .todo_importance_4 { background:#FF6464; }
 .todo_importance_5 { background:#FF4242; }
 .todo_resolu       { background:#599B49; }
-div.todo_adminmode { width:1100px;       }
-div.todo_miniadmin { width:350px;        }
-input.raisonedit   { width:640px;        }

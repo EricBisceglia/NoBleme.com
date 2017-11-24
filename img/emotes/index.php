@@ -1,5 +1,1 @@
-<?php
-
-header("Location: ..");
-
-?>
+<?php exit(header("Location: ..")); ?>

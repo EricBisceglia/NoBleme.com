@@ -1,2 +1,3 @@
-/*************************************************************** irl.php *****************************************************************/
-td.infos_irl { width: 69px; }
+/********************************************************* PRÉVISUALISER DES IRL *********************************************************/
+textarea.irl_details     { height: 150px;                                                    }
+div.irl_previsualisation { max-height: 150px; border: 1px solid #CACACA; padding-top: 10px;  }

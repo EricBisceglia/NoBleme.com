@@ -20,6 +20,7 @@ else
   $GLOBALS['db'] = @mysqli_connect('localhost', 'root', $GLOBALS['mysql_pass'], 'nobleme') or die ('Erreur SQL ! Connexion &agrave; la base de donn&eacute;es impossible');
 
 mysqli_set_charset($GLOBALS['db'], "utf8");
+$GLOBALS['query'] = 0;
 
 
 
@@ -27,11 +28,17 @@ mysqli_set_charset($GLOBALS['db'], "utf8");
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction permettant de faire une requête et d'en retourner le message d'erreur en cas d'échec
 //
+// $ignore est un paramètre optionnel qui ignore les erreurs
+//
 // Exemple d'utilisation:
-// $ma_requete = query($db,"SELECT * FROM ma_bdd");
+// $ma_requete = query("SELECT * FROM ma_bdd");
 
-function query($requete)
+function query($requete, $ignore=NULL)
 {
-  $query = mysqli_query($GLOBALS['db'],$requete) or die ('Erreur SQL !<br>'.mysqli_error($GLOBALS['db']));
+  $GLOBALS['query']++;
+  if($ignore)
+    $query = mysqli_query($GLOBALS['db'],$requete);
+  else
+    $query = mysqli_query($GLOBALS['db'],$requete) or die ('Erreur SQL !<br>'.mysqli_error($GLOBALS['db']));
   return $query;
 }

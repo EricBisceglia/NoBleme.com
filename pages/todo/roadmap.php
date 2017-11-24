@@ -6,21 +6,24 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = '';
-$header_submenu   = 'dev';
-$header_sidemenu  = 'roadmap';
+$header_menu      = 'NoBleme';
+$header_sidemenu  = 'Roadmap';
+
+// Identification
+$page_nom = "Lit le plan de route";
+$page_url = "pages/todo/roadmap";
+
+// Langages disponibles
+$langage_page = array('FR');
 
 // Titre et description
 $page_titre = "Plan de route";
-$page_desc  = "Historique et futur du développement de Nobleme";
+$page_desc  = "Historique et futur du développement de NoBleme";
 
-// Identification
-$page_nom = "todo";
-$page_id  = "roadmap";
-
-// CSS & JS
+// CSS
 $css = array('todo');
-$js  = array('popup');
+
+
 
 
 /*****************************************************************************************************************************************/
@@ -29,55 +32,59 @@ $js  = array('popup');
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// On commence par aller chercher les plans de route
-$qroadmaps = query(" SELECT id, version, description FROM todo_roadmap ORDER BY id_classement DESC ");
+// On va chercher les roadmaps
+$qroadmaps = query("  SELECT    todo_roadmap.id           ,
+                                todo_roadmap.version      ,
+                                todo_roadmap.description
+                      FROM      todo_roadmap
+                      ORDER BY  todo_roadmap.id_classement DESC ");
 
-// Et on les parcourt
-for($nroadmaps = 0 ; $droadmaps = mysqli_fetch_array($qroadmaps) ; $nroadmaps++)
+// On les prépare pour l'affichage
+$temp_admin = getadmin() ? ' ' : ' AND todo.public = 1 ';
+for($nroadmaps = 0; $droadmaps = mysqli_fetch_array($qroadmaps); $nroadmaps++)
 {
-  // Assignation des données pour l'affichage
-  $roadmap_version[$nroadmaps]      = $droadmaps['version'];
-  $roadmap_description[$nroadmaps]  = bbcode(nl2br_fixed($droadmaps['description']));
+  $roadmap_id[$nroadmaps]           = $droadmaps['id'];
+  $roadmap_nom[$nroadmaps]          = predata($droadmaps['version']);
+  $roadmap_description[$nroadmaps]  = bbcode(predata($droadmaps['description'], 1));
 
-  // Et maintenant, on va chercher les tickets liés à la version
-  $roadmapid  = $droadmaps['id'];
-  $qtodo      = " SELECT    todo.id                   ,
-                            todo.timestamp            ,
-                            todo.importance           ,
-                            todo.titre                ,
-                            todo_categorie.categorie  ,
-                            todo.timestamp_fini       ,
-                            COUNT(todo_commentaire.id) AS 'commentaires'
-                  FROM      todo
-                  LEFT JOIN todo_categorie    ON todo.FKtodo_categorie  = todo_categorie.id
-                  LEFT JOIN todo_commentaire  ON todo.id                = todo_commentaire.FKtodo
-                  WHERE     todo.FKtodo_roadmap = '$roadmapid'
-                  AND       todo.valide_admin   = 1   ";
-  if(!getadmin())
-    $qtodo   .= " AND       todo.public         = 1   ";
-  $qtodo     .= " GROUP BY  todo.id
-                  ORDER BY  todo.timestamp_fini   DESC  ,
-                            todo.importance       DESC  ,
-                            todo.titre            ASC   ";
-  $qtodo = query($qtodo);
+  // Pour chaque roadmap, on va chercher les tâches liées
+  $temp_roadmap_id          = $droadmaps['id'];
+  $todo_a_faire[$nroadmaps] = 0;
+  $qtodo = query("  SELECT    todo.id                   AS 't_id'           ,
+                              todo.importance           AS 't_importance'   ,
+                              todo.timestamp            AS 't_creation'     ,
+                              todo_categorie.categorie  AS 't_categorie'    ,
+                              todo.titre                AS 't_description'  ,
+                              todo.timestamp_fini       AS 't_resolution'   ,
+                              todo.public               AS 't_public'
+                    FROM      todo
+                    LEFT JOIN todo_categorie ON todo.FKtodo_categorie = todo_categorie.id
+                    WHERE     todo.valide_admin     = 1
+                    $temp_admin
+                    AND       todo.FKtodo_roadmap   = '$temp_roadmap_id'
+                    ORDER BY  (todo.timestamp_fini != 0)        ,
+                              todo.timestamp_fini         DESC  ,
+                              todo.importance             DESC  ,
+                              todo.timestamp              DESC  ");
 
-  // On parcourt les tickets
-  for($i = 0 ; $dtodo = mysqli_fetch_array($qtodo) ; $i++)
+  // Et on prépare les tâches liées pour l'affichage
+  for($ntodo[$nroadmaps] = 0; $dtodo = mysqli_fetch_array($qtodo); $ntodo[$nroadmaps]++)
   {
-    // Reste qu'à assigner les données des tickets
-    $todo_id[$nroadmaps][$i]            = $dtodo['id'];
-    $todo_css[$nroadmaps][$i]           = (!$dtodo['timestamp_fini']) ? 'todo_importance_'.$dtodo['importance'] : 'todo_resolu';
-    $todo_titre[$nroadmaps][$i]         = (strlen(html_entity_decode($dtodo['titre'])) > 39) ? substr(html_entity_decode($dtodo['titre']),0,36).'...' : $dtodo['titre'];
-    $todo_ouvert[$nroadmaps][$i]        = ilya($dtodo['timestamp']);
-    $todo_resolu[$nroadmaps][$i]        = ($dtodo['timestamp_fini']) ? ilya($dtodo['timestamp_fini']) : '';
-    $todo_importance[$nroadmaps][$i]    = todo_importance($dtodo['importance'],1);
-    $todo_projet[$nroadmaps][$i]        = $dtodo['categorie'];
-    $todo_commentaires[$nroadmaps][$i]  = ($dtodo['commentaires']) ? $dtodo['commentaires'] : '';
+    $todo_a_faire[$nroadmaps]                        += (!$dtodo['t_resolution']) ? 1 : 0;
+    $todo_id[$nroadmaps][$ntodo[$nroadmaps]]          = $dtodo['t_id'];
+    $todo_css[$nroadmaps][$ntodo[$nroadmaps]]         = ($dtodo['t_resolution']) ? 'todo_resolu' : 'todo_importance_'.$dtodo['t_importance'];
+    $todo_prive[$nroadmaps][$ntodo[$nroadmaps]]       = (!$dtodo['t_public']) ? 'PRIVÉ' : '';
+    $todo_importance[$nroadmaps][$ntodo[$nroadmaps]]  = (!$dtodo['t_resolution']) ? todo_importance($dtodo['t_importance'], 1) : 'Résolu';
+    $todo_creation[$nroadmaps][$ntodo[$nroadmaps]]    = predata(ilya($dtodo['t_creation']));
+    $todo_categorie[$nroadmaps][$ntodo[$nroadmaps]]   = ($dtodo['t_categorie']) ? predata($dtodo['t_categorie']) : '';
+    $todo_description[$nroadmaps][$ntodo[$nroadmaps]] = predata(tronquer_chaine($dtodo['t_description'], 50, '...'));
+    $todo_resolution[$nroadmaps][$ntodo[$nroadmaps]]  = ($dtodo['t_resolution']) ? predata(ilya($dtodo['t_resolution'])) : 'Non résolu';
   }
-
-  // On récupère le nombre de tickets dans le roadmap
-  $num_todo[$nroadmaps] = $i;
+  $todo_finies[$nroadmaps]    = $ntodo[$nroadmaps] - $todo_a_faire[$nroadmaps];
+  $todo_resolues[$nroadmaps]  = format_nombre(calcul_pourcentage($todo_finies[$nroadmaps], $ntodo[$nroadmaps]),"pourcentage",0);
 }
+$temp_admin = getadmin();
+
 
 
 
@@ -87,109 +94,126 @@ for($nroadmaps = 0 ; $droadmaps = mysqli_fetch_array($qroadmaps) ; $nroadmaps++)
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/roadmap.png" alt="PLAN DE ROUTE">
-    </div>
-    <br>
+      <div class="texte">
 
-    <div class="body_main midsize">
-      <span class="titre">Historique et futur du développement de NoBleme</span><br>
-      <br>
-      Cette page contient le « plan de route » de NoBleme : Une liste des versions passées et futures du site.<br>
-      Pour chacune de ces versions, il y a une liste des tâches accomplies ou à accomplir qui y sont liées.<br>
-      <br>
-      La page est présentée antéchronologiquement : Les versions futures en haut, passées en bas.<br>
-      Pour les versions futures, les tâches sont sur fond <span class="todo_importance_5 texte_blanc gras">&nbsp;rouge </span>. Il s'agit uniquement de projets, qui sont listés à titre indicatif.<br>
-      Si aucune tâche rouge n'apparait sur la page, c'est que le développement est en pause ou qu'il ne reste plus rien de planifié à faire.<br>
-      Pour les versions passées, les tâches sont sur fond <span class="todo_resolu texte_blanc gras">&nbsp;vert </span>. Ce sont des tâches déjà résolues.<br>
-      <br>
-      <script type="text/javascript">
-        document.write('Vous pouvez voir les détails, la description, et les commentaires d\'un ticket en cliquant dessus.<br>');
-      </script>
-      <noscript>
-        <div class="gros gras align_center erreur texte_blanc intable">
-          <br>
-          Le JavaScript est désactivé sur votre navigateur.<br>
-          <br>
-          Le JavaScript est requis pour pouvoir utiliser toutes les fonctionnalités la page !<br>
-          <br>
-        </div>
-      </noscript>
-      <br>
-      Certains tickets ne sont assignés à aucune version et n'apparaissent pas ici. Vous pouvez voir tous les tickets sur la <a href="<?=$chemin?>pages/todo/index?recent">liste des tâches</a>.<br>
-      Si vous avez une bonne idée à proposer pour une version future du site, n'hésitez pas à <a href="<?=$chemin?>pages/todo/add">ouvrir un ticket</a>.
-    </div>
+        <h1>
+          Plan de route
+          <?php if($temp_admin) { ?>
+          <a href="<?=$chemin?>pages/todo/edit_roadmaps">
+            <img src="<?=$chemin?>img/icones/modifier.png" alt="M">
+          </a>
+          <?php } ?>
+        </h1>
 
-    <br>
+        <h5>Historique et futur du développement de NoBleme</h5>
 
-    <?php for($i=0;$i<$nroadmaps;$i++) { ?>
-    <div class="body_main midsize">
-      <?php if(loggedin() && getadmin()) { ?>
-      <table class="cadre_gris indiv" onClick="lienpopup('<?=$chemin?>pages/todo/roadmaps?popup',800)">
-      <?php } else { ?>
-      <table class="cadre_gris indiv">
-      <?php } ?>
-        <tr>
-          <td class="align_center gras">
-            <span class="moinsgros">Version <?=$roadmap_version[$i]?></span><br>
-            <?php if($roadmap_description[$i]) { ?>
-            <br>
-            <?=$roadmap_description[$i]?><br>
-            <br>
-            <?php } ?>
-          </td>
-        </tr>
-      </table>
-      <?php if($num_todo[$i]) { ?>
-      <table class="cadre_gris indiv">
-        <tr>
-          <td class="cadre_gris gras spaced align_center">
-            Titre
-          </td>
-          <td class="cadre_gris gras spaced align_center">
-            Ouvert
-          </td>
-          <td class="cadre_gris gras spaced align_center">
-            Résolu
-          </td>
-          <td class="cadre_gris gras spaced align_center">
-            Importance
-          </td>
-          <td class="cadre_gris gras spaced align_center">
-            Catégorie
-          </td>
-          <td class="cadre_gris gras spaced align_center">
-            Réponses
-          </td>
-        </tr>
-        <?php for($j=0;$j<$num_todo[$i];$j++) { ?>
-        <tr class="pointeur" onClick="window.location.href = '<?=$chemin?>pages/todo/index?id=<?=$todo_id[$i][$j]?>';">
-          <td class="cadre_gris align_center spaced gras <?=$todo_css[$i][$j]?>">
-            <a class="blank" href="<?=$chemin?>pages/todo/index?id=<?=$todo_id[$i][$j]?>"><?=$todo_titre[$i][$j]?></a>
-          </td>
-          <td class="cadre_gris align_center spaced <?=$todo_css[$i][$j]?>">
-            <?=$todo_ouvert[$i][$j]?>
-          </td>
-          <td class="cadre_gris align_center spaced <?=$todo_css[$i][$j]?>">
-            <?=$todo_resolu[$i][$j]?>
-          </td>
-          <td class="cadre_gris align_center spaced <?=$todo_css[$i][$j]?>">
-            <?=$todo_importance[$i][$j]?>
-          </td>
-          <td class="cadre_gris align_center spaced <?=$todo_css[$i][$j]?>">
-            <?=$todo_projet[$i][$j]?>
-          </td>
-          <td class="cadre_gris align_center spaced gras <?=$todo_css[$i][$j]?>">
-            <?=$todo_commentaires[$i][$j]?>
-          </td>
-        </tr>
+        <p>
+          Cette page vous permet de voir le chemin qu'a parcouru le développement de NoBleme, et le chemin futur qui sera parcouru si les plans ne changent pas. Les tâches (issues de la <a class="gras" href="<?=$chemin?>pages/todo/index">liste des tâches</a>) sont regroupées par version passée du site ou par objectif futur, et triés par ordre antéchronologique. Les tâches finies apparaissent en <span class="todo_resolu texte_noir spaced gras">vert</span>, les ouvertes <span class="todo_importance_1 texte_noir spaced gras">nuances</span> <span class="todo_importance_3 texte_noir spaced gras">de</span> <span class="todo_importance_5 texte_noir spaced gras">rouge</span> selon leur degré d'importance. Pour voir les détails d'une tâche, cliquez n'importe où sur la ligne contenant la tâche en question.
+        </p>
+
+      </div>
+
+      <?php for($i=0;$i<$nroadmaps;$i++) { ?>
+      <?php if($ntodo[$i]) { ?>
+
+      <br>
+      <br>
+      <hr class="separateur_contenu">
+      <br>
+
+      <div class="texte3">
+
+        <h5 class="align_center"><?=$roadmap_nom[$i]?></h5>
+
+        <?php if($roadmap_description[$i]) { ?>
+        <p class="align_center">
+          <?=$roadmap_description[$i]?>
+        </p>
+        <br>
         <?php } ?>
-      </table>
+
+        <br>
+
+        <table class="grid fullgrid texte_noir nowrap">
+          <thead>
+
+            <tr class="grisclair gras pointeur">
+              <?php if($temp_admin) { ?>
+              <th>
+                PUBLIC
+              </th>
+              <?php } ?>
+              <th>
+                IMPORTANCE
+              </th>
+              <th>
+                CRÉATION
+              </th>
+              <th>
+                CATÉGORIE
+              </th>
+              <th>
+                DESCRIPTION
+              </th>
+              <th>
+                RÉSOLUTION
+              </th>
+            </tr>
+
+          </thead>
+          <tbody>
+
+            <tr>
+              <?php if($temp_admin) { ?>
+              <td class="align_center noir texte_blanc gras" colspan="6">
+              <?php } else { ?>
+              <td class="align_center noir texte_blanc gras" colspan="5">
+              <?php } ?>
+                <?php if($ntodo[$i] > 1) { ?>
+                <?=$ntodo[$i]?> TÂCHES LIÉES À CET OBJECTIF
+                <?php } else { ?>
+                <?=$ntodo[$i]?> TÂCHE LIÉE À CET OBJECTIF
+                <?php } ?>
+                &nbsp;<span class="texte_positif">DONT <?=$todo_finies[$i]?> FINIES</span>
+                &nbsp;<span class="texte_negatif">ET <?=$todo_a_faire[$i]?> À FAIRE</span>
+                &nbsp;<span class="texte_neutre">SOIT <?=$todo_resolues[$i]?> RÉSOLUES</span>
+              </td>
+            </tr>
+
+            <?php for($j=0;$j<$ntodo[$i];$j++) { ?>
+
+            <tr class="align_center pointeur <?=$todo_css[$i][$j]?>" onclick="window.open('<?=$chemin?>pages/todo/index?id=<?=$todo_id[$i][$j]?>', '_blank');">
+              <?php if($temp_admin) { ?>
+              <td class="gras">
+                <?=$todo_prive[$i][$j]?>
+              </td>
+              <?php } ?>
+              <td>
+                <?=$todo_importance[$i][$j]?>
+              </td>
+              <td>
+                <?=$todo_creation[$i][$j]?>
+              </td>
+              <td>
+                <?=$todo_categorie[$i][$j]?>
+              </td>
+              <td>
+                <?=$todo_description[$i][$j]?>
+              </td>
+              <td>
+                <?=$todo_resolution[$i][$j]?>
+              </td>
+            </tr>
+
+            <?php } ?>
+
+          </tbody>
+        </table>
+
+      </div>
+
       <?php } ?>
-    </div>
-    <?php } ?>
+      <?php } ?>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

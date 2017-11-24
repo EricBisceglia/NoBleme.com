@@ -6,15 +6,20 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-useronly();
+useronly($lang);
 
-// Titre et description
-$page_titre = "Banni :(";
-$page_desc  = "Vous êtes banni de NoBleme";
+// Menus du header
+$header_menu      = 'Compte';
+$header_sidemenu  = 'MonProfil';
 
 // Identification
-$page_nom = "user";
-$page_id  = "banned";
+$page_nom = "Déprime parce qu'il est banni";
+
+// Langages disponibles
+$langage_page = array('FR','EN');
+
+// Titre et description
+$page_titre = ($lang == 'FR') ? "Banni !" : "Banned!";
 
 
 
@@ -25,36 +30,82 @@ $page_id  = "banned";
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// On va chercher le pseudo
-$nickid = postdata($_SESSION['user']);
+// On va chercher la raison et la date de fin du ban
+$user_id = $_SESSION['user'];
+$qbanned = mysqli_fetch_array(query(" SELECT  membres.banni_date ,
+                                              membres.banni_raison
+                                      FROM    membres
+                                      WHERE   membres.id = '$user_id' "));
 
-// On récupère les infos
-$banquery = query(" SELECT  membres.id          ,
-                            membres.pseudonyme  ,
-                            membres.banni_date  ,
-                            membres.banni_raison
-                    FROM    membres
-                    WHERE   membres.id = '$nickid' ");
+// Si l'user est pas banni, on le redirige
+if(!$qbanned['banni_date'])
+  exit(header("Location: ".$chemin."pages/user/user"));
 
-// On met tout ça dans des variables
-$baninfo    = mysqli_fetch_array($banquery);
-$user_nick  = $baninfo['pseudonyme'];
-$ban_fin    = datefr(date("Y-m-d", $baninfo["banni_date"]))." à ".date("H:i:s", $baninfo["banni_date"]).' ('.dans($baninfo['banni_date']).')';
-$ban_raison = destroy_html($baninfo['banni_raison']);
-
-// Si l'user n'est pas banni, il n'a rien à faire sur cette page
-if($baninfo["banni_date"] == 0)
-  erreur("Vous n'avez pas la permission d'accéder à cette page");
-
-// Si le ban est fini, reste plus qu'à le lever
-if($baninfo["banni_date"] < time())
+// Si l'user a purgé son ban, on le retire et on le redirige
+$timestamp = time();
+if($timestamp > $qbanned['banni_date'])
 {
   query(" UPDATE  membres
-          SET     membres.banni_date    = '0' ,
+          SET     membres.banni_date    = 0 ,
                   membres.banni_raison  = ''
-          WHERE   membres.id = '$nickid'");
-  erreur("Félicitations, votre bannissement est fini !");
+          WHERE   membres.id = '$user_id' ");
+  exit(header("Location: ".$chemin."pages/user/user"));
 }
+
+// On prépare les infos pour l'affichage
+$ban_raison = predata($qbanned['banni_raison']);
+$ban_date   = datefr(date('Y-m-d', $qbanned['banni_date']), $lang);
+$ban_heure  = date('H:i', $qbanned['banni_date']);
+$ban_dans   = changer_casse(dans($qbanned['banni_date'], $lang), 'min');
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+if($lang == 'FR')
+{
+  // Header
+  $trad['titre']      = "Banni !";
+
+  // Corps
+  $temp_raison        = ($ban_raison) ? $ban_raison : 'Raison non spécifiée';
+  $trad['desc']       = <<<EOD
+Félicitations, à force d'enfreindre le code de conduite du site, vous avez été banni de NoBleme !<br>
+<br>
+La raison de votre bannissement est: <span class="texte_negatif gras">$ban_raison</span><br>
+Vous êtes banni jusqu'au <span class="texte_negatif gras">$ban_date à $ban_heure ($ban_dans)</span><br>
+<br>
+Si vous trouvez ce ban injuste et désirez le contester, vous pouvez venir en discuter poliment avec l'équipe administrative du site sur notre serveur IRC en <a class="gras" href="https://client00.chat.mibbit.com/?url=irc%3A%2F%2Firc.nobleme.com%2FNoBleme&charset=UTF-8">cliquant ici</a>.<br>
+<br>
+En attendant, vous pouvez continuer à naviguer sur le site en tant qu'invité, <a class="gras" href="<?=$chemin?>pages/user/banned?logout">cliquez ici</a> pour vous déconnecter de votre compte. Si vous voulez jouer au plus malin et vous créer un nouveau compte pour contourner le ban, vous vous prendrez un bannissement par adresse IP.
+EOD;
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Header
+  $trad['titre']      = "Banned!";
+
+  // Corps
+  $trad['desc']       = <<<EOD
+Congratulations, you managed to break NoBleme's code of conduct hard enough to get yourself banned!<br>
+<br>
+Your account will be banned until <span class="texte_negatif gras">$ban_date à $ban_heure ($ban_dans)</span><br>
+<br>
+If you do not believe that you deserved a ban, you can come and politiely appeal to NoBleme's administrative staff on our IRC server by <a class="gras" href="https://client00.chat.mibbit.com/?url=irc%3A%2F%2Firc.nobleme.com%2Fenglish&charset=UTF-8">clicking here</a>.<br>
+<br>
+Meanwhile, you are free to browse the website as a guest, <a class="gras" href="<?=$chemin?>pages/user/banned?logout">click here</a> to log out of your account.<br>If you want to play clever kid and create a new account to go around the ban, you will end up IP banned.
+EOD;
+}
+
 
 
 
@@ -64,43 +115,13 @@ if($baninfo["banni_date"] < time())
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/banned.png" alt="Vous êtes banni :(">
-    </div>
-    <br>
+      <div class="texte">
 
-    <div class="body_main midsize">
+        <h1 class="texte_negatif"><?=$trad['titre']?></h1>
 
-      <span class="titre">Désolé <?=$user_nick?>, vous vous êtes fait bannir de NoBleme</span><br>
-      <br>
-      Il vous sera impossible de vous servir de votre compte jusqu'au <b><?=$ban_fin?></b><br>
-      <br>
-      La raison de vore bannissement est la suivante: <b><?=$ban_raison?></b><br>
-      <br>
-      <br>
-      Si vous jugez votre bannissement injuste, vous pouvez tenter de venir contester votre ban auprès de <a href="<?=$chemin?>pages/user/user?id=1">Bad</a> sur le <a href="<?=$chemin?>pages/irc/index">chat IRC NoBleme</a>.<br>
+        <p><?=$trad['desc']?></p>
 
-    </div>
-
-    <br/>
-    <br/>
-
-    <div class="body_main midsize">
-
-      <span class="titre">Bon à savoir avant de faire des bêtises</span><br>
-
-      <br>
-      Si vous créez un nouveau compte pendant la durée de votre sentence, <b>la durée de votre bannissement sera rallongée</b>, et vous serez également banni par range d'addresse IP, ce qui <b>vous empêchera de visiter la moindre page de NoBleme tant que vous êtes banni, même en vous déconnectant de votre compte</b>.<br>
-      <br>
-      Il va falloir être patient et accepter de payer le prix de ce dont vous êtes accusé. Difficile, je sais, mais il faut faire avec.<br>
-      En attendant, vous êtes libre de <a href="<?=$chemin?>pages/nobleme/pilori.php?logout">vous déconnecter</a> de votre compte et de naviguer sur le site en tant qu'invité.<br>
-      <br>
-      Vous pouvez suivre sans vous connecter la progression de votre sentence depuis le <a href="<?=$chemin?>pages/nobleme/pilori">pilori des bannis</a>
-
-    </div>
-
+      </div>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

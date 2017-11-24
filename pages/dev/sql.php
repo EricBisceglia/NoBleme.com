@@ -6,19 +6,17 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-adminonly();
+adminonly($lang);
 
 // Menus du header
-$header_menu      = 'admin';
-$header_submenu   = 'dev';
-$header_sidemenu  = 'sql';
+$header_menu      = 'Dev';
+$header_sidemenu  = 'MajRequetes';
 
 // Titre et description
-$page_titre = "Dev : Requêtes";
+$page_titre = "Dev: Requêtes SQL";
 
 // Identification
-$page_nom = "admin";
-
+$page_nom = "Administre secrètement le site";
 
 
 
@@ -29,504 +27,230 @@ $page_nom = "admin";
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                      FONCTIONS POUR LES REQUÊTES                                                      */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+/*   Ces fonctions permettent d'effectuer des modifications structurelles sur la base de données, à ne pas utiliser hors de ce fichier   */
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/* Liste des fonctions contenues dans ce fichier:                                                                                        */
+/* sql_creer_table($nom_table, $requete);                                                                                                */
+/* sql_renommer_table($nom_table, $nouveau_nom);                                                                                         */
+/* sql_vider_table($nom_table);                                                                                                          */
+/* sql_supprimer_table($nom_table);                                                                                                      */
+/* sql_creer_champ($nom_table, $nom_champ, $type_champ, $after_nom_champ);                                                               */
+/* sql_renommer_champ($nom_table, $ancien_nom_champ, $nouveau_nom_champ, $type_champ);                                                   */
+/* sql_changer_type_champ($nom_table, $nom_champ, $type_champ)                                                                           */
+/* sql_supprimer_champ($nom_table, $nom_champ);                                                                                          */
+/* sql_insertion_valeur($condition, $requete);                                                                                           */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// On commence par choper la maj choisie et initialiser le string d'affichage
+// Création d'une table
+//
+/* Exemple:
+sql_creer_table("nom_table", "  id    INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+                                cc    MEDIUMTEXT                                            ,
+                                tvvmb INT(11) UNSIGNED NOT NULL                             ");
+*/
 
-$majq = '';
-
-if(isset($_GET['maj']))
-  $idmaj = postdata($_GET['maj']);
-else
-  $idmaj = '';
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Version 2
-
-if($idmaj == 'v2')
+function sql_creer_table($nom_table, $requete)
 {
-  $majq .= '<span class="gras souligne moinsgros alinea">Version 2</span><br>';
-
-  // Création de la table quotes_membres
-  query(" CREATE TABLE IF NOT EXISTS quotes_membres (
-            id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-            FKquotes          INT(11) UNSIGNED NOT NULL                             ,
-            FKmembres         INT(11) UNSIGNED NOT NULL
-          ) ENGINE=MyISAM; ");
-  $majq .= "<br>Crée la table quotes_membres";
-
-  // Nettoyage du bordel dans les miscellanées
-  $getmisc = query(" SELECT id, contenu FROM quotes ");
-  while($fixmisc = mysqli_fetch_array($getmisc))
-    query(" UPDATE quotes SET contenu = '".postdata(stripslashes($fixmisc['contenu']))."' WHERE id = '".$fixmisc['id']."'");
-  $majq .= "<br><br>Fixé le bordel dans les miscellanées";
-
-  // Ajout du champ todo.source
-  if(!@mysqli_query($GLOBALS['db'], " SELECT source FROM todo "))
-    query(" ALTER TABLE todo ADD source MEDIUMTEXT AFTER timestamp_fini ");
-  $majq .= "<br><br>Ajout du champ todo.source";
-
-  // Suppression du champ membres.bie
-  if(@mysqli_query($GLOBALS['db'], " SELECT bie FROM membres "))
-    query(" ALTER TABLE membres DROP bie ");
-  $majq .= "<br><br>Suppression du champ membres.bie";
-
-  // Suppression du champ membres.pass_old
-  if(@mysqli_query($GLOBALS['db'], " SELECT pass_old FROM membres "))
-    query(" ALTER TABLE membres DROP pass_old ");
-  $majq .= "<br><br>Suppression du champ membres.pass_old";
-
-  // Création de l'enregistrement consulte le CV de Bad
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'nobleme' AND page_id LIKE 'cv' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'nobleme'                 ,
-                        page_id     = 'cv'                      ,
-                        visite_page = 'Consulte de CV de Bad'   ,
-                        visite_url  = 'pages/cv'                ");
-  $majq .= "<br><br>Activité : Consulte le CV de Bad";
-
-  // Création de l'enregistrement observe les stats des miscellanées
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'quotes' AND page_id LIKE 'stats' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'quotes'                              ,
-                        page_id     = 'stats'                                 ,
-                        visite_page = 'Observe les stats des miscellanées'  ,
-                        visite_url  = 'pages/irc/quotes'                    ");
-  $majq .= "<br>Activité : Observe les stats des miscellanées";
-
-  // Création de l'enregistrement propose une nouvelle miscellanée
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'quotes' AND page_id LIKE 'add' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'quotes'                            ,
-                        page_id     = 'add'                               ,
-                        visite_page = 'Propose une nouvelle miscellanée'  ,
-                        visite_url  = 'pages/irc/quotes'                  ");
-  $majq .= "<br>Activité : Propose une nouvelle miscellanée";
-
-  // Création de l'enregistrement se marre devant les miscellanées
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'quotes' AND page_id LIKE 'index' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'quotes'                            ,
-                        page_id     = 'index'                             ,
-                        visite_page = 'Se marre devant les miscellanées'  ,
-                        visite_url  = 'pages/irc/quotes'                  ");
-  $majq .= "<br>Activité : Se marre devant les miscellanées";
-
-  // Création de l'enregistrement déchiffre les commandes IRC
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'irc' AND page_id LIKE 'services' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'irc'                         ,
-                        page_id     = 'services'                    ,
-                        visite_page = 'Déchiffre les commandes IRC' ,
-                        visite_url  = 'pages/irc/services'          ");
-  $majq .= "<br>Activité : Déchiffre les commandes IRC";
-
-  // Création de l'enregistrement se connecte à son compte
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'user' AND page_id LIKE 'login' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'user'                      ,
-                        page_id     = 'login'                     ,
-                        visite_page = 'Se connecte à son compte'  ,
-                        visite_url  = 'pages/user/login'          ");
-  $majq .= "<br>Activité : Se connecte à son compte";
+  return query(" CREATE TABLE IF NOT EXISTS ".$nom_table." ( ".$requete." ) ENGINE=MyISAM;");
 }
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Re-Alpha 15
+// Renommer une table
+//
+// Exemple: sql_renommer_table("nom_table", "nouveau_nom");
 
-if($idmaj == 'ra15')
+function sql_renommer_table($nom_table, $nouveau_nom)
 {
-  $majq .= '<span class="gras souligne moinsgros alinea">Re-Alpha 15</span><br>';
-
-  // Création de la table forum_loljk
-  query(" CREATE TABLE IF NOT EXISTS forum_loljk (
-            id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-            timestamp         INT(11) UNSIGNED NOT NULL                             ,
-            threadparent      INT(11) NOT NULL                                      ,
-            threadstart       TINYINT(1) NOT NULL                                   ,
-            FKauteur          INT(11) NOT NULL                                      ,
-            titre             MEDIUMTEXT                                            ,
-            contenu           LONGTEXT
-          ) ENGINE=MyISAM; ");
-  $majq .= "<br>Crée la table forum_loljk";
-
-  // Création de la table quotes
-  query(" CREATE TABLE IF NOT EXISTS quotes (
-            id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-            timestamp         INT(11) UNSIGNED NOT NULL                             ,
-            contenu           LONGTEXT                                              ,
-            FKauteur          INT(11) NOT NULL                                      ,
-            valide_admin      TINYINT(1) NOT NULL
-          ) ENGINE=MyISAM; ");
-  $majq .= "<br>Crée la table quotes";
-
-  // Création de la table secrets
-  query(" CREATE TABLE IF NOT EXISTS secrets (
-            id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-            nom               MEDIUMTEXT                                            ,
-            url               MEDIUMTEXT                                            ,
-            titre             MEDIUMTEXT                                            ,
-            description       MEDIUMTEXT
-          ) ENGINE=MyISAM; ");
-  $majq .= "<br>Crée la table secrets";
-
-  // Création de la table membres_secrets
-  query(" CREATE TABLE IF NOT EXISTS membres_secrets (
-            id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-            FKmembres         INT(11) UNSIGNED NOT NULL                             ,
-            FKsecrets         INT(11) UNSIGNED NOT NULL                             ,
-            timestamp         INT(11) UNSIGNED NOT NULL
-          ) ENGINE=MyISAM; ");
-  $majq .= "<br>Crée la table membres_secrets";
-
-  // Ajout du champ membres.moderateur
-  if(!@mysqli_query($GLOBALS['db'], " SELECT moderateur FROM membres "))
-    query(" ALTER TABLE membres ADD moderateur MEDIUMTEXT AFTER sysop ");
-  $majq .= "<br><br>Ajout du champ membres.moderateur";
-
-  // Ajout du champ membres.moderateur_description
-  if(!@mysqli_query($GLOBALS['db'], " SELECT moderateur_description FROM membres "))
-    query(" ALTER TABLE membres ADD moderateur_description MEDIUMTEXT AFTER moderateur ");
-  $majq .= "<br>Ajout du champ membres.moderateur_description";
-
-  // Création de l'enregistrement découvre IRC
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'irc' AND page_id LIKE 'index' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'irc'               ,
-                        page_id     = 'index'             ,
-                        visite_page = 'Découvre IRC'      ,
-                        visite_url  = 'pages/irc/index'   ");
-  $majq .= "<br><br>Activité : Découvre IRC";
-
-  // Création de l'enregistrement veut rejoindre IRC
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'irc' AND page_id LIKE 'web' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'irc'                 ,
-                        page_id     = 'web'                 ,
-                        visite_page = 'Veut rejoindre IRC'  ,
-                        visite_url  = 'pages/irc/web'       ");
-  $majq .= "<br>Activité : Veut rejoindre IRC";
-
-  // Création de l'enregistrement questionne les traditions IRC
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'irc' AND page_id LIKE 'traditions' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'irc'                           ,
-                        page_id     = 'traditions'                    ,
-                        visite_page = 'Questionne les traditions IRC' ,
-                        visite_url  = 'pages/irc/traditions'          ");
-  $majq .= "<br>Activité : Questionne les traditions IRC";
-
-  // Création de l'enregistrement choisit son canal IRC préféré
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'irc' AND page_id LIKE 'canaux' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'irc'                           ,
-                        page_id     = 'canaux'                        ,
-                        visite_page = 'Choisit son canal IRC préféré' ,
-                        visite_url  = 'pages/irc/canaux'              ");
-  $majq .= "<br>Activité : Choisit son canal IRC préféré";
-
-  // Création de l'enregistrement se fait troller par le forum
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'forum' AND page_id LIKE 'loljk' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'forum'                             ,
-                        page_id     = 'loljk'                             ,
-                        visite_page = 'Se fait troller par le \"forum\"'  ,
-                        visite_url  = 'pages/forum/index'                 ");
-  $majq .= "<br>Activité : Se fait troller par le forum";
-
-  // Création de l'enregistrement déprime devant une page en travaux
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'nobleme' AND page_id LIKE 'travaux' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'nobleme'                             ,
-                        page_id     = 'travaux'                             ,
-                        visite_page = 'Déprime devant une page en travaux'  ,
-                        visite_url  = 'pages/nobleme/travaux'               ");
-  $majq .= "<br>Activité : Déprime devant une page en trvaux";
-
-  // Création de l'enregistrement découvre NoBleme
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'doc' AND page_id LIKE 'nobleme' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'doc'               ,
-                        page_id     = 'nobleme'           ,
-                        visite_page = 'Découvre NoBleme'  ,
-                        visite_url  = 'pages/doc/nobleme' ");
-  $majq .= "<br>Activité : Découvre NoBleme";
-
+  // Si la table existe, on la renomme
+  if(query(" DESCRIBE ".$nom_table, 1))
+    query(" ALTER TABLE $nom_table RENAME $nouveau_nom ");
 }
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Re-Alpha 14
+// Vidange d'une table
+//
+// Exemple: sql_vider_table("nom_table");
 
-if($idmaj == 'ra14')
+function sql_vider_table($nom_table)
 {
-  $majq .= '<span class="gras souligne moinsgros alinea">Re-Alpha 14</span><br>';
+  // On vérifie que la table existe
+  if(!query(" DESCRIBE ".$nom_table, 1))
+    return;
 
-  // Création du champ stats_referer.alias
-  if(!@mysqli_query($GLOBALS['db'], " SELECT alias FROM stats_referer "))
-    query(" ALTER TABLE stats_referer ADD alias TEXT NOT NULL AFTER source ");
-  $majq .= "<br>Crée le champ stats_referer.alias";
-
-  // Création du champ vars_globales.last_referer_check
-  if(!@mysqli_query($GLOBALS['db'], " SELECT last_referer_check FROM vars_globales "))
-    query(" ALTER TABLE vars_globales ADD last_referer_check TEXT NOT NULL AFTER last_pageview_check ");
-  $majq .= "<br>Crée le champ vars_globales.last_referer_check<br>";
-
-  // Création de l'enregistrement se prend une 404
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'erreur' AND page_id LIKE '404' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'erreur'            ,
-                        page_id     = '404'               ,
-                        visite_page = 'Se prend une 404'  ,
-                        visite_url  = 'pages/nobleme/404' ");
-  $majq .= "<br>Activité : Erreur 404";
-
-  // Création de l'enregistrement change son e-mail
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'user' AND page_id LIKE 'email' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'user'              ,
-                        page_id     = 'email'             ,
-                        visite_page = 'Change son e-mail' ,
-                        visite_url  = 'pages/nobleme/404' ");
-  $majq .= "<br>Activité : Changer d'e-mail";
-
-  // Création de l'enregistrement change son e-mail
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'user' AND page_id LIKE 'pass' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'user'                    ,
-                        page_id     = 'pass'                    ,
-                        visite_page = 'Change son mot de passe' ,
-                        visite_url  = 'pages/nobleme/404'       ");
-  $majq .= "<br>Activité : Changer de mot de passe";
-}
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Re-Alpha 13
-
-if($idmaj == 'ra13')
-{
-  $majq .= '<span class="gras souligne moinsgros alinea">Re-Alpha 13</span><br>';
-
-  // Création du champ membres.sexe
-  if(!@mysqli_query($GLOBALS['db'], " SELECT sexe FROM membres "))
-    query(" ALTER TABLE membres ADD sexe TINYTEXT NOT NULL AFTER banni_raison ");
-  $majq .= "<br>Crée le champ membres.sexe";
-
-  // Création du champ membres.région
-  if(!@mysqli_query($GLOBALS['db'], " SELECT region FROM membres "))
-    query(" ALTER TABLE membres ADD region TINYTEXT NOT NULL AFTER anniversaire ");
-  $majq .= "<br>Crée le champ membres.region";
-
-  // Création du champ membres.métier
-  if(!@mysqli_query($GLOBALS['db'], " SELECT metier FROM membres "))
-    query(" ALTER TABLE membres ADD metier TINYTEXT NOT NULL AFTER region ");
-  $majq .= "<br>Crée le champ membres.metier<br>";
-
-
-  // Création de l'enregistrement respecte l'équipe administrative
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'nobleme' AND page_id LIKE 'admins' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'nobleme'                           ,
-                        page_id     = 'admins'                            ,
-                        visite_page = 'Respecte l\'équipe administrative' ,
-                        visite_url  = 'pages/nobleme/admins'              ");
-  $majq .= "<br>Activité : Équipe administrative";
-
-  // Création de l'enregistrement recalcule les statistiques des IRL
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'nobleme' AND page_id LIKE 'irlstats' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'nobleme'                             ,
-                        page_id     = 'irlstats'                            ,
-                        visite_page = 'Recalcule les statistiques des IRL'  ,
-                        visite_url  = 'pages/nobleme/irlstats'              ");
-  $majq .= "<br>Activité : Stastistiques des IRL";
-
-  // Création de l'enregistrement modifie son profil public
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'user' AND page_id LIKE 'profil' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'user'                        ,
-                        page_id     = 'profil'                      ,
-                        visite_page = 'Modifie son profil public'   ,
-                        visite_url  = 'pages/nobleme/profil'        ");
-  $majq .= "<br>Activité : Éditer son profil public";
+  // Puis on la vide
+  query(" TRUNCATE TABLE ".$nom_table);
 }
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Re-Alpha 12
+// Suppression d'une table
+//
+// Exemple: sql_supprimer_table("nom_table");
 
-if($idmaj == 'ra12')
+function sql_supprimer_table($nom_table)
 {
-  $majq .= '<span class="gras souligne moinsgros alinea">Re-Alpha 12</span><br>';
-
-  // Création de la table todo
-  query(" CREATE TABLE IF NOT EXISTS todo (
-            id                INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-            FKmembres         INT(11)                                     ,
-            timestamp         INT(11)                                     ,
-            importance        INT(11)                                     ,
-            titre             MEDIUMTEXT                                  ,
-            contenu           LONGTEXT                                    ,
-            FKtodo_categorie  INT(11)                                     ,
-            FKtodo_roadmap    INT(11)                                     ,
-            valide_admin      TINYINT(1)                                  ,
-            public            TINYINT(1)                                  ,
-            timestamp_fini    INT(11)
-          ) ENGINE=MyISAM; ");
-  $majq .= '<br>Crée la table todo';
-
-
-  // Création de la table todo_commentaire
-  query(" CREATE TABLE IF NOT EXISTS todo_commentaire (
-            id                INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-            FKtodo            INT(11)                                     ,
-            FKmembres         INT(11)                                     ,
-            timestamp         INT(11)                                     ,
-            contenu           LONGTEXT
-          ) ENGINE=MyISAM; ");
-  $majq .= '<br>Crée la table todo_commentaire';
-
-
-  // Création de la table todo_categorie
-  query(" CREATE TABLE IF NOT EXISTS todo_categorie (
-            id                INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-            categorie         TINYTEXT
-          ) ENGINE=MyISAM; ");
-  $majq .= '<br>Crée la table todo_catégorie';
-
-
-  // Création de la table todo_roadmap
-  query(" CREATE TABLE IF NOT EXISTS todo_roadmap (
-            id                INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-            id_classement     INT(11)                                     ,
-            version           TINYTEXT                                    ,
-            description       MEDIUMTEXT
-          ) ENGINE=MyISAM; ");
-  $majq .= '<br>Crée la table todo_roadmap<br>';
-
-
-  // Création de l'enregistrement liste des tâches
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'todo' AND page_id LIKE 'index' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'todo'                            ,
-                        page_id     = 'index'                           ,
-                        visite_page = 'Décortique la liste des tâches'  ,
-                        visite_url  = 'pages/todo/index'                ");
-  $majq .= '<br>Activité : Liste des tâches';
-
-  // Création de l'enregistrement ouvre un ticket
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'todo' AND page_id LIKE 'add' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'todo'                    ,
-                        page_id     = 'add'                     ,
-                        visite_page = 'Ouvre un nouveau ticket' ,
-                        visite_url  = 'pages/todo/add'          ");
-  $majq .= '<br>Activité: Ouvre un ticket';
-
-  // Création de l'enregistrement litle plan de route
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'todo' AND page_id LIKE 'roadmap' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'todo'                  ,
-                        page_id     = 'roadmap'               ,
-                        visite_page = 'Lit le plan de route'  ,
-                        visite_url  = 'pages/todo/add'        ");
-  $majq .= '<br>Activité: Lit le plan de route';
+  query(" DROP TABLE IF EXISTS ".$nom_table);
 }
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Re-Alpha 11
+// Création d'un champ dans une table existante
+//
+// Exemple: sql_creer_champ("nom_table", "cc2", "MEDIUMTEXT", "cc");
 
-if($idmaj == 'ra11')
+function sql_creer_champ($nom_table, $nom_champ, $type_champ, $after_nom_champ)
 {
-  $majq .= '<span class="gras souligne moinsgros alinea">Re-Alpha 11</span><br>';
+  // On vérifie que la table existe
+  if(!query(" DESCRIBE ".$nom_table, 1))
+    return;
 
-  // Suppression des pageviews mensuelles
-  query(" DROP TABLE IF EXISTS stats_pageviews_mois; ");
-  $majq .= "<br>Supprimé la table stats_pageviews_mois<br>";
+  // On a besoin de la structure de la table
+  $qdescribe = query(" DESCRIBE ".$nom_table);
 
+  // Si le champ après lequel placer ce champ n'existe pas, on s'arrête là
+  $i = 0;
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+    $i = ($ddescribe['Field'] == $after_nom_champ) ? 1 : $i;
+  if(!$i)
+    return;
 
-  // Création de la table devblog
-  query(" CREATE TABLE IF NOT EXISTS devblog (
-            id                INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-            timestamp         INT(11) UNSIGNED NOT NULL                   ,
-            titre             MEDIUMTEXT                                  ,
-            resume            MEDIUMTEXT                                  ,
-            contenu           LONGTEXT                                    ,
-            score_popularite  INT(11)
-          ) ENGINE=MyISAM; ");
-  $majq .= "<br>Crée la table devblog";
+  // On a besoin une nouvelle fois de la structure de la table
+  $qdescribe = query(" DESCRIBE ".$nom_table);
 
+  // On va tester si le champ existe déjà
+  $i = 0;
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+    $i = ($ddescribe['Field'] == $nom_champ) ? 1 : $i;
 
-  // Création de la table devblog_commentaire
-  query(" CREATE TABLE IF NOT EXISTS devblog_commentaire (
-            id        INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-            FKdevblog INT(11)                                     ,
-            FKmembres INT(11)                                     ,
-            timestamp INT(11) UNSIGNED NOT NULL                   ,
-            contenu   LONGTEXT
-          ) ENGINE=MyISAM; ");
-  $majq .= "<br>Crée la table devblog_commentaire<br>";
-
-
-  // On vire le PHP du nom des pages
-  query(" UPDATE pages SET visite_url = REPLACE(visite_url,'.php','') ");
-  $majq .= "<br>Retiré .php de la fin du nom des pages de l'activité récente<br>";
-
-
-  // Création de l'enregistrement coulisses
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'nobleme' AND page_id LIKE 'coulisses' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'nobleme'                         ,
-                        page_id     = 'coulisses'                       ,
-                        visite_page = 'Zyeute les coulisses de NoBleme' ,
-                        visite_url  = 'pages/nobleme/coulisses'         ");
-  $majq .= "<br>Activité : Coulisses";
-
-  // Création de l'enregistrement liste des devblogs
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'devblog' AND page_id LIKE 'index' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'devblog'                         ,
-                        page_id     = 'index'                           ,
-                        visite_page = 'Considère la liste des devblogs' ,
-                        visite_url  = 'pages/devblog/index'             ");
-  $majq .= "<br>Activité : Liste des devblogs";
-
-  // Création de l'enregistrement devblogs populaires
-  if(!@mysqli_num_rows(@mysqli_query($GLOBALS['db'], " SELECT id FROM pages WHERE page_nom LIKE 'devblog' AND page_id LIKE 'top' ")))
-    query(" INSERT INTO pages
-            SET         page_nom    = 'devblog'                         ,
-                        page_id     = 'top'                             ,
-                        visite_page = 'Mire les devblogs populaires'    ,
-                        visite_url  = 'pages/devblog/top'               ");
-  $majq .= "<br>Activité : Devblogs populaires";
+  // S'il n'existe pas, on fait la requête
+  if(!$i)
+    query(" ALTER TABLE ".$nom_table." ADD ".$nom_champ." ".$type_champ." AFTER ".$after_nom_champ);
 }
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// On finit le string d'affichage
+// Renommer un champ dans une table existante
+//
+// Exemple: sql_renommer_champ("nom_table", "cc2", "cc3", "MEDIUMTEXT");
 
-if($idmaj)
-  $majq .= '<br><br><span class="moinsgros gras">Fini toutes les requêtes !</span></div><div class="body_main midsize align_center">';
+function sql_renommer_champ($nom_table, $ancien_nom_champ, $nouveau_nom_champ, $type_champ)
+{
+  // On vérifie que la table existe
+  if(!query(" DESCRIBE ".$nom_table, 1))
+    return;
 
+  // On a besoin de la structure de la table
+  $qdescribe = query(" DESCRIBE ".$nom_table);
+
+  // Si le nouveau nom du champ existe déjà, on s'arrête là
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+  {
+    if ($ddescribe['Field'] == $nouveau_nom_champ)
+      return;
+  }
+
+  // On a besoin une nouvelle fois de la structure de la table
+  $qdescribe = query(" DESCRIBE ".$nom_table);
+
+  // Si le champ existe dans la table, on le renomme
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+  {
+    if($ddescribe['Field'] == $ancien_nom_champ)
+      query(" ALTER TABLE ".$nom_table." CHANGE ".$ancien_nom_champ." ".$nouveau_nom_champ." ".$type_champ);
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Changer le type d'un champ dans une table existante
+//
+// Exemple: sql_changer_type_champ("nom_table", "cc2", "MEDIUMTEXT");
+
+function sql_changer_type_champ($nom_table, $nom_champ, $type_champ)
+{
+  // On vérifie que la table existe
+  if(!query(" DESCRIBE ".$nom_table, 1))
+    return;
+
+  // On a besoin une nouvelle fois de la structure de la table
+  $qdescribe = query(" DESCRIBE ".$nom_table);
+
+  // Si le champ existe dans la table, on le renomme
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+  {
+    if($ddescribe['Field'] == $nom_champ)
+      query(" ALTER TABLE ".$nom_table." MODIFY ".$nom_champ." ".$type_champ);
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Suppression d'un champ dans une table existante
+//
+// Exemple: sql_supprimer_champ("nom_table", "tvvmb");
+
+function sql_supprimer_champ($nom_table, $nom_champ)
+{
+  // On vérifie que la table existe
+  if(!query(" DESCRIBE ".$nom_table, 1))
+    return;
+
+  // On a besoin de la structure de la table
+  $qdescribe = query(" DESCRIBE ".$nom_table);
+
+  // Si le champ existe dans la table, on le supprime
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+  {
+    if($ddescribe['Field'] == $nom_champ)
+      query(" ALTER TABLE ".$nom_table." DROP ".$nom_champ);
+  }
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Ajout d'une entrée dans une table
+//
+/* Exemple :
+sql_insertion_valeur(" SELECT cc, tvvmb FROM nom_table WHERE cc LIKE 'test' AND tvvmb = 1 ",
+" INSERT INTO nom_table
+  SET         cc    = 'test'  ,
+              tvvmb = 1       ");
+*/
+
+function sql_insertion_valeur($condition, $requete)
+{
+  // Si l'entrée n'existe pas déjà, on insère
+  if(!mysqli_num_rows(query($condition)))
+    query($requete);
+}
 
 
 
@@ -537,106 +261,25 @@ if($idmaj)
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/administration.png" alt="Administration">
-    </div>
-    <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
 
-    <div class="body_main midsize align_center">
-      <?=$majq?>
-      <table class="cadre_gris indiv">
-        <tr>
-          <td class="cadre_gris_titre moinsgros">
-            VERSION
-          </td>
-          <td class="cadre_gris_titre moinsgros">
-            CHANGEMENTS STRUCTURELS
-          </td>
-        </tr>
+      <div class="texte">
 
-        <tr>
-          <td class="cadre_gris moinsgros gras">
-            <a class="dark blank" href="?maj=v2">Version 2</a>
-          </td>
-          <td class="cadre_gris">
-            Création de la table quotes_membres<br>
-            Fix du bordel dans les miscellanées<br>
-            Création du champ todo.source<br>
-            Suppression du champ membres.bie
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" class="cadre_gris_vide">
-          </td>
-        </tr>
+        <h1 class="positif texte_blanc align_center">LES REQUÊTES ONT ÉTÉ EFFECTUÉES AVEC SUCCÈS</h1>
 
-        <tr>
-          <td class="cadre_gris moinsgros gras">
-            <a class="dark blank" href="?maj=ra15">Re-alpha 15</a>
-          </td>
-          <td class="cadre_gris">
-            Création des tables quotes ; quotes_membres
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" class="cadre_gris_vide">
-          </td>
-        </tr>
+      </div>
 
-        <tr>
-          <td class="cadre_gris moinsgros gras">
-            <a class="dark blank" href="?maj=ra14">Re-alpha 14</a>
-          </td>
-          <td class="cadre_gris">
-            Création des champs stats_referer.alias ; vars_globales.last_referer_check
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" class="cadre_gris_vide">
-          </td>
-        </tr>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
 
-        <tr>
-          <td class="cadre_gris moinsgros gras">
-            <a class="dark blank" href="?maj=ra13">Re-alpha 13</a>
-          </td>
-          <td class="cadre_gris">
-            Création des champs membres.sexe ; membres.region ; membres.metier
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" class="cadre_gris_vide">
-          </td>
-        </tr>
-
-        <tr>
-          <td class="cadre_gris moinsgros gras">
-            <a class="dark blank" href="?maj=ra12">Re-alpha 12</a>
-          </td>
-          <td class="cadre_gris">
-            Création des tables todo ; todo_commentaire ; todo_categorie ; roadmap
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" class="cadre_gris_vide">
-          </td>
-        </tr>
-
-        <tr>
-          <td class="cadre_gris moinsgros gras">
-            <a class="dark blank" href="?maj=ra11">Re-alpha 11</a>
-          </td>
-          <td class="cadre_gris">
-            Suppression de la table stats_pageviews_mois<br>
-            Création des tables devblog ; devblog_commentaire<br>
-            Suppression de .php à la fin des urls dans l'activité récente
-          </td>
-        </tr>
-
-      </table>
-    </div>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

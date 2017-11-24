@@ -6,45 +6,51 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = 'discuter';
-$header_submenu   = 'forum';
+$header_menu      = 'Discuter';
+$header_sidemenu  = 'ForumIndex';
+
+// Identification
+$page_nom = "Espère que le forum reviendra un jour";
+$page_url = "pages/forum/index";
+
+// Langages disponibles
+$langage_page = array('FR','EN');
 
 // Titre et description
 $page_titre = "Forum";
-$page_desc  = "Le forum NoBleme... plus ou moins";
-
-// Identification
-$page_nom = "forum";
-$page_id  = "loljk";
-
-// CSS & JS
-$css = array('forum_loljk');
+$page_desc  = "Forum de discussion NoBleme";
 
 
 
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                        PRÉPARATION DES DONNÉES                                                        */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// On chope les threads
-$qforumjk = query(" SELECT    forum_loljk.id        AS 'jk_id'      ,
-                              forum_loljk.titre     AS 'jk_titre'   ,
-                              membres.pseudonyme    AS 'jk_user'
-                    FROM      forum_loljk
-                    LEFT JOIN membres ON forum_loljk.FKauteur = membres.id
-                    WHERE     forum_loljk.threadparent = 0
-                    ORDER BY  forum_loljk.timestamp DESC ");
-
-// Et on prépare à l'affichage
-for($nforumjk = 0 ; $dforumjk = mysqli_fetch_array($qforumjk) ; $nforumjk++)
+if($lang == 'FR')
 {
-  $jk_id[$nforumjk]     = destroy_html($dforumjk['jk_id']);
-  $jk_titre[$nforumjk]  = destroy_html($dforumjk['jk_titre']);
-  $jk_auteur[$nforumjk] = destroy_html($dforumjk['jk_user']);
+  // Header
+  $trad['titre']      = "Forum NoBleme";
+  $trad['soustitre']  = "Reviendra à la vie Bientôt™";
+  $trad['desc']       = <<<EOD
+Qu'est-ce que NoBleme sans son légendaire forum ? Rien, dirons certains. Une ruine, rajouterons-t-il. La honte, surenchériront-ils. Et ils n'auront pas forcément tort. Mais d'autres rappelleront à certains que NoBleme est une communauté qui n'a pas eu besoin de son forum pour survivre pendant ces cinq dernières années, et que ce n'est pas quelques années de plus sans forum qui tueront le site. N'est-ce pas ? Alors soyons patients.
+EOD;
 }
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  $trad['titre']      = "NoBleme forum";
+  $trad['soustitre']  = "Will be resurrected Soon™";
+  $trad['desc']       = <<<EOD
+What's NoBleme without its legendary forum? Nothing, some people might say. A ruin, said people might add. A shame, these people would insist. And they wouldn't necessarily be wrong. But others shall remind them that NoBleme as a community didn't need its forum to survive during the past five years, and can survive a few more years without a forum. So let's be patient, and good things shall come in due time.
+EOD;
+}
+
 
 
 
@@ -54,44 +60,23 @@ for($nforumjk = 0 ; $dforumjk = mysqli_fetch_array($qforumjk) ; $nforumjk++)
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/forumloljk/forum_jk.png" alt="Le forum nobleme xd">
-    </div>
-    <br>
+      <div class="texte">
 
-    <div class="body_main midsize">
+        <h1><?=$trad['titre']?></h1>
 
-      <table class="intable">
-        <tr>
-          <td class="comicsans gros gras align_center">
-            <a href="<?=$chemin?>pages/forum/topic?new">++++ Créer un nouveau sujet de discussion ++++</a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <br><hr>
-          </td>
-        </tr>
+        <h5><?=$trad['soustitre']?></h5>
 
-        <?php for($i=0;$i<$nforumjk;$i++) { ?>
-        <tr>
-          <td class="comicsans gros">
-            <span style="color:#<?=substr(md5(rand()), 0, 6);?>"><a class="blank" style="color:#<?=substr(md5(rand()), 0, 6);?>" href="<?=$chemin?>pages/forum/topic?id=<?=$jk_id[$i]?>"><?=$jk_titre[$i]?> (<?=$jk_auteur[$i]?>)</span><hr>
-          </td>
-        </tr>
-        <?php } ?>
+        <p><?=$trad['desc']?></p>
 
-        <tr>
-          <td class="comicsans gros gras align_center">
-            <a href="<?=$chemin?>pages/forum/topic?new">++++ Créer un nouveau sujet de discussion ++++</a>
-          </td>
-        </tr>
+        <br>
+        <br>
+        <br>
 
-      </table>
+        <div class="align_center">
+          <img src="<?=$chemin?>img/divers/construction.png" alt="Under construction">
+        </div>
 
-    </div>
+      </div>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

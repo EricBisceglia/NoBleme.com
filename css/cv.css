@@ -1,0 +1,16 @@
+/************************************************************ CV & PORTFOLIO *************************************************************/
+hr     { border: 0; border-bottom: 1px dashed #CCCCCC; background: #888888; }
+h5     { font-size: 1.4em;    }
+@media (max-width: 801px)     {
+body   { font-size: 1.3em;    }
+h1     { font-size: 4.0em;    }
+h5     { font-size: 1.5em;  } }
+@media (max-width: 641px)     {
+body   { font-size: 1.0em;  } }
+@media (max-width: 481px)     {
+body   { font-size: 0.75em; } }
+@media (max-width: 361px)     {
+body   { font-size: 0.65em; } }
+@media (max-width: 321px)     {
+body   { font-size: 0.6em;    }
+h1     { font-size: 3.0em;  } }

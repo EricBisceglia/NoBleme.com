@@ -1,0 +1,1709 @@
+[2015-10-06 20:30:01] <Narrateur> Il est l'heure du NoBlemeRPG! Si vous désirez participer, c'est simple: les 5 premiers à écrire quelque chose, même n'importe quoi, une lettre, un mot, sur #NoBlemeRPG seront pris dans la session du jour!
+[2015-10-06 20:30:02] <Narrateur> (Note aux refoulés: Désolé, pour maintenir l'intérêt des parties, je suis forcé de limiter le nombre de joueurs qui peuvent participer à la fois. Si c'est pas pour cette fois, c'est pour la prochaine! Et rien ne vous empêche de venir observer la partie!)
+[2015-10-06 20:30:04] * Channel mode set to -m by Narrateur
+[2015-10-06 20:30:05] <Planeshift> Tous présents, et dénombrés !
+[2015-10-06 20:30:05] <Wan> JOHN CENA
+[2015-10-06 20:30:05] <Kutz> Quelque chose !
+[2015-10-06 20:30:06] <Exirel> Hi
+[2015-10-06 20:30:07] <Odin> bite
+[2015-10-06 20:30:12] * Channel mode set to +m by Narrateur
+[2015-10-06 20:30:19] * Narrateur set +v Exirel
+[2015-10-06 20:30:19] * Narrateur set +v Kutz
+[2015-10-06 20:30:19] * Narrateur set +v Odin
+[2015-10-06 20:30:19] * Narrateur set +v Planeshift
+[2015-10-06 20:30:21] * Narrateur set +v Wan
+[2015-10-06 20:30:22] <Narrateur> Hopla
+[2015-10-06 20:30:33] <Narrateur> Alors alors
+[2015-10-06 20:30:41] <Narrateur> Exirel: Kutz: Planeshift: Wan: Qui n'a pas sa fiche
+[2015-10-06 20:30:44] * Wan is now known as JOHN_CENA
+[2015-10-06 20:30:46] <Exirel> Moi.
+[2015-10-06 20:30:47] <Planeshift> Je l'ai
+[2015-10-06 20:30:50] <JOHN_CENA> Mon temps est maintenant
+[2015-10-06 20:30:52] <Kutz> J'ai
+[2015-10-06 20:30:54] <JOHN_CENA> Tu ne peux pas me voir
+[2015-10-06 20:30:55] <Exirel> Je n'ai pas.
+[2015-10-06 20:30:56] <Planeshift> J'ai même Libre Office
+[2015-10-06 20:31:00] * JOHN_CENA is now known as Gwrartz
+[2015-10-06 20:31:02] <Gwrartz> J'ai
+[2015-10-06 20:31:10] <Narrateur> Je te pm ça dans un moment Exirel
+[2015-10-06 20:31:15] * Kutz is now known as Quon
+[2015-10-06 20:31:18] <Exirel>  /o/
+[2015-10-06 20:31:41] <Narrateur> Et on a ici un STUPIDE DÉBUTANT
+[2015-10-06 20:31:44] <Narrateur> Bravo hein Odin
+[2015-10-06 20:31:48] <Quon> Bravo Odin !
+[2015-10-06 20:31:49] <Narrateur> Je te félicite pas de squatter notre précieux temps
+[2015-10-06 20:31:53] <Odin> Bonjour :D
+[2015-10-06 20:31:54] <Gwrartz> haha, junior petit gland
+[2015-10-06 20:31:59] <Narrateur> Donc donc donc, on va te créer un personnage
+[2015-10-06 20:32:10] <Narrateur> Alors Odin comme j'ai plus le wiki je vais te paster les descriptions des classes de personnages qui existent
+[2015-10-06 20:32:12] <Exirel> j'ai maintenant /o/
+[2015-10-06 20:32:12] <Narrateur> Flood time
+[2015-10-06 20:32:20] <Odin> Narrateur: Déjà lu
+[2015-10-06 20:32:23] <Exirel> Narrateur: et le NB de ThArGos ?
+[2015-10-06 20:32:24] <Gwrartz> :D
+[2015-10-06 20:32:33] <Narrateur> Exirel: Le wat?
+[2015-10-06 20:32:34] * Exirel is now known as Raaclu
+[2015-10-06 20:32:40] <Narrateur> Odin: Tu as déjà fait ton choix de classe? :D
+[2015-10-06 20:32:45] <Narrateur> Parfait alors
+[2015-10-06 20:32:50] <Odin> Ouip :)
+[2015-10-06 20:32:50] <Raaclu> Narrateur: il me semble que ThArGos avait un gros dump de tout ça.
+[2015-10-06 20:32:56] <Narrateur> Ah oui, effectivement
+[2015-10-06 20:32:58] <Narrateur> Mais pas à jour
+[2015-10-06 20:33:04] <Odin> Je te balance ça en vrac ?
+[2015-10-06 20:33:04] <Narrateur> Odin: Nom, classe, sexe, et alignement de ton personnage plzkthx.
+[2015-10-06 20:33:09] <Raaclu> http://hobeika.fr/~vincent/nbrpg/NB/
+[2015-10-06 20:33:22] <Odin> Malen, Druide, M, Neutre
+[2015-10-06 20:33:23] <Narrateur> Raaclu: C'est des données qui datent de ~2011-2012 though
+[2015-10-06 20:33:24] * Odin is now known as Malen
+[2015-10-06 20:33:59] <Narrateur> Je te pm tes infos Malen
+[2015-10-06 20:34:02] * Planeshift is now known as Liodain
+[2015-10-06 20:34:08] <Liodain> Vu qu'apparemment c'est la tendance
+[2015-10-06 20:34:32] <Narrateur> Si tu te fais insulter par ce que je t'envoie c'est normal
+[2015-10-06 20:34:33] <Liodain> Narrateur: Ouais mais c'est plus ou moins exactes comme données
+[2015-10-06 20:34:35] <Liodain> Tout de même
+[2015-10-06 20:34:37] <Narrateur> C'est moi qui suis insulté en réalité
+[2015-10-06 20:34:45] <Narrateur> Liodain: C'est presque exact mais pas complètement :D
+[2015-10-06 20:34:55] <Narrateur> Donc, tout le monde est prêt pour la session du jour?
+[2015-10-06 20:34:56] <Liodain> Ah oui
+[2015-10-06 20:34:58] <Liodain> Ouais
+[2015-10-06 20:35:03] <Liodain> J'ai des choses à faire en revanche
+[2015-10-06 20:35:06] <Quon> Prêt !
+[2015-10-06 20:35:09] <Liodain> Enfin, du dump d'inventaire
+[2015-10-06 20:35:13] <Liodain> Donc dès qu'on a un moment :D
+[2015-10-06 20:35:16] <Narrateur> Des trucs à filer tu veux dire?
+[2015-10-06 20:35:23] <Narrateur> Fais ça tout de suite
+[2015-10-06 20:35:27] <Narrateur> Comme ça ce sera réglé
+[2015-10-06 20:35:33] * Narrateur set the topic to Dimension actuelle: Dimension du futur awesome | Planeshift > Kutz > Wan > Odin > Exirel > Et on recommence...
+[2015-10-06 20:36:01] <Liodain> Okidoki
+[2015-10-06 20:36:03] <Liodain> ALORS
+[2015-10-06 20:36:04] <Narrateur> T'as vu Raaclu j'ai fait un hook pour mettre l'ordre dans le topic
+[2015-10-06 20:36:04] <Liodain> Exirel
+[2015-10-06 20:36:05] <Narrateur> Content?
+[2015-10-06 20:36:09] <Liodain> Enfin
+[2015-10-06 20:36:11] <Liodain> Raaclu:
+[2015-10-06 20:36:21] <Liodain> J'ai unn item pour toi si tu veux.
+[2015-10-06 20:36:28] <Raaclu> Yep ?
+[2015-10-06 20:36:33] <Raaclu> J'avais déjà tes lunettes d'aviateur.
+[2015-10-06 20:36:39] <Liodain> T'as que ça je crois
+[2015-10-06 20:36:48] <Liodain> J'ai des trucs qui m'encombrent
+[2015-10-06 20:36:48] <Narrateur> Mais Liodain aurait-il une arme unique aux prêtres?
+[2015-10-06 20:36:52] <Liodain> Narrateur: Exact
+[2015-10-06 20:36:53] <Narrateur> AURAIT-IL?
+[2015-10-06 20:37:01] <Liodain> Je tiens à confirmer ma description que je donne là
+[2015-10-06 20:37:03] <Gwrartz> Narrateur: question, mon attaque frénétique a bien 2 charges ?
+[2015-10-06 20:37:09] <Liodain> Sceptre d'Autocar
+[2015-10-06 20:37:10] <Liodain> Arme de prédilection des prêtres, les sceptres sont faciles à manier et peuvent mettre de sacrés gnons. Celui-ci a appartenu à Autocar 2nd, grand prêtre de New Vegas 3000 et père de Désir, le Tramway, quatrième du nom. Inflige 2 à 5 dégâts. Inhibant son esprit scolaire, le porteur du sceptre d'Autokar disposera d'un bonus de +5 à l'intelligence et montera 5% plus vite en niveau...
+[2015-10-06 20:37:11] <Narrateur> Attends je vais voir ça
+[2015-10-06 20:37:12] <Liodain> ...tant que le...
+[2015-10-06 20:37:13] <Liodain> ...sceptre sera équipé. Ne peut être équipé que par un prêtre.
+[2015-10-06 20:37:27] <Narrateur> Yup Gwrartz
+[2015-10-06 20:37:32] <Liodain> J'avais pas la description la session précédente, sinon j'aurais filé
+[2015-10-06 20:37:36] <Liodain> Donc mon cher Raaclu
+[2015-10-06 20:37:41] <Narrateur> Donc Liodain, slot 5 de ton inventaire: Vide
+[2015-10-06 20:37:42] <Liodain> Je te propose ceci.
+[2015-10-06 20:37:45] <Liodain> WOH
+[2015-10-06 20:37:47] <Raaclu> J'accepte. J'ai un CD de Diam's si tu veux en échange.
+[2015-10-06 20:37:47] <Liodain> Narrateur: WOH
+[2015-10-06 20:37:49] <Liodain> NON NON NON
+[2015-10-06 20:37:53] <Narrateur> !!!! Liodain
+[2015-10-06 20:37:54] <Liodain> On se calme
+[2015-10-06 20:38:00] <Narrateur> Ah pas encore :D
+[2015-10-06 20:38:00] <Liodain> Raaclu: Donc je te propose ceci
+[2015-10-06 20:38:01] <Narrateur> Je vois.
+[2015-10-06 20:38:11] <Narrateur> Monsieur est business.
+[2015-10-06 20:38:13] <Liodain> Je t'offre cet objet épiquement bourrinn
+[2015-10-06 20:38:16] <Liodain> Mais en échange
+[2015-10-06 20:38:21] <Raaclu> Narrateur: monsieur veut être sûr d'être soigné.
+[2015-10-06 20:38:24] <Liodain> Si y a un objet unique qui m'intéresse
+[2015-10-06 20:38:24] <Narrateur> :>
+[2015-10-06 20:38:26] <Liodain> Tu me le donnes
+[2015-10-06 20:38:29] <Liodain> Okidoki ?
+[2015-10-06 20:38:37] <Liodain> Ou rare hein
+[2015-10-06 20:38:38] <Raaclu> Sauf si ledit objet est unique aux prêtres.
+[2015-10-06 20:38:42] <Liodain> On va pas chouiner sur la rareté
+[2015-10-06 20:38:43] <Liodain> Non bien sûr
+[2015-10-06 20:38:48] <Liodain> Mais j'entends un objet que je peux utiliser
+[2015-10-06 20:38:50] <Liodain> De toute
+[2015-10-06 20:38:53] <Raaclu> Cela me convient.
+[2015-10-06 20:38:54] <Raaclu> Deal.
+[2015-10-06 20:38:55] <Liodain> Je peux te marave la gueule et te voler ce que je veux
+[2015-10-06 20:38:57] <Liodain> Ok !
+[2015-10-06 20:39:00] <Narrateur> Liodain: Slot 5: Vide.
+[2015-10-06 20:39:01] <Liodain> Donc je lui donne le sceptre
+[2015-10-06 20:39:05] <Liodain> Ensuite
+[2015-10-06 20:39:08] <Narrateur> Raaclu: Ta nouvelle arme: Sceptre d'Autocar (Arme unique): Arme de prédilection des prêtres, les sceptres sont faciles à manier et peuvent mettre de sacrés gnons. Celui-ci a appartenu à Autocar 2nd, grand prêtre de New Vegas 3000 et père de Désir, le Tramway, quatrième du nom. Inflige 2 à 5 dégâts. Inhibant son esprit scolaire, le porteur du sceptre d'Autokar disposera d'un...
+[2015-10-06 20:39:09] <Narrateur> ...bonus de +5...
+[2015-10-06 20:39:11] <Narrateur> ...à l'intelligence et montera 5% plus vite en niveau tant que le sceptre sera équipé. Ne peut être équipé que par un prêtre.
+[2015-10-06 20:39:17] <Raaclu> Narrateur: j'équipe.
+[2015-10-06 20:39:26] <Narrateur> Déjà fait :D
+[2015-10-06 20:39:29] <Liodain> Raaclu: Je te file des charentaises en preuve de bonne foi
+[2015-10-06 20:39:36] <Liodain> Narrateur: Donne-lui mes charentaises aussi
+[2015-10-06 20:39:40] <Liodain> Et ça ira pour le moment :)
+[2015-10-06 20:39:43] <Raaclu> Je prends.
+[2015-10-06 20:39:44] <Liodain> Je vais pas empêcher le jeu plus longtemps
+[2015-10-06 20:39:48] <Narrateur> Liodain: Slot 6: Vide
+[2015-10-06 20:40:00] <Narrateur> Raaclu: Tes bottes: Charentaises (Botte): Quitte à se protéger, autant avoir des charentaises aux pattes. +1 armure.
+[2015-10-06 20:40:08] <Liodain> VOYEZ MA MAGNANIMITE
+[2015-10-06 20:40:12] <Liodain> Bande de salauds.
+[2015-10-06 20:40:21] <Narrateur> >empêcher le jeu
+[2015-10-06 20:40:26] <Liodain> Bloquer quoi
+[2015-10-06 20:40:27] <Liodain> whatev'
+[2015-10-06 20:40:28] <Narrateur> Ouais ouais
+[2015-10-06 20:40:29] <Liodain> Sur ce...
+[2015-10-06 20:40:30] <Narrateur> C'est tout?
+[2015-10-06 20:40:34] <Liodain> Malen: BON DIEU UN NOUVEAU
+[2015-10-06 20:40:36] <Liodain> (Oui c'est tout)
+[2015-10-06 20:40:38] <Narrateur> C'est tout.
+[2015-10-06 20:40:43] <Liodain> Encore un type tout nu.
+[2015-10-06 20:40:47] <Narrateur> Alors attends attends avant de greeter les nouveaux toi là
+[2015-10-06 20:40:50] <Narrateur> Démarrons la session
+[2015-10-06 20:40:52] <Narrateur> Si tu permets
+[2015-10-06 20:41:02] <Narrateur> On vous avait laissés pour morts dans un univers qui disparaissait
+[2015-10-06 20:41:14] <Narrateur> Le groupe, comme toujours, se réveille, confus
+[2015-10-06 20:41:21] <Narrateur> Autour de vous, la réalité semble à nouveau être stable
+[2015-10-06 20:41:33] <Narrateur> Vous êtes dans le village de New Vegas 3000, à la lisière de la forêt de New Vegas 3000
+[2015-10-06 20:41:45] <Narrateur> Toutefois, maintenant, vous repérez directement les détails bizarres de la dernière fois
+[2015-10-06 20:41:49] <Narrateur> Certaines choses grésillent
+[2015-10-06 20:41:52] <Narrateur> D'autres semblent instables
+[2015-10-06 20:41:53] <Narrateur> Hm.
+[2015-10-06 20:41:56] <Narrateur> À vous la main
+[2015-10-06 20:42:22] <Liodain> Ca semble la friture.
+[2015-10-06 20:42:24] <Liodain> Or donnc
+[2015-10-06 20:42:27] <Narrateur> Votre quête, pour rappel, est de trouver Aktor l'honnête pour l'Ombre... si vous en avez envie.
+[2015-10-06 20:42:27] <Liodain> Malen: BON DIEU UN NOUVEAU
+[2015-10-06 20:42:29] <Quon> Je ne me souviens plus si nous avions vaincu le émchant.
+[2015-10-06 20:42:30] <Liodain> TOUT NU EN PLUS
+[2015-10-06 20:42:33] <Narrateur> Quon: Négatif.
+[2015-10-06 20:42:34] <Liodain> Bah
+[2015-10-06 20:42:41] <Liodain> On avait pas trouvé d'Aktor en tous les cas
+[2015-10-06 20:42:45] <Liodain> Et on est pas plus avancés
+[2015-10-06 20:42:45] <Malen> Mais qu'est-ce que je fous ici moi
+[2015-10-06 20:42:49] <Liodain> Retour à la case départ
+[2015-10-06 20:42:51] <Malen> TOUT NU EN PLUS
+[2015-10-06 20:43:04] <Liodain> Malen: C'est normal, oui.
+[2015-10-06 20:43:07] <Malen> Mais qui sont ces gens ?
+[2015-10-06 20:43:32] <Quon> Nous étions allés voir le forgeron, il me semble.
+[2015-10-06 20:43:33] <Malen> C'est normal c'est normal. Facile à dire quand on porte un slip.
+[2015-10-06 20:43:42] <Narrateur> Malen: Tu notes que tu es en forme humaine, mais quand tu veux tu peux passer en forme de scarabée géant avec tous les bonus que ça apporte
+[2015-10-06 20:44:31] <Liodain> Malen: Disons, mon brave, que tu as été choisi par... je suppose l'Ombre, plutôt que l'Oracle, afin de nous aider dans nos... aventures ?
+[2015-10-06 20:44:34] <Liodain> Tu n'as pas le choix.
+[2015-10-06 20:44:38] <Liodain> Et la mort n'est pas une échappatoire
+[2015-10-06 20:44:39] <Narrateur> Malen: Et tu notes aussi qu'étant un druide, tu ne peux pas équiper d'armes et armures. Que des runes.
+[2015-10-06 20:44:45] <Liodain> Donc euh, autant nous suivre.
+[2015-10-06 20:44:54] <Liodain> C'est quoi ton nom sinon mon p'tit ?
+[2015-10-06 20:45:07] <Malen> Malen, pour vous servir.
+[2015-10-06 20:45:16] <Raaclu> C'est moi ou il manque quelqu'un ?
+[2015-10-06 20:45:22] <Gwrartz> Enchancé, je suis Gwrartz
+[2015-10-06 20:45:30] <Malen> Gw... quoi ?
+[2015-10-06 20:45:32] <Gwrartz> Raaclu: pas assez de slots sur cette session :/
+[2015-10-06 20:45:37] <Quon> Moi c'est Quon !
+[2015-10-06 20:45:43] <Raaclu> Gwrartz: Ah, c'est donc ça.
+[2015-10-06 20:45:46] <Raaclu> Pas très efficace cette Ombre.
+[2015-10-06 20:45:48] <Gwrartz> Malen: Gwrartz, Gw et tab en général ça suffit à le dire
+[2015-10-06 20:46:11] <Malen> Tes parents t'aimaient pas pour te donner un nom pareil ?
+[2015-10-06 20:46:16] <Narrateur> Raaclu: L'Ombre, elle a une puissance limitée, hey. Déjà, arriver à faire revenir tout un univers qui a été détruit, ça draine. Alors en plus mettre plus de 5 personnes dedans...
+[2015-10-06 20:46:41] <Raaclu> Narrateur: Nous l'excuserons.
+[2015-10-06 20:46:42] <Gwrartz> Malen: Mon prénom a une étymologie longue et complexe !
+[2015-10-06 20:46:44] <Quon> Il n'a pas de parents.
+[2015-10-06 20:46:51] <Narrateur> Gwrartz: Ça veut dire castor en amérindien?
+[2015-10-06 20:46:55] <Gwrartz> Exact.
+[2015-10-06 20:46:55] <Quon> :D
+[2015-10-06 20:47:06] <Narrateur> Un narrateur, ça sait des choses.
+[2015-10-06 20:47:08] <Narrateur> C'est son job.
+[2015-10-06 20:47:15] <Liodain> Moi je m'appelle Liodain.
+[2015-10-06 20:47:21] <Liodain> Raaclu: Ouais, parfois il manque des gens.
+[2015-10-06 20:47:21] <Quon> Narrateur, quelles sont les deux autres maisons non encore visitées ?
+[2015-10-06 20:47:23] <Liodain> S'normal.
+[2015-10-06 20:47:27] <Malen> Enchanté , enchanté
+[2015-10-06 20:47:30] <Gwrartz> Quon: toi non plus hé, tu as juste été créé par un joueur sur un chan IRC
+[2015-10-06 20:47:43] <Liodain> Gwrartz: Cesse avec ta religion.
+[2015-10-06 20:47:44] <Narrateur> Quon: Village rustique composé de trois maisons (respectivement, celle de l'Homme Louche de New Vegas, celle de Raymond le forgeron, et celle de Désir le Tramway), d'une écurie vide en ruines, et d'un champ dans lequel se trouve Beauvéy le Paysan.
+[2015-10-06 20:47:48] <Liodain> Tout le monde s'en fout.
+[2015-10-06 20:47:51] <Gwrartz> Malen: EN CHANTIER, JE M'APPELLE TEUSE LOL
+[2015-10-06 20:47:52] <Liodain> Euh
+[2015-10-06 20:47:58] <Quon> Allons voir Désir !
+[2015-10-06 20:48:03] <Quon> Qui m'aime me suive !
+[2015-10-06 20:48:04] <Liodain> Narrateur: Dans notre liste, on a pas le père de Désir à tuer ?
+[2015-10-06 20:48:11] <Liodain> Ca me dit quelque chose ô_o
+[2015-10-06 20:48:12] <Malen> Dites il est bizarre votre pote.
+[2015-10-06 20:48:13] <Narrateur> Liodain: Nope
+[2015-10-06 20:48:16] <Liodain> Hm, soit.
+[2015-10-06 20:48:23] <Gwrartz> Quon: je te suis :3
+[2015-10-06 20:48:27] <Malen> Bon bah je vous suis
+[2015-10-06 20:48:30] <Liodain> Malen: Ouais, on s'y fait. On apprend à ignorer les idioties.
+[2015-10-06 20:48:35] <Quon> Gwrartz: Cesse de mater mes fesses.
+[2015-10-06 20:48:39] <Liodain> Exemple, je n'entends quasiment jamais le reste du groupe.
+[2015-10-06 20:48:41] <Narrateur> 2/5 pour aller voir Désir
+[2015-10-06 20:48:54] <Liodain> Va pour Désir
+[2015-10-06 20:49:08] <Gwrartz> Liodain: Nous ne sommes que des caractères sur des écrans.
+[2015-10-06 20:49:08] <Narrateur> Vous allez donc dans la maison de Désir.
+[2015-10-06 20:49:09] <Raaclu> Heh.
+[2015-10-06 20:49:14] <Raaclu> Je croyais qu'il fallait continuer "tout droit" ?
+[2015-10-06 20:49:20] <Narrateur> Vous poussez la porte de sa maison, qui est déverouillée
+[2015-10-06 20:49:24] <Raaclu> Grml.
+[2015-10-06 20:49:26] <Raaclu> >.>
+[2015-10-06 20:49:26] <Narrateur> À l'intérieur, une sorte de petit sanctuaire
+[2015-10-06 20:49:28] <Raaclu> <.<
+[2015-10-06 20:49:30] <Gwrartz> Tout droit vers la maison de Désir
+[2015-10-06 20:49:31] <Narrateur> Des bougies et une photo encadrée
+[2015-10-06 20:49:41] <Gwrartz> ^.^
+[2015-10-06 20:49:46] <Narrateur> Un mot, dans un coin « À la mémoire de notre ami Désir, victime du mooooooooooooonstre »
+[2015-10-06 20:50:05] <Raaclu> C'est dommage.
+[2015-10-06 20:50:07] <Quon> Quelle trsitesse !
+[2015-10-06 20:50:10] <Narrateur> Y'a pas grand monde à qui parler ici.
+[2015-10-06 20:50:17] — Quon verse une larme.
+[2015-10-06 20:50:18] <Malen> Ca fait beaucoup de "o" pour un seul monstre.
+[2015-10-06 20:50:22] <Narrateur> On se croirait en 2012, avec ces histoires de mooooooooonstre.
+[2015-10-06 20:50:24] <Raaclu> Voilà quelqu'un qui aurait pu nous renseigner sur le mo+nstre.
+[2015-10-06 20:50:26] <Liodain> En effet
+[2015-10-06 20:50:29] <Gwrartz> :D
+[2015-10-06 20:50:31] <Liodain> Raaclu: On l'a déjà tué
+[2015-10-06 20:50:35] <Quon> Onn va voir le paysan ?
+[2015-10-06 20:50:39] <Raaclu> Liodain: ah bah forcément.
+[2015-10-06 20:50:43] <Gwrartz> Raaclu: le mo+nstre\.
+[2015-10-06 20:50:47] <Liodain> Ouais, ouais. Longue histoire tout ça.
+[2015-10-06 20:50:53] <Liodain> M'enfin bref.
+[2015-10-06 20:51:01] <Liodain> Quon: Va pour l'Homme Louche.
+[2015-10-06 20:51:08] <Liodain> Je croyais qu'il nous avait pris en gripe
+[2015-10-06 20:51:10] <Liodain> En revanche
+[2015-10-06 20:51:10] <Malen> Je suis Quon.
+[2015-10-06 20:51:16] <Quon> Ben l'Homme Louche alors.
+[2015-10-06 20:51:20] <Liodain> Malen: Non, toi, c'est Malen.
+[2015-10-06 20:51:21] <Raaclu> Et dire que nous revenons à ces maisons alors qu'on avait pris le temps de tuer quelques hamstéroïdes.
+[2015-10-06 20:51:26] <Narrateur> 3/5 pour l'homme louche dans ce cas
+[2015-10-06 20:51:36] <Narrateur> Vous tapez à la porte de l'homme louche
+[2015-10-06 20:51:39] <Narrateur> La porte ne s'ouvre pas
+[2015-10-06 20:51:42] <Narrateur> De derrière la porte, une voix
+[2015-10-06 20:51:56] * Narrateur is now known as Planetshift
+[2015-10-06 20:51:58] <Planetshift> QUOI
+[2015-10-06 20:52:00] <Liodain> :|
+[2015-10-06 20:52:01] <Planetshift> QUI TAPE À MA PORTE
+[2015-10-06 20:52:04] — Planetshift est louche
+[2015-10-06 20:52:13] — Planetshift ne donne pas confiance
+[2015-10-06 20:52:20] <Quon> C'est Quon !
+[2015-10-06 20:52:21] <Liodain> On voudrait savoir si vous savez où trouver un certain Aktor l'Honnête
+[2015-10-06 20:52:27] <Liodain> M'voyez.
+[2015-10-06 20:52:30] <Planetshift> AKTOR L'HONNÊTE C'EST QUI ÇA
+[2015-10-06 20:52:34] <Liodain> ...
+[2015-10-06 20:52:36] <Liodain> Ouais bon.
+[2015-10-06 20:52:37] <Planetshift> ET POURQUOI JE VOUS AIDERAI VOUS ÊTES TOUS LOUCHES
+[2015-10-06 20:52:38] — Quon voit Liodain
+[2015-10-06 20:52:46] <Liodain> Certes.
+[2015-10-06 20:52:51] <Gwrartz> Hmm.
+[2015-10-06 20:52:56] <Quon> Je ne suis pas louche Monsieur, je suis cruche !
+[2015-10-06 20:52:57] <Liodain> Narrateur: J'invoque l'Oracle.
+[2015-10-06 20:53:08] <Planetshift> [Planeshift] Liodain dépense une charge d'oracle. Charges restantes: 1
+[2015-10-06 20:53:12] * Planetshift is now known as Narrateur
+[2015-10-06 20:53:18] <Narrateur> Un rayon de lumière descend du ciel
+[2015-10-06 20:53:25] <Narrateur> Un feeling que vous n'aviez pas eu depuis longtemps
+[2015-10-06 20:53:30] <Narrateur> Un vieil ami?
+[2015-10-06 20:53:31] <Liodain> "Le numéro attribué nn'est pas disponible pour l'instant..."
+[2015-10-06 20:53:32] <Narrateur> Nope
+[2015-10-06 20:53:36] <Narrateur> Le rayon de lumière s'assombrit
+[2015-10-06 20:53:39] <Narrateur> Et descend l'Ombre
+[2015-10-06 20:53:40] * Narrateur is now known as Ombre
+[2015-10-06 20:53:45] <Ombre> Une question, une réponse.
+[2015-10-06 20:54:21] <Liodain> Dans quelle direction doit-on aller pour régler les frétillements ambiants ?
+[2015-10-06 20:54:40] <Liodain> (inb4 réponse à la con)
+[2015-10-06 20:55:30] <Liodain> Euh.
+[2015-10-06 20:55:36] <Ombre> Les frétillements sont les effets secondaires de mes efforts pour maintenir cette réalité. Si j'arrête, la réalité disparait. Tant que je continue, mes forces se drainent, et le monde perd de son existence, lentement. Nourrissez moi de la force des dix cibles que je vous avais listées pour que je puisse restaurer la réalité.
+[2015-10-06 20:55:39] * Ombre is now known as Narrateur
+[2015-10-06 20:55:45] <Narrateur> L'Ombre disparait.
+[2015-10-06 20:55:46] <Liodain> Certes.
+[2015-10-06 20:55:55] <Liodain> J'aurais aimé une direction pour Aktor l'Honnête, vous voyez.
+[2015-10-06 20:55:58] <Liodain> Enfin bon.
+[2015-10-06 20:56:00] <Liodain> S'pas grave.
+[2015-10-06 20:56:08] <Liodain> Je propose de cesser de perdre du temps dans ce bled pourri
+[2015-10-06 20:56:11] <Quon> Allons parler au paysan !
+[2015-10-06 20:56:14] <Raaclu> Ouais, il aurait sans doute fallu demander la direction pour Aktor l'Honnête, du coup.
+[2015-10-06 20:56:20] <Liodain> ... soit.
+[2015-10-06 20:56:25] <Raaclu> Mais, soit.
+[2015-10-06 20:56:25] <Liodain> Quon: Je te suis.
+[2015-10-06 20:56:25] <Malen> Mais qu'est-ce que c'était que ce bordel ?
+[2015-10-06 20:56:29] <Liodain> Malen: Ah ouais.
+[2015-10-06 20:56:35] <Liodain> Euh.
+[2015-10-06 20:56:36] <Raaclu> Malen: aucune idée, mais les autres trouvent ça normal.
+[2015-10-06 20:56:37] <Liodain> Disons.
+[2015-10-06 20:56:40] <Liodain> C'est compliqué, ok.
+[2015-10-06 20:56:42] <Raaclu> Alors dans le doute, je trouve ça normal aussi.
+[2015-10-06 20:57:00] <Liodain> Raaclu: Ca devient notre "normalité", ouais.
+[2015-10-06 20:57:04] <Liodain> Monde de merde.
+[2015-10-06 20:57:09] — Narrateur attend la décision du groupe
+[2015-10-06 20:57:10] <Liodain> Enfin bref.
+[2015-10-06 20:57:12] <Malen> Bon bah. Comme j'ai le choix je vais trouver ça normal et continuer à vous suivre ?
+[2015-10-06 20:57:15] <Narrateur> Liodain: courbe gaussienne etc
+[2015-10-06 20:57:25] <Liodain> Narrateur: éducation arbitraire etc
+[2015-10-06 20:57:38] <Gwrartz> Œdipe, etc.
+[2015-10-06 20:57:43] <Raaclu> Allons-y.
+[2015-10-06 20:58:07] <Narrateur> Allons-y où? :D (targe parce que wan est là et a encore 14 ans)
+[2015-10-06 20:58:09] <Quon> On va voir le paysan !
+[2015-10-06 20:58:39] <Gwrartz> Narrateur: ce n'est pas une [targe] DANS TON CUL LOL
+[2015-10-06 20:58:59] <Gwrartz> Du coup, ouais, paysan, c'est tout ce qui nous reste
+[2015-10-06 20:59:04] <Narrateur> 2/5
+[2015-10-06 20:59:09] <Raaclu> Voir le paysan. Comme les autres le disent.
+[2015-10-06 20:59:12] <Narrateur> kk
+[2015-10-06 20:59:14] <Liodain> Narrateur: J'ai dit que j'y allais déjà
+[2015-10-06 20:59:15] <Raaclu> Même si bon moi j'irais bien tout droit.
+[2015-10-06 20:59:16] <Liodain> Boulet
+[2015-10-06 20:59:17] <Raaclu> Comme avant.
+[2015-10-06 20:59:19] <Narrateur> Vous allez dans le champ derrière la ville parler au paysan
+[2015-10-06 20:59:20] <Gwrartz> Au pire convaincre Planetshift de nous guider
+[2015-10-06 20:59:22] * Narrateur is now known as Beauvey
+[2015-10-06 20:59:37] <Raaclu> Gwrartz: beaucoup trop louche.
+[2015-10-06 20:59:40] <Beauvey> Bonjour, aventuriers. Le coin est calme depuis que vous avez tué le mooooooooooooonstre.
+[2015-10-06 20:59:52] <Quon> Bonjour !
+[2015-10-06 20:59:54] <Raaclu> Je n'ai rien fait.
+[2015-10-06 20:59:55] <Beauvey> Globalisons les luttes pour globaliser l’espoir !
+[2015-10-06 21:00:09] <Liodain> Ok.
+[2015-10-06 21:00:14] <Malen> Euh. Soit ?
+[2015-10-06 21:00:30] <Liodain> Vous savez où trouver un certain Aktor l'Honnête ?
+[2015-10-06 21:00:35] <Beauvey> Liodain: Si l'on ne construit pas un monde de partage des richesses, c'est un monde de conflits multilatéraux qui nous attend.
+[2015-10-06 21:00:37] <Gwrartz> Grilled
+[2015-10-06 21:00:41] <Beauvey> La pédagogie de l’action fait débattre.
+[2015-10-06 21:00:58] <Liodain> ...
+[2015-10-06 21:01:03] <Liodain> Et sinon ?
+[2015-10-06 21:01:06] <Beauvey> Liodain: Je voterai pour le candidat de gauche le mieux placé au second tour parce que je fais la différence entre la droite et gauche.
+[2015-10-06 21:01:14] <Liodain> Je vois.
+[2015-10-06 21:01:14] <Beauvey> L’utopie est la matrice de l’histoire et la soeur jumelle de la révolte.
+[2015-10-06 21:01:16] <Liodain> Je peux le tuer ?
+[2015-10-06 21:01:27] <Quon> Je te prie.
+[2015-10-06 21:01:28] <Gwrartz> NON
+[2015-10-06 21:01:35] <Liodain> Mouais.
+[2015-10-06 21:01:39] <Liodain> Bon, on retourne dans la forêt ?
+[2015-10-06 21:01:46] <Quon> Allons-y !
+[2015-10-06 21:01:50] <Liodain> Okidoki
+[2015-10-06 21:01:53] <Raaclu> Tout droit quoi.
+[2015-10-06 21:01:53] * Beauvey is now known as Narrateur
+[2015-10-06 21:01:57] <Gwrartz> Beauvey: Aktor l'Honnête souhaite oprimmer le peuple, où pouvons-nous le trouver ?
+[2015-10-06 21:02:00] <Gwrartz> Bon.
+[2015-10-06 21:02:01] — Raaclu pointe la direction "tout droit".
+[2015-10-06 21:02:01] <Gwrartz> Bah.
+[2015-10-06 21:02:03] <Gwrartz> Bon.
+[2015-10-06 21:02:04] <Narrateur> Suite à cette conversation fort importante et intéressante
+[2015-10-06 21:02:05] <Gwrartz> Hein.
+[2015-10-06 21:02:07] <Gwrartz> Voilà.
+[2015-10-06 21:02:09] <Raaclu> Oui.
+[2015-10-06 21:02:14] <Liodain> Gwrartz: Faut réagir plus vite.
+[2015-10-06 21:02:16] <Liodain> :D
+[2015-10-06 21:02:17] <Narrateur> Le groupe repart vers la forêt de New Vegas 3000.
+[2015-10-06 21:02:23] <Narrateur> Vous êtes à l'orée de la forêt. Direction ?
+[2015-10-06 21:02:35] <Liodain> Tout droit
+[2015-10-06 21:02:49] <Malen> C'est une obsession chez vous le "tout droit"
+[2015-10-06 21:02:54] <Liodain> Malen: On y peut rien.
+[2015-10-06 21:02:55] <Quon> Tout droit, oui.
+[2015-10-06 21:03:06] <Malen> Bon bah tout droit et puis voil)
+[2015-10-06 21:03:09] <Raaclu> Malen: c'est la mission.
+[2015-10-06 21:03:10] <Malen> voilà*
+[2015-10-06 21:03:10] <Narrateur> Vous avancez donc tout droit dans la forêt.
+[2015-10-06 21:03:25] <Liodain> Malen: Par ailleurs, mon brave...
+[2015-10-06 21:03:28] <Malen> Raaclu: La mission c'est d'aller tout droit ? Mais qu'eeest-ce que je fous là...
+[2015-10-06 21:03:35] <Liodain> Aurais-tu des... aptitudes ? Genre, le combat, tout ça...
+[2015-10-06 21:03:36] <Gwrartz> Wow.
+[2015-10-06 21:03:39] <Malen> Euh.
+[2015-10-06 21:03:48] <Narrateur> Plus vous avancez, plus la forêt semble épaisse autour de vous. Toutefois, il semble que vous êtes sur une sorte de chemin non balisé. Les arbres sont de part et d'autre de vous, mais jamais droit devant vous.
+[2015-10-06 21:03:58] <Narrateur> QUAND SOUDAIN
+[2015-10-06 21:04:11] <Liodain> MON DIEU
+[2015-10-06 21:04:13] <Malen> Je peux me transformer en scarabée. Genre gros. C'est bien pour éviter de parler à des gens.
+[2015-10-06 21:04:26] <Narrateur> Quelques arbres autour de vous commencent à bouger et à se pencher vers vous. L'un d'entre eux tente de mettre un coup de branche à Quon, qui l'évite de justesse.
+[2015-10-06 21:04:31] <Narrateur> Voulez-vous fight ou gtfo
+[2015-10-06 21:04:37] <Liodain> Malen: Ah, oui, on a quelqu'un qui fait ça aussi. Il est pas là aujourd'hui, en revanche.
+[2015-10-06 21:04:40] <Narrateur> Parce qu'un arbre, ça peut pas vraiment vous poursuivre.
+[2015-10-06 21:04:50] <Quon> Bagaaaaaaaaarre !!
+[2015-10-06 21:04:53] <Raaclu> gtfo
+[2015-10-06 21:04:54] <Liodain> Euh
+[2015-10-06 21:04:55] <Liodain> gtfo
+[2015-10-06 21:05:00] <Gwrartz> BASTON
+[2015-10-06 21:05:01] <Narrateur> 2/5 gtfo 1/2 battre
+[2015-10-06 21:05:03] <Liodain> Je vois pas l'intérêt de combattre des arbres
+[2015-10-06 21:05:11] <Narrateur> Malen: Tu es le vote qui décide
+[2015-10-06 21:05:12] <Malen> gtfooo
+[2015-10-06 21:05:16] <Narrateur> Vous gtfoez
+[2015-10-06 21:05:26] — Quon traîne des pieds.
+[2015-10-06 21:05:26] <Narrateur> Vous continuez votre chemin, loin des arbres bizarres.
+[2015-10-06 21:05:31] — Gwrartz gtfote contre son gré
+[2015-10-06 21:05:33] <Malen> Un arbre qui tape des gens mais qu'est-ce que quoi ?
+[2015-10-06 21:05:35] <Narrateur> Le monde autour de vous est de plus en plus sombre.
+[2015-10-06 21:05:41] <Raaclu> Hm.
+[2015-10-06 21:05:47] <Raaclu> La dernière fois ça ne l'a pas fait ça.
+[2015-10-06 21:05:48] <Liodain> Malen: Oh, on a vu pire...
+[2015-10-06 21:05:55] <Narrateur> Vous remarquez que ce ne sont pas les arbres qui obscurcissent le soleil.
+[2015-10-06 21:06:03] <Narrateur> C'est l'air général qui semble... ombrageux
+[2015-10-06 21:06:16] <Quon> L'air est palpable ?
+[2015-10-06 21:06:17] <Narrateur> Alors que vous avancez, vous entendez un bruit dans un buisson
+[2015-10-06 21:06:19] <Malen> Et ça aussi c'est "normal" les gens ?
+[2015-10-06 21:06:25] <Narrateur> On dirait que le buisson qui est devant vous a bougé un peu
+[2015-10-06 21:06:26] <Quon> Tout est normal !
+[2015-10-06 21:06:26] <Narrateur> Hmmmmm
+[2015-10-06 21:06:28] <Narrateur> Que faire?
+[2015-10-06 21:06:28] <Liodain> Probablement pas.
+[2015-10-06 21:06:34] <Narrateur> Passer votre chemin? Être curieux?
+[2015-10-06 21:06:38] <Liodain> Mais mon cher Malen, la réalité est en train de partir en sucette.
+[2015-10-06 21:06:40] <Liodain> Alors bon.
+[2015-10-06 21:06:47] <Quon> Je suis curieuse, je voudrais observer le buisson.
+[2015-10-06 21:06:52] <Liodain> Curieux aussi.
+[2015-10-06 21:07:00] <Raaclu> Moi je regarde Quon et Liodain faire.
+[2015-10-06 21:07:01] <Malen> J'assume pas de fuir deux fois devant de la végétation.
+[2015-10-06 21:07:06] <Malen> Je jette un oeil aussi.
+[2015-10-06 21:07:13] <Raaclu> Malen: ça doit être douloureux.
+[2015-10-06 21:07:15] <Narrateur> Quon sort son Guide Du Voyageur Internoblèmérpégeux et ctrl+F le buisson
+[2015-10-06 21:07:24] <Narrateur> Buisson: Alors c'est un truc genre un arbre mais petit.
+[2015-10-06 21:07:32] <Narrateur> Quelqu'un a envie d'aller le voir de plus près?
+[2015-10-06 21:07:42] — Raaclu pointe Liodain du doigt
+[2015-10-06 21:07:44] <Raaclu> Lui
+[2015-10-06 21:07:51] — Liodain point sa dague vers Raaclu
+[2015-10-06 21:07:56] <Liodain> Tu disais ?
+[2015-10-06 21:07:58] <Raaclu> Bon bon.
+[2015-10-06 21:08:01] <Raaclu> Comme tu veux.
+[2015-10-06 21:08:08] <Malen> Ambiance.
+[2015-10-06 21:08:18] <Raaclu> Il marque un point.
+[2015-10-06 21:08:25] <Liodain> Malen: Quand tu seras déjà mort trois ou quatre fois, on en reparlera.
+[2015-10-06 21:08:31] <Narrateur> Raaclu s'approche du buisson, coerci par un pacte qu'il a fait avec Liodain plus tôt, et secoue les feuilles
+[2015-10-06 21:08:37] <Narrateur> Le buisson semble... vivant?
+[2015-10-06 21:08:39] <Malen> Comment ça "mort trois ou quatre fois"
+[2015-10-06 21:08:39] <Narrateur> QUAND
+[2015-10-06 21:08:40] <Liodain> What.
+[2015-10-06 21:08:40] <Narrateur> SOUDAIN
+[2015-10-06 21:08:43] <Narrateur> Sautant hors du buisson
+[2015-10-06 21:08:44] <Liodain> Mais non.
+[2015-10-06 21:08:51] * Narrateur is now known as Aktor
+[2015-10-06 21:08:51] <Gwrartz> CAISSE
+[2015-10-06 21:08:53] <Aktor> AH OH QUE QUI
+[2015-10-06 21:08:54] <Aktor> POURQUOI
+[2015-10-06 21:08:56] <Aktor> POURQUOI MOI
+[2015-10-06 21:08:58] <Aktor> JE VEUX PAS ME BATTRE
+[2015-10-06 21:09:00] <Aktor> JE VEUX ME CASSER
+[2015-10-06 21:09:02] <Aktor> DOUCEMENT LES GENS
+[2015-10-06 21:09:03] <Gwrartz> BASTON
+[2015-10-06 21:09:04] <Aktor> QUI A DU FRIC
+[2015-10-06 21:09:04] <Liodain> Certes.
+[2015-10-06 21:09:05] <Gwrartz> POUILLAVE
+[2015-10-06 21:09:06] <Aktor> BONJOUR
+[2015-10-06 21:09:07] <Aktor> AU REVOIR
+[2015-10-06 21:09:09] <Aktor> NON
+[2015-10-06 21:09:10] <Aktor> OUI
+[2015-10-06 21:09:12] <Aktor> JE VEUX PAS
+[2015-10-06 21:09:13] <Aktor> AAAAH
+[2015-10-06 21:09:14] <Malen> Euh
+[2015-10-06 21:09:15] — Aktor respire fort
+[2015-10-06 21:09:15] <Gwrartz> Bon.
+[2015-10-06 21:09:16] <Malen> Bonjour ?
+[2015-10-06 21:09:17] <Liodain> ON CESSE DE CRIER
+[2015-10-06 21:09:18] <Aktor> VOUS ÊTES QUI POURQUOI VOUS ÊTES LÀ
+[2015-10-06 21:09:18] <Liodain> ON SE CALME
+[2015-10-06 21:09:20] <Aktor> ET SURTOUT
+[2015-10-06 21:09:20] <Gwrartz> On le frappe ?
+[2015-10-06 21:09:21] <Aktor> POURQUOI JE SUIS ICI
+[2015-10-06 21:09:22] <Gwrartz> EZ
+[2015-10-06 21:09:27] <Liodain> SILENCE
+[2015-10-06 21:09:34] <Quon> Bonjour Monsieur !
+[2015-10-06 21:09:38] <Liodain> Par la barbe de l'Oracle.
+[2015-10-06 21:09:43] <Aktor> L'ORACLE
+[2015-10-06 21:09:44] <Aktor> NON PAS L'ORACLE
+[2015-10-06 21:09:48] <Aktor> J'AI PEUR DE L'ORACLE
+[2015-10-06 21:09:53] <Aktor> LUI ET SES BITTES
+[2015-10-06 21:09:54] <Quon> MOI AUSSI !
+[2015-10-06 21:09:55] <Aktor> PLUS JAMAIS
+[2015-10-06 21:09:56] <Liodain> Ah, voilà quelqu'un de...
+[2015-10-06 21:09:58] <Liodain> Eh mais
+[2015-10-06 21:10:02] <Liodain> Il connnaît l'Oracle.
+[2015-10-06 21:10:06] <Liodain> Qui êtes-vous ?
+[2015-10-06 21:10:10] <Aktor> Ouais ouais il connait
+[2015-10-06 21:10:13] <Aktor> Vous voulez dire l'Oracle il me connait
+[2015-10-06 21:10:22] <Aktor> Ça fait genre des années que je l'invoque et il me répond plus
+[2015-10-06 21:10:25] <Aktor> Je suis Aktor l'Honnête
+[2015-10-06 21:10:29] <Aktor> Seul survivant du Groupe Originel
+[2015-10-06 21:10:31] <Liodain> Oh.
+[2015-10-06 21:10:33] <Raaclu> Ah.
+[2015-10-06 21:10:35] <Liodain> ... Ooooh.
+[2015-10-06 21:10:36] <Aktor> À une époque on était les sauveurs de ce monde
+[2015-10-06 21:10:37] <Liodain> Fâcheux.
+[2015-10-06 21:10:42] <Raaclu> Triste.
+[2015-10-06 21:10:45] <Aktor> Maintenant je suis... je croyais être mort en fait.
+[2015-10-06 21:10:54] <Aktor> Et tout d'un coup je suis vivant, et dans une forêt.
+[2015-10-06 21:10:59] <Raaclu> On peut arranger ça.
+[2015-10-06 21:11:00] <Aktor> Quelqu'un peut me dire ce qui se passe?
+[2015-10-06 21:11:05] <Liodain> Euh.
+[2015-10-06 21:11:09] <Liodain> Disons que...
+[2015-10-06 21:11:11] <Liodain> ...
+[2015-10-06 21:11:14] <Raaclu> Moi, non, je ne sais pas ce qui se passe.
+[2015-10-06 21:11:16] <Liodain> Bon, les gars, comité de groupe.
+[2015-10-06 21:11:17] <Quon> C'est compliqué !
+[2015-10-06 21:11:22] <Liodain> On fait quoi là ?
+[2015-10-06 21:11:29] — Raaclu se regroupe.
+[2015-10-06 21:11:31] — Aktor essaye d'écouter ce qui se dit
+[2015-10-06 21:11:34] — Aktor arrive pas à entendre
+[2015-10-06 21:11:42] <Aktor> Bon c'est bien les secrets je vous attends à côté de mon buisson hein
+[2015-10-06 21:11:45] <Raaclu> C'est le premier sur la liste.
+[2015-10-06 21:11:51] <Malen> J'aimerais bien savoir ce qui s'est passé avant qu'il croie être mort.
+[2015-10-06 21:11:52] <Liodain> Ouais ouais, euh, t'inquiète.
+[2015-10-06 21:11:55] <Quon> Mon cheval et moi pensons qu'il faut faire quelque chose !
+[2015-10-06 21:11:57] <Malen> On est pas là pour sauver le monde nous aussi ?
+[2015-10-06 21:12:05] <Liodain> ... Pas vraiment, non.
+[2015-10-06 21:12:07] <Liodain> Enfin, si.
+[2015-10-06 21:12:11] <Liodain> Pour une fois.
+[2015-10-06 21:12:13] <Liodain> En fait.
+[2015-10-06 21:12:19] <Liodain> La réalité part en sucette
+[2015-10-06 21:12:20] <Gwrartz> Ouais si
+[2015-10-06 21:12:22] <Gwrartz> Mais bon
+[2015-10-06 21:12:24] <Liodain> Et on doit tuer dix personnes pour la rétablir
+[2015-10-06 21:12:25] <Raaclu> Cela ressemble beaucoup à un push de l'Ombre sur l'Oracle.
+[2015-10-06 21:12:29] <Liodain> Et ce type, c'est le premier de la liste
+[2015-10-06 21:12:31] <Gwrartz> A-t-on confiance en l'Ombre ?
+[2015-10-06 21:12:38] <Gwrartz> Exactement Raaclu
+[2015-10-06 21:12:41] <Liodain> Le problème, c'est que cette tâche nous a été donnée par l'Ombre, non par l'Oracle
+[2015-10-06 21:12:48] <Liodain> L'Ombre prétend que l'Oracle est devenu fou
+[2015-10-06 21:12:49] <Raaclu> Qui maintient le monde, cela dit.
+[2015-10-06 21:12:51] — Aktor regarde l'air s'assombrir pendant que certains mots sont mentionnés
+[2015-10-06 21:12:53] <Liodain> Et que tuer ces personnes devrait aider
+[2015-10-06 21:12:54] <Quon> Attendez, je vais profiter de ma hauteur pour mieux observer Aktor avec mon Ctrl+F.
+[2015-10-06 21:12:55] — Aktor se demande quoi et pourquoi
+[2015-10-06 21:13:08] * Aktor is now known as Narrateur
+[2015-10-06 21:13:16] <Raaclu> Liodain: pas seulement tuer. Détruire certaines choses.
+[2015-10-06 21:13:19] <Narrateur> Quon sort son guide et ctrl+F Aktor
+[2015-10-06 21:13:24] <Liodain> Mais bon, voilà, je connnais pas cette Ombre, et genre, ouais, pas confiance.
+[2015-10-06 21:13:31] <Liodain> Mais je vois pas ce qu'on pourrait faire.
+[2015-10-06 21:13:34] <Raaclu> Ou alors la caisse de paquerettes slovènes est un individu...
+[2015-10-06 21:13:35] <Narrateur>  Aktor l'Honnête était l'unique voleur du groupe d'aventuriers envoyé par l'Oracle pour déboucher ses toilettes. Il fut envoyé là-bas après être allé chez l'Oracle, suite à une sombre affaire dans laquelle il aurait été mêlé dans sa ville natale. Son surnom lui viendrait de là-bas, où il était réputé pour ne dire que la vérité (mais libre à vous de comprendre ce que...
+[2015-10-06 21:13:36] <Narrateur> ...vous voulez).
+[2015-10-06 21:13:38] <Narrateur> Bien qu'encore assez inexpérimenté, Aktor l'Honnête fit ses preuves face aux différents obstacles qui se dressèrent devant ses compagnons et lui. Premier dans la fuite, certes, mais aussi premier dans l'expérience, car il devint le seul aventurier confirmé du groupe en s'entraînant en tant qu'assassin. Il prit alors sur lui de ne plus voler ses petits camarades, mais son caractère...
+[2015-10-06 21:13:39] <Narrateur> ...relativement jou
+[2015-10-06 21:13:41] <Narrateur> eur aurait pu causer la mort "accidentelle" de plus d'un de ses compères pour qu'il puisse au final récupérer ce qui l'intéresse.
+[2015-10-06 21:13:42] <Narrateur> Il fut, comme ses compagnons, porté disparu et présumé mort en haut de la Montagne des 1337 Dangers.
+[2015-10-06 21:13:46] * Narrateur is now known as Aktor
+[2015-10-06 21:13:54] <Aktor> Hey c'est quoi le truc pointé sur moi là
+[2015-10-06 21:13:56] <Aktor> Ça a l'air cool
+[2015-10-06 21:14:00] <Liodain> Narrateur : ... Ayant relu y a pas longntemps...
+[2015-10-06 21:14:07] <Liodain> Je ne te félicite pas :D
+[2015-10-06 21:14:32] <Raaclu> Liodain: il pourrait être balaise.
+[2015-10-06 21:14:40] <Liodain> Raaclu: Ouais.
+[2015-10-06 21:14:41] <Quon> J'pense qu'il va nous défoncer la tronche si on fait la bagarre.
+[2015-10-06 21:14:41] <Raaclu> Ce qui me semble être un problème en soit.
+[2015-10-06 21:14:48] <Quon> Ça va être rigolo !
+[2015-10-06 21:14:52] <Raaclu> Mais en même temps il est tout seul.
+[2015-10-06 21:15:02] <Liodain> Certes.
+[2015-10-06 21:15:05] <Liodain> Hm.
+[2015-10-06 21:15:05] <Malen> Mais en même temps j'aimerais bien qu'il nous raconte son histoire.
+[2015-10-06 21:15:05] <Raaclu> Bon.
+[2015-10-06 21:15:06] <Liodain> Bon
+[2015-10-06 21:15:08] — Aktor est tout frêle
+[2015-10-06 21:15:09] <Raaclu> Moi je vote : neutre.
+[2015-10-06 21:15:10] — Aktor est quasi à poil
+[2015-10-06 21:15:12] <Raaclu> Je suis le groupe.
+[2015-10-06 21:15:18] <Malen> Après on lui refait le portrait ou pas, de toute je vous suis.
+[2015-10-06 21:15:20] <Liodain> Aktor: Bon, toi.
+[2015-10-06 21:15:21] <Malen> Tout comme Raaclu
+[2015-10-06 21:15:22] — Aktor a pas l'air d'être de haut niveau
+[2015-10-06 21:15:44] <Liodain> La réalité est en bordel et l'Oracle est devenu fou, paraît-il.
+[2015-10-06 21:15:53] <Aktor> Oui oui ça pour être devenu fou
+[2015-10-06 21:15:56] <Liodain> T'aurais pas quelque chose à voir avec ça ?
+[2015-10-06 21:16:01] <Aktor> La dernière fois qu'il m'a parlé il m'a dit qu'il nous tuerai tous
+[2015-10-06 21:16:05] <Liodain> Ah.
+[2015-10-06 21:16:06] <Aktor> Alors bon ça va deux minutes l'Oracle
+[2015-10-06 21:16:09] <Aktor> Et puis il l'a fait je crois
+[2015-10-06 21:16:15] <Liodain> Tu peux... essayer de l'invoquer à nouveau ?
+[2015-10-06 21:16:17] <Quon> Je suis morte ? :o
+[2015-10-06 21:16:22] <Aktor> Je peux essayer oui
+[2015-10-06 21:16:28] <Aktor> D'habitude ça fonctionne pas
+[2015-10-06 21:16:32] <Aktor> Mais peut-être cette fois-ci?
+[2015-10-06 21:16:34] <Aktor> Une minute.
+[2015-10-06 21:16:36] <Liodain> Ouais.
+[2015-10-06 21:16:55] <Aktor> [????????] Aktor l'honnête dépense une charge d'oracle. Charges restantes: 1
+[2015-10-06 21:17:02] * Aktor is now known as Narrateur
+[2015-10-06 21:17:07] <Narrateur> Le ciel s'assombrit fortement
+[2015-10-06 21:17:12] <Liodain> Ah.
+[2015-10-06 21:17:14] <Narrateur> Quelque chose descend vers vous
+[2015-10-06 21:17:24] <Narrateur> Vous n'y voyez plus rien
+[2015-10-06 21:17:26] <Narrateur> Des bruits
+[2015-10-06 21:17:28] <Narrateur> Des hurlements
+[2015-10-06 21:17:29] <Narrateur> Horribles
+[2015-10-06 21:17:34] <Narrateur> Et lorsque la lumière revient
+[2015-10-06 21:17:35] — Malen se cache tout derrière le groupe
+[2015-10-06 21:17:39] <Narrateur> Il n'y a plus que la peau d'Aktor au sol
+[2015-10-06 21:17:42] <Liodain> ...
+[2015-10-06 21:17:46] <Raaclu> Zut. Pas de vêtements.
+[2015-10-06 21:17:47] <Narrateur> Son corps semble comme vidé.
+[2015-10-06 21:17:50] <Liodain> J'ai comme un regret.
+[2015-10-06 21:17:50] <Narrateur> Drainé.
+[2015-10-06 21:18:01] <Raaclu> Liodain: techniquement, il l'a fait tout seul.
+[2015-10-06 21:18:09] <Malen> Euh. Au moins la tâche de le tuer est remplie ?
+[2015-10-06 21:18:13] <Liodain> Raaclu: Et ça ne te perturbe pas, toi, ça là ?!
+[2015-10-06 21:18:26] <Raaclu> Liodain: tu veux dire, plus ou moins que le reste ?
+[2015-10-06 21:18:31] <Liodain> Bordel, si c'est ça mon avenir, ça craint.
+[2015-10-06 21:18:38] <Liodain> Raaclu: Plus.
+[2015-10-06 21:18:41] <Quon> Tu veux pas finir en carpette ?
+[2015-10-06 21:18:45] <Raaclu> Hm... pas plus non.
+[2015-10-06 21:18:45] <Liodain> Quon: ...
+[2015-10-06 21:18:47] <Raaclu> Pas moins non plus.
+[2015-10-06 21:18:49] <Liodain> MAIS POURQUOI JE VOUS PARLE.
+[2015-10-06 21:19:00] <Malen> Et sinon y'a quelque chose à fouiller sur ce tas de peau ?
+[2015-10-06 21:19:04] <Liodain> Bon, je suppose que notre première cible est morte.
+[2015-10-06 21:19:06] <Narrateur> On dirait pas.
+[2015-10-06 21:19:09] <Liodain> Hm.
+[2015-10-06 21:19:10] <Narrateur> Rien à récupérer
+[2015-10-06 21:19:12] <Narrateur> Il reste que de la peau et des os.
+[2015-10-06 21:19:21] <Narrateur> Des os réduits en bouillie.
+[2015-10-06 21:19:24] <Quon> J'invoque l'Oracle !
+[2015-10-06 21:19:32] <Narrateur> [Kutz] Quon dépense une charge d'oracle. Charges restantes: 1
+[2015-10-06 21:19:38] <Narrateur> L'Ombre descend sur le groupe
+[2015-10-06 21:19:40] * Narrateur is now known as Ombre
+[2015-10-06 21:19:46] <Ombre> Merci de m'avoir amené à la première cible
+[2015-10-06 21:19:51] <Liodain> ...
+[2015-10-06 21:19:55] <Ombre> Je n'aurai pas la force de vous aider ainsi avec les suivantes
+[2015-10-06 21:20:03] <Raaclu> Soit.
+[2015-10-06 21:20:04] <Ombre> Absorber sa puissance me permettra de vous déplacer
+[2015-10-06 21:20:09] <Ombre> Lumière !
+[2015-10-06 21:20:12] * Ombre is now known as Narrateur
+[2015-10-06 21:20:17] <Narrateur> Le monde autour de vous grésille
+[2015-10-06 21:20:19] <Narrateur> Bizarre
+[2015-10-06 21:20:20] <Narrateur> Tout disparait
+[2015-10-06 21:20:21] <Raaclu> Une ombre qui dit lumière. Ah ah.
+[2015-10-06 21:20:23] <Narrateur> Il n'y a plus de forêt
+[2015-10-06 21:20:25] <Narrateur> Vous flottez
+[2015-10-06 21:20:28] <Gwrartz> Caisse.
+[2015-10-06 21:20:30] <Liodain> Je sais pas vous, mais j'ai vaguement envie de me débarasser de l'Ombre.
+[2015-10-06 21:20:34] <Narrateur> Et le monde se recrée
+[2015-10-06 21:20:45] <Narrateur> Ce que vous remarquez en premier, c'est l'odeur.
+[2015-10-06 21:20:48] * Narrateur set the topic to Dimension actuelle: Dimension du jambon | Planeshift > Kutz > Wan > Odin > Exirel > Et on recommence...
+[2015-10-06 21:20:52] <Narrateur> Vous êtes dans des égoûts.
+[2015-10-06 21:20:54] * Narrateur is now known as Ombre
+[2015-10-06 21:20:55] <Liodain> (Eh.)
+[2015-10-06 21:20:58] <Liodain> ... Des égoûts ?
+[2015-10-06 21:21:04] <Ombre> Votre nouvelle cible: Oniro le Fuyard.
+[2015-10-06 21:21:13] <Raaclu> Une âme égarée.
+[2015-10-06 21:21:14] <Ombre> Il s'est réfugié dans les égoûts de l'Oracle, que vous connaissez déjà.
+[2015-10-06 21:21:17] <Raaclu> C'est ce dont je me souviens.
+[2015-10-06 21:21:19] <Ombre> Avant que je parte
+[2015-10-06 21:21:24] <Ombre> Quon: Une question, une réponse.
+[2015-10-06 21:21:39] <Quon> Dans quelle direction est Oniro ?
+[2015-10-06 21:21:57] — Raaclu chuchote à Liodain " Tout droit "
+[2015-10-06 21:21:57] <Ombre> Comme toujours, droit devant. J'aime les choses simples.
+[2015-10-06 21:21:59] * Ombre is now known as Narrateur
+[2015-10-06 21:22:01] <Narrateur> L'ombre disparapt.
+[2015-10-06 21:22:05] <Malen> Euh. Quitte à me balader dans les égoûts je peux le faire en scarabée ?
+[2015-10-06 21:22:05] <Narrateur> disparaptdisparaptdisparaptdisparaptdisparaptdisparaptdisparaptdisparapt
+[2015-10-06 21:22:13] <Malen> Sparapt.
+[2015-10-06 21:22:14] <Narrateur> Malen: Tu es en forme de scarabée, done.
+[2015-10-06 21:22:26] <Liodain> Hm.
+[2015-10-06 21:22:38] <Raaclu> C'est...  un gros scarabée.
+[2015-10-06 21:22:48] <Raaclu> Bon. Et bah tout droit.
+[2015-10-06 21:22:57] <Liodain> Je propose d'aller en arrière.
+[2015-10-06 21:22:58] — Gwrartz va tout droit
+[2015-10-06 21:23:00] <Malen> Au moins j'ai plus les odeurs.
+[2015-10-06 21:23:09] <Gwrartz> Liodain: marche à reculons sinon, hé
+[2015-10-06 21:23:15] <Liodain> MON DIEU UN SCARABEE QUI P... Ah Malen.
+[2015-10-06 21:23:22] <Malen> Coucou.
+[2015-10-06 21:23:24] <Narrateur> 2/5 tout droit, 1/5 en arrière
+[2015-10-06 21:23:31] <Liodain> Quon: Malen:
+[2015-10-06 21:23:37] <Malen> Tiens je suis curieux maintenant
+[2015-10-06 21:23:37] <Quon> Tout droit
+[2015-10-06 21:23:39] <Malen> Je vote arrière
+[2015-10-06 21:23:42] <Narrateur> Vous allez tout droit.
+[2015-10-06 21:23:45] <Malen> Ah zut.
+[2015-10-06 21:23:55] <Narrateur> Vous avancez dans les égoûts
+[2015-10-06 21:24:03] <Narrateur> Entre des tas d'ordures... qui semblent bouger
+[2015-10-06 21:24:12] <Narrateur> L'odeur vous emplit les narines
+[2015-10-06 21:24:14] <Narrateur> Not cool
+[2015-10-06 21:24:21] <Narrateur> Ces égoûts sont bouchés depuis très longtemps on dirait
+[2015-10-06 21:24:32] <Narrateur> Quelqu'un aurait pu faire l'effort de les déboucher un jour, erk.
+[2015-10-06 21:24:34] <Raaclu> Bouchés mais capable de laisser passer un cheval.
+[2015-10-06 21:24:39] <Narrateur> Oui.
+[2015-10-06 21:24:52] <Narrateur> Alors que vous avancez, vous voyez une inscription sur un mur, à votre droite.
+[2015-10-06 21:24:55] <Narrateur> Quelqu'un veut la lire?
+[2015-10-06 21:25:00] <Quon> Je veux bien lire
+[2015-10-06 21:25:01] <Raaclu> Heh Liodain, comment est-ce qu'on trouve un fuyard ?
+[2015-10-06 21:25:05] <Malen> Soyons fou, je veux lire
+[2015-10-06 21:25:08] <Narrateur> Quon: Tu t'approches du mur.
+[2015-10-06 21:25:11] <Liodain> Raaclu: Pourquoi cette questionn ?
+[2015-10-06 21:25:19] <Raaclu> Liodain: tu as l'air le plus malin du groupe.
+[2015-10-06 21:25:24] <Narrateur> L'inscription est terrible
+[2015-10-06 21:25:27] <Narrateur> Effrayante, à glacer le sang
+[2015-10-06 21:25:30] <Liodain> Certes.
+[2015-10-06 21:25:34] <Narrateur> Je vous la transcrit
+[2015-10-06 21:25:40] <Narrateur> « FULL STACK NODE MONGO »
+[2015-10-06 21:25:43] <Narrateur> Le groupe tremble de peur
+[2015-10-06 21:25:50] — Quon tremble de peur
+[2015-10-06 21:25:51] <Narrateur> Mais l'oriflamme de Quon vous protège de la peur
+[2015-10-06 21:25:53] <Narrateur> Brr.
+[2015-10-06 21:25:54] — Liodain ne comprend pas
+[2015-10-06 21:25:55] <Raaclu> > Je vous la transcrit
+[2015-10-06 21:26:11] <Malen> Quelqu'un comprend ?
+[2015-10-06 21:26:16] <Liodain> Bon bah, continuons d'avancer.
+[2015-10-06 21:26:17] <Narrateur> Ayant lu cette instruction, vous avez perdu assez de temps pour qu'un groupe de monstre décide de VOUS ATTAQUER, COMBAAAAT
+[2015-10-06 21:26:20] <Liodain> Malen: Oui, Exirel.
+[2015-10-06 21:26:21] <Liodain> :D
+[2015-10-06 21:26:26] <Quon> Whéééééé !!
+[2015-10-06 21:26:29] <Raaclu> :D
+[2015-10-06 21:26:50] <Narrateur> wtf is this
+[2015-10-06 21:26:51] <Narrateur> un instant
+[2015-10-06 21:26:54] <Narrateur> ö_o
+[2015-10-06 21:27:04] <Narrateur> Aha.
+[2015-10-06 21:27:07] <Liodain> Bad a cassé le NBRPG.
+[2015-10-06 21:27:15] <Narrateur> Non
+[2015-10-06 21:27:19] <Narrateur> Un dipneuste avait cassé le NBRPG
+[2015-10-06 21:27:23] <Narrateur> Planeshift > Kutz > Wan > Astronaute glissant (niv. 5) > Odin > Dipneuste (niv. 4) > Exirel > Érection (niv. 1) > Et on recommence...
+[2015-10-06 21:27:29] * Narrateur set the topic to Dimension actuelle: Dimension du jambon | Planeshift > Kutz > Wan > Astronaute glissant (niv. 5) > Odin > Dipneuste (niv. 4) > Exirel > Érection (niv. 1) > Et on recommence...
+[2015-10-06 21:27:41] <Malen> Mais qu'est-ce que c'est que ces montres à la con ?
+[2015-10-06 21:27:46] <Narrateur> UN ASTRONAUTE GLISSANT UN DIPNEUSTE ET UNE ÉRECTION
+[2015-10-06 21:27:48] <Narrateur> FEAR
+[2015-10-06 21:27:53] <Gwrartz> BASTON
+[2015-10-06 21:27:59] <Gwrartz> PUTAIN ÇA FAISAIT LONGTEMPS
+[2015-10-06 21:28:06] <Narrateur> Liodain:
+[2015-10-06 21:28:07] <Liodain> J'ai comme un fort air de déjà vu.
+[2015-10-06 21:28:11] <Narrateur> Comme.
+[2015-10-06 21:28:20] <Raaclu> Et bien, ça aurait pu être une ariolimax que je n'aurais pas été plus étonné.
+[2015-10-06 21:28:21] <Liodain> Camoufalge
+[2015-10-06 21:28:26] <Liodain> Camouflage*
+[2015-10-06 21:28:29] <Liodain> Bordel.
+[2015-10-06 21:28:46] <Raaclu> On va préparer les prières...
+[2015-10-06 21:28:46] <Narrateur> Liodain se planque dans un coin, entre les jambes de Raaclu.
+[2015-10-06 21:28:48] <Narrateur> Quon:
+[2015-10-06 21:29:02] <Quon> Je lance mes ordres de bataille.
+[2015-10-06 21:29:20] <Narrateur> Quon fait tourner ses platines de DJ et tout le groupe gagne en esquive, aw yeah
+[2015-10-06 21:29:23] <Narrateur> Gwrartz:
+[2015-10-06 21:29:33] <Gwrartz> J'attaque l'érection
+[2015-10-06 21:29:57] <Narrateur> Gwrartz dague l'érection
+[2015-10-06 21:29:58] <Narrateur> Érection subit 0 dégât. (hell yeah!)
+[2015-10-06 21:30:09] <Narrateur> L'astronaute glissant sort un tube de sa poche
+[2015-10-06 21:30:23] <Narrateur> Et s'enduit de graisse.
+[2015-10-06 21:30:25] <Narrateur> Malen:
+[2015-10-06 21:30:34] <Malen> J'attaque l'érection aussi
+[2015-10-06 21:30:48] <Narrateur> Malen pince l'érection bien au milieu
+[2015-10-06 21:30:50] <Narrateur> Érection subit 0 dégât. (hell yeah!)
+[2015-10-06 21:31:08] <Narrateur> Le dipneuste attaque Quon et lui met un coup de boule là où ça fait pas super mal
+[2015-10-06 21:31:11] <Malen> Elle est solide, cette érection !
+[2015-10-06 21:31:14] <Narrateur> [Kutz] Quon ne subit aucun dégât. Yay!
+[2015-10-06 21:31:17] <Narrateur> Raaclu:
+[2015-10-06 21:31:30] <Raaclu> Je prépare une réaction quelconque après l'érection.
+[2015-10-06 21:31:40] <Narrateur> Que lis-je
+[2015-10-06 21:31:54] <Narrateur> En français tu fais quoi :D
+[2015-10-06 21:32:08] <Raaclu> Je retarde mon tour pour jouer après l'érection ?
+[2015-10-06 21:32:22] <Narrateur> Tu peux passer ton tour si tu veux
+[2015-10-06 21:32:24] <Narrateur> Pas mieux
+[2015-10-06 21:32:30] <Raaclu> ok
+[2015-10-06 21:32:48] <Narrateur> Okay, c'est donc que tu passes ton tour
+[2015-10-06 21:32:52] <Narrateur> Raaclu attend calmement que le combat commence
+[2015-10-06 21:33:03] <Narrateur> L'érection utilise la compétence bien nommée ÉRECTION
+[2015-10-06 21:33:09] <Narrateur> Vous assistez à l'érection d'une statue de marbre
+[2015-10-06 21:33:18] * Narrateur set the topic to Dimension actuelle: Dimension du jambon | Planeshift > Kutz > Wan > Astronaute glissant (niv. 5) > Odin > Dipneuste (niv. 4) > Exirel > Statue de marbre (niv. 5) > Et on recommence...
+[2015-10-06 21:33:20] <Liodain> Pas de surprise.
+[2015-10-06 21:33:29] <Narrateur> Il s'agit d'une statue de vol de 7 canards aux 5 parfums
+[2015-10-06 21:33:36] <Liodain> Vraiment aucune surprise.
+[2015-10-06 21:33:37] <Narrateur> Sur la statue sont sculptés 7 canards, en marbre.
+[2015-10-06 21:33:38] <Narrateur> Liodain:
+[2015-10-06 21:33:48] <Liodain> Coup perfide sur la statue de marbre
+[2015-10-06 21:33:57] <Narrateur> Liodain utilise Coup perfide.
+[2015-10-06 21:33:58] <Narrateur> Charges restantes: 1
+[2015-10-06 21:34:08] <Narrateur> Liodain sort de son camouflage et plante bien profond sa dague dans la statue
+[2015-10-06 21:34:24] <Narrateur> Deux des canards sont coupés. Il en reste 5.
+[2015-10-06 21:34:27] <Narrateur> Quon:
+[2015-10-06 21:34:30] <Quon> J'attaque la statue de marbre avec mon épée
+[2015-10-06 21:34:41] <Narrateur> Quon met un coup d'épée dans la statue.
+[2015-10-06 21:34:46] <Narrateur> Deux des canards sont coupés. Il en reste 3.
+[2015-10-06 21:34:47] <Narrateur> Gwrartz:
+[2015-10-06 21:35:00] <Gwrartz> CONCENTRATION
+[2015-10-06 21:35:32] <Narrateur> Un momnt Gwrartz je fixe un truc ö_o
+[2015-10-06 21:35:36] <Narrateur> grmbl de chier
+[2015-10-06 21:35:53] <Narrateur> Mieux.
+[2015-10-06 21:35:54] <Narrateur> [Wan] Gwrärtz gagne 14 rage: 0 => 14%
+[2015-10-06 21:35:57] <Narrateur> D
+[2015-10-06 21:36:01] <Narrateur> LE D
+[2015-10-06 21:36:04] <Narrateur> grmbl de bdd de merde
+[2015-10-06 21:36:06] <Narrateur> Donc
+[2015-10-06 21:36:16] <Narrateur> L'astronaute glissant attaque BRUTALEMENT Raaclu
+[2015-10-06 21:36:20] <Narrateur> [Exirel] Raaclu perd 2 points de vie. HP: 10 => 8
+[2015-10-06 21:36:25] <Raaclu> aw
+[2015-10-06 21:36:25] <Narrateur> Malen:
+[2015-10-06 21:36:37] <Malen> J'attaque la statue
+[2015-10-06 21:36:51] <Narrateur> Malen pince à mort un des canards sur la statue, il en reste encore deux.
+[2015-10-06 21:37:11] <Narrateur> Le dipneuste en met une à Liodain avec brutale violence
+[2015-10-06 21:37:13] <Narrateur> [Planeshift] Liodain perd 3 points de vie. HP: 16 => 13
+[2015-10-06 21:37:16] <Narrateur> Raaclu:
+[2015-10-06 21:37:30] <Raaclu>  Soins Mineur =>  Liodain
+[2015-10-06 21:37:36] <Narrateur> Raaclu utilise Soins mineurs.
+[2015-10-06 21:37:38] <Narrateur> Energie: 13 => 8
+[2015-10-06 21:37:41] <Narrateur> [Planeshift] Liodain gagne 2 points de vie. HP: 13 => 15
+[2015-10-06 21:37:48] <Liodain> My thanks to you, healer.
+[2015-10-06 21:37:53] <Narrateur> SICK REF
+[2015-10-06 21:37:56] <Narrateur> La statue de marbre s'agite
+[2015-10-06 21:38:03] <Liodain> Ca va chatouiller.
+[2015-10-06 21:38:11] <Narrateur> Un laser horriblement douloureux sort des deux têtes des deux canards restant
+[2015-10-06 21:38:18] <Raaclu> Ha he ha he giggles
+[2015-10-06 21:38:19] <Narrateur> [Planeshift] Liodain ne subit aucun dégât. Yay!
+[2015-10-06 21:38:21] <Narrateur> [Planeshift] Liodain perd 1 point de vie. HP: 15 => 14
+[2015-10-06 21:38:24] <Narrateur> [Kutz] Quon ne subit aucun dégât. Yay!
+[2015-10-06 21:38:25] <Narrateur> [Kutz] Quon gagne 1 point de vie. HP: 34 => 34 [Maximum atteint]
+[2015-10-06 21:38:28] <Narrateur> [Wan] Gwrärtz perd 1 point de vie. HP: 18 => 17
+[2015-10-06 21:38:29] <Narrateur> [Wan] Gwrärtz ne subit aucun dégât. Yay!
+[2015-10-06 21:38:34] <Narrateur> [Odin] Malen perd 2 points de vie. HP: 9 => 7
+[2015-10-06 21:38:35] <Narrateur> [Odin] Malen perd 2 points de vie. HP: 7 => 5
+[2015-10-06 21:38:39] <Narrateur> [Exirel] Raaclu perd 2 points de vie. HP: 8 => 6
+[2015-10-06 21:38:40] <Narrateur> [Exirel] Raaclu perd 2 points de vie. HP: 6 => 4
+[2015-10-06 21:38:54] <Narrateur> Liodain:
+[2015-10-06 21:38:55] <Liodain> A moi ?
+[2015-10-06 21:38:57] <Liodain> k
+[2015-10-06 21:39:03] <Liodain> J'attaque la statue de marbre
+[2015-10-06 21:39:19] <Narrateur> Et rire @ Quon a gagné de la vie en se faisant attaquer, bien grosse armure et bon inventaire
+[2015-10-06 21:39:33] <Narrateur> Liodain met un coup de dague à la statue, mais... mais...
+[2015-10-06 21:39:34] <Narrateur> FUMBLE CRITIQUE
+[2015-10-06 21:39:49] <Liodain> Et c'est pour ça que je n'attaque pas.
+[2015-10-06 21:39:53] <Narrateur> Liodain glisse sur le sol lubrifié par l'astronaute
+[2015-10-06 21:39:58] <Narrateur> Et s'étale la tête la première
+[2015-10-06 21:40:02] <Narrateur> [Planeshift] Liodain perd 4 points de vie. HP: 14 => 10
+[2015-10-06 21:40:04] <Narrateur> Quon:
+[2015-10-06 21:40:23] <Quon> J'attaque l'astronaute avec mon épée
+[2015-10-06 21:40:34] <Narrateur> Quon met un coup d'épée à l'astronaute
+[2015-10-06 21:40:36] <Narrateur> Astronaute glissant subit 6 dégâts.
+[2015-10-06 21:40:39] <Narrateur> Gwrartz:
+[2015-10-06 21:40:47] <Gwrartz> J'attaque la statue
+[2015-10-06 21:41:01] <Narrateur> Gwrartz tranche les deux canards restants sur la statue. Ne reste plus qu'un socle de statue.
+[2015-10-06 21:41:10] * Narrateur set the topic to Dimension actuelle: Dimension du jambon | Planeshift > Kutz > Wan > Astronaute glissant (niv. 5) > Odin > Dipneuste (niv. 4) > Exirel > Socle de statue de marbre (niv. 5) > Et on recommence...
+[2015-10-06 21:41:15] <Liodain> Faut finir le socle, de mémoire.
+[2015-10-06 21:41:20] <Narrateur> L'astronaute glissant utilise une compétence
+[2015-10-06 21:41:23] <Narrateur> TAPETTE
+[2015-10-06 21:41:28] <Narrateur> Il se casse du combat à toute vitesse
+[2015-10-06 21:41:32] <Liodain> No surprise.
+[2015-10-06 21:41:34] * Narrateur set the topic to Dimension actuelle: Dimension du jambon | Planeshift > Kutz > Wan > Odin > Dipneuste (niv. 4) > Exirel > Socle de statue de marbre (niv. 5) > Et on recommence...
+[2015-10-06 21:41:39] <Narrateur> Malen:
+[2015-10-06 21:41:53] <Malen> J'attaque le socle de statue avec mes jolies pinces o/
+[2015-10-06 21:42:01] <Narrateur> Malen pince (sans rire) le socle de la statue
+[2015-10-06 21:42:03] <Narrateur> Et rate son attaque.
+[2015-10-06 21:42:11] <Narrateur> Le dipneuste utilise une compétence
+[2015-10-06 21:42:14] <Narrateur> CHAAAAAAAAAAAAAAAARGE
+[2015-10-06 21:42:24] <Narrateur> [Kutz] Quon perd 2 points de vie. HP: 34 => 32
+[2015-10-06 21:42:28] <Narrateur> Quon est assommé.
+[2015-10-06 21:42:31] <Narrateur> Raaclu:
+[2015-10-06 21:42:32] <Raaclu>  Soins Corporel =>  Raaclu
+[2015-10-06 21:42:33] <Quon> :c
+[2015-10-06 21:42:38] <Narrateur> Raaclu utilise Soins corporels.
+[2015-10-06 21:42:39] <Narrateur> Energie: 8 => 3
+[2015-10-06 21:42:47] <Narrateur> COUP CRITIQUE
+[2015-10-06 21:43:04] <Narrateur> Tu es béni par les dieux du soin
+[2015-10-06 21:43:06] <Narrateur> Je sais pas qui c'est ces dieux
+[2015-10-06 21:43:08] <Narrateur> Mais whatev
+[2015-10-06 21:43:10] <Narrateur> Profite
+[2015-10-06 21:43:11] <Narrateur> [Exirel] Raaclu gagne 6 points de vie. HP: 4 => 10
+[2015-10-06 21:43:22] <Narrateur> Le socle de statue ne fait rien.
+[2015-10-06 21:43:22] <Raaclu> 8)
+[2015-10-06 21:43:24] <Narrateur> Liodain:
+[2015-10-06 21:43:39] <Liodain> Camouflage
+[2015-10-06 21:43:50] <Narrateur> Liodain soulève le lubrifiant qui est au sol et se planque en dessous.
+[2015-10-06 21:43:52] <Narrateur> Quon:
+[2015-10-06 21:44:06] <Quon> J'attaque le socle avec mon épée
+[2015-10-06 21:44:26] <Narrateur> Quon, assommée, se plante l'épée dans le socle tout en plantant le socle. Huergh.
+[2015-10-06 21:44:31] <Narrateur> [Kutz] Quon perd 7 points de vie. HP: 32 => 25
+[2015-10-06 21:44:33] <Narrateur> Socle de statue de marbre subit 7 dégâts.
+[2015-10-06 21:44:37] <Narrateur> Gwrartz:
+[2015-10-06 21:44:47] <Gwrartz> (2 sec, y'a le feu)
+[2015-10-06 21:44:54] <Narrateur> (np prends le temps de mourir)
+[2015-10-06 21:44:59] <Gwrartz> (thx)
+[2015-10-06 21:45:25] <Narrateur> (mais la règle s'applique quand même, soon ton tour passe automatiquement)
+[2015-10-06 21:45:27] <Gwrartz> J'attaque le socle
+[2015-10-06 21:45:38] <Narrateur> Gwrartz met un coup de dague dans le socle de la statue
+[2015-10-06 21:45:41] <Narrateur> Socle de statue de marbre subit 3 dégâts.
+[2015-10-06 21:45:46] <Narrateur> Le socle est mort. RIP
+[2015-10-06 21:45:49] <Gwrartz> Bim
+[2015-10-06 21:45:49] <Gwrartz> allez
+[2015-10-06 21:45:53] * Narrateur set the topic to Dimension actuelle: Dimension du jambon | Planeshift > Kutz > Wan > Odin > Dipneuste (niv. 4) > Exirel > Et on recommence...
+[2015-10-06 21:45:59] <Narrateur> Malen:
+[2015-10-06 21:46:07] <Gwrartz> TOUCHE À UN MEMBRE DE MA CLIQUE NÉGRO, TU VERRAS QU'ON N'EST PAS TOUS SEULS
+[2015-10-06 21:46:57] <Malen> J'attaque le dipneuste avec mes grosses pinces ;)
+[2015-10-06 21:47:06] <Narrateur> Grands dieux c'est un COUP CRITIQUE
+[2015-10-06 21:47:18] <Narrateur> Malen est en souffrance et rage sa race
+[2015-10-06 21:47:32] <Narrateur> Il s'acharne avec frénésie sur le dipneuste
+[2015-10-06 21:47:34] <Narrateur> Lui arrache sa chair
+[2015-10-06 21:47:37] <Narrateur> Et s'en nourrit
+[2015-10-06 21:47:42] <Narrateur> Dipneuste subit 5 dégâts.
+[2015-10-06 21:47:43] <Narrateur> Enchaînement! Dipneuste subit 5 dégâts.
+[2015-10-06 21:47:45] <Narrateur> Dipneuste subit 5 dégâts.
+[2015-10-06 21:47:50] <Liodain> (Bravo le végétarisme)
+[2015-10-06 21:47:55] <Narrateur> [Odin] Malen gagne 5 points de vie. HP: 5 => 9 [Maximum atteint]
+[2015-10-06 21:48:00] <Malen> VEGE TA MERE
+[2015-10-06 21:48:10] <Narrateur> Le dipneuste est assommé par sa charge du tour précédent.
+[2015-10-06 21:48:11] <Narrateur> Malen:
+[2015-10-06 21:48:13] <Narrateur> wait
+[2015-10-06 21:48:14] <Narrateur> Raaclu:
+[2015-10-06 21:48:16] <Raaclu>  Prière
+[2015-10-06 21:48:20] <Narrateur> failtab
+[2015-10-06 21:48:28] <Narrateur> Raaclu utilise Prière.
+[2015-10-06 21:48:29] <Narrateur> Energie: 3 => 7
+[2015-10-06 21:48:31] <Narrateur> Liodain:
+[2015-10-06 21:48:44] <Gwrartz> végé comme un pédé
+[2015-10-06 21:48:55] <Malen> Gwrartz: Plaît-il
+[2015-10-06 21:49:07] <Narrateur> Bon comme d'hab Liodain me demande un truc qui casse le script
+[2015-10-06 21:49:08] <Narrateur> Faisons le roll.
+[2015-10-06 21:49:13] <Liodain> ;=
+[2015-10-06 21:49:14] <Liodain> ;)
+[2015-10-06 21:49:18] <Narrateur> Liodain s'approche du dipneuste et tente de lui voler QUELQUE CHOSE
+[2015-10-06 21:49:22] <Narrateur> Mais échoue.
+[2015-10-06 21:49:24] <Narrateur> Quon:
+[2015-10-06 21:49:24] <Liodain> Mais échoue.
+[2015-10-06 21:49:26] <Liodain> Yup.
+[2015-10-06 21:49:31] <Quon> Ordres de bataille !!
+[2015-10-06 21:49:45] <Narrateur> Quon insère la cassette audio dans le lecteur et fait péter la disco
+[2015-10-06 21:49:50] <Narrateur> Attaque et précision ++ pour tout le groupe
+[2015-10-06 21:49:52] <Narrateur> Gwrartz:
+[2015-10-06 21:49:53] <Gwrartz> J'ATTAQUE LE DIPNEUSTE
+[2015-10-06 21:50:02] <Gwrartz> NIQUE TA MÈRE PUTAIN DE ZEN NARDINE
+[2015-10-06 21:50:04] <Narrateur> Gwrartz met un coup de dague fatal au dipneuste
+[2015-10-06 21:50:07] <Narrateur> Dipneuste subit 2 dégâts.
+[2015-10-06 21:50:08] <Narrateur> RIP
+[2015-10-06 21:50:21] <Narrateur> Félicitatons, vous avez gagné de l'xp et du loot
+[2015-10-06 21:50:27] <Narrateur> XP d'abord parce que why not
+[2015-10-06 21:50:34] <Narrateur> [Exirel] Raaclu gagne 9 points d'expérience. XP: 22 => 31  [Lvlup!]
+[2015-10-06 21:50:37] <Narrateur> [Planeshift] Liodain gagne 5 points d'expérience. XP: 164 => 169
+[2015-10-06 21:50:38] <Gwrartz> 92 EZ
+[2015-10-06 21:50:40] <Narrateur> [Kutz] Quon gagne 4 points d'expérience. XP: 221 => 225
+[2015-10-06 21:50:42] <Narrateur> [Wan] Gwrärtz gagne 8 points d'expérience. XP: 35 => 43
+[2015-10-06 21:50:45] <Narrateur> [Odin] Malen gagne 10 points d'expérience. XP: 0 => 10  [Lvlup!]
+[2015-10-06 21:50:54] <Narrateur> Deux levelups à gérer
+[2015-10-06 21:50:58] <Narrateur> D'abord Raaclu
+[2015-10-06 21:51:07] <Raaclu> Ok.
+[2015-10-06 21:51:21] <Narrateur> Raaclu passe du niveau 1 au niveau 2!
+[2015-10-06 21:51:23] <Narrateur> Expérience: 31/47
+[2015-10-06 21:51:24] <Narrateur> Energie: 7/15 => 10/16
+[2015-10-06 21:51:26] <Narrateur> HP: 10/10 => 13/13
+[2015-10-06 21:51:27] <Narrateur> Force: 8 (8) => 10 (10)
+[2015-10-06 21:51:29] <Narrateur> Dextérité: 3 (3) => 4 (4)
+[2015-10-06 21:51:30] <Narrateur> Intelligence: 14 (19) => 18 (23)
+[2015-10-06 21:51:32] <Narrateur> Armure: 3 (4) => 4 (5)
+[2015-10-06 21:51:33] <Narrateur>
+[2015-10-06 21:51:35] <Narrateur> Vous gagnez le droit de choisir 2 nouvelles aptitudes parmi les 4 que vous avez débloquées ci-dessous:
+[2015-10-06 21:51:36] <Narrateur> Note: Attention à bien peser votre décision, l'avenir de votre personnage (c'est à dire quelles autres compétences seront débloquées par la suite, et quelles sous-classes vous seront plus tard accessibles) dépendra entièrement de vos choix présents.
+[2015-10-06 21:51:38] <Narrateur> Cure - Niv. 1 (4 énergie): Le prêtre soigne les afflictions qui affectent un allié ou l'affectent lui-même, pouvant ainsi curer le poison, les hémorragies, et autres formes de troubles sanguins.
+[2015-10-06 21:51:39] <Narrateur> Vent sacré - Niv. 1 (2 énergie): Le prêtre invoque un doux vent bénéfique, calmant le feu et les brûlures sur l'allié de son choix ou sur lui-même.
+[2015-10-06 21:51:41] <Narrateur> Sphère de lumière - Niv. 1 (4 énergie): Invoque une sphère lumineuse qui part s'écraser sur un adversaire, lui infligeant 2-4 dégâts de magie blanche et pouvant l'aveugler pour 1 à 2 tours. Si la victime est un mort-vivant, la sphère lui inflige 3-5 dégâts, peut l'aveugler, et peut également le paralyser pour 1 à 2 tours.
+[2015-10-06 21:51:43] <Narrateur> Hosties volantes - Niv. 1 (3 énergie): Le prêtre sort sept hosties, et les charge d'énergie. Il les envoie ensuite en salve sur un adversaire, les plantant dans sa chair tels des shurikens. Inflige 0-1 dégât par hostie, soit 0-7 dégâts au total.
+[2015-10-06 21:52:18] <Raaclu> Cure
+[2015-10-06 21:52:26] <Raaclu> Sphère de lumière
+[2015-10-06 21:52:29] <Narrateur> C'est parti
+[2015-10-06 21:52:39] <Narrateur> Au tour de Malen
+[2015-10-06 21:52:45] <Narrateur> Malen passe du niveau 0 au niveau 1!
+[2015-10-06 21:52:46] <Narrateur> Expérience: 10/25
+[2015-10-06 21:52:48] <Narrateur> HP: 9/9 => 12/12
+[2015-10-06 21:52:49] <Narrateur> Force: 9 (11) => 12 (14)
+[2015-10-06 21:52:51] <Narrateur> Dextérité: 7 (7) => 10 (10)
+[2015-10-06 21:52:52] <Narrateur> Intelligence: 8 (8) => 11 (11)
+[2015-10-06 21:52:54] <Narrateur> Armure: 4 (6) => 5 (7)
+[2015-10-06 21:52:55] <Narrateur>
+[2015-10-06 21:52:57] <Narrateur> Vous gagnez le droit de choisir 2 nouvelles aptitudes parmi les 4 que vous avez débloquées ci-dessous:
+[2015-10-06 21:52:58] <Narrateur> Note: Attention à bien peser votre décision, l'avenir de votre personnage (c'est à dire quelles autres compétences seront débloquées par la suite, et quelles sous-classes vous seront plus tard accessibles) dépendra entièrement de vos choix présents.
+[2015-10-06 21:53:00] <Narrateur> Essaim de criquets - Niv. 1 (1 charge): Invoque un essaim de criquets pour la durée d'un combat. Chaque tour, l'essaim inflige 0-2 dégâts à tous les joueurs présents, alliés comme adversaires, et dispose d'une chance de les aveugler pendant un tour.
+[2015-10-06 21:53:01] <Narrateur> Lucioles - Niv. 1 (2 charges): Le druide jette des projectiles enflammés sur un adversaire de son choix, lui infligeant 1-4 dégâts et ayant une chance de le brûler.
+[2015-10-06 21:53:03] <Narrateur> Nécrophage - Niv. 1 (passif): Le druide peut se métamorphoser en un nécrophage. Il bénéficie de +4 armure, +2 points de vie, et attaque avec des griffes qui infligent 0-2 dégâts. A chaque fois qu'une attaque du nécrophage atteint un adversaire, elle soigne au druide autant de points de vie qu'il a infligé de dégâts. Évolue lorsque le druide atteint 6 de synergie.
+[2015-10-06 21:53:05] <Narrateur> Transe - Niv. 1 (2 charges): Le druide entre dans une transe, communiant avec la nature environnante. Il passe son tour, puis, au tour suivant, dispose d'un bonus de +150% à +250% aux dégâts et de 15% de chances de faire des multi-coups. Chaque utilisation de transe augmente le niveau de synergie du druide de +2.
+[2015-10-06 21:53:47] <Malen> Nécrophage
+[2015-10-06 21:53:51] <Malen> Transe
+[2015-10-06 21:53:58] <Narrateur> C'est parti
+[2015-10-06 21:54:04] <Narrateur> Et du loot ! parce que why not
+[2015-10-06 21:54:15] <Narrateur> Bonne nouvelle, Gwrartz Malen et Raaclu ont trouvé quelque chose
+[2015-10-06 21:54:27] <Narrateur> Gwrartz: Petit sablé (Consommable): Un petit biscuit sablé qui peut soigner 1 à 2 points de vie une fois consommé. Miam.
+[2015-10-06 21:54:29] <Narrateur> Tu veux?
+[2015-10-06 21:55:21] <Narrateur> Le temps qu'il se pointe, je file son item à Malen: Minicrète (Casque): Pour avoir la classe, quoi de mieux qu'une minicrète? Augmente l'armure de +1, mais, tant qu'elle est équipée, baisse fortement le charisme de son porteur.
+[2015-10-06 21:55:35] <Narrateur> Tu peux pas équiper parce que druide. Tu prends, tu jettes, tu donnes?
+[2015-10-06 21:55:37] <Liodain> (Sachant que tu ne peux pas l'équiper)
+[2015-10-06 21:55:42] <Malen> Euh. Quelqu'un veut un casque ?
+[2015-10-06 21:55:52] <Liodain> Ca nique le charisme, alors bof.
+[2015-10-06 21:55:59] <Liodain> Tu peux toujours le garder dans l'inventaire
+[2015-10-06 21:55:59] <Malen> Parce que sur les pinces c'est pas très utile, m'voyez
+[2015-10-06 21:56:02] <Liodain> Au pire ça se revend.
+[2015-10-06 21:56:14] <Liodain> (Ahaha trouver un marchand dans le NBRPG)
+[2015-10-06 21:56:15] <Malen> Ouais bah je vais faire ça. Je le prends
+[2015-10-06 21:56:22] <Narrateur> Slot 1: Minicrète
+[2015-10-06 21:56:24] <Malen> Au pire je le jetterai plus tard.
+[2015-10-06 21:56:33] <Narrateur> Et pour Raaclu
+[2015-10-06 21:56:36] <Narrateur> UN OBJET TELLEMENT UTILE
+[2015-10-06 21:56:37] <Narrateur> Surprise (Inutile & Invendable): C'est une surprise. Comme dans les kinder. Yay.
+[2015-10-06 21:56:39] <Narrateur> Tu prends?
+[2015-10-06 21:56:45] <Gwrartz> Narrateur: je prend
+[2015-10-06 21:56:45] <Raaclu> Je prends.
+[2015-10-06 21:56:53] <Narrateur> Raaclu: Slot 3: Surprise
+[2015-10-06 21:57:04] <Narrateur> Gwrartz: Slot 1: Petit sablé
+[2015-10-06 21:57:12] <Narrateur> Ayant combattu
+[2015-10-06 21:57:17] <Narrateur> Vous êtes toujours dans les égoûts
+[2015-10-06 21:57:18] <Liodain> no thunes ?
+[2015-10-06 21:57:22] <Narrateur> No thunes.
+[2015-10-06 21:57:24] <Narrateur> Deux directions possibles
+[2015-10-06 21:57:27] <Narrateur> Devant, ou derrière.
+[2015-10-06 21:57:30] <Liodain> Derrière.
+[2015-10-06 21:57:34] <Raaclu> Devant.
+[2015-10-06 21:57:36] <Raaclu> Mais d'abord.
+[2015-10-06 21:57:42] <Quon> Devant
+[2015-10-06 21:57:45] <Liodain> Une page de publicité ?
+[2015-10-06 21:57:48] <Raaclu>  Prière
+[2015-10-06 21:57:56] <Liodain> Pas possible hors combat.
+[2015-10-06 21:57:57] <Liodain> :D
+[2015-10-06 21:57:59] <Malen> Devant
+[2015-10-06 21:58:00] <Raaclu> grml
+[2015-10-06 21:58:01] <Narrateur> Tu peux pas prier hors des combats, la présence de tes dieux dépend de la présence du danger
+[2015-10-06 21:58:04] <Narrateur> 3/5 devant, let's go
+[2015-10-06 21:58:08] <Raaclu> Admettons.
+[2015-10-06 21:58:09] <Narrateur> Le groupe continue son chemin joyeusement
+[2015-10-06 21:58:18] <Narrateur> MAIS SERAIT-CE
+[2015-10-06 21:58:20] <Narrateur> UN MINI JEU
+[2015-10-06 21:58:22] <Narrateur> STUPIDE
+[2015-10-06 21:58:23] <Narrateur> OUI
+[2015-10-06 21:58:28] <Gwrartz> PUTE
+[2015-10-06 21:58:29] <Narrateur> Mini-jeu time!
+[2015-10-06 21:58:30] <Narrateur> Instructions: Choisissez chacun une lettre de l'alphabet vénusien.
+[2015-10-06 21:58:32] <Narrateur> Vous disposez de deux minutes pour répondre, sous peine de ne pas être pris en compte. Le premier message posté par chaque joueur sera considéré comme sa réponse.
+[2015-10-06 21:58:36] <Malen> Beuargl.
+[2015-10-06 21:58:41] <Gwrartz> Zguègue
+[2015-10-06 21:58:54] <Raaclu> ß
+[2015-10-06 21:58:57] <Liodain> Aadvark
+[2015-10-06 21:59:14] <Quon> Quetsche
+[2015-10-06 21:59:18] <Narrateur> La bonne réponse était: Keko/2
+[2015-10-06 21:59:20] <Narrateur> Pas de gagnant
+[2015-10-06 21:59:23] <Narrateur> Mais serait-ce....
+[2015-10-06 21:59:24] <Gwrartz> Putain ptdr
+[2015-10-06 21:59:25] <Narrateur> Un round bonus?
+[2015-10-06 21:59:26] <Gwrartz> Keko/2
+[2015-10-06 21:59:34] <Narrateur> La bonne réponse est Z0r
+[2015-10-06 21:59:38] <Narrateur> Aucun gagnant aujourd'hui.
+[2015-10-06 21:59:43] <Narrateur> Le groupe, confus, continue son chemin tout droit.
+[2015-10-06 21:59:47] <Narrateur> Bizarre interlude.
+[2015-10-06 21:59:48] <Gwrartz> D====8
+[2015-10-06 22:00:02] <Liodain> Gwrartz: Pelle.
+[2015-10-06 22:00:08] <Narrateur> Alors que vous avancez dans ce tunnel VRAIMENT TRÈS LINÉAIRE POUR UN JEU OUVERT, vous voyez, devant vous, une figure humaine.
+[2015-10-06 22:00:14] <Malen> Gwrartz: pourquoi tu fais une tête de bite ?
+[2015-10-06 22:00:24] <Narrateur> Bossu, vieux, portant une cape, il vous regarde avancer
+[2015-10-06 22:00:31] <Raaclu> Malen: c'est une pelle.
+[2015-10-06 22:00:36] <Narrateur> Il est si frêle qu'un coup de vent semblerait pouvoir le briser
+[2015-10-06 22:00:38] <Liodain> Raaclu: Namour.
+[2015-10-06 22:00:39] <Narrateur> Et il vous adresse la parole
+[2015-10-06 22:00:45] * Narrateur is now known as Oniro
+[2015-10-06 22:00:47] <Oniro> Bonjour, voyageurs.
+[2015-10-06 22:00:50] <Liodain> ... Bonjour.
+[2015-10-06 22:00:53] <Liodain> Qui êtes-vous ?
+[2015-10-06 22:01:08] <Oniro> Je suis Oniro, le fuyard.
+[2015-10-06 22:01:15] <Liodain> Ah.
+[2015-10-06 22:01:22] <Gwrartz> Hum
+[2015-10-06 22:01:25] <Oniro> Je pensais être mort
+[2015-10-06 22:01:27] <Oniro> Mais la vie m'a été rendue
+[2015-10-06 22:01:30] <Liodain> Vous aussi, vous serviez le barbu ?
+[2015-10-06 22:01:33] <Oniro> Et je m'en sers à son plein potentiel.
+[2015-10-06 22:01:38] <Oniro> Je suis le maître de ces lieux.
+[2015-10-06 22:01:45] <Oniro> Faites demi-tour si vous voulez vivre.
+[2015-10-06 22:01:46] <Liodain> ... Le maître des égoûts.
+[2015-10-06 22:01:48] <Liodain> Certes.
+[2015-10-06 22:02:04] <Raaclu> Des égoûts de l'Oracle, si j'ai bien compris.
+[2015-10-06 22:02:04] <Oniro> Ne riez pas de mes égoûts, ils sont remplis de richesses intéressantes.
+[2015-10-06 22:02:20] <Raaclu> Oui, d'ailleurs, tenez, prenez ceci.
+[2015-10-06 22:02:20] <Oniro> Quel barbu, Liodain ?
+[2015-10-06 22:02:27] — Raaclu donne à Oniro sa Surprise (slot 3).
+[2015-10-06 22:02:28] <Liodain> Comme dit Raaclu.
+[2015-10-06 22:02:31] <Liodain> L'Oracle.
+[2015-10-06 22:02:39] <Oniro> Raaclu: Slot 3: Vide
+[2015-10-06 22:02:46] <Oniro> Merci bien pour ce cadeau.
+[2015-10-06 22:02:51] <Oniro> Qui n'a aucune valeur.
+[2015-10-06 22:02:55] <Oniro> Ni utilité.
+[2015-10-06 22:02:59] <Raaclu> Et qui est invendable.
+[2015-10-06 22:03:07] <Oniro> L'Oracle, Liodain, oui, je l'ai servi fut un temps.
+[2015-10-06 22:03:14] <Oniro> Je l'ai servi jusqu'à ce qu'il me mène à ma mort.
+[2015-10-06 22:03:19] <Oniro> Je suis le seul survivant de mon groupe.
+[2015-10-06 22:03:24] <Liodain> Encore un.
+[2015-10-06 22:03:25] <Malen> Euh.
+[2015-10-06 22:03:26] <Liodain> Etrange.
+[2015-10-06 22:03:29] <Liodain> Bon euh.
+[2015-10-06 22:03:31] <Liodain> On fait quoi ?
+[2015-10-06 22:03:34] <Oniro> J'ai survécu des années sans l'Oracle. Je ne veux plus entendre parler de lui.
+[2015-10-06 22:03:41] <Oniro> Je suis devenu fort, puissant, IMMORTEL
+[2015-10-06 22:03:43] <Raaclu> Ne me dites pas que la caisse de pâquerettes slovènes est la dernière survivante de son groupe...
+[2015-10-06 22:03:47] <Oniro> JE VIS JE MEURS JE VIS ENCORE
+[2015-10-06 22:03:55] — Raaclu got that ref.
+[2015-10-06 22:04:04] — Raaclu full metal bitch.
+[2015-10-06 22:04:05] <Oniro> CAISSE DE PAQUERETTES SLOVÈNE
+[2015-10-06 22:04:06] <Liodain> BRILLANT ET CHROME
+[2015-10-06 22:04:07] <Oniro> AH NON
+[2015-10-06 22:04:08] <Liodain> Bref.
+[2015-10-06 22:04:09] <Oniro> PAS ÇA
+[2015-10-06 22:04:10] <Oniro> PAS CETTE HORREUR
+[2015-10-06 22:04:14] <Oniro> J'EN AI DANS LES ÉGOÛTS
+[2015-10-06 22:04:14] <Raaclu> Ah ?
+[2015-10-06 22:04:18] <Oniro> SI VOUS EN VOYEZ
+[2015-10-06 22:04:19] <Oniro> FUYEZ
+[2015-10-06 22:04:27] <Oniro> C'est un truc que je fais bien, ça, fuir. Mais bon.
+[2015-10-06 22:04:27] <Liodain> Soit.
+[2015-10-06 22:04:29] <Liodain> Le fait étant
+[2015-10-06 22:04:43] <Liodain> C'est qu'on est au service de l'Oracle, aussi, à la base
+[2015-10-06 22:04:59] <Oniro> Dans ce cas vous n'avez pas votre place chez moi.
+[2015-10-06 22:05:02] <Liodain> Sauf que là, un type a pris sa place et prétend que l'Oracle est devenu encore plus fou.
+[2015-10-06 22:05:05] <Oniro> Je ne veux plus entendre parler de cet horrible Oracle.
+[2015-10-06 22:05:07] <Liodain> Oh oh du calme
+[2015-10-06 22:05:10] <Quon> :)
+[2015-10-06 22:05:12] <Liodain> Si je le pouvais, moi non plus.
+[2015-10-06 22:05:17] <Liodain> Mais
+[2015-10-06 22:05:27] <Liodain> Le type qui a pris sa place dit que la réalité part en morceaux
+[2015-10-06 22:05:31] <Liodain> Et ça a bien l'air d'être le cas
+[2015-10-06 22:05:34] <Oniro> J'ai remarqué, oui
+[2015-10-06 22:05:35] <Liodain> Et on doit tuer dix personnens
+[2015-10-06 22:05:41] — Oniro pointe vers le mur qui vibre et clignotte
+[2015-10-06 22:05:45] <Liodain> Une d'entre elles a déjà été tué par notre nouvel employeur
+[2015-10-06 22:05:52] <Liodain> Je vous laisse deviner la suivante.
+[2015-10-06 22:05:53] <Raaclu> Dont une caisse de pâquerettes.
+[2015-10-06 22:06:01] <Raaclu> Mais ce n'est pas la cible suivante.
+[2015-10-06 22:06:02] <Oniro> Ha, tuer une caisse de paquerettes. Impossible, bon courage.
+[2015-10-06 22:06:04] <Oniro> Je ne vous aiderai pas.
+[2015-10-06 22:06:06] <Oniro> Fous.
+[2015-10-06 22:06:14] <Liodain> Je parle de vous, abruti.
+[2015-10-06 22:06:18] <Liodain> On doit vous tuer.
+[2015-10-06 22:06:21] <Liodain> Enfin, doit.
+[2015-10-06 22:06:23] <Oniro> Ah oui c'est gênant ça.
+[2015-10-06 22:06:24] <Raaclu> Liodain: monsieur est fuyard, pas abruti.
+[2015-10-06 22:06:26] <Liodain> J'ai pas très envie, perso.
+[2015-10-06 22:06:31] <Oniro> Dans ce cas, c'est moi qui vous tuerai le premier.
+[2015-10-06 22:06:34] <Liodain> Ca sent l'arnaque.
+[2015-10-06 22:06:36] <Oniro> Réfléchissez bien avant d'agir.
+[2015-10-06 22:06:39] <Gwrartz> CÉCUIKIDIKYÉ
+[2015-10-06 22:06:40] — Oniro est frêle
+[2015-10-06 22:06:42] — Oniro tient à peine debout
+[2015-10-06 22:06:46] — Oniro est vieux et ridé
+[2015-10-06 22:06:49] <Quon> Je CTRl+F Oniro
+[2015-10-06 22:06:50] <Malen> Liodain: Ca sent l'arnaque depuis le début de cette aventure.
+[2015-10-06 22:06:56] * Oniro is now known as Narrateur
+[2015-10-06 22:06:57] <Liodain> Malen: Aventure est un bien grand mot.
+[2015-10-06 22:07:00] <Liodain> Mais a-t-on le choix ?
+[2015-10-06 22:07:02] <Narrateur> Quon sort son guide et le pointe vers Oniro
+[2015-10-06 22:07:18] <Narrateur> Effigie de vieux en carton: Un truc classique pour éviter les confrontations
+[2015-10-06 22:07:19] <Malen> Liodain: Tu parles à un mec qui s'est réveillé ce matin à poil et entouré d'inconnus. J'ai connu de meilleurs jours.
+[2015-10-06 22:07:26] <Liodain> ...
+[2015-10-06 22:07:26] <Quon> :D
+[2015-10-06 22:07:29] * Narrateur is now known as Oniro
+[2015-10-06 22:07:31] <Liodain> Mais il se fout de notre gueule le vieux.
+[2015-10-06 22:07:39] <Gwrartz> Je lui crame sa race ?
+[2015-10-06 22:07:44] <Malen> Je vote pour.
+[2015-10-06 22:07:45] <Oniro> Qui se fout de la gueule de qui?
+[2015-10-06 22:07:46] <Liodain> Bon, je veux bien le tuer maintenant.
+[2015-10-06 22:07:47] <Raaclu> Je contourne l'effigie en carton.
+[2015-10-06 22:07:51] * Oniro is now known as Narrateur
+[2015-10-06 22:07:52] <Gwrartz> Ouais non, ça me niquerai une charge
+[2015-10-06 22:07:55] <Narrateur> Raaclu fait le tour de l'effigie
+[2015-10-06 22:07:57] <Gwrartz> J'ATTAQUE L'ENCULÉ EN CARTON
+[2015-10-06 22:07:57] <Narrateur> Et derrière l'effigie
+[2015-10-06 22:08:05] <Liodain> Gwrartz: On se calme.
+[2015-10-06 22:08:07] <Narrateur> Un type dans la fleur de l'âge
+[2015-10-06 22:08:09] <Narrateur> Pas vieux
+[2015-10-06 22:08:11] <Narrateur> Pas ridé
+[2015-10-06 22:08:14] <Narrateur> Et qui a l'air assez puissant quand même
+[2015-10-06 22:08:16] * Narrateur is now known as Oniro
+[2015-10-06 22:08:18] <Raaclu> Bonjour.
+[2015-10-06 22:08:20] <Gwrartz> Hmm.
+[2015-10-06 22:08:20] <Oniro> Gasp, je suis découvert.
+[2015-10-06 22:08:26] <Quon> Je CTRl+F le vrai Oniro
+[2015-10-06 22:08:29] — Gwrartz tips fedora
+[2015-10-06 22:08:39] * Oniro is now known as Narrateur
+[2015-10-06 22:08:41] <Narrateur> Résultats de l'inspection:
+[2015-10-06 22:08:42] <Narrateur> Faiblesse: Oniro n'a qu'une faible armure physique et aucune résistance aux attaques magiques. Il suffit de le bourriner assez et il finira par tomber.
+[2015-10-06 22:08:44] <Narrateur> Étrangeté: Par moments, Oniro semble grésiller, comme s'il était dans une TV au signal foireux. Est-il vraiment vivant, ou une illusion plantée ici par quelqu'un?
+[2015-10-06 22:08:45] <Narrateur> Traitre: Oniro est connu pour sa traitrise. Même s'il n'est pas le plus traitre des voleurs de cet univers (AHEM LIODAIN), il est tout de même sacrément perfide. Faites gaffe à vos poches.
+[2015-10-06 22:08:50] * Narrateur is now known as Oniro
+[2015-10-06 22:08:52] <Oniro> OH C'EST QUOI CET APPAREIL
+[2015-10-06 22:08:56] <Oniro> RANGEZ MOI-ÇA LÀ
+[2015-10-06 22:09:02] <Gwrartz> TOUCHE PAS WESH
+[2015-10-06 22:09:07] <Liodain> Bon.
+[2015-10-06 22:09:11] — Raaclu tente de le frapper à l'aide du sceptre.
+[2015-10-06 22:09:20] <Liodain> C'est pas très net tout ça.
+[2015-10-06 22:09:23] <Oniro> Raaclu initie un COMBAT
+[2015-10-06 22:09:25] <Oniro> FIGHTUUUUUUUUUUUUUUUUUUUUU
+[2015-10-06 22:09:29] <Raaclu> yay
+[2015-10-06 22:09:30] <Liodain> Si cet Oniro est lui aussi une création de notre employeur
+[2015-10-06 22:09:33] <Liodain> Pourquoi devoir le tuer ?
+[2015-10-06 22:09:35] <Oniro> Oniro le fuyard (niv. 9) > Planeshift > Kutz > Wan > Odin > Exirel > Et on recommence...
+[2015-10-06 22:09:35] <Liodain> Ca n'a pas de sens.
+[2015-10-06 22:09:38] * Oniro set the topic to Dimension actuelle: Dimension du jambon | Oniro le fuyard (niv. 9) > Planeshift > Kutz > Wan > Odin > Exirel > Et on recommence...
+[2015-10-06 22:09:43] <Liodain> ...
+[2015-10-06 22:09:51] * Oniro is now known as Narrateur
+[2015-10-06 22:09:56] <Narrateur> Oniro utilise une compétence
+[2015-10-06 22:09:58] <Narrateur> CAMOUFLAGE
+[2015-10-06 22:10:00] <Narrateur> Il se planque dans un coin.
+[2015-10-06 22:10:01] <Narrateur> Liodain:
+[2015-10-06 22:10:05] <Liodain> CAMOUFLAGE
+[2015-10-06 22:10:12] <Liodain> Je me planque dans le même coin.
+[2015-10-06 22:10:18] <Narrateur> FUMBLE CRITIQUE
+[2015-10-06 22:10:21] <Liodain> :|
+[2015-10-06 22:10:22] <Raaclu> lol
+[2015-10-06 22:10:23] <Liodain> Pourquoi.
+[2015-10-06 22:10:25] <Narrateur> Il y avait un pièèèèèège
+[2015-10-06 22:10:31] <Raaclu> Le nombre de FUMBLE CRITIQUE de Liodain. :D
+[2015-10-06 22:10:32] <Narrateur> Car ce lieu appartient à un voleur
+[2015-10-06 22:10:37] <Narrateur> Et les voleurs ça connait les camouflages
+[2015-10-06 22:10:41] <Liodain> Ah bah oui, j'oubliais.
+[2015-10-06 22:10:45] <Narrateur> Liodain tente de se planquer dans un recoin
+[2015-10-06 22:10:48] <Narrateur> Et ce recoin contient une bitte
+[2015-10-06 22:10:54] <Narrateur> L'empêchant de se planquer
+[2015-10-06 22:10:55] <Liodain> NON
+[2015-10-06 22:10:58] <Gwrartz> XD
+[2015-10-06 22:11:01] <Liodain> PAS LA BITTE
+[2015-10-06 22:11:02] <Narrateur> Quon:
+[2015-10-06 22:11:03] <Gwrartz> pédé
+[2015-10-06 22:11:19] <Quon> Je lance mes ordres de bataille.
+[2015-10-06 22:11:40] <Narrateur> Quon chante à capella le refrain de men in black, ça motive le groupe +attaque/+précision
+[2015-10-06 22:11:43] <Narrateur> Gwrartz:
+[2015-10-06 22:11:54] <Malen> Gwrartz: t'as des trucs refoulés toi non ?
+[2015-10-06 22:11:56] <Liodain> Here comes the men in black ♫
+[2015-10-06 22:12:25] <Raaclu> Oh oh the men in black.
+[2015-10-06 22:12:38] <Narrateur> They won't let you remember ♫
+[2015-10-06 22:12:53] <Narrateur> 9/11 des personnes interrogées se souviennent.
+[2015-10-06 22:13:02] <Liodain> Gwrartz: Bordel
+[2015-10-06 22:13:03] <Liodain> Tu joues
+[2015-10-06 22:13:13] <Narrateur> Il a encore 30 secondes.
+[2015-10-06 22:13:14] <Gwrartz> j'attaque
+[2015-10-06 22:13:23] <Narrateur> Gwrartz attaque
+[2015-10-06 22:13:24] <Gwrartz> (j'ai 3 feux à gérer putain sry)
+[2015-10-06 22:13:28] <Narrateur> Il met des coups de dague devant lui
+[2015-10-06 22:13:30] <Narrateur> Brutal.
+[2015-10-06 22:13:36] <Narrateur> Mais Oniro est camouflé
+[2015-10-06 22:13:38] <Narrateur> Chaud à atteindre.
+[2015-10-06 22:13:40] <Narrateur> Malen:
+[2015-10-06 22:13:46] <Malen> Je rentre en transe.
+[2015-10-06 22:13:55] <Narrateur> Malen utilise Transe.
+[2015-10-06 22:13:56] <Narrateur> Charges restantes: 1
+[2015-10-06 22:13:58] <Narrateur> Synergie 0 => 2
+[2015-10-06 22:14:00] <Narrateur> Raaclu:
+[2015-10-06 22:14:14] <Raaclu>  Prière
+[2015-10-06 22:14:18] <Narrateur> Raaclu utilise Prière.
+[2015-10-06 22:14:20] <Narrateur> Energie: 10 => 14
+[2015-10-06 22:14:27] <Narrateur> Oniro utilise une compétence !!!
+[2015-10-06 22:14:30] <Narrateur> COUP PERFIDE (surprise)
+[2015-10-06 22:14:38] <Liodain> Adios amigos.
+[2015-10-06 22:14:40] <Raaclu> Personne ne s'y attendait.
+[2015-10-06 22:14:45] <Narrateur> Il plante super brutalement sa dague dans le dos de Gwrartz
+[2015-10-06 22:14:48] <Narrateur> [Wan] Gwrärtz perd 14 points de vie. HP: 17 => 3
+[2015-10-06 22:15:03] <Narrateur> Une bitte semble poursuivre Liodain
+[2015-10-06 22:15:04] <Liodain> J'utilise Acolyte sur Oniro.
+[2015-10-06 22:15:07] <Liodain> Wut.
+[2015-10-06 22:15:15] <Narrateur> Liodain utilise Acolyte.
+[2015-10-06 22:15:16] <Narrateur> Charges restantes: 1
+[2015-10-06 22:15:29] <Narrateur> Liodain se planque dans l'ombre, loin de la bitte.
+[2015-10-06 22:15:43] <Narrateur> Une personne mystérieuse met un coup de rasoir à Oniro
+[2015-10-06 22:15:53] <Narrateur> Oniro le fuyard subit 3 dégâts.
+[2015-10-06 22:15:58] <Narrateur> Quon:
+[2015-10-06 22:16:13] <Quon> Je lance un cri du vainqueur
+[2015-10-06 22:16:24] <Narrateur> Quon utilise Cri du vainqueur.
+[2015-10-06 22:16:26] <Narrateur> Charges restantes: 0
+[2015-10-06 22:16:33] <Narrateur> L'équipe se sent en confiance, tout va mieux
+[2015-10-06 22:16:42] <Narrateur> Oniro n'a pas peur, il est trop intelligent pour ça.
+[2015-10-06 22:16:45] <Narrateur> Gwrartz:
+[2015-10-06 22:17:20] <Gwrartz> CRÈVE CHAROGNE sur Oniro
+[2015-10-06 22:17:35] <Narrateur> Gwrärtz utilise Crève, charogne!.
+[2015-10-06 22:17:36] <Narrateur> Charges restantes: 1
+[2015-10-06 22:17:38] <Narrateur> Rage 14 => 34
+[2015-10-06 22:17:39] <Narrateur> COUP CRITIQUE
+[2015-10-06 22:17:52] <Gwrartz> BAM
+[2015-10-06 22:17:57] <Narrateur> Gwrartz devient tout rouge
+[2015-10-06 22:17:59] <Gwrartz> MES COUILLES SUR TON FRONT
+[2015-10-06 22:18:00] <Narrateur> Il est en rage maximale
+[2015-10-06 22:18:04] <Narrateur> Oniro le fuyard subit 5 dégâts.
+[2015-10-06 22:18:05] <Narrateur> Oniro le fuyard subit 2 dégâts.
+[2015-10-06 22:18:10] <Narrateur> Oniro le fuyard subit 1 dégât.
+[2015-10-06 22:18:12] <Narrateur> Oniro le fuyard subit 5 dégâts.
+[2015-10-06 22:18:17] <Narrateur> Raaclu:
+[2015-10-06 22:18:19] <Raaclu>  Soins Mineur =>  Gwrärtz
+[2015-10-06 22:18:24] <Gwrartz> <3 Raaclu
+[2015-10-06 22:18:25] <Narrateur> Raaclu utilise Soins mineurs.
+[2015-10-06 22:18:26] <Narrateur> Energie: 14 => 9
+[2015-10-06 22:18:32] <Narrateur> [Wan] Gwrärtz gagne 1 point de vie. HP: 3 => 4
+[2015-10-06 22:18:33] <Malen> Comment ça Raaclu
+[2015-10-06 22:18:35] <Narrateur> (yeee)
+[2015-10-06 22:18:42] <Narrateur> Oniro utilise une compétence
+[2015-10-06 22:18:45] <Liodain> Narrateur: Euh
+[2015-10-06 22:18:47] <Narrateur> TIENS UN TIBIA
+[2015-10-06 22:18:48] <Liodain> On a sauté le tour de Malen
+[2015-10-06 22:18:52] <Malen> Coucou j'ai pas joué o/
+[2015-10-06 22:18:53] — Liodain claps
+[2015-10-06 22:18:54] <Narrateur> Oui on a sauté le tour de Malen
+[2015-10-06 22:18:55] <Narrateur> :D
+[2015-10-06 22:18:57] <Narrateur> Malen: Allez fais ton tour
+[2015-10-06 22:19:03] <Narrateur> Je blame la bdd
+[2015-10-06 22:19:04] <Malen> Ben j'attaque Oniro avec mes pinces
+[2015-10-06 22:19:10] <Narrateur> J'ai du appuyer deux fois comme un con
+[2015-10-06 22:19:24] <Narrateur> Malen sort de sa transe et met un méga coup de pince à Oniro
+[2015-10-06 22:19:29] <Malen> Ca y est je me met en transe on m'oublie. Bravo D:
+[2015-10-06 22:19:33] <Narrateur> Oniro le fuyard subit 4 dégâts.
+[2015-10-06 22:19:42] <Liodain> On voulait pas dérange pendant ta méditaiton eh
+[2015-10-06 22:19:42] <Raaclu> (-20PV déjà au moins)
+[2015-10-06 22:19:43] <Narrateur> Oniro utilise donc une copétence
+[2015-10-06 22:19:44] <Narrateur> TIENS UN TIBIA
+[2015-10-06 22:19:57] <Narrateur> Vous perdez Oniro de vue
+[2015-10-06 22:20:03] <Narrateur> Et vous le retrouvez, derrière Quon
+[2015-10-06 22:20:06] <Narrateur> [Kutz] Quon perd 4 points de vie. HP: 25 => 21
+[2015-10-06 22:20:10] <Narrateur> Quon a TRÈS mal au cul
+[2015-10-06 22:20:14] <Narrateur> Oniro a une nouvelle arme.
+[2015-10-06 22:20:16] <Narrateur> Liodain:
+[2015-10-06 22:20:31] <Liodain> Coup perfide sur Oniro
+[2015-10-06 22:20:46] <Narrateur> Liodain sort de l'ombre et utilise un COUP PERFIDE sur le méchant ONIRO
+[2015-10-06 22:20:48] <Narrateur> CAPS
+[2015-10-06 22:20:56] <Narrateur> Liodain utilise Coup perfide.
+[2015-10-06 22:20:58] <Narrateur> Charges restantes: 0
+[2015-10-06 22:21:06] <Narrateur> Oniro le fuyard subit 5 dégâts.
+[2015-10-06 22:21:16] <Narrateur> La bitte continue à suivre Liodain.
+[2015-10-06 22:21:18] <Narrateur> Quon:
+[2015-10-06 22:21:19] <Liodain> Heureusement que c'est 300% des dégâts de mon arme 2-5 Coup perfide.
+[2015-10-06 22:21:27] <Liodain> :|
+[2015-10-06 22:21:34] <Narrateur> T'as du roll un 6 puis -1 parce que armure
+[2015-10-06 22:21:35] <Liodain> (oui je sais, Armure, blah blah)
+[2015-10-06 22:21:39] — Narrateur a la flemme de vérifier le roll
+[2015-10-06 22:21:40] <Quon> Plaie ouverte sur Onirto
+[2015-10-06 22:21:47] <Quon> Oniro*
+[2015-10-06 22:21:59] <Narrateur> Quon utilise Plaie ouverte.
+[2015-10-06 22:22:01] <Narrateur> Charges restantes: 1
+[2015-10-06 22:22:06] <Narrateur> Quon tranche dans le lard d'Oniro
+[2015-10-06 22:22:09] <Narrateur> Oniro pisse le sang
+[2015-10-06 22:22:12] <Narrateur> Gwrartz:
+[2015-10-06 22:22:17] <Liodain> Il devrait bientôt crever
+[2015-10-06 22:22:22] <Raaclu> (-25)
+[2015-10-06 22:22:27] <Gwrartz> POING ENFLAMMÉ
+[2015-10-06 22:22:34] <Narrateur> Gwrärtz utilise Poing enflammé.
+[2015-10-06 22:22:35] <Narrateur> Charges restantes: 1
+[2015-10-06 22:22:48] <Narrateur> Oniro le fuyard subit 6 dégâts.
+[2015-10-06 22:22:50] <Narrateur> Ça chauffe.
+[2015-10-06 22:22:55] <Narrateur> Malen:
+[2015-10-06 22:23:02] <Malen> J'en pince pour Oniro
+[2015-10-06 22:23:05] <Malen> (pardon)
+[2015-10-06 22:23:14] <Narrateur> Malen met un coup de pince à Oniro
+[2015-10-06 22:23:18] <Narrateur> Oniro le fuyard subit 1 dégât.
+[2015-10-06 22:23:22] <Narrateur> Il agonise
+[2015-10-06 22:23:24] <Narrateur> Et périt
+[2015-10-06 22:23:31] <Narrateur> Et... retire son masque?
+[2015-10-06 22:23:33] <Narrateur> DAMNED
+[2015-10-06 22:23:37] <Narrateur> Il était bien trop lent pour être un voleur
+[2015-10-06 22:23:52] <Liodain> Il n'a pas fui surtout.
+[2015-10-06 22:23:53] <Narrateur> Tandis que le sbire d'Oniro crève au sol, Oniro rigole du groupe, et rentre dans le combat. Les choses sérieuses peuvent commencer.
+[2015-10-06 22:23:54] <Narrateur> Raaclu:
+[2015-10-06 22:24:00] <Raaclu>  Soins Mineur =>  Gwrärtz
+[2015-10-06 22:24:05] <Narrateur> Raaclu utilise Soins mineurs.
+[2015-10-06 22:24:06] <Narrateur> Energie: 9 => 4
+[2015-10-06 22:24:10] <Narrateur> [Wan] Gwrärtz gagne 3 points de vie. HP: 4 => 7
+[2015-10-06 22:24:16] <Narrateur> Oniro utilise une compétence
+[2015-10-06 22:24:21] <Narrateur> DÉDOUBLEMENT
+[2015-10-06 22:24:30] <Narrateur> Il attaque brutalement Liodain puis disparait dans l'ombre
+[2015-10-06 22:24:35] <Narrateur> [Planeshift] Liodain perd 1 point de vie. HP: 10 => 9
+[2015-10-06 22:24:38] <Narrateur> (brutalement)
+[2015-10-06 22:24:40] <Narrateur> Liodain:
+[2015-10-06 22:24:43] <Liodain> (brutalement)
+[2015-10-06 22:24:48] <Narrateur> (oui ça va sans dire)
+[2015-10-06 22:24:51] <Narrateur> (bien le lucky roll)
+[2015-10-06 22:25:18] <Liodain> hmmm
+[2015-10-06 22:25:45] <Liodain> Je tente d'attaquer Oniro
+[2015-10-06 22:25:55] <Narrateur> Liodain attaque et connecte avec...?
+[2015-10-06 22:25:58] <Narrateur> Une effigie en carton d'Oniro
+[2015-10-06 22:26:04] <Narrateur> Oniro est de l'autre côté et ricane.
+[2015-10-06 22:26:06] <Narrateur> Quon:
+[2015-10-06 22:26:15] <Quon> Je lance Damnation sur Oniro
+[2015-10-06 22:26:25] <Narrateur> Quon utilise Damnation.
+[2015-10-06 22:26:27] <Narrateur> Charges restantes: 0
+[2015-10-06 22:26:29] <Narrateur> Oniro est maudit.
+[2015-10-06 22:26:36] <Narrateur> Gwrartz:
+[2015-10-06 22:26:47] <Gwrartz> POING ENFLAMMÉ
+[2015-10-06 22:26:56] <Narrateur> Gwrärtz utilise Poing enflammé.
+[2015-10-06 22:26:58] <Narrateur> Charges restantes: 0
+[2015-10-06 22:27:04] <Narrateur> Oniro le fuyard subit 4 dégâts.
+[2015-10-06 22:27:15] <Narrateur> Il n'arrive pas à éviter la rapidité et la rage de cette attaque.
+[2015-10-06 22:27:16] <Narrateur> Malen:
+[2015-10-06 22:27:23] <Malen> Je re-rentre en trans
+[2015-10-06 22:27:24] <Malen> transe*
+[2015-10-06 22:27:29] <Narrateur> Malen utilise Transe.
+[2015-10-06 22:27:30] <Malen> En espérant qu'on m'oublie pas cette fois HEIN
+[2015-10-06 22:27:30] <Narrateur> Charges restantes: 0
+[2015-10-06 22:27:32] <Narrateur> Synergie 2 => 4
+[2015-10-06 22:27:33] <Narrateur> Malen se concentre.
+[2015-10-06 22:27:36] <Narrateur> Raaclu:
+[2015-10-06 22:27:37] <Raaclu>  Sphère de lumière =>  Oniro
+[2015-10-06 22:27:45] <Narrateur> Raaclu utilise Sphère de lumière.
+[2015-10-06 22:27:46] <Narrateur> Energie: 4 => 0
+[2015-10-06 22:27:52] <Narrateur> Oniro le fuyard subit 6 dégâts.
+[2015-10-06 22:27:56] <Narrateur> GASP il aime pas ça
+[2015-10-06 22:28:01] <Narrateur> Et il peut pas éviter ça
+[2015-10-06 22:28:04] <Narrateur> Oniro est légèrement aveuglé
+[2015-10-06 22:28:14] <Narrateur> Il est maudit par Quon
+[2015-10-06 22:28:15] <Narrateur> Oniro le fuyard subit 3 dégâts.
+[2015-10-06 22:28:23] <Narrateur> GASP il aime vraiment pas ça
+[2015-10-06 22:28:27] <Narrateur> Oniro utilise une compétence
+[2015-10-06 22:28:29] <Narrateur> SOUVENIR DU SED ROH
+[2015-10-06 22:28:33] <Liodain> Oh.
+[2015-10-06 22:28:49] <Narrateur> Il pose un piège piquant qui donne pas envie devant lui, et lance du sable sur tout le groupe avec force et puissance
+[2015-10-06 22:28:56] <Narrateur> [Planeshift] Liodain ne subit aucun dégât. Yay!
+[2015-10-06 22:28:58] <Narrateur> [Kutz] Quon perd 1 point de vie. HP: 21 => 20
+[2015-10-06 22:29:00] <Narrateur> [Wan] Gwrärtz perd 2 points de vie. HP: 7 => 5
+[2015-10-06 22:29:02] <Narrateur> [Odin] Malen perd 1 point de vie. HP: 12 => 11
+[2015-10-06 22:29:04] <Narrateur> [Exirel] Raaclu perd 3 points de vie. HP: 13 => 10
+[2015-10-06 22:29:10] <Narrateur> Vous perdez tous en précision.
+[2015-10-06 22:29:12] <Narrateur> Liodain:
+[2015-10-06 22:29:15] <Liodain> Acolyte sur Oniro
+[2015-10-06 22:29:29] <Narrateur> Liodain se planque dans un coin, suivi par la bitte qui hurle sa position à Oniro.
+[2015-10-06 22:29:47] <Narrateur> Une ombre se déplace sur le champ de bataille et tente d'attaquer Oniro avec une épée longue, mais rate.
+[2015-10-06 22:29:53] <Narrateur> Il est agile le petit.
+[2015-10-06 22:29:58] <Liodain> Déception
+[2015-10-06 22:30:02] <Narrateur> L'ombre déclenche le piège
+[2015-10-06 22:30:03] <Raaclu> Même s'il est un peu aveuglé.
+[2015-10-06 22:30:05] <Narrateur> Elle disparait en fumée.
+[2015-10-06 22:30:06] <Narrateur> Quon:
+[2015-10-06 22:30:12] <Quon> J'attaque Oniro avec mon épée.
+[2015-10-06 22:30:20] <Liodain> Déjà, y a plus de piège
+[2015-10-06 22:30:22] <Liodain> Merci l'Acolyte
+[2015-10-06 22:30:24] <Narrateur> Quon tente de mettre un coup d'épée à Oniro, qui l'évite facilement.
+[2015-10-06 22:30:25] — Liodain est parfois utile
+[2015-10-06 22:30:26] <Narrateur> Gwrartz:
+[2015-10-06 22:31:35] <Narrateur> keyword: parfois
+[2015-10-06 22:31:44] <Gwrartz> Bon.
+[2015-10-06 22:31:54] <Liodain> Narrateur: S'ta soeur le keyword.
+[2015-10-06 22:31:57] <Gwrartz> Attaque frénétique
+[2015-10-06 22:32:02] <Narrateur> Gwrärtz utilise Attaque frénétique.
+[2015-10-06 22:32:04] <Narrateur> Charges restantes: 1
+[2015-10-06 22:32:05] <Narrateur> Rage 34 => 49
+[2015-10-06 22:32:24] <Narrateur> Gwrartz avance vers Oniro en mode full rage, mais rate ses attaques. Oniro est rapide, et le sable aveugle Gwrartz.
+[2015-10-06 22:32:26] <Narrateur> Malen:
+[2015-10-06 22:32:41] <Malen> J'attaque Oniro avec mes pinces (pour changer)
+[2015-10-06 22:32:44] <Gwrartz> pute
+[2015-10-06 22:33:13] <Narrateur> Malen attaque en mode superbrute, mais Oniro évite facilement. Sans effort.
+[2015-10-06 22:33:15] <Narrateur> Raaclu:
+[2015-10-06 22:33:17] <Raaclu>  Prière
+[2015-10-06 22:33:21] <Narrateur> Raaclu utilise Prière.
+[2015-10-06 22:33:22] <Narrateur> Energie: 0 => 4
+[2015-10-06 22:33:27] <Narrateur> Oniro utilise une compétence
+[2015-10-06 22:33:31] <Narrateur> CHARCUTERIE
+[2015-10-06 22:33:37] <Narrateur> Il met des coups de dague à gauche à droite
+[2015-10-06 22:33:42] <Narrateur> [Planeshift] Liodain perd 2 points de vie. HP: 9 => 7
+[2015-10-06 22:33:45] <Narrateur> [Kutz] Quon perd 4 points de vie. HP: 20 => 16
+[2015-10-06 22:33:46] <Narrateur> [Wan] Gwrärtz perd 1 point de vie. HP: 5 => 4
+[2015-10-06 22:33:49] <Narrateur> [Exirel] Raaclu perd 2 points de vie. HP: 10 => 8
+[2015-10-06 22:33:51] <Narrateur> [Odin] Malen perd 2 points de vie. HP: 11 => 9
+[2015-10-06 22:33:52] <Narrateur> [Odin] Malen perd 3 points de vie. HP: 9 => 6
+[2015-10-06 22:33:54] <Narrateur> [Kutz] Quon perd 1 point de vie. HP: 16 => 15
+[2015-10-06 22:33:56] <Narrateur> [Wan] Gwrärtz perd 4 points de vie. HP: 4 => 0
+[2015-10-06 22:33:59] <Narrateur> [Exirel] Raaclu perd 2 points de vie. HP: 8 => 6
+[2015-10-06 22:34:00] <Narrateur> Liodain:
+[2015-10-06 22:34:05] <Liodain> Eh bah.
+[2015-10-06 22:34:06] <Narrateur> (oui, 0HP n'est pas mort)
+[2015-10-06 22:34:19] <Liodain> Poison lent sur Oniro
+[2015-10-06 22:34:20] <Gwrartz> :<
+[2015-10-06 22:34:29] <Narrateur> Liodain utilise Poison lent.
+[2015-10-06 22:34:30] <Narrateur> Charges restantes: 1
+[2015-10-06 22:34:45] <Narrateur> Oniro est empoisonné. Urgh.
+[2015-10-06 22:34:52] <Narrateur> La bitte suit Liodain.
+[2015-10-06 22:34:53] <Narrateur> Quon:
+[2015-10-06 22:34:55] <Liodain> Il était pas maudit aussi ?
+[2015-10-06 22:35:00] <Narrateur> Oui Liodain, mais ça fait parfois 0
+[2015-10-06 22:35:04] <Quon> Je lance un képi tranchant sur Oniro.
+[2015-10-06 22:35:05] <Liodain> Ah kk
+[2015-10-06 22:35:05] <Raaclu> Maudit et légèrement aveuglé.
+[2015-10-06 22:35:12] <Narrateur> Quon utilise Képi tranchant.
+[2015-10-06 22:35:14] <Narrateur> Charges restantes: 2
+[2015-10-06 22:35:19] <Narrateur> Oniro le fuyard subit 12 dégâts.
+[2015-10-06 22:35:23] <Liodain> Ouch
+[2015-10-06 22:35:27] <Narrateur> Oniro recule en arrière et tousse un peu de sang
+[2015-10-06 22:35:29] <Narrateur> Not cool, not cool.
+[2015-10-06 22:35:32] <Narrateur> Malen:
+[2015-10-06 22:35:44] <Malen> J'attaque Oniro
+[2015-10-06 22:35:57] <Narrateur> Malen met le coup fatal sur Oniro, facilement
+[2015-10-06 22:35:58] <Narrateur> Oniro le fuyard subit 12 dégâts.
+[2015-10-06 22:36:00] <Narrateur> Facilement?
+[2015-10-06 22:36:01] <Narrateur> Trop facilement.
+[2015-10-06 22:36:13] <Narrateur> Le double explosif d'Oniro explose, et fait péter Malen avec lui.
+[2015-10-06 22:36:15] <Liodain> Nom de nom.
+[2015-10-06 22:36:20] <Malen> Bordel
+[2015-10-06 22:36:25] <Narrateur> [Odin] Malen perd 7 points de vie. HP: 6 => -1
+[2015-10-06 22:36:31] <Liodain> Ouch.
+[2015-10-06 22:36:32] <Liodain> Goodbye.
+[2015-10-06 22:36:36] <Malen> Ca picote.
+[2015-10-06 22:36:43] <Narrateur> Malen agonise, au sol, du sang de scarabée se répand dans les égoûts.
+[2015-10-06 22:36:46] * Narrateur set -v Malen
+[2015-10-06 22:36:54] * Narrateur set the topic to Dimension actuelle: Dimension du jambon | Oniro le fuyard (niv. 9) > Planeshift > Kutz > Wan > Exirel > Et on recommence...
+[2015-10-06 22:36:56] <Narrateur> Raaclu:
+[2015-10-06 22:37:03] <Raaclu>  Prière
+[2015-10-06 22:37:07] <Narrateur> Raaclu utilise Prière.
+[2015-10-06 22:37:09] <Narrateur> Energie: 4 => 8
+[2015-10-06 22:37:20] <Narrateur> Oniro souffre du poison et de la malédiction
+[2015-10-06 22:37:26] <Narrateur> Oniro le fuyard subit 2 dégâts.
+[2015-10-06 22:37:32] <Narrateur> Il a l'air très fortement affaibli
+[2015-10-06 22:37:39] <Narrateur> Comme s'il lui restait pas grand chose en stock
+[2015-10-06 22:37:43] <Narrateur> Oniro utilise une compétence
+[2015-10-06 22:37:47] <Narrateur> ACOLYTE
+[2015-10-06 22:37:52] <Narrateur> Oniro se planque dans un coin, comme il peut
+[2015-10-06 22:37:52] <Liodain> Le vil copieur.
+[2015-10-06 22:38:09] <Narrateur> Une créature sort des ombres et tire une pluie de flèches sur le groupe
+[2015-10-06 22:38:17] <Narrateur> [Planeshift] Liodain perd 2 points de vie. HP: 7 => 5
+[2015-10-06 22:38:18] <Narrateur> [Kutz] Quon ne subit aucun dégât. Yay!
+[2015-10-06 22:38:20] <Narrateur> [Kutz] Quon perd 1 point de vie. HP: 15 => 14
+[2015-10-06 22:38:24] <Narrateur> [Wan] Gwrärtz perd 1 point de vie. HP: 0 => -1
+[2015-10-06 22:38:26] <Narrateur> [Exirel] Raaclu perd 2 points de vie. HP: 6 => 4
+[2015-10-06 22:38:28] <Narrateur> [Exirel] Raaclu perd 3 points de vie. HP: 4 => 1
+[2015-10-06 22:38:40] <Narrateur> Gwrartz agonise, une flèche dans le cœur. Ça commence à faire mal au groupe tout ça.
+[2015-10-06 22:38:43] * Narrateur set -v Gwrartz
+[2015-10-06 22:38:47] <Narrateur> Liodain:
+[2015-10-06 22:38:58] <Liodain> Guère le choix, hélas.
+[2015-10-06 22:39:05] <Liodain> J'attaque Oniro.
+[2015-10-06 22:39:21] <Narrateur> COUP CRITIQUE
+[2015-10-06 22:39:39] <Narrateur> Liodain s'installe à une table avec du thé et une poupée
+[2015-10-06 22:39:42] <Narrateur> Oniro est confus
+[2015-10-06 22:39:46] <Narrateur> Il est paralysé par sa confusion
+[2015-10-06 22:39:50] <Narrateur> Quon:
+[2015-10-06 22:39:51] <Liodain> J'avoue, moi aussi.
+[2015-10-06 22:40:13] <Quon> J'attaque Oniro avec mon épée.
+[2015-10-06 22:40:27] <Narrateur> Quon brandit son épée et tranche Oniro, qui ne peut plus s'enfuir, sanglant et paralysé
+[2015-10-06 22:40:32] <Narrateur> Oniro le fuyard subit 6 dégâts.
+[2015-10-06 22:40:42] <Narrateur> Quon tranche net
+[2015-10-06 22:40:46] <Narrateur> La tête d'Oniro roule au sol
+[2015-10-06 22:40:48] <Narrateur> Il est mort.
+[2015-10-06 22:40:49] <Narrateur> Cette fois, c'est le vrai.
+[2015-10-06 22:40:55] <Raaclu>  Soins Mineur =>  Gwrärtz
+[2015-10-06 22:40:57] <Raaclu> ?
+[2015-10-06 22:41:04] <Liodain> Raaclu: Non, il est mort lui aussi.
+[2015-10-06 22:41:04] <Narrateur> Raaclu: Il est mort, et le fight est fini.
+[2015-10-06 22:41:07] <Raaclu> Rah.
+[2015-10-06 22:41:11] <Raaclu> Mort mort.
+[2015-10-06 22:41:13] <Raaclu> Damn.
+[2015-10-06 22:41:16] <Liodain> Bon
+[2015-10-06 22:41:24] <Narrateur> Tandis qu'une ombre descend sur les lieux, les survivants du groupe se partagent le loot et xp à trois
+[2015-10-06 22:41:27] <Liodain> C'est parti pour la pluie d'expérience, je suppose ? ô_o
+[2015-10-06 22:41:30] <Raaclu> Mais à 1 HP on peut me considérer en danger ou bien ? :D
+[2015-10-06 22:41:37] <Raaclu> Cela dit vu l'heure...
+[2015-10-06 22:41:37] <Liodain> La session va finir
+[2015-10-06 22:41:39] <Liodain> T'inquiète
+[2015-10-06 22:41:47] <Narrateur> [Planeshift] Liodain gagne 9 points d'expérience. XP: 169 => 178
+[2015-10-06 22:41:49] <Liodain> pire des cas, un dernier fight où on meurt tous comme des merdes
+[2015-10-06 22:41:51] <Narrateur> [Kutz] Quon gagne 8 points d'expérience. XP: 225 => 233
+[2015-10-06 22:41:53] <Narrateur> [Exirel] Raaclu gagne 12 points d'expérience. XP: 31 => 43
+[2015-10-06 22:42:00] <Narrateur> Et du loot !
+[2015-10-06 22:42:09] <Liodain> Putain faut le mériter son niveau 6 :|
+[2015-10-06 22:42:12] <Narrateur> [Planeshift] Liodain gagne 3 thunes  (A toi de tenir tes comptes, je ne les dévoile pas en public. Je peux confirmer ça dans un onglet privé en cas de doute).
+[2015-10-06 22:42:22] <Narrateur> [Kutz] Quon gagne 4 thunes  (A toi de tenir tes comptes, je ne les dévoile pas en public. Je peux confirmer ça dans un onglet privé en cas de doute).
+[2015-10-06 22:42:27] <Narrateur> [Exirel] Raaclu gagne 2 thunes  (A toi de tenir tes comptes, je ne les dévoile pas en public. Je peux confirmer ça dans un onglet privé en cas de doute).
+[2015-10-06 22:42:34] <Narrateur> Liodain tu trouves un objet !
+[2015-10-06 22:42:41] <Raaclu> "Surprise"
+[2015-10-06 22:42:42] <Narrateur> Bitte d'amarrage: Comme son nom l'indique, c'est une bitte d'amarrage. Dingue. Avec les compliments du MJ!
+[2015-10-06 22:42:55] <Raaclu> C'est presque ça cela dit.
+[2015-10-06 22:42:57] <Liodain> Certes.
+[2015-10-06 22:42:58] <Narrateur> Want?
+[2015-10-06 22:43:02] <Liodain> Pourquoi pas.
+[2015-10-06 22:43:05] <Narrateur> Slot 5: Bitte
+[2015-10-06 22:43:15] <Narrateur> Si jamais y'a quelque chose à ammarrer.
+[2015-10-06 22:43:20] <Narrateur> Quon tu trouves un item !
+[2015-10-06 22:43:35] <Narrateur> Parce que aujourd'hui on trouve que des bons items
+[2015-10-06 22:43:37] <Narrateur> Sardine pétrifiée (Inutile & Invendable): Même pétrifiée, elle sent mauvais. Beuargh.
+[2015-10-06 22:43:48] <Quon> Je prends !
+[2015-10-06 22:43:53] <Narrateur> Slot 2: Sardine pétrifiée
+[2015-10-06 22:44:02] <Narrateur> Et petit veinard, Raaclu, tu trouves deux items !
+[2015-10-06 22:44:09] <Raaclu> Surprise ?
+[2015-10-06 22:44:12] <Narrateur> Bouclier en bois (Bouclier): Un bouclier basique, en bois. +4 à l'armure.
+[2015-10-06 22:44:24] <Narrateur> Rillettes Bordeau Chesnel: Ca ferait un bon repas, mais le contenu en est complètement moisi. Tant pis. Nous n'avons vraiment pas les mêmes valeurs.
+[2015-10-06 22:44:29] <Narrateur> Tu veux?
+[2015-10-06 22:44:37] <Raaclu> Je prends les deux.
+[2015-10-06 22:44:41] <Liodain> Ah, tiens.
+[2015-10-06 22:44:42] <Narrateur> Tu équipes le bouclier?
+[2015-10-06 22:44:43] <Raaclu> J'équipe le bouclier. 8)
+[2015-10-06 22:44:47] — Liodain reconnaît vaguement quelque chose
+[2015-10-06 22:44:50] <Narrateur> Slot 3: Rillettes
+[2015-10-06 22:44:54] <Narrateur> Bouclier: Bouclier en bois
+[2015-10-06 22:45:12] <Narrateur> Le lieu continue de s'assombrir tandis que vous lootez
+[2015-10-06 22:45:24] <Narrateur> Le temps de finir de looter, vous remarquez qu'il ne reste sur le cadavre d'Oniro que de la peau et des os broyés.
+[2015-10-06 22:45:29] <Liodain> ...
+[2015-10-06 22:45:34] <Narrateur> Comme si le contenu de son corps avait été absorbé.
+[2015-10-06 22:45:40] <Narrateur> Intéressant.
+[2015-10-06 22:45:40] <Liodain> Ca me fait presque mal de le dire
+[2015-10-06 22:45:42] <Quon> Comme c'est bizarre !
+[2015-10-06 22:45:48] <Liodain> Mais je regrette un peu l'Oracle, là.
+[2015-10-06 22:45:58] <Narrateur> Bah putain Liodain.
+[2015-10-06 22:46:05] <Liodain> Au moins, avec lui, y avait un côté jovial dans la façon dont il vout tuait, vous voyez.
+[2015-10-06 22:46:06] <Narrateur> Le truc que je pensais jamais lire sur ce chan.
+[2015-10-06 22:46:17] <Liodain> Ouais, moi non plus, je pensais pas le dire, voix cosmique.
+[2015-10-06 22:46:27] <Raaclu> Ce sont des choses qui arrivent.
+[2015-10-06 22:46:28] <Narrateur> >voix cosmique
+[2015-10-06 22:46:36] <Narrateur> Vous êtes donc trois, à côté d'un cadavre, dans des égoûts.
+[2015-10-06 22:46:37] <Liodain> >Je suis en mode RP.
+[2015-10-06 22:46:38] <Narrateur> À vous de jouer.
+[2015-10-06 22:46:43] <Raaclu> Il y a toujours une raison à tout.
+[2015-10-06 22:46:43] <Liodain> Hm.
+[2015-10-06 22:47:01] <Liodain> On peut récupérer le cadavre ?
+[2015-10-06 22:47:10] <Narrateur> Non, il est vraiment trop horrible pour être touché
+[2015-10-06 22:47:12] <Liodain> Ok
+[2015-10-06 22:47:14] <Liodain> Bon bah
+[2015-10-06 22:47:16] <Narrateur> Il exude l'horreur
+[2015-10-06 22:47:19] <Raaclu> Narrateur: je cherche des vêtements dans la salle.
+[2015-10-06 22:47:20] <Liodain> J'invoque l'Oracle.
+[2015-10-06 22:47:28] <Raaclu> Liodain: ah non mais attend un peu.
+[2015-10-06 22:47:32] <Narrateur> Raaclu: Tu n'en trouves pas, les égoûts sont crades et non fringués.
+[2015-10-06 22:47:37] <Raaclu> Narrateur: zut.
+[2015-10-06 22:47:38] <Narrateur> [Planeshift] Liodain dépense une charge d'oracle. Charges restantes: 0
+[2015-10-06 22:47:45] <Narrateur> Le lieu s'assombrit.
+[2015-10-06 22:47:48] <Raaclu> J'ai l'air bien avec mon bouclier, mon scepter de prêtre, mes charentaises, et ma bite à l'air.
+[2015-10-06 22:47:49] * Narrateur is now known as Ombre
+[2015-10-06 22:47:54] <Raaclu> sceptre*
+[2015-10-06 22:48:01] <Ombre> Aventuriers, vous m'avez donné de la puissance.
+[2015-10-06 22:48:02] <Quon> T'as un peu froid Raaclu, non ? :D
+[2015-10-06 22:48:11] <Ombre> Je peux maintenir le monde, il est maintenant stable pour quelques temps.
+[2015-10-06 22:48:20] <Ombre> La cible suivante est l'ombre de Nangatrad.
+[2015-10-06 22:48:21] <Liodain> Cool story bro.
+[2015-10-06 22:48:30] * Ombre is now known as Narrateur
+[2015-10-06 22:48:34] <Narrateur> Le lieu s'assombrit encore plus
+[2015-10-06 22:48:35] <Liodain> Ouais, bah s'il est encore plus dur à tuer que la dernière fois, on va pas aller loin.
+[2015-10-06 22:48:38] <Narrateur> Les égoûts se dématérialisent
+[2015-10-06 22:48:41] <Liodain> Eh, et ma question alors !
+[2015-10-06 22:48:49] <Narrateur> Et autour de vous, une côte
+[2015-10-06 22:48:51] <Liodain> Bordel, pire que l'Oracle.
+[2015-10-06 22:48:53] <Liodain> C'est pas peu dire.
+[2015-10-06 22:48:56] <Raaclu> Bah laisse le, je te paris que ce sera lorsqu'on arrivera là bas.
+[2015-10-06 22:49:02] <Narrateur> L'eau est d'une couleur rose vif, que l'on nomme ici okuh
+[2015-10-06 22:49:05] <Narrateur> Vous reconnaissez les lieux
+[2015-10-06 22:49:13] <Narrateur> Si c'est la mer d'okuh, c'est forcément l'île des moustiquaires
+[2015-10-06 22:49:27] <Narrateur> Vous êtes sur l'île aux Poulettes, dans la dimension Nipalohc.
+[2015-10-06 22:49:28] <Quon> :D
+[2015-10-06 22:49:32] * Narrateur set the topic to Dimension actuelle: Dimension Nipaloch | Oniro le fuyard (niv. 9) > Planeshift > Kutz > Wan > Exirel > Et on recommence...
+[2015-10-06 22:49:36] * Narrateur set the topic to Dimension actuelle: Dimension Nipalohc | Oniro le fuyard (niv. 9) > Planeshift > Kutz > Wan > Exirel > Et on recommence...
+[2015-10-06 22:49:40] * Narrateur is now known as Ombre
+[2015-10-06 22:49:46] <Ombre> Liodain: Avant que je parte. Une question, une réponse.
+[2015-10-06 22:50:38] <Liodain> Comment peut-on vous tuer, juste pour savoir ?
+[2015-10-06 22:50:54] <Liodain> ;D
+[2015-10-06 22:51:36] <Ombre> Je suis immortel. Je suis le seul à avoir survécu après la destruction de l'univers par l'Oracle, car je suis omniprésent et indestructible. Bonne quête. Trebla est également sur l'île, vous avez deux cibles à gérer.
+[2015-10-06 22:51:38] * Ombre is now known as Narrateur
+[2015-10-06 22:51:44] <Narrateur> Et l'Ombre disparait... dans l'ombre.
+[2015-10-06 22:51:50] <Raaclu> Et bien.
+[2015-10-06 22:51:56] <Liodain> Intéressant.
+[2015-10-06 22:52:03] <Narrateur> Intéressant, et étrange.
+[2015-10-06 22:52:06] <Narrateur> Mauvais augure, cette ombre.
+[2015-10-06 22:52:07] <Quon> ^^
+[2015-10-06 22:53:03] <Raaclu> Liodain: toi qui connais tout, tu aurais un endroit pour s'habiller ?
+[2015-10-06 22:53:23] <Raaclu> Je sais que ça devient un peu comme une fixette.
+[2015-10-06 22:53:29] <Raaclu> Mais ce serait pas si mal de ne plus être à poil.
+[2015-10-06 22:53:34] <Raaclu> Et puis on est plus que trois.
+[2015-10-06 22:53:55] <Liodain> Oui enfin
+[2015-10-06 22:54:02] <Liodain> Je suis à peine plus habillé.
+[2015-10-06 22:54:05] <Liodain> Bon.
+[2015-10-06 22:54:07] <Raaclu> Ah oui tiens.
+[2015-10-06 22:54:17] <Liodain> Raaclu: J'ai quand même une armure, moi.
+[2015-10-06 22:54:20] <Liodain> Mais en-dessous... bref.
+[2015-10-06 22:54:28] <Raaclu> Je n'imagine pas, mais je conçois.
+[2015-10-06 22:54:41] <Liodain> Narrateur: On s'arrête là en comptant nos morts, je suppute ?
+[2015-10-06 22:54:50] <Narrateur> Liodain: Qui a dit que c'était fini
+[2015-10-06 22:54:54] <Liodain> Je sais pas.
+[2015-10-06 22:54:58] <Raaclu> Narrateur: je vérifie qu'il n'y ait rien de dangereux dans le coin, ou rien qui serait du genre à venir vers nous pour nous agresser.
+[2015-10-06 22:54:58] <Narrateur> Vous êtes au bord de la mer, sur l'île aux Poulettes.
+[2015-10-06 22:55:00] <Liodain> Tu nous as pas demandé ce qu'on faisait.
+[2015-10-06 22:55:02] <Narrateur> Il peut encore se passer quelque chose.
+[2015-10-06 22:55:08] <Liodain> Bon bah.
+[2015-10-06 22:55:13] <Liodain> Je pars vers la forêt.
+[2015-10-06 22:55:19] <Liodain> Enfin, jungle.
+[2015-10-06 22:55:36] <Narrateur> Raaclu: Tu regardes autour de toi, tout semble clean. Il y a une forêt d'arbres en béton cartonneux vers l'intérieur des terres, et la mer d'okuh s'étend jusqu'à l'horizon dans les autres directions.
+[2015-10-06 22:55:49] <Raaclu> Ah. Ouais.
+[2015-10-06 22:55:51] <Raaclu> Je vais suivre Liodain.
+[2015-10-06 22:55:54] <Raaclu> Mais il passe devant.
+[2015-10-06 22:55:55] <Narrateur> 2/3
+[2015-10-06 22:55:56] <Raaclu> Il a une armure, lui.
+[2015-10-06 22:56:00] <Narrateur> Le groupe s'engage dans la forêt
+[2015-10-06 22:56:12] <Narrateur> Affaibli, mais vivant, il commence à marcher vers l'intérieur des terres
+[2015-10-06 22:56:14] <Narrateur> Tout semble normal.
+[2015-10-06 22:56:15] <Narrateur> Rien de bizarre.
+[2015-10-06 22:56:19] * Narrateur set -v Liodain
+[2015-10-06 22:56:19] * Narrateur set -v Quon
+[2015-10-06 22:56:19] * Narrateur set -v Raaclu
+[2015-10-06 22:56:28] <Narrateur> Tandis que le groupe avance, le monde se met à grésiller
+[2015-10-06 22:56:33] <Narrateur> Et le ciel s'illumine
+[2015-10-06 22:56:41] <Narrateur> La lumière remplace l'ombre
+[2015-10-06 22:56:46] <Narrateur> Une lumière familière
+[2015-10-06 22:56:54] <Narrateur> Celle de l'Oracle
+[2015-10-06 22:57:25] <Narrateur> Le groupe, fatigué, aveuglé par la puissante lumière, et alourdi par la chaleur du béton cartonneux, s'effondre au sol.
+[2015-10-06 22:57:34] <Narrateur> Que se passera-t-il ensuite?
+[2015-10-06 22:57:38] <Narrateur> Il parait que l'Ombre connait la réponse
+[2015-10-06 22:57:40] <Narrateur> Demandons-lui
+[2015-10-06 22:57:42] * Narrateur is now known as Ombre
+[2015-10-06 22:57:54] <Ombre> Réponse le jeudi 15 octobre à 20h30.
+[2015-10-06 22:57:57] ⇐ Ombre quit (leet.admin@hidden-C769B77C.bdx.modulonet.fr): Quit: ChatZilla 0.9.90.1-rdmsoft [XULRunner 22.0/20130619132145]

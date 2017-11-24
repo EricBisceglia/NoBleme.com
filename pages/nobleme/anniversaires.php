@@ -6,17 +6,19 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = 'communaute';
-$header_submenu   = 'membres';
-$header_sidemenu  = 'anniversaires';
-
-// Titre et description
-$page_titre = "Anniversaires";
-$page_desc  = "Anniversaires des NoBlemeux en cours et/ou à venir";
+$header_menu      = 'NoBleme';
+$header_sidemenu  = 'Anniversaires';
 
 // Identification
-$page_nom = "nobleme";
-$page_id  = "anniversaires";
+$page_nom = "Regarde les anniversaires à venir";
+$page_url = "pages/nobleme/anniversaires";
+
+// Langages disponibles
+$langage_page = array('FR','EN');
+
+// Titre et description
+$page_titre = ($lang == 'FR') ? "Anniversaires" : "Birthdays";
+$page_desc  = "Liste des anniversaires à venir des membres de NoBleme";
 
 
 
@@ -45,7 +47,7 @@ $qannivirl =  query(" SELECT  membres.id              ,
                               MONTH(membres.anniversaire)                                                                       ,
                               DAY(membres.anniversaire)                                                                         ,
                               membres.pseudonyme
-                    LIMIT     25 ");
+                    LIMIT     50 ");
 
 // Préparation des données
 $nannivirl = 0;
@@ -63,42 +65,48 @@ while($dannivirl = mysqli_fetch_array($qannivirl))
   {
     // Si c'est bon, on prépare les données pour l'affichage
     $annivirl_id[$nannivirl]      = $dannivirl['id'];
-    $annivirl_pseudo[$nannivirl]  = $dannivirl['pseudonyme'];
-    $annivirl_date[$nannivirl]    = jourfr($dannivirl['anniversaire']);
-    $annivirl_css[$nannivirl]     = ((time() - $dannivirl['derniere_visite']) < 2678400) ? ' gras' : ' ';
-    $annivirl_linkcss[$nannivirl] = ($dannivirl['admin'] || $dannivirl['sysop'] || $dannivirl['moderateur']) ? 'texte_blanc nolink' : 'dark blank ';
+    $annivirl_pseudo[$nannivirl]  = predata($dannivirl['pseudonyme']);
+    $annivirl_date[$nannivirl]    = jourfr($dannivirl['anniversaire'], $lang);
+    $annivirl_css[$nannivirl]     = ((time() - $dannivirl['derniere_visite']) < 864000) ? ' gras' : ' ';
+    $annivirl_linkcss[$nannivirl] = ($dannivirl['admin'] || $dannivirl['sysop']) ? 'texte_blanc nohover' : 'dark blank ';
+    $annivirl_linkcss[$nannivirl] = ($dannivirl['moderateur']) ? 'texte_nobleme_fonce' : $annivirl_linkcss[$nannivirl];
 
     // Déterminer le style des lignes qui sont aujourd'hui
     if(date('md') == (substr($dannivirl['anniversaire'],-5,2).substr($dannivirl['anniversaire'],-2,2)))
     {
       if ($dannivirl['admin'])
         $annivirl_css[$nannivirl] .= ' mise_a_jour texte_blanc gras';
-      else if ($dannivirl['sysop'] || $dannivirl['moderateur'])
-        $annivirl_css[$nannivirl] .= ' sysop texte_blanc gras';
-      else
+      else if ($dannivirl['sysop'])
+        $annivirl_css[$nannivirl] .= ' neutre texte_blanc gras';
+      else if ($dannivirl['moderateur'])
         $annivirl_css[$nannivirl] .= ' vert_background gras';
-      $annivirl_age[$nannivirl]   = 'Joyeux '.$dannivirl['xeme_anniv'].' ans !';
+      else
+        $annivirl_css[$nannivirl] .= ' gras';
+      $annivirl_age[$nannivirl]   = ($lang == 'FR') ? 'Joyeux '.$dannivirl['xeme_anniv'].' ans !' : 'Happy '.$dannivirl['xeme_anniv'].' years !';
     }
     else
     {
       // On calcule quand est l'anniversaire
       if((date('md')-(substr($dannivirl['anniversaire'],-5,2).substr($dannivirl['anniversaire'],-2,2))) > 0)
-        $annivirl_age[$nannivirl]    = dans(strtotime((date('Y')+1).'-'.(substr($dannivirl['anniversaire'],-5,2).'-'.(substr($dannivirl['anniversaire'],-2,2)))));
+        $annivirl_age[$nannivirl]    = dans(strtotime((date('Y')+1).'-'.(substr($dannivirl['anniversaire'],-5,2).'-'.(substr($dannivirl['anniversaire'],-2,2)))), $lang);
       else
-        $annivirl_age[$nannivirl]    = dans(strtotime((date('Y')).'-'.(substr($dannivirl['anniversaire'],-5,2).'-'.(substr($dannivirl['anniversaire'],-2,2)))));
+        $annivirl_age[$nannivirl]    = dans(strtotime((date('Y')).'-'.(substr($dannivirl['anniversaire'],-5,2).'-'.(substr($dannivirl['anniversaire'],-2,2)))), $lang);
       // On finit le style des lignes
       if ($dannivirl['admin'])
         $annivirl_css[$nannivirl] .= ' mise_a_jour texte_blanc gras';
-      else if ($dannivirl['sysop'] || $dannivirl['moderateur'])
-        $annivirl_css[$nannivirl] .= ' sysop texte_blanc gras';
-      else if ((time() - $dannivirl['derniere_visite']) < 2678400)
-        $annivirl_css[$nannivirl] .= ' nobleme_background';
+      else if ($dannivirl['sysop'])
+        $annivirl_css[$nannivirl] .= ' neutre texte_blanc gras';
+      else if ($dannivirl['moderateur'])
+        $annivirl_css[$nannivirl] .= ' vert_background gras';
+      else if ((time() - $dannivirl['derniere_visite']) < 864000)
+        $annivirl_css[$nannivirl] .= '';
     }
 
     // On peut incrémenter
     $nannivirl++;
   }
 }
+
 
 
 
@@ -121,7 +129,7 @@ $qannivnb = query(" SELECT    membres.id                                        
                               MONTH(DATE(FROM_UNIXTIME(membres.date_creation))) ,
                               DAY(DATE(FROM_UNIXTIME(membres.date_creation))) ,
                               membres.pseudonyme
-                    LIMIT     25 ");
+                    LIMIT     50 ");
 
 // Préparation des données
 $nannivnb = 0;
@@ -132,18 +140,21 @@ while($dannivnb = mysqli_fetch_array($qannivnb))
   {
     // Données de base
     $anb_id[$nannivnb]      = $dannivnb['id'];
-    $anb_user[$nannivnb]    = $dannivnb['pseudonyme'];
-    $anb_inscr[$nannivnb]   = jourfr($dannivnb['inscr']);
+    $anb_user[$nannivnb]    = predata($dannivnb['pseudonyme']);
+    $anb_inscr[$nannivnb]   = jourfr($dannivnb['inscr'], $lang);
     $anb_xanniv[$nannivnb]  = $dannivnb['xeme_anniv'];
-    $anb_linkcss[$nannivnb] = ($dannivnb['admin'] || $dannivnb['sysop'] || $dannivnb['moderateur']) ? 'texte_blanc nolink' : 'dark blank ';
+    $anb_linkcss[$nannivnb] = ($dannivnb['admin'] || $dannivnb['sysop']) ? 'texte_blanc nohover' : 'dark blank ';
+    $anb_linkcss[$nannivnb] = ($dannivnb['moderateur']) ? 'texte_nobleme_fonce' : $anb_linkcss[$nannivnb];
 
     // Déterminer le style pour toutes les lignes
     if($dannivnb['admin'])
       $anb_css[$nannivnb] = ' mise_a_jour texte_blanc gras';
-    else if($dannivnb['sysop'] || $dannivnb['moderateur'])
-      $anb_css[$nannivnb] = ' sysop texte_blanc gras';
-    else if((time() - $dannivnb['derniere_visite']) < 2678400)
-      $anb_css[$nannivnb] = ' nobleme_background gras';
+    else if($dannivnb['sysop'])
+      $anb_css[$nannivnb] = ' neutre texte_blanc gras';
+    else if($dannivnb['moderateur'])
+      $anb_css[$nannivnb] = ' vert_background gras';
+    else if((time() - $dannivnb['derniere_visite']) < 864000)
+      $anb_css[$nannivnb] = ' grisclair gras';
     else
       $anb_css[$nannivnb] = '';
 
@@ -151,19 +162,19 @@ while($dannivnb = mysqli_fetch_array($qannivnb))
     if((date('m-d',time()) == date('m-d',$dannivnb['date_creation'])))
     {
       if($anb_xanniv[$nannivnb] == 1)
-        $anb_xanniv[$nannivnb] = "Joyeux ".$anb_xanniv[$nannivnb]." an !";
+        $anb_xanniv[$nannivnb] = ($lang == 'FR') ? "Joyeux ".$anb_xanniv[$nannivnb]." an !" : "Happy ".$anb_xanniv[$nannivnb]." year !";
       else
-        $anb_xanniv[$nannivnb] = "Joyeux ".$anb_xanniv[$nannivnb]." ans !";
+        $anb_xanniv[$nannivnb] = ($lang == 'FR') ? "Joyeux ".$anb_xanniv[$nannivnb]." ans !" : "Happy ".$anb_xanniv[$nannivnb]." years !";;
       if(!$dannivnb['admin'])
-        $anb_css[$nannivnb] = $anb_css[$nannivnb].' vert_background gras';
+        $anb_css[$nannivnb] = $anb_css[$nannivnb].' gras';
     }
     else
     {
       $anb_css[$nannivnb] = $anb_css[$nannivnb];
       if((date('md')-(substr($dannivnb['inscr'],-5,2).substr($dannivnb['inscr'],-2,2))) > 0)
-        $anb_xanniv[$nannivnb] = dans(strtotime((date('Y')+1).'-'.(substr($dannivnb['inscr'],-5,2).'-'.(substr($dannivnb['inscr'],-2,2)))));
+        $anb_xanniv[$nannivnb] = dans(strtotime((date('Y')+1).'-'.(substr($dannivnb['inscr'],-5,2).'-'.(substr($dannivnb['inscr'],-2,2)))), $lang);
       else
-        $anb_xanniv[$nannivnb] = dans(strtotime((date('Y')).'-'.(substr($dannivnb['inscr'],-5,2).'-'.(substr($dannivnb['inscr'],-2,2)))));
+        $anb_xanniv[$nannivnb] = dans(strtotime((date('Y')).'-'.(substr($dannivnb['inscr'],-5,2).'-'.(substr($dannivnb['inscr'],-2,2)))), $lang);
     }
 
     // On peut incrémenter
@@ -176,113 +187,172 @@ while($dannivnb = mysqli_fetch_array($qannivnb))
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+if($lang == 'FR')
+{
+  // Header
+  $trad['titre']        = "Anniversaires";
+  $trad['soustitre']    = "Prochains anniversaires réels et NoBlemeux";
+  $trad['description']  = <<<EOD
+<p>
+  Cette page contient deux tableaux permettant de voir deux types d'anniversaires à venir :<br>
+  Le premier liste les <span class="gras">anniversaires réels</span> (vous pouvez remplir le votre dans les <a href="{$chemin}pages/user/public">réglages de votre compte</a>).<br>
+  Le second liste les <span class="gras">anniversaires NoBlemeux</span>, basés sur la date de création des comptes.
+</p>
+<p>
+  Les utilisateurs qui se sont <a href="{$chemin}pages/nobleme/online?noguest">connectés récemment</a> à leur compte apparaissent en <span class="gras">gras</span><br>
+  Les membres de <a class="gras" href="{$chemin}pages/nobleme/admins">l'équipe administrative</a> apparaissent dans leurs couleurs respectives.<br>
+</p>
+EOD;
+
+  // Tableaux
+  $trad['ann_reels']    = "ANNIVERSAIRES RÉELS";
+  $trad['ann_nobleme']  = "ANNIVERSAIRES NOBLEMEUX";
+  $trad['ann_pseudo']   = "PSEUDONYME";
+  $trad['ann_naiss']    = "DATE DE NAISSANCE";
+  $trad['ann_inscr']    = "DATE D'INSCRIPTION";
+  $trad['ann_iv']       = "ANNIVERSAIRE";
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Header
+  $trad['titre']        = "Birthdays";
+  $trad['soustitre']    = "Upcoming real life and virtual birthdays";
+  $trad['description']  = <<<EOD
+<p>
+  Below are two tables which contain two different types of upcoming birthdays:<br>
+  The first one lists <span class="gras">real life birthdays</span> (you can set yours in your <a href="{$chemin}pages/user/public">account settings</a>).<br>
+  The second one lists <span class="gras">NoBleme anniversaries</span>, based on the registration date of accounts.
+</p>
+<p>
+  Users that have <a href="{$chemin}pages/nobleme/online">recently logged into their account</a> will appear in <span class="gras">bold</span><br>
+  Members of the <a class="gras" href="{$chemin}pages/nobleme/admins">administrative team</a> will appear each in their respective formatting<br>
+</p>
+EOD;
+
+  // Tableaux
+  $trad['ann_reels']    = "REAL LIFE BIRTHDAYS";
+  $trad['ann_nobleme']  = "NOBLEME ANNIVERSARIES";
+  $trad['ann_pseudo']   = "NICKNAME";
+  $trad['ann_naiss']    = "BIRTHDAY";
+  $trad['ann_inscr']    = "REGISTRATION";
+  $trad['ann_iv']       = "BIRTHDAY";
+}
+
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/anniversaires.png" alt="Anniversaires">
-    </div>
-    <br>
+      <div class="texte">
 
-    <div class="body_main bigsize">
-      <span class="titre">Prochains anniversaires réels et noblemeux</span><br>
+        <h1><?=$trad['titre']?></h1>
+
+        <h5><?=$trad['soustitre']?></h5>
+
+        <?=$trad['description']?>
+
+      </div>
+
       <br>
-      Cette page contient deux tableaux permettant de prévoir deux types d'anniversaires à venir :<br>
-      Le premier liste les <span class="gras">anniversaires réels</span>, ceux que vous vivez chaque année dans la vie réelle. Pour apparaitre dans la liste, remplissez vos <a href="<?=$chemin?>pages/user/public">informations publiques</a>.<br>
-      Le secornd liste les <span class="gras">anniversaires noblemeux</span>, célébrant la date anniversaire de l'inscription de l'utilisateur sur NoBleme.<br>
       <br>
-      Les lignes ayant un <span class="vert_background">&nbsp;fond vert&nbsp;</span> signifient que l'anniversaire en question a lieu aujourd'hui.<br>
-      Les lignes ayant un <span class="nobleme_background gras">&nbsp;fond gris&nbsp;</span> et/ou dont le texte est en <span class="gras">gras</span> signifient que le membre concerné a été <a href="<?=$chemin?>pages/nobleme/online">actif récemment</a>.<br>
-      Les lignes ayant un <span class="sysop texte_blanc gras">&nbsp;fond orange&nbsp;</span> signifient qu'il s'agit d'un <a href="<?=$chemin?>pages/nobleme/admins">modérateur</a> ou d'un <a href="<?=$chemin?>pages/nobleme/admins">sysop</a> (modérateur global du site).<br>
-      Les lignes ayant un <span class="mise_a_jour texte_blanc gras">&nbsp;fond rouge&nbsp;</span> signifient qu'il s'agit de <a href="<?=$chemin?>pages/user/user?id=1">l'administrateur</a>.<br>
-    </div>
 
-    <br>
+      <div class="texte3">
 
-    <div class="body_main bigsize">
-      <table class="indiv">
-        <tr>
-          <td class="valign_top">
+        <div class="flexcontainer">
+          <div style="flex:1;margin-right:25px;">
 
-            <table class="cadre_gris intable">
-              <tr>
-                <td class="cadre_gris_titre gros" colspan="3">
-                  PROCHAINS ANNIVERSAIRES RÉELS
-                </td>
-              </tr>
-              <tr>
-                <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-                  Pseudonyme
-                </td>
-                <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-                  Date de naissance
-                </td>
-                <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-                  Anniversaire
-                </td>
-              </tr>
-              <?php for($i=0;$i<$nannivirl;$i++) { ?>
-              <tr>
-                <td class="cadre_gris cadre_gris_haut align_center<?=$annivirl_css[$i]?>">
-                  <a class="<?=$annivirl_linkcss[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$annivirl_id[$i]?>"><?=$annivirl_pseudo[$i]?></a>
-                </td>
-                <td class="cadre_gris cadre_gris_haut align_center<?=$annivirl_css[$i]?>">
-                  <?=$annivirl_date[$i]?>
-                </td>
-                <td class="cadre_gris cadre_gris_haut align_center<?=$annivirl_css[$i]?>">
-                  <?=$annivirl_age[$i]?>
-                </td>
-              </tr>
-              <?php } ?>
+            <table class="fullgrid titresnoirs nowrap">
+              <thead>
+                <tr>
+                  <th colspan="3" class="moinsgros">
+                    <?=$trad['ann_reels']?>
+                  </th>
+                </tr>
+                <tr>
+                  <th>
+                    <?=$trad['ann_pseudo']?>
+                  </th>
+                  <th>
+                    <?=$trad['ann_naiss']?>
+                  </th>
+                  <th>
+                    <?=$trad['ann_iv']?>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="align_center">
+                <?php for($i=0;$i<$nannivirl;$i++) { ?>
+                <tr>
+                  <td class="cadre_gris cadre_gris_haut align_center<?=$annivirl_css[$i]?>">
+                    <a class="<?=$annivirl_linkcss[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$annivirl_id[$i]?>"><?=$annivirl_pseudo[$i]?></a>
+                  </td>
+                 <td class="cadre_gris cadre_gris_haut align_center<?=$annivirl_css[$i]?>">
+                   <?=$annivirl_date[$i]?>
+                 </td>
+                 <td class="cadre_gris cadre_gris_haut align_center<?=$annivirl_css[$i]?>">
+                   <?=$annivirl_age[$i]?>
+                 </td>
+               </tr>
+               <?php } ?>
+              </tbody>
             </table>
 
-          </td>
+          </div>
+          <div style="flex:1;margin-left:25px;">
 
-          <td>
-            &nbsp;
-          </td>
-
-          <td class="valign_top">
-
-            <table class="cadre_gris intable">
-              <tr>
-                <td class="cadre_gris_titre gros" colspan="3">
-                  PROCHAINS ANNIVERSAIRES NOBLEMEUX
-                </td>
-              </tr>
-              <tr>
-                <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-                  Pseudonyme
-                </td>
-                <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-                  Date d'inscription
-                </td>
-                <td class="cadre_gris_sous_titre cadre_gris_haut moinsgros">
-                  Anniversaire
-                </td>
-              </tr>
-              <?php for($i=0;$i<$nannivnb;$i++) { ?>
-              <tr>
-                <td class="cadre_gris cadre_gris_haut align_center<?=$anb_css[$i]?>">
-                  <a class="<?=$anb_linkcss[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$anb_id[$i]?>"><?=$anb_user[$i]?></a>
-                </td>
-                <td class="cadre_gris cadre_gris_haut align_center<?=$anb_css[$i]?>">
-                  <?=$anb_inscr[$i]?>
-                </td>
-                <td class="cadre_gris cadre_gris_haut align_center<?=$anb_css[$i]?>">
-                  <?=$anb_xanniv[$i]?>
-                </td>
-              </tr>
-              <?php } ?>
+            <table class="fullgrid titresnoirs nowrap">
+              <thead>
+                <tr>
+                  <th colspan="3" class="moinsgros">
+                    <?=$trad['ann_nobleme']?>
+                  </th>
+                </tr>
+                <tr>
+                  <th>
+                    <?=$trad['ann_pseudo']?>
+                  </th>
+                  <th>
+                    <?=$trad['ann_inscr']?>
+                  </th>
+                  <th>
+                    <?=$trad['ann_iv']?>
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="align_center">
+                <?php for($i=0;$i<$nannivnb;$i++) { ?>
+                <tr>
+                  <td class="cadre_gris cadre_gris_haut align_center<?=$anb_css[$i]?>">
+                    <a class="<?=$anb_linkcss[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$anb_id[$i]?>"><?=$anb_user[$i]?></a>
+                  </td>
+                  <td class="cadre_gris cadre_gris_haut align_center<?=$anb_css[$i]?>">
+                    <?=$anb_inscr[$i]?>
+                  </td>
+                  <td class="cadre_gris cadre_gris_haut align_center<?=$anb_css[$i]?>">
+                    <?=$anb_xanniv[$i]?>
+                  </td>
+                </tr>
+                <?php } ?>
+              </tbody>
             </table>
 
-          </td>
-        </tr>
-      </table>
-    </div>
+          </div>
+        </div>
+
+      </div>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

@@ -13,14 +13,15 @@
 **  Paramètres :                                                                                                                         **
 **                                                                                                                                       **
 **           monobjet : ID de la ligne d'une table dont la visibilité va être togglée                                                    **
+**              table : Paramètre optionnel, transforme l'élément en table-row au lieu de block, à utiliser pour les <tr>                **
 **                                                                                                                                       **
 **  Exemple d'utilisation :                                                                                                              **
 **                                                                                                                                       **
-**           onClick="toggle_row('monobjet')                                                                                             **
+**           onClick="toggle_row('monobjet')";                                                                                           **
 **                                                                                                                                       **
 ******************************************************************************************************************************************/
 
-function toggle_row(monobjet) {
+function toggle_row(monobjet,table) {
 
   // On récupère le statut de la ligne
   var cssobjet = document.getElementById(monobjet);
@@ -28,7 +29,7 @@ function toggle_row(monobjet) {
 
   // On toggle la visibilité de la ligne
   if(visobjet == 'none')
-    cssobjet.style.display = 'table-row';
+    cssobjet.style.display = (typeof table === 'undefined') ? 'block' : 'table-row';
   else
     cssobjet.style.display = 'none';
 }

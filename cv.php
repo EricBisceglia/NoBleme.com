@@ -1,20 +1,184 @@
-﻿<?php /***********************************************************************************************************************************/
+<?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                             INITIALISATION                                                            */
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './inc/includes.inc.php'; // Inclusions communes
 
-// Titre et description
-$page_titre = "CV de Éric Bisceglia";
-$page_desc  = "Curriculum Vitae de Éric Bisceglia aka Bad, administrateur et développeur de NoBleme";
-
 // Identification
-$page_nom = "nobleme";
-$page_id  = "cv";
+$page_nom = "Consulte le CV de Bad";
+$page_url = "cv";
 
-// On force le popout
-$_GET['popout'] = 1;
+// On vire le menu
+$_GET['popup'] = 1;
+
+// Langages disponibles
+$langage_page = array('FR','EN');
+
+// Titre et description
+$page_titre = ($lang == 'FR') ? "CV de Éric Bisceglia" : "Éric Bisceglia's CV";
+$page_desc  = "Curriculum Vitæ de Éric Bisceglia, développeur.";
+
+// CSS
+$css = array('cv');
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                        TRAITEMENT DU POST-DATA                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+// Changement de langue
+if(isset($_GET['en']))
+{
+  $_SESSION['lang'] = 'EN';
+  $lang             = 'EN';
+}
+if(isset($_GET['fr']))
+{
+  $_SESSION['lang'] = 'FR';
+  $lang             = 'FR';
+}
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+if($lang == 'FR')
+{
+  // CV: Titres
+  $trad['soustitre']      = "Développeur informatique";
+  $trad['langlink']       = "en";
+  $trad['langswitch']     = "Click here for the english version";
+  $trad['domicile']       = "Habite Paris, France";
+  $temp_age               = floor((strtotime(date('Y-m-d'))-strtotime('1988-08-26'))/31556926);
+  $trad['naissance']      = "Né le 26 août 1988 ($temp_age ans)";
+  $trad['active']         = "Développeur depuis 2007";
+
+  // CV: Parcours professionel
+  $trad['parcours']       = "Parcours professionel";
+  $trad['aujourdhui']     = "Aujourd'hui";
+  $trad['work_mtd2']      = "CTO (Directeur informatique)";
+  $trad['work_free2']     = "Sous secret professionel";
+  $trad['work_mtd']       = "Développeur de l'intranet";
+  $trad['work_meca']      = "Développement logiciel interne";
+  $trad['work_free']      = "Développement de jeux en flash";
+
+  // CV: Projets personnels
+  $trad['projets']        = "Projets personnels";
+  $trad['perso_nobleme']  = "Site internet et communauté";
+  $trad['perso_steeldb']  = "Base de données à usage commercial";
+  $trad['perso_dix']      = "Exploitation d'un format propriétaire";
+  $trad['perso_nrm']      = "MMO de stratégie via navigateur";
+  $trad['perso_nbrpg']    = "Jeu de rôle multijoueur via IRC";
+
+  // CV: Compétences techniques
+  $trad['skill']          = "Compétences techniques";
+  $trad['skill_maitre']   = "Languages maîtrisés";
+  $trad['skill_partiel']  = "Maîtrise partielle";
+  $trad['skill_os']       = "Systèmes d'exploitation";
+  $trad['skill_bdd']      = "Bases de données";
+  $trad['skill_soft']     = "Logiciels";
+
+  // CV: Compatences linguistiques
+  $trad['lang']           = "Langages";
+  $trad['lang_cefr']      = "Échelle CEFR";
+  $trad['lang_cefr_href'] = "https://fr.wikipedia.org/wiki/Cadre_europ%C3%A9en_commun_de_r%C3%A9f%C3%A9rence_pour_les_langues#.C3.89chelle_globale";
+  $trad['lang_resume']    = "Français natif ; Bilingue anglais ; Allemand correct ; Bases de russe, espagnol, et autres langages";
+  $trad['lang_oral']      = "Oral";
+  $trad['lang_lecture']   = "Lecture";
+  $trad['lang_ecriture']  = "Écriture";
+  $trad['lang_fr']        = "Français";
+  $trad['lang_en']        = "Anglais";
+  $trad['lang_de']        = "Allemand";
+  $trad['lang_ru']        = "Russe";
+  $trad['lang_es']        = "Espagnol";
+
+  // CV: Informations complémentaires
+  $trad['extra']          = "Informations complémentaires";
+  $trad['extra_text']     = <<<EOD
+Vous trouverez des exemples illustrés de mes compétences dans le <a class="gras souligne" href="cv?portfolio#portfolio">portfolio</a> qui accompagne ce CV.<br>
+<br>
+Outre le développement informatique (ma passion principale), je suis un passionné de littérature, histoire, sociologie, game design, science-fiction, et musique moderne.<br>
+Je gère l'héritage culturel de la collection <a class="gras" href="http://www.jazzhot.net/PBEvents.asp?ItmID=23592">photographique</a> et <a class="gras" href="http://bdzoom.com/60445/actualites/deces-de-jacques-bisceglia/">littéraire</a> de mon défunt père, <a class="gras" href="https://www.citizenjazz.com/Jacques-Bisceglia-par-Jerome-Merli.html">Jacques Bisceglia</a>.<br>
+J'ai pratiqué le roller de vitesse en compétition de 2003 à 2005, et je continue à le pratiquer en amateur.<br>
+<br>
+N'hésitez pas à me contacter via mon email <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> ou sur <a class="gras" href="{$chemin}pages/irc/index">IRC</a>.
+EOD;
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // CV: Titres
+  $trad['soustitre']      = "Senior developer";
+  $trad['langlink']       = "fr";
+  $trad['langswitch']     = "Click here for the french version";
+  $trad['domicile']       = "Lives in Paris, France";
+  $temp_age               = floor((strtotime(date('Y-m-d'))-strtotime('1988-08-26'))/31556926);
+  $trad['naissance']      = "Born august 26, 1988 (age $temp_age)";
+  $trad['active']         = "Developer since 2007";
+
+  // CV: Parcours professionel
+  $trad['parcours']       = "Work experience";
+  $trad['aujourdhui']     = "Today";
+  $trad['work_mtd2']      = "CTO + lead developer";
+  $trad['work_free2']     = "Details protected by a NDA";
+  $trad['work_mtd']       = "Intranet development";
+  $trad['work_meca']      = "Custom software development";
+  $trad['work_free']      = "Flash game development";
+
+  // CV: Projets personnels
+  $trad['projets']        = "Personal projets";
+  $trad['perso_nobleme']  = "Website and community";
+  $trad['perso_steeldb']  = "Database for commercial use";
+  $trad['perso_dix']      = "Proprietary format analysis tool";
+  $trad['perso_nrm']      = "Browser based strategy MMO";
+  $trad['perso_nbrpg']    = "Multiplayer game played through IRC";
+
+  // CV: Compétences techniques
+  $trad['skill']          = "Technical skills";
+  $trad['skill_maitre']   = "Mastered languages";
+  $trad['skill_partiel']  = "Strong knowledge";
+  $trad['skill_os']       = "Operating systems";
+  $trad['skill_bdd']      = "Databases";
+  $trad['skill_soft']     = "Software";
+
+  // CV: Compatences linguistiques
+  $trad['lang']           = "Languages";
+  $trad['lang_cefr']      = "CEFR scale";
+  $trad['lang_cefr_href'] = "https://en.wikipedia.org/wiki/Common_European_Framework_of_Reference_for_Languages#Common_reference_levels";
+  $trad['lang_resume']    = "French native ; Fluent english ; Decent german ; Bases of russian, spanish, and other languages";
+  $trad['lang_oral']      = "Spoken";
+  $trad['lang_lecture']   = "Read";
+  $trad['lang_ecriture']  = "Written";
+  $trad['lang_fr']        = "French";
+  $trad['lang_en']        = "English";
+  $trad['lang_de']        = "German";
+  $trad['lang_ru']        = "Russian";
+  $trad['lang_es']        = "Spanish";
+
+  // CV: Informations complémentaires
+  $trad['extra']          = "Extra information";
+  $trad['extra_text']     = <<<EOD
+You will find illustrated examples of my skills in the <a class="gras souligne" href="cv?portfolio#portfolio">portfolio</a> which accompanies this CV.<br>
+<br>
+Other than computer programming (my main passion), I am passionate about literature, history, sociology, game design, science fiction, and modern music.<br>
+I manage the cultural inheritance (photographs and books) of my deceased father, <a class="gras" href="http://inconstantsol.blogspot.fr/2013/03/jacques-bisceglia-1940-2013.html">Jacques Bisceglia</a>.<br>
+I've practiced competitive rollerblading from 2003 to 2005, and still practice it as an amateur.<br>
+<br>
+Do not hesitate to contact me by e-mail at <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> or through <a class="gras" href="{$chemin}pages/irc/index">IRC</a>.
+EOD;
+}
 
 
 
@@ -25,861 +189,729 @@ $_GET['popout'] = 1;
 /*                                                                                                                                       */
 /******************************************************************************************************/ include './inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/cv.png" alt="Curricilum Vitæ">
-    </div>
-    <br>
+      <div class="texte">
 
-    <?php if(!isset($_GET['en'])) { ?>
+        <br>
+        <br>
 
-    <div class="body_main midsize">
-      <table class="indiv">
-        <tr>
-          <td>
-            <span class="gros gras">Éric Bisceglia</span><br>
-            <span class="moinsgros gras">Développeur</span><br>
-          </td>
-          <td class="align_right valign_top">
-            <a class="dark blank gras" href="cv?en">Click here for the english version</a>
-          </td>
-        </tr>
-      </table>
+        <div class="flexcontainer">
+
+          <div style="flex:1">
+            <h1>Éric Bisceglia</h1>
+            <h5><?=$trad['soustitre']?></h5>
+            <a class="gras souligne" href="cv?<?=$trad['langlink']?>"><?=$trad['langswitch']?></a>
+          </div>
+
+          <div class="align_right" style="flex:1;">
+            <p>
+              <?=$trad['domicile']?><br>
+              <?=$trad['active']?><br>
+              <?=$trad['naissance']?><br>
+              E-mail : <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a>
+            </p>
+          </div>
+
+        </div>
+
+        <br>
+        <hr>
+        <br>
+        <h5 class="alinea"><?=$trad['parcours']?></h5>
+        <br>
+
+        <div class="flexcontainer">
+
+          <div style="flex:auto">
+            2016 - <?=$trad['aujourdhui']?><br>
+            2015 - 2016<br>
+            2010 - 2015<br>
+            2009 - 2010<br>
+            2007 - 2009
+          </div>
+
+          <div style="flex:auto">
+            <a class="gras" href="http://www.mtd-finance.fr">MTD Finance</a> - <?=$trad['work_mtd2']?><br>
+            <span class="gras texte_noir">Freelance</span> - <?=$trad['work_free2']?><br>
+            <a class="gras" href="http://www.mtd-finance.fr">MTD Finance</a> - <?=$trad['work_mtd']?><br>
+            <a class="gras" href="http://www.mecamatic.fr">Mécamatic</a> - <?=$trad['work_meca']?><br>
+            <span class="gras texte_noir">Freelance</span> - <?=$trad['work_free']?>
+          </div>
+
+          <div style="flex:auto">
+            PHP - MySQL - JavaScript<br>
+            Python - PostgreSQL - React.js<br>
+            PHP - MySQL - JavaScript<br>
+            Filemaker - Perl - AppleScript<br>
+            Flash - Actionscript
+          </div>
+
+        </div>
+
+        <br>
+        <hr>
+        <br>
+        <h5 class="alinea"><?=$trad['projets']?></h5>
+        <br>
+
+        <div class="flexcontainer">
+
+          <div style="flex:auto">
+            2005 - <?=$trad['aujourdhui']?><br>
+            2010 - 2011<br>
+            2011 - 2012<br>
+            2006 - 2009<br>
+            2006 - 2015
+          </div>
+
+          <div style="flex:auto">
+            <a class="gras" href="http://nobleme.com/">NoBleme</a> - <?=$trad['perso_nobleme']?><br>
+            <span class="gras texte_noir">SteelDB</span> - <?=$trad['perso_steeldb']?><br>
+            <span class="gras texte_noir">Dix</span> - <?=$trad['perso_dix']?><br>
+            <span class="gras texte_noir">NRM Online</span> - <?=$trad['perso_nrm']?><br>
+            <span class="gras texte_noir">NBRPG</span> - <?=$trad['perso_nbrpg']?>
+          </div>
+
+          <div style="flex:auto">
+            PHP - MySQL<br>
+            Perl - Filemaker<br>
+            C - Bash - PHP<br>
+            PHP - MySQL<br>
+            C - MySQL
+          </div>
+
+          <div style="flex:auto">
+            <a class="gras" href="cv?portfolio#nobleme">Portfolio : NoBleme</a><br>
+            <a class="gras" href="cv?portfolio#steeldb">Portfolio : SteelDB</a><br>
+            <a class="gras" href="cv?portfolio#dix">Portfolio : Dix</a><br>
+            <a class="gras" href="cv?portfolio#nrm">Portfolio : NRM Online</a><br>
+            <a class="gras" href="cv?portfolio#nbrpg">Portfolio : NBRPG</a>
+          </div>
+
+        </div>
+
+        <br>
+        <hr>
+        <br>
+        <h5 class="alinea"><?=$trad['skill']?></h5>
+        <br>
+
+        <div class="flexcontainer">
+
+          <div style="flex:1">
+            <?=$trad['skill_maitre']?><br>
+            <?=$trad['skill_partiel']?><br>
+            <?=$trad['skill_os']?><br>
+            <?=$trad['skill_bdd']?><br>
+            <?=$trad['skill_soft']?>
+          </div>
+
+          <div style="flex:3">
+            C ; PHP ; SQL ; JavaScript<br>
+            C++ ; Python ; Perl ; Java<br>
+            MySQL ; PostgreSQL ; Filemaker<br>
+            FreeBSD ; Linux ; Windows ; OSX<br>
+            Hg/Git/SVN ; Flash/ActionScript ; GtkRadiant ; Qt
+          </div>
+
+        </div>
+
+        <br>
+        <hr>
+        <br>
+        <h5 class="alinea"><?=$trad['lang']?> (<a href="<?=$trad['lang_cefr_href']?>"><?=$trad['lang_cefr']?></a>)</h5>
+        <br>
+        <span class="gras"><?=$trad['lang_resume']?></span><br>
+        <br>
+
+        <div class="flexcontainer">
+
+          <div style="flex:1">
+            <?=$trad['lang_oral']?><br>
+            <?=$trad['lang_lecture']?><br>
+            <?=$trad['lang_ecriture']?>
+          </div>
+
+          <div style="flex:1">
+            <?=$trad['lang_fr']?> C2<br>
+            <?=$trad['lang_fr']?> C2<br>
+            <?=$trad['lang_fr']?> C2
+          </div>
+
+          <div style="flex:1">
+            <?=$trad['lang_en']?> C2<br>
+            <?=$trad['lang_en']?> C2<br>
+            <?=$trad['lang_en']?> C2
+          </div>
+
+          <div style="flex:1">
+            <?=$trad['lang_de']?> A2<br>
+            <?=$trad['lang_de']?> B1<br>
+            <?=$trad['lang_de']?> A2
+          </div>
+
+          <div style="flex:1">
+            <?=$trad['lang_ru']?> A1<br>
+            <?=$trad['lang_ru']?> A2<br>
+            <?=$trad['lang_ru']?> A1
+          </div>
+
+          <div style="flex:1">
+            <?=$trad['lang_es']?> A1<br>
+            <?=$trad['lang_es']?> A2<br>
+            <?=$trad['lang_es']?> A1
+          </div>
+
+        </div>
+
+        <br>
+        <hr>
+        <br>
+        <h5 class="alinea"><?=$trad['extra']?></h5>
+
+        <p>
+          <?=$trad['extra_text']?>
+        </p>
+
+      </div>
+
       <br>
-      Habite Paris, France<br>
-      Né le 26 août 1988 (<?=floor((strtotime(date('Y-m-d'))-strtotime('1988-08-26'))/31556926)?> ans)<br>
-      E-Mail : <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a><br>
+      <br>
+
+
+
+
+      <?php if(isset($_GET['portfolio']) && $lang == 'FR') { ?>
+
+      <br>
+      <br>
       <br>
       <hr>
       <br>
-      <span class="alinea gras">Parcours professionnel :</span><br>
       <br>
-      <table>
-        <tr>
-          <td class="spaced">2016 - Aujourd'hui</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="http://www.mtd-finance.fr/">MTD Finance</a> : CTO (Directeur informatique)</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">PHP - MySQL - JavaScript</td>
-        </tr>
-        <tr>
-          <td class="spaced">2015 - 2016</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">Freelance</span> : Sous secret professionnel</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">C - Python - PostgreSQL</td>
-        </tr>
-        <tr>
-          <td class="spaced">2010 - 2015</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="http://www.mtd-finance.fr/">MTD Finance</a> : Développement intranet</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">PHP - MySQL - JavaScript</td>
-        </tr>
-        <tr>
-          <td class="spaced">2009 - 2010</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="http://www.mecamatic.fr/">Mécamatic</a> : Développement logiciel interne</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">FileMaker - Perl - AppleScript</td>
-        </tr>
-        <tr>
-          <td class="spaced">2007 - 2009</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">Freelance</span> : Développement de jeux en Flash</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Flash - ActionScript</td>
-        </tr>
-      </table>
+
+      <div class="texte" id="portfolio">
+
+        <br>
+        <br>
+
+        <h1>Portfolio</h1>
+        <h5>Exemples de projets personnels</h5>
+
+        <p>
+          Par respect du secret professionnel et de mes anciens employeurs, je ne vais pas parler de mes anciens emplois dans mon portfolio. À la place, je vais me servir de projets personnels (dont un à usage commercial) pour illustrer mes compétences de développeur informatique.<br>
+          <br>
+          Il s'agit principalement de projets que j'ai réalisés parfois pour apprendre, parfois pour le plaisir, parfois pour les deux à la fois. J'apprécie la production et le partage de contenu gratuit, par conséquent je ne monétise jamais ce que je développe.
+        </p>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <br id="nobleme">
+
+        <h5 class="alinea">NoBleme.com : Site internet et communauté depuis 2005</h5>
+        <span class="alinea">PHP - MySQL - JavaScript - Entièrement open source</span>
+
+        <p>
+          Après avoir pris le temps d'apprendre les bases du développement web et de l'administration d'un serveur UNIX, j'ai inauguré le site internet <a class="gras" href="http://nobleme.com">NoBleme.com</a> en Mars 2005.<br>
+          <br>
+          À l'origine, NoBleme devait servir à héberger les vidéos d'un ami étudiant en cinéma, aspirant à devenir réalisateur. Le défi technologique était énorme, à une époque où les sites de streaming vidéo publics et gratuits (tels YouTube) n'existaient pas encore.<br>
+          <br>
+          Au fur et à mesure des années, une communauté internet s'est crée autour de NoBleme. La partie streaming vidéo a rapidement disparu (trop intense en ressources serveur pour la conserver), et NoBleme est devenu un site généraliste centré sur sa communauté, qui organise régulièrement des <a class="gras" href="<?=$chemin?>pages/irl/index">rencontres IRL</a>.
+        </p>
+
+        <p>
+          Le code source de NoBleme est entièrement libre et open source, publié sous une license permissive qui permet de le réutiliser. Il est visible publiquement sur Bitbucket : <a class="gras" href="https://bitbucket.org/EricBisceglia/nobleme.com/overview">voir le code source de NoBleme.com</a><br>
+          <br>
+          Vous trouverez plus d'informations sur les aspects techniques du développement de NoBleme.com et sur mes convictions de développeur en visitant les <a class="gras" href="<?=$chemin?>pages/nobleme/coulisses">coulisses de NoBleme</a>
+        </p>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <br id="steeldb">
+
+        <h5 class="alinea">SteelDB : Logiciel de traduction pour l'industrie lourde</h5>
+        <span class="alinea">Perl - FileMaker - AppleScript - Développé de 2010 à 2011</span>
+
+        <p>
+          SteelDB est le nom de code interne d'un projet commercial que j'ai réalisé en 2010 et continué à maintenir jusqu'en 2011. Il s'agit d'un logiciel interne répondant à une problématique spécifique : Une entreprise ayant un environnement Mac OSX, et désirant utiliser le logiciel (très limité) Filemaker pour leur outil interne.<br>
+          <br>
+          Étant à l'époque un des seuls développeurs sur Paris ayant à la fois de l'expérience avec Filemaker, OSX, et l'industrie lourde, j'ai décidé de tenter ma chance. Sur mon temps libre, j'ai assemblé un prototype d'outil utilisant des hooks système en AppleScript permettant d'appeler des scripts en Perl depuis Filemaker afin de contourner les limitations du logiciel. Certaines actions impossibles à l'époque depuis Filemaker (envoyer un e-mail, exporter un PDF, etc.) deviennent ainsi relativement simples à réaliser.<br>
+          <br>
+          L'objectif de SteelDB est de gérer tous les éléments suivants :<br>
+          - Un carnet d'adresses de contacts, clients et fournisseurs<br>
+          - Un utilitaire de traductions techniques pointues automatisées<br>
+          - Un suivi du processus allant de la commande au suivi après vente<br>
+          - Une liste de pièces d'industrie lourde stockée de façon bilingue (français/anglais)<br>
+          - D'autres outils plus spécifiques dont je ne peux pas parler sans ruiner le secret professionel
+        </p>
+
+        <br>
+
+        <p>
+          Voici des captures d'écran du processus de développement de SteelDB, lourdement censurées des données professionelles qu'elle contiennent. Le développement a commencé par la conception de la structure de données, continué par la gestion des dossiers et des éléments qui y sont liés, et fini par la gestion des exports PDF et des e-mails automatisés.
+        </p>
+
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_struct1.png" alt="SteelDB"><br>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_struct2.png" alt="SteelDB"><br>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_struct3.png" alt="SteelDB"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_dossier.png" alt="SteelDB"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_ddp.png" alt="SteelDB"><br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_ddp_details.png" alt="SteelDB"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_entreprise.png" alt="SteelDB"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_hotel.png" alt="SteelDB"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_pdf.png" alt="SteelDB"><br>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <br id="dix">
+
+        <h5 class="alinea">Starcraft Dix : Génération de statistiques à partir de fichiers .MPQ</h5>
+        <span class="alinea">C - Bash - PHP - MySQL - JavaScript - Developpé de 2011 à 2012</span>
+
+        <p>
+          En 2011, je jouais compétitivement au jeu vidéo <a class="gras" href="https://fr.wikipedia.org/wiki/StarCraft_2:_Wings_of_Liberty">Starcraft II</a>. À l'époque, le jeu ne proposait pas de statistiques sur ses performances à long terme. Afin de mesurer mon progrès et de déterminer les talents spécifiques que je devais entrainer afin de m'améliorer, j'ai décidé de créer mon propre utilitaire de statistiques.
+        </p>
+
+        <p>
+          À la fin de chaque partie de Starcraft II, une option permettait de produire automatiquement un fichier .MPQ contenant le replay de la partie (qui permet de re-visionner ses parties passées). Le <a class="gras" href="https://en.wikipedia.org/wiki/MPQ">format MPQ</a> est malheureusement propriétaire, mais d'autres développeurs curieux avaient déjà su comment en extraire des informations. En me basant sur la documentation du format MPQ effectuée par d'autres avant moi, j'ai crée mon propre script en C permettant de parcourir un fichier MPQ et d'en extraire les informations pertinentes.
+        </p>
+
+        <p>
+          Maintenant que je disposais de la capacité à extraire les informations sur mes parties passées, il ne me restait plus qu'à les exploiter. Pour ce faire, j'ai déployé sur mon réseau local un script en Bash qui se charge d'automatiquement insérer les statistiques des replays dans une base de données MySQL, ainsi qu'un environnement local en PHP + JavaScript permettant d'exploiter ces statistiques.
+        </p>
+
+        <br>
+
+        <p>
+          Voici quelques captures d'écran de l'interface utilisateur que j'utilisais sur mon réseau local. J'ai maintenu Starcraft Dix jusqu'en 2012, lorsqu'un outil de statistiques intégré au jeu a enfin été ajouté dans Starcraft II.
+        </p>
+
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/dix_tableau.png" alt="Starcraft Dix"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/dix_stats.png" alt="Starcraft Dix"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/dix_search.png" alt="Starcraft Dix"><br>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <br id="nrm">
+
+        <h5 class="alinea">NRM Online : Jeu de stratégie multijoueur par navigateur</h5>
+        <span class="alinea">PHP - MySQL - JavaScript - Développé de 2006 à 2009</span>
+
+        <p>
+          Le milieu des années 2000 est marqué sur internet par la mode des jeux via navigateur. En plein dans cette mode, un jeu nommé Super Robot Wars Online capture l'attention de quelques centaines de joueurs, avant de périr pour cause de manque de temps libre de son administrateur. Moi-même joueur de Super Robot Wars Online, je décide de créer mon propre jeu via navigateur sur le même thème afin de donner un nouveau jeu à ceux qui veulent continuer à jouer à quelque chose qui ressemble à Super Robot Wars Online.
+        </p>
+
+        <p>
+          Le NRM Online (NoBleme Robot Mayhem Online) a ouvert ses portes en 2006, et été maintenu activement jusqu'en 2009. Tout du long de son existence, le jeu a été entièrement gratuit. Le concept du NRM Online était que chaque joueur incarnait un pilote de robot de combat, et devait utiliser un système de stratégie complexe pour gagner des combats de robots contre les autres joueurs.
+        </p>
+
+        <p>
+          Durant ses 4 ans d'existence, j'ai introduit en continu de nouvelles idées dans le NRM. Ces changements constants ont fini par lasser les joueurs et ont provoqué la mort lente du jeu, mais m'ont également permis d'apprendre de nombreuses leçons de game design et de me donner la passion du développement.
+        </p>
+
+        <br>
+
+        <p>
+          Voici des captures d'écran du NRM Online lors de sa 27ème saison, en 2007. Souvenez vous que nous sommes à l'époque au milieu des années 2000, le design des sites internet était... très différent.
+        </p>
+
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nrm_index.png" alt="NRM Online"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nrm_robot.png" alt="NRM Online"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nrm_assign.png" alt="NRM Online"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nrm_combat.png" alt="NRM Online"><br>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <br id="nbrpg">
+
+        <h5 class="alinea">NoBlemeRPG : Jeu de rôle multijoueur via IRC</h5>
+        <span class="alinea">C - MySQL - Bash - IRC - Développé par intermittence de 2006 à 2015</span>
+
+        <p>
+          Lorsque j'étais adolescent, à chaque fois que j'avais un week-end de libre, je m'en servais pour organiser des sessions de <a class="gras" href="https://fr.wikipedia.org/wiki/Donjons_et_Dragons">Donjons &amp; Dragons</a> et autres <a class="gras" href="https://fr.wikipedia.org/wiki/Jeu_de_r%C3%B4le_sur_table">jeux de rôle</a>. Je prenais beaucoup de plaisir à être le maître du donjon et à inventer des histoires et des univers pour mes joueurs.
+        </p>
+
+        <p>
+          Le temps est passé, et la vie a  évolué. Je me suis mis à travailler le week-end, des amis ont déménagé, organiser des sessions de jeux de rôle devenait de plus en plus compliqué. Heureusement, internet était en train de se propager, et nous permettait de continuer à jouer via des serveurs de <a class="gras" href="<?=$chemin?>pages/irc/index">chat IRC</a>.
+        </p>
+
+        <p>
+          Bien entendu, jouer par écrit n'est pas du tout équivalent à jouer en présence physique de ses joueurs. Il est plus difficile de communiquer des émotions, les actions ont un temps de réaction beaucoup plus long, et il y a une grande quantité de temps morts à meubler causés par la lenteur d'écriture au clavier.
+        </p>
+
+        <p>
+          Pour s'adapter au changement de méthode de jeu, j'ai décidé de créer mon propre jeu de rôle. Pour ce faire, j'ai suivi des tutoriels de programmation afin d'apprendre le C, puis j'ai assemblé un utilitaire minimaliste en ligne de commande qui permettait de préparer certaines phrases et de résoudre certaines actions. Autour de ce moteur de jeu, j'ai également crée un univers, auquel j'ai donné le nom de la communauté internet à laquelle le jeu était destiné, NoBleme. C'est ainsi que le NoBlemeRPG est né.
+        </p>
+
+        <p>
+          Au fur et à mesure que j'ai appris à programmer de façon professionelle, le programme d'administration du NoBlemeRPG a évolué en complexité. À la première version minimaliste de 2006 du jeu succède une seconde version en 2007, possédant une interface graphique permettant de réduire au maximum les délais entre les actions et réactions lors des sessions de jeu. En 2009 sort la version finale du NoBlemeRPG, rendant l'interface graphique du jeu extrêmement complexe mais permettant de donner une liberté d'action infinie aux joueurs et de faire aller les sessions de jeu dans n'importe quelle direction créative sans devoir à chaque fois préalablement modifier le code source du jeu.
+        </p>
+
+        <p>
+          Après 9 ans de bons et loyaux services intermittents, le NoBlemeRPG a pris sa retraite définitive en 2015, tout simplement par manque de temps pour organiser des sessions de jeu.
+        </p>
+
+        <br>
+
+        <p>
+          Voici des captures d'écran de certaines parties centrales de l'interface locale de maître du donjon du NoBlemeRPG telle qu'elle était en 2011, dans toute sa complexité.
+        </p>
+
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_main.png" alt="NoBlemeRPG"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_perso.png" alt="NoBlemeRPG"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_aptitude.png" alt="NoBlemeRPG"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_item.png" alt="NoBlemeRPG"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_monstre.png" alt="NoBlemeRPG"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_search.png" alt="NoBlemeRPG"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_session.png" alt="NoBlemeRPG"><br>
+        <br>
+        <br>
+
+      </div>
+
+
+
+
+      <?php } else if(isset($_GET['portfolio']) && $lang == 'EN') { ?>
+
+      <br>
+      <br>
       <br>
       <hr>
       <br>
-      <span class="alinea gras">Projets personnels :</span><br>
       <br>
-      <table>
-        <tr>
-          <td class="spaced">2011 - Aujourd'hui</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">Life.base</span> : Utilitaire de gestion de la vie quotidienne</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">PHP - PgSQL</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="cv?portfolio#lifebase">Portfolio : Life.base</a></td>
-        </tr>
-        <tr>
-          <td class="spaced">2011 - 2012</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">Dix</span> : Utilitaire d'analyse des replays de Starcraft II</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">C - Bash - PHP</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="cv?portfolio#dix">Portfolio : Starcraft Dix</a></td>
-        </tr>
-        <tr>
-          <td class="spaced">2010 - 2011</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">SteelDB</span> : Base de données à usage commercial</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Perl - FileMaker</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="cv?portfolio#steeldb">Portfolio : SteelDB</a></td>
-        </tr>
-        <tr>
-          <td class="spaced">2006 - 2009</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">NRM Online</span> : Jeu de stratégie multijoueur par navigateur</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">PHP - MySQL</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="cv?portfolio#nrm">Portfolio : NRM Online</a></td>
-        </tr>
-        <tr>
-          <td class="spaced">2006 - 2015</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">NBRPG</span> : Jeu de rôle multijoueur via IRC</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">C - Bash</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="cv?portfolio#nbrpg">Portfolio : NoBlemeRPG</a></td>
-        </tr>
-        <tr>
-          <td class="spaced">2005 - Aujourd'hui</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="http://nobleme.com/">NoBleme</a> : Communauté et site internet</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">PHP - MySQL</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="cv?portfolio#nobleme">Portfolio : NoBleme</a></td>
-        </tr>
-      </table>
-      <br>
-      <hr>
-      <br>
-      <span class="alinea gras">Compétences informatiques :</span><br>
-      <br>
-      <table>
-        <tr>
-          <td class="spaced">Langages maîtrisés</td>
-          <td class="spaced">C ; PHP ; SQL ; JavaScript</td>
-        </tr>
-        <tr>
-          <td class="spaced">Maîtrise partielle</td>
-          <td class="spaced">C++ ; Python ; Perl ; Java</td>
-        </tr>
-        <tr>
-          <td class="spaced">Bases de données</td>
-          <td class="spaced">MySQL ; PostgreSQL ; FileMaker</td>
-        </tr>
-        <tr>
-          <td class="spaced">Systèmes</td>
-          <td class="spaced">FreeBSD ; Linux ; Windows ; Mac OSX</td>
-        </tr>
-        <tr>
-          <td class="spaced">Logiciels</td>
-          <td class="spaced">Hg/Git/SVN ; Flash/ActionScript ; GtkRadiant ; Qt</td>
-        </tr>
-      </table>
-      <br>
-      <hr>
-      <br>
-      <span class="alinea gras">Compétences linguistiques (<a class="dark blank gras" href="https://fr.wikipedia.org/wiki/Cadre_europ%C3%A9en_commun_de_r%C3%A9f%C3%A9rence_pour_les_langues">échelle CEFR</a>) :</span><br>
-      <br>
-      Natif français ; Bilingue natif anglais ; Allemand scolaire ; Bases de russe et d'espagnol<br>
-      <br>
-      <table>
-        <tr>
-          <td class="spaced">Oral</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Français C2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Anglais C2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Allemand A2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Russe A1</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Espagnol A1</td>
-        </tr>
-        <tr>
-          <td class="spaced">Lecture</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Français C2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Anglais C2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Allemand B1</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Russe A2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Espagnol A2</td>
-        </tr>
-        <tr>
-          <td class="spaced">Écriture</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Français C2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Anglais C2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Allemand A2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Russe A1</td>
-          <td>&nbsp;&nbsp;</td>
-          <td>&nbsp;&nbsp;</td>
-        </tr>
-      </table>
-      <br>
-      <hr>
-      <br>
-      <span class="alinea gras">Informations complémentaires :</span><br>
-      <br>
-      Vous trouverez des exemples détaillés et illustrés de mes compétences informatiques dans le <span><a class="dark gras" href="cv?portfolio#portfolio">portfolio</a></span> qui accompagne mon CV.<br>
-      <br>
-      Outre le développement informatique (ma passion principale), je suis un passioné de littérature, de sociologie, et d'histoire de l'art.<br>
-      Je gère l'héritage culturel de la collection <a href="http://www.jazzhot.net/PBEvents.asp?ItmID=23592">photographique</a> et <a href="http://bdzoom.com/60445/actualites/deces-de-jacques-bisceglia/">littéraire </a> de mon défunt père, <a href="http://www.citizenjazz.com/Jacques-Bisceglia-par-Jerome-Merli.html">Jacques Bisceglia</a>.<br>
-      J'ai pratiqué le roller de compétition de 2003 à 2005, et je continue à le pratiquer en amateur aujourd'hui.<br>
-      <br>
-      N'hésitez pas à me contacter via mon e-mail <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> ou sur <a href="http://nobleme.com/pages/irc/index">IRC</a>.
-    </div>
 
-    <br>
+      <div class="texte" id="portfolio">
 
-    <?php if(isset($_GET['portfolio'])) { ?>
+        <br>
+        <br>
 
-    <br>
-    <br>
-    <div class="indiv align_center" id="portfolio">
-      <img src="<?=$chemin?>img/logos/portfolio.png" alt="Portfolio">
-    </div>
-    <br>
-    <br>
+        <h1>Portfolio</h1>
+        <h5>Examples of personal projects</h5>
 
-    <div class="body_main midsize">
-      <span class="titre">Portfolio : Exemples de projets personnels</span><br>
-      <br>
-      Par respect du secret professionnel et de mes anciens employeurs, je ne vais pas parler de mes anciens emplois dans mon portfolio. À la place, je vais illustrer mes compétences à l'aide de projets personnels (dont un semi-professionnel).<br>
-      <br>
-      Il s'agit principalement de projets que j'ai réalisés parfois pour apprendre, parfois pour le plaisir, parfois pour les deux à la fois.<br>
-      J'apprécie la production et le partage de contenu gratuit, par conséquent je ne monétise que très rarement ce que je produis.<br>
-      <br>
-      <br>
-      <hr class="points" id="nobleme">
-      <br>
-      <br>
-      <span class="titre">NoBleme : Communauté et site internet depuis 2005</span><br>
-      <span class="alinea moinsgros">PHP - MySQL - JavaScript - Entièrement open source</span><br>
-      <br>
-      <br>
-      Après avoir réalisé quelques « pages perso » et pris le temps d'apprendre les bases de l'administration d'un serveur UNIX, je me suis lancé dans le monde du développement web en inaugurant <a href="http://nobleme.com">nobleme.com</a> en Mars 2005.<br>
-      <br>
-      À l'origine, NoBleme devait servir à héberger les vidéos d'un ami étudiant en cinéma, aspirant à devenir réalisateur.<br>
-      Le défi technologique était énorme, à une époque où les sites de streaming vidéo (tels YouTube) n'existaient pas encore.<br>
-      Avec les années, une communauté internet d'amis s'est crée autour de NoBleme. La partie streaming vidéo a rapidement disparu (trop intense en ressources serveur pour la conserver), et NoBleme est devenu un site généraliste centré sur sa communauté.<br>
-      <br>
-      Depuis 2005, NoBleme est un projet central à ma vie, ses utilisateurs réguliers formant pour moi une sorte de seconde famille.<br>
-      Le code source de NoBleme est entièrement libre et open source, publié sous une license permissive qui permet de le réutiliser.<br>
-      <br>
-      Vous pouvez trouver plus d'informations sur les coulisses de NoBleme et mes convictions de développeur en <a href="<?=$chemin?>pages/nobleme/coulisses">cliquant ici</a>.<br>
-      Et vous trouverez le code source de NoBleme sur BitBucket en <a href="https://bitbucket.org/EricBisceglia/nobleme.com/overview">cliquant ici</a>.<br>
-      <br>
-      <br>
-      <hr class="points" id="lifebase">
-      <br>
-      <br>
-      <span class="titre">Life.base : Utilitaire de gestion de la vie quotidienne</span><br>
-      <span class="alinea moinsgros">PHP - PostgreSQL - JavaScript - Bash</span><br>
-      <br>
-      <br>
-      J'ai toujours organisé ma vie dans des bases de données. L'investissement temporel pour développer la base de données et la remplir est à long terme largement rattrapé par le temps qu'elle me fait gagner au quotidien.<br>
-      <br>
-      Life.base est l'incarnation actuelle (depuis 2011) de mes bases de données personnelles. Hébergé sur le réseau local de mon ordinateur, je peux transformer Life.base en un clic en un serveur accessible à distance lorsque je suis en déplacement.<br>
-      <br>
-      Je gère (entre autres) les contenus suivants dans Life.base :<br>
-      - Une liste des tâches à effectuer, pour ne rien oublier dans la vie quotidienne<br>
-      - Ma comptabilité personnelle, permettant une gestion avancée avec brouillard, bilans et prévisions<br>
-      - Gestion des stocks de livres de collection que j'achète et que je revends (et que je garde parfois dans ma collection personnelle)<br>
-      - Une aide au rangement de mes papiers administratifs et comptables, pour pouvoir les retrouver instantanément<br>
-      - Une bibliothèque de tous les livres que j'ai lus, films et séries que j'ai vus, et albums de musique que je possède<br>
-      - Un annuaire de pages trouvées sur Internet que je désire conserver de façon plus pratique que des favoris dans un navigateur<br>
-      - Un rappel de mes mots de passe, encryptés suivant une clé que moi seul connait au cas où quelqu'un d'autre accèderait à life.base<br>
-      <br>
-      Voici quelques captures d'écran (très lourdement censurées) de diverses sections de Life.base :<br>
-      <br>
-      <div class="indiv align_center">
-        <img src="<?=$chemin?>img/portfolio/lifebase_index.png" alt="Illustration" width="795px"><br>
+        <p>
+          Out of respect for my current and former employers, I will not showcase any professional projects in this portfolio. Instead, I will illustrate my skills through personal projects (and one project for commercial use).<br>
+          <br>
+          Since I mostly develop for myself and/or french communities, the content in most screenshots will be in french. I am however fluent in english, and have worked on many professional english projects.
+        </p>
+
         <br>
-        <img src="<?=$chemin?>img/portfolio/lifebase_compta.png" alt="Illustration" width="795px"><br>
         <br>
-        <img src="<?=$chemin?>img/portfolio/lifebase_contact.png" alt="Illustration" width="795px"><br>
         <br>
-        <img src="<?=$chemin?>img/portfolio/lifebase_show.png" alt="Illustration" width="795px"><br>
         <br>
-        <img src="<?=$chemin?>img/portfolio/lifebase_collection.png" alt="Illustration" width="795px"><br>
+        <hr>
+        <br id="nobleme">
+
+        <h5 class="alinea">NoBleme.com: Website and community since 2005</h5>
+        <span class="alinea">PHP - MySQL - JavaScript - Fully open sourced</span>
+
+        <p>
+          After taking the time required to learn web development and UNIX server administration, I opened my first website, <a class="gras" href="http://nobleme.com">NoBleme.com</a> in March 2005.<br>
+          <br>
+          Originally, NoBleme was meant to be a video streaming platform for content made by a friend who was studying movie making. The technological challenge was huge back in the day, as free streaming websites (such as YouTube) weren't a common thing yet.<br>
+          <br>
+          Time passed, and an internet community appeared on NoBleme. The video streaming part quickly disappeared (too ressource intensive for the server), and NoBleme became a general purpose website centered on its community, which regularly organized <a class="gras" href="<?=$chemin?>pages/irl/index">real life meetups</a>.
+        </p>
+
+        <p>
+          NoBleme's source code is entirely free and open source, published under a permissive license that lets you reuse parts of it if you desire. It is publicly available on Bitbucket: <a class="gras" href="https://bitbucket.org/EricBisceglia/nobleme.com/overview">NoBleme.com's source code</a><br>
+        </p>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <br id="steeldb">
+
+        <h5 class="alinea">SteelDB: Translation software for the heavy steel industry</h5>
+        <span class="alinea">Perl - FileMaker - AppleScript - Developped from 2010 until 2011</span>
+
+        <p>
+          SteelDB is the internal name of a commercial project which I developed in 2010 and maintained throughout 2011. SteelDB is an internal software made to deal with a specific situation: A company using a fully Mac OSX environment, wanting to use the (very limited) Filemaker software for their internal tool.<br>
+          <br>
+          Being at the time one of the very few developers in Paris who had experience with Filemaker, OSX, and the steel industry, I decided to try my luck. On my free time, I assembled a prototype using system hooks in AppleScript that allowed the use of Perl scripts in order to bypass Filemaker's technical limitations. Several things that were impossible to do within Filemaker at the time (sending an e-mail, generating a PDF file, etc.) became possible thanks to those system hooks.<br>
+          <br>
+          SteelDB is a multi purpose tool capable of handling the following things:<br>
+          - An address books for clients, suppliers, and other contacts<br>
+          - A list of steelworks components stored bilingually (french/english)<br>
+          - A complex tracking tool that allows to manage a sale from the price quotation to the post-sale delivery<br>
+          - A translation system which allows communication between companies without the need for a translator<br>
+          - Other tools specific to the company which I will not talk about out of respect for their business
+        </p>
+
+        <br>
+
+        <p>
+          Below are screenshots of the development process of SteelDB, heavily censored of all the business related data. Development started with the conception of the database, continued with management of sales and quotations, and finished with the use of the system hooks for PDF exports and automated e-mails.
+        </p>
+
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_struct1.png" alt="SteelDB"><br>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_struct2.png" alt="SteelDB"><br>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_struct3.png" alt="SteelDB"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_dossier.png" alt="SteelDB"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_ddp.png" alt="SteelDB"><br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_ddp_details.png" alt="SteelDB"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_entreprise.png" alt="SteelDB"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_hotel.png" alt="SteelDB"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/steeldb_pdf.png" alt="SteelDB"><br>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <br id="dix">
+
+        <h5 class="alinea">Starcraft Dix: Generating statistics from .MPQ files</h5>
+        <span class="alinea">C - Bash - PHP - MySQL - JavaScript - Developed from 2011 until 2012</span>
+
+        <p>
+          Back in 2011, I played <a class="gras" href="https://en.wikipedia.org/wiki/StarCraft_II:_Wings_of_Liberty">Starcraft II</a> competitively. At the time, the game did not offer any statistics on our long term performances. As I wanted to improve as a player, I decided to come up with my own statistics tool in order to know which areas of my game I needed to work on in order to climb the game's ranks.
+        </p>
+
+        <p>
+          At the end of every Starcraft II game, an option allowed for automated generation of a .MPQ file containing the replay of the game. The <a class="gras" href="https://en.wikipedia.org/wiki/MPQ">MPQ format</a> is sadly proprietary, but other curious developers had managed to extract data from .MPQ files in the past. Using their knowledge, I created my own C script which allowed me to extract game data from Starcraft II replays.
+        </p>
+
+        <p>
+          Now that I had a tool to transform replays into statistics, I needed to turn that raw data into something useful. I started by deploying a Bash script which automatically imported replay data into a MySQL database, then ran a PHP + JavaScript interface on my local network which displayed statistics calculated from the replay data.
+        </p>
+
+        <br>
+
+        <p>
+          Below are a few screenshots of the interface I used on my local network. I maintained Starcraft Dix until 2012, when a native statistics tool was finally introduced into Starcraft II.
+        </p>
+
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/dix_tableau.png" alt="Starcraft Dix"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/dix_stats.png" alt="Starcraft Dix"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/dix_search.png" alt="Starcraft Dix"><br>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <br id="nrm">
+
+        <h5 class="alinea">NRM Online: Browser based multiplayer strategy game</h5>
+        <span class="alinea">PHP - MySQL - JavaScript - Developed from 2006 until 2009</span>
+
+        <p>
+          The early 2000s on the internet were characterized by the browser game fad. Right at the peak of this fad, a game named Super Robot Wars Online captured the attention of a few hundred players, until it died when its developer ran out of free time to maintain the game. Being one of those players myself, I decided to create a similarly themed browser game in order to give a new game to disappointed players who wanted to keep playing something that felt like Super Robot Wars Online.
+        </p>
+
+        <p>
+          The NRM Online (NoBleme Robot Mayhem Online) opened in 2006, and was actively maintained until 2009. During its whole existence, the game remained free to play. In the NRM Online, each user played as the pilot of a combat robot, and had to use a complex strategy system to win fights against other players
+        </p>
+
+        <p>
+          During its 4 years of existence, I continuously introduced new concepts into the game. These constant changes ended up frustrating the player base and caused the slow death of the game, but also allowed me to learn a lot of useful lessions in game design, and instilled the passion of being a developer into me.
+        </p>
+
+        <br>
+
+        <p>
+          Below are screenshots from the 27th season of the NRM Online, in 2007. Remember that back in the day, website design used to be... very different.
+        </p>
+
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nrm_index.png" alt="NRM Online"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nrm_robot.png" alt="NRM Online"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nrm_assign.png" alt="NRM Online"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nrm_combat.png" alt="NRM Online"><br>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <hr>
+        <br id="nbrpg">
+
+        <h5 class="alinea">NoBlemeRPG: IRC based multiplayer role playing game</h5>
+        <span class="alinea">C - MySQL - Bash - IRC - Developed intermittently from 2006 until 2015</span>
+
+        <p>
+          Back when I was a teenager, I used to spend a lot of my week-ends hosting games of <a class="gras" href="https://en.wikipedia.org/wiki/Dungeons_and_Dragons">Dungeons &amp; Dragons</a> and other <a class="gras" href="https://en.wikipedia.org/wiki/Role-playing_game">tabletop RPGs</a>. I took a lot of pleasure in being the dungeon master, creating new imaginary worlds and hopefully riveting storylines for my players
+        </p>
+
+        <p>
+          Time passed, and life changed. I started working on week-ends, some friends moved away, and hosting game sessions became increasingly impossible. Luckily, the internet was starting to spread, and allowed us to continue playing our role playing games through <a class="gras" href="<?=$chemin?>pages/irc/index">IRC chat</a>.
+        </p>
+
+        <p>
+          Obviously, playing through internet chat is not the same as playing in real life. It is harder to communicate emotions, actions have a longer reaction time, and there is a lot of dead time to deal with caused by the slowness of typing on a keyboard (compared to speaking).
+        </p>
+
+        <p>
+          In order to adapt to this new paradigm, I decided to create my own role playing game. I learned C programming by reading tutorials online, and developed a minimalistic command line interface which allowed me to prepare some phrases and react to some actions without wasting too much time. Around this game engine, I created an universe for the game. Since the game was meant to be played with people from the NoBleme community, I called it the NoBleme Role Playing Game. And thus, the NoBlemeRPG was born.
+        </p>
+
+        <p>
+          As years passed and I became a professional developer, I used my newly learned skills to improve the NoBlemeRPG's dungeon master interface. The first minimalistic version from 2006 was replaced by a more complex version in 2007, with an actual graphic interface, allowing for even more control on the game and faster reaction times. The final version was released in 2009, turning the graphical interface into an extremely complicated mess that allowed me to give infinite freedom of action to my players, thus removing the need to develop new features before every session in preparation of what players would be doing.
+        </p>
+
+        <p>
+          After 9 years of use, the NoBlemeRPG was retired for good in 2015, simply due to lack of free time.
+        </p>
+
+        <br>
+
+        <p>
+          Below are screenshots of a few panels of the NoBlemeRPG's dungeon master interface as it looked like in 2011, in all its complexity.
+        </p>
+
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_main.png" alt="NoBlemeRPG"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_perso.png" alt="NoBlemeRPG"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_aptitude.png" alt="NoBlemeRPG"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_item.png" alt="NoBlemeRPG"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_monstre.png" alt="NoBlemeRPG"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_search.png" alt="NoBlemeRPG"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nbrpg_session.png" alt="NoBlemeRPG"><br>
+        <br>
+        <br>
+
       </div>
-      <br>
-      <br>
-      <hr class="points" id="dix">
-      <br>
-      <br>
-      <span class="titre">Starcraft Dix : Utilitaire d'analyse des replays de Starcraft II</span><br>
-      <span class="alinea moinsgros">C - Bash - PHP - MySQL</span><br>
-      <br>
-      <br>
-      En jouant au jeu vidéo de stratégie <a href="https://fr.wikipedia.org/wiki/StarCraft_2">Starcraft II</a>, je me suis retrouvé confronté à un manque : À l'époque (2011), le jeu n'enregistrait pas les statistiques. Il n'était donc pas possible de mesurer mes progrès, ou de savoir quelles étaient mes forces et mes faiblesses. Ayant une nature compétitive, je désirais m'améliorer, et pour cela il fallait que je puisse avoir des statistiques sur mes performances.<br>
-      <br>
-      Dans un premier temps, je m'étais crée un tableau dans <a href="https://docs.google.com/">Google Docs</a>, où je notais tous mes résultats. Malheureusement, il y avait trop d'informations à noter après chaque partie, ce qui rendait ce système très laborieux. J'ai donc décidé de créer mon propre système, qui extrait automatiquement les informations à partir des replays générés à la fin des parties, et les stocke dans une base de données.<br>
-      <br>
-      Le plus gros problème était de décrypter le format <a href="https://en.wikipedia.org/wiki/MPQ">MPQ</a> dans lequel les informations des replays est stocké, format extrêmement complexe et qui change à chaque nouvelle version du jeu. Pour ce faire, j'ai crée un programme en C qui est capable de parcourir un fichier MPQ et de n'en extraire que les informations dont j'ai besoin pour ce projet.<br>
-      Ensuite, il suffit de semi-automatiser l'ajout de ces informations dans une base de données, et d'afficher les statistiques.<br>
-      <br>
-      Dix a servi jusqu'en 2012, lorsqu'un outil de statistiques interne au jeu a enfin été ajouté dans Starcraft II.<br>
-      Voici des captures d'écran de l'interface de Dix lorsqu'il était encore en service :<br>
-      <br>
-      <div class="indiv align_center">
-        <img src="<?=$chemin?>img/portfolio/dix_upload.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/dix_tableau.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/dix_stats.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/dix_search.png" alt="Illustration" width="795px"><br>
-      </div>
-      <br>
-      <br>
-      <hr class="points" id="steeldb">
-      <br>
-      <br>
-      <span class="titre">SteelDB : Outil interne dans l'industrie de l'acier</span><br>
-      <span class="alinea moinsgros">Perl - FileMaker - AppleScript</span><br>
-      <br>
-      <br>
-      SteelDB est le nom de code d'un projet professionnel que j'ai réalisé qui a gagné un appel d'offres en 2010 et que j'ai continué à développer jusqu'en 2011. Il s'agit d'une situation très spécifique : Une entreprise ayant un environnement entièrement Mac OSX, et désirant utiliser le logiciel (très limité) FileMaker pour leur outil interne.<br>
-      <br>
-      Étant à l'époque un des seuls développeurs sur Paris ayant de l'expérience avec FileMaker et l'industrie de l'acier, j'ai décidé de tenter ma chance en répondant à l'appel d'offres. Sur mon temps libre, j'ai assemblé un prototype d'outil utilisant des hooks système en AppleScript qui servent à appeler des scripts en Perl afin de contourner les limitations de FileMaker et d'effectuer certaines actions requises par l'appel d'offres qui sont difficiles ou impossibles à faire depuis FileMaker (par exemple envoyer un e-mail, exporter un fichier Excel ou PDF).<br>
-      <br>
-      Vu que le contrat lié à l'appel d'offres m'autorise à conserver les droits sur le code source que j'ai produit et à le réutiliser librement, je peux parler sans restriction de ce que j'ai fait. Je censure toutefois, par respect, les informations liées à l'entreprise.<br>
-      <br>
-      SteelDB est une base de données permettant de gérer les éléments suivants :<br>
-      - Un carnet d'adresses de contacts, clients et fournisseurs<br>
-      - Une liste de pièces d'aciérie lourde stockée de façon bilingue (français/anglais)<br>
-      - Un suivi de dossiers pointu allant de la commande au suivi après la vente<br>
-      - Un système de traduction de chaque étape des dossiers du français vers l'anglais<br>
-      - D'autres outils plus spécifiques dont je ne peux pas parler sans trop révéler d'informations sur l'entreprise<br>
-      <br>
-      Voici des captures d'écran de SteelDB en production, lourdement censurées des données professionnelles qu'elle contient :<br>
-      (les premières illustrations sont un schéma relationnel complet de la base de données de l'outil)<br>
-      <br>
-      <div class="indiv align_center">
-        <img src="<?=$chemin?>img/portfolio/steeldb_struct1.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_struct2.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_struct3.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_dossier.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_entreprise.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_ddp.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_ddp_details.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_hotel.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_pdf.png" alt="Illustration" width="795px"><br>
-      </div>
-      <br>
-      <br>
-      <hr class="points" id="nrm">
-      <br>
-      <br>
-      <span class="titre">NRM Online : Jeu de stratégie multijoueur par navigateur</span><br>
-      <span class="alinea moinsgros">PHP - MySQL - JavaScript</span><br>
-      <br>
-      <br>
-      Le milieu des années 2000 est marqué sur internet par la mode des jeux au tour par tour via navigateur.<br>
-      Suivant cette mode, je m'inspire d'autres jeux similaires pour créer mon propre jeu, le NRM Online.<br>
-      Dans ce jeu, chaque joueur incarne un pilote de robot de combat, et affronte d'autres adversaires humains.<br>
-      <br>
-      Le NRM Online a été actif de 2006 à 2009, et a toujours été entièrement gratuit.<br>
-      Le concept du NRM Online était de pousser l'aspect stratégique à fond, permettant à tout joueur de pouvoir battre un adversaire s'il est plus malin que lui, peu importe le robot qu'il a à sa disposition ou le temps qu'il a investi dans le jeu.<br>
-      <br>
-      Au final, c'est la trop grande profondeur stratégique du NRM qui aura causé sa perte. Même s'il a passé la centaines de joueurs lors de certaines saisons, il n'a su fidéliser qu'un cœur d'une dizaine de joueurs réguliers, nombre trop faible pour continuer à faire vivre le jeu.<br>
-      <br>
-      Voici des captures d'écran du NRM Online lors de sa 27ème saison, en 2007 :<br>
-      (souvenez vous que nous sommes au milieu des années 2000, le design des sites internet était... très différent à l'époque)<br>
-      <br>
-      <div class="indiv align_center">
-        <img src="<?=$chemin?>img/portfolio/nrm_index.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_robot.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_assign.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_combat.png" alt="Illustration" width="795px"><br>
-      </div>
-      <br>
-      <br>
-      <hr class="points" id="nbrpg">
-      <br>
-      <br>
-      <span class="titre">NoBlemeRPG : Jeu de rôle multijoueur via IRC</span><br>
-      <span class="alinea moinsgros">C - MySQL - Bash - IRC</span><br>
-      <br>
-      <br>
-      Lorsque j'étais adolescent, j'adorais organiser des sessions de <a href="https://fr.wikipedia.org/wiki/Donjons_et_Dragons">Donjons &amp; Dragons</a>. Je prenais beaucoup de plaisir à être le maître du donjon, à inventer des univers toujours différents et uniques pour mes joueurs.<br>
-      <br>
-      Le temps est passé, et mes amis se sont dispersés. Puisqu'il n'était plus possible de jouer physiquement avec eux, j'ai décidé en 2006 de créer un système permettant de jouer à un jeu de rôles en se servant du protocole utilisé par les <a href="<?=$chemin?>pages/irc/index">serveurs de chat IRC</a>.<br>
-      <br>
-      Le NoBlemeRPG part d'un programme de jeu qui se trouve sur mon ordinateur, depuis lequel j'effectue des actions qui affectent les joueurs. Ces actions génèrent des messages sur un canal IRC, auxquels les joueurs doivent réagir en temps réel. Les décisions des joueurs (qu'ils écrivent dans le canal de discussion) sont ensuite interprétées par le programme se trouvant sur mon ordinateur, me permettant ainsi d'intéragir avec les participants en temps quasi-réel de façon quasi-automatisée.<br>
-      <br>
-      Voici des captures d'écran de l'interface de maître du donjon du NoBlemeRPG tel qu'il était lorsqu'il a pris sa retraite, en 2015 :<br>
-      <br>
-      <div class="indiv align_center">
-        <img src="<?=$chemin?>img/portfolio/nbrpg_main.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_perso.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_monstre.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_aptitude.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_item.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_session.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_search.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_irc.png" alt="Illustration" width="795px">
-      </div>
-    </div>
 
-
-    <?php } } else { ?>
-
-
-    <div class="body_main midsize">
-      <table class="indiv">
-        <tr>
-          <td>
-            <span class="gros gras">Éric Bisceglia</span><br>
-            <span class="moinsgros gras">Developer</span><br>
-          </td>
-          <td class="align_right valign_top">
-            <a class="dark blank gras" href="cv">Cliquez ici pour la version française</a><br>
-            <a class="dark blank gras" href="cv">Click here for the french version</a>
-          </td>
-        </tr>
-      </table>
-      <br>
-      Lives in Paris, France<br>
-      Born August 26, 1988 (<?=floor((strtotime(date('Y-m-d'))-strtotime('1988-08-26'))/31556926)?> years old)<br>
-      E-Mail : <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a><br>
-      <br>
-      <hr>
-      <br>
-      <span class="alinea gras">Work experience:</span><br>
-      <br>
-      <table>
-        <tr>
-          <td class="spaced">2016 - Today</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="http://www.mtd-finance.fr/">MTD Finance</a> : CTO + Intranet development</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">PHP - MySQL - JavaScript</td>
-        </tr>
-        <tr>
-          <td class="spaced">2015 - 2016</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">Freelance</span> : Details protected by a NDA</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">C - Python - PostgreSQL</td>
-        </tr>
-        <tr>
-          <td class="spaced">2010 - 2015</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="http://www.mtd-finance.fr/">MTD Finance</a> : Intranet development</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">PHP - MySQL - JavaScript</td>
-        </tr>
-        <tr>
-          <td class="spaced">2009 - 2010</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="http://www.mecamatic.fr/en/home.php">Mécamatic</a> : Custom software development</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">FileMaker - Perl - AppleScript</td>
-        </tr>
-        <tr>
-          <td class="spaced">2007 - 2009</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">Freelance</span> : Flash game development</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Flash - ActionScript</td>
-        </tr>
-      </table>
-      <br>
-      <hr>
-      <br>
-      <span class="alinea gras">Personal projects:</span><br>
-      <br>
-      <table>
-        <tr>
-          <td class="spaced">2011 - Today</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">Life.base</span> : Daily life management tool</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">PHP - PgSQL</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="cv?en&amp;portfolio#lifebase">Portfolio : Life.base</a></td>
-        </tr>
-        <tr>
-          <td class="spaced">2011 - 2012</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">Dix</span> : Automated Starcraft II replay analysis</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">C - Bash - PHP</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="cv?en&amp;portfolio#dix">Portfolio : Starcraft Dix</a></td>
-        </tr>
-        <tr>
-          <td class="spaced">2010 - 2011</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">SteelDB</span> : Commercial database for the steel industry</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Perl - FileMaker</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="cv?en&amp;portfolio#steeldb">Portfolio : SteelDB</a></td>
-        </tr>
-        <tr>
-          <td class="spaced">2006 - 2009</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">NRM Online</span> : Massively multiplayer browser game</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">PHP - MySQL</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="cv?en&amp;portfolio#nrm">Portfolio : NRM Online</a></td>
-        </tr>
-        <tr>
-          <td class="spaced">2006 - 2015</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><span class="gras">NBRPG</span> : Real time multiplayer game through IRC</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">C - Bash</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="cv?en&amp;portfolio#nbrpg">Portfolio : NoBlemeRPG</a></td>
-        </tr>
-        <tr>
-          <td class="spaced">2005 - Today</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="http://nobleme.com/">NoBleme</a> : Community and website</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">PHP - MySQL</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced"><a class="dark blank gras" href="cv?en&amp;portfolio#nobleme">Portfolio : NoBleme</a></td>
-        </tr>
-      </table>
-      <br>
-      <hr>
-      <br>
-      <span class="alinea gras">Development skills:</span><br>
-      <br>
-      <table>
-        <tr>
-          <td class="spaced">Fully mastered</td>
-          <td class="spaced">C ; PHP ; SQL ; JavaScript</td>
-        </tr>
-        <tr>
-          <td class="spaced">Strong knowledge</td>
-          <td class="spaced">C++ ; Python ; Perl ; Java</td>
-        </tr>
-        <tr>
-          <td class="spaced">Databases</td>
-          <td class="spaced">MySQL ; PostgreSQL ; FileMaker</td>
-        </tr>
-        <tr>
-          <td class="spaced">Operating systems</td>
-          <td class="spaced">FreeBSD ; Linux ; Windows ; Mac OSX</td>
-        </tr>
-        <tr>
-          <td class="spaced">Other software</td>
-          <td class="spaced">Hg/Git/SVN ; Flash/ActionScript ; GtkRadiant ; Qt</td>
-        </tr>
-      </table>
-      <br>
-      <hr>
-      <br>
-      <span class="alinea gras">Languages (<a class="dark blank gras" href="https://en.wikipedia.org/wiki/Common_European_Framework_of_Reference_for_Languages">CEFR scale</a>):</span><br>
-      <br>
-      Fluent native french ; Fluent bilingual english ; Decent german ; Basics of russian and spanish<br>
-      <br>
-      <table>
-        <tr>
-          <td class="spaced">Spoken</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">French C2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">English C2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">German A2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Russian A1</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Spanish A1</td>
-        </tr>
-        <tr>
-          <td class="spaced">Reading</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">French C2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">English C2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">German B1</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Russian A2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Spanish A2</td>
-        </tr>
-        <tr>
-          <td class="spaced">Writing</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">French C2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">English C2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">German A2</td>
-          <td>&nbsp;&nbsp;</td>
-          <td class="spaced">Russian A1</td>
-          <td>&nbsp;&nbsp;</td>
-          <td>&nbsp;&nbsp;</td>
-        </tr>
-      </table>
-      <br>
-      <hr>
-      <br>
-      <span class="alinea gras">Extra information:</span><br>
-      <br>
-      You can find detailed and illustrated examples of my development skills in the <span><a class="dark gras" href="cv?en&amp;portfolio#portfolio">portfolio</a></span> that comes with my CV.<br>
-      <br>
-      Other than computer programming (my main passion), I am passionate about french literature, sociology, and art history.<br>
-      I manage the cultural inheritance (photographic and literary collections) of my deceased father, <a href="http://inconstantsol.blogspot.fr/2013/03/jacques-bisceglia-1940-2013.html">Jacques Bisceglia</a>.<br>
-      I've practiced competitive rollerblading from 2003 to 2005, and still practice it as an amateur nowadays.<br>
-      <br>
-      Do not hesitate to contact me by email at <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> or on IRC at irc.nobleme.com on the channel #english.
-    </div>
-
-    <br>
-
-    <?php if(isset($_GET['portfolio'])) { ?>
-
-    <br>
-    <br>
-    <div class="indiv align_center" id="portfolio">
-      <img src="<?=$chemin?>img/logos/portfolio.png" alt="Portfolio">
-    </div>
-    <br>
-    <br>
-
-    <div class="body_main midsize">
-      <span class="titre">Portfolio : Examples of personal projects</span><br>
-      <br>
-      Out of respect for my current and former employers, I will not discuss any of my professional projects within this portfolio.<br>
-      Instead, I will illustrate my skills through personal projects (and one semi-professional project).<br>
-      <br>
-      Since I mostly develop for myself and/or french communities, the content in most screenshots will be in french.<br>
-      I am however fluent in english, and have worked on many professional english projects.<br>
-      <br>
-      <br>
-      <hr class="points" id="nobleme">
-      <br>
-      <br>
-      <span class="titre">NoBleme : Internet community since 2005</span><br>
-      <span class="alinea moinsgros">PHP - MySQL - JavaScript - Entirely open sourced</span><br>
-      <br>
-      <br>
-      After making a few “personal homepages” and taking the time required to learn UNIX administration, I entered the world of proper web development in March 2005 by launching the french website <a href="http://nobleme.com">nobleme.com</a>.<br>
-      <br>
-      At first, NoBleme was meant to be a hosting platform for the videos of a friend who studied filmmaking.<br>
-      The technological challenge was tough, at a time where video streaming websites (such as YouTube) didn't exist yet.<br>
-      As time went by, a community of internet and real life friends appeared within NoBleme. The video streaming part disappeared (too demanding in server resources), and NoBleme became a general purpose website centered on its community.<br>
-      <br>
-      Since 2005, NoBleme has always been a central part of my life, its users being sort of a second family to me.<br>
-      The website is entirely open sourced, published under a permissive licence which allows code re-use.<br>
-      You can find nobleme.com's source code on BitBucket by <a href="https://bitbucket.org/EricBisceglia/nobleme.com/src">clicking here</a> (keep in mind it is a <?=floor((strtotime(date('Y-m-d'))-strtotime('2005-03-21'))/31556926)?> year old project).<br>
-      <br>
-      <br>
-      <hr class="points" id="lifebase">
-      <br>
-      <br>
-      <span class="titre">Life.base : Daily life management tool</span><br>
-      <span class="alinea moinsgros">PHP - PostgreSQL - JavaScript - Bash</span><br>
-      <br>
-      <br>
-      I've always organized many aspects of my life using databases. The time invested in developing and maintening the databases usually ends up being offset by the comfort and time gained in my daily life from having readily available information.<br>
-      <br>
-      Life.base is the current embodiment (since 2011) of my personal databases. Hosted on my home computer's localhost, I can transform it in one click into a server which allows me to access and use Life.base when I am traveling.<br>
-      <br>
-      I manage the following content (among others) within Life.base :<br>
-      - A daily todo-list/tasklist, in order to never forget anything<br>
-      - My personal accounting, using tools that allow for long term planning and balancing when I work as a freelancer<br>
-      - A management tool for my book storage (I buy, sell, and collect high value french books)<br>
-      - An administrative document sorting tool, which lets me know instantly where any important document is stored<br>
-      - A library of every book I've read, movie I've watched, and music album I own<br>
-      - A directory of web pages which I want to keep in a way that is more convenient than browser bookmarks<br>
-      - A reminder of my important passwords, which can only be accessed through the use of a specific key that only I know<br>
-      <br>
-      Here are a few (highly censored) screenshots of some Life.base pages:<br>
-      <br>
-      <div class="indiv align_center">
-        <img src="<?=$chemin?>img/portfolio/lifebase_index.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/lifebase_compta.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/lifebase_contact.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/lifebase_show.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/lifebase_collection.png" alt="Illustration" width="795px"><br>
-      </div>
-      <br>
-      <br>
-      <hr class="points" id="dix">
-      <br>
-      <br>
-      <span class="titre">Starcraft Dix : Automated Starcraft II replay analysis</span><br>
-      <span class="alinea moinsgros">C - Bash - PHP - MySQL</span><br>
-      <br>
-      <br>
-      Playing the real time strategy game <a href="https://en.wikipedia.org/wiki/StarCraft_2">Starcraft II</a>, I was faced with an issue : At the time (2011), the game did not keep any stats about your performances. It was therefore not possible to measure my strengths and weaknesses, to know which area I needed to improve in. Having a competitive nature, I had a drive to become a better player, and thus needed a tool that would track those stats for me.<br>
-      <br>
-      At first, I used <a href="https://docs.google.com/">Google Docs</a> to store my results. However, there was so much information to keep from each game that it felt like a waste of time to enter them manually. I had to find a way to automate that process as much as possible, and to keep those stats in a database from which I could easily extract any custom data I'd want.<br>
-      <br>
-      The main issue was to parse the <a href="https://en.wikipedia.org/wiki/MPQ">MPQ</a> format used by replay files. Not only is it an extremely complex format, but it also changes with every new version of the game. After a while, I developed a program in C capable of extracting the data I needed from MPQ files.<br>
-      Once that program extracted enough data, all that remained was to create a web interface to display the stats I wanted to see.<br>
-      <br>
-      Dix was used and maintained until 2012, when internal stats tracking was finally added to Starcraft II.<br>
-      Here are a few screenshots of the Starcraft Dix web interface from when it was still in use:<br>
-      <br>
-      <div class="indiv align_center">
-        <img src="<?=$chemin?>img/portfolio/dix_upload.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/dix_tableau.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/dix_stats.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/dix_search.png" alt="Illustration" width="795px"><br>
-      </div>
-      <br>
-      <br>
-      <hr class="points" id="steeldb">
-      <br>
-      <br>
-      <span class="titre">SteelDB : Internal software for the steel industry</span><br>
-      <span class="alinea moinsgros">Perl - FileMaker - AppleScript</span><br>
-      <br>
-      <br>
-      SteelDB is the code name of a professional project with which I won a bidding call in 2010, and which I kept developing until 2011.<br>
-      It was the product of a very specific situation: A company working entirely in a Mac OSX environment needed an internal tool, and insisted that said tool used the (very limited) FileMaker software as its database and user interface.<br>
-      <br>
-      Being at the time one of the very few developers in France who had experience with both FileMaker and the steel industry, I decided to answer the bidding call. During my free time, I assembled a prototype tool which used sysem hooks in AppleScript to call Perl scripts in order to bypass FileMaker's limitations and achieve things that were tedious or impossible to do natively with FileMaker (such as sending an e-mail, exporting a PDF file, or editing an Excel file).<br>
-      <br>
-      Given that the contract I signed for that bidding call allows me to keep the rights to the software I developed, I can talk about it freely. However, out of respect for the company that made the bidding call, I censor everything related to them.<br>
-      <br>
-      SteelDB is a multi purpose tool able to manage the following things :<br>
-      - An address books for clients, suppliers, and other contacts<br>
-      - A list of steelworks components stored bilingually (french/english)<br>
-      - A complex tracking tool that allows to follow a sale from the price quotation to the post-sale delivery<br>
-      - An automated translation system that allows communication between french and english companies without the need for a translator<br>
-      - Other tools specific to the company which I will not talk about out of respect for their business<br>
-      <br>
-      Here are a few SteelDB screenshots, heavily censored of all the company data it contains:<br>
-      (the first pictures are a partial relational graph of the tool's database)<br>
-      <br>
-      <div class="indiv align_center">
-        <img src="<?=$chemin?>img/portfolio/steeldb_struct1.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_struct2.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_struct3.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_dossier.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_entreprise.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_ddp.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_ddp_details.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_hotel.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_pdf.png" alt="Illustration" width="795px"><br>
-      </div>
-      <br>
-      <br>
-      <hr class="points" id="nrm">
-      <br>
-      <br>
-      <span class="titre">NRM Online : Massively multiplayer browser game</span><br>
-      <span class="alinea moinsgros">PHP - MySQL - JavaScript</span><br>
-      <br>
-      <br>
-      Turn by turn browser games were one of the biggest internet trends of the first decade of the 2000s.<br>
-      Following this trend, I took inspiration from a few other games to develop my own, the NRM Online.<br>
-      In this game, each player incarnated a combat mech pilot, and fought other players over dominance of the rankings.<br>
-      <br>
-      The NRM Online was active from 2006 to 2009, and was a fully free game during all of its lifespan, despite the server costs.<br>
-      The main idea behind the game was to push the boundaries of turn by turn strategy as deep as possible, always giving any player the ability to beat any other player even if his mech was way inferior to that of his opponent. It was all about outsmarting other players.<br>
-      <br>
-      The game peaked at several hundred daily active players in 2007. As browser games started to become a thing of the past, the playerbase slowly shrunk over time to a point where there was no point in keeping the game alive. It was shut down in 2009.<br>
-      <br>
-      Here are a few screenshots from the NRM Online 27th season, in 2007:<br>
-      (keep in mind that back then what was considered good web design was rather... different)<br>
-      <br>
-      <div class="indiv align_center">
-        <img src="<?=$chemin?>img/portfolio/nrm_index.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_robot.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_assign.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_combat.png" alt="Illustration" width="795px"><br>
-      </div>
-      <br>
-      <br>
-      <hr class="points" id="nbrpg">
-      <br>
-      <br>
-      <span class="titre">NoBlemeRPG : Multiplayer role playing game through IRC</span><br>
-      <span class="alinea moinsgros">C - MySQL - Bash - IRC</span><br>
-      <br>
-      <br>
-      Back when I was a teenager, I used to love hosting <a href="https://en.wikipedia.org/wiki/Dungeons_%26_Dragons">Dungeons &amp; Dragons</a> games. I took a lot of pleasure in being the dungeon master, in inventing new universes every week to keep my players interested enough to come back the next week.<br>
-      <br>
-      Time went by, and my friends moved to other cities. As it wasn't possible anymore to play with them in real life, I decided in 2006 to create a way to keep playing online. Since most of us used <a href="https://en.wikipedia.org/wiki/Internet_Relay_Chat">IRC</a> on a daily basis, I decided to build the game on top of it.<br>
-      <br>
-      The NoBlemeRPG is a master program which rests in my computer. From this master program, I run commands which affect players. Those commands generate messages on an IRC channel, to which players have to reply. The player's actions are then read by the master program and automatically processed, allowing me to interact in near real time with my players.<br>
-      <br>
-      Here are a few screenshots from the NoBlemeRPG's master program as it was when I retired it, in 2005:<br>
-      <br>
-      <div class="indiv align_center">
-        <img src="<?=$chemin?>img/portfolio/nbrpg_main.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_perso.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_monstre.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_aptitude.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_item.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_session.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_search.png" alt="Illustration" width="795px"><br>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_irc.png" alt="Illustration" width="795px">
-      </div>
-    </div>
-
-    <?php } } ?>
+      <?php } ?>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

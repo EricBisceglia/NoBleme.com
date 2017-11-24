@@ -13,7 +13,7 @@
 ******************************************/
 
 // Configure below to change URL path to the snow image
-var snowsrc="http://www.nobleme.com/img/divers/festif.gif"
+var snowsrc="http://nobleme.com/img/divers/festif.gif"
 // Configure below to change number of snow to render
 var no = 50;
 // Configure whether snow should disappear after x seconds (0=never):
@@ -48,7 +48,7 @@ yp = new Array();
 am = new Array();
 stx = new Array();
 sty = new Array();
-snowsrc=(snowsrc.indexOf("nobleme.com")!=-1)? "http://www.nobleme.com/img/divers/festif.gif" : snowsrc
+snowsrc=(snowsrc.indexOf("nobleme.com")!=-1)? "http://nobleme.com/img/divers/festif.gif" : snowsrc
 for (i = 0; i < no; ++ i) {
   dx[i] = 0;                        // set coordinate variables
   xp[i] = Math.random()*(doc_width-50);  // set position variables

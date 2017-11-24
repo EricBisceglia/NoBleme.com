@@ -6,20 +6,21 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-useronly();
+useronly($lang);
 
 // Menus du header
-$header_menu      = 'compte';
-$header_submenu   = 'reglages';
-$header_sidemenu  = 'pass';
-
-// Titre et description
-$page_titre = "Changer de mot de passe";
-$page_desc  = "Changer le mot de passe de votre compte sur NoBleme";
+$header_menu      = 'Compte';
+$header_sidemenu  = 'ChangerPass';
 
 // Identification
-$page_nom = "user";
-$page_id  = "pass";
+$page_nom = "Protège son compte";
+$page_url = "pages/user/pass";
+
+// Langages disponibles
+$langage_page = array('FR','EN');
+
+// Titre et description
+$page_titre = ($lang == 'FR') ? "Changer de mot de passe" : "Change my password";
 
 
 
@@ -30,47 +31,84 @@ $page_id  = "pass";
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Si on change le mot de passe
-$pass_actuel_erreur   = '';
-$nouveau_pass_erreur  = '';
-$nouveau_pass_regles  = '';
-$changement_pass      = 0;
-if(isset($_POST['edit_pass_go_x']))
+// On chope l'userid, si y'en a pas on arrête tout
+$user_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateur invalide');
+
+// Modifier le mot de passe
+if(isset($_POST['passModifier']))
 {
-  // On assainit le postdata
-  $pass_actuel_check  = postdata($_POST['pass_actuel']);
-  $nouveau_pass_1     = $_POST['nouveau_pass_1'];
-  $nouveau_pass_2     = $_POST['nouveau_pass_2'];
+  // On commence par nettoyer le postdata
+  $pass_actuel    = postdata_vide('passActuel', 'string', '');
+  $pass_nouveau   = postdata_vide('passNouveau', 'string', '');
+  $pass_confirmer = postdata_vide('passConfirmer', 'string', '');
 
-  // On va chercher le pass actuel
-  $user_id      = $_SESSION['user'];
-  $qpass_actuel = mysqli_fetch_array(query(" SELECT membres.pass FROM membres WHERE membres.id = '$user_id' "));
-  $pass_actuel  = $qpass_actuel['pass'];
+  // Si une des entrées est vide, on envoie une erreur
+  if(!$pass_actuel || !$pass_nouveau || !$pass_confirmer)
+    $erreur = ($lang == 'FR') ? 'Tous les champs doivent être remplis' : 'You must fill all of the fields below';
 
-  // On continue que si le pass est bon
-  if($pass_actuel != salage($pass_actuel_check))
-    $pass_actuel_erreur = ' erreur';
-  else
+  // Si le mot de passe actuel est faux, on envoie une erreur
+  $cypher_actuel  = salage($pass_actuel);
+  $qpasscheck     = mysqli_fetch_array(query("  SELECT  membres.pass
+                                                FROM    membres
+                                                WHERE   membres.id = '$user_id' "));
+  if(!isset($erreur) && $cypher_actuel != $qpasscheck['pass'])
+    $erreur = ($lang == 'FR') ? 'Mot de passe actuel incorrect' : 'Incorrect current password';
+
+  // Si les nouveaux pass ne sont pas identiques, on envoie une erreur
+  if(!isset($erreur) && $pass_nouveau != $pass_confirmer)
+    $erreur = ($lang == 'FR') ? 'Les nouveaux mots de passe sont différents' : 'You entered two different new passwords';
+
+  // Si les nouveaux pass ne sont pas assez longs, on envoie une erreur
+  if(!isset($erreur) && mb_strlen($pass_nouveau) < 6)
+    $erreur = ($lang == 'FR') ? 'Nouveau mot de passe trop court' : 'Your new password is too short';
+
+  // Maintenant on peut changer le mot de passe
+  if(!isset($erreur))
   {
-    // On s'assure que les deux nouveaux pass soient les mêmes
-    if($nouveau_pass_1 != $nouveau_pass_2 || $nouveau_pass_1 == '' || $nouveau_pass_2 == '')
-      $nouveau_pass_erreur = ' erreur';
-    else
-    {
-      // On check la longueur du nouveau pass
-      if(strlen($nouveau_pass_1) < 5)
-        $nouveau_pass_regles = ' class="texte_blanc erreur gras" ';
-      else
-      {
-        // On peut changer le pass si tout est bon
-        $changement_pass = 1;
-        $nouveau_pass = postdata(salage($nouveau_pass_1));
-        query(" UPDATE membres SET membres.pass = '$nouveau_pass' WHERE membres.id = '$user_id' ");
-      }
-    }
+    $nouveau_pass = salage($pass_nouveau);
+    query(" UPDATE  membres
+            SET     membres.pass  = '$nouveau_pass'
+            WHERE   membres.id    = '$user_id' ");
   }
 }
 
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+if($lang == 'FR')
+{
+  // Header
+  $trad['titre']          = "Changer mon mot de passe";
+  $trad['pass_change']    = "Votre mot de passe a bien été changé";
+
+  // Formulaire
+  $trad['form_actuel']    = "Entrez votre mot de passe actuel";
+  $trad['form_nouveau']   = "Entrez votre nouveau mot de passe (6 caractères minimum)";
+  $trad['form_confirmer'] = "Entrez une seconde fois votre nouveau mot de passe";
+  $trad['form_submit']    = "CHANGER MON MOT DE PASSE";
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Header
+  $trad['titre']          = "Change my password";
+  $trad['pass_change']    = "Your password has successfully been changed";
+
+  // Formulaire
+  $trad['form_actuel']    = "Enter your current password";
+  $trad['form_nouveau']   = "Enter your new password (6 characters minimum)";
+  $trad['form_confirmer'] = "Enter your new password once again";
+  $trad['form_submit']    = "CHANGE MY PASSWORD";
+}
 
 
 
@@ -81,41 +119,41 @@ if(isset($_POST['edit_pass_go_x']))
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/reglages.png" alt="Réglages">
-    </div>
-    <br>
+      <div class="texte">
 
-    <div class="body_main smallsize">
-      <?php if(!$changement_pass) { ?>
-      <span class="titre">Changer le mot de passe de votre compte</span><br>
-      <br>
-      Pour changer votre mot de passe, vous devez d'abord rentrer votre mot de passe, pour prouver que vous êtes bien le propriétaire du compte et non pas un petit malin qui utilise l'ordinateur d'un ami.<br>
-      <br>
-      Ensuite, vous devrez rentrer deux fois le nouveau mot de passe, pour être sûr de ne pas faire d'erreur.<br>
-      <span<?=$nouveau_pass_regles?>>Votre nouveau mot de passe doit avoir une longueur d'au moins de 5 caractères.</span><br>
-      <br>
-      Le changement de mot de passe est définitif, ne faites pas n'importe quoi.<br>
-      <br>
-      <br>
-      <form name="editpass" action="pass" method="POST">
-        <span class="moinsgros gras alinea">Entrez votre mot de passe actuel :</span>
-        <input type="password" class="indiv<?=$pass_actuel_erreur?>" name="pass_actuel"><br>
+        <h2><?=$trad['titre']?></h2>
+
         <br>
-        <span class="moinsgros gras alinea">Entrez deux fois votre nouveau mot de passe :</span>
-        <input type="password" class="indiv<?=$nouveau_pass_erreur?>" name="nouveau_pass_1"><br>
-        <input type="password" class="indiv<?=$nouveau_pass_erreur?>" name="nouveau_pass_2"><br>
         <br>
-        <div class="indiv align_center">
-          <input type="image" src="<?=$chemin?>img/boutons/modifier.png" alt="Modifier" name="edit_pass_go">
-        </div>
-      </form>
-      <?php } else { ?>
-      <div class="indiv align_center vert_background moinsgros gras"><br>Votre mot de passe a été changé !<br><br></div>
-      <?php } ?>
-    </div>
+
+        <?php if(isset($erreur)) { ?>
+        <h4 class="negatif texte_blanc align_center"><?=$erreur?></h4>
+        <br>
+        <br>
+        <?php } else if(isset($nouveau_pass)) { ?>
+        <h4 class="positif texte_blanc align_center"><?=$trad['pass_change']?></h4>
+        <br>
+        <br>
+        <?php } ?>
+
+        <form method="POST">
+          <fieldset>
+            <label for="passActuel"><?=$trad['form_actuel']?></label>
+            <input id="passActuel" name="passActuel" class="indiv" type="password"><br>
+            <br>
+            <br>
+            <label for="passNouveau"><?=$trad['form_nouveau']?></label>
+            <input id="passNouveau" name="passNouveau" class="indiv" type="password"><br>
+            <br>
+            <label for="passConfirmer"><?=$trad['form_confirmer']?></label>
+            <input id="passConfirmer" name="passConfirmer" class="indiv" type="password"><br>
+            <br>
+            <br>
+            <input value="<?=$trad['form_submit']?>" type="submit" name="passModifier">
+          </fieldset>
+        </form>
+
+      </div>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

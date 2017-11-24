@@ -6,21 +6,22 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-adminonly();
+adminonly($lang);
 
 // Menus du header
-$header_menu      = 'admin';
-$header_submenu   = 'dev';
-$header_sidemenu  = 'fonctions';
+$header_menu      = 'Dev';
+$header_sidemenu  = 'Fonctions';
 
-// Titre
-$page_titre = "Dev : Fonctions";
+// Titre et description
+$page_titre = "Dev: Fonctions";
 
 // Identification
-$page_nom = "admin";
+$page_nom = "Administre secrètement le site";
 
 // CSS & JS
-$css = array('admin');
+$css = array('dev');
+$js  = array('toggle', 'highlight', 'dev/reference');
+
 
 
 
@@ -31,775 +32,1083 @@ $css = array('admin');
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-
-    <div class="margin_auto css_couleurs monospace">
-      <table class="cadre_gris indiv">
-
-        <tr>
-          <td class="cadre_gris_sous_titre gros">LÉGENDE DES COULEURS</td>
-        </tr>
-        <tr>
-          <td class="cadre_gris align_center vert_background gras">Fonction sécurisée et bonne à utiliser</td>
-        </tr>
-        <tr>
-          <td class="cadre_gris align_center mise_a_jour_background gras">Fonction dépréciée et/ou dangereuse, à éviter</td>
-        </tr>
-
+      <table class="fullgrid titresnoirs margin_auto noresize" style="width:1250px;">
+        <thead>
+          <tr>
+            <th class="rowaltc moinsgros pointeur border_right_blank"
+                onClick="fonctions_tout_fermer();toggle_row('liste_fonctions_texte');">
+              TEXTE
+            </th>
+            <th class="rowaltc moinsgros pointeur border_right_blank"
+                onClick="fonctions_tout_fermer();toggle_row('liste_fonctions_dates');">
+              DATES
+            </th>
+            <th class="rowaltc moinsgros pointeur border_right_blank"
+                onClick="fonctions_tout_fermer();toggle_row('liste_fonctions_maths');">
+              MATHS
+            </th>
+            <th class="rowaltc moinsgros pointeur border_right_blank"
+                onClick="fonctions_tout_fermer();toggle_row('liste_fonctions_users');">
+              USERS
+            </th>
+            <th class="rowaltc moinsgros pointeur border_right_blank"
+                onClick="fonctions_tout_fermer();toggle_row('liste_fonctions_nobleme');">
+              NOBLEME
+            </th>
+            <th class="rowaltc moinsgros pointeur border_all_blank"
+                onClick="fonctions_tout_fermer();toggle_row('liste_fonctions_divers');">
+              DIVERS
+            </th>
+          </tr>
+        </thead>
       </table>
-    </div>
 
-    <br>
-    <br>
-
-    <div class="margin_auto midsize monospace">
-      <table class="cadre_gris indiv">
-
-        <tr>
-          <td class="cadre_gris_titre gros" colspan="3">INDEX NAVIGATION RAPIDE</td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre moinsgros pointeur" onClick="window.location.hash='#sql';">
-            Fonctions SQL
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros pointeur" onClick="window.location.hash='#dates';">
-            Dates
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros pointeur" onClick="window.location.hash='#users';">
-            Utilisateurs et permissions
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre moinsgros pointeur" onClick="window.location.hash='#post';">
-            Post-traitement
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros pointeur" onClick="window.location.hash='#sessions';">
-            Sessions
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros pointeur" onClick="window.location.hash='#nobleme';">
-            Fonctionnalités du site
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre moinsgros pointeur" onClick="window.location.hash='#formattage';">
-            Formattage
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros pointeur" onClick="window.location.hash='#debug';">
-            Debug
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros pointeur" onClick="window.location.hash='#conneries';">
-            Conneries
-          </td>
-        </tr>
-
-      </table>
-    </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <div class="margin_auto monospace css_sections" id="sql">
-      <table class="cadre_gris indiv">
-
-        <tr>
-          <td class="cadre_gris_titre gros" colspan="3">
-            FONCTIONS SQL
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Fonction
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Description
-          </td><td class="cadre_gris_sous_titre moinsgros">
-            Exemple
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>query(</b>"requête"<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Requête SQL basique, prend la requête entière en paramètre
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $q = query(" SELECT * FROM table ");
-          </td>
-        </tr>
-
-      </table>
-    </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <div class="margin_auto monospace css_sections" id="post">
-      <table class="cadre_gris indiv">
-
-        <tr>
-          <td class="cadre_gris_titre gros" colspan="3">
-            POST-TRAITEMENT DES DONNÉES
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Fonction
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Description
-          </td><td class="cadre_gris_sous_titre moinsgros">
-            Exemple
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>postdata(</b>$_POST['data']<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Nettoie le postdata pour éviter les injections SQL
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $champ = postdata($_POST['champ']);
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>postdata_vide(</b>'data'<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Similaire à postdata(), mais renvoie '' si le post n'existe pas
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $champ = postdata_vide('champ');
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>postdata_vide_defaut(</b>'data',defaut<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Similaire à postdata_vide(),<br>mais assigne la valeur par défaut si le post n'existe pas
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $champ = postdata_vide_defaut('champ','x');
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap mise_a_jour_background">
-            <b>postdata_vide_dangereux(</b>'data'<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced mise_a_jour_background">
-            <b>DANGEREUX !</b> Similaire à postdata_vide(),<br> mais ne sanitize pas les données
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap mise_a_jour_background">
-            $champ = postdata_vide_dangereux('champ');
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_vide" colspan="3">
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>nl2br_fixed(</b>"contenu"<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            nl2br() ne respecte pas le doctype, sort des &lt;br /> au lieu de &lt;br><br>
-            Cette fonction transforme retours à la ligne en &lt;br>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $texte = nl2br_fixed("abc \r\n xyz");
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>br2ln(</b>"contenu"<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Effet inverse de nl2br et nl2br_fixed<br>
-            Cette fonction transforme &lt;br> en retours à la ligne
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $texte = br2ln("abc &lt;br> xyz");
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_vide" colspan="3">
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>meta_fix(</b>"description"<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Remplace les caractères interdits dans les balises meta<br>par leur équivalent htmlentities
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $meta = meta_fix("Description][meta");
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>destroy_html(</b>"string"<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Détruit les tags html pour ne pas se faire xss<br>Transforme également les :amp: en &amp; pour gérer les retours du XHR
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $string = destroy_html($contenu_html);
-          </td>
-        </tr>
-
-      </table>
-    </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <div class="margin_auto monospace css_sections" id="users">
-      <table class="cadre_gris indiv">
-
-        <tr>
-          <td class="cadre_gris_titre gros" colspan="3">
-            GESTION DES UTILISATEURS
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Fonction
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Description
-          </td><td class="cadre_gris_sous_titre moinsgros">
-            Exemple
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>adminonly()</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Empêche de voir la page si l'user n'est pas un admin
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            adminonly();
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>sysoponly()</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Empêche de voir la page si l'user n'est pas un sysop
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            sysoponly();
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>useronly()</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Empêche de voir la page si l'user est un invité, requiert un compte
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            useronly();
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>guestonly()</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Empêche de voir la page si l'user est enregistré, invités uniquement
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            guestonly();
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_vide" colspan="3">
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>loggedin()</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Renvoie TRUE si l'utilisateur est connecté, sinon FALSE
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            if(loggedin()){ action(); }
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>getsysop(</b>userid<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Renvoie 1 si l'userid rentré est un sysop, sinon renvoie 0<br>
-            Si le paramètre est NULL, renvoie le pseudonyme de l'user actuel
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            if getsysop($_SESSION['user']){ action(); }<br>
-            if getsysop(){ action(); }
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>getadmin(</b>userid<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Renvoie 1 si l'userid rentré est un admin, sinon renvoie 0<br>
-            Si le paramètre est NULL, renvoie le pseudonyme de l'user actuel
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            if getadmin($_SESSION['user']){ action(); }<br>
-            if getadmin(){ action(); }
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_vide" colspan="3">
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>getpseudo(</b>userid<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Renvoie le pseudonyme correspondant à l'userid rentré<br>
-            Si le paramètre est NULL, renvoie le pseudonyme de l'user actuel
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $nick = getpseudo($_SESSION['user']);<br>
-            $nick = getpseudo();
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_vide" colspan="3">
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap mise_a_jour_background">
-            <b>logout()</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced mise_a_jour_background">
-            Déconnecte l'user, détruit également son cookie
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap mise_a_jour_background">
-            logout();
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_vide" colspan="3">
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>salage(</b>"pass"<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Hashage et salage du mot de passe<br>
-            Sha-512 avec saltage, largement assez sécurisé pour les années à venir
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $hash = salage("motdepasse");
-          </td>
-        </tr>
-
-      </table>
-    </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <div class="margin_auto monospace css_sections" id="nobleme">
-      <table class="cadre_gris indiv">
-
-        <tr>
-          <td class="cadre_gris_titre gros" colspan="3">
-            FONCTIONNALITÉS DU SITE
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Fonction
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Description
-          </td><td class="cadre_gris_sous_titre moinsgros">
-            Exemple
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>erreur(</b>"message"<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Envoie un message d'erreur et exit() la page actuelle<br>
-            La page d'erreur contient le header et footer, ne bloque pas la navigation
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            erreur("gtfo");
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_vide" colspan="3">
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>envoyer_notif(</b>destinataire,<br>"titre","contenu",sender,silent<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Envoie une notification<br>
-            Le champ destinataire est un userid<br>
-            Si sender est NULL, alors la notif sera un message système<br>
-            Si silent est set, alors le message sera considéré comme déjà lu<br>
-            Les retours à la ligne sont à faire sous forme \r\n
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            envoyer_notif(1,"Sup!","Line\r\nBreak");<br>
-            envoyer_notif($user,"Shh","Silent",1,1);
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_vide" colspan="3">
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>ircbot(</b>$chemin,"texte",<br>
-            "canal","formattage"<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Envoie une commande au bot IRC NoBleme<br>
-            $chemin doit être le $chemin usuel<br>
-            Canal doit contenir le nom du canal entier, avec le #<br>
-            Si canal est NULL, le message brut sera envoyé<br>
-            Si formattage n'est pas NULL, le texte sera formatté<br>
-            (c'est à dire que les codes comme %B fonctionneront)
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            ircbot($chemin,"Bonjour !","#NoBleme");<br>
-            ircbot($chemin,"NICK NouveauPseudo");
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_vide" colspan="3">
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>bbcode(</b>data<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Transforme les bbcodes et emotes du contenu en html
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            bbcode('[b]gras[/b]');
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_vide" colspan="3">
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>todo_importance(</b>valeur,style<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Renvoie un ordre de priorité à partir d'une valeur entre 0 et 5<br>
-            Utilisé pour la liste des tâches<br>
-            Si style est set, renvoie du HTML en plus du texte<br>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            todo_importance($valeur);<br>
-            todo_importance($todo,1)
-          </td>
-        </tr>
-
-      </table>
-    </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <div class="margin_auto monospace css_sections" id="dates">
-      <table class="cadre_gris indiv">
-
-        <tr>
-          <td class="cadre_gris_titre gros" colspan="3">
-            GESTION DES DATES
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Fonction
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Description
-          </td><td class="cadre_gris_sous_titre moinsgros">
-            Exemple
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>datefr(</b>date<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Transforme une date mysql en une date en toutes lettres<br>
-            Aujourd'hui (<?=date('Y-m-d')?>) en datefr() est le <?=datefr(date('Y-m-d'))?>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $date = datefr(date('Y-m-d'));
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>jourfr(</b>date<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Similaire à datefr, mais ne renvoie pas le nom du jour<br>
-            Aujourd'hui (<?=date('Y-m-d')?>) en jourfr() est le <?=jourfr(date('Y-m-d'))?><br>
-            Un paramètre optionnel permet de ne pas spécifier le jour avant la date
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $date = jourfr(date('Y-m-d'));<br>
-            $date = jourfr('2005-19-03',1);
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_vide" colspan="3">
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>ddmmyy(</b>date<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Transforme une date mysql en date au format dd/mm/yy<br>
-            Aujourd'hui (<?=date('Y-m-d')?>) en ddmmyy() est le <?=ddmmyy(date('Y-m-d'))?>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $date = ddmmyy(date('Y-m-d'));
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_vide" colspan="3">
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>ilya(</b>timestamp<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Renvoie en toutes lettres le temps écoulé entre le timestamp et maintenant
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $anciennete = ilya($timestamp);
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>dans(</b>timestamp<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Renvoie en toutes lettres le temps restant entre maintenant et le timestamp
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $reste = dans($timestamp);
-          </td>
-        </tr>
-
-      </table>
-    </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <div class="margin_auto monospace css_sections" id="formattage">
-      <table class="cadre_gris indiv">
-
-        <tr>
-          <td class="cadre_gris_titre gros" colspan="3">
-            FORMATTAGE
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Fonction
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Description
-          </td><td class="cadre_gris_sous_titre moinsgros">
-            Exemple
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>diff_raw()</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Fonction servant au fonctionnement de diff()<br>
-            Prend deux arrays en param, renvoie un array des différences<br>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            -----
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>diff()</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Renvoie les différences entre deux strings<br>
-            Utilise les tags html ins et del pour formatter le résultat<br>
-            Le troisième paramètre optionnel renvoie du bbcode au lieu de html<br>
-            Le quatrième paramètre optionnel renvoie les résultats dans un joli tableau<br>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            diff("avant","apres",0,1);
-          </td>
-        </tr>
-
-      </table>
-    </div>
-
-    <br>
-    <br>
-    <br>
-    <br>
+      <br>
+      <br>
 
 
-    <div class="margin_auto monospace css_sections" id="sessions">
-      <table class="cadre_gris indiv">
 
-        <tr>
-          <td class="cadre_gris_titre gros" colspan="3">
-            SESSIONS PHP
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Fonction
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Description
-          </td><td class="cadre_gris_sous_titre moinsgros">
-            Exemple
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>session_start_securise()</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Bouche des trous de sécurités du session_start() de PHP<br>
-            Régénère le token à chaque page load pour le rendre plus chiant à spoofer<br>
-            Passe uniquement par un cookie de session pour minimiser les routes de fuite<br>
-            Spawne un cookie de session qui ne se laisse pas poller par le javascript<br>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            session_start_securise();
-          </td>
-        </tr>
 
-      </table>
-    </div>
+<!-- ######################################################################################################################################
+#                                                                                                                                         #
+#                                                                 TEXTE                                                                   #
+#                                                                                                                                         #
+###################################################################################################################################### !-->
 
-    <br>
-    <br>
-    <br>
-    <br>
+      <div id="liste_fonctions_texte">
 
-    <div class="margin_auto monospace css_sections" id="conneries">
-      <table class="cadre_gris indiv">
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                CHAÎNES DE CARACTÈRES
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                tronquer_chaine('Héhéhé',4,' [...]');
+              </td>
+              <td class="gras align_center">
+                <?=tronquer_chaine('Héhéhé',4,' [...]');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                changer_casse('Test accentué','maj');
+              </td>
+              <td class="gras align_center">
+                <?=changer_casse('Test accentué','maj');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                changer_casse('TEST ACCENTUÉ','min');
+              </td>
+              <td class="gras align_center">
+                <?=changer_casse('TEST ACCENTUÉ','min');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                changer_casse('éssai avec accent','init');
+              </td>
+              <td class="gras align_center">
+                <?=changer_casse('éssai avec accent','init');?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-        <tr>
-          <td class="cadre_gris_titre gros" colspan="3">
-            CONNERIES
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Fonction
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Description
-          </td><td class="cadre_gris_sous_titre moinsgros">
-            Exemple
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap vert_background">
-            <b>surnom_mignon()</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced vert_background">
-            Génère un surnom mignon aléatoire, utilisé pour identifier les invités<br>
-            Exemple: <?=surnom_mignon()?>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap vert_background">
-            $nom_invite = surnom_mignon();
-          </td>
-        </tr>
+        <br>
+        <br>
 
-      </table>
-    </div>
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                BBCODES ET EMOTICÔNES
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                bbcode("on [u]souligne[/u] :)");
+              </td>
+              <td class="gras align_center">
+                <?=bbcode("on [u]souligne[/u] :)");?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-    <br>
-    <br>
-    <br>
-    <br>
+        <br>
+        <br>
 
-    <div class="margin_auto monospace css_sections" id="debug">
-      <table class="cadre_gris indiv">
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                DIFFÉRENCE ENTRE DEUX TEXTES
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                diff("123 Avant xx", "123 Après xx");
+              </td>
+              <td class="align_center">
+                <?=diff("123 Avant xx", "123 Après xx");?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-        <tr>
-          <td class="cadre_gris_titre gros" colspan="3">
-            FONCTIONS DE DEBUG
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Fonction
-          </td>
-          <td class="cadre_gris_sous_titre moinsgros">
-            Description
-          </td><td class="cadre_gris_sous_titre moinsgros">
-            Exemple
-          </td>
-        </tr>
-        <tr>
-          <td class="cadre_gris cadre_gris_haut align_right spaced nowrap mise_a_jour_background">
-            <b>bfdecho(</b>"valeur"<b>)</b>
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_center spaced mise_a_jour_background">
-            Affiche du texte que seul Bad peut voir<br>
-            À n'utiliser que dans les cas extrêmes, pour debug en prod
-          </td>
-          <td class="cadre_gris cadre_gris_haut align_left italique spaced nowrap mise_a_jour_background">
-            bfdecho($debug);
-          </td>
-        </tr>
+        <br>
+        <br>
 
-      </table>
-    </div>
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                RETOURS CHARIOTS
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                br2ln("Des&lt;br&gt;retours&lt;br /&gt;chariot");
+              </td>
+              <td class="gras align_center">
+                <?=br2ln("Des<br>retours<br />chariot");?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+
+
+
+<!-- ######################################################################################################################################
+#                                                                                                                                         #
+#                                                                 DATES                                                                   #
+#                                                                                                                                         #
+###################################################################################################################################### !-->
+
+      <div class="hidden" id="liste_fonctions_dates">
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                DATES EN TOUTES LETTRES
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                $joursfr[2]
+              </td>
+              <td class="gras align_center">
+                <?=$joursfr[2];?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                $moisfr[2]
+              </td>
+              <td class="gras align_center">
+                <?=$moisfr[2];?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                $moisfr_courts[2]
+              </td>
+              <td class="gras align_center">
+                <?=$moisfr_courts[2];?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                $datefr
+              </td>
+              <td class="gras align_center">
+                <?=$datefr;?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                CONVERSION DE DATES MYSQL
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                datefr('2005-03-19');
+              </td>
+              <td class="gras align_center">
+                <?=datefr('2005-03-19');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                datefr('2005-03-19', 'EN');
+              </td>
+              <td class="gras align_center">
+                <?=datefr('2005-03-19', 'EN');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                jourfr('2005-03-19', 'FR');
+              </td>
+              <td class="gras align_center">
+                <?=jourfr('2005-03-19', 'FR');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                jourfr('2005-03-19', 'EN');
+              </td>
+              <td class="gras align_center">
+                <?=jourfr('2005-03-19', 'EN');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                jourfr('2005-03-19', 'FR', 1);
+              </td>
+              <td class="gras align_center">
+                <?=jourfr('2005-03-19', 'FR', 1);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                jourfr('2005-03-19', 'EN', 1);
+              </td>
+              <td class="gras align_center">
+                <?=jourfr('2005-03-19', 'EN', 1);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                ddmmyy('2005-03-19');
+              </td>
+              <td class="gras align_center">
+                <?=ddmmyy('2005-03-19');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                ddmmyy('0000-00-00');
+              </td>
+              <td class="gras align_center">
+                <?=ddmmyy('0000-00-00');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                mysqldate('19/03/2005');
+              </td>
+              <td class="gras align_center">
+                <?=mysqldate('19/03/2005');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                mysqldate('19/03/05');
+              </td>
+              <td class="gras align_center">
+                <?=mysqldate('19/03/05');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                mysqldate('13/14/15');
+              </td>
+              <td class="gras align_center">
+                <?=mysqldate('13/14/15');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                mysqldate('Ceci n\'est pas une date');
+              </td>
+              <td class="gras align_center">
+                <?=mysqldate('Ceci n\'est pas une date');?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                DÉLAI D'UN TIMESTAMP
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                ilya(strtotime('2005-03-19'));
+              </td>
+              <td class="gras align_center">
+                <?=ilya(strtotime('2005-03-19'));?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                ilya(strtotime('2005-03-19'), 'EN');
+              </td>
+              <td class="gras align_center">
+                <?=ilya(strtotime('2005-03-19'), 'EN');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                ilya(time());
+              </td>
+              <td class="gras align_center">
+                <?=ilya(time());?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                dans(strtotime((date('Y')+1).date('-m-d')));
+              </td>
+              <td class="gras align_center">
+                <?=dans(strtotime((date('Y')+1).date('-m-d')));?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                dans(strtotime((date('Y')+1).date('-m-d')), 'EN');
+              </td>
+              <td class="gras align_center">
+                <?=dans(strtotime((date('Y')+1).date('-m-d')), 'EN');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                dans(time()-1);
+              </td>
+              <td class="gras align_center">
+                <?=dans(time()-1);?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+
+
+
+<!-- ######################################################################################################################################
+#                                                                                                                                         #
+#                                                                 MATHS                                                                   #
+#                                                                                                                                         #
+###################################################################################################################################### !-->
+
+      <div class="hidden" id="liste_fonctions_maths">
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                SIGNE D'UN NOMBRE
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                signe_nombre(1);
+              </td>
+              <td class="gras align_center">
+                <?=signe_nombre(1);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_positif(0);
+              </td>
+              <td class="gras align_center">
+                <?=format_positif(0);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_positif(-1,'hex');
+              </td>
+              <td class="gras align_center" style="color:#<?=format_positif(-1,'hex');?>">
+                <?=format_positif(-1,'hex');?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                FORMATTAGE DES NOMBRES
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                format_nombre(1234567, "nombre");
+              </td>
+              <td class="gras align_center">
+                <?=format_nombre(1234567, "nombre");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_nombre(1000000, "prix");
+              </td>
+              <td class="gras align_center">
+                <?=format_nombre(1000000, "prix");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_nombre(1337.42, "centimes");
+              </td>
+              <td class="gras align_center">
+                <?=format_nombre(1337.42, "centimes");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_nombre(12.3, "pourcentage",2);
+              </td>
+              <td class="gras align_center">
+                <?=format_nombre(12.3, "pourcentage",2);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_nombre(3, "point", NULL, "signed");
+              </td>
+              <td class="gras align_center">
+                <?=format_nombre(3, "point", NULL, "signed");?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                CALCUL D'UN POURCENTAGE
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                calcul_pourcentage(42,69);
+              </td>
+              <td class="gras align_center">
+                <?=calcul_pourcentage(42,69);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                format_nombre(calcul_pourcentage(1,4),"pourcentage",0);
+              </td>
+              <td class="gras align_center">
+                <?=format_nombre(calcul_pourcentage(1,4),"pourcentage",0);?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+
+
+
+<!-- ######################################################################################################################################
+#                                                                                                                                         #
+#                                                                 USERS                                                                   #
+#                                                                                                                                         #
+###################################################################################################################################### !-->
+
+      <div class="hidden" id="liste_fonctions_users">
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                PERMISSIONS
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                guestonly($lang);
+              </td>
+              <td class="align_center">
+                Vire les utilisateurs connectés
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                useronly($lang);
+              </td>
+              <td class="align_center">
+                Vire les visiteurs non connectés
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                sysoponly($lang);
+              </td>
+              <td class="align_center">
+                Vire ceux qui ne sont pas sysop
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                sysoponly($lang, 'forum');
+              </td>
+              <td class="align_center">
+                Vire ceux qui sont ni sysop ni modérateur de la zone
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                adminonly($lang);
+              </td>
+              <td class="align_center">
+                Vire ceux qui ne sont pas admin
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                INFOS SUR LE COMPTE
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                loggedin();
+              </td>
+              <td class="gras align_center">
+                <?=loggedin();?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                getpseudo();
+              </td>
+              <td class="gras align_center">
+                <?=getpseudo();?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                getpseudo(42);
+              </td>
+              <td class="gras align_center">
+                <?=getpseudo(42);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                getmod('irl');
+              </td>
+              <td class="gras align_center">
+                <?=getmod('irl');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                getmod('irl',227);
+              </td>
+              <td class="gras align_center">
+                <?=getmod('irl',227);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                getsysop();
+              </td>
+              <td class="gras align_center">
+                <?=getsysop();?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                getsysop(42);
+              </td>
+              <td class="gras align_center">
+                <?=getsysop(42);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                getadmin();
+              </td>
+              <td class="gras align_center">
+                <?=getadmin();?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                getadmin(42);
+              </td>
+              <td class="gras align_center">
+                <?=getadmin(42);?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                GESTION DE LA CONNEXION
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                logout();
+              </td>
+              <td class="align_center">
+                Déconnexion
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros">
+                NOTIFICATIONS / MESSAGES PRIVÉS
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                envoyer_notif(42, 'Message de Bad', 'Corps du message', 1);
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                envoyer_notif(69, 'Messge système', 'Apparait comme envoyé par le système');
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                SALAGE DE MOT DE PASSE
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                salage('mot de passe');
+              </td>
+              <td class="gras align_center">
+                <?=salage('mot de passe');?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+
+
+
+<!-- ######################################################################################################################################
+#                                                                                                                                         #
+#                                                                NOBLEME                                                                  #
+#                                                                                                                                         #
+###################################################################################################################################### !-->
+
+      <div class="hidden" id="liste_fonctions_nobleme">
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                IMPORTANCE D'UNE TÂCHE
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                todo_importance(5);
+              </td>
+              <td class="align_center">
+                <?=todo_importance(5);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                todo_importance(5,1);
+              </td>
+              <td class="align_center">
+                <?=todo_importance(5,1);?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                SURNOMS MIGNONS ALÉATOIRES
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                surnom_mignon();<br>
+                surnom_mignon();<br>
+                surnom_mignon();<br>
+                surnom_mignon();
+              </td>
+              <td class="gras align_center">
+                <?=surnom_mignon();?><br>
+                <?=surnom_mignon();?><br>
+                <?=surnom_mignon();?><br>
+                <?=surnom_mignon();?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros">
+                ENVOI D'UN MESSAGE SUR IRC VIA LE BOT
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                ircbot($chemin,"Message à poster sur dev","#dev");
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+
+
+<!-- ######################################################################################################################################
+#                                                                                                                                         #
+#                                                                 DIVERS                                                                  #
+#                                                                                                                                         #
+###################################################################################################################################### !-->
+
+      <div class="hidden" id="liste_fonctions_divers">
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros">
+                REQUÊTE SQL
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                query("SELECT * FROM table WHERE 1=1");
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                NETTOYAGE DU HTML
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                predata("string&lt;hr&gt;HTML");
+              </td>
+              <td class="align_center">
+                <?=predata("string<hr>HTML");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                predata("string&lt;hr&gt;<br>
+                Retour chariot",1);
+              </td>
+              <td class="align_center">
+                <?=predata("string<hr>
+                Retour chariot",1);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                destroy_html('&lt;balise onclick="xss"&gt;');
+              </td>
+              <td class="align_center">
+                <?=destroy_html('<balise onclick="xss">');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                destroy_html(":amp:");
+              </td>
+              <td class="align_center">
+                <?=destroy_html(":amp:");?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                ASSAINISSEMENT DU POSTDATA
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                postdata("hel'lo");
+              </td>
+              <td class="align_center">
+                <?=postdata("hel'lo");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata("whitespace           ");
+              </td>
+              <td class="align_center">
+                <?=postdata("whitespace           ");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata("string","int");
+              </td>
+              <td class="align_center">
+                <?=postdata("string","int");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata(123.456,"int");
+              </td>
+              <td class="align_center">
+                <?=postdata(123.456,"int");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata(-999.9999,"double",-500.001,500.001);
+              </td>
+              <td class="align_center">
+                <?=postdata(-999.9999,"double",-500.001,500.001);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata(999,"double",-500,500);
+              </td>
+              <td class="align_center">
+                <?=postdata(999,"double",-500,500);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata("longue p'hrase","string",0,10);
+              </td>
+              <td class="align_center">
+                <?=postdata("longue p'hrase","string",0,10);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata("courte p'hrase","string",20);
+              </td>
+              <td class="align_center">
+                <?=postdata("courte p'hrase","string",20);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata_vide("mon_postdata", "string", "rien");
+              </td>
+              <td class="align_center">
+                <?=postdata_vide("mon_postdata", "string", "rien");?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                postdata_vide("texte", "string", "", 4, '...');
+              </td>
+              <td class="align_center">
+                text...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros">
+                PAGE D'ERREUR
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                erreur("On arrête tout (à placer avant le header)");
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros">
+                PAGE NE POUVANT QUE ÊTRE APPELÉE PAR DYNAMIQUE()
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                xhronly();
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                DEBUG EN PROD
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                bfdecho("Seul Bad peut voir ceci");
+              </td>
+              <td class="gras align_center">
+                <?=bfdecho("Seul Bad peut voir ceci");?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+
+
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

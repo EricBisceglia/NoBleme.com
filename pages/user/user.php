@@ -6,19 +6,48 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = 'communaute';
-$header_submenu   = 'membres';
-$header_sidemenu  = 'portail';
+$header_menu      = 'NoBleme';
+$header_sidemenu  = 'ListeDesMembres';
+
+// Identification
+$page_nom = "Regarde le profil de ";
+$page_url = "pages/user/user?id=";
+
+// Lien court
+$shorturl = "u=";
+
+// Langages disponibles
+$langage_page = array('FR','EN');
 
 // Titre et description
 $page_titre = "Profil de ";
-$page_desc  = "Profil public du membre de NoBleme ";
-
-// Identification
-$page_nom = "user";
+$page_desc  = "Profil public du compte NoBleme de ";
 
 // CSS & JS
 $css = array('user');
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                        TRAITEMENT DU POST-DATA                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+// Si on a ni ID ni pseudo, on met son propre profil, ou on renvoie une erreur
+if(!isset($_GET['id']) && !isset($_GET['pseudo']))
+{
+  if(!loggedin())
+    useronly($lang);
+  else
+    $user_id = $_SESSION['user'];
+}
+// Sinon on récupère l'ID ou le pseudo
+else if(isset($_GET['id']))
+  $user_id = postdata($_GET['id'], 'int');
+else
+  $user_pseudo = postdata($_GET['pseudo'], 'string');
 
 
 
@@ -29,112 +58,170 @@ $css = array('user');
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Si pas d'userid, dehors
-if(!isset($_GET['id']) && !isset($_GET['pseudo']))
-  erreur('ID utilisateur invalide');
-
-// On nettoie
-$getid      = (isset($_GET['id'])) ? postdata($_GET['id']) : '';
-$getpseudo  = (isset($_GET['pseudo'])) ? postdata($_GET['pseudo']) : '';
-
-// Si getid, on check s'il existe puis on va chercher userid et userpseudo
-if(is_numeric($getid))
+// Si on a un pseudo, on récupère l'ID correspondant
+if (isset($user_pseudo))
 {
-  // Si c'est un id numérique
-  if(!mysqli_num_rows(query(" SELECT id FROM membres WHERE id = '$getid' ")))
-    erreur('ID utilisateur inexistant');
-  $userid     = $getid;
-  $userpseudo = getpseudo($getid);
-}
-else
-{
-  // Si c'est un pseudonyme
-  $querynick = query(" SELECT id FROM membres WHERE pseudonyme LIKE '$getpseudo' ");
-  if(!mysqli_num_rows($querynick))
-    erreur('Pseudonyme inexistant');
-  $querynick  = mysqli_fetch_array($querynick);
-  $userid     = $querynick['id'];
-  $userpseudo = $getpseudo;
-}
+  // On va chercher l'ID
+  $qtempuser = query(" SELECT membres.id FROM membres WHERE membres.pseudonyme LIKE BINARY '$user_pseudo' ");
 
-// Et on complète les infos des menus du header
-if(loggedin() && $userid == $_SESSION['user'])
-{
-  $header_menu      = 'compte';
-  $header_submenu   = 'profil';
-  $header_sidemenu  = '';
-}
-
-// Et les infos d'identification de la page
-$page_titre .= $userpseudo;
-$page_desc  .= $userpseudo;
-$page_id     = $userid;
-
-// S'il est banni, on révoque le ban
-$banquery = mysqli_fetch_array(query(" SELECT membres.banni_date FROM membres WHERE membres.id = '$userid' "));
-if($banquery["banni_date"] < time())
-  query(" UPDATE membres SET membres.banni_date = '0' , membres.banni_raison  = '' WHERE membres.id = '$userid' ");
-
-// Maintenant on peut aller chercher les infos qu'on va afficher sur la page
-$datenow = date("Y-m-d");
-$qprofil = query("  SELECT  membres.admin           AS 'admin'        ,
-                            membres.sysop           AS 'sysop'        ,
-                            membres.moderateur      AS 'moderateur'   ,
-                            membres.date_creation   AS 'creation'     ,
-                            membres.derniere_visite AS 'visite'       ,
-                            membres.banni_date      AS 'ban_date'     ,
-                            membres.banni_raison    AS 'ban_raison'   ,
-                            membres.sexe            AS 'sexe'         ,
-                            membres.anniversaire    AS 'anniversaire' ,
-                            membres.region          AS 'region'       ,
-                            membres.metier          AS 'metier'       ,
-                            membres.profil          AS 'custom'       ,
-                   (SELECT COUNT(*) FROM irl_participants, irl  WHERE irl_participants.FKmembres    = '$userid'
-                                                                AND   irl_participants.confirme     = 1
-                                                                AND   irl_participants.FKirl        = irl.id
-                                                                AND   irl.date                      < '$datenow') AS 'irls'     ,
-                   (SELECT COUNT(*) FROM quotes                 WHERE quotes.valide_admin           = 1
-                                                                AND   quotes.FKauteur               = '$userid')  AS 'squotes'  ,
-                   (SELECT COUNT(*) FROM quotes_membres         WHERE quotes_membres.FKmembres      = '$userid')  AS 'quotes'   ,
-                   (SELECT COUNT(*) FROM devblog_commentaire    WHERE devblog_commentaire.FKmembres = '$userid')  AS 'devblog'  ,
-                   (SELECT COUNT(*) FROM todo                   WHERE todo.FKmembres                = '$userid')  AS 'tickets'  ,
-                   (SELECT COUNT(*) FROM todo_commentaire       WHERE todo_commentaire.FKmembres    = '$userid')  AS 'tickets_comm'
-                    FROM    membres
-                    WHERE   membres.id = '$userid' ");
-while($dprofil = mysqli_fetch_array($qprofil))
-{
-  $p_admin            = $dprofil['admin'];
-  $p_sysop            = $dprofil['sysop'];
-  $p_moderateur       = $dprofil['moderateur'];
-  $p_creation         = 'Le <span class="gras">'.jourfr(date('Y-m-d',$dprofil['creation'])).'</span> à '.date('H:i',$dprofil['creation']);
-  $p_creation        .= ' ('.strtolower(ilya($dprofil['creation'],1)).')';
-  if($dprofil['visite'])
+  // S'il existe pas, on dégage
+  if(!mysqli_num_rows($qtempuser))
   {
-    $p_visite         = 'Le <span class="gras">'.jourfr(date('Y-m-d',$dprofil['visite'])).'</span> à '.date('H:i',$dprofil['visite']);
-    $p_visite        .= ' ('.strtolower(ilya($dprofil['visite'],1)).')';
+    $temp_erreur = ($lang == 'FR') ? 'Cet utilisateur n\'existe pas' : 'This user does not exist';
+    erreur($temp_erreur);
   }
-  else
-    $p_visite = 0;
-  $p_ban              = ($dprofil['ban_date']) ? 1 : 0;
-  $p_ban_date         = jourfr(date("Y-m-d",$dprofil['ban_date']));
-  $p_ban_raison       = destroy_html($dprofil['ban_raison']);
-  $p_sexe             = ($dprofil['sexe']) ? '<span class="gras">'.substr($dprofil['sexe'],0,1).'</span>'.substr($dprofil['sexe'],1) : 0;
-  if(substr($dprofil['anniversaire'],0,4) > '0000' && substr($dprofil['anniversaire'],5,2) != '00' && substr($dprofil['anniversaire'],8,2) != '00')
-  {
-    $p_anniversaire   = '<span class="gras">'.floor((strtotime(date('Y-m-d'))-strtotime($dprofil['anniversaire']))/31556926).'</span> ans / Anniversaire le ';
-    $p_anniversaire  .= substr(jourfr(date('Y').'-'.substr($dprofil['anniversaire'],5,5)),0,-5);
-  }
-  else
-    $p_anniversaire   = 0;
-  $p_region           = destroy_html($dprofil['region']);
-  $p_metier           = destroy_html($dprofil['metier']);
-  $p_irls             = $dprofil['irls'];
-  $p_squotes          = $dprofil['squotes'];
-  $p_quotes           = $dprofil['quotes'];
-  $p_devblog          = $dprofil['devblog'];
-  $p_tickets          = $dprofil['tickets'];
-  $p_tickets_comm     = $dprofil['tickets_comm'];
-  $p_custom           = ($dprofil['custom']) ? nl2br_fixed(bbcode(destroy_html($dprofil['custom']))) : '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><div class="indiv align_center gras">'.$userpseudo.' n\'a pas personnalisé son profil</div>';
+
+  // Sinon, on récupère l'ID
+  $dtempuser = mysqli_fetch_array($qtempuser);
+  $user_id = $dtempuser['id'];
+}
+
+// Maintenant, on peut aller chercher les données du profil
+$qprofil = query("  SELECT      membres.pseudonyme      AS 'u_pseudo'     ,
+                                membres.admin           AS 'u_admin'      ,
+                                membres.sysop           AS 'u_sysop'      ,
+                                membres.moderateur      AS 'u_mod'        ,
+                                membres.date_creation   AS 'u_creation'   ,
+                                membres.derniere_visite AS 'u_activite'   ,
+                                membres.banni_date      AS 'u_ban_date'   ,
+                                membres.banni_raison    AS 'u_ban_raison' ,
+                                membres.genre           AS 'u_genre'      ,
+                                membres.anniversaire    AS 'u_anniv'      ,
+                                membres.habite          AS 'u_habite'     ,
+                                membres.metier          AS 'u_metier'     ,
+                                membres.email           AS 'u_email'      ,
+                                membres.profil          AS 'u_profil'
+                    FROM        membres
+                    WHERE       membres.id = '$user_id' ");
+
+// Si le membre existe pas, on dégage
+if(!mysqli_num_rows($qprofil))
+{
+  $temp_erreur = ($lang == 'FR') ? 'Cet utilisateur n\'existe pas' : 'This user does not exist';
+  erreur($temp_erreur);
+}
+
+// On va commencer par compléter les infos internes de la page
+if(loggedin() && $user_id == $_SESSION['user'])
+{
+  $header_menu      = 'Compte';
+  $header_sidemenu  = 'MonProfil';
+}
+$dprofil            = mysqli_fetch_array($qprofil);
+$page_nom           = $page_nom.predata($dprofil['u_pseudo']);
+$page_url           = $page_url.$user_id;
+$shorturl           = $shorturl.$user_id;
+$page_titre         = ($lang == 'FR') ? $page_titre.predata($dprofil['u_pseudo']) : predata($dprofil['u_pseudo']).'\'s profile';
+$page_desc          = $page_desc.predata($dprofil['u_pseudo']);
+
+
+// On va aller chercher d'autres infos sur le membre
+$temp_date        = date('Y-m-d');
+$qprofil_irl      = mysqli_fetch_array(query("  SELECT    COUNT(irl_participants.id) AS 'num_irls'
+                                                FROM      irl_participants
+                                                LEFT JOIN irl ON irl_participants.FKirl = irl.id
+                                                WHERE     irl.date                    <= '$temp_date'
+                                                AND       irl_participants.FKmembres  = '$user_id'
+                                                AND       irl_participants.confirme   = 1 "));
+
+$qprofil_quotes   = mysqli_fetch_array(query("  SELECT    COUNT(quotes_membres.id) AS 'num_quotes'
+                                                FROM      quotes_membres
+                                                LEFT JOIN quotes ON quotes_membres.FKquotes = quotes.id
+                                                WHERE     quotes_membres.FKmembres  = '$user_id'
+                                                AND       quotes.valide_admin       = 1 "));
+
+$qprofil_quotesub = mysqli_fetch_array(query("  SELECT    COUNT(quotes.id) AS 'num_quotes'
+                                                FROM      quotes
+                                                WHERE     quotes.FKauteur     = '$user_id'
+                                                AND       quotes.valide_admin = 1 "));
+
+$qprofil_todo     = mysqli_fetch_array(query("  SELECT    COUNT(todo.id) AS 'num_todos'
+                                                FROM      todo
+                                                WHERE     todo.FKmembres    = '$user_id'
+                                                AND       todo.valide_admin = 1
+                                                AND       todo.public       = 1 "));
+
+// Reste plus qu'à préparer tout ça pour l'affichage
+$profil_pseudo    = predata($dprofil['u_pseudo']);
+$profil_admin     = $dprofil['u_admin'];
+$profil_sysop     = $dprofil['u_sysop'];
+$profil_mod       = $dprofil['u_mod'];
+$profil_banni     = ($dprofil['u_ban_date']) ? jourfr(date('Y-m-d', $dprofil['u_ban_date']), $lang) : 0;
+$profil_sysop_ban = (!$dprofil['u_ban_date']) ? 'BANNIR' : 'DÉBANNIR';
+$profil_bannidans = changer_casse(dans($dprofil['u_ban_date'], $lang), 'min');
+$profil_banraison = predata($dprofil['u_ban_raison']);
+$profil_contenu   = ($dprofil['u_profil']) ? bbcode(predata($dprofil['u_profil'], 1)) : '';
+$profil_creation  = jourfr(date('Y-m-d', $dprofil['u_creation']), $lang).' ('.ilya($dprofil['u_creation'], $lang).')';
+$profil_activite  = ilya($dprofil['u_activite'], $lang);
+$profil_genre     = predata($dprofil['u_genre']);
+$profil_age       = ($dprofil['u_anniv'] != '0000-00-00') ? floor((time() - strtotime($dprofil['u_anniv'])) / 31556926) : '';
+$profil_anniv     = ($dprofil['u_anniv'] != '0000-00-00') ? jourfr($dprofil['u_anniv'], $lang) : '';
+$profil_lieu      = predata($dprofil['u_habite']);
+$profil_metier    = predata($dprofil['u_metier']);
+$profil_email     = predata($dprofil['u_email']);
+$profil_irl       = $qprofil_irl['num_irls'];
+$profil_quotes    = $qprofil_quotes['num_quotes'];
+$profil_quotesub  = $qprofil_quotesub['num_quotes'];
+$profil_todo      = $qprofil_todo['num_todos'];
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+if($lang == 'FR')
+{
+  // Header
+  $trad['soustitre']      = "Membre #".$user_id;
+  $trad['banni']          = "Banni jusqu'au $profil_banni ($profil_bannidans)<br>Raison: $profil_banraison";
+  $trad['admin']          = "Administrateur";
+  $trad['sysop']          = "Sysop";
+  $trad['mod']            = "Modérateur";
+
+  // Profil
+  $trad['bouton_profil']  = "MODIFIER MON PROFIL PUBLIC";
+  $trad['bouton_message'] = "ENVOYER UN MESSAGE PRIVÉ";
+  $trad['user_creation']  = "Création du compte";
+  $trad['usert_creation'] = "Le ";
+  $trad['user_activite']  = "Dernière visite";
+  $trad['user_genre']     = "Genre";
+  $trad['user_age']       = "Âge / Anniversaire";
+  $trad['user_anniv']     = " ans / Né le ";
+  $trad['user_lieu']      = "Ville / Pays";
+  $trad['user_metier']    = "Métier / Occupation";
+  $trad['user_irl']       = "IRLs NoBlemeuses";
+  $trad['usert_irl']      = 'Est venu <span class="gras texte_noir">'.$profil_irl.'</span> fois';
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Header
+  $trad['soustitre']      = "User #".$user_id;
+  $trad['banni']          = "Banned until $profil_banni ($profil_bannidans)";
+  $trad['admin']          = "Administrator";
+  $trad['sysop']          = "Sysop";
+  $trad['mod']            = "Moderator";
+
+  // Profil
+  $trad['bouton_profil']  = "EDIT MY PUBLIC PROFILE";
+  $trad['bouton_message'] = "SEND A PRIVATE MESSAGE";
+  $trad['user_creation']  = "Account creation";
+  $trad['usert_creation'] = "";
+  $trad['user_activite']  = "Latest visit";
+  $trad['user_genre']     = "Gender";
+  $trad['user_age']       = "Age / Birthday";
+  $trad['user_anniv']     = " years old / Born ";
+  $trad['user_lieu']      = "City / Country";
+  $trad['user_metier']    = "Job / Occupation";
+  $trad['user_irl']       = "Real life meetups";
+  $trad['usert_irl']      = 'Attended <span class="gras texte_noir">'.$profil_irl.'</span> of them';
 }
 
 
@@ -146,144 +233,135 @@ while($dprofil = mysqli_fetch_array($qprofil))
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/profil.png" alt="PROFIL UTILISATEUR">
-    </div>
-    <br>
+      <div class="texte2">
 
-    <table class="indiv margin_auto userprofil_titre" id="profil_haut">
-      <tr>
-        <td colspan="3">
-          <?php if(!$p_ban) { ?>
-          <div class="body_main align_center">
-            <span class="user_pseudo"><?=$userpseudo?></span><br>
-            <?php if($p_admin) { ?>
-            <span class="texte_mise_a_jour user_titre">Administrateur</span><br>
-            <?php } else if($p_sysop) { ?>
-            <a href="<?=$chemin?>pages/nobleme/admins"><span class="texte_sysop user_titre">Modérateur global</span></a><br>
-            <?php } else if($p_moderateur) { ?>
-            <a href="<?=$chemin?>pages/nobleme/admins"><span class="texte_vert user_titre">Modérateur</span></a><br>
-            <?php } ?>
-            Membre #<?=$page_id?>
-          </div>
-          <?php } else { ?>
-          <div class="body_main align_center">
-            <div class="indiv mise_a_jour texte_blanc">
-              <br>
-              <span class="user_pseudo"><?=$userpseudo?></span><br>
-              Membre #<?=$page_id?><br>
-              <br>
-              <span class="moinsgros gras">Banni de NoBleme jusqu'au <?=$p_ban_date?></span><br>
-              <span class="moinsgros gras">Raison du ban : <?=$p_ban_raison?></span><br>
-              <br>
+        <h1 class="align_center"><?=$profil_pseudo?></h1>
+
+        <h5 class="align_center"><?=$trad['soustitre']?></h5>
+
+        <?php if($profil_banni) { ?>
+        <br>
+        <h5 class="align_center texte_negatif"><?=$trad['banni']?></h5>
+        <?php } else if($profil_admin) { ?>
+        <h5 class="align_center">
+          <a class="texte_negatif" href="<?=$chemin?>pages/nobleme/admins"><?=$trad['admin']?></a>
+        </h5>
+        <?php } else if($profil_sysop) { ?>
+        <h5 class="align_center">
+          <a class="texte_neutre" href="<?=$chemin?>pages/nobleme/admins"><?=$trad['sysop']?></a>
+        </h5>
+        <?php } else if($profil_mod) { ?>
+        <h5 class="align_center">
+          <a class="texte_positif" href="<?=$chemin?>pages/nobleme/admins"><?=$trad['mod']?></a>
+        </h5>
+        <?php } ?>
+
+        <br>
+        <br>
+
+        <div class="flexcontainer">
+          <div style="flex:15">
+
+            <div class="profil_cadre align_center">
+
+              <?php if(getsysop()) { ?>
+              <button class="profil_bouton button-outline" onclick="window.location.href = '<?=$chemin?>pages/sysop/profil?id=<?=$user_id?>';">MODIFIER LE PROFIL</button>
+              &nbsp;
+              <button class="profil_bouton button-outline" onclick="window.location.href = '<?=$chemin?>pages/sysop/ban?id=<?=$user_id?>';"><?=$profil_sysop_ban?></button>
+
+              <hr class="profil_hr">
+              <?php } if (loggedin() && $user_id == $_SESSION['user']) { ?>
+              <button class="profil_bouton" onclick="window.location.href = '<?=$chemin?>pages/user/profil';"><?=$trad['bouton_profil']?></button>
+              <?php } else { ?>
+              <button class="profil_bouton" onclick="window.location.href = '<?=$chemin?>pages/user/pm?user=<?=$user_id?>';"><?=$trad['bouton_message']?></button>
+              <?php } ?>
+
+              <hr class="profil_hr">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/nobleme/membres';">
+                <span class="gras"><?=$trad['user_creation']?></span><br>
+                <?=$trad['usert_creation'].$profil_creation?>
+              </div>
+
+              <hr class="profil_hr">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/nobleme/online';">
+                <span class="gras"><?=$trad['user_activite']?></span><br>
+                <?=$profil_activite?>
+              </div>
+
+              <?php if($profil_genre) { ?>
+              <hr class="profil_hr">
+              <span class="gras"><?=$trad['user_genre']?></span><br>
+              <?=$profil_genre?>
+
+              <?php } if($profil_anniv) { ?>
+              <hr class="profil_hr">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/nobleme/anniversaires';">
+                <span class="gras"><?=$trad['user_age']?></span><br>
+                <?=$profil_age.$trad['user_anniv'].$profil_anniv?>
+              </div>
+
+              <?php } if($profil_lieu) { ?>
+              <hr class="profil_hr">
+              <span class="gras"><?=$trad['user_lieu']?></span><br>
+              <?=$profil_lieu?>
+
+              <?php } if($profil_metier) { ?>
+              <hr class="profil_hr">
+              <span class="gras"><?=$trad['user_metier']?></span><br>
+              <?=$profil_metier?>
+
+              <?php } if($profil_irl) { ?>
+              <hr class="profil_hr">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/irl/stats';">
+                <span class="gras"><?=$trad['user_irl']?></span><br>
+                <?=$trad['usert_irl']?>
+              </div>
+
+              <?php } if($profil_quotes && $lang == 'FR') { ?>
+              <hr class="profil_hr">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/quotes/stats';">
+                <span class="gras">Apparitions dans les miscellanées</span><br>
+                <span class="gras texte_noir"><?=$profil_quotes?></span>
+              </div>
+
+              <?php } if($profil_quotesub && $lang == 'FR') { ?>
+              <hr class="profil_hr">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/quotes/stats';">
+                <span class="gras">Miscellanées proposées</span><br>
+                <span class="gras texte_noir"><?=$profil_quotesub?></span>
+              </div>
+
+              <?php } if($profil_todo && $lang == 'FR') { ?>
+              <hr class="profil_hr">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/todo/index';">
+                <span class="gras">Tâches proposées</span><br>
+                <span class="gras texte_noir"><?=$profil_todo?></span>
+              </div>
+
+              <?php } if($profil_email && getadmin()) { ?>
+              <hr class="profil_hr">
+              <span class="gras">E-mail du compte</span><br>
+              <?=$profil_email?>
+
+              <?php } ?>
+              <hr class="profil_hr">
+
             </div>
+
           </div>
-          <?php } ?>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <table class="indiv userprofil_gauche">
-            <tr>
-              <td>
-                <div class="body_main userprofil_pm align_center">
-                  <?php if(loggedin() && $userid != $_SESSION['user']) { ?>
-                  <a href="<?=$chemin?>pages/user/pm?user=<?=$userid?>">
-                    <img src="<?=$chemin?>img/boutons/profil_envoyer_pm.png" alt="Envoyer un message privé">
-                  </a>
-                  <?php } else { ?>
-                  <a href="<?=$chemin?>pages/user/profil">
-                    <img src="<?=$chemin?>img/boutons/profil_modifier_infos.png" alt="Modifier mon profil">
-                  </a>
-                  <?php } ?>
-                </div>
-                <div class="body_main userprofil_info align_center">
-                  Création du compte :<br>
-                  <?=$p_creation?>
-                  <hr class="separateur_profil">
-                  <?php if($p_visite) { ?>
-                  Dernière visite :<br>
-                  <?=$p_visite?>
-                  <hr class="separateur_profil">
-                  <?php } if($p_sexe) { ?>
-                  Sexe :<br>
-                  <?=$p_sexe?>
-                  <hr class="separateur_profil">
-                  <?php } if($p_anniversaire) { ?>
-                  Âge actuel / Anniversaire :<br>
-                  <?=$p_anniversaire?>
-                  <hr class="separateur_profil">
-                  <?php } if($p_region) { ?>
-                  Ville / Région / Pays :<br>
-                  <?=$p_region?>
-                  <hr class="separateur_profil">
-                  <?php } if($p_metier) { ?>
-                  Métier / Occupation :<br>
-                  <?=$p_metier?>
-                  <hr class="separateur_profil">
-                  <?php } if($p_irls) { ?>
-                  <a href="<?=$chemin?>pages/nobleme/irls">IRLs NoBlemeuses</a> :<br>
-                  Est venu <span class="gras"><?=$p_irls?></span> fois
-                  <hr class="separateur_profil">
-                  <?php } if($p_squotes) { ?>
-                  <a href="<?=$chemin?>pages/irc/quotes">Miscellanées</a> proposées :<br>
-                  <span class="gras"><?=$p_squotes?></span>
-                  <hr class="separateur_profil">
-                  <?php } if($p_quotes) { ?>
-                  Apparitions dans les <a href="<?=$chemin?>pages/irc/quotes">miscellanées</a> :<br>
-                  <span class="gras"><?=$p_quotes?></span>
-                  <hr class="separateur_profil">
-                  <?php } if($p_devblog) { ?>
-                  Commentaires postés sur des <a href="<?=$chemin?>pages/devblog/index">devblogs</a> :<br>
-                  <span class="gras"><?=$p_devblog?></span>
-                  <hr class="separateur_profil">
-                  <?php } if($p_tickets) { ?>
-                  <a href="<?=$chemin?>pages/todo/index">Tickets</a> ouverts :<br>
-                  <span class="gras"><?=$p_tickets?></span>
-                  <hr class="separateur_profil">
-                  <?php } if($p_tickets_comm) { ?>
-                  Commentaires postés sur des <a href="<?=$chemin?>pages/todo/index">tickets</a> <br>
-                  <span class="gras"><?=$p_tickets_comm?></span>
-                  <hr class="separateur_profil">
-                  <?php } ?>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </td>
-        <td class="userprofil_milieu">
-          &nbsp;
-        </td>
-        <td>
-          <table class="indiv userprofil_droite">
-            <tr>
-              <td>
-                <div class="body_main userprofil_custom">
-                  <?=$p_custom?>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <?php if(loggedin() && getsysop()) { ?>
-      <tr>
-        <td colspan="3">
-          <div class="body_main align_center">
-            <span class="moinsgros gras souligne">Outils administratifs</span><br>
-            <a href="<?=$chemin?>pages/sysop/profil?id=<?=$userid?>">Modifier le profil public de <?=$userpseudo?></a><br>
-            <?php if(!$p_ban) { ?>
-            <a href="<?=$chemin?>pages/sysop/ban?id=<?=$userid?>">Bannir <?=$userpseudo?></a>
-            <?php } else { ?>
-            <a href="<?=$chemin?>pages/sysop/ban?id=<?=$userid?>">Débannir <?=$userpseudo?></a>
-            <?php } ?>
+
+          <div style="flex:1">
+            &nbsp;
           </div>
-        </td>
-      </tr>
-      <?php } ?>
-    </table>
+
+          <div style="flex:20">
+
+            <div class="profil_cadre"><?=$profil_contenu?></div>
+
+          </div>
+        </div>
+
+      </div>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

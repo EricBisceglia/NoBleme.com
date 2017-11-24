@@ -6,24 +6,26 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-useronly();
+useronly($lang);
 
 // Menus du header
-$header_menu      = 'compte';
-$header_submenu   = 'messages';
-$header_sidemenu  = 'ecrire';
-
-// Titre et description
-$page_titre = "Composer un message privé";
-$page_desc  = "Composer un message privé destiné à un autre membre du site";
+$header_menu      = 'Compte';
+$header_sidemenu  = 'ComposerMessage';
 
 // Identification
-$page_nom = "user";
-$page_id  = "pm";
+$page_nom = "Compose un message privé";
+$page_url = "pages/user/pm";
 
-// JS
-$js  = array('dynamique');
-$css = array('user');
+// Langages disponibles
+$langage_page = array('FR','EN');
+
+// Titre et description
+$page_titre = ($lang == 'FR') ? "Message privé" : "Private message";
+$page_desc  = "Composer un message privé destiné à un autre membre du site";
+
+// CSS & JS
+$css  = array('user');
+$js   = array('dynamique', 'user/notifications');
 
 
 
@@ -34,36 +36,120 @@ $css = array('user');
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Si un destinataire est preset
-$pm_destinataire = '';
-if(isset($_GET['user']))
+// Assainissement du postdata
+if(isset($_POST['message_envoyer']))
 {
-  $pm_getuser      = postdata($_GET['user']);
-  $pm_destinataire = ($pm_getuser == 0) ? 'Bad' : getpseudo($pm_getuser);
+  $envoyer_pseudo = postdata_vide('message_destinataire', 'string', '');
+  $envoyer_sujet  = postdata_vide('message_sujet',        'string', '');
+  $envoyer_corps  = postdata_vide('message_textarea',     'string', '');
 }
 
-// Si un message est preset
-$pm_body  = '';
-$pm_titre = 'Message privé de '.getpseudo($_SESSION['user']);
-if(isset($_GET['reply']))
+// Si on demande un destinataire spécifique, on le prend et on le remplit
+if(isset($_GET['user']))
 {
-  // On va chercher le message d'origine
-  $pm_reply = postdata($_GET['reply']);
-  $dpmbody  = mysqli_fetch_array(query("  SELECT  notifications.contenu     ,
-                                                  notifications.titre       ,
-                                                  notifications.FKmembres_destinataire
-                                          FROM    notifications
-                                          WHERE   notifications.id = '$pm_reply' "));
+  $message_id     = postdata($_GET['user'], 'int');
+  $message_pseudo = getpseudo($message_id);
+}
 
-  // On laisse pas lire les messages des autres
-  if($dpmbody['FKmembres_destinataire'] == $_SESSION['user'])
+// Récupération du post raw pour pré-remplir le formulaire
+if(!isset($_GET['user']) || isset($_POST['message_envoyer']))
+  $message_pseudo = isset($_POST['message_destinataire']) ? predata($_POST['message_destinataire']) : '';
+$message_sujet    = isset($_POST['message_sujet'])        ? predata($_POST['message_sujet'])        : '';
+$message_corps    = isset($_POST['message_textarea'])     ? predata($_POST['message_textarea'])     : '';
+$message_hidden   = (!$message_corps) ? ' class="hidden"' : '';
+$message_prev     = bbcode(predata($message_corps, 1));
+$erreur           = '';
+
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                        PRÉPARATION DES DONNÉES                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+if(isset($_POST['message_envoyer']))
+{
+  // On commence par vérifier que tout soit bien rempli
+  $erreur = 0;
+  if(!$envoyer_corps || !$envoyer_sujet || !$envoyer_pseudo)
+    $erreur = ($lang == 'FR') ? "VOUS DEVEZ REMPLIR TOUS LES CHAMPS" : "EVERY FIELD MUST BE FILLED";
+
+  // On vérifie que le destinataire existe
+  if(!$erreur)
   {
-    $pm_titre = 'Re: '.$dpmbody['titre'];
-    if($pm_destinataire == '')
-      $pm_body = '[quote]'.$dpmbody['contenu'].'[/quote]';
-    else
-      $pm_body = '[quote='.$pm_destinataire.']'.$dpmbody['contenu'].'[/quote]';
+    $qcheckpseudo = query(" SELECT membres.id FROM membres WHERE membres.pseudonyme LIKE '$envoyer_pseudo' ");
+    if(!mysqli_num_rows($qcheckpseudo))
+      $erreur = ($lang == 'FR') ? "CET UTILISATEUR N'EXISTE PAS" : "THIS USER DOES NOT EXIST";
   }
+
+  // On va vérifier si l'user est un flooder ou non
+  if(!$erreur)
+  {
+    $message_de = $_SESSION['user'];
+    $floodtest  = (time() - 300);
+    $qfloodtest = query(" SELECT  COUNT(notifications.id) AS 'm_count'
+                          FROM    notifications
+                          WHERE   notifications.FKmembres_envoyeur = '$message_de'
+                          AND     notifications.date_envoi        >= '$floodtest' ");
+    $dfloodtest = mysqli_fetch_array($qfloodtest);
+    if($dfloodtest['m_count'] >= 5)
+      $erreur = ($lang == 'FR') ? 'VOTRE MESSAGE N\'A PAS ÉTÉ ENVOYÉ<br>VOUS AVEZ ENVOYÉ TROP DE MESSAGES RÉCEMMENT<br>RÉESSAYEZ PLUS TARD' : 'YOUR MESSAGE HAS NOT BEEN SENT<br>YOU HAVE SENT TOO MANY MESSAGES RECENTLY<br>TRY AGAIN LATER';
+  }
+
+  // Si tout est bon, on peut envoyer le message et rediriger vers l'outbox
+  if(!$erreur)
+  {
+    $dcheckpseudo = mysqli_fetch_array($qcheckpseudo);
+    $message_a    = $dcheckpseudo['id'];
+    $timestamp    = time();
+    envoyer_notif($message_a, $envoyer_sujet, $envoyer_corps, $message_de);
+    header("Location: ".$chemin."pages/user/notifications?envoyes");
+  }
+}
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+if($lang == 'FR')
+{
+  // Header
+  $trad['m_titre']    = "Message privé";
+
+  // Formulaire
+  $trad['m_dest']     = "Pseudonyme du destinataire";
+  $trad['m_sujet']    = "Sujet du message";
+  $trad['m_corps']    = <<<EOD
+Corps du message (vous pouvez utiliser des <a href="{$chemin}pages/doc/emotes">émoticônes</a> et des <a href="{$chemin}pages/doc/bbcodes">BBCodes</a>)
+EOD;
+  $trad['m_preview']  = "Prévisualisation du message";
+  $trad['m_envoyer']  = "ENVOYER LE MESSAGE PRIVÉ";
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Header
+  $trad['m_titre']    = "Private message";
+
+  // Formulaire
+  $trad['m_dest']     = "Recipient nickname";
+  $trad['m_sujet']    = "Message title";
+  $trad['m_corps']    = <<<EOD
+Message body (you can use <a href="{$chemin}pages/doc/emotes">emotes</a> and <a href="{$chemin}pages/doc/bbcodes">BBCodes</a>)
+EOD;
+  $trad['m_preview']  = "Formatted message preview";
+  $trad['m_envoyer']  = "SEND PRIVATE MESSAGE";
 }
 
 
@@ -73,216 +159,57 @@ if(isset($_GET['reply']))
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-if(!isset($_GET['dynamique'])) { /* Ne pas afficher les données dynamiques dans la page normale */ include './../../inc/header.inc.php'; ?>
+/************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-    <br>
-    <br>
-    <div class="indiv align_center">
-      <img src="<?=$chemin?>img/logos/composer_un_message_prive.png" alt="Composer un message privé">
-    </div>
-    <br>
+      <div class="texte">
 
-    <div class="body_main midsize">
-      <span class="titre">Message privé</span><br>
-      <br>
-      Entrez le <a href="<?=$chemin?>pages/nobleme/membres">pseudonyme</a> de votre destinataire dans le premier champ, un sujet (optionnel), puis le corps de votre message.<br>
-      Une copie du message sera conservée dans votre <a href="<?=$chemin?>pages/user/notifications?envoyes">boite d'envoi</a> tant que le detinataire n'aura pas supprimé votre message.<br>
-      <br>
-      Vous pouvez utiliser les <a href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> et des <a href="<?=$chemin?>pages/doc/emotes">émoticônes</a> dans votre message.
-      <script type="text/javascript">
-        document.write('<br>'); // Cette ruse est pour que la balise noscript qui suive soit validée WC3 :>
-      </script>
-      <noscript>
+        <h1><?=$trad['m_titre']?></h1>
+
         <br>
         <br>
-        <div class="gros gras align_center erreur texte_blanc intable">
-          <br>
-          Le JavaScript est désactivé sur votre navigateur.<br>
-          <br>
-          Vous devez activer le JavaScript pour pouvoir composer un message !<br>
-          <br>
-        </div>
+
+        <?php if($erreur) { ?>
+
+        <h5 class="negatif gras texte_blanc align_center"><?=$erreur?></h5>
         <br>
-      </noscript>
-    </div>
+        <br>
 
-    <br>
+        <?php } ?>
 
-    <div class="body_main midsize">
+        <form method="POST">
+          <fieldset>
 
-      <span id="prev"></span>
+            <label for="message_destinataire"><?=$trad['m_dest']?></label>
+            <input id="message_destinataire" name="message_destinataire" class="indiv" type="text" value="<?=$message_pseudo?>"><br>
+            <br>
 
-      <table class="data_input indiv">
-        <tr>
-          <td class="data_input_right titres_pm">
-            Destinataire :&nbsp;
-          </td>
-          <td>
-            <input class="indiv" id="pm_destinataire" value="<?=$pm_destinataire?>">
-          </td>
-        </tr>
-        <tr>
-          <td class="data_input_right titres_pm">
-            Sujet :&nbsp;
-          </td>
-          <td>
-            <input class="indiv" value="<?=$pm_titre?>" id="pm_sujet">
-          </td>
-        </tr>
-        <tr>
-          <td class="data_input_right titres_pm">
-            Message :&nbsp;
-          </td>
-          <td>
-            <textarea class="indiv" rows="15" id="pm_message"><?=$pm_body?></textarea>
-          </td>
-        </tr>
-      </table>
+            <label for="message_sujet"><?=$trad['m_sujet']?></label>
+            <input id="message_sujet" name="message_sujet" class="indiv" type="text" maxlength="80" value="<?=$message_sujet?>"><br>
+            <br>
 
-      <div class="indiv align_center">
-        <img class="pointeur" src="<?=$chemin?>img/boutons/previsualiser.png" alt="Prévisualiser"
-          onClick="dynamique('<?=$chemin?>','pm.php?dynamique','prev','prev='+dynamique_prepare('pm_message'));">
-        <img src="<?=$chemin?>img/boutons/separateur.png" alt=" ">
-        <img class="pointeur" src="<?=$chemin?>img/boutons/envoyer_le_message.png" alt="Envoyer le message"
-          onClick="dynamique('<?=$chemin?>','pm.php?dynamique','prev',
-          'destinataire='+dynamique_prepare('pm_destinataire')+
-          '&amp;sujet='+dynamique_prepare('pm_sujet')+
-          '&amp;message='+dynamique_prepare('pm_message')+
-          '&amp;envoyer=1');">
+            <label for="message_textarea"><?=$trad['m_corps']?></label>
+            <textarea id="message_textarea" name="message_textarea" class="indiv notif_message" onkeyup="notification_previsualiser('<?=$chemin?>');"><?=$message_corps?></textarea><br>
+            <br>
+
+            <div id="message_previsualisation_container"<?=$message_hidden?>>
+              <label><?=$trad['m_preview']?>:</label>
+              <div id="message_previsualisation" class="vscrollbar notif_previsualisation notif_cadre">
+                <?=$message_prev?>
+              </div>
+              <br>
+            </div>
+
+            <div class="indiv align_center">
+              <input type="submit" class="button" value="<?=$trad['m_envoyer']?>" name="message_envoyer">
+            </div>
+
+          </fieldset>
+        </form>
+
       </div>
 
-    </div>
-
-<?php include './../../inc/footer.inc.php'; /*********************************************************************************************/
+<?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                     PLACE AUX DONNÉES DYNAMIQUES                                                      */
+/*                                                              FIN DU HTML                                                              */
 /*                                                                                                                                       */
-/********************************************************************************************************************************/ } else {
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // XHR: Prévisualiser
-
-  if(isset($_POST['prev']) && $_POST['prev'] != '')
-  {
-    // On sanitize et prépare tout ce bordel
-    $pm_prev = bbcode(nl2br_fixed(destroy_html($_POST['prev'])));
-
-    // Puis on l'affiche
-    ?>
-
-    <span class="moinsgros gras alinea">Prévisualisation avant envoi de votre message :</span><br>
-
-    <div class="indiv limited">
-      <table class="cadre_gris indiv">
-        <tr>
-          <td>
-            <?=$pm_prev?>
-          </td>
-        </tr>
-      </table>
-    </div>
-
-    <br>
-
-    <?php
-  }
-
-
-
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // XHR: Envoyer
-
-  if(isset($_POST['envoyer']))
-  {
-    // On commence par faire la chasse aux erreurs
-    $erreur = '';
-
-    // Membre inexistant ?
-    $pm_destinataire = postdata_vide('destinataire');
-    $qpmembre = query(" SELECT membres.id FROM membres WHERE membres.pseudonyme LIKE '$pm_destinataire' ");
-    if(!mysqli_num_rows($qpmembre))
-      $erreur = 'Destinataire non existant, vérifiez le pseudonyme';
-    else
-    {
-      $dpmembre         = mysqli_fetch_array($qpmembre);
-      $pm_destinataire  = $dpmembre['id'];
-    }
-
-    // Sujet trop long ?
-    if(strlen($_POST['sujet']) > 50)
-      $erreur = 'Sujet trop long ('.(strlen($_POST['sujet'])-50).' caractère(s) de trop)';
-
-    // Message vide ?
-    if($_POST['message'] == '')
-      $erreur = 'Votre message est vide';
-
-    // Duplicata ?
-    $itsme = $_SESSION['user'];
-    if($erreur === '')
-    {
-      $pm_titre = postdata_vide('sujet');
-      $pm_sdate = time()-100;
-      $qpmdup   = query(" SELECT  notifications.id
-                          FROM    notifications
-                          WHERE   notifications.date_envoi              >     '$pm_sdate'
-                          AND     notifications.FKmembres_destinataire  =     '$pm_destinataire'
-                          AND     notifications.FKmembres_envoyeur      =     '$itsme'
-                          AND     notifications.titre                   LIKE  '$pm_titre' ");
-      if(mysqli_num_rows($qpmdup))
-        $erreur = 'Vous venez d\'envoyer ce message !';
-    }
-
-    // Flood ?
-    $pm_flooddate = time()-3600;
-    $qpmflood     = query(" SELECT  notifications.id
-                            FROM    notifications
-                            WHERE   notifications.date_envoi      > '$pm_flooddate'
-                            AND notifications.FKmembres_envoyeur  = '$itsme' ");
-    if(mysqli_num_rows($qpmflood) >= 10)
-      $erreur     = 'Vous avez envoyé trop de messages privés récemment.<br>Ré-essayez dans quelques heures, merci de ne pas flooder le système.';
-
-    // Y'a une erreur ? -> On envoie pas
-    if($erreur !== '')
-    {
-      ?>
-
-      <div class="gros gras align_center erreur texte_blanc intable">
-        <span class="souligne">Erreur</span> : <?=$erreur?>
-      </div>
-      <br>
-
-      <?php
-    }
-    // Sinon on envoie le message
-    else
-    {
-      // Traitement du postdata
-      $pm_envoyeur  = $_SESSION['user'];
-      $pm_date      = time();
-      $pm_message   = postdata_vide('message');
-
-      // Envoi du message
-      query(" INSERT INTO notifications
-              SET         notifications.FKmembres_destinataire  = '$pm_destinataire'  ,
-                          notifications.FKmembres_envoyeur      = '$pm_envoyeur'      ,
-                          notifications.date_envoi              = '$pm_date'          ,
-                          notifications.date_consultation       = 0                   ,
-                          notifications.titre                   = '$pm_titre'         ,
-                          notifications.contenu                 = '$pm_message'       ");
-
-      // Et on fait savoir que ça s'est bien passé !
-      ?>
-
-      <div class="gros gras align_center vert_background intable">
-        <br>
-        Le message a bien été envoyé !<br>
-        <br>
-      </div>
-      <br>
-
-      <?php
-    }
-  }
-
-}
+/***************************************************************************************************/ include './../../inc/footer.inc.php';
