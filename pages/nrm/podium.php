@@ -6,19 +6,19 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = 'Discuter';
-$header_sidemenu  = 'ForumIndex';
+$header_menu      = 'Jouer';
+$header_sidemenu  = 'NRMPodium';
 
 // Identification
-$page_nom = "Espère que le forum reviendra un jour";
-$page_url = "pages/forum/index";
+$page_nom = "Se souvient des champions du NRM Online";
+$page_url = "pages/nrm/podium";
 
 // Langages disponibles
 $langage_page = array('FR','EN');
 
 // Titre et description
-$page_titre = "Forum";
-$page_desc  = "Forum de discussion NoBleme";
+$page_titre = "NRM Online";
+$page_desc  = "À la mémoire d'un jeu en ligne qui manque à certains d'entre nous.";
 
 
 
@@ -32,10 +32,10 @@ $page_desc  = "Forum de discussion NoBleme";
 if($lang == 'FR')
 {
   // Header
-  $trad['titre']      = "Forum NoBleme";
-  $trad['soustitre']  = "Reviendra à la vie Bientôt™";
+  $trad['titre']      = "Champions du passé";
+  $trad['soustitre']  = "Archive des podiums de 26 saisons du NRM Online";
   $trad['desc']       = <<<EOD
-Qu'est-ce que NoBleme sans son légendaire forum ? Rien, dirons certains. Une ruine, rajouterons-t-il. La honte, surenchériront-ils. Et ils n'auront pas forcément tort. Mais d'autres rappelleront à certains que NoBleme est une communauté qui n'a pas eu besoin de son forum pour survivre pendant ces cinq dernières années, et que ce n'est pas quelques années de plus sans forum qui tueront le site. N'est-ce pas ? Alors soyons patients.
+Même si le <a class="gras" href="{$chemin}pages/nrm/index">NRM Online</a> a disparu depuis de nombreuses années, les gagnants des diverses saisons du jeu restent gravés dans l'histoire de NoBleme. Pour rajouter une touche de nostalgie, plutôt que de présenter les podiums archivés dans un format moderne, les voici sous la forme d'une grande capture d'écran :
 EOD;
 }
 
@@ -44,10 +44,11 @@ EOD;
 
 else if($lang == 'EN')
 {
-  $trad['titre']      = "NoBleme forum";
-  $trad['soustitre']  = "Will be resurrected Soon™";
+  // Header
+  $trad['titre']      = "Champions of the past";
+  $trad['soustitre']  = "26 seasons of NRM Online hall of famers, archived";
   $trad['desc']       = <<<EOD
-What's NoBleme without its legendary forum? Nothing, some people might say. A ruin, said people might add. A shame, these people would insist. And they wouldn't necessarily be wrong. But others shall remind them that NoBleme as a community didn't need its forum to survive during the past five years, and can survive a few more years without a forum. So let's be patient, and good things shall come in due time.
+Even though the <a class="gras" href="{$chemin}pages/nrm/index">NRM Online</a> has been gone for several years, the winners of the game's various seasons remain forever archived on NoBleme. In order to add a bit of nostalgia, instead of presenting the hall of fame in a modern format, here it is as a giant screenshot taken from the defunct game:
 EOD;
 }
 
@@ -68,14 +69,13 @@ EOD;
 
         <p><?=$trad['desc']?></p>
 
-        <br>
-        <br>
-        <br>
+      </div>
 
-        <div class="align_center">
-          <img src="<?=$chemin?>img/divers/construction.png" alt="Under construction">
-        </div>
+      <br>
+      <br>
 
+      <div class="align_center">
+        <img src="<?=$chemin?>img/divers/nrm_hof.png" alt="NRM Online">
       </div>
 
 <?php /***********************************************************************************************************************************/

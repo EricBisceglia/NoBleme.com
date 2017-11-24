@@ -6,19 +6,19 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = 'Discuter';
-$header_sidemenu  = 'ForumIndex';
+$header_menu      = 'Jouer';
+$header_sidemenu  = 'NRM';
 
 // Identification
-$page_nom = "Espère que le forum reviendra un jour";
-$page_url = "pages/forum/index";
+$page_nom = "Se souvient du NRM Online";
+$page_url = "pages/nrm/index";
 
 // Langages disponibles
 $langage_page = array('FR','EN');
 
 // Titre et description
-$page_titre = "Forum";
-$page_desc  = "Forum de discussion NoBleme";
+$page_titre = "NRM Online";
+$page_desc  = "À la mémoire d'un jeu en ligne qui manque à certains d'entre nous.";
 
 
 
@@ -32,10 +32,15 @@ $page_desc  = "Forum de discussion NoBleme";
 if($lang == 'FR')
 {
   // Header
-  $trad['titre']      = "Forum NoBleme";
-  $trad['soustitre']  = "Reviendra à la vie Bientôt™";
+  $trad['titre']      = "NRM Online";
+  $trad['soustitre']  = "En souvenir d'un jeu en ligne";
   $trad['desc']       = <<<EOD
-Qu'est-ce que NoBleme sans son légendaire forum ? Rien, dirons certains. Une ruine, rajouterons-t-il. La honte, surenchériront-ils. Et ils n'auront pas forcément tort. Mais d'autres rappelleront à certains que NoBleme est une communauté qui n'a pas eu besoin de son forum pour survivre pendant ces cinq dernières années, et que ce n'est pas quelques années de plus sans forum qui tueront le site. N'est-ce pas ? Alors soyons patients.
+<p>
+  De 2006 à 2009 est hébergé sur NoBleme un jeu de stratégie via navigateur dans lequel chaque joueur incarne un pilote de mecha géant et se bat jusqu'à la mort avec les autres joueurs. Nommé le NRM Online (NoBleme Robot Mayhem Online), ce jeu est un grand classique de l'histoire de NoBleme.
+</p>
+<p>
+  Aujourd'hui, il n'y a aucun plan de ramener le NRM Online à la vie. Il faut que toutes les bonnes choses finissent un jour, et le NRM est un de ces jeux qui est meilleur en souvenir qu'en réalité. Toutefois, je laisse cette page-souvenir en place avec quelques captures d'écran du jeu, pour ceux qui l'ont connu à l'époque et voudraient faire un voyage nostalgie dans le passé. Vous pouvez également trouver une liste des anciens gagnants du jeu sur la page <a class="gras" href="{$chemin}pages/nrm/podium">champions du passé</a>.
+</p>
 EOD;
 }
 
@@ -44,10 +49,16 @@ EOD;
 
 else if($lang == 'EN')
 {
-  $trad['titre']      = "NoBleme forum";
-  $trad['soustitre']  = "Will be resurrected Soon™";
+  // Header
+  $trad['titre']      = "NRM Online";
+  $trad['soustitre']  = "Remembering an online game";
   $trad['desc']       = <<<EOD
-What's NoBleme without its legendary forum? Nothing, some people might say. A ruin, said people might add. A shame, these people would insist. And they wouldn't necessarily be wrong. But others shall remind them that NoBleme as a community didn't need its forum to survive during the past five years, and can survive a few more years without a forum. So let's be patient, and good things shall come in due time.
+<p>
+  From 2006 to 2009, an online multiplayer browser game was hosted on NoBleme in which each player piloted a giant combat mecha's pilot and fought to the death with other players. Called the NRM Online (NoBleme Robot Mayhem Online), this game is a classic part of NoBleme's history.
+</p>
+<p>
+  Today, there is no plan to bring the NRM Online back to life. All good things must come to an end, and the NRM is one of those things that's better in memories than it actually is. However, I'm leaving this memory shrine up on the website with a few screenshots from the game (in french), for those who experienced the game and want to go on a nostalgia trip. You can also find the game's hall of fame on the <a class="gras" href="{$chemin}pages/nrm/podium">champions of the past</a> page.
+</p>
 EOD;
 }
 
@@ -66,15 +77,20 @@ EOD;
 
         <h5><?=$trad['soustitre']?></h5>
 
-        <p><?=$trad['desc']?></p>
+        <?=$trad['desc']?>
 
         <br>
         <br>
+        <img src="<?=$chemin?>img/portfolio/nrm_index.png" alt="NRM Online">
         <br>
-
-        <div class="align_center">
-          <img src="<?=$chemin?>img/divers/construction.png" alt="Under construction">
-        </div>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nrm_robot.png" alt="NRM Online">
+        <br>
+        <br>
+        <img src="<?=$chemin?>img/portfolio/nrm_combat.png" alt="NRM Online">
+        <br>
+        <br>
+        <img src="<?=$chemin?>img/nobleme/2006_3.png" alt="NRM Online">
 
       </div>
 

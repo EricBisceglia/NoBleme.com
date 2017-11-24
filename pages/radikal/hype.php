@@ -6,19 +6,19 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = 'Discuter';
-$header_sidemenu  = 'ForumIndex';
+$header_menu      = 'Jouer';
+$header_sidemenu  = 'RadikalHype';
 
 // Identification
-$page_nom = "Espère que le forum reviendra un jour";
-$page_url = "pages/forum/index";
+$page_nom = "Se demande ce qu'est le projet Radikal";
+$page_url = "pages/radikal/hype";
 
 // Langages disponibles
 $langage_page = array('FR','EN');
 
 // Titre et description
-$page_titre = "Forum";
-$page_desc  = "Forum de discussion NoBleme";
+$page_titre = ($lang == 'FR') ? "Projet : Radikal" : "Project: Radikal";
+$page_desc  = "Le prochain projet de jeu NoBlemeux";
 
 
 
@@ -32,10 +32,10 @@ $page_desc  = "Forum de discussion NoBleme";
 if($lang == 'FR')
 {
   // Header
-  $trad['titre']      = "Forum NoBleme";
-  $trad['soustitre']  = "Reviendra à la vie Bientôt™";
+  $trad['titre']      = "Projet : Radikal";
+  $trad['soustitre']  = "Le prochain jeu NoBlemeux, disponible Bientôt™";
   $trad['desc']       = <<<EOD
-Qu'est-ce que NoBleme sans son légendaire forum ? Rien, dirons certains. Une ruine, rajouterons-t-il. La honte, surenchériront-ils. Et ils n'auront pas forcément tort. Mais d'autres rappelleront à certains que NoBleme est une communauté qui n'a pas eu besoin de son forum pour survivre pendant ces cinq dernières années, et que ce n'est pas quelques années de plus sans forum qui tueront le site. N'est-ce pas ? Alors soyons patients.
+En gestation depuis 2010, le Projet : Radikal est le prochain jeu NoBlemeux en développement. Comme tous les projets de <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a>, plusieurs itérations du jeu ont déjà été complétées, mais aucune n'était assez satisfaisante et tout recommence à zéro. Lorsque le bon équilibre entre intéressant, divertissant, et complexe aura été trouvé, le Projet : Radikal pourra ouvrir ses portes sur NoBleme. Patience !
 EOD;
 }
 
@@ -44,10 +44,11 @@ EOD;
 
 else if($lang == 'EN')
 {
-  $trad['titre']      = "NoBleme forum";
-  $trad['soustitre']  = "Will be resurrected Soon™";
+  // Header
+  $trad['titre']      = "Project: Radikal";
+  $trad['soustitre']  = "NoBleme's next game, coming Soon™";
   $trad['desc']       = <<<EOD
-What's NoBleme without its legendary forum? Nothing, some people might say. A ruin, said people might add. A shame, these people would insist. And they wouldn't necessarily be wrong. But others shall remind them that NoBleme as a community didn't need its forum to survive during the past five years, and can survive a few more years without a forum. So let's be patient, and good things shall come in due time.
+Constantly gestating as an idea since 2010, Project: Radikal is NoBleme's next upcoming game. As with every one of <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a>'s projects, many iterations of the game have already been completed, but none felt good enough to release. Once the right balance between interesting, entertaining, and challenging will have been found, then Project: Radikal shall open its doors on NoBleme. Patience!
 EOD;
 }
 

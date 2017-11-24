@@ -423,12 +423,12 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
           <div class="<?=header_class('NoBleme',$header_menu,'top')?>">NOBLEME</div>
         </a>
 
-        <a class="header_topmenu_lien" href="<?=$chemin?>pages/forum/index">
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/irc/index">
           <div class="<?=header_class('Discuter',$header_menu,'top')?>"><?=$menu['discuter']?></div>
         </a>
 
         <?php if($lang == 'FR') { ?>
-        <a class="header_topmenu_lien" href="<?=$chemin?>pages/nbdb/index">
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/quotes/index">
           <div class="<?=header_class('Lire',$header_menu,'top')?>"><?=$menu['lire']?></div>
         </a>
         <?php } ?>
@@ -705,42 +705,13 @@ $sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Requ
 <?php } ################################################ MENU LATÉRAL : DISCUTER ##########################################################
 // Préparation des traductions des titres du menu
 $sidemenu['bla_forum']            = ($lang == 'FR') ? "Forum de discussion"       : "Discussion forum";
-$sidemenu['bla_forum_sujets']     = ($lang == 'FR') ? "Sujets de discussion"      : "Latest forum threads";
-$sidemenu['bla_forum_ouvrir']     = ($lang == 'FR') ? "Créer un nouveau sujet"    : "Open a new thread";
+$sidemenu['bla_forum_sujets']     = ($lang == 'FR') ? "Travaux en cours"          : "Work in progress";
 $sidemenu['bla_irc']              = ($lang == 'FR') ? "Serveur de chat IRC"       : "IRC chat server";
 $sidemenu['bla_irc_what']         = ($lang == 'FR') ? "Qu'est-ce que IRC"         : "What is IRC";
 $sidemenu['bla_irc_clic']         = ($lang == 'FR') ? "Rejoindre la conversation" : "Join the conversation";
 $sidemenu['bla_irc_canaux']       = ($lang == 'FR') ? "Liste des canaux"          : "Channel list";
 $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"     : "Commands and services";
 /* ################################################################################################# */ if($header_menu == 'Discuter') { ?>
-
-            <div class="header_sidemenu_titre">
-              <?=$sidemenu['bla_forum']?>
-            </div>
-
-            <a href="<?=$chemin?>pages/forum/index">
-              <div class="<?=header_class('ForumIndex',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_forum_sujets']?>
-              </div>
-            </a>
-
-            <?php if($lang == 'FR') { ?>
-
-            <a href="<?=$chemin?>pages/forum/ecrivains">
-              <div class="<?=header_class('ForumEcrivains',$header_sidemenu,'side')?>">
-                Le coin des écrivains
-              </div>
-            </a>
-
-            <?php } ?>
-
-            <a href="<?=$chemin?>pages/forum/nouveau">
-              <div class="<?=header_class('ForumNouveau',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_forum_ouvrir']?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
               <?=$sidemenu['bla_irc']?>
@@ -770,6 +741,18 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
               </div>
             </a>
 
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              <?=$sidemenu['bla_forum']?>
+            </div>
+
+            <a href="<?=$chemin?>pages/forum/index">
+              <div class="<?=header_class('ForumIndex',$header_sidemenu,'side')?>">
+                <?=$sidemenu['bla_forum_sujets']?>
+              </div>
+            </a>
+
 
 
 
@@ -778,29 +761,6 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
 /* ##################################################################################################### */ if($header_menu == 'Lire') { ?>
 
             <?php if($lang == 'FR') { ?>
-            <div class="header_sidemenu_titre">
-              NBDatabase
-            </div>
-
-            <a href="<?=$chemin?>pages/nbdb/index">
-              <div class="<?=header_class('NBDB',$header_sidemenu,'side')?>">
-                Qu'est-ce que la NBDB
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/nbdb/web">
-              <div class="<?=header_class('NBDBWeb',$header_sidemenu,'side')?>">
-                Encyclopédie du web
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/nbdb/nobleme">
-              <div class="<?=header_class('NBDBNoBleme',$header_sidemenu,'side')?>">
-                Historique de NoBleme
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
               Miscellanées
@@ -827,6 +787,18 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
             <a href="<?=$chemin?>pages/quotes/add">
               <div class="<?=header_class('MiscAdd',$header_sidemenu,'side')?>">
                 Proposer une miscellanée
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              NBDatabase
+            </div>
+
+            <a href="<?=$chemin?>pages/nbdb/index">
+              <div class="<?=header_class('NBDBIndex',$header_sidemenu,'side')?>">
+                Qu'est-ce que la NBDB
               </div>
             </a>
 
@@ -859,14 +831,14 @@ $sidemenu['jeu_radikal_hype'] = ($lang == 'FR') ? "Le prochain jeu NoBleme" : "T
             </div>
 
             <a href="<?=$chemin?>pages/nbrpg/index">
-              <div class="<?=header_class('NBRPG',$header_sidemenu,'side')?>">
+              <div class="<?=header_class('NBRPGWhat',$header_sidemenu,'side')?>">
                 <?=$sidemenu['jeu_nbrpg_index']?>
               </div>
             </a>
 
             <?php if($lang == 'FR') { ?>
-            <a href="<?=$chemin?>pages/nbrpg/logs">
-              <div class="<?=header_class('NBRPGLogs',$header_sidemenu,'side')?>">
+            <a href="<?=$chemin?>pages/nbrpg/archives">
+              <div class="<?=header_class('NBRPGArchives',$header_sidemenu,'side')?>">
                 Sessions archivées
               </div>
             </a>
