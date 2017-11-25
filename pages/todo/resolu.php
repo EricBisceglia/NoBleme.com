@@ -177,7 +177,7 @@ $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
         </h5>
 
         <h5>
-          <a class="gras" href="<?=$chemin?>pages/todo/todo?id=<?=$todo_id?>"><?=$GLOBALS['url_site']?>pages/todo/todo?id=<?=$todo_id?></a>
+          <a class="gras" href="<?=$chemin?>pages/todo/index?id=<?=$todo_id?>"><?=$GLOBALS['url_site']?>pages/todo/index?id=<?=$todo_id?></a>
         </h5>
 
         <br>

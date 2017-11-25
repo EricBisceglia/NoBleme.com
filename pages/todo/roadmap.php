@@ -137,7 +137,7 @@ $temp_admin = getadmin();
         <table class="grid fullgrid texte_noir nowrap">
           <thead>
 
-            <tr class="grisclair gras pointeur">
+            <tr class="grisclair gras">
               <?php if($temp_admin) { ?>
               <th>
                 ID
