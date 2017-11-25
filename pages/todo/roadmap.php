@@ -140,6 +140,9 @@ $temp_admin = getadmin();
             <tr class="grisclair gras pointeur">
               <?php if($temp_admin) { ?>
               <th>
+                ID
+              </th>
+              <th>
                 PUBLIC
               </th>
               <?php } ?>
@@ -165,7 +168,7 @@ $temp_admin = getadmin();
 
             <tr>
               <?php if($temp_admin) { ?>
-              <td class="align_center noir texte_blanc gras" colspan="6">
+              <td class="align_center noir texte_blanc gras" colspan="7">
               <?php } else { ?>
               <td class="align_center noir texte_blanc gras" colspan="5">
               <?php } ?>
@@ -184,6 +187,9 @@ $temp_admin = getadmin();
 
             <tr class="align_center pointeur <?=$todo_css[$i][$j]?>" onclick="window.open('<?=$chemin?>pages/todo/index?id=<?=$todo_id[$i][$j]?>', '_blank');">
               <?php if($temp_admin) { ?>
+              <td>
+                <?=$todo_id[$i][$j]?>
+              </td>
               <td class="gras">
                 <?=$todo_prive[$i][$j]?>
               </td>

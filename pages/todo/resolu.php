@@ -172,7 +172,13 @@ $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
 
         <h1>Résoudre une tâche</h1>
 
-        <h5>#<?=$todo_id?> <?=$todo_titre?></h5>
+        <h5>
+          Tâche #<?=$todo_id?> : <?=$todo_titre?>
+        </h5>
+
+        <h5>
+          <a class="gras" href="<?=$chemin?>pages/todo/todo?id=<?=$todo_id?>"><?=$GLOBALS['url_site']?>pages/todo/todo?id=<?=$todo_id?></a>
+        </h5>
 
         <br>
 
