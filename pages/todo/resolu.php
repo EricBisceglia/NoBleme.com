@@ -190,17 +190,6 @@ $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
             <input id="todo_edit_source" name="todo_edit_source" class="indiv" type="text" value="<?=$todo_source?>"><br>
             <br>
 
-            <br>
-            <br>
-
-            <label for="todo_edit_titre">Titre de la tâche</label>
-            <input id="todo_edit_titre" name="todo_edit_titre" class="indiv" type="text" value="<?=$todo_titre?>"><br>
-            <br>
-
-            <label for="todo_edit_description">Description</label>
-            <textarea id="todo_edit_description" name="todo_edit_description" class="indiv" style="height:100px"><?=$todo_contenu?></textarea><br>
-            <br>
-
             <label for="todo_edit_objectif">Objectif</label>
             <div class="flexcontainer">
               <div style="flex:15">
@@ -221,6 +210,13 @@ $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
               <?=$select_visibilite?>
             </select><br>
             <br>
+
+            <label for="todo_edit_titre">Titre de la tâche</label>
+            <input id="todo_edit_titre" name="todo_edit_titre" class="indiv" type="text" value="<?=$todo_titre?>"><br>
+            <br>
+
+            <label for="todo_edit_description">Description</label>
+            <textarea id="todo_edit_description" name="todo_edit_description" class="indiv" style="height:100px"><?=$todo_contenu?></textarea><br>
             <br>
 
             <input value="CHANGER L'ÉTAT DE LA TÂCHE" type="submit" name="todo_solved_go"><br>
