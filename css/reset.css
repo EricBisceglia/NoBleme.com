@@ -17,10 +17,26 @@ table                                                                           
 /*************************************** https://github.com/milligram/milligram/blob/master/license **************************************/
 /*****************************************************************************************************************************************/
 /************************************************ IMPORTATIONS DE POLICES PERSONNALISÉES *************************************************/
-@font-face { font-family: 'NoBleme'; src: url('./fonts/Roboto.woff'); src: url('./fonts/Roboto.woff2');                        }
-@font-face { font-family: 'NoBleme-bold'; src: url('./fonts/Roboto-bold.woff'); src: url('./fonts/Roboto-bold.woff2');         }
-@font-face { font-family: 'NoBleme-header'; src: url('./fonts/Open-sans-bold.woff'); src: url('./fonts/Open-sans-bold.woff2'); }
-@font-face { font-family: 'NoBleme-sidebar'; src: url('./fonts/Open-sans.woff'); src: url('./fonts/Open-sans.woff2');          }
+@font-face { font-family: 'NoBleme'                                         ;
+  src:  url('./fonts/Roboto.eot?#iefix') format('embedded-opentype')        ,
+        url('./fonts/Roboto.woff') format('woff')                           ,
+        url('./fonts/Roboto.ttf')  format('truetype')                       ,
+        url('./fonts/Roboto.svg#svgFontName') format('svg');                }
+@font-face { font-family: 'NoBleme-bold'                                    ;
+  src:  url('./fonts/Roboto-bold.eot?#iefix') format('embedded-opentype')   ,
+        url('./fonts/Roboto-bold.woff') format('woff')                      ,
+        url('./fonts/Roboto-bold.ttf')  format('truetype')                  ,
+        url('./fonts/Roboto-bold.svg#svgFontName') format('svg');           }
+@font-face { font-family: 'NoBleme-header'                                  ;
+  src:  url('./fonts/Open-sans-bold.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/Open-sans-bold.woff') format('woff')                   ,
+        url('./fonts/Open-sans-bold.ttf')  format('truetype')               ,
+        url('./fonts/Open-sans-bold.svg#svgFontName') format('svg');        }
+@font-face { font-family: 'NoBleme-sidebar'                                 ;
+  src:  url('./fonts/Open-sans.eot?#iefix') format('embedded-opentype')     ,
+        url('./fonts/Open-sans.woff') format('woff')                        ,
+        url('./fonts/Open-sans.ttf')  format('truetype')                    ,
+        url('./fonts/Open-sans.svg#svgFontName') format('svg');             }
 /************************************** DÉFINITION DES STYLES PAR DÉFAUT DE CERTAINS TAGS GÉNÉRIQUES *************************************/
              *, *:after, *:before { box-sizing: inherit;                                                                             }
                              html { box-sizing: border-box; font-size: 62.5%;                                                        }

@@ -182,7 +182,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         </p>
 
         <p>
-          Du côté du NRM Online, Bad essaye autant qu'il peut de regrouper le nombre de joueurs nécessaires pour que le jeu soit aussi intéressant qu'il devrait l'être, et la première saison de 2007 a enfin la cinquantaine de joueurs requis. La seconde saison de 2017 montera même au dessus des 100 joueurs. Hélas, à l'époque, Bad rentre dans une période difficile de sa vie privée, et n'a pas le temps de s'occuper proprement du NRM. Le temps d'attente entre les saisons s'allonge, les saisons se ressemblent trop entre elles, et le NRM décline doucement jusqu'à fermer fin 2008 par manque de joueurs.
+          Du côté du NRM Online, Bad essaye autant qu'il peut de regrouper le nombre de joueurs nécessaires pour que le jeu soit aussi intéressant qu'il devrait l'être, et la première saison de 2007 a enfin la cinquantaine de joueurs requis. La seconde saison de 2007 montera même au dessus des 100 joueurs. Hélas, à l'époque, Bad rentre dans une période difficile de sa vie privée, et n'a pas le temps de s'occuper proprement du NRM. Le temps d'attente entre les saisons s'allonge, les saisons se ressemblent trop entre elles, et le NRM décline doucement jusqu'à fermer fin 2008 par manque de joueurs.
         </p>
 
         <p>
@@ -198,7 +198,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         </p>
 
         <p>
-          En tant que communauté, NoBleme traverse le désert. En tant que site, grâce à son wiki, NoBleme n'a jamais été aussi populaire. Inévitablement, cette popularité finit par permettre de renouveler la communauté. D'abord, une première vague débarque sur IRC après avoir trouvé NoBleme par des recherches stupides de phénomenes internet. Parmi eux, Baffan, Wan, Lidys, et Kryos deviennent des réguliers. Plus tard, d'autres trouvent NoBleme via des extraits du NoBlemeRPG postés sur le wiki, et la communauté se voit renforcée de la présence de Enerhpozyks, Shalena, Kutz, et SiHn. Tous ces nouveaux arrivants forment la troisième génération de NoBlemeux.
+          En tant que communauté, NoBleme traverse le désert. En tant que site, grâce à son wiki, NoBleme n'a jamais été aussi populaire. Inévitablement, cette popularité finit par permettre de renouveler la communauté. D'abord, une première vague débarque sur IRC après avoir trouvé NoBleme par des recherches stupides de phénomenes internet. Parmi eux, Baffan, Trucy, Lidys, et Kryos deviennent des réguliers. Plus tard, d'autres trouvent NoBleme via des extraits du NoBlemeRPG postés sur le wiki, et la communauté se voit renforcée de la présence de Enerhpozyks, Shalena, Kutz, et SiHn. Tous ces nouveaux arrivants forment la troisième génération de NoBlemeux.
         </p>
 
         <p>

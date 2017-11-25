@@ -10,8 +10,8 @@ $page_titre = "Perdus dans l'espace !";
 $page_desc  = "Erreur 404 : Page non trouvée";
 
 // Identification
-$page_nom = "erreur";
-$page_id  = "404";
+$page_nom = "Erreur 404 : Page non trouvée";
+$page_url = "pages/nobleme/404";
 
 // CSS & JS
 $css = array('404');
