@@ -406,6 +406,17 @@ EOD;
   Seuls <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> et <a class="gras" href="{$chemin}pages/user/user?pseudo=ThArGos">ThArGos</a> peuvent modifier les déclencheurs et définitions auxquels Akundo réagit.
 </p>
 EOD;
+
+  // AKUNDO : NoBleme-trivia
+  $trad['akuntrivia_titre'] = "Le #NoBleme-trivia, jeu de mots via Akundo";
+  $trad['akuntrivia_desc']  = <<<EOD
+<p class="spaced">
+  Akundo possède également une fonctionnalité ludique, un jeu de <a class="gras" href="https://fr.wikipedia.org/wiki/Motus_(jeu_t%C3%A9l%C3%A9vis%C3%A9)">motus</a> multijoueur dans lequel vous cherchez à deviner un mot d'une taille fixe, et Akundo vous répond par des indices vous disant si vous avez trouvé des lettres bien placées (en vert) ou des lettres présentes dans le mot mais mal placées (en rouge).
+</p>
+<p class="spaced">
+  Pour jouer au Motus d'Akundo, commencez par annoncer sur NoBleme que vous avez envie de faire un #NoBleme-trivia pour trouver des participants (sauf si vous voulez jouer seul), puis rejoignez le <a class="gras" href="{$chemin}pages/irc/canaux">canal de discussion</a> #NoBleme-trivia et écrivez « !motus » dans le canal pour démarrer une partie. Akundo devrait normalement vous proposer un mot vide d'une certaine longueur, il ne vous reste plus qu'à écrire des mots de cette longueur pour qu'Akundo vous réponde et que la partie avance. Au cas où les règles ne seraient pas claires, voici une capture d'écran d'une brève partie en solo :
+</p>
+EOD;
 }
 
 
@@ -1412,6 +1423,18 @@ EOD;
 
           <?=$trad['akunliste_desc']?>
 
+          <br>
+          <br>
+
+          <h5 class="alinea"><?=$trad['akuntrivia_titre']?></h5>
+
+          <?=$trad['akuntrivia_desc']?>
+
+          <br>
+          <br>
+          <div class="align_center">
+            <img src="<?=$chemin?>img/irc/akundo_trivia.png" alt="Capture d'écran du NoBleme-trivia"><br>
+          </div>
           <br>
 
         </div>
