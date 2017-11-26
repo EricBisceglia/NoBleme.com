@@ -10,15 +10,27 @@ $header_menu      = 'Discuter';
 $header_sidemenu  = 'ForumIndex';
 
 // Identification
-$page_nom = "Espère que le forum reviendra un jour";
+$page_nom = "Parcourt les sujets de discussion du forum";
 $page_url = "pages/forum/index";
+
+// Lien court
+$shorturl = "f";
 
 // Langages disponibles
 $langage_page = array('FR','EN');
 
 // Titre et description
-$page_titre = "Forum";
-$page_desc  = "Forum de discussion NoBleme";
+$page_titre = ($lang == 'FR') ? "Forum" : "Forum";
+$page_desc  = "Liste des sujets actifs sur le forum NoBleme";
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                        PRÉPARATION DES DONNÉES                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
 
 
 
@@ -32,11 +44,18 @@ $page_desc  = "Forum de discussion NoBleme";
 if($lang == 'FR')
 {
   // Header
-  $trad['titre']      = "Forum NoBleme";
-  $trad['soustitre']  = "Reviendra à la vie Bientôt™";
-  $trad['desc']       = <<<EOD
-Qu'est-ce que NoBleme sans son légendaire forum ? Rien, dirons certains. Une ruine, rajouterons-t-il. La honte, surenchériront-ils. Et ils n'auront pas forcément tort. Mais d'autres rappelleront à certains que NoBleme est une communauté qui n'a pas eu besoin de son forum pour survivre pendant ces cinq dernières années, et que ce n'est pas quelques années de plus sans forum qui tueront le site. N'est-ce pas ? Alors soyons patients.
+  $trad['titre']            = "Forum NoBleme";
+  $trad['soustitre']        = "Oui, il est réellement de retour";
+  $trad['desc']             = <<<EOD
+Bienvenue sur le <a class="gras" href="https://fr.wikipedia.org/wiki/Forum_(informatique)">forum de discussion</a> de NoBleme, un espace d'échange qui se veut convivial et ouvert à tous les individus et tous les sujets, tant que vous respectez notre <a class="gras" href="{$chemin}pages/doc/coc">code de conduite</a>. Le forum NoBleme est bilingue français/anglais et regroupe plusieurs catégories de conversation différentes, vous pouvez changer vos préférences de filtrage personnelles de langue et de catégories en cliquant sur le bouton ci-dessous.
 EOD;
+  $trad['options']          = "CLIQUEZ ICI POUR CHANGER VOS OPTIONS DE FILTRAGE ET/OU EFFECTUER UNE RECHERCHE";
+
+  // Sujets de discussion
+  $trad['sujets_sujets']    = "SUJETS DE DISCUSSION";
+  $trad['sujets_creation']  = "CRÉATION";
+  $trad['sujets_reponses']  = "RÉPONSES";
+  $trad['sujets_dernier']   = "DERNIER MESSAGE";
 }
 
 
@@ -44,11 +63,6 @@ EOD;
 
 else if($lang == 'EN')
 {
-  $trad['titre']      = "NoBleme forum";
-  $trad['soustitre']  = "Will be resurrected Soon™";
-  $trad['desc']       = <<<EOD
-What's NoBleme without its legendary forum? Nothing, some people might say. A ruin, said people might add. A shame, these people would insist. And they wouldn't necessarily be wrong. But others shall remind them that NoBleme as a community didn't need its forum to survive during the past five years, and can survive a few more years without a forum. So let's be patient, and good things shall come in due time.
-EOD;
 }
 
 
@@ -69,12 +83,91 @@ EOD;
         <p><?=$trad['desc']?></p>
 
         <br>
-        <br>
-        <br>
 
-        <div class="align_center">
-          <img src="<?=$chemin?>img/divers/construction.png" alt="Under construction">
-        </div>
+        <button class="button button-outline"><?=$trad['options']?></button>
+
+      </div>
+
+      <br>
+      <br>
+
+      <div class="texte2">
+
+        <table class="titresnoirs nowrap">
+
+          <thead>
+            <tr>
+              <th colspan="2">
+                <?=$trad['sujets_sujets']?> &nbsp;<a class="texte_positif pointeur" href="<?=$chemin?>pages/forum/new">+NOUVEAU</a>
+              </th>
+              <th class="nopadding">
+                <?=$trad['sujets_creation']?>
+              </th>
+              <th class="moinsmaigre nopadding">
+                <?=$trad['sujets_reponses']?>
+              </th>
+              <th class="nopadding">
+                <?=$trad['sujets_dernier']?>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <?php for($i=0;$i<50;$i++) { ?>
+            <tr>
+
+              <td>
+                <img src="<?=$chemin?>img/icones/lang_<?=['fr', 'fr', 'fr', 'fr', 'en'][rand(0,4)];?>_clear.png" alt="FR" class="valign_table" height="20">
+              </td>
+
+              <td>
+
+                <a class="gras"><?=['Titre court', 'Salut !', 'Titre de message un peu long qui se fait couper...', 'Titre standard de sujet', 'Discutons politique', 'Parlons de pénis', 'Je suis ouvert à faire un débat les amis', 'The spoiling adventure version deux point zéro virgule c...'][rand(0,7)];?></a><br>
+
+                <span class="gras texte_noir"><?=['Fil', 'Fil', 'Fil', 'Anonyme', 'Cascade', 'Cascade', 'Art'][rand(0,6)];?></span>
+
+                <span class="texte_noir"><?=['- Débat', '- Sérieux', '', ''][rand(0,3)];?></span>
+
+                <?=[' - NoBleme.com', ' - Politique', ''][rand(0,2)];?>
+
+                <?php if(!rand(0,10)) { ?>
+                <span class="gras neutre texte_blanc spaced">PRIVÉ</span>
+                <?php } ?>
+
+                <?php if(!rand(0,10)) { ?>
+                <span class="gras negatif texte_blanc spaced">FERMÉ</span>
+                <?php } ?>
+
+                <?php if($i < 2) { ?>
+                <span class="gras positif texte_blanc spaced">ÉPINGLÉ</span>
+                <?php } ?>
+
+              </td>
+
+              <td class="align_center nopadding">
+                <a><?=['Bad', 'Planeshift', 'Pseudonyme long', 'Shalena', 'Bad', 'Trucy', 'Bruce'][rand(0,6)];?></a><br>
+                <?=['Il y a '.rand(0,200).' jours', 'Il y a '.rand(1,5).' mois'][rand(0,1)];?>
+              </td>
+
+              <td class="align_center texte_noir gras nopadding">
+                <?=[0, rand(0,10), rand(0,100)][rand(0,2)];?>
+              </td>
+
+              <td class="align_center nopadding">
+                <a><?=['Bad', 'Planeshift', 'Pseudonyme long', 'Shalena', 'Bad', 'Trucy', 'Bruce'][rand(0,6)];?></a><br>
+                <?=['Il y a '.rand(0,200).' jours', 'Il y a '.rand(1,5).' mois'][rand(0,1)];?>
+              </td>
+
+            </tr>
+            <?php } ?>
+
+            <td colspan="5" class="align_center noir texte_blanc moinsgros gras pointeur">
+              1-50 SUJETS AFFICHÉS SUR <?=rand(100,1000)?> - CLIQUEZ ICI POUR EN CHARGER 50 DE PLUS
+            </td>
+
+          </tbody>
+        </table>
 
       </div>
 

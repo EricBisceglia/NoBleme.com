@@ -138,7 +138,7 @@ $last_pageview_check  = jourfr(date('Y-m-d', $qpageviews['last_pageview_check'])
 /*                                                                                                                                       */
 if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
 
-      <div class="texte align_center">
+      <div class="texte2 align_center">
 
         <h1>Pageviews</h1>
 

@@ -423,7 +423,7 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
           <div class="<?=header_class('NoBleme',$header_menu,'top')?>">NOBLEME</div>
         </a>
 
-        <a class="header_topmenu_lien" href="<?=$chemin?>pages/irc/index">
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/forum/index">
           <div class="<?=header_class('Discuter',$header_menu,'top')?>"><?=$menu['discuter']?></div>
         </a>
 
@@ -705,13 +705,32 @@ $sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Requ
 <?php } ################################################ MENU LATÉRAL : DISCUTER ##########################################################
 // Préparation des traductions des titres du menu
 $sidemenu['bla_forum']            = ($lang == 'FR') ? "Forum de discussion"       : "Discussion forum";
-$sidemenu['bla_forum_sujets']     = ($lang == 'FR') ? "Travaux en cours"          : "Work in progress";
+$sidemenu['bla_forum_sujets']     = ($lang == 'FR') ? "Sujets de discussion"      : "Latest forum threads";
+$sidemenu['bla_forum_ouvrir']     = ($lang == 'FR') ? "Ouvrir un nouveau sujet"   : "Open a new thread";
 $sidemenu['bla_irc']              = ($lang == 'FR') ? "Serveur de chat IRC"       : "IRC chat server";
 $sidemenu['bla_irc_what']         = ($lang == 'FR') ? "Qu'est-ce que IRC"         : "What is IRC";
 $sidemenu['bla_irc_clic']         = ($lang == 'FR') ? "Rejoindre la conversation" : "Join the conversation";
 $sidemenu['bla_irc_canaux']       = ($lang == 'FR') ? "Liste des canaux"          : "Channel list";
 $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"     : "Commands and services";
 /* ################################################################################################# */ if($header_menu == 'Discuter') { ?>
+
+            <div class="header_sidemenu_titre">
+              <?=$sidemenu['bla_forum']?>
+            </div>
+
+            <a href="<?=$chemin?>pages/forum/index">
+              <div class="<?=header_class('ForumIndex',$header_sidemenu,'side')?>">
+                <?=$sidemenu['bla_forum_sujets']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/forum/new">
+              <div class="<?=header_class('ForumNew',$header_sidemenu,'side')?>">
+                <?=$sidemenu['bla_forum_ouvrir']?>
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
               <?=$sidemenu['bla_irc']?>
@@ -738,18 +757,6 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
             <a href="<?=$chemin?>pages/irc/canaux">
               <div class="<?=header_class('IRCCanaux',$header_sidemenu,'side')?>">
                 <?=$sidemenu['bla_irc_canaux']?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_titre">
-              <?=$sidemenu['bla_forum']?>
-            </div>
-
-            <a href="<?=$chemin?>pages/forum/index">
-              <div class="<?=header_class('ForumIndex',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_forum_sujets']?>
               </div>
             </a>
 

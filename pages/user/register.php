@@ -58,7 +58,7 @@ if (isset($_POST["register_pseudo"]))
   // On vérifie si le pseudo est valide
   if($register_erreur == "" && strlen($_POST["register_pseudo"]) < 3)
     $register_erreur = ($lang == 'FR') ? "Pseudonyme trop court" : "Nickname is too short";
-  else if($register_erreur == "" && strlen($_POST["register_pseudo"]) > 18)
+  else if($register_erreur == "" && strlen($_POST["register_pseudo"]) > 15)
     $register_erreur = ($lang == 'FR') ? "Pseudonyme trop long" : "Nickname is too long";
   else if($register_erreur == "" && strlen($_POST["register_pass_1"]) < 6)
     $register_erreur = ($lang == 'FR') ? "Mot de passe trop court" : "Password is too short";
@@ -187,7 +187,7 @@ if($lang == 'FR')
   $trad['soustitre']  = "Code de conduite à respecter sur NoBleme";
 
   // Formulaire d'inscription
-  $trad['reg_pseudo'] = "Choisissez un pseudonyme (3 à 18 caractères)";
+  $trad['reg_pseudo'] = "Choisissez un pseudonyme (3 à 15 caractères)";
   $trad['reg_pass']   = "Mot de passe (6 caractères minimum)";
   $trad['reg_pass2']  = "Entrez à nouveau votre mot de passe";
   $trad['reg_email']  = "Adresse e-mail (utile si vous oubliez votre mot de passe)";
@@ -253,7 +253,7 @@ else if($lang == 'EN')
   $trad['soustitre']  = "Code of conduct to follow on NoBleme";
 
   // Formulaire d'inscription
-  $trad['reg_pseudo'] = "Choose a nickname (3 to 18 characters long)";
+  $trad['reg_pseudo'] = "Choose a nickname (3 to 15 characters long)";
   $trad['reg_pass']   = "Your password (at least 6 characters long)";
   $trad['reg_pass2']  = "Confirm your password by typing it again";
   $trad['reg_email']  = "E-mail address (useful if you forget your password)";
@@ -331,7 +331,7 @@ EOD;
           <fieldset>
 
             <label for="register_pseudo" id="label_register_pseudo"><?=$trad['reg_pseudo']?></label>
-            <input id="register_pseudo" name="register_pseudo" class="indiv" type="text" value="<?=$register_pseudo?>"><br>
+            <input id="register_pseudo" name="register_pseudo" class="indiv" type="text" value="<?=$register_pseudo?>" maxlength="15"><br>
             <br>
 
             <label for="register_pass_1" id="label_register_pass_1"><?=$trad['reg_pass']?></label>
