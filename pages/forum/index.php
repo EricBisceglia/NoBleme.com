@@ -123,7 +123,7 @@ else if($lang == 'EN')
 
               <td>
 
-                <a class="gras"><?=['Titre court', 'Salut !', 'Titre de message un peu long qui se fait couper...', 'Titre standard de sujet', 'Discutons politique', 'Parlons de pénis', 'Je suis ouvert à faire un débat les amis', 'The spoiling adventure version deux point zéro virgule c...'][rand(0,7)];?></a><br>
+                <a class="gras" href="<?=$chemin?>pages/forum/sujet"><?=['Titre court', 'Salut !', 'Titre de message un peu long qui se fait couper...', 'Titre standard de sujet', 'Discutons politique', 'Parlons de pénis', 'Je suis ouvert à faire un débat les amis', 'The spoiling adventure version deux point zéro virgule c...'][rand(0,7)];?></a><br>
 
                 <span class="gras texte_noir"><?=['Fil', 'Fil', 'Fil', 'Anonyme', 'Cascade', 'Cascade', 'Art'][rand(0,6)];?></span>
 
@@ -146,17 +146,17 @@ else if($lang == 'EN')
               </td>
 
               <td class="align_center nopadding">
-                <a><?=['Bad', 'Planeshift', 'Pseudonyme long', 'Shalena', 'Bad', 'Trucy', 'Bruce'][rand(0,6)];?></a><br>
-                <?=['Il y a '.rand(0,200).' jours', 'Il y a '.rand(1,5).' mois'][rand(0,1)];?>
+                <a class="pointeur"><?=['Bad', 'Planeshift', 'Pseudonyme long', 'Shalena', 'Bad', 'Trucy', 'Bruce'][rand(0,6)];?></a><br>
+                <?=ilya(strtotime(rand(2016,2017).'-'.rand(1,10).'-'.rand(1,29)))?>
               </td>
 
               <td class="align_center texte_noir gras nopadding">
-                <?=[0, rand(0,10), rand(0,100)][rand(0,2)];?>
+                <?=[0, rand(0,10), rand(0,100)][rand(0,2)];?><br>
               </td>
 
               <td class="align_center nopadding">
-                <a><?=['Bad', 'Planeshift', 'Pseudonyme long', 'Shalena', 'Bad', 'Trucy', 'Bruce'][rand(0,6)];?></a><br>
-                <?=['Il y a '.rand(0,200).' jours', 'Il y a '.rand(1,5).' mois'][rand(0,1)];?>
+                <a class="pointeur"><?=['Bad', 'Planeshift', 'Pseudonyme long', 'Shalena', 'Bad', 'Trucy', 'Bruce'][rand(0,6)];?></a><br>
+                <?=ilya(strtotime(rand(2016,2017).'-'.rand(1,10).'-'.rand(1,29)))?>
               </td>
 
             </tr>
