@@ -86,9 +86,10 @@ if(isset($_POST['irl_add_pseudo']) && $_POST['irl_add_pseudo'] && getmod('irl'))
                       details_en  = '$irl_add_details_en' ");
 
   // Activité récente
-  $timestamp    = time();
-  $pseudonyme   = postdata_vide('irl_add_pseudo', 'string', '');
-  $action_titre = postdata(jourfr($qcheckirl['date']), 'string', '');
+  $timestamp        = time();
+  $pseudonyme       = postdata_vide('irl_add_pseudo', 'string', '');
+  $action_titre     = postdata(jourfr($qcheckirl['date']), 'string', '');
+  $action_titre_en  = postdata(jourfr($qcheckirl['date'], 'EN'), 'string', '');
   query(" INSERT INTO activite
           SET         timestamp     = '$timestamp'          ,
                       pseudonyme    = '$pseudonyme'         ,
@@ -110,6 +111,7 @@ if(isset($_POST['irl_add_pseudo']) && $_POST['irl_add_pseudo'] && getmod('irl'))
 
   // Bot IRC
   ircbot($chemin, $_POST["irl_add_pseudo"]." a rejoint l'IRL du ".$action_titre, "#NoBleme");
+  ircbot($chemin, $_POST["irl_add_pseudo"]." will attend the ".$action_titre_en." meetup", "#english");
 }
 
 
@@ -230,10 +232,11 @@ if(isset($_POST['irl_supprimer_participant']) && $_POST['irl_supprimer_participa
     exit('Impossible de supprimer un participant inexistant');
 
   // On va chercher les infos sur le participant pour le diff
-  $del_irl_pseudo = ($qcheckirlp['irlp_pseudo']) ? $qcheckirlp['irlp_pseudo'] : $qcheckirlp['u_pseudo'];
-  $del_irl_date   = jourfr($qcheckirlp['irl_date']);
-  $del_details_fr = postdata($qcheckirlp['irlp_details_fr']);
-  $del_details_en = postdata($qcheckirlp['irlp_details_en']);
+  $del_irl_pseudo   = ($qcheckirlp['irlp_pseudo']) ? $qcheckirlp['irlp_pseudo'] : $qcheckirlp['u_pseudo'];
+  $del_irl_date     = jourfr($qcheckirlp['irl_date']);
+  $del_irl_date_en  = jourfr($qcheckirlp['irl_date'], 'EN');
+  $del_details_fr   = postdata($qcheckirlp['irlp_details_fr']);
+  $del_details_en   = postdata($qcheckirlp['irlp_details_en']);
 
   // Suppression de l'entrée
   query(" DELETE FROM irl_participants
@@ -277,6 +280,7 @@ if(isset($_POST['irl_supprimer_participant']) && $_POST['irl_supprimer_participa
 
   // Bot IRC
   ircbot($chemin, $del_irl_pseudo." a quitté l'IRL du ".$del_irl_date, "#NoBleme");
+  ircbot($chemin, $del_irl_pseudo." will no longer attend the ".$del_irl_date_en." meetup", "#english");
 }
 
 

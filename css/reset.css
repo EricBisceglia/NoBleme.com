@@ -51,7 +51,7 @@ table                                                                           
                               img { max-width: 100%;                                                                                 }
                            button { margin-bottom: 1.0rem;                                                                           }
                         li, table { margin-bottom: 0.4rem;                                                                           }
-                                p { padding-top: 2.5rem;                                                                             }
+                                p { padding-top: 2.5rem; text-align: justify;                                                        }
                                ul { list-style: circle inside;                                                                       }
                        blockquote { border-left: 0.3rem solid #D1D1D1; padding: 1rem 1.5rem;                                         }
           blockquote *:last-child { margin-bottom: 0;                                                                                }

@@ -110,8 +110,10 @@ if(isset($_POST['irl_add_go']) && getmod('irl'))
                       action_titre    = '$action_titre' ");
 
   // Bot IRC
-  $date_irl = datefr($irl_edit_date);
+  $date_irl     = datefr($irl_edit_date);
+  $date_irl_en  = datefr($irl_edit_date, 'EN');
   ircbot($chemin, "Nouvelle IRL planifiée le ".$date_irl.": ".$GLOBALS['url_site']."pages/irl/irl?id=".$irl_id, "#NoBleme");
+  ircbot($chemin, "New meetup planned : ".$date_irl_en." - ".$GLOBALS['url_site']."pages/irl/irl?id=".$irl_id, "#english");
 
   // Redirection
   exit(header("Location: ".$chemin."pages/irl/irl?id=".$irl_id));

@@ -129,6 +129,7 @@ else
             <select id="botCanal" name="botCanal" class="indiv">
               <option value="#nobleme">#NoBleme</option>
               <option value="#dev">#Dev</option>
+              <option value="#english">#English</option>
               <option value="#sysop">#Sysop</option>
               <option value="aucun">Aucun (commande, sans le slash)</option>
             </select><br>

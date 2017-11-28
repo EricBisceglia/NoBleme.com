@@ -30,6 +30,7 @@
 .texte_mise_a_jour            { color: #D13030; }
 
 /************************************************************* TAGS GÉNÉRAUX *************************************************************/
+.align_justify   { text-align: justify;                       }
 .align_center    { text-align: center;                        }
 .align_left      { text-align: left;                          }
 .align_right     { text-align: right;                         }

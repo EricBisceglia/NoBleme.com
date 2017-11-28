@@ -300,8 +300,8 @@ EOD;
           <div style="flex:1">
             <?=$trad['skill_maitre']?><br>
             <?=$trad['skill_partiel']?><br>
-            <?=$trad['skill_os']?><br>
             <?=$trad['skill_bdd']?><br>
+            <?=$trad['skill_os']?><br>
             <?=$trad['skill_soft']?>
           </div>
 
