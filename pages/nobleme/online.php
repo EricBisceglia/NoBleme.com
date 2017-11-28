@@ -94,11 +94,11 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
 
   // La page avec ou sans url autour
   if(!$donline['url'])
-    $online_page[$nonline] = predata($donline['page']);
+    $online_page[$nonline] = $donline['page'];
   else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
-    $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'">'.predata($donline['page']).'</a>';
+    $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'">'.$donline['page'].'</a>';
   else
-    $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'"><span class="texte_blanc">'.predata($donline['page']).'</span></a>';
+    $online_page[$nonline] = '<a href="'.$chemin.$donline['url'].'"><span class="texte_blanc">'.$donline['page'].'</span></a>';
 
   // La date avec ou sans url autour
   if($lang == 'FR')
@@ -106,7 +106,7 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
   else
   {
     if(!$donline['url'])
-      $online_date[$nonline] = predata($donline['page']);
+      $online_date[$nonline] = $donline['page'];
     else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
       $online_date[$nonline] = '<a href="'.$chemin.$donline['url'].'">'.ilya($donline['date'],'EN').'</a>';
     else
