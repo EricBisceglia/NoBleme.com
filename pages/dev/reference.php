@@ -1917,6 +1917,19 @@ Retours à la ligne</code></pre>'))
           <tbody>
             <tr>
               <td class="align_center gras">
+                .align_justify
+              </td>
+              <td class="align_justify">
+                Le contenu de cette section est aligné de façon justifiée, avec des rivières typographiques parfois désagréables
+              </td>
+              <td class="align_center">
+                <pre onclick="highlight('refhtml_textjustify');" class="monospace spaced" id="refhtml_textjustify" style="margin-bottom:0"><?php
+                  echo(htmlspecialchars('<div class="align_justify">'))
+                ?></pre>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center gras">
                 .align_left<br>
                 .align_center<br>
                 .align_right
