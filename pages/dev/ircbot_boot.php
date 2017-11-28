@@ -46,6 +46,7 @@ fputs($socket_irc, str_replace('PING','PONG',$fetchping)."\r\n");
 // Si le pong est accepté, on peut join les canaux
 fputs($socket_irc,"JOIN #NoBleme\r\n");
 fputs($socket_irc,"JOIN #dev\r\n");
+fputs($socket_irc,"JOIN #english\r\n");
 
 // Et ne pas oublier de s'indentifier pour ne pas se faire troller par nickserv
 fputs($socket_irc,"NickServ IDENTIFY $pseudo_bot $pass_bot\r\n");
