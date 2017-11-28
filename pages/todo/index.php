@@ -247,6 +247,7 @@ for($ntodo = 0; $dtodo = mysqli_fetch_array($qtodo); $ntodo++)
   $todo_css[$ntodo]         = (!$dtodo['t_valide']) ? 'negatif texte_blanc' : $todo_css[$ntodo];
   $todo_id[$ntodo]          = $dtodo['t_id'];
   $todo_titre[$ntodo]       = predata(tronquer_chaine($dtodo['t_titre'], 50, '...'));
+  $todo_full_titre[$ntodo]  = predata($dtodo['t_titre']);
   $todo_createur[$ntodo]    = predata($dtodo['m_pseudo']);
   $todo_creation[$ntodo]    = predata(ilya($dtodo['t_creation']));
   $todo_resolution[$ntodo]  = ($dtodo['t_resolution']) ? predata(ilya($dtodo['t_resolution'])) : 'Non résolu';
@@ -314,6 +315,23 @@ $qobjectifs = query(" SELECT    todo_roadmap.id ,
 $select_objectif = '<option value="0">Aucun objectif</option>';
 while($dobjectifs = mysqli_fetch_array($qobjectifs))
   $select_objectif .= '<option value="'.$dobjectifs['id'].'">'.predata($dobjectifs['version']).'</option>';
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Si on est dans une tâche spécifique, on update les variables du header
+
+if(isset($_GET['id']))
+{
+  // Identification
+  $page_nom = "Constate l'état de la tâche #".$todo_id[0];
+  $page_url = "pages/todo/index?id=".$todo_id[0];
+
+  // Titre et description
+  $page_titre = "Tâche #".$todo_id[0]." : ".$todo_full_titre[0];
+  $page_desc  = "Tâche liée au développement de NoBleme : ".$todo_full_titre[0];
+}
 
 
 
