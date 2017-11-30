@@ -1,0 +1,29 @@
+/********************************************************** SUJET DE DISCUSSION **********************************************************/
+table.forum_sujet_entete          { border: 2px solid #37536B;                                                              }
+tr.forum_sujet_entete             { border-top: 3px solid #37536B;                                                          }
+td.forum_sujet_entete_gauche      { width: 15em; border-right: 2px solid #37536B; padding-left: 10px; padding-right: 10px;  }
+label.forum_sujet_entete_reponses { font-size:0.9em;                                                                        }
+select.forum_sujet_entete_pages   { margin-bottom:10px;                                                                     }
+a.forum_sujet_entete_recent       { font-size:0.85em;                                                                       }
+td.forum_sujet_entete_titre       { padding: 10px;                                                                          }
+span.forum_sujet_entete_titre     { font-size: 1.35em;                                                                      }
+img.forum_sujet_entete_lang       { margin-bottom: 7px; padding-left: 5px;                                                  }
+td.forum_sujet_entete_description { border-top: 2px solid #37536B; padding: 10px;                                           }
+
+table.forum_sujet_message       { border: 2px solid #CACACA;                                                                }
+tr.forum_sujet_message          { border-top: 3px solid #78A1BC;                                                            }
+td.forum_sujet_message_gauche   { width: 15em; border-right: 2px solid #CACACA; border-bottom: none                         ;
+                                  padding-bottom: 0px; padding-left: 10px; padding-right: 10px; margin-bottom: 0px;         }
+.forum_sujet_message_info       { font-size:0.75em;                                                                         }
+img.forum_sujet_message_actions { margin-top:4px;                                                                           }
+td.forum_sujet_message_contenu  { text-align: justify; padding: 10px;                                                       }
+td.forum_sujet_message_actions  { border-top: 2px solid #CACACA; padding-top: 7px; padding-bottom: 7px; padding-left: 15px; }
+
+/******************************************************** OUVRIR UN NOUVEAU SUJET ********************************************************/
+.forum_nouveau_sujet_option       { margin-bottom: 5px;                                          }
+span.forum_nouveau_sujet_tooltip  { font-size: 0.95em !important; padding: 12px 20px !important; }
+label.forum_nouveau_sujet_label   { margin-top: 5px;                                             }
+
+div.forum_nouveau_sujet_cadre         { border: 1px solid #CACACA; padding: 10px;         }
+div.forum_nouveau_sujet_valignhack_1  { display: table; height: 400px; overflow: hidden;  }
+div.forum_nouveau_sujet_valignhack_2  { display: table-cell; vertical-align: middle;      }

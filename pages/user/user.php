@@ -90,7 +90,8 @@ $qprofil = query("  SELECT      membres.pseudonyme      AS 'u_pseudo'     ,
                                 membres.habite          AS 'u_habite'     ,
                                 membres.metier          AS 'u_metier'     ,
                                 membres.email           AS 'u_email'      ,
-                                membres.profil          AS 'u_profil'
+                                membres.profil          AS 'u_profil'     ,
+                                membres.forum_messages  AS 'u_forum'
                     FROM        membres
                     WHERE       membres.id = '$user_id' ");
 
@@ -159,6 +160,7 @@ $profil_anniv     = ($dprofil['u_anniv'] != '0000-00-00') ? jourfr($dprofil['u_a
 $profil_lieu      = predata($dprofil['u_habite']);
 $profil_metier    = predata($dprofil['u_metier']);
 $profil_email     = predata($dprofil['u_email']);
+$profil_forum     = $dprofil['u_forum'];
 $profil_irl       = $qprofil_irl['num_irls'];
 $profil_quotes    = $qprofil_quotes['num_quotes'];
 $profil_quotesub  = $qprofil_quotesub['num_quotes'];
@@ -195,6 +197,9 @@ if($lang == 'FR')
   $trad['user_metier']    = "Métier / Occupation";
   $trad['user_irl']       = "IRLs NoBlemeuses";
   $trad['usert_irl']      = 'Est venu <span class="gras texte_noir">'.$profil_irl.'</span> fois';
+  $trad['user_forum']     = "Forum NoBleme";
+  $temp_pluriel           = ($profil_forum == 1) ? 'message' : 'messages';
+  $trad['usert_forum']    = 'A posté <span class="gras texte_noir">'.$profil_forum.'</span> '.$temp_pluriel;
 }
 
 
@@ -222,6 +227,9 @@ else if($lang == 'EN')
   $trad['user_metier']    = "Job / Occupation";
   $trad['user_irl']       = "Real life meetups";
   $trad['usert_irl']      = 'Attended <span class="gras texte_noir">'.$profil_irl.'</span> of them';
+  $trad['user_forum']     = "NoBleme forum";
+  $temp_pluriel           = ($profil_forum == 1) ? 'message' : 'messages';
+  $trad['usert_forum']    = 'Posted <span class="gras texte_noir">'.$profil_forum.'</span> '.$temp_pluriel;
 }
 
 
@@ -310,6 +318,13 @@ else if($lang == 'EN')
               <span class="gras"><?=$trad['user_metier']?></span><br>
               <?=$profil_metier?>
 
+              <?php } if($profil_forum) { ?>
+              <hr class="profil_hr">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/forum/index';">
+                <span class="gras"><?=$trad['user_forum']?></span><br>
+                <?=$trad['usert_forum']?>
+              </div>
+
               <?php } if($profil_irl) { ?>
               <hr class="profil_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/irl/stats';">
@@ -320,22 +335,22 @@ else if($lang == 'EN')
               <?php } if($profil_quotes && $lang == 'FR') { ?>
               <hr class="profil_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/quotes/stats';">
-                <span class="gras">Apparitions dans les miscellanées</span><br>
-                <span class="gras texte_noir"><?=$profil_quotes?></span>
+                <span class="gras">Miscellanées</span><br>
+                Est apparu <span class="gras texte_noir"><?=$profil_quotes?></span> fois
               </div>
 
               <?php } if($profil_quotesub && $lang == 'FR') { ?>
               <hr class="profil_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/quotes/stats';">
-                <span class="gras">Miscellanées proposées</span><br>
-                <span class="gras texte_noir"><?=$profil_quotesub?></span>
+                <span class="gras">Proposition de miscellanées</span><br>
+                A proposé <span class="gras texte_noir"><?=$profil_quotesub?></span> miscellanée<?=($profil_quotesub == 1) ? '' : 's'?>
               </div>
 
               <?php } if($profil_todo && $lang == 'FR') { ?>
               <hr class="profil_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/todo/index';">
-                <span class="gras">Tâches proposées</span><br>
-                <span class="gras texte_noir"><?=$profil_todo?></span>
+                <span class="gras">Liste des tâches</span><br>
+                A proposé <span class="gras texte_noir"><?=$profil_todo?></span> tâche<?=($profil_todo == 1) ? '' : 's'?>
               </div>
 
               <?php } if($profil_email && getadmin()) { ?>

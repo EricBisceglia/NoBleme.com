@@ -10,7 +10,7 @@ $header_menu      = 'NoBleme';
 $header_sidemenu  = 'QuEstCeQueNoBleme';
 
 // Identification
-$page_nom = "Se demande se qu'est NoBleme";
+$page_nom = "Se demande ce qu'est NoBleme";
 $page_url = "pages/doc/nobleme";
 
 // Langages disponibles

@@ -31,8 +31,7 @@ $page_nom = "Administre secrètement le site";
 sql_creer_table("forum_sujet", "  id                        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
                                   FKmembres_createur        INT(11) UNSIGNED NOT NULL                             ,
                                   FKmembres_dernier_message INT(11) UNSIGNED NOT NULL                             ,
-                                  FKforum_tags_type         INT(11) UNSIGNED NOT NULL                             ,
-                                  FKforum_tags_sujet        INT(11) UNSIGNED NOT NULL                             ,
+                                  FKforum_tags              INT(11) UNSIGNED NOT NULL                             ,
                                   timestamp_creation        INT(11) UNSIGNED NOT NULL                             ,
                                   timestamp_dernier_message INT(11) UNSIGNED NOT NULL                             ,
                                   type_sujet                TINYINT(1) UNSIGNED NOT NULL                          ,
@@ -50,9 +49,14 @@ sql_creer_table("forum_message", "  id                      INT(11) UNSIGNED NOT
                                     timestamp_modification  INT(11) UNSIGNED NOT NULL                             ,
                                     contenu                 LONGTEXT NOT NULL                                     ");
 
-sql_creer_table("forum_tags", " id      INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-                                nom_fr  MEDIUMTEXT NOT NULL                                   ,
-                                nom_en  MEDIUMTEXT NOT NULL                                   ");
+sql_creer_table("forum_tags", " id              INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+                                nom_fr          TINYTEXT NOT NULL                                     ,
+                                nom_en          TINYTEXT NOT NULL                                     ,
+                                description_fr  MEDIUMTEXT NOT NULL                                   ,
+                                description_en  MEDIUMTEXT NOT NULL                                   ");
+
+// Nombre de messages dans le profil
+sql_creer_champ("membres", "forum_messages", "INT(11) UNSIGNED NOT NULL", "profil");
 
 
 

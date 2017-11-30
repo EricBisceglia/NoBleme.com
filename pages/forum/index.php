@@ -51,11 +51,16 @@ Bienvenue sur le <a class="gras" href="https://fr.wikipedia.org/wiki/Forum_(info
 EOD;
   $trad['options']          = "CLIQUEZ ICI POUR CHANGER VOS OPTIONS DE FILTRAGE ET/OU EFFECTUER UNE RECHERCHE";
 
-  // Sujets de discussion
+  // Titres de la liste des sujets
   $trad['sujets_sujets']    = "SUJETS DE DISCUSSION";
+  $trad['sujets_new']       = "+NOUVEAU";
   $trad['sujets_creation']  = "CRÉATION";
   $trad['sujets_reponses']  = "RÉPONSES";
   $trad['sujets_dernier']   = "DERNIER MESSAGE";
+
+  // Pages de la liste des sujets
+  $trad['sujets_affiches']  = "SUJETS AFFICHÉS SUR";
+  $trad['sujets_plus']      = "CLIQUEZ ICI POUR EN CHARGER 50 DE PLUS";
 }
 
 
@@ -98,7 +103,7 @@ else if($lang == 'EN')
           <thead>
             <tr>
               <th colspan="2">
-                <?=$trad['sujets_sujets']?> &nbsp;<a class="texte_positif pointeur" href="<?=$chemin?>pages/forum/new">+NOUVEAU</a>
+                <?=$trad['sujets_sujets']?> &nbsp;<a class="texte_positif pointeur" href="<?=$chemin?>pages/forum/new"><?=$trad['sujets_new']?></a>
               </th>
               <th class="nopadding">
                 <?=$trad['sujets_creation']?>
@@ -163,7 +168,7 @@ else if($lang == 'EN')
             <?php } ?>
 
             <td colspan="5" class="align_center noir texte_blanc moinsgros gras pointeur">
-              1-50 SUJETS AFFICHÉS SUR <?=rand(100,1000)?> - CLIQUEZ ICI POUR EN CHARGER 50 DE PLUS
+              1-50 <?=$trad['sujets_affiches']?> <?=rand(100,1000)?> - <?=$trad['sujets_plus']?>
             </td>
 
           </tbody>
