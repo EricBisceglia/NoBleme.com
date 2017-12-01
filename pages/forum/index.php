@@ -47,7 +47,7 @@ if($lang == 'FR')
   $trad['titre']            = "Forum NoBleme";
   $trad['soustitre']        = "Oui, il est réellement de retour";
   $trad['desc']             = <<<EOD
-Qu'est-ce que NoBleme sans son légendaire forum ? Rien, dirons certains. Une ruine, rajouteront-ils. La honte, surenchériront-ils. Et ils n'auront pas forcément tort. Mais d'autres rappelleront à certains que NoBleme est une communauté qui n'a pas eu besoin de son forum pour survivre pendant ces cinq dernières années, et que ce n'est pas quelques années de plus sans forum qui tueront le site. N'est-ce pas ? Alors soyons patients.
+Bienvenue sur le <a class="gras" href="https://fr.wikipedia.org/wiki/Forum_(informatique)">forum de discussion</a> de NoBleme, un espace d'échange qui se veut convivial et ouvert à tous les individus et tous les sujets, tant que vous respectez notre <a class="gras" href="{$chemin}pages/doc/coc">code de conduite</a>. Le forum NoBleme est bilingue français/anglais et regroupe plusieurs catégories de conversation différentes, vous pouvez changer vos préférences de filtrage personnelles de langue et de catégories en cliquant sur le bouton ci-dessous.
 EOD;
   $trad['options']          = "CLIQUEZ ICI POUR CHANGER VOS OPTIONS DE FILTRAGE ET/OU EFFECTUER UNE RECHERCHE";
 

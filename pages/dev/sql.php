@@ -32,7 +32,7 @@ $page_nom = "Administre secrètement le site";
 sql_creer_champ("membres", "langue", "TINYTEXT NOT NULL", "banni_raison");
 
 // Nouvelles tables pour le forum
-sql_creer_table("forum_sujet", "  id                        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,                                  
+sql_creer_table("forum_sujet", "  id                        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
                                   FKmembres_createur        INT(11) UNSIGNED NOT NULL                             ,
                                   FKmembres_dernier_message INT(11) UNSIGNED NOT NULL                             ,
                                   FKforum_tags              INT(11) UNSIGNED NOT NULL                             ,
