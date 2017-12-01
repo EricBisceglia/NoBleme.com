@@ -35,7 +35,7 @@ if($lang == 'FR')
   $trad['titre']      = "Forum NoBleme";
   $trad['soustitre']  = "Reviendra à la vie Bientôt™";
   $trad['desc']       = <<<EOD
-Qu'est-ce que NoBleme sans son légendaire forum ? Rien, dirons certains. Une ruine, rajouterons-t-il. La honte, surenchériront-ils. Et ils n'auront pas forcément tort. Mais d'autres rappelleront à certains que NoBleme est une communauté qui n'a pas eu besoin de son forum pour survivre pendant ces cinq dernières années, et que ce n'est pas quelques années de plus sans forum qui tueront le site. N'est-ce pas ? Alors soyons patients.
+Qu'est-ce que NoBleme sans son légendaire forum ? Rien, dirons certains. Une ruine, rajouteront-ils. La honte, surenchériront-ils. Et ils n'auront pas forcément tort. Mais d'autres rappelleront à certains que NoBleme est une communauté qui n'a pas eu besoin de son forum pour survivre pendant ces cinq dernières années, et que ce n'est pas quelques années de plus sans forum qui tueront le site. N'est-ce pas ? Alors soyons patients.
 EOD;
 }
 

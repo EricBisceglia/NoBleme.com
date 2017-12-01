@@ -85,6 +85,7 @@ $qprofil = query("  SELECT      membres.pseudonyme      AS 'u_pseudo'     ,
                                 membres.derniere_visite AS 'u_activite'   ,
                                 membres.banni_date      AS 'u_ban_date'   ,
                                 membres.banni_raison    AS 'u_ban_raison' ,
+                                membres.langue          AS 'u_langue'     ,
                                 membres.genre           AS 'u_genre'      ,
                                 membres.anniversaire    AS 'u_anniv'      ,
                                 membres.habite          AS 'u_habite'     ,
@@ -150,6 +151,7 @@ $profil_banni     = ($dprofil['u_ban_date']) ? jourfr(date('Y-m-d', $dprofil['u_
 $profil_sysop_ban = (!$dprofil['u_ban_date']) ? 'BANNIR' : 'DÉBANNIR';
 $profil_bannidans = changer_casse(dans($dprofil['u_ban_date'], $lang), 'min');
 $profil_banraison = predata($dprofil['u_ban_raison']);
+$profil_langue    = $dprofil['u_langue'];
 $profil_contenu   = ($dprofil['u_profil']) ? bbcode(predata($dprofil['u_profil'], 1)) : '';
 $profil_creation  = jourfr(date('Y-m-d', $dprofil['u_creation']), $lang).' ('.ilya($dprofil['u_creation'], $lang).')';
 $profil_activite  = ilya($dprofil['u_activite'], $lang);
@@ -181,6 +183,8 @@ if($lang == 'FR')
   $trad['admin']          = "Administrateur";
   $trad['sysop']          = "Sysop";
   $trad['mod']            = "Modérateur";
+  $trad['fr']             = "Parle français";
+  $trad['en']             = "Parle anglais";
 
   // Profil
   $trad['bouton_profil']  = "MODIFIER MON PROFIL PUBLIC";
@@ -208,6 +212,8 @@ else if($lang == 'EN')
   $trad['admin']          = "Administrator";
   $trad['sysop']          = "Sysop";
   $trad['mod']            = "Moderator";
+  $trad['fr']             = "Speaks french";
+  $trad['en']             = "Speaks english";
 
   // Profil
   $trad['bouton_profil']  = "EDIT MY PUBLIC PROFILE";
@@ -256,7 +262,20 @@ else if($lang == 'EN')
         </h5>
         <?php } ?>
 
+        <?php if($profil_langue) { ?>
+        <div class="indiv align_center vspaced">
+          <?php if($profil_langue == 'FR' || $profil_langue == 'FREN') { ?>
+          <img src="<?=$chemin?>img/icones/lang_fr_clear.png" alt="FR" title="<?=$trad['fr']?>">
+          <?php } if($profil_langue == 'FREN') { ?>
+          &nbsp;
+          <?php } if($profil_langue == 'EN' || $profil_langue == 'FREN') { ?>
+          <img src="<?=$chemin?>img/icones/lang_en_clear.png" alt="EN" title="<?=$trad['en']?>">
+          <?php } ?>
+        </div>
+        <?php } else { ?>
         <br>
+        <?php } ?>
+
         <br>
 
         <div class="flexcontainer">

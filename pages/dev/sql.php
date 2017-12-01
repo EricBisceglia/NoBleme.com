@@ -27,6 +27,9 @@ $page_nom = "Administre secrètement le site";
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
+// Langage dans le profil
+sql_creer_champ("membres", "langue", "TINYTEXT NOT NULL", "banni_raison");
+
 
 
 
