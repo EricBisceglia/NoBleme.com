@@ -49,6 +49,8 @@ $profil_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateu
 if(isset($_POST['profil_modifier']))
 {
   // Assainissement du postdata
+  $edit_langue_fr   = postdata_vide('profilLangueFr', 'string', '');
+  $edit_langue_en   = postdata_vide('profilLangueEn', 'string', '');
   $edit_naissance_d = str_pad(postdata_vide('profilNaissanceJour', 'int', 0), 2, '0', STR_PAD_LEFT);
   $edit_naissance_m = str_pad(postdata_vide('profilNaissanceMois', 'int', 0), 2, '0', STR_PAD_LEFT);
   $edit_naissance_y = str_pad(postdata_vide('profilNaissanceAnnee', 'int', 0), 4, '0', STR_PAD_LEFT);
@@ -58,9 +60,14 @@ if(isset($_POST['profil_modifier']))
   $edit_metier      = postdata_vide('profilMetier', 'string', '', 35);
   $edit_texte       = postdata_vide('profilTexte', 'string', '');
 
+  // On détermine les langages
+  $edit_langue = ($edit_langue_fr) ? 'FR' : '';
+  $edit_langue = ($edit_langue_en) ? $edit_langue.'EN' : $edit_langue;
+
   // On met à jour le profil
   query(" UPDATE  membres
-          SET     membres.anniversaire  = '$edit_naissance' ,
+          SET     membres.langue        = '$edit_langue'    ,
+                  membres.anniversaire  = '$edit_naissance' ,
                   membres.genre         = '$edit_genre'     ,
                   membres.habite        = '$edit_habite'    ,
                   membres.metier        = '$edit_metier'    ,
@@ -97,8 +104,9 @@ if(isset($_POST['profil_modifier']))
 // Données du profil pour pré-remplir les champs
 
 // On commence par aller chercher les données
-$qprofil = mysqli_fetch_array(query(" SELECT  membres.anniversaire  AS 'u_anniv'  ,
-                                              membres.genre         AS 'u_genre'   ,
+$qprofil = mysqli_fetch_array(query(" SELECT  membres.langue        AS 'u_langue' ,
+                                              membres.anniversaire  AS 'u_anniv'  ,
+                                              membres.genre         AS 'u_genre'  ,
                                               membres.habite        AS 'u_habite' ,
                                               membres.metier        AS 'u_metier' ,
                                               membres.profil        AS 'u_profil'
@@ -106,12 +114,14 @@ $qprofil = mysqli_fetch_array(query(" SELECT  membres.anniversaire  AS 'u_anniv'
                                       WHERE   membres.id = '$profil_id' "));
 
 // Et on les prépare pour l'affichage
-$profil_genre   = predata($qprofil['u_genre']);
-$profil_habite  = predata($qprofil['u_habite']);
-$profil_metier  = predata($qprofil['u_metier']);
-$profil_texte   = predata($qprofil['u_profil']);
-$profil_hidden  = (!$qprofil['u_profil']) ? ' class="hidden"' : '';
-$profil_preview = bbcode(predata($qprofil['u_profil'], 1));
+$profil_langue_fr = (strstr($qprofil['u_langue'], 'FR')) ? ' checked' : '';
+$profil_langue_en = (strstr($qprofil['u_langue'], 'EN')) ? ' checked' : '';
+$profil_genre     = predata($qprofil['u_genre']);
+$profil_habite    = predata($qprofil['u_habite']);
+$profil_metier    = predata($qprofil['u_metier']);
+$profil_texte     = predata($qprofil['u_profil']);
+$profil_hidden    = (!$qprofil['u_profil']) ? ' class="hidden"' : '';
+$profil_preview   = bbcode(predata($qprofil['u_profil'], 1));
 
 
 
@@ -164,6 +174,12 @@ if($lang == 'FR')
 Cette page vous permet de modifier les éléments qui apparaissent sur votre <a href="{$chemin}pages/user/user" class="gras">profil public</a>. Bien entendu, l'intégralité de ces champs sont optionnels, c'est à vous de décider si vous voulez ou non que ces choses apparaissent publiquement. Si vous préférez rester anonyme, il n'y a aucune conséquence négative à laisser votre profil entièrement vide.
 EOD;
 
+  // Informations générales
+  $trad['general_titre']  = "Informations générales";
+  $trad['general_lang']   = "Langues parlées (vous pouvez cocher les deux)";
+  $trad['general_fr']     = "Français";
+  $trad['general_en']     = "Anglais";
+
   // Colonne de gauche
   $trad['gauche_titre']   = "Colonne de gauche : Informations personnelles";
   $trad['gauche_anniv']   = "Date de naissance";
@@ -193,6 +209,12 @@ else if($lang == 'EN')
   $trad['desc']           = <<<EOD
 This page allows you to edit the contents of elements that appear on your <a href="{$chemin}pages/user/user" class="gras">public profile</a>. Of course, all of those fields are optional, it's up to you to decide whether you want to share those things publicly or not. If you would rather stay fully anonymous, there are no consequences to leaving your public profile empty.
 EOD;
+
+// Informations générales
+  $trad['general_titre']  = "General information";
+  $trad['general_lang']   = "Spoken languages (you can select both)";
+  $trad['general_fr']     = "French";
+  $trad['general_en']     = "English";
 
   // Colonne de gauche
   $trad['gauche_titre']   = "Left side: Personal information";
@@ -231,12 +253,24 @@ EOD;
         <br>
         <br>
 
-        <h5><?=$trad['gauche_titre']?></h5>
-
-        <br>
-
         <form method="POST">
           <fieldset>
+
+            <h5><?=$trad['general_titre']?></h5>
+
+            <br>
+
+            <label><?=$trad['general_lang']?></label>
+            <input id="profilLangueFr" name="profilLangueFr" type="checkbox"<?=$profil_langue_fr?>>
+            <label class="label-inline" for="profilLangueFr"><?=$trad['general_fr']?></label><br>
+            <input id="profilLangueEn" name="profilLangueEn" type="checkbox"<?=$profil_langue_en?>>
+            <label class="label-inline" for="profilLangueEn"><?=$trad['general_en']?></label><br>
+            <br>
+            <br>
+
+            <h5><?=$trad['gauche_titre']?></h5>
+
+            <br>
 
             <label for="profilNaissanceJour"><?=$trad['gauche_anniv']?></label>
             <div class="flexcontainer">
