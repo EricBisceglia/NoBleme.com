@@ -283,6 +283,29 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
 
 
   //*************************************************************************************************************************************//
+  //                                                                FORUM                                                                //
+  //*************************************************************************************************************************************//
+  // Nouveau sujet
+
+  if($dactrec['action_type'] === 'forum_new' && !isset($_GET['mod']))
+  {
+    $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
+    $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a ouvert un sujet sur le forum : '.tronquer_chaine(predata($dactrec['action_titre']), 55, '...');
+    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' opened a forum topic: '.tronquer_chaine(predata($dactrec['action_titre']), 55, '...');
+  }
+  else if($dactrec['action_type'] === 'forum_new')
+  {
+    $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
+    $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a ouvert un sujet privé sur le forum : '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
+    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' opened a private forum topic: '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
+  }
+
+
+
+
+  //*************************************************************************************************************************************//
   //                                                                 IRL                                                                 //
   //*************************************************************************************************************************************//
   // Nouvelle IRL

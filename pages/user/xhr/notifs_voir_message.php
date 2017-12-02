@@ -204,7 +204,7 @@ EOD;
     <br>
 
     <div id="message_previsualisation_container_<?=$message_id?>">
-      <label><?=$trad['m_preview']?>:</label>
+      <label><?=$trad['m_preview']?></label>
       <div id="message_previsualisation_<?=$message_id?>" class="vscrollbar notif_previsualisation notif_cadre">
         <?=$message_texte?>
       </div>

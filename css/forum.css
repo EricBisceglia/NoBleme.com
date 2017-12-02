@@ -24,7 +24,10 @@ td.forum_sujet_message_actions  { border-top: 2px solid #CACACA; padding-top: 7p
 span.forum_nouveau_sujet_tooltip  { font-size: 0.95em !important; padding: 12px 20px !important; }
 label.forum_nouveau_sujet_label   { margin-top: 5px;                                             }
 
-div.forum_nouveau_sujet_cadre         { border: 1px solid #CACACA; padding: 10px;         }
-div.forum_nouveau_sujet_valignhack_1  { display: table; height: 400px; overflow: hidden;  }
-div.forum_nouveau_sujet_valignhack_2  { display: table-cell; vertical-align: middle;      }
-.forum_nouveau_sujet_petitexemple     { font-size: 0.75em;                                }
+div.forum_nouveau_sujet_cadre         { border: 1px solid #CACACA; padding: 10px;        }
+div.forum_nouveau_sujet_valignhack_1  { display: table; height: 400px; overflow: hidden; }
+div.forum_nouveau_sujet_valignhack_2  { display: table-cell; vertical-align: middle;     }
+.forum_nouveau_sujet_petitexemple     { font-size: 0.75em;                               }
+
+textarea.forum_nouveau_sujet_composition  { height: 250px;                                               }
+div.forum_nouveau_sujet_previsualisation  { border: 1px solid #CACACA; padding: 10px; max-height: 300px; }
