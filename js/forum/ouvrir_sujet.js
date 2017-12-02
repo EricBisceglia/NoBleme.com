@@ -1,20 +1,21 @@
 /******************************************************************************************************************************************
 **                                                                                                                                       **
-**                                   Fonction permettant de chercher un utilisateur par son pseudonyme                                   **
+**                                         Fonctions liées à la création d'un sujet sur le forum                                         **
 **                                                                                                                                       **
 ******************************************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction permettant de chercher un utilisateur par son pseudonyme afin de modifier ses permissions
+// Remplit le cadre d'exemple à partir d'informations demandées par un clic de l'utilisateur sur un élément
 //
-// chemin est le chemin jusqu'à la racine du site
+// chemin   est le chemin jusqu'à la racine du site
+// element  est l'élément demandé
 
-function admin_chercher_user(chemin)
+function forum_ouvrir_sujet_explications(chemin, element)
 {
-  // On prépare le postdata
-  postdata  = 'pseudo='   + dynamique_prepare('admin_pseudo_user');
-  postdata += '&chemin='  + encodeURIComponent(chemin);
+  // Préparation du postdata
+  postdata  = 'chemin='+encodeURIComponent(chemin);
+  postdata += '&element='+encodeURIComponent(element);
 
-  // On envoie le XHR
-  dynamique(chemin, './xhr/liste_users.php', 'admin_liste_users', postdata, 1 );
+  // On remplace le contenu de la boite par l'élément demandé
+  dynamique(chemin, 'xhr/explications.php', 'forum_explications', postdata);
 }

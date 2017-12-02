@@ -25,7 +25,7 @@ $page_desc  = "Ouvrir un nouveau sujet de discussion sur le forum NoBleme";
 
 // CSS & JS
 $css  = array('forum');
-$js   = array('dynamique');
+$js   = array('forum/ouvrir_sujet', 'dynamique', 'toggle');
 
 
 
@@ -60,9 +60,9 @@ $js   = array('dynamique');
 if($lang == 'FR')
 {
   // Header
-  $trad['titre']      = "Forum NoBleme";
-  $trad['soustitre']  = "Ouvrir un nouveau sujet de discussion";
-  $trad['desc']       = <<<EOD
+  $trad['titre']            = "Forum NoBleme";
+  $trad['soustitre']        = "Ouvrir un nouveau sujet de discussion";
+  $trad['desc']             = <<<EOD
 <p>
   Avant de composer le contenu du sujet que vous souhaitez poster sur le <a class="gras" href="{$chemin}pages/forum/index">forum NoBleme</a>, vous devez commencer par spécifier de quel type de sujet il s'agit. Plusieurs options d'apparence, classification, et catégorisation de sujet vous serons proposés, et vous devrez impérativement sélectionner un de chaque. Une fois que vous aurez sélectionné les trois, un bouton apparaitra qui vous permettra de composer le contenu de votre sujet. <span class="gras">Si vous hésitez ou voulez créer un sujet de forum linéaire classique, sélectionnez tout simplement la première option dans les trois catégories.</span>
 </p>
@@ -70,6 +70,23 @@ if($lang == 'FR')
   Afin de vous aider à comprendre ce que chacune des options signifie, vous pouvez cliquer sur le nom d'une option, et une description illustrée de l'option choisie apparaitra dans l'encadré à droite. Assurez-vous de faire le bon choix car il s'agit d'un choix définitif : <span class="gras">Vous ne pourrez plus modifier ces options une fois votre sujet de discussion publié sur le forum.</span>
 </p>
 EOD;
+
+  // Catégorisation du sujet
+  $trad['cat_apparence']    = "Apparence de votre sujet de discussion";
+  $trad['cat_app_fil']      = "Fil de discussion";
+  $trad['cat_app_anon']     = "Fil de discussion anonyme";
+  $trad['cat_class']        = "Classification de votre sujet";
+  $trad['cat_cl_standard']  = "Sujet standard";
+  $trad['cat_cl_serieux']   = "Sujet sérieux";
+  $trad['cat_cl_debat']     = "Débat d'opinion";
+  $trad['cat_cl_jeu']       = "Jeu de forum";
+  $trad['cat_categorie']    = "Catégorisation de votre sujet";
+  $trad['cat_cat_aucun']    = "Aucune catégorie";
+  $trad['cat_cat_pol']      = "Politique";
+  $trad['cat_cat_info']     = "Informatique";
+  $trad['cat_cat_nobleme']  = "NoBleme.com";
+  $trad['cat_composer']     = "COMPOSER MON SUJET DE DISCUSSION";
+  $trad['cat_placeholder']  = "Cliquez sur le nom d'une option à gauche et une explication illustrée de son fonctionnement apparaitra dans ce cadre.";
 }
 
 
@@ -106,112 +123,97 @@ else if($lang == 'EN')
             <form method="POST">
               <fieldset>
 
-                <label class="texte_noir forum_nouveau_sujet_option">Apparence de votre sujet de discussion:</label>
+                <label class="texte_noir forum_nouveau_sujet_option"><?=$trad['cat_apparence']?></label>
 
                 <input id="forum_presentation_fil" name="forum_presentation_fil" type="checkbox">
-                <div class="tooltip-container label-inline gras forum_nouveau_sujet_option">
-                  <a>Fil de discussion</a>
-                  <span class="tooltip forum_nouveau_sujet_tooltip">
-                    Sujet de discussion linéaire classique,<br>
-                    dans lequel les messages se suivent dans l'ordre.<br>
-                    <span class="texte_positif">Idéal pour la majorité des conversations.</span>
-                  </span>
+                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'fil');"><?=$trad['cat_app_fil']?></a>
                 </div>
                 <br>
 
                 <input id="forum_presentation_anonyme" name="forum_presentation_anonyme" type="checkbox">
-                <div class="tooltip-container label-inline gras forum_nouveau_sujet_option">
-                  <a>Fil anonyme</a>
-                  <span class="tooltip forum_nouveau_sujet_tooltip">
-                    Sujet de discussion linéaire classique,<br>
-                    dans lequel les messages se suivent dans l'ordre,<br>
-                    où tous les messages sont postés anonymement<br>
-                    (les messages n'ont pas d'auteur visible)<br>
-                    <span class="texte_positif">Idéal pour les conversations non sérieuses.</span>
-                  </span>
+                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'anonyme');"><?=$trad['cat_app_anon']?></a>
                 </div>
                 <br>
 
                 <br>
 
-                <label class="texte_noir forum_nouveau_sujet_option forum_nouveau_sujet_label">Classification de votre sujet :</label>
+                <label class="texte_noir forum_nouveau_sujet_option forum_nouveau_sujet_label"><?=$trad['cat_class']?></label>
 
                 <input id="forum_type_standard" name="forum_type_standard" type="checkbox">
-                <div class="tooltip-container label-inline gras forum_nouveau_sujet_option">
-                  <a>Sujet standard</a>
-                  <span class="tooltip forum_nouveau_sujet_tooltip">
-                    Sélectionnez ceci si votre sujet ne correspond<br>
-                    à aucune des autres options ci-dessous<br>
-                    <span class="texte_positif">Idéal pour la majorité des conversations.</span>
-                  </span>
+                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'standard');"><?=$trad['cat_cl_standard']?></a>
                 </div>
                 <br>
 
                 <input id="forum_type_serieux" name="forum_type_serieux" type="checkbox">
-                <div class="tooltip-container label-inline gras forum_nouveau_sujet_option">
-                  <a>Sujet sérieux</a>
-                  <span class="tooltip forum_nouveau_sujet_tooltip">
-                    Vous désirez que les conversations autour de votre sujet restent sérieuses.<br>
-                    L'équipe administrative modèrera ce sujet avec plus de sévérité<br>
-                    et supprimera les réponses qui ne sont pas sérieuses.<br>
-                    <span class="texte_positif">Idéal pour parler de sujets personnels dont vous ne souhaitez pas débattre.</span>
-                  </span>
+                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'serieux');"><?=$trad['cat_cl_serieux']?></a>
                 </div>
                 <br>
 
                 <input id="forum_type_debat" name="forum_type_debat" type="checkbox">
-                <div class="tooltip-container label-inline gras forum_nouveau_sujet_option">
-                  <a>Débat d'opinion</a>
-                  <span class="tooltip forum_nouveau_sujet_tooltip">
-                    Votre sujet est fait pour discuter de façon constructive,<br>
-                    pour débattre d'un sujet tout en restant ouvert aux opinions des autres.<br>
-                    L'équipe administrative modèrera ce sujet avec plus de sévérité<br>
-                    et supprimera les réponses hors sujet, les trolls, et les attaques personnelles.<br>
-                    <span class="texte_positif">Idéal pour les débats constructifs.</span>
-                  </span>
+                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'debat');"><?=$trad['cat_cl_debat']?></a>
+                </div>
+                <br>
+
+                <input id="forum_type_jeu" name="forum_type_jeu" type="checkbox">
+                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'jeu');"><?=$trad['cat_cl_jeu']?></a>
                 </div>
                 <br>
 
                 <br>
 
-                <label class="texte_noir forum_nouveau_sujet_option forum_nouveau_sujet_label">Catégorisation de votre sujet :</label>
+                <label class="texte_noir forum_nouveau_sujet_option forum_nouveau_sujet_label"><?=$trad['cat_categorie']?></label>
 
                 <input id="forum_categorie_aucune" name="forum_categorie_aucune" type="checkbox">
-                <div class="tooltip-container label-inline gras forum_nouveau_sujet_option">
-                  <a>Aucune catégorie</a>
-                  <span class="tooltip forum_nouveau_sujet_tooltip">
-                    Sélectionnez ceci si votre sujet ne correspond<br>
-                    à aucune des autres catégories ci-dessous<br>
-                  </span>
+                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'aucune');"><?=$trad['cat_cat_aucun']?></a>
                 </div>
                 <br>
 
                 <input id="forum_categorie_politique" name="forum_categorie_politique" type="checkbox">
-                <div class="tooltip-container label-inline gras forum_nouveau_sujet_option">
-                  <a>Politique</a>
-                  <span class="tooltip forum_nouveau_sujet_tooltip">
-                    Sujet parlant d'un sujet politique, ou parlant d'actualités chargées de politique.
-                  </span>
+                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'politique');"><?=$trad['cat_cat_pol']?></a>
+                </div>
+                <br>
+
+                <input id="forum_categorie_informatique" name="forum_categorie_informatique" type="checkbox">
+                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'informatique');"><?=$trad['cat_cat_info']?></a>
+                </div>
+                <br>
+
+                <input id="forum_categorie_nobleme" name="forum_categorie_nobleme" type="checkbox">
+                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'nobleme');"><?=$trad['cat_cat_nobleme']?></a>
                 </div>
                 <br>
 
                 <br>
 
-                <button type="button">Composer mon sujet de discussion</button>
+                <button type="button"><?=$trad['cat_composer']?></button>
 
               </fieldset>
             </form>
 
           </div>
-          <div class="forum_nouveau_sujet_cadre" style="flex:3">
+
+          <div class="forum_nouveau_sujet_cadre" style="flex:3" id="forum_explications">
+
             <div class="indiv forum_nouveau_sujet_valignhack_1">
-             <div class="indiv forum_nouveau_sujet_valignhack_2">
-               <div class="indiv align_center">
-                 Cliquez sur le nom d'une option à gauche et une explication illustrée de leur fonctionnement apparaitra dans ce cadre.
-               </div>
-             </div>
-           </div>
+              <div class="indiv forum_nouveau_sujet_valignhack_2">
+                <div class="indiv align_center">
+                  <?=$trad['cat_placeholder']?>
+                </div>
+              </div>
+            </div>
+
           </div>
+
         </div>
 
       </div>

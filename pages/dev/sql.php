@@ -27,23 +27,21 @@ $page_nom = "Administre secrètement le site";
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-
-// Langage dans le profil
-sql_creer_champ("membres", "langue", "TINYTEXT NOT NULL", "banni_raison");
-
 // Nouvelles tables pour le forum
 sql_creer_table("forum_sujet", "  id                        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
                                   FKmembres_createur        INT(11) UNSIGNED NOT NULL                             ,
                                   FKmembres_dernier_message INT(11) UNSIGNED NOT NULL                             ,
-                                  FKforum_tags              INT(11) UNSIGNED NOT NULL                             ,
                                   timestamp_creation        INT(11) UNSIGNED NOT NULL                             ,
                                   timestamp_dernier_message INT(11) UNSIGNED NOT NULL                             ,
-                                  type_sujet                TINYINT(1) UNSIGNED NOT NULL                          ,
+                                  apparence                 TINYTEXT NOT NULL                                     ,
+                                  classification            TINYTEXT NOT NULL                                     ,
+                                  categorie                 TINYTEXT NOT NULL                                     ,
                                   public                    TINYINT(1) UNSIGNED NOT NULL                          ,
                                   ouvert                    TINYINT(1) UNSIGNED NOT NULL                          ,
                                   epingle                   TINYINT(1) UNSIGNED NOT NULL                          ,
                                   langage                   TINYTEXT NOT NULL                                     ,
-                                  titre                     MEDIUMTEXT NOT NULL                                   ");
+                                  titre                     MEDIUMTEXT NOT NULL                                   ,
+                                  nombre_reponses           INT(11) UNSIGNED NOT NULL                             ");
 
 sql_creer_table("forum_message", "  id                      INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
                                     FKforum_sujet           INT(11) UNSIGNED NOT NULL                             ,
@@ -52,12 +50,6 @@ sql_creer_table("forum_message", "  id                      INT(11) UNSIGNED NOT
                                     timestamp_creation      INT(11) UNSIGNED NOT NULL                             ,
                                     timestamp_modification  INT(11) UNSIGNED NOT NULL                             ,
                                     contenu                 LONGTEXT NOT NULL                                     ");
-
-sql_creer_table("forum_tags", " id              INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-                                nom_fr          TINYTEXT NOT NULL                                     ,
-                                nom_en          TINYTEXT NOT NULL                                     ,
-                                description_fr  MEDIUMTEXT NOT NULL                                   ,
-                                description_en  MEDIUMTEXT NOT NULL                                   ");
 
 // Nombre de messages dans le profil
 sql_creer_champ("membres", "forum_messages", "INT(11) UNSIGNED NOT NULL", "profil");

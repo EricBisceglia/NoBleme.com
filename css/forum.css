@@ -27,3 +27,4 @@ label.forum_nouveau_sujet_label   { margin-top: 5px;                            
 div.forum_nouveau_sujet_cadre         { border: 1px solid #CACACA; padding: 10px;         }
 div.forum_nouveau_sujet_valignhack_1  { display: table; height: 400px; overflow: hidden;  }
 div.forum_nouveau_sujet_valignhack_2  { display: table-cell; vertical-align: middle;      }
+.forum_nouveau_sujet_petitexemple     { font-size: 0.75em;                                }
