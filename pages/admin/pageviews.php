@@ -116,7 +116,7 @@ $qpageviews = query($qpageviews);
 for($npageviews = 0; $dpageviews = mysqli_fetch_array($qpageviews); $npageviews++)
 {
   $views_id[$npageviews]          = $dpageviews['id'];
-  $views_nom[$npageviews]         = (!$dpageviews['url_page']) ? predata($dpageviews['nom_page']) : '<a href="'.$chemin.predata($dpageviews['url_page']).'">'.predata($dpageviews['nom_page']).'</a>';
+  $views_nom[$npageviews]         = (!$dpageviews['url_page']) ? $dpageviews['nom_page'] : '<a href="'.$chemin.$dpageviews['url_page'].'">'.$dpageviews['nom_page'].'</a>';
   $views_vues[$npageviews]        = format_nombre($dpageviews['vues'], 'nombre');
   $views_lastvisit[$npageviews]   = format_nombre($dpageviews['vues_lastvisit'], 'nombre');
   $views_croissance[$npageviews]  = ($dpageviews['vues'] != $dpageviews['vues_lastvisit']) ? format_nombre($dpageviews['vues'] - $dpageviews['vues_lastvisit'], 'nombre', NULL, 1) : '-';

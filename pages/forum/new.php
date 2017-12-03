@@ -116,7 +116,8 @@ if(isset($_POST['forum_add_titre']))
   forum_recompter_messages_membre($add_auteur);
 
   // Activité récente
-  $add_pseudo = postdata(getpseudo(), 'string');
+  $temp_lang  = ($add_langage == 'FR') ? 'Anonyme' : 'Anonymous';
+  $add_pseudo = ($add_apparence == 'Anonyme') ? $temp_lang : postdata(getpseudo(), 'string');
   $add_modlog = ($add_public) ? 0 : 1;
   query(" INSERT INTO activite
           SET         activite.timestamp      = '$timestamp'  ,
@@ -127,7 +128,7 @@ if(isset($_POST['forum_add_titre']))
                       activite.action_titre   = '$add_titre'  ");
 
   // Bot IRC
-  $add_pseudo_raw = getpseudo();
+  $add_pseudo_raw = ($add_apparence == 'Anonyme') ? $temp_lang : getpseudo();
   $add_titre_raw  = (isset($_POST['forum_add_titre'])) ? tronquer_chaine($_POST['forum_add_titre'], 100) : '';
   if($add_public)
   {
@@ -427,17 +428,16 @@ EOD;
             <textarea id="forum_add_contenu" name="forum_add_contenu" class="indiv forum_nouveau_sujet_composition" onkeyup="forum_ouvrir_sujet_previsualisation('<?=$chemin?>');"></textarea><br>
             <br>
 
+            <button type="button" onclick="forum_ouvrir_sujet_envoyer();"><?=$trad['comp_go']?></button>
+
             <div id="forum_add_previsualisation_container" class="hidden">
+              <br>
               <label><?=$trad['comp_prev']?></label>
               <div class="vscrollbar forum_nouveau_sujet_previsualisation" id="forum_add_previsualisation">
                 &nbsp;
               </div>
               <br>
             </div>
-
-            <br>
-
-            <button type="button" onclick="forum_ouvrir_sujet_envoyer();"><?=$trad['comp_go']?></button>
 
           </fieldset>
         </form>

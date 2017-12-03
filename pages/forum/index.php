@@ -48,8 +48,14 @@ $qsujets = query("  SELECT    forum_sujet.id                        AS 's_id'   
                               forum_sujet.nombre_reponses           AS 's_reponses'   ,
                               membres_createur.id                   AS 'c_id'         ,
                               membres_createur.pseudonyme           AS 'c_pseudo'     ,
+                              membres_createur.admin                AS 'c_admin'      ,
+                              membres_createur.sysop                AS 'c_sysop'      ,
+                              membres_createur.moderateur           AS 'c_mod'        ,
                               membres_dernier.id                    AS 'd_id'         ,
-                              membres_dernier.pseudonyme            AS 'd_pseudo'
+                              membres_dernier.pseudonyme            AS 'd_pseudo'     ,
+                              membres_dernier.admin                 AS 'd_admin'      ,
+                              membres_dernier.sysop                 AS 'd_sysop'      ,
+                              membres_dernier.moderateur            AS 'd_mod'
                     FROM      forum_sujet
                     LEFT JOIN membres AS membres_createur ON forum_sujet.FKmembres_createur         = membres_createur.id
                     LEFT JOIN membres AS membres_dernier  ON forum_sujet.FKmembres_dernier_message  = membres_dernier.id
@@ -71,10 +77,16 @@ for($nsujets = 0; $dsujets = mysqli_fetch_array($qsujets); $nsujets++)
   $sujet_epingle[$nsujets]    = $dsujets['s_epingle'];
   $sujet_c_id[$nsujets]       = ($dsujets['s_apparence'] != 'Anonyme') ? $dsujets['c_id'] : 0;
   $sujet_c_pseudo[$nsujets]   = predata($dsujets['c_pseudo']);
+  $temp_css                   = ($dsujets['c_mod']) ? ' texte_positif' : '';
+  $temp_css                   = ($dsujets['c_sysop']) ? ' texte_neutre' : $temp_css;
+  $sujet_c_css[$nsujets]      = ($dsujets['c_admin']) ? ' texte_negatif' : $temp_css;
   $sujet_creation[$nsujets]   = predata(ilya($dsujets['s_creation'], $lang));
   $sujet_reponses[$nsujets]   = $dsujets['s_reponses'];
   $sujet_d_id[$nsujets]       = ($dsujets['s_apparence'] != 'Anonyme') ? $dsujets['d_id'] : 0;
   $sujet_d_pseudo[$nsujets]   = predata($dsujets['d_pseudo']);
+  $temp_css                   = ($dsujets['d_mod']) ? ' texte_positif' : '';
+  $temp_css                   = ($dsujets['d_sysop']) ? ' texte_neutre' : $temp_css;
+  $sujet_d_css[$nsujets]      = ($dsujets['d_admin']) ? ' texte_negatif' : $temp_css;
   $sujet_dernier[$nsujets]    = predata(ilya($dsujets['s_dernier'], $lang));
 }
 
@@ -105,6 +117,7 @@ EOD;
   $trad['sujets_dernier']   = "DERNIER MESSAGE";
 
   // Liste des sujets de discussion
+  $trad['liste_anon']       = "Anonyme";
   $trad['liste_prive']      = "PRIVÉ";
   $trad['liste_ferme']      = "FERMÉ";
   $trad['liste_epingle']    = "ÉPINGLÉ";
@@ -130,6 +143,7 @@ EOD;
   $trad['sujets_dernier']   = "LAST REPLY";
 
   // Liste des sujets de discussion
+  $trad['liste_anon']       = "Anonymous";
   $trad['liste_prive']      = "PRIVATE";
   $trad['liste_ferme']      = "CLOSED";
   $trad['liste_epingle']    = "PINNED";
@@ -211,7 +225,9 @@ EOD;
 
               <td class="align_center nopadding">
                 <?php if($sujet_c_id[$i]) { ?>
-                <a href="<?=$chemin?>pages/user/user?id=<?=$sujet_c_id[$i]?>"><?=$sujet_c_pseudo[$i]?></a><br>
+                <a class="gras<?=$sujet_c_css[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$sujet_c_id[$i]?>"><?=$sujet_c_pseudo[$i]?></a><br>
+                <?php } else { ?>
+                <span class="gras"><?=$trad['liste_anon']?></span><br>
                 <?php } ?>
                 <?=$sujet_creation[$i]?>
               </td>
@@ -222,7 +238,9 @@ EOD;
 
               <td class="align_center nopadding">
                 <?php if($sujet_d_id[$i]) { ?>
-                <a href="<?=$chemin?>pages/user/user?id=<?=$sujet_d_id[$i]?>"><?=$sujet_d_pseudo[$i]?></a><br>
+                <a class="gras<?=$sujet_d_css[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$sujet_d_id[$i]?>"><?=$sujet_d_pseudo[$i]?></a><br>
+                <?php } else { ?>
+                <span class="gras"><?=$trad['liste_anon']?></span><br>
                 <?php } ?>
                 <?=$sujet_dernier[$i]?>
               </td>

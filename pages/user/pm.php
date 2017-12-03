@@ -191,16 +191,15 @@ EOD;
             <textarea id="message_textarea" name="message_textarea" class="indiv notif_message" onkeyup="notification_previsualiser('<?=$chemin?>');"><?=$message_corps?></textarea><br>
             <br>
 
+            <input type="submit" class="button" value="<?=$trad['m_envoyer']?>" name="message_envoyer">
+
             <div id="message_previsualisation_container"<?=$message_hidden?>>
+              <br>
               <label><?=$trad['m_preview']?></label>
               <div id="message_previsualisation" class="vscrollbar notif_previsualisation notif_cadre">
                 <?=$message_prev?>
               </div>
               <br>
-            </div>
-
-            <div class="indiv align_center">
-              <input type="submit" class="button" value="<?=$trad['m_envoyer']?>" name="message_envoyer">
             </div>
 
           </fieldset>

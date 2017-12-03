@@ -103,13 +103,13 @@ else
 if(isset($page_nom) && isset($page_url) && !isset($error_mode))
 {
   // Réparation des erreurs au cas où
-  $page_nom = postdata($page_nom, 'string');
-  $page_url = postdata($page_url, 'string');
+  $page_nom_propre = postdata($page_nom, 'string');
+  $page_url_propre = postdata($page_url, 'string');
 
   // Requête pour récupérer les pageviews sur la page courante
   $view_query = query(" SELECT  pageviews.vues
                         FROM    pageviews
-                        WHERE   pageviews.url_page  = '$page_url' ");
+                        WHERE   pageviews.url_page  = '$page_url_propre' ");
 
   // Si la requête renvoie un résultat, reste plus qu'à incrémenter les pageviews
   if (mysqli_num_rows($view_query) != 0)
@@ -122,8 +122,8 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
     if(((loggedin() && !getadmin()) || !loggedin()))
       query(" UPDATE  pageviews
               SET     pageviews.vues      = pageviews.vues + 1 ,
-                      pageviews.nom_page  = '$page_nom'
-              WHERE   pageviews.url_page  = '$page_url' ");
+                      pageviews.nom_page  = '$page_nom_propre'
+              WHERE   pageviews.url_page  = '$page_url_propre' ");
   }
 
   // Sinon, il faut créer l'entrée de la page et lui donner son premier pageview
@@ -134,9 +134,9 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
 
     // On update la BDD
     query(" INSERT INTO pageviews
-            SET         pageviews.nom_page  = '$page_nom' ,
-                        pageviews.url_page  = '$page_url' ,
-                        pageviews.vues      = 1           ");
+            SET         pageviews.nom_page  = '$page_nom_propre'  ,
+                        pageviews.url_page  = '$page_url_propre'  ,
+                        pageviews.vues      = 1                   ");
   }
 }
 

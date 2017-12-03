@@ -9,6 +9,7 @@ td.forum_sujet_entete_titre       { padding: 10px;                              
 span.forum_sujet_entete_titre     { font-size: 1.35em;                                                                      }
 img.forum_sujet_entete_lang       { margin-bottom: 7px; padding-left: 5px;                                                  }
 td.forum_sujet_entete_description { border-top: 2px solid #37536B; padding: 10px;                                           }
+img.forum_sujet_entete_actions    { margin-top:10px;                                                                        }
 
 table.forum_sujet_message       { border: 2px solid #CACACA;                                                                }
 tr.forum_sujet_message          { border-top: 3px solid #78A1BC;                                                            }
@@ -18,6 +19,9 @@ td.forum_sujet_message_gauche   { width: 15em; border-right: 2px solid #CACACA; 
 img.forum_sujet_message_actions { margin-top:4px;                                                                           }
 td.forum_sujet_message_contenu  { text-align: justify; padding: 10px;                                                       }
 td.forum_sujet_message_actions  { border-top: 2px solid #CACACA; padding-top: 7px; padding-bottom: 7px; padding-left: 15px; }
+
+textarea.forum_ecrire_reponse_composition { height: 200px;                                               }
+div.forum_ecrire_reponse_previsualisation { border: 1px solid #CACACA; padding: 10px; max-height: 300px; }
 
 /******************************************************** OUVRIR UN NOUVEAU SUJET ********************************************************/
 .forum_nouveau_sujet_option       { margin-bottom: 5px;                                          }

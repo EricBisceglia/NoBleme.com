@@ -116,3 +116,31 @@ function forum_recompter_messages_membre($id=0)
   // Au cas où ça pourrait servir, on renvoie le nouveau postcount
   return $compte_messages;
 }
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Recompte le nombre de messages postés dans un sujet
+//
+// $id est l'id du sujet dont on veut recompter les messages
+//
+// Utilisation forum_recompter_messages_sujet(1);
+
+function forum_recompter_messages_sujet($id=0)
+{
+  // On va chercher tous les messages qu'on peut recompter
+  $qcompte = mysqli_fetch_array(query(" SELECT    COUNT(*) AS 'count_messages'
+                                        FROM      forum_message
+                                        LEFT JOIN forum_sujet ON forum_message.FKforum_sujet = forum_sujet.id
+                                        WHERE     forum_message.FKforum_sujet     =         '$id'
+                                        AND       forum_message.message_supprime  =         0 "));
+
+  // Et on met à jour le compte de messages du sujet
+  $compte_messages = ($qcompte['count_messages'] - 1);
+  query(" UPDATE forum_sujet SET nombre_reponses = '$compte_messages' WHERE forum_sujet.id = '$id' ");
+
+  // Au cas où ça pourrait servir, on renvoie le nouveau postcount
+  return $compte_messages;
+}
