@@ -13,37 +13,75 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Renvoie le nom de l'option d'un sujet de discussion
 //
 // $option              est le nom de l'option sur laquelle on veut des infos
+// $format              est le format dans lequel on veut que les infos soient renvoyées
 // $lang    (optionnel) est la langue dans laquelle renvoyer l'option
 //
-// Utilisation: forum_option_info('Anonyme', 'FR');
+// Utilisation: forum_option_info('Anonyme', 'Complet', 'FR');
 
-function forum_option_info($option, $lang="FR")
+function forum_option_info($option, $format, $lang="FR")
 {
-  // Apparence
-  if($option == 'Fil')
-    $return = ($lang == 'FR') ? 'Fil de discussion' : 'Linear thread';
-  if($option == 'Anonyme')
-    $return = ($lang == 'FR') ? 'Fil de discussion anonyme' : 'Anonymous thread';
+  // Au cas où, on met la valeur de retour à 0
+  $return = 0;
 
-  // Classification
-  if($option == 'Standard')
-    $return = ($lang == 'FR') ? 'Sujet standard' : 'Standard topic';
-  if($option == 'Sérieux')
-    $return = ($lang == 'FR') ? 'Sujet sérieux' : 'Serious topic';
-  if($option == 'Débat')
-    $return = ($lang == 'FR') ? 'Débat d\'opinion' : 'Debate';
-  if($option == 'Jeu')
-    $return = ($lang == 'FR') ? 'Jeu de forum' : 'Forum game';
+  // Format : Nom court
+  if($format == 'court')
+  {
+    // Apparence
+    if($option == 'Fil')
+      $return = ($lang == 'FR') ? 'Fil' : 'Thread';
+    if($option == 'Anonyme')
+      $return = ($lang == 'FR') ? 'Anonyme' : 'Anonymous';
 
-  // Catégorie
-  if($option == 'Aucune')
-    $return = ($lang == 'FR') ? 'Aucune catégorie' : 'Uncategorized';
-  if($option == 'Politique')
-    $return = ($lang == 'FR') ? 'Politique' : 'Political';
-  if($option == 'Informatique')
-    $return = ($lang == 'FR') ? 'Informatique' : 'Computer science';
-  if($option == 'NoBleme')
-    $return = 'NoBleme.com';
+    // Classification
+    if($option == 'Standard')
+      $return = ($lang == 'FR') ? '' : '';
+    if($option == 'Sérieux')
+      $return = ($lang == 'FR') ? 'Sérieux' : 'Serious';
+    if($option == 'Débat')
+      $return = ($lang == 'FR') ? 'Débat' : 'Debate';
+    if($option == 'Jeu')
+      $return = ($lang == 'FR') ? 'Jeu de forum' : 'Forum game';
+
+    // Catégorie
+    if($option == 'Aucune')
+      $return = ($lang == 'FR') ? '' : '';
+    if($option == 'Politique')
+      $return = ($lang == 'FR') ? 'Politique' : 'Political';
+    if($option == 'Informatique')
+      $return = ($lang == 'FR') ? 'Informatique' : 'Computer science';
+    if($option == 'NoBleme')
+      $return = 'NoBleme.com';
+  }
+
+  // Format : Nom complet
+  else if($format == 'complet')
+  {
+    // Apparence
+    if($option == 'Fil')
+      $return = ($lang == 'FR') ? 'Fil de discussion' : 'Linear thread';
+    if($option == 'Anonyme')
+      $return = ($lang == 'FR') ? 'Fil de discussion anonyme' : 'Anonymous thread';
+
+    // Classification
+    if($option == 'Standard')
+      $return = ($lang == 'FR') ? 'Sujet standard' : 'Standard topic';
+    if($option == 'Sérieux')
+      $return = ($lang == 'FR') ? 'Sujet sérieux' : 'Serious topic';
+    if($option == 'Débat')
+      $return = ($lang == 'FR') ? 'Débat d\'opinion' : 'Debate';
+    if($option == 'Jeu')
+      $return = ($lang == 'FR') ? 'Jeu de forum' : 'Forum game';
+
+    // Catégorie
+    if($option == 'Aucune')
+      $return = ($lang == 'FR') ? 'Aucune catégorie' : 'Uncategorized';
+    if($option == 'Politique')
+      $return = ($lang == 'FR') ? 'Politique' : 'Political';
+    if($option == 'Informatique')
+      $return = ($lang == 'FR') ? 'Informatique' : 'Computer science';
+    if($option == 'NoBleme')
+      $return = 'NoBleme.com';
+  }
 
   // On renvoie la valeur demandée
   return $return;

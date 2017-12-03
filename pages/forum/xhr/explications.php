@@ -134,6 +134,101 @@ EOD;
 
 else if($lang == 'EN')
 {
+  // Fil de discussion
+  $trad['fil_titre']        = "Linear thread";
+  $trad['fil_soustitre']    = "Ideal for most topics";
+  $trad['fil_desc']         = <<<EOD
+Your typical oldschool linear forum thread, in which replies follow each other chronologically. Allows you to have an easy to follow conversation, in which no reply goes unnoticed.
+EOD;
+  $trad['fil_sujet']        = "Some topic title";
+  $trad['fil_1_pseudo']     = "An user";
+  $trad['fil_1_date']       = "Posted 19/03/05 at 10:00";
+  $trad['fil_1_contenu']    = "Thread's first message";
+  $trad['fil_2_pseudo']     = "Another user";
+  $trad['fil_2_date']       = "Posted le 19/03/05 at 11:00";
+  $trad['fil_2_contenu']    = "Some reply to the first message";
+  $trad['fil_3_pseudo']     = "User #3";
+  $trad['fil_3_date']       = "Posted 19/03/05 at 12:00";
+  $trad['fil_3_contenu']    = "Reply to the reply, etc";
+
+  // Fil de discussion anonyme
+  $trad['anon_titre']       = "Anonymous thread";
+  $trad['anon_soustitre']   = "Ideal for anonymous conversations (it's in the name)";
+  $trad['anon_desc']        = <<<EOD
+As with a linear thread, replies follow each other chronologically. However, all nicknames are hidden, allowing you to have an anonymous conversation in which everyone can participate without fear of being identified.
+EOD;
+  $trad['anon_desc_2']      = <<<EOD
+In order to preserve everyone's anonymity, replies posted in anonymous threads will not increase the forum post count in your <a class="gras" href="{$chemin_xhr}pages/user/user">public profile</a>.
+EOD;
+  $trad['anon_pseudo']      = "Anonymous";
+
+  // Sujet standard
+  $trad['stand_titre']      = "Standard topic";
+  $trad['stand_soustitre']  = "For most conversations";
+  $trad['stand_desc']       = <<<EOD
+Pick this if your topic does not fit any of the other subjects available. In most cases, this is the option you will want to pick.
+EOD;
+
+  // Sujet sérieux
+  $trad['ser_titre']        = "Serious topic";
+  $trad['ser_soustitre']    = "For things you care about";
+  $trad['ser_desc']         = <<<EOD
+You want your topic to be taken seriously, and make it clear that it is not a place for jokes or off topic posts. Situations where you might want to pick this option include talking about serious personal things without fear of it derailing, needing help with an important personal situation, or simply if you want your topic to not stray from its original subject.
+EOD;
+  $trad['ser_desc_admin']   = <<<EOD
+The administrative team will moderate this topic severely, all off topic replies will be deleted without warning.
+EOD;
+
+  // Débat d'opinion
+  $trad['debat_titre']      = "Debate";
+  $trad['debat_soustitre']  = "For constructive conversations";
+  $trad['debat_desc']       = <<<EOD
+You want to debate a topic without the conversation getting derailed, in a context where everyone respects each other's opinions and does not throw personal attacks around at the first disagreement. Pick this option if you want to talk about politics, current events, or anything else that's politically sensitive in order to avoid your thread getting derailed by trolls.
+EOD;
+  $trad['debat_desc_2']     = <<<EOD
+Please note that your freedom of opinion in a debate doesn't mean that ou can break <a class="gras" href="{$chemin_xhr}pages/doc/coc">NoBleme's code of conduct</a>: even if it is properly documented and sourced, racism and other forms of hate will not be tolerated.
+EOD;
+  $trad['debat_desc_adm']   = <<<EOD
+The administrative team will moderate this topic severely. Off topic replies, troll posts, and personal attacks will be deleted without warning.
+EOD;
+
+  // Jeu de forum
+  $trad['jeu_titre']        = "Forum game";
+  $trad['jeu_soustitre']    = "For topics that are not conversations";
+  $trad['jeu_desc']         = <<<EOD
+The topic you are about to open isn't meant to be a discussion. It is either a game that uses the forum as a platform, either a topic made to be deliberately stupid and expecting a lot of non constructive replies.
+EOD;
+  $trad['jeu_desc_2']       = <<<EOD
+Since they do not contribute to the forum's quality, replies posted in forum game threads will not increase the forum post count in your <a class="gras" href="{$chemin_xhr}pages/user/user">public profile</a>.
+EOD;
+
+  // Aucune catégorie
+  $trad['aucune_titre']     = "Uncategorized";
+  $trad['aucune_soustitre'] = "For generic conversations";
+  $trad['aucune_desc']      = <<<EOD
+Pick this if your topic doesn't fit any of the other categories. In most cases, this is the option that you will want to select.
+EOD;
+
+  // Politique
+  $trad['pol_titre']        = "Politics";
+  $trad['pol_soustitre']    = "For politically loaded topics";
+  $trad['pol_desc']         = <<<EOD
+If your topic is about politics and/or current events of a political nature, pick this option so that users who want to avoid that kind of content can filter it out (or so that those who want to discuss this kind of content can do so).
+EOD;
+
+  // Informatique
+  $trad['info_titre']       = "Computer science";
+  $trad['info_soustitre']   = "For talks about coding, sysadmin, networking, etc.";
+  $trad['info_desc']        = <<<EOD
+In order to tag all topics that deal with the world of computer science (software, hardware, coding, sysadmin, networking, etc.), check this box if your planned topic fits that description. Note that this category is not made for video games: if you wish to discuss video games, check the "Uncategorized" box instead.
+EOD;
+
+  // Informatique
+  $trad['nb_titre']         = "NoBleme.com";
+  $trad['nb_soustitre']     = "To talk about NoBleme";
+  $trad['nb_desc']          = <<<EOD
+Pick this option if your topic is about the NoBleme.com website and/or its community.
+EOD;
 }
 
 

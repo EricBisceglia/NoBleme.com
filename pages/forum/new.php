@@ -152,9 +152,7 @@ if(isset($_POST['forum_add_titre']))
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Menu déroulant pour la sélection de langage
-
+// Menu déroulant pour la sélection de la langue
 $temp_lang          = ($lang == 'FR') ? 'Français' : 'French';
 $selected           = ($lang == 'FR') ? ' selected' : '';
 $select_add_langue  = '<option value="FR"'.$selected.'>'.$temp_lang.'</option>';
@@ -214,6 +212,40 @@ EOD;
 
 else if($lang == 'EN')
 {
+  // Header
+  $trad['titre']            = "Forum NoBleme";
+  $trad['soustitre']        = "Open a new discussion topic";
+  $trad['desc']             = <<<EOD
+<p>
+  Before you write the contents of the thread you want to post on the <a class="gras" href="{$chemin}pages/forum/index">NoBleme forum</a>, you will first have to specify what kind of thread it is that you want to open by picking a format, subject, and category from predefined options. Once all three are selected, you will be able to get to the topic writing part. <span class="gras">If you don't know what to pick or want to create a standard forum thread, pick the first option in each of the three categories.</span>
+</p>
+<p>
+  If you are wondering what any of the options do, click on one of them and its illustrated description will appear in the frame to its right. Make sure you choose wisely: <span class="gras">You will not be able to modify those options once your thread has been posted.</span>
+</p>
+EOD;
+
+  // Options de catégorisation du sujet
+  $trad['cat_apparence']    = "Format of your discussion thread";
+  $trad['cat_class']        = "Subject of your thread";
+  $trad['cat_categorie']    = "Category of your thread";
+  $trad['cat_erreur']       = "You must check a box in each of the three sets of options above before you can continue.";
+  $trad['cat_composer']     = "SELECT MY THREAD OPTIONS";
+  $trad['cat_placeholder']  = "Cliquez sur le nom d'une option à gauche et une explication illustrée de son fonctionnement apparaitra dans ce cadre.";
+
+  // Composition du sujet
+  $trad['comp_apparence']   = "Format";
+  $trad['comp_class']       = "Subject";
+  $trad['comp_categorie']   = "Category";
+  $trad['comp_langue']      = "Language of your topic";
+  $trad['comp_prive']       = "Topic visibility (available to the administrative team only)";
+  $trad['comp_prive_pub']   = "Public";
+  $trad['comp_prive_prive'] = "Private (only members of the administrative team will be able to see this topic)";
+  $trad['comp_titre']       = "Topic title (max. 100 characters)";
+  $trad['comp_contenu']     = <<<EOD
+Contents of the first message in the thread (you can format your message with <a class="gras" href="{$chemin}pages/doc/emotes">emotes</a> and <a class="gras" href="{$chemin}pages/doc/bbcodes">BBCodes</a>)
+EOD;
+  $trad['comp_prev']        = "Formatted message preview";
+  $trad['comp_go']          = "OPEN MY DISCUSSION THREAD";
 }
 
 
@@ -251,13 +283,13 @@ else if($lang == 'EN')
 
                 <input id="forum_presentation_fil" name="forum_presentation_fil" type="checkbox" onchange="forum_ouvrir_sujet_categories('apparence', 'forum_presentation_fil');">
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'fil');"><?=forum_option_info('Fil', $lang)?></a>
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'fil');"><?=forum_option_info('Fil', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <input id="forum_presentation_anonyme" name="forum_presentation_anonyme" type="checkbox" onchange="forum_ouvrir_sujet_categories('apparence', 'forum_presentation_anonyme');">
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'anonyme');"><?=forum_option_info('Anonyme', $lang)?></a>
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'anonyme');"><?=forum_option_info('Anonyme', 'complet', $lang)?></a>
                 </div>
                 <br>
 
@@ -267,25 +299,25 @@ else if($lang == 'EN')
 
                 <input id="forum_type_standard" name="forum_type_standard" type="checkbox" onchange="forum_ouvrir_sujet_categories('classification', 'forum_type_standard');">
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'standard');"><?=forum_option_info('Standard', $lang)?></a>
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'standard');"><?=forum_option_info('Standard', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <input id="forum_type_serieux" name="forum_type_serieux" type="checkbox" onchange="forum_ouvrir_sujet_categories('classification', 'forum_type_serieux');">
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'serieux');"><?=forum_option_info('Sérieux', $lang)?></a>
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'serieux');"><?=forum_option_info('Sérieux', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <input id="forum_type_debat" name="forum_type_debat" type="checkbox" onchange="forum_ouvrir_sujet_categories('classification', 'forum_type_debat');">
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'debat');"><?=forum_option_info('Débat', $lang)?></a>
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'debat');"><?=forum_option_info('Débat', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <input id="forum_type_jeu" name="forum_type_jeu" type="checkbox" onchange="forum_ouvrir_sujet_categories('classification', 'forum_type_jeu');">
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'jeu');"><?=forum_option_info('Jeu', $lang)?></a>
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'jeu');"><?=forum_option_info('Jeu', 'complet', $lang)?></a>
                 </div>
                 <br>
 
@@ -295,25 +327,25 @@ else if($lang == 'EN')
 
                 <input id="forum_categorie_aucune" name="forum_categorie_aucune" type="checkbox" onchange="forum_ouvrir_sujet_categories('categorisation', 'forum_categorie_aucune');">
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'aucune');"><?=forum_option_info('Aucune', $lang)?></a>
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'aucune');"><?=forum_option_info('Aucune', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <input id="forum_categorie_politique" name="forum_categorie_politique" type="checkbox" onchange="forum_ouvrir_sujet_categories('categorisation', 'forum_categorie_politique');">
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'politique');"><?=forum_option_info('Politique', $lang)?></a>
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'politique');"><?=forum_option_info('Politique', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <input id="forum_categorie_informatique" name="forum_categorie_informatique" type="checkbox" onchange="forum_ouvrir_sujet_categories('categorisation', 'forum_categorie_informatique');">
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'informatique');"><?=forum_option_info('Informatique', $lang)?></a>
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'informatique');"><?=forum_option_info('Informatique', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <input id="forum_categorie_nobleme" name="forum_categorie_nobleme" type="checkbox" onchange="forum_ouvrir_sujet_categories('categorisation', 'forum_categorie_nobleme');">
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'nobleme');"><?=forum_option_info('NoBleme', $lang)?></a>
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'nobleme');"><?=forum_option_info('NoBleme', 'complet', $lang)?></a>
                 </div>
                 <br>
 
@@ -356,9 +388,9 @@ else if($lang == 'EN')
         <h5><?=$trad['soustitre']?></h5>
 
         <p>
-          <span class="gras"><?=$trad['comp_apparence']?></span>: <?=forum_option_info($new_apparence, $lang)?><br>
-          <span class="gras"><?=$trad['comp_class']?></span>: <?=forum_option_info($new_classification, $lang)?><br>
-          <span class="gras"><?=$trad['comp_categorie']?></span>: <?=forum_option_info($new_categorie, $lang)?><br>
+          <span class="gras"><?=$trad['comp_apparence']?></span>: <?=forum_option_info($new_apparence, 'complet', $lang)?><br>
+          <span class="gras"><?=$trad['comp_class']?></span>: <?=forum_option_info($new_classification, 'complet', $lang)?><br>
+          <span class="gras"><?=$trad['comp_categorie']?></span>: <?=forum_option_info($new_categorie, 'complet', $lang)?><br>
         </p>
 
         <br>
@@ -395,13 +427,15 @@ else if($lang == 'EN')
             <textarea id="forum_add_contenu" name="forum_add_contenu" class="indiv forum_nouveau_sujet_composition" onkeyup="forum_ouvrir_sujet_previsualisation('<?=$chemin?>');"></textarea><br>
             <br>
 
-            <div id="forum_add_previsualisation_container">
+            <div id="forum_add_previsualisation_container" class="hidden">
               <label><?=$trad['comp_prev']?></label>
               <div class="vscrollbar forum_nouveau_sujet_previsualisation" id="forum_add_previsualisation">
                 &nbsp;
               </div>
               <br>
             </div>
+
+            <br>
 
             <button type="button" onclick="forum_ouvrir_sujet_envoyer();"><?=$trad['comp_go']?></button>
 

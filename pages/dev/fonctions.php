@@ -884,18 +884,18 @@ $js  = array('toggle', 'highlight', 'dev/reference');
           <tbody>
             <tr>
               <td class="align_center">
-                forum_option_info('Anonyme', 'FR');
+                forum_option_info('Anonyme', 'complet', 'FR');
               </td>
               <td class="gras align_center">
-                <?=forum_option_info('Anonyme', 'FR');?>
+                <?=forum_option_info('Anonyme', 'complet', 'FR');?>
               </td>
             </tr>
             <tr>
               <td class="align_center">
-                forum_option_info('Sérieux', 'EN');
+                forum_option_info('Sérieux', 'court', 'EN');
               </td>
               <td class="gras align_center">
-                <?=forum_option_info('Sérieux', 'EN');?>
+                <?=forum_option_info('Sérieux', 'court', 'EN');?>
               </td>
             </tr>
           </tbody>
