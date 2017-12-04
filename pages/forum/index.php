@@ -73,7 +73,13 @@ EOD;
         <br>
 
         <div class="align_center">
-          <img src="<?=$chemin?>img/divers/construction.png" alt="Under construction">
+          <img src="http://textfiles.com/underconstruction/elainemarieslittlelanternGODSWORKIN-PROGRESS-Construction.gif" alt="Under construction"><br>
+          <img src="http://textfiles.com/underconstruction/CoColosseumPressbox6848picsconstruction.gif" alt="Under construction"><br>
+          <img src="http://textfiles.com/underconstruction/HoHollywoodHills5836under_construction.gif" alt="Under construction">
+          <img src="http://textfiles.com/underconstruction/Wellesley5405construction.gif" alt="Under construction">
+          <img src="http://textfiles.com/underconstruction/HeHeartlandLane5025imagesconstruction.gif" alt="Under construction"><br>
+          <img src="http://textfiles.com/underconstruction/Nova2773construction.gif" alt="Under construction">
+          <img src="http://textfiles.com/underconstruction/ajaj0077lines_bulletsconstruction.gif" alt="Under construction">
         </div>
 
       </div>
