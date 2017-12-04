@@ -24,6 +24,9 @@ $langage_page = array('FR','EN');
 $page_titre = ($lang == 'FR') ? "Forum" : "Forum";
 $page_desc  = "Liste des sujets actifs sur le forum NoBleme";
 
+// CSS
+$css = array('forum');
+
 
 
 
@@ -32,6 +35,9 @@ $page_desc  = "Liste des sujets actifs sur le forum NoBleme";
 /*                                                        PRÉPARATION DES DONNÉES                                                        */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
+
+// On récupère le statut de modérateur (ou non) de l'user
+$forum_moderateur = getmod('forum');
 
 // On va chercher la liste des sujets
 $qsujets = query("  SELECT    forum_sujet.id                        AS 's_id'         ,
@@ -219,6 +225,15 @@ EOD;
                 <span class="gras negatif texte_blanc spaced"><?=$trad['liste_ferme']?></span>
                 <?php } if($sujet_epingle[$i]) { ?>
                 <span class="gras positif texte_blanc spaced"><?=$trad['liste_epingle']?></span>
+                <?php } ?>
+
+                <?php if($forum_moderateur) { ?>
+                <a href="<?=$chemin?>pages/forum/sujet_modifier?id=<?=$sujet_id[$i]?>">
+                  <img class="pointeur forum_liste_actions forum_liste_actions_premier" src="<?=$chemin?>img/icones/modifier.png" alt="M" height="16">
+                </a>
+                <a href="<?=$chemin?>pages/forum/sujet_supprimer?id=<?=$sujet_id[$i]?>">
+                  <img class="pointeur forum_liste_actions" src="<?=$chemin?>img/icones/supprimer.png" alt="X" height="16">
+                </a>
                 <?php } ?>
 
               </td>

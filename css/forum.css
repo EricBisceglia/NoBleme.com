@@ -35,3 +35,7 @@ div.forum_nouveau_sujet_valignhack_2  { display: table-cell; vertical-align: mid
 
 textarea.forum_nouveau_sujet_composition  { height: 250px;                                               }
 div.forum_nouveau_sujet_previsualisation  { border: 1px solid #CACACA; padding: 10px; max-height: 300px; }
+
+/*********************************************************** LISTE DES SUJETS ************************************************************/
+img.forum_liste_actions_premier { margin-left: 4px;    }
+img.forum_liste_actions         { margin-bottom: -2px; }

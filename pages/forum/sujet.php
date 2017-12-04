@@ -205,6 +205,38 @@ if($sujet_apparence == 'Fil' || $sujet_apparence == 'Anonyme')
     $reponse_contenu[$nreponses]    = bbcode(predata($dreponses['r_contenu'], 1));
     $reponse_peut_edit[$nreponses]  = ((time() - $dreponses['r_creation']) < 2592000) ? 1 : 0;
   }
+
+  // On vérifie si on a une citation de remplie
+  if(isset($_GET['quote']))
+  {
+    // Si oui, on assainit le postdata
+    $quote_id = postdata($_GET['quote'], 'int', 0);
+
+    // On va chercher le message correspondant
+    $qquote = mysqli_fetch_array(query("  SELECT    membres.pseudonyme    AS 'm_pseudo' ,
+                                                    forum_message.contenu AS 'f_contenu'
+                                          FROM      forum_message
+                                          LEFT JOIN membres ON forum_message.FKmembres = membres.id
+                                          WHERE     forum_message.id            = '$quote_id'
+                                          AND       forum_message.FKforum_sujet = '$sujet_id' "));
+
+    // Si il existe, on prépare la citation
+    if($qquote['f_contenu'] !== NULL)
+    {
+      $reponse_quote_raw  = "[quote=".$qquote['m_pseudo']."]".$qquote['f_contenu']."[/quote]".PHP_EOL;
+      $reponse_quote      = bbcode("[quote=".predata($qquote['m_pseudo'])."]".predata($qquote['f_contenu'], 1)."[/quote]");
+      $reponse_hidden     = "";
+      $onload             = "var textarea = document.getElementById('forum_ecrire_reponse'); textarea.focus(); var temp = textarea.value; textarea.value = ''; textarea.value = temp;";
+    }
+  }
+
+  // Sinon, on cache la section
+  if(!isset($reponse_quote))
+  {
+    $reponse_quote_raw  = "";
+    $reponse_quote      = "&nbsp;";
+    $reponse_hidden     = ' class="hidden"';
+  }
 }
 
 
@@ -333,10 +365,10 @@ EOD;
                   <a class="gras forum_sujet_entete_recent" href="#<?=$reponse_id[$nreponses-1]?>"><?=$trad['gotolast']?></a><br>
 
                   <?php if($moderateur_forum) { ?>
-                  <a href="<?=$chemin?>pages/forum/sujet_modifier">
+                  <a href="<?=$chemin?>pages/forum/sujet_modifier?id=<?=$sujet_id?>">
                     <img class="pointeur forum_sujet_entete_actions" src="<?=$chemin?>img/icones/modifier.png" alt="M" height="25">
                   </a>
-                  <a href="<?=$chemin?>pages/forum/sujet_supprimer">
+                  <a href="<?=$chemin?>pages/forum/sujet_supprimer?id=<?=$sujet_id?>">
                     <img class="pointeur forum_sujet_entete_actions" src="<?=$chemin?>img/icones/supprimer.png" alt="X" height="25">
                   </a>
                   <?php } ?>
@@ -439,7 +471,9 @@ EOD;
                 <?php } ?>
 
                 <?php if(loggedin()) { ?>
-                <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/quote.png" alt="Q" height="18">
+                <a href="<?=$chemin?>pages/forum/sujet?id=<?=$sujet_id?>&amp;quote=<?=$reponse_id[$i]?>#sujet_repondre">
+                  <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/quote.png" alt="Q" height="18" title="Citer le message">
+                </a>
                 <?php } ?>
                 <?php if($moderateur_forum) { ?>
                 <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/modifier.png" alt="M" height="18">
@@ -472,7 +506,7 @@ EOD;
 
         <?php } ?>
 
-        <br>
+        <br id="sujet_repondre">
 
         <table class="forum_sujet_message">
           <tbody>
@@ -486,16 +520,16 @@ EOD;
                   <fieldset>
 
                     <label for="forum_ecrire_reponse" id="forum_ecrire_reponse_label"><?=$trad['reply_label']?></label>
-                    <textarea id="forum_ecrire_reponse" name="forum_ecrire_reponse" class="indiv forum_ecrire_reponse_composition" onkeyup="forum_ecrire_reponse_previsualisation('<?=$chemin?>');"></textarea><br>
+                    <textarea id="forum_ecrire_reponse" name="forum_ecrire_reponse" class="indiv forum_ecrire_reponse_composition" onkeyup="forum_ecrire_reponse_previsualisation('<?=$chemin?>');"><?=$reponse_quote_raw?></textarea><br>
                     <br>
 
                     <button type="button" onclick="forum_ecrire_reponse_envoyer();"><?=$trad['reply_go']?></button>
 
-                    <div id="forum_ecrire_reponse_container" class="hidden">
+                    <div id="forum_ecrire_reponse_container"<?=$reponse_hidden?>>
                       <br>
                       <label><?=$trad['reply_prev']?></label>
                       <div class="vscrollbar forum_ecrire_reponse_previsualisation" id="forum_ecrire_reponse_previsualisation">
-                        &nbsp;
+                        <?=$reponse_quote?>
                       </div>
                       <br>
                     </div>

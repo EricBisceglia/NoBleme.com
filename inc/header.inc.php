@@ -397,7 +397,9 @@ function header_class($element, $actuel, $menu)
   </head>
 
   <?php if(isset($cette_page_est_404)) { ?>
-<body id="body" onLoad="ecrire_404();">
+<body id="body" onload="ecrire_404();">
+  <?php } else if(isset($onload)) { ?>
+<body id="body" onload="<?=$onload?>">
   <?php } else { ?>
 <body id="body">
   <?php } ?>
