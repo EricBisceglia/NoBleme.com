@@ -53,6 +53,106 @@ if($qchecksujet['id'] === NULL)
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Modification du sujet
+
+if(isset($_POST['sujet_edit_go']))
+{
+  // On va chercher des infos sur l'IRL pour compléter le diff
+  $qchecksujet = mysqli_fetch_array(query(" SELECT  forum_sujet.categorie ,
+                                                    forum_sujet.langage   ,
+                                                    forum_sujet.titre     ,
+                                                    forum_sujet.public    ,
+                                                    forum_sujet.ouvert    ,
+                                                    forum_sujet.epingle
+                                            FROM    forum_sujet
+                                            WHERE   forum_sujet.id = '$sujet_edit_id' "));
+
+  // On prépare les infos pour le diff
+  $edit_avant_titre     = postdata($qchecksujet['titre'], 'string', '');
+  $edit_avant_categorie = postdata($qchecksujet['categorie'], 'string', 'Aucune');
+  $edit_avant_langue    = postdata($qchecksujet['langage'], 'string', 'FR');
+  $edit_avant_public    = $qchecksujet['public'];
+  $edit_avant_ouvert    = $qchecksujet['ouvert'];
+  $edit_avant_epingle   = $qchecksujet['epingle'];
+  $edit_titre_raw       = $qchecksujet['titre'];
+
+  // Assainissement du postdata
+  $edit_titre     = postdata_vide('sujet_edit_titre', 'string', '');
+  $edit_categorie = postdata_vide('sujet_edit_categorie', 'string', 'Aucune');
+  $edit_langue    = postdata_vide('sujet_edit_langue', 'string', 'FR');
+  $edit_public    = (isset($_POST['sujet_edit_prive']) && $_POST['sujet_edit_prive']) ? 0 : 1;
+  $edit_ouvert    = (isset($_POST['sujet_edit_ferme']) && $_POST['sujet_edit_ferme']) ? 0 : 1;
+  $edit_epingle   = (isset($_POST['sujet_edit_epingle']) && $_POST['sujet_edit_epingle']) ? 1 : 0;
+
+  // Mise à jour des infos
+  query(" UPDATE  forum_sujet
+          SET     forum_sujet.categorie = '$edit_categorie' ,
+                  forum_sujet.langage   = '$edit_langue'    ,
+                  forum_sujet.titre     = '$edit_titre'     ,
+                  forum_sujet.public    = '$edit_public'    ,
+                  forum_sujet.ouvert    = '$edit_ouvert'    ,
+                  forum_sujet.epingle   = '$edit_epingle'
+          WHERE   forum_sujet.id        = '$sujet_edit_id' ");
+
+  // Activité récente
+  $timestamp    = time();
+  $edit_pseudo  = getpseudo();
+  query(" INSERT INTO activite
+          SET         activite.timestamp      = '$timestamp'      ,
+                      activite.log_moderation = 1                 ,
+                      activite.pseudonyme     = '$edit_pseudo'    ,
+                      activite.action_type    = 'forum_edit'      ,
+                      activite.action_id      = '$sujet_edit_id'  ,
+                      activite.action_titre   = '$edit_titre'     ");
+
+  // Diff
+  $activite_id = mysqli_insert_id($db);
+  if($edit_avant_titre != $edit_titre)
+    query(" INSERT INTO activite_diff
+            SET         FKactivite  = '$activite_id'      ,
+                        titre_diff  = 'Titre'             ,
+                        diff_avant  = '$edit_avant_titre' ,
+                        diff_apres  = '$edit_titre'       ");
+  if($edit_avant_categorie != $edit_categorie)
+    query(" INSERT INTO activite_diff
+            SET         FKactivite  = '$activite_id'          ,
+                        titre_diff  = 'Catégorie'             ,
+                        diff_avant  = '$edit_avant_categorie' ,
+                        diff_apres  = '$edit_categorie'       ");
+  if($edit_avant_langue != $edit_langue)
+    query(" INSERT INTO activite_diff
+            SET         FKactivite  = '$activite_id'        ,
+                        titre_diff  = 'Langue'              ,
+                        diff_avant  = '$edit_avant_langue'  ,
+                        diff_apres  = '$edit_langue'        ");
+  if($edit_avant_public != $edit_public)
+    query(" INSERT INTO activite_diff
+            SET         FKactivite  = '$activite_id'        ,
+                        titre_diff  = 'Public'              ,
+                        diff_avant  = '$edit_avant_public'  ");
+  if($edit_avant_ouvert != $edit_ouvert)
+    query(" INSERT INTO activite_diff
+            SET         FKactivite  = '$activite_id'        ,
+                        titre_diff  = 'Ouvert'              ,
+                        diff_avant  = '$edit_avant_ouvert'  ");
+  if($edit_avant_epingle != $edit_epingle)
+    query(" INSERT INTO activite_diff
+            SET         FKactivite  = '$activite_id'        ,
+                        titre_diff  = 'Épinglé'             ,
+                        diff_avant  = '$edit_avant_epingle' ");
+
+  // IRCbot
+  ircbot($chemin, getpseudo()." a modifié le sujet du forum ".$edit_titre_raw.". Diff des changements : ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
+
+  // Redirection
+  exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_edit_id));
+}
+
+
+
+
+
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                        PRÉPARATION DES DONNÉES                                                        */
@@ -60,11 +160,11 @@ if($qchecksujet['id'] === NULL)
 /*****************************************************************************************************************************************/
 
 // On va chercher les infos du sujet
-$qsujet = mysqli_fetch_array(query("  SELECT  forum_sujet.categorie       ,
-                                              forum_sujet.langage         ,
-                                              forum_sujet.titre           ,
-                                              forum_sujet.public          ,
-                                              forum_sujet.ouvert          ,
+$qsujet = mysqli_fetch_array(query("  SELECT  forum_sujet.categorie ,
+                                              forum_sujet.langage   ,
+                                              forum_sujet.titre     ,
+                                              forum_sujet.public    ,
+                                              forum_sujet.ouvert    ,
                                               forum_sujet.epingle
                                       FROM    forum_sujet
                                       WHERE   forum_sujet.id = '$sujet_edit_id' "));
@@ -167,7 +267,7 @@ else if($lang == 'EN')
           <fieldset>
 
             <label for="sujet_edit_titre"><?=$trad['edit_titre']?></label>
-            <input id="sujet_edit_titre" name="sujet_edit_titre" class="indiv" type="text" value="<?=$sujet_titre?>"><br>
+            <input id="sujet_edit_titre" name="sujet_edit_titre" class="indiv" type="text" value="<?=$sujet_titre?>" maxlength="100"><br>
             <br>
 
             <label for="sujet_edit_categorie"><?=$trad['edit_categorie']?></label>

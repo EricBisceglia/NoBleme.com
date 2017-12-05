@@ -541,3 +541,28 @@ function menu_css($menu_postdata, $menu_objet, $menu_type)
       return '';
   }
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Purge le contenu de la table activite_diff qui n'est lié à aucune entrée dans la table activite
+//
+// Utilisation: purger_diff_orphelins()
+
+function purger_diff_orphelins()
+{
+  // On va chercher les orphelins
+  $qorphelins = query(" SELECT    activite_diff.id AS 'd_id'
+                        FROM      activite_diff
+                        LEFT JOIN activite ON activite_diff.FKactivite = activite.id
+                        WHERE     activite.id IS NULL ");
+
+  // Et on les asphyxie discrètement
+  while($dorphelins = mysqli_fetch_array($qorphelins))
+  {
+    $id_orphelin = $dorphelins['d_id'];
+    query(" DELETE FROM activite_diff
+            WHERE       activite_diff.id = '$id_orphelin' ");
+  }
+}

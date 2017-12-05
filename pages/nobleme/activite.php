@@ -328,6 +328,23 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
     $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' replied to the private forum topic '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
   }
 
+  //***************************************************************************************************************************************
+  // Modification d'un sujet
+
+  else if($dactrec['action_type'] === 'forum_edit')
+  {
+    $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a modifié le sujet du forum '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+  }
+
+  //***************************************************************************************************************************************
+  // Suppression d'un sujet
+
+  else if($dactrec['action_type'] === 'forum_delete')
+  {
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a supprimé le sujet du forum '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+  }
+
 
 
 

@@ -97,11 +97,15 @@ $page_nom   = ($qverifsujet['s_public']) ? 'Forum : '.predata(tronquer_chaine($q
 $page_url   = ($qverifsujet['s_public']) ? 'pages/forum/sujet?id='.$sujet_id : 'pages/forum/index';
 $shorturl  .= $sujet_id;
 $page_titre = predata($qverifsujet['s_titre']);
-$page_desc  = "Forum NoBleme : ".$qverifsujet['s_titre'];
+$page_desc  = "".$qverifsujet['s_titre']." - Sujet de discussion du forum NoBleme";
 
 // Ça nous serait également utile de savoir si on a des permissions sur le forum ou non
 $moderateur_forum = getmod('forum');
 $administrateur_forum = getadmin();
+
+// Si le sujet est privé et qu'on a pas les droits, on sort
+if(!$sujet_public && !$moderateur_forum)
+  exit(header("Location: ".$chemin."pages/forum/index"));
 
 
 
@@ -111,6 +115,13 @@ $administrateur_forum = getadmin();
 
 if(isset($_POST['forum_ecrire_reponse']))
 {
+  // Si le sujet est fermé, on se fait rejeter
+  $qcheckprive = mysqli_fetch_array(query(" SELECT  forum_sujet.ouvert
+                                            FROM    forum_sujet
+                                            WHERE   forum_sujet.id = '$sujet_id' "));
+  if(!$qcheckprive['ouvert'])
+    exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id."#sujet_repondre"));
+
   // Assainissement du postdata
   $add_reponse  = postdata_vide('forum_ecrire_reponse', 'string', '');
 
@@ -290,6 +301,7 @@ if($lang == 'FR')
 EOD;
   $trad['reply_prev']   = "Prévisualisation du message";
   $trad['reply_go']     = "ENVOYER MA RÉPONSE";
+  $trad['reply_ferme']  = "CE SUJET A ÉTÉ FERMÉ PAR UN MEMBRE DE L'ÉQUIPE ADMINISTRATIVE<br>IL N'EST PAS POSSIBLE D'Y POSTER DE RÉPONSE";
   $trad['reply_guest']  = <<<EOD
 VOUS DEVEZ ÊTRE CONNECTÉ À VOTRE COMPTE POUR POSTER SUR LE FORUM NOBLEME<br>
 <a class="texte_nobleme_clair" href="{$chemin}pages/user/login">CLIQUEZ ICI</a> POUR VOUS CONNECTER À VOTRE COMPTE, OU <a class="texte_nobleme_clair" href="{$chemin}pages/user/login">CLIQUEZ ICI</a> POUR VOUS INSCRIRE SUR NOBLEME
@@ -327,8 +339,9 @@ else if($lang == 'EN')
   $trad['reply_label']  = <<<EOD
 Write a reply to the topic (you can format your message with <a class="gras" href="{$chemin}pages/doc/emotes">emotes</a> and <a class="gras" href="{$chemin}pages/doc/bbcodes">BBCodes</a>)
 EOD;
-  $trad['reply_go']     = "POST MY REPLY";
   $trad['reply_prev']   = "Formatted message preview";
+  $trad['reply_go']     = "POST MY REPLY";
+  $trad['reply_ferme']  = "THIS TOPIC HAS BEEN CLOSED BY A MEMBER OF THE ADMINISTRATIVE TEAM<br>IT IS NOT POSSIBLE TO POST A REPLY TO THIS TOPIC";
   $trad['reply_guest']  = <<<EOD
 YOU MUST BE LOGGED INTO YOUR ACCOUNT BEFORE YOU CAN POST MESSAGES ON NOBLEME'S FORUM<br>
 <a class="texte_nobleme_clair" href="{$chemin}pages/user/login">CLICK HERE</a> TO LOG INTO YOUR ACCOUNT, OR <a class="texte_nobleme_clair" href="{$chemin}pages/user/login">CLICK HERE</a> TO REGISTER AN ACCOUNT ON NOBLEME
@@ -512,7 +525,7 @@ EOD;
           <tbody>
             <tr class="forum_sujet_message">
 
-              <?php if(loggedin()) { ?>
+              <?php if(loggedin() && $sujet_ouvert) { ?>
 
               <td class="forum_sujet_message_contenu">
 
@@ -537,6 +550,12 @@ EOD;
                   </fieldset>
                 </form>
 
+              </td>
+
+              <?php } else if(loggedin()) { ?>
+
+              <td class="nobleme_fonce texte_blanc align_center gras">
+                <?=$trad['reply_ferme']?>
               </td>
 
               <?php } else { ?>

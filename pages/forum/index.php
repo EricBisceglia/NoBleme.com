@@ -39,6 +39,9 @@ $css = array('forum');
 // On récupère le statut de modérateur (ou non) de l'user
 $forum_moderateur = getmod('forum');
 
+// Selon si l'user est modérateur ou non, on affiche ou non les sujets privés
+$condition_prive = ($forum_moderateur) ? "" : " WHERE forum_sujet.public = 1 ";
+
 // On va chercher la liste des sujets
 $qsujets = query("  SELECT    forum_sujet.id                        AS 's_id'         ,
                               forum_sujet.timestamp_creation        AS 's_creation'   ,
@@ -65,6 +68,7 @@ $qsujets = query("  SELECT    forum_sujet.id                        AS 's_id'   
                     FROM      forum_sujet
                     LEFT JOIN membres AS membres_createur ON forum_sujet.FKmembres_createur         = membres_createur.id
                     LEFT JOIN membres AS membres_dernier  ON forum_sujet.FKmembres_dernier_message  = membres_dernier.id
+                              $condition_prive
                     ORDER BY  forum_sujet.epingle                   DESC  ,
                               forum_sujet.timestamp_dernier_message DESC  ");
 
