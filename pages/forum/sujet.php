@@ -169,6 +169,171 @@ if(isset($_POST['forum_ecrire_reponse']))
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Supprimer une réponse au sujet
+
+if(isset($_POST['forum_supprimer_message_go']))
+{
+  // Seuls les utilisateurs peuvent faire ceci
+  useronly();
+
+  // On commence par récupérer et assainir l'id du message
+  $delete_id = postdata_vide('forum_message_id', 'int', 0);
+
+  // On récupère les justifications sur la suppression, si nécessaire
+  $delete_raison  = (isset($_POST['forum_message_justification_'.$delete_id])) ? $_POST['forum_message_justification_'.$delete_id] : '';
+  $delete_envoyer = postdata_vide('forum_message_envoyer_'.$delete_id, 'int', 1);
+
+  // On va chercher si le message existe (et on en profite pour récupérer son contenu)
+  $qmessage = mysqli_fetch_array(query("  SELECT  forum_message.contenu   ,
+                                                  forum_message.FKmembres ,
+                                                  forum_message.FKforum_sujet
+                                          FROM    forum_message
+                                          WHERE   forum_message.id = '$delete_id'" ));
+
+  // S'il existe pas, on dégage
+  if($qmessage['contenu'] === NULL)
+    exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id));
+
+  // On regarde si c'est une modération (et si oui, on rejette si les droits ne sont pas bons)
+  if($qmessage['FKmembres'] != $_SESSION['user'])
+  {
+    if(!getmod('forum'))
+      exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id));
+    else
+      $action_sysop = 1;
+  }
+
+  // On a besoin d'infos sur le sujet aussi
+  $delete_sujet = $qmessage['FKforum_sujet'];
+  $qsujet = mysqli_fetch_array(query("  SELECT  forum_sujet.public  ,
+                                                forum_sujet.langage ,
+                                                forum_sujet.titre
+                                        FROM    forum_sujet
+                                        WHERE   forum_sujet.id = '$delete_sujet' "));
+
+  // Si le sujet est privé et que l'user n'a pas les droits, on dégage
+  if(!$qsujet['public'])
+  {
+    if(!getmod('forum'))
+      exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id));
+  }
+
+  // On supprime le message
+  query(" DELETE FROM forum_message
+          WHERE       forum_message.id = '$delete_id'" );
+
+  // On supprime l'activité récente et les logs de modération liés à ce message
+  query(" DELETE FROM activite
+          WHERE     ( activite.action_type  LIKE  'forum_new_message'
+          OR          activite.action_type  LIKE  'forum_edit_message' )
+          AND         activite.action_id    =     '$delete_id' ");
+
+  // On nettoie les potentiels diffs orphelins
+  purger_diff_orphelins();
+
+  // On recalcule le postcount de l'auteur du message
+  forum_recompter_messages_membre($qmessage['FKmembres']);
+
+  // Activité récente
+  $timestamp            = time();
+  $delete_mod           = postdata(getpseudo());
+  $delete_auteur        = postdata(getpseudo($qmessage['FKmembres']));
+  $delete_justification = ($delete_raison) ? " , activite.justification = '".postdata($delete_raison, 'string', '')."' " : '';
+  query(" INSERT INTO activite
+          SET         activite.timestamp      = '$timestamp'            ,
+                      activite.log_moderation = 1                       ,
+                      activite.pseudonyme     = '$delete_mod'           ,
+                      activite.action_type    = 'forum_delete_message'  ,
+                      activite.action_id      = '$delete_sujet'         ,
+                      activite.action_titre   = '$delete_auteur'
+                      $delete_justification                             ");
+
+  // Diff
+  $activite_id    = mysqli_insert_id($db);
+  $delete_titre   = postdata($qsujet['titre']);
+  $delete_message = postdata($qmessage['contenu']);
+  query(" INSERT INTO activite_diff
+          SET         FKactivite  = '$activite_id'  ,
+                      titre_diff  = 'Sujet'         ,
+                      diff_avant  = '$delete_titre' ");
+  query(" INSERT INTO activite_diff
+          SET         FKactivite  = '$activite_id'    ,
+                      titre_diff  = 'Message'         ,
+                      diff_avant  = '$delete_message' ");
+
+  // IRCbot
+  $delete_sujet_raw = $qsujet['titre'];
+  if($delete_mod == $delete_auteur)
+    ircbot($chemin, getpseudo()." a supprimé un de ses messages dans le sujet ".$delete_sujet_raw.". Le contenu du message est archivé ici : ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
+  else
+  {
+    ircbot($chemin, getpseudo()." a supprimé un message de ".getpseudo($qmessage['FKmembres'])." dans le sujet ".$delete_sujet_raw.". Le contenu du message est archivé ici : ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
+    if($delete_raison)
+      ircbot($chemin, "Justification de la suppression du message : ".$delete_raison, "#sysop");
+  }
+
+  // Message privé
+  if(getmod('forum') && $delete_envoyer)
+  {
+    // On prépare le contenu du message
+    $pm_lang            = $qsujet['langage'];
+    $delete_message_raw = $qmessage['contenu'];
+    $pm_titre           = ($pm_lang == 'FR') ? "Message supprimé sur le forum" : "Message deleted on the forum";
+
+    // On prépare la justification si elle est remplie
+    if($delete_raison)
+    {
+      if($pm_lang == 'FR')
+        $delete_justification = <<<EOD
+
+La raison de la suppression est : [b]{$delete_raison}[/b]
+
+EOD;
+      else
+        $delete_justification = <<<EOD
+
+The reason for deletion is: [b]{$delete_raison}[/b]
+
+EOD;
+    }
+    else
+      $delete_justification = "";
+
+    // On prépare le message en français
+    if($pm_lang == 'FR')
+      $delete_pm = <<<EOD
+[b]Une réponse que vous avez postée sur le forum a été supprimé[/b]
+
+Le message supprimé était dans le sujet [url={$chemin}pages/forum/sujet?id={$delete_sujet}]{$delete_sujet_raw}[/url]
+$delete_justification
+Le contenu de votre message était :
+
+[quote]{$delete_message_raw}[/quote]
+EOD;
+    // Et en anglais
+    else
+      $delete_pm = <<<EOD
+[b]A reply you posted on the forum has been deleted[/b]
+
+The deleted message was in the thread [url={$chemin}pages/forum/sujet?id={$delete_sujet}]{$delete_sujet_raw}[/url]
+$delete_justification
+The contents of your message were:
+
+[quote]{$delete_message_raw}[/quote]
+EOD;
+
+    // Puis on envoie le message
+    envoyer_notif($qmessage['FKmembres'], $pm_titre, postdata($delete_pm));
+  }
+
+  // Redirection vers le début du sujet
+  exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id));
+}
+
+
+
+
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                        PRÉPARATION DES DONNÉES                                                        */
@@ -293,6 +458,7 @@ if($lang == 'FR')
   $trad['mess_anon']    = "Anonyme";
   $trad['mess_edit']    = "Modifier mon message";
   $trad['mess_supp']    = "Supprimer mon message";
+  $trad['mess_supp_0']  = "Supprimer mon sujet";
   $trad['mess_nocando'] = "Vous ne pouvez pas modifier ou supprimer un message vieux de plus d'un mois";
 
   // Répondre
@@ -333,6 +499,7 @@ else if($lang == 'EN')
   $trad['mess_anon']    = "Anonymous";
   $trad['mess_edit']    = "Edit my post";
   $trad['mess_supp']    = "Delete my post";
+  $trad['mess_supp_0']  = "Delete my thread";
   $trad['mess_nocando'] = "You can not edit or delete your messages if they are older than a month";
 
   // Répondre
@@ -453,7 +620,7 @@ EOD;
         <br id="<?=$reponse_id[$i]?>">
 
         <table class="forum_sujet_message">
-          <tbody>
+          <tbody id="message_<?=$reponse_id[$i]?>">
             <tr class="forum_sujet_message">
 
               <td class="align_center valign_top nowrap forum_sujet_message_gauche">
@@ -489,9 +656,9 @@ EOD;
                 </a>
                 <?php } ?>
                 <?php if($moderateur_forum) { ?>
-                <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/modifier.png" alt="M" height="18">
+                <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/modifier.png" alt="M" height="18" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'edit')">
                 <?php if($i) { ?>
-                <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/supprimer.png" alt="X" height="18">
+                <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/supprimer.png" alt="X" height="18" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'delete')">
                 <?php } ?>
                 <?php } ?>
 
@@ -499,10 +666,16 @@ EOD;
             </tr>
 
             <?php if(loggedin() && $reponse_auteur_id[$i] == $_SESSION['user']) { ?>
-            <?php if($reponse_peut_edit[$i]) { ?>
+            <?php if($reponse_peut_edit[$i] && !$i) { ?>
             <tr>
               <td class="forum_sujet_message_actions">
-                <a class="pointeur"><?=$trad['mess_edit']?></a> - <a class="pointeur"><?=$trad['mess_supp']?></a>
+                <a class="pointeur" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'edit')"><?=$trad['mess_edit']?></a> - <a class="pointeur" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'delete_thread')"><?=$trad['mess_supp_0']?></a>
+              </td>
+            </tr>
+            <?php } else if ($reponse_peut_edit[$i]) { ?>
+            <tr>
+              <td class="forum_sujet_message_actions">
+                <a class="pointeur" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'edit')"><?=$trad['mess_edit']?></a> - <a class="pointeur" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'delete')"><?=$trad['mess_supp']?></a>
               </td>
             </tr>
             <?php } else { ?>

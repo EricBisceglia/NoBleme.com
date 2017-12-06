@@ -6,15 +6,24 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Prévisualise en direct le contenu d'une réponse pendant qu'on l'écrit
-// chemin est le chemin jusqu'à la racine du site
+// chemin             est le chemin jusqu'à la racine du site
+// id     (optionnel) spécifie l'id du message prévisualisé
 
-function forum_ecrire_reponse_previsualisation(chemin)
+function forum_ecrire_reponse_previsualisation(chemin, id)
 {
-  // On affiche l'encadré de preview au cas où il serait encore masqué
-  document.getElementById('forum_ecrire_reponse_container').style.display = 'block';
+  if(typeof(id) === 'undefined')
+  {
+    // On affiche l'encadré de preview au cas où il serait encore masqué
+    document.getElementById('forum_ecrire_reponse_container').style.display = 'block';
 
-  // Et on génère la prévisualisation en XHR
-  dynamique(chemin, './xhr/previsualiser_message.php', 'forum_ecrire_reponse_previsualisation', 'message='+dynamique_prepare('forum_ecrire_reponse'), 1);
+    // Et on génère la prévisualisation en XHR
+    dynamique(chemin, './xhr/previsualiser_message.php', 'forum_ecrire_reponse_previsualisation', 'message='+dynamique_prepare('forum_ecrire_reponse'), 1);
+  }
+  else
+  {
+    // On se contente d'envoyer le xhr
+    dynamique(chemin, './xhr/previsualiser_message.php', 'forum_modifier_message_previsualisation_'+id, 'message='+dynamique_prepare('forum_modifier_message_'+id), 1);
+  }
 }
 
 
@@ -38,4 +47,24 @@ function forum_ecrire_reponse_envoyer()
 
   // Sinon, on envoie le formulaire
   document.getElementById("forum_poster_reponse").submit();
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Ouvre le formulaire de modification ou suppression d'un message
+// chemin est le chemin jusqu'à la racine du site
+// id     est l'id du message à modifier/supprimer
+// action est l'action à effectuer
+
+function forum_modifier_message(chemin, id, action)
+{
+  // On prépare le postdata
+  postdata  = 'chemin='   + encodeURIComponent(chemin);
+  postdata += '&action='  + encodeURIComponent(action);
+  postdata += '&id='      + encodeURIComponent(id);
+
+  // On envoie le xhr
+  dynamique(chemin, './xhr/modifier_message.php', 'message_' + id, postdata, 1);
 }

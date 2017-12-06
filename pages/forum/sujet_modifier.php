@@ -282,11 +282,11 @@ else if($lang == 'EN')
             </select><br>
             <br>
 
-            <input id="sujet_edit_prive" name="sujet_edit_prive" type="checkbox"<?=$sujet_public?>>
-            <label class="label-inline" for="sujet_edit_prive"><span class="texte_blanc negatif spaced gras"><?=$trad['edit_prive']?></span><?=$trad['edit_prive_desc']?></label><br>
-
             <input id="sujet_edit_ferme" name="sujet_edit_ferme" type="checkbox"<?=$sujet_ouvert?>>
-            <label class="label-inline" for="sujet_edit_ferme"><span class="texte_blanc neutre spaced gras"><?=$trad['edit_ferme']?></span><?=$trad['edit_ferme_desc']?></label><br>
+            <label class="label-inline" for="sujet_edit_ferme"><span class="texte_blanc negatif spaced gras"><?=$trad['edit_ferme']?></span><?=$trad['edit_ferme_desc']?></label><br>
+
+            <input id="sujet_edit_prive" name="sujet_edit_prive" type="checkbox"<?=$sujet_public?>>
+            <label class="label-inline" for="sujet_edit_prive"><span class="texte_blanc neutre spaced gras"><?=$trad['edit_prive']?></span><?=$trad['edit_prive_desc']?></label><br>
 
             <input id="sujet_edit_epingle" name="sujet_edit_epingle" type="checkbox"<?=$sujet_epingle?>>
             <label class="label-inline" for="sujet_edit_epingle"><span class="texte_blanc positif spaced gras"><?=$trad['edit_epingle']?></span><?=$trad['edit_epingle_desc']?></label><br>

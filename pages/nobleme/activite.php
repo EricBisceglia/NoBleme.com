@@ -329,6 +329,25 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   }
 
   //***************************************************************************************************************************************
+  // Suppression d'un message
+
+  else if($dactrec['action_type'] === 'forum_delete_message')
+  {
+    $activite_css[$nactrec]         = 'mise_a_jour_background';
+    $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
+    if($dactrec['pseudonyme'] == $dactrec['action_titre'])
+    {
+      $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a supprimé un de ses messages sur le forum';
+      $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' deleted one of his messages on the forum';
+    }
+    else
+      {
+      $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a supprimé un message de '.$dactrec['action_titre'].' sur le forum';
+      $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' deleted a message by '.$dactrec['action_titre'].' on the forum';
+    }
+  }
+
+  //***************************************************************************************************************************************
   // Modification d'un sujet
 
   else if($dactrec['action_type'] === 'forum_edit')
@@ -342,6 +361,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
 
   else if($dactrec['action_type'] === 'forum_delete')
   {
+    $activite_css[$nactrec]         = 'mise_a_jour texte_blanc';
     $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a supprimé le sujet du forum '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
   }
 

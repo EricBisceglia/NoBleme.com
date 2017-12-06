@@ -23,6 +23,8 @@ td.forum_sujet_message_actions  { border-top: 2px solid #CACACA; padding-top: 7p
 textarea.forum_ecrire_reponse_composition { height: 200px;                                               }
 div.forum_ecrire_reponse_previsualisation { border: 1px solid #CACACA; padding: 10px; max-height: 300px; }
 
+td.forum_modifier_message_corps { padding: 12px; }
+
 /******************************************************** OUVRIR UN NOUVEAU SUJET ********************************************************/
 .forum_nouveau_sujet_option       { margin-bottom: 5px;                                          }
 span.forum_nouveau_sujet_tooltip  { font-size: 0.95em !important; padding: 12px 20px !important; }
