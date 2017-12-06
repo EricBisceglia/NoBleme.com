@@ -69,7 +69,6 @@ if(isset($_POST['forum_delete_go']))
                             FROM      forum_message
                             LEFT JOIN membres ON forum_message.FKmembres  = membres.id
                             WHERE     forum_message.FKforum_sujet         = '$sujet_delete_id'
-                            AND       forum_message.message_supprime      = 0
                             ORDER BY  forum_message.timestamp_creation ");
 
   // On a aussi besoin d'une liste des users qui ont posté dans le sujet

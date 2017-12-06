@@ -27,7 +27,7 @@ $page_nom = "Administre secrètement le site";
 
 // CSS & JS
 $css  = array('onglets', 'dev');
-$js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'popup', 'dev/reference');
+$js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'dev/reference');
 
 
 
