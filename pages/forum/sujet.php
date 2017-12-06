@@ -577,18 +577,28 @@ if($sujet_apparence == 'Fil' || $sujet_apparence == 'Anonyme')
     $quote_id = postdata($_GET['quote'], 'int', 0);
 
     // On va chercher le message correspondant
-    $qquote = mysqli_fetch_array(query("  SELECT    membres.pseudonyme    AS 'm_pseudo' ,
-                                                    forum_message.contenu AS 'f_contenu'
+    $qquote = mysqli_fetch_array(query("  SELECT    membres.pseudonyme      AS 'm_pseudo'   ,
+                                                    forum_message.contenu   AS 'f_contenu'  ,
+                                                    forum_sujet.apparence   AS 'f_apparence'
                                           FROM      forum_message
                                           LEFT JOIN membres ON forum_message.FKmembres = membres.id
+                                          LEFT JOIN forum_sujet ON forum_message.FKforum_sujet = forum_sujet.id
                                           WHERE     forum_message.id            = '$quote_id'
                                           AND       forum_message.FKforum_sujet = '$sujet_id' "));
 
     // Si il existe, on prépare la citation
     if($qquote['f_contenu'] !== NULL)
     {
-      $reponse_quote_raw  = "[quote=".$qquote['m_pseudo']."]".$qquote['f_contenu']."[/quote]".PHP_EOL;
-      $reponse_quote      = bbcode("[quote=".predata($qquote['m_pseudo'])."]".predata($qquote['f_contenu'], 1)."[/quote]");
+      if($qquote['f_apparence'] == 'Anonyme')
+      {
+        $reponse_quote_raw  = "[quote]".$qquote['f_contenu']."[/quote]".PHP_EOL;
+        $reponse_quote      = bbcode("[quote]".predata($qquote['f_contenu'], 1)."[/quote]");
+      }
+      else
+      {
+        $reponse_quote_raw  = "[quote=".$qquote['m_pseudo']."]".$qquote['f_contenu']."[/quote]".PHP_EOL;
+        $reponse_quote      = bbcode("[quote=".predata($qquote['m_pseudo'])."]".predata($qquote['f_contenu'], 1)."[/quote]");
+      }
       $reponse_hidden     = "";
       $onload             = "var textarea = document.getElementById('forum_ecrire_reponse'); textarea.focus(); var temp = textarea.value; textarea.value = ''; textarea.value = temp;";
     }
