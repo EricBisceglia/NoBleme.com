@@ -127,6 +127,9 @@ if(!$sujet_public && !$moderateur_forum)
 
 if(isset($_POST['forum_ecrire_reponse']))
 {
+  // Seuls les utilisateurs peuvent faire ceci
+  useronly();
+
   // Si le sujet est fermé, on se fait rejeter
   $qcheckprive = mysqli_fetch_array(query(" SELECT  forum_sujet.ouvert    ,
                                                     forum_sujet.apparence ,
@@ -138,11 +141,23 @@ if(isset($_POST['forum_ecrire_reponse']))
   if(!$qcheckprive['ouvert'])
     exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id."#sujet_repondre"));
 
+  // On vérifie que ça ne soit pas un double post
+  $time_double  = time() - 1;
+  $add_userid   = postdata($_SESSION['user'], 'int');
+  $qcheckdouble = mysqli_fetch_array(query("  SELECT  forum_message.id
+                                              FROM    forum_message
+                                              WHERE   forum_message.FKmembres           = '$add_userid'
+                                              AND     forum_message.FKforum_sujet       = '$sujet_id'
+                                              AND     forum_message.timestamp_creation >= '$time_double'  "));
+
+  // Si c'est un double post, on redirige vers le message fraichement posté
+  if($qcheckdouble['id'] !== NULL)
+    exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id."#".$qcheckdouble['id']));
+
   // Assainissement du postdata
   $add_reponse  = postdata_vide('forum_ecrire_reponse', 'string', '');
 
   // On poste le message
-  $add_userid   = postdata($_SESSION['user'], 'int');
   $timestamp    = time();
   query(" INSERT INTO forum_message
           SET         forum_message.FKforum_sujet           = '$sujet_id'     ,
