@@ -35,22 +35,6 @@ $page_desc  = "NoBleme, la communauté web qui n'apporte rien mais a réponse à
 // On définit l'âge du site
 $agenobleme = date('Y')-2005;
 
-if(date('d-m') == '19-03')
-{
-  // On va chercher les infos dans la bdd
-  $qflash     = query(" SELECT anniv_flash.nom_fichier, anniv_flash.largeur FROM anniv_flash ");
-  $nflash     = mysqli_num_rows($qflash);
-
-  // On en pique un au hasard
-  $randflash  = rand(1,$nflash);
-  for($i=0;$i<$randflash;$i++)
-    $dflash = mysqli_fetch_array($qflash);
-
-  // Et on prépare les infos
-  $annivflash = $dflash['nom_fichier'];
-  $annivsize  = $dflash['largeur'];
-}
-
 
 
 
