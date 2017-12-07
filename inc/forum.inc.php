@@ -104,7 +104,6 @@ function forum_recompter_messages_membre($id=0)
                                         FROM      forum_message
                                         LEFT JOIN forum_sujet ON forum_message.FKforum_sujet = forum_sujet.id
                                         WHERE     forum_message.FKmembres         =         '$id'
-                                        AND       forum_message.message_supprime  =         0
                                         AND       forum_sujet.public              =         1
                                         AND       forum_sujet.apparence           NOT LIKE  'Anonyme'
                                         AND       forum_sujet.classification      NOT LIKE  'Jeu' "));
@@ -134,8 +133,7 @@ function forum_recompter_messages_sujet($id=0)
   $qcompte = mysqli_fetch_array(query(" SELECT    COUNT(*) AS 'count_messages'
                                         FROM      forum_message
                                         LEFT JOIN forum_sujet ON forum_message.FKforum_sujet = forum_sujet.id
-                                        WHERE     forum_message.FKforum_sujet     =         '$id'
-                                        AND       forum_message.message_supprime  =         0 "));
+                                        WHERE     forum_message.FKforum_sujet = '$id' "));
 
   // Et on met à jour le compte de messages du sujet
   $compte_messages = ($qcompte['count_messages'] - 1);

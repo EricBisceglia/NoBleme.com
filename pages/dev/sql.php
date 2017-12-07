@@ -49,8 +49,11 @@ sql_creer_table("forum_message", "  id                      INT(11) UNSIGNED NOT
                                     FKmembres               INT(11) UNSIGNED NOT NULL                             ,
                                     timestamp_creation      INT(11) UNSIGNED NOT NULL                             ,
                                     timestamp_modification  INT(11) UNSIGNED NOT NULL                             ,
-                                    message_supprime        TINYINT(1) UNSIGNED NOT NULL                          ,
                                     contenu                 LONGTEXT NOT NULL                                     ");
+
+sql_creer_table("forum_filtrage", " id        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+                                    FKmembres INT(11) UNSIGNED NOT NULL                             ,
+                                    filtre    TINYTEXT NOT NULL                                     ");
 
 // Nombre de messages dans le profil
 sql_creer_champ("membres", "forum_messages", "INT(11) UNSIGNED NOT NULL", "profil");

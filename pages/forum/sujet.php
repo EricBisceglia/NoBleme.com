@@ -134,7 +134,6 @@ if(isset($_POST['forum_ecrire_reponse']))
                       forum_message.FKmembres               = '$add_userid'   ,
                       forum_message.timestamp_creation      = '$timestamp'    ,
                       forum_message.timestamp_modification  = 0               ,
-                      forum_message.message_supprime        = 0               ,
                       forum_message.contenu                 = '$add_reponse'  ");
 
   // Si nécessaire, on augmente le post count de l'user et du sujet
@@ -164,6 +163,179 @@ if(isset($_POST['forum_ecrire_reponse']))
 
   // Redirection vers le nouveau message
   exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id."#".$message_id));
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Modifier une réponse au sujet
+
+if(isset($_POST['forum_modifier_message_go']))
+{
+  // Seuls les utilisateurs peuvent faire ceci
+  useronly();
+
+  // On commence par récupérer et assainir l'id du message
+  $edit_id = postdata_vide('forum_message_id', 'int', 0);
+
+  // On assainit le postdata
+  $edit_contenu = postdata_vide('forum_modifier_message_'.$edit_id, 'string', '');
+
+  // On récupère les justifications sur la suppression, si nécessaire
+  $edit_raison  = (isset($_POST['forum_message_justification_'.$edit_id])) ? $_POST['forum_message_justification_'.$edit_id] : '';
+  $edit_envoyer = postdata_vide('forum_message_envoyer_'.$edit_id, 'int', 1);
+
+  // On va chercher si le message existe (et on en profite pour récupérer son contenu)
+  $qmessage = mysqli_fetch_array(query("  SELECT  forum_message.contenu   ,
+                                                  forum_message.FKmembres ,
+                                                  forum_message.FKforum_sujet
+                                          FROM    forum_message
+                                          WHERE   forum_message.id = '$edit_id'" ));
+
+  // S'il existe pas, on dégage
+  if($qmessage['contenu'] === NULL)
+    exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id));
+
+  // On regarde si c'est une modération (et si oui, on rejette si les droits ne sont pas bons)
+  if($qmessage['FKmembres'] != $_SESSION['user'])
+  {
+    if(!getmod('forum'))
+      exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id));
+    else
+      $sysop_modif = 1;
+  }
+
+  // On a besoin d'infos sur le sujet aussi
+  $edit_sujet = $qmessage['FKforum_sujet'];
+  $qsujet = mysqli_fetch_array(query("  SELECT  forum_sujet.public  ,
+                                                forum_sujet.langage ,
+                                                forum_sujet.titre   ,
+                                                forum_sujet.apparence
+                                        FROM    forum_sujet
+                                        WHERE   forum_sujet.id = '$edit_sujet' "));
+
+  // Si le sujet est privé et que l'user n'a pas les droits, on dégage
+  if(!$qsujet['public'])
+  {
+    if(!getmod('forum'))
+      exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id));
+  }
+
+  // On modifie le message
+  query(" UPDATE  forum_message
+          SET     forum_message.contenu = '$edit_contenu'
+          WHERE   forum_message.id      = '$edit_id'" );
+
+  // On recalcule le postcount de l'auteur du message et le compte de messages du sujet
+  forum_recompter_messages_membre($qmessage['FKmembres']);
+  forum_recompter_messages_sujet($sujet_id);
+
+  // On prépare le pseudo de l'auteur dans un autre langage s'il est anonyme
+  if($qsujet['apparence'] != 'Anonyme')
+  {
+    $edit_mod     = getpseudo();
+    $edit_pseudo  = getpseudo($qmessage['FKmembres']);
+  }
+  else
+  {
+    $edit_mod     = ($qsujet['langage'] == 'FR') ? 'Anonyme' : 'Anonymous';
+    $edit_pseudo  = ($qsujet['langage'] == 'FR') ? 'Anonyme' : 'Anonymous';
+  }
+
+  // Activité récente
+  $timestamp          = time();
+  $edit_mod           = postdata($edit_mod);
+  $edit_auteur        = postdata($edit_pseudo);
+  $edit_justification = ($edit_raison) ? " , activite.justification = '".postdata($edit_raison, 'string', '')."' " : '';
+  if(isset($sysop_modif))
+  {
+    $real_edit_mod = getpseudo();
+    query(" INSERT INTO activite
+            SET         activite.timestamp      = '$timestamp'          ,
+                        activite.log_moderation = 1                     ,
+                        activite.pseudonyme     = '$real_edit_mod'      ,
+                        activite.action_type    = 'forum_edit_message'  ,
+                        activite.action_id      = '$edit_sujet'         ,
+                        activite.action_titre   = '$edit_auteur'
+                        $edit_justification                             ");
+
+    // Diff
+    $activite_id      = mysqli_insert_id($db);
+    $edit_message     = postdata($qmessage['contenu']);
+    query(" INSERT INTO activite_diff
+            SET         FKactivite  = '$activite_id'        ,
+                        titre_diff  = 'Contenu du message'  ,
+                        diff_avant  = '$edit_message'       ,
+                        diff_apres  = '$edit_contenu'       ");
+  }
+
+  // Si c'est une modification spontanée, on ajoute une date de modification
+  if(!isset($sysop_modif))
+    query(" UPDATE  forum_message
+            SET     forum_message.timestamp_modification  = '$timestamp'
+            WHERE   forum_message.id                      = '$edit_id'" );
+
+
+  // IRCbot
+  $edit_sujet_raw = $qsujet['titre'];
+  if(isset($sysop_modif))
+  {
+    ircbot($chemin, getpseudo()." a modifié un message de ".$edit_pseudo." dans le sujet ".$edit_sujet_raw.". Le contenu du changement est visible ici : ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
+    if($edit_raison)
+      ircbot($chemin, "Justification de la modification du message : ".$edit_raison, "#sysop");
+  }
+
+  // Message privé
+  if(getmod('forum') && $edit_envoyer && isset($sysop_modif))
+  {
+    // On prépare le contenu du message
+    $pm_lang          = $qsujet['langage'];
+    $edit_message_raw = $qmessage['contenu'];
+    $pm_titre         = ($pm_lang == 'FR') ? "Message modifié sur le forum" : "Message edited on the forum";
+
+    // On prépare la justification si elle est remplie
+    if($edit_raison)
+    {
+      if($pm_lang == 'FR')
+        $edit_justification = <<<EOD
+
+La raison de la modification est : [b]{$edit_raison}[/b]
+
+EOD;
+      else
+        $edit_justification = <<<EOD
+
+The reason for being edited is: [b]{$edit_raison}[/b]
+
+EOD;
+    }
+    else
+      $edit_justification = "";
+
+    // On prépare le message en français
+    if($pm_lang == 'FR')
+      $edit_pm = <<<EOD
+[b]Une réponse que vous avez postée sur le forum a été modifiée[/b]
+
+Il s'agit du message #{$edit_id} du sujet que vous pouvez trouver ici : [url={$chemin}pages/forum/sujet?id={$edit_sujet}#{$edit_id}]{$edit_sujet_raw}[/url]
+$edit_justification
+EOD;
+    // Et en anglais
+    else
+      $edit_pm = <<<EOD
+[b]A reply you posted on the forum has been edited[/b]
+
+The message in question is message #{$edit_id} from the following topic: [url={$chemin}pages/forum/sujet?id={$edit_sujet}]{$edit_sujet_raw}#{$edit_id}[/url]
+$edit_justification
+EOD;
+
+    // Puis on envoie le message
+    envoyer_notif($qmessage['FKmembres'], $pm_titre, postdata($edit_pm));
+  }
+
+  // Redirection vers le début du sujet
+  exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id));
 }
 
 
@@ -201,14 +373,15 @@ if(isset($_POST['forum_supprimer_message_go']))
     if(!getmod('forum'))
       exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id));
     else
-      $action_sysop = 1;
+      $sysop_delete = 1;
   }
 
   // On a besoin d'infos sur le sujet aussi
   $delete_sujet = $qmessage['FKforum_sujet'];
   $qsujet = mysqli_fetch_array(query("  SELECT  forum_sujet.public  ,
                                                 forum_sujet.langage ,
-                                                forum_sujet.titre
+                                                forum_sujet.titre   ,
+                                                forum_sujet.apparence
                                         FROM    forum_sujet
                                         WHERE   forum_sujet.id = '$delete_sujet' "));
 
@@ -235,10 +408,22 @@ if(isset($_POST['forum_supprimer_message_go']))
   // On recalcule le postcount de l'auteur du message
   forum_recompter_messages_membre($qmessage['FKmembres']);
 
+  // On prépare le pseudo de l'auteur dans un autre langage s'il est anonyme
+  if($qsujet['apparence'] != 'Anonyme')
+  {
+    $delete_mod     = getpseudo();
+    $delete_pseudo  = getpseudo($qmessage['FKmembres']);
+  }
+  else
+  {
+    $delete_mod     = ($qsujet['langage'] == 'FR') ? 'Anonyme' : 'Anonymous';
+    $delete_pseudo  = ($qsujet['langage'] == 'FR') ? 'Anonyme' : 'Anonymous';
+  }
+
   // Activité récente
   $timestamp            = time();
-  $delete_mod           = postdata(getpseudo());
-  $delete_auteur        = postdata(getpseudo($qmessage['FKmembres']));
+  $delete_mod           = (isset($sysop_delete)) ? postdata(getpseudo()) : postdata($delete_mod);
+  $delete_auteur        = postdata($delete_pseudo);
   $delete_justification = ($delete_raison) ? " , activite.justification = '".postdata($delete_raison, 'string', '')."' " : '';
   query(" INSERT INTO activite
           SET         activite.timestamp      = '$timestamp'            ,
@@ -264,17 +449,22 @@ if(isset($_POST['forum_supprimer_message_go']))
 
   // IRCbot
   $delete_sujet_raw = $qsujet['titre'];
-  if($delete_mod == $delete_auteur)
-    ircbot($chemin, getpseudo()." a supprimé un de ses messages dans le sujet ".$delete_sujet_raw.". Le contenu du message est archivé ici : ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
+  if(!isset($sysop_delete))
+  {
+    if($qsujet['apparence'] != 'Anonyme')
+      ircbot($chemin, getpseudo()." a supprimé un de ses messages dans le sujet ".$delete_sujet_raw.". Le contenu du message est archivé ici : ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
+    else
+      ircbot($chemin, "Anonyme a supprimé un de ses messages dans le sujet ".$delete_sujet_raw.". Le contenu du message est archivé ici : ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
+  }
   else
   {
-    ircbot($chemin, getpseudo()." a supprimé un message de ".getpseudo($qmessage['FKmembres'])." dans le sujet ".$delete_sujet_raw.". Le contenu du message est archivé ici : ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
+    ircbot($chemin, getpseudo()." a supprimé un message de ".$delete_pseudo." dans le sujet ".$delete_sujet_raw.". Le contenu du message est archivé ici : ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
     if($delete_raison)
       ircbot($chemin, "Justification de la suppression du message : ".$delete_raison, "#sysop");
   }
 
   // Message privé
-  if(getmod('forum') && $delete_envoyer)
+  if(getmod('forum') && $delete_envoyer && isset($sysop_delete))
   {
     // On prépare le contenu du message
     $pm_lang            = $qsujet['langage'];
@@ -355,7 +545,6 @@ if($sujet_apparence == 'Fil' || $sujet_apparence == 'Anonyme')
                                   membres.forum_messages                AS 'm_messages' ,
                                   forum_message.timestamp_creation      AS 'r_creation' ,
                                   forum_message.timestamp_modification  AS 'r_edit'     ,
-                                  forum_message.message_supprime        AS 'r_supprime' ,
                                   forum_message.contenu                 AS 'r_contenu'
                         FROM      forum_message
                         LEFT JOIN membres ON forum_message.FKmembres  = membres.id
@@ -377,7 +566,6 @@ if($sujet_apparence == 'Fil' || $sujet_apparence == 'Anonyme')
     $temp_lang                      = ($lang == 'FR') ? ' à ' : ' at ';
     $reponse_creation[$nreponses]   = predata(jourfr(date('Y-m-d', $dreponses['r_creation']), $lang).$temp_lang.date('H:i', $dreponses['r_creation']));
     $reponse_edit[$nreponses]       = ($dreponses['r_edit']) ? predata(jourfr(date('Y-m-d', $dreponses['r_edit']), $lang).$temp_lang.date('H:i', $dreponses['r_edit'])) : 0;
-    $reponse_supprime[$nreponses]   = $dreponses['r_supprime'];
     $reponse_contenu[$nreponses]    = bbcode(predata($dreponses['r_contenu'], 1));
     $reponse_peut_edit[$nreponses]  = ((time() - $dreponses['r_creation']) < 2592000) ? 1 : 0;
   }
@@ -389,18 +577,28 @@ if($sujet_apparence == 'Fil' || $sujet_apparence == 'Anonyme')
     $quote_id = postdata($_GET['quote'], 'int', 0);
 
     // On va chercher le message correspondant
-    $qquote = mysqli_fetch_array(query("  SELECT    membres.pseudonyme    AS 'm_pseudo' ,
-                                                    forum_message.contenu AS 'f_contenu'
+    $qquote = mysqli_fetch_array(query("  SELECT    membres.pseudonyme      AS 'm_pseudo'   ,
+                                                    forum_message.contenu   AS 'f_contenu'  ,
+                                                    forum_sujet.apparence   AS 'f_apparence'
                                           FROM      forum_message
                                           LEFT JOIN membres ON forum_message.FKmembres = membres.id
+                                          LEFT JOIN forum_sujet ON forum_message.FKforum_sujet = forum_sujet.id
                                           WHERE     forum_message.id            = '$quote_id'
                                           AND       forum_message.FKforum_sujet = '$sujet_id' "));
 
     // Si il existe, on prépare la citation
     if($qquote['f_contenu'] !== NULL)
     {
-      $reponse_quote_raw  = "[quote=".$qquote['m_pseudo']."]".$qquote['f_contenu']."[/quote]".PHP_EOL;
-      $reponse_quote      = bbcode("[quote=".predata($qquote['m_pseudo'])."]".predata($qquote['f_contenu'], 1)."[/quote]");
+      if($qquote['f_apparence'] == 'Anonyme')
+      {
+        $reponse_quote_raw  = "[quote]".$qquote['f_contenu']."[/quote]".PHP_EOL;
+        $reponse_quote      = bbcode("[quote]".predata($qquote['f_contenu'], 1)."[/quote]");
+      }
+      else
+      {
+        $reponse_quote_raw  = "[quote=".$qquote['m_pseudo']."]".$qquote['f_contenu']."[/quote]".PHP_EOL;
+        $reponse_quote      = bbcode("[quote=".predata($qquote['m_pseudo'])."]".predata($qquote['f_contenu'], 1)."[/quote]");
+      }
       $reponse_hidden     = "";
       $onload             = "var textarea = document.getElementById('forum_ecrire_reponse'); textarea.focus(); var temp = textarea.value; textarea.value = ''; textarea.value = temp;";
     }
@@ -669,7 +867,7 @@ EOD;
             <?php if($reponse_peut_edit[$i] && !$i) { ?>
             <tr>
               <td class="forum_sujet_message_actions">
-                <a class="pointeur" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'edit')"><?=$trad['mess_edit']?></a> - <a class="pointeur" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'delete_thread')"><?=$trad['mess_supp_0']?></a>
+                <a class="pointeur" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'edit')"><?=$trad['mess_edit']?></a>
               </td>
             </tr>
             <?php } else if ($reponse_peut_edit[$i]) { ?>
