@@ -189,10 +189,12 @@ function bbcode($post, $xhr=NULL)
   // [code]Bloc de code[/code]
   $post = preg_replace('/\[code\](.*?)\[\/code\]/is','<pre class="monospace alinea wrap">$1</pre>', $post);
 
+  // [youtube]http://www.image.com/image.jpg[/youtube]
+  $post = preg_replace('/\[youtube\](.*?)\[\/youtube\]/is',"<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/$1\" frameborder=\"0\" gesture=\"media\" allow=\"encrypted-media\" allowfullscreen></iframe>", $post);
+
   // [quote]Citation[/quote]
-  $temp = ($lang == 'FR') ? 'Citation :' : 'Quote:';
-  while(preg_match('/\[quote\](.*?)\[\/quote\]/is',$post))
-    $post = preg_replace('/\[quote\](.*?)\[\/quote\]/is',"<div class=\"citation_corps\"><div class=\"citation_titre\">$temp</div>$1</div>", $post);
+  while(preg_match('/\[youtube\](.*?)\[\/youtube\]/is',$post))
+    $post = preg_replace('/\[youtube\](.*?)\[\/youtube\]/is',"<div class=\"citation_corps\"><div class=\"citation_titre\">Youtbue</div>$1</div>", $post);
 
   // [quote=Machin]Citation par Machin[/quote]
   $temp = ($lang == 'FR') ? 'Citation de' : 'Quote by';

@@ -198,7 +198,7 @@ EOD;
 
       <div class="texte3">
 
-        <table class="fullgrid titresnoirs">
+        <table class="fullgrid titresnoirs nowrap">
           <thead>
             <tr>
               <th>
@@ -466,6 +466,21 @@ EOD;
               </td>
               <td class="align_left">
                 <?=bbcode($trad['tablex_code'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                YouTube
+              </td>
+              <td>
+                [youtube][/youtube]
+              </td>
+              <td>
+                [youtube]4o5baMYWdtQ[/youtube]
+              </td>
+              <td class="align_center">
+                <iframe width="280" height="157" src="https://www.youtube.com/embed/4o5baMYWdtQ" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
               </td>
             </tr>
 
