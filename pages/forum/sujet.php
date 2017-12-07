@@ -116,7 +116,11 @@ if(!$sujet_public && !$moderateur_forum)
 if(isset($_POST['forum_ecrire_reponse']))
 {
   // Si le sujet est fermé, on se fait rejeter
-  $qcheckprive = mysqli_fetch_array(query(" SELECT  forum_sujet.ouvert
+  $qcheckprive = mysqli_fetch_array(query(" SELECT  forum_sujet.ouvert    ,
+                                                    forum_sujet.apparence ,
+                                                    forum_sujet.public    ,
+                                                    forum_sujet.langage   ,
+                                                    forum_sujet.titre
                                             FROM    forum_sujet
                                             WHERE   forum_sujet.id = '$sujet_id' "));
   if(!$qcheckprive['ouvert'])
@@ -160,6 +164,19 @@ if(isset($_POST['forum_ecrire_reponse']))
                       activite.action_id      = '$message_id'       ,
                       activite.action_titre   = '$add_titre'        ,
                       activite.parent         = '$sujet_id'         ");
+
+  // Bot IRC
+  $temp_lang      = ($qcheckprive['langage'] == 'FR') ? 'Anonyme' : 'Anonymous';
+  $add_pseudo_raw = ($qcheckprive['apparence'] == 'Anonyme') ? $temp_lang : getpseudo();
+  if($qcheckprive['public'])
+  {
+    if($qcheckprive['langage'] == 'FR')
+      ircbot($chemin, $add_pseudo_raw." a posté une réponse au sujet ".$qcheckprive['titre']." : ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id.'#'.$message_id, "#forum");
+    else
+      ircbot($chemin, $add_pseudo_raw." posted a reply to the topic ".$qcheckprive['titre'].": ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id.'#'.$message_id, "#forum");
+  }
+  else
+    ircbot($chemin, $add_pseudo_raw." a posté une réponse au sujet privé ".$qcheckprive['titre']." : ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id.'#'.$message_id, "#sysop");
 
   // Redirection vers le nouveau message
   exit(header("Location: ".$chemin."pages/forum/sujet?id=".$sujet_id."#".$message_id));

@@ -132,9 +132,15 @@ if(isset($_POST['forum_add_titre']))
   if($add_public)
   {
     if($add_langage == 'FR')
+    {
       ircbot($chemin, $add_pseudo_raw." a ouvert un nouveau sujet sur le forum : ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id, "#NoBleme");
+      ircbot($chemin, $add_pseudo_raw." a ouvert un nouveau sujet sur le forum : ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id, "#forum");
+    }
     else
+    {
       ircbot($chemin, $add_pseudo_raw." opened a new thread on the forum: ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id, "#english");
+      ircbot($chemin, $add_pseudo_raw." opened a new thread on the forum: ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id, "#forum");
+    }
   }
   else
     ircbot($chemin, $add_pseudo_raw." a ouvert un sujet privé sur le forum : ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id, "#sysop");
