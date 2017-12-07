@@ -422,8 +422,9 @@ if(isset($_POST['forum_supprimer_message_go']))
   // On nettoie les potentiels diffs orphelins
   purger_diff_orphelins();
 
-  // On recalcule le postcount de l'auteur du message
+  // On recalcule les comptes de message de l'auteur du message et du sujet
   forum_recompter_messages_membre($qmessage['FKmembres']);
+  forum_recompter_messages_sujet($qmessage['FKforum_sujet']);
 
   // On prépare le pseudo de l'auteur dans un autre langage s'il est anonyme
   if($qsujet['apparence'] != 'Anonyme')
