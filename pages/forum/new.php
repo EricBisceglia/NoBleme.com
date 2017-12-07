@@ -14,8 +14,8 @@ $header_menu      = 'Discuter';
 $header_sidemenu  = 'ForumNew';
 
 // Identification
-$page_nom = "Prépare un nouveau sujet pour le forum";
-$page_url = "pages/forum/new";
+$page_nom = "Parcourt les sujets de discussion du forum";
+$page_url = "pages/forum/index";
 
 // Langages disponibles
 $langage_page = array('FR','EN');

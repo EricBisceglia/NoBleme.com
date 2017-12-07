@@ -99,6 +99,18 @@ $shorturl  .= $sujet_id;
 $page_titre = predata($qverifsujet['s_titre']);
 $page_desc  = "".$qverifsujet['s_titre']." - Sujet de discussion du forum NoBleme";
 
+// Si c'est un sujet anonyme, on fuzze le lieu et l'url
+if($qverifsujet['s_public'] && $sujet_apparence == 'Anonyme')
+{
+  $qanonyme = mysqli_fetch_array(query("  SELECT    forum_sujet.id  ,
+                                                    forum_sujet.titre
+                                          FROM      forum_sujet
+                                          ORDER BY  RAND()
+                                          LIMIT     1 "));
+  $page_nom = 'Forum : '.predata(tronquer_chaine($qanonyme['titre'], 35, '...'));
+  $page_url = 'pages/forum/sujet?id='.$qanonyme['id'];
+}
+
 // Ça nous serait également utile de savoir si on a des permissions sur le forum ou non
 $moderateur_forum = getmod('forum');
 $administrateur_forum = getadmin();
