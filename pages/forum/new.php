@@ -109,7 +109,6 @@ if(isset($_POST['forum_add_titre']))
                       forum_message.FKmembres               = '$add_auteur'           ,
                       forum_message.timestamp_creation      = '$timestamp'            ,
                       forum_message.timestamp_modification  = 0                       ,
-                      forum_message.message_supprime        = 0                       ,
                       forum_message.contenu                 = '$add_premier_message'  ");
 
   // Si nécessaire, on augmente le post count de l'user

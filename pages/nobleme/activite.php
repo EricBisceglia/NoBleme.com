@@ -348,6 +348,16 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   }
 
   //***************************************************************************************************************************************
+  // Modification d'un message
+
+  else if($dactrec['action_type'] === 'forum_edit_message')
+  {
+    $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a modifié un message de '.$dactrec['action_titre'].' sur le forum';
+    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' edited a message by '.$dactrec['action_titre'].' on the forum';
+  }
+
+  //***************************************************************************************************************************************
   // Modification d'un sujet
 
   else if($dactrec['action_type'] === 'forum_edit')
