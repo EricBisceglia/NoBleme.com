@@ -4,6 +4,7 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/forum.inc.php';    // Fonctions liées au forum
 
 // Permissions
 adminonly($lang);
@@ -795,6 +796,26 @@ $js  = array('toggle', 'highlight', 'dev/reference');
         <table class="fullgrid titresnoirs margin_auto" style="width:600px">
           <thead>
             <tr>
+              <th class="rowaltc moinsgros">
+                ENVOI D'UN MESSAGE SUR IRC VIA LE BOT
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                ircbot($chemin,"Message à poster sur dev","#dev");
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
               <th class="rowaltc moinsgros" colspan="2">
                 IMPORTANCE D'UNE TÂCHE
               </th>
@@ -855,15 +876,26 @@ $js  = array('toggle', 'highlight', 'dev/reference');
         <table class="fullgrid titresnoirs margin_auto" style="width:600px">
           <thead>
             <tr>
-              <th class="rowaltc moinsgros">
-                ENVOI D'UN MESSAGE SUR IRC VIA LE BOT
+              <th class="rowaltc moinsgros" colspan="2">
+                CLASSIFICATION D'UN SUJET DE DISCUSSION DU FORUM
               </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="align_center">
-                ircbot($chemin,"Message à poster sur dev","#dev");
+                forum_option_info('Anonyme', 'complet', 'FR');
+              </td>
+              <td class="gras align_center">
+                <?=forum_option_info('Anonyme', 'complet', 'FR');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                forum_option_info('Sérieux', 'court', 'EN');
+              </td>
+              <td class="gras align_center">
+                <?=forum_option_info('Sérieux', 'court', 'EN');?>
               </td>
             </tr>
           </tbody>

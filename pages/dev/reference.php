@@ -1308,15 +1308,17 @@ $js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'popup', 'dev/refer
                     <label for="form_textarea">Textarea</label>
                     <textarea id="form_textarea" name="form_textarea" class="indiv" placeholder="Du texte va ici"></textarea><br>
                     <br>
-                    <label for="form_radio">Radio buttons</label>
+                    <label>Radio buttons</label>
                     <input id="form_radio_1" name="form_radio_1" type="radio">
-                    <label class="label-inline gras" for="form_radio_1">1</label>
-                    &nbsp;
+                    <label class="label-inline" for="form_radio_1">Option 1</label><br>
                     <input id="form_radio_2" name="form_radio_2" type="radio">
-                    <label class="label-inline gras" for="form_radio_2">2</label>
-                    &nbsp;
-                    <input id="form_radio_3" name="form_radio_3" type="radio">
-                    <label class="label-inline gras" for="form_radio_3">3</label><br>
+                    <label class="label-inline" for="form_radio_2">Option 2</label><br>
+                    <br>
+                    <label>Checkboxes</label>
+                    <input id="form_checkboxes_1" name="form_checkboxes_1" type="checkbox">
+                    <label class="label-inline" for="form_checkboxes_1">Option 1</label><br>
+                    <input id="form_checkboxes_2" name="form_checkboxes_2" type="checkbox">
+                    <label class="label-inline" for="form_checkboxes_2">Option 2</label><br>
                     <br>
                     <label for="form_pass">Mot de passe</label>
                     <input id="form_pass" name="form_pass" class="indiv" type="password"><br>
@@ -1348,15 +1350,17 @@ $js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'popup', 'dev/refer
     <label for="form_textarea">Textarea</label>
     <textarea id="form_textarea" name="form_textarea" class="indiv" placeholder="Du texte va ici"></textarea><br>
     <br>
-    <label for="form_radio">Radio buttons</label>
+    <label>Radio buttons</label>
     <input id="form_radio_1" name="form_radio_1" type="radio">
-    <label class="label-inline gras" for="form_radio_1">1</label>
-    &nbsp;
+    <label class="label-inline" for="form_radio_1">Option 1</label><br>
     <input id="form_radio_2" name="form_radio_2" type="radio">
-    <label class="label-inline gras" for="form_radio_2">2</label>
-    &nbsp;
-    <input id="form_radio_3" name="form_radio_3" type="radio">
-    <label class="label-inline gras" for="form_radio_3">3</label><br>
+    <label class="label-inline" for="form_radio_2">Option 2</label><br>
+    <br>
+    <label>Checkboxes</label>
+    <input id="form_checkboxes_1" name="form_checkboxes_1" type="checkbox">
+    <label class="label-inline" for="form_checkboxes_1">Option 1</label><br>
+    <input id="form_checkboxes_2" name="form_checkboxes_2" type="checkbox">
+    <label class="label-inline" for="form_checkboxes_2">Option 2</label><br>
     <br>
     <label for="form_pass">Mot de passe</label>
     <input id="form_pass" name="form_pass" class="indiv" type="password"><br>

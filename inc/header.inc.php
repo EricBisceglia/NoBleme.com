@@ -103,13 +103,13 @@ else
 if(isset($page_nom) && isset($page_url) && !isset($error_mode))
 {
   // Réparation des erreurs au cas où
-  $page_nom = postdata($page_nom, 'string');
-  $page_url = postdata($page_url, 'string');
+  $page_nom_propre = postdata($page_nom, 'string');
+  $page_url_propre = postdata($page_url, 'string');
 
   // Requête pour récupérer les pageviews sur la page courante
   $view_query = query(" SELECT  pageviews.vues
                         FROM    pageviews
-                        WHERE   pageviews.url_page  = '$page_url' ");
+                        WHERE   pageviews.url_page  = '$page_url_propre' ");
 
   // Si la requête renvoie un résultat, reste plus qu'à incrémenter les pageviews
   if (mysqli_num_rows($view_query) != 0)
@@ -122,8 +122,8 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
     if(((loggedin() && !getadmin()) || !loggedin()))
       query(" UPDATE  pageviews
               SET     pageviews.vues      = pageviews.vues + 1 ,
-                      pageviews.nom_page  = '$page_nom'
-              WHERE   pageviews.url_page  = '$page_url' ");
+                      pageviews.nom_page  = '$page_nom_propre'
+              WHERE   pageviews.url_page  = '$page_url_propre' ");
   }
 
   // Sinon, il faut créer l'entrée de la page et lui donner son premier pageview
@@ -134,9 +134,9 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
 
     // On update la BDD
     query(" INSERT INTO pageviews
-            SET         pageviews.nom_page  = '$page_nom' ,
-                        pageviews.url_page  = '$page_url' ,
-                        pageviews.vues      = 1           ");
+            SET         pageviews.nom_page  = '$page_nom_propre'  ,
+                        pageviews.url_page  = '$page_url_propre'  ,
+                        pageviews.vues      = 1                   ");
   }
 }
 
@@ -397,7 +397,9 @@ function header_class($element, $actuel, $menu)
   </head>
 
   <?php if(isset($cette_page_est_404)) { ?>
-<body id="body" onLoad="ecrire_404();">
+<body id="body" onload="ecrire_404();">
+  <?php } else if(isset($onload)) { ?>
+<body id="body" onload="<?=$onload?>">
   <?php } else { ?>
 <body id="body">
   <?php } ?>
@@ -423,7 +425,7 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
           <div class="<?=header_class('NoBleme',$header_menu,'top')?>">NOBLEME</div>
         </a>
 
-        <a class="header_topmenu_lien" href="<?=$chemin?>pages/irc/index">
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/forum/index">
           <div class="<?=header_class('Discuter',$header_menu,'top')?>"><?=$menu['discuter']?></div>
         </a>
 
@@ -705,13 +707,32 @@ $sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Requ
 <?php } ################################################ MENU LATÉRAL : DISCUTER ##########################################################
 // Préparation des traductions des titres du menu
 $sidemenu['bla_forum']            = ($lang == 'FR') ? "Forum de discussion"       : "Discussion forum";
-$sidemenu['bla_forum_sujets']     = ($lang == 'FR') ? "Travaux en cours"          : "Work in progress";
+$sidemenu['bla_forum_sujets']     = ($lang == 'FR') ? "Sujets de discussion"      : "Latest forum threads";
+$sidemenu['bla_forum_ouvrir']     = ($lang == 'FR') ? "Ouvrir un nouveau sujet"   : "Open a new thread";
 $sidemenu['bla_irc']              = ($lang == 'FR') ? "Serveur de chat IRC"       : "IRC chat server";
 $sidemenu['bla_irc_what']         = ($lang == 'FR') ? "Qu'est-ce que IRC"         : "What is IRC";
 $sidemenu['bla_irc_clic']         = ($lang == 'FR') ? "Rejoindre la conversation" : "Join the conversation";
 $sidemenu['bla_irc_canaux']       = ($lang == 'FR') ? "Liste des canaux"          : "Channel list";
 $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"     : "Commands and services";
 /* ################################################################################################# */ if($header_menu == 'Discuter') { ?>
+
+            <div class="header_sidemenu_titre">
+              <?=$sidemenu['bla_forum']?>
+            </div>
+
+            <a href="<?=$chemin?>pages/forum/index">
+              <div class="<?=header_class('ForumIndex',$header_sidemenu,'side')?>">
+                <?=$sidemenu['bla_forum_sujets']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/forum/new">
+              <div class="<?=header_class('ForumNew',$header_sidemenu,'side')?>">
+                <?=$sidemenu['bla_forum_ouvrir']?>
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
               <?=$sidemenu['bla_irc']?>
@@ -738,18 +759,6 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
             <a href="<?=$chemin?>pages/irc/canaux">
               <div class="<?=header_class('IRCCanaux',$header_sidemenu,'side')?>">
                 <?=$sidemenu['bla_irc_canaux']?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_titre">
-              <?=$sidemenu['bla_forum']?>
-            </div>
-
-            <a href="<?=$chemin?>pages/forum/index">
-              <div class="<?=header_class('ForumIndex',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_forum_sujets']?>
               </div>
             </a>
 

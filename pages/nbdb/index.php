@@ -35,7 +35,7 @@ $page_desc  = "NoBlemeDataBase, compilation de savoir utile et inutile.";
 
         <h5>Le successeur spirituel du Wiki NoBleme... pour Bientôt™</h5>
 
-        <p>Êtes-vous assez ancien NoBlemeux pour vous souvenir du Wiki NoBleme ? Si oui, la bonne nouvelle, c'est qu'il est prévu qu'il revienne un de ces jours, sous une forme plus moderne (et sous un nom différent). La mauvaise nouvelle, c'est que c'est pas vraiment en haut de la liste des priorité, ça demande une grande quantité d'investissement personnel de maintenir une encyclopédie entière. Patience et espoir.</p>
+        <p>Êtes-vous assez ancien NoBlemeux pour vous souvenir du Wiki NoBleme ? Si oui, la bonne nouvelle, c'est qu'il est prévu qu'il revienne un de ces jours, sous une forme plus moderne (et sous un nom différent). La mauvaise nouvelle, c'est que c'est pas vraiment en haut de la liste des priorités, ça demande une grande quantité d'investissement personnel de maintenir une encyclopédie entière. Patience et espoir.</p>
 
         <br>
         <br>

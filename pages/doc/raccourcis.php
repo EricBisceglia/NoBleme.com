@@ -45,6 +45,8 @@ if($lang == 'FR')
   $trad['rac_profil']     = "Profil d'un utilisateur";
   $trad['rac_activite']   = "Activité récente";
   $trad['rac_online']     = "Qui est en ligne";
+  $trad['rac_forum']      = "Forum de discussion";
+  $trad['rac_forum_id']   = "Discussion spécifique du forum";
   $trad['rac_irl']        = "Rencontres IRL";
   $trad['rac_irl_id']     = "IRL spécifique";
   $trad['rac_irc']        = "Serveur IRC";
@@ -70,6 +72,8 @@ else if($lang == 'EN')
   $trad['rac_profil']     = "User profile";
   $trad['rac_activite']   = "Recent activity";
   $trad['rac_online']     = "Who's online";
+  $trad['rac_forum']      = "Discussion forum";
+  $trad['rac_forum_id']   = "Specific forum thread";
   $trad['rac_irl']        = "Real life meetups";
   $trad['rac_irl_id']     = "Specific meetup";
   $trad['rac_irc']        = "IRC server";
@@ -140,6 +144,22 @@ else if($lang == 'EN')
               </td>
               <td>
                 <a href="<?=$chemin?>s?o">o</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_forum']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?f">f</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_forum_id']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?f=1">f=?</a>
               </td>
             </tr>
             <tr>

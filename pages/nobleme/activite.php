@@ -21,7 +21,7 @@ $page_url = "pages/nobleme/activite";
 $shorturl = "a";
 
 // Langages disponibles
-$langage_page = (!isset($_GET['mod'])) ? array('FR','EN') : array('FR');
+$langage_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Activité récente" : "Recent activity";
@@ -107,6 +107,8 @@ if(isset($_POST['activite_type']))
                   OR        activite.action_type LIKE 'ban'
                   OR        activite.action_type LIKE 'deban'
                   OR        activite.action_type LIKE 'editpass' ) ";
+  else if($activite_type == 'forum')
+    $qactrec .= " AND       activite.action_type LIKE 'forum_%' ";
   else if($activite_type == 'irl')
     $qactrec .= " AND       activite.action_type LIKE 'irl_%' ";
   else if($activite_type == 'dev')
@@ -191,6 +193,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   {
     $activite_href[$nactrec]        = $chemin.'pages/user/user?id='.$dactrec['FKmembres'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a modifié son profil public';
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' edited his public profile';
   }
 
   //***************************************************************************************************************************************
@@ -201,6 +204,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
     $activite_css[$nactrec]         = 'neutre texte_blanc';
     $activite_href[$nactrec]        = $chemin.'pages/user/user?id='.$dactrec['FKmembres'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a modifié le profil public de '.predata($dactrec['pseudonyme']);
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['parent']).' edited '.predata($dactrec['pseudonyme']).'\'s public profile';
   }
 
   //***************************************************************************************************************************************
@@ -211,6 +215,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
     $activite_css[$nactrec]         = 'neutre texte_blanc';
     $activite_href[$nactrec]        = $chemin.'pages/user/user?id='.$dactrec['FKmembres'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a modifié le mot de passe de '.predata($dactrec['pseudonyme']);
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['parent']).' changed '.predata($dactrec['pseudonyme']).'\'s password';
   }
 
   //***************************************************************************************************************************************
@@ -230,6 +235,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
     $activite_href[$nactrec]        = $chemin.'pages/sysop/pilori';
     $temp                           = ($dactrec['action_id'] > 1) ? 's' : '';
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a banni '.predata($dactrec['pseudonyme']).' pendant '.$dactrec['action_id'].' jour'.$temp;
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['parent']).' banned '.predata($dactrec['pseudonyme']).' for '.$dactrec['action_id'].' day'.$temp;
   }
 
   //***************************************************************************************************************************************
@@ -247,6 +253,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
     $activite_css[$nactrec]         = 'positif texte_blanc gras';
     $activite_href[$nactrec]        = $chemin.'pages/sysop/pilori';
     $activite_desc[$nactrec]['FR']  = predata($dactrec['parent']).' a débanni '.predata($dactrec['pseudonyme']);
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['parent']).' has unbanned '.predata($dactrec['pseudonyme']);
   }
 
   //***************************************************************************************************************************************
@@ -257,6 +264,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
     $activite_css[$nactrec]         = 'negatif texte_blanc gras';
     $activite_href[$nactrec]        = $chemin.'pages/nobleme/admins';
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." ne fait plus partie de l'équipe administrative";
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme'])." is not part of the administrative team anymore";
   }
 
   //***************************************************************************************************************************************
@@ -267,6 +275,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
     $activite_css[$nactrec]         = 'vert_background texte_noir';
     $activite_href[$nactrec]        = $chemin.'pages/nobleme/admins';
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a rejoint l'équipe administrative en tant que modérateur";
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme'])." has joined the administrative team as a moderator";
   }
 
   //***************************************************************************************************************************************
@@ -277,6 +286,83 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
     $activite_css[$nactrec]         = 'neutre texte_blanc gras';
     $activite_href[$nactrec]        = $chemin.'pages/nobleme/admins';
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme'])." a rejoint l'équipe administrative en tant que sysop";
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme'])." has joined the administrative team as a sysop";
+  }
+
+
+
+
+  //*************************************************************************************************************************************//
+  //                                                                FORUM                                                                //
+  //*************************************************************************************************************************************//
+  // Nouveau sujet
+
+  else if($dactrec['action_type'] === 'forum_new' && !isset($_GET['mod']))
+  {
+    $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
+    $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a ouvert un sujet sur le forum : '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
+    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' opened a forum topic: '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
+  }
+  else if($dactrec['action_type'] === 'forum_new')
+  {
+    $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
+    $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a ouvert un sujet privé sur le forum : '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' opened a private forum topic: '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+  }
+
+  //***************************************************************************************************************************************
+  // Nouveau message
+
+  else if($dactrec['action_type'] === 'forum_new_message' && !isset($_GET['mod']))
+  {
+    $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['parent'].'#'.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a répondu au sujet du forum '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
+    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' replied to the forum topic '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
+  }
+  else if($dactrec['action_type'] === 'forum_new_message')
+  {
+    $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['parent'].'#'.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a répondu au sujet privé du forum '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' replied to the private forum topic '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+  }
+
+  //***************************************************************************************************************************************
+  // Suppression d'un message
+
+  else if($dactrec['action_type'] === 'forum_delete_message')
+  {
+    $activite_css[$nactrec]         = 'mise_a_jour_background';
+    $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
+    if($dactrec['pseudonyme'] == $dactrec['action_titre'])
+    {
+      $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a supprimé un de ses messages sur le forum';
+      $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' deleted one of his messages on the forum';
+    }
+    else
+      {
+      $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a supprimé un message de '.$dactrec['action_titre'].' sur le forum';
+      $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' deleted a message by '.$dactrec['action_titre'].' on the forum';
+    }
+  }
+
+  //***************************************************************************************************************************************
+  // Modification d'un sujet
+
+  else if($dactrec['action_type'] === 'forum_edit')
+  {
+    $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a modifié le sujet du forum '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+  }
+
+  //***************************************************************************************************************************************
+  // Suppression d'un sujet
+
+  else if($dactrec['action_type'] === 'forum_delete')
+  {
+    $activite_css[$nactrec]         = 'mise_a_jour texte_blanc';
+    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a supprimé le sujet du forum '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
   }
 
 
@@ -444,15 +530,23 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
 
 if($lang == 'FR')
 {
+  // Header
   $trad['titre']      = "Activité récente";
   $trad['soustitre']  = "Pour ceux qui ne veulent rien rater et tout traquer";
   $trad['titre_mod']  = "Logs de modération";
+
+  // Sélecteurs
   $trad['titretable'] = "DERNIÈRES ACTIONS";
   $trad['ar_tout']    = "Voir tout";
   $trad['ar_user']    = "Membres";
+  $trad['ar_forum']   = "Forum";
   $trad['ar_irl']     = "IRL";
   $trad['ar_dev']     = "Développement";
   $trad['ar_misc']    = "Miscellanées";
+
+  // Détails
+  $trad['d_justif']   = "Justification de l'action :";
+  $trad['d_diff']     = "Différence(s) avant/après l'action :";
 }
 
 
@@ -460,15 +554,23 @@ if($lang == 'FR')
 
 else if($lang == 'EN')
 {
+  // Header
   $trad['titre']      = "Recent activity";
   $trad['soustitre']  = "For those of us who don't want to miss a thing";
   $trad['titre_mod']  = "Mod logs";
+
+  // Sélecteurs
   $trad['titretable'] = "LATEST ACTIONS";
   $trad['ar_tout']    = "Everything";
   $trad['ar_user']    = "Users";
+  $trad['ar_forum']   = "Forum";
   $trad['ar_irl']     = "Meetups";
   $trad['ar_dev']     = "Internals";
   $trad['ar_misc']    = "Quotes";
+
+  // Détails
+  $trad['d_justif']   = "Reason for this action:";
+  $trad['d_diff']     = "Différence(s) before/after this action:";
 }
 
 
@@ -512,6 +614,7 @@ if(!getxhr()) { /***************************************************************
                   '&activite_type='+dynamique_prepare('activite_type'), 1);">
             <option value="tout"><?=$trad['ar_tout']?></option>
             <option value="membres"><?=$trad['ar_user']?></option>
+            <option value="forum"><?=$trad['ar_forum']?></option>
             <option value="irl"><?=$trad['ar_irl']?></option>
             <option value="misc"><?=$trad['ar_misc']?></option>
             <option value="dev"><?=$trad['ar_dev']?></option>
@@ -568,13 +671,13 @@ if(!getxhr()) { /***************************************************************
             <tr class="hidden texte_noir" id="activite_hidden<?=$i?>">
               <td colspan="3" class="align_left">
                 <?php if($activite_raison[$i]) { ?>
-                <span class="alinea gras souligne">Justification de l'action:</span> <?=$activite_raison[$i]?><br>
+                <span class="alinea gras souligne"><?=$trad['d_justif']?></span> <?=$activite_raison[$i]?><br>
                 <br>
                 <?php } if($activite_raison[$i] && $activite_diff[$i]) { ?>
                 <hr>
                 <br>
                 <?php } if($activite_diff[$i]) { ?>
-                <span class="alinea gras souligne">Différence(s) avant/après l'action:</span><br>
+                <span class="alinea gras souligne"><?=$trad['d_diff']?></span><br>
                 <br>
                 <?=$activite_diff[$i]?><br>
                 <br>

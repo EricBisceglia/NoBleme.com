@@ -116,7 +116,7 @@ $qpageviews = query($qpageviews);
 for($npageviews = 0; $dpageviews = mysqli_fetch_array($qpageviews); $npageviews++)
 {
   $views_id[$npageviews]          = $dpageviews['id'];
-  $views_nom[$npageviews]         = (!$dpageviews['url_page']) ? predata($dpageviews['nom_page']) : '<a href="'.$chemin.predata($dpageviews['url_page']).'">'.predata($dpageviews['nom_page']).'</a>';
+  $views_nom[$npageviews]         = (!$dpageviews['url_page']) ? $dpageviews['nom_page'] : '<a href="'.$chemin.$dpageviews['url_page'].'">'.$dpageviews['nom_page'].'</a>';
   $views_vues[$npageviews]        = format_nombre($dpageviews['vues'], 'nombre');
   $views_lastvisit[$npageviews]   = format_nombre($dpageviews['vues_lastvisit'], 'nombre');
   $views_croissance[$npageviews]  = ($dpageviews['vues'] != $dpageviews['vues_lastvisit']) ? format_nombre($dpageviews['vues'] - $dpageviews['vues_lastvisit'], 'nombre', NULL, 1) : '-';
@@ -138,7 +138,7 @@ $last_pageview_check  = jourfr(date('Y-m-d', $qpageviews['last_pageview_check'])
 /*                                                                                                                                       */
 if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
 
-      <div class="texte align_center">
+      <div class="texte2 align_center">
 
         <h1>Pageviews</h1>
 
