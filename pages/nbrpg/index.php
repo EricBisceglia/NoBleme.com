@@ -42,7 +42,7 @@ if($lang == 'FR')
   Après un dernier arc en 2015 pour conclure les dix ans d'histoire du jeu, la version classique du NoBlemeRPG a atteint la fin de sa vie. Un nouveau NoBlemeRPG plus moderne, joué directement dans le navigateur, avait été assemblé en 2016. Malheureusement, cet idiot de <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> est un perfectionniste et n'accepte pas de publier un jeu qui n'est pas 100% fun. Le remake du NBRPG était aux alentours de 90% fun, ce qui ne suffisait pas. Quand Bad aura trouvé les 10% manquants, le jeu reviendra. Un de ces jours...
 </p>
 <p>
-  En attendant le retour inévitable du NoBlemeRPG dans un corps tout neuf (Bientôt™), je vous laisse avec quelques <a class="gras" href="{$chemin}pages/nbrpg/logs">sessions de jeu archivées</a> pour assouvir votre curiosité.
+  En attendant le retour inévitable du NoBlemeRPG dans un corps tout neuf (Bientôt™), je vous laisse avec quelques <a class="gras" href="{$chemin}pages/nbrpg/archives">sessions de jeu archivées</a> pour assouvir votre curiosité.
 </p>
 EOD;
   $trad['pins']       = "Illustration grâcieusement offerte par ce bon vieux";
