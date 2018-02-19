@@ -51,7 +51,6 @@ $sujet_id = postdata($_GET['id'], 'int', 0);
 // On va chercher si le sujet existe, et on en profite pour récupérer des infos pour le header et sur l'apparence de sujet
 $qverifsujet = mysqli_fetch_array(query(" SELECT    forum_sujet.apparence       AS 's_apparence'      ,
                                                     forum_sujet.classification  AS 's_classification' ,
-                                                    forum_sujet.categorie       AS 's_categorie'      ,
                                                     forum_sujet.public          AS 's_public'         ,
                                                     forum_sujet.ouvert          AS 's_ouvert'         ,
                                                     forum_sujet.epingle         AS 's_epingle'        ,
@@ -68,7 +67,6 @@ if($qverifsujet['s_titre'] === NULL)
 // On récupère les infos sur le sujet
 $sujet_apparence      = $qverifsujet['s_apparence'];
 $sujet_classification = $qverifsujet['s_classification'];
-$sujet_categorie      = $qverifsujet['s_categorie'];
 $sujet_public         = $qverifsujet['s_public'];
 $sujet_ouvert         = $qverifsujet['s_ouvert'];
 $sujet_epingle        = $qverifsujet['s_epingle'];

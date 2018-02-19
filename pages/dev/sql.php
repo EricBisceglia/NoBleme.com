@@ -27,36 +27,123 @@ $page_nom = "Administre secrètement le site";
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Nouvelles tables pour le forum
-sql_creer_table("forum_sujet", "  id                        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-                                  FKmembres_createur        INT(11) UNSIGNED NOT NULL                             ,
-                                  FKmembres_dernier_message INT(11) UNSIGNED NOT NULL                             ,
-                                  timestamp_creation        INT(11) UNSIGNED NOT NULL                             ,
-                                  timestamp_dernier_message INT(11) UNSIGNED NOT NULL                             ,
-                                  apparence                 TINYTEXT NOT NULL                                     ,
-                                  classification            TINYTEXT NOT NULL                                     ,
-                                  categorie                 TINYTEXT NOT NULL                                     ,
-                                  public                    TINYINT(1) UNSIGNED NOT NULL                          ,
-                                  ouvert                    TINYINT(1) UNSIGNED NOT NULL                          ,
-                                  epingle                   TINYINT(1) UNSIGNED NOT NULL                          ,
-                                  langage                   TINYTEXT NOT NULL                                     ,
-                                  titre                     MEDIUMTEXT NOT NULL                                   ,
-                                  nombre_reponses           INT(11) UNSIGNED NOT NULL                             ");
+// Vu que c'est du MyISAM faudrait peut-être construire des index (oops)
 
-sql_creer_table("forum_message", "  id                      INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-                                    FKforum_sujet           INT(11) UNSIGNED NOT NULL                             ,
-                                    FKforum_message_parent  INT(11) UNSIGNED NOT NULL                             ,
-                                    FKmembres               INT(11) UNSIGNED NOT NULL                             ,
-                                    timestamp_creation      INT(11) UNSIGNED NOT NULL                             ,
-                                    timestamp_modification  INT(11) UNSIGNED NOT NULL                             ,
-                                    contenu                 LONGTEXT NOT NULL                                     ");
+sql_creer_index("activite", "index_membres", "FKmembres");
+sql_creer_index("activite", "index_action", "action_id");
+sql_creer_index("activite", "index_type", "action_type(10)");
+sql_creer_index("activite_diff", "index_activite", "FKactivite");
+sql_creer_index("irl_participants", "index_irl", "FKirl");
+sql_creer_index("irl_participants", "index_membres", "FKmembres");
+sql_creer_index("membres", "index_login", "pseudonyme(20), pass(60)");
+sql_creer_index("membres", "index_droits", "admin, sysop, moderateur(10)");
+sql_creer_index("membres_essais_login", "index_membres", "FKmembres");
+sql_creer_index("notifications", "index_destinataire", "FKmembres_destinataire");
+sql_creer_index("notifications", "index_envoyeur", "FKmembres_envoyeur");
+sql_creer_index("notifications", "index_chronologie", "date_envoi");
+sql_creer_index("pageviews", "index_recherche", "nom_page, url_page", 1);
+sql_creer_index("pageviews", "index_tri", "vues, vues_lastvisit");
+sql_creer_index("quotes", "index_membres", "FKauteur");
+sql_creer_index("quotes_membres", "index_quotes", "FKquotes");
+sql_creer_index("quotes_membres", "index_membres", "FKmembres");
+sql_creer_index("todo", "index_membres", "FKmembres");
+sql_creer_index("todo", "index_categorie", "FKtodo_categorie");
+sql_creer_index("todo", "index_roadmap", "FKtodo_roadmap");
+sql_creer_index("todo", "index_titre", "titre", 1);
+sql_creer_index("todo_roadmap", "index_classement", "id_classement");
 
-sql_creer_table("forum_filtrage", " id        INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-                                    FKmembres INT(11) UNSIGNED NOT NULL                             ,
-                                    filtre    TINYTEXT NOT NULL                                     ");
 
-// Nombre de messages dans le profil
-sql_creer_champ("membres", "forum_messages", "INT(11) UNSIGNED NOT NULL", "profil");
+
+
+// On veut plus du vieux système de filtrage par catégorie du forum, on va en recréer un nouveau
+
+sql_supprimer_table('forum_filtrage');
+sql_creer_table("forum_categorie", "  id              INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+                                      par_defaut      TINYINT(1) UNSIGNED NOT NULL                          ,
+                                      classement      INT(11) UNSIGNED NOT NULL                             ,
+                                      nom_fr          TINYTEXT NOT NULL                                     ,
+                                      nom_en          TINYTEXT NOT NULL                                     ,
+                                      description_fr  MEDIUMTEXT NOT NULL                                   ,
+                                      description_en  MEDIUMTEXT NOT NULL                                   ");
+sql_supprimer_champ("forum_sujet", "categorie");
+sql_creer_champ("forum_sujet", "FKforum_categorie", "INT(11) UNSIGNED NOT NULL", "FKmembres_dernier_message");
+sql_creer_table("forum_filtrage", " id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+                                    FKmembres         INT(11) UNSIGNED NOT NULL                             ,
+                                    FKforum_categorie INT(11) UNSIGNED NOT NULL                             ");
+sql_creer_champ("membres", "forum_lang", "TINYTEXT NOT NULL", "forum_messages");
+
+
+
+// Le forum aussi a le droit à des index
+
+sql_creer_index("forum_categorie", "index_classement", "par_defaut, classement");
+sql_creer_index("forum_filtrage", "index_membres", "FKmembres");
+sql_creer_index("forum_filtrage", "index_categorie", "FKforum_categorie");
+sql_creer_index("forum_message", "index_sujet", "FKforum_sujet");
+sql_creer_index("forum_message", "index_parent", "FKforum_message_parent");
+sql_creer_index("forum_message", "index_membres", "FKmembres");
+sql_creer_index("forum_message", "index_chronologie", "timestamp_creation");
+sql_creer_index("forum_message", "index_contenu", "contenu", 1);
+sql_creer_index("forum_sujet", "index_createur", "FKmembres_createur");
+sql_creer_index("forum_sujet", "index_dernier", "FKmembres_dernier_message");
+sql_creer_index("forum_sujet", "index_categorie", "FKforum_categorie");
+sql_creer_index("forum_sujet", "index_chronologie", "timestamp_dernier_message");
+sql_creer_index("forum_sujet", "index_titre", "titre", 1);
+
+
+
+
+// Contenu des catégories du forum : Par défaut
+
+$temp_desc_fr = postdata("Sélectionnez ceci si votre sujet ne correspond à aucune des options de catégorisation possibles. Dans la majorité des cas, c'est cette option que vous voudrez choisir pour votre sujet de discussion.", 'string');
+$temp_desc_en = postdata("Pick this if your topic doesn't fit any of the other categories. In most cases, this is the option that you will want to select.", 'string');
+sql_insertion_valeur(" SELECT nom_fr FROM forum_categorie WHERE nom_fr LIKE 'Aucune catégorie' ",
+" INSERT INTO forum_categorie
+  SET         par_defaut      = 1                   ,
+              classement      = 0                   ,
+              nom_fr          = 'Aucune catégorie'  ,
+              nom_en          = 'Uncategorized'     ,
+              description_fr  = '$temp_desc_fr'     ,
+              description_en  = '$temp_desc_en'     ");
+
+// Contenu des catégories du forum : Politique
+
+$temp_desc_fr = postdata("Si votre sujet parle de politique et/ou est lié à des actualités de nature politisées, cochez cette case afin que les utilisateurs qui le désirent puissent soit facilement trouver votre sujet pour y répondre, soit facilement filtrer votre sujet afin de ne pas le voir.", 'string');
+$temp_desc_en = postdata("If your topic is about politics and/or current events of a political nature, pick this option so that users who want to avoid that kind of content can filter it out (or so that those who want to discuss this kind of content can do so).", 'string');
+sql_insertion_valeur(" SELECT nom_fr FROM forum_categorie WHERE nom_fr LIKE 'Politique' ",
+" INSERT INTO forum_categorie
+  SET         par_defaut      = 0               ,
+              classement      = 100             ,
+              nom_fr          = 'Politique'     ,
+              nom_en          = 'Political'     ,
+              description_fr  = '$temp_desc_fr' ,
+              description_en  = '$temp_desc_en' ");
+
+// Contenu des catégories du forum : Informatique
+
+$temp_desc_fr = postdata("Afin de catégoriser les conversations liées à tous les champs de l'informatique (logiciels, développement, administration système, réseau, hardware, etc.), cochez cette case si votre sujet parle d'un sujet informatique quelconque. Cette catégorie n'est pas faite pour les jeux vidéo : si vous souhaitez parler de jeux vidéo sélectionnez l'option Aucune catégorie.", 'string');
+$temp_desc_en = postdata("In order to tag all topics that deal with the world of computer science (software, hardware, coding, sysadmin, networking, etc.), check this box if your planned topic fits that description. Note that this category is not made for video games: if you wish to discuss video games, check the \"Uncategorized\" box instead.", 'string');
+sql_insertion_valeur(" SELECT nom_fr FROM forum_categorie WHERE nom_fr LIKE 'Informatique' ",
+" INSERT INTO forum_categorie
+  SET         par_defaut      = 0                   ,
+              classement      = 101                 ,
+              nom_fr          = 'Informatique'      ,
+              nom_en          = 'Computer science'  ,
+              description_fr  = '$temp_desc_fr'     ,
+              description_en  = '$temp_desc_en'     ");
+
+// Contenu des catégories du forum : NoBleme.com
+
+$temp_desc_fr = postdata("Cochez cette case si votre sujet parle du contenu du site NoBleme.com et/ou de la communauté NoBleme.", 'string');
+$temp_desc_en = postdata("Pick this option if your topic is about the NoBleme.com website and/or its community.", 'string');
+sql_insertion_valeur(" SELECT nom_fr FROM forum_categorie WHERE nom_fr LIKE 'NoBleme.com' ",
+" INSERT INTO forum_categorie
+  SET         par_defaut      = 0               ,
+              classement      = 200             ,
+              nom_fr          = 'NoBleme.com'   ,
+              nom_en          = 'NoBleme.com'   ,
+              description_fr  = '$temp_desc_fr' ,
+              description_en  = '$temp_desc_en' ");
 
 
 
@@ -78,6 +165,7 @@ sql_creer_champ("membres", "forum_messages", "INT(11) UNSIGNED NOT NULL", "profi
 /* sql_renommer_champ($nom_table, $ancien_nom_champ, $nouveau_nom_champ, $type_champ);                                                   */
 /* sql_changer_type_champ($nom_table, $nom_champ, $type_champ)                                                                           */
 /* sql_supprimer_champ($nom_table, $nom_champ);                                                                                          */
+/* sql_creer_index($nom_table, $nom_index, $nom_champs, $fulltext);                                                                      */
 /* sql_insertion_valeur($condition, $requete);                                                                                           */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
@@ -263,6 +351,29 @@ function sql_supprimer_champ($nom_table, $nom_champ)
       query(" ALTER TABLE ".$nom_table." DROP ".$nom_champ);
   }
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Création d'un index dans une table existante
+//
+// Exemple: sql_creer_index("nom_table", "index_cc", "cc, tvvmb(10)")
+
+function sql_creer_index($nom_table, $nom_index, $nom_champs, $fulltext=NULL)
+{
+  // On va chercher si l'index existe
+  $qindex = query(" SHOW INDEX FROM ".$nom_table." WHERE key_name LIKE '".$nom_index."' ");
+
+  // S'il existe pas, on le crée
+  if(!mysqli_num_rows($qindex))
+  {
+    $temp_fulltext = ($fulltext) ? ' FULLTEXT ' : '';
+    query(" ALTER TABLE ".$nom_table."
+            ADD ".$temp_fulltext." INDEX ".$nom_index." (".$nom_champs."); ");
+  }
+}
+
 
 
 

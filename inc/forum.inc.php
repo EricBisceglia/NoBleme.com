@@ -41,16 +41,6 @@ function forum_option_info($option, $format, $lang="FR")
       $return = ($lang == 'FR') ? 'Débat' : 'Debate';
     if($option == 'Jeu')
       $return = ($lang == 'FR') ? 'Jeu de forum' : 'Forum game';
-
-    // Catégorie
-    if($option == 'Aucune')
-      $return = ($lang == 'FR') ? '' : '';
-    if($option == 'Politique')
-      $return = ($lang == 'FR') ? 'Politique' : 'Political';
-    if($option == 'Informatique')
-      $return = ($lang == 'FR') ? 'Informatique' : 'Computer science';
-    if($option == 'NoBleme')
-      $return = 'NoBleme.com';
   }
 
   // Format : Nom complet
@@ -71,16 +61,6 @@ function forum_option_info($option, $format, $lang="FR")
       $return = ($lang == 'FR') ? 'Débat d\'opinion' : 'Debate';
     if($option == 'Jeu')
       $return = ($lang == 'FR') ? 'Jeu de forum' : 'Forum game';
-
-    // Catégorie
-    if($option == 'Aucune')
-      $return = ($lang == 'FR') ? 'Aucune catégorie' : 'Uncategorized';
-    if($option == 'Politique')
-      $return = ($lang == 'FR') ? 'Politique' : 'Political';
-    if($option == 'Informatique')
-      $return = ($lang == 'FR') ? 'Informatique' : 'Computer science';
-    if($option == 'NoBleme')
-      $return = 'NoBleme.com';
   }
 
   // On renvoie la valeur demandée
