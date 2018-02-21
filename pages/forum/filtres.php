@@ -234,6 +234,8 @@ EOD;
             <label class="label-inline" for="filtre_lang_en"><?=$trad['lang_en']?></label><br>
             <br>
 
+            <br>
+
             <h5><?=$trad['cat_titre']?></h5>
 
             <br>
@@ -245,6 +247,7 @@ EOD;
             <label class="label-inline" for="filtre_categorie_<?=$categorie_id[$i]?>"><?=$categorie_nom[$i]?></label><br>
             <?php } ?>
 
+            <br>
             <br>
 
             <input value="<?=$trad['go_texte']?>" type="submit" name="filtre_go">
