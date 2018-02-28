@@ -407,12 +407,17 @@ function diff($old, $new)
 
 function search_wrap($recherche, $texte, $nombre_mots_autour)
 {
-  // On commence par découper les mots
-  $mots = preg_split('/\s+/', $texte);
+  $recherche = preg_quote($recherche, '/');
+  $texte = preg_quote($texte, '/');
+  // On commence par découper les mots en ignorant la casse
+  $mots = preg_split('/\s+/u', changer_casse($texte, 'min'));
 
   // Si on trouve le mot dans la phrase, on récupère sa position
-  $recuperation_mots  = preg_grep("/^".$recherche.".*/", $mots);
+  $recuperation_mots  = preg_grep("/".changer_casse($recherche, 'min').".*/", $mots);
   $position_mots      = array_keys($recuperation_mots);
+
+  // Puis on reprend les mots dans leur forme réelle
+  $mots = preg_split('/\s+/u', $texte);
 
   // Si on a repéré le mot, on met sa première occurence dans une variable
   if(count($position_mots))
@@ -422,8 +427,8 @@ function search_wrap($recherche, $texte, $nombre_mots_autour)
   if (isset($position))
   {
     // D'abord on a besoin des positions de début et de fin selon le nombre de mots qu'on veut récupérer
-    $debut  = ($position - $nombre_mots_autour > 0) ? $position - $nombre_mots_autour : 0;
-    $fin    = (($position + ($nombre_mots_autour + 1) < count($mots)) ? $position + ($nombre_mots_autour + 1) : count($mots)) - $debut;
+    $debut  = (($position - $nombre_mots_autour) > 0) ? $position - $nombre_mots_autour : 0;
+    $fin    = ((($position + ($nombre_mots_autour + 1)) < count($mots)) ? $position + ($nombre_mots_autour + 1) : count($mots)) - $debut;
 
     // Ensuite on découpe les mots en un tableau
     $slice  = array_slice($mots, $debut, $fin);
@@ -433,7 +438,7 @@ function search_wrap($recherche, $texte, $nombre_mots_autour)
     $fin    = ($position + ($nombre_mots_autour + 1) < count($mots)) ? "..." : "";
 
     // Puis on assemble ce tableau en une chaine de caractères qu'on renvoie
-    return $debut.implode(' ', $slice).$fin;
+    return stripslashes($debut.implode(' ', $slice).$fin);
   }
 
   // Si on a été perdu à une étape, on renvoie rien
@@ -451,7 +456,9 @@ function search_wrap($recherche, $texte, $nombre_mots_autour)
 
 function html_autour($recherche, $texte, $html_avant, $html_apres)
 {
-  return preg_replace("/($recherche)/i", "$html_avant$1$html_apres", $texte);
+  $recherche = preg_quote($recherche, '/');
+  $texte = preg_quote($texte, '/');
+  return stripslashes(preg_replace("/($recherche)/i", "$html_avant$1$html_apres", $texte));
 }
 
 

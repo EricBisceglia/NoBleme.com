@@ -80,10 +80,10 @@ if($forum_search_texte && strlen($forum_search_texte) < 3)
 if(isset($_POST['forum_search_go']) && !isset($forum_search_erreur) && $forum_search_sujets)
 {
   // On prépare la recherche
-  $qsujets_texte          = ($forum_search_texte) ? " , MATCH (forum_sujet.titre) AGAINST ('%$forum_search_texte%' IN BOOLEAN MODE) " : '';
-  $qsujets_texte_where    = ($forum_search_texte) ? " WHERE MATCH (forum_sujet.titre) AGAINST ('%$forum_search_texte%') > 0 " : ' WHERE 1 = 1 ';
-  $qmessages_texte        = ($forum_search_texte) ? " , MATCH (forum_message.contenu) AGAINST ('%$forum_search_texte%' IN BOOLEAN MODE) " : '';
-  $qmessages_texte_where  = ($forum_search_texte) ? " WHERE MATCH (forum_message.contenu) AGAINST ('%$forum_search_texte%') > 0 " : ' WHERE 1 = 1 ';
+  $qsujets_texte          = ($forum_search_texte) ? " , MATCH (forum_sujet.titre) AGAINST ('$forum_search_texte' IN BOOLEAN MODE) " : '';
+  $qsujets_texte_where    = ($forum_search_texte) ? " WHERE MATCH (forum_sujet.titre) AGAINST ('$forum_search_texte') > 0 " : ' WHERE 1 = 1 ';
+  $qmessages_texte        = ($forum_search_texte) ? " , MATCH (forum_message.contenu) AGAINST ('$forum_search_texte' IN BOOLEAN MODE) " : '';
+  $qmessages_texte_where  = ($forum_search_texte) ? " WHERE MATCH (forum_message.contenu) AGAINST ('$forum_search_texte') > 0 " : ' WHERE 1 = 1 ';
 
   // On va chercher les sujets
   $qsujets = query("  SELECT    forum_sujet.titre     AS 's_titre'
@@ -111,8 +111,10 @@ if(isset($_POST['forum_search_go']) && !isset($forum_search_erreur) && $forum_se
   // Qu'on prépare ensuite pour l'affichage
   for(; $dsujets = mysqli_fetch_array($qsujets); $nsujets++)
   {
-    $sujet_titre[$nsujets]    = predata(tronquer_chaine($dsujets['s_titre'], 55, '...'));
-    $sujet_message[$nsujets]  = bbcode(html_autour($forum_search_texte, predata(tronquer_chaine(search_wrap($forum_search_texte, $dsujets['s_message'], 5), 80, '...')), '<ins>', '</ins>'));
+    $sujet_titre[$nsujets]      = predata(tronquer_chaine($dsujets['s_titre'], 55, '...'));
+    $sujet_message[$nsujets]    = bbcode(html_autour($forum_search_texte, predata(tronquer_chaine(search_wrap($forum_search_texte, $dsujets['s_message'], 5), 80, '...')), '<ins>', '</ins>'));
+    if(!$sujet_message[$nsujets])
+      $sujet_message[$nsujets]  = ($lang == 'FR') ? 'Message trop long pour être affiché' : 'Post is too long to be shown';
   }
 }
 
@@ -308,7 +310,7 @@ else if($lang == 'EN')
 
       <?php } else { ?>
 
-      <div class="tableau">
+      <div class="tableau2">
 
         <h2><?=$trad['res_titre']?></h2>
 
@@ -343,10 +345,10 @@ else if($lang == 'EN')
                 <?=$sujet_message[$i]?>
               </td>
               <td>
-                
+
               </td>
               <td>
-                
+
               </td>
             </tr>
             <?php } ?>
