@@ -330,7 +330,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         <h5>Le futur : Quel est l'avenir de NoBleme ?</h5>
 
         <p>
-          Pour ne pas répéter les erreurs du passé, il est important que NoBleme ait une direction qui ne clashe pas avec l'état d'esprit de sa communauté. Il serait facile de juste faire revenir le NRM ou le Wiki pour faire grandir rapidement NoBleme, mais si c'est pour qu'ils attirent des gens dont la présence écraserait la communautés en place, ce ne serait pas intéressant.
+          Pour ne pas répéter les erreurs du passé, il est important que NoBleme ait une direction qui ne clashe pas avec l'état d'esprit de sa communauté. Il serait facile de juste faire revenir le NRM ou le Wiki pour faire grandir rapidement NoBleme, mais si c'est pour qu'ils attirent des gens dont la présence écraserait la communauté en place, ce ne serait pas intéressant.
         </p>
 
         <p>
