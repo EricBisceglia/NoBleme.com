@@ -59,27 +59,28 @@ if($qchecksujet['id'] === NULL)
 if(isset($_POST['sujet_edit_go']))
 {
   // On va chercher des infos sur l'IRL pour compléter le diff
-  $qchecksujet = mysqli_fetch_array(query(" SELECT  forum_sujet.categorie ,
-                                                    forum_sujet.langage   ,
-                                                    forum_sujet.titre     ,
-                                                    forum_sujet.public    ,
-                                                    forum_sujet.ouvert    ,
-                                                    forum_sujet.epingle
-                                            FROM    forum_sujet
-                                            WHERE   forum_sujet.id = '$sujet_edit_id' "));
+  $qchecksujet = mysqli_fetch_array(query(" SELECT    forum_sujet.langage     AS 's_lang'     ,
+                                                      forum_sujet.titre       AS 's_titre'    ,
+                                                      forum_sujet.public      AS 's_public'   ,
+                                                      forum_sujet.ouvert      AS 's_ouvert'   ,
+                                                      forum_sujet.epingle     AS 's_epingle'  ,
+                                                      forum_categorie.nom_fr  AS 'cat_nom'
+                                            FROM      forum_sujet
+                                            LEFT JOIN forum_categorie ON forum_sujet.FKforum_categorie = forum_categorie.id
+                                            WHERE     forum_sujet.id = '$sujet_edit_id' "));
 
   // On prépare les infos pour le diff
-  $edit_avant_titre     = postdata($qchecksujet['titre'], 'string', '');
-  $edit_avant_categorie = postdata($qchecksujet['categorie'], 'string', 'Aucune');
-  $edit_avant_langue    = postdata($qchecksujet['langage'], 'string', 'FR');
-  $edit_avant_public    = $qchecksujet['public'];
-  $edit_avant_ouvert    = $qchecksujet['ouvert'];
-  $edit_avant_epingle   = $qchecksujet['epingle'];
-  $edit_titre_raw       = $qchecksujet['titre'];
+  $edit_avant_titre     = postdata($qchecksujet['s_titre'], 'string', '');
+  $edit_avant_categorie = postdata($qchecksujet['cat_nom'], 'string', 'Aucune');
+  $edit_avant_langue    = postdata($qchecksujet['s_lang'], 'string', 'FR');
+  $edit_avant_public    = $qchecksujet['s_public'];
+  $edit_avant_ouvert    = $qchecksujet['s_ouvert'];
+  $edit_avant_epingle   = $qchecksujet['s_epingle'];
+  $edit_titre_raw       = $qchecksujet['s_titre'];
 
   // Assainissement du postdata
   $edit_titre     = postdata_vide('sujet_edit_titre', 'string', '');
-  $edit_categorie = postdata_vide('sujet_edit_categorie', 'string', 'Aucune');
+  $edit_categorie = postdata_vide('sujet_edit_categorie', 'int', 0);
   $edit_langue    = postdata_vide('sujet_edit_langue', 'string', 'FR');
   $edit_public    = (isset($_POST['sujet_edit_prive']) && $_POST['sujet_edit_prive']) ? 0 : 1;
   $edit_ouvert    = (isset($_POST['sujet_edit_ferme']) && $_POST['sujet_edit_ferme']) ? 0 : 1;
@@ -87,13 +88,13 @@ if(isset($_POST['sujet_edit_go']))
 
   // Mise à jour des infos
   query(" UPDATE  forum_sujet
-          SET     forum_sujet.categorie = '$edit_categorie' ,
-                  forum_sujet.langage   = '$edit_langue'    ,
-                  forum_sujet.titre     = '$edit_titre'     ,
-                  forum_sujet.public    = '$edit_public'    ,
-                  forum_sujet.ouvert    = '$edit_ouvert'    ,
-                  forum_sujet.epingle   = '$edit_epingle'
-          WHERE   forum_sujet.id        = '$sujet_edit_id' ");
+          SET     forum_sujet.FKforum_categorie = '$edit_categorie' ,
+                  forum_sujet.langage           = '$edit_langue'    ,
+                  forum_sujet.titre             = '$edit_titre'     ,
+                  forum_sujet.public            = '$edit_public'    ,
+                  forum_sujet.ouvert            = '$edit_ouvert'    ,
+                  forum_sujet.epingle           = '$edit_epingle'
+          WHERE   forum_sujet.id                = '$sujet_edit_id' ");
 
   // Activité récente
   $timestamp    = time();
@@ -115,11 +116,17 @@ if(isset($_POST['sujet_edit_go']))
                         diff_avant  = '$edit_avant_titre' ,
                         diff_apres  = '$edit_titre'       ");
   if($edit_avant_categorie != $edit_categorie)
+  {
+    $qgetcategorie = mysqli_fetch_array(query(" SELECT  forum_categorie.nom_fr
+                                                FROM    forum_categorie
+                                                WHERE   forum_categorie.id = '$edit_categorie' "));
+    $edit_categorie = $qgetcategorie['nom_fr'];
     query(" INSERT INTO activite_diff
             SET         FKactivite  = '$activite_id'          ,
                         titre_diff  = 'Catégorie'             ,
                         diff_avant  = '$edit_avant_categorie' ,
                         diff_apres  = '$edit_categorie'       ");
+  }
   if($edit_avant_langue != $edit_langue)
     query(" INSERT INTO activite_diff
             SET         FKactivite  = '$activite_id'        ,
@@ -160,32 +167,37 @@ if(isset($_POST['sujet_edit_go']))
 /*****************************************************************************************************************************************/
 
 // On va chercher les infos du sujet
-$qsujet = mysqli_fetch_array(query("  SELECT  forum_sujet.categorie ,
-                                              forum_sujet.langage   ,
-                                              forum_sujet.titre     ,
-                                              forum_sujet.public    ,
-                                              forum_sujet.ouvert    ,
-                                              forum_sujet.epingle
-                                      FROM    forum_sujet
-                                      WHERE   forum_sujet.id = '$sujet_edit_id' "));
+$qsujet = mysqli_fetch_array(query("  SELECT    forum_sujet.FKforum_categorie AS 'f_cat'      ,
+                                                forum_sujet.langage           AS 'f_lang'     ,
+                                                forum_sujet.titre             AS 'f_titre'    ,
+                                                forum_sujet.public            AS 'f_public'   ,
+                                                forum_sujet.ouvert            AS 'f_ouvert'   ,
+                                                forum_sujet.epingle           AS 'f_epingle'
+                                      FROM      forum_sujet
+                                      WHERE     forum_sujet.id = '$sujet_edit_id' "));
 
 // On les prépare pour l'affichage
-$sujet_titre      = predata($qsujet['titre']);
-$sujet_categorie  = predata($qsujet['categorie']);
-$sujet_langue     = $qsujet['langage'];
-$sujet_public     = (!$qsujet['public']) ? ' checked' : '';
-$sujet_ouvert     = (!$qsujet['ouvert']) ? ' checked' : '';
-$sujet_epingle    = ($qsujet['epingle']) ? ' checked' : '';
+$sujet_titre      = predata($qsujet['f_titre']);
+$sujet_categorie  = $qsujet['f_cat'];
+$sujet_langue     = $qsujet['f_lang'];
+$sujet_public     = (!$qsujet['f_public']) ? ' checked' : '';
+$sujet_ouvert     = (!$qsujet['f_ouvert']) ? ' checked' : '';
+$sujet_epingle    = ($qsujet['f_epingle']) ? ' checked' : '';
 
 // Menu déroulant : Catégorie
-$temp_selected      = ($sujet_categorie == 'Aucune') ? ' selected' : '';
-$select_categorie   = '<option value="Aucune"'.$temp_selected.'>'.forum_option_info('Aucune', 'complet', $lang).'</option>';
-$temp_selected      = ($sujet_categorie == 'Politique') ? ' selected' : '';
-$select_categorie  .= '<option value="Politique"'.$temp_selected.'>'.forum_option_info('Politique', 'complet', $lang).'</option>';
-$temp_selected      = ($sujet_categorie == 'Informatique') ? ' selected' : '';
-$select_categorie  .= '<option value="Informatique"'.$temp_selected.'>'.forum_option_info('Informatique', 'complet', $lang).'</option>';
-$temp_selected      = ($sujet_categorie == 'NoBleme') ? ' selected' : '';
-$select_categorie  .= '<option value="NoBleme"'.$temp_selected.'>'.forum_option_info('NoBleme', 'complet', $lang).'</option>';
+$select_categorie = '';
+$qcategories = query("  SELECT    forum_categorie.id      ,
+                                  forum_categorie.nom_fr  ,
+                                  forum_categorie.nom_en
+                        FROM      forum_categorie
+                        ORDER BY  forum_categorie.par_defaut  DESC  ,
+                                  forum_categorie.classement  ASC   ");
+while($dcategories = mysqli_fetch_array($qcategories))
+{
+  $temp_selected      = ($sujet_categorie == $dcategories['id']) ? ' selected' : '';
+  $temp_lang          = ($lang == 'FR') ? predata($dcategories['nom_fr']) : predata($dcategories['nom_en']);
+  $select_categorie  .= '<option value="'.$dcategories['id'].'"'.$temp_selected.'>'.$temp_lang.'</option>';
+}
 
 // Menu déroulant : Langue du sujet
 $temp_selected  = ($sujet_langue == 'FR') ? ' selected' : '';
@@ -271,9 +283,22 @@ else if($lang == 'EN')
             <br>
 
             <label for="sujet_edit_categorie"><?=$trad['edit_categorie']?></label>
+            <?php if(getadmin()) { ?>
+            <div class="flexcontainer">
+              <div style="flex:15">
+            <?php } ?>
             <select id="sujet_edit_categorie" name="sujet_edit_categorie" class="indiv">
               <?=$select_categorie?>
             </select><br>
+            <?php if(getadmin()) { ?>
+              </div>
+              <div style="flex:1" class="align_center">
+                <a href="<?=$chemin?>pages/forum/filtres_modifier">
+                  <img class="pointeur" src="<?=$chemin?>img/icones/modifier.png" alt="M">
+                </a>
+              </div>
+            </div>
+            <?php } ?>
             <br>
 
             <label for="sujet_edit_langue"><?=$trad['edit_langue']?></label>

@@ -19,8 +19,8 @@
 **                                                                                                                                       **
 ******************************************************************************************************************************************/
 
-function toggle_row(monobjet,table) {
-
+function toggle_row(monobjet,table)
+{
   // On récupère le statut de la ligne
   var cssobjet = document.getElementById(monobjet);
   var visobjet = cssobjet.currentStyle ? cssobjet.currentStyle.display : getComputedStyle(cssobjet,null).display;
@@ -31,6 +31,9 @@ function toggle_row(monobjet,table) {
   else
     cssobjet.style.display = 'none';
 }
+
+
+
 
 /******************************************************************************************************************************************
 **                                                                                                                                       **
@@ -48,8 +51,8 @@ function toggle_row(monobjet,table) {
 **                                                                                                                                       **
 ******************************************************************************************************************************************/
 
-function toggle_class(maclasse) {
-
+function toggle_class(maclasse)
+{
   // On met les éléments de la classe dans un tableau et
   var arrayclass    = document.getElementsByClassName(maclasse);
 
@@ -63,4 +66,36 @@ function toggle_class(maclasse) {
   // Reste plus qu'à toggler la visibilité de tous les éléments de la classe
   for(var i = 0 ; i < arrayclass.length ; i++)
     arrayclass[i].style.display = newstatusclass;
+}
+
+
+
+
+/******************************************************************************************************************************************
+**                                                                                                                                       **
+**                                                             toggle_oneway                                                             **
+**                                                                                                                                       **
+**                                                 Rend un élément visible ou invisible                                                  **
+**                                                                                                                                       **
+**  Paramètres :                                                                                                                         **
+**                                                                                                                                       **
+**           monobjet : ID de l'objet dont la visibilité va être togglée                                                                 **
+**             oneway : Sens dans lequel on veut faire une action (0 = masquer, 1 = afficher)                                            **
+**              table : Paramètre optionnel, transforme l'élément en table-row au lieu de block, à utiliser pour les <tr>                **
+**                                                                                                                                       **
+**  Exemple d'utilisation :                                                                                                              **
+**                                                                                                                                       **
+**           onClick="toggle_oneway('monobjet', 1)";                                                                                     **
+**                                                                                                                                       **
+******************************************************************************************************************************************/
+
+function toggle_oneway(monobjet, oneway, table)
+{
+  // Si on demande de masquer l'élément
+  if(!oneway)
+    document.getElementById(monobjet).style.display = 'none';
+
+  // Si on demande d'afficher l'élément
+  else
+    document.getElementById(monobjet).style.display = (typeof table === 'undefined') ? 'block' : 'table-row';
 }

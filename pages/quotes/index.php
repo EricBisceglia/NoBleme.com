@@ -116,7 +116,7 @@ if(!getxhr()) { /***************************************************************
         </p>
 
         <p>
-          L'intégralité de ces citations proviennent de NoBleme. La majorité viennent du <a class="gras" href="<?=$chemin?>pages/irc/index">serveur IRC</a>, les autres du <a class="gras" href="<?=$chemin?>pages/forum/index">forum</a> ou des <a class="gras" href="<?=$chemin?>pages/irl/index">rencontres IRL</a>. Si vous êtes diverti par du contenu qui a été écrit sur NoBleme, n'hésitez pas à proposer que ce contenu soit intégré aux miscellanées en <a class="gras" href="<?=$chemin?>pages/quote/add">cliquant ici</a>.
+          L'intégralité de ces citations proviennent de NoBleme. La majorité viennent du <a class="gras" href="<?=$chemin?>pages/irc/index">serveur IRC</a>, les autres du <a class="gras" href="<?=$chemin?>pages/forum/index">forum</a> ou des <a class="gras" href="<?=$chemin?>pages/irl/index">rencontres IRL</a>. Si vous êtes diverti par du contenu qui a été écrit sur NoBleme, n'hésitez pas à proposer que ce contenu soit intégré aux miscellanées en <a class="gras" href="<?=$chemin?>pages/quotes/add">cliquant ici</a>.
         </p>
 
         <br>

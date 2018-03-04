@@ -57,10 +57,19 @@ if(isset($_POST['forum_presentation_go']))
   $new_classification = (isset($_POST['forum_type_jeu']))       ? 'Jeu'       : $new_classification;
 
   // Et les options de catégorie
-  $new_categorie  = (isset($_POST['forum_categorie_aucune']))       ? 'Aucune'        : 0;
-  $new_categorie  = (isset($_POST['forum_categorie_politique']))    ? 'Politique'     : $new_categorie;
-  $new_categorie  = (isset($_POST['forum_categorie_informatique'])) ? 'Informatique'  : $new_categorie;
-  $new_categorie  = (isset($_POST['forum_categorie_nobleme']))      ? 'NoBleme'       : $new_categorie;
+  $new_categorie      = 0;
+  $new_categorie_nom  = '';
+  $qcategories = query("  SELECT    forum_categorie.id      ,
+                                    forum_categorie.nom_fr  ,
+                                    forum_categorie.nom_en
+                          FROM      forum_categorie
+                          ORDER BY  forum_categorie.id ASC ");
+  while($dcategories = mysqli_fetch_array($qcategories))
+  {
+    $new_categorie      = (isset($_POST['forum_categorie_'.$dcategories['id']])) ? $dcategories['id'] : $new_categorie;
+    $temp_nom           = ($lang == 'FR') ? predata($dcategories['nom_fr']) : predata($dcategories['nom_en']);
+    $new_categorie_nom  = (isset($_POST['forum_categorie_'.$dcategories['id']])) ? $temp_nom : $new_categorie_nom;
+  }
 
   // Si les trois options sont remplies, on autorise la composition du sujet
   $new_composition = ($new_apparence && $new_classification && $new_categorie) ? 1 : 0;
@@ -77,7 +86,7 @@ if(isset($_POST['forum_add_titre']))
   // Assainissement du postdata
   $add_apparence        = postdata_vide('forum_add_apparence', 'string', 'Fil');
   $add_classification   = postdata_vide('forum_add_classification', 'string', 'Standard');
-  $add_categorie        = postdata_vide('forum_add_categorie', 'string', 'Aucune');
+  $add_categorie        = postdata_vide('forum_add_categorie', 'int', 0);
   $add_langage          = postdata_vide('forum_add_langue', 'string', 'FR');
   $add_public           = (getmod('forum')) ? postdata_vide('forum_add_public', 'int', 1) : 1;
   $add_titre            = (isset($_POST['forum_add_titre'])) ? postdata(tronquer_chaine($_POST['forum_add_titre'], 100), 'string', ''): '';
@@ -89,11 +98,11 @@ if(isset($_POST['forum_add_titre']))
   query(" INSERT INTO forum_sujet
           SET         forum_sujet.FKmembres_createur        = '$add_auteur'         ,
                       forum_sujet.FKmembres_dernier_message = '$add_auteur'         ,
+                      forum_sujet.FKforum_categorie         = '$add_categorie'      ,
                       forum_sujet.timestamp_creation        = '$timestamp'          ,
                       forum_sujet.timestamp_dernier_message = '$timestamp'          ,
                       forum_sujet.apparence                 = '$add_apparence'      ,
                       forum_sujet.classification            = '$add_classification' ,
-                      forum_sujet.categorie                 = '$add_categorie'      ,
                       forum_sujet.public                    = '$add_public'         ,
                       forum_sujet.ouvert                    = 1                     ,
                       forum_sujet.epingle                   = 0                     ,
@@ -158,7 +167,32 @@ if(isset($_POST['forum_add_titre']))
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Liste des catégories
+
+// On va chercher les catégories
+$qcategories = query("  SELECT    forum_categorie.id          ,
+                                  forum_categorie.par_defaut  ,
+                                  forum_categorie.nom_fr      ,
+                                  forum_categorie.nom_en
+                        FROM      forum_categorie
+                        ORDER BY  forum_categorie.par_defaut  DESC  ,
+                                  forum_categorie.classement  ASC   ");
+
+// Et on les prépare pour l'affichage
+for($ncategories = 0; $dcategories = mysqli_fetch_array($qcategories); $ncategories++)
+{
+  $categorie_id[$ncategories]       = $dcategories['id'];
+  $categorie_checked[$ncategories]  = ($dcategories['par_defaut']) ? ' checked' : '';
+  $categorie_nom[$ncategories]      = ($lang == 'FR') ? predata($dcategories['nom_fr']) : predata($dcategories['nom_en']);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Menu déroulant pour la sélection de la langue
+
 $temp_lang          = ($lang == 'FR') ? 'Français' : 'French';
 $selected           = ($lang == 'FR') ? ' selected' : '';
 $select_add_langue  = '<option value="FR"'.$selected.'>'.$temp_lang.'</option>';
@@ -178,8 +212,8 @@ $select_add_langue .= '<option value="EN"'.$selected.'>'.$temp_lang.'</option>';
 if($lang == 'FR')
 {
   // Header
-  $trad['titre']            = "Forum NoBleme";
-  $trad['soustitre']        = "Ouvrir un nouveau sujet de discussion";
+  $trad['titre']            = "Ouvrir un nouveau sujet";
+  $trad['soustitre']        = "Démarrer un sujet de discussion sur le forum NoBleme";
   $trad['desc']             = <<<EOD
 <p>
   Avant de composer le contenu du sujet que vous souhaitez poster sur le <a class="gras" href="{$chemin}pages/forum/index">forum NoBleme</a>, vous devez commencer par spécifier de quel type de sujet il s'agit. Plusieurs options d'apparence, classification, et catégorisation de sujet vous serons proposés, et vous devrez impérativement sélectionner un de chaque. Une fois que vous aurez sélectionné les trois, un bouton apparaitra qui vous permettra de composer le contenu de votre sujet. <span class="gras">Si vous hésitez ou voulez créer un sujet de forum linéaire classique, sélectionnez tout simplement la première option dans les trois catégories.</span>
@@ -219,8 +253,8 @@ EOD;
 else if($lang == 'EN')
 {
   // Header
-  $trad['titre']            = "Forum NoBleme";
-  $trad['soustitre']        = "Open a new discussion topic";
+  $trad['titre']            = "Open a new topic";
+  $trad['soustitre']        = "Start a discussion topic on the NoBleme forum";
   $trad['desc']             = <<<EOD
 <p>
   Before you write the contents of the thread you want to post on the <a class="gras" href="{$chemin}pages/forum/index">NoBleme forum</a>, you will first have to specify what kind of thread it is that you want to open by picking a format, subject, and category from predefined options. Once all three are selected, you will be able to get to the topic writing part. <span class="gras">If you don't know what to pick or want to create a standard forum thread, pick the first option in each of the three categories.</span>
@@ -283,11 +317,9 @@ EOD;
             <form method="POST" id="forum_choisir_options">
               <fieldset>
 
-                <input type="hidden" name="forum_presentation_go">
-
                 <label class="texte_noir forum_nouveau_sujet_option"><?=$trad['cat_apparence']?></label>
 
-                <input id="forum_presentation_fil" name="forum_presentation_fil" type="checkbox" onchange="forum_ouvrir_sujet_categories('apparence', 'forum_presentation_fil');">
+                <input id="forum_presentation_fil" name="forum_presentation_fil" type="checkbox" onchange="forum_ouvrir_sujet_categories('apparence', 'forum_presentation_fil');" checked>
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
                   <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'fil');"><?=forum_option_info('Fil', 'complet', $lang)?></a>
                 </div>
@@ -303,7 +335,7 @@ EOD;
 
                 <label class="texte_noir forum_nouveau_sujet_option forum_nouveau_sujet_label"><?=$trad['cat_class']?></label>
 
-                <input id="forum_type_standard" name="forum_type_standard" type="checkbox" onchange="forum_ouvrir_sujet_categories('classification', 'forum_type_standard');">
+                <input id="forum_type_standard" name="forum_type_standard" type="checkbox" onchange="forum_ouvrir_sujet_categories('classification', 'forum_type_standard');" checked>
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
                   <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'standard');"><?=forum_option_info('Standard', 'complet', $lang)?></a>
                 </div>
@@ -329,37 +361,29 @@ EOD;
 
                 <br>
 
-                <label class="texte_noir forum_nouveau_sujet_option forum_nouveau_sujet_label"><?=$trad['cat_categorie']?></label>
+                <label class="texte_noir forum_nouveau_sujet_option forum_nouveau_sujet_label">
+                  <?=$trad['cat_categorie']?>
+                  <?php if(getadmin()) { ?>
+                  <a href="<?=$chemin?>pages/forum/filtres_modifier">
+                    &nbsp;<img class="pointeur" src="<?=$chemin?>img/icones/modifier.png" alt="M" height="16">
+                  </a>
+                  <?php } ?>
+                </label>
 
-                <input id="forum_categorie_aucune" name="forum_categorie_aucune" type="checkbox" onchange="forum_ouvrir_sujet_categories('categorisation', 'forum_categorie_aucune');">
+                <input type="hidden" id="forum_categorie_num" value="<?=$ncategories?>">
+                <?php for($i=0;$i<$ncategories;$i++) { ?>
+                <input id="forum_categorie_<?=$i?>" name="forum_categorie_<?=$categorie_id[$i]?>" type="checkbox" onchange="forum_ouvrir_sujet_categories('categorisation', <?=$i?>);"<?=$categorie_checked[$i]?>>
                 <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'aucune');"><?=forum_option_info('Aucune', 'complet', $lang)?></a>
+                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', '<?=$categorie_id[$i]?>');"><?=$categorie_nom[$i]?></a>
                 </div>
                 <br>
-
-                <input id="forum_categorie_politique" name="forum_categorie_politique" type="checkbox" onchange="forum_ouvrir_sujet_categories('categorisation', 'forum_categorie_politique');">
-                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'politique');"><?=forum_option_info('Politique', 'complet', $lang)?></a>
-                </div>
-                <br>
-
-                <input id="forum_categorie_informatique" name="forum_categorie_informatique" type="checkbox" onchange="forum_ouvrir_sujet_categories('categorisation', 'forum_categorie_informatique');">
-                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'informatique');"><?=forum_option_info('Informatique', 'complet', $lang)?></a>
-                </div>
-                <br>
-
-                <input id="forum_categorie_nobleme" name="forum_categorie_nobleme" type="checkbox" onchange="forum_ouvrir_sujet_categories('categorisation', 'forum_categorie_nobleme');">
-                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
-                  <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'nobleme');"><?=forum_option_info('NoBleme', 'complet', $lang)?></a>
-                </div>
-                <br>
+                <?php } ?>
 
                 <p class="texte_negatif gras spaced hidden" id="forum_choisir_options_erreur"><?=$trad['cat_erreur']?></p>
 
                 <br>
 
-                <button type="button" onclick="forum_ouvrir_sujet_composer();"><?=$trad['cat_composer']?></button>
+                <input type="submit" value="<?=$trad['cat_composer']?>" name="forum_presentation_go">
 
               </fieldset>
             </form>
@@ -396,7 +420,7 @@ EOD;
         <p>
           <span class="gras"><?=$trad['comp_apparence']?></span>: <?=forum_option_info($new_apparence, 'complet', $lang)?><br>
           <span class="gras"><?=$trad['comp_class']?></span>: <?=forum_option_info($new_classification, 'complet', $lang)?><br>
-          <span class="gras"><?=$trad['comp_categorie']?></span>: <?=forum_option_info($new_categorie, 'complet', $lang)?><br>
+          <span class="gras"><?=$trad['comp_categorie']?></span>: <?=$new_categorie_nom?><br>
         </p>
 
         <br>

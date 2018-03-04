@@ -47,11 +47,10 @@ function forum_ouvrir_sujet_categories(type, element)
   }
   else if(type == 'categorisation')
   {
-    document.getElementById('forum_categorie_aucune').checked       = false;
-    document.getElementById('forum_categorie_politique').checked    = false;
-    document.getElementById('forum_categorie_informatique').checked = false;
-    document.getElementById('forum_categorie_nobleme').checked      = false;
-    document.getElementById(element).checked                        = true;
+    num_categories = document.getElementById('forum_categorie_num').value;
+    for(var i = 0; i < num_categories; i++)
+      document.getElementById('forum_categorie_' + i).checked     = false;
+    document.getElementById('forum_categorie_' + element).checked = true;
   }
 }
 
@@ -63,25 +62,8 @@ function forum_ouvrir_sujet_categories(type, element)
 
 function forum_ouvrir_sujet_composer()
 {
-  // On vérifie que les cases soient bien cochées
-  apparence       = (document.getElementById('forum_presentation_fil').checked)       ? 1 : 0;
-  apparence       = (document.getElementById('forum_presentation_anonyme').checked)   ? 1 : apparence;
-  classification  = (document.getElementById('forum_type_standard').checked)          ? 1 : 0;
-  classification  = (document.getElementById('forum_type_serieux').checked)           ? 1 : classification;
-  classification  = (document.getElementById('forum_type_debat').checked)             ? 1 : classification;
-  classification  = (document.getElementById('forum_type_jeu').checked)               ? 1 : classification;
-  categorie       = (document.getElementById('forum_categorie_aucune').checked)       ? 1 : 0;
-  categorie       = (document.getElementById('forum_categorie_politique').checked)    ? 1 : categorie;
-  categorie       = (document.getElementById('forum_categorie_informatique').checked) ? 1 : categorie;
-  categorie       = (document.getElementById('forum_categorie_nobleme').checked)      ? 1 : categorie;
-
-  // Si tout est coché, on envoie le formulaire et on passe à la suite
-  if(apparence && classification && categorie)
-    document.getElementById("forum_choisir_options").submit();
-
-  // Sinon, on affiche un message d'erreur
-  else
-    document.getElementById("forum_choisir_options_erreur").style.display = 'block';
+  // On envoie le formulaire et on passe à la suite
+  document.getElementById("forum_choisir_options").submit();
 }
 
 

@@ -191,6 +191,54 @@ $js  = array('toggle', 'highlight', 'dev/reference');
           </tbody>
         </table>
 
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                TROUVER UN MOT ET CEUX QUI L'ENTOURENT
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                search_wrap("canard", "Je suis un canard, yo", 2);
+              </td>
+              <td class="align_center">
+                <?=search_wrap("canard", "Je suis un canard, yo", 2);?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                PLACER DU HTML AUTOUR D'UN MOT
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                html_autour("canard", "Je suis un canard, yo", '&lt;span class="gras"&gt;', "&lt;/span&gt;");
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                <?=html_autour("canard", "Je suis un canard, yo", '<span class="gras">', "</span>");?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
       </div>
 
 

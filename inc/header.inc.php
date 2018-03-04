@@ -707,8 +707,10 @@ $sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Requ
 <?php } ################################################ MENU LATÉRAL : DISCUTER ##########################################################
 // Préparation des traductions des titres du menu
 $sidemenu['bla_forum']            = ($lang == 'FR') ? "Forum de discussion"       : "Discussion forum";
-$sidemenu['bla_forum_sujets']     = ($lang == 'FR') ? "Sujets de discussion"      : "Latest forum threads";
-$sidemenu['bla_forum_ouvrir']     = ($lang == 'FR') ? "Ouvrir un nouveau sujet"   : "Open a new thread";
+$sidemenu['bla_forum_sujets']     = ($lang == 'FR') ? "Sujets de discussion"      : "Latest forum topics";
+$sidemenu['bla_forum_ouvrir']     = ($lang == 'FR') ? "Ouvrir un nouveau sujet"   : "Open a new topic";
+$sidemenu['bla_forum_recherche']  = ($lang == 'FR') ? "Recherche sur le forum"    : "Search the forum";
+$sidemenu['bla_forum_filtrage']   = ($lang == 'FR') ? "Préférences de filtrage"   : "Filtering preferences";
 $sidemenu['bla_irc']              = ($lang == 'FR') ? "Serveur de chat IRC"       : "IRC chat server";
 $sidemenu['bla_irc_what']         = ($lang == 'FR') ? "Qu'est-ce que IRC"         : "What is IRC";
 $sidemenu['bla_irc_clic']         = ($lang == 'FR') ? "Rejoindre la conversation" : "Join the conversation";
@@ -729,6 +731,18 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
             <a href="<?=$chemin?>pages/forum/new">
               <div class="<?=header_class('ForumNew',$header_sidemenu,'side')?>">
                 <?=$sidemenu['bla_forum_ouvrir']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/forum/recherche">
+              <div class="<?=header_class('ForumRecherche',$header_sidemenu,'side')?>">
+                <?=$sidemenu['bla_forum_recherche']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/forum/filtres">
+              <div class="<?=header_class('ForumFiltrage',$header_sidemenu,'side')?>">
+                <?=$sidemenu['bla_forum_filtrage']?>
               </div>
             </a>
 

@@ -21,7 +21,18 @@ xhronly();
 $chemin_xhr   = postdata_vide('chemin', 'string', '');
 $explications = postdata_vide('element', 'string', '');
 
-
+// Si c'est une catégorie, on va chercher les infos
+if(is_numeric($explications))
+{
+  $qcategorie = mysqli_fetch_array(query("  SELECT  forum_categorie.nom_fr          ,
+                                                    forum_categorie.nom_en          ,
+                                                    forum_categorie.description_fr  ,
+                                                    forum_categorie.description_en
+                                            FROM    forum_categorie
+                                            WHERE   forum_categorie.id = '$explications'  "));
+  $categorie_nom  = ($lang == 'FR') ? predata($qcategorie['nom_fr']) : predata($qcategorie['nom_en']);
+  $categorie_desc = ($lang == 'FR') ? bbcode(predata($qcategorie['description_fr'], 1)) : bbcode(predata($qcategorie['description_en'], 1));
+}
 
 
 /*****************************************************************************************************************************************/
@@ -99,34 +110,6 @@ EOD;
   $trad['jeu_desc_2']       = <<<EOD
 Les messages postés dans les sujets classifiés comme des jeux de forum n'augmentent pas le compte de messages postés sur le forum qui se trouve dans le <a class="gras" href="{$chemin_xhr}pages/user/user">profil public</a> de chaque utilisateur.
 EOD;
-
-  // Aucune catégorie
-  $trad['aucune_titre']     = "Aucune catégorie";
-  $trad['aucune_soustitre'] = "Pour les conversations génériques";
-  $trad['aucune_desc']      = <<<EOD
-Sélectionnez ceci si votre sujet ne correspond à aucune des options de catégorisation possibles. Dans la majorité des cas, c'est cette option que vous voudrez choisir pour votre sujet de discussion.
-EOD;
-
-  // Politique
-  $trad['pol_titre']        = "Politique";
-  $trad['pol_soustitre']    = "Pour les conversations politisées";
-  $trad['pol_desc']         = <<<EOD
-Si votre sujet parle de politique et/ou est lié à des actualités de nature politisées, cochez cette case afin que les utilisateurs qui le désirent puissent soit facilement trouver votre sujet pour y répondre, soit facilement filtrer votre sujet afin de ne pas le voir.
-EOD;
-
-  // Informatique
-  $trad['info_titre']       = "Informatique";
-  $trad['info_soustitre']   = "Pour parler développement, sysadmin, réseau, etc.";
-  $trad['info_desc']        = <<<EOD
-Afin de catégoriser les conversations liées à tous les champs de l'informatique (logiciels, développement, administration système, réseau, hardware, etc.), cochez cette case si votre sujet parle d'un sujet informatique quelconque. Cette catégorie n'est pas faite pour les jeux vidéo : si vous souhaitez parler de jeux vidéo sélectionnez l'option Aucune catégorie.
-EOD;
-
-  // Informatique
-  $trad['nb_titre']         = "NoBleme.com";
-  $trad['nb_soustitre']     = "Pour parler de NoBleme";
-  $trad['nb_desc']          = <<<EOD
-Cochez cette case si votre sujet parle du contenu du site NoBleme.com et/ou de la communauté NoBleme.
-EOD;
 }
 
 
@@ -200,34 +183,6 @@ The topic you are about to open isn't meant to be a discussion. It is either a g
 EOD;
   $trad['jeu_desc_2']       = <<<EOD
 Since they do not contribute to the forum's quality, replies posted in forum game threads will not increase the forum post count in your <a class="gras" href="{$chemin_xhr}pages/user/user">public profile</a>.
-EOD;
-
-  // Aucune catégorie
-  $trad['aucune_titre']     = "Uncategorized";
-  $trad['aucune_soustitre'] = "For generic conversations";
-  $trad['aucune_desc']      = <<<EOD
-Pick this if your topic doesn't fit any of the other categories. In most cases, this is the option that you will want to select.
-EOD;
-
-  // Politique
-  $trad['pol_titre']        = "Politics";
-  $trad['pol_soustitre']    = "For politically loaded topics";
-  $trad['pol_desc']         = <<<EOD
-If your topic is about politics and/or current events of a political nature, pick this option so that users who want to avoid that kind of content can filter it out (or so that those who want to discuss this kind of content can do so).
-EOD;
-
-  // Informatique
-  $trad['info_titre']       = "Computer science";
-  $trad['info_soustitre']   = "For talks about coding, sysadmin, networking, etc.";
-  $trad['info_desc']        = <<<EOD
-In order to tag all topics that deal with the world of computer science (software, hardware, coding, sysadmin, networking, etc.), check this box if your planned topic fits that description. Note that this category is not made for video games: if you wish to discuss video games, check the "Uncategorized" box instead.
-EOD;
-
-  // Informatique
-  $trad['nb_titre']         = "NoBleme.com";
-  $trad['nb_soustitre']     = "To talk about NoBleme";
-  $trad['nb_desc']          = <<<EOD
-Pick this option if your topic is about the NoBleme.com website and/or its community.
 EOD;
 }
 
@@ -423,45 +378,10 @@ EOD;
 
 
 
-<?php } else if($explications == 'aucune') { ?>
+<?php } else if(is_numeric($explications)) { ?>
 
-<h5 class="indiv align_center texte_noir"><?=$trad['aucune_titre']?></h5>
+<h5 class="indiv align_center texte_noir"><?=$categorie_nom?></h5>
 
-<div class="texte_positif gras indiv align_center"><?=$trad['aucune_soustitre']?></div>
-
-<p><?=$trad['aucune_desc']?></p>
-
-
-
-
-<?php } else if($explications == 'politique') { ?>
-
-<h5 class="indiv align_center texte_noir"><?=$trad['pol_titre']?></h5>
-
-<div class="texte_positif gras indiv align_center"><?=$trad['pol_soustitre']?></div>
-
-<p><?=$trad['pol_desc']?></p>
-
-
-
-
-<?php } else if($explications == 'informatique') { ?>
-
-<h5 class="indiv align_center texte_noir"><?=$trad['info_titre']?></h5>
-
-<div class="texte_positif gras indiv align_center"><?=$trad['info_soustitre']?></div>
-
-<p><?=$trad['info_desc']?></p>
-
-
-
-
-<?php } else if($explications == 'nobleme') { ?>
-
-<h5 class="indiv align_center texte_noir"><?=$trad['nb_titre']?></h5>
-
-<div class="texte_positif gras indiv align_center"><?=$trad['nb_soustitre']?></div>
-
-<p><?=$trad['nb_desc']?></p>
+<p><?=$categorie_desc?></p>
 
 <?php } ?>
