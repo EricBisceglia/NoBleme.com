@@ -38,14 +38,7 @@ $forum_search_auteur    = postdata_vide('forum_search_auteur', 'string', '');
 $forum_search_sujets    = isset($_POST['forum_search_go']) ? postdata_vide('forum_search_sujets', 'string', '')   : 'on';
 $forum_search_messages  = isset($_POST['forum_search_go']) ? postdata_vide('forum_search_messages', 'string', '') : 'on';
 $forum_search_anonyme   = isset($_POST['forum_search_go']) ? postdata_vide('forum_search_anonyme', 'string', '')  : 'on';
-$forum_search_jeux      = isset($_POST['forum_search_go']) ? postdata_vide('forum_search_jeux', 'string', '')     : 'on';
-
-// De même pour la liste des catégories
-$forum_search_categories = array();
-$qcategories = query("  SELECT  forum_categorie.id
-                        FROM    forum_categorie ");
-while($dcategories = mysqli_fetch_array($qcategories))
-  $forum_search_categories[$dcategories['id']] = isset($_POST['forum_search_go']) ? postdata_vide('forum_search_categorie_'.$dcategories['id'], 'string', '') : 'on';
+$forum_search_jeux      = isset($_POST['forum_search_go']) ? postdata_vide('forum_search_jeux', 'string', '')     : '';
 
 // On va chercher l'id du pseudonyme recherché
 if($forum_search_auteur)
@@ -61,7 +54,7 @@ if($forum_search_auteur)
 
 // On s'assure qu'il n'y ait pas d'erreur
 if($forum_search_auteur && $forum_search_anonyme)
-  $forum_search_erreur = ($lang == 'FR') ? "Impossible de faire une recherche par pseudonyme tout en incluant les sujets anonymes" : "Can't include anonymous topics when searching posts by author";
+  $forum_search_erreur = ($lang == 'FR') ? "Impossible de faire une recherche par pseudonyme tout en incluant les sujets anonymes" : "Can't include anonymous threads when searching posts by author";
 if(!$forum_search_texte && !$forum_search_auteur)
   $forum_search_erreur = ($lang == 'FR') ? "Vous devez remplir au moins un des deux premiers champs de recherche" : "You must fill at least one of the first two text forms";
 if($forum_search_texte && strlen($forum_search_texte) < 3)
@@ -90,6 +83,35 @@ if(isset($_POST['forum_search_go']) && !isset($forum_search_erreur))
   $qsujets_pseudo   = ($forum_search_auteur) ? " AND forum_sujet.FKmembres_createur LIKE '$forum_search_membre' AND forum_sujet.apparence NOT LIKE 'Anonyme' " : "";
   $qmessages_pseudo = ($forum_search_auteur) ? " AND forum_message.FKmembres        LIKE '$forum_search_membre' AND forum_sujet.apparence NOT LIKE 'Anonyme' " : "";
 
+  // Et les critères de recherche
+  $qsujets_criteres   = (!$forum_search_anonyme)  ? " AND forum_sujet.apparence NOT LIKE 'Anonyme' "  : " ";
+  $qsujets_criteres  .= (!$forum_search_jeux)     ? " AND forum_sujet.classification NOT LIKE 'Jeu' " : " ";
+
+  // Critères auxquels on rajoute les préférences de langage et de catégories si l'utilisateur est connecté
+  if(loggedin())
+  {
+    // Filtrage par langage
+    $user_id    = postdata($_SESSION['user'], 'int', 0);
+    $qforumlang = mysqli_fetch_array(query("  SELECT  membres.forum_lang
+                                              FROM    membres
+                                              WHERE   membres.id = '$user_id' "));
+    if($qforumlang['forum_lang'])
+    {
+      $qsujets_criteres .= (strpos($qforumlang['forum_lang'], 'FR') !== false) ? '' : " AND forum_sujet.langage LIKE 'EN' ";
+      $qsujets_criteres .= (strpos($qforumlang['forum_lang'], 'EN') !== false) ? '' : " AND forum_sujet.langage LIKE 'FR' ";
+    }
+
+    // Filtrage par catégories
+    $qforumcat = query("  SELECT  forum_filtrage.FKforum_categorie
+                          FROM    forum_filtrage
+                          WHERE   forum_filtrage.FKmembres = '$user_id' ");
+    if(mysqli_num_rows($qforumcat))
+    {
+      while($dforumcat = mysqli_fetch_array($qforumcat))
+        $qsujets_criteres .= " AND forum_sujet.FKforum_categorie != '".$dforumcat['FKforum_categorie']."' ";
+    }
+  }
+
   // On interdit aux non-admins de voir les sujets privés
   $qsujets_prive = getmod('forum') ? "" : " AND forum_sujet.public = 1 ";
 
@@ -108,6 +130,7 @@ if(isset($_POST['forum_search_go']) && !isset($forum_search_erreur))
                                   $qsujets_texte_where
                                   $qsujets_pseudo
                                   $qsujets_prive
+                                  $qsujets_criteres
                         ORDER BY  forum_sujet.timestamp_creation DESC ");
 
     // Qu'on prépare ensuite pour l'affichage
@@ -127,6 +150,7 @@ if(isset($_POST['forum_search_go']) && !isset($forum_search_erreur))
     $nsujets = 0;
 
   // Puis les messages individuels
+  $total_sujets = $nsujets;
   if($forum_search_messages)
   {
     $qsujets = query("  SELECT    forum_sujet.id                    AS 's_id'         ,
@@ -144,6 +168,7 @@ if(isset($_POST['forum_search_go']) && !isset($forum_search_erreur))
                                   $qmessages_texte_where
                                   $qmessages_pseudo
                                   $qsujets_prive
+                                  $qsujets_criteres
                         ORDER BY  forum_message.timestamp_creation DESC ");
 
     // Qu'on prépare ensuite pour l'affichage
@@ -154,55 +179,16 @@ if(isset($_POST['forum_search_go']) && !isset($forum_search_erreur))
       $sujet_idmessage[$nsujets]  = $dsujets['m_id'];
       $sujet_message[$nsujets]    = ($forum_search_auteur) ? bbcode(predata(tronquer_chaine($dsujets['m_contenu'], 80, '...'))) : bbcode(html_autour($forum_search_texte, predata(tronquer_chaine(search_wrap($forum_search_texte, $dsujets['m_contenu'], 5), 80, '...')), '<ins>', '</ins>'));
       if(!$sujet_message[$nsujets])
-        $sujet_message[$nsujets]  = ($lang == 'FR') ? 'Message trop long pour être affiché' : 'Post is too long to be shown';
+        $sujet_message[$nsujets]  = bbcode(predata(tronquer_chaine($dsujets['m_contenu'], 80, '...')));
       $temp_anonyme               = ($lang == 'FR') ? 'Anonyme' : 'Anonymous';
       $sujet_auteur[$nsujets]     = ($dsujets['s_apparence'] == 'Anonyme') ? $temp_anonyme : predata($dsujets['m_auteur']);
       $sujet_idauteur[$nsujets]   = ($dsujets['s_apparence'] == 'Anonyme') ? 0 : $dsujets['m_idauteur'];
       $sujet_date[$nsujets]       = ilya($dsujets['m_date']);
     }
   }
-}
 
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Liste des catégories pour la recherche
-
-// Si le membre est connecté, on récupère ses préférences de filtrage
-$filtre_categories = ' ';
-if(loggedin())
-{
-  // On va chercher s'il a un filtagee par catégorie en place
-  $user_id   = postdata($_SESSION['user'], 'int', 0);
-  $qforumcat = query("  SELECT  forum_filtrage.FKforum_categorie
-                        FROM    forum_filtrage
-                        WHERE   forum_filtrage.FKmembres = '$user_id' ");
-
-  // S'il y en a, on parcourt les filtres pour créer les conditions
-  if(mysqli_num_rows($qforumcat))
-  {
-    while($dforumcat = mysqli_fetch_array($qforumcat))
-      $filtre_categories .= " AND forum_categorie.id != '".$dforumcat['FKforum_categorie']."' ";
-  }
-}
-
-// On va chercher la liste des catégories non filtrées autres que celle par défaut
-$qcategories = query("  SELECT    forum_categorie.id      ,
-                                  forum_categorie.nom_fr  ,
-                                  forum_categorie.nom_en
-                        FROM      forum_categorie
-                        WHERE     1 = 1
-                                  $filtre_categories
-                        ORDER BY  forum_categorie.par_defaut DESC ,
-                                  forum_categorie.classement ASC  ");
-
-// Et on les prépare pour l'affichage
-for($ncategories = 0; $dcategories = mysqli_fetch_array($qcategories); $ncategories++)
-{
-  $categorie_id[$ncategories]       = $dcategories['id'];
-  $categorie_nom[$ncategories]      = ($lang == 'FR') ? predata($dcategories['nom_fr']) : predata($dcategories['nom_en']);
-  $categorie_checked[$ncategories]  = ($forum_search_categories[$dcategories['id']]) ? ' checked' : '';
+  // On calcule les totaux de sujets et messages
+  $total_messages = $nsujets - $total_sujets;
 }
 
 
@@ -248,13 +234,13 @@ EOD;
   $trad['form_posts']     = "Contenu des messages";
   $trad['form_anon']      = "Inclure les sujets anonymes dans la recherche";
   $trad['form_jeux']      = "Inclure les jeux de forum dans la recherche";
-  $trad['form_cat']       = "Catégories dans lesquelles chercher";
   $trad['form_go']        = "EXÉCUTER LA RECHERCHE SUR LE FORUM NOBLEME";
 
   // Résultats de la recherche
   $trad['res_erreur']     = "Erreur :";
-  $temp_nsujets           = (isset($nsujets)) ? $nsujets : 0;
-  $trad['res_titre']      = "Résultats de la recherche : $temp_nsujets sujets et/ou messages trouvés";
+  $temp_nsujets           = (isset($total_sujets)) ? $total_sujets : 0;
+  $temp_nmessages         = (isset($total_messages)) ? $total_messages : 0;
+  $trad['res_titre']      = "Résultats de la recherche : $temp_nsujets sujets et $temp_nmessages messages trouvés";
 }
 
 
@@ -262,6 +248,29 @@ EOD;
 
 else if($lang == 'EN')
 {
+  // Header
+  $trad['titre']          = "Search the forum";
+  $trad['soustitre']      = "Find specific posts on NoBleme's forum";
+  $trad['desc']           = <<<EOD
+Are you searching for specific content on <a class="gras" href="{$chemin}pages/forum/index">NoBleme's forum</a>? Fill up part of the search form below, then press the search button, and you might find what you are looking for. The search results will be displayed or hidden according to your <a class="gras" href="{$chemin}pages/forum/filtres">filtering preferences</a>.
+EOD;
+
+  // Formulaire de recherche
+  $trad['form_texte']     = "Text to search on the forum";
+  $trad['form_auteur']    = "Nickname of the post's author";
+  $trad['form_contenu']   = "Contents that you want to return";
+  $trad['form_criteres']  = "Search options";
+  $trad['form_sujets']    = "Thread titles";
+  $trad['form_posts']     = "Individual posts";
+  $trad['form_anon']      = "Include anonymous threads in the search results";
+  $trad['form_jeux']      = "Include forum games in the search results";
+  $trad['form_go']        = "SEARCH THE NOBLEME FORUM";
+
+  // Résultats de la recherche
+  $trad['res_erreur']     = "Error:";
+  $temp_nsujets           = (isset($total_sujets)) ? $total_sujets : 0;
+  $temp_nmessages         = (isset($total_messages)) ? $total_messages : 0;
+  $trad['res_titre']      = "Search results: $temp_nsujets thread titles and $temp_nmessages posts found";
 }
 
 
@@ -306,19 +315,6 @@ else if($lang == 'EN')
 
             <br>
 
-            <?php if($ncategories > 1) { ?>
-
-            <label><?=$trad['form_cat']?></label>
-
-            <?php for($i=0;$i<$ncategories;$i++) { ?>
-
-            <input id="forum_search_categorie_<?=$categorie_id[$i]?>" name="forum_search_categorie_<?=$categorie_id[$i]?>" type="checkbox"<?=$categorie_checked[$i]?>>
-            <label class="label-inline" for="forum_search_categorie_<?=$categorie_id[$i]?>"><?=$categorie_nom[$i]?></label><br>
-
-            <?php } ?>
-
-            <br>
-
             <label><?=$trad['form_criteres']?></label>
 
             <input id="forum_search_anonyme" name="forum_search_anonyme" type="checkbox"<?=$checked_anonyme?>>
@@ -328,8 +324,6 @@ else if($lang == 'EN')
             <label class="label-inline" for="forum_search_jeux"><?=$trad['form_jeux']?></label><br>
 
             <br>
-
-            <?php } ?>
 
             <input value="<?=$trad['form_go']?>" type="submit" name="forum_search_go">
 
