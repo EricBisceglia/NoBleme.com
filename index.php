@@ -53,7 +53,7 @@ $agenobleme = date('Y')-2005;
 
         <p>Existant dans son coin depuis plus de <?=$agenobleme?> ans, NoBleme est un vestige du passé d'internet.</p>
 
-        <p>Avant l'ère des réseaux sociaux, le web était décentralisé : composé de plein de petites communautés qui n'avaient pas spécialement de thème ou de raison d'être. Aujourd'hui, NoBleme continue à préserver l'esprit quasi-familial de ces petites commaunatés d'antan.</p>
+        <p>Avant l'ère des réseaux sociaux, le web était décentralisé : composé de plein de petites communautés qui n'avaient pas spécialement de thème ou de raison d'être. Aujourd'hui, NoBleme continue à préserver l'esprit quasi-familial de ces petites communautés d'antan.</p>
 
         <p>Toutefois, NoBleme n'est pas fait pour être un musée. C'est une communauté vivante, activement développée, qui continue à accueillir les nouveaux à bras ouverts et à éjecter les causeurs de drames afin de préserver l'ambiance amicale qui fait son charme.</p>
 
