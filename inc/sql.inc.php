@@ -20,7 +20,8 @@ else
   $GLOBALS['db'] = @mysqli_connect('localhost', 'root', $GLOBALS['mysql_pass'], 'nobleme') or die ('Erreur SQL ! Connexion &agrave; la base de donn&eacute;es impossible');
 
 mysqli_set_charset($GLOBALS['db'], "utf8");
-$GLOBALS['query'] = 0;
+$GLOBALS['query'] = -1;
+query('SET NAMES utf8mb4');
 
 
 
