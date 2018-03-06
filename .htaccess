@@ -1,5 +1,8 @@
 Options +FollowSymlinks -MultiViews
 RewriteEngine On
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Pour retirer le .php à la fin des urls
 RewriteCond %{REQUEST_FILENAME} !-d
