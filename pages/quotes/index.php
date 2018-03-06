@@ -48,7 +48,7 @@ if(!getadmin())
 if(isset($_POST['misc_recherche']))
 {
   $misc_recherche = postdata_vide('misc_recherche', 'string', '');
-  $qmisc .= " AND       quotes.contenu LIKE '%$misc_recherche%' collate utf8_bin ";
+  $qmisc .= " AND       quotes.contenu LIKE '%$misc_recherche%' collate utf8mb4_general_ci ";
 }
 
 // Tri

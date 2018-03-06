@@ -61,7 +61,7 @@ if(isset($_POST['misc_action']) && $_POST['misc_action'] == 'ajout')
   // On récupère l'id du membre
   $qgetmembre = mysqli_fetch_array(query("  SELECT  membres.id
                                             FROM    membres
-                                            WHERE   membres.pseudonyme LIKE '$misc_ajouter' collate utf8_bin "));
+                                            WHERE   membres.pseudonyme LIKE '$misc_ajouter' collate utf8mb4_general_ci "));
 
   // On vérifie si le membre est déjà lié
   $misc_ajouter     = $qgetmembre['id'];
