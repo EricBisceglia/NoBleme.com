@@ -118,6 +118,13 @@ $page_desc          = $page_desc.predata($dprofil['u_pseudo']);
 
 
 // On va aller chercher d'autres infos sur le membre
+
+$qprofil_forum    = mysqli_fetch_array(query("  SELECT    COUNT(forum_sujet.id) AS 'num_sujets'
+                                                FROM      forum_sujet
+                                                WHERE     forum_sujet.FKmembres_createur    = '$user_id'
+                                                AND       forum_sujet.apparence      NOT LIKE 'Anonyme'
+                                                AND       forum_sujet.public                = 1 "));
+
 $temp_date        = date('Y-m-d');
 $qprofil_irl      = mysqli_fetch_array(query("  SELECT    COUNT(irl_participants.id) AS 'num_irls'
                                                 FROM      irl_participants
@@ -162,7 +169,8 @@ $profil_anniv     = ($dprofil['u_anniv'] != '0000-00-00') ? jourfr($dprofil['u_a
 $profil_lieu      = predata($dprofil['u_habite']);
 $profil_metier    = predata($dprofil['u_metier']);
 $profil_email     = predata($dprofil['u_email']);
-$profil_forum     = $dprofil['u_forum'];
+$profil_forum     = $qprofil_forum['num_sujets'];
+$profil_forum_2   = $dprofil['u_forum'];
 $profil_irl       = $qprofil_irl['num_irls'];
 $profil_quotes    = $qprofil_quotes['num_quotes'];
 $profil_quotesub  = $qprofil_quotesub['num_quotes'];
@@ -199,11 +207,14 @@ if($lang == 'FR')
   $trad['user_anniv']     = " ans / Né le ";
   $trad['user_lieu']      = "Ville / Pays";
   $trad['user_metier']    = "Métier / Occupation";
+  $trad['user_forum']     = "Forum NoBleme";
+  $trad['usert_forum']    = "A posté ";
+  $temp_pluriel           = ($profil_forum == 1) ? 'sujet' : 'sujets';
+  $trad['usert_forum']   .= ($profil_forum) ? '<span class="gras texte_noir">'.$profil_forum.'</span> '.$temp_pluriel.' et ' : "";
+  $temp_pluriel           = ($profil_forum_2 == 1) ? 'message' : 'messages';
+  $trad['usert_forum']   .= ($profil_forum_2) ? '<span class="gras texte_noir">'.$profil_forum_2.'</span> '.$temp_pluriel : "";
   $trad['user_irl']       = "IRLs NoBlemeuses";
   $trad['usert_irl']      = 'Est venu <span class="gras texte_noir">'.$profil_irl.'</span> fois';
-  $trad['user_forum']     = "Forum NoBleme";
-  $temp_pluriel           = ($profil_forum == 1) ? 'message' : 'messages';
-  $trad['usert_forum']    = 'A posté <span class="gras texte_noir">'.$profil_forum.'</span> '.$temp_pluriel;
 }
 
 
@@ -231,11 +242,14 @@ else if($lang == 'EN')
   $trad['user_anniv']     = " years old / Born ";
   $trad['user_lieu']      = "City / Country";
   $trad['user_metier']    = "Job / Occupation";
+  $trad['user_forum']     = "NoBleme forum";
+  $trad['usert_forum']    = "Posted ";
+  $temp_pluriel           = ($profil_forum == 1) ? 'topic' : 'topics';
+  $trad['usert_forum']   .= ($profil_forum) ? '<span class="gras texte_noir">'.$profil_forum.'</span> '.$temp_pluriel.' and ' : "";
+  $temp_pluriel           = ($profil_forum_2 == 1) ? 'message' : 'messages';
+  $trad['usert_forum']   .= ($profil_forum_2) ? '<span class="gras texte_noir">'.$profil_forum_2.'</span> '.$temp_pluriel : "";
   $trad['user_irl']       = "Real life meetups";
   $trad['usert_irl']      = 'Attended <span class="gras texte_noir">'.$profil_irl.'</span> of them';
-  $trad['user_forum']     = "NoBleme forum";
-  $temp_pluriel           = ($profil_forum == 1) ? 'message' : 'messages';
-  $trad['usert_forum']    = 'Posted <span class="gras texte_noir">'.$profil_forum.'</span> '.$temp_pluriel;
 }
 
 
@@ -337,7 +351,7 @@ else if($lang == 'EN')
               <span class="gras"><?=$trad['user_metier']?></span><br>
               <?=$profil_metier?>
 
-              <?php } if($profil_forum) { ?>
+              <?php } if($profil_forum || $profil_forum_2) { ?>
               <hr class="profil_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/forum/index';">
                 <span class="gras"><?=$trad['user_forum']?></span><br>
