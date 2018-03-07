@@ -190,6 +190,13 @@ EOD;
         <br>
         <br>
 
+        <?php if(!isset($_GET['noguest'])) { ?>
+
+      </div>
+      <div class="texte2">
+
+        <?php } ?>
+
         <table class="titresnoirs">
           <thead>
             <tr>
