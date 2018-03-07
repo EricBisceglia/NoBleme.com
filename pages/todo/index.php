@@ -324,6 +324,10 @@ while($dobjectifs = mysqli_fetch_array($qobjectifs))
 
 if(isset($_GET['id']))
 {
+  // Si la tâche n'existe pas, on revient sur l'index
+  if(!$_GET['id'] || !$todo_id[0])
+    exit(header("Location: ".$chemin."pages/todo/index"));
+
   // Identification
   $page_nom = "Constate l'état de la tâche #".$todo_id[0];
   $page_url = "pages/todo/index?id=".$todo_id[0];
