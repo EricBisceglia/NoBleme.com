@@ -15,8 +15,8 @@ $header_sidemenu  = 'ModifierProfil';
 // Identification
 $page_nom = "Administre secrètement le site";
 
-// Langages disponibles
-$langage_page = array('FR');
+// Langues disponibles
+$langue_page = array('FR');
 
 // Titre et description
 $page_titre = "Modifier un profil";

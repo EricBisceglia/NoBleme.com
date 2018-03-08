@@ -13,8 +13,8 @@ $header_sidemenu  = 'Doc';
 $page_nom = "Apprend à utiliser les BBCodes";
 $page_url = "pages/doc/bbcodes";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = "BBCodes";

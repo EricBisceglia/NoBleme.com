@@ -13,8 +13,8 @@ $header_sidemenu  = 'Todolist';
 $page_nom = "Décortique la liste des tâches";
 $page_url = "pages/todo/index";
 
-// Langages disponibles
-$langage_page = array('FR');
+// Langues disponibles
+$langue_page = array('FR');
 
 // Titre et description
 $page_titre = "Liste des tâches";

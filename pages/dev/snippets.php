@@ -80,8 +80,8 @@ $page_url = "pages/nobleme/404";
 // Lien court
 $shorturl = "raccourcis";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Titre" : "Title";
@@ -210,8 +210,8 @@ $page_url = "pages/nobleme/404";
 // Lien court
 $shorturl = "raccourcis";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Titre" : "Title";

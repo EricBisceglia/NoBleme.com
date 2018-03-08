@@ -238,7 +238,7 @@ function mysqldate($date)
 //
 // Paramètres:
 // $date est un timestamp
-// $lang est le langage à utiliser (français par défaut)
+// $lang est la langue à utiliser (français par défaut)
 //
 // Exemple d'utilisation :
 // $anciennete = ilya($timestamp,"FR");
@@ -291,7 +291,7 @@ function ilya($date, $lang="FR")
 //
 // Paramètres:
 // $date est un timestamp
-// $lang est le langage à utiliser (français par défaut)
+// $lang est la langue à utiliser (français par défaut)
 //
 // Exemple d'utilisation :
 // $anciennete = dans($timestamp,"FR");

@@ -16,8 +16,8 @@ $header_sidemenu  = (isset($_GET['bug'])) ? 'OuvrirTicketBug' : 'OuvrirTicket';
 $page_nom = (isset($_GET['bug'])) ? 'Prépare un rapport de bug' : 'Fait part de ses désirs intimes';
 $page_url = (isset($_GET['bug'])) ? 'pages/todo/request?bug' : 'pages/todo/request';
 
-// Langages disponibles
-$langage_page = array('FR', 'EN');
+// Langues disponibles
+$langue_page = array('FR', 'EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Quémander un feature" : "Request a feature";

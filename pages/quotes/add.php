@@ -16,8 +16,8 @@ $header_sidemenu  = 'MiscAdd';
 $page_nom = "Propose une nouvelle miscellanée";
 $page_url = "pages/quotes/add";
 
-// Langages disponibles
-$langage_page = array('FR');
+// Langues disponibles
+$langue_page = array('FR');
 
 // Titre et description
 $page_titre = "Proposer une miscellanée" ;

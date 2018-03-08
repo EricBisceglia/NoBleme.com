@@ -16,8 +16,8 @@ $header_sidemenu  = 'SupprimerCompte';
 $page_nom = "En a fini avec NoBleme";
 $page_url = "pages/user/delete";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Supprimer mon compte" : "Delete my account";

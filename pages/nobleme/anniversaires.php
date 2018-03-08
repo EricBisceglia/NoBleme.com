@@ -13,8 +13,8 @@ $header_sidemenu  = 'Anniversaires';
 $page_nom = "Regarde les anniversaires à venir";
 $page_url = "pages/nobleme/anniversaires";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Anniversaires" : "Birthdays";

@@ -13,8 +13,8 @@ $header_sidemenu  = 'Doc';
 $page_nom = "Contemple les émoticônes";
 $page_url = "pages/doc/emotes";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Émoticônes" : "Emotes";

@@ -16,8 +16,8 @@ $page_url = "pages/doc/raccourcis";
 // Lien court
 $shorturl = "";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Liens courts" : "Short URLs";

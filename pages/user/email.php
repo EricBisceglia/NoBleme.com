@@ -16,8 +16,8 @@ $header_sidemenu  = 'ChangerEmail';
 $page_nom = "En a marre de son adresse e-mail";
 $page_url = "pages/user/email";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Changer d'e-mail" : "Change my e-mail";

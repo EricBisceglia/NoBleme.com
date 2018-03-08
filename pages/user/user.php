@@ -16,8 +16,8 @@ $page_url = "pages/user/user?id=";
 // Lien court
 $shorturl = "u=";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = "Profil de ";

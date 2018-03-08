@@ -13,8 +13,8 @@ $header_sidemenu  = 'NRM';
 $page_nom = "Se souvient du NRM Online";
 $page_url = "pages/nrm/index";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = "NRM Online";

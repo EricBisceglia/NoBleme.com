@@ -13,8 +13,8 @@ $header_sidemenu  = 'IRCClient';
 $page_nom = "Discute sur IRC";
 $page_url = "pages/irc/client";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Client IRC" : "IRC client";

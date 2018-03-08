@@ -16,8 +16,8 @@ $header_sidemenu  = 'ForumIndex';
 // Identification
 $page_nom = "Administre secrètement le site";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Modifier un sujet du forum" : "Edit a forum topic";
@@ -59,7 +59,7 @@ if($qchecksujet['id'] === NULL)
 if(isset($_POST['sujet_edit_go']))
 {
   // On va chercher des infos sur l'IRL pour compléter le diff
-  $qchecksujet = mysqli_fetch_array(query(" SELECT    forum_sujet.langage     AS 's_lang'     ,
+  $qchecksujet = mysqli_fetch_array(query(" SELECT    forum_sujet.langue      AS 's_lang'     ,
                                                       forum_sujet.titre       AS 's_titre'    ,
                                                       forum_sujet.public      AS 's_public'   ,
                                                       forum_sujet.ouvert      AS 's_ouvert'   ,
@@ -89,7 +89,7 @@ if(isset($_POST['sujet_edit_go']))
   // Mise à jour des infos
   query(" UPDATE  forum_sujet
           SET     forum_sujet.FKforum_categorie = '$edit_categorie' ,
-                  forum_sujet.langage           = '$edit_langue'    ,
+                  forum_sujet.langue            = '$edit_langue'    ,
                   forum_sujet.titre             = '$edit_titre'     ,
                   forum_sujet.public            = '$edit_public'    ,
                   forum_sujet.ouvert            = '$edit_ouvert'    ,
@@ -168,7 +168,7 @@ if(isset($_POST['sujet_edit_go']))
 
 // On va chercher les infos du sujet
 $qsujet = mysqli_fetch_array(query("  SELECT    forum_sujet.FKforum_categorie AS 'f_cat'      ,
-                                                forum_sujet.langage           AS 'f_lang'     ,
+                                                forum_sujet.langue            AS 'f_lang'     ,
                                                 forum_sujet.titre             AS 'f_titre'    ,
                                                 forum_sujet.public            AS 'f_public'   ,
                                                 forum_sujet.ouvert            AS 'f_ouvert'   ,

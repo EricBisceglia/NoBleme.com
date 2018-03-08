@@ -13,8 +13,8 @@ $header_sidemenu  = 'MiscStats';
 $page_nom = "Recalcule les statistiques des miscellanées";
 $page_url = "pages/quotes/stats";
 
-// Langages disponibles
-$langage_page = array('FR');
+// Langues disponibles
+$langue_page = array('FR');
 
 // Titre et description
 $page_titre = "Statistiques des miscellanées";

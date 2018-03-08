@@ -15,8 +15,8 @@ $header_sidemenu  = 'ChangerPass';
 // Identification
 $page_nom = "Administre secrètement le site";
 
-// Langages disponibles
-$langage_page = array('FR');
+// Langues disponibles
+$langue_page = array('FR');
 
 // Titre et description
 $page_titre = "Changer un mot de passe";

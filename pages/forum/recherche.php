@@ -13,8 +13,8 @@ $header_sidemenu  = 'ForumRecherche';
 $page_nom = "Effectue une recherche sur le forum";
 $page_url = "pages/forum/recherche";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Forum : Recherche" : "Forum: Search";
@@ -87,18 +87,18 @@ if(isset($_POST['forum_search_go']) && !isset($forum_search_erreur))
   $qsujets_criteres   = (!$forum_search_anonyme)  ? " AND forum_sujet.apparence NOT LIKE 'Anonyme' "  : " ";
   $qsujets_criteres  .= (!$forum_search_jeux)     ? " AND forum_sujet.classification NOT LIKE 'Jeu' " : " ";
 
-  // Critères auxquels on rajoute les préférences de langage et de catégories si l'utilisateur est connecté
+  // Critères auxquels on rajoute les préférences de langue et de catégories si l'utilisateur est connecté
   if(loggedin())
   {
-    // Filtrage par langage
+    // Filtrage par langue
     $user_id    = postdata($_SESSION['user'], 'int', 0);
     $qforumlang = mysqli_fetch_array(query("  SELECT  membres.forum_lang
                                               FROM    membres
                                               WHERE   membres.id = '$user_id' "));
     if($qforumlang['forum_lang'])
     {
-      $qsujets_criteres .= (strpos($qforumlang['forum_lang'], 'FR') !== false) ? '' : " AND forum_sujet.langage LIKE 'EN' ";
-      $qsujets_criteres .= (strpos($qforumlang['forum_lang'], 'EN') !== false) ? '' : " AND forum_sujet.langage LIKE 'FR' ";
+      $qsujets_criteres .= (strpos($qforumlang['forum_lang'], 'FR') !== false) ? '' : " AND forum_sujet.langue LIKE 'EN' ";
+      $qsujets_criteres .= (strpos($qforumlang['forum_lang'], 'EN') !== false) ? '' : " AND forum_sujet.langue LIKE 'FR' ";
     }
 
     // Filtrage par catégories

@@ -13,8 +13,8 @@ $header_sidemenu  = 'ListeDesMembres';
 $page_nom = "Parcourt la liste des membres";
 $page_url = "pages/nobleme/membres";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Liste des membres" : "User list";

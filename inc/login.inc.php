@@ -104,9 +104,9 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && loggedin())
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Gestion du langage
+// Gestion de la langue
 
-// Détermination du langage s'il n'est pas encore déterminé
+// Détermination de la langue si elle n'est pas encore déterminée
 if(!isset($_SESSION['lang']))
 {
   // Par défaut (si on a pas de cookie) en met en français
@@ -120,18 +120,18 @@ if(!isset($_SESSION['lang']))
     $_SESSION['lang'] = $_COOKIE['nobleme_language'];
 }
 
-// Changement de langage demandé en cliquant sur le drapeau
+// Changement de langue demandée en cliquant sur le drapeau
 if(isset($_GET['changelang']))
 {
-  // On détermine le nouveau langage
+  // On détermine la nouvelle langue
   $changelang = ($_SESSION['lang'] == 'EN') ? 'FR' : 'EN';
 
-  // On change le cookie de langage et la session en cours
+  // On change le cookie de langue et la session en cours
   setcookie("nobleme_language", $changelang , time()+630720000, "/");
   $_SESSION['lang'] = $changelang;
 }
 
-// Changement de langage imposé par l'URL
+// Changement de langue imposé par l'URL
 if(isset($_GET['english']) || isset($_GET['anglais']))
 {
   setcookie("nobleme_language", "EN" , time()+630720000, "/");
@@ -143,7 +143,7 @@ if(isset($_GET['francais']) || isset($_GET['french']))
   $_SESSION['lang'] = "FR";
 }
 
-// Si on a changé le langage, on reload pour virer l'url spéciale
+// Si on a changé le langue, on reload pour virer l'url spéciale
 if(isset($_GET['english']) || isset($_GET['anglais']) || isset($_GET['francais']) || isset($_GET['french']) || isset($_GET['changelang']))
 {
   // On vire les paramètres dont on ne veut plus dans l'url
@@ -338,7 +338,7 @@ function getadmin($user=NULL)
 
 function sysoponly($lang='FR', $section=NULL)
 {
-  // On prépare le message selon le langage
+  // On prépare le message selon la langue
   $message = ($lang == 'FR') ? "Cette page est réservée aux administrateurs.<br><br>Ouste !" : 'This page is for admins only<br><br>Shoo!';
 
   // On vérifie si l'user est connecté et est un admin
@@ -371,7 +371,7 @@ function sysoponly($lang='FR', $section=NULL)
 
 function adminonly($lang='FR')
 {
-  // On prépare le message selon le langage
+  // On prépare le message selon la langue
   $message = ($lang == 'FR') ? "Cette page est réservée aux administrateurs.<br><br>Ouste !" : 'This page is for admins only<br><br>Shoo!';
 
   // On vérifie si l'user est connecté et est un admin
@@ -441,7 +441,7 @@ function useronly($lang='FR')
 
 function guestonly($lang='FR')
 {
-  // On prépare le message selon le langage
+  // On prépare le message selon la langue
   $message = ($lang == 'FR') ? "Cette page n'est accessible qu'aux invités." : "This page is accessible by guests only.";
 
   // On vérifie si l'user est connecté

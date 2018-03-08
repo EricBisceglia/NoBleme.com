@@ -13,8 +13,8 @@ $header_sidemenu  = 'NBDBIndex';
 $page_nom = "Espère que le wiki reviendra un jour";
 $page_url = "pages/nbdb/index";
 
-// Langages disponibles
-$langage_page = array('FR');
+// Langues disponibles
+$langue_page = array('FR');
 
 // Titre et description
 $page_titre = "NBDB";

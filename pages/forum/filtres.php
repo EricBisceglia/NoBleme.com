@@ -16,8 +16,8 @@ $header_sidemenu  = 'ForumFiltrage';
 $page_nom = "Choisit ce qu'il veut voir sur le forum";
 $page_url = "pages/forum/filtres";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Filtrage du forum" : "Forum filtering preferences";
@@ -36,14 +36,14 @@ $page_titre = ($lang == 'FR') ? "Filtrage du forum" : "Forum filtering preferenc
 
 if(isset($_POST['filtre_go']))
 {
-  // On commence par récupérer l'ID du membre et les préférences de langage
+  // On commence par récupérer l'ID du membre et les préférences de langue
   $user_id            = postdata($_SESSION['user'], 'int', 0);
   $edit_filtre_fr     = postdata_vide('filtre_lang_fr', 'string', '');
   $edit_filtre_en     = postdata_vide('filtre_lang_en', 'string', '');
   $edit_filtre_lang   = ($edit_filtre_fr) ? 'FR' : '';
   $edit_filtre_lang  .= ($edit_filtre_en) ? 'EN' : '';
 
-  // Puis on met à jour les préférences de langage
+  // Puis on met à jour les préférences de langue
   query(" UPDATE  membres
           SET     membres.forum_lang  = '$edit_filtre_lang'
           WHERE   membres.id          = '$user_id' ");
@@ -148,7 +148,7 @@ if($lang == 'FR')
   $trad['titre']        = "Préférences de filtrage";
   $trad['soustitre']    = "Choisir ce que vous avez envie de voir sur le forum";
   $trad['desc']         = <<<EOD
-Le <a class="gras" href="{$chemin}pages/forum/index">forum NoBleme</a> contient un mélange de langages et catégories de conversations, qui n'intéressent pas forcément tout le monde. Sur cette page, vous pouvez choisir d'exclure certains langages et/ou certaines catégories pour ne plus les voir apparaitre dans la liste des sujets.
+Le <a class="gras" href="{$chemin}pages/forum/index">forum NoBleme</a> contient un mélange de langues et catégories de conversations, qui n'intéressent pas forcément tout le monde. Sur cette page, vous pouvez choisir d'exclure certaines langues et/ou catégories pour ne plus les voir apparaitre dans la liste des sujets.
 EOD;
 
   // Langues

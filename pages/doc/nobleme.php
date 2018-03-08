@@ -13,8 +13,8 @@ $header_sidemenu  = 'QuEstCeQueNoBleme';
 $page_nom = "Se demande ce qu'est NoBleme";
 $page_url = "pages/doc/nobleme";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Qu'est-ce que NoBleme" : "What is NoBleme";

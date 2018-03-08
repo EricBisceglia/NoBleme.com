@@ -16,8 +16,8 @@ $header_sidemenu  = 'ComposerMessage';
 $page_nom = "Compose un message privé";
 $page_url = "pages/user/pm";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Message privé" : "Private message";

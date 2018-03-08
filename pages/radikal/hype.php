@@ -13,8 +13,8 @@ $header_sidemenu  = 'RadikalHype';
 $page_nom = "Se demande ce qu'est le projet Radikal";
 $page_url = "pages/radikal/hype";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Projet : Radikal" : "Project: Radikal";

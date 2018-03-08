@@ -16,8 +16,8 @@ $page_url = "pages/irl/irl?id=";
 // Lien court
 $shorturl = "irl=";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "IRL du " : "";

@@ -13,8 +13,8 @@ $header_sidemenu  = 'IRCServices';
 $page_nom = "Essaye de comprendre les commandes IRC";
 $page_url = "pages/irc/services";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Commandes IRC" : "IRC commands";

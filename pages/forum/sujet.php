@@ -17,8 +17,8 @@ $page_url = "pages/forum/sujet?id=";
 // Lien court
 $shorturl = "f=";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = "Forum";
@@ -54,7 +54,7 @@ $qverifsujet = mysqli_fetch_array(query(" SELECT    forum_sujet.apparence       
                                                     forum_sujet.public          AS 's_public'         ,
                                                     forum_sujet.ouvert          AS 's_ouvert'         ,
                                                     forum_sujet.epingle         AS 's_epingle'        ,
-                                                    forum_sujet.langage         AS 's_langage'        ,
+                                                    forum_sujet.langue          AS 's_langue'         ,
                                                     forum_sujet.nombre_reponses AS 's_reponses'       ,
                                                     forum_sujet.titre           AS 's_titre'
                                           FROM      forum_sujet
@@ -70,8 +70,8 @@ $sujet_classification = $qverifsujet['s_classification'];
 $sujet_public         = $qverifsujet['s_public'];
 $sujet_ouvert         = $qverifsujet['s_ouvert'];
 $sujet_epingle        = $qverifsujet['s_epingle'];
-$sujet_langage        = changer_casse($qverifsujet['s_langage'], 'min');
-$sujet_langage_caps   = $qverifsujet['s_langage'];
+$sujet_langue         = changer_casse($qverifsujet['s_langue'], 'min');
+$sujet_langue_caps    = $qverifsujet['s_langue'];
 $sujet_reponses       = $qverifsujet['s_reponses'];
 $sujet_titre          = predata($qverifsujet['s_titre']);
 $sujet_titre_raw      = $qverifsujet['s_titre'];
@@ -132,7 +132,7 @@ if(isset($_POST['forum_ecrire_reponse']))
   $qcheckprive = mysqli_fetch_array(query(" SELECT  forum_sujet.ouvert    ,
                                                     forum_sujet.apparence ,
                                                     forum_sujet.public    ,
-                                                    forum_sujet.langage   ,
+                                                    forum_sujet.langue    ,
                                                     forum_sujet.titre
                                             FROM    forum_sujet
                                             WHERE   forum_sujet.id = '$sujet_id' "));
@@ -177,7 +177,7 @@ if(isset($_POST['forum_ecrire_reponse']))
           WHERE   forum_sujet.id                        = '$sujet_id' ");
 
   // Activité récente
-  $temp_lang  = ($sujet_langage_caps == 'FR') ? 'Anonyme' : 'Anonymous';
+  $temp_lang  = ($sujet_langue_caps == 'FR') ? 'Anonyme' : 'Anonymous';
   $add_pseudo = ($sujet_apparence == 'Anonyme') ? $temp_lang : postdata(getpseudo(), 'string');
   $add_modlog = ($sujet_public) ? 0 : 1;
   $add_titre  = postdata($sujet_titre_raw);
@@ -191,11 +191,11 @@ if(isset($_POST['forum_ecrire_reponse']))
                       activite.parent         = '$sujet_id'         ");
 
   // Bot IRC
-  $temp_lang      = ($qcheckprive['langage'] == 'FR') ? 'Anonyme' : 'Anonymous';
+  $temp_lang      = ($qcheckprive['langue'] == 'FR') ? 'Anonyme' : 'Anonymous';
   $add_pseudo_raw = ($qcheckprive['apparence'] == 'Anonyme') ? $temp_lang : getpseudo();
   if($qcheckprive['public'])
   {
-    if($qcheckprive['langage'] == 'FR')
+    if($qcheckprive['langue'] == 'FR')
       ircbot($chemin, $add_pseudo_raw." a posté une réponse au sujet ".$qcheckprive['titre']." : ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id.'#'.$message_id, "#forum");
     else
       ircbot($chemin, $add_pseudo_raw." posted a reply to the topic ".$qcheckprive['titre'].": ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id.'#'.$message_id, "#forum");
@@ -251,7 +251,7 @@ if(isset($_POST['forum_modifier_message_go']))
   // On a besoin d'infos sur le sujet aussi
   $edit_sujet = $qmessage['FKforum_sujet'];
   $qsujet = mysqli_fetch_array(query("  SELECT  forum_sujet.public  ,
-                                                forum_sujet.langage ,
+                                                forum_sujet.langue  ,
                                                 forum_sujet.titre   ,
                                                 forum_sujet.apparence
                                         FROM    forum_sujet
@@ -273,7 +273,7 @@ if(isset($_POST['forum_modifier_message_go']))
   forum_recompter_messages_membre($qmessage['FKmembres']);
   forum_recompter_messages_sujet($sujet_id);
 
-  // On prépare le pseudo de l'auteur dans un autre langage s'il est anonyme
+  // On prépare le pseudo de l'auteur dans une autre langue s'il est anonyme
   if($qsujet['apparence'] != 'Anonyme')
   {
     $edit_mod     = getpseudo();
@@ -281,8 +281,8 @@ if(isset($_POST['forum_modifier_message_go']))
   }
   else
   {
-    $edit_mod     = ($qsujet['langage'] == 'FR') ? 'Anonyme' : 'Anonymous';
-    $edit_pseudo  = ($qsujet['langage'] == 'FR') ? 'Anonyme' : 'Anonymous';
+    $edit_mod     = ($qsujet['langue'] == 'FR') ? 'Anonyme' : 'Anonymous';
+    $edit_pseudo  = ($qsujet['langue'] == 'FR') ? 'Anonyme' : 'Anonymous';
   }
 
   // Activité récente
@@ -332,7 +332,7 @@ if(isset($_POST['forum_modifier_message_go']))
   if(getmod('forum') && $edit_envoyer && isset($sysop_modif))
   {
     // On prépare le contenu du message
-    $pm_lang          = $qsujet['langage'];
+    $pm_lang          = $qsujet['langue'];
     $edit_message_raw = $qmessage['contenu'];
     $pm_titre         = ($pm_lang == 'FR') ? "Message modifié sur le forum" : "Message edited on the forum";
 
@@ -421,7 +421,7 @@ if(isset($_POST['forum_supprimer_message_go']))
   // On a besoin d'infos sur le sujet aussi
   $delete_sujet = $qmessage['FKforum_sujet'];
   $qsujet = mysqli_fetch_array(query("  SELECT  forum_sujet.public  ,
-                                                forum_sujet.langage ,
+                                                forum_sujet.langue  ,
                                                 forum_sujet.titre   ,
                                                 forum_sujet.apparence
                                         FROM    forum_sujet
@@ -451,7 +451,7 @@ if(isset($_POST['forum_supprimer_message_go']))
   forum_recompter_messages_membre($qmessage['FKmembres']);
   forum_recompter_messages_sujet($qmessage['FKforum_sujet']);
 
-  // On prépare le pseudo de l'auteur dans un autre langage s'il est anonyme
+  // On prépare le pseudo de l'auteur dans une autre langue s'il est anonyme
   if($qsujet['apparence'] != 'Anonyme')
   {
     $delete_mod     = getpseudo();
@@ -459,8 +459,8 @@ if(isset($_POST['forum_supprimer_message_go']))
   }
   else
   {
-    $delete_mod     = ($qsujet['langage'] == 'FR') ? 'Anonyme' : 'Anonymous';
-    $delete_pseudo  = ($qsujet['langage'] == 'FR') ? 'Anonyme' : 'Anonymous';
+    $delete_mod     = ($qsujet['langue'] == 'FR') ? 'Anonyme' : 'Anonymous';
+    $delete_pseudo  = ($qsujet['langue'] == 'FR') ? 'Anonyme' : 'Anonymous';
   }
 
   // Activité récente
@@ -510,7 +510,7 @@ if(isset($_POST['forum_supprimer_message_go']))
   if(getmod('forum') && $delete_envoyer && isset($sysop_delete))
   {
     // On prépare le contenu du message
-    $pm_lang            = $qsujet['langage'];
+    $pm_lang            = $qsujet['langue'];
     $delete_message_raw = $qmessage['contenu'];
     $pm_titre           = ($pm_lang == 'FR') ? "Message supprimé sur le forum" : "Message deleted on the forum";
 
@@ -799,7 +799,7 @@ EOD;
 
               <td class="valign_middle align_center forum_sujet_entete_titre">
                 <span class="texte_noir gras forum_sujet_entete_titre"><?=$sujet_titre?></span>
-                <img src="<?=$chemin?>img/icones/lang_<?=$sujet_langage?>_clear.png" alt="<?=$sujet_langage_caps?>" class="valign_middle forum_sujet_entete_lang" height="18">
+                <img src="<?=$chemin?>img/icones/lang_<?=$sujet_langue?>_clear.png" alt="<?=$sujet_langue_caps?>" class="valign_middle forum_sujet_entete_lang" height="18">
               </td>
 
             </tr>

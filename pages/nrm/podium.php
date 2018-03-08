@@ -13,8 +13,8 @@ $header_sidemenu  = 'NRMPodium';
 $page_nom = "Se souvient des champions du NRM Online";
 $page_url = "pages/nrm/podium";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = "NRM Online";

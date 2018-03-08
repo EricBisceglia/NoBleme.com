@@ -13,8 +13,8 @@ $header_sidemenu  = 'IRCCanaux';
 $page_nom = "Choisit des canaux IRC à rejoindre";
 $page_url = "pages/irc/canaux";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Canaux IRC" : "IRC Channels";

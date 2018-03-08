@@ -13,8 +13,8 @@ $header_sidemenu  = 'Roadmap';
 $page_nom = "Lit le plan de route";
 $page_url = "pages/todo/roadmap";
 
-// Langages disponibles
-$langage_page = array('FR');
+// Langues disponibles
+$langue_page = array('FR');
 
 // Titre et description
 $page_titre = "Plan de route";

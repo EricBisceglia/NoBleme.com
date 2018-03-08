@@ -13,8 +13,8 @@ $header_sidemenu  = 'NBRPGWhat';
 $page_nom = "Attend sagement le retour du NBRPG";
 $page_url = "pages/nbrpg/index";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = "NoBlemeRPG";

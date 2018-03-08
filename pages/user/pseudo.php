@@ -16,8 +16,8 @@ $header_sidemenu  = 'ChangerPseudo';
 $page_nom = "Veut changer d'identité";
 $page_url = "pages/user/pseudo";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Changer de pseudonyme" : "Change my nickname";

@@ -16,8 +16,8 @@ $header_sidemenu  = 'IRL';
 $page_nom = "Observe de loin les IRL";
 $page_url = "pages/irl/index";
 
-// Langages disponibles
-$langage_page = array('FR');
+// Langues disponibles
+$langue_page = array('FR');
 
 // Titre et description
 $page_titre = (!isset($_GET['id'])) ? "Créer une IRL" : "Modifier une IRL";

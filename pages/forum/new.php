@@ -17,8 +17,8 @@ $header_sidemenu  = 'ForumNew';
 $page_nom = "Parcourt les sujets de discussion du forum";
 $page_url = "pages/forum/index";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Forum : Nouveau sujet" : "Forum: New topic";
@@ -87,7 +87,7 @@ if(isset($_POST['forum_add_titre']))
   $add_apparence        = postdata_vide('forum_add_apparence', 'string', 'Fil');
   $add_classification   = postdata_vide('forum_add_classification', 'string', 'Standard');
   $add_categorie        = postdata_vide('forum_add_categorie', 'int', 0);
-  $add_langage          = postdata_vide('forum_add_langue', 'string', 'FR');
+  $add_langue           = postdata_vide('forum_add_langue', 'string', 'FR');
   $add_public           = (getmod('forum')) ? postdata_vide('forum_add_public', 'int', 1) : 1;
   $add_titre            = (isset($_POST['forum_add_titre'])) ? postdata(tronquer_chaine($_POST['forum_add_titre'], 100), 'string', ''): '';
   $add_premier_message  = postdata_vide('forum_add_contenu', 'string', '');
@@ -106,7 +106,7 @@ if(isset($_POST['forum_add_titre']))
                       forum_sujet.public                    = '$add_public'         ,
                       forum_sujet.ouvert                    = 1                     ,
                       forum_sujet.epingle                   = 0                     ,
-                      forum_sujet.langage                   = '$add_langage'        ,
+                      forum_sujet.langue                    = '$add_langue'         ,
                       forum_sujet.titre                     = '$add_titre'          ,
                       forum_sujet.nombre_reponses           = 0                     ");
 
@@ -124,7 +124,7 @@ if(isset($_POST['forum_add_titre']))
   forum_recompter_messages_membre($add_auteur);
 
   // Activité récente
-  $temp_lang  = ($add_langage == 'FR') ? 'Anonyme' : 'Anonymous';
+  $temp_lang  = ($add_langue == 'FR') ? 'Anonyme' : 'Anonymous';
   $add_pseudo = ($add_apparence == 'Anonyme') ? $temp_lang : postdata(getpseudo(), 'string');
   $add_modlog = ($add_public) ? 0 : 1;
   query(" INSERT INTO activite
@@ -140,7 +140,7 @@ if(isset($_POST['forum_add_titre']))
   $add_titre_raw  = (isset($_POST['forum_add_titre'])) ? tronquer_chaine($_POST['forum_add_titre'], 100) : '';
   if($add_public)
   {
-    if($add_langage == 'FR')
+    if($add_langue == 'FR')
     {
       ircbot($chemin, $add_pseudo_raw." a ouvert un nouveau sujet sur le forum : ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id, "#NoBleme");
       ircbot($chemin, $add_pseudo_raw." a ouvert un nouveau sujet sur le forum : ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id, "#forum");

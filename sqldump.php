@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `forum_sujet` (
   `public` tinyint(1) UNSIGNED NOT NULL,
   `ouvert` tinyint(1) UNSIGNED NOT NULL,
   `epingle` tinyint(1) UNSIGNED NOT NULL,
-  `langage` tinytext COLLATE utf8mb4_unicode_ci,
+  `langue` tinytext COLLATE utf8mb4_unicode_ci,
   `titre` mediumtext COLLATE utf8mb4_unicode_ci,
   `nombre_reponses` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),

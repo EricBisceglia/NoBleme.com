@@ -15,8 +15,8 @@ $header_sidemenu  = 'MonProfil';
 // Identification
 $page_nom = "Déprime parce qu'il est banni";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Banni !" : "Banned!";

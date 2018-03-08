@@ -13,8 +13,8 @@ $header_sidemenu  = 'MiscIndex';
 $page_nom = "Se marre devant les miscellanées";
 $page_url = "pages/quotes/index";
 
-// Langages disponibles
-$langage_page = array('FR');
+// Langues disponibles
+$langue_page = array('FR');
 
 // Titre et description
 $page_titre = "Miscellanées";

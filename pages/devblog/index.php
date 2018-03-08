@@ -13,8 +13,8 @@ $header_sidemenu  = 'Devblog';
 $page_nom = "Considère la liste des devblogs";
 $page_url = "pages/devblog/index";
 
-// Langages disponibles
-$langage_page = array('FR');
+// Langues disponibles
+$langue_page = array('FR');
 
 // Titre et description
 $page_titre = "Devblogs";

@@ -16,8 +16,8 @@ $header_sidemenu  = 'ModifierProfil';
 $page_nom = "Modifie son profil public";
 $page_url = "pages/user/profil";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Modifier mon profil public" : "Edit my public profile";
@@ -60,7 +60,7 @@ if(isset($_POST['profil_modifier']))
   $edit_metier      = postdata_vide('profilMetier', 'string', '', 35);
   $edit_texte       = postdata_vide('profilTexte', 'string', '');
 
-  // On détermine les langages
+  // On détermine la langue
   $edit_langue = ($edit_langue_fr) ? 'FR' : '';
   $edit_langue = ($edit_langue_en) ? $edit_langue.'EN' : $edit_langue;
 

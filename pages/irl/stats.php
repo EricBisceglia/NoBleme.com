@@ -13,8 +13,8 @@ $header_sidemenu  = 'IRLStats';
 $page_nom = "Recalcule les statistiques des IRL";
 $page_url = "pages/irl/stats";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Statistiques des IRL" : "Real life meetup stats";

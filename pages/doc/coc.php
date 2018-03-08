@@ -16,8 +16,8 @@ $page_url = "pages/doc/coc";
 // Lien court
 $shorturl = "coc";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Code de conduite" : "Code of conduct";

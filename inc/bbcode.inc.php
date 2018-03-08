@@ -21,7 +21,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 function bbcode($post, $xhr=NULL)
 {
-  // Détermination du langage utilisé
+  // Détermination de la langue utilisée
   $lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
 
   // Fix temporaire pour les XSS gratuits.

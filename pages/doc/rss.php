@@ -13,8 +13,8 @@ $header_sidemenu  = 'RSS';
 $page_nom = "S'abonne aux flux RSS";
 $page_url = "pages/doc/rss";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Flux RSS" : "RSS feeds";

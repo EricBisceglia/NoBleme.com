@@ -13,8 +13,8 @@ $header_sidemenu  = 'Accueil';
 $page_nom = "Traine sur l'index du site";
 $page_url = "index";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR', 'EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Accueil" : "Homepage";

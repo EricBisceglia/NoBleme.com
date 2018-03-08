@@ -12,8 +12,8 @@ $page_url = "cv";
 // On vire le menu
 $_GET['popup'] = 1;
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "CV de Éric Bisceglia" : "Éric Bisceglia's CV";
@@ -81,17 +81,17 @@ if($lang == 'FR')
 
   // CV: Compétences techniques
   $trad['skill']          = "Compétences techniques";
-  $trad['skill_maitre']   = "Languages maîtrisés";
+  $trad['skill_maitre']   = "Langages maîtrisés";
   $trad['skill_partiel']  = "Maîtrise partielle";
   $trad['skill_os']       = "Systèmes d'exploitation";
   $trad['skill_bdd']      = "Bases de données";
   $trad['skill_soft']     = "Logiciels";
 
   // CV: Compatences linguistiques
-  $trad['lang']           = "Langages";
+  $trad['lang']           = "Langues";
   $trad['lang_cefr']      = "Échelle CEFR";
   $trad['lang_cefr_href'] = "https://fr.wikipedia.org/wiki/Cadre_europ%C3%A9en_commun_de_r%C3%A9f%C3%A9rence_pour_les_langues#.C3.89chelle_globale";
-  $trad['lang_resume']    = "Français natif ; Bilingue anglais ; Allemand correct ; Bases de russe, espagnol, et autres langages";
+  $trad['lang_resume']    = "Français natif ; Bilingue anglais ; Allemand correct ; Bases de russe, espagnol, et autres langues";
   $trad['lang_oral']      = "Oral";
   $trad['lang_lecture']   = "Lecture";
   $trad['lang_ecriture']  = "Écriture";
@@ -306,8 +306,8 @@ EOD;
           </div>
 
           <div style="flex:3">
-            C ; PHP ; SQL ; JavaScript<br>
-            C++ ; Python ; Perl ; Java<br>
+            PHP ; SQL ; JavaScript ; HTML/CSS<br>
+            C ; C++ ; Python ; Perl ; Java<br>
             MySQL ; PostgreSQL ; Filemaker<br>
             FreeBSD ; Linux ; Windows ; OSX<br>
             Hg/Git/SVN ; Flash/ActionScript ; GtkRadiant ; Qt

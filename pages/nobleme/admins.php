@@ -13,8 +13,8 @@ $header_sidemenu  = 'EquipeAdmin';
 $page_nom = "Respecte l'équipe administrative";
 $page_url = "pages/nobleme/admins";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Équipe administrative" : "Administrative team";

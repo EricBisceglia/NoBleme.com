@@ -20,8 +20,8 @@ $page_url = "pages/nobleme/activite";
 // Lien court
 $shorturl = "a";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Activité récente" : "Recent activity";
@@ -71,7 +71,7 @@ if(isset($_POST['activite_delete']) && getadmin())
 // $nactrec                         - Nombre de lignes au tableau renvoyé
 // $activite_id[$nactrec]           - ID dans la table activite
 // $activite_date[$nactrec]         - Ancienneté de l'activité (format texte)
-// $activite_desc[$nactrec][$lang]  - Description de l'activité dans le langage spécifié
+// $activite_desc[$nactrec][$lang]  - Description de l'activité dans la langue spécifiée
 // $activite_href[$nactrec]         - Lien vers lequel l'activité pointe
 // $activite_css[$nactrec]          - CSS à appliquer à l'activité
 // $activite_raison[$nactrec]       - (optionnel) Justification du log

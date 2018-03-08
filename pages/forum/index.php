@@ -17,8 +17,8 @@ $page_url = "pages/forum/index";
 // Lien court
 $shorturl = "f";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Forum" : "Forum";
@@ -56,8 +56,8 @@ if(loggedin())
   // Et s'il a un filtre, on l'applique
   if($qforumlang['forum_lang'])
   {
-    $condition_lang .= (strpos($qforumlang['forum_lang'], 'FR') !== false) ? '' : " AND forum_sujet.langage LIKE 'EN' ";
-    $condition_lang .= (strpos($qforumlang['forum_lang'], 'EN') !== false) ? '' : " AND forum_sujet.langage LIKE 'FR' ";
+    $condition_lang .= (strpos($qforumlang['forum_lang'], 'FR') !== false) ? '' : " AND forum_sujet.langue LIKE 'EN' ";
+    $condition_lang .= (strpos($qforumlang['forum_lang'], 'EN') !== false) ? '' : " AND forum_sujet.langue LIKE 'FR' ";
   }
 
   // Ensuite, on va chercher s'il a un filtagee par catégorie en place
@@ -82,7 +82,7 @@ $qsujets = query("  SELECT    forum_sujet.id                        AS 's_id'   
                               forum_sujet.public                    AS 's_public'     ,
                               forum_sujet.ouvert                    AS 's_ouvert'     ,
                               forum_sujet.epingle                   AS 's_epingle'    ,
-                              forum_sujet.langage                   AS 's_lang'       ,
+                              forum_sujet.langue                    AS 's_lang'       ,
                               forum_sujet.titre                     AS 's_titre'      ,
                               forum_sujet.nombre_reponses           AS 's_reponses'   ,
                               forum_sujet.FKforum_categorie         AS 'cat_id'       ,

@@ -13,8 +13,8 @@ $header_sidemenu  = 'Doc';
 $page_nom = "Se renseigne dans la documentation";
 $page_url = "pages/doc/index";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = "Documentation";

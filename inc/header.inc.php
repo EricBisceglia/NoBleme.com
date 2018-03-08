@@ -27,15 +27,15 @@ if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                    GESTION DU LOGIN ET DU LANGAGE                                                     */
+/*                                                   GESTION DU LOGIN ET DE LA LANGUE                                                    */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
 // Préparation des URLs pour la déconnexion et le changement de langue
 $url_logout   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
-$url_langage  = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
+$url_langue   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
 $url_logout   = destroy_html($url_logout);
-$url_langage  = destroy_html($url_langage);
+$url_langue   = destroy_html($url_langue);
 
 // Déconnexion
 if(isset($_GET['logout']))
@@ -49,15 +49,15 @@ if(isset($_GET['logout']))
   exit(header("Location: ".$url_rebuild));
 }
 
-// On va chercher si le langage choisi est couvert par la page
-if(isset($langage_page))
-  $langage_error = (!in_array($lang, $langage_page)) ? 1 : 0;
+// On va chercher si la langue choisie est couverte par la page
+if(isset($langue_page))
+  $langue_error = (!in_array($lang, $langue_page)) ? 1 : 0;
 else
-  $langage_error = 0;
+  $langue_error = 0;
 
 // Et on prépare les strings d'erreur selon la langue
-if($langage_error)
-  $langage_error = ($lang == 'FR') ? "Cette page n'est disponible qu'en anglais et n'a pas de traduction française." : "Sorry! This page is only available in french and does not have an english translation.";
+if($langue_error)
+  $langue_error = ($lang == 'FR') ? "Cette page n'est disponible qu'en anglais et n'a pas de traduction française." : "Sorry! This page is only available in french and does not have an english translation.";
 
 
 
@@ -451,7 +451,7 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
         <?php } ?>
       </div>
       <div class="header_topmenu_zone header_topmenu_flag">
-        <a href="<?=$url_langage?>">
+        <a href="<?=$url_langue?>">
           <?php if($lang == 'FR') { ?>
           <img class="header_topmenu_flagimg" src="<?=$chemin?>img/icones/lang_en.png" alt="EN">
           <?php } else { ?>
@@ -1162,10 +1162,10 @@ $sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    
         <?=$alerte_meta?>
       </div>
 
-      <?php } if($langage_error) { ?>
+      <?php } if($langue_error) { ?>
 
       <div class="gros gras texte_erreur align_center monospace">
-        <?=$langage_error?>
+        <?=$langue_error?>
       </div>
 
       <br>

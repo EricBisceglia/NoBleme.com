@@ -32,7 +32,7 @@ include 'fonctions.inc.php';  // Fonctions génériques
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Détermination du langage utilisé
+// Détermination de la langue utilisée
 
 $lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
 $trad = array();

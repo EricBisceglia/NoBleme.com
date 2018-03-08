@@ -16,8 +16,8 @@ $header_sidemenu  = 'ChangerPass';
 $page_nom = "Protège son compte";
 $page_url = "pages/user/pass";
 
-// Langages disponibles
-$langage_page = array('FR','EN');
+// Langues disponibles
+$langue_page = array('FR','EN');
 
 // Titre et description
 $page_titre = ($lang == 'FR') ? "Changer de mot de passe" : "Change my password";

@@ -13,8 +13,8 @@ $header_sidemenu  = 'NBRPGArchives';
 $page_nom = "Consulte les archives du NBRPG";
 $page_url = "pages/nbrpg/archives";
 
-// Langages disponibles
-$langage_page = array('FR');
+// Langues disponibles
+$langue_page = array('FR');
 
 // Titre et description
 $page_titre = "NBRPG : Archives";

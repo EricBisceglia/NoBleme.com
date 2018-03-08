@@ -42,7 +42,7 @@ function erreur($message)
       $chemin .= "../";
   }
 
-  // Détermination du langage utilisé
+  // Détermination de la langue utilisée
   $lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
   $trad = array();
 
@@ -50,7 +50,7 @@ function erreur($message)
   $error_mode = 1;
 
   // Titre et description
-  $langage_page = array('FR','EN');
+  $langue_page  = array('FR','EN');
   $page_titre   = ($lang == 'FR') ? "Erreur" : "Error";
   $page_desc    = "Ceci est une page d'erreur. Vous allez oublier l'existence de cette page. Ne paniquez pas, le flash rouge est normal.";
 
