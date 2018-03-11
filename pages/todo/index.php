@@ -256,6 +256,7 @@ for($ntodo = 0; $dtodo = mysqli_fetch_array($qtodo); $ntodo++)
   $todo_categorie[$ntodo]   = ($dtodo['c_nom']) ? predata($dtodo['c_nom']) : '';
   $todo_objectif[$ntodo]    = ($dtodo['r_nom']) ? predata($dtodo['r_nom']) : '';
   $todo_prive[$ntodo]       = (!$dtodo['t_public']) ? 'PRIVÉ' : '';
+  $todo_approuve[$ntodo]    = ($dtodo['t_valide']) ? 1 : 0;
 }
 
 // Si c'est une tâche seule, on prépare le contenu des détails de la tâche
@@ -665,10 +666,12 @@ if(!getxhr()) { /***************************************************************
                   <br>
                   <br>
 
+                  <?php if($todo_approuve[$i]) { ?>
                   <a class="spaced" href="<?=$chemin?>pages/todo/resolu?id=<?=$todo_id[$i]?>">
                     <button class="button button-outline">RÉSOLU</button>
                   </a>
                   &nbsp;
+                  <?php } ?>
 
                   <a class="spaced" href="<?=$chemin?>pages/todo/edit?id=<?=$todo_id[$i]?>">
                     <button class="button button-outline"><?=$todo_modifier?></button>

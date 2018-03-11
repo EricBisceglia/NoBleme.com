@@ -112,7 +112,7 @@ if(!isset($_SESSION['lang']))
   // Par défaut (si on a pas de cookie) en met en français
   if(!isset($_COOKIE['nobleme_language']))
   {
-    setcookie("nobleme_language", 'FR' , time()+630720000, "/");
+    setcookie("nobleme_language", 'FR' , 2147483647, "/");
     $_SESSION['lang'] = 'FR';
   }
   // Sinon on lui donne la valeur du cookie
@@ -127,19 +127,19 @@ if(isset($_GET['changelang']))
   $changelang = ($_SESSION['lang'] == 'EN') ? 'FR' : 'EN';
 
   // On change le cookie de langue et la session en cours
-  setcookie("nobleme_language", $changelang , time()+630720000, "/");
+  setcookie("nobleme_language", $changelang , 2147483647 , "/");
   $_SESSION['lang'] = $changelang;
 }
 
 // Changement de langue imposé par l'URL
 if(isset($_GET['english']) || isset($_GET['anglais']))
 {
-  setcookie("nobleme_language", "EN" , time()+630720000, "/");
+  setcookie("nobleme_language", "EN" , 2147483647 , "/");
   $_SESSION['lang'] = "EN";
 }
 if(isset($_GET['francais']) || isset($_GET['french']))
 {
-  setcookie("nobleme_language", "FR" , time()+630720000, "/");
+  setcookie("nobleme_language", "FR" , 2147483647 , "/");
   $_SESSION['lang'] = "FR";
 }
 

@@ -100,7 +100,7 @@ if(isset($_POST['login_pseudo']))
           if($login_souvenir)
           {
             // Si checkbox se souvenir est cochée, on crée un cookie
-            setcookie("nobleme_memory", salage($pseudo) , (time()+630720000), "/");
+            setcookie("nobleme_memory", salage($pseudo) , 2147483647, "/");
             $_SESSION['user'] = $login_id;
           }
           // Sinon, on se contente d'ouvrir une session

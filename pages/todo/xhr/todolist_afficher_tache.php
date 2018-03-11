@@ -66,6 +66,7 @@ $todo_source      = ($qtodo['t_source']) ? predata($qtodo['t_source']) : 0;
 $todo_contenu     = bbcode(predata($qtodo['t_contenu'], 1), 1);
 $todo_modifier    = ($qtodo['t_valide']) ? 'MODIFIER' : 'APPROUVER';
 $todo_supprimer   = ($qtodo['t_valide']) ? 'SUPPRIMER' : 'REJETER';
+$todo_approuve    = ($qtodo['t_valide']) ? 1 : 0;
 
 
 
@@ -108,10 +109,12 @@ $todo_supprimer   = ($qtodo['t_valide']) ? 'SUPPRIMER' : 'REJETER';
     <br>
     <br>
 
+    <?php if($todo_approuve) { ?>
     <a class="spaced" href="<?=$todo_chemin?>pages/todo/resolu?id=<?=$todo_id?>">
       <button class="button button-outline">RÉSOLU</button>
     </a>
     &nbsp;
+    <?php } ?>
 
     <a class="spaced" href="<?=$todo_chemin?>pages/todo/edit?id=<?=$todo_id?>">
       <button class="button button-outline"><?=$todo_modifier?></button>
