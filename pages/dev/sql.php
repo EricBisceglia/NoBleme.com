@@ -27,8 +27,38 @@ $page_nom = "Administre secrètement le site";
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// En français on dit langue, pas langage
-sql_renommer_champ("forum_sujet", "langage", "langue", "TINYTEXT");
+// Le coin des écrivains
+sql_creer_table("ecrivains_texte", "  id                      INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+                                      FKmembres               INT(11) UNSIGNED NOT NULL                             ,
+                                      FKecrivains_concours    INT(11) UNSIGNED NOT NULL                             ,
+                                      timestamp_creation      INT(11) UNSIGNED NOT NULL                             ,
+                                      timestamp_modification  INT(11) UNSIGNED NOT NULL                             ,
+                                      feedback_messages       TINYINT(1) UNSIGNED NOT NULL                          ,
+                                      feedback_forum          TINYINT(1) UNSIGNED NOT NULL                          ,
+                                      feedback_note           TINYINT(1) UNSIGNED NOT NULL                          ,
+                                      titre                   TEXT                                                  ,
+                                      note_moyenne            DECIMAL(2,1)                                          ,
+                                      longueur_texte          INT(11) UNSIGNED NOT NULL                             ,
+                                      contenu                 LONGTEXT                                              ");
+
+sql_creer_table("ecrivains_note", " id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+                                    FKecrivains_texte INT(11) UNSIGNED NOT NULL                             ,
+                                    FKmembres         INT(11) UNSIGNED NOT NULL                             ,
+                                    note              DECIMAL(2,1)                                          ,
+                                    anonyme           TINYINT(1) UNSIGNED NOT NULL                          ,
+                                    message           TEXT                                                  ");
+
+sql_creer_table("ecrivains_concours", " id              INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+                                        FKforum_sujet   INT(11) UNSIGNED NOT NULL                             ,
+                                        date_debut      INT(11) UNSIGNED NOT NULL                             ,
+                                        date_fin        INT(11) UNSIGNED NOT NULL                             ,
+                                        titre           TEXT                                                  ,
+                                        sujet           MEDIUMTEXT                                            ");
+
+sql_creer_table("ecrivains_concours_vote", "  id                    INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+                                              FKecrivains_concours  INT(11) UNSIGNED NOT NULL                             ,
+                                              FKecrivains_texte     INT(11) UNSIGNED NOT NULL                             ,
+                                              FKmembres             INT(11) UNSIGNED NOT NULL                             ");
 
 
 

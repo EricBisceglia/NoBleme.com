@@ -816,6 +816,36 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
+              Le coin des écrivains
+            </div>
+
+            <a href="<?=$chemin?>pages/ecrivains/index">
+              <div class="<?=header_class('EcrivainsListe',$header_sidemenu,'side')?>">
+                Écrits de NoBlemeux
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/ecrivains/concours">
+              <div class="<?=header_class('EcrivainsConcours',$header_sidemenu,'side')?>">
+                Concours d'écriture
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/ecrivains/auteurs">
+              <div class="<?=header_class('EcrivainsAuteurs',$header_sidemenu,'side')?>">
+                Liste des auteurs
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/ecrivains/publier">
+              <div class="<?=header_class('EcrivainsPublier',$header_sidemenu,'side')?>">
+                Publier un texte
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
               NBDatabase
             </div>
 
