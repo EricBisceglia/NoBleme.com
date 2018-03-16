@@ -33,9 +33,7 @@ sql_creer_table("ecrivains_texte", "  id                      INT(11) UNSIGNED N
                                       FKecrivains_concours    INT(11) UNSIGNED NOT NULL                             ,
                                       timestamp_creation      INT(11) UNSIGNED NOT NULL                             ,
                                       timestamp_modification  INT(11) UNSIGNED NOT NULL                             ,
-                                      feedback_messages       TINYINT(1) UNSIGNED NOT NULL                          ,
-                                      feedback_forum          TINYINT(1) UNSIGNED NOT NULL                          ,
-                                      feedback_note           TINYINT(1) UNSIGNED NOT NULL                          ,
+                                      niveau_feedback         INT(4)  UNSIGNED NOt NULL                             ,
                                       titre                   TEXT                                                  ,
                                       note_moyenne            DECIMAL(2,1)                                          ,
                                       longueur_texte          INT(11) UNSIGNED NOT NULL                             ,
@@ -59,6 +57,12 @@ sql_creer_table("ecrivains_concours_vote", "  id                    INT(11) UNSI
                                               FKecrivains_concours  INT(11) UNSIGNED NOT NULL                             ,
                                               FKecrivains_texte     INT(11) UNSIGNED NOT NULL                             ,
                                               FKmembres             INT(11) UNSIGNED NOT NULL                             ");
+
+// Changement du format de la table ecrivains_texte
+sql_supprimer_champ("ecrivains_texte", "feedback_messages");
+sql_supprimer_champ("ecrivains_texte", "feedback_forum");
+sql_supprimer_champ("ecrivains_texte", "feedback_note");
+sql_creer_champ("ecrivains_texte", "niveau_feedback", "INT(4) UNSIGNED NOT NULL", "timestamp_modification");
 
 
 
