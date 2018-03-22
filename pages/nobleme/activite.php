@@ -301,15 +301,15 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   {
     $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
     $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a ouvert un sujet sur le forum : '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
-    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' opened a forum topic: '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a ouvert un sujet sur le forum : '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' opened a forum topic: '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
   }
   else if($dactrec['action_type'] === 'forum_new')
   {
     $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
     $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a ouvert un sujet privé sur le forum : '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
-    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' opened a private forum topic: '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a ouvert un sujet privé sur le forum : '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' opened a private forum topic: '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
   }
 
   //***************************************************************************************************************************************
@@ -318,14 +318,14 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   else if($dactrec['action_type'] === 'forum_new_message' && !isset($_GET['mod']))
   {
     $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['parent'].'#'.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a répondu au sujet du forum '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
-    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' replied to the forum topic '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a répondu au sujet du forum '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' replied to the forum topic '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
   }
   else if($dactrec['action_type'] === 'forum_new_message')
   {
     $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['parent'].'#'.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a répondu au sujet privé du forum '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
-    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' replied to the private forum topic '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a répondu au sujet privé du forum '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' replied to the private forum topic '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
   }
 
   //***************************************************************************************************************************************
@@ -337,13 +337,13 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
     $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
     if($dactrec['pseudonyme'] == $dactrec['action_titre'])
     {
-      $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a supprimé un de ses messages sur le forum';
-      $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' deleted one of his messages on the forum';
+      $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a supprimé un de ses messages sur le forum';
+      $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' deleted one of his messages on the forum';
     }
     else
       {
-      $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a supprimé un message de '.$dactrec['action_titre'].' sur le forum';
-      $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' deleted a message by '.$dactrec['action_titre'].' on the forum';
+      $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a supprimé un message de '.$dactrec['action_titre'].' sur le forum';
+      $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' deleted a message by '.$dactrec['action_titre'].' on the forum';
     }
   }
 
@@ -353,8 +353,8 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   else if($dactrec['action_type'] === 'forum_edit_message')
   {
     $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a modifié un message de '.$dactrec['action_titre'].' sur le forum';
-    $activite_desc[$nactrec]['EN']  = $dactrec['pseudonyme'].' edited a message by '.$dactrec['action_titre'].' on the forum';
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a modifié un message de '.$dactrec['action_titre'].' sur le forum';
+    $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' edited a message by '.$dactrec['action_titre'].' on the forum';
   }
 
   //***************************************************************************************************************************************
@@ -363,7 +363,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   else if($dactrec['action_type'] === 'forum_edit')
   {
     $activite_href[$nactrec]        = $chemin.'pages/forum/sujet?id='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a modifié le sujet du forum '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a modifié le sujet du forum '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
   }
 
   //***************************************************************************************************************************************
@@ -372,9 +372,23 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   else if($dactrec['action_type'] === 'forum_delete')
   {
     $activite_css[$nactrec]         = 'mise_a_jour texte_blanc';
-    $activite_desc[$nactrec]['FR']  = $dactrec['pseudonyme'].' a supprimé le sujet du forum '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a supprimé le sujet du forum '.tronquer_chaine(predata($dactrec['action_titre']), 45, '...');
   }
 
+
+
+
+  //*************************************************************************************************************************************//
+  //                                                          COIN DES ÉCRIVAINS                                                         //
+  //*************************************************************************************************************************************//
+  // Nouveau texte
+
+  else if($dactrec['action_type'] === 'ecrivains_new')
+  {
+    $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
+    $activite_href[$nactrec]        = $chemin.'pages/ecrivains/texte?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a publié un texte : '.tronquer_chaine(predata($dactrec['action_titre']), 70, '...');
+  }
 
 
 
