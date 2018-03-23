@@ -42,6 +42,7 @@ sql_creer_table("ecrivains_texte", "  id                      INT(11) UNSIGNED N
 sql_creer_table("ecrivains_note", " id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
                                     FKecrivains_texte INT(11) UNSIGNED NOT NULL                             ,
                                     FKmembres         INT(11) UNSIGNED NOT NULL                             ,
+                                    timestamp         INT(11) UNSIGNED NOT NULL                             ,
                                     note              DECIMAL(2,1)                                          ,
                                     anonyme           TINYINT(1) UNSIGNED NOT NULL                          ,
                                     message           TEXT                                                  ");
@@ -63,6 +64,7 @@ sql_supprimer_champ("ecrivains_texte", "feedback_messages");
 sql_supprimer_champ("ecrivains_texte", "feedback_forum");
 sql_supprimer_champ("ecrivains_texte", "feedback_note");
 sql_creer_champ("ecrivains_texte", "niveau_feedback", "INT(4) UNSIGNED NOT NULL", "timestamp_modification");
+sql_creer_champ("ecrivains_note", "timestamp", "INT(11) UNSIGNED NOT NULL", "FKmembres");
 
 
 

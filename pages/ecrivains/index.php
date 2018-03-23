@@ -28,21 +28,42 @@ $page_desc  = "Un lieu de partage public pour créations littéraires entre amat
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                                                        TRAITEMENT DU POST-DATA                                                        */
+/*                                                        PRÉPARATION DES DONNÉES                                                        */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Titre
+// Liste des publications
+
+// On va chercher les textes
+$qtextes = "  SELECT    ecrivains_texte.id                  AS 't_id'       ,
+                        ecrivains_texte.timestamp_creation  AS 't_date'     ,
+                        ecrivains_texte.niveau_feedback     AS 't_feedback' ,
+                        ecrivains_texte.titre               AS 't_titre'    ,
+                        ecrivains_texte.note_moyenne        AS 't_note'     ,
+                        ecrivains_texte.longueur_texte      AS 't_longueur' ,
+                        membres.id                          AS 'm_id'       ,
+                        membres.pseudonyme                  AS 'm_pseudo'
+              FROM      ecrivains_texte
+              LEFT JOIN membres ON ecrivains_texte.FKmembres = membres.id
+              ORDER BY  ecrivains_texte.timestamp_creation DESC ";
+
+// Et on envoie la requête
+$qtextes = query($qtextes);
+
+// Puis on parcourt les résultats pour les préparer à l'affichage
+for($ntextes = 0 ; $dtextes = mysqli_fetch_array($qtextes) ; $ntextes++)
+{
+  $texte_id[$ntextes]       = $dtextes['t_id'];
+  $texte_titre[$ntextes]    = predata($dtextes['t_titre']);
+  $texte_longueur[$ntextes] = $dtextes['t_longueur'];
+  $texte_idauteur[$ntextes] = $dtextes['m_id'];
+  $texte_auteur[$ntextes]   = predata($dtextes['m_pseudo']);
+  $texte_publie[$ntextes]   = predata(ilya($dtextes['t_date']));
+  $texte_note[$ntextes]     = ($dtextes['t_feedback'] < 2 || $dtextes['t_note'] < 0) ? '&nbsp;' : $dtextes['t_note'].' / 5';
+}
 
 
-
-
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                        PRÉPARATION DES DONNÉES                                                        */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
 
 
 
@@ -103,23 +124,33 @@ if(!getxhr()) { /***************************************************************
           <?php } ?>
 
           <tbody class="align_center">
+
+            <?php for($i=0;$i<$ntextes;$i++) { ?>
+
             <tr>
               <td>
-                Les aventures du NoBlemeux qui publie un texte
+                <a class="gras" href="<?=$chemin?>pages/ecrivains/texte?id=<?=$texte_id[$i]?>">
+                  <?=$texte_titre[$i]?>
+                </a>
               </td>
               <td>
-                700
+                <?=$texte_longueur[$i]?>
               </td>
               <td>
-                <a class="gras">PseudonymeLong</a>
+                <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$texte_idauteur[$i]?>">
+                  <?=$texte_auteur[$i]?>
+                </a>
               </td>
               <td>
-                Il y a 73 jours
+                <?=$texte_publie[$i]?>
               </td>
               <td>
-                3.5/5
+                <?=$texte_note[$i]?>
               </td>
             </tr>
+
+            <?php } ?>
+
           </tbody>
 
           <?php if(!getxhr()) { ?>

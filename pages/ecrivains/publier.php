@@ -42,7 +42,7 @@ if(isset($_POST['publier_go']))
 {
   // Assainissement du postdata
   $texte_feedback = postdata($_POST['publier_feedback']);
-  $texte_titre    = postdata($_POST['publier_titre']);
+  $texte_titre    = postdata(tronquer_chaine($_POST['publier_titre'], 90));
   $texte_contenu  = postdata($_POST['publier_contenu']);
 
   // Informations nécessaires pour publier le texte
@@ -151,8 +151,8 @@ else
             </select><br>
             <br>
 
-            <label for="publier_titre">Titre du texte (maximum 120 caractères)</label>
-            <input id="publier_titre" name="publier_titre" class="indiv" type="text" value="<?=$texte_titre?>" maxlength="120"><br>
+            <label for="publier_titre">Titre du texte (maximum 90 caractères)</label>
+            <input id="publier_titre" name="publier_titre" class="indiv" type="text" value="<?=$texte_titre?>" maxlength="90"><br>
             <br>
 
             <label for="publier_contenu">Contenu du texte (vous pouvez utiliser des <a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> pour formater le texte)</label>
