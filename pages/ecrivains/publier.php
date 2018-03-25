@@ -41,9 +41,9 @@ $css = array('ecrivains');
 if(isset($_POST['publier_go']))
 {
   // Assainissement du postdata
-  $texte_feedback = postdata($_POST['publier_feedback']);
-  $texte_titre    = postdata(tronquer_chaine($_POST['publier_titre'], 90));
-  $texte_contenu  = postdata($_POST['publier_contenu']);
+  $texte_feedback = postdata_vide('publier_feedback', 'int', 2);
+  $texte_titre    = isset($_POST['publier_titre']) ? postdata(tronquer_chaine($_POST['publier_titre'], 90)) : '';
+  $texte_contenu  = postdata_vide('publier_contenu', 'string');
 
   // Informations nécessaires pour publier le texte
   $texte_auteur   = $_SESSION['user'];

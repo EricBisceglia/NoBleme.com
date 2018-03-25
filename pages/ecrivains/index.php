@@ -66,8 +66,6 @@ for($ntextes = 0 ; $dtextes = mysqli_fetch_array($qtextes) ; $ntextes++)
 
 
 
-
-
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
@@ -97,7 +95,7 @@ if(!getxhr()) { /***************************************************************
       <br>
       <br>
 
-      <div class="texte3">
+      <div class="texte3 nowrap">
 
         <table class="titresnoirs">
 

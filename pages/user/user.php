@@ -137,6 +137,10 @@ $qprofil_ecrivains  = mysqli_fetch_array(query("  SELECT    COUNT(ecrivains_text
                                                   FROM      ecrivains_texte
                                                   WHERE     ecrivains_texte.FKmembres = '$user_id' "));
 
+$qprofil_necrivains = mysqli_fetch_array(query("  SELECT    COUNT(ecrivains_note.id) AS 'num_reactions'
+                                                  FROM      ecrivains_note
+                                                  WHERE     ecrivains_note.FKmembres = '$user_id' "));
+
 $qprofil_quotes     = mysqli_fetch_array(query("  SELECT    COUNT(quotes_membres.id) AS 'num_quotes'
                                                   FROM      quotes_membres
                                                   LEFT JOIN quotes ON quotes_membres.FKquotes = quotes.id
@@ -155,31 +159,37 @@ $qprofil_todo       = mysqli_fetch_array(query("  SELECT    COUNT(todo.id) AS 'n
                                                   AND       todo.public       = 1 "));
 
 // Reste plus qu'à préparer tout ça pour l'affichage
-$profil_pseudo    = predata($dprofil['u_pseudo']);
-$profil_admin     = $dprofil['u_admin'];
-$profil_sysop     = $dprofil['u_sysop'];
-$profil_mod       = $dprofil['u_mod'];
-$profil_banni     = ($dprofil['u_ban_date']) ? jourfr(date('Y-m-d', $dprofil['u_ban_date']), $lang) : 0;
-$profil_sysop_ban = (!$dprofil['u_ban_date']) ? 'BANNIR' : 'DÉBANNIR';
-$profil_bannidans = changer_casse(dans($dprofil['u_ban_date'], $lang), 'min');
-$profil_banraison = predata($dprofil['u_ban_raison']);
-$profil_langue    = $dprofil['u_langue'];
-$profil_contenu   = ($dprofil['u_profil']) ? bbcode(predata($dprofil['u_profil'], 1)) : '';
-$profil_creation  = jourfr(date('Y-m-d', $dprofil['u_creation']), $lang).' ('.ilya($dprofil['u_creation'], $lang).')';
-$profil_activite  = ilya($dprofil['u_activite'], $lang);
-$profil_genre     = predata($dprofil['u_genre']);
-$profil_age       = ($dprofil['u_anniv'] != '0000-00-00') ? floor((time() - strtotime($dprofil['u_anniv'])) / 31556926) : '';
-$profil_anniv     = ($dprofil['u_anniv'] != '0000-00-00') ? jourfr($dprofil['u_anniv'], $lang) : '';
-$profil_lieu      = predata($dprofil['u_habite']);
-$profil_metier    = predata($dprofil['u_metier']);
-$profil_email     = predata($dprofil['u_email']);
-$profil_forum     = $qprofil_forum['num_sujets'];
-$profil_forum_2   = $dprofil['u_forum'];
-$profil_irl       = $qprofil_irl['num_irls'];
-$profil_ecrivains = $qprofil_ecrivains['num_textes'];
-$profil_quotes    = $qprofil_quotes['num_quotes'];
-$profil_quotesub  = $qprofil_quotesub['num_quotes'];
-$profil_todo      = $qprofil_todo['num_todos'];
+$profil_pseudo      = predata($dprofil['u_pseudo']);
+$profil_admin       = $dprofil['u_admin'];
+$profil_sysop       = $dprofil['u_sysop'];
+$profil_mod         = $dprofil['u_mod'];
+$profil_banni       = ($dprofil['u_ban_date']) ? jourfr(date('Y-m-d', $dprofil['u_ban_date']), $lang) : 0;
+$profil_sysop_ban   = (!$dprofil['u_ban_date']) ? 'BANNIR' : 'DÉBANNIR';
+$profil_bannidans   = changer_casse(dans($dprofil['u_ban_date'], $lang), 'min');
+$profil_banraison   = predata($dprofil['u_ban_raison']);
+$profil_langue      = $dprofil['u_langue'];
+$profil_contenu     = ($dprofil['u_profil']) ? bbcode(predata($dprofil['u_profil'], 1)) : '';
+$profil_creation    = jourfr(date('Y-m-d', $dprofil['u_creation']), $lang).' ('.ilya($dprofil['u_creation'], $lang).')';
+$profil_activite    = ilya($dprofil['u_activite'], $lang);
+$profil_genre       = predata($dprofil['u_genre']);
+$profil_age         = ($dprofil['u_anniv'] != '0000-00-00') ? floor((time() - strtotime($dprofil['u_anniv'])) / 31556926) : '';
+$profil_anniv       = ($dprofil['u_anniv'] != '0000-00-00') ? jourfr($dprofil['u_anniv'], $lang) : '';
+$profil_lieu        = predata($dprofil['u_habite']);
+$profil_metier      = predata($dprofil['u_metier']);
+$profil_email       = predata($dprofil['u_email']);
+$profil_forum       = $qprofil_forum['num_sujets'];
+$profil_forum_2     = $dprofil['u_forum'];
+$profil_irl         = $qprofil_irl['num_irls'];
+$profil_ecrivains   = "A ";
+$temp_pluriel       = ($qprofil_ecrivains['num_textes'] == 1) ? 'texte' : 'textes';
+$profil_ecrivains  .= ($qprofil_ecrivains['num_textes']) ? 'publié <span class="gras texte_noir">'.$qprofil_ecrivains['num_textes'].'</span> '.$temp_pluriel : '';
+$profil_ecrivains  .= ($qprofil_ecrivains['num_textes'] && $qprofil_necrivains['num_reactions']) ? ' et ' : '';
+$temp_pluriel       = ($qprofil_necrivains['num_reactions'] == 1) ? 'texte' : 'textes';
+$profil_ecrivains  .= ($qprofil_necrivains['num_reactions']) ? 'réagi à <span class="gras texte_noir">'.$qprofil_necrivains['num_reactions'].'</span> '.$temp_pluriel : '';
+$profil_ecrivains   = ($qprofil_ecrivains['num_textes'] || $qprofil_necrivains['num_reactions']) ? $profil_ecrivains : '';
+$profil_quotes      = $qprofil_quotes['num_quotes'];
+$profil_quotesub    = $qprofil_quotesub['num_quotes'];
+$profil_todo        = $qprofil_todo['num_todos'];
 
 
 
@@ -374,7 +384,7 @@ else if($lang == 'EN')
               <hr class="profil_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/ecrivains/index';">
                 <span class="gras">Coin des écrivains</span><br>
-                A publié <span class="gras texte_noir"><?=$profil_ecrivains?></span> textes
+                <?=$profil_ecrivains?>
               </div>
 
               <?php } if($profil_quotes && $lang == 'FR') { ?>

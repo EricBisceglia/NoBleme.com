@@ -390,6 +390,16 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a publié un texte : '.tronquer_chaine(predata($dactrec['action_titre']), 70, '...');
   }
 
+  //*************************************************************************************************************************************//
+  // Réaction à un texte
+
+  else if($dactrec['action_type'] === 'ecrivains_reaction_new')
+  {
+    $activite_href[$nactrec]        = $chemin.'pages/ecrivains/texte?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a réagi au texte '.tronquer_chaine(predata($dactrec['action_titre']), 70, '...');
+  }
+
+
 
 
   //*************************************************************************************************************************************//
