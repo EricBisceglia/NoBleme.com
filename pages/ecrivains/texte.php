@@ -20,6 +20,10 @@ $langue_page = array('FR');
 $page_titre = "Coin des écrivains";
 $page_desc  = "Coin des écrivains de NoBleme";
 
+// CSS & JS
+$css  = array('ecrivains');
+$js   = array('dynamique', 'ecrivains/texte');
+
 
 
 
@@ -103,9 +107,9 @@ if(isset($_POST['reaction_go']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Ajout d'une nouvelle réaction sur le texte
+// Suppression d'une réaction au texte par son auteur
 
-if($loggedin && isset($_GET['supprimer_reaction']))
+if($loggedin && isset($_POST['supprimer_reaction']))
 {
   // On supprime la note
   query(" DELETE FROM ecrivains_note
@@ -113,12 +117,15 @@ if($loggedin && isset($_GET['supprimer_reaction']))
           AND         ecrivains_note.FKmembres          = '$userid' ");
 
   // Puis on supprime l'entrée dans l'activité récente
-  $reaction_pseudo = postdata(getpseudo(), 'string');
+  $note_pseudo = postdata(getpseudo(), 'string');
   query(" DELETE FROM activite
           WHERE       activite.action_type  =     'ecrivains_reaction_new'
           AND         activite.action_id    =     '$texte_id'
-          AND         activite.pseudonyme   LIKE  '$reaction_pseudo'  ");
+          AND         activite.pseudonyme   LIKE  '$note_pseudo' ");
 }
+
+
+var_dump($_POST);
 
 
 
@@ -162,6 +169,8 @@ $qtexte = mysqli_fetch_array(query("  SELECT    ecrivains_texte.titre           
                                       WHERE     ecrivains_texte.id = '$texte_id' "));
 
 // Puis on prépare le contenu pour l'affichage
+$est_sysop        = getsysop();
+$est_auteur       = (loggedin() && ($qtexte['m_id'] == $_SESSION['user']));
 $texte_titre      = predata($qtexte['t_titre']);
 $texte_contenu    = bbcode(predata($qtexte['t_contenu'], 1));
 $texte_auteur_id  = $qtexte['m_id'];
@@ -197,7 +206,8 @@ if($loggedin)
 }
 
 // Maintenant, on peut aller va chercher la liste des réactions
-$qreactions = query(" SELECT    ecrivains_note.timestamp  AS 'n_date'     ,
+$qreactions = query(" SELECT    ecrivains_note.id         AS 'n_id'       ,
+                                ecrivains_note.timestamp  AS 'n_date'     ,
                                 ecrivains_note.note       AS 'n_note'     ,
                                 ecrivains_note.anonyme    AS 'n_anon'     ,
                                 ecrivains_note.message    AS 'n_message'  ,
@@ -211,6 +221,7 @@ $qreactions = query(" SELECT    ecrivains_note.timestamp  AS 'n_date'     ,
 // Puis on les parcourt afin de les préparer pour l'affichage
 for($nreactions = 0; $dreactions = mysqli_fetch_array($qreactions); $nreactions++)
 {
+  $reaction_id[$nreactions]       = $dreactions['n_id'];
   $reaction_note[$nreactions]     = round($dreactions['n_note']);
   $reaction_anonyme[$nreactions]  = $dreactions['n_anon'];
   $reaction_userid[$nreactions]   = $dreactions['m_id'];
@@ -227,13 +238,13 @@ for($nreactions = 0; $dreactions = mysqli_fetch_array($qreactions); $nreactions+
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-/************************************************************************************************/ include './../../inc/header.inc.php'; ?>
+if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
 
       <div class="texte">
 
         <h3>
           <?=$texte_titre?>
-          <?php if(getsysop()) { ?>
+          <?php if($est_sysop || $est_auteur) { ?>
           <a href="<?=$chemin?>pages/ecrivains/texte_modifier?id=<?=$texte_id?>">
             <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.png" alt="M">
           </a>
@@ -301,6 +312,11 @@ for($nreactions = 0; $dreactions = mysqli_fetch_array($qreactions); $nreactions+
         <?php for($i=0;$i<$nreactions;$i++) { ?>
 
         <p>
+          <?php if($est_sysop) { ?>
+          <span id="texte_reaction_<?=$reaction_id[$i]?>">
+            <img src="<?=$chemin?>img/icones/delete.png" height="15px" class="pointeur" onclick="texte_supprimer_reaction('<?=$chemin?>', <?=$reaction_id[$i]?>)">
+          </span>
+          <?php } ?>
           <span class="gras texte_noir"><?=$reaction_note[$i]?> / 5</span>
           par
           <?php if($reaction_anonyme[$i]) { ?>
@@ -312,7 +328,9 @@ for($nreactions = 0; $dreactions = mysqli_fetch_array($qreactions); $nreactions+
           <?=$reaction_message[$i]?>
           <?php if($reaction_cestmoi[$i]) { ?>
           <br>
-          <a href="<?=$chemin?>pages/ecrivains/texte?id=<?=$texte_id?>&supprimer_reaction=1">-- Supprimer ma réaction à ce texte --</a>
+          <form method="POST">
+            <input type="submit" class="button-outline" value="Supprimer ma réaction à ce texte" name="supprimer_reaction" onclick="return confirm('Confirmer la suppression ?');">
+          </form>
           <?php } ?>
         </p>
 
@@ -369,8 +387,8 @@ for($nreactions = 0; $dreactions = mysqli_fetch_array($qreactions); $nreactions+
 
       </div>
 
-<?php /***********************************************************************************************************************************/
+<?php include './../../inc/footer.inc.php'; /*********************************************************************************************/
 /*                                                                                                                                       */
 /*                                                              FIN DU HTML                                                              */
 /*                                                                                                                                       */
-/***************************************************************************************************/ include './../../inc/footer.inc.php';
+/***************************************************************************************************************************************/ }
