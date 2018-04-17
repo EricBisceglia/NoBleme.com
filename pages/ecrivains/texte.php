@@ -55,6 +55,7 @@ if($qveriftexte['t_titre'] === NULL)
 
 // Et on met à jour les infos du header
 $loggedin     = loggedin();
+$est_sysop    = getsysop();
 $texte_titre  = predata($qveriftexte['t_titre']);
 $page_nom    .= ' : '.predata(tronquer_chaine($qveriftexte['t_titre'], 25, '...'));
 $page_url    .= $texte_id;
@@ -93,13 +94,14 @@ if(isset($_POST['reaction_go']))
                         ecrivains_note.message            = '$note_commentaire' ");
 
     // Activité récente
-    $note_pseudo = postdata(getpseudo(), 'string');
+    $note_pseudo      = postdata(getpseudo(), 'string');
+    $note_type_action = ($note_anonyme) ? 'ecrivains_reaction_new_anonyme' : 'ecrivains_reaction_new';
     query(" INSERT INTO activite
-            SET         activite.timestamp      = '$timestamp'              ,
-                        activite.pseudonyme     = '$note_pseudo'            ,
-                        activite.action_type    = 'ecrivains_reaction_new'  ,
-                        activite.action_id      = '$texte_id'               ,
-                        activite.action_titre   = '$texte_titre'            ");
+            SET         activite.timestamp      = '$timestamp'        ,
+                        activite.pseudonyme     = '$note_pseudo'      ,
+                        activite.action_type    = '$note_type_action' ,
+                        activite.action_id      = '$texte_id'         ,
+                        activite.action_titre   = '$texte_titre'      ");
   }
 }
 
@@ -119,13 +121,86 @@ if($loggedin && isset($_POST['supprimer_reaction']))
   // Puis on supprime l'entrée dans l'activité récente
   $note_pseudo = postdata(getpseudo(), 'string');
   query(" DELETE FROM activite
-          WHERE       activite.action_type  =     'ecrivains_reaction_new'
+          WHERE     ( activite.action_type  =     'ecrivains_reaction_new'
+          OR          activite.action_type  =     'ecrivains_reaction_new_anonyme' )
           AND         activite.action_id    =     '$texte_id'
           AND         activite.pseudonyme   LIKE  '$note_pseudo' ");
 }
 
 
-var_dump($_POST);
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Suppression d'une réaction au texte
+
+if($est_sysop && isset($_POST['supprimer_reaction_go']))
+{
+  // On commence par récupérer et assainir l'id de la réaction
+  $delete_id = postdata_vide('supprimer_reaction_id', 'int', 0);
+
+  // On récupère les justifications sur la suppression, si nécessaire
+  $delete_raison  = (isset($_POST['supprimer_reaction_justification_'.$delete_id])) ? $_POST['supprimer_reaction_justification_'.$delete_id] : '';
+
+  // On va chercher si la réaction existe (et on en profite pour récupérer son contenu)
+  $qreaction = mysqli_fetch_array(query(" SELECT    ecrivains_note.note     AS 'n_note'     ,
+                                                    ecrivains_note.message  AS 'n_message'  ,
+                                                    ecrivains_note.anonyme  AS 'n_anonyme'  ,
+                                                    membres.pseudonyme      AS 'm_pseudo'   ,
+                                                    ecrivains_texte.titre   AS 't_titre'
+                                          FROM      ecrivains_note
+                                          LEFT JOIN membres         ON ecrivains_note.FKmembres         = membres.id
+                                          LEFT JOIN ecrivains_texte ON ecrivains_note.FKecrivains_texte = ecrivains_texte.id
+                                          WHERE     ecrivains_note.id = '$delete_id'" ));
+
+  // Si elle n'existe pas, on dégage
+  if($qreaction['n_note'] === NULL)
+    exit(header("Location: ".$chemin."pages/ecrivains/texte?id=".$texte_id));
+
+  // On supprime la note
+  query(" DELETE FROM ecrivains_note
+          WHERE       ecrivains_note.id = '$delete_id' ");
+
+  // Puis on supprime l'entrée dans l'activité récente
+  $delete_pseudo = postdata($qreaction['m_pseudo']);
+  query(" DELETE FROM activite
+          WHERE     ( activite.action_type  =     'ecrivains_reaction_new'
+          OR          activite.action_type  =     'ecrivains_reaction_new_anonyme' )
+          AND         activite.action_id    =     '$texte_id'
+          AND         activite.pseudonyme   LIKE  '$delete_pseudo' ");
+
+  // Activité récente
+  $timestamp            = time();
+  $delete_mod           = postdata(getpseudo());
+  $delete_anonyme       = ($qreaction['n_anonyme']) ? 'Anonyme' : $delete_pseudo;
+  $delete_justification = ($delete_raison) ? " , activite.justification = '".postdata($delete_raison, 'string', '')."' " : '';
+  query(" INSERT INTO activite
+          SET         activite.timestamp      = '$timestamp'                ,
+                      activite.log_moderation = 1                           ,
+                      activite.pseudonyme     = '$delete_mod'               ,
+                      activite.action_type    = 'ecrivains_reaction_delete' ,
+                      activite.action_id      = '$delete_id'                ,
+                      activite.action_titre   = '$delete_anonyme'
+                      $delete_justification                                 ");
+
+  // Diff
+  $activite_id    = mysqli_insert_id($db);
+  $delete_note    = postdata($qreaction['n_note']);
+  $delete_message = postdata($qreaction['n_message']);
+  query(" INSERT INTO activite_diff
+          SET         FKactivite  = '$activite_id'  ,
+                      titre_diff  = 'Note'          ,
+                      diff_avant  = '$delete_note' ");
+  if($delete_message)
+    query(" INSERT INTO activite_diff
+            SET         FKactivite  = '$activite_id'    ,
+                        titre_diff  = 'Message'         ,
+                        diff_avant  = '$delete_message' ");
+
+  // IRCbot
+  $delete_titre_raw   = $qreaction['t_titre'];
+  $delete_pseudo_raw  = $qreaction['m_pseudo'];
+  ircbot($chemin, getpseudo()." a supprimé une réaction de ".$delete_pseudo_raw." au texte ".$delete_titre_raw.". Le contenu de la réaction est archivé ici : ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
+}
 
 
 
@@ -169,7 +244,6 @@ $qtexte = mysqli_fetch_array(query("  SELECT    ecrivains_texte.titre           
                                       WHERE     ecrivains_texte.id = '$texte_id' "));
 
 // Puis on prépare le contenu pour l'affichage
-$est_sysop        = getsysop();
 $est_auteur       = (loggedin() && ($qtexte['m_id'] == $_SESSION['user']));
 $texte_titre      = predata($qtexte['t_titre']);
 $texte_contenu    = bbcode(predata($qtexte['t_contenu'], 1));
@@ -319,7 +393,9 @@ if(!getxhr()) { /***************************************************************
           <?php } ?>
           <span class="gras texte_noir"><?=$reaction_note[$i]?> / 5</span>
           par
-          <?php if($reaction_anonyme[$i]) { ?>
+          <?php if($reaction_anonyme[$i] && getadmin()) { ?>
+          <span class="texte_noir gras">Anonyme</span> (<?=$reaction_pseudo[$i]?>)
+          <?php } else if($reaction_anonyme[$i]) { ?>
           <span class="texte_noir gras">Anonyme</span>
           <?php } else { ?>
           <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$reaction_userid[$i]?>"><?=$reaction_pseudo[$i]?></a>

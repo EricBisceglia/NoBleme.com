@@ -831,12 +831,6 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
               </div>
             </a>
 
-            <a href="<?=$chemin?>pages/ecrivains/auteurs">
-              <div class="<?=header_class('EcrivainsAuteurs',$header_sidemenu,'side')?>">
-                Liste des auteurs
-              </div>
-            </a>
-
             <a href="<?=$chemin?>pages/ecrivains/publier">
               <div class="<?=header_class('EcrivainsPublier',$header_sidemenu,'side')?>">
                 Publier un texte

@@ -341,7 +341,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
       $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' deleted one of his messages on the forum';
     }
     else
-      {
+    {
       $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a supprimé un message de '.$dactrec['action_titre'].' sur le forum';
       $activite_desc[$nactrec]['EN']  = predata($dactrec['pseudonyme']).' deleted a message by '.$dactrec['action_titre'].' on the forum';
     }
@@ -397,6 +397,21 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   {
     $activite_href[$nactrec]        = $chemin.'pages/ecrivains/texte?id='.$dactrec['action_id'];
     $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a réagi au texte '.tronquer_chaine(predata($dactrec['action_titre']), 70, '...');
+  }
+  else if($dactrec['action_type'] === 'ecrivains_reaction_new_anonyme')
+  {
+    $activite_href[$nactrec]        = $chemin.'pages/ecrivains/texte?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = 'Nouvelle réaction anonyme au texte '.tronquer_chaine(predata($dactrec['action_titre']), 60, '...');
+  }
+
+  //***************************************************************************************************************************************
+  // Suppression d'un message
+
+  else if($dactrec['action_type'] === 'ecrivains_reaction_delete')
+  {
+    $activite_css[$nactrec]         = 'mise_a_jour_background';
+    $activite_href[$nactrec]        = $chemin.'pages/ecrivains/texte?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a supprimé une réaction de '.$dactrec['action_titre'].' dans le coin des écrivains';
   }
 
 
@@ -542,7 +557,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
 
 
   //*************************************************************************************************************************************//
-  //                                                            DÉVELOPPEMENT                                                            //
+  //                                                           CAS PAR DÉFAUT                                                            //
   //*************************************************************************************************************************************//
   // Cas par défaut
 

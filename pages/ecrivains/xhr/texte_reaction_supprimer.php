@@ -55,13 +55,6 @@ if($qnote['id'] === NULL)
     <input id="supprimer_reaction_justification_<?=$delete_id?>" name="supprimer_reaction_justification_<?=$delete_id?>" class="indiv" type="text"><br>
     <br>
 
-    <label for="supprimer_reaction_envoyer_<?=$delete_id?>" id="supprimer_reaction_envoyer_<?=$delete_id?>">Envoyer un message privé à l'utilisateur pour le notifier de l'action de modération</label>
-    <select id="supprimer_reaction_envoyer_<?=$delete_id?>" name="supprimer_reaction_envoyer_<?=$delete_id?>" class="indiv">
-      <option value="1">Oui, envoyer un message privé automatique</option>
-      <option value="0">Non, ne pas envoyer de message privé automatique</option>
-    </select><br>
-    <br>
-
     <div class="align_center">
       <input type="submit" value="SUPPRIMER LA RÉACTION CI-DESSOUS" name="supprimer_reaction_go"><br>
       <br>
