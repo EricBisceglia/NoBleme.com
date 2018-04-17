@@ -23,6 +23,9 @@ $langue_page = array('FR');
 $page_titre = "Le coin des écrivains";
 $page_desc  = "Un lieu de partage public pour créations littéraires entre amateurs";
 
+// JS
+$js = array('dynamique');
+
 
 
 
@@ -36,17 +39,32 @@ $page_desc  = "Un lieu de partage public pour créations littéraires entre amat
 // Liste des publications
 
 // On va chercher les textes
-$qtextes = "  SELECT    ecrivains_texte.id                  AS 't_id'       ,
-                        ecrivains_texte.timestamp_creation  AS 't_date'     ,
-                        ecrivains_texte.niveau_feedback     AS 't_feedback' ,
-                        ecrivains_texte.titre               AS 't_titre'    ,
-                        ecrivains_texte.note_moyenne        AS 't_note'     ,
-                        ecrivains_texte.longueur_texte      AS 't_longueur' ,
-                        membres.id                          AS 'm_id'       ,
-                        membres.pseudonyme                  AS 'm_pseudo'
-              FROM      ecrivains_texte
-              LEFT JOIN membres ON ecrivains_texte.FKmembres = membres.id
-              ORDER BY  ecrivains_texte.timestamp_creation DESC ";
+$qtextes = "    SELECT    ecrivains_texte.id                  AS 't_id'       ,
+                          ecrivains_texte.timestamp_creation  AS 't_date'     ,
+                          ecrivains_texte.niveau_feedback     AS 't_feedback' ,
+                          ecrivains_texte.titre               AS 't_titre'    ,
+                          ecrivains_texte.note_moyenne        AS 't_note'     ,
+                          ecrivains_texte.longueur_texte      AS 't_longueur' ,
+                          membres.id                          AS 'm_id'       ,
+                          membres.pseudonyme                  AS 'm_pseudo'
+                FROM      ecrivains_texte
+                LEFT JOIN membres ON ecrivains_texte.FKmembres = membres.id ";
+
+// On détermine l'ordre de tri
+$textes_tri = postdata_vide('ecrivains_tri', 'string', '');
+if($textes_tri == 'titre')
+  $qtextes .= " ORDER BY  ecrivains_texte.titre               ASC   ";
+else if($textes_tri == 'longueur')
+  $qtextes .= " ORDER BY  ecrivains_texte.longueur_texte      DESC  ,
+                          ecrivains_texte.timestamp_creation  DESC  ";
+else if($textes_tri == 'auteur')
+  $qtextes .= " ORDER BY  membres.pseudonyme                  ASC   ,
+                          ecrivains_texte.timestamp_creation  DESC  ";
+else if($textes_tri == 'note')
+  $qtextes .= " ORDER BY  ecrivains_texte.note_moyenne        DESC  ,
+                          ecrivains_texte.timestamp_creation  DESC  ";
+else
+  $qtextes .= " ORDER BY  ecrivains_texte.timestamp_creation  DESC  ";
 
 // Et on envoie la requête
 $qtextes = query($qtextes);
@@ -101,19 +119,19 @@ if(!getxhr()) { /***************************************************************
 
           <thead>
             <tr class="pointeur">
-              <th>
+              <th onclick="dynamique('<?=$chemin?>', 'index', 'ecrivains_liste_tbody', 'ecrivains_tri=titre', 1);">
                 TITRE DU TEXTE
               </th>
-              <th>
+              <th onclick="dynamique('<?=$chemin?>', 'index', 'ecrivains_liste_tbody', 'ecrivains_tri=longueur', 1);">
                 LONGUEUR
               </th>
-              <th>
+              <th onclick="dynamique('<?=$chemin?>', 'index', 'ecrivains_liste_tbody', 'ecrivains_tri=auteur', 1);">
                 AUTEUR
               </th>
-              <th>
+              <th onclick="dynamique('<?=$chemin?>', 'index', 'ecrivains_liste_tbody', 'ecrivains_tri=date', 1);">
                 PUBLIÉ
               </th>
-              <th>
+              <th onclick="dynamique('<?=$chemin?>', 'index', 'ecrivains_liste_tbody', 'ecrivains_tri=note', 1);">
                 NOTE
               </th>
             </tr>
@@ -121,7 +139,7 @@ if(!getxhr()) { /***************************************************************
 
           <?php } ?>
 
-          <tbody class="align_center">
+          <tbody class="align_center" id="ecrivains_liste_tbody">
 
             <?php for($i=0;$i<$ntextes;$i++) { ?>
 
