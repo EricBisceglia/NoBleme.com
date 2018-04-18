@@ -101,24 +101,19 @@ if(isset($_POST['publier_go']))
 if(isset($_POST['publier_prev']) || isset($_POST['publier_go']))
 {
   // On prépare le contenu des champs
-  $texte_titre    = $_POST['publier_titre'];
-  $texte_contenu  = $_POST['publier_contenu'];
+  $texte_titre        = $_POST['publier_titre'];
+  $texte_contenu      = $_POST['publier_contenu'];
+  $texte_titre_prev   = predata($_POST['publier_titre']);
+  $texte_contenu_prev = bbcode(predata($_POST['publier_contenu'], 1));
+  $texte_auteur       = predata(getpseudo());
+  $texte_creation     = predata(changer_casse(ilya(time()-1), 'min'));
 }
 else
 {
   // Sinon, on met le contenu à zéro
-  $texte_titre    = '';
-  $texte_contenu  = '';
+  $texte_titre        = '';
+  $texte_contenu      = '';
 }
-
-
-
-
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                        PRÉPARATION DES DONNÉES                                                        */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
 
 
 
@@ -140,7 +135,7 @@ else
         <br>
         <br>
 
-        <form method="POST">
+        <form method="POST" action="publier#publier_contenu">
           <fieldset>
 
             <label for="publier_feedback">Niveau de retours que vous désirez</label>
@@ -177,6 +172,38 @@ else
         </form>
 
       </div>
+
+      <?php if(isset($_POST['publier_prev'])) { ?>
+
+      <br>
+      <br>
+      <hr class="separateur_contenu">
+      <br>
+
+      <div class="texte">
+
+        <h3>
+          <?=$texte_titre_prev?>
+        </h3>
+
+        <h6>
+          Publié dans le <a>coin des écrivains</a> de NoBleme par <a><?=$texte_auteur?></a> <?=$texte_creation?>
+        </h6>
+
+        <br>
+
+        <p>
+          <?=$texte_contenu_prev?>
+        </p>
+
+      </div>
+
+      <br>
+      <br>
+      <br>
+      <hr class="separateur_contenu">
+
+      <?php } ?>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

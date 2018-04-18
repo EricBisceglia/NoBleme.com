@@ -111,6 +111,8 @@ if(isset($_POST['activite_type']))
     $qactrec .= " AND       activite.action_type LIKE 'forum_%' ";
   else if($activite_type == 'irl')
     $qactrec .= " AND       activite.action_type LIKE 'irl_%' ";
+  else if($activite_type == 'ecrivains')
+    $qactrec .= " AND       activite.action_type LIKE 'ecrivains_%' ";
   else if($activite_type == 'dev')
     $qactrec .= " AND     ( activite.action_type LIKE 'version'
                   OR        activite.action_type LIKE 'devblog'
@@ -391,6 +393,24 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   }
 
   //*************************************************************************************************************************************//
+  // Modification d'un texte
+
+  else if($dactrec['action_type'] === 'ecrivains_edit')
+  {
+    $activite_href[$nactrec]        = $chemin.'pages/ecrivains/texte?id='.$dactrec['action_id'];
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a modifié le contenu d\'un texte : '.tronquer_chaine(predata($dactrec['action_titre']), 50, '...');
+  }
+
+  //*************************************************************************************************************************************//
+  // Suppression d'un texte
+
+  else if($dactrec['action_type'] === 'ecrivains_delete')
+  {
+    $activite_css[$nactrec]         = 'mise_a_jour texte_blanc';
+    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a supprimé un texte du coin des écrivains : '.tronquer_chaine(predata($dactrec['action_titre']), 40, '...');
+  }
+
+  //*************************************************************************************************************************************//
   // Réaction à un texte
 
   else if($dactrec['action_type'] === 'ecrivains_reaction_new')
@@ -405,7 +425,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   }
 
   //***************************************************************************************************************************************
-  // Suppression d'un message
+  // Suppression d'une réaction à un texte
 
   else if($dactrec['action_type'] === 'ecrivains_reaction_delete')
   {
@@ -665,6 +685,9 @@ if(!getxhr()) { /***************************************************************
             <option value="membres"><?=$trad['ar_user']?></option>
             <option value="forum"><?=$trad['ar_forum']?></option>
             <option value="irl"><?=$trad['ar_irl']?></option>
+            <?php if($lang == 'FR') { ?>
+            <option value="ecrivains">Coin des écrivains</option>
+            <?php } ?>
             <option value="misc"><?=$trad['ar_misc']?></option>
             <option value="dev"><?=$trad['ar_dev']?></option>
           </select>

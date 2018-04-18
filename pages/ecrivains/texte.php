@@ -249,7 +249,7 @@ $texte_titre      = predata($qtexte['t_titre']);
 $texte_contenu    = bbcode(predata($qtexte['t_contenu'], 1));
 $texte_auteur_id  = $qtexte['m_id'];
 $texte_auteur     = predata($qtexte['m_pseudo']);
-$texte_creation   = predata(ilya($qtexte['t_creation']));
+$texte_creation   = predata(changer_casse(ilya($qtexte['t_creation']), 'min'));
 $texte_feedback   = $qtexte['t_feedback'];
 
 
@@ -328,11 +328,15 @@ if(!getxhr()) { /***************************************************************
           <?php } ?>
         </h3>
 
-        <h6>Publié dans le <a href="<?=$chemin?>pages/ecrivains/index">coin des écrivains</a> de NoBleme par <a href="<?=$chemin?>pages/user/user?id=<?=$texte_auteur_id?>"><?=$texte_auteur?></a> <?=$texte_creation?></h6>
+        <h6>
+          Publié dans le <a href="<?=$chemin?>pages/ecrivains/index">coin des écrivains</a> de NoBleme par <a href="<?=$chemin?>pages/user/user?id=<?=$texte_auteur_id?>"><?=$texte_auteur?></a> <?=$texte_creation?>
+        </h6>
 
         <br>
 
-        <p><?=$texte_contenu?></p>
+        <p>
+          <?=$texte_contenu?>
+        </p>
 
       </div>
 
