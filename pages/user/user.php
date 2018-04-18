@@ -119,62 +119,77 @@ $page_desc          = $page_desc.predata($dprofil['u_pseudo']);
 
 // On va aller chercher d'autres infos sur le membre
 
-$qprofil_forum    = mysqli_fetch_array(query("  SELECT    COUNT(forum_sujet.id) AS 'num_sujets'
-                                                FROM      forum_sujet
-                                                WHERE     forum_sujet.FKmembres_createur    = '$user_id'
-                                                AND       forum_sujet.apparence      NOT LIKE 'Anonyme'
-                                                AND       forum_sujet.public                = 1 "));
+$qprofil_forum      = mysqli_fetch_array(query("  SELECT    COUNT(forum_sujet.id) AS 'num_sujets'
+                                                  FROM      forum_sujet
+                                                  WHERE     forum_sujet.FKmembres_createur    = '$user_id'
+                                                  AND       forum_sujet.apparence      NOT LIKE 'Anonyme'
+                                                  AND       forum_sujet.public                = 1 "));
 
-$temp_date        = date('Y-m-d');
-$qprofil_irl      = mysqli_fetch_array(query("  SELECT    COUNT(irl_participants.id) AS 'num_irls'
-                                                FROM      irl_participants
-                                                LEFT JOIN irl ON irl_participants.FKirl = irl.id
-                                                WHERE     irl.date                    <= '$temp_date'
-                                                AND       irl_participants.FKmembres  = '$user_id'
-                                                AND       irl_participants.confirme   = 1 "));
+$temp_date          = date('Y-m-d');
+$qprofil_irl        = mysqli_fetch_array(query("  SELECT    COUNT(irl_participants.id) AS 'num_irls'
+                                                  FROM      irl_participants
+                                                  LEFT JOIN irl ON irl_participants.FKirl = irl.id
+                                                  WHERE     irl.date                    <= '$temp_date'
+                                                  AND       irl_participants.FKmembres  = '$user_id'
+                                                  AND       irl_participants.confirme   = 1 "));
 
-$qprofil_quotes   = mysqli_fetch_array(query("  SELECT    COUNT(quotes_membres.id) AS 'num_quotes'
-                                                FROM      quotes_membres
-                                                LEFT JOIN quotes ON quotes_membres.FKquotes = quotes.id
-                                                WHERE     quotes_membres.FKmembres  = '$user_id'
-                                                AND       quotes.valide_admin       = 1 "));
+$qprofil_ecrivains  = mysqli_fetch_array(query("  SELECT    COUNT(ecrivains_texte.id) AS 'num_textes'
+                                                  FROM      ecrivains_texte
+                                                  WHERE     ecrivains_texte.FKmembres = '$user_id' "));
 
-$qprofil_quotesub = mysqli_fetch_array(query("  SELECT    COUNT(quotes.id) AS 'num_quotes'
-                                                FROM      quotes
-                                                WHERE     quotes.FKauteur     = '$user_id'
-                                                AND       quotes.valide_admin = 1 "));
+$qprofil_necrivains = mysqli_fetch_array(query("  SELECT    COUNT(ecrivains_note.id) AS 'num_reactions'
+                                                  FROM      ecrivains_note
+                                                  WHERE     ecrivains_note.FKmembres = '$user_id' "));
 
-$qprofil_todo     = mysqli_fetch_array(query("  SELECT    COUNT(todo.id) AS 'num_todos'
-                                                FROM      todo
-                                                WHERE     todo.FKmembres    = '$user_id'
-                                                AND       todo.valide_admin = 1
-                                                AND       todo.public       = 1 "));
+$qprofil_quotes     = mysqli_fetch_array(query("  SELECT    COUNT(quotes_membres.id) AS 'num_quotes'
+                                                  FROM      quotes_membres
+                                                  LEFT JOIN quotes ON quotes_membres.FKquotes = quotes.id
+                                                  WHERE     quotes_membres.FKmembres  = '$user_id'
+                                                  AND       quotes.valide_admin       = 1 "));
+
+$qprofil_quotesub   = mysqli_fetch_array(query("  SELECT    COUNT(quotes.id) AS 'num_quotes'
+                                                  FROM      quotes
+                                                  WHERE     quotes.FKauteur     = '$user_id'
+                                                  AND       quotes.valide_admin = 1 "));
+
+$qprofil_todo       = mysqli_fetch_array(query("  SELECT    COUNT(todo.id) AS 'num_todos'
+                                                  FROM      todo
+                                                  WHERE     todo.FKmembres    = '$user_id'
+                                                  AND       todo.valide_admin = 1
+                                                  AND       todo.public       = 1 "));
 
 // Reste plus qu'à préparer tout ça pour l'affichage
-$profil_pseudo    = predata($dprofil['u_pseudo']);
-$profil_admin     = $dprofil['u_admin'];
-$profil_sysop     = $dprofil['u_sysop'];
-$profil_mod       = $dprofil['u_mod'];
-$profil_banni     = ($dprofil['u_ban_date']) ? jourfr(date('Y-m-d', $dprofil['u_ban_date']), $lang) : 0;
-$profil_sysop_ban = (!$dprofil['u_ban_date']) ? 'BANNIR' : 'DÉBANNIR';
-$profil_bannidans = changer_casse(dans($dprofil['u_ban_date'], $lang), 'min');
-$profil_banraison = predata($dprofil['u_ban_raison']);
-$profil_langue    = $dprofil['u_langue'];
-$profil_contenu   = ($dprofil['u_profil']) ? bbcode(predata($dprofil['u_profil'], 1)) : '';
-$profil_creation  = jourfr(date('Y-m-d', $dprofil['u_creation']), $lang).' ('.ilya($dprofil['u_creation'], $lang).')';
-$profil_activite  = ilya($dprofil['u_activite'], $lang);
-$profil_genre     = predata($dprofil['u_genre']);
-$profil_age       = ($dprofil['u_anniv'] != '0000-00-00') ? floor((time() - strtotime($dprofil['u_anniv'])) / 31556926) : '';
-$profil_anniv     = ($dprofil['u_anniv'] != '0000-00-00') ? jourfr($dprofil['u_anniv'], $lang) : '';
-$profil_lieu      = predata($dprofil['u_habite']);
-$profil_metier    = predata($dprofil['u_metier']);
-$profil_email     = predata($dprofil['u_email']);
-$profil_forum     = $qprofil_forum['num_sujets'];
-$profil_forum_2   = $dprofil['u_forum'];
-$profil_irl       = $qprofil_irl['num_irls'];
-$profil_quotes    = $qprofil_quotes['num_quotes'];
-$profil_quotesub  = $qprofil_quotesub['num_quotes'];
-$profil_todo      = $qprofil_todo['num_todos'];
+$profil_pseudo      = predata($dprofil['u_pseudo']);
+$profil_admin       = $dprofil['u_admin'];
+$profil_sysop       = $dprofil['u_sysop'];
+$profil_mod         = $dprofil['u_mod'];
+$profil_banni       = ($dprofil['u_ban_date']) ? jourfr(date('Y-m-d', $dprofil['u_ban_date']), $lang) : 0;
+$profil_sysop_ban   = (!$dprofil['u_ban_date']) ? 'BANNIR' : 'DÉBANNIR';
+$profil_bannidans   = changer_casse(dans($dprofil['u_ban_date'], $lang), 'min');
+$profil_banraison   = predata($dprofil['u_ban_raison']);
+$profil_langue      = $dprofil['u_langue'];
+$profil_contenu     = ($dprofil['u_profil']) ? bbcode(predata($dprofil['u_profil'], 1)) : '';
+$profil_creation    = jourfr(date('Y-m-d', $dprofil['u_creation']), $lang).' ('.ilya($dprofil['u_creation'], $lang).')';
+$profil_activite    = ilya($dprofil['u_activite'], $lang);
+$profil_genre       = predata($dprofil['u_genre']);
+$profil_age         = ($dprofil['u_anniv'] != '0000-00-00') ? floor((time() - strtotime($dprofil['u_anniv'])) / 31556926) : '';
+$profil_anniv       = ($dprofil['u_anniv'] != '0000-00-00') ? jourfr($dprofil['u_anniv'], $lang) : '';
+$profil_lieu        = predata($dprofil['u_habite']);
+$profil_metier      = predata($dprofil['u_metier']);
+$profil_email       = predata($dprofil['u_email']);
+$profil_forum       = $qprofil_forum['num_sujets'];
+$profil_forum_2     = $dprofil['u_forum'];
+$profil_irl         = $qprofil_irl['num_irls'];
+$profil_ecrivains   = "A ";
+$temp_pluriel       = ($qprofil_ecrivains['num_textes'] == 1) ? 'texte' : 'textes';
+$profil_ecrivains  .= ($qprofil_ecrivains['num_textes']) ? 'publié <span class="gras texte_noir">'.$qprofil_ecrivains['num_textes'].'</span> '.$temp_pluriel : '';
+$profil_ecrivains  .= ($qprofil_ecrivains['num_textes'] && $qprofil_necrivains['num_reactions']) ? ' et ' : '';
+$temp_pluriel       = ($qprofil_necrivains['num_reactions'] == 1) ? 'texte' : 'textes';
+$profil_ecrivains  .= ($qprofil_necrivains['num_reactions']) ? 'réagi à <span class="gras texte_noir">'.$qprofil_necrivains['num_reactions'].'</span> '.$temp_pluriel : '';
+$profil_ecrivains   = ($qprofil_ecrivains['num_textes'] || $qprofil_necrivains['num_reactions']) ? $profil_ecrivains : '';
+$profil_quotes      = $qprofil_quotes['num_quotes'];
+$profil_quotesub    = $qprofil_quotesub['num_quotes'];
+$profil_todo        = $qprofil_todo['num_todos'];
 
 
 
@@ -363,6 +378,13 @@ else if($lang == 'EN')
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/irl/stats';">
                 <span class="gras"><?=$trad['user_irl']?></span><br>
                 <?=$trad['usert_irl']?>
+              </div>
+
+              <?php } if($profil_ecrivains && $lang == 'FR') { ?>
+              <hr class="profil_hr">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/ecrivains/index';">
+                <span class="gras">Coin des écrivains</span><br>
+                <?=$profil_ecrivains?>
               </div>
 
               <?php } if($profil_quotes && $lang == 'FR') { ?>

@@ -291,7 +291,7 @@ else
 ';
 
 // Pluie de bites tournantes le premier avril
-if(date('d-m') == '01-04' && ($_SERVER["SERVER_NAME"] != "localhost" || $_SERVER["SERVER_NAME"] != "127.0.0.1") && substr($_SERVER["PHP_SELF"],-6) != 'cv.php' && substr($_SERVER["PHP_SELF"],-2) != 'cv')
+if(date('d-m') == '01-04' && $_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0.1" && substr($_SERVER["PHP_SELF"],-6) != 'cv.php' && substr($_SERVER["PHP_SELF"],-2) != 'cv')
   $javascripts .= '
     <script src="'.$chemin.'js/festif.js"> </script>
 ';
@@ -810,6 +810,30 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
             <a href="<?=$chemin?>pages/quotes/add">
               <div class="<?=header_class('MiscAdd',$header_sidemenu,'side')?>">
                 Proposer une miscellanée
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              Le coin des écrivains
+            </div>
+
+            <a href="<?=$chemin?>pages/ecrivains/index">
+              <div class="<?=header_class('EcrivainsListe',$header_sidemenu,'side')?>">
+                Écrits de NoBlemeux
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/ecrivains/concours">
+              <div class="<?=header_class('EcrivainsConcours',$header_sidemenu,'side')?>">
+                Concours d'écriture
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/ecrivains/publier">
+              <div class="<?=header_class('EcrivainsPublier',$header_sidemenu,'side')?>">
+                Publier un texte
               </div>
             </a>
 
