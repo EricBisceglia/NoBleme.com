@@ -44,6 +44,7 @@ if(isset($_POST['publier_go']))
   $texte_feedback = postdata_vide('publier_feedback', 'int', 2);
   $texte_titre    = isset($_POST['publier_titre']) ? postdata(tronquer_chaine($_POST['publier_titre'], 90)) : '';
   $texte_contenu  = postdata_vide('publier_contenu', 'string');
+  $texte_anonyme  = (isset($_POST['publier_anonyme'])) ? 1 : 0;
 
   // Informations nécessaires pour publier le texte
   $texte_auteur   = $_SESSION['user'];
@@ -64,6 +65,7 @@ if(isset($_POST['publier_go']))
     query(" INSERT INTO ecrivains_texte
             SET         ecrivains_texte.FKmembres               = '$texte_auteur'   ,
                         ecrivains_texte.FKecrivains_concours    = 0                 ,
+                        ecrivains_texte.anonyme                 = '$texte_anonyme'  ,
                         ecrivains_texte.timestamp_creation      = '$texte_creation' ,
                         ecrivains_texte.timestamp_modification  = 0                 ,
                         ecrivains_texte.niveau_feedback         = '$texte_feedback' ,
@@ -74,7 +76,7 @@ if(isset($_POST['publier_go']))
 
     // Activité récente
     $texte_id   = mysqli_insert_id($db);
-    $add_pseudo = postdata(getpseudo(), 'string');
+    $add_pseudo = ($texte_anonyme) ? 'Anonyme' : postdata(getpseudo(), 'string');
     query(" INSERT INTO activite
             SET         activite.timestamp      = '$texte_creation' ,
                         activite.pseudonyme     = '$add_pseudo'     ,
@@ -85,7 +87,10 @@ if(isset($_POST['publier_go']))
     // Bot IRC
     $add_pseudo_raw = getpseudo();
     $add_titre_raw  = (isset($_POST['publier_titre'])) ? tronquer_chaine($_POST['publier_titre'], 80) : '';
-    ircbot($chemin, $add_pseudo_raw." a publié un nouveau texte dans le coin des écrivains : ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_id, "#NoBleme");
+    if(!$texte_anonyme)
+      ircbot($chemin, $add_pseudo_raw." a publié un nouveau texte dans le coin des écrivains : ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_id, "#NoBleme");
+    else
+      ircbot($chemin, "Un nouveau texte a été publié dans le coin des écrivains : ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_id, "#NoBleme");
 
     // Redirection vers le texte
     exit(header("Location: ".$chemin."pages/ecrivains/texte?id=".$texte_id));
@@ -103,6 +108,7 @@ if(isset($_POST['publier_prev']) || isset($_POST['publier_go']))
   // On prépare le contenu des champs
   $texte_titre        = $_POST['publier_titre'];
   $texte_contenu      = $_POST['publier_contenu'];
+  $texte_anonyme      = (isset($_POST['publier_anonyme'])) ? ' checked' : '';
   $texte_titre_prev   = predata($_POST['publier_titre']);
   $texte_contenu_prev = bbcode(predata($_POST['publier_contenu'], 1));
   $texte_auteur       = predata(getpseudo());
@@ -113,6 +119,7 @@ else
   // Sinon, on met le contenu à zéro
   $texte_titre        = '';
   $texte_contenu      = '';
+  $texte_anonyme      = '';
 }
 
 
@@ -154,6 +161,10 @@ else
             <textarea id="publier_contenu" name="publier_contenu" class="indiv composer_texte"><?=$texte_contenu?></textarea><br>
             <br>
 
+            <label>Publier ce texte anonymement (vous n'apparaitrez pas comme auteur du texte)</label>
+            <input id="publier_anonyme" name="publier_anonyme" type="checkbox"<?=$texte_anonyme?>>
+            <label class="label-inline" for="publier_anonyme">Je désire que ce texte soit publié anonymement</label><br>
+
             <?php if(isset($erreur)) { ?>
             <h4 class="align_center erreur texte_blanc">Erreur : <?=$erreur?></h4>
             <?php } ?>
@@ -187,7 +198,11 @@ else
         </h3>
 
         <h6>
+          <?php if(!$texte_anonyme) { ?>
           Publié dans le <a>coin des écrivains</a> de NoBleme par <a><?=$texte_auteur?></a> <?=$texte_creation?>
+          <?php } else { ?>
+          Publié anonymement dans le <a>coin des écrivains</a> de NoBleme <?=$texte_creation?>
+          <?php } ?>
         </h6>
 
         <br>

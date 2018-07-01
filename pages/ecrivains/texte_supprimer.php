@@ -93,6 +93,9 @@ if(isset($_POST['texte_suppression_go']))
                       activite.action_type    = 'ecrivains_delete'            ,
                       activite.action_titre   = '$texte_delete_titre_escaped' ");
 
+  // Notification des sysops au cas où
+  ircbot($chemin, getpseudo()." a supprimé un texte du coin des écrivains intitulé : ".$qchecktexte['titre'], "#sysop");
+
   // Redirection
   exit(header('Location: '.$chemin.'pages/ecrivains/index'));
 }

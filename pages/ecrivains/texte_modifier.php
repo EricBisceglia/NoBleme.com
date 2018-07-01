@@ -107,6 +107,9 @@ if(isset($_POST['modifier_go']))
                         activite.action_id      = '$texte_edit_id'  ,
                         activite.action_titre   = '$texte_titre'    ");
 
+  // On envoie un message sur #sysop avec le bot IRC pour qu'un sysop vérifie que ça soit pas du contenu abusif
+  ircbot($chemin, getpseudo()." a modifié le contenu d'un texte du coin des écrivains : ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_edit_id, "#sysop");
+
     // Redirection vers le texte
     exit(header("Location: ".$chemin."pages/ecrivains/texte?id=".$texte_edit_id));
   }

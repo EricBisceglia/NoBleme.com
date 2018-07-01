@@ -40,6 +40,7 @@ $js = array('dynamique');
 
 // On va chercher les textes
 $qtextes = "    SELECT    ecrivains_texte.id                  AS 't_id'       ,
+                          ecrivains_texte.anonyme             AS 't_anonyme'  ,
                           ecrivains_texte.timestamp_creation  AS 't_date'     ,
                           ecrivains_texte.niveau_feedback     AS 't_feedback' ,
                           ecrivains_texte.titre               AS 't_titre'    ,
@@ -58,7 +59,8 @@ else if($textes_tri == 'longueur')
   $qtextes .= " ORDER BY  ecrivains_texte.longueur_texte      DESC  ,
                           ecrivains_texte.timestamp_creation  DESC  ";
 else if($textes_tri == 'auteur')
-  $qtextes .= " ORDER BY  membres.pseudonyme                  ASC   ,
+  $qtextes .= " ORDER BY  ecrivains_texte.anonyme             ASC   ,
+                          membres.pseudonyme                  ASC   ,
                           ecrivains_texte.timestamp_creation  DESC  ";
 else if($textes_tri == 'note')
   $qtextes .= " ORDER BY  ecrivains_texte.note_moyenne        DESC  ,
@@ -76,6 +78,7 @@ for($ntextes = 0 ; $dtextes = mysqli_fetch_array($qtextes) ; $ntextes++)
   $texte_titre[$ntextes]    = predata($dtextes['t_titre']);
   $texte_longueur[$ntextes] = $dtextes['t_longueur'];
   $texte_idauteur[$ntextes] = $dtextes['m_id'];
+  $texte_anonyme[$ntextes]  = ($dtextes['t_anonyme']) ? 1 : 0;
   $texte_auteur[$ntextes]   = predata($dtextes['m_pseudo']);
   $texte_publie[$ntextes]   = predata(ilya($dtextes['t_date']));
   $texte_note[$ntextes]     = ($dtextes['t_feedback'] < 2 || $dtextes['t_note'] < 0) ? '&nbsp;' : $dtextes['t_note'].' / 5';
@@ -153,9 +156,13 @@ if(!getxhr()) { /***************************************************************
                 <?=$texte_longueur[$i]?>
               </td>
               <td>
+                <?php if($texte_anonyme[$i]) { ?>
+                Anonyme
+                <?php } else { ?>
                 <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$texte_idauteur[$i]?>">
                   <?=$texte_auteur[$i]?>
                 </a>
+                <?php } ?>
               </td>
               <td>
                 <?=$texte_publie[$i]?>

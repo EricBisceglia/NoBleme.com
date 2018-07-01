@@ -56,6 +56,7 @@ if($qveriftexte['t_titre'] === NULL)
 // Et on met à jour les infos du header
 $loggedin     = loggedin();
 $est_sysop    = getsysop();
+$est_admin    = getadmin();
 $texte_titre  = predata($qveriftexte['t_titre']);
 $page_nom    .= ' : '.predata(tronquer_chaine($qveriftexte['t_titre'], 25, '...'));
 $page_url    .= $texte_id;
@@ -233,7 +234,8 @@ query(" UPDATE  ecrivains_texte
 // Contenu du texte
 
 // On va récupérer des infos pour le header et sur l'apparence de sujet
-$qtexte = mysqli_fetch_array(query("  SELECT    ecrivains_texte.titre               AS 't_titre'    ,
+$qtexte = mysqli_fetch_array(query("  SELECT    ecrivains_texte.anonyme             AS 't_anonyme'  ,
+                                                ecrivains_texte.titre               AS 't_titre'    ,
                                                 ecrivains_texte.contenu             AS 't_contenu'  ,
                                                 ecrivains_texte.timestamp_creation  AS 't_creation' ,
                                                 ecrivains_texte.niveau_feedback     AS 't_feedback' ,
@@ -247,6 +249,7 @@ $qtexte = mysqli_fetch_array(query("  SELECT    ecrivains_texte.titre           
 $est_auteur       = (loggedin() && ($qtexte['m_id'] == $_SESSION['user']));
 $texte_titre      = predata($qtexte['t_titre']);
 $texte_contenu    = bbcode(predata($qtexte['t_contenu'], 1));
+$texte_anonyme    = $qtexte['t_anonyme'];
 $texte_auteur_id  = $qtexte['m_id'];
 $texte_auteur     = predata($qtexte['m_pseudo']);
 $texte_creation   = predata(changer_casse(ilya($qtexte['t_creation']), 'min'));
@@ -329,7 +332,13 @@ if(!getxhr()) { /***************************************************************
         </h3>
 
         <h6>
+          <?php if(!$texte_anonyme) { ?>
           Publié dans le <a href="<?=$chemin?>pages/ecrivains/index">coin des écrivains</a> de NoBleme par <a href="<?=$chemin?>pages/user/user?id=<?=$texte_auteur_id?>"><?=$texte_auteur?></a> <?=$texte_creation?>
+          <?php } else if($est_admin) { ?>
+            Publié anonymement (<?=$texte_auteur?>) dans le <a href="<?=$chemin?>pages/ecrivains/index">coin des écrivains</a> de NoBleme <?=$texte_creation?>
+          <?php } else { ?>
+            Publié anonymement dans le <a href="<?=$chemin?>pages/ecrivains/index">coin des écrivains</a> de NoBleme <?=$texte_creation?>
+          <?php } ?>
         </h6>
 
         <br>
@@ -352,7 +361,7 @@ if(!getxhr()) { /***************************************************************
 
       <div class="texte">
 
-        <?php if(!$texte_feedback) { ?>
+        <?php if(!$texte_feedback || ($texte_feedback == 1 && $texte_anonyme)) { ?>
 
         <p>L'auteur de ce texte a demandé spécifiquement à ne pas avoir de retours. Son texte est uniquement fait pour être lu, les réactions ne l'intéressent pas. Par conséquent, vous ne pouvez pas laisser de notes sur ce texte.</p>
 
@@ -397,7 +406,7 @@ if(!getxhr()) { /***************************************************************
           <?php } ?>
           <span class="gras texte_noir"><?=$reaction_note[$i]?> / 5</span>
           par
-          <?php if($reaction_anonyme[$i] && getadmin()) { ?>
+          <?php if($reaction_anonyme[$i] && $est_admin) { ?>
           <span class="texte_noir gras">Anonyme</span> (<?=$reaction_pseudo[$i]?>)
           <?php } else if($reaction_anonyme[$i]) { ?>
           <span class="texte_noir gras">Anonyme</span>

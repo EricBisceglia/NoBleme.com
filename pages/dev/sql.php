@@ -27,44 +27,8 @@ $page_nom = "Administre secrètement le site";
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
-// Le coin des écrivains
-sql_creer_table("ecrivains_texte", "  id                      INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-                                      FKmembres               INT(11) UNSIGNED NOT NULL                             ,
-                                      FKecrivains_concours    INT(11) UNSIGNED NOT NULL                             ,
-                                      timestamp_creation      INT(11) UNSIGNED NOT NULL                             ,
-                                      timestamp_modification  INT(11) UNSIGNED NOT NULL                             ,
-                                      niveau_feedback         INT(4)  UNSIGNED NOt NULL                             ,
-                                      titre                   TEXT                                                  ,
-                                      note_moyenne            DECIMAL(2,1)                                          ,
-                                      longueur_texte          INT(11) UNSIGNED NOT NULL                             ,
-                                      contenu                 LONGTEXT                                              ");
-
-sql_creer_table("ecrivains_note", " id                INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-                                    FKecrivains_texte INT(11) UNSIGNED NOT NULL                             ,
-                                    FKmembres         INT(11) UNSIGNED NOT NULL                             ,
-                                    timestamp         INT(11) UNSIGNED NOT NULL                             ,
-                                    note              DECIMAL(2,1)                                          ,
-                                    anonyme           TINYINT(1) UNSIGNED NOT NULL                          ,
-                                    message           TEXT                                                  ");
-
-sql_creer_table("ecrivains_concours", " id              INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-                                        FKforum_sujet   INT(11) UNSIGNED NOT NULL                             ,
-                                        date_debut      INT(11) UNSIGNED NOT NULL                             ,
-                                        date_fin        INT(11) UNSIGNED NOT NULL                             ,
-                                        titre           TEXT                                                  ,
-                                        sujet           MEDIUMTEXT                                            ");
-
-sql_creer_table("ecrivains_concours_vote", "  id                    INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-                                              FKecrivains_concours  INT(11) UNSIGNED NOT NULL                             ,
-                                              FKecrivains_texte     INT(11) UNSIGNED NOT NULL                             ,
-                                              FKmembres             INT(11) UNSIGNED NOT NULL                             ");
-
-// Changement du format de la table ecrivains_texte
-sql_supprimer_champ("ecrivains_texte", "feedback_messages");
-sql_supprimer_champ("ecrivains_texte", "feedback_forum");
-sql_supprimer_champ("ecrivains_texte", "feedback_note");
-sql_creer_champ("ecrivains_texte", "niveau_feedback", "INT(4) UNSIGNED NOT NULL", "timestamp_modification");
-sql_creer_champ("ecrivains_note", "timestamp", "INT(11) UNSIGNED NOT NULL", "FKmembres");
+// Textes anonymes dans le coin des écrivains
+sql_creer_champ("ecrivains_texte", "anonyme", "TINYINT(1) UNSIGNED NOT NULL", "FKecrivains_concours");
 
 
 

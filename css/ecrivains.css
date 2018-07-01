@@ -1,5 +1,5 @@
 /****************************************************** PUBLIER / MODIFIER UN TEXTE ******************************************************/
-textarea.composer_texte { height: 300px; }
+textarea.composer_texte { height: 250px; }
 
 /********************************************************* RÉACTIONS À UN TEXTE **********************************************************/
 td.texte_modifier_message_corps { padding: 12px; }

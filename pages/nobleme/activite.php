@@ -389,7 +389,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
   {
     $activite_css[$nactrec]         = 'texte_noir vert_background_clair';
     $activite_href[$nactrec]        = $chemin.'pages/ecrivains/texte?id='.$dactrec['action_id'];
-    $activite_desc[$nactrec]['FR']  = predata($dactrec['pseudonyme']).' a publié un texte : '.tronquer_chaine(predata($dactrec['action_titre']), 70, '...');
+    $activite_desc[$nactrec]['FR']  = ($dactrec['pseudonyme'] != 'Anonyme') ? predata($dactrec['pseudonyme']).' a publié un texte : '.tronquer_chaine(predata($dactrec['action_titre']), 70, '...') : 'Nouveau texte pulié : '.tronquer_chaine(predata($dactrec['action_titre']), 70, '...');
   }
 
   //*************************************************************************************************************************************//
