@@ -70,6 +70,15 @@ $texte_delete_concours      = $qchecktexte['FKecrivains_concours'];
 
 if(isset($_POST['texte_suppression_go']))
 {
+  // On va chercher des infos sur le texte pour compléter le diff
+  $qchecktexte = mysqli_fetch_array(query(" SELECT    ecrivains_texte.titre   AS 't_titre'    ,
+                                                      ecrivains_texte.contenu AS 't_texte'    ,
+                                                      ecrivains_texte.anonyme AS 't_anonyme'  ,
+                                                      membres.pseudonyme      AS 'm_pseudo'
+                                            FROM      ecrivains_texte
+                                            LEFT JOIN membres ON ecrivains_texte.FKmembres = membres.id
+                                            WHERE     ecrivains_texte.id = '$texte_delete_id' "));
+
   // Suppression du texte et de ses réactions
   query(" DELETE FROM ecrivains_texte
           WHERE       ecrivains_texte.id = '$texte_delete_id' ");
@@ -93,8 +102,26 @@ if(isset($_POST['texte_suppression_go']))
                       activite.action_type    = 'ecrivains_delete'            ,
                       activite.action_titre   = '$texte_delete_titre_escaped' ");
 
+  // Diff
+  $activite_id          = mysqli_insert_id($db);
+  $texte_avant_auteur   = ($qchecktexte['t_anonyme']) ? 'Anonyme' : postdata($qchecktexte['m_pseudo'], 'string');
+  $texte_avant_titre    = postdata($qchecktexte['t_titre'], 'string');
+  $texte_avant_contenu  = postdata($qchecktexte['t_texte'], 'string');
+  query(" INSERT INTO activite_diff
+          SET         FKactivite  = '$activite_id'        ,
+                      titre_diff  = 'Auteur'              ,
+                      diff_avant  = '$texte_avant_auteur' ");
+  query(" INSERT INTO activite_diff
+          SET         FKactivite  = '$activite_id'        ,
+                      titre_diff  = 'Titre'               ,
+                      diff_avant  = '$texte_avant_titre'  ");
+  query(" INSERT INTO activite_diff
+          SET         FKactivite  = '$activite_id'          ,
+                      titre_diff  = 'Contenu'               ,
+                      diff_avant  = '$texte_avant_contenu'  ");
+
   // Notification des sysops au cas où
-  ircbot($chemin, getpseudo()." a supprimé un texte du coin des écrivains intitulé : ".$qchecktexte['titre'], "#sysop");
+  ircbot($chemin, getpseudo()." a supprimé un texte du coin des écrivains intitulé : ".$qchecktexte['titre']." - ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
 
   // Redirection
   exit(header('Location: '.$chemin.'pages/ecrivains/index'));

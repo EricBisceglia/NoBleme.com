@@ -195,8 +195,8 @@ if($est_sysop && isset($_POST['supprimer_reaction_go']))
 
   // Diff
   $activite_id    = mysqli_insert_id($db);
-  $delete_note    = postdata($qreaction['n_note']);
-  $delete_message = postdata($qreaction['n_message']);
+  $delete_note    = postdata($qreaction['n_note'], 'double');
+  $delete_message = postdata($qreaction['n_message'], 'string');
   query(" INSERT INTO activite_diff
           SET         FKactivite  = '$activite_id'  ,
                       titre_diff  = 'Note'          ,

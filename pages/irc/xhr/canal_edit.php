@@ -74,7 +74,7 @@ $canal_descen     = predata($qcanal['description_en']);
     <input id="canal_nom_<?=$canal_id?>" name="canal_nom_<?=$canal_id?>" class="indiv" type="text" value="<?=$canal_nom?>"><br>
     <br>
 
-    <label for="canal_importance_<?=$canal_id?>">Importance</label>
+    <label for="canal_importance_<?=$canal_id?>">Importance (0 : mineur ; 1 à 10 : automatisé ; 11+ : majeur)</label>
     <input id="canal_importance_<?=$canal_id?>" name="canal_importance_<?=$canal_id?>" class="indiv" type="text" value="<?=$canal_importance?>"><br>
     <br>
 

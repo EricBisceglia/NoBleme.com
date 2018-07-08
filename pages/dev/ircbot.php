@@ -131,6 +131,7 @@ else
               <option value="#dev">#Dev</option>
               <option value="#english">#English</option>
               <option value="#sysop">#Sysop</option>
+              <option value="#write">#Write</option>
               <option value="aucun">Aucun (commande, sans le slash)</option>
             </select><br>
             <br>

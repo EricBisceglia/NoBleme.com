@@ -90,6 +90,12 @@ if(isset($_POST['modifier_go']))
   // Si on a pas d'erreur, on peut passer à la suite
   if(!$erreur)
   {
+    // On va chercher des infos sur le texte pour compléter les diffs
+    $qchecktexte = mysqli_fetch_array(query(" SELECT    ecrivains_texte.titre   AS 't_titre' ,
+                                                        ecrivains_texte.contenu AS 't_texte'
+                                              FROM      ecrivains_texte
+                                              WHERE     ecrivains_texte.id = '$texte_edit_id' "));
+
     // Modification du texte
     query(" UPDATE  ecrivains_texte
             SET     ecrivains_texte.titre   = '$texte_titre'  ,
@@ -107,8 +113,25 @@ if(isset($_POST['modifier_go']))
                         activite.action_id      = '$texte_edit_id'  ,
                         activite.action_titre   = '$texte_titre'    ");
 
-  // On envoie un message sur #sysop avec le bot IRC pour qu'un sysop vérifie que ça soit pas du contenu abusif
-  ircbot($chemin, getpseudo()." a modifié le contenu d'un texte du coin des écrivains : ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_edit_id, "#sysop");
+    // Diff
+    $activite_id          = mysqli_insert_id($db);
+    $texte_avant_titre    = postdata($qchecktexte['t_titre'], 'string');
+    $texte_avant_contenu  = postdata($qchecktexte['t_texte'], 'string');
+    if($texte_avant_titre != $texte_titre)
+      query(" INSERT INTO activite_diff
+              SET         FKactivite  = '$activite_id'        ,
+                          titre_diff  = 'Titre'               ,
+                          diff_avant  = '$texte_avant_titre'  ,
+                          diff_apres  = '$texte_titre'        ");
+    if($texte_avant_contenu != $texte_contenu)
+      query(" INSERT INTO activite_diff
+              SET         FKactivite  = '$activite_id'          ,
+                          titre_diff  = 'Contenu'               ,
+                          diff_avant  = '$texte_avant_contenu'  ,
+                          diff_apres  = '$texte_contenu'        ");
+
+    // On envoie un message sur #sysop avec le bot IRC pour qu'un sysop vérifie que ça soit pas du contenu abusif
+    ircbot($chemin, getpseudo()." a modifié le contenu d'un texte du coin des écrivains : ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_edit_id, "#sysop");
 
     // Redirection vers le texte
     exit(header("Location: ".$chemin."pages/ecrivains/texte?id=".$texte_edit_id));

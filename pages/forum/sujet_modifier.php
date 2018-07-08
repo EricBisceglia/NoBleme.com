@@ -58,7 +58,7 @@ if($qchecksujet['id'] === NULL)
 
 if(isset($_POST['sujet_edit_go']))
 {
-  // On va chercher des infos sur l'IRL pour compléter le diff
+  // On va chercher des infos sur le sujet pour compléter le diff
   $qchecksujet = mysqli_fetch_array(query(" SELECT    forum_sujet.langue      AS 's_lang'     ,
                                                       forum_sujet.titre       AS 's_titre'    ,
                                                       forum_sujet.public      AS 's_public'   ,
