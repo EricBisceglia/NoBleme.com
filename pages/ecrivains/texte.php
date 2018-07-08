@@ -103,6 +103,16 @@ if(isset($_POST['reaction_go']))
                         activite.action_type    = '$note_type_action' ,
                         activite.action_id      = '$texte_id'         ,
                         activite.action_titre   = '$texte_titre'      ");
+
+    // Notification sur IRC
+    $note_titre_raw = $qveriftexte['t_titre'];
+    if($note_anonyme)
+      ircbot($chemin, "Quelqu'un a réagi anonymement au texte ".$note_titre_raw." : ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_id."#texte_reactions", "#write");
+    else
+    {
+      $note_pseudo_raw = getpseudo();
+      ircbot($chemin, $note_pseudo_raw." a réagi au texte ".$note_titre_raw." : ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_id."#texte_reactions", "#write");
+    }
   }
 }
 

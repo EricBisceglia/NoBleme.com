@@ -88,9 +88,15 @@ if(isset($_POST['publier_go']))
     $add_pseudo_raw = getpseudo();
     $add_titre_raw  = (isset($_POST['publier_titre'])) ? tronquer_chaine($_POST['publier_titre'], 80) : '';
     if(!$texte_anonyme)
+    {
       ircbot($chemin, $add_pseudo_raw." a publié un nouveau texte dans le coin des écrivains : ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_id, "#NoBleme");
+      ircbot($chemin, $add_pseudo_raw." a publié un nouveau texte dans le coin des écrivains : ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_id, "#write");
+    }
     else
+    {
       ircbot($chemin, "Un nouveau texte a été publié dans le coin des écrivains : ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_id, "#NoBleme");
+      ircbot($chemin, "Un nouveau texte a été publié dans le coin des écrivains : ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_id, "#write");
+    }
 
     // Redirection vers le texte
     exit(header("Location: ".$chemin."pages/ecrivains/texte?id=".$texte_id));

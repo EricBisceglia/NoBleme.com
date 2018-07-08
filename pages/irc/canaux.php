@@ -49,8 +49,10 @@ for($ncanaux = 0; $dcanaux = mysqli_fetch_array($qcanaux); $ncanaux++)
   $canal_nom[$ncanaux]      = predata($dcanaux['canal']);
   $canal_langue[$ncanaux]   = $dcanaux['langue'];
   $temp_majeur              = ($lang == 'FR') ? 'Majeur' : 'Major';
+  $temp_auto                = ($lang == 'FR') ? 'Automatisé' : 'Automated';
   $temp_mineur              = ($lang == 'FR') ? 'Mineur' : 'Minor';
-  $canal_majeur[$ncanaux]   = ($dcanaux['importance']) ? '<span class="gras">'.$temp_majeur.'</span>' : $temp_mineur;
+  $temp_canal_majeur        = ($dcanaux['importance']) ? '<span class="gras">'.$temp_majeur.'</span>' : $temp_mineur;
+  $canal_majeur[$ncanaux]   = ($dcanaux['importance'] == 1) ? '<span class="italique">'.$temp_auto.'</span>' : $temp_canal_majeur;
   $canal_desc[$ncanaux]     = ($lang == 'FR') ? predata($dcanaux['description_fr']) : predata($dcanaux['description_en']);
 }
 
@@ -168,7 +170,7 @@ EOD;
           </thead>
           <tbody class="align_center">
             <?php for($i=0;$i<$ncanaux;$i++) { ?>
-            <?php if($i < ($ncanaux - 1) && $canal_imp[$i] && !$canal_imp[$i+1]) { ?>
+            <?php if($i < ($ncanaux - 1) && $canal_imp[$i] && (!$canal_imp[$i+1] || ($canal_imp[$i+1] == 1 && $canal_imp[$i] > 1))) { ?>
             <tr class="bas_noir">
             <?php } else { ?>
             <tr>
