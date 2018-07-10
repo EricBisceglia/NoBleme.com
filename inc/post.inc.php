@@ -11,9 +11,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 //
 // Paramètres :
 // $data est le postdata qui doit être assaini par la fonction
-// $type (optionnel) est le type de données auquel on a affaire
-// $min (optionnel) est la valeur minimum des données
-// $max (optionnel) est la valeur maximum des données
+// $type  (optionnel) est le type de données auquel on a affaire
+// $min   (optionnel) est la valeur minimum des données
+// $max   (optionnel) est la valeur maximum des données
 //
 // Types de données qui peuvent être traitées :
 // "double" est un nombre à virgule, $min et $max sont les valeurs minimum et maximum

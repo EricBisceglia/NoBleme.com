@@ -64,7 +64,8 @@ $sujet_delete_titre_raw   = $qchecksujet['titre'];
 if(isset($_POST['forum_delete_go']))
 {
   // On récupère les réponses au sujet pour le diff du log de moderation
-  $qcheckmessages = query(" SELECT    forum_message.contenu AS 'f_contenu'  ,
+  $qcheckmessages = query(" SELECT    forum_message.id      AS 'f_id'       ,
+                                      forum_message.contenu AS 'f_contenu'  ,
                                       membres.pseudonyme    AS 'm_pseudo'
                             FROM      forum_message
                             LEFT JOIN membres ON forum_message.FKmembres  = membres.id
@@ -83,48 +84,33 @@ if(isset($_POST['forum_delete_go']))
   query(" DELETE FROM forum_message
           WHERE       forum_message.FKforum_sujet = '$sujet_delete_id' ");
 
-  // On supprime l'activité récente et les logs de modération liés à ce sujet
-  query(" DELETE FROM activite
-          WHERE     ( activite.action_type  LIKE  'forum_new'
-          OR          activite.action_type  LIKE  'forum_edit' )
-          AND         activite.action_id    =     '$sujet_delete_id' ");
-  query(" DELETE FROM activite
-          WHERE     ( activite.action_type  LIKE  'forum_new_message'
-          OR          activite.action_type  LIKE  'forum_edit_message'
-          OR          activite.action_type  LIKE  'forum_delete_message' )
-          AND         activite.parent       =     '$sujet_delete_id' ");
-
-  // On nettoie les potentiels diffs orphelins
-  purger_diff_orphelins();
+  // On supprime l'activité récente lié à ce sujet
+  activite_supprimer('forum_new', 0, 0, 0, $sujet_delete_id);
+  activite_supprimer('forum_edit', 0, 0, 0, $sujet_delete_id);
 
   // On recalcule le postcount des membres qui avaient posté dans le sujet
   while($dcheckmembres = mysqli_fetch_array($qcheckmembres))
     forum_recompter_messages_membre($dcheckmembres['FKmembres']);
 
   // Activité récente
-  $timestamp            = time();
   $sujet_delete_pseudo  = postdata(getpseudo());
-  query(" INSERT INTO activite
-          SET         activite.timestamp      = '$timestamp'            ,
-                      activite.log_moderation = 1                       ,
-                      activite.pseudonyme     = '$sujet_delete_pseudo'  ,
-                      activite.action_type    = 'forum_delete'          ,
-                      activite.action_titre   = '$sujet_delete_titre_post' ");
+  $activite_id          = activite_nouveau('forum_delete', 1, 0, $sujet_delete_pseudo, 0, $sujet_delete_titre_post);
 
   // Diff
-  $activite_id = mysqli_insert_id($db);
-  query(" INSERT INTO activite_diff
-          SET         FKactivite  = '$activite_id'              ,
-                      titre_diff  = 'Sujet'                     ,
-                      diff_avant  = '$sujet_delete_titre_post'  ");
+  activite_diff($activite_id, 'Sujet', $sujet_delete_titre_post);
+
+  // On parcourt les messages
   for($i = 1; $dcheckmessages = mysqli_fetch_array($qcheckmessages); $i++)
   {
+    // Suppression de l'activité récente liée aux messages du sujet
+    activite_supprimer('forum_new_message', 0, 0, 0, $dcheckmessages['f_id']);
+    activite_supprimer('forum_edit_message', 0, 0, 0, $dcheckmessages['f_id']);
+    activite_supprimer('forum_delete_message', 0, 0, 0, $dcheckmessages['f_id']);
+
+    // Diff
     $message_delete_id      = 'Message #'.$i.' par '.postdata($dcheckmessages['m_pseudo']);
     $message_delete_contenu = postdata($dcheckmessages['f_contenu']);
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'            ,
-                        titre_diff  = '$message_delete_id'      ,
-                        diff_avant  = '$message_delete_contenu' ");
+    activite_diff($activite_id, $message_delete_id, $message_delete_contenu);
   }
 
   // IRCbot

@@ -103,32 +103,14 @@ if(isset($_POST['modifier_go']))
             WHERE   ecrivains_texte.id      = '$texte_edit_id' ");
 
     // Activité récente
-    $timestamp    = time();
     $edit_pseudo  = postdata(getpseudo(), 'string');
-    query(" INSERT INTO activite
-            SET         activite.timestamp      = '$timestamp'      ,
-                        activite.log_moderation = 1                 ,
-                        activite.pseudonyme     = '$edit_pseudo'    ,
-                        activite.action_type    = 'ecrivains_edit'  ,
-                        activite.action_id      = '$texte_edit_id'  ,
-                        activite.action_titre   = '$texte_titre'    ");
+    $activite_id  = activite_nouveau('ecrivains_edit', 1, 0, $edit_pseudo, $texte_edit_id, $texte_titre);
 
     // Diff
-    $activite_id          = mysqli_insert_id($db);
     $texte_avant_titre    = postdata($qchecktexte['t_titre'], 'string');
     $texte_avant_contenu  = postdata($qchecktexte['t_texte'], 'string');
-    if($texte_avant_titre != $texte_titre)
-      query(" INSERT INTO activite_diff
-              SET         FKactivite  = '$activite_id'        ,
-                          titre_diff  = 'Titre'               ,
-                          diff_avant  = '$texte_avant_titre'  ,
-                          diff_apres  = '$texte_titre'        ");
-    if($texte_avant_contenu != $texte_contenu)
-      query(" INSERT INTO activite_diff
-              SET         FKactivite  = '$activite_id'          ,
-                          titre_diff  = 'Contenu'               ,
-                          diff_avant  = '$texte_avant_contenu'  ,
-                          diff_apres  = '$texte_contenu'        ");
+    activite_diff($activite_id, 'Titre', $texte_avant_titre, $texte_titre, 1);
+    activite_diff($activite_id, 'Contenu', $texte_avant_contenu, $texte_contenu, 1);
 
     // On envoie un message sur #sysop avec le bot IRC pour qu'un sysop vérifie que ça soit pas du contenu abusif
     ircbot($chemin, getpseudo()." a modifié le contenu d'un texte du coin des écrivains : ".$GLOBALS['url_site']."pages/ecrivains/texte?id=".$texte_edit_id, "#sysop");

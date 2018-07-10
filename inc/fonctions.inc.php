@@ -610,6 +610,70 @@ function menu_css($menu_postdata, $menu_objet, $menu_type)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Insère une entrée dans la table activite, retourne l'id de l'activité qui vient d'être crée
+//
+// type_action                    est le le type d'action, pour son traitement dans pages/nobleme/activite
+// log_moderation                 définit si c'est public (0) ou un log de modération (1)
+// membre_id          (optionnel) est l'ID du membre lié à l'activité
+// membre_pseudonyme  (optionnel) est le pseudonyme du membre lié à l'activité
+// action_id          (optionnel) est l'id d'une table externe auquel l'action est lié
+// action_titre       (optionnel) est le titre de l'action, pour son traitement dans pages/nobleme/activite
+// action_parent      (optionnel) est un élément parent à l'action, pour son traitement dans pages/nobleme/activite
+// justification      (optionnel) est la justification de l'action dans le log de modération
+//
+// Utilisation: activite_nouveau('truc_edit', 0, 0, 'Bad', 42, 'Le truc édité');
+
+function activite_nouveau($type_action, $log_moderation, $membre_id=0, $membre_pseudonyme=NULL, $action_id=0, $action_titre=NULL, $action_parent=NULL, $justification=NULL)
+{
+  // On crée la nouvelle activité
+  $timestamp = time();
+  query(" INSERT INTO activite
+          SET         activite.timestamp      = '$timestamp'          ,
+                      activite.log_moderation = '$log_moderation'     ,
+                      activite.FKmembres      = '$membre_id'          ,
+                      activite.pseudonyme     = '$membre_pseudonyme'  ,
+                      activite.action_type    = '$type_action'        ,
+                      activite.action_id      = '$action_id'          ,
+                      activite.action_titre   = '$action_titre'       ,
+                      activite.parent         = '$action_parent'      ,
+                      activite.justification  = '$justification'      ");
+
+  // Puis on renvoie l'id de l'activité fraichement crée
+  return(mysqli_insert_id($GLOBALS['db']));
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Insère une entrée dans la table activite_diff
+//
+// id                     est l'id de l'activité liée au diff
+// titre                  est le titre du diff
+// avant                  est le contenu qui était présent avant le diff
+// apres      (optionnel) est le contenu qui en remplace un autre dans le diff
+// optionnel  (optionnel) spécifie que le diff ne doit être crée que si le contenu d'après est différent du contenu d'avant
+//
+// Utilisation: $activite_id = activite_diff(1, 'Valeur', 3, 5, 1);
+
+function activite_diff($id, $titre, $avant, $apres=NULL, $optionnel=NULL)
+{
+  // Si le contenu est trop grand, on ne crée pas de diff
+  $apres = (strlen($apres) > 10000) ? NULL : $apres;
+
+  // On crée le diff (si nécessaire)
+  if(!$optionnel || $avant != $apres)
+    query(" INSERT INTO activite_diff
+            SET         FKactivite  = '$id'     ,
+                        titre_diff  = '$titre'  ,
+                        diff_avant  = '$avant'  ,
+                        diff_apres  = '$apres'  ");
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Purge le contenu de la table activite_diff qui n'est lié à aucune entrée dans la table activite
 //
 // Utilisation: purger_diff_orphelins()
@@ -629,4 +693,48 @@ function purger_diff_orphelins()
     query(" DELETE FROM activite_diff
             WHERE       activite_diff.id = '$id_orphelin' ");
   }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Supprime une entrée dans la table activite ainsi que toutes les entrées liées dans activite_diff
+//
+// type_action                    est le le type d'activité à supprimer
+// log_moderation     (optionnel) définit si c'est public (0) ou un log de modération (1)
+// membre_id          (optionnel) est l'ID du membre lié à l'activité à supprimer
+// membre_pseudonyme  (optionnel) est le pseudonyme du membre lié à l'activité à supprimer
+// action_id          (optionnel) est l'id d'une table externe à laquelle l'activité est lié
+// type_action_tout   (optionnel) s'il est rempli, supprime toutes les actions de ce type
+//
+// Utilisation: activite_supprimer('truc_edit', 42);
+
+function activite_supprimer($type_action, $log_moderation=0, $membre_id=0, $membre_pseudonyme=NULL, $action_id=0, $type_action_tout=0)
+{
+  // On construit la requête selon les paramètres qui sont remplis ou non
+  $activite_supprimer    = "  DELETE FROM activite ";
+
+  // Type d'action, englobant toutes les actions du type ou non
+  if(!$type_action_tout)
+    $activite_supprimer .= "  WHERE       activite.action_type    LIKE  '$type_action' ";
+  else
+    $activite_supprimer .= "  WHERE       activite.action_type    LIKE  '$type_action%' ";
+
+  // Activité récente ou log de modération
+  $activite_supprimer .= "    AND         activite.log_moderation =     '$log_moderation' ";
+
+  // Autres paramètres
+  if($membre_id)
+    $activite_supprimer .= "  AND         activite.FKmembres      =     '$membre_id' ";
+  if($membre_pseudonyme)
+    $activite_supprimer .= "  AND         activite.pseudonyme     LIKE  '$membre_pseudonyme' ";
+  if($action_id)
+    $activite_supprimer .= "  AND         activite.action_id      =     '$action_id' ";
+
+  // On supprime l'activité
+  query($activite_supprimer);
+
+  // Et on envoie une purge des diffs potentiellement orphelins suite à la suppression
+  purger_diff_orphelins();
 }

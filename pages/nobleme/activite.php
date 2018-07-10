@@ -164,12 +164,12 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
     if($ddiff['titre_diff'])
     {
       if($ddiff['diff_apres'])
-        $activite_diff[$nactrec] .= '<span class="gras">'.predata($ddiff['titre_diff']).' :</span> '.bbcode(diff(predata($ddiff['diff_avant'], 1), predata($ddiff['diff_apres'], 1))).'<br>';
+        $activite_diff[$nactrec] .= '<span class="gras">'.predata($ddiff['titre_diff']).' :</span> '.bbcode(diff(predata($ddiff['diff_avant'], 1), predata($ddiff['diff_apres'], 1))).'<br><br>';
       else
-        $activite_diff[$nactrec] .= '<span class="gras">'.predata($ddiff['titre_diff']).' :</span> '.bbcode(predata($ddiff['diff_avant'], 1)).'<br>';
+        $activite_diff[$nactrec] .= '<span class="gras">'.predata($ddiff['titre_diff']).' :</span> '.bbcode(predata($ddiff['diff_avant'], 1)).'<br><br>';
     }
     else
-      $activite_diff[$nactrec] .= bbcode(predata($ddiff['diff_avant'])).'<br>';
+      $activite_diff[$nactrec] .= bbcode(predata($ddiff['diff_avant'])).'<br><br>';
   }
 
   // Puis on passe au traitement au cas par cas des divers types d'activité...

@@ -91,23 +91,12 @@ if(isset($_POST['irl_add_go']) && getmod('irl'))
 
   // Activité récente
   $irl_id       = mysqli_insert_id($db);
-  $timestamp    = time();
-  $action_titre = postdata(jourfr($irl_edit_date));
-  query(" INSERT INTO activite
-          SET         timestamp     = '$timestamp'    ,
-                      action_type   = 'irl_new'       ,
-                      action_id     = '$irl_id'       ,
-                      action_titre  = '$action_titre' ");
+  $action_titre = postdata(jourfr($irl_edit_date), 'string');
+  activite_nouveau('irl_new', 0, 0, NULL, $irl_id, $action_titre);
 
   // Log de modération
-  $sysop = postdata(getpseudo());
-  query(" INSERT INTO activite
-          SET         timestamp       = '$timestamp'    ,
-                      log_moderation  = 1               ,
-                      pseudonyme      = '$sysop'        ,
-                      action_type     = 'irl_new'       ,
-                      action_id       = '$irl_id'       ,
-                      action_titre    = '$action_titre' ");
+  $sysop = postdata(getpseudo(), 'string');
+  activite_nouveau('irl_new', 1, 0, $sysop, $irl_id, $action_titre);
 
   // Bot IRC
   $date_irl     = datefr($irl_edit_date);
@@ -156,55 +145,17 @@ if(isset($_POST['irl_edit_go']) && getmod('irl'))
           WHERE   irl.id          = '$irl_id' ");
 
   // Log de modération
-  $timestamp    = time();
-  $action_titre = postdata(jourfr($irl_edit_date));
-  $sysop        = postdata(getpseudo());
-  query(" INSERT INTO activite
-          SET         timestamp       = '$timestamp'    ,
-                      log_moderation  = 1               ,
-                      pseudonyme      = '$sysop'        ,
-                      action_type     = 'irl_edit'      ,
-                      action_id       = '$irl_id'       ,
-                      action_titre    = '$action_titre' ");
+  $action_titre = postdata(jourfr($irl_edit_date), 'string');
+  $sysop        = postdata(getpseudo(), 'string');
+  $activite_id  = activite_nouveau('irl_edit', 1, 0, $sysop, $irl_id, $action_titre);
 
   // Diff
-  $activite_id = mysqli_insert_id($db);
-  if($irl_avant_date != $irl_edit_date)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'    ,
-                        titre_diff  = 'Date'            ,
-                        diff_avant  = '$irl_avant_date' ,
-                        diff_apres  = '$irl_edit_date'  ");
-  if($irl_avant_lieu != $irl_edit_lieu)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'    ,
-                        titre_diff  = 'Lieu'            ,
-                        diff_avant  = '$irl_avant_lieu' ,
-                        diff_apres  = '$irl_edit_lieu'  ");
-  if($irl_avant_raison_fr != $irl_edit_raison_fr)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'          ,
-                        titre_diff  = 'Raison (fr)'           ,
-                        diff_avant  = '$irl_avant_raison_fr'  ,
-                        diff_apres  = '$irl_edit_raison_fr'   ");
-  if($irl_avant_raison_en != $irl_edit_raison_en)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'          ,
-                        titre_diff  = 'Raison (en)'           ,
-                        diff_avant  = '$irl_avant_raison_en'  ,
-                        diff_apres  = '$irl_edit_raison_en'   ");
-  if($irl_avant_details_fr != $irl_edit_details_fr)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'          ,
-                        titre_diff  = 'Détails (fr)'          ,
-                        diff_avant  = '$irl_avant_details_fr' ,
-                        diff_apres  = '$irl_edit_details_fr'  ");
-  if($irl_avant_details_en != $irl_edit_details_en)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'          ,
-                        titre_diff  = 'Détails (en)'          ,
-                        diff_avant  = '$irl_avant_details_en' ,
-                        diff_apres  = '$irl_edit_details_en'  ");
+  activite_diff($activite_id, 'Date'          , $irl_avant_date       , $irl_edit_date        , 1);
+  activite_diff($activite_id, 'Lieu'          , $irl_avant_lieu       , $irl_edit_lieu        , 1);
+  activite_diff($activite_id, 'Raison (fr)'   , $irl_avant_raison_fr  , $irl_edit_raison_fr   , 1);
+  activite_diff($activite_id, 'Raison (en)'   , $irl_avant_raison_en  , $irl_edit_raison_en   , 1);
+  activite_diff($activite_id, 'Détails (fr)'  , $irl_avant_details_fr , $irl_edit_details_fr  , 1);
+  activite_diff($activite_id, 'Détails (en)'  , $irl_avant_details_en , $irl_edit_details_en  , 1);
 
   // Redirection
   exit(header("Location: ".$chemin."pages/irl/irl?id=".$irl_id));

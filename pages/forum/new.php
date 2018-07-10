@@ -127,13 +127,7 @@ if(isset($_POST['forum_add_titre']))
   $temp_lang  = ($add_langue == 'FR') ? 'Anonyme' : 'Anonymous';
   $add_pseudo = ($add_apparence == 'Anonyme') ? $temp_lang : postdata(getpseudo(), 'string');
   $add_modlog = ($add_public) ? 0 : 1;
-  query(" INSERT INTO activite
-          SET         activite.timestamp      = '$timestamp'  ,
-                      activite.log_moderation = '$add_modlog' ,
-                      activite.pseudonyme     = '$add_pseudo' ,
-                      activite.action_type    = 'forum_new'   ,
-                      activite.action_id      = '$sujet_id'   ,
-                      activite.action_titre   = '$add_titre'  ");
+  activite_nouveau('forum_new', $add_modlog, 0, $add_pseudo, $sujet_id, $add_titre);
 
   // Bot IRC
   $add_pseudo_raw = ($add_apparence == 'Anonyme') ? $temp_lang : getpseudo();

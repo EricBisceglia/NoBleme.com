@@ -9,9 +9,13 @@ $page_views = isset($pageviews) ? "Cette page a été consultée ".$pageviews." 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Version actuelle
 
-$qversion = mysqli_fetch_array(query("SELECT version.version, version.build, version.date FROM version ORDER BY version.id DESC LIMIT 1"));
-$version = "Version ".$qversion['version'].", build ".$qversion['build'];
-$version .= ($lang == 'FR') ? " du ".jourfr($qversion['date'], 'FR') : " - ".jourfr($qversion['date'], 'EN');
+$dversion = mysqli_fetch_array(query("  SELECT    version.version AS 'v_version'  ,
+                                                  version.build   AS 'v_build'    ,
+                                                  version.date    AS 'v_date'
+                                        FROM      version
+                                        ORDER BY  version.id DESC LIMIT 1 "));
+$version = "Version ".$dversion['v_version'].", build ".$dversion['v_build'];
+$version .= ($lang == 'FR') ? " du ".jourfr($dversion['v_date'], 'FR') : " - ".jourfr($dversion['v_date'], 'EN');
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

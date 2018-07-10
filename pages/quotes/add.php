@@ -54,10 +54,7 @@ if(isset($_POST['misc_contenu']))
     if($misc_valide)
     {
       // Si c'est Bad, la quote est direct validée, on ajoute une entrée à l'activité récente
-      query(" INSERT INTO activite
-              SET         timestamp   = '$misc_timestamp' ,
-                          action_type = 'quote'           ,
-                          action_id   = '$misc_id'        ");
+      activite_nouveau('quote', 0, 0, NULL, $misc_id);
 
       // On envoie un message via le bot IRC
       ircbot($chemin, "Miscellanée #".$misc_id." ajoutée à la collection: ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#NoBleme");

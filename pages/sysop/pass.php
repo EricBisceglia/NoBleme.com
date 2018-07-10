@@ -57,16 +57,9 @@ if(isset($_POST['pass_go']))
           WHERE   membres.id    = '$pass_id' ");
 
   // On ajoute le changement de pass au log de modération
-  $timestamp    = time();
   $pass_pseudo  = postdata(getpseudo($pass_id), 'string');
   $pass_sysop   = postdata(getpseudo(), 'string');
-  query(" INSERT INTO activite
-          SET         timestamp       = '$timestamp'    ,
-                      log_moderation  = 1               ,
-                      FKmembres       = '$pass_id'      ,
-                      pseudonyme      = '$pass_pseudo'  ,
-                      action_type     = 'editpass'      ,
-                      parent          = '$pass_sysop'   ");
+  activite_nouveau('editpass', 1, $pass_id, $pass_pseudo, 0, NULL, $pass_sysop);
 
   // On notifie #sysop de l'action
   ircbot($chemin, getpseudo()." a changé le mot de passe de ".getpseudo($pass_id), "#sysop");

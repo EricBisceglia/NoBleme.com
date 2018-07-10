@@ -70,13 +70,7 @@ if(isset($_POST['todo_add_go']) && getadmin())
     // Activité récente
     $todo_add_id      = mysqli_insert_id($db);
     $todo_add_pseudo  = postdata(getpseudo(), 'string');
-    query(" INSERT INTO activite
-            SET         activite.timestamp    = '$timestamp'        ,
-                        activite.FKmembres    = 1                   ,
-                        activite.pseudonyme   = '$todo_add_pseudo'  ,
-                        activite.action_type  = 'todo_new'          ,
-                        activite.action_id    = '$todo_add_id'      ,
-                        activite.action_titre = '$todo_add_titre'   ");
+    activite_nouveau('todo_new', 0, 1, $todo_add_pseudo, $todo_add_id, $todo_add_titre);
 
     // Bot IRC
     $todo_add_pseudo_raw  = getpseudo();

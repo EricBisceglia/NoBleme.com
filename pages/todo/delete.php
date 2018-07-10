@@ -60,10 +60,7 @@ if(isset($_POST['todo_delete']) || isset($_POST['todo_reject']))
           WHERE       todo.id = '$todo_id' ");
 
   // Ainsi que l'entrée dans l'activité récente
-  query(" DELETE FROM activite
-          WHERE     ( activite.action_type  = 'todo_new'
-          OR          activite.action_type  = 'todo_fini' )
-          AND         activite.action_id    = '$todo_id' ");
+  activite_supprimer('todo_', 0, 0, NULL, $todo_id, 1);
 
   if(isset($_POST['todo_reject']))
   {

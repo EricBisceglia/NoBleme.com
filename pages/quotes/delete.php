@@ -90,9 +90,7 @@ if(isset($_POST['misc_delete']))
           WHERE       quotes_membres.FKquotes = '$misc_id' ");
 
   // On supprime l'activité récente liée
-  query(" DELETE FROM activite
-          WHERE       action_type LIKE  'quote'
-          AND         action_id   =     '$misc_id' ");
+  activite_supprimer('quote', 0, 0, NULL, $misc_id);
 
   // Redirection vers les miscellanées
   exit(header("Location: ".$chemin."pages/quotes/index?admin"));

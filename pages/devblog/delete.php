@@ -55,9 +55,7 @@ if(isset($_POST['devblog_delete']))
           WHERE       devblog.id = '$devblog_id' ");
 
   // On vire l'entrée de l'activité récente
-  query(" DELETE FROM activite
-          WHERE       activite.action_type  = 'devblog'
-          AND         activite.action_id    = '$devblog_id' ");
+  activite_supprimer('devblog', 0, 0, NULL, $devblog_id);
 
   // Et on redirige vers la liste des devblogs
   exit(header("Location: ".$chemin."pages/devblog/index"));

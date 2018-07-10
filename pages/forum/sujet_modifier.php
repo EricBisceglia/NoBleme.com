@@ -97,57 +97,26 @@ if(isset($_POST['sujet_edit_go']))
           WHERE   forum_sujet.id                = '$sujet_edit_id' ");
 
   // Activité récente
-  $timestamp    = time();
   $edit_pseudo  = getpseudo();
-  query(" INSERT INTO activite
-          SET         activite.timestamp      = '$timestamp'      ,
-                      activite.log_moderation = 1                 ,
-                      activite.pseudonyme     = '$edit_pseudo'    ,
-                      activite.action_type    = 'forum_edit'      ,
-                      activite.action_id      = '$sujet_edit_id'  ,
-                      activite.action_titre   = '$edit_titre'     ");
+  $activite_id  = activite_nouveau('forum_edit', 1, 0, $edit_pseudo, $sujet_edit_id, $edit_titre);
 
   // Diff
-  $activite_id = mysqli_insert_id($db);
-  if($edit_avant_titre != $edit_titre)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'      ,
-                        titre_diff  = 'Titre'             ,
-                        diff_avant  = '$edit_avant_titre' ,
-                        diff_apres  = '$edit_titre'       ");
+  activite_diff($activite_id, 'Titre', $edit_avant_titre, $edit_titre, 1);
   if($edit_avant_categorie != $edit_categorie)
   {
-    $qgetcategorie = mysqli_fetch_array(query(" SELECT  forum_categorie.nom_fr
-                                                FROM    forum_categorie
-                                                WHERE   forum_categorie.id = '$edit_categorie' "));
+    $qgetcategorie  = mysqli_fetch_array(query("  SELECT  forum_categorie.nom_fr
+                                                  FROM    forum_categorie
+                                                  WHERE   forum_categorie.id = '$edit_categorie' "));
     $edit_categorie = $qgetcategorie['nom_fr'];
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'          ,
-                        titre_diff  = 'Catégorie'             ,
-                        diff_avant  = '$edit_avant_categorie' ,
-                        diff_apres  = '$edit_categorie'       ");
+    activite_diff($activite_id, 'Catégorie', $edit_avant_categorie, $edit_categorie);
   }
-  if($edit_avant_langue != $edit_langue)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'        ,
-                        titre_diff  = 'Langue'              ,
-                        diff_avant  = '$edit_avant_langue'  ,
-                        diff_apres  = '$edit_langue'        ");
+  activite_diff($activite_id, 'Langue', $edit_avant_langue, $edit_langue, 1);
   if($edit_avant_public != $edit_public)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'        ,
-                        titre_diff  = 'Public'              ,
-                        diff_avant  = '$edit_avant_public'  ");
+    activite_diff($activite_id, 'Public', $edit_avant_public);
   if($edit_avant_ouvert != $edit_ouvert)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'        ,
-                        titre_diff  = 'Ouvert'              ,
-                        diff_avant  = '$edit_avant_ouvert'  ");
+    activite_diff($activite_id, 'Ouvert', $edit_avant_ouvert);
   if($edit_avant_epingle != $edit_epingle)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'        ,
-                        titre_diff  = 'Épinglé'             ,
-                        diff_avant  = '$edit_avant_epingle' ");
+    activite_diff($activite_id, 'Épinglé', $edit_avant_epingle);
 
   // IRCbot
   ircbot($chemin, getpseudo()." a modifié le sujet du forum ".$edit_titre_raw.". Diff des changements : ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");

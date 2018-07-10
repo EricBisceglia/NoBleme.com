@@ -94,13 +94,9 @@ if (isset($_POST["register_pseudo"]))
                         email         = '$register_email'   ,
                         date_creation = '$date_creation'    ");
 
-    // Ajout du register dans l'activité
+    // Activité récente
     $new_user = mysqli_insert_id($db);
-    query(" INSERT INTO activite
-            SET         timestamp   = '$date_creation'    ,
-                        pseudonyme  = '$register_pseudo'  ,
-                        FKmembres   = '$new_user'         ,
-                        action_type = 'register'          ");
+    activite_nouveau('register', 0, $new_user, $register_pseudo);
 
     // Bot IRC NoBleme
     ircbot($chemin, "Nouveau membre enregistré sur le site : ".$_POST["register_pseudo"]." - ".$GLOBALS['url_site']."pages/user/user?id=".$new_user, "#NoBleme");

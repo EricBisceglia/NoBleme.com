@@ -77,12 +77,7 @@ if(isset($_POST['publier_go']))
     // Activité récente
     $texte_id   = mysqli_insert_id($db);
     $add_pseudo = ($texte_anonyme) ? 'Anonyme' : postdata(getpseudo(), 'string');
-    query(" INSERT INTO activite
-            SET         activite.timestamp      = '$texte_creation' ,
-                        activite.pseudonyme     = '$add_pseudo'     ,
-                        activite.action_type    = 'ecrivains_new'   ,
-                        activite.action_id      = '$texte_id'       ,
-                        activite.action_titre   = '$texte_titre'    ");
+    activite_nouveau('ecrivains_new', 0, 0, $add_pseudo, $texte_id, $texte_titre);
 
     // Bot IRC
     $add_pseudo_raw = getpseudo();

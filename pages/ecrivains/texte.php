@@ -95,14 +95,10 @@ if(isset($_POST['reaction_go']))
                         ecrivains_note.message            = '$note_commentaire' ");
 
     // Activité récente
-    $note_pseudo      = postdata(getpseudo(), 'string');
-    $note_type_action = ($note_anonyme) ? 'ecrivains_reaction_new_anonyme' : 'ecrivains_reaction_new';
-    query(" INSERT INTO activite
-            SET         activite.timestamp      = '$timestamp'        ,
-                        activite.pseudonyme     = '$note_pseudo'      ,
-                        activite.action_type    = '$note_type_action' ,
-                        activite.action_id      = '$texte_id'         ,
-                        activite.action_titre   = '$texte_titre'      ");
+    $note_pseudo          = postdata(getpseudo(), 'string');
+    $note_type_action     = ($note_anonyme) ? 'ecrivains_reaction_new_anonyme' : 'ecrivains_reaction_new';
+    $texte_titre_escaped  = postdata($qveriftexte['t_titre'], 'string');
+    activite_nouveau($note_type_action, 0, 0, $note_pseudo, $texte_id, $texte_titre_escaped);
 
     // Notification sur IRC
     $note_titre_raw = $qveriftexte['t_titre'];
@@ -131,11 +127,8 @@ if($loggedin && isset($_POST['supprimer_reaction']))
 
   // Puis on supprime l'entrée dans l'activité récente
   $note_pseudo = postdata(getpseudo(), 'string');
-  query(" DELETE FROM activite
-          WHERE     ( activite.action_type  =     'ecrivains_reaction_new'
-          OR          activite.action_type  =     'ecrivains_reaction_new_anonyme' )
-          AND         activite.action_id    =     '$texte_id'
-          AND         activite.pseudonyme   LIKE  '$note_pseudo' ");
+  activite_supprimer('ecrivains_reaction_new', 0, 0, $note_pseudo, $texte_id);
+  activite_supprimer('ecrivains_reaction_new_anonyme', 0, 0, $note_pseudo, $texte_id);
 }
 
 
@@ -173,39 +166,20 @@ if($est_sysop && isset($_POST['supprimer_reaction_go']))
 
   // Puis on supprime l'entrée dans l'activité récente
   $delete_pseudo = postdata($qreaction['m_pseudo']);
-  query(" DELETE FROM activite
-          WHERE     ( activite.action_type  =     'ecrivains_reaction_new'
-          OR          activite.action_type  =     'ecrivains_reaction_new_anonyme' )
-          AND         activite.action_id    =     '$texte_id'
-          AND         activite.pseudonyme   LIKE  '$delete_pseudo' ");
+  activite_supprimer('ecrivains_reaction_new', 0, 0, $delete_pseudo, $texte_id);
+  activite_supprimer('ecrivains_reaction_new_anonyme', 0, 0, $delete_pseudo, $texte_id);
 
   // Activité récente
-  $timestamp            = time();
   $delete_mod           = postdata(getpseudo());
   $delete_anonyme       = ($qreaction['n_anonyme']) ? 'Anonyme' : $delete_pseudo;
-  $delete_justification = ($delete_raison) ? " , activite.justification = '".postdata($delete_raison, 'string', '')."' " : '';
-  query(" INSERT INTO activite
-          SET         activite.timestamp      = '$timestamp'                ,
-                      activite.log_moderation = 1                           ,
-                      activite.pseudonyme     = '$delete_mod'               ,
-                      activite.action_type    = 'ecrivains_reaction_delete' ,
-                      activite.action_id      = '$delete_id'                ,
-                      activite.action_titre   = '$delete_anonyme'
-                      $delete_justification                                 ");
+  $delete_justification = ($delete_raison) ? postdata($delete_raison, 'string', '') : '';
+  $activite_id          = activite_nouveau('ecrivains_reaction_delete', 1, 0, $delete_mod, $delete_id, $delete_anonyme, 0, $delete_justification);
 
   // Diff
-  $activite_id    = mysqli_insert_id($db);
   $delete_note    = postdata($qreaction['n_note'], 'double');
   $delete_message = postdata($qreaction['n_message'], 'string');
-  query(" INSERT INTO activite_diff
-          SET         FKactivite  = '$activite_id'  ,
-                      titre_diff  = 'Note'          ,
-                      diff_avant  = '$delete_note' ");
-  if($delete_message)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'    ,
-                        titre_diff  = 'Message'         ,
-                        diff_avant  = '$delete_message' ");
+  activite_diff($activite_id, 'Note'    , $delete_note);
+  activite_diff($activite_id, 'Message' , $delete_message);
 
   // IRCbot
   $delete_titre_raw   = $qreaction['t_titre'];

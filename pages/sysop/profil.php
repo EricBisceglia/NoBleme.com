@@ -69,47 +69,19 @@ if(isset($_POST['profil_go']))
           WHERE   membres.id      = '$profil_id'      ");
 
   // On ajoute le changement aux logs de modération
-  $timestamp      = time();
   $profil_pseudo  = postdata(getpseudo($profil_id), 'string');
   $profil_sysop   = postdata(getpseudo(), 'string');
-  query(" INSERT INTO activite
-          SET         timestamp       = '$timestamp'      ,
-                      log_moderation  = 1                 ,
-                      FKmembres       = '$profil_id'      ,
-                      pseudonyme      = '$profil_pseudo'  ,
-                      action_type     = 'profil_edit'     ,
-                      parent          = '$profil_sysop'   ");
+  $id_activite    = activite_nouveau('profil_edit', 1, $profil_id, $profil_pseudo, 0, NULL, $profil_sysop);
 
   // On crée les diff pour aller avec le log
-  $id_activite        = mysqli_insert_id($db);
   $old_profil_genre   = postdata($qprofiluser['genre'], 'string');
   $old_profil_habite  = postdata($qprofiluser['habite'], 'string');
   $old_profil_metier  = postdata($qprofiluser['metier'], 'string');
   $old_profil_texte   = postdata($qprofiluser['profil'], 'string');
-  if($profil_genre != $old_profil_genre)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite      = '$id_activite'      ,
-                        titre_diff      = 'Genre'             ,
-                        diff_avant      = '$old_profil_genre' ,
-                        diff_apres      = '$profil_genre'     ");
-  if($profil_habite != $old_profil_habite)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite      = '$id_activite'          ,
-                        titre_diff      = 'Ville / Région / Pays' ,
-                        diff_avant      = '$old_profil_habite'    ,
-                        diff_apres      = '$profil_habite'        ");
-  if($profil_metier != $old_profil_metier)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite      = '$id_activite'        ,
-                        titre_diff      = 'Métier / Occupation' ,
-                        diff_avant      = '$old_profil_metier'  ,
-                        diff_apres      = '$profil_metier'      ");
-  if($profil_texte != $old_profil_texte)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite      = '$id_activite'      ,
-                        titre_diff      = 'Texte libre'       ,
-                        diff_avant      = '$old_profil_texte' ,
-                        diff_apres      = '$profil_texte'     ");
+  activite_diff($id_activite, 'Genre'                 , $old_profil_genre   , $profil_genre   , 1);
+  activite_diff($id_activite, 'Ville / Région / Pays' , $old_profil_habite  , $profil_habite  , 1);
+  activite_diff($id_activite, 'Métier / Occupation'   , $old_profil_metier  , $profil_metier  , 1);
+  activite_diff($id_activite, 'Texte libre'           , $old_profil_texte   , $profil_texte   , 1);
 
   // On prépare le message privé à envoyer à l'user dont le profil a été changé
   $profil_pm = <<<EOD

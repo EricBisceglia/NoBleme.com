@@ -120,7 +120,7 @@ if(!$sujet_public && !$moderateur_forum)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Poster une réponse au sujet
 
 if(isset($_POST['forum_ecrire_reponse']))
@@ -181,14 +181,7 @@ if(isset($_POST['forum_ecrire_reponse']))
   $add_pseudo = ($sujet_apparence == 'Anonyme') ? $temp_lang : postdata(getpseudo(), 'string');
   $add_modlog = ($sujet_public) ? 0 : 1;
   $add_titre  = postdata($sujet_titre_raw);
-  query(" INSERT INTO activite
-          SET         activite.timestamp      = '$timestamp'        ,
-                      activite.log_moderation = '$add_modlog'       ,
-                      activite.pseudonyme     = '$add_pseudo'       ,
-                      activite.action_type    = 'forum_new_message' ,
-                      activite.action_id      = '$message_id'       ,
-                      activite.action_titre   = '$add_titre'        ,
-                      activite.parent         = '$sujet_id'         ");
+  activite_nouveau('forum_new_message', $add_modlog, 0, $add_pseudo, $message_id, $add_titre, $sujet_id);
 
   // Bot IRC
   $temp_lang      = ($qcheckprive['langue'] == 'FR') ? 'Anonyme' : 'Anonymous';
@@ -286,30 +279,17 @@ if(isset($_POST['forum_modifier_message_go']))
   }
 
   // Activité récente
-  $timestamp          = time();
-  $edit_mod           = postdata($edit_mod);
-  $edit_auteur        = postdata($edit_pseudo);
-  $edit_justification = ($edit_raison) ? " , activite.justification = '".postdata($edit_raison, 'string', '')."' " : '';
+  $edit_mod           = postdata($edit_mod, 'string');
+  $edit_auteur        = postdata($edit_pseudo, 'string');
+  $edit_justification = ($edit_raison) ? postdata($edit_raison, 'string', '') : '';
   if(isset($sysop_modif))
   {
-    $real_edit_mod = getpseudo();
-    query(" INSERT INTO activite
-            SET         activite.timestamp      = '$timestamp'          ,
-                        activite.log_moderation = 1                     ,
-                        activite.pseudonyme     = '$real_edit_mod'      ,
-                        activite.action_type    = 'forum_edit_message'  ,
-                        activite.action_id      = '$edit_sujet'         ,
-                        activite.action_titre   = '$edit_auteur'
-                        $edit_justification                             ");
+    $real_edit_mod  = postdata(getpseudo(), 'string');
+    $activite_id    = activite_nouveau('forum_edit_message', 1, 0, $real_edit_mod, $edit_sujet, $edit_auteur, 0, $edit_justification);
 
     // Diff
-    $activite_id      = mysqli_insert_id($db);
-    $edit_message     = postdata($qmessage['contenu']);
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'        ,
-                        titre_diff  = 'Contenu du message'  ,
-                        diff_avant  = '$edit_message'       ,
-                        diff_apres  = '$edit_contenu'       ");
+    $edit_message = postdata($qmessage['contenu']);
+    activite_diff($activite_id, 'Contenu du message', $edit_message, $edit_contenu);
   }
 
   // Si c'est une modification spontanée, on ajoute une date de modification
@@ -439,10 +419,8 @@ if(isset($_POST['forum_supprimer_message_go']))
           WHERE       forum_message.id = '$delete_id'" );
 
   // On supprime l'activité récente et les logs de modération liés à ce message
-  query(" DELETE FROM activite
-          WHERE     ( activite.action_type  LIKE  'forum_new_message'
-          OR          activite.action_type  LIKE  'forum_edit_message' )
-          AND         activite.action_id    =     '$delete_id' ");
+  activite_supprimer('forum_new_message'  , 0, 0, 0, $delete_id);
+  activite_supprimer('forum_edit_message' , 0, 0, 0, $delete_id);
 
   // On nettoie les potentiels diffs orphelins
   purger_diff_orphelins();
@@ -464,31 +442,16 @@ if(isset($_POST['forum_supprimer_message_go']))
   }
 
   // Activité récente
-  $timestamp            = time();
   $delete_mod           = (isset($sysop_delete)) ? postdata(getpseudo()) : postdata($delete_mod);
-  $delete_auteur        = postdata($delete_pseudo);
-  $delete_justification = ($delete_raison) ? " , activite.justification = '".postdata($delete_raison, 'string', '')."' " : '';
-  query(" INSERT INTO activite
-          SET         activite.timestamp      = '$timestamp'            ,
-                      activite.log_moderation = 1                       ,
-                      activite.pseudonyme     = '$delete_mod'           ,
-                      activite.action_type    = 'forum_delete_message'  ,
-                      activite.action_id      = '$delete_sujet'         ,
-                      activite.action_titre   = '$delete_auteur'
-                      $delete_justification                             ");
+  $delete_auteur        = postdata($delete_pseudo, 'string');
+  $delete_justification = ($delete_raison) ? postdata($delete_raison, 'string', '') : '';
+  $activite_id          = activite_nouveau('forum_delete_message', 1, 0, $delete_mod, $delete_sujet, $delete_auteur, 0, $delete_justification);
 
   // Diff
-  $activite_id    = mysqli_insert_id($db);
-  $delete_titre   = postdata($qsujet['titre']);
-  $delete_message = postdata($qmessage['contenu']);
-  query(" INSERT INTO activite_diff
-          SET         FKactivite  = '$activite_id'  ,
-                      titre_diff  = 'Sujet'         ,
-                      diff_avant  = '$delete_titre' ");
-  query(" INSERT INTO activite_diff
-          SET         FKactivite  = '$activite_id'    ,
-                      titre_diff  = 'Message'         ,
-                      diff_avant  = '$delete_message' ");
+  $delete_titre   = postdata($qsujet['titre'], 'string');
+  $delete_message = postdata($qmessage['contenu'], 'string');
+  activite_diff($activite_id, 'Sujet'   , $delete_titre);
+  activite_diff($activite_id, 'Message' , $delete_message);
 
   // IRCbot
   $delete_sujet_raw = $qsujet['titre'];

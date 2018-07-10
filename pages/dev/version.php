@@ -35,13 +35,12 @@ if(isset($_POST['majVersion']))
   $maj_build    = postdata($_POST['majBuild']);
   $maj_date     = postdata($_POST['majDate']);
   $maj_activite = $maj_version.' build '.$maj_build;
-  $timestamp    = time();
 
   // Nouvelle version
   query(" INSERT INTO version SET version.version = '$maj_version', version.build = '$maj_build', version.date = '$maj_date' ");
 
   // Activité récente
-  query(" INSERT INTO activite SET activite.timestamp = '$timestamp', activite.action_type = 'version', activite.action_titre = '$maj_activite' ");
+  activite_nouveau('version', 0, 0, 0, 0, $maj_activite);
 
   // Bot IRC NoBleme
   ircbot($chemin,"Nouvelle version de NoBleme: Version ".$maj_version." build ".$maj_build." - ".$GLOBALS['url_site']."pages/todo/roadmap","#dev");

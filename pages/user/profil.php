@@ -75,14 +75,8 @@ if(isset($_POST['profil_modifier']))
           WHERE   membres.id = '$profil_id' ");
 
   // On met une notification dans le log de modération
-  $timestamp  = time();
   $pseudonyme = postdata(getpseudo($profil_id), 'string');
-  query(" INSERT INTO activite
-          SET         activite.timestamp      = '$timestamp'  ,
-                      activite.log_moderation = 1             ,
-                      activite.FKmembres      = '$profil_id'  ,
-                      activite.pseudonyme     = '$pseudonyme' ,
-                      activite.action_type    = 'profil'      ");
+  activite_nouveau('profil', 1, $profil_id, $pseudonyme);
 
   // On envoie un message sur #sysop avec le bot IRC pour qu'un sysop vérifie que ça soit pas du contenu abusif
   ircbot($chemin, getpseudo($profil_id)." a modifié son profil public - ".$GLOBALS['url_site']."pages/user/user?id=".$profil_id, "#sysop");

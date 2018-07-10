@@ -135,11 +135,7 @@ EOD;
     envoyer_notif($misc_auteur, "Proposition de miscellanée acceptée", postdata($misc_message));
 
     // On va aussi mettre une notification dans l'activité récente
-    $misc_timestamp = time();
-    query(" INSERT INTO activite
-            SET         timestamp   = '$misc_timestamp' ,
-                        action_type = 'quote'           ,
-                        action_id   = '$misc_id'        ");
+    activite_nouveau('quote', 0, 0, NULL, $misc_id);
 
     // Et via le bot IRC
     ircbot($chemin, "Miscellanée #".$misc_id." ajoutée à la collection: ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#NoBleme");

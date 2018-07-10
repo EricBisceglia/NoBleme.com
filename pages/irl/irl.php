@@ -86,28 +86,14 @@ if(isset($_POST['irl_add_pseudo']) && $_POST['irl_add_pseudo'] && getmod('irl'))
                       details_en  = '$irl_add_details_en' ");
 
   // Activité récente
-  $timestamp        = time();
   $pseudonyme       = postdata_vide('irl_add_pseudo', 'string', '');
   $action_titre     = postdata(jourfr($qcheckirl['date']), 'string', '');
   $action_titre_en  = postdata(jourfr($qcheckirl['date'], 'EN'), 'string', '');
-  query(" INSERT INTO activite
-          SET         timestamp     = '$timestamp'          ,
-                      pseudonyme    = '$pseudonyme'         ,
-                      action_type   = 'irl_add_participant' ,
-                      action_id     = '$irl_id'             ,
-                      action_titre  = '$action_titre'       ");
-
+  activite_nouveau('irl_add_participant', 0, 0, $pseudonyme, $irl_id, $action_titre);
 
   // Log de modération
-  $sysop = postdata(getpseudo());
-  query(" INSERT INTO activite
-          SET         timestamp       = '$timestamp'          ,
-                      log_moderation  = 1                     ,
-                      pseudonyme      = '$pseudonyme'         ,
-                      action_type     = 'irl_add_participant' ,
-                      action_id       = '$irl_id'             ,
-                      action_titre    = '$action_titre'       ,
-                      parent          = '$sysop'              ");
+  $sysop = postdata(getpseudo(), 'string');
+  activite_nouveau('irl_add_participant', 1, 0, $pseudonyme, $irl_id, $action_titre, $sysop);
 
   // Bot IRC
   ircbot($chemin, $_POST["irl_add_pseudo"]." a rejoint l'IRL du ".$action_titre, "#NoBleme");
@@ -169,39 +155,15 @@ if(isset($_POST['irl_edit_id']) && $_POST['irl_edit_id'] && getmod('irl'))
           WHERE   id          = '$irl_edit_id'          ");
 
   // Log de modération
-  $timestamp    = time();
   $pseudonyme   = postdata_vide('irl_edit_pseudo', 'string', '');
-  $sysop        = postdata(getpseudo());
-  query(" INSERT INTO activite
-          SET         timestamp       = '$timestamp'            ,
-                      log_moderation  = 1                       ,
-                      pseudonyme      = '$pseudonyme'           ,
-                      action_type     = 'irl_edit_participant'  ,
-                      action_id       = '$irl_id'               ,
-                      action_titre    = '$edit_irl_date'        ,
-                      parent          = '$sysop'                ");
+  $sysop        = postdata(getpseudo(), 'string');
+  $activite_id  = activite_nouveau('irl_edit_participant', 1, 0, $pseudonyme, $irl_id, $edit_irl_date, $sysop);
 
   // Diff
-  $activite_id        = mysqli_insert_id($db);
   $irl_edit_confirme  = ($irl_edit_confirme) ? 'Oui' : 'Non';
-  if($irl_edit_details_fr != $edit_irl_details_fr)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'          ,
-                        titre_diff  = 'Détails (français)'    ,
-                        diff_avant  = '$edit_irl_details_fr'  ,
-                        diff_apres  = '$irl_edit_details_fr'  ");
-  if($irl_edit_details_en != $edit_irl_details_en)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'          ,
-                        titre_diff  = 'Détails (anglais)'     ,
-                        diff_avant  = '$edit_irl_details_en'  ,
-                        diff_apres  = '$irl_edit_details_en'  ");
-  if($irl_edit_confirme != $edit_irl_confirme)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'        ,
-                        titre_diff  = 'Présence confirmée'  ,
-                        diff_avant  = '$edit_irl_confirme'  ,
-                        diff_apres  = '$irl_edit_confirme'  ");
+  activite_diff($activite_id, 'Détails (français)'  , $edit_irl_details_fr  , $irl_edit_details_fr  , 1);
+  activite_diff($activite_id, 'Détails (anglais)'   , $edit_irl_details_en  , $irl_edit_details_en  , 1);
+  activite_diff($activite_id, 'Présence confirmée'  , $edit_irl_confirme    , $irl_edit_confirme    , 1);
 }
 
 
@@ -243,40 +205,17 @@ if(isset($_POST['irl_supprimer_participant']) && $_POST['irl_supprimer_participa
           WHERE       id = '$irl_supprimer_participant' ");
 
   // Activité récente
-  $timestamp    = time();
-  $pseudonyme   = postdata($del_irl_pseudo);
-  $action_titre = postdata($del_irl_date);
-  query(" INSERT INTO activite
-          SET         timestamp     = '$timestamp'          ,
-                      pseudonyme    = '$pseudonyme'         ,
-                      action_type   = 'irl_del_participant' ,
-                      action_id     = '$irl_id'             ,
-                      action_titre  = '$action_titre'       ");
-
+  $pseudonyme   = postdata($del_irl_pseudo, 'string');
+  $action_titre = postdata($del_irl_date, 'string');
+  activite_nouveau('irl_del_participant', 0, 0, $pseudonyme, $irl_id, $action_titre);
 
   // Log de modération
-  $sysop = postdata(getpseudo());
-  query(" INSERT INTO activite
-          SET         timestamp       = '$timestamp'          ,
-                      log_moderation  = 1                     ,
-                      pseudonyme      = '$pseudonyme'         ,
-                      action_type     = 'irl_del_participant' ,
-                      action_id       = '$irl_id'             ,
-                      action_titre    = '$action_titre'       ,
-                      parent          = '$sysop'              ");
+  $sysop        = postdata(getpseudo(), 'string');
+  $activite_id  = activite_nouveau('irl_del_participant', 1, 0, $pseudonyme, $irl_id, $action_titre, $sysop);
 
   // Diff
-  $activite_id = mysqli_insert_id($db);
-  if($del_details_fr)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'        ,
-                        titre_diff  = 'Détails (français)'  ,
-                        diff_avant  = '$del_details_fr'     ");
-  if($del_details_en)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'        ,
-                        titre_diff  = 'Détails (anglais)'   ,
-                        diff_avant  = '$del_details_en'     ");
+  activite_diff($activite_id, 'Détails (français)', $del_details_fr);
+  activite_diff($activite_id, 'Détails (anglais)' , $del_details_en);
 
   // Bot IRC
   ircbot($chemin, $del_irl_pseudo." a quitté l'IRL du ".$del_irl_date, "#NoBleme");
@@ -336,12 +275,7 @@ if(isset($_POST['irl_supprimer']) && getmod('irl'))
           WHERE       irl_participants.FKirl = '$irl_id' ");
 
   // On supprime toutes les entrées liées à l'IRL dans l'activité récente
-  query(" DELETE FROM   activite
-          WHERE       ( activite.action_type    = 'irl_new'
-          OR            activite.action_type    = 'irl_add_participant'
-          OR            activite.action_type    = 'irl_del_participant' )
-          AND           activite.action_id      = '$irl_id'
-          AND           activite.log_moderation = 0 ");
+  activite_supprimer('irl_', 0, 0, NULL, $irl_id, 1);
 
   // On supprime les pageviews
   $page_url = predata($page_url);
@@ -349,42 +283,15 @@ if(isset($_POST['irl_supprimer']) && getmod('irl'))
           WHERE       url_page LIKE '$page_url' ");
 
   // Log de modération
-  $sysop      = postdata(getpseudo());
-  $timestamp  = time();
-  query(" INSERT INTO activite
-          SET         timestamp       = '$timestamp'    ,
-                      log_moderation  = 1               ,
-                      pseudonyme      = '$sysop'        ,
-                      action_type     = 'irl_delete'    ,
-                      action_titre    = '$irl_del_date' ");
+  $sysop        = postdata(getpseudo(), 'string');
+  $activite_id  = activite_nouveau('irl_delete', 1, 0, $sysop, 0, $irl_del_date);
 
   // Diff
-  $activite_id = mysqli_insert_id($db);
-  if($irl_del_lieu)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'  ,
-                        titre_diff  = 'Lieu'          ,
-                        diff_avant  = '$irl_del_lieu' ");
-  if($irl_del_raison_fr)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'        ,
-                        titre_diff  = 'Raison (fr)'         ,
-                        diff_avant  = '$irl_del_raison_fr'  ");
-  if($irl_del_raison_en)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'        ,
-                        titre_diff  = 'Raison (en)'         ,
-                        diff_avant  = '$irl_del_raison_en'  ");
-  if($irl_del_details_fr)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'        ,
-                        titre_diff  = 'Détails (fr)'        ,
-                        diff_avant  = '$irl_del_details_fr' ");
-  if($irl_del_details_en)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'        ,
-                        titre_diff  = 'Détails (en)'        ,
-                        diff_avant  = '$irl_del_details_en' ");
+  activite_diff($activite_id, 'Lieu'          , $irl_del_lieu);
+  activite_diff($activite_id, 'Raison (fr)'   , $irl_del_raison_fr);
+  activite_diff($activite_id, 'Raison (en)'   , $irl_del_raison_en);
+  activite_diff($activite_id, 'Détails (fr)'  , $irl_del_details_fr);
+  activite_diff($activite_id, 'Détails (en)'  , $irl_del_details_en);
 
   // Diff des participants
   for($i=0;$i<$ndelirlp;$i++)
@@ -392,20 +299,11 @@ if(isset($_POST['irl_supprimer']) && getmod('irl'))
     $temp_pseudo    = $delirlp_pseudo[$i];
     $temp_deets_fr  = $delirlp_deets_fr[$i];
     $temp_deets_en  = $delirlp_deets_en[$i];
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$activite_id'  ,
-                        titre_diff  = 'Participant'   ,
-                        diff_avant  = '$temp_pseudo'  ");
+    activite_diff($activite_id, 'Participant'               , $temp_pseudo);
     if($temp_deets_fr)
-      query(" INSERT INTO activite_diff
-              SET         FKactivite  = '$activite_id'              ,
-                          titre_diff  = 'Détails participant (fr)'  ,
-                          diff_avant  = '$temp_deets_fr'            ");
+      activite_diff($activite_id, 'Détails participant (fr)'  , $temp_deets_fr);
     if($temp_deets_en)
-      query(" INSERT INTO activite_diff
-              SET         FKactivite  = '$activite_id'              ,
-                          titre_diff  = 'Détails participant (en)'  ,
-                          diff_avant  = '$temp_deets_en'            ");
+      activite_diff($activite_id, 'Détails participant (en)'  , $temp_deets_en);
   }
 
   // Bot IRC

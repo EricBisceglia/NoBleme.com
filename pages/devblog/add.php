@@ -53,17 +53,13 @@ if(isset($_POST['devblog_go']))
 
   // On crée le devblog
   query(" INSERT INTO devblog
-          SET         timestamp = '$devblog_timestamp'  ,
-                      titre     = '$devblog_titre'      ,
-                      contenu   = '$devblog_contenu'    ");
+          SET         devblog.timestamp = '$devblog_timestamp'  ,
+                      devblog.titre     = '$devblog_titre'      ,
+                      devblog.contenu   = '$devblog_contenu'    ");
 
   // Activité récente
   $devblog_id = mysqli_insert_id($db);
-  query(" INSERT INTO activite
-          SET         timestamp     = '$devblog_timestamp'  ,
-                      action_type   = 'devblog'             ,
-                      action_id     = '$devblog_id'         ,
-                      action_titre  = '$devblog_titre'      ");
+  activite_nouveau('devblog', 0, 0, 0, $devblog_id, $devblog_titre);
 
   // Bot IRC
   $devblog_titre_raw = $_POST['devblog_titre'];

@@ -86,39 +86,19 @@ if(isset($_POST['texte_suppression_go']))
           WHERE       ecrivains_note.FKecrivains_texte = '$texte_delete_id' ");
 
   // Suppression des logs d'activité liés au texte
-  query(" DELETE FROM activite
-          WHERE     ( activite.action_type  LIKE  'ecrivains_new'
-          OR          activite.action_type  LIKE  'ecrivains_reaction_new'
-          OR          activite.action_type  LIKE  'ecrivains_reaction_new_anonyme' )
-          AND         activite.action_id    =     '$texte_delete_id' ");
+  activite_supprimer('ecrivains_', 0, 0, 0, $texte_delete_id, 1);
 
   // Activité récente
-  $timestamp            = time();
   $texte_delete_pseudo  = postdata(getpseudo(), 'string', '');
-  query(" INSERT INTO activite
-          SET         activite.timestamp      = '$timestamp'                  ,
-                      activite.log_moderation = 1                             ,
-                      activite.pseudonyme     = '$texte_delete_pseudo'        ,
-                      activite.action_type    = 'ecrivains_delete'            ,
-                      activite.action_titre   = '$texte_delete_titre_escaped' ");
+  $activite_id          = activite_nouveau('ecrivains_delete', 1, 0, $texte_delete_pseudo, 0, $texte_delete_titre_escaped);
 
   // Diff
-  $activite_id          = mysqli_insert_id($db);
   $texte_avant_auteur   = ($qchecktexte['t_anonyme']) ? 'Anonyme' : postdata($qchecktexte['m_pseudo'], 'string');
   $texte_avant_titre    = postdata($qchecktexte['t_titre'], 'string');
   $texte_avant_contenu  = postdata($qchecktexte['t_texte'], 'string');
-  query(" INSERT INTO activite_diff
-          SET         FKactivite  = '$activite_id'        ,
-                      titre_diff  = 'Auteur'              ,
-                      diff_avant  = '$texte_avant_auteur' ");
-  query(" INSERT INTO activite_diff
-          SET         FKactivite  = '$activite_id'        ,
-                      titre_diff  = 'Titre'               ,
-                      diff_avant  = '$texte_avant_titre'  ");
-  query(" INSERT INTO activite_diff
-          SET         FKactivite  = '$activite_id'          ,
-                      titre_diff  = 'Contenu'               ,
-                      diff_avant  = '$texte_avant_contenu'  ");
+  activite_diff($activite_id, 'Auteur'  , $texte_avant_auteur);
+  activite_diff($activite_id, 'Titre'   , $texte_avant_titre);
+  activite_diff($activite_id, 'Contenu' , $texte_avant_contenu);
 
   // Notification des sysops au cas où
   ircbot($chemin, getpseudo()." a supprimé un texte du coin des écrivains intitulé : ".$qchecktexte['titre']." - ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");

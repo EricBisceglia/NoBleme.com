@@ -79,16 +79,9 @@ if(isset($_POST['todo_edit_go']) || isset($_POST['todo_approve_go']))
 
     if($todo_edit_public)
     {
-      // On crée une entrée dans la liste des tâches
-      $timestamp            = time();
-      $todo_edit_pseudo     = postdata(getpseudo(), 'string');
-      query(" INSERT INTO activite
-              SET         activite.timestamp    = '$timestamp'            ,
-                          activite.FKmembres    = '$todo_edit_submitter'  ,
-                          activite.pseudonyme   = '$todo_edit_pseudo'     ,
-                          activite.action_type  = 'todo_new'              ,
-                          activite.action_id    = '$todo_id'              ,
-                          activite.action_titre = '$todo_edit_titre'      ");
+      // On crée une entrée dans l'activité récente
+      $todo_edit_pseudo = postdata(getpseudo(), 'string');
+      activite_nouveau('todo_new', 0, $todo_edit_submitter, $todo_edit_pseudo, $todo_id, $todo_edit_titre);
 
       // On notifie IRC
       $todo_edit_titre_raw  = $_POST['todo_edit_titre'];

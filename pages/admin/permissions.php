@@ -89,20 +89,10 @@ if(isset($_POST['permissions_go']))
                   moderateur_description_en = '$permissions_moden'
           WHERE   membres.id                = '$permissions_id' ");
 
-  // On crée un log dans l'activité récente
-  $timestamp          = time();
+  // On crée un log dans l'activité récente et dans le log de modération
   $permissions_pseudo = postdata(getpseudo($permissions_id), 'string');
-  query(" INSERT INTO activite
-          SET         timestamp   = '$timestamp'          ,
-                      pseudonyme  = '$permissions_pseudo' ,
-                      action_type = '$permissions_action' ");
-
-  // Ainsi qu'aux logs de modération
-  query(" INSERT INTO activite
-          SET         timestamp       = '$timestamp'          ,
-                      log_moderation  = 1                     ,
-                      pseudonyme      = '$permissions_pseudo' ,
-                      action_type     = '$permissions_action' ");
+  activite_nouveau($permissions_action, 0, 0, $permissions_pseudo);
+  activite_nouveau($permissions_action, 1, 0, $permissions_pseudo);
 
   // On notifie #nobleme
   ircbot($chemin, getpseudo($permissions_id).$permissions_ircbot." - ".$GLOBALS['url_site']."pages/nobleme/admins", "#nobleme");

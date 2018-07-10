@@ -75,12 +75,7 @@ if(isset($_POST['todo_solved_go']))
     if($qcheckactivite['id'] === NULL)
     {
       // Si non, on l'insère dans l'activité récente
-      $timestamp = time();
-      query(" INSERT INTO activite
-              SET         activite.timestamp    = '$timestamp'  ,
-                          activite.action_type  = 'todo_fini'   ,
-                          activite.action_id    = '$todo_id'    ,
-                          activite.action_titre = '$todo_edit_titre'  ");
+      activite_nouveau('todo_fini', 0, 0, NULL, $todo_id, $todo_edit_titre);
 
       // Et on notifie via le bot IRC
       $todo_edit_titre_raw = $_POST['todo_edit_titre'];
@@ -92,11 +87,9 @@ if(isset($_POST['todo_solved_go']))
       }
     }
   }
+  // Sinon, on supprime l'entrée dans l'activité récente
   else
-    // Sinon, on supprime l'entrée dans l'activité
-    query(" DELETE FROM activite
-            WHERE       activite.action_type  = 'todo_fini'
-            AND         activite.action_id    = '$todo_id' ");
+    activite_supprimer('todo_fini', 0, 0, NULL, $todo_id);
 
   // Et on redirige vers la liste des tâches
   exit(header("Location: ".$chemin."pages/todo/index"));

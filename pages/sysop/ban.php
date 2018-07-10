@@ -33,7 +33,9 @@ $js = array('dynamique', 'sysop/chercher_user');
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Si on est en train de bannir un utilisateur
+
 if(isset($_POST['ban_go']) && isset($_POST['ban_raison']) && $_POST['ban_raison'])
 {
   // On nettoie le postdata
@@ -55,27 +57,13 @@ if(isset($_POST['ban_go']) && isset($_POST['ban_raison']) && $_POST['ban_raison'
           WHERE   membres.id    = '$ban_id' ");
 
   // On ajoute le ban à l'activité récente
-  $timestamp  = time();
   $ban_pseudo = postdata(getpseudo($ban_id), 'string');
   $ban_jours  = postdata_vide('ban_duree', 'int', 0);
-  query(" INSERT INTO activite
-          SET         timestamp   = '$timestamp'  ,
-                      FKmembres   = '$ban_id'     ,
-                      pseudonyme  = '$ban_pseudo' ,
-                      action_type = 'ban'         ,
-                      action_id   = '$ban_jours'  ");
+  activite_nouveau('ban', 0, $ban_id, $ban_pseudo, $ban_jours);
 
   // Ainsi qu'aux logs de modération
   $ban_sysop = postdata(getpseudo(), 'string');
-  query(" INSERT INTO activite
-          SET         timestamp       = '$timestamp'  ,
-                      log_moderation  = 1             ,
-                      FKmembres       = '$ban_id'     ,
-                      pseudonyme      = '$ban_pseudo' ,
-                      action_type     = 'ban'         ,
-                      action_id       = '$ban_jours'  ,
-                      parent          = '$ban_sysop'  ,
-                      justification   = '$ban_raison' ");
+  activite_nouveau('ban', 1, $ban_id, $ban_pseudo, $ban_jours, NULL, $ban_sysop, $ban_raison);
 
   // On prépare le message privé à envoyer à l'user banni
   $ban_duree_raw  = $_POST['ban_duree'];
@@ -108,7 +96,9 @@ EOD;
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Si on est en train de débannir un utilisateur
+
 if(isset($_POST['deban_go']) && isset($_POST['deban_raison']) && $_POST['deban_raison'])
 {
   // On nettoie le postdata
@@ -129,24 +119,12 @@ if(isset($_POST['deban_go']) && isset($_POST['deban_raison']) && $_POST['deban_r
           WHERE   membres.id    = '$deban_id' ");
 
   // On ajoute le ban à l'activité récente
-  $timestamp    = time();
   $deban_pseudo = postdata(getpseudo($deban_id), 'string');
-  query(" INSERT INTO activite
-          SET         timestamp   = '$timestamp'    ,
-                      FKmembres   = '$deban_id'     ,
-                      pseudonyme  = '$deban_pseudo' ,
-                      action_type = 'deban'         ");
+  activite_nouveau('deban', 0, $deban_id, $deban_pseudo);
 
   // Ainsi qu'aux logs de modération
   $deban_sysop = postdata(getpseudo(), 'string');
-  query(" INSERT INTO activite
-          SET         timestamp       = '$timestamp'    ,
-                      log_moderation  = 1               ,
-                      FKmembres       = '$deban_id'     ,
-                      pseudonyme      = '$deban_pseudo' ,
-                      action_type     = 'deban'         ,
-                      parent          = '$deban_sysop'  ,
-                      justification   = '$deban_raison' ");
+  activite_nouveau('deban', 1, $deban_id, $deban_pseudo, 0, NULL, $deban_sysop, $deban_raison);
 
   // On prépare le message privé à envoyer à l'user banni
   $deban_raison_raw = tronquer_chaine($_POST['deban_raison'], 50);
