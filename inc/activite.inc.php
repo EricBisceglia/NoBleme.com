@@ -167,15 +167,15 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   {
     $retour['css']  = 'texte_noir vert_background_clair';
     $retour['href'] = $chemin.'pages/forum/sujet?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a ouvert un sujet sur le forum : '.tronquer_chaine(predata($titre), 50, '...');
-    $retour['EN']   = predata($pseudonyme).' opened a forum topic: '.tronquer_chaine(predata($titre), 50, '...');
+    $retour['FR']   = predata($pseudonyme).' a ouvert un sujet sur le forum : '.predata(tronquer_chaine($titre, 50, '...'));
+    $retour['EN']   = predata($pseudonyme).' opened a forum topic: '.predata(tronquer_chaine($titre, 50, '...'));
   }
   else if($type === 'forum_new')
   {
     $retour['css']  = 'texte_noir vert_background_clair';
     $retour['href'] = $chemin.'pages/forum/sujet?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a ouvert un sujet privé sur le forum : '.tronquer_chaine(predata($titre), 45, '...');
-    $retour['EN']   = predata($pseudonyme).' opened a private forum topic: '.tronquer_chaine(predata($titre), 45, '...');
+    $retour['FR']   = predata($pseudonyme).' a ouvert un sujet privé sur le forum : '.predata(tronquer_chaine($titre, 45, '...'));
+    $retour['EN']   = predata($pseudonyme).' opened a private forum topic: '.predata(tronquer_chaine($titre, 45, '...'));
   }
 
   //***************************************************************************************************************************************
@@ -184,14 +184,14 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   else if($type === 'forum_new_message' && !$modlog)
   {
     $retour['href'] = $chemin.'pages/forum/sujet?id='.$parent.'#'.$id;
-    $retour['FR']   = predata($pseudonyme).' a répondu au sujet du forum '.tronquer_chaine(predata($titre), 50, '...');
-    $retour['EN']   = predata($pseudonyme).' replied to the forum topic '.tronquer_chaine(predata($titre), 50, '...');
+    $retour['FR']   = predata($pseudonyme).' a répondu au sujet du forum '.predata(tronquer_chaine($titre, 50, '...'));
+    $retour['EN']   = predata($pseudonyme).' replied to the forum topic '.predata(tronquer_chaine($titre, 50, '...'));
   }
   else if($type === 'forum_new_message')
   {
     $retour['href'] = $chemin.'pages/forum/sujet?id='.$parent.'#'.$id;
-    $retour['FR']   = predata($pseudonyme).' a répondu au sujet privé du forum '.tronquer_chaine(predata($titre), 45, '...');
-    $retour['EN']   = predata($pseudonyme).' replied to the private forum topic '.tronquer_chaine(predata($titre), 45, '...');
+    $retour['FR']   = predata($pseudonyme).' a répondu au sujet privé du forum '.predata(tronquer_chaine($titre, 45, '...'));
+    $retour['EN']   = predata($pseudonyme).' replied to the private forum topic '.predata(tronquer_chaine($titre, 45, '...'));
   }
 
   //***************************************************************************************************************************************
@@ -229,7 +229,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   else if($type === 'forum_edit')
   {
     $retour['href'] = $chemin.'pages/forum/sujet?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a modifié le sujet du forum '.tronquer_chaine(predata($titre), 45, '...');
+    $retour['FR']   = predata($pseudonyme).' a modifié le sujet du forum '.predata(tronquer_chaine($titre, 45, '...'));
   }
 
   //***************************************************************************************************************************************
@@ -238,7 +238,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   else if($type === 'forum_delete')
   {
     $retour['css']  = 'mise_a_jour texte_blanc';
-    $retour['FR']   = predata($pseudonyme).' a supprimé le sujet du forum '.tronquer_chaine(predata($titre), 45, '...');
+    $retour['FR']   = predata($pseudonyme).' a supprimé le sujet du forum '.predata(tronquer_chaine($titre, 45, '...'));
   }
 
 
@@ -253,7 +253,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   {
     $retour['css']  = 'texte_noir vert_background_clair';
     $retour['href'] = $chemin.'pages/ecrivains/texte?id='.$id;
-    $retour['FR']   = ($pseudonyme != 'Anonyme') ? predata($pseudonyme).' a publié un texte : '.tronquer_chaine(predata($titre), 70, '...') : 'Nouveau texte publié : '.tronquer_chaine(predata($titre), 70, '...');
+    $retour['FR']   = ($pseudonyme != 'Anonyme') ? predata($pseudonyme).' a publié un texte : '.predata(tronquer_chaine($titre, 70, '...')) : 'Nouveau texte publié : '.predata(tronquer_chaine($titre, 70, '...'));
   }
 
   //*************************************************************************************************************************************//
@@ -262,7 +262,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   else if($type === 'ecrivains_edit')
   {
     $retour['href'] = $chemin.'pages/ecrivains/texte?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a modifié le contenu d\'un texte : '.tronquer_chaine(predata($titre), 50, '...');
+    $retour['FR']   = predata($pseudonyme).' a modifié le contenu d\'un texte : '.predata(tronquer_chaine($titre, 50, '...'));
   }
 
   //*************************************************************************************************************************************//
@@ -271,7 +271,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   else if($type === 'ecrivains_delete')
   {
     $retour['css']  = 'mise_a_jour texte_blanc';
-    $retour['FR']   = predata($pseudonyme).' a supprimé un texte du coin des écrivains : '.tronquer_chaine(predata($titre), 40, '...');
+    $retour['FR']   = predata($pseudonyme).' a supprimé un texte du coin des écrivains : '.predata(tronquer_chaine($titre, 40, '...'));
   }
 
   //*************************************************************************************************************************************//
@@ -280,12 +280,12 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   else if($type === 'ecrivains_reaction_new')
   {
     $retour['href'] = $chemin.'pages/ecrivains/texte?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a réagi au texte '.tronquer_chaine(predata($titre), 70, '...');
+    $retour['FR']   = predata($pseudonyme).' a réagi au texte '.predata(tronquer_chaine($titre, 70, '...'));
   }
   else if($type === 'ecrivains_reaction_new_anonyme')
   {
     $retour['href'] = $chemin.'pages/ecrivains/texte?id='.$id;
-    $retour['FR']   = 'Nouvelle réaction anonyme au texte '.tronquer_chaine(predata($titre), 60, '...');
+    $retour['FR']   = 'Nouvelle réaction anonyme au texte '.predata(tronquer_chaine($titre, 60, '...'));
   }
 
   //***************************************************************************************************************************************
@@ -305,7 +305,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   {
     $retour['css']  = 'texte_noir vert_background';
     $retour['href'] = $chemin.'pages/ecrivains/concours?id='.$id;
-    $retour['FR']   = 'Nouveau concours du coin des écrivains : '.tronquer_chaine(predata($titre), 50, '...');
+    $retour['FR']   = 'Nouveau concours du coin des écrivains : '.predata(tronquer_chaine($titre, 50, '...'));
   }
 
   //***************************************************************************************************************************************
@@ -315,7 +315,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   {
     $retour['css']  = 'texte_noir vert_background_clair';
     $retour['href'] = $chemin.'pages/ecrivains/concours?id='.$id;
-    $retour['FR']   = 'Concours du coin des écrivains ouvert aux votes : '.tronquer_chaine(predata($titre), 40, '...');
+    $retour['FR']   = 'Concours du coin des écrivains ouvert aux votes : '.predata(tronquer_chaine($titre, 40, '...'));
   }
 
   //***************************************************************************************************************************************
@@ -325,7 +325,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   {
     $retour['css']  = 'texte_noir vert_background';
     $retour['href'] = $chemin.'pages/ecrivains/concours?id='.$id;
-    $retour['FR']   = $pseudonyme.' a gagné le concours du coin des écrivains : '.tronquer_chaine(predata($titre), 30, '...');
+    $retour['FR']   = $pseudonyme.' a gagné le concours du coin des écrivains : '.predata(tronquer_chaine($titre, 30, '...'));
   }
 
 
