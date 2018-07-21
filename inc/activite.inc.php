@@ -253,7 +253,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   {
     $retour['css']  = 'texte_noir vert_background_clair';
     $retour['href'] = $chemin.'pages/ecrivains/texte?id='.$id;
-    $retour['FR']   = ($pseudonyme != 'Anonyme') ? predata($pseudonyme).' a publié un texte : '.tronquer_chaine(predata($titre), 70, '...') : 'Nouveau texte pulié : '.tronquer_chaine(predata($titre), 70, '...');
+    $retour['FR']   = ($pseudonyme != 'Anonyme') ? predata($pseudonyme).' a publié un texte : '.tronquer_chaine(predata($titre), 70, '...') : 'Nouveau texte publié : '.tronquer_chaine(predata($titre), 70, '...');
   }
 
   //*************************************************************************************************************************************//

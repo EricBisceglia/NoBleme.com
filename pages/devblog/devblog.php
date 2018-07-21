@@ -108,10 +108,10 @@ $devblog_next_titre = predata($qnextdevblog['titre']);
           <?=$devblog_titre?>
           <?php if(getadmin()) { ?>
           <a href="<?=$chemin?>pages/devblog/edit?id=<?=$devblog_id?>">
-            <img src="<?=$chemin?>img/icones/modifier.png" alt="M" height="24" class="pointeur">
+            <img src="<?=$chemin?>img/icones/modifier.svg" alt="M" class="pointeur">
           </a>
           <a href="<?=$chemin?>pages/devblog/delete?id=<?=$devblog_id?>">
-            <img src="<?=$chemin?>img/icones/supprimer.png" alt="S" height="24" class="pointeur">
+            <img src="<?=$chemin?>img/icones/supprimer.svg" alt="S" class="pointeur">
           </a>
           <?php } ?>
         </h4>

@@ -98,7 +98,7 @@ if(!getxhr()) { /***************************************************************
         <h1>
           Le coin des écrivains
           <a href="<?=$chemin?>pages/ecrivains/publier">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="M">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="M">
           </a>
         </h1>
 

@@ -100,7 +100,7 @@ if(!getxhr()) { /***************************************************************
         <h1>
           Miscellanées
           <a href="<?=$chemin?>pages/doc/rss">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.png" alt="RSS">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="RSS">
           </a>
         </h1>
 

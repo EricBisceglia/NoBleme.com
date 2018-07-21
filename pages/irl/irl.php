@@ -23,8 +23,9 @@ $langue_page = array('FR','EN');
 $page_titre = ($lang == 'FR') ? "IRL du " : "";
 $page_desc  = "Organisation de rencontres en personne entre les NoBlemeux";
 
-// JS
-$js = array('toggle', 'dynamique', 'irl/editer_irl');
+// CSS & JS
+$css  = array('irl');
+$js   = array('toggle', 'dynamique', 'irl/editer_irl');
 
 
 
@@ -454,9 +455,9 @@ if(!getxhr()) { /***************************************************************
           <?=$trad['titre']?>
           <?php if($irl_mod) { ?>
           <a href="<?=$chemin?>pages/irl/irl_modifier?id=<?=$irl_id?>">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.png" alt="M">
+            <img class="pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="30">
           </a>
-          <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/supprimer.png" alt="X" onclick="irl_supprimer('<?=$chemin?>', <?=$irl_id?>);">
+          <img class="pointeur" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" onclick="irl_supprimer('<?=$chemin?>', <?=$irl_id?>);" height="30">
           <?php } ?>
         </h3>
 
@@ -486,7 +487,7 @@ if(!getxhr()) { /***************************************************************
           <?php } else { ?>
           <?=$trad['irlp_membres_passe']?>
           <?php } if($irl_mod) { ?>
-          &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="+" height="25" onclick="toggle_row('irl_ajouter_participant');">
+          &nbsp;&nbsp;<img class="valign_middle pointeur irl_ajouter_personne" src="<?=$chemin?>img/icones/ajouter_personne.svg" alt="+" height="30" onclick="toggle_row('irl_ajouter_participant');">
           <?php } ?>
         </h5>
 
@@ -563,10 +564,10 @@ if(!getxhr()) { /***************************************************************
               </td>
               <?php if($irl_mod) { ?>
               <td>
-                <img class="valign_table pointeur" src="<?=$chemin?>img/icones/modifier.png" alt="M" height="18" onclick="toggle_row('irl_edition_<?=$irlp_id[$i]?>', 1);">
+                <img class="valign_table pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="18" onclick="toggle_row('irl_edition_<?=$irlp_id[$i]?>', 1);">
               </td>
               <td>
-                <img class="valign_table pointeur" src="<?=$chemin?>img/icones/supprimer.png" alt="X" height="18" onclick="irl_supprimer_participant('<?=$chemin?>', <?=$irl_id?>, <?=$irlp_id[$i]?>);">
+                <img class="valign_table pointeur" src="<?=$chemin?>img/icones/supprimer_personne.svg" alt="X" height="18" onclick="irl_supprimer_participant('<?=$chemin?>', <?=$irl_id?>, <?=$irlp_id[$i]?>);">
               </td>
               <?php } ?>
             </tr>

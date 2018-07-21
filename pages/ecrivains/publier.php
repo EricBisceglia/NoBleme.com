@@ -126,7 +126,7 @@ $qconcours  = query(" SELECT    ecrivains_concours.id     AS 'c_id' ,
                       ORDER BY  ecrivains_concours.titre ASC ");
 
 // Puis on les prépare pour le menu déroulant
-$texte_concours   = postdata_vide('publier_concours', 'int', 2);
+$texte_concours   = postdata_vide('publier_concours', 'int', 0);
 $temp_selected    = (!$texte_concours) ? ' selected' : '';
 $select_concours  = '<option value="0"'.$temp_selected.'>Non, ce texte n\'est pas une participation à un concours</option>';
 for($nconcours = 0; $dconcours = mysqli_fetch_array($qconcours); $nconcours++)

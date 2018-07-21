@@ -125,7 +125,7 @@ if(!getxhr()) { /***************************************************************
 
         <h1 class="align_center">
           Plans de route
-          <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="+" onclick="roadmap_ajouter('<?=$chemin?>');">
+          <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" onclick="roadmap_ajouter('<?=$chemin?>');" height="30">
         </h1>
 
 

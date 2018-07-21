@@ -101,7 +101,7 @@ $temp_admin = getadmin();
           Plan de route
           <?php if($temp_admin) { ?>
           <a href="<?=$chemin?>pages/todo/edit_roadmaps">
-            <img src="<?=$chemin?>img/icones/modifier.png" alt="M">
+            <img src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="30">
           </a>
           <?php } ?>
         </h1>

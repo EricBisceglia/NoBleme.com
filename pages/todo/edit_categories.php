@@ -114,7 +114,7 @@ if(!getxhr()) { /***************************************************************
 
         <h1 class="align_center">
           Catégories
-          <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="+" onclick="categorie_ajouter('<?=$chemin?>');">
+          <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" onclick="categorie_ajouter('<?=$chemin?>');" height="32">
         </h1>
 
       </div>

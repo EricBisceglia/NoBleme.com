@@ -351,12 +351,12 @@ if(!getxhr()) { /***************************************************************
           <?php } else { ?>
           Liste des tâches
           <?php } ?>
-          <a href="<?=$chemin?>pages/doc/rss">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.png" alt="RSS">
-          </a>
           <?php if($todo_admin) { ?>
-          <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="+" onclick="todolist_ajouter_tache();">
+          <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" onclick="todolist_ajouter_tache();" height="30">
           <?php } ?>
+          <a href="<?=$chemin?>pages/doc/rss">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="RSS">
+          </a>
         </h1>
 
         <h5>Suivi du développement de NoBleme</h5>
@@ -402,7 +402,7 @@ if(!getxhr()) { /***************************************************************
                 </div>
                 <div style="flex:1" class="align_right">
                   <a href="<?=$chemin?>pages/todo/edit_categories">
-                    <img src="<?=$chemin?>img/icones/modifier.png" alt="M">
+                    <img src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="30">
                   </a>
                 </div>
               </div>
@@ -417,7 +417,7 @@ if(!getxhr()) { /***************************************************************
                 </div>
                 <div style="flex:1" class="align_right">
                   <a href="<?=$chemin?>pages/todo/edit_roadmaps">
-                    <img src="<?=$chemin?>img/icones/modifier.png" alt="M">
+                    <img src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="30">
                   </a>
                 </div>
               </div>

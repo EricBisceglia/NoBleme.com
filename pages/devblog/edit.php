@@ -128,8 +128,8 @@ if(!getxhr()) { /***************************************************************
 
           <h4 class="alinea">
             <?=$previsualiser_titre?>
-            <img src="<?=$chemin?>img/icones/modifier.png" alt="M" height="24" class="pointeur">
-            <img src="<?=$chemin?>img/icones/supprimer.png" alt="S" height="24" class="pointeur">
+            <img src="<?=$chemin?>img/icones/modifier.svg" alt="M" class="pointeur">
+            <img src="<?=$chemin?>img/icones/supprimer.svg" alt="S" class="pointeur">
           </h4>
 
           <h6 class="alinea texte_nobleme_clair">Blog de développement #<?=$devblog_id?> du <?=$previsualiser_date?> (<?=$previsualiser_ilya?>)</h6>

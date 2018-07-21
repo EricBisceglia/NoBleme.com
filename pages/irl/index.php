@@ -200,14 +200,14 @@ if(!getxhr()) { /***************************************************************
 
         <h1>
           <?=$trad['titre']?>
-          <a href="<?=$chemin?>pages/doc/rss">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.png" alt="RSS">
-          </a>
           <?php if(getmod('irl')) { ?>
           <a href="<?=$chemin?>pages/irl/irl_modifier">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="+">
+            <img class=" pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" height="32">
           </a>
           <?php } ?>
+          <a href="<?=$chemin?>pages/doc/rss">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="RSS">
+          </a>
         </h1>
 
         <h5><?=$trad['soustitre']?></h5>

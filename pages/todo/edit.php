@@ -275,7 +275,7 @@ $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
               </div>
               <div style="flex:1" class="align_right">
                 <a href="<?=$chemin?>pages/todo/edit_categories">
-                  <img src="<?=$chemin?>img/icones/modifier.png" alt="M">
+                  <img src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="30">
                 </a>
               </div>
             </div>
@@ -290,7 +290,7 @@ $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
               </div>
               <div style="flex:1" class="align_right">
                 <a href="<?=$chemin?>pages/todo/edit_roadmaps">
-                  <img src="<?=$chemin?>img/icones/modifier.png" alt="M">
+                  <img src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="30">
                 </a>
               </div>
             </div>

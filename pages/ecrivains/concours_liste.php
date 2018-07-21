@@ -76,7 +76,7 @@ for($nconcours = 0; $dconcours = mysqli_fetch_array($qconcours); $nconcours++)
           Concours du coin des écrivains
           <?php if(getadmin()) { ?>
           <a href="<?=$chemin?>pages/ecrivains/concours_modifier">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="M">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="M">
           </a>
           <?php } ?>
         </h1>

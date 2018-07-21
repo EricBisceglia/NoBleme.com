@@ -263,7 +263,7 @@ else if($lang == 'EN')
               </div>
               <div style="flex:1" class="align_center">
                 <a href="<?=$chemin?>pages/forum/filtres_modifier">
-                  <img class="pointeur" src="<?=$chemin?>img/icones/modifier.png" alt="M">
+                  <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M">
                 </a>
               </div>
             </div>

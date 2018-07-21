@@ -278,10 +278,10 @@ if($concours_est_admin)
           <?=$concours_titre?>
           <?php if($concours_est_admin) { ?>
           <a href="<?=$chemin?>pages/ecrivains/concours_modifier?id=<?=$id_concours?>">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.png" alt="M">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M">
           </a>
           <a href="<?=$chemin?>pages/ecrivains/concours_supprimer?id=<?=$id_concours?>">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/supprimer.png" alt="X">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/supprimer.svg" alt="X">
           </a>
           <?php } ?>
         </h3>

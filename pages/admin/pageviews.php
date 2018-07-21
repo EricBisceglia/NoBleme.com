@@ -197,7 +197,7 @@ if(!getxhr()) { /***************************************************************
                 <?=$views_croissancep[$i]?>
               </td>
               <td class="pointeur" onclick="d_tableau_pageviews('<?=$chemin?>', 0, 0, <?=$views_id[$i]?>);">
-                <img height="17" width="17" class="valign_table" src="./../../img/icones/delete.png" alt="X">
+                <img height="20" width="20" class="valign_table" src="./../../img/icones/supprimer.svg" alt="X">
               </td>
             </tr>
             <?php } ?>

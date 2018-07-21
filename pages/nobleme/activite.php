@@ -249,7 +249,7 @@ if(!getxhr()) { /***************************************************************
         <h1 class="indiv align_center"><?=$trad['titre_mod']?></h1>
         <br>
         <p>
-          Certains logs de modération ont des icônes à droite de la ligne ( <img height="20" width="20" class="valign_bottom" src="<?=$chemin?>img/icones/pourquoi.png" alt="?"> et <img height="20" width="20" class="valign_bottom" src="<?=$chemin?>img/icones/details.png" alt="?"> ).<br>
+          Certains logs de modération ont des icônes à droite de la ligne ( <img class="valign_bottom" src="<?=$chemin?>img/icones/info.svg" alt="i" height="18"> et <img class="valign_bottom" src="<?=$chemin?>img/icones/help.svg" alt="?" height="18"> ).<br>
           Vous pouvez cliquer dessus pour afficher la justification de l'action et/ou le contenu qui a été modifié/supprimé.
         </p>
         <?php } ?>
@@ -313,13 +313,13 @@ if(!getxhr()) { /***************************************************************
               </td>
               <td class="pointeur nowrap <?=$activite_css[$i]?>">
                 <?php if(isset($_GET['mod']) && $activite_raison[$i]) { ?>
-                <img  height="17" width="17" class="valign_center" src="<?=$chemin?>img/icones/pourquoi.png" alt="?"
+                <img class="valign_center" src="<?=$chemin?>img/icones/help.svg" alt="?"
                       onclick="toggle_row('activite_hidden<?=$i?>',1);">
                 <?php } if(isset($_GET['mod']) && $activite_diff[$i]) { ?>
-                <img height="17" width="17" class="valign_center" src="<?=$chemin?>img/icones/details.png" alt="?"
+                <img class="valign_center" src="<?=$chemin?>img/icones/info.svg" alt="i"
                       onclick="toggle_row('activite_hidden<?=$i?>',1);">
-                <?php } if(loggedin()) { ?>
-                <img height="17" width="17" class="valign_center" src="<?=$chemin?>img/icones/delete.png" alt="X"
+                <?php } if(getadmin()) { ?>
+                <img class="valign_center" src="<?=$chemin?>img/icones/supprimer.svg" alt="X"
                       onclick="var ok = confirm('Confirmation'); if(ok == true) {
                       dynamique('<?=$chemin?>', '<?=$activite_dynamique_url?>', 'activite_table',
                       'activite_num='+dynamique_prepare('activite_num')+

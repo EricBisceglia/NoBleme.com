@@ -750,10 +750,10 @@ EOD;
 
                   <?php if($moderateur_forum) { ?>
                   <a href="<?=$chemin?>pages/forum/sujet_modifier?id=<?=$sujet_id?>">
-                    <img class="pointeur forum_sujet_entete_actions" src="<?=$chemin?>img/icones/modifier.png" alt="M" height="25">
+                    <img class="pointeur forum_sujet_entete_actions" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="25">
                   </a>
                   <a href="<?=$chemin?>pages/forum/sujet_supprimer?id=<?=$sujet_id?>">
-                    <img class="pointeur forum_sujet_entete_actions" src="<?=$chemin?>img/icones/supprimer.png" alt="X" height="25">
+                    <img class="pointeur forum_sujet_entete_actions" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" height="25">
                   </a>
                   <?php } ?>
 
@@ -860,9 +860,9 @@ EOD;
                 </a>
                 <?php } ?>
                 <?php if($moderateur_forum) { ?>
-                <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/modifier.png" alt="M" height="18" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'edit')">
+                <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="18" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'edit')">
                 <?php if($i) { ?>
-                <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/supprimer.png" alt="X" height="18" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'delete')">
+                <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" height="18" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'delete')">
                 <?php } ?>
                 <?php } ?>
 

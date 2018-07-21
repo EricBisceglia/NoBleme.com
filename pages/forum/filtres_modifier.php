@@ -171,7 +171,7 @@ $categorie_prochain_classement = ($categorie_classement[$ncategories-1] + 1);
 
         <h1 class="align_center">
           Catégories du forum
-          <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="+" onclick="toggle_row('categorie_ajouter')">
+          <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" onclick="toggle_row('categorie_ajouter')" height="28">
         </h1>
 
         <br>

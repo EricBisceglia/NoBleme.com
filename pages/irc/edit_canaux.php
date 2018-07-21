@@ -140,7 +140,7 @@ if(!getxhr()) { /***************************************************************
 
         <h1 class="align_center">
           Canaux IRC
-          <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="+" onclick="toggle_row('canal_formulaire_ajout');">
+          <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" onclick="toggle_row('canal_formulaire_ajout');" height="32">
         </h1>
 
         <br>

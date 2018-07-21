@@ -174,7 +174,7 @@ EOD;
 
         <h1>
           <?=$trad['titre']?>
-          <img class="valign_middle" src="<?=$chemin?>img/icones/rss.png" alt="RSS">
+          <img class="valign_middle" src="<?=$chemin?>img/icones/rss.svg" alt="RSS">
         </h1>
 
         <h5><?=$trad['soustitre']?></h5>

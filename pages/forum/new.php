@@ -359,7 +359,7 @@ EOD;
                   <?=$trad['cat_categorie']?>
                   <?php if(getadmin()) { ?>
                   <a href="<?=$chemin?>pages/forum/filtres_modifier">
-                    &nbsp;<img class="pointeur" src="<?=$chemin?>img/icones/modifier.png" alt="M" height="16">
+                    &nbsp;<img class="pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="16">
                   </a>
                   <?php } ?>
                 </label>

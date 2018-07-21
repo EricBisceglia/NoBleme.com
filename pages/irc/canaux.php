@@ -139,7 +139,7 @@ EOD;
           <?=$trad['titre']?>
           <?php if(getadmin()) { ?>
           <a href="<?=$chemin?>pages/irc/edit_canaux">
-            <img src="<?=$chemin?>img/icones/modifier.png" alt="M">
+            <img src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="30">
           </a>
           <?php } ?>
         </h1>

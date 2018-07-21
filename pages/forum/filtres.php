@@ -204,11 +204,6 @@ EOD;
 
         <h1>
           <?=$trad['titre']?>
-          <?php if(getadmin()) { ?>
-          <a href="<?=$chemin?>pages/forum/filtres_modifier">
-            <img class="pointeur" src="<?=$chemin?>img/icones/modifier.png" alt="M">
-          </a>
-          <?php } ?>
         </h1>
 
         <h5><?=$trad['soustitre']?></h5>
@@ -236,7 +231,14 @@ EOD;
 
             <br>
 
-            <h5><?=$trad['cat_titre']?></h5>
+            <h5>
+              <?=$trad['cat_titre']?>
+              <?php if(getadmin()) { ?>
+              <a href="<?=$chemin?>pages/forum/filtres_modifier">
+                &nbsp;<img class="pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="18">
+              </a>
+              <?php } ?>
+            </h5>
 
             <br>
 

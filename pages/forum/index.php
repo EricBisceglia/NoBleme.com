@@ -267,10 +267,10 @@ EOD;
 
                 <?php if($forum_moderateur) { ?>
                 <a href="<?=$chemin?>pages/forum/sujet_modifier?id=<?=$sujet_id[$i]?>">
-                  <img class="pointeur forum_liste_actions forum_liste_actions_premier" src="<?=$chemin?>img/icones/modifier.png" alt="M" height="16">
+                  <img class="pointeur forum_liste_actions forum_liste_actions_premier" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="16">
                 </a>
                 <a href="<?=$chemin?>pages/forum/sujet_supprimer?id=<?=$sujet_id[$i]?>">
-                  <img class="pointeur forum_liste_actions" src="<?=$chemin?>img/icones/supprimer.png" alt="X" height="16">
+                  <img class="pointeur forum_liste_actions" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" height="16">
                 </a>
                 <?php } ?>
 

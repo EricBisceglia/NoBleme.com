@@ -152,6 +152,9 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
             Le <a class="gras" href="https://fr.wikipedia.org/wiki/Frontal_(serveur)">front-end</a> du site est en <a class="gras" href="https://fr.wikipedia.org/wiki/HTML">HTML</a>, stylé en <a class="gras" href="https://fr.wikipedia.org/wiki/Feuilles_de_style_en_cascade">CSS</a>, et dynamisé avec du <a class="gras" href="https://fr.wikipedia.org/wiki/JavaScript">JavaScript</a>
           </li>
           <li>
+            Certaines des images utilisées sur le site proviennent de <a class="gras" href="https://feathericons.com/">Feather</a>
+          </li>
+          <li>
             De mon côté, je développe sous <a class="gras" href="https://fr.wikipedia.org/wiki/Microsoft_Windows">Microsoft Windows</a> (eh ouais, même pas honte)
           </li>
           <li>
@@ -300,6 +303,9 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
           </li>
           <li>
             The <a class="gras" href="https://en.wikipedia.org/wiki/Front_and_back_ends">front end</a> is <a class="gras" href="https://en.wikipedia.org/wiki/HTML">HTML</a>, styled using <a class="gras" href="https://en.wikipedia.org/wiki/Cascading_Style_Sheets">CSS</a>, and dynamized with <a class="gras" href="https://en.wikipedia.org/wiki/JavaScript">JavaScript</a>
+          </li>
+          <li>
+            Some of the images used on the website come from <a class="gras" href="https://feathericons.com/">Feather</a>
           </li>
           <li>
             On my development machine, I run <a class="gras" href="https://en.wikipedia.org/wiki/Microsoft_Windows">Microsoft Windows</a> (yup, not ashamed)

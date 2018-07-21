@@ -319,10 +319,10 @@ if(!getxhr()) { /***************************************************************
           <?=$texte_titre?>
           <?php if($est_sysop || $est_auteur) { ?>
           <a href="<?=$chemin?>pages/ecrivains/texte_modifier?id=<?=$texte_id?>">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.png" alt="M">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M">
           </a>
           <a href="<?=$chemin?>pages/ecrivains/texte_supprimer?id=<?=$texte_id?>">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/supprimer.png" alt="X">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/supprimer.svg" alt="X">
           </a>
           <?php } ?>
         </h3>
@@ -420,7 +420,7 @@ if(!getxhr()) { /***************************************************************
         <p>
           <?php if($est_sysop) { ?>
           <span id="texte_reaction_<?=$reaction_id[$i]?>">
-            <img src="<?=$chemin?>img/icones/delete.png" height="15px" class="pointeur" onclick="texte_supprimer_reaction('<?=$chemin?>', <?=$reaction_id[$i]?>)">
+            <img src="<?=$chemin?>img/icones/supprimer.svg" height="15px" class="pointeur" onclick="texte_supprimer_reaction('<?=$chemin?>', <?=$reaction_id[$i]?>)">
           </span>
           <?php } ?>
           <span class="gras texte_noir"><?=$reaction_note[$i]?> / 5</span>
