@@ -3,7 +3,9 @@
 /*                                                             INITIALISATION                                                            */
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
-include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/includes.inc.php';   // Inclusions communes
+include './../../inc/ecrivains.inc.php';  // Fonctions liées au coin des écrivains
+
 
 // Permissions
 useronly($lang);
@@ -71,10 +73,11 @@ $texte_delete_concours      = $qchecktexte['FKecrivains_concours'];
 if(isset($_POST['texte_suppression_go']))
 {
   // On va chercher des infos sur le texte pour compléter le diff
-  $qchecktexte = mysqli_fetch_array(query(" SELECT    ecrivains_texte.titre   AS 't_titre'    ,
-                                                      ecrivains_texte.contenu AS 't_texte'    ,
-                                                      ecrivains_texte.anonyme AS 't_anonyme'  ,
-                                                      membres.pseudonyme      AS 'm_pseudo'
+  $qchecktexte = mysqli_fetch_array(query(" SELECT    ecrivains_texte.titre                 AS 't_titre'    ,
+                                                      ecrivains_texte.contenu               AS 't_texte'    ,
+                                                      ecrivains_texte.anonyme               AS 't_anonyme'  ,
+                                                      ecrivains_texte.FKecrivains_concours  AS 't_concours' ,
+                                                      membres.pseudonyme                    AS 'm_pseudo'
                                             FROM      ecrivains_texte
                                             LEFT JOIN membres ON ecrivains_texte.FKmembres = membres.id
                                             WHERE     ecrivains_texte.id = '$texte_delete_id' "));
@@ -84,6 +87,9 @@ if(isset($_POST['texte_suppression_go']))
           WHERE       ecrivains_texte.id = '$texte_delete_id' ");
   query(" DELETE FROM ecrivains_note
           WHERE       ecrivains_note.FKecrivains_texte = '$texte_delete_id' ");
+
+  // Recompte des textes liés au concours
+  ecrivains_concours_compter_textes($qchecktexte['t_concours']);
 
   // Suppression des logs d'activité liés au texte
   activite_supprimer('ecrivains_', 0, 0, 0, $texte_delete_id, 1);
@@ -127,7 +133,7 @@ if(isset($_POST['texte_suppression_go']))
         <?php if($texte_delete_concours && !getsysop()) { ?>
 
         <p>
-          Ce texte est lié à un <a class="gras" href="<?=$chemin?>pages/ecrivains/concours">concours du coin des écrivains</a>, par conséquent il doit rester figé dans l'état où il était lorsque le concours a eu lieu : vous ne pouvez pas le modifier ni le supprimer.
+          Ce texte est lié à un <a class="gras" href="<?=$chemin?>pages/ecrivains/concours_liste">concours du coin des écrivains</a>, par conséquent il doit rester figé dans l'état où il était lorsque le concours a eu lieu : vous ne pouvez pas le modifier ni le supprimer.
         </p>
 
         <?php } else { ?>
@@ -136,7 +142,7 @@ if(isset($_POST['texte_suppression_go']))
 
         <br>
 
-        <h5 class="erreur texte_blanc spaced">Attention ! Ce texte est lié à un concours du coin des écrivains. Il ne faut pas le supprimer sans avoir une excellente raison de le faire, sous peine de créer des trous les archives du concours.</h5>
+        <h5 class="erreur texte_blanc spaced">Attention ! Ce texte est lié à un concours du coin des écrivains. Il ne faut pas le supprimer sans avoir une excellente raison de le faire, sous peine de créer des trous dans les archives du concours.</h5>
 
         <br>
 

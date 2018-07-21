@@ -10,15 +10,43 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Regroupement de tous les includes majeurs qui sont nécessaires dans toutes les pages
+// Inclusion de la config, on exit si elle est pas faite
 
-include_once 'reglages.inc.php';        // Réglages préliminaires à l'utilisation du site
-include_once 'erreur.inc.php';          // Fonction permettant de générer une page d'erreur
-include_once 'sql.inc.php';             // Connexion à la base de données MySQL
-include_once 'login.inc.php';           // Gestion de la connexion des utilisateurs
-include_once 'post.inc.php';            // Fonctions de traitement des données
-include_once 'date.inc.php';            // Fonctions de traitement de la date
-include_once 'bbcode.inc.php';          // BBCodes et émoticones
-include_once 'fonctions.inc.php';       // Fonctions génériques
-include_once 'nobleme.inc.php';         // Fonctions spécifiques au fonctionnement de NoBleme
-include_once 'automatisation.inc.php';  // Exécution des tâches planifiées
+include 'conf.inc.php';
+if(!isset($GLOBALS['mysql_pass']))
+  exit("Le conf.inc.php manque !");
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Définition du $chemin
+
+// La base est différente selon si on est en localhost ou en prod
+if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1")
+  $count_base = 3;
+else
+  $count_base = 2;
+
+// Déterminer à combien de dossiers de la racine on est
+$longueur = count(explode( '/', $_SERVER['REQUEST_URI']));
+
+// Si on est à la racine, laisser le chemin tel quel
+if($longueur <= $count_base)
+  $chemin = "";
+
+// Sinon, partir de ./ puis déterminer le nombre de ../ à rajouter
+else
+{
+  $chemin = "./";
+  for ($i=0 ; $i<($longueur-$count_base) ; $i++)
+    $chemin .= "../";
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Définition du fuseau horaire
+
+date_default_timezone_set('Europe/Paris');

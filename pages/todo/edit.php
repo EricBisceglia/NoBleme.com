@@ -4,6 +4,7 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/todo.inc.php';     // Fonctions liées à la liste des tâches
 
 // Permissions
 adminonly($lang);

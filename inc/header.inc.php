@@ -825,7 +825,7 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
               </div>
             </a>
 
-            <a href="<?=$chemin?>pages/ecrivains/concours">
+            <a href="<?=$chemin?>pages/ecrivains/concours_liste">
               <div class="<?=header_class('EcrivainsConcours',$header_sidemenu,'side')?>">
                 Concours d'écriture
               </div>

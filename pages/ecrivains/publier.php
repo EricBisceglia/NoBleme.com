@@ -3,7 +3,8 @@
 /*                                                             INITIALISATION                                                            */
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
-include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/includes.inc.php';   // Inclusions communes
+include './../../inc/ecrivains.inc.php';  // Fonctions liées au coin des écrivains
 
 // Permissions
 useronly($lang);
@@ -41,6 +42,7 @@ $css = array('ecrivains');
 if(isset($_POST['publier_go']))
 {
   // Assainissement du postdata
+  $texte_concours = postdata_vide('publier_concours', 'int', 0);
   $texte_feedback = postdata_vide('publier_feedback', 'int', 2);
   $texte_titre    = isset($_POST['publier_titre']) ? postdata(tronquer_chaine($_POST['publier_titre'], 90)) : '';
   $texte_contenu  = postdata_vide('publier_contenu', 'string');
@@ -58,13 +60,20 @@ if(isset($_POST['publier_go']))
   if(!$texte_titre)
     $erreur = "Votre texte doit avoir un titre";
 
+  // On vérifie que le concours choisi soit toujours ouvert
+  $dconcours  = mysqli_fetch_array(query("  SELECT    ecrivains_concours.timestamp_fin AS 'c_fin'
+                                            FROM      ecrivains_concours
+                                            WHERE     ecrivains_concours.id = '$texte_concours' "));
+  if($texte_concours && time() > $dconcours['c_fin'])
+    $erreur = "La date limite du concours d'écriture choisi est dépassée";
+
   // Si on a pas d'erreur, on peut passer à la suite
   if(!$erreur)
   {
     // Publication du texte
     query(" INSERT INTO ecrivains_texte
             SET         ecrivains_texte.FKmembres               = '$texte_auteur'   ,
-                        ecrivains_texte.FKecrivains_concours    = 0                 ,
+                        ecrivains_texte.FKecrivains_concours    = '$texte_concours' ,
                         ecrivains_texte.anonyme                 = '$texte_anonyme'  ,
                         ecrivains_texte.timestamp_creation      = '$texte_creation' ,
                         ecrivains_texte.timestamp_modification  = 0                 ,
@@ -78,6 +87,10 @@ if(isset($_POST['publier_go']))
     $texte_id   = mysqli_insert_id($db);
     $add_pseudo = ($texte_anonyme) ? 'Anonyme' : postdata(getpseudo(), 'string');
     activite_nouveau('ecrivains_new', 0, 0, $add_pseudo, $texte_id, $texte_titre);
+
+    // Si le texte est une participation à un concours, en en recompte le nombre de textes
+    if($texte_concours)
+      ecrivains_concours_compter_textes($texte_concours);
 
     // Bot IRC
     $add_pseudo_raw = getpseudo();
@@ -102,8 +115,35 @@ if(isset($_POST['publier_go']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Liste des concours du coin des écrivains ouverts
+
+// On va chercher les concours encore ouverts
+$timestamp  = time();
+$qconcours  = query(" SELECT    ecrivains_concours.id     AS 'c_id' ,
+                                ecrivains_concours.titre  AS 'c_titre'
+                      FROM      ecrivains_concours
+                      WHERE     ecrivains_concours.timestamp_fin >= '$timestamp'
+                      ORDER BY  ecrivains_concours.titre ASC ");
+
+// Puis on les prépare pour le menu déroulant
+$texte_concours   = postdata_vide('publier_concours', 'int', 2);
+$temp_selected    = (!$texte_concours) ? ' selected' : '';
+$select_concours  = '<option value="0"'.$temp_selected.'>Non, ce texte n\'est pas une participation à un concours</option>';
+for($nconcours = 0; $dconcours = mysqli_fetch_array($qconcours); $nconcours++)
+{
+  $temp_selected    = ($texte_concours == $dconcours['c_id']) ? ' selected' : '';
+  $select_concours .= '<option value="'.$dconcours['c_id'].'"'.$temp_selected.'>Participer au concours '.predata($dconcours['c_titre']).'</option>';
+}
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Prévisualiser un texte
 
+// Si on demande une prévisualisation...
 if(isset($_POST['publier_prev']) || isset($_POST['publier_go']))
 {
   // On prépare le contenu des champs
@@ -122,6 +162,15 @@ else
   $texte_contenu      = '';
   $texte_anonyme      = '';
 }
+
+// Il faut aussi que le menu déroulant du feedback soit rempli
+$texte_feedback   = postdata_vide('publier_feedback', 'int', 2);
+$temp_selected    = ($texte_feedback == 2) ? ' selected' : '';
+$select_feedback  = '<option value="2"'.$temp_selected.'">Je partage ce texte pour qu\'on y réagisse, je veux bien que les gens le notent et fassent savoir ce qu\'ils en pensent.</option>';
+$temp_selected    = ($texte_feedback == 1) ? ' selected' : '';
+$select_feedback .= '<option value="1"'.$temp_selected.'>Si quelqu\'un a quelque chose à dire sur mon texte, il peut le faire, mais uniquement par messages privés.</option>';
+$temp_selected    = ($texte_feedback == 0) ? ' selected' : '';
+$select_feedback .= '<option value="0"'.$temp_selected.'>Je ne veux aucun retour sur mon texte. Il est fait pour être lu, les réactions ne m\'intéressent pas.</option>';
 
 
 
@@ -146,11 +195,19 @@ else
         <form method="POST" action="publier#publier_contenu">
           <fieldset>
 
+            <?php if($nconcours) { ?>
+
+            <label for="publier_concours">Ce texte est-il pour un <a href="<?=$chemin?>pages/ecrivains/concours_liste">concours du coin des écrivains</a></label>
+            <select id="publier_concours" name="publier_concours" class="indiv">
+              <?=$select_concours?>
+            </select><br>
+            <br>
+
+            <?php } ?>
+
             <label for="publier_feedback">Niveau de retours que vous désirez</label>
             <select id="publier_feedback" name="publier_feedback" class="indiv">
-              <option value="2">Je partage ce texte pour qu'on y réagisse, je veux bien que les gens le notent et fassent savoir ce qu'ils en pensent.</option>
-              <option value="1">Si quelqu'un a quelque chose à dire sur mon texte, il peut le faire, mais uniquement par messages privés.</option>
-              <option value="0">Je ne veux aucun retour sur mon texte. Il est fait pour être lu, les réactions ne m'intéressent pas.</option>
+              <?=$select_feedback?>
             </select><br>
             <br>
 
@@ -164,7 +221,7 @@ else
 
             <label>Publier ce texte anonymement (vous n'apparaitrez pas comme auteur du texte)</label>
             <input id="publier_anonyme" name="publier_anonyme" type="checkbox"<?=$texte_anonyme?>>
-            <label class="label-inline" for="publier_anonyme">Je désire que ce texte soit publié anonymement</label><br>
+            <label class="label-inline" for="publier_anonyme">Je désire que ce texte soit publié anonymement (s'il gagne un <a class="gras" href="<?=$chemin?>pages/ecrivains/concours_liste">concours d'écriture</a>, il sera dé-anonymisé)</label><br>
 
             <?php if(isset($erreur)) { ?>
             <h4 class="align_center erreur texte_blanc">Erreur : <?=$erreur?></h4>

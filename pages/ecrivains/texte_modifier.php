@@ -3,7 +3,8 @@
 /*                                                             INITIALISATION                                                            */
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
-include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/includes.inc.php';   // Inclusions communes
+include './../../inc/ecrivains.inc.php';  // Fonctions liées au coin des écrivains
 
 // Permissions
 useronly($lang);
@@ -76,6 +77,7 @@ $texte_edit_concours      = $qchecktexte['FKecrivains_concours'];
 if(isset($_POST['modifier_go']))
 {
   // Assainissement du postdata
+  $texte_concours = postdata_vide('modifier_concours', 'int');
   $texte_titre    = isset($_POST['modifier_titre']) ? postdata(tronquer_chaine($_POST['modifier_titre'], 90)) : '';
   $texte_contenu  = postdata_vide('modifier_contenu', 'string');
 
@@ -91,24 +93,32 @@ if(isset($_POST['modifier_go']))
   if(!$erreur)
   {
     // On va chercher des infos sur le texte pour compléter les diffs
-    $qchecktexte = mysqli_fetch_array(query(" SELECT    ecrivains_texte.titre   AS 't_titre' ,
-                                                        ecrivains_texte.contenu AS 't_texte'
+    $qchecktexte = mysqli_fetch_array(query(" SELECT    ecrivains_texte.titre                 AS 't_titre'  ,
+                                                        ecrivains_texte.contenu               AS 't_texte'  ,
+                                                        ecrivains_texte.FKecrivains_concours  AS 't_concours'
                                               FROM      ecrivains_texte
                                               WHERE     ecrivains_texte.id = '$texte_edit_id' "));
 
     // Modification du texte
     query(" UPDATE  ecrivains_texte
-            SET     ecrivains_texte.titre   = '$texte_titre'  ,
-                    ecrivains_texte.contenu = '$texte_contenu'
-            WHERE   ecrivains_texte.id      = '$texte_edit_id' ");
+            SET     ecrivains_texte.titre                 = '$texte_titre'    ,
+                    ecrivains_texte.contenu               = '$texte_contenu'  ,
+                    ecrivains_texte.FKecrivains_concours  = '$texte_concours'
+            WHERE   ecrivains_texte.id                    = '$texte_edit_id' ");
+
+    // On recompte les textes des concours avant/après au cas où
+    ecrivains_concours_compter_textes($texte_concours);
+    ecrivains_concours_compter_textes($qchecktexte['t_concours']);
 
     // Activité récente
     $edit_pseudo  = postdata(getpseudo(), 'string');
     $activite_id  = activite_nouveau('ecrivains_edit', 1, 0, $edit_pseudo, $texte_edit_id, $texte_titre);
 
     // Diff
+    $texte_avant_concours = postdata($qchecktexte['t_concours'], 'string');
     $texte_avant_titre    = postdata($qchecktexte['t_titre'], 'string');
     $texte_avant_contenu  = postdata($qchecktexte['t_texte'], 'string');
+    activite_diff($activite_id, 'Concours', $texte_avant_concours, $texte_concours, 1);
     activite_diff($activite_id, 'Titre', $texte_avant_titre, $texte_titre, 1);
     activite_diff($activite_id, 'Contenu', $texte_avant_contenu, $texte_contenu, 1);
 
@@ -140,6 +150,27 @@ if(isset($_POST['modifier_prev']))
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Menu déroulant des concours d'écriture
+
+// On va chercher les concours
+$qconcours = query("  SELECT    ecrivains_concours.id     AS 'c_id' ,
+                                ecrivains_concours.titre  AS 'c_titre'
+                      FROM      ecrivains_concours
+                      ORDER BY  ecrivains_concours.timestamp_fin DESC ");
+
+// Et on les met dans un menu déroulant
+$select_concours  = '';
+while($dconcours = mysqli_fetch_array($qconcours))
+{
+  $temp_selected    = ($texte_edit_concours == $dconcours['c_id']) ? ' selected' : '';
+  $select_concours .= '<option value="'.$dconcours['c_id'].'"'.$temp_selected.'>'.predata($dconcours['c_titre']).'</option>';
+}
+
+
+
+
+
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
@@ -157,7 +188,7 @@ if(isset($_POST['modifier_prev']))
         <?php if($texte_edit_concours && !getsysop()) { ?>
 
         <p>
-          Ce texte est lié à un <a class="gras" href="<?=$chemin?>pages/ecrivains/concours">concours du coin des écrivains</a>, par conséquent il doit rester figé dans l'état où il était lorsque le concours a eu lieu : vous ne pouvez pas le modifier ni le supprimer.
+          Ce texte est lié à un <a class="gras" href="<?=$chemin?>pages/ecrivains/concours_liste">concours du coin des écrivains</a>, par conséquent il doit rester figé dans l'état où il était lorsque le concours a eu lieu : vous ne pouvez pas le modifier ni le supprimer.
         </p>
 
         <?php } else { ?>
@@ -174,6 +205,13 @@ if(isset($_POST['modifier_prev']))
 
         <form method="POST" action="texte_modifier?id=<?=$texte_edit_id?>#modifier_contenu">
           <fieldset>
+
+            <label for="modifier_concours">Concours d'écriture lié</label>
+            <select id="modifier_concours" name="modifier_concours" class="indiv">
+              <option value="0">Le texte n'est lié à aucun concours d'écriture</option>
+              <?=$select_concours?>
+            </select><br>
+            <br>
 
             <label for="modifier_titre">Titre du texte (maximum 90 caractères)</label>
             <input id="modifier_titre" name="modifier_titre" class="indiv" type="text" value="<?=$texte_edit_titre_raw?>" maxlength="90"><br>

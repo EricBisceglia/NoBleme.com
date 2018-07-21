@@ -129,9 +129,9 @@ $temp_date          = date('Y-m-d');
 $qprofil_irl        = mysqli_fetch_array(query("  SELECT    COUNT(irl_participants.id) AS 'num_irls'
                                                   FROM      irl_participants
                                                   LEFT JOIN irl ON irl_participants.FKirl = irl.id
-                                                  WHERE     irl.date                    <= '$temp_date'
-                                                  AND       irl_participants.FKmembres  = '$user_id'
-                                                  AND       irl_participants.confirme   = 1 "));
+                                                  WHERE     irl.date                     <= '$temp_date'
+                                                  AND       irl_participants.FKmembres    = '$user_id'
+                                                  AND       irl_participants.confirme     = 1 "));
 
 $qprofil_ecrivains  = mysqli_fetch_array(query("  SELECT    COUNT(ecrivains_texte.id) AS 'num_textes'
                                                   FROM      ecrivains_texte
@@ -141,11 +141,20 @@ $qprofil_necrivains = mysqli_fetch_array(query("  SELECT    COUNT(ecrivains_note
                                                   FROM      ecrivains_note
                                                   WHERE     ecrivains_note.FKmembres = '$user_id' "));
 
+$profil_concoursecr = mysqli_fetch_array(query("  SELECT    COUNT(ecrivains_texte.id) AS 'num_textes'
+                                                  FROM      ecrivains_texte
+                                                  WHERE     ecrivains_texte.FKmembres             = '$user_id'
+                                                  AND       ecrivains_texte.FKecrivains_concours != 0 "));
+
+$profil_gagnantcecr = mysqli_fetch_array(query("  SELECT    COUNT(ecrivains_concours.id) AS 'num_concours'
+                                                  FROM      ecrivains_concours
+                                                  WHERE     ecrivains_concours.FKmembres_gagnant = '$user_id' "));
+
 $qprofil_quotes     = mysqli_fetch_array(query("  SELECT    COUNT(quotes_membres.id) AS 'num_quotes'
                                                   FROM      quotes_membres
                                                   LEFT JOIN quotes ON quotes_membres.FKquotes = quotes.id
-                                                  WHERE     quotes_membres.FKmembres  = '$user_id'
-                                                  AND       quotes.valide_admin       = 1 "));
+                                                  WHERE     quotes_membres.FKmembres          = '$user_id'
+                                                  AND       quotes.valide_admin               = 1 "));
 
 $qprofil_quotesub   = mysqli_fetch_array(query("  SELECT    COUNT(quotes.id) AS 'num_quotes'
                                                   FROM      quotes
@@ -187,6 +196,8 @@ $profil_ecrivains  .= ($qprofil_ecrivains['num_textes'] && $qprofil_necrivains['
 $temp_pluriel       = ($qprofil_necrivains['num_reactions'] == 1) ? 'texte' : 'textes';
 $profil_ecrivains  .= ($qprofil_necrivains['num_reactions']) ? 'réagi à <span class="gras texte_noir">'.$qprofil_necrivains['num_reactions'].'</span> '.$temp_pluriel : '';
 $profil_ecrivains   = ($qprofil_ecrivains['num_textes'] || $qprofil_necrivains['num_reactions']) ? $profil_ecrivains : '';
+$profil_concoursecr = ($profil_concoursecr['num_textes']) ? 'A participé <span class="gras texte_noir">'.$profil_concoursecr['num_textes'].'</span> fois aux concours d\'écriture' : '';
+$profil_gagnantcecr = ($profil_gagnantcecr['num_concours']) ? 'A gagné <span class="gras texte_noir">'.$profil_gagnantcecr['num_concours'].'</span> concours du coin des écrivains' : '';
 $profil_quotes      = $qprofil_quotes['num_quotes'];
 $profil_quotesub    = $qprofil_quotesub['num_quotes'];
 $profil_todo        = $qprofil_todo['num_todos'];
@@ -385,6 +396,20 @@ else if($lang == 'EN')
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/ecrivains/index';">
                 <span class="gras">Coin des écrivains</span><br>
                 <?=$profil_ecrivains?>
+              </div>
+
+              <?php } if($profil_concoursecr && $lang == 'FR') { ?>
+              <hr class="profil_hr">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/ecrivains/concours_liste';">
+                <span class="gras">Concours du coin des écrivains</span><br>
+                <?=$profil_concoursecr?>
+              </div>
+
+              <?php } if($profil_gagnantcecr && $lang == 'FR') { ?>
+              <hr class="profil_hr">
+              <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/ecrivains/concours_liste';">
+                <span class="gras">Gagnant du concours du coin des écrivains</span><br>
+                <?=$profil_gagnantcecr?>
               </div>
 
               <?php } if($profil_quotes && $lang == 'FR') { ?>

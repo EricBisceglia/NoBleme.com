@@ -3,8 +3,11 @@
 /*                                                            INITIALISATION                                                            */
 /*                                                                                                                                      */
 // Inclusions /**************************************************************************************************************************/
-include './../../inc/includes.inc.php'; // Inclusions communes
-include './../../inc/forum.inc.php';    // Fonctions liées au forum
+include './../../inc/includes.inc.php';   // Inclusions communes
+include './../../inc/activite.inc.php';   // Fonctions liées à l'activité récente
+include './../../inc/ecrivains.inc.php';  // Fonctions liées au coin des écrivains
+include './../../inc/forum.inc.php';      // Fonctions liées au forum
+include './../../inc/todo.inc.php';       // Fonctions liées à la liste des tâches
 
 // Permissions
 adminonly($lang);
@@ -844,29 +847,79 @@ $js  = array('toggle', 'highlight', 'dev/reference');
         <table class="fullgrid titresnoirs margin_auto" style="width:600px">
           <thead>
             <tr>
-              <th class="rowaltc moinsgros">
-                ACTIVITÉ RÉCENTE, LOG DE MODÉRATION, ET DIFFS
+              <th class="rowaltc moinsgros" colspan="2">
+                VÉRIFIE SI UN ID EXISTE DANS UNE TABLE
               </th>
             </tr>
           </thead>
           <tbody>
           <tr>
               <td class="align_center">
+                verifier_existence('membres', 1);
+              </td>
+              <td class="align_center">
+                <?=verifier_existence('membres', 1);?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                verifier_existence('membres', 2);
+              </td>
+              <td class="align_center">
+                <?=verifier_existence('membres', 2);?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:800px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                ACTIVITÉ RÉCENTE, LOG DE MODÉRATION, ET DIFFS
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                $array = activite_recente($chemin, 0, 'register', 1, 'Bad');<br>
+                $array['css'];<br>
+                $array['href'];<br>
+                $array['FR'];<br>
+                $array['EN'];
+              </td>
+              <td class="align_center">
+                <br>
+                <?php
+                  $temp_activite = activite_recente($chemin, 0, 'register', 1, 'Bad');
+                  echo $temp_activite['css'].'<br>';
+                  echo $temp_activite['href'].'<br>';
+                  echo $temp_activite['FR'].'<br>';
+                  echo $temp_activite['EN'];
+                ?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center" colspan="2">
                 $activite_id = activite_nouveau('truc_edit', 0, 0, 'Bad', 42, 'Le truc édité');
               </td>
             </tr>
             <tr>
-              <td class="align_center">
+              <td class="align_center" colspan="2">
                 activite_diff(1, 'Valeur', 3, 5, 1);
               </td>
             </tr>
             <tr>
-              <td class="align_center">
+              <td class="align_center" colspan="2">
                 activite_supprimer('truc_edit', 42);
               </td>
             </tr>
             <tr>
-              <td class="align_center">
+              <td class="align_center" colspan="2">
                 purger_diff_orphelins();
               </td>
             </tr>
@@ -888,6 +941,26 @@ $js  = array('toggle', 'highlight', 'dev/reference');
             <tr>
               <td class="align_center">
                 ircbot($chemin,"Message à poster sur dev","#dev");
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros">
+                PLANIFICATION D'UNE TÂCHE
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                automatisation('ecrivains_concours_fin', 5, strtotime('2005-03-19'));
               </td>
             </tr>
           </tbody>
@@ -979,6 +1052,52 @@ $js  = array('toggle', 'highlight', 'dev/reference');
               </td>
               <td class="gras align_center">
                 <?=forum_option_info('Sérieux', 'court', 'EN');?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                COMPTE LE NOMBRE DE TEXTES DANS UN CONCOURS
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                ecrivains_concours_compter_textes(1);
+              </td>
+              <td class="gras align_center">
+                <?=ecrivains_concours_compter_textes(1);?>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros" colspan="2">
+                DROIT DE VOTE DANS UN CONCOURS D'ÉCRITURE
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                ecrivains_concours_peut_voter();
+              </td>
+              <td class="gras align_center">
+                <?=ecrivains_concours_peut_voter();?>
               </td>
             </tr>
           </tbody>
@@ -1192,29 +1311,6 @@ $js  = array('toggle', 'highlight', 'dev/reference');
             <tr>
               <td class="align_center">
                 xhronly();
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <br>
-        <br>
-
-        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
-          <thead>
-            <tr>
-              <th class="rowaltc moinsgros" colspan="2">
-                DEBUG EN PROD
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="align_center">
-                bfdecho("Seul Bad peut voir ceci");
-              </td>
-              <td class="gras align_center">
-                <?=bfdecho("Seul Bad peut voir ceci");?>
               </td>
             </tr>
           </tbody>

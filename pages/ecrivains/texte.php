@@ -3,7 +3,8 @@
 /*                                                             INITIALISATION                                                            */
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
-include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/includes.inc.php';   // Inclusions communes
+include './../../inc/ecrivains.inc.php';  // Fonctions liées au coin des écrivains
 
 // Menus du header
 $header_menu      = 'Lire';
@@ -57,6 +58,7 @@ if($qveriftexte['t_titre'] === NULL)
 $loggedin     = loggedin();
 $est_sysop    = getsysop();
 $est_admin    = getadmin();
+$peut_voter   = ecrivains_concours_peut_voter();
 $texte_titre  = predata($qveriftexte['t_titre']);
 $page_nom    .= ' : '.predata(tronquer_chaine($qveriftexte['t_titre'], 25, '...'));
 $page_url    .= $texte_id;
@@ -218,26 +220,36 @@ query(" UPDATE  ecrivains_texte
 // Contenu du texte
 
 // On va récupérer des infos pour le header et sur l'apparence de sujet
-$qtexte = mysqli_fetch_array(query("  SELECT    ecrivains_texte.anonyme             AS 't_anonyme'  ,
-                                                ecrivains_texte.titre               AS 't_titre'    ,
-                                                ecrivains_texte.contenu             AS 't_contenu'  ,
-                                                ecrivains_texte.timestamp_creation  AS 't_creation' ,
-                                                ecrivains_texte.niveau_feedback     AS 't_feedback' ,
-                                                membres.id                          AS 'm_id'       ,
-                                                membres.pseudonyme                  AS 'm_pseudo'
+$qtexte = mysqli_fetch_array(query("  SELECT    ecrivains_texte.anonyme                       AS 't_anonyme'  ,
+                                                ecrivains_texte.titre                         AS 't_titre'    ,
+                                                ecrivains_texte.contenu                       AS 't_contenu'  ,
+                                                ecrivains_texte.timestamp_creation            AS 't_creation' ,
+                                                ecrivains_texte.niveau_feedback               AS 't_feedback' ,
+                                                membres.id                                    AS 'm_id'       ,
+                                                membres.pseudonyme                            AS 'm_pseudo'   ,
+                                                ecrivains_concours.id                         AS 'c_id'       ,
+                                                ecrivains_concours.titre                      AS 'c_titre'    ,
+                                                ecrivains_concours.FKecrivains_texte_gagnant  AS 'c_gagnant'  ,
+                                                ecrivains_concours.timestamp_fin              AS 'c_fin'
                                       FROM      ecrivains_texte
-                                      LEFT JOIN membres ON ecrivains_texte.FKmembres = membres.id
+                                      LEFT JOIN membres             ON ecrivains_texte.FKmembres            = membres.id
+                                      LEFT JOIN ecrivains_concours  ON ecrivains_texte.FKecrivains_concours = ecrivains_concours.id
                                       WHERE     ecrivains_texte.id = '$texte_id' "));
 
 // Puis on prépare le contenu pour l'affichage
-$est_auteur       = (loggedin() && ($qtexte['m_id'] == $_SESSION['user']));
-$texte_titre      = predata($qtexte['t_titre']);
-$texte_contenu    = bbcode(predata($qtexte['t_contenu'], 1));
-$texte_anonyme    = $qtexte['t_anonyme'];
-$texte_auteur_id  = $qtexte['m_id'];
-$texte_auteur     = predata($qtexte['m_pseudo']);
-$texte_creation   = predata(changer_casse(ilya($qtexte['t_creation']), 'min'));
-$texte_feedback   = $qtexte['t_feedback'];
+$est_auteur             = (loggedin() && ($qtexte['m_id'] == $_SESSION['user']));
+$texte_titre            = predata($qtexte['t_titre']);
+$texte_contenu          = bbcode(predata($qtexte['t_contenu'], 1));
+$texte_anonyme          = $qtexte['t_anonyme'];
+$texte_auteur_id        = $qtexte['m_id'];
+$texte_auteur           = predata($qtexte['m_pseudo']);
+$texte_creation         = predata(changer_casse(ilya($qtexte['t_creation']), 'min'));
+$texte_concours_id      = $qtexte['c_id'];
+$texte_concours_titre   = predata($qtexte['c_titre']);
+$texte_concours_gagnant = ($texte_id == $qtexte['c_gagnant']) ? 1 : 0;
+$texte_concours_fini    = ($qtexte['c_gagnant']) ? 1 : 0;
+$texte_concours_vote    = (time() > $qtexte['c_fin']) ? 1 : 0;
+$texte_feedback         = $qtexte['t_feedback'];
 
 
 
@@ -315,6 +327,16 @@ if(!getxhr()) { /***************************************************************
           <?php } ?>
         </h3>
 
+        <?php if($texte_concours_id && !$texte_concours_gagnant) { ?>
+        <h6>
+          Ce texte est une participation au concours d'écriture <a href="<?=$chemin?>pages/ecrivains/concours?id=<?=$texte_concours_id?>"><?=$texte_concours_titre?></a>
+        </h6>
+        <?php } else if($texte_concours_id) { ?>
+        <h6>
+          Ce texte a gagné le concours d'écriture <a href="<?=$chemin?>pages/ecrivains/concours?id=<?=$texte_concours_id?>"><?=$texte_concours_titre?></a>
+        </h6>
+        <?php } ?>
+
         <h6>
           <?php if(!$texte_anonyme) { ?>
           Publié dans le <a href="<?=$chemin?>pages/ecrivains/index">coin des écrivains</a> de NoBleme par <a href="<?=$chemin?>pages/user/user?id=<?=$texte_auteur_id?>"><?=$texte_auteur?></a> <?=$texte_creation?>
@@ -327,6 +349,19 @@ if(!getxhr()) { /***************************************************************
 
         <br>
 
+        <?php if($texte_concours_id && !$texte_concours_fini) { ?>
+        <?php if($est_admin || ($texte_concours_vote && $peut_voter)) { ?>
+        <p>
+          <?=$texte_contenu?>
+        </p>
+        <?php } else { ?>
+        <br>
+        <p>
+          Ce texte est une participation à un <a class="gras" href="<?=$chemin?>pages/ecrivains/concours_liste">concours du coin des écrivains</a>, et son contenu est caché tant que le concours est en cours, afin de ne pas influencer les autres textes. Une fois que le concours en question (<a class="gras" href="<?=$chemin?>pages/ecrivains/concours?id=<?=$texte_concours_id?>"><?=$texte_concours_titre?></a>) sera fini, le contenu de ce texte deviendra public.
+        </p>
+        <?php } ?>
+
+        <?php } else { ?>
         <p>
           <?=$texte_contenu?>
         </p>
@@ -453,6 +488,8 @@ if(!getxhr()) { /***************************************************************
           Vous devez être connecté à votre compte pour poster votre opinion sur ce texte.<br>
           <a class="gras" href="<?=$chemin?>pages/user/login">Cliquez ici pour vous identifier ou vous enregistrer</a>
         </p>
+
+        <?php } ?>
 
         <?php } ?>
 

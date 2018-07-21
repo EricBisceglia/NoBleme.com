@@ -10,15 +10,46 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Regroupement de tous les includes majeurs qui sont nécessaires dans toutes les pages
+// Fonction renvoyant un ordre de priorité à partir d'une valeur entre 0 et 5
+// Utilisé pour la liste des tâches
+//
+// Le paramètre optionnel permet de décider si on veut du style html ou non
+//
+// Utilisation: todo_importance($valeur,1);
 
-include_once 'reglages.inc.php';        // Réglages préliminaires à l'utilisation du site
-include_once 'erreur.inc.php';          // Fonction permettant de générer une page d'erreur
-include_once 'sql.inc.php';             // Connexion à la base de données MySQL
-include_once 'login.inc.php';           // Gestion de la connexion des utilisateurs
-include_once 'post.inc.php';            // Fonctions de traitement des données
-include_once 'date.inc.php';            // Fonctions de traitement de la date
-include_once 'bbcode.inc.php';          // BBCodes et émoticones
-include_once 'fonctions.inc.php';       // Fonctions génériques
-include_once 'nobleme.inc.php';         // Fonctions spécifiques au fonctionnement de NoBleme
-include_once 'automatisation.inc.php';  // Exécution des tâches planifiées
+function todo_importance($importance,$style=NULL)
+{
+  switch($importance)
+  {
+    case 5:
+      if($style)
+        $returnme = '<span class="gras souligne">Urgent</span>';
+      else
+        $returnme = 'Urgent';
+    break;
+    case 4:
+      if($style)
+        $returnme = '<span class="gras">Important</span>';
+      else
+        $returnme = 'Important';
+    break;
+    case 3:
+      $returnme = 'À considérer';
+    break;
+    case 2:
+      $returnme = 'Y\'a le temps';
+    break;
+    case 1:
+      if($style)
+        $returnme = '<span class="italique">Pas pressé</span>';
+      else
+        $returnme = 'Pas pressé';
+    break;
+    default:
+      if($style)
+        $returnme = '<span class="italique">À faire un jour</span>';
+      else
+        $returnme = 'À faire un jour';
+  }
+  return $returnme;
+}

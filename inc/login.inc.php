@@ -10,6 +10,40 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Session sécurisée pour remplacer les sessions normales pas super secures de PHP
+// Le token de la session est régénéré à chaque nouveau chargement de page
+// À invoquer au début des pages utilisant des sessions, à la place de session_start
+
+function session_start_securise()
+{
+  // Token public qui sert à identifier la session générale
+  $nom_session = 'nobleme_session_secure';
+
+  // On va forcer la session à ne passer que par les cookies
+  if (ini_set('session.use_only_cookies', 1) === FALSE) {
+      exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Impossible de démarrer une session sécurisée, merci de ne pas bloquer les cookies</body></html>');
+  }
+
+  // On chope le cookie actuel
+  $cookieParams = session_get_cookie_params();
+
+  // On prépare un nouveau cookie à chaque changement de page
+  session_set_cookie_params(  $cookieParams["lifetime"] ,
+                              $cookieParams["path"]     ,
+                              $cookieParams["domain"]   ,
+                              false                     ,  // Une fois que je peux garantir le https partout, mettre true ici
+                              true                      ); // Cette ligne fait que le session id ne peut pas être chopé par du js
+
+  // Et on démarre la session
+  session_name($nom_session);
+  session_start();
+  session_regenerate_id();
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ouverture de la session et vérification de l'identité
 
 // Déjà, on ouvre la session
@@ -162,6 +196,10 @@ if(isset($_GET['english']) || isset($_GET['anglais']) || isset($_GET['francais']
   exit(header("Location: ".$url_rebuild));
 }
 
+// Détermination de la langue utilisée
+$lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
+$trad = array();
+
 
 
 
@@ -249,7 +287,7 @@ function getpseudo($id=NULL)
 // Exemple d'utilisation:
 // getmod('irl','1');
 
-function getmod($section,$user=NULL)
+function getmod($section=NULL,$user=NULL)
 {
   // Si on spécifie pas d'user, on prend la session en cours
   if(!$user && isset($_SESSION['user']))
@@ -260,9 +298,20 @@ function getmod($section,$user=NULL)
     return 0;
 
   // Si c'est un mod de la section concernée, on renvoie 1
-  $qdroits = mysqli_fetch_array(query(" SELECT membres.moderateur FROM membres WHERE id = '$user' AND moderateur LIKE '%$section%' "));
-  if($qdroits['moderateur'])
-    return 1;
+  if($section)
+  {
+    $qdroits = mysqli_fetch_array(query(" SELECT membres.moderateur FROM membres WHERE id = '$user' AND moderateur LIKE '%$section%' "));
+    if($qdroits['moderateur'])
+      return 1;
+  }
+
+  // Si on ne spécifie pas de section, on va vérifier si c'est un mod et on renvoie 1 si oui
+  if(!$section)
+  {
+    $qdroits = mysqli_fetch_array(query(" SELECT membres.moderateur FROM membres WHERE id = '$user' AND moderateur != '' "));
+    if($qdroits['moderateur'])
+      return 1;
+  }
 
   // Si c'est un sysop ou un admin, on renvoie aussi 1
   $qdroits = mysqli_fetch_array(query(" SELECT membres.sysop, membres.admin FROM membres WHERE id = '$user' "));

@@ -75,6 +75,10 @@ $datefr = $joursfr[date("w")]." ".date("j")." ".strtolower($moisfr[date("n")])."
 
 function datefr($date, $lang="FR")
 {
+  // Si c'est un timestamp, on le convertit
+  if(is_numeric($date))
+    $date = date('Y-m-d', $date);
+
   // En anglais c'est simple
   if($lang != 'FR')
     return date('l F j, Y', strtotime($date));
@@ -131,6 +135,10 @@ function datefr($date, $lang="FR")
 
 function jourfr($date, $lang="FR", $stripday=NULL)
 {
+  // Si c'est un timestamp, on le convertit
+  if(is_numeric($date))
+    $date = date('Y-m-d', $date);
+
   // En anglais c'est simple
   if($lang != 'FR')
   {

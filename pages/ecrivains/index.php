@@ -95,7 +95,12 @@ if(!getxhr()) { /***************************************************************
 
       <div class="texte">
 
-        <h1>Le coin des écrivains</h1>
+        <h1>
+          Le coin des écrivains
+          <a href="<?=$chemin?>pages/ecrivains/publier">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.png" alt="M">
+          </a>
+        </h1>
 
         <h5>Partages littéraires publics entre auteurs amateurs</h5>
 
@@ -104,7 +109,7 @@ if(!getxhr()) { /***************************************************************
         </p>
 
         <p>
-          Si vous désirez <a class="gras" href="<?=$chemin?>pages/ecrivains/publier">publier un texte</a>, le coin des écrivains est ouvert à tous. Si vous désirez vous entrainer à écrire sur des sujets imposés, NoBleme organise régulièrement des <a class="gras" href="<?=$chemin?>pages/ecrivains/concours">concours d'écriture</a> entre amateurs.
+          Si vous désirez <a class="gras" href="<?=$chemin?>pages/ecrivains/publier">publier un texte</a>, le coin des écrivains est ouvert à tous. Si vous désirez vous entrainer à écrire sur des sujets imposés, NoBleme organise régulièrement des <a class="gras" href="<?=$chemin?>pages/ecrivains/concours_liste">concours d'écriture</a> entre amateurs.
         </p>
 
         <p>
