@@ -46,6 +46,68 @@ $qrss .= "  UNION
               ORDER BY  irl.date DESC
               LIMIT     10 ) ";
 
+if(isset($_GET['flux_forum_fr']))
+$qrss .= "  UNION
+            ( SELECT    forum_sujet.id                      AS 'rss_id'       ,
+                        forum_sujet.timestamp_creation      AS 'rss_date'     ,
+                        forum_sujet.titre                   AS 'rss_titre'    ,
+                        forum_message.contenu               AS 'rss_contenu'  ,
+                        ''                                  AS 'rss_user'     ,
+                        'forum_sujet_fr'                    AS 'rss_type'
+              FROM      forum_sujet
+              LEFT JOIN forum_message ON ( forum_message.FKforum_sujet = forum_sujet.id AND forum_message.timestamp_creation = forum_sujet.timestamp_creation )
+              WHERE     forum_sujet.public = 1
+              AND       forum_sujet.langue LIKE 'FR'
+              ORDER BY  forum_sujet.timestamp_creation DESC
+              LIMIT     40 ) ";
+
+if(isset($_GET['flux_forum_en']))
+$qrss .= "  UNION
+            ( SELECT    forum_sujet.id                      AS 'rss_id'       ,
+                        forum_sujet.timestamp_creation      AS 'rss_date'     ,
+                        forum_sujet.titre                   AS 'rss_titre'    ,
+                        forum_message.contenu               AS 'rss_contenu'  ,
+                        ''                                  AS 'rss_user'     ,
+                        'forum_sujet_fr'                    AS 'rss_type'
+              FROM      forum_sujet
+              LEFT JOIN forum_message ON ( forum_message.FKforum_sujet = forum_sujet.id AND forum_message.timestamp_creation = forum_sujet.timestamp_creation )
+              WHERE     forum_sujet.public = 1
+              AND       forum_sujet.langue LIKE 'EN'
+              ORDER BY  forum_sujet.timestamp_creation DESC
+              LIMIT     40 ) ";
+
+if(isset($_GET['flux_forumpost_fr']))
+$qrss .= "  UNION
+            ( SELECT    forum_message.id                    AS 'rss_id'       ,
+                        forum_message.timestamp_creation    AS 'rss_date'     ,
+                        forum_sujet.titre                   AS 'rss_titre'    ,
+                        forum_message.contenu               AS 'rss_contenu'  ,
+                        ''                                  AS 'rss_user'     ,
+                        'forum_fr'                          AS 'rss_type'
+              FROM      forum_message
+              LEFT JOIN forum_sujet ON forum_message.FKforum_sujet = forum_sujet.id
+              WHERE     forum_sujet.public = 1
+              AND       forum_sujet.langue LIKE 'FR'
+              AND       forum_message.timestamp_creation != forum_sujet.timestamp_creation
+              ORDER BY  forum_message.timestamp_creation DESC
+              LIMIT     100 ) ";
+
+if(isset($_GET['flux_forumpost_en']))
+$qrss .= "  UNION
+            ( SELECT    forum_message.id                    AS 'rss_id'       ,
+                        forum_message.timestamp_creation    AS 'rss_date'     ,
+                        forum_sujet.titre                   AS 'rss_titre'    ,
+                        forum_message.contenu               AS 'rss_contenu'  ,
+                        ''                                  AS 'rss_user'     ,
+                        'forum_en'                          AS 'rss_type'
+              FROM      forum_message
+              LEFT JOIN forum_sujet ON forum_message.FKforum_sujet = forum_sujet.id
+              WHERE     forum_sujet.public = 1
+              AND       forum_sujet.langue LIKE 'EN'
+              AND       forum_message.timestamp_creation != forum_sujet.timestamp_creation
+              ORDER BY  forum_message.timestamp_creation DESC
+              LIMIT     100 ) ";
+
 if(isset($_GET['flux_misc']) && !isset($_GET['lang_en']))
 $qrss .= "  UNION
             ( SELECT    quotes.id                           AS 'rss_id'       ,
@@ -150,7 +212,7 @@ $full_url = predata((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? 'ht
 // Et on prépare les données pour les afficher dans le flux, en traitant au cas par cas
 for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
 {
-  // Nouvelle IRL
+  // IRL
   if($drss['rss_type'] == 'irl')
   {
     $rss_url[$nrss]     = "pages/irl/irl?id=".$drss['rss_id'];
@@ -166,6 +228,24 @@ for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
     $rss_contenu[$nrss] = '<b><u>'.datefr(date('Y-m-d',$drss['rss_date']), 'EN').' meetup</u></b><br><br>'.bbcode(predata($drss['rss_contenu'], 1));
   }
 
+  // Forum : sujets
+  else if($drss['rss_type'] == 'forum_sujet_fr' || $drss['rss_type'] == 'forum_sujet_en')
+  {
+    $rss_url[$nrss]     = "pages/forum/sujet?id=".$drss['rss_id'];
+    $rss_date[$nrss]    = predata(date('r', $drss['rss_date']));
+    $rss_titre[$nrss]   = (!isset($_GET['lang_en'])) ? "Forum NoBleme : Nouveau sujet" : "NoBleme forum: New topic";
+    $rss_contenu[$nrss] = '<b><u>'.predata($drss['rss_titre']).'</u></b><br><br>'.bbcode(predata($drss['rss_contenu'], 1));
+  }
+
+  // Forum : messages
+  else if($drss['rss_type'] == 'forum_fr' || $drss['rss_type'] == 'forum_en')
+  {
+    $rss_url[$nrss]     = "pages/forum/sujet?id=".$drss['rss_id'];
+    $rss_date[$nrss]    = predata(date('r', $drss['rss_date']));
+    $rss_titre[$nrss]   = (!isset($_GET['lang_en'])) ? "Forum NoBleme : Nouveau message" : "NoBleme forum: New post";
+    $rss_contenu[$nrss] = '<b><u>'.predata($drss['rss_titre']).'</u></b><br><br>'.bbcode(predata($drss['rss_contenu'], 1));
+  }
+
   // Miscellanées
   else if($drss['rss_type'] == 'misc')
   {
@@ -175,7 +255,7 @@ for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
     $rss_contenu[$nrss] = predata($drss['rss_contenu'], 1);
   }
 
-  // Textes du coin des écrivains
+  // Coin des écrivains : Textes
   else if($drss['rss_type'] == 'ecrivains')
   {
     $rss_url[$nrss]     = "pages/ecrivains/texte?id=".$drss['rss_id'];
@@ -184,7 +264,7 @@ for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
     $rss_contenu[$nrss] = "Un nouveau texte a été publié dans le coin des écrivains de NoBleme : « ".predata($drss['rss_titre'])." »";
   }
 
-  // Concours du coin des écrivains
+  // Coin des écrivains : Concours
   else if($drss['rss_type'] == 'ecrivains_concours')
   {
     $rss_url[$nrss]     = "pages/ecrivains/concours?id=".$drss['rss_id'];
@@ -192,8 +272,6 @@ for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
     $rss_titre[$nrss]   = "Coin des écrivains : Nouveau concours ouvert";
     $rss_contenu[$nrss] = "Le concours du coin des écrivains de NoBleme « ".predata($drss['rss_titre'])." » vient de commencer.";
   }
-
-  // Gagnant du concours du coin des écrivains
   else if($drss['rss_type'] == 'ecrivains_concours_gagnant')
   {
     $rss_url[$nrss]     = "pages/ecrivains/concours?id=".$drss['rss_id'];
@@ -203,7 +281,7 @@ for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
     $rss_contenu[$nrss] = predata($temp_gagnant)." a gagné le concours du coin des écrivains de NoBleme « ".predata($drss['rss_titre'])." ».<br><br>Tous les textes publiés en participation au concours sont maintenant disponibles à la lecture.";
   }
 
-  // Nouveau devblog
+  // Devblog
   if($drss['rss_type'] == 'devblog')
   {
     $rss_url[$nrss]     = "pages/devblog/devblog?id=".$drss['rss_id'];
@@ -212,7 +290,7 @@ for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
     $rss_contenu[$nrss] = '<b><u>'.predata($drss['rss_titre']).'</u></b><br><br>'.tronquer_chaine($drss['rss_contenu'],200,'...');
   }
 
-  // Tâche ouverte
+  // Tâches : Création
   if($drss['rss_type'] == 'todo')
   {
     $rss_url[$nrss]     = "pages/todo/index?id=".$drss['rss_id'];
@@ -221,7 +299,7 @@ for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
     $rss_contenu[$nrss] = "Tâche proposée par ".predata($drss['rss_user']).'<br><u>'.predata($drss['rss_titre']).'</u><br><br>'.bbcode(predata($drss['rss_contenu'], 1));
   }
 
-  // Tâche fermée
+  // Tâches : Résolution
   else if($drss['rss_type'] == 'todo_fini')
   {
     $rss_url[$nrss]     = "pages/todo/index?id=".$drss['rss_id']."&amp;fini";

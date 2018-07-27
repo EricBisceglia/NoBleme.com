@@ -15,6 +15,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 include_once 'reglages.inc.php';        // Réglages préliminaires à l'utilisation du site
 include_once 'erreur.inc.php';          // Fonction permettant de générer une page d'erreur
 include_once 'sql.inc.php';             // Connexion à la base de données MySQL
+include_once 'session.inc.php';         // Gestion des sessions en PHP
 include_once 'login.inc.php';           // Gestion de la connexion des utilisateurs
 include_once 'post.inc.php';            // Fonctions de traitement des données
 include_once 'date.inc.php';            // Fonctions de traitement de la date

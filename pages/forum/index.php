@@ -210,7 +210,12 @@ EOD;
 
       <div class="texte">
 
-        <h1><?=$trad['titre']?></h1>
+        <h1>
+          <?=$trad['titre']?>
+          <a href="<?=$chemin?>pages/doc/rss">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="M" height="35">
+          </a>
+        </h1>
 
         <h5><?=$trad['soustitre']?></h5>
 

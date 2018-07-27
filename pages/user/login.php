@@ -34,8 +34,8 @@ if(isset($_POST['login_pseudo']))
   // Récupération du postdata
   $login_pseudo   = predata($_POST['login_pseudo']);
   $login_souvenir = (isset($_POST['login_souvenir'])) ? ' checked' : '';
-  $pseudo         = destroy_html(postdata($_POST['login_pseudo'], "string"));
-  $pass           = destroy_html(postdata($_POST['login_pass'], "string"));
+  $pseudo         = postdata($_POST['login_pseudo'], "string");
+  $pass           = postdata($_POST['login_pass'], "string");
 
   // Vérification que le pseudo & pass sont bien rentrés
   if($pseudo != "" && $pass != "")

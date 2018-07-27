@@ -18,6 +18,30 @@ function rss_check_boxes()
   else
     document.getElementById("flux_irl").checked = false;
 
+  // Forum (français)
+  if(type == 'all' || type == 'forum_fr' || type == 'forum_all')
+  {
+    document.getElementById("flux_forum_fr").checked = true;
+    document.getElementById("flux_forumpost_fr").checked = true;
+  }
+  else
+  {
+    document.getElementById("flux_forum_fr").checked = false;
+    document.getElementById("flux_forumpost_fr").checked = false;
+  }
+
+  // Forum (anglais)
+  if(type == 'all' || type == 'forum_en' || type == 'forum_all')
+  {
+    document.getElementById("flux_forum_en").checked = true;
+    document.getElementById("flux_forumpost_en").checked = true;
+  }
+  else
+  {
+    document.getElementById("flux_forum_en").checked = false;
+    document.getElementById("flux_forumpost_en").checked = false;
+  }
+
   // Miscellanées
   if(type == 'all' || type == 'misc')
     document.getElementById("flux_misc").checked = true;

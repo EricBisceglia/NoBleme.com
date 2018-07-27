@@ -37,14 +37,24 @@ $js   = array('toggle', 'doc/rss_checkboxes');
 if(isset($_POST['flux_go']))
 {
   // On prépare la liste des flux possibles
-  $liste_flux = array('flux_irl'                ,
-                      'flux_irl_p'              ,
-                      'flux_devblog'            ,
-                      'flux_todo'               ,
-                      'flux_todo_fini'          ,
-                      'flux_misc'               ,
-                      'flux_ecrivains'          ,
-                      'flux_ecrivains_concours' );
+  if($lang == 'FR')
+    $liste_flux = array('flux_irl'                ,
+                        'flux_devblog'            ,
+                        'flux_todo'               ,
+                        'flux_todo_fini'          ,
+                        'flux_misc'               ,
+                        'flux_ecrivains'          ,
+                        'flux_ecrivains_concours' ,
+                        'flux_forum_fr'           ,
+                        'flux_forum_en'           ,
+                        'flux_forumpost_fr'       ,
+                        'flux_forumpost_en'       );
+  else
+    $liste_flux = array('flux_irl'                ,
+                        'flux_forum_fr'           ,
+                        'flux_forum_en'           ,
+                        'flux_forumpost_fr'       ,
+                        'flux_forumpost_en'       );
 
   // On initialise un compteur et l'url
   $fluxcount  = 0;
@@ -116,6 +126,12 @@ EOD;
   $trad['flux_s_none']    = "Tout déselectionner";
   $trad['flux_s_irl']     = "Rencontres irl";
   $trad['flux_irl']       = "Organisation de nouvelles IRL";
+  $trad['flux_s_forum']   = "Forum NoBleme";
+  $trad['flux_forum']     = "Nouveaux sujets sur le forum";
+  $trad['flux_forumpost'] = "Messages postés sur le forum";
+  $trad['flux_forum_fr']  = "(en français)";
+  $trad['flux_forum_en']  = "(en anglais)";
+  $trad['flux_forum_all'] = "(bilingue)";
   $trad['flux_go']        = "GÉNÉRER MON FLUX RSS";
   $trad['flux_resultat']  = "Adresse de votre flux RSS personnalisé (à coller dans votre agrégateur de flux RSS)";
 }
@@ -146,19 +162,19 @@ EOD;
 <p>
   In order to build your dream RSS feed, use the dropdown menu below to select a predefined combination and/or check the boxes below to select which contents you want or don't want to follow. Once done, press the « Generate my RSS feed » button, and you will be redirected to the page of your desired feed.
 </p>
-<br>
-<br>
-<h5>English RSS feeds on NoBleme</h5>
-<p>
-  As of right now, the only RSS feed available in english on NoBleme is the one containing real life meetups. The rest of the feeds are only available in french right now. More english content will be available at a later date.
-</p>
 EOD;
   $trad['flux_label']     = "Preselected RSS feed combinations";
   $trad['flux_error']     = "You must check at least one box to generate a feed !";
   $trad['flux_s_all']     = "Select all RSS feeds";
-  $trad['flux_s_none']    = "Deselect all feeds";
+  $trad['flux_s_none']    = "Unselect all feeds";
   $trad['flux_s_irl']     = "Real life meetups";
   $trad['flux_irl']       = "Real life meetups";
+  $trad['flux_s_forum']   = "NoBleme forum";
+  $trad['flux_forum']     = "New forum threads";
+  $trad['flux_forumpost'] = "Posts on the forum";
+  $trad['flux_forum_fr']  = "(in french)";
+  $trad['flux_forum_en']  = "(in english)";
+  $trad['flux_forum_all'] = "(bilingual)";
   $trad['flux_go']        = "GENERATE MY RSS FEED";
   $trad['flux_resultat']  = "Your custom RSS feed's URL (paste this in your RSS feed aggregator)";
 }
@@ -286,6 +302,9 @@ EOD;
               <option value="all"><?=$trad['flux_s_all']?></option>
               <option value="none"><?=$trad['flux_s_none']?></option>
               <option value="irl"><?=$trad['flux_s_irl']?></option>
+              <option value="forum_fr"><?=$trad['flux_s_forum']?> <?=$trad['flux_forum_fr']?></option>
+              <option value="forum_en"><?=$trad['flux_s_forum']?> <?=$trad['flux_forum_en']?></option>
+              <option value="forum_all"><?=$trad['flux_s_forum']?> <?=$trad['flux_forum_all']?></option>
               <?php if($lang == 'FR') { ?>
               <option value="misc">Miscellanées</option>
               <option value="ecrivains">Coin des écrivains</option>
@@ -296,6 +315,32 @@ EOD;
 
             <input id="flux_irl" name="flux_irl" type="checkbox">
             <label class="label-inline" for="flux_irl"><?=$trad['flux_irl']?></label><br>
+
+            <?php if($lang == 'FR') { ?>
+
+            <input id="flux_forum_fr" name="flux_forum_fr" type="checkbox">
+            <label class="label-inline" for="flux_forum_fr"><?=$trad['flux_forum']?> <?=$trad['flux_forum_fr']?></label><br>
+
+            <input id="flux_forumpost_fr" name="flux_forumpost_fr" type="checkbox">
+            <label class="label-inline" for="flux_forumpost_fr"><?=$trad['flux_forumpost']?> <?=$trad['flux_forum_fr']?></label><br>
+
+            <?php } ?>
+
+            <input id="flux_forum_en" name="flux_forum_en" type="checkbox">
+            <label class="label-inline" for="flux_forum_en"><?=$trad['flux_forum']?> <?=$trad['flux_forum_en']?></label><br>
+
+            <input id="flux_forumpost_en" name="flux_forumpost_en" type="checkbox">
+            <label class="label-inline" for="flux_forumpost_en"><?=$trad['flux_forumpost']?> <?=$trad['flux_forum_en']?></label><br>
+
+            <?php if($lang == 'EN') { ?>
+
+            <input id="flux_forum_fr" name="flux_forum_fr" type="checkbox">
+            <label class="label-inline" for="flux_forum_fr"><?=$trad['flux_forum']?> <?=$trad['flux_forum_fr']?></label><br>
+
+            <input id="flux_forumpost_fr" name="flux_forumpost_fr" type="checkbox">
+            <label class="label-inline" for="flux_forumpost_fr"><?=$trad['flux_forumpost']?> <?=$trad['flux_forum_fr']?></label><br>
+
+            <?php } ?>
 
             <?php if($lang != 'FR') { ?>
             <div class="hidden">

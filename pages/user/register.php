@@ -82,7 +82,7 @@ if (isset($_POST["register_pseudo"]))
   // Si pas d'erreur, on peut créer le compte
   if($register_erreur == "")
   {
-    $register_pass  = postdata(salage($register_pass_1));
+    $register_pass  = postdata(salage($_POST["register_pass_1"]), 'string');
     $date_creation  = time();
 
     // Création du compte
