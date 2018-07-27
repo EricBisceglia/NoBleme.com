@@ -37,12 +37,14 @@ $js   = array('toggle', 'doc/rss_checkboxes');
 if(isset($_POST['flux_go']))
 {
   // On prépare la liste des flux possibles
-  $liste_flux = array('flux_irl'        ,
-                      'flux_irl_p'      ,
-                      'flux_devblog'    ,
-                      'flux_todo'       ,
-                      'flux_todo_fini'  ,
-                      'flux_misc'       );
+  $liste_flux = array('flux_irl'                ,
+                      'flux_irl_p'              ,
+                      'flux_devblog'            ,
+                      'flux_todo'               ,
+                      'flux_todo_fini'          ,
+                      'flux_misc'               ,
+                      'flux_ecrivains'          ,
+                      'flux_ecrivains_concours' );
 
   // On initialise un compteur et l'url
   $fluxcount  = 0;
@@ -174,7 +176,7 @@ EOD;
 
         <h1>
           <?=$trad['titre']?>
-          <img class="valign_middle" src="<?=$chemin?>img/icones/rss.svg" alt="RSS">
+          <img src="<?=$chemin?>img/icones/rss.svg" alt="RSS" height="40">
         </h1>
 
         <h5><?=$trad['soustitre']?></h5>
@@ -286,6 +288,7 @@ EOD;
               <option value="irl"><?=$trad['flux_s_irl']?></option>
               <?php if($lang == 'FR') { ?>
               <option value="misc">Miscellanées</option>
+              <option value="ecrivains">Coin des écrivains</option>
               <option value="dev">Développement de NoBleme</option>
               <?php } ?>
             </select><br>
@@ -300,6 +303,12 @@ EOD;
 
             <input id="flux_misc" name="flux_misc" type="checkbox">
             <label class="label-inline" for="flux_misc">Nouvelles miscellanées</label><br>
+
+            <input id="flux_ecrivains" name="flux_ecrivains" type="checkbox">
+            <label class="label-inline" for="flux_ecrivains">Textes du coin des écrivains</label><br>
+
+            <input id="flux_ecrivains_concours" name="flux_ecrivains_concours" type="checkbox">
+            <label class="label-inline" for="flux_ecrivains_concours">Concours du coin des écrivains</label><br>
 
             <input id="flux_devblog" name="flux_devblog" type="checkbox">
             <label class="label-inline" for="flux_devblog">Blogs de développement</label><br>

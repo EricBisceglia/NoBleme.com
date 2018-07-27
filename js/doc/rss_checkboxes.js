@@ -24,6 +24,18 @@ function rss_check_boxes()
   else
     document.getElementById("flux_misc").checked = false;
 
+  // Coin des écrivains
+  if(type == 'all' || type == 'ecrivains')
+  {
+    document.getElementById("flux_ecrivains").checked = true;
+    document.getElementById("flux_ecrivains_concours").checked = true;
+  }
+  else
+  {
+    document.getElementById("flux_ecrivains").checked = false;
+    document.getElementById("flux_ecrivains_concours").checked = false;
+  }
+
   // Développement
   if(type == 'all' || type == 'dev')
   {
