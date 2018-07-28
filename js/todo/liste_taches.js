@@ -63,8 +63,11 @@ function todolist_ajouter_tache()
   // On wipe le formulaire
   document.getElementById('todolist_add_form').reset();
 
-  // Et on l'affiche
+  // On l'affiche
   toggle_row('todolist_add');
+
+  // Et on sélectionne la première ligne
+  document.getElementById('todo_add_titre').focus(); document.getElementById('todo_add_titre').select();
 }
 
 

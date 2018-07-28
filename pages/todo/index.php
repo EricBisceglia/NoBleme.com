@@ -336,6 +336,18 @@ if(isset($_GET['id']))
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// On détermine si on est en mode ajout ou lecture
+
+// Selon le mode, on affiche ou non l'ajout de tâche
+$todo_add_hidden = (isset($_GET['add'])) ? '' : ' class="hidden"';
+
+// Si on est en mode ajout, on sélectionne le champ d'ajout
+if(isset($_GET['add']) && $todo_admin)
+  $onload = "document.getElementById('todo_add_titre').focus(); document.getElementById('todo_add_titre').select();";
+
+
+
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
@@ -374,7 +386,7 @@ if(!getxhr()) { /***************************************************************
 
       <?php if($todo_admin) { ?>
 
-      <div class="hidden" id="todolist_add">
+      <div id="todolist_add"<?=$todo_add_hidden?>>
 
         <br>
         <hr class="separateur_contenu">
