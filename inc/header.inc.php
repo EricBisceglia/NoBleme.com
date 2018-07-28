@@ -392,6 +392,13 @@ function header_class($element, $actuel, $menu)
     <link rel="shortcut icon" href="<?=$chemin?>img/divers/favicon.ico">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="description" content="<?=$page_desc?>">
+    <meta property="og:title" content="<?=$page_titre?>">
+    <meta property="og:description" content="<?=$page_desc?>">
+    <meta property="og:url" content="<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
+    <meta property="og:site_name" content="NoBleme.com">
+    <meta property="og:image" content="<?=$chemin?>img/divers/404_gauche.png">
+    <meta name="twitter:image:alt" content="NoBleme, la communauté qui n'apporte rien mais a réponse à tout">
+    <meta name="twitter:card" content="summary_large_image">
     <?=$stylesheets?>
     <?=$javascripts?>
   </head>
