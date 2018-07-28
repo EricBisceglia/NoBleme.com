@@ -68,7 +68,7 @@ if (isset($user_pseudo))
   if(!mysqli_num_rows($qtempuser))
   {
     $temp_erreur = ($lang == 'FR') ? 'Cet utilisateur n\'existe pas' : 'This user does not exist';
-    erreur($temp_erreur);
+    exit(header("Location: ".$chemin."pages/nobleme/membres"));
   }
 
   // Sinon, on récupère l'ID
@@ -100,7 +100,7 @@ $qprofil = query("  SELECT      membres.pseudonyme      AS 'u_pseudo'     ,
 if(!mysqli_num_rows($qprofil))
 {
   $temp_erreur = ($lang == 'FR') ? 'Cet utilisateur n\'existe pas' : 'This user does not exist';
-  erreur($temp_erreur);
+  exit(header("Location: ".$chemin."pages/nobleme/membres"));
 }
 
 // On va commencer par compléter les infos internes de la page

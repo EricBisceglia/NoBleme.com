@@ -40,15 +40,16 @@ $js   = array('dynamique', 'forum/sujet');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Identification du sujet et informations communes
 
-// Si on a pas d'id, on dégage
-$temp_erreur = ($lang == 'FR') ? "Sujet inexistant" : "Topic does not exist";
-if(!isset($_GET['id']))
-  erreur($temp_erreur);
+// On vérifie si l'ID est bien spécifie, sinon on dégage
+if(!isset($_GET['id']) || !is_numeric($_GET['id']))
+  exit(header("Location: ".$chemin."pages/forum/index"));
 
-// On récupère l'id du sujet
-$sujet_id = postdata($_GET['id'], 'int', 0);
+// On vérifie que le concours existe, sinon on dégage
+$sujet_id = postdata($_GET['id'], 'int');
+if(!verifier_existence('forum_sujet', $sujet_id))
+  exit(header("Location: ".$chemin."pages/forum/index"));
 
-// On va chercher si le sujet existe, et on en profite pour récupérer des infos pour le header et sur l'apparence de sujet
+// On va chercher des infos pour le header et sur l'apparence de sujet
 $qverifsujet = mysqli_fetch_array(query(" SELECT    forum_sujet.apparence       AS 's_apparence'      ,
                                                     forum_sujet.classification  AS 's_classification' ,
                                                     forum_sujet.public          AS 's_public'         ,
@@ -59,10 +60,6 @@ $qverifsujet = mysqli_fetch_array(query(" SELECT    forum_sujet.apparence       
                                                     forum_sujet.titre           AS 's_titre'
                                           FROM      forum_sujet
                                           WHERE     forum_sujet.id = '$sujet_id' "));
-
-// S'il existe pas, on dégage
-if($qverifsujet['s_titre'] === NULL)
-  erreur($temp_erreur);
 
 // On récupère les infos sur le sujet
 $sujet_apparence      = $qverifsujet['s_apparence'];
@@ -628,7 +625,7 @@ if($sujet_apparence == 'Fil' || $sujet_apparence == 'Anonyme')
 else
 {
   $temp_erreur = ($lang == 'FR') ? "Type de sujet inconnu" : "Unknown topic type";
-  erreur($temp_erreur);
+  erreur($temp_erreur, $chemin, $lang, 'Discuter', 'ForumIndex');
 }
 
 

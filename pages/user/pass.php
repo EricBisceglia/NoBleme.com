@@ -32,7 +32,7 @@ $page_titre = ($lang == 'FR') ? "Changer de mot de passe" : "Change my password"
 /*****************************************************************************************************************************************/
 
 // On chope l'userid, si y'en a pas on arrête tout
-$user_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateur invalide');
+$user_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateur invalide', $chemin, $lang, 'Compte', 'ChangerPass');
 
 // Modifier le mot de passe
 if(isset($_POST['passModifier']))

@@ -39,7 +39,7 @@ $js  = array('dynamique', 'user/previsualiser_profil');
 // Récupération des données
 
 // On chope l'userid, si y'en a pas on arrête tout
-$profil_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateur invalide');
+$profil_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateur invalide', $chemin, $lang, 'Compte', 'ModifierProfil');
 
 
 

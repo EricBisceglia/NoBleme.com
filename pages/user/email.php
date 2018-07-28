@@ -32,7 +32,7 @@ $page_titre = ($lang == 'FR') ? "Changer d'e-mail" : "Change my e-mail";
 /*****************************************************************************************************************************************/
 
 // On chope l'userid, si y'en a pas on arrête tout
-$user_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateur invalide');
+$user_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateur invalide', $chemin, $lang, 'Compte', 'ChangerEmail');
 
 // Modifier l'adresse e-mail
 if(isset($_POST['emailModifier']))

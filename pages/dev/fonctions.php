@@ -847,6 +847,46 @@ $js  = array('toggle', 'highlight', 'dev/reference');
         <table class="fullgrid titresnoirs margin_auto" style="width:600px">
           <thead>
             <tr>
+              <th class="rowaltc moinsgros">
+                PAGE D'ERREUR
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                erreur("On arrête tout (à placer avant le header)", $chemin, $lang);
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
+              <th class="rowaltc moinsgros">
+                PAGE NE POUVANT QUE ÊTRE APPELÉE PAR DYNAMIQUE()
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                xhronly();
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
+          <thead>
+            <tr>
               <th class="rowaltc moinsgros" colspan="2">
                 VÉRIFIE SI UN ID EXISTE DANS UNE TABLE
               </th>
@@ -1271,46 +1311,6 @@ $js  = array('toggle', 'highlight', 'dev/reference');
               </td>
               <td class="align_center">
                 text...
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <br>
-        <br>
-
-        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
-          <thead>
-            <tr>
-              <th class="rowaltc moinsgros">
-                PAGE D'ERREUR
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="align_center">
-                erreur("On arrête tout (à placer avant le header)");
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <br>
-        <br>
-
-        <table class="fullgrid titresnoirs margin_auto" style="width:600px">
-          <thead>
-            <tr>
-              <th class="rowaltc moinsgros">
-                PAGE NE POUVANT QUE ÊTRE APPELÉE PAR DYNAMIQUE()
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="align_center">
-                xhronly();
               </td>
             </tr>
           </tbody>

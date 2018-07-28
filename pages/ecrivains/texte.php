@@ -37,24 +37,22 @@ $js   = array('dynamique', 'ecrivains/texte');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Identification du texte
 
-// Si on a pas d'id, on dégage
-if(!isset($_GET['id']))
-  erreur("Texte inexistant");
+// On vérifie si l'ID est bien spécifie, sinon on dégagee
+if(!isset($_GET['id']) || !is_numeric($_GET['id']))
+  exit(header("Location: ".$chemin."pages/ecrivains/index"));
 
-// On récupère l'id du sujet
-$texte_id = postdata($_GET['id'], 'int', 0);
+// On vérifie que le concours existe, sinon on dégage
+$texte_id = postdata($_GET['id'], 'int');
+if(!verifier_existence('ecrivains_texte', $texte_id))
+  exit(header("Location: ".$chemin."pages/ecrivains/index"));
 
-// On va chercher si le sujet existe, et on en profite pour récupérer des infos pour le header et sur l'apparence de sujet
+// On a besoin du titre pour compléter les infos de la page
 $qveriftexte = mysqli_fetch_array(query(" SELECT    ecrivains_texte.titre AS 't_titre'
                                           FROM      ecrivains_texte
                                           LEFT JOIN membres ON ecrivains_texte.FKmembres = membres.id
                                           WHERE     ecrivains_texte.id = '$texte_id' "));
 
-// S'il existe pas, on dégage
-if($qveriftexte['t_titre'] === NULL)
-  erreur("Texte inexistant");
-
-// Et on met à jour les infos du header
+// Et on met à jour les infos de la page
 $loggedin     = loggedin();
 $est_sysop    = getsysop();
 $est_admin    = getadmin();

@@ -14,37 +14,20 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // A n'utiliser qu'avant l'inclusion du header!
 // Se conclut par un exit();
 //
+// $message                     est le message d'erreur à écrire
+// $chemin          (optionnel) est le chemin relatif jusqu'à l'index du site
+// $lang            (optionnel) est la langue actuellement utilisée
+// $menu_principal  (optionnel) est le menu principal du header dans lequel on se trouve
+// $menu_lateral    (optionnel) est le menu latéral du header dans lequel on se trouve
+//
 // Exemple d'utilisation:
-// erreur("Chiens interdits, même tenus en laisse");
+// erreur("Chiens interdits, même tenus en laisse", $chemin, $lang);
 
-function erreur($message)
+function erreur($message, $chemin='./../../', $lang='FR', $menu_principal='NoBleme', $menu_lateral='Accueil')
 {
-  // Redéfinition du $chemin
-
-  // La base est différente selon si on est en localhost ou en prod
-  if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1")
-    $count_base = 3;
-  else
-    $count_base = 2;
-
-  // Déterminer à combien de dossiers de la racine on est
-  $longueur = count(explode( '/', $_SERVER['REQUEST_URI']));
-
-  // Si on est à la racine, laisser le chemin tel quel
-  if($longueur <= $count_base)
-    $chemin = "";
-
-  // Sinon, partir de ./ puis déterminer le nombre de ../ à rajouter
-  else
-  {
-    $chemin = "./";
-    for ($i=0 ; $i<($longueur-$count_base) ; $i++)
-      $chemin .= "../";
-  }
-
-  // Détermination de la langue utilisée
-  $lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
-  $trad = array();
+  // Menus du header
+  $header_menu      = $menu_principal;
+  $header_sidemenu  = $menu_lateral;
 
   // Erreur
   $error_mode = 1;
@@ -58,11 +41,12 @@ function erreur($message)
   $page_nom = "Se prend une erreur";
 
   // Contenu multilingue
+  $trad = array();
   $trad['ohno'] = ($lang == 'FR') ? "OH NON &nbsp;: (" : "OH NO &nbsp;: (";
   $trad['oups'] = ($lang == 'FR') ? "VOUS AVEZ RENCONTRÉ UNE ERREUR" : "YOU HAVE ENCOUNTERED AN ERROR";
 
   // HTML
-  include './../../inc/header.inc.php';
+  include $chemin.'inc/header.inc.php';
   ?>
 
   <br>
