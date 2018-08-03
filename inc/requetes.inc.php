@@ -17,23 +17,150 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 //                                            !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP !!!!!                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Table pour les cron
-sql_creer_table("automatisation", " id                  INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-                                    action_id           INT(11) UNSIGNED NOT NULL                             ,
-                                    action_type         MEDIUMTEXT                                            ,
-                                    action_description  MEDIUMTEXT                                            ,
-                                    action_timestamp    INT(11) UNSIGNED NOT NULL                             ");
+// Indexs manquants dans les tables précédentes
+
+sql_creer_index('automatisation', 'index_action', 'action_id');
+
+sql_creer_index('ecrivains_concours', 'index_gagnant', 'FKecrivains_texte_gagnant, FKmembres_gagnant');
+
+sql_creer_index('ecrivains_concours_vote', 'index_texte', 'FKecrivains_concours');
+sql_creer_index('ecrivains_concours_vote', 'index_concours', 'FKecrivains_texte');
+sql_creer_index('ecrivains_concours_vote', 'index_membre', 'FKmembres');
+sql_creer_index('ecrivains_concours_vote', 'index_poids', 'poids_vote, FKmembres, FKecrivains_texte, FKecrivains_concours');
+
+sql_creer_index('ecrivains_note', 'index_texte', 'FKecrivains_texte');
+sql_creer_index('ecrivains_note', 'index_membre', 'FKmembres');
+sql_creer_index('ecrivains_note', 'index_note', 'note');
+
+sql_creer_index('ecrivains_texte', 'index_auteur', 'anonyme, FKmembres');
+sql_creer_index('ecrivains_texte', 'index_concours', 'FKecrivains_concours');
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Changement structurel du coin des écrivains
-sql_supprimer_champ('ecrivains_concours', 'FKforum_sujet');
-sql_renommer_champ('ecrivains_concours', 'date_debut', 'timestamp_debut', 'INT(11) UNSIGNED NOT NULL');
-sql_renommer_champ('ecrivains_concours', 'date_fin', 'timestamp_fin', 'INT(11) UNSIGNED NOT NULL');
-sql_creer_champ('ecrivains_concours', 'FKmembres_gagnant', 'INT(11) UNSIGNED NOT NULL', 'id');
-sql_creer_champ('ecrivains_concours', 'FKecrivains_texte_gagnant', 'INT(11) UNSIGNED NOT NULL', 'FKmembres_gagnant');
-sql_creer_champ('ecrivains_concours', 'num_participants', 'INT(11) UNSIGNED NOT NULL', 'timestamp_fin');
-sql_creer_champ('ecrivains_concours_vote', 'poids_vote', 'INT(11) UNSIGNED NOT NULL', 'FKmembres');
+// Nouvelle table : NBDB - Encyclopédie du web - Pages
+
+sql_creer_table('nbdb_web_page');
+
+sql_creer_champ('nbdb_web_page', 'FKnbdb_web_periode', 'INT(11) UNSIGNED NOT NULL', 'id');
+sql_creer_champ('nbdb_web_page', 'titre_fr', 'MEDIUMTEXT', 'FKnbdb_web_periode');
+sql_creer_champ('nbdb_web_page', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+sql_creer_champ('nbdb_web_page', 'contenu_fr', 'LONGTEXT', 'titre_en');
+sql_creer_champ('nbdb_web_page', 'contenu_en', 'LONGTEXT', 'contenu_fr');
+sql_creer_champ('nbdb_web_page', 'date_apparition', 'DATE', 'contenu_en');
+sql_creer_champ('nbdb_web_page', 'date_popularisation', 'DATE', 'date_apparition');
+
+sql_creer_index('nbdb_web_page', 'index_periode', 'FKnbdb_web_periode');
+sql_creer_index('nbdb_web_page', 'index_apparition', 'date_apparition');
+sql_creer_index('nbdb_web_page', 'index_popularisation', 'date_popularisation');
+sql_creer_index('nbdb_web_page', 'index_titre_fr', 'titre_fr (25)');
+sql_creer_index('nbdb_web_page', 'index_titre_en', 'titre_en (25)');
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Définitions
+
+sql_creer_table('nbdb_web_definition');
+
+sql_creer_champ('nbdb_web_definition', 'titre_fr', 'MEDIUMTEXT', 'id');
+sql_creer_champ('nbdb_web_definition', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+sql_creer_champ('nbdb_web_definition', 'definition_fr', 'LONGTEXT', 'titre_en');
+sql_creer_champ('nbdb_web_definition', 'definition_en', 'LONGTEXT', 'definition_fr');
+
+sql_creer_index('nbdb_web_definition', 'index_titre_fr', 'titre_fr (25)');
+sql_creer_index('nbdb_web_definition', 'index_titre_en', 'titre_en (25)');
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Périodes
+
+sql_creer_table('nbdb_web_periode');
+
+sql_creer_champ('nbdb_web_periode', 'titre_fr', 'MEDIUMTEXT', 'id');
+sql_creer_champ('nbdb_web_periode', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+sql_creer_champ('nbdb_web_periode', 'description_fr', 'MEDIUMTEXT', 'titre_en');
+sql_creer_champ('nbdb_web_periode', 'description_en', 'MEDIUMTEXT', 'description_fr');
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Catégories
+
+sql_creer_table('nbdb_web_categorie');
+
+sql_creer_champ('nbdb_web_categorie', 'titre_fr', 'MEDIUMTEXT', 'id');
+sql_creer_champ('nbdb_web_categorie', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Catégories des pages, définitions, et images
+
+sql_creer_table('nbdb_web_categorie_contenu');
+
+sql_creer_champ('nbdb_web_categorie_contenu', 'FKnbdb_web_categorie', 'INT(11) UNSIGNED NOT NULL', 'id');
+sql_creer_champ('nbdb_web_categorie_contenu', 'FKnbdb_web_page', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_categorie');
+sql_creer_champ('nbdb_web_categorie_contenu', 'FKnbdb_web_definition', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_page');
+sql_creer_champ('nbdb_web_categorie_contenu', 'FKnbdb_web_image', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_definition');
+
+sql_creer_index('nbdb_web_categorie_contenu', 'index_pages', 'FKnbdb_web_page, FKnbdb_web_categorie');
+sql_creer_index('nbdb_web_categorie_contenu', 'index_definitions', 'FKnbdb_web_definition, FKnbdb_web_categorie');
+sql_creer_index('nbdb_web_categorie_contenu', 'index_images', 'FKnbdb_web_image, FKnbdb_web_categorie');
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Images
+
+sql_creer_table('nbdb_web_image');
+
+sql_creer_champ('nbdb_web_image', 'url', 'TEXT', 'id');
+sql_creer_champ('nbdb_web_image', 'titre_fr', 'MEDIUMTEXT', 'url');
+sql_creer_champ('nbdb_web_image', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Images liées à une page
+
+sql_creer_table('nbdb_web_image_page');
+
+sql_creer_champ('nbdb_web_image_page', 'FKnbdb_web_image', 'INT(11) UNSIGNED NOT NULL', 'id');
+sql_creer_champ('nbdb_web_image_page', 'FKnbdb_web_page', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_image');
+sql_creer_champ('nbdb_web_image_page', 'ordre_affichage', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_page');
+sql_creer_champ('nbdb_web_image_page', 'titre_fr', 'MEDIUMTEXT', 'ordre_affichage');
+sql_creer_champ('nbdb_web_image_page', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+sql_creer_champ('nbdb_web_image_page', 'description_fr', 'MEDIUMTEXT', 'titre_en');
+sql_creer_champ('nbdb_web_image_page', 'description_en', 'MEDIUMTEXT', 'description_fr');
+
+sql_creer_index('nbdb_web_image_page', 'index_images', 'FKnbdb_web_page, FKnbdb_web_image');
+sql_creer_index('nbdb_web_image_page', 'index_affichage', 'ordre_affichage');
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Historique des changements
+
+sql_creer_table('nbdb_web_historique');
+
+sql_creer_champ('nbdb_web_historique', 'FKnbdb_web_page', 'INT(11) UNSIGNED NOT NULL', 'id');
+sql_creer_champ('nbdb_web_historique', 'public', 'TINYINT(1) NOT NULL', 'FKnbdb_web_page');
+sql_creer_champ('nbdb_web_historique', 'timestamp', 'INT(11) UNSIGNED NOT NULL', 'public');
+sql_creer_champ('nbdb_web_historique', 'type_historique', 'TEXT', 'timestamp');
+sql_creer_champ('nbdb_web_historique', 'diff_avant', 'TEXT', 'type_historique');
+sql_creer_champ('nbdb_web_historique', 'diff_apres', 'TEXT', 'diff_avant');
+
+sql_creer_index('nbdb_web_historique', 'index_timestamp', 'timestamp');
 
 
 
@@ -47,7 +174,7 @@ sql_creer_champ('ecrivains_concours_vote', 'poids_vote', 'INT(11) UNSIGNED NOT N
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
 /* Liste des fonctions contenues dans ce fichier:                                                                                        */
-/* sql_creer_table($nom_table, $requete);                                                                                                */
+/* sql_creer_table($nom_table);                                                                                                          */
 /* sql_renommer_table($nom_table, $nouveau_nom);                                                                                         */
 /* sql_vider_table($nom_table);                                                                                                          */
 /* sql_supprimer_table($nom_table);                                                                                                      */
@@ -61,17 +188,13 @@ sql_creer_champ('ecrivains_concours_vote', 'poids_vote', 'INT(11) UNSIGNED NOT N
 /*****************************************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Création d'une table
+// Création d'une table contenant uniquement un champ nommé 'id' (clé primaire, auto increment, etc.)
 //
-/* Exemple:
-sql_creer_table("nom_table", "  id    INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-                                cc    MEDIUMTEXT                                            ,
-                                tvvmb INT(11) UNSIGNED NOT NULL                             ");
-*/
+// Exemple: sql_creer_table("nom_table");
 
-function sql_creer_table($nom_table, $requete)
+function sql_creer_table($nom_table)
 {
-  return query(" CREATE TABLE IF NOT EXISTS ".$nom_table." ( ".$requete." ) ENGINE=MyISAM;");
+  return query(" CREATE TABLE IF NOT EXISTS ".$nom_table." ( id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=MyISAM;");
 }
 
 
@@ -126,7 +249,7 @@ function sql_supprimer_table($nom_table)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Création d'un champ dans une table existante
 //
-// Exemple: sql_creer_champ("nom_table", "cc2", "MEDIUMTEXT", "cc");
+// Exemple: sql_creer_champ("nom_table", "cc2", "INT(11) UNSIGNED NOT NULL", "cc");
 
 function sql_creer_champ($nom_table, $nom_champ, $type_champ, $after_nom_champ)
 {

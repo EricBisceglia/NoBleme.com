@@ -396,7 +396,7 @@ function header_class($element, $actuel, $menu)
     <meta property="og:description" content="<?=$page_desc?>">
     <meta property="og:url" content="<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
     <meta property="og:site_name" content="NoBleme.com">
-    <meta property="og:image" content="<?=$chemin?>img/divers/404_gauche.png">
+    <meta property="og:image" content="<?=$GLOBALS['url_site']?>img/divers/404_gauche.png">
     <meta name="twitter:image:alt" content="NoBleme, la communauté qui n'apporte rien mais a réponse à tout">
     <meta name="twitter:card" content="summary_large_image">
     <?=$stylesheets?>
@@ -436,11 +436,9 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
           <div class="<?=header_class('Discuter',$header_menu,'top')?>"><?=$menu['discuter']?></div>
         </a>
 
-        <?php if($lang == 'FR') { ?>
-        <a class="header_topmenu_lien" href="<?=$chemin?>pages/quotes/index">
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/nbdb/index">
           <div class="<?=header_class('Lire',$header_menu,'top')?>"><?=$menu['lire']?></div>
         </a>
-        <?php } ?>
 
         <a class="header_topmenu_lien" href="<?=$chemin?>pages/nbrpg/index">
           <div class="<?=header_class('Jouer',$header_menu,'top')?>"><?=$menu['jouer']?></div>
@@ -787,10 +785,75 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
 
 
 <?php } ################################################## MENU LATÉRAL : LIRE ###########################################################
-// Pas de traductions de titres dans cette section, elle n'est pas multilingue (pour le moment ?)
+// Préparation des traductions des titres du menu
+$sidemenu['nbdb_index']       = ($lang == 'FR') ? "Base d'informations"     : "The NoBleme Database";
+$sidemenu['nbdb_web_encyclo'] = ($lang == 'FR') ? "Encyclopédie du web"     : "Internet encyclopedia";
+$sidemenu['nbdb_web_dico']    = ($lang == 'FR') ? "Dictionnaire du web"     : "Internet dictionnary";
+$sidemenu['nbdb_activite']    = ($lang == 'FR') ? "Changements récents"     : "Recent changes";
+$sidemenu['nbdb_recherche']   = ($lang == 'FR') ? "Recherche dans la NBDB"  : "Search the NBDB";
 /* #################################################################################################### */ if($header_menu == 'Lire') { ?>
 
+            <div class="header_sidemenu_titre">
+              NBDB
+            </div>
+
+            <a href="<?=$chemin?>pages/nbdb/index">
+              <div class="<?=header_class('NBDBIndex',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nbdb_index']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nbdb/web">
+              <div class="<?=header_class('NBDBEncycloWeb',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nbdb_web_encyclo']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nbdb/web_dictionnaire">
+              <div class="<?=header_class('NBDBDicoWeb',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nbdb_web_dico']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nbdb/activite">
+              <div class="<?=header_class('NBDBactivite',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nbdb_activite']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nbdb/recherche">
+              <div class="<?=header_class('NBDBSearch',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nbdb_recherche']?>
+              </div>
+            </a>
+
             <?php if($lang == 'FR') { ?>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              Coin des écrivains
+            </div>
+
+            <a href="<?=$chemin?>pages/ecrivains/index">
+              <div class="<?=header_class('EcrivainsListe',$header_sidemenu,'side')?>">
+                Écrits de NoBlemeux
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/ecrivains/concours_liste">
+              <div class="<?=header_class('EcrivainsConcours',$header_sidemenu,'side')?>">
+                Concours d'écriture
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/ecrivains/publier">
+              <div class="<?=header_class('EcrivainsPublier',$header_sidemenu,'side')?>">
+                Publier un texte
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
               Miscellanées
@@ -820,52 +883,6 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
               </div>
             </a>
 
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_titre">
-              Le coin des écrivains
-            </div>
-
-            <a href="<?=$chemin?>pages/ecrivains/index">
-              <div class="<?=header_class('EcrivainsListe',$header_sidemenu,'side')?>">
-                Écrits de NoBlemeux
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/ecrivains/concours_liste">
-              <div class="<?=header_class('EcrivainsConcours',$header_sidemenu,'side')?>">
-                Concours d'écriture
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/ecrivains/publier">
-              <div class="<?=header_class('EcrivainsPublier',$header_sidemenu,'side')?>">
-                Publier un texte
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_titre">
-              NBDatabase
-            </div>
-
-            <a href="<?=$chemin?>pages/nbdb/index">
-              <div class="<?=header_class('NBDBIndex',$header_sidemenu,'side')?>">
-                Travaux en cours
-              </div>
-            </a>
-
-            <?php } else { ?>
-            <div class="header_sidemenu_titre">
-              This section of the
-            </div>
-            <div class="header_sidemenu_titre">
-              website isn't available
-            </div>
-            <div class="header_sidemenu_titre">
-              in english, sorry :(
-            </div>
             <?php } ?>
 
 
