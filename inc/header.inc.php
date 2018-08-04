@@ -59,6 +59,11 @@ else
 if($langue_error)
   $langue_error = ($lang == 'FR') ? "Cette page n'est disponible qu'en anglais et n'a pas de traduction française." : "Sorry! This page is only available in french and does not have an english translation.";
 
+// On va chercher le statut de l'utilisateur
+$est_connecte = loggedin();
+$est_sysop    = ($est_connecte) ? getsysop() : 0;
+$est_admin    = ($est_connecte) ? getadmin() : 0;
+
 
 
 
@@ -73,7 +78,7 @@ $checkmaj = query(" SELECT vars_globales.mise_a_jour FROM vars_globales ");
 $majcheck = mysqli_fetch_array($checkmaj);
 
 // Si maj, on ferme la machine (sauf pour les admins)
-if($majcheck['mise_a_jour'] && !getadmin())
+if($majcheck['mise_a_jour'] && !$est_admin)
   exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Une mise à jour est en cours, NoBleme est temporairement fermé.<br><br>Revenez dans quelques minutes.<br><br><br><br>An update is in progress, NoBleme is temporarily closed.<br><br>Come back in a few minutes.</body></html>');
 
 // CSS spécial pendant les mises à jour
@@ -444,12 +449,12 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
           <div class="<?=header_class('Jouer',$header_menu,'top')?>"><?=$menu['jouer']?></div>
         </a>
 
-        <?php if(loggedin() && getsysop()) { ?>
+        <?php if($est_sysop) { ?>
         <a class="header_topmenu_lien" href="<?=$chemin?>pages/nobleme/activite?mod">
           <div class="<?=header_class('Admin',$header_menu,'top')?>">ADMIN</div>
         </a>
 
-        <?php } if(loggedin() && getadmin()) { ?>
+        <?php } if($est_admin) { ?>
         <a class="header_topmenu_lien" href="<?=$chemin?>pages/dev/ircbot">
           <div class="<?=header_class('Dev',$header_menu,'top')?>">DEV</div>
         </a>
@@ -786,15 +791,15 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
 
 <?php } ################################################## MENU LATÉRAL : LIRE ###########################################################
 // Préparation des traductions des titres du menu
-$sidemenu['nbdb_index']       = ($lang == 'FR') ? "Base d'informations"     : "The NoBleme Database";
-$sidemenu['nbdb_web_encyclo'] = ($lang == 'FR') ? "Encyclopédie du web"     : "Internet encyclopedia";
-$sidemenu['nbdb_web_dico']    = ($lang == 'FR') ? "Dictionnaire du web"     : "Internet dictionnary";
-$sidemenu['nbdb_activite']    = ($lang == 'FR') ? "Changements récents"     : "Recent changes";
-$sidemenu['nbdb_recherche']   = ($lang == 'FR') ? "Recherche dans la NBDB"  : "Search the NBDB";
+$sidemenu['nbdb_titre']       = ($lang == 'FR') ? "NBDB"                      : "NoBleme Database";
+$sidemenu['nbdb_index']       = ($lang == 'FR') ? "Base d'informations"       : "The NoBleme Database";
+$sidemenu['nbdb_web_encyclo'] = ($lang == 'FR') ? "Encyclopédie du web"       : "Internet encyclopedia";
+$sidemenu['nbdb_web_dico']    = ($lang == 'FR') ? "Dictionnaire du web"       : "Internet dictionnary";
+$sidemenu['nbdb_activite']    = ($lang == 'FR') ? "Changements récents"       : "Recent changes";
 /* #################################################################################################### */ if($header_menu == 'Lire') { ?>
 
             <div class="header_sidemenu_titre">
-              NBDB
+              <?=$sidemenu['nbdb_titre']?>
             </div>
 
             <a href="<?=$chemin?>pages/nbdb/index">
@@ -816,14 +821,8 @@ $sidemenu['nbdb_recherche']   = ($lang == 'FR') ? "Recherche dans la NBDB"  : "S
             </a>
 
             <a href="<?=$chemin?>pages/nbdb/activite">
-              <div class="<?=header_class('NBDBactivite',$header_sidemenu,'side')?>">
+              <div class="<?=header_class('NBDBActivite',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nbdb_activite']?>
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/nbdb/recherche">
-              <div class="<?=header_class('NBDBSearch',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nbdb_recherche']?>
               </div>
             </a>
 
@@ -1079,7 +1078,7 @@ $sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    
               </div>
             </a>
 
-            <?php if(getadmin()) { ?>
+            <?php if($est_admin) { ?>
 
             <hr class="header_sidemenu_hr">
 
