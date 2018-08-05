@@ -82,7 +82,7 @@ $qmisc = mysqli_fetch_array(query(" SELECT    quotes.id         AS 'q_id'   ,
 // Préparation des données pour l'affichage
 $misc_id      = $qmisc['q_id'];
 $misc_date    = ($qmisc['q_time']) ? '<span class="gras">du '.predata(jourfr(date('Y-m-d', $qmisc['q_time']))).'</span>' : '';
-$misc_contenu = predata($qmisc['q_contenu'], 1);
+$misc_contenu = predata($qmisc['q_contenu'], 1, 1);
 
 // On a aussi besoin des membres liés à la miscellanée
 $tempid       = $qmisc['q_id'];

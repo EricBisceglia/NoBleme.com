@@ -66,7 +66,7 @@ for($nmisc = 0; $dmisc = mysqli_fetch_array($qmisc); $nmisc++)
   $misc_id[$nmisc]      = $dmisc['q_id'];
   $misc_date[$nmisc]    = ($dmisc['q_time']) ? '<span class="gras">du '.predata(jourfr(date('Y-m-d', $dmisc['q_time']))).'</span>' : '';
   $misc_contenu[$nmisc] = ($dmisc['q_valide']) ? '' : '<span class="texte_negatif">---- MISCELLANÉE NON VALIDÉE ! ----<br>';
-  $misc_contenu[$nmisc] .= predata($dmisc['q_contenu'], 1);
+  $misc_contenu[$nmisc] .= predata($dmisc['q_contenu'], 1, 1);
   $misc_contenu[$nmisc] .= ($dmisc['q_valide']) ? '' : '<br>---- MISCELLANÉE NON VALIDÉE ! ----</span>';
 
   // On a aussi besoin des membres liés à la miscellanée
