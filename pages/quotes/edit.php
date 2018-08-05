@@ -172,8 +172,8 @@ $misc_id      = $qmisc['q_id'];
 $misc_date    = ($qmisc['q_time']) ? 'le '.predata(jourfr(date('Y-m-d', $qmisc['q_time']))) : '';
 $misc_auteur  = predata($qmisc['m_auteur']);
 $misc_valide  = $qmisc['q_valide'];
-$misc_contenu = predata($qmisc['q_contenu']);
-$misc_preview = (isset($_POST['misc_preview'])) ? predata($_POST['misc_preview'], 1) : predata($qmisc['q_contenu'], 1);
+$misc_contenu = $qmisc['q_contenu'];
+$misc_preview = (isset($_POST['misc_preview'])) ? predata($_POST['misc_preview'], 1, 1) : predata($qmisc['q_contenu'], 1, 1);
 
 // On a aussi besoin des membres liés à la miscellanée
 $tempid       = $qmisc['q_id'];
