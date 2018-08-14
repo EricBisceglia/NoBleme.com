@@ -795,7 +795,6 @@ $sidemenu['nbdb_titre']       = ($lang == 'FR') ? "NBDB"                      : 
 $sidemenu['nbdb_index']       = ($lang == 'FR') ? "Base d'informations"       : "The NoBleme Database";
 $sidemenu['nbdb_web_encyclo'] = ($lang == 'FR') ? "Encyclopédie du web"       : "Internet encyclopedia";
 $sidemenu['nbdb_web_dico']    = ($lang == 'FR') ? "Dictionnaire du web"       : "Internet dictionnary";
-$sidemenu['nbdb_activite']    = ($lang == 'FR') ? "Changements récents"       : "Recent changes";
 /* #################################################################################################### */ if($header_menu == 'Lire') { ?>
 
             <div class="header_sidemenu_titre">
@@ -817,12 +816,6 @@ $sidemenu['nbdb_activite']    = ($lang == 'FR') ? "Changements récents"       :
             <a href="<?=$chemin?>pages/nbdb/web_dictionnaire">
               <div class="<?=header_class('NBDBDicoWeb',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nbdb_web_dico']?>
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/nbdb/activite">
-              <div class="<?=header_class('NBDBActivite',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nbdb_activite']?>
               </div>
             </a>
 

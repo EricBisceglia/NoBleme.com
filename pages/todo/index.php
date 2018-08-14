@@ -367,7 +367,7 @@ if(!getxhr()) { /***************************************************************
           <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" onclick="todolist_ajouter_tache();" height="30">
           <?php } ?>
           <a href="<?=$chemin?>pages/doc/rss">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="RSS">
+            <img class="pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="RSS" height="30">
           </a>
         </h1>
 

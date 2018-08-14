@@ -115,7 +115,7 @@ $misc_pseudos = ($temp_pseudos) ? '<span class="gras">(</span>'.$temp_pseudos.'<
 
         <h5>Petite citation amusante</h5>
 
-        <p class="monospace">
+        <p class="monospace align_left">
           <a class="gras" href="<?=$chemin?>pages/quotes/quote?id=<?=$misc_id?>">Miscellanée #<?=$misc_id?></a> <?=$misc_date?> <?=$misc_pseudos?>
           <?php if(getadmin()) { ?>
           - <a class="gras" href="<?=$chemin?>pages/quotes/edit?id=<?=$misc_id?>">Modifier</a> - <a class="gras" href="<?=$chemin?>pages/quotes/delete?id=<?=$misc_id?>">Supprimer</a>

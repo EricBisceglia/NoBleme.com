@@ -99,8 +99,11 @@ if(!getxhr()) { /***************************************************************
 
         <h1>
           Miscellanées
+          <a href="<?=$chemin?>pages/quotes/add">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" height="30">
+          </a>
           <a href="<?=$chemin?>pages/doc/rss">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="RSS">
+            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="RSS" height="30">
           </a>
         </h1>
 
@@ -142,7 +145,7 @@ if(!getxhr()) { /***************************************************************
 
           <?php } for($i=0;$i<$nmisc;$i++) { ?>
 
-          <p class="monospace">
+          <p class="monospace align_left">
             <a class="gras" href="<?=$chemin?>pages/quotes/quote?id=<?=$misc_id[$i]?>">Miscellanée #<?=$misc_id[$i]?></a> <?=$misc_date[$i]?> <?=$misc_pseudos[$i]?>
             <?php if($misc_admin) { ?>
             - <a class="gras" href="<?=$chemin?>pages/quotes/edit?id=<?=$misc_id[$i]?>">Modifier</a> - <a class="gras" href="<?=$chemin?>pages/quotes/delete?id=<?=$misc_id[$i]?>">Supprimer</a>

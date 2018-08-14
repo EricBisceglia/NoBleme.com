@@ -122,6 +122,14 @@ $js  = array('toggle', 'highlight', 'dev/reference');
                 <?=changer_casse('éssai avec accent','init');?>
               </td>
             </tr>
+            <tr>
+              <td class="align_center">
+              remplacer_accents('Évangélisme');
+              </td>
+              <td class="gras align_center">
+                <?=remplacer_accents('Évangélisme');?>
+              </td>
+            </tr>
           </tbody>
         </table>
 

@@ -36,7 +36,7 @@ if($lang == 'FR')
 {
   // Introduction
   $trad['titre']      = "Encyclopédie de la culture web";
-  $trad['soustitre']  = "Documentation de l'histoire des memes et des cultures d'internet";
+  $trad['soustitre']  = "Documentation de l'histoire des memes et de la culture d'internet";
   $trad['desc']       = <<<EOD
 À l'origine un monde à part, Internet s'est doucement ouvert au public jusqu'à devenir un lieu incontournable. Cette encyclopédie vise à raconter l'histoire des cultures qui se sont développées au sein d'Internet lors de son enfance, ainsi qu'à documenter les <a class="gras" href="{$chemin}pages/nbdb/web_dictionnaire?define=meme">memes</a> qui se propagent sur le web de nos jours. Elle est accompagnée d'un <a class="gras" href="{$chemin}pages/nbdb/web_dictionnaire">dictionnaire de la culture internet</a>, afin de ne pas avoir à redéfinir à chaque page de l'encyclopédie le vocabulaire propre à la culture internet.
 EOD;
@@ -70,7 +70,7 @@ else if($lang == 'EN')
 {
   // Introduction
   $trad['titre']      = "Internet culture encyclopedia";
-  $trad['soustitre']  = "Documenting the history of memes and internet culture in general";
+  $trad['soustitre']  = "Documenting the history of memes and internet culture";
   $trad['desc']       = <<<EOD
 At first a quaint world of its own, the Internet slowly opened itself to the public, and has now become an unavoidable part of everyone's life. The goal of this encyclopedia is to tell the history of how Internet became what it is today, aswell as document the various <a class="gras" href="{$chemin}pages/nbdb/web_dictionnaire?define=meme">memes</a> that are being spread everywhere nowadays. It comes with a <a class="gras" href="{$chemin}pages/nbdb/web_dictionnaire">dictionary of internet culture</a>, in order to avoid having to define the same words over and over.
 EOD;
@@ -110,18 +110,19 @@ EOD;
 
         <h1>
           <?=$trad['titre']?>
-          <?php if($est_admin) { ?>
-          <a href="<?=$chemin?>pages/nbdb/web_add">
-            <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" height="30">
-          </a>
-          <?php } else { ?>
-            <a href="<?=$chemin?>pages/doc/rss">
+          <a href="<?=$chemin?>pages/doc/rss">
             <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="M" height="30">
           </a>
-          <?php } ?>
         </h1>
 
-        <h5><?=$trad['soustitre']?></h5>
+        <h5>
+          <?=$trad['soustitre']?>
+          <?php if($est_admin) { ?>
+          <a href="<?=$chemin?>pages/nbdb/web_edit">
+            &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" height="22">
+          </a>
+          <?php } ?>
+        </h5>
 
         <p><?=$trad['desc']?></p>
 
