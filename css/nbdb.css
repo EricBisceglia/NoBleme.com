@@ -1,2 +1,5 @@
+/********************************************************** DICTIONNAIRE DU WEB **********************************************************/
+.web_dico_alerte_conteneur { padding-left: 15px; padding-top: 8px; align-items: center; text-align: justify; }
+
 /********************************************** MODIFIER UNE ENTRÉE DU DICTIONNAIRE DU WEB ***********************************************/
-textarea.web_dico_edit { height: 250px; }
+.web_dico_edit { height: 250px; }

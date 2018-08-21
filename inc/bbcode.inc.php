@@ -273,3 +273,17 @@ function bbcode($post, $xhr=NULL)
   // Et on renvoie la chaine traitée
   return $post;
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction rajoutant des BBCodes supplémentaires pour la NBDB
+//
+// Exemple d'utilisation: nbdbcode($post)
+
+function nbdbcode($post)
+{
+  // Et on renvoie la chaine traitée
+  return $post;
+}

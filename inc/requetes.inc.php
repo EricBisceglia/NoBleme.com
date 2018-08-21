@@ -67,7 +67,9 @@ sql_creer_table('nbdb_web_definition');
 
 sql_creer_champ('nbdb_web_definition', 'titre_fr', 'MEDIUMTEXT', 'id');
 sql_creer_champ('nbdb_web_definition', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
-sql_creer_champ('nbdb_web_definition', 'definition_fr', 'LONGTEXT', 'titre_en');
+sql_creer_champ('nbdb_web_definition', 'redirection_fr', 'MEDIUMTEXT', 'titre_en');
+sql_creer_champ('nbdb_web_definition', 'redirection_en', 'MEDIUMTEXT', 'redirection_fr');
+sql_creer_champ('nbdb_web_definition', 'definition_fr', 'LONGTEXT', 'redirection_en');
 sql_creer_champ('nbdb_web_definition', 'definition_en', 'LONGTEXT', 'definition_fr');
 sql_creer_champ('nbdb_web_definition', 'est_vulgaire', 'TINYINT(1)', 'definition_en');
 sql_creer_champ('nbdb_web_definition', 'est_politise', 'TINYINT(1)', 'est_vulgaire');

@@ -245,6 +245,44 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
 
 
   //*************************************************************************************************************************************//
+  //                                                                 NBDB                                                                //
+  //*************************************************************************************************************************************//
+  // Dictionnaire du web : Nouvelle entrée
+
+  else if($type === 'nbdb_web_definition_new')
+  {
+    $retour['css']  = 'texte_noir vert_background_clair';
+    $retour['href'] = $chemin.'pages/nbdb/web_dictionnaire?id='.$id;
+    $retour['FR']   = ($titre) ? 'Nouvelle entrée dans le dictionnaire du web : '.predata(tronquer_chaine($titre, 45, '...')) : '';
+    $retour['EN']   = ($parent) ? 'New entry in the internet dictionary : '.predata(tronquer_chaine($parent, 55, '...')) : '';
+  }
+
+  //*************************************************************************************************************************************//
+  // Dictionnaire du web : Modification d'une entrée
+
+  else if($type === 'nbdb_web_definition_edit')
+  {
+    $retour['css']  = '';
+    $retour['href'] = $chemin.'pages/nbdb/web_dictionnaire?id='.$id;
+    $retour['FR']   = ($titre) ? 'Entrée modifiée dans le dictionnaire du web : '.predata(tronquer_chaine($titre, 45, '...')) : '';
+    $retour['EN']   = ($parent) ? 'Entry modified in the internet dictionary : '.predata(tronquer_chaine($parent, 55, '...')) : '';
+  }
+
+  //*************************************************************************************************************************************//
+  // Dictionnaire du web : Suppression d'une entrée
+
+  else if($type === 'nbdb_web_definition_delete')
+  {
+    $retour['css']  = '';
+    $retour['href'] = $chemin.'pages/nbdb/web_dictionnaire?id='.$id;
+    $retour['FR']   = ($titre) ? 'Entrée supprimée dans le dictionnaire du web : '.predata(tronquer_chaine($titre, 40, '...')) : '';
+    $retour['EN']   = ($parent) ? 'Entry deleted in the internet dictionary : '.predata(tronquer_chaine($parent, 55, '...')) : '';
+  }
+
+
+
+
+  //*************************************************************************************************************************************//
   //                                                          COIN DES ÉCRIVAINS                                                         //
   //*************************************************************************************************************************************//
   // Nouveau texte
