@@ -247,6 +247,39 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   //*************************************************************************************************************************************//
   //                                                                 NBDB                                                                //
   //*************************************************************************************************************************************//
+  // Encyclopédie du web : Nouvelle page
+
+  else if($type === 'nbdb_web_page_new')
+  {
+    $retour['css']  = 'texte_noir vert_background_clair';
+    $retour['href'] = $chemin.'pages/nbdb/web?id='.$id;
+    $retour['FR']   = ($titre) ? 'Nouvelle page dans l\'encyclopédie du web : '.predata(tronquer_chaine($titre, 45, '...')) : '';
+    $retour['EN']   = ($parent) ? 'New page in the internet encyclopedia : '.predata(tronquer_chaine($parent, 50, '...')) : '';
+  }
+
+  //*************************************************************************************************************************************//
+  // Encyclopédie du web : Modification d'une page
+
+  else if($type === 'nbdb_web_page_edit')
+  {
+    $retour['css']  = '';
+    $retour['href'] = $chemin.'pages/nbdb/web?id='.$id;
+    $retour['FR']   = ($titre) ? 'Page modifiée dans l\'encyclopédie du web : '.predata(tronquer_chaine($titre, 45, '...')) : '';
+    $retour['EN']   = ($parent) ? 'Page modified in the internet encyclopedia : '.predata(tronquer_chaine($parent, 50, '...')) : '';
+  }
+
+  //*************************************************************************************************************************************//
+  // Encyclopédie du web : Suppression d'une page
+
+  else if($type === 'nbdb_web_page_delete')
+  {
+    $retour['css']  = '';
+    $retour['href'] = $chemin.'pages/nbdb/web?id='.$id;
+    $retour['FR']   = ($titre) ? 'Page supprimée dans l\'encyclopédie du web : '.predata(tronquer_chaine($titre, 40, '...')) : '';
+    $retour['EN']   = ($parent) ? 'Page deleted in the internet encyclopedia : '.predata(tronquer_chaine($parent, 50, '...')) : '';
+  }
+
+  //*************************************************************************************************************************************//
   // Dictionnaire du web : Nouvelle entrée
 
   else if($type === 'nbdb_web_definition_new')

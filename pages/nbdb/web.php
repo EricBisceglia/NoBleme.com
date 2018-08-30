@@ -17,11 +17,116 @@ $page_url = "pages/nbdb/web";
 $langue_page = array('FR','EN');
 
 // Titre et description
-$page_titre = "NBDB : Culture internet";
+$page_titre = ($lang == 'FR') ? "NBDB : Culture internet" : "NBDB: Internet culture";
 $page_desc  = "Encyclopédie de la culture internet, des obscurs bulletin boards d'antan aux memes modernes.";
 
 // CSS
-$css = array('doc');
+$css = array('doc', 'nbdb');
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                        TRAITEMENT DU POST-DATA                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Récupération de l'id (ou de l'absence d'id) de la page
+
+// On récupère le titre ou l'id s'il y en a un de spécifié
+$web_titre = (isset($_GET['page'])) ? postdata($_GET['page'], 'string') : '';
+$web_id    = (isset($_GET['id']))   ? predata($_GET['id'], 'int', 0)      : 0;
+
+// Si c'est une page aléatoire, on va choper un ID au pif
+if(isset($_GET['random']))
+{
+  // Selon la langue, on fait une requête différente
+  $header_sidemenu  = 'NBDBEncycloRand';
+  $web_lang         = changer_casse($lang, 'min');
+  $dwebrandom       = mysqli_fetch_array(query("  SELECT    nbdb_web_page.id AS 'w_id'
+                                            FROM      nbdb_web_page
+                                            WHERE     nbdb_web_page.titre_$web_lang    NOT LIKE ''
+                                            AND       nbdb_web_page.redirection_$web_lang  LIKE ''
+                                            ORDER BY  RAND()
+                                            LIMIT     1 "));
+  $web_id           = $dwebrandom['w_id'];
+}
+
+// On va chercher si l'entrée existe
+if($web_titre && !$web_id)
+{
+  // Selon la langue, on fait une requête différente
+  $web_lang   = changer_casse($lang, 'min');
+  $dcheckweb  = mysqli_fetch_array(query("  SELECT  nbdb_web_page.id AS 'w_id'
+                                            FROM    nbdb_web_page
+                                            WHERE   nbdb_web_page.titre_$web_lang  LIKE '$web_titre' "));
+
+  // Si la page existe, on récupère son id
+  $web_id     = ($dcheckweb['w_id']) ? $dcheckweb['w_id'] : 0;
+
+  // Sinon, on redirige vers la liste des pages
+  if(!$web_id)
+    exit(header("Location: ".$chemin."pages/nbdb/web_pages"));
+}
+// Sinon, on lui met l'id 0
+else if(!$web_id)
+  $web_id = 0;
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                        PRÉPARATION DES DONNÉES                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Contenu d'une page
+
+// On ne peut aller la chercher que si une page spécifique est choisie
+if($web_id)
+{
+  // On spécifique la langue à utiliser
+  $web_lang = changer_casse($lang, 'min');
+
+  // On va chercher l'entrée
+  $dweb = mysqli_fetch_array(query("  SELECT  nbdb_web_page.redirection_$web_lang AS 'w_redirect'       ,
+                                              nbdb_web_page.titre_$web_lang       AS 'w_titre'          ,
+                                              nbdb_web_page.contenu_$web_lang     AS 'w_contenu'        ,
+                                              nbdb_web_page.date_apparition       AS 'w_apparition'     ,
+                                              nbdb_web_page.date_popularisation   AS 'w_popularisation' ,
+                                              nbdb_web_page.est_vulgaire          AS 'w_vulgaire'       ,
+                                              nbdb_web_page.est_politise          AS 'w_politise'       ,
+                                              nbdb_web_page.est_incorrect         AS 'w_incorrect'
+                                      FROM    nbdb_web_page
+                                      WHERE   nbdb_web_page.id = '$web_id' "));
+
+  // Si c'est une redirection, on redirige vers la bonne page
+  if($dweb['w_redirect'] && $dweb['w_redirect'] != $dweb['w_titre'] && !getadmin())
+    exit(header("Location: ".$chemin."pages/nbdb/web?page=".urlencode($dweb['w_redirect'])));
+
+  // S'il n'y a pas de page dans notre langue, on dégage
+  if(!$dweb['w_titre'])
+    exit(header("Location: ".$chemin."pages/nbdb/web_pages"));
+
+  // Puis on prépare le contenu de la page pour l'affichage
+  $web_redirect     = ($dweb['w_redirect']) ? predata($dweb['w_redirect']) : '';
+  $web_redirect_url = ($dweb['w_redirect']) ? urlencode($dweb['w_redirect']) : '';
+  $web_titre        = predata($dweb['w_titre']);
+  $web_contenu      = nbdbcode(bbcode(predata($dweb['w_contenu'], 1)));
+  $web_vulgaire     = $dweb['w_vulgaire'];
+  $web_politise     = $dweb['w_politise'];
+  $web_incorrect    = $dweb['w_incorrect'];
+
+  // Et on oublie pas de modifier les infos de la page
+  $page_nom   = 'Découvre ce qu\'est '.predata(tronquer_chaine($dweb['w_titre'], 20, '...'));
+  $page_url   = "pages/nbdb/web?page=".urlencode($dweb['w_titre']);
+  $page_titre = "NBDB : ".predata($dweb['w_titre']);
+  $page_desc  = predata($dweb['w_titre']).", c'est quoi ça ? Encyclopédie de la culture internet.";
+}
 
 
 
@@ -61,6 +166,13 @@ EOD;
   $trad['docd_rss']         = "Suivre les changements de contenu par flux RSS.";
   $trad['doct_suggerer']    = "Signaler une erreur, suggérer du contenu";
   $trad['docd_suggerer']    = "Cette encyclopédie étant maintenue par une seule personne, votre aide et vos suggestions sont appréciés.";
+
+  // Contenu du dictionnaire du web
+  $trad['web_colon']        = ' :';
+  $trad['web_autre']        = "Autre page au hasard";
+  $trad['web_vulgaire']     = "LA PAGE CI-DESSOUS CONTIENT DU CONTENU VULGAIRE OU DÉGUEULASSE";
+  $trad['web_politise']     = "La page ci-dessous est politisée : elle aborde un sujet de société d'une façon avec laquelle tout le monde ne sera pas forcément d'accord. Le but de cette encyclopédie n'est pas de plaire à tous, mais plutôt de présenter des faits de façon objective, en tentant d'être aussi neutre que possible, quitte à froisser certaines opinions.";
+  $trad['web_incorrect']    = "Le but de cette encyclopédie est de documenter toute la culture internet, même dans ses aspects offensants. La page ci-dessous porte sur un sujet politiquement incorrect : il est très fortement conseillé de ne pas utiliser ce terme publiquement, car il a de mauvaises connotations.";
 }
 
 
@@ -95,6 +207,13 @@ EOD;
   $trad['docd_rss']         = "Follow new content through your RSS feed reader.";
   $trad['doct_suggerer']    = "Report a mistake, suggest new content";
   $trad['docd_suggerer']    = "This encyclopedia being the work of a single person,<br> your help is always appreciated.";
+
+  // Contenu du dictionnaire du web
+  $trad['web_colon']        = ':';
+  $trad['web_autre']        = "Another random page";
+  $trad['web_vulgaire']     = "THE FOLLOWING PAGE CONTAINS RUDE<br>AND/OR GROSS CONTENT";
+  $trad['web_politise']     = "The following page is politically loaded: it concerns an aspect of society on which people tend to have disagreements. The goal of this encyclopedia is not to please everyone, but rather to try to bring facts objectively, with a point of view as neutral as possible, even if it often means being in disagreement with some strong opinions.";
+  $trad['web_incorrect']    = "This encyclopedia's goal is to document internet culture as a whole, including its offensive and irrespectful aspects. The following page concerns a politically incorrect topic: it is heavily suggested that you do not use it publicly, as it has extremely negative connotations.";
 }
 
 
@@ -105,6 +224,10 @@ EOD;
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
+
+      <?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      // Index de l'encyclopédie du web
+      if(!$web_id) { ?>
 
       <div class="texte">
 
@@ -120,6 +243,9 @@ EOD;
           <?php if($est_admin) { ?>
           <a href="<?=$chemin?>pages/nbdb/web_edit">
             &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" height="22">
+          </a>
+          <a href="<?=$chemin?>pages/nbdb/web_images">
+            &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/upload.svg" alt="+" height="22">
           </a>
           <?php } ?>
         </h5>
@@ -148,7 +274,7 @@ EOD;
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_liste';">
+        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_pages';">
           <div class="align_center doc_minibordure">
             <h5 class="doc_minipadding_bot doc_minibordure_bot">
               <?=$trad['doct_liste']?>
@@ -176,7 +302,7 @@ EOD;
 
         <div class="flexcontainer">
           <div style="flex:10;">
-            <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web?page=random';">
+            <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web?random';">
               <div class="align_center doc_minibordure">
                 <h5 class="doc_minipadding_bot doc_minibordure_bot">
                   <?=$trad['doct_random']?>
@@ -250,6 +376,150 @@ EOD;
         </div>
 
       </div>
+
+
+
+
+      <?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      // Redirection vers une autre page
+      } else if($web_redirect && $est_admin) { ?>
+
+      <div class="texte">
+
+        <h1>
+          <a href="<?=$chemin?>pages/nbdb/web">
+            <?=$trad['titre']?>
+          </a>
+          <a href="<?=$chemin?>pages/doc/rss">
+            <img class="pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="M" height="30">
+          </a>
+        </h1>
+
+        <h5>
+          <?=$trad['soustitre']?>
+          <?php if($est_admin) { ?>
+          <a href="<?=$chemin?>pages/nbdb/web_edit?id=<?=$web_id?>">
+            &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="22">
+          </a>
+          <a href="<?=$chemin?>pages/nbdb/web_delete?id=<?=$web_id?>">
+            &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" height="22">
+          </a>
+          <?php } ?>
+        </h5>
+
+        <br>
+        <br>
+
+        <p class="alinea gros texte_noir">
+          <a href="<?=$chemin?>pages/nbdb/web?page=<?=$web_redirect_url?>">
+            Redirection automatique vers : <span class="souligne"><?=$web_redirect?></span>
+          </a>
+        </p>
+
+      </div>
+
+
+
+
+      <?php ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      // Page spécifique du dictionnaire du web
+      } else { ?>
+
+      <div class="texte">
+
+        <h1>
+          <a href="<?=$chemin?>pages/nbdb/web">
+            <?=$trad['titre']?>
+          </a>
+          <a href="<?=$chemin?>pages/doc/rss">
+            <img class="pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="M" height="30">
+          </a>
+        </h1>
+
+        <h5>
+          <?=$trad['soustitre']?>
+          <?php if($est_admin) { ?>
+          <a href="<?=$chemin?>pages/nbdb/web_edit?id=<?=$web_id?>">
+            &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="22">
+          </a>
+          <a href="<?=$chemin?>pages/nbdb/web_delete?id=<?=$web_id?>">
+            &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" height="22">
+          </a>
+          <?php } ?>
+        </h5>
+
+        <br>
+        <br>
+
+        <?php if($web_vulgaire) { ?>
+
+        <div class="flexcontainer web_dico_alerte_conteneur">
+          <div style="flex:1" class="align_center">
+            <img src="<?=$chemin?>img/icones/avertissement.svg" alt="!" height="70">
+          </div>
+          <div style="flex:5" class="align_center gros gras texte_noir">
+            <?=$trad['web_vulgaire']?>
+          </div>
+          <div style="flex:1" class="align_center">
+            <img src="<?=$chemin?>img/icones/avertissement.svg" alt="!" height="70">
+          </div>
+        </div>
+        <br>
+        <br>
+
+        <?php } if($web_politise) { ?>
+
+        <div class="flexcontainer web_dico_alerte_conteneur">
+          <div style="flex:1" class="align_center" class="valign_middle">
+            <img src="<?=$chemin?>img/icones/avertissement.svg" alt="!" height="50">
+          </div>
+          <div style="flex:5" class="gras texte_noir">
+            <?=$trad['web_politise']?>
+          </div>
+          <div style="flex:1" class="align_center" class="valign_middle">
+            <img src="<?=$chemin?>img/icones/avertissement.svg" alt="!" height="50">
+          </div>
+        </div>
+        <br>
+        <br>
+
+        <?php } if($web_incorrect) { ?>
+
+        <div class="flexcontainer web_dico_alerte_conteneur">
+          <div style="flex:1" class="align_center" class="valign_middle">
+            <img src="<?=$chemin?>img/icones/avertissement.svg" alt="!" height="50">
+          </div>
+          <div style="flex:5" class="gras texte_noir">
+            <?=$trad['web_incorrect']?>
+          </div>
+          <div style="flex:1" class="align_center" class="valign_middle">
+            <img src="<?=$chemin?>img/icones/avertissement.svg" alt="!" height="50">
+          </div>
+        </div>
+        <br>
+        <br>
+
+        <?php } ?>
+
+        <h3 class="alinea texte_noir">
+          <?=$web_titre?><?=$trad['web_colon']?>
+        </h3>
+
+        <p>
+          <?=$web_contenu?>
+        </p>
+
+        <br>
+
+        <p class="align_center moinsgros gras">
+          <a href="<?=$chemin?>pages/nbdb/web?random">
+            <?=$trad['web_autre']?>
+          </a>
+        </p>
+
+      </div>
+
+      <?php } ?>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

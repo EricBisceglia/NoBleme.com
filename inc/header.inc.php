@@ -794,6 +794,8 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
 $sidemenu['nbdb_titre']       = ($lang == 'FR') ? "NBDB"                      : "NoBleme Database";
 $sidemenu['nbdb_index']       = ($lang == 'FR') ? "Base d'informations"       : "The NoBleme Database";
 $sidemenu['nbdb_web_encyclo'] = ($lang == 'FR') ? "Encyclopédie du web"       : "Internet encyclopedia";
+$sidemenu['nbdb_web_e_liste'] = ($lang == 'FR') ? "Liste des pages"           : "List of all pages";
+$sidemenu['nbdb_web_e_rand']  = ($lang == 'FR') ? "Page au hasard"            : "Random page";
 $sidemenu['nbdb_web_dico']    = ($lang == 'FR') ? "Dictionnaire du web"       : "Internet dictionnary";
 /* #################################################################################################### */ if($header_menu == 'Lire') { ?>
 
@@ -810,6 +812,18 @@ $sidemenu['nbdb_web_dico']    = ($lang == 'FR') ? "Dictionnaire du web"       : 
             <a href="<?=$chemin?>pages/nbdb/web">
               <div class="<?=header_class('NBDBEncycloWeb',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nbdb_web_encyclo']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nbdb/web_pages">
+              <div class="<?=header_class('NBDBEncycloListe',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nbdb_web_e_liste']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nbdb/web?random">
+              <div class="<?=header_class('NBDBEncycloRand',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nbdb_web_e_rand']?>
               </div>
             </a>
 

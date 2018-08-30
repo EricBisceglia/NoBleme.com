@@ -17,7 +17,7 @@ $page_url = "pages/nbdb/web_dictionnaire";
 $langue_page = array('FR','EN');
 
 // Titre et description
-$page_titre = "NBDB : Culture internet";
+$page_titre = ($lang == 'FR') ? "NBDB : Culture internet" : "NBDB: Internet culture";
 $page_desc  = "Dictionnaire des termes propres à la culture internet.";
 
 // CSS & JS
@@ -59,12 +59,12 @@ if($dico_titre && !$dico_id)
 {
   // Selon la langue, on fait une requête différente
   $dico_lang  = changer_casse($lang, 'min');
-  $check_dico = mysqli_fetch_array(query("  SELECT  nbdb_web_definition.id AS 'd_id'
+  $dcheckdico = mysqli_fetch_array(query("  SELECT  nbdb_web_definition.id AS 'd_id'
                                             FROM    nbdb_web_definition
                                             WHERE   nbdb_web_definition.titre_$dico_lang  LIKE '$dico_titre' "));
 
   // Si la page existe, on récupère son id
-  $dico_id = ($check_dico['d_id']) ? $check_dico['d_id'] : 0;
+  $dico_id = ($dcheckdico['d_id']) ? $dcheckdico['d_id'] : 0;
 }
 // Sinon, on lui met l'id 0
 else if(!$dico_id)
@@ -116,10 +116,10 @@ if($dico_id)
   $definition_incorrect     = $ddefinition['d_incorrect'];
 
   // Et on oublie pas de modifier les infos de la page
-  $page_nom = 'Apprend le sens de '.predata(tronquer_chaine($ddefinition['d_titre'], 20, '...'));
-  $page_url = "pages/nbdb/web_dictionnaire";
+  $page_nom   = 'Apprend le sens de '.predata(tronquer_chaine($ddefinition['d_titre'], 20, '...'));
+  $page_url   = "pages/nbdb/web_dictionnaire?define=".urlencode($ddefinition['d_titre']);
   $page_titre = "NBDB : ".predata($ddefinition['d_titre']);
-  $page_desc  = "Dictionnaire des termes propres à la culture internet.";
+  $page_desc  = predata($ddefinition['d_titre']).", ça veut dire quoi ? Dictionnaire des termes propres à la culture internet.";
 }
 
 
@@ -143,7 +143,8 @@ if(!$dico_id)
                           FROM      nbdb_web_definition
                           WHERE     nbdb_web_definition.titre_$definition_lang  NOT LIKE ''
                                     $where_definition_redirections
-                          ORDER BY  nbdb_web_definition.titre_$definition_lang  ASC ");
+                          ORDER BY  nbdb_web_definition.titre_$definition_lang REGEXP '^[a-z]' DESC  ,
+                                    nbdb_web_definition.titre_$definition_lang                       ");
 
   // Préparation pour l'affichage
   for($ndefinition = 0 ; $ddefinition = mysqli_fetch_array($qdefinition) ; $ndefinition++)
@@ -339,7 +340,7 @@ if(!getxhr()) { /***************************************************************
         <br>
 
         <p class="alinea gros texte_noir">
-          <a href="<?=$chemin?>pages/nbdb/web_dictionnaire?define=<?=$definition_redirect?>">
+          <a href="<?=$chemin?>pages/nbdb/web_dictionnaire?define=<?=$definition_redirect_url?>">
             Redirection automatique vers : <span class="souligne"><?=$definition_redirect?></span>
           </a>
         </p>

@@ -64,6 +64,7 @@ if(isset($_POST['web_dico_add']) || isset($_POST['web_dico_edit']))
                         nbdb_web_definition.redirection_fr  = '$edit_dico_redirection_fr' ,
                         nbdb_web_definition.redirection_en  = '$edit_dico_redirection_en' ,
                         nbdb_web_definition.definition_fr   = '$edit_dico_contenu_fr'     ,
+                        nbdb_web_definition.definition_en   = '$edit_dico_contenu_en'     ,
                         nbdb_web_definition.est_vulgaire    = '$edit_dico_vulgaire'       ,
                         nbdb_web_definition.est_politise    = '$edit_dico_politise'       ,
                         nbdb_web_definition.est_incorrect   = '$edit_dico_incorrect'      ");
@@ -228,20 +229,6 @@ else
 
       <div class="texte">
 
-        <h1>
-          <a>Dictionnaire de la culture web</a>
-          <img class="pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="M" height="30">
-        </h1>
-
-        <h5>
-          Documentation de l'histoire des memes et de la culture d'internet
-          &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="22">
-          &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" height="22">
-        </h5>
-
-        <br>
-        <br>
-
         <p class="alinea gros texte_noir souligne">
           <?=$dico_titre_fr?> :
         </p>
@@ -264,22 +251,8 @@ else
 
       <div class="texte">
 
-        <h1>
-          <a>Internet culture dictionary</a>
-          <img class="pointeur" src="<?=$chemin?>img/icones/rss.svg" alt="M" height="30">
-        </h1>
-
-        <h5>
-          Documenting the history of memes and internet culture
-          &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="22">
-          &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" height="22">
-        </h5>
-
-        <br>
-        <br>
-
         <p class="alinea gros texte_noir souligne">
-          <?=$dico_titre_en?> :
+          <?=$dico_titre_en?>:
         </p>
 
         <p>
