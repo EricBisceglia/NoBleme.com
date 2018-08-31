@@ -95,6 +95,8 @@ sql_creer_champ('nbdb_web_periode', 'titre_fr', 'MEDIUMTEXT', 'id');
 sql_creer_champ('nbdb_web_periode', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
 sql_creer_champ('nbdb_web_periode', 'description_fr', 'MEDIUMTEXT', 'titre_en');
 sql_creer_champ('nbdb_web_periode', 'description_en', 'MEDIUMTEXT', 'description_fr');
+sql_creer_champ('nbdb_web_periode', 'annee_debut', 'INT(4)', 'description_en');
+sql_creer_champ('nbdb_web_periode', 'annee_fin', 'INT(4)', 'annee_debut');
 
 
 
@@ -106,23 +108,24 @@ sql_creer_table('nbdb_web_categorie');
 
 sql_creer_champ('nbdb_web_categorie', 'titre_fr', 'MEDIUMTEXT', 'id');
 sql_creer_champ('nbdb_web_categorie', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+sql_creer_champ('nbdb_web_categorie', 'ordre_affichage', 'INT(11) UNSIGNED NOT NULL', 'titre_en');
+sql_creer_champ('nbdb_web_categorie', 'description_fr', 'MEDIUMTEXT', 'ordre_affichage');
+sql_creer_champ('nbdb_web_categorie', 'description_en', 'MEDIUMTEXT', 'description_fr');
+
+sql_creer_index('nbdb_web_categorie', 'index_ordre_affichage', 'ordre_affichage');
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Nouvelle table : NBDB - Encyclopédie du web - Catégories des pages, définitions, et images
+// Nouvelle table : NBDB - Encyclopédie du web - Catégories des pages
 
-sql_creer_table('nbdb_web_categorie_contenu');
+sql_creer_table('nbdb_web_page_categorie');
 
-sql_creer_champ('nbdb_web_categorie_contenu', 'FKnbdb_web_categorie', 'INT(11) UNSIGNED NOT NULL', 'id');
-sql_creer_champ('nbdb_web_categorie_contenu', 'FKnbdb_web_page', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_categorie');
-sql_creer_champ('nbdb_web_categorie_contenu', 'FKnbdb_web_definition', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_page');
-sql_creer_champ('nbdb_web_categorie_contenu', 'FKnbdb_web_image', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_definition');
+sql_creer_champ('nbdb_web_page_categorie', 'FKnbdb_web_page', 'INT(11) UNSIGNED NOT NULL', 'id');
+sql_creer_champ('nbdb_web_page_categorie', 'FKnbdb_web_categorie', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_page');
 
-sql_creer_index('nbdb_web_categorie_contenu', 'index_pages', 'FKnbdb_web_page, FKnbdb_web_categorie');
-sql_creer_index('nbdb_web_categorie_contenu', 'index_definitions', 'FKnbdb_web_definition, FKnbdb_web_categorie');
-sql_creer_index('nbdb_web_categorie_contenu', 'index_images', 'FKnbdb_web_image, FKnbdb_web_categorie');
+sql_creer_index('nbdb_web_page_categorie', 'index_pages', 'FKnbdb_web_page, FKnbdb_web_categorie');
 
 
 
@@ -142,35 +145,18 @@ sql_creer_champ('nbdb_web_image', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Nouvelle table : NBDB - Encyclopédie du web - Images liées à une page
 
-sql_creer_table('nbdb_web_image_page');
+sql_creer_table('nbdb_web_page_image');
 
-sql_creer_champ('nbdb_web_image_page', 'FKnbdb_web_image', 'INT(11) UNSIGNED NOT NULL', 'id');
-sql_creer_champ('nbdb_web_image_page', 'FKnbdb_web_page', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_image');
-sql_creer_champ('nbdb_web_image_page', 'ordre_affichage', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_page');
-sql_creer_champ('nbdb_web_image_page', 'titre_fr', 'MEDIUMTEXT', 'ordre_affichage');
-sql_creer_champ('nbdb_web_image_page', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
-sql_creer_champ('nbdb_web_image_page', 'description_fr', 'MEDIUMTEXT', 'titre_en');
-sql_creer_champ('nbdb_web_image_page', 'description_en', 'MEDIUMTEXT', 'description_fr');
+sql_creer_champ('nbdb_web_page_image', 'FKnbdb_web_page', 'INT(11) UNSIGNED NOT NULL', 'id');
+sql_creer_champ('nbdb_web_page_image', 'FKnbdb_web_image', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_page');
+sql_creer_champ('nbdb_web_page_image', 'ordre_affichage', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_image');
+sql_creer_champ('nbdb_web_page_image', 'titre_fr', 'MEDIUMTEXT', 'ordre_affichage');
+sql_creer_champ('nbdb_web_page_image', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+sql_creer_champ('nbdb_web_page_image', 'description_fr', 'MEDIUMTEXT', 'titre_en');
+sql_creer_champ('nbdb_web_page_image', 'description_en', 'MEDIUMTEXT', 'description_fr');
 
-sql_creer_index('nbdb_web_image_page', 'index_images', 'FKnbdb_web_page, FKnbdb_web_image');
-sql_creer_index('nbdb_web_image_page', 'index_affichage', 'ordre_affichage');
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Nouvelle table : NBDB - Encyclopédie du web - Historique des changements
-
-sql_creer_table('nbdb_web_historique');
-
-sql_creer_champ('nbdb_web_historique', 'FKnbdb_web_page', 'INT(11) UNSIGNED NOT NULL', 'id');
-sql_creer_champ('nbdb_web_historique', 'public', 'TINYINT(1) NOT NULL', 'FKnbdb_web_page');
-sql_creer_champ('nbdb_web_historique', 'timestamp', 'INT(11) UNSIGNED NOT NULL', 'public');
-sql_creer_champ('nbdb_web_historique', 'type_historique', 'TEXT', 'timestamp');
-sql_creer_champ('nbdb_web_historique', 'diff_avant', 'TEXT', 'type_historique');
-sql_creer_champ('nbdb_web_historique', 'diff_apres', 'TEXT', 'diff_avant');
-
-sql_creer_index('nbdb_web_historique', 'index_timestamp', 'timestamp');
+sql_creer_index('nbdb_web_page_image', 'index_images', 'FKnbdb_web_page, FKnbdb_web_image');
+sql_creer_index('nbdb_web_page_image', 'index_affichage', 'ordre_affichage');
 
 
 

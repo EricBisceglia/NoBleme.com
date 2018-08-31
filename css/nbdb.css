@@ -2,9 +2,10 @@
 .web_dico_alerte_conteneur { padding-left: 15px; padding-top: 8px; align-items: center; text-align: justify; }
 
 /********************************************* MODIFIER UNE ENTRÉE DE L'ENCYCLOPÉDIE DU WEB **********************************************/
-.web_encyclo_edit  { height: 300px; }
-.web_encyclo_dates { width: 190px;  }
-.web_encyclo_dates_container { width: 420px; }
+.web_encyclo_edit               { height: 300px; }
+.web_encyclo_dates              { width: 190px;  }
+.web_encyclo_periode_container  { width: 400px;  }
+.web_encyclo_dates_container    { width: 420px;  }
 
 /********************************************** MODIFIER UNE ENTRÉE DU DICTIONNAIRE DU WEB ***********************************************/
 .web_dico_edit { height: 250px; }

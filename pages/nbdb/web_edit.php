@@ -22,8 +22,9 @@ $langue_page = array('FR');
 // Titre
 $page_titre = "NBDB : Administration";
 
-// CSS
-$css = array('NBDB');
+// CSS & JS
+$css  = array('NBDB');
+$js   = array('dynamique');
 
 
 
@@ -48,6 +49,7 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
   $edit_web_titre_en_raw    = (isset($_POST['web_titre_en'])) ? $_POST['web_titre_en'] : '';
   $edit_web_contenu_fr      = postdata_vide('web_definition_fr', 'string', '');
   $edit_web_contenu_en      = postdata_vide('web_definition_en', 'string', '');
+  $edit_web_periode         = postdata_vide('web_periode', 'int', 0);
   $edit_web_apparition      = ($_POST['web_apparition']) ? mysqldate(postdata_vide('web_apparition', 'string', '')) : '0000-00-00';
   $edit_web_popularisation  = ($_POST['web_popularisation']) ? mysqldate(postdata_vide('web_popularisation', 'string', '')) : '0000-00-00';
   $edit_web_vulgaire        = isset($_POST['web_vulgaire']) ? 1 : 0;
@@ -61,7 +63,8 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
   {
     // On ajoute la définition
     query(" INSERT INTO nbdb_web_page
-            SET         nbdb_web_page.titre_fr            = '$edit_web_titre_fr'        ,
+            SET         nbdb_web_page.FKnbdb_web_periode  = '$edit_web_periode'         ,
+                        nbdb_web_page.titre_fr            = '$edit_web_titre_fr'        ,
                         nbdb_web_page.titre_en            = '$edit_web_titre_en'        ,
                         nbdb_web_page.redirection_fr      = '$edit_web_redirection_fr'  ,
                         nbdb_web_page.redirection_en      = '$edit_web_redirection_en'  ,
@@ -98,7 +101,8 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
 
     // On modifie la définition
     query(" UPDATE  nbdb_web_page
-            SET     nbdb_web_page.titre_fr            = '$edit_web_titre_fr'        ,
+            SET     nbdb_web_page.FKnbdb_web_periode  = '$edit_web_periode'         ,
+                    nbdb_web_page.titre_fr            = '$edit_web_titre_fr'        ,
                     nbdb_web_page.titre_en            = '$edit_web_titre_en'        ,
                     nbdb_web_page.redirection_fr      = '$edit_web_redirection_fr'  ,
                     nbdb_web_page.redirection_en      = '$edit_web_redirection_en'  ,
@@ -123,6 +127,25 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
       if($edit_web_titre_en)
         ircbot($chemin, "An entry in the encyclopedia of internet culture has been modified : ".$edit_web_titre_en_raw." - ".$GLOBALS['url_site']."pages/nbdb/web?id=".$edit_web_id, "#english");
     }
+  }
+
+  // On supprime les catégories liées à la page
+  query(" DELETE FROM nbdb_web_page_categorie
+          WHERE       FKnbdb_web_page = '$edit_web_id' ");
+
+  // On va chercher la liste de toutes les catégories
+  $qcategories = query("  SELECT  nbdb_web_categorie.id AS 'c_id'
+                          FROM    nbdb_web_categorie ");
+
+  // On parcourt cette liste
+  while($dcategories = mysqli_fetch_array($qcategories))
+  {
+    // On vérifie pour chaque entrée si elle est cochée - si oui, on la lie à la page qu'on vient de créer ou modifier
+    $temp_categorie = $dcategories['c_id'];
+    if(isset($_POST['web_categorie_'.$temp_categorie]))
+      query(" INSERT INTO nbdb_web_page_categorie
+              SET         nbdb_web_page_categorie.FKnbdb_web_page       = '$edit_web_id' ,
+                          nbdb_web_page_categorie.FKnbdb_web_categorie  = '$temp_categorie' ");
   }
 
   // Redirection
@@ -174,7 +197,8 @@ else if(isset($_GET['id']))
     exit(header("Location: ".$chemin."pages/nbdb/web"));
 
   // On va récupérer le contenu de la définition
-  $dweb = mysqli_fetch_array(query("  SELECT  nbdb_web_page.titre_fr            AS 'w_titre_fr'       ,
+  $dweb = mysqli_fetch_array(query("  SELECT  nbdb_web_page.FKnbdb_web_periode  AS 'w_periode'        ,
+                                              nbdb_web_page.titre_fr            AS 'w_titre_fr'       ,
                                               nbdb_web_page.titre_en            AS 'w_titre_en'       ,
                                               nbdb_web_page.redirection_fr      AS 'w_redirect_fr'    ,
                                               nbdb_web_page.redirection_en      AS 'w_redirect_en'    ,
@@ -189,6 +213,7 @@ else if(isset($_GET['id']))
                                       WHERE   nbdb_web_page.id = '$web_id' "));
 
   // On prépare tout ça pour l'affichage
+  $web_periode        = $dweb['w_periode'];
   $web_titre_fr       = predata($dweb['w_titre_fr']);
   $web_titre_en       = predata($dweb['w_titre_en']);
   $web_redirect_fr    = predata($dweb['w_redirect_fr']);
@@ -222,6 +247,70 @@ else
   $web_irc            = ' checked';
 }
 
+// On va aussi avoir besoin de l'URL de la page à appeler dynamiquement
+$dynamique_url = (!isset($_GET['id'])) ? 'web_edit' : 'web_edit?id='.$web_id;
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Liste des catégories
+
+// Si c'est une édition, on va chercher la liste des catégories auxquelles la page appartient
+if(isset($_GET['id']))
+{
+  $qpagecategories = query("  SELECT  nbdb_web_page_categorie.FKnbdb_web_categorie AS 'pc_id'
+                              FROM    nbdb_web_page_categorie
+                              WHERE   nbdb_web_page_categorie.FKnbdb_web_page = '$web_id' ");
+
+  // Et on colle toutes ces valeurs dans un tableau
+  $page_categories = array();
+  while($dpagecategories = mysqli_fetch_array($qpagecategories))
+    array_push($page_categories, $dpagecategories['pc_id']);
+}
+
+// On va chercher les catégories
+$qcategories = query("  SELECT    nbdb_web_categorie.id       AS 'c_id' ,
+                                  nbdb_web_categorie.titre_fr AS 'c_titre'
+                        FROM      nbdb_web_categorie
+                        ORDER BY  nbdb_web_categorie.ordre_affichage ASC ");
+
+// Puis on prépare les checkboxes
+$check_categories = '';
+while($dcategories = mysqli_fetch_array($qcategories))
+{
+  $temp_checked      = (isset($_GET['id']) && in_array($dcategories['c_id'], $page_categories)) ? ' checked' : '';
+  $check_categories .= '<input id="web_categorie_'.$dcategories['c_id'].'" name="web_categorie_'.$dcategories['c_id'].'"" type="checkbox"'.$temp_checked.'>&nbsp;<label class="label-inline" for="web_categorie_'.$dcategories['c_id'].'">'.predata($dcategories['c_titre']).'</label><br>';
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Liste des périodes
+
+// On va chercher les périodes
+$qperiodes = query("  SELECT    nbdb_web_periode.id           AS 'p_id'     ,
+                                nbdb_web_periode.titre_fr     AS 'p_titre'  ,
+                                nbdb_web_periode.annee_debut  AS 'p_debut'  ,
+                                nbdb_web_periode.annee_fin    AS 'p_fin'
+                      FROM      nbdb_web_periode
+                      ORDER BY  nbdb_web_periode.annee_debut  ASC ,
+                                nbdb_web_periode.annee_fin    ASC ");
+
+// On prépare le menu déroulant
+$temp_selected    = (isset($_GET['id']) && !$web_periode) ? ' selected' : '';
+$select_periodes  = '<option value="0"'.$temp_selected.'></option>';
+
+// Et on remplit le menu déroulant
+while($dperiodes = mysqli_fetch_array($qperiodes))
+{
+  $temp_selected    = (isset($_GET['id']) && $web_periode == $dperiodes['p_id']) ? ' selected' : '';
+  $temp_annees      = ($dperiodes['p_debut']) ? $dperiodes['p_debut'].' - ' : 'XXXX - ';
+  $temp_annees      = ($dperiodes['p_fin']) ? $temp_annees.$dperiodes['p_fin'] : $temp_annees.' XXXX';
+  $select_periodes .= '<option value="'.$dperiodes['p_id'].'"'.$temp_selected.'>'.$temp_annees.' &nbsp; '.predata($dperiodes['p_titre']).'</option>';
+}
+
 
 
 
@@ -229,7 +318,7 @@ else
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-/************************************************************************************************/ include './../../inc/header.inc.php'; ?>
+if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
 
       <?php if(!isset($_POST['web_preview'])) { ?>
 
@@ -344,6 +433,36 @@ else
 
             <div class="texte">
 
+              <label>
+                Catégories auxquelles laquelle la page appartient
+                <a target="_blank" href="<?=$chemin?>pages/nbdb/web_categories_edit">
+                  &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="18">
+                </a>
+                &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/recharger.svg" alt="R" height="18" onclick="dynamique('<?=$chemin?>', '<?=$dynamique_url?>', 'web_categories', 'reload_categories', 1);">
+              </label>
+              <div id="web_categories">
+                <?php } if(!getxhr() || isset($_POST['reload_categories'])) { ?>
+                <?=$check_categories?>
+                <?php } if(!getxhr()) { ?>
+              </div>
+              <br>
+
+              <div class="web_encyclo_periode_container">
+                <label for="web_periode">
+                  Période à laquelle la page appartient
+                  <a target="_blank" href="<?=$chemin?>pages/nbdb/web_periodes_edit">
+                    &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="18">
+                  </a>
+                  &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/recharger.svg" alt="R" height="18" onclick="dynamique('<?=$chemin?>', '<?=$dynamique_url?>', 'web_periode', 'reload_periodes', 1);">
+                </label>
+                <select id="web_periode" name="web_periode" class="indiv">
+                  <?php } if(!getxhr() || isset($_POST['reload_periodes'])) { ?>
+                  <?=$select_periodes?>
+                <?php } if(!getxhr()) { ?>
+                </select>
+              </div>
+              <br>
+
               <div class="flexcontainer web_encyclo_dates_container">
                 <div style="flex:1">
                   <label for="web_apparition">Date d'apparition (d/m/y)</label>
@@ -391,8 +510,8 @@ else
 
       </div>
 
-<?php /***********************************************************************************************************************************/
+<?php include './../../inc/footer.inc.php'; /*********************************************************************************************/
 /*                                                                                                                                       */
 /*                                                              FIN DU HTML                                                              */
 /*                                                                                                                                       */
-/***************************************************************************************************/ include './../../inc/footer.inc.php';
+/***************************************************************************************************************************************/ }

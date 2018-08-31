@@ -274,7 +274,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   else if($type === 'nbdb_web_page_delete')
   {
     $retour['css']  = '';
-    $retour['href'] = $chemin.'pages/nbdb/web?id='.$id;
+    $retour['href'] = $chemin.'pages/nbdb/web';
     $retour['FR']   = ($titre) ? 'Page supprimée dans l\'encyclopédie du web : '.predata(tronquer_chaine($titre, 40, '...')) : '';
     $retour['EN']   = ($parent) ? 'Page deleted in the internet encyclopedia : '.predata(tronquer_chaine($parent, 50, '...')) : '';
   }
@@ -307,7 +307,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   else if($type === 'nbdb_web_definition_delete')
   {
     $retour['css']  = '';
-    $retour['href'] = $chemin.'pages/nbdb/web_dictionnaire?id='.$id;
+    $retour['href'] = $chemin.'pages/nbdb/web_dictionnaire';
     $retour['FR']   = ($titre) ? 'Entrée supprimée dans le dictionnaire du web : '.predata(tronquer_chaine($titre, 40, '...')) : '';
     $retour['EN']   = ($parent) ? 'Entry deleted in the internet dictionary : '.predata(tronquer_chaine($parent, 55, '...')) : '';
   }
