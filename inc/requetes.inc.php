@@ -50,15 +50,17 @@ sql_creer_champ('nbdb_web_page', 'redirection_fr', 'MEDIUMTEXT', 'titre_en');
 sql_creer_champ('nbdb_web_page', 'redirection_en', 'MEDIUMTEXT', 'redirection_fr');
 sql_creer_champ('nbdb_web_page', 'contenu_fr', 'LONGTEXT', 'redirection_en');
 sql_creer_champ('nbdb_web_page', 'contenu_en', 'LONGTEXT', 'contenu_fr');
-sql_creer_champ('nbdb_web_page', 'date_apparition', 'DATE', 'contenu_en');
-sql_creer_champ('nbdb_web_page', 'date_popularisation', 'DATE', 'date_apparition');
-sql_creer_champ('nbdb_web_page', 'est_vulgaire', 'TINYINT(1)', 'date_popularisation');
+sql_creer_champ('nbdb_web_page', 'annee_apparition', 'INT(4)', 'contenu_en');
+sql_creer_champ('nbdb_web_page', 'mois_apparition', 'INT(2)', 'annee_apparition');
+sql_creer_champ('nbdb_web_page', 'annee_popularisation', 'INT(4)', 'mois_apparition');
+sql_creer_champ('nbdb_web_page', 'mois_popularisation', 'INT(2)', 'annee_popularisation');
+sql_creer_champ('nbdb_web_page', 'est_vulgaire', 'TINYINT(1)', 'mois_popularisation');
 sql_creer_champ('nbdb_web_page', 'est_politise', 'TINYINT(1)', 'est_vulgaire');
 sql_creer_champ('nbdb_web_page', 'est_incorrect', 'TINYINT(1)', 'est_politise');
 
 sql_creer_index('nbdb_web_page', 'index_periode', 'FKnbdb_web_periode');
-sql_creer_index('nbdb_web_page', 'index_apparition', 'date_apparition');
-sql_creer_index('nbdb_web_page', 'index_popularisation', 'date_popularisation');
+sql_creer_index('nbdb_web_page', 'index_apparition', 'annee_apparition, mois_apparition');
+sql_creer_index('nbdb_web_page', 'index_popularisation', 'annee_popularisation, mois_popularisation');
 sql_creer_index('nbdb_web_page', 'index_titre_fr', 'titre_fr (25)');
 sql_creer_index('nbdb_web_page', 'index_titre_en', 'titre_en (25)');
 

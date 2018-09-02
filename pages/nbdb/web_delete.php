@@ -69,6 +69,10 @@ if(isset($_POST['web_delete']))
   query(" DELETE FROM nbdb_web_page
           WHERE       nbdb_web_page.id = '$web_id' ");
 
+  // Ainsi que les catégorisations de la page
+  query(" DELETE FROM nbdb_web_page_categorie
+          WHERE       FKnbdb_web_page = '$web_id' ");
+
   // Activité récente
   if($delete_web_activite)
     activite_nouveau('nbdb_web_page_delete', 0, 0, NULL, 0, $delete_web_titre_fr, $delete_web_titre_en);

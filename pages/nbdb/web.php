@@ -93,16 +93,21 @@ if($web_id)
   $web_lang = changer_casse($lang, 'min');
 
   // On va chercher l'entrée
-  $dweb = mysqli_fetch_array(query("  SELECT  nbdb_web_page.redirection_$web_lang AS 'w_redirect'       ,
-                                              nbdb_web_page.titre_$web_lang       AS 'w_titre'          ,
-                                              nbdb_web_page.contenu_$web_lang     AS 'w_contenu'        ,
-                                              nbdb_web_page.date_apparition       AS 'w_apparition'     ,
-                                              nbdb_web_page.date_popularisation   AS 'w_popularisation' ,
-                                              nbdb_web_page.est_vulgaire          AS 'w_vulgaire'       ,
-                                              nbdb_web_page.est_politise          AS 'w_politise'       ,
-                                              nbdb_web_page.est_incorrect         AS 'w_incorrect'
-                                      FROM    nbdb_web_page
-                                      WHERE   nbdb_web_page.id = '$web_id' "));
+  $dweb = mysqli_fetch_array(query("  SELECT    nbdb_web_page.redirection_$web_lang AS 'w_redirect'         ,
+                                                nbdb_web_page.titre_$web_lang       AS 'w_titre'            ,
+                                                nbdb_web_page.contenu_$web_lang     AS 'w_contenu'          ,
+                                                nbdb_web_page.annee_apparition      AS 'w_apparition_y'     ,
+                                                nbdb_web_page.mois_apparition       AS 'w_apparition_m'     ,
+                                                nbdb_web_page.annee_popularisation  AS 'w_popularisation_y' ,
+                                                nbdb_web_page.mois_popularisation   AS 'w_popularisation_m' ,
+                                                nbdb_web_page.est_vulgaire          AS 'w_vulgaire'         ,
+                                                nbdb_web_page.est_politise          AS 'w_politise'         ,
+                                                nbdb_web_page.est_incorrect         AS 'w_incorrect'        ,
+                                                nbdb_web_periode.id                 AS 'p_id'               ,
+                                                nbdb_web_periode.titre_$web_lang    AS 'p_nom'
+                                      FROM      nbdb_web_page
+                                      LEFT JOIN nbdb_web_periode ON nbdb_web_page.FKnbdb_web_periode = nbdb_web_periode.id
+                                      WHERE     nbdb_web_page.id = '$web_id' "));
 
   // Si c'est une redirection, on redirige vers la bonne page
   if($dweb['w_redirect'] && $dweb['w_redirect'] != $dweb['w_titre'] && !getadmin())
@@ -113,13 +118,37 @@ if($web_id)
     exit(header("Location: ".$chemin."pages/nbdb/web_pages"));
 
   // Puis on prépare le contenu de la page pour l'affichage
-  $web_redirect     = ($dweb['w_redirect']) ? predata($dweb['w_redirect']) : '';
-  $web_redirect_url = ($dweb['w_redirect']) ? urlencode($dweb['w_redirect']) : '';
-  $web_titre        = predata($dweb['w_titre']);
-  $web_contenu      = nbdbcode(bbcode(predata($dweb['w_contenu'], 1)));
-  $web_vulgaire     = $dweb['w_vulgaire'];
-  $web_politise     = $dweb['w_politise'];
-  $web_incorrect    = $dweb['w_incorrect'];
+  $web_redirect         = ($dweb['w_redirect']) ? predata($dweb['w_redirect']) : '';
+  $web_redirect_url     = ($dweb['w_redirect']) ? urlencode($dweb['w_redirect']) : '';
+  $web_titre            = predata($dweb['w_titre']);
+  $web_contenu          = nbdbcode(bbcode(predata($dweb['w_contenu'], 1)));
+  $web_vulgaire         = $dweb['w_vulgaire'];
+  $web_politise         = $dweb['w_politise'];
+  $web_incorrect        = $dweb['w_incorrect'];
+  $temp_moisfr          = ($dweb['w_apparition_m']) ? $moisfr[$dweb['w_apparition_m']] : '';
+  $temp_apparition      = ($lang == 'FR') ? $temp_moisfr : date('F', strtotime('2018-'.$dweb['w_apparition_m'].'-01'));
+  $web_apparition_m     = ($dweb['w_apparition_m']) ? $temp_apparition.' ' : '';
+  $web_apparition_y     = $dweb['w_apparition_y'];
+  $temp_moisfr          = ($dweb['w_popularisation_m']) ? $moisfr[$dweb['w_popularisation_m']] : '';
+  $temp_popularisation  = ($lang == 'FR') ? $temp_moisfr : date('F', strtotime('2018-'.$dweb['w_popularisation_m'].'-01'));
+  $web_popularisation_m = ($dweb['w_popularisation_m']) ? $temp_popularisation.' ' : '';
+  $web_popularisation_y = $dweb['w_popularisation_y'];
+  $web_periode_id       = $dweb['p_id'];
+  $web_periode          = ($dweb['p_nom']) ? predata($dweb['p_nom']) : '';
+
+  // On a besoin de la liste des catégories liées à la page
+  $qcategories = query("  SELECT    nbdb_web_categorie.id               AS 'c_id' ,
+                                    nbdb_web_categorie.titre_$web_lang  AS 'c_nom'
+                          FROM      nbdb_web_page_categorie
+                          LEFT JOIN nbdb_web_categorie ON nbdb_web_page_categorie.FKnbdb_web_categorie = nbdb_web_categorie.id
+                          WHERE     nbdb_web_page_categorie.FKnbdb_web_page = '$web_id'
+                          ORDER BY  nbdb_web_categorie.ordre_affichage ASC ");
+
+  // Maintenant on peut préparer les catégories pour l'affichage
+  $web_categories = '';
+  for($ncategories = 0 ; $dcategories = mysqli_fetch_array($qcategories) ; $ncategories++)
+    $web_categories .= '<a href="'.$chemin.'pages/nbdb/web_pages?categorie='.$dcategories['c_id'].'">'.predata($dcategories['c_nom']).'</a> ; ';
+  $web_categories = ($ncategories) ? substr($web_categories, 0, -2) : '';
 
   // Et on oublie pas de modifier les infos de la page
   $page_nom   = 'Découvre ce qu\'est '.predata(tronquer_chaine($dweb['w_titre'], 20, '...'));
@@ -158,10 +187,6 @@ EOD;
   $trad['docd_chronologie'] = "Ligne chronologique vous permettant de placer les memes et évènements dans le contexte de leur époque.";
   $trad['doct_random']      = "Page au hasard";
   $trad['docd_random']      = "Vous redirigera vers un contenu choisi au hasard.";
-  $trad['doct_search']      = "Recherche";
-  $trad['docd_search']      = "Êtes-vous à la recherche d'un contenu spécifique ?";
-  $trad['doct_activite']    = "Changements";
-  $trad['docd_activite']    = "Liste des contenus crées ou modifiés récemment.";
   $trad['doct_rss']         = "Suivre l'évolution";
   $trad['docd_rss']         = "Suivre les changements de contenu par flux RSS.";
   $trad['doct_suggerer']    = "Signaler une erreur, suggérer du contenu";
@@ -173,6 +198,13 @@ EOD;
   $trad['web_vulgaire']     = "LA PAGE CI-DESSOUS CONTIENT DU CONTENU VULGAIRE OU DÉGUEULASSE";
   $trad['web_politise']     = "La page ci-dessous est politisée : elle aborde un sujet de société d'une façon avec laquelle tout le monde ne sera pas forcément d'accord. Le but de cette encyclopédie n'est pas de plaire à tous, mais plutôt de présenter des faits de façon objective, en tentant d'être aussi neutre que possible, quitte à froisser certaines opinions.";
   $trad['web_incorrect']    = "Le but de cette encyclopédie est de documenter toute la culture internet, même dans ses aspects offensants. La page ci-dessous porte sur un sujet politiquement incorrect : il est très fortement conseillé de ne pas utiliser ce terme publiquement, car il a de mauvaises connotations.";
+
+  // Contenu d'une page spécifique
+  $trad['web_apparition']   = "Première apparition :";
+  $trad['web_popular']      = "Pic de popularité :";
+  $trad['web_categorie']    = "Catégorie :";
+  $trad['web_categories']   = "Catégories :";
+  $trad['web_periode']      = "Période :";
 }
 
 
@@ -199,10 +231,6 @@ EOD;
   $trad['docd_chronologie'] = "This timeline should help you put some context on when some events and memes happened compared to others.";
   $trad['doct_random']      = "Random page";
   $trad['docd_random']      = "Redirects you towards a randomly selected page.";
-  $trad['doct_search']      = "Search";
-  $trad['docd_search']      = "Are you looking for some specific content?";
-  $trad['doct_activite']    = "Recent changes";
-  $trad['docd_activite']    = "List of recently added or edited content.";
   $trad['doct_rss']         = "Follow changes";
   $trad['docd_rss']         = "Follow new content through your RSS feed reader.";
   $trad['doct_suggerer']    = "Report a mistake, suggest new content";
@@ -214,6 +242,13 @@ EOD;
   $trad['web_vulgaire']     = "THE FOLLOWING PAGE CONTAINS RUDE<br>AND/OR GROSS CONTENT";
   $trad['web_politise']     = "The following page is politically loaded: it concerns an aspect of society on which people tend to have disagreements. The goal of this encyclopedia is not to please everyone, but rather to try to bring facts objectively, with a point of view as neutral as possible, even if it often means being in disagreement with some strong opinions.";
   $trad['web_incorrect']    = "This encyclopedia's goal is to document internet culture as a whole, including its offensive and irrespectful aspects. The following page concerns a politically incorrect topic: it is heavily suggested that you do not use it publicly, as it has extremely negative connotations.";
+
+  // Contenu d'une page spécifique
+  $trad['web_apparition']   = "First appearance:";
+  $trad['web_popular']      = "Peak popularity:";
+  $trad['web_categorie']    = "Categorie :";
+  $trad['web_categories']   = "Categories :";
+  $trad['web_periode']      = "Era :";
 }
 
 
@@ -241,11 +276,11 @@ EOD;
         <h5>
           <?=$trad['soustitre']?>
           <?php if($est_admin) { ?>
-          <a href="<?=$chemin?>pages/nbdb/web_edit">
-            &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" height="22">
-          </a>
           <a href="<?=$chemin?>pages/nbdb/web_images">
             &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/upload.svg" alt="+" height="22">
+          </a>
+          <a href="<?=$chemin?>pages/nbdb/web_edit">
+            &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" height="22">
           </a>
           <?php } ?>
         </h5>
@@ -287,6 +322,7 @@ EOD;
 
         <br>
 
+        <!--
         <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_timeline';">
           <div class="align_center doc_minibordure">
             <h5 class="doc_minipadding_bot doc_minibordure_bot">
@@ -299,6 +335,7 @@ EOD;
         </div>
 
         <br>
+        -->
 
         <div class="flexcontainer">
           <div style="flex:10;">
@@ -309,38 +346,6 @@ EOD;
                 </h5>
                 <span class="doc_minipadding">
                 <?=$trad['docd_random']?>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div style="flex:1;">
-            &nbsp;
-          </div>
-          <div style="flex:10;">
-            <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/recherche?section=web';">
-              <div class="align_center doc_minibordure">
-                <h5 class="doc_minipadding_bot doc_minibordure_bot">
-                  <?=$trad['doct_search']?>
-                </h5>
-                <span class="doc_minipadding">
-                <?=$trad['docd_search']?>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <br>
-
-        <div class="flexcontainer">
-          <div style="flex:10;">
-            <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/activite?section=web';">
-              <div class="align_center doc_minibordure">
-                <h5 class="doc_minipadding_bot doc_minibordure_bot">
-                  <?=$trad['doct_activite']?>
-                </h5>
-                <span class="doc_minipadding">
-                <?=$trad['docd_activite']?>
                 </span>
               </div>
             </div>
@@ -364,7 +369,7 @@ EOD;
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_contact';">
+        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/user/pm?user=1';">
           <div class="align_center doc_minibordure">
             <h5 class="doc_minipadding_bot doc_minibordure_bot">
               <?=$trad['doct_suggerer']?>
@@ -501,9 +506,27 @@ EOD;
 
         <?php } ?>
 
+        <br>
+
         <h3 class="alinea texte_noir">
           <?=$web_titre?><?=$trad['web_colon']?>
         </h3>
+
+        <p class="alinea">
+          <?php if($web_apparition_y) { ?>
+          <span class="gras"><?=$trad['web_apparition']?></span> <?=$web_apparition_m?><?=$web_apparition_y?><br>
+          <?php } if ($web_popularisation_y) { ?>
+          <span class="gras"><?=$trad['web_popular']?></span> <?=$web_popularisation_m?><?=$web_popularisation_y?><br>
+          <?php } if($web_periode) { ?>
+          <span class="gras"><?=$trad['web_periode']?></span> <a href="<?=$chemin?>pages/nbdb/web_pages?periode=<?=$web_periode_id?>"><?=$web_periode?></a><br>
+          <?php } if ($web_categories && $ncategories == 1) { ?>
+          <span class="gras"><?=$trad['web_categorie']?></span> <?=$web_categories?>
+          <?php } else if ($web_categories) { ?>
+          <span class="gras"><?=$trad['web_categories']?></span> <?=$web_categories?>
+          <?php } ?>
+        </p>
+
+        <br>
 
         <p>
           <?=$web_contenu?>
