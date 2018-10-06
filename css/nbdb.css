@@ -14,3 +14,7 @@
 
 /********************************************** MODIFIER UNE ENTRÉE DU DICTIONNAIRE DU WEB ***********************************************/
 .web_dico_edit { height: 250px; }
+
+/******************************************* ADMINISTRATION DES IMAGES DU DICTIONNAIRE DU WEB ********************************************/
+.web_image_upload  { font-size: 1.5em; color: #CACACA; border-radius: 2px; }
+.web_image_preview { margin-top: -120px !important;                        }

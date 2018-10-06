@@ -137,9 +137,9 @@ sql_creer_index('nbdb_web_page_categorie', 'index_pages', 'FKnbdb_web_page, FKnb
 
 sql_creer_table('nbdb_web_image');
 
-sql_creer_champ('nbdb_web_image', 'url', 'TEXT', 'id');
-sql_creer_champ('nbdb_web_image', 'titre_fr', 'MEDIUMTEXT', 'url');
-sql_creer_champ('nbdb_web_image', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+sql_creer_champ('nbdb_web_image', 'timestamp_upload', 'INT(11) UNSIGNED NOT NULL', 'id');
+sql_creer_champ('nbdb_web_image', 'nom_fichier', 'MEDIUMTEXT', 'timestamp_upload');
+sql_creer_champ('nbdb_web_image', 'tags', 'MEDIUMTEXT', 'nom_fichier');
 
 
 

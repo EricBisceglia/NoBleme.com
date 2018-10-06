@@ -175,7 +175,7 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
 if(isset($_POST['web_preview']))
 {
   // Assainissement du postdata
-  $web_id               = postdata($_GET['id'], 'int', 0);
+  $web_id               = (isset($_GET['id'])) ? postdata($_GET['id'], 'int', 0) : 0;
   $web_titre_fr         = predata($_POST['web_titre_fr']);
   $web_titre_en         = predata($_POST['web_titre_en']);
   $web_redirect_fr      = predata($_POST['web_redirection_fr']);
