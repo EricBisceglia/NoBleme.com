@@ -4,6 +4,7 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/nbdb.inc.php';     // Fonctions lées à la NBDB
 
 // Menus du header
 $header_menu      = 'Lire';
@@ -110,7 +111,7 @@ if($dico_id)
   $definition_redirect      = ($ddefinition['d_redirect']) ? predata($ddefinition['d_redirect']) : '';
   $definition_redirect_url  = ($ddefinition['d_redirect']) ? urlencode($ddefinition['d_redirect']) : '';
   $definition_titre         = predata($ddefinition['d_titre']);
-  $definition_contenu       = nbdbcode(bbcode(predata($ddefinition['d_contenu'], 1)));
+  $definition_contenu       = nbdbcode(bbcode(predata($ddefinition['d_contenu'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang));
   $definition_vulgaire      = $ddefinition['d_vulgaire'];
   $definition_politise      = $ddefinition['d_politise'];
   $definition_incorrect     = $ddefinition['d_incorrect'];

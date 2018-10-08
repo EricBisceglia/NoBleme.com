@@ -4,6 +4,7 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/nbdb.inc.php';     // Fonctions lées à la NBDB
 
 // Menus du header
 $header_menu      = 'Lire';
@@ -121,7 +122,7 @@ if($web_id)
   $web_redirect         = ($dweb['w_redirect']) ? predata($dweb['w_redirect']) : '';
   $web_redirect_url     = ($dweb['w_redirect']) ? urlencode($dweb['w_redirect']) : '';
   $web_titre            = predata($dweb['w_titre']);
-  $web_contenu          = nbdbcode(bbcode(predata($dweb['w_contenu'], 1)));
+  $web_contenu          = nbdbcode(bbcode(predata($dweb['w_contenu'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang));
   $web_vulgaire         = $dweb['w_vulgaire'];
   $web_politise         = $dweb['w_politise'];
   $web_incorrect        = $dweb['w_incorrect'];
@@ -526,6 +527,7 @@ EOD;
           <?php } ?>
         </p>
 
+        <br>
         <br>
 
         <p>

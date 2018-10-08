@@ -372,10 +372,10 @@ EOD;
 
             <tr>
               <td rowspan="2">
-                <?=bbcode(":S")?>
+                <?=bbcode(":-S")?>
               </td>
               <td class="monospace">
-                :S
+                :-S
               </td>
               <td rowspan="2">
                 <?=$trad['table_gene']?>
@@ -383,7 +383,7 @@ EOD;
             </tr>
             <tr>
               <td class="monospace">
-                :s
+                :-s
               </td>
             </tr>
 

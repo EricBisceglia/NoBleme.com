@@ -4,6 +4,7 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/nbdb.inc.php';     // Fonctions lées à la NBDB
 
 // Menus du header
 $header_menu      = 'Lire';
@@ -123,7 +124,7 @@ if(isset($_GET['categorie']) && $filtre_categorie > 0)
 
     // Et les préparer pour l'affichage
     $categorie_titre  = predata($dcategorie['c_titre']);
-    $categorie_desc   = nbdbcode(bbcode(predata($dcategorie['c_desc'], 1)));
+    $categorie_desc   = nbdbcode(bbcode(predata($dcategorie['c_desc'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang));
   }
 }
 
@@ -141,7 +142,7 @@ if(isset($_GET['periode']) && $filtre_periode)
 
     // Et les préparer pour l'affichage
     $periode_titre  = predata($dperiode['p_titre']);
-    $periode_desc   = nbdbcode(bbcode(predata($dperiode['p_desc'], 1)));
+    $periode_desc   = nbdbcode(bbcode(predata($dperiode['p_desc'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang));
   }
 }
 

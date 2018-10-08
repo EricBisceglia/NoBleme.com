@@ -4,6 +4,7 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/nbdb.inc.php';     // Fonctions lées à la NBDB
 
 // Permissions
 adminonly($lang);
@@ -182,8 +183,8 @@ if(isset($_POST['web_preview']))
   $web_redirect_en      = predata($_POST['web_redirection_en']);
   $web_contenu_fr       = $_POST['web_definition_fr'];
   $web_contenu_en       = $_POST['web_definition_en'];
-  $web_definition_fr    = nbdbcode(bbcode(predata($_POST['web_definition_fr'], 1)));
-  $web_definition_en    = nbdbcode(bbcode(predata($_POST['web_definition_en'], 1)));
+  $web_definition_fr    = nbdbcode(bbcode(predata($_POST['web_definition_fr'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang));
+  $web_definition_en    = nbdbcode(bbcode(predata($_POST['web_definition_en'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang));
   $web_periode          = $_POST['web_periode'];
   $web_apparition_y     = predata($_POST['web_apparition_y']);
   $web_apparition_m     = predata($_POST['web_apparition_m']);
@@ -341,7 +342,12 @@ if(!getxhr()) { /***************************************************************
 
       <div class="tableau2">
 
-        <h1 class="align_center">Administration de l'encyclopédie de la culture web</h1>
+        <h1 class="align_center">
+          Administration de l'encyclopédie de la culture web
+          <a href="<?=$chemin?>pages/nbdb/web_images" target="_blank">
+            &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/upload.svg" alt="+" height="40">
+          </a>
+        </h1>
 
         <?php } else { ?>
 

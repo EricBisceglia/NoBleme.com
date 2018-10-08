@@ -24,7 +24,7 @@ $page_titre = "NBDB : Administration";
 
 // CSS & JS
 $css  = array('nbdb');
-$js   = array('dynamique', 'toggle');
+$js   = array('dynamique', 'toggle', 'clipboard');
 
 
 
@@ -150,12 +150,21 @@ $qimages  =   " SELECT    nbdb_web_image.id               AS 'i_id'   ,
                           nbdb_web_image.timestamp_upload AS 'i_date' ,
                           nbdb_web_image.nom_fichier      AS 'i_nom'  ,
                           nbdb_web_image.tags             AS 'i_tags'
-                FROM      nbdb_web_image ";
+                FROM      nbdb_web_image
+                WHERE     1 = 1 ";
+
+// Recherche
+if($search_images_nom = urlencode(postdata_vide('web_images_search_nom', 'string', '')))
+  $qimages .= " AND       nbdb_web_image.nom_fichier LIKE '%$search_images_nom%' ";
+if($search_images_tags = postdata_vide('web_images_search_tags', 'string', ''))
+  $qimages .= " AND       nbdb_web_image.tags LIKE '%$search_images_tags%' ";
 
 // Ordre de tri des données
 $images_tri = postdata_vide('web_images_tri', 'string', '');
 if($images_tri == 'nom')
   $qimages .= " ORDER BY  nbdb_web_image.nom_fichier ASC ";
+else if($images_tri == 'tags')
+  $qimages .= " ORDER BY  nbdb_web_image.tags = '' , nbdb_web_image.tags ASC ";
 else
   $qimages .= " ORDER BY  nbdb_web_image.timestamp_upload DESC ";
 
@@ -236,23 +245,23 @@ if(!getxhr()) { /***************************************************************
 
       <div class="tableau" id="web_images_tableau">
 
-      <?php } ?>
+      <?php } if(!getxhr() || isset($_POST['web_images_tri']) || isset($_POST['web_images_id'])) { ?>
 
         <table class="grid titresnoirs">
           <thead>
 
             <tr>
+              <th>
+                COPIER
+              </th>
               <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'web_images', 'web_images_tableau', 'web_images_tri=nom', 1);">
                 NOM DU FICHIER
               </th>
               <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'web_images', 'web_images_tableau', 'web_images_tri=date', 1);">
                 MISE EN LIGNE
               </th>
-              <th>
+              <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'web_images', 'web_images_tableau', 'web_images_tri=tags', 1);">
                 TAGS
-              </th>
-              <th>
-                PAGES
               </th>
               <th>
                 ACTIONS
@@ -261,16 +270,16 @@ if(!getxhr()) { /***************************************************************
 
             <tr>
               <th>
-                <input class="intable" size="1">
+                &nbsp;
+              </th>
+              <th>
+                <input class="intable" size="1" id="web_images_search_nom" onkeyup="dynamique('<?=$chemin?>', 'web_images', 'web_images_tbody', 'web_images_search_nom='+dynamique_prepare('web_images_search_nom')+'&web_images_search_tags='+dynamique_prepare('web_images_search_tags'), 1);">
               </th>
               <th>
                 &nbsp;
               </th>
               <th>
-                <input class="intable" size="1">
-              </th>
-              <th>
-                <input class="intable" size="1">
+                <input class="intable" size="1" id="web_images_search_tags" onkeyup="dynamique('<?=$chemin?>', 'web_images', 'web_images_tbody', 'web_images_search_nom='+dynamique_prepare('web_images_search_nom')+'&web_images_search_tags='+dynamique_prepare('web_images_search_tags'), 1);">
               </th>
               <th>
                 &nbsp;
@@ -278,11 +287,16 @@ if(!getxhr()) { /***************************************************************
             </tr>
 
           </thead>
-          <tbody class="align_center">
+          <tbody class="align_center" id="web_images_tbody">
 
-            <?php for($i=0;$i<$nimages;$i++) { ?>
+            <?php } for($i=0;$i<$nimages;$i++) { ?>
 
             <tr>
+
+              <td>
+                <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/copier.svg" alt="X" height="24" onclick="pressepapiers('[[image:<?=$image_lien[$i]?>]]');">
+                <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/image.svg" alt="X" height="24" onclick="pressepapiers('[[galerie:<?=$image_lien[$i]?>]]');">
+              </td>
 
               <td class="spaced">
                 <div class="tooltip-container" onmouseover="document.getElementById('web_images_preview_<?=$image_nom[$i]?>').src = '<?=$chemin?>img/nbdb_web/<?=$image_lien[$i]?>'; document.getElementById('web_images_preview_<?=$image_nom[$i]?>').style.maxHeight = '250px';">
@@ -304,10 +318,6 @@ if(!getxhr()) { /***************************************************************
               </td>
 
               <td>
-                &nbsp;
-              </td>
-
-              <td>
                 <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="24" onclick="toggle_oneway('web_images_edition_<?=$image_id[$i]?>', 1, 1); dynamique('<?=$chemin?>', 'xhr/web_images_modifier?edit', 'web_images_edition_<?=$image_id[$i]?>', 'id=<?=$image_id[$i]?>', 1);">
                 <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" height="24" onclick="toggle_oneway('web_images_edition_<?=$image_id[$i]?>', 1, 1); dynamique('<?=$chemin?>', 'xhr/web_images_modifier?delete', 'web_images_edition_<?=$image_id[$i]?>', 'id=<?=$image_id[$i]?>', 1);">
               </td>
@@ -320,10 +330,12 @@ if(!getxhr()) { /***************************************************************
               </td>
             </tr>
 
-            <?php } ?>
+            <?php } if(!getxhr() || isset($_POST['web_images_tri']) || isset($_POST['web_images_id'])) { ?>
 
           </tbody>
         </table>
+
+      <?php } ?>
 
       <?php if(!getxhr()) { ?>
 

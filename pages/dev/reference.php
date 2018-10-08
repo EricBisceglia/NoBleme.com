@@ -1,8 +1,8 @@
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                             INITIALISATION                                                            */
-/*                                                                                                                                       */
-// Quand on fait le truc du contenu dynamique, on s'arrête là ****************************************************************************/
+<?php /**********************************************************************************************************************************/
+/*                                                                                                                                      */
+/*                                                            INITIALISATION                                                            */
+/*                                                                                                                                      */
+// Quand on fait le truc du contenu dynamique, on s'arrête là ***************************************************************************/
 if(isset($_POST['dynamique_test']))
 {
   header('Content-type: text/html; charset=utf-8');
@@ -27,46 +27,46 @@ $page_nom = "Administre secrètement le site";
 
 // CSS & JS
 $css  = array('onglets', 'dev');
-$js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'dev/reference');
+$js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'clipboard', 'dev/reference');
 
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                         AFFICHAGE DES DONNÉES                                                         */
-/*                                                                                                                                       */
-/************************************************************************************************/ include './../../inc/header.inc.php'; ?>
+/****************************************************************************************************************************************/
+/*                                                                                                                                      */
+/*                                                        AFFICHAGE DES DONNÉES                                                         */
+/*                                                                                                                                      */
+/***********************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
       <table class="fullgrid titresnoirs margin_auto noresize" style="width:1300px;">
         <thead>
           <tr>
             <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="reference_css_tout_fermer();toggle_row('reference_css_couleurs');">
+                onclick="reference_css_tout_fermer();toggle_row('reference_css_couleurs');">
               COULEURS
             </th>
             <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="reference_css_tout_fermer();toggle_row('reference_css_texte');">
+                onclick="reference_css_tout_fermer();toggle_row('reference_css_texte');">
               TEXTE
             </th>
             <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="reference_css_tout_fermer();toggle_row('reference_css_tableaux');">
+                onclick="reference_css_tout_fermer();toggle_row('reference_css_tableaux');">
               TABLEAUX
             </th>
             <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="reference_css_tout_fermer();toggle_row('reference_css_formulaires');">
+                onclick="reference_css_tout_fermer();toggle_row('reference_css_formulaires');">
               FORMULAIRES
             </th>
             <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="reference_css_tout_fermer();toggle_row('reference_css_elements');">
+                onclick="reference_css_tout_fermer();toggle_row('reference_css_elements');">
               ELEMENTS
             </th>
             <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="reference_css_tout_fermer();toggle_row('reference_css_divers');">
+                onclick="reference_css_tout_fermer();toggle_row('reference_css_divers');">
               DIVERS
             </th>
             <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="reference_css_tout_fermer();toggle_row('reference_css_scripts');">
+                onclick="reference_css_tout_fermer();toggle_row('reference_css_scripts');">
               SCRIPTS
             </th>
           </tr>
@@ -79,11 +79,11 @@ $js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'dev/reference');
 
 
 
-<!-- ######################################################################################################################################
-#                                                                                                                                         #
-#                                                                 COULEURS                                                                #
-#                                                                                                                                         #
-###################################################################################################################################### !-->
+<!-- #####################################################################################################################################
+#                                                                                                                                        #
+#                                                                COULEURS                                                                #
+#                                                                                                                                        #
+##################################################################################################################################### !-->
 
       <div id="reference_css_couleurs">
 
@@ -293,11 +293,11 @@ $js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'dev/reference');
 
 
 
-<!-- ######################################################################################################################################
-#                                                                                                                                         #
-#                                                                  TEXTE                                                                  #
-#                                                                                                                                         #
-###################################################################################################################################### !-->
+<!-- #####################################################################################################################################
+#                                                                                                                                        #
+#                                                                 TEXTE                                                                  #
+#                                                                                                                                        #
+##################################################################################################################################### !-->
 
       <div id="reference_css_texte" class="hidden">
 
@@ -499,11 +499,11 @@ $js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'dev/reference');
 
 
 
-<!-- ######################################################################################################################################
-#                                                                                                                                         #
-#                                                                 TABLEAUX                                                                #
-#                                                                                                                                         #
-###################################################################################################################################### !-->
+<!-- #####################################################################################################################################
+#                                                                                                                                        #
+#                                                                TABLEAUX                                                                #
+#                                                                                                                                        #
+##################################################################################################################################### !-->
 
       <div id="reference_css_tableaux" class="hidden">
 
@@ -1271,11 +1271,11 @@ $js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'dev/reference');
 
 
 
-<!-- ######################################################################################################################################
-#                                                                                                                                         #
-#                                                               FORMULAIRES                                                               #
-#                                                                                                                                         #
-###################################################################################################################################### !-->
+<!-- #####################################################################################################################################
+#                                                                                                                                        #
+#                                                              FORMULAIRES                                                               #
+#                                                                                                                                        #
+##################################################################################################################################### !-->
 
       <div id="reference_css_formulaires" class="hidden">
 
@@ -1472,11 +1472,11 @@ $js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'dev/reference');
 
 
 
-<!-- ######################################################################################################################################
-#                                                                                                                                         #
-#                                                                ELEMENTS                                                                 #
-#                                                                                                                                         #
-###################################################################################################################################### !-->
+<!-- #####################################################################################################################################
+#                                                                                                                                        #
+#                                                               ELEMENTS                                                                 #
+#                                                                                                                                        #
+##################################################################################################################################### !-->
 
       <div id="reference_css_elements" class="hidden">
 
@@ -1902,11 +1902,11 @@ Retours à la ligne</code></pre>'))
 
 
 
-<!-- ######################################################################################################################################
-#                                                                                                                                         #
-#                                                                 DIVERS                                                                  #
-#                                                                                                                                         #
-###################################################################################################################################### !-->
+<!-- #####################################################################################################################################
+#                                                                                                                                        #
+#                                                                DIVERS                                                                  #
+#                                                                                                                                        #
+##################################################################################################################################### !-->
 
       <div id="reference_css_divers" class="hidden">
 
@@ -2169,11 +2169,11 @@ Retours à la ligne</code></pre>'))
 
 
 
-<!-- ######################################################################################################################################
-#                                                                                                                                         #
-#                                                                 SCRIPTS                                                                 #
-#                                                                                                                                         #
-###################################################################################################################################### !-->
+<!-- #####################################################################################################################################
+#                                                                                                                                        #
+#                                                                SCRIPTS                                                                 #
+#                                                                                                                                        #
+##################################################################################################################################### !-->
 
       <div id="reference_css_scripts" class="hidden">
 
@@ -2192,7 +2192,7 @@ Retours à la ligne</code></pre>'))
           <tbody>
             <tr>
               <td class="align_center pointeur gras texte_nobleme_fonce"
-                  onClick="dynamique('<?=$chemin?>','css.php','exemple_dynamique','dynamique_test=0');">
+                  onclick="dynamique('<?=$chemin?>', 'reference', 'exemple_dynamique', 'dynamique_test=0');">
                 Cliquez moi
               </td>
             </tr>
@@ -2204,7 +2204,7 @@ Retours à la ligne</code></pre>'))
             <tr>
               <td>
                 <pre onclick="highlight('refhtml_dynamique');" class="monospace spaced scrollbar" id="refhtml_dynamique" style="max-width:500px;max-height:80px;margin-bottom:0"><?php
-                  echo(htmlspecialchars('<div class="align_center pointeur gras texte_nobleme_fonce" onClick="dynamique(\'<?=$chemin?>\',\'ma_page.php\',\'mon_id\',\'postdata\');">
+                  echo(htmlspecialchars('<div class="align_center pointeur gras texte_nobleme_fonce" onclick="dynamique(\'<?=$chemin?>\',\'ma_page.php\',\'mon_id\',\'postdata\');">
   Cliquez moi
 </div>
 <div class="align_center gras" id="mon_id">
@@ -2232,7 +2232,7 @@ Retours à la ligne</code></pre>'))
           <tbody>
             <tr>
               <td class="align_center">
-                <div class="pointeur gras texte_nobleme_fonce" onClick="toggle_row('exemple_togglejs');">
+                <div class="pointeur gras texte_nobleme_fonce" onclick="toggle_row('exemple_togglejs');">
                   Cliquez moi (par id)
                 </div>
                 <div class="gras noir texte_negatif hidden" id="exemple_togglejs">
@@ -2242,7 +2242,7 @@ Retours à la ligne</code></pre>'))
             </tr>
             <tr>
               <td class="align_center">
-                <div class="pointeur gras texte_nobleme_fonce" onClick="toggle_class('exemple_togglejs');">
+                <div class="pointeur gras texte_nobleme_fonce" onclick="toggle_class('exemple_togglejs');">
                   Cliquez moi (par classe)
                 </div>
                 <div class="gras noir texte_positif hidden exemple_togglejs">
@@ -2259,13 +2259,13 @@ Retours à la ligne</code></pre>'))
             <tr>
               <td>
                 <pre onclick="highlight('refhtml_toggle');" class="monospace spaced scrollbar" id="refhtml_toggle" style="max-width:500px;max-height:80px;margin-bottom:0"><?php
-                  echo(htmlspecialchars('<div class="pointeur gras texte_nobleme_fonce" onClick="toggle_row(\'exemple_togglejs\');">
+                  echo(htmlspecialchars('<div class="pointeur gras texte_nobleme_fonce" onclick="toggle_row(\'exemple_togglejs\');">
   Cliquez moi (par id)
 </div>
 <div class="gras noir texte_negatif hidden" id="exemple_togglejs">
   Cette section de contenu apparait et disparait
 </div>
-<div class="pointeur gras texte_nobleme_fonce" onClick="toggle_class(\'exemple_togglejs\');">
+<div class="pointeur gras texte_nobleme_fonce" onclick="toggle_class(\'exemple_togglejs\');">
   Cliquez moi (par classe)
 </div>
 <div class="gras noir texte_positif hidden exemple_togglejs">
@@ -2283,10 +2283,43 @@ Retours à la ligne</code></pre>'))
           </tbody>
         </table>
 
+        <br>
+        <hr class="separateur_contenu">
+        <br>
+
+        <table class="fullgrid titresnoirs" style="width:500px;margin:auto;">
+          <thead>
+            <tr>
+              <th class="rowaltc" style="width:500px">
+                <span class="moinsgros">METTRE DU CONTENU DANS LE PRESSE PAPIERS</span><br>
+                clipboard.js
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="align_center">
+                <div class="pointeur gras texte_nobleme_fonce" onclick="pressepapiers('Du contenu dans le presse papiers');">
+                  Cliquez moi pour remplir le presse papiers
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <pre onclick="highlight('refhtml_clipboard');" class="monospace spaced scrollbar" id="refhtml_clipboard" style="max-width:500px;max-height:80px;margin-bottom:0"><?php
+                  echo(htmlspecialchars('<div onclick="pressepapiers(\'Ceci va dans le presse papiers\')">
+  Cliquer ici
+</div>'))
+                ?></pre>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
       </div>
 
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                              FIN DU HTML                                                              */
-/*                                                                                                                                       */
-/***************************************************************************************************/ include './../../inc/footer.inc.php';
+<?php /**********************************************************************************************************************************/
+/*                                                                                                                                      */
+/*                                                             FIN DU HTML                                                              */
+/*                                                                                                                                      */
+/**************************************************************************************************/ include './../../inc/footer.inc.php';

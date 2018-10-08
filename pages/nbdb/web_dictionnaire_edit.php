@@ -4,6 +4,7 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/nbdb.inc.php';     // Fonctions lées à la NBDB
 
 // Permissions
 adminonly($lang);
@@ -146,8 +147,8 @@ if(isset($_POST['web_dico_preview']))
   $dico_redirect_en   = predata($_POST['web_dico_redirection_en']);
   $dico_contenu_fr    = $_POST['web_dico_definition_fr'];
   $dico_contenu_en    = $_POST['web_dico_definition_en'];
-  $dico_definition_fr = nbdbcode(bbcode(predata($_POST['web_dico_definition_fr'], 1)));
-  $dico_definition_en = nbdbcode(bbcode(predata($_POST['web_dico_definition_en'], 1)));
+  $dico_definition_fr = nbdbcode(bbcode(predata($_POST['web_dico_definition_fr'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang));
+  $dico_definition_en = nbdbcode(bbcode(predata($_POST['web_dico_definition_en'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang));
   $dico_vulgaire      = isset($_POST['web_dico_vulgaire']) ? ' checked' : '';
   $dico_politise      = isset($_POST['web_dico_politise']) ? ' checked' : '';
   $dico_incorrect     = isset($_POST['web_dico_incorrect']) ? ' checked' : '';

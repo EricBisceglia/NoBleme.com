@@ -144,25 +144,6 @@ sql_creer_champ('nbdb_web_image', 'tags', 'MEDIUMTEXT', 'nom_fichier');
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Nouvelle table : NBDB - Encyclopédie du web - Images liées à une page
-
-sql_creer_table('nbdb_web_page_image');
-
-sql_creer_champ('nbdb_web_page_image', 'FKnbdb_web_page', 'INT(11) UNSIGNED NOT NULL', 'id');
-sql_creer_champ('nbdb_web_page_image', 'FKnbdb_web_image', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_page');
-sql_creer_champ('nbdb_web_page_image', 'ordre_affichage', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_image');
-sql_creer_champ('nbdb_web_page_image', 'titre_fr', 'MEDIUMTEXT', 'ordre_affichage');
-sql_creer_champ('nbdb_web_page_image', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
-sql_creer_champ('nbdb_web_page_image', 'description_fr', 'MEDIUMTEXT', 'titre_en');
-sql_creer_champ('nbdb_web_page_image', 'description_en', 'MEDIUMTEXT', 'description_fr');
-
-sql_creer_index('nbdb_web_page_image', 'index_images', 'FKnbdb_web_page, FKnbdb_web_image');
-sql_creer_index('nbdb_web_page_image', 'index_affichage', 'ordre_affichage');
-
-
-
-
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                      FONCTIONS POUR LES REQUÊTES                                                      */
