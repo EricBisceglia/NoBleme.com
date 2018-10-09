@@ -85,10 +85,10 @@ $css  = array('doc', 'nbdb');
             </tr>
             <tr>
               <td class="texte_noir">
-                [[web:titre alternatif|page]]
+                [[web:page|titre alternatif]]
               </td>
               <td>
-                <?=nbdbcode('[[web:Scoop di poop inexistant]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcode('[[web:Poop da scoop|Scoop di poop inexistant]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
               </td>
             </tr>
 
@@ -102,10 +102,27 @@ $css  = array('doc', 'nbdb');
             </tr>
             <tr>
               <td class="texte_noir">
-                [[dico:titre alternatif|page]]
+                [[dico:page|titre alternatif]]
               </td>
               <td>
-                <?=nbdbcode('[[web:Page qui n\'est pas là]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcode('[[web:It is a heuristic|Page qui n\'est pas là]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir">
+                [[lien:http://www.lien.com]]
+              </td>
+              <td>
+                <?=nbdbcode('[[lien:http://www.nobleme.com/]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+              </td>
+            </tr>
+            <tr>
+              <td class="texte_noir">
+               [[lien:http://www.lien.com|titre]]
+              </td>
+              <td>
+                <?=nbdbcode('[[lien:http://www.nobleme.com/|NoBleme]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
               </td>
             </tr>
 
@@ -136,22 +153,22 @@ $css  = array('doc', 'nbdb');
 
             <tr>
               <td class="texte_noir">
-                [galerie]<br>
+                [[galerie]]<br>
                 <br>
                 [[galerie:image.png]]<br>
                 [[galerie:image.png|légende]]<br>
                 <br>
-                [/galerie]
+                [[/galerie]]
               </td>
               <td>
-                <?=nbdbcode(' [galerie]
+                <?=nbdbcode(' [[galerie]]
                                 [[galerie:Image_de_test_pour_les_exemples.png]]
                                 [[galerie:Image_de_test_pour_les_exemples.png]]
                                 [[galerie:Image_de_test_pour_les_exemples.png]]
                                 [[galerie:Image_de_test_pour_les_exemples.png]]
                                 [[galerie:Image_de_test_pour_les_exemples.png]]
                                 [[galerie:Image_de_test_pour_les_exemples.png|Légende]]
-                              [/galerie]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                              [[/galerie]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
               </td>
             </tr>
 

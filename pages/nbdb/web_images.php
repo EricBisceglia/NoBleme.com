@@ -124,8 +124,6 @@ if(isset($_GET['delete']))
     // Ainsi que ses entrées dans la BDD
     query(" DELETE FROM nbdb_web_image
             WHERE       nbdb_web_image.id = '$image_delete_id' ");
-    query(" DELETE FROM nbdb_web_page_image
-            WHERE       nbdb_web_page_image.FKnbdb_web_image = '$image_delete_id' ");
   }
 
   // Si ça c'est mal passé, on le fait savoir
@@ -300,7 +298,7 @@ if(!getxhr()) { /***************************************************************
 
               <td class="spaced">
                 <div class="tooltip-container" onmouseover="document.getElementById('web_images_preview_<?=$image_nom[$i]?>').src = '<?=$chemin?>img/nbdb_web/<?=$image_lien[$i]?>'; document.getElementById('web_images_preview_<?=$image_nom[$i]?>').style.maxHeight = '250px';">
-                  <a class="gras" href="<?=$chemin?>img/nbdb_web/<?=$image_lien[$i]?>">
+                  <a class="gras" href="<?=$chemin?>pages/nbdb/web_image?image=<?=$image_lien[$i]?>">
                     <?=$image_nom[$i]?>
                     <span class="tooltip web_image_preview">
                       <img id="web_images_preview_<?=$image_nom[$i]?>" class="valign_middle pointeur" src="<?=$chemin?>img/icones/chargement.svg" alt="Chargement">
