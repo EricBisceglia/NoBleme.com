@@ -12,7 +12,13 @@ function rss_check_boxes()
   // On va chercher le type de sélection
   type = document.getElementById('flux_preset').value;
 
-  // Rencontres IRL
+  // NBDB - Encyclopédie de la culture web
+  if(type == 'all' || type == 'nbdbweb')
+    document.getElementById("flux_nbdbweb").checked = true;
+  else
+    document.getElementById("flux_nbdbweb").checked = false;
+
+    // Rencontres IRL
   if(type == 'all' || type == 'irl')
     document.getElementById("flux_irl").checked = true;
   else

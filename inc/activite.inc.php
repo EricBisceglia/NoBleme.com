@@ -245,6 +245,77 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
 
 
   //*************************************************************************************************************************************//
+  //                                                                 NBDB                                                                //
+  //*************************************************************************************************************************************//
+  // Encyclopédie du web : Nouvelle page
+
+  else if($type === 'nbdb_web_page_new')
+  {
+    $retour['css']  = 'texte_noir vert_background_clair';
+    $retour['href'] = $chemin.'pages/nbdb/web?id='.$id;
+    $retour['FR']   = ($titre) ? 'Nouvelle page dans l\'encyclopédie du web : '.predata(tronquer_chaine($titre, 45, '...')) : '';
+    $retour['EN']   = ($parent) ? 'New page in the internet encyclopedia : '.predata(tronquer_chaine($parent, 50, '...')) : '';
+  }
+
+  //*************************************************************************************************************************************//
+  // Encyclopédie du web : Modification d'une page
+
+  else if($type === 'nbdb_web_page_edit')
+  {
+    $retour['css']  = '';
+    $retour['href'] = $chemin.'pages/nbdb/web?id='.$id;
+    $retour['FR']   = ($titre) ? 'Page modifiée dans l\'encyclopédie du web : '.predata(tronquer_chaine($titre, 45, '...')) : '';
+    $retour['EN']   = ($parent) ? 'Page modified in the internet encyclopedia : '.predata(tronquer_chaine($parent, 50, '...')) : '';
+  }
+
+  //*************************************************************************************************************************************//
+  // Encyclopédie du web : Suppression d'une page
+
+  else if($type === 'nbdb_web_page_delete')
+  {
+    $retour['css']  = '';
+    $retour['href'] = $chemin.'pages/nbdb/web';
+    $retour['FR']   = ($titre) ? 'Page supprimée dans l\'encyclopédie du web : '.predata(tronquer_chaine($titre, 40, '...')) : '';
+    $retour['EN']   = ($parent) ? 'Page deleted in the internet encyclopedia : '.predata(tronquer_chaine($parent, 50, '...')) : '';
+  }
+
+  //*************************************************************************************************************************************//
+  // Dictionnaire du web : Nouvelle entrée
+
+  else if($type === 'nbdb_web_definition_new')
+  {
+    $retour['css']  = 'texte_noir vert_background_clair';
+    $retour['href'] = $chemin.'pages/nbdb/web_dictionnaire?id='.$id;
+    $retour['FR']   = ($titre) ? 'Nouvelle entrée dans le dictionnaire du web : '.predata(tronquer_chaine($titre, 45, '...')) : '';
+    $retour['EN']   = ($parent) ? 'New entry in the internet dictionary : '.predata(tronquer_chaine($parent, 55, '...')) : '';
+  }
+
+  //*************************************************************************************************************************************//
+  // Dictionnaire du web : Modification d'une entrée
+
+  else if($type === 'nbdb_web_definition_edit')
+  {
+    $retour['css']  = '';
+    $retour['href'] = $chemin.'pages/nbdb/web_dictionnaire?id='.$id;
+    $retour['FR']   = ($titre) ? 'Entrée modifiée dans le dictionnaire du web : '.predata(tronquer_chaine($titre, 45, '...')) : '';
+    $retour['EN']   = ($parent) ? 'Entry modified in the internet dictionary : '.predata(tronquer_chaine($parent, 55, '...')) : '';
+  }
+
+  //*************************************************************************************************************************************//
+  // Dictionnaire du web : Suppression d'une entrée
+
+  else if($type === 'nbdb_web_definition_delete')
+  {
+    $retour['css']  = '';
+    $retour['href'] = $chemin.'pages/nbdb/web_dictionnaire';
+    $retour['FR']   = ($titre) ? 'Entrée supprimée dans le dictionnaire du web : '.predata(tronquer_chaine($titre, 40, '...')) : '';
+    $retour['EN']   = ($parent) ? 'Entry deleted in the internet dictionary : '.predata(tronquer_chaine($parent, 55, '...')) : '';
+  }
+
+
+
+
+  //*************************************************************************************************************************************//
   //                                                          COIN DES ÉCRIVAINS                                                         //
   //*************************************************************************************************************************************//
   // Nouveau texte

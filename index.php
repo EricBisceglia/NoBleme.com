@@ -61,7 +61,9 @@ $agenobleme = date('Y')-2005;
 
         <p>Si vous vous demandez d'où NoBleme vient et à quoi sert NoBleme, vous pouvez trouver la réponse à ces questions dans la page <a class="gras" href="<?=$chemin?>pages/doc/nobleme">qu'est-ce que NoBleme</a> de la <a class="gras" href="<?=$chemin?>pages/doc">documentation du site</a></p>
 
-        <p>Maintenant que vous avez une vague idée de ce que NoBleme représente, peut-être avez vous envie d'intéragir avec la communauté NoBlemeuse. Vous pouvez venir discuter avec nous en temps réel sur notre <a class="gras" href="<?=$chemin?>pages/irc/index">serveur de discussion IRC</a>, ou en différé sur notre <a class="gras" href="<?=$chemin?>pages/forum/index">forum de discussion</a>.</p>
+        <p>Notre attraction principale pour les visiteurs perdus est <a class="gras" href="<?=$chemin?>pages/nbdb/index">l'encyclopédie de la culture internet</a>, une documentation de l'histoire d'internet et des memes qu'on y trouve.</p>
+
+        <p>Maintenant que vous avez une vague idée de ce que NoBleme représente, peut-être êtes vous assez curieux pour avoir envie d'intéragir avec la communauté NoBlemeuse. Si c'est le cas, venez nous rejoindre là où nous sommes toujours actifs : sur notre <a class="gras" href="<?=$chemin?>pages/irc/index">serveur de discussion IRC</a>.</p>
 
         <p>N'hésitez pas à vous balader sur le site pour découvrir son contenu, et bon séjour sur NoBleme !</p>
         <a class="alinea gras" href="<?=$chemin?>pages/user/user?id=1">- Bad</a>

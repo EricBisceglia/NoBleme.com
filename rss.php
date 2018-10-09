@@ -22,6 +22,22 @@ $qrss = "   ( SELECT    ''                                  AS 'rss_id'       ,
               FROM      vars_globales
               WHERE     vars_globales.mise_a_jour LIKE 'sql_cheat_code' ) ";
 
+if(isset($_GET['flux_nbdbweb']))
+$qrss .= "  UNION
+            ( SELECT    activite.action_id                  AS 'rss_id'       ,
+                        activite.timestamp                  AS 'rss_date'     ,
+                        activite.action_titre               AS 'rss_titre'    ,
+                        activite.parent                     AS 'rss_contenu'  ,
+                        activite.action_type                AS 'rss_user'     ,
+                        'nbdbweb'                           AS 'rss_type'
+              FROM      activite
+              WHERE   ( activite.action_type  LIKE 'nbdb_web_page_new'
+              OR        activite.action_type  LIKE 'nbdb_web_page_edit'
+              OR        activite.action_type  LIKE 'nbdb_web_definition_new'
+              OR        activite.action_type  LIKE 'nbdb_web_definition_edit' )
+              ORDER BY  activite.timestamp DESC
+              LIMIT     100 ) ";
+
 if(isset($_GET['flux_irl']) && !isset($_GET['lang_en']))
 $qrss .= "  UNION
             ( SELECT    irl.id                              AS 'rss_id'       ,
@@ -212,6 +228,30 @@ $full_url = predata((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? 'ht
 // Et on prépare les données pour les afficher dans le flux, en traitant au cas par cas
 for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
 {
+  // NBDB - Encyclopédie du web
+  if($drss['rss_type'] == 'nbdbweb' && !isset($_GET['lang_en']))
+  {
+    $rss_url[$nrss]     = "pages/nbdb/encyclopedie_web?id=".$drss['rss_id'];
+    $rss_date[$nrss]    = predata(date('r', $drss['rss_date']));
+    $temp_titre         = ($drss['rss_user'] == 'nbdb_web_page_new') ? 'Nouvelle page dans l\'encyclopédie de la culture internet ' : '';
+    $temp_titre         = ($drss['rss_user'] == 'nbdb_web_page_edit') ? 'Page modifiée dans l\'encyclopédie de la culture internet ' : $temp_titre;
+    $temp_titre         = ($drss['rss_user'] == 'nbdb_web_definition_new') ? 'Nouvelle page dans le dictionnaire de la culture internet ' : $temp_titre;
+    $temp_titre         = ($drss['rss_user'] == 'nbdb_web_definition_edit') ? 'Page modifiée dans le dictionnaire de la culture internet ' : $temp_titre;
+    $rss_titre[$nrss]   = $temp_titre;
+    $rss_contenu[$nrss] = $drss['rss_titre'];
+  }
+  else if($drss['rss_type'] == 'nbdbweb' && isset($_GET['lang_en']))
+  {
+    $rss_url[$nrss]     = "pages/nbdb/encyclopedie_web?id=".$drss['rss_id'];
+    $rss_date[$nrss]    = predata(date('r', $drss['rss_date']));
+    $temp_titre         = ($drss['rss_user'] == 'nbdb_web_page_new') ? 'New page in the encyclopedia of internet culture' : '';
+    $temp_titre         = ($drss['rss_user'] == 'nbdb_web_page_edit') ? 'Page modified in the encyclopedia of internet culture' : $temp_titre;
+    $temp_titre         = ($drss['rss_user'] == 'nbdb_web_definition_new') ? 'New page in the dictionary of internet culture' : $temp_titre;
+    $temp_titre         = ($drss['rss_user'] == 'nbdb_web_definition_edit') ? 'Page modified in the dictionary of internet culture' : $temp_titre;
+    $rss_titre[$nrss]   = $temp_titre;
+    $rss_contenu[$nrss] = $drss['rss_contenu'];
+  }
+
   // IRL
   if($drss['rss_type'] == 'irl')
   {

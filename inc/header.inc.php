@@ -59,6 +59,11 @@ else
 if($langue_error)
   $langue_error = ($lang == 'FR') ? "Cette page n'est disponible qu'en anglais et n'a pas de traduction française." : "Sorry! This page is only available in french and does not have an english translation.";
 
+// On va chercher le statut de l'utilisateur
+$est_connecte = loggedin();
+$est_sysop    = ($est_connecte) ? getsysop() : 0;
+$est_admin    = ($est_connecte) ? getadmin() : 0;
+
 
 
 
@@ -73,7 +78,7 @@ $checkmaj = query(" SELECT vars_globales.mise_a_jour FROM vars_globales ");
 $majcheck = mysqli_fetch_array($checkmaj);
 
 // Si maj, on ferme la machine (sauf pour les admins)
-if($majcheck['mise_a_jour'] && !getadmin())
+if($majcheck['mise_a_jour'] && !$est_admin)
   exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Une mise à jour est en cours, NoBleme est temporairement fermé.<br><br>Revenez dans quelques minutes.<br><br><br><br>An update is in progress, NoBleme is temporarily closed.<br><br>Come back in a few minutes.</body></html>');
 
 // CSS spécial pendant les mises à jour
@@ -396,7 +401,7 @@ function header_class($element, $actuel, $menu)
     <meta property="og:description" content="<?=$page_desc?>">
     <meta property="og:url" content="<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
     <meta property="og:site_name" content="NoBleme.com">
-    <meta property="og:image" content="<?=$chemin?>img/divers/404_gauche.png">
+    <meta property="og:image" content="<?=$GLOBALS['url_site']?>img/divers/404_gauche.png">
     <meta name="twitter:image:alt" content="NoBleme, la communauté qui n'apporte rien mais a réponse à tout">
     <meta name="twitter:card" content="summary_large_image">
     <?=$stylesheets?>
@@ -436,22 +441,20 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
           <div class="<?=header_class('Discuter',$header_menu,'top')?>"><?=$menu['discuter']?></div>
         </a>
 
-        <?php if($lang == 'FR') { ?>
-        <a class="header_topmenu_lien" href="<?=$chemin?>pages/quotes/index">
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/nbdb/index">
           <div class="<?=header_class('Lire',$header_menu,'top')?>"><?=$menu['lire']?></div>
         </a>
-        <?php } ?>
 
         <a class="header_topmenu_lien" href="<?=$chemin?>pages/nbrpg/index">
           <div class="<?=header_class('Jouer',$header_menu,'top')?>"><?=$menu['jouer']?></div>
         </a>
 
-        <?php if(loggedin() && getsysop()) { ?>
+        <?php if($est_sysop) { ?>
         <a class="header_topmenu_lien" href="<?=$chemin?>pages/nobleme/activite?mod">
           <div class="<?=header_class('Admin',$header_menu,'top')?>">ADMIN</div>
         </a>
 
-        <?php } if(loggedin() && getadmin()) { ?>
+        <?php } if($est_admin) { ?>
         <a class="header_topmenu_lien" href="<?=$chemin?>pages/dev/ircbot">
           <div class="<?=header_class('Dev',$header_menu,'top')?>">DEV</div>
         </a>
@@ -787,10 +790,76 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
 
 
 <?php } ################################################## MENU LATÉRAL : LIRE ###########################################################
-// Pas de traductions de titres dans cette section, elle n'est pas multilingue (pour le moment ?)
+// Préparation des traductions des titres du menu
+$sidemenu['nbdb_titre']       = ($lang == 'FR') ? "NBDB"                      : "NoBleme Database";
+$sidemenu['nbdb_index']       = ($lang == 'FR') ? "Base d'informations"       : "The NoBleme Database";
+$sidemenu['nbdb_web_encyclo'] = ($lang == 'FR') ? "Encyclopédie du web"       : "Internet encyclopedia";
+$sidemenu['nbdb_web_e_liste'] = ($lang == 'FR') ? "Liste des pages"           : "List of all pages";
+$sidemenu['nbdb_web_e_rand']  = ($lang == 'FR') ? "Page au hasard"            : "Random page";
+$sidemenu['nbdb_web_dico']    = ($lang == 'FR') ? "Dictionnaire du web"       : "Internet dictionnary";
 /* #################################################################################################### */ if($header_menu == 'Lire') { ?>
 
+            <div class="header_sidemenu_titre">
+              <?=$sidemenu['nbdb_titre']?>
+            </div>
+
+            <a href="<?=$chemin?>pages/nbdb/index">
+              <div class="<?=header_class('NBDBIndex',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nbdb_index']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nbdb/web">
+              <div class="<?=header_class('NBDBEncycloWeb',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nbdb_web_encyclo']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nbdb/web_pages">
+              <div class="<?=header_class('NBDBEncycloListe',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nbdb_web_e_liste']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nbdb/web?random">
+              <div class="<?=header_class('NBDBEncycloRand',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nbdb_web_e_rand']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/nbdb/web_dictionnaire">
+              <div class="<?=header_class('NBDBDicoWeb',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nbdb_web_dico']?>
+              </div>
+            </a>
+
             <?php if($lang == 'FR') { ?>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              Coin des écrivains
+            </div>
+
+            <a href="<?=$chemin?>pages/ecrivains/index">
+              <div class="<?=header_class('EcrivainsListe',$header_sidemenu,'side')?>">
+                Écrits de NoBlemeux
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/ecrivains/concours_liste">
+              <div class="<?=header_class('EcrivainsConcours',$header_sidemenu,'side')?>">
+                Concours d'écriture
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/ecrivains/publier">
+              <div class="<?=header_class('EcrivainsPublier',$header_sidemenu,'side')?>">
+                Publier un texte
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
               Miscellanées
@@ -820,52 +889,6 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
               </div>
             </a>
 
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_titre">
-              Le coin des écrivains
-            </div>
-
-            <a href="<?=$chemin?>pages/ecrivains/index">
-              <div class="<?=header_class('EcrivainsListe',$header_sidemenu,'side')?>">
-                Écrits de NoBlemeux
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/ecrivains/concours_liste">
-              <div class="<?=header_class('EcrivainsConcours',$header_sidemenu,'side')?>">
-                Concours d'écriture
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/ecrivains/publier">
-              <div class="<?=header_class('EcrivainsPublier',$header_sidemenu,'side')?>">
-                Publier un texte
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_titre">
-              NBDatabase
-            </div>
-
-            <a href="<?=$chemin?>pages/nbdb/index">
-              <div class="<?=header_class('NBDBIndex',$header_sidemenu,'side')?>">
-                Travaux en cours
-              </div>
-            </a>
-
-            <?php } else { ?>
-            <div class="header_sidemenu_titre">
-              This section of the
-            </div>
-            <div class="header_sidemenu_titre">
-              website isn't available
-            </div>
-            <div class="header_sidemenu_titre">
-              in english, sorry :(
-            </div>
             <?php } ?>
 
 
@@ -1062,7 +1085,7 @@ $sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    
               </div>
             </a>
 
-            <?php if(getadmin()) { ?>
+            <?php if($est_admin) { ?>
 
             <hr class="header_sidemenu_hr">
 

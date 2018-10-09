@@ -15,8 +15,8 @@
 **                                                                                                                                       **
 ******************************************************************************************************************************************/
 
-function highlight( element ) {
-
+function highlight(element)
+{
   // On chope l'élément à sélectionner
   var selectme = document.getElementById(element);
 

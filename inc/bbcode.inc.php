@@ -253,8 +253,8 @@ function bbcode($post, $xhr=NULL)
   $post = str_replace("xD", '<img src="'.$chemin.'./img/emotes/rire.png" alt="rire">', $post);
   $post = str_replace(":O", '<img src="'.$chemin.'./img/emotes/surprise.png" alt="surprise">', $post);
   $post = str_replace(":o", '<img src="'.$chemin.'./img/emotes/surprise.png" alt="surprise">', $post);
-  $post = str_replace(":s", '<img src="'.$chemin.'./img/emotes/gene.png" alt="gêné">', $post);
-  $post = str_replace(":S", '<img src="'.$chemin.'./img/emotes/gene.png" alt="gêné">', $post);
+  $post = str_replace(":-s", '<img src="'.$chemin.'./img/emotes/gene.png" alt="gêné">', $post);
+  $post = str_replace(":-S", '<img src="'.$chemin.'./img/emotes/gene.png" alt="gêné">', $post);
   $post = str_replace(":p", '<img src="'.$chemin.'./img/emotes/coquin.png" alt="coquin">', $post);
   $post = str_replace(":P", '<img src="'.$chemin.'./img/emotes/coquin.png" alt="coquin">', $post);
   $post = str_replace(":DD", '<img src="'.$chemin.'./img/emotes/jouissif.png" alt="jouissif">', $post);
@@ -269,6 +269,107 @@ function bbcode($post, $xhr=NULL)
   $post = str_replace("o_o", '<img src="'.$chemin.'./img/emotes/perplexe1.png" alt="perplexe">', $post);
   $post = str_replace("O_O", '<img src="'.$chemin.'./img/emotes/perplexe1.png" alt="perplexe">', $post);
   $post = str_replace("O_o", '<img src="'.$chemin.'./img/emotes/perplexe2.png" alt="perplexe">', $post);
+
+  // Et on renvoie la chaine traitée
+  return $post;
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction rajoutant des BBCodes supplémentaires pour la NBDB
+//
+// $post                      est la chaîne de caractères à transformer
+// $chemin                    est le chemin jusqu'à la racine du site
+// $liste_pages_encyclopedie  est un tableau contenant la liste de toutes les pages de l'encyclopédie du web
+// $liste_pages_dictionnaire  est un tableau contenant la liste de toutes les pages du dictionnaire du web
+//
+// Exemple d'utilisation: nbdbcode($post, $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang));
+
+function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictionnaire)
+{
+  // === Sous-titre ===
+  $post = str_replace("=== ", "<span class=\"moinsgros gras texte_grisfonce\">", $post, $open);
+  $post = str_replace(" ===", "</span>", $post, $close);
+  if($open > $close)
+  {
+    for($i=0;$i<($open-$close);$i++)
+      $post.="</span>";
+  }
+
+  // == Titre ==
+  $post = str_replace("== ", "<span class=\"gros gras texte_noir souligne\">", $post, $open);
+  $post = str_replace(" ==", "</span>", $post, $close);
+  if($open > $close)
+  {
+    for($i=0;$i<($open-$close);$i++)
+      $post.="</span>";
+  }
+
+  // [[web:page de l'encyclo du web|titre du lien]]
+  preg_match_all('/\[\[web:(.*?)\|(.*?)\]\]/', $post, $resultats);
+  $i = 0;
+  foreach($resultats[0] as $pattern)
+  {
+    $temp_style = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), $liste_pages_encyclopedie)) ? 'gras' : 'texte_negatif';
+    $post = str_replace($pattern, '<a class="'.$temp_style.'" href="'.$chemin.'pages/nbdb/web?page='.$resultats[1][$i].'">'.$resultats[2][$i].'</a>', $post);
+    $i++;
+  }
+
+  // [[web:page de l'encyclo du web]]
+  preg_match_all('/\[\[web:(.*?)\]\]/', $post, $resultats);
+  $i = 0;
+  foreach($resultats[0] as $pattern)
+  {
+    $temp_style = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), $liste_pages_encyclopedie)) ? 'gras' : 'texte_negatif';
+    $post = str_replace($pattern, '<a class="'.$temp_style.'" href="'.$chemin.'pages/nbdb/web?page='.$resultats[1][$i].'">'.$resultats[1][$i].'</a>', $post);
+    $i++;
+  }
+
+  // [[dico:page du dico du web|titre du lien]]
+  preg_match_all('/\[\[dico:(.*?)\|(.*?)\]\]/', $post, $resultats);
+  $i = 0;
+  foreach($resultats[0] as $pattern)
+  {
+    $temp_style = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), $liste_pages_dictionnaire)) ? 'gras' : 'texte_negatif';
+    $post = str_replace($pattern, '<a class="'.$temp_style.'" href="'.$chemin.'pages/nbdb/web_dictionnaire?define='.$resultats[1][$i].'">'.$resultats[2][$i].'</a>', $post);
+    $i++;
+  }
+
+  // [[dico:page du dico du web]]
+  preg_match_all('/\[\[dico:(.*?)\]\]/', $post, $resultats);
+  $i = 0;
+  foreach($resultats[0] as $pattern)
+  {
+    $temp_style = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), $liste_pages_dictionnaire)) ? 'gras' : 'texte_negatif';
+    $post = str_replace($pattern, '<a class="'.$temp_style.'" href="'.$chemin.'pages/nbdb/web_dictionnaire?define='.$resultats[1][$i].'">'.$resultats[1][$i].'</a>', $post);
+    $i++;
+  }
+
+  // [[lien:http://www.lienexterne.com|description du lien]]
+  $post = preg_replace('/\[\[lien:(.*?)\|(.*?)\]\]/i','<a href="$1">$2<img src="'.$chemin.'img/icones/lien_externe.svg" alt=" " height="14" style="padding: 0px 2px;"></a>', $post);
+
+  // [[lien:http://www.lienexterne.com]]
+  $post = preg_replace('/\[\[lien:(.*?)\]\]/i','<a href="$1">$1<img src="'.$chemin.'img/icones/lien_externe.svg" alt=" " height="14" style="padding: 0px 2px;"></a>', $post);
+
+  // [[image:image.png|gauche|description de l'image]]
+  $post = preg_replace('/\[\[image:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><a href="'.$chemin.'pages/nbdb/web_image?image=$1"><img src="'.$chemin.'img/nbdb_web/$1" alt="$1"></a>$3</div>', $post);
+
+  // [[image:image.png|gauche]]
+  $post = preg_replace('/\[\[image:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><a href="'.$chemin.'pages/nbdb/web_image?image=$1"><img src="'.$chemin.'img/nbdb_web/$1" alt="$1"></a></div>', $post);
+
+  // [[image:image.png]]
+  $post = preg_replace('/\[\[image:(.*?)\]\]/i','<a href="'.$chemin.'pages/nbdb/web_image?image=$1"><img src="'.$chemin.'img/nbdb_web/$1" alt="$1"></a>', $post);
+
+  // [galerie][/galerie]
+  $post = preg_replace('/\[\[galerie\]\](.*?)\[\[\/galerie\]\]/is','<div class="web_galerie">$1</div>', $post);
+
+  // [[galerie:image.png|description de l'image]]
+  $post = preg_replace('/\[\[galerie:(.*?)\|(.*?)\]\]/i','<div class="web_galerie_image"><a href="'.$chemin.'pages/nbdb/web_image?image=$1"><img src="'.$chemin.'img/nbdb_web/$1" alt="$1"></a><hr class="web_galerie_hr">$2</div>', $post);
+
+  // [[galerie:image.png]]
+  $post = preg_replace('/\[\[galerie:(.*?)\]\]/i','<div class="web_galerie_image"><a href="'.$chemin.'pages/nbdb/web_image?image=$1"><img src="'.$chemin.'img/nbdb_web/$1" alt="$1"></a></div>', $post);
 
   // Et on renvoie la chaine traitée
   return $post;

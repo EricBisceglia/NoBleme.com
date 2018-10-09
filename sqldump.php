@@ -4,7 +4,7 @@
 /*                                                                                                                                       */
 /******************************************************************************************************************************************
 
-CREATE DATABASE IF NOT EXISTS `nobleme` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `nobleme` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `nobleme`;
 
 DROP TABLE IF EXISTS `activite`;
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `activite` (
   KEY `index_membres` (`FKmembres`),
   KEY `index_action` (`action_id`),
   KEY `index_type` (`action_type`(10))
-) ENGINE=MyISAM AUTO_INCREMENT=20765 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `activite_diff`;
 CREATE TABLE IF NOT EXISTS `activite_diff` (
@@ -34,7 +34,17 @@ CREATE TABLE IF NOT EXISTS `activite_diff` (
   `diff_apres` longtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_activite` (`FKactivite`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `automatisation`;
+CREATE TABLE IF NOT EXISTS `automatisation` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `action_id` int(11) UNSIGNED NOT NULL,
+  `action_type` mediumtext COLLATE utf8mb4_unicode_ci,
+  `action_description` mediumtext COLLATE utf8mb4_unicode_ci,
+  `action_timestamp` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `devblog`;
 CREATE TABLE IF NOT EXISTS `devblog` (
@@ -43,7 +53,58 @@ CREATE TABLE IF NOT EXISTS `devblog` (
   `titre` mediumtext COLLATE utf8mb4_unicode_ci,
   `contenu` longtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `ecrivains_concours`;
+CREATE TABLE IF NOT EXISTS `ecrivains_concours` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `FKmembres_gagnant` int(11) UNSIGNED NOT NULL,
+  `FKecrivains_texte_gagnant` int(11) UNSIGNED NOT NULL,
+  `timestamp_debut` int(11) UNSIGNED NOT NULL,
+  `timestamp_fin` int(11) UNSIGNED NOT NULL,
+  `num_participants` int(11) UNSIGNED NOT NULL,
+  `titre` text COLLATE utf8mb4_unicode_ci,
+  `sujet` mediumtext COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `ecrivains_concours_vote`;
+CREATE TABLE IF NOT EXISTS `ecrivains_concours_vote` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `FKecrivains_concours` int(11) UNSIGNED NOT NULL,
+  `FKecrivains_texte` int(11) UNSIGNED NOT NULL,
+  `FKmembres` int(11) UNSIGNED NOT NULL,
+  `poids_vote` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `ecrivains_note`;
+CREATE TABLE IF NOT EXISTS `ecrivains_note` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `FKecrivains_texte` int(11) UNSIGNED NOT NULL,
+  `FKmembres` int(11) UNSIGNED NOT NULL,
+  `timestamp` int(11) UNSIGNED NOT NULL,
+  `note` decimal(2,1) DEFAULT NULL,
+  `anonyme` tinyint(1) UNSIGNED NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `ecrivains_texte`;
+CREATE TABLE IF NOT EXISTS `ecrivains_texte` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `FKmembres` int(11) UNSIGNED NOT NULL,
+  `FKecrivains_concours` int(11) UNSIGNED NOT NULL,
+  `anonyme` tinyint(1) UNSIGNED NOT NULL,
+  `timestamp_creation` int(11) UNSIGNED NOT NULL,
+  `timestamp_modification` int(11) UNSIGNED NOT NULL,
+  `niveau_feedback` int(4) UNSIGNED NOT NULL,
+  `titre` text COLLATE utf8mb4_unicode_ci,
+  `note_moyenne` decimal(2,1) DEFAULT NULL,
+  `longueur_texte` int(11) UNSIGNED NOT NULL,
+  `contenu` longtext COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `forum_categorie`;
 CREATE TABLE IF NOT EXISTS `forum_categorie` (
@@ -56,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `forum_categorie` (
   `description_en` mediumtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_classement` (`par_defaut`,`classement`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `forum_filtrage`;
 CREATE TABLE IF NOT EXISTS `forum_filtrage` (
@@ -66,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `forum_filtrage` (
   PRIMARY KEY (`id`),
   KEY `index_membres` (`FKmembres`),
   KEY `index_categorie` (`FKforum_categorie`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `forum_message`;
 CREATE TABLE IF NOT EXISTS `forum_message` (
@@ -83,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `forum_message` (
   KEY `index_parent` (`FKforum_message_parent`),
   KEY `index_membres` (`FKmembres`),
   KEY `index_chronologie` (`timestamp_creation`)
-) ENGINE=MyISAM AUTO_INCREMENT=161 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `forum_sujet`;
 CREATE TABLE IF NOT EXISTS `forum_sujet` (
@@ -106,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `forum_sujet` (
   KEY `index_dernier` (`FKmembres_dernier_message`),
   KEY `index_categorie` (`FKforum_categorie`),
   KEY `index_chronologie` (`timestamp_dernier_message`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `invites`;
 CREATE TABLE IF NOT EXISTS `invites` (
@@ -118,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `invites` (
   `derniere_visite_url` mediumtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ip` (`ip`)
-) ENGINE=MyISAM AUTO_INCREMENT=107702 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `irc_canaux`;
 CREATE TABLE IF NOT EXISTS `irc_canaux` (
@@ -129,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `irc_canaux` (
   `description_fr` mediumtext COLLATE utf8mb4_unicode_ci,
   `description_en` mediumtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `irl`;
 CREATE TABLE IF NOT EXISTS `irl` (
@@ -141,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `irl` (
   `details_fr` longtext COLLATE utf8mb4_unicode_ci,
   `details_en` longtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `irl_participants`;
 CREATE TABLE IF NOT EXISTS `irl_participants` (
@@ -155,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `irl_participants` (
   PRIMARY KEY (`id`),
   KEY `index_irl` (`FKirl`),
   KEY `index_membres` (`FKmembres`)
-) ENGINE=MyISAM AUTO_INCREMENT=342 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `membres`;
 CREATE TABLE IF NOT EXISTS `membres` (
@@ -186,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `membres` (
   PRIMARY KEY (`id`),
   KEY `index_login` (`pseudonyme`(20),`pass`(60)),
   KEY `index_droits` (`admin`,`sysop`,`moderateur`(10))
-) ENGINE=MyISAM AUTO_INCREMENT=417 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `membres_essais_login`;
 CREATE TABLE IF NOT EXISTS `membres_essais_login` (
@@ -196,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `membres_essais_login` (
   `ip` tinytext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_membres` (`FKmembres`)
-) ENGINE=MyISAM AUTO_INCREMENT=134 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `notifications`;
 CREATE TABLE IF NOT EXISTS `notifications` (
@@ -211,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   KEY `index_destinataire` (`FKmembres_destinataire`),
   KEY `index_envoyeur` (`FKmembres_envoyeur`),
   KEY `index_chronologie` (`date_envoi`)
-) ENGINE=MyISAM AUTO_INCREMENT=904 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `pageviews`;
 CREATE TABLE IF NOT EXISTS `pageviews` (
@@ -222,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `pageviews` (
   `vues_lastvisit` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_tri` (`vues`,`vues_lastvisit`)
-) ENGINE=MyISAM AUTO_INCREMENT=873 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `quotes`;
 CREATE TABLE IF NOT EXISTS `quotes` (
@@ -233,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `quotes` (
   `valide_admin` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_membres` (`FKauteur`)
-) ENGINE=MyISAM AUTO_INCREMENT=251 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `quotes_membres`;
 CREATE TABLE IF NOT EXISTS `quotes_membres` (
@@ -243,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `quotes_membres` (
   PRIMARY KEY (`id`),
   KEY `index_quotes` (`FKquotes`),
   KEY `index_membres` (`FKmembres`)
-) ENGINE=MyISAM AUTO_INCREMENT=145 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `todo`;
 CREATE TABLE IF NOT EXISTS `todo` (
@@ -263,14 +324,14 @@ CREATE TABLE IF NOT EXISTS `todo` (
   KEY `index_membres` (`FKmembres`),
   KEY `index_categorie` (`FKtodo_categorie`),
   KEY `index_roadmap` (`FKtodo_roadmap`)
-) ENGINE=MyISAM AUTO_INCREMENT=433 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `todo_categorie`;
 CREATE TABLE IF NOT EXISTS `todo_categorie` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `categorie` tinytext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `todo_roadmap`;
 CREATE TABLE IF NOT EXISTS `todo_roadmap` (
@@ -280,14 +341,14 @@ CREATE TABLE IF NOT EXISTS `todo_roadmap` (
   `description` mediumtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_classement` (`id_classement`)
-) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `vars_globales`;
 CREATE TABLE IF NOT EXISTS `vars_globales` (
   `mise_a_jour` tinyint(1) NOT NULL,
   `last_pageview_check` int(11) NOT NULL,
   UNIQUE KEY `mise_a_jour` (`mise_a_jour`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `version`;
 CREATE TABLE IF NOT EXISTS `version` (
@@ -296,7 +357,7 @@ CREATE TABLE IF NOT EXISTS `version` (
   `build` tinytext COLLATE utf8mb4_unicode_ci,
   `date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 ALTER TABLE `forum_message` ADD FULLTEXT KEY `index_contenu` (`contenu`);

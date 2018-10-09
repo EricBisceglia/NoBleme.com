@@ -59,7 +59,7 @@ function envoyer_notif($en_destinataire,$en_titre,$en_contenu,$sender=NULL,$sile
 // action_parent      (optionnel) est un élément parent à l'action, pour son traitement dans pages/nobleme/activite
 // justification      (optionnel) est la justification de l'action dans le log de modération
 //
-// Utilisation: activite_nouveau('truc_edit', 0, 0, 'Bad', 42, 'Le truc édité');
+// Utilisation: $activite_id = activite_nouveau('truc_edit', 0, 0, 'Bad', 42, 'Le truc édité');
 
 function activite_nouveau($type_action, $log_moderation, $membre_id=0, $membre_pseudonyme=NULL, $action_id=0, $action_titre=NULL, $action_parent=NULL, $justification=NULL)
 {
@@ -92,7 +92,7 @@ function activite_nouveau($type_action, $log_moderation, $membre_id=0, $membre_p
 // apres      (optionnel) est le contenu qui en remplace un autre dans le diff
 // optionnel  (optionnel) spécifie que le diff ne doit être crée que si le contenu d'après est différent du contenu d'avant
 //
-// Utilisation: $activite_id = activite_diff(1, 'Valeur', 3, 5, 1);
+// Utilisation: activite_diff(1, 'Valeur', 3, 5, 1);
 
 function activite_diff($id, $titre, $avant, $apres=NULL, $optionnel=NULL)
 {
@@ -175,6 +175,29 @@ function activite_supprimer($type_action, $log_moderation=0, $membre_id=0, $memb
 
   // Et on envoie une purge des diffs potentiellement orphelins suite à la suppression
   purger_diff_orphelins();
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction vérifiant l'existence d'une entrée dans une table de la base de données
+//
+// $table   est le nom de la table
+// $id      est l'id à chercher dans la table
+//
+// Utilisation: verifier_existence('membres', 1);
+
+function verifier_existence($table, $id)
+{
+  // On va vérifier si le champ existe
+  $qcheck = mysqli_fetch_array(query("  SELECT  ".$table.".id AS 't_id'
+                                        FROM    $table
+                                        WHERE   ".$table.".id = '".$id."' "));
+
+  // Puis on revoie 1 ou 0 selon si l'id existe ou non
+  $return = ($qcheck['t_id']) ? 1 : 0;
+  return $return;
 }
 
 

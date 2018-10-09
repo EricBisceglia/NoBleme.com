@@ -389,21 +389,16 @@ function html_autour($recherche, $texte, $html_avant, $html_apres)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction vérifiant l'existence d'une entrée dans une table de la base de données
+// Remplace les lettres accentuées d'une chaine de caractères par leur équivalent non accentué
 //
-// $table   est le nom de la table
-// $id      est l'id à chercher dans la table
-//
-// Utilisation: verifier_existence('membres', 1);
+// Utilisation: remplacer_accents('Évangélisme');
 
-function verifier_existence($table, $id)
+function remplacer_accents($chaine)
 {
-  // On va vérifier si le champ existe
-  $qcheck = mysqli_fetch_array(query("  SELECT  ".$table.".id AS 't_id'
-                                        FROM    $table
-                                        WHERE   ".$table.".id = '".$id."' "));
+  // On dénifinit de façon complètement stupide les caractères à remplacer
+  $accents    = explode(",","ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,Ø,Å,Á,À,Â,Ä,È,É,Ê,Ë,Í,Î,Ï,Ì,Ò,Ó,Ô,Ö,Ú,Ù,Û,Ü,Ÿ,Ç,Æ,Œ");
+  $noaccents  = explode(",","c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,o,O,A,A,A,A,A,E,E,E,E,I,I,I,I,O,O,O,O,U,U,U,U,Y,C,AE,OE");
 
-  // Puis on revoie 1 ou 0 selon si l'id existe ou non
-  $return = ($qcheck['t_id']) ? 1 : 0;
-  return $return;
+  // Puis on renvoie la chaine modifiée
+  return str_replace($accents, $noaccents, $chaine);
 }

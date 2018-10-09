@@ -118,7 +118,7 @@ $dconcours = mysqli_fetch_array(query(" SELECT    ecrivains_concours.timestamp_f
                                         FROM      ecrivains_concours
                                         LEFT JOIN membres         ON    ecrivains_concours.FKmembres_gagnant  = membres.id
                                         LEFT JOIN automatisation  ON    ecrivains_concours.id                 = automatisation.action_id
-                                                                  AND   automatisation.action_type         LIKE 'ecrivains_concours_vote'
+                                                                  AND   automatisation.action_type         LIKE 'ecrivains_concours_fin'
                                         LEFT JOIN ecrivains_texte ON    ecrivains_concours.FKecrivains_texte_gagnant = ecrivains_texte.id
                                         WHERE     ecrivains_concours.id = '$id_concours' "));
 
