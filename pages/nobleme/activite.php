@@ -120,6 +120,8 @@ if(isset($_POST['activite_type']))
                   OR        activite.action_type LIKE 'todo_%' )";
   else if($activite_type == 'misc')
     $qactrec .= " AND       activite.action_type LIKE 'quote' ";
+  else if($activite_type == 'nbdb')
+    $qactrec .= " AND       activite.action_type LIKE 'nbdb_%' ";
 }
 
 // On trie
@@ -200,7 +202,7 @@ if($lang == 'FR')
   $trad['ar_forum']   = "Forum";
   $trad['ar_irl']     = "IRL";
   $trad['ar_dev']     = "Développement";
-  $trad['ar_misc']    = "Miscellanées";
+  $trad['ar_nbdb']    = "NBDB";
 
   // Détails
   $trad['d_justif']   = "Justification de l'action :";
@@ -224,7 +226,7 @@ else if($lang == 'EN')
   $trad['ar_forum']   = "Forum";
   $trad['ar_irl']     = "Meetups";
   $trad['ar_dev']     = "Internals";
-  $trad['ar_misc']    = "Quotes";
+  $trad['ar_nbdb']    = "NBDB";
 
   // Détails
   $trad['d_justif']   = "Reason for this action:";
@@ -274,10 +276,11 @@ if(!getxhr()) { /***************************************************************
             <option value="membres"><?=$trad['ar_user']?></option>
             <option value="forum"><?=$trad['ar_forum']?></option>
             <option value="irl"><?=$trad['ar_irl']?></option>
+            <option value="nbdb"><?=$trad['ar_nbdb']?></option>
             <?php if($lang == 'FR') { ?>
             <option value="ecrivains">Coin des écrivains</option>
+            <option value="misc">Miscellanées</option>
             <?php } ?>
-            <option value="misc"><?=$trad['ar_misc']?></option>
             <option value="dev"><?=$trad['ar_dev']?></option>
           </select>
         </p>
