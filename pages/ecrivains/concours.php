@@ -162,9 +162,10 @@ if($concours_peut_voter && $concours_fini && !$concours_gagnant_texte)
   $concours_a_vote = 0;
 
   // On prépare ces textes pour l'affichage
+  $concours_a_vote = 0;
   for($nvotes = 0 ; $dvotes = mysqli_fetch_array($qvotes) ; $nvotes++)
   {
-    $concours_a_vote        = ($dvotes['v_poids'] && !$concours_a_vote) ? 1 : 0;
+    $concours_a_vote        = ($dvotes['v_poids']) ? 1 : $concours_a_vote;
     $temp_poids             = ($dvotes['v_poids'] == 3) ? 'Second choix' : 'Troisième choix';
     $temp_poids             = ($dvotes['v_poids'] == 5) ? 'Premier choix' : $temp_poids;
     $vote_poids[$nvotes]    = (!$dvotes['v_poids']) ? 0 : $temp_poids;
@@ -231,35 +232,35 @@ for($ntextes = 0; $dtextes = mysqli_fetch_array($qtextes); $ntextes++)
 if($concours_est_admin)
 {
   // On va chercher les votes
-  $qvotes = query(" SELECT    ecrivains_concours_vote.poids_vote  AS 'c_poids'  ,
-                              ecrivains_texte.id                  AS 't_id'     ,
-                              ecrivains_texte.titre               AS 't_titre'  ,
-                              ecrivains_texte.anonyme             AS 't_anon'   ,
-                              membres.id                          AS 'm_id'     ,
-                              membres.pseudonyme                  AS 'm_pseudo' ,
-                              auteur.id                           AS 'a_id'     ,
-                              auteur.pseudonyme                   AS 'a_pseudo'
-                    FROM      ecrivains_concours_vote
-                    LEFT JOIN ecrivains_texte   ON ecrivains_concours_vote.FKecrivains_texte  = ecrivains_texte.id
-                    LEFT JOIN membres           ON ecrivains_concours_vote.FKmembres          = membres.id
-                    LEFT JOIN membres AS auteur ON ecrivains_texte.FKmembres                  = auteur.id
-                    WHERE     ecrivains_concours_vote.FKecrivains_concours = '$id_concours'
-                    ORDER BY  membres.pseudonyme                 ASC  ,
-                              ecrivains_concours_vote.poids_vote DESC ");
+  $qvotesd = query("  SELECT    ecrivains_concours_vote.poids_vote  AS 'c_poids'  ,
+                                ecrivains_texte.id                  AS 't_id'     ,
+                                ecrivains_texte.titre               AS 't_titre'  ,
+                                ecrivains_texte.anonyme             AS 't_anon'   ,
+                                membres.id                          AS 'm_id'     ,
+                                membres.pseudonyme                  AS 'm_pseudo' ,
+                                auteur.id                           AS 'a_id'     ,
+                                auteur.pseudonyme                   AS 'a_pseudo'
+                      FROM      ecrivains_concours_vote
+                      LEFT JOIN ecrivains_texte   ON ecrivains_concours_vote.FKecrivains_texte  = ecrivains_texte.id
+                      LEFT JOIN membres           ON ecrivains_concours_vote.FKmembres          = membres.id
+                      LEFT JOIN membres AS auteur ON ecrivains_texte.FKmembres                  = auteur.id
+                      WHERE     ecrivains_concours_vote.FKecrivains_concours = '$id_concours'
+                      ORDER BY  membres.pseudonyme                 ASC  ,
+                                ecrivains_concours_vote.poids_vote DESC ");
 
   // Puis on les prépare pour l'affichage
-  for($nvotes = 0; $dvotes = mysqli_fetch_array($qvotes); $nvotes++)
+  for($nvotesd = 0; $dvotesd = mysqli_fetch_array($qvotesd); $nvotesd++)
   {
-    $temp_choix             = ($dvotes['c_poids'] == 5) ? '1er' : '2nd';
-    $vote_choix[$nvotes]    = ($dvotes['c_poids'] == 1) ? '3ème' : $temp_choix;
-    $temp_csschoix          = ($dvotes['c_poids'] == 5) ? ' class="texte_noir gras"' : ' class="gras"';
-    $vote_csschoix[$nvotes] = ($dvotes['c_poids'] == 1) ? '' : $temp_csschoix;
-    $vote_idtexte[$nvotes]  = $dvotes['t_id'];
-    $vote_texte[$nvotes]    = predata($dvotes['t_titre']);
-    $vote_idmembre[$nvotes] = $dvotes['m_id'];
-    $vote_membre[$nvotes]   = predata($dvotes['m_pseudo']);
-    $vote_idauteur[$nvotes] = $dvotes['a_id'];
-    $vote_auteur[$nvotes]   = ($dvotes['t_anon']) ? predata($dvotes['a_pseudo']).' (Anonyme)' : predata($dvotes['a_pseudo']);
+    $temp_choix               = ($dvotesd['c_poids'] == 5) ? '1er' : '2nd';
+    $voted_choix[$nvotesd]    = ($dvotesd['c_poids'] == 1) ? '3ème' : $temp_choix;
+    $temp_csschoix            = ($dvotesd['c_poids'] == 5) ? ' class="texte_noir gras"' : ' class="gras"';
+    $voted_csschoix[$nvotesd] = ($dvotesd['c_poids'] == 1) ? '' : $temp_csschoix;
+    $voted_idtexte[$nvotesd]  = $dvotesd['t_id'];
+    $voted_texte[$nvotesd]    = predata($dvotesd['t_titre']);
+    $voted_idmembre[$nvotesd] = $dvotesd['m_id'];
+    $voted_membre[$nvotesd]   = predata($dvotesd['m_pseudo']);
+    $voted_idauteur[$nvotesd] = $dvotesd['a_id'];
+    $voted_auteur[$nvotesd]   = ($dvotesd['t_anon']) ? predata($dvotesd['a_pseudo']).' (Anonyme)' : predata($dvotesd['a_pseudo']);
   }
 }
 
@@ -545,7 +546,7 @@ if($concours_est_admin)
 
       <?php } ?>
 
-      <?php if($concours_est_admin && $nvotes) { ?>
+      <?php if($concours_est_admin && $nvotesd) { ?>
 
       <br>
       <br>
@@ -583,29 +584,29 @@ if($concours_est_admin)
 
           <tbody class="align_center">
 
-            <?php for($i=0;$i<$nvotes;$i++) { ?>
+            <?php for($i=0;$i<$nvotesd;$i++) { ?>
 
-            <?php if($i < ($nvotes - 1) && $vote_membre[$i] != $vote_membre[$i+1]) { ?>
+            <?php if($i < ($nvotesd - 1) && $voted_membre[$i] != $voted_membre[$i+1]) { ?>
             <tr class="bas_noir">
             <?php } else { ?>
             <tr>
             <?php } ?>
               <td>
-                <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$vote_idmembre[$i]?>">
-                  <?=$vote_membre[$i]?>
+                <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$voted_idmembre[$i]?>">
+                  <?=$voted_membre[$i]?>
                 </a>
               </td>
-              <td<?=$vote_csschoix[$i]?>>
-                <?=$vote_choix[$i]?>
+              <td<?=$voted_csschoix[$i]?>>
+                <?=$voted_choix[$i]?>
               </td>
               <td>
-                <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$vote_idauteur[$i]?>">
-                  <?=$vote_auteur[$i]?>
+                <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$voted_idauteur[$i]?>">
+                  <?=$voted_auteur[$i]?>
                 </a>
               </td>
               <td>
-                <a class="gras" href="<?=$chemin?>pages/ecrivains/texte?id=<?=$vote_idtexte[$i]?>">
-                  <?=$vote_texte[$i]?>
+                <a class="gras" href="<?=$chemin?>pages/ecrivains/texte?id=<?=$voted_idtexte[$i]?>">
+                  <?=$voted_texte[$i]?>
                 </a>
               </td>
             </tr>
