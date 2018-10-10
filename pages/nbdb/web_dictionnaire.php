@@ -355,7 +355,7 @@ if(!getxhr()) { /***************************************************************
       // Page spécifique du dictionnaire du web
       } else { ?>
 
-      <div class="texte">
+      <div class="texte align_justify">
 
         <h1>
           <a href="<?=$chemin?>pages/nbdb/web_dictionnaire">

@@ -353,7 +353,7 @@ if(!getxhr()) { /***************************************************************
 
       <?php if($web_titre_fr) { ?>
 
-      <div class="texte">
+      <div class="texte align_justify">
 
         <h3 class="alinea texte_noir">
           <?=$web_titre_fr?> :
@@ -375,7 +375,7 @@ if(!getxhr()) { /***************************************************************
 
       <?php } if($web_titre_en) { ?>
 
-      <div class="texte">
+      <div class="texte align_justify">
 
         <h3 class="alinea texte_noir">
           <?=$web_titre_en?>:

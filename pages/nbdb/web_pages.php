@@ -246,7 +246,7 @@ EOD;
 /*                                                                                                                                       */
 if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
 
-      <div class="texte" id="">
+      <div class="texte align_justify" id="">
 
         <h1>
           <a href="<?=$chemin?>pages/nbdb/web">

@@ -228,7 +228,7 @@ else
 
       <?php if($dico_titre_fr) { ?>
 
-      <div class="texte">
+      <div class="texte align_justify">
 
         <p class="alinea gros texte_noir souligne">
           <?=$dico_titre_fr?> :
@@ -250,7 +250,7 @@ else
 
       <?php } if($dico_titre_en) { ?>
 
-      <div class="texte">
+      <div class="texte align_justify">
 
         <p class="alinea gros texte_noir souligne">
           <?=$dico_titre_en?>:

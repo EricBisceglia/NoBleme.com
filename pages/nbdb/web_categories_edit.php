@@ -177,7 +177,7 @@ if(!isset($categorie_afficher_edit))
 /*                                                                                                                                       */
 if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
 
-      <div class="texte">
+      <div class="texte align_justify">
 
         <h4 class="align_center">
           Encyclopédie de la culture internet : Catégories
