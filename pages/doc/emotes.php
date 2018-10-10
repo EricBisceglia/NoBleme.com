@@ -179,10 +179,10 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode(":)")?>
+                <?=bbcode(":-)")?>
               </td>
               <td class="monospace">
-                :)
+                :-)
               </td>
               <td>
                 <?=$trad['table_sourire']?>
@@ -191,10 +191,10 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode(":D")?>
+                <?=bbcode(":-D")?>
               </td>
               <td class="monospace">
-                :D
+                :-D
               </td>
               <td>
                 <?=$trad['table_heureux']?>
@@ -203,10 +203,10 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode(":DD")?>
+                <?=bbcode(":-DD")?>
               </td>
               <td class="monospace">
-                :DD
+                :-DD
               </td>
               <td>
                 <?=$trad['table_jouissif']?>
@@ -232,10 +232,10 @@ EOD;
 
             <tr>
               <td rowspan="2">
-                <?=bbcode(":P")?>
+                <?=bbcode(":-P")?>
               </td>
               <td class="monospace">
-                :P
+                :-P
               </td>
               <td rowspan="2">
                 <?=$trad['table_coquin']?>
@@ -243,16 +243,16 @@ EOD;
             </tr>
             <tr>
               <td class="monospace">
-                :p
+                :-p
               </td>
             </tr>
 
             <tr>
               <td>
-                <?=bbcode(":(")?>
+                <?=bbcode(":-(")?>
               </td>
               <td class="monospace">
-                :(
+                :-(
               </td>
               <td>
                 <?=$trad['table_triste']?>
@@ -331,10 +331,10 @@ EOD;
 
             <tr>
               <td rowspan="2">
-                <?=bbcode(":#")?>
+                <?=bbcode(":-#")?>
               </td>
               <td class="monospace">
-                :")
+                :-")
               </td>
               <td rowspan="2">
                 <?=$trad['table_honte']?>
@@ -342,7 +342,7 @@ EOD;
             </tr>
             <tr>
               <td class="monospace">
-                :#
+                :-#
               </td>
             </tr>
 
@@ -360,10 +360,10 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode(":|")?>
+                <?=bbcode(":-|")?>
               </td>
               <td class="monospace">
-                :|
+                :-|
               </td>
               <td>
                 <?=$trad['table_blase']?>
@@ -389,10 +389,10 @@ EOD;
 
             <tr>
               <td rowspan="2">
-                <?=bbcode(":O")?>
+                <?=bbcode(":-O")?>
               </td>
               <td class="monospace">
-                :O
+                :-O
               </td>
               <td rowspan="2">
                 <?=$trad['table_surprise']?>
@@ -400,7 +400,7 @@ EOD;
             </tr>
             <tr>
               <td class="monospace">
-                :o
+                :-o
               </td>
             </tr>
 
