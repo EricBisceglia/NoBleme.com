@@ -170,10 +170,10 @@ while($dcategories = mysqli_fetch_array($qcategories))
 // Liste des périodes
 
 // On va chercher les périodes
-$qperiodes = query("  SELECT    nbdb_web_periode.id           AS 'p_id'     ,
-                                nbdb_web_periode.titre_fr     AS 'p_titre'  ,
-                                nbdb_web_periode.annee_debut  AS 'p_debut'  ,
-                                nbdb_web_periode.annee_fin    AS 'p_fin'
+$qperiodes = query("  SELECT    nbdb_web_periode.id               AS 'p_id'     ,
+                                nbdb_web_periode.titre_$web_lang  AS 'p_titre'  ,
+                                nbdb_web_periode.annee_debut      AS 'p_debut'  ,
+                                nbdb_web_periode.annee_fin        AS 'p_fin'
                       FROM      nbdb_web_periode
                       ORDER BY  nbdb_web_periode.annee_debut  ASC ,
                                 nbdb_web_periode.annee_fin    ASC ");
