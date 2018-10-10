@@ -12,7 +12,7 @@ $header_sidemenu  = 'NBDBEncycloListe';
 
 // Identification
 $page_nom = "Parcourt la culture du web";
-$page_url = "pages/nbdb/web_liste";
+$page_url = "pages/nbdb/web_pages";
 
 // Langues disponibles
 $langue_page = array('FR','EN');
