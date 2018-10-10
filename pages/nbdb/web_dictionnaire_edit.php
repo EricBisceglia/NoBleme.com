@@ -222,7 +222,12 @@ else
 
       <div class="tableau2">
 
-        <h1 class="align_center">Administration du dictionnaire de la culture web</h1>
+        <h1 class="align_center">
+          Administration du dictionnaire de la culture web
+          <a href="<?=$chemin?>pages/nbdb/web_images" target="_blank">
+            &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/upload.svg" alt="+" height="40">
+          </a>
+        </h1>
 
         <?php } else { ?>
 
