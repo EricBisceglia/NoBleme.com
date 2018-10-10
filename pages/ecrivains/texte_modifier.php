@@ -197,7 +197,7 @@ while($dconcours = mysqli_fetch_array($qconcours))
 
         <br>
 
-        <h5 class="erreur texte_blanc spaced">Attention ! Ce texte est lié à un concours du coin des écrivains. Il ne faut pas le modifier sans avoir une excellente raison de le faire, sous peine de créer des incohérences les archives du concours.</h5>
+        <h5 class="erreur texte_blanc spaced">Attention ! Ce texte est lié à un concours du coin des écrivains. Il ne faut pas le modifier sans avoir une excellente raison de le faire, sous peine de créer des incohérences dans les archives du concours.</h5>
 
         <br>
 
