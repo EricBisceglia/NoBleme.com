@@ -362,8 +362,23 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
   // [[image:image.png]]
   $post = preg_replace('/\[\[image:(.*?)\]\]/i','<a href="'.$chemin.'pages/nbdb/web_image?image=$1"><img src="'.$chemin.'img/nbdb_web/$1" alt="$1"></a>', $post);
 
+  // [[youtube:urlyoutube|gauche|description de la vidéo]]
+  $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $post);
+
+  // [[youtube:urlyoutube|gauche]]
+  $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+
+  // [[youtube:urlyoutube]]
+  $post = preg_replace('/\[\[youtube:(.*?)\]\]/i','<div class="align_center"><iframe width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+
   // [galerie][/galerie]
   $post = preg_replace('/\[\[galerie\]\](.*?)\[\[\/galerie\]\]/is','<div class="web_galerie">$1</div>', $post);
+
+  // [[galerie:urlyoutube|youtube|légende]]
+  $post = preg_replace('/\[\[galerie:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr">$2</div>', $post);
+
+    // [[galerie:urlyoutube|youtube]]
+  $post = preg_replace('/\[\[galerie:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr"></div>', $post);
 
   // [[galerie:image.png|description de l'image]]
   $post = preg_replace('/\[\[galerie:(.*?)\|(.*?)\]\]/i','<div class="web_galerie_image"><a href="'.$chemin.'pages/nbdb/web_image?image=$1"><img src="'.$chemin.'img/nbdb_web/$1" alt="$1"></a><hr class="web_galerie_hr">$2</div>', $post);

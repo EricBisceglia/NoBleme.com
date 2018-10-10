@@ -153,10 +153,37 @@ $css  = array('doc', 'nbdb');
 
             <tr>
               <td class="texte_noir">
+                [[youtube:hash]]
+              </td>
+              <td>
+                <?=nbdbcode('[[youtube:LDU_Txk06tM]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+              </td>
+            </tr>
+            <tr>
+              <td class="texte_noir">
+                [[youtube:hash|gauche]]
+              </td>
+              <td>
+                <?=nbdbcode('[[youtube:LDU_Txk06tM|gauche]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo
+              </td>
+            </tr>
+            <tr>
+              <td class="texte_noir">
+                [[youtube:hash|droite|Légende]]
+              </td>
+              <td>
+                <?=nbdbcode('[[youtube:LDU_Txk06tM|droite|Légende]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir">
                 [[galerie]]<br>
                 <br>
                 [[galerie:image.png]]<br>
                 [[galerie:image.png|légende]]<br>
+                [[galerie:hash|youtube]]
+                [[galerie:hash|youtube|légende]]<br>
                 <br>
                 [[/galerie]]
               </td>
@@ -164,10 +191,10 @@ $css  = array('doc', 'nbdb');
                 <?=nbdbcode(' [[galerie]]
                                 [[galerie:Image_de_test_pour_les_exemples.png]]
                                 [[galerie:Image_de_test_pour_les_exemples.png]]
-                                [[galerie:Image_de_test_pour_les_exemples.png]]
-                                [[galerie:Image_de_test_pour_les_exemples.png]]
-                                [[galerie:Image_de_test_pour_les_exemples.png]]
                                 [[galerie:Image_de_test_pour_les_exemples.png|Légende]]
+                                [[galerie:LDU_Txk06tM|youtube]]
+                                [[galerie:LDU_Txk06tM|youtube]]
+                                [[galerie:LDU_Txk06tM|youtube|Légende]]
                               [[/galerie]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
               </td>
             </tr>
