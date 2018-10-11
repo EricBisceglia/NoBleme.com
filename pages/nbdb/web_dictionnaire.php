@@ -253,6 +253,9 @@ if(!getxhr()) { /***************************************************************
         <h5>
           <?=$trad['soustitre']?>
           <?php if($est_admin) { ?>
+          <a href="<?=$chemin?>pages/nbdb/web_images">
+            &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/upload.svg" alt="+" height="22">
+          </a>
           <a href="<?=$chemin?>pages/nbdb/web_dictionnaire_edit">
             &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" height="22">
           </a>

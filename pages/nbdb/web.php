@@ -381,6 +381,23 @@ EOD;
           </div>
         </div>
 
+        <?php if($est_admin) { ?>
+
+        <br>
+
+        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_missing';">
+          <div class="align_center doc_minibordure">
+            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+              Administration : Pages manquantes
+            </h5>
+            <span class="doc_minipadding">
+              Liste des pages liées mais non existantes dans l'encyclopédie du web et le dictionnaire du web
+            </span>
+          </div>
+        </div>
+
+        <?php } ?>
+
       </div>
 
 
