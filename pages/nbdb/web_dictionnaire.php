@@ -440,6 +440,7 @@ if(!getxhr()) { /***************************************************************
         </p>
 
         <br>
+        <br>
 
         <p class="align_center moinsgros gras">
           <a href="<?=$chemin?>pages/nbdb/web_dictionnaire?random">

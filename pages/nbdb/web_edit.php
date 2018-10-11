@@ -183,8 +183,8 @@ if(isset($_POST['web_preview']))
   $web_redirect_en      = predata($_POST['web_redirection_en']);
   $web_contenu_fr       = $_POST['web_definition_fr'];
   $web_contenu_en       = $_POST['web_definition_en'];
-  $web_definition_fr    = nbdbcode(bbcode(predata($_POST['web_definition_fr'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang));
-  $web_definition_en    = nbdbcode(bbcode(predata($_POST['web_definition_en'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang));
+  $web_definition_fr    = nbdbcode(bbcode(predata($_POST['web_definition_fr'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie('FR'), nbdb_web_liste_pages_dictionnaire('FR'));
+  $web_definition_en    = nbdbcode(bbcode(predata($_POST['web_definition_en'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie('EN'), nbdb_web_liste_pages_dictionnaire('EN'));
   $web_periode          = $_POST['web_periode'];
   $web_apparition_y     = predata($_POST['web_apparition_y']);
   $web_apparition_m     = predata($_POST['web_apparition_m']);
