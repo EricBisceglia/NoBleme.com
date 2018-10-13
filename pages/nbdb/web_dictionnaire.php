@@ -14,6 +14,9 @@ $header_sidemenu  = 'NBDBDicoWeb';
 $page_nom = "Apprend à comprendre internet";
 $page_url = "pages/nbdb/web_dictionnaire";
 
+// Lien court
+$shorturl = "wd";
+
 // Langues disponibles
 $langue_page = array('FR','EN');
 
@@ -119,6 +122,7 @@ if($dico_id)
   // Et on oublie pas de modifier les infos de la page
   $page_nom   = 'Apprend le sens de '.predata(tronquer_chaine($ddefinition['d_titre'], 20, '...'));
   $page_url   = "pages/nbdb/web_dictionnaire?define=".urlencode($ddefinition['d_titre']);
+  $shorturl  .= "=".$dico_id;
   $page_titre = "NBDB : ".predata($ddefinition['d_titre']);
   $page_desc  = predata($ddefinition['d_titre']).", ça veut dire quoi ? Dictionnaire des termes propres à la culture internet.";
 }

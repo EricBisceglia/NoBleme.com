@@ -15,6 +15,9 @@ $header_sidemenu  = 'EcrivainsConcours';
 $page_nom = "Regarde le concours d'écriture ";
 $page_url = "pages/ecrivains/concours?id=";
 
+// Lien court
+$shorturl = "ec=";
+
 // Langues disponibles
 $langue_page = array('FR');
 
@@ -124,6 +127,7 @@ $dconcours = mysqli_fetch_array(query(" SELECT    ecrivains_concours.timestamp_f
 
 // On complète les infos de la page
 $page_url .= $id_concours;
+$shorturl .= $id_concours;
 
 // Puis on prépare les infos pour l'affichage
 $concours_fin           = predata(datefr($dconcours['c_fin']));

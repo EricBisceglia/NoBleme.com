@@ -14,6 +14,9 @@ $header_sidemenu  = 'NBDBEncycloWeb';
 $page_nom = "Découvre la culture du web";
 $page_url = "pages/nbdb/web";
 
+// Lien court
+$shorturl = "w";
+
 // Langues disponibles
 $langue_page = array('FR','EN');
 
@@ -154,6 +157,7 @@ if($web_id)
   // Et on oublie pas de modifier les infos de la page
   $page_nom   = 'Découvre ce qu\'est '.predata(tronquer_chaine($dweb['w_titre'], 20, '...'));
   $page_url   = "pages/nbdb/web?page=".urlencode($dweb['w_titre']);
+  $shorturl  .= "=".$web_id;
   $page_titre = "NBDB : ".predata($dweb['w_titre']);
   $page_desc  = predata($dweb['w_titre']).", c'est quoi ça ? Encyclopédie de la culture internet.";
 }

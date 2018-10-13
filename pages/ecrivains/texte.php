@@ -14,6 +14,9 @@ $header_sidemenu  = 'EcrivainsListe';
 $page_nom = "Coin des écrivains";
 $page_url = "pages/ecrivains/texte?id=";
 
+// Lien court
+$shorturl = "e=";
+
 // Langues disponibles
 $langue_page = array('FR');
 
@@ -60,6 +63,7 @@ $peut_voter   = ecrivains_concours_peut_voter();
 $texte_titre  = predata($qveriftexte['t_titre']);
 $page_nom    .= ' : '.predata(tronquer_chaine($qveriftexte['t_titre'], 25, '...'));
 $page_url    .= $texte_id;
+$shorturl    .= $texte_id;
 $page_titre   = predata($qveriftexte['t_titre']);
 $page_desc   .= ' : '.predata($qveriftexte['t_titre']);
 

@@ -87,6 +87,46 @@ if(isset($_GET['coc']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Coin des écrivains
+
+if(isset($_GET['e']))
+{
+  if(!intval($_GET['e']))
+    exit(header("Location: ./pages/ecrivains/index"));
+  else
+    exit(header("Location: ./pages/ecrivains/texte?id=".intval($_GET['e'])));
+}
+if(isset($_GET['ec']))
+{
+  exit(header("Location: ./pages/ecrivains/concours?id=".intval($_GET['ec'])));
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Encyclopédie de la culture web
+
+if(isset($_GET['w']))
+{
+  if(!intval($_GET['w']))
+    exit(header("Location: ./pages/nbdb/web"));
+  else
+    exit(header("Location: ./pages/nbdb/web?id=".intval($_GET['w'])));
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Dictionnaire de la culture web
+
+if(isset($_GET['wd']))
+{
+  if(!intval($_GET['wd']))
+    exit(header("Location: ./pages/nbdb/web_dictionnaire"));
+  else
+    exit(header("Location: ./pages/nbdb/web_dictionnaire?id=".intval($_GET['wd'])));
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Si on a aucune rediretion, on redirige vers la liste des raccourcis
 
 exit(header("Location: ./pages/doc/raccourcis"));

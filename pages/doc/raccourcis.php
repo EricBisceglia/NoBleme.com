@@ -45,12 +45,19 @@ if($lang == 'FR')
   $trad['rac_profil']     = "Profil d'un utilisateur";
   $trad['rac_activite']   = "Activité récente";
   $trad['rac_online']     = "Qui est en ligne";
+  $trad['rac_encyclo']    = "Enyclopédie de la culture web";
+  $trad['rac_encycloa']   = "Article de l'enyclopédie de la culture web";
+  $trad['rac_dico']       = "Dictionnaire de la culture web";
+  $trad['rac_dicoa']      = "Article du dictionnaire de la culture web";
   $trad['rac_forum']      = "Forum de discussion";
   $trad['rac_forum_id']   = "Discussion spécifique du forum";
   $trad['rac_irl']        = "Rencontres IRL";
   $trad['rac_irl_id']     = "IRL spécifique";
   $trad['rac_irc']        = "Serveur IRC";
   $trad['rac_misc']       = "Miscellanée spécifique";
+  $trad['rac_ecrivains']  = "Coin des écrivains";
+  $trad['rac_ecrtexte']   = "Texte spécifique du coin des écrivains";
+  $trad['rac_ecrcon']     = "Concours spécifique du coin des écrivains";
   $trad['rac_todo']       = "Tâche spécifique";
   $trad['rac_devblog']    = "Devblog spécifique";
   $trad['rac_coc']        = "Code de conduite";
@@ -72,6 +79,10 @@ else if($lang == 'EN')
   $trad['rac_profil']     = "User profile";
   $trad['rac_activite']   = "Recent activity";
   $trad['rac_online']     = "Who's online";
+  $trad['rac_encyclo']    = "Encyclopedia of internet culture";
+  $trad['rac_encycloa']   = "Page of the encyclopedia of internet culture";
+  $trad['rac_dico']       = "Dictionary of internet culture";
+  $trad['rac_dicoa']      = "Page of the dictionary of internet culture";
   $trad['rac_forum']      = "Discussion forum";
   $trad['rac_forum_id']   = "Specific forum thread";
   $trad['rac_irl']        = "Real life meetups";
@@ -148,6 +159,38 @@ else if($lang == 'EN')
             </tr>
             <tr>
               <td>
+                <?=$trad['rac_encyclo']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?w">w</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_encycloa']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?w=1">w=?</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_dico']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?wd">o</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_dicoa']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?wd=1">wd=?</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
                 <?=$trad['rac_forum']?>
               </td>
               <td>
@@ -187,12 +230,36 @@ else if($lang == 'EN')
               </td>
             </tr>
             <?php if($lang == 'FR') { ?>
-            <tr>
+              <tr>
               <td>
                 <?=$trad['rac_misc']?>
               </td>
               <td>
                 <a href="<?=$chemin?>s?m=210">m=?</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_ecrivains']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?e">e</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_ecrtexte']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?e=3">e=?</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_ecrcon']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?ec=2">ec=?</a>
               </td>
             </tr>
             <tr>
