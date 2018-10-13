@@ -77,35 +77,19 @@ $css  = array('doc', 'nbdb');
 
             <tr>
               <td class="texte_noir">
-                [[web:page]]
-              </td>
-              <td>
-                <?=nbdbcode('[[web:Somebody toucha my spaghet]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
-              </td>
-            </tr>
-            <tr>
-              <td class="texte_noir">
                 [[web:page|titre alternatif]]
               </td>
               <td>
-                <?=nbdbcode('[[web:Poop da scoop|Scoop di poop inexistant]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcode('[[web:Poop da scoop di poop|Scoop di poop]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
               </td>
             </tr>
 
             <tr>
               <td class="texte_noir">
-                [[dico:page]]
-              </td>
-              <td>
-                <?=nbdbcode('[[web:IRL]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
-              </td>
-            </tr>
-            <tr>
-              <td class="texte_noir">
                 [[dico:page|titre alternatif]]
               </td>
               <td>
-                <?=nbdbcode('[[web:It is a heuristic|Page qui n\'est pas là]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcode('[[dico:troll|Troll]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
               </td>
             </tr>
 

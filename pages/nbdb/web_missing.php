@@ -47,27 +47,22 @@ $web_liens_morts_fr = array();
 // Puis on parcourt ces pages à la recherche de liens morts
 while($dwebmiss = mysqli_fetch_array($qwebmiss))
 {
-  // D'abord le format [[web:lien|description]]
+  // On récupère toutes les instances d'un lien
   $temp_definition = $dwebmiss['w_contenu_fr'];
   preg_match_all('/\[\[web:(.*?)\|(.*?)\]\]/', $temp_definition, $resultats);
-  $i = 0;
-  foreach($resultats[0] as $pattern)
-  {
-    $temp_lien_mort = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), nbdb_web_liste_pages_encyclopedie('FR'))) ? '' : $resultats[1][$i];
-    if($temp_lien_mort)
-      array_push($web_liens_morts_fr, $temp_lien_mort);
-    $temp_definition = str_replace($pattern, '', $temp_definition);
-    $i++;
-  }
 
-  // Ensuite le format [[web:lien]]
-  preg_match_all('/\[\[web:(.*?)\]\]/', $temp_definition, $resultats);
+  // On parcourt ces instances
   $i = 0;
   foreach($resultats[0] as $pattern)
   {
+    // On vérifie si le lien est mort ou non
     $temp_lien_mort = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), nbdb_web_liste_pages_encyclopedie('FR'))) ? '' : $resultats[1][$i];
+
+    // Si oui, on l'ajoute dans le tableau des liens morts
     if($temp_lien_mort)
       array_push($web_liens_morts_fr, $temp_lien_mort);
+
+    // On peut passer au lien suivant
     $i++;
   }
 }
@@ -100,27 +95,20 @@ $web_liens_morts_en = array();
 // Puis on parcourt ces pages à la recherche de liens morts
 while($dwebmiss = mysqli_fetch_array($qwebmiss))
 {
-  // D'abord le format [[web:lien|description]]
+  // On récupère toutes les instances d'un lien
   $temp_definition = $dwebmiss['w_contenu_en'];
   preg_match_all('/\[\[web:(.*?)\|(.*?)\]\]/', $temp_definition, $resultats);
-  $i = 0;
-  foreach($resultats[0] as $pattern)
-  {
-    $temp_lien_mort = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), nbdb_web_liste_pages_encyclopedie('EN'))) ? '' : $resultats[1][$i];
-    if($temp_lien_mort)
-      array_push($web_liens_morts_en, $temp_lien_mort);
-    $temp_definition = str_replace($pattern, '', $temp_definition);
-    $i++;
-  }
 
-  // Ensuite le format [[web:lien]]
-  preg_match_all('/\[\[web:(.*?)\]\]/', $temp_definition, $resultats);
+  // On parcourt ces instances
   $i = 0;
   foreach($resultats[0] as $pattern)
   {
+    // On vérifie si le lien est mort ou non
     $temp_lien_mort = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), nbdb_web_liste_pages_encyclopedie('EN'))) ? '' : $resultats[1][$i];
+    // Si oui, on l'ajoute dans le tableau des liens morts
     if($temp_lien_mort)
       array_push($web_liens_morts_en, $temp_lien_mort);
+    // On peut passer au lien suivant
     $i++;
   }
 }
@@ -153,27 +141,20 @@ $dico_liens_morts_fr = array();
 // Puis on parcourt ces pages à la recherche de liens morts
 while($ddicomiss = mysqli_fetch_array($qdicomiss))
 {
-  // D'abord le format [[dico:lien|description]]
+  // On récupère toutes les instances d'un lien
   $temp_definition = $ddicomiss['d_definition_fr'];
   preg_match_all('/\[\[dico:(.*?)\|(.*?)\]\]/', $temp_definition, $resultats);
-  $i = 0;
-  foreach($resultats[0] as $pattern)
-  {
-    $temp_lien_mort = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), nbdb_web_liste_pages_dictionnaire('FR'))) ? '' : $resultats[1][$i];
-    if($temp_lien_mort)
-      array_push($dico_liens_morts_fr, $temp_lien_mort);
-    $temp_definition = str_replace($pattern, '', $temp_definition);
-    $i++;
-  }
 
-  // Ensuite le format [[dico:lien]]
-  preg_match_all('/\[\[dico:(.*?)\]\]/', $temp_definition, $resultats);
+  // On parcourt ces instances
   $i = 0;
   foreach($resultats[0] as $pattern)
   {
+    // On vérifie si le lien est mort ou non
     $temp_lien_mort = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), nbdb_web_liste_pages_dictionnaire('FR'))) ? '' : $resultats[1][$i];
+    // Si oui, on l'ajoute dans le tableau des liens morts
     if($temp_lien_mort)
       array_push($dico_liens_morts_fr, $temp_lien_mort);
+    // On peut passer au lien suivant
     $i++;
   }
 }
@@ -206,27 +187,20 @@ $dico_liens_morts_en = array();
 // Puis on parcourt ces pages à la recherche de liens morts
 while($ddicomiss = mysqli_fetch_array($qdicomiss))
 {
-  // D'abord le format [[dico:lien|description]]
+  // On récupère toutes les instances d'un lien
   $temp_definition = $ddicomiss['d_definition_en'];
   preg_match_all('/\[\[dico:(.*?)\|(.*?)\]\]/', $temp_definition, $resultats);
-  $i = 0;
-  foreach($resultats[0] as $pattern)
-  {
-    $temp_lien_mort = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), nbdb_web_liste_pages_dictionnaire('EN'))) ? '' : $resultats[1][$i];
-    if($temp_lien_mort)
-      array_push($dico_liens_morts_en, $temp_lien_mort);
-    $temp_definition = str_replace($pattern, '', $temp_definition);
-    $i++;
-  }
 
-  // Ensuite le format [[dico:lien]]
-  preg_match_all('/\[\[dico:(.*?)\]\]/', $temp_definition, $resultats);
+  // On parcourt ces instances
   $i = 0;
   foreach($resultats[0] as $pattern)
   {
+    // On vérifie si le lien est mort ou non
     $temp_lien_mort = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), nbdb_web_liste_pages_dictionnaire('EN'))) ? '' : $resultats[1][$i];
+    // Si oui, on l'ajoute dans le tableau des liens morts
     if($temp_lien_mort)
       array_push($dico_liens_morts_en, $temp_lien_mort);
+    // On peut passer au lien suivant
     $i++;
   }
 }

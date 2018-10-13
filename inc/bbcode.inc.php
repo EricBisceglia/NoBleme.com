@@ -317,16 +317,6 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
     $i++;
   }
 
-  // [[web:page de l'encyclo du web]]
-  preg_match_all('/\[\[web:(.*?)\]\]/', $post, $resultats);
-  $i = 0;
-  foreach($resultats[0] as $pattern)
-  {
-    $temp_style = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), $liste_pages_encyclopedie)) ? 'gras' : 'texte_negatif';
-    $post = str_replace($pattern, '<a class="'.$temp_style.'" href="'.$chemin.'pages/nbdb/web?page='.$resultats[1][$i].'">'.$resultats[1][$i].'</a>', $post);
-    $i++;
-  }
-
   // [[dico:page du dico du web|titre du lien]]
   preg_match_all('/\[\[dico:(.*?)\|(.*?)\]\]/', $post, $resultats);
   $i = 0;
@@ -334,16 +324,6 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
   {
     $temp_style = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), $liste_pages_dictionnaire)) ? 'gras' : 'texte_negatif';
     $post = str_replace($pattern, '<a class="'.$temp_style.'" href="'.$chemin.'pages/nbdb/web_dictionnaire?define='.$resultats[1][$i].'">'.$resultats[2][$i].'</a>', $post);
-    $i++;
-  }
-
-  // [[dico:page du dico du web]]
-  preg_match_all('/\[\[dico:(.*?)\]\]/', $post, $resultats);
-  $i = 0;
-  foreach($resultats[0] as $pattern)
-  {
-    $temp_style = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), $liste_pages_dictionnaire)) ? 'gras' : 'texte_negatif';
-    $post = str_replace($pattern, '<a class="'.$temp_style.'" href="'.$chemin.'pages/nbdb/web_dictionnaire?define='.$resultats[1][$i].'">'.$resultats[1][$i].'</a>', $post);
     $i++;
   }
 
