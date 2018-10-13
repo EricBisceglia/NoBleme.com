@@ -73,6 +73,10 @@ EOD;
   $trad['table_taille']     = "Taille";
   $trad['tablex_taille_1']  = "[size=0.7]70% de la taille normale[/size]";
   $trad['tablex_taille_2']  = "[size=1.3]30% plus gros[/size]";
+  $trad['table_alinea']     = "Alinéa";
+  $trad['tablex_alinea']    = "De[space]l'espace";
+  $trad['table_ligne']      = "Ligne";
+  $trad['tablex_ligne']     = "Ligne[line]horizontale";
   $trad['table_flou']       = "Flou";
   $trad['tablex_flou']      = "[blur]Passez la souris sur ce texte[/blur]";
   $trad['table_spoiler']    = "Texte caché";
@@ -145,6 +149,10 @@ EOD;
   $trad['table_taille']     = "Size";
   $trad['tablex_taille_1']  = "[size=0.7]70% smaller than normal[/size]";
   $trad['tablex_taille_2']  = "[size=1.3]30% bigger text[/size]";
+  $trad['table_alinea']     = "Space";
+  $trad['tablex_alinea']    = "Some[space]space";
+  $trad['table_ligne']      = "Line";
+  $trad['tablex_ligne']     = "Horizontal[line]line";
   $trad['table_flou']       = "Blur";
   $trad['tablex_flou']      = "[blur]Hover your mouse over this text[/blur]";
   $trad['table_spoiler']    = "Spoiler";
@@ -390,6 +398,36 @@ EOD;
               </td>
               <td>
                 <?=bbcode($trad['tablex_taille_2'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <?=$trad['table_alinea']?>
+              </td>
+              <td>
+                [space]
+              </td>
+              <td>
+                <?=$trad['tablex_alinea']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_alinea'])?>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <?=$trad['table_ligne']?>
+              </td>
+              <td>
+                [line]
+              </td>
+              <td>
+                <?=$trad['tablex_ligne']?>
+              </td>
+              <td>
+                <?=bbcode($trad['tablex_ligne'])?>
               </td>
             </tr>
 

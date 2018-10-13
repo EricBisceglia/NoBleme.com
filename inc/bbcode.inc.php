@@ -215,6 +215,12 @@ function bbcode($post, $xhr=NULL)
   // [blur]Contenu floué[/blur]
   $post = preg_replace('/\[blur\](.*?)\[\/blur\]/is','<span class="flou">$1</span>', $post);
 
+  // [space]
+  $post = preg_replace('/\[space\]/is','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $post);
+
+  // [line]
+  $post = preg_replace('/\[line\]/is','<hr>', $post);
+
 
   // Redéfinition du $chemin
   // La base est différente selon si on est en localhost ou en prod
