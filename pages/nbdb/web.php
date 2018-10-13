@@ -545,7 +545,6 @@ EOD;
         </p>
 
         <br>
-        <br>
 
         <p>
           <?=$web_contenu?>

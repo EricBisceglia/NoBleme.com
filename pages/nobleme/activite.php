@@ -251,7 +251,7 @@ if(!getxhr()) { /***************************************************************
         <h1 class="indiv align_center"><?=$trad['titre_mod']?></h1>
         <br>
         <p>
-          Certains logs de modération ont des icônes à droite de la ligne ( <img class="valign_bottom" src="<?=$chemin?>img/icones/info.svg" alt="i" height="18"> et <img class="valign_bottom" src="<?=$chemin?>img/icones/help.svg" alt="?" height="18"> ).<br>
+          Certains logs de modération ont des icônes à droite de la ligne ( <img class="valign_middle" src="<?=$chemin?>img/icones/info.svg" alt="i" height="18"> et <img class="valign_middle" src="<?=$chemin?>img/icones/help.svg" alt="?" height="18"> ).<br>
           Vous pouvez cliquer dessus pour afficher la justification de l'action et/ou le contenu qui a été modifié/supprimé.
         </p>
         <?php } ?>
