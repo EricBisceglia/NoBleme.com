@@ -218,8 +218,6 @@ else
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-      <?php if(!isset($_POST['web_dico_preview'])) { ?>
-
       <div class="tableau2">
 
         <h1 class="align_center">
@@ -229,7 +227,13 @@ else
           </a>
         </h1>
 
-        <?php } else { ?>
+        <?php if(isset($_POST['web_dico_preview'])) { ?>
+
+      </div>
+
+      <br>
+      <hr class="separateur_contenu">
+      <br>
 
       <?php if($dico_titre_fr) { ?>
 

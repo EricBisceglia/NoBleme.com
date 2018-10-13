@@ -338,8 +338,6 @@ while($dperiodes = mysqli_fetch_array($qperiodes))
 /*                                                                                                                                       */
 if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
 
-      <?php if(!isset($_POST['web_preview'])) { ?>
-
       <div class="tableau2">
 
         <h1 class="align_center">
@@ -349,7 +347,13 @@ if(!getxhr()) { /***************************************************************
           </a>
         </h1>
 
-        <?php } else { ?>
+        <?php if(isset($_POST['web_preview'])) { ?>
+
+      </div>
+
+      <br>
+      <hr class="separateur_contenu">
+      <br>
 
       <?php if($web_titre_fr) { ?>
 
