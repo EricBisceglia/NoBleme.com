@@ -94,21 +94,24 @@ else if(!$web_id)
 if($web_id)
 {
   // On spécifique la langue à utiliser
-  $web_lang = changer_casse($lang, 'min');
+  $web_lang       = changer_casse($lang, 'min');
+  $web_autrelang  = ($web_lang == 'fr') ? 'en' : 'fr';
 
   // On va chercher l'entrée
-  $dweb = mysqli_fetch_array(query("  SELECT    nbdb_web_page.redirection_$web_lang AS 'w_redirect'         ,
-                                                nbdb_web_page.titre_$web_lang       AS 'w_titre'            ,
-                                                nbdb_web_page.contenu_$web_lang     AS 'w_contenu'          ,
-                                                nbdb_web_page.annee_apparition      AS 'w_apparition_y'     ,
-                                                nbdb_web_page.mois_apparition       AS 'w_apparition_m'     ,
-                                                nbdb_web_page.annee_popularisation  AS 'w_popularisation_y' ,
-                                                nbdb_web_page.mois_popularisation   AS 'w_popularisation_m' ,
-                                                nbdb_web_page.est_vulgaire          AS 'w_vulgaire'         ,
-                                                nbdb_web_page.est_politise          AS 'w_politise'         ,
-                                                nbdb_web_page.est_incorrect         AS 'w_incorrect'        ,
-                                                nbdb_web_periode.id                 AS 'p_id'               ,
-                                                nbdb_web_periode.titre_$web_lang    AS 'p_nom'
+  $dweb = mysqli_fetch_array(query("  SELECT    nbdb_web_page.redirection_$web_lang       AS 'w_redirect'         ,
+                                                nbdb_web_page.titre_$web_lang             AS 'w_titre'            ,
+                                                nbdb_web_page.contenu_$web_lang           AS 'w_contenu'          ,
+                                                nbdb_web_page.titre_$web_autrelang        AS 'w_titre_autre'      ,
+                                                nbdb_web_page.redirection_$web_autrelang  AS 'w_redirect_autre'   ,
+                                                nbdb_web_page.annee_apparition            AS 'w_apparition_y'     ,
+                                                nbdb_web_page.mois_apparition             AS 'w_apparition_m'     ,
+                                                nbdb_web_page.annee_popularisation        AS 'w_popularisation_y' ,
+                                                nbdb_web_page.mois_popularisation         AS 'w_popularisation_m' ,
+                                                nbdb_web_page.est_vulgaire                AS 'w_vulgaire'         ,
+                                                nbdb_web_page.est_politise                AS 'w_politise'         ,
+                                                nbdb_web_page.est_incorrect               AS 'w_incorrect'        ,
+                                                nbdb_web_periode.id                       AS 'p_id'               ,
+                                                nbdb_web_periode.titre_$web_lang          AS 'p_nom'
                                       FROM      nbdb_web_page
                                       LEFT JOIN nbdb_web_periode ON nbdb_web_page.FKnbdb_web_periode = nbdb_web_periode.id
                                       WHERE     nbdb_web_page.id = '$web_id' "));
@@ -139,6 +142,7 @@ if($web_id)
   $web_popularisation_y = $dweb['w_popularisation_y'];
   $web_periode_id       = $dweb['p_id'];
   $web_periode          = ($dweb['p_nom']) ? predata($dweb['p_nom']) : '';
+  $web_bilingue         = ($dweb['w_titre_autre'] && !$dweb['w_redirect_autre']) ? 1 : 0;
 
   // On a besoin de la liste des catégories liées à la page
   $qcategories = query("  SELECT    nbdb_web_categorie.id               AS 'c_id' ,
@@ -200,6 +204,8 @@ EOD;
   // Contenu du dictionnaire du web
   $trad['web_colon']        = ' :';
   $trad['web_autre']        = "Autre page au hasard";
+  $trad['web_bilingue']     = "This page is available in english aswell";
+  $trad['web_bilingue_2']   = "Cette page est disponible en anglais également";
   $trad['web_vulgaire']     = "LA PAGE CI-DESSOUS CONTIENT DU CONTENU VULGAIRE OU DÉGUEULASSE";
   $trad['web_politise']     = "La page ci-dessous est politisée : elle aborde un sujet de société d'une façon avec laquelle tout le monde ne sera pas forcément d'accord. Le but de cette encyclopédie n'est pas de plaire à tous, mais plutôt de présenter des faits de façon objective, en tentant d'être aussi neutre que possible, quitte à froisser certaines opinions.";
   $trad['web_incorrect']    = "Le but de cette encyclopédie est de documenter toute la culture internet, même dans ses aspects offensants. La page ci-dessous porte sur un sujet politiquement incorrect : il est très fortement conseillé de ne pas utiliser ce terme publiquement, car il a de mauvaises connotations.";
@@ -244,6 +250,8 @@ EOD;
   // Contenu du dictionnaire du web
   $trad['web_colon']        = ':';
   $trad['web_autre']        = "Another random page";
+  $trad['web_bilingue']     = "This page is available in french aswell";
+  $trad['web_bilingue_2']   = "Cette page est disponible en français également";
   $trad['web_vulgaire']     = "THE FOLLOWING PAGE CONTAINS RUDE<br>AND/OR GROSS CONTENT";
   $trad['web_politise']     = "The following page is politically loaded: it concerns an aspect of society on which people tend to have disagreements. The goal of this encyclopedia is not to please everyone, but rather to try to bring facts objectively, with a point of view as neutral as possible, even if it often means being in disagreement with some strong opinions.";
   $trad['web_incorrect']    = "This encyclopedia's goal is to document internet culture as a whole, including its offensive and irrespectful aspects. The following page concerns a politically incorrect topic: it is heavily suggested that you do not use it publicly, as it has extremely negative connotations.";
@@ -556,10 +564,25 @@ EOD;
 
         <br>
 
-        <p class="align_center moinsgros gras">
-          <a href="<?=$chemin?>pages/nbdb/web?random">
-            <?=$trad['web_autre']?>
-          </a>
+        <p class="align_center">
+
+          <span class="moinsgros gras">
+            <a href="<?=$chemin?>pages/nbdb/web?random">
+              <?=$trad['web_autre']?>
+            </a>
+          </span>
+
+          <?php if($web_bilingue) { ?>
+
+          <br>
+          <span class="pluspetit">
+            <a href="<?=$chemin?>pages/nbdb/web?id=<?=$web_id?>&amp;changelang">
+            <?=$trad['web_bilingue']?><br>
+            <?=$trad['web_bilingue_2']?></a>
+          </span>
+
+          <?php } ?>
+
         </p>
 
       </div>

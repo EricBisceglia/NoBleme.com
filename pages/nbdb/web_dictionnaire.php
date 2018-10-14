@@ -90,15 +90,18 @@ else if(!$dico_id)
 if($dico_id)
 {
   // On spécifique la langue à utiliser
-  $definition_lang = changer_casse($lang, 'min');
+  $definition_lang      = changer_casse($lang, 'min');
+  $definition_autrelang = ($definition_lang == 'fr') ? 'en' : 'fr';
 
   // On va chercher la définition
-  $ddefinition = mysqli_fetch_array(query(" SELECT  nbdb_web_definition.redirection_$definition_lang  AS 'd_redirect' ,
-                                                    nbdb_web_definition.titre_$definition_lang        AS 'd_titre'    ,
-                                                    nbdb_web_definition.definition_$definition_lang   AS 'd_contenu'  ,
-                                                    nbdb_web_definition.est_vulgaire                  AS 'd_vulgaire' ,
-                                                    nbdb_web_definition.est_politise                  AS 'd_politise' ,
-                                                    nbdb_web_definition.est_incorrect                 AS 'd_incorrect'
+  $ddefinition = mysqli_fetch_array(query(" SELECT  nbdb_web_definition.redirection_$definition_lang      AS 'd_redirect'       ,
+                                                    nbdb_web_definition.titre_$definition_lang            AS 'd_titre'          ,
+                                                    nbdb_web_definition.definition_$definition_lang       AS 'd_contenu'        ,
+                                                    nbdb_web_definition.titre_$definition_autrelang       AS 'd_titre_autre'    ,
+                                                    nbdb_web_definition.redirection_$definition_autrelang AS 'd_redirect_autre' ,
+                                                    nbdb_web_definition.est_vulgaire                      AS 'd_vulgaire'       ,
+                                                    nbdb_web_definition.est_politise                      AS 'd_politise'       ,
+                                                    nbdb_web_definition.est_incorrect                     AS 'd_incorrect'
                                             FROM    nbdb_web_definition
                                             WHERE   nbdb_web_definition.id = '$dico_id' "));
 
@@ -118,6 +121,7 @@ if($dico_id)
   $definition_vulgaire      = $ddefinition['d_vulgaire'];
   $definition_politise      = $ddefinition['d_politise'];
   $definition_incorrect     = $ddefinition['d_incorrect'];
+  $definition_bilingue      = ($ddefinition['d_titre_autre'] && !$ddefinition['d_redirect_autre']) ? 1 : 0;
 
   // Et on oublie pas de modifier les infos de la page
   $page_nom   = 'Apprend le sens de '.predata(tronquer_chaine($ddefinition['d_titre'], 20, '...'));
@@ -199,6 +203,8 @@ EOD;
   $trad['dico_politise']  = "La définition ci-dessous est politisée : elle aborde un sujet de société d'une façon avec laquelle tout le monde ne sera pas forcément d'accord. Le but de ce dictionnaire n'est pas de plaire à tous, mais plutôt de présenter des faits de façon objective, en tentant d'être aussi neutre que possible, quitte à froisser certaines opinions.";
   $trad['dico_incorrect'] = "Le but de ce dictionnaire est de documenter toute la culture internet, même dans ses aspects offensants. La définition ci-dessous porte sur un sujet politiquement incorrect : il est très fortement conseillé de ne pas utiliser ce terme publiquement, car il a de mauvaises connotations.";
   $trad['dico_autre']     = "Autre définition au hasard";
+  $trad['dico_bilingue']  = "This definition is available in english aswell";
+  $trad['dico_bilingue2'] = "Cette définition est disponible en anglais également";
 }
 
 
@@ -230,6 +236,8 @@ EOD;
   $trad['dico_politise']  = "The following definition is politically loaded: it concerns an aspect of society on which people tend to have disagreements. The goal of this dictionary is not to please everyone, but rather to try to bring facts objectively, with a point of view as neutral as possible, even if it often means being in disagreement with some strong opinions.";
   $trad['dico_incorrect'] = "This dictionary's goal is to document internet culture as a whole, including its offensive and irrespectful aspects. The following definition concerns a politically incorrect topic: it is heavily suggested that you do not use it publicly, as it has extremely negative connotations.";
   $trad['dico_autre']     = "Other random definition";
+  $trad['dico_bilingue']  = "This definition is available in french aswell";
+  $trad['dico_bilingue2'] = "Cette définition est disponible en français également";
 }
 
 
@@ -449,10 +457,25 @@ if(!getxhr()) { /***************************************************************
         <br>
         <br>
 
-        <p class="align_center moinsgros gras">
-          <a href="<?=$chemin?>pages/nbdb/web_dictionnaire?random">
-            <?=$trad['dico_autre']?>
-          </a>
+        <p class="align_center">
+
+          <span class="moinsgros gras">
+            <a href="<?=$chemin?>pages/nbdb/web_dictionnaire?random">
+              <?=$trad['dico_autre']?>
+            </a>
+          </span>
+
+          <?php if($definition_bilingue) { ?>
+
+          <br>
+          <span class="pluspetit">
+            <a href="<?=$chemin?>pages/nbdb/web_dictionnaire?id=<?=$dico_id?>&amp;changelang">
+            <?=$trad['dico_bilingue']?><br>
+            <?=$trad['dico_bilingue2']?></a>
+          </span>
+
+          <?php } ?>
+
         </p>
 
       </div>
