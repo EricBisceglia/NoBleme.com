@@ -39,17 +39,20 @@ $js = array('dynamique');
 // Liste des publications
 
 // On va chercher les textes
-$qtextes = "    SELECT    ecrivains_texte.id                  AS 't_id'       ,
-                          ecrivains_texte.anonyme             AS 't_anonyme'  ,
-                          ecrivains_texte.timestamp_creation  AS 't_date'     ,
-                          ecrivains_texte.niveau_feedback     AS 't_feedback' ,
-                          ecrivains_texte.titre               AS 't_titre'    ,
-                          ecrivains_texte.note_moyenne        AS 't_note'     ,
-                          ecrivains_texte.longueur_texte      AS 't_longueur' ,
-                          membres.id                          AS 'm_id'       ,
-                          membres.pseudonyme                  AS 'm_pseudo'
+$qtextes = "    SELECT    ecrivains_texte.id                    AS 't_id'       ,
+                          ecrivains_texte.anonyme               AS 't_anonyme'  ,
+                          ecrivains_texte.timestamp_creation    AS 't_date'     ,
+                          ecrivains_texte.niveau_feedback       AS 't_feedback' ,
+                          ecrivains_texte.titre                 AS 't_titre'    ,
+                          ecrivains_texte.note_moyenne          AS 't_note'     ,
+                          ecrivains_texte.longueur_texte        AS 't_longueur' ,
+                          membres.id                            AS 'm_id'       ,
+                          membres.pseudonyme                    AS 'm_pseudo'   ,
+                          ecrivains_concours.id                 AS 'c_id'       ,
+                          ecrivains_concours.titre              AS 'c_titre'
                 FROM      ecrivains_texte
-                LEFT JOIN membres ON ecrivains_texte.FKmembres = membres.id ";
+                LEFT JOIN membres             ON ecrivains_texte.FKmembres            = membres.id
+                LEFT JOIN ecrivains_concours  ON ecrivains_texte.FKecrivains_concours = ecrivains_concours.id ";
 
 // On détermine l'ordre de tri
 $textes_tri = postdata_vide('ecrivains_tri', 'string', '');
@@ -65,6 +68,11 @@ else if($textes_tri == 'auteur')
 else if($textes_tri == 'note')
   $qtextes .= " ORDER BY  ecrivains_texte.note_moyenne        DESC  ,
                           ecrivains_texte.timestamp_creation  DESC  ";
+else if($textes_tri == 'concours')
+  $qtextes .= " ORDER BY  ecrivains_concours.titre         IS NULL  ,
+                          ecrivains_concours.titre            DESC  ,
+                          membres.pseudonyme                  ASC   ,
+                          ecrivains_texte.timestamp_creation  DESC  ";
 else
   $qtextes .= " ORDER BY  ecrivains_texte.timestamp_creation  DESC  ";
 
@@ -74,14 +82,16 @@ $qtextes = query($qtextes);
 // Puis on parcourt les résultats pour les préparer à l'affichage
 for($ntextes = 0 ; $dtextes = mysqli_fetch_array($qtextes) ; $ntextes++)
 {
-  $texte_id[$ntextes]       = $dtextes['t_id'];
-  $texte_titre[$ntextes]    = predata($dtextes['t_titre']);
-  $texte_longueur[$ntextes] = $dtextes['t_longueur'];
-  $texte_idauteur[$ntextes] = $dtextes['m_id'];
-  $texte_anonyme[$ntextes]  = ($dtextes['t_anonyme']) ? 1 : 0;
-  $texte_auteur[$ntextes]   = predata($dtextes['m_pseudo']);
-  $texte_publie[$ntextes]   = predata(ilya($dtextes['t_date']));
-  $texte_note[$ntextes]     = ($dtextes['t_feedback'] < 2 || $dtextes['t_note'] < 0) ? '&nbsp;' : $dtextes['t_note'].' / 5';
+  $texte_id[$ntextes]           = $dtextes['t_id'];
+  $texte_titre[$ntextes]        = tronquer_chaine(predata($dtextes['t_titre']), 50, '...');
+  $texte_longueur[$ntextes]     = $dtextes['t_longueur'];
+  $texte_idauteur[$ntextes]     = $dtextes['m_id'];
+  $texte_anonyme[$ntextes]      = ($dtextes['t_anonyme']) ? 1 : 0;
+  $texte_auteur[$ntextes]       = predata($dtextes['m_pseudo']);
+  $texte_publie[$ntextes]       = predata(ilya($dtextes['t_date']));
+  $texte_concours[$ntextes]     = ($dtextes['c_titre']) ? tronquer_chaine(predata(mb_strstr($dtextes['c_titre'], " ")), 25, '...') : '';
+  $texte_idconcours[$ntextes]   = $dtextes['c_id'];
+  $texte_note[$ntextes]         = ($dtextes['t_feedback'] < 2 || $dtextes['t_note'] < 0) ? '&nbsp;' : ($dtextes['t_note']*2);
 }
 
 
@@ -124,7 +134,7 @@ if(!getxhr()) { /***************************************************************
       <br>
       <br>
 
-      <div class="texte3 nowrap">
+      <div class="tableau nowrap">
 
         <table class="titresnoirs">
 
@@ -141,6 +151,9 @@ if(!getxhr()) { /***************************************************************
               </th>
               <th onclick="dynamique('<?=$chemin?>', 'index', 'ecrivains_liste_tbody', 'ecrivains_tri=date', 1);">
                 PUBLIÉ
+              </th>
+              <th onclick="dynamique('<?=$chemin?>', 'index', 'ecrivains_liste_tbody', 'ecrivains_tri=concours', 1);">
+                CONCOURS
               </th>
               <th onclick="dynamique('<?=$chemin?>', 'index', 'ecrivains_liste_tbody', 'ecrivains_tri=note', 1);">
                 NOTE
@@ -174,6 +187,15 @@ if(!getxhr()) { /***************************************************************
               </td>
               <td>
                 <?=$texte_publie[$i]?>
+              </td>
+              <td>
+                <?php if($texte_idconcours[$i]) { ?>
+                <a href="<?=$chemin?>pages/ecrivains/concours?id=<?=$texte_idconcours[$i]?>">
+                  <?=$texte_concours[$i]?>
+                </a>
+                <?php } else { ?>
+                &nbsp;
+                <?php } ?>
               </td>
               <td>
                 <?=$texte_note[$i]?>
