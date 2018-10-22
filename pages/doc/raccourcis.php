@@ -47,6 +47,7 @@ if($lang == 'FR')
   $trad['rac_online']     = "Qui est en ligne";
   $trad['rac_encyclo']    = "Enyclopédie de la culture web";
   $trad['rac_encycloa']   = "Article de l'enyclopédie de la culture web";
+  $trad['rac_encycloi']   = "Image de l'enyclopédie de la culture web";
   $trad['rac_dico']       = "Dictionnaire de la culture web";
   $trad['rac_dicoa']      = "Article du dictionnaire de la culture web";
   $trad['rac_forum']      = "Forum de discussion";
@@ -81,6 +82,7 @@ else if($lang == 'EN')
   $trad['rac_online']     = "Who's online";
   $trad['rac_encyclo']    = "Encyclopedia of internet culture";
   $trad['rac_encycloa']   = "Page of the encyclopedia of internet culture";
+  $trad['rac_encycloi']   = "Image from the encyclopedia of internet culture";
   $trad['rac_dico']       = "Dictionary of internet culture";
   $trad['rac_dicoa']      = "Page of the dictionary of internet culture";
   $trad['rac_forum']      = "Discussion forum";
@@ -171,6 +173,14 @@ else if($lang == 'EN')
               </td>
               <td>
                 <a href="<?=$chemin?>s?w=1">w=?</a>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <?=$trad['rac_encycloi']?>
+              </td>
+              <td>
+                <a href="<?=$chemin?>s?wi=1">wi=?</a>
               </td>
             </tr>
             <tr>

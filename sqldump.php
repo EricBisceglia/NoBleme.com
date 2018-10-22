@@ -3,6 +3,15 @@
 /*                                              DUMP DE LA STRUCTURE DE LA BASE DE DONNÉES                                               */
 /*                                                                                                                                       */
 /******************************************************************************************************************************************
+/*                                                                                                                                       */
+/*  Méthode d'exportation : Personnalisée                                                                                                */
+/*  Ne pas exporter les données (structure uniquement)                                                                                   */
+/*  Ne pas afficher les commentaires                                                                                                     */
+/*  Afficher les résultats (ne pas diriger vers un fichier)                                                                              */
+/*  Ajouter tous les énoncés sauf la valeur des auto increment                                                                           */
+/*  Syntaxe : N'utiliser aucun mode prédéfini (insert into T values X)                                                                   */
+/*                                                                                                                                       */
+/******************************************************************************************************************************************
 
 CREATE DATABASE IF NOT EXISTS `nobleme` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `nobleme`;
@@ -43,7 +52,8 @@ CREATE TABLE IF NOT EXISTS `automatisation` (
   `action_type` mediumtext COLLATE utf8mb4_unicode_ci,
   `action_description` mediumtext COLLATE utf8mb4_unicode_ci,
   `action_timestamp` int(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_action` (`action_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `devblog`;
@@ -65,7 +75,8 @@ CREATE TABLE IF NOT EXISTS `ecrivains_concours` (
   `num_participants` int(11) UNSIGNED NOT NULL,
   `titre` text COLLATE utf8mb4_unicode_ci,
   `sujet` mediumtext COLLATE utf8mb4_unicode_ci,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_gagnant` (`FKecrivains_texte_gagnant`,`FKmembres_gagnant`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `ecrivains_concours_vote`;
@@ -75,7 +86,11 @@ CREATE TABLE IF NOT EXISTS `ecrivains_concours_vote` (
   `FKecrivains_texte` int(11) UNSIGNED NOT NULL,
   `FKmembres` int(11) UNSIGNED NOT NULL,
   `poids_vote` int(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_texte` (`FKecrivains_concours`),
+  KEY `index_concours` (`FKecrivains_texte`),
+  KEY `index_membre` (`FKmembres`),
+  KEY `index_poids` (`poids_vote`,`FKmembres`,`FKecrivains_texte`,`FKecrivains_concours`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `ecrivains_note`;
@@ -87,7 +102,10 @@ CREATE TABLE IF NOT EXISTS `ecrivains_note` (
   `note` decimal(2,1) DEFAULT NULL,
   `anonyme` tinyint(1) UNSIGNED NOT NULL,
   `message` text COLLATE utf8mb4_unicode_ci,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_texte` (`FKecrivains_texte`),
+  KEY `index_membre` (`FKmembres`),
+  KEY `index_note` (`note`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `ecrivains_texte`;
@@ -103,7 +121,9 @@ CREATE TABLE IF NOT EXISTS `ecrivains_texte` (
   `note_moyenne` decimal(2,1) DEFAULT NULL,
   `longueur_texte` int(11) UNSIGNED NOT NULL,
   `contenu` longtext COLLATE utf8mb4_unicode_ci,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_auteur` (`anonyme`,`FKmembres`),
+  KEY `index_concours` (`FKecrivains_concours`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `forum_categorie`;
@@ -259,6 +279,90 @@ CREATE TABLE IF NOT EXISTS `membres_essais_login` (
   KEY `index_membres` (`FKmembres`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS `nbdb_web_categorie`;
+CREATE TABLE IF NOT EXISTS `nbdb_web_categorie` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `titre_fr` mediumtext COLLATE utf8mb4_unicode_ci,
+  `titre_en` mediumtext COLLATE utf8mb4_unicode_ci,
+  `ordre_affichage` int(11) UNSIGNED NOT NULL,
+  `description_fr` mediumtext COLLATE utf8mb4_unicode_ci,
+  `description_en` mediumtext COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `index_ordre_affichage` (`ordre_affichage`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `nbdb_web_definition`;
+CREATE TABLE IF NOT EXISTS `nbdb_web_definition` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `titre_fr` mediumtext COLLATE utf8mb4_unicode_ci,
+  `titre_en` mediumtext COLLATE utf8mb4_unicode_ci,
+  `redirection_fr` mediumtext COLLATE utf8mb4_unicode_ci,
+  `redirection_en` mediumtext COLLATE utf8mb4_unicode_ci,
+  `definition_fr` longtext COLLATE utf8mb4_unicode_ci,
+  `definition_en` longtext COLLATE utf8mb4_unicode_ci,
+  `est_vulgaire` tinyint(1) DEFAULT NULL,
+  `est_politise` tinyint(1) DEFAULT NULL,
+  `est_incorrect` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_titre_fr` (`titre_fr`(25)),
+  KEY `index_titre_en` (`titre_en`(25))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `nbdb_web_image`;
+CREATE TABLE IF NOT EXISTS `nbdb_web_image` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `timestamp_upload` int(11) UNSIGNED NOT NULL,
+  `nom_fichier` mediumtext COLLATE utf8mb4_unicode_ci,
+  `tags` mediumtext COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `nbdb_web_page`;
+CREATE TABLE IF NOT EXISTS `nbdb_web_page` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `FKnbdb_web_periode` int(11) UNSIGNED NOT NULL,
+  `titre_fr` mediumtext COLLATE utf8mb4_unicode_ci,
+  `titre_en` mediumtext COLLATE utf8mb4_unicode_ci,
+  `redirection_fr` mediumtext COLLATE utf8mb4_unicode_ci,
+  `redirection_en` mediumtext COLLATE utf8mb4_unicode_ci,
+  `contenu_fr` longtext COLLATE utf8mb4_unicode_ci,
+  `contenu_en` longtext COLLATE utf8mb4_unicode_ci,
+  `annee_apparition` int(4) DEFAULT NULL,
+  `mois_apparition` int(2) DEFAULT NULL,
+  `annee_popularisation` int(4) DEFAULT NULL,
+  `mois_popularisation` int(2) DEFAULT NULL,
+  `est_vulgaire` tinyint(1) DEFAULT NULL,
+  `est_politise` tinyint(1) DEFAULT NULL,
+  `est_incorrect` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_periode` (`FKnbdb_web_periode`),
+  KEY `index_apparition` (`annee_apparition`,`mois_apparition`),
+  KEY `index_popularisation` (`annee_popularisation`,`mois_popularisation`),
+  KEY `index_titre_fr` (`titre_fr`(25)),
+  KEY `index_titre_en` (`titre_en`(25))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `nbdb_web_page_categorie`;
+CREATE TABLE IF NOT EXISTS `nbdb_web_page_categorie` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `FKnbdb_web_page` int(11) UNSIGNED NOT NULL,
+  `FKnbdb_web_categorie` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_pages` (`FKnbdb_web_page`,`FKnbdb_web_categorie`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `nbdb_web_periode`;
+CREATE TABLE IF NOT EXISTS `nbdb_web_periode` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `titre_fr` mediumtext COLLATE utf8mb4_unicode_ci,
+  `titre_en` mediumtext COLLATE utf8mb4_unicode_ci,
+  `description_fr` mediumtext COLLATE utf8mb4_unicode_ci,
+  `description_en` mediumtext COLLATE utf8mb4_unicode_ci,
+  `annee_debut` int(4) DEFAULT NULL,
+  `annee_fin` int(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 DROP TABLE IF EXISTS `notifications`;
 CREATE TABLE IF NOT EXISTS `notifications` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -363,6 +467,15 @@ CREATE TABLE IF NOT EXISTS `version` (
 ALTER TABLE `forum_message` ADD FULLTEXT KEY `index_contenu` (`contenu`);
 
 ALTER TABLE `forum_sujet` ADD FULLTEXT KEY `index_titre` (`titre`);
+
+ALTER TABLE `nbdb_web_categorie` ADD FULLTEXT KEY `index_description_fr` (`description_fr`);
+ALTER TABLE `nbdb_web_categorie` ADD FULLTEXT KEY `index_description_en` (`description_en`);
+
+ALTER TABLE `nbdb_web_definition` ADD FULLTEXT KEY `index_definition_en` (`definition_en`);
+ALTER TABLE `nbdb_web_definition` ADD FULLTEXT KEY `index_definition_fr` (`definition_fr`);
+
+ALTER TABLE `nbdb_web_page` ADD FULLTEXT KEY `index_contenu_en` (`contenu_en`);
+ALTER TABLE `nbdb_web_page` ADD FULLTEXT KEY `index_contenu_fr` (`contenu_fr`);
 
 ALTER TABLE `pageviews` ADD FULLTEXT KEY `index_recherche` (`nom_page`,`url_page`);
 

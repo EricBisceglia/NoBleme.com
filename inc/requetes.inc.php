@@ -13,133 +13,24 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Elle ne peut être appelée que par un administrateur via la page /pages/dev/requetes                                                   //
 // Les requêtes ne sont pas conservées d'une mise à jour à l'autre.                                                                      //
 // À la place, il faut importer la structure de données du site depuis le fichier sqldump.php qui se trouve à la racine du site          //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                       //
 //                                            !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP !!!!!                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Indexs manquants dans les tables précédentes
+// Indexs fulltext pour les recherches dans la NBDB
 
-sql_creer_index('automatisation', 'index_action', 'action_id');
+sql_creer_index('nbdb_web_page', 'index_contenu_en', 'contenu_en', 1);
+sql_creer_index('nbdb_web_page', 'index_contenu_fr', 'contenu_fr', 1);
 
-sql_creer_index('ecrivains_concours', 'index_gagnant', 'FKecrivains_texte_gagnant, FKmembres_gagnant');
+sql_creer_index('nbdb_web_definition', 'index_definition_en', 'definition_en', 1);
+sql_creer_index('nbdb_web_definition', 'index_definition_fr', 'definition_fr', 1);
 
-sql_creer_index('ecrivains_concours_vote', 'index_texte', 'FKecrivains_concours');
-sql_creer_index('ecrivains_concours_vote', 'index_concours', 'FKecrivains_texte');
-sql_creer_index('ecrivains_concours_vote', 'index_membre', 'FKmembres');
-sql_creer_index('ecrivains_concours_vote', 'index_poids', 'poids_vote, FKmembres, FKecrivains_texte, FKecrivains_concours');
+sql_creer_index('nbdb_web_categorie', 'index_description_fr', 'description_fr', 1);
+sql_creer_index('nbdb_web_categorie', 'index_description_en', 'description_en', 1);
 
-sql_creer_index('ecrivains_note', 'index_texte', 'FKecrivains_texte');
-sql_creer_index('ecrivains_note', 'index_membre', 'FKmembres');
-sql_creer_index('ecrivains_note', 'index_note', 'note');
-
-sql_creer_index('ecrivains_texte', 'index_auteur', 'anonyme, FKmembres');
-sql_creer_index('ecrivains_texte', 'index_concours', 'FKecrivains_concours');
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Nouvelle table : NBDB - Encyclopédie du web - Pages
-
-sql_creer_table('nbdb_web_page');
-
-sql_creer_champ('nbdb_web_page', 'FKnbdb_web_periode', 'INT(11) UNSIGNED NOT NULL', 'id');
-sql_creer_champ('nbdb_web_page', 'titre_fr', 'MEDIUMTEXT', 'FKnbdb_web_periode');
-sql_creer_champ('nbdb_web_page', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
-sql_creer_champ('nbdb_web_page', 'redirection_fr', 'MEDIUMTEXT', 'titre_en');
-sql_creer_champ('nbdb_web_page', 'redirection_en', 'MEDIUMTEXT', 'redirection_fr');
-sql_creer_champ('nbdb_web_page', 'contenu_fr', 'LONGTEXT', 'redirection_en');
-sql_creer_champ('nbdb_web_page', 'contenu_en', 'LONGTEXT', 'contenu_fr');
-sql_creer_champ('nbdb_web_page', 'annee_apparition', 'INT(4)', 'contenu_en');
-sql_creer_champ('nbdb_web_page', 'mois_apparition', 'INT(2)', 'annee_apparition');
-sql_creer_champ('nbdb_web_page', 'annee_popularisation', 'INT(4)', 'mois_apparition');
-sql_creer_champ('nbdb_web_page', 'mois_popularisation', 'INT(2)', 'annee_popularisation');
-sql_creer_champ('nbdb_web_page', 'est_vulgaire', 'TINYINT(1)', 'mois_popularisation');
-sql_creer_champ('nbdb_web_page', 'est_politise', 'TINYINT(1)', 'est_vulgaire');
-sql_creer_champ('nbdb_web_page', 'est_incorrect', 'TINYINT(1)', 'est_politise');
-
-sql_creer_index('nbdb_web_page', 'index_periode', 'FKnbdb_web_periode');
-sql_creer_index('nbdb_web_page', 'index_apparition', 'annee_apparition, mois_apparition');
-sql_creer_index('nbdb_web_page', 'index_popularisation', 'annee_popularisation, mois_popularisation');
-sql_creer_index('nbdb_web_page', 'index_titre_fr', 'titre_fr (25)');
-sql_creer_index('nbdb_web_page', 'index_titre_en', 'titre_en (25)');
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Nouvelle table : NBDB - Encyclopédie du web - Définitions
-
-sql_creer_table('nbdb_web_definition');
-
-sql_creer_champ('nbdb_web_definition', 'titre_fr', 'MEDIUMTEXT', 'id');
-sql_creer_champ('nbdb_web_definition', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
-sql_creer_champ('nbdb_web_definition', 'redirection_fr', 'MEDIUMTEXT', 'titre_en');
-sql_creer_champ('nbdb_web_definition', 'redirection_en', 'MEDIUMTEXT', 'redirection_fr');
-sql_creer_champ('nbdb_web_definition', 'definition_fr', 'LONGTEXT', 'redirection_en');
-sql_creer_champ('nbdb_web_definition', 'definition_en', 'LONGTEXT', 'definition_fr');
-sql_creer_champ('nbdb_web_definition', 'est_vulgaire', 'TINYINT(1)', 'definition_en');
-sql_creer_champ('nbdb_web_definition', 'est_politise', 'TINYINT(1)', 'est_vulgaire');
-sql_creer_champ('nbdb_web_definition', 'est_incorrect', 'TINYINT(1)', 'est_politise');
-
-sql_creer_index('nbdb_web_definition', 'index_titre_fr', 'titre_fr (25)');
-sql_creer_index('nbdb_web_definition', 'index_titre_en', 'titre_en (25)');
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Nouvelle table : NBDB - Encyclopédie du web - Périodes
-
-sql_creer_table('nbdb_web_periode');
-
-sql_creer_champ('nbdb_web_periode', 'titre_fr', 'MEDIUMTEXT', 'id');
-sql_creer_champ('nbdb_web_periode', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
-sql_creer_champ('nbdb_web_periode', 'description_fr', 'MEDIUMTEXT', 'titre_en');
-sql_creer_champ('nbdb_web_periode', 'description_en', 'MEDIUMTEXT', 'description_fr');
-sql_creer_champ('nbdb_web_periode', 'annee_debut', 'INT(4)', 'description_en');
-sql_creer_champ('nbdb_web_periode', 'annee_fin', 'INT(4)', 'annee_debut');
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Nouvelle table : NBDB - Encyclopédie du web - Catégories
-
-sql_creer_table('nbdb_web_categorie');
-
-sql_creer_champ('nbdb_web_categorie', 'titre_fr', 'MEDIUMTEXT', 'id');
-sql_creer_champ('nbdb_web_categorie', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
-sql_creer_champ('nbdb_web_categorie', 'ordre_affichage', 'INT(11) UNSIGNED NOT NULL', 'titre_en');
-sql_creer_champ('nbdb_web_categorie', 'description_fr', 'MEDIUMTEXT', 'ordre_affichage');
-sql_creer_champ('nbdb_web_categorie', 'description_en', 'MEDIUMTEXT', 'description_fr');
-
-sql_creer_index('nbdb_web_categorie', 'index_ordre_affichage', 'ordre_affichage');
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Nouvelle table : NBDB - Encyclopédie du web - Catégories des pages
-
-sql_creer_table('nbdb_web_page_categorie');
-
-sql_creer_champ('nbdb_web_page_categorie', 'FKnbdb_web_page', 'INT(11) UNSIGNED NOT NULL', 'id');
-sql_creer_champ('nbdb_web_page_categorie', 'FKnbdb_web_categorie', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_page');
-
-sql_creer_index('nbdb_web_page_categorie', 'index_pages', 'FKnbdb_web_page, FKnbdb_web_categorie');
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Nouvelle table : NBDB - Encyclopédie du web - Images
-
-sql_creer_table('nbdb_web_image');
-
-sql_creer_champ('nbdb_web_image', 'timestamp_upload', 'INT(11) UNSIGNED NOT NULL', 'id');
-sql_creer_champ('nbdb_web_image', 'nom_fichier', 'MEDIUMTEXT', 'timestamp_upload');
-sql_creer_champ('nbdb_web_image', 'tags', 'MEDIUMTEXT', 'nom_fichier');
+sql_creer_index('nbdb_web_definition', 'index_definition_fr', 'definition_fr', 1);
+sql_creer_index('nbdb_web_definition', 'index_definition_en', 'definition_en', 1);
 
 
 
