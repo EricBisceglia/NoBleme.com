@@ -1,6 +1,7 @@
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */
-/*                             CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST APPELÉE DYNAMIQUEMENT PAR DU XHR                              *//*                                                                                                                                       */
+/*                             CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST APPELÉE DYNAMIQUEMENT PAR DU XHR                              */
+/*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../../inc/includes.inc.php'; // Inclusions communes
 

@@ -41,6 +41,9 @@ $css = array('ecrivains');
 
 if(isset($_POST['publier_go']))
 {
+  // Mesure anti flood
+  antiflood();
+
   // Assainissement du postdata
   $texte_concours = postdata_vide('publier_concours', 'int', 0);
   $texte_feedback = postdata_vide('publier_feedback', 'int', 2);

@@ -125,6 +125,9 @@ if(isset($_POST['forum_ecrire_reponse']))
   // Seuls les utilisateurs peuvent faire ceci
   useronly();
 
+  // Mesure anti flood
+  antiflood();
+
   // Si le sujet est fermé, on se fait rejeter
   $qcheckprive = mysqli_fetch_array(query(" SELECT  forum_sujet.ouvert    ,
                                                     forum_sujet.apparence ,
@@ -207,6 +210,10 @@ if(isset($_POST['forum_modifier_message_go']))
 {
   // Seuls les utilisateurs peuvent faire ceci
   useronly();
+
+  // Mesure anti flood
+  if(!getmod('forum'))
+    antiflood();
 
   // On commence par récupérer et assainir l'id du message
   $edit_id = postdata_vide('forum_message_id', 'int', 0);

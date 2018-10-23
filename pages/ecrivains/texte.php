@@ -75,6 +75,9 @@ $page_desc   .= ' : '.predata($qveriftexte['t_titre']);
 
 if(isset($_POST['reaction_go']))
 {
+  // Mesure anti flood
+  antiflood();
+
   // Assainissement du postdata
   $note_valeur      = isset($_POST['reaction_note']) ? postdata($_POST['reaction_note'], 'int', 0, 5) : 0;
   $note_commentaire = postdata_vide('reaction_commentaire', 'string', '');

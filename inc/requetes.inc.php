@@ -18,19 +18,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 //                                            !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP !!!!!                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Indexs fulltext pour les recherches dans la NBDB
+// Dernière activité des membres
 
-sql_creer_index('nbdb_web_page', 'index_contenu_en', 'contenu_en', 1);
-sql_creer_index('nbdb_web_page', 'index_contenu_fr', 'contenu_fr', 1);
-
-sql_creer_index('nbdb_web_definition', 'index_definition_en', 'definition_en', 1);
-sql_creer_index('nbdb_web_definition', 'index_definition_fr', 'definition_fr', 1);
-
-sql_creer_index('nbdb_web_categorie', 'index_description_fr', 'description_fr', 1);
-sql_creer_index('nbdb_web_categorie', 'index_description_en', 'description_en', 1);
-
-sql_creer_index('nbdb_web_definition', 'index_definition_fr', 'definition_fr', 1);
-sql_creer_index('nbdb_web_definition', 'index_definition_en', 'definition_en', 1);
+sql_creer_champ('membres', 'derniere_activite', 'INT(11) UNSIGNED NOT NULL', 'derniere_visite_ip');
 
 
 

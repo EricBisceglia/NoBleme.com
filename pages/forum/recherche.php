@@ -71,6 +71,7 @@ if($forum_search_texte && strlen($forum_search_texte) < 3)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Résultats de la recherche
+
 if(isset($_POST['forum_search_go']) && !isset($forum_search_erreur))
 {
   // On prépare la recherche de texte

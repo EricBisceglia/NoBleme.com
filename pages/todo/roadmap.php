@@ -112,7 +112,7 @@ $temp_admin = getadmin();
         <h5>Historique et futur du développement de NoBleme</h5>
 
         <p>
-          Cette page vous permet de voir le chemin qu'a parcouru le développement de NoBleme, et le chemin futur qui sera parcouru si les plans ne changent pas. Les tâches (issues de la <a class="gras" href="<?=$chemin?>pages/todo/index">liste des tâches</a>) sont regroupées par version passée du site ou par objectif futur, et triés par ordre antéchronologique. Les tâches finies apparaissent en <span class="todo_resolu texte_noir spaced gras">vert</span>, les ouvertes <span class="todo_importance_1 texte_noir spaced gras">nuances</span> <span class="todo_importance_3 texte_noir spaced gras">de</span> <span class="todo_importance_5 texte_noir spaced gras">rouge</span> selon leur degré d'importance. Pour voir les détails d'une tâche, cliquez n'importe où sur la ligne contenant la tâche en question.
+          Cette page vous permet de voir le chemin qu'a parcouru le développement de NoBleme, et le chemin futur qui sera parcouru si les plans ne changent pas. Les tâches (issues de la <a class="gras" href="<?=$chemin?>pages/todo/index">liste des tâches</a>) sont regroupées par version passée du site (ou par objectif futur), et triées par ordre antéchronologique. Les tâches finies apparaissent en <span class="todo_resolu texte_noir spaced gras">vert</span>, les ouvertes <span class="todo_importance_1 texte_noir spaced gras">nuances</span> <span class="todo_importance_3 texte_noir spaced gras">de</span> <span class="todo_importance_5 texte_noir spaced gras">rouge</span> selon leur degré d'importance. Pour voir les détails d'une tâche, cliquez n'importe où sur la ligne contenant la tâche en question.
         </p>
 
       </div>

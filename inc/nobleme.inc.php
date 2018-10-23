@@ -10,6 +10,55 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction vérifiant que le membre n'ait pas déjà fait une action récemment
+//
+// Utilisation: antiflood($lang);
+
+function antiflood()
+{
+  // On prépare certains messages bilingues
+  $lang                 = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
+  $temp_lang_loggedout  = ($lang == 'FR') ? 'Vous devez être connecté pour effectuer cette action' : 'You can only do this action while logged into your account';
+  $temp_lang_flood      = ($lang == 'FR') ? 'Vous devez attendre quelques secondes entre chaque action<br><br>Réessayez dans 10 secondes' : 'You must wait a bit between each action on the website<br><br>Try doing it again in 10 seconds';
+
+  // Si on a affaire à un user pas connecté, on s'arrête là
+  if(!loggedin())
+    erreur($temp_lang_loggedout);
+
+  // Sinon, on va chercher la dernière activité du membre
+  else
+  {
+    // On assainit l'ID
+    $membre_id = postdata($_SESSION['user'], 'int', 0);
+
+    // On va chercher la dernière activité
+    $dactivite = mysqli_fetch_array(query(" SELECT  membres.derniere_activite AS 'm_activite'
+                                            FROM    membres
+                                            WHERE   membres.id = '$membre_id' "));
+
+    // Si elle n'existe pas, erreur
+    if($dactivite['m_activite'] == NULL)
+      erreur($temp_lang_loggedout, NULL, $lang);
+
+    // Si la dernière activité est trop récente, erreur
+    $timestamp = time();
+    if(($timestamp - $dactivite['m_activite']) <= 10 )
+      erreur($temp_lang_flood);
+
+    // Si ça passe, on met à jour la date de dernière activité
+    query(" UPDATE  membres
+            SET     membres.derniere_activite = '$timestamp'
+            WHERE   membres.id = '$membre_id' ");
+
+    // On laisse passer l'activité
+    return 1;
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction envoyant un message privé type "message système" à un utilisateur à partir de son ID
 //
 // Utilisation: envoyer_notif($destinataire,$titre,$contenu,$silent);

@@ -35,6 +35,10 @@ $page_desc  = "Intéractions entre NoBlemeux qui ont été conservées pour la p
 // Ajout d'une miscellanée
 if(isset($_POST['misc_contenu']))
 {
+  // Mesure anti flood
+  if(!getadmin())
+    antiflood();
+
   // Assainissement du postdata
   $misc_contenu = postdata_vide('misc_contenu', 'string', '');
 

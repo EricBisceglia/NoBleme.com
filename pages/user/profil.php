@@ -48,6 +48,9 @@ $profil_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateu
 
 if(isset($_POST['profil_modifier']))
 {
+  // Mesure anti flood
+  antiflood();
+
   // Assainissement du postdata
   $edit_langue_fr   = postdata_vide('profilLangueFr', 'string', '');
   $edit_langue_en   = postdata_vide('profilLangueEn', 'string', '');

@@ -6,13 +6,15 @@
 /*                                                                                                                                       */
 /*  Méthode d'exportation : Personnalisée                                                                                                */
 /*  Ne pas exporter les données (structure uniquement)                                                                                   */
-/*  Ne pas afficher les commentaires                                                                                                     */
 /*  Afficher les résultats (ne pas diriger vers un fichier)                                                                              */
+/*  Ne pas afficher les commentaires                                                                                                     */
 /*  Ajouter tous les énoncés sauf la valeur des auto increment                                                                           */
 /*  Syntaxe : N'utiliser aucun mode prédéfini (insert into T values X)                                                                   */
 /*                                                                                                                                       */
 /******************************************************************************************************************************************
 
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `nobleme` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `nobleme`;
 
@@ -254,6 +256,7 @@ CREATE TABLE IF NOT EXISTS `membres` (
   `derniere_visite_page` mediumtext COLLATE utf8mb4_unicode_ci,
   `derniere_visite_url` mediumtext COLLATE utf8mb4_unicode_ci,
   `derniere_visite_ip` tinytext COLLATE utf8mb4_unicode_ci,
+  `derniere_activite` int(11) UNSIGNED NOT NULL,
   `banni_date` int(11) NOT NULL,
   `banni_raison` mediumtext COLLATE utf8mb4_unicode_ci,
   `langue` tinytext COLLATE utf8mb4_unicode_ci,

@@ -83,6 +83,9 @@ if(isset($_POST['forum_presentation_go']))
 
 if(isset($_POST['forum_add_titre']))
 {
+  // Mesure anti flood
+  antiflood();
+
   // Assainissement du postdata
   $add_apparence        = postdata_vide('forum_add_apparence', 'string', 'Fil');
   $add_classification   = postdata_vide('forum_add_classification', 'string', 'Standard');

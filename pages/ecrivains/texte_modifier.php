@@ -76,6 +76,10 @@ $texte_edit_concours      = $qchecktexte['FKecrivains_concours'];
 
 if(isset($_POST['modifier_go']))
 {
+  // Mesure anti flood
+  if(!getsysop())
+    antiflood();
+
   // Assainissement du postdata
   $texte_concours = postdata_vide('modifier_concours', 'int');
   $texte_titre    = isset($_POST['modifier_titre']) ? postdata(tronquer_chaine($_POST['modifier_titre'], 90)) : '';

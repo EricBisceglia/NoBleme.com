@@ -23,8 +23,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Exemple d'utilisation:
 // erreur("Chiens interdits, même tenus en laisse", $chemin, $lang);
 
-function erreur($message, $chemin='./../../', $lang='FR', $menu_principal='NoBleme', $menu_lateral='Accueil')
+function erreur($message, $chemin='./../../', $lang=NULL, $menu_principal='NoBleme', $menu_lateral='Accueil')
 {
+  // Détermination de la langue à utiliser
+  $temp_lang  = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
+  $lang       = ($lang) ? $lang : $temp_lang;
+
   // Menus du header
   $header_menu      = $menu_principal;
   $header_sidemenu  = $menu_lateral;
