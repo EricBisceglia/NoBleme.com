@@ -2,7 +2,7 @@
 .web_flottement_gauche { float: left; margin: 5px 15px 5px 0px;                                 }
 .web_flottement_droite { float: right; margin: 5px 0px 5px 15px;                                }
 .web_flotteur          { width: 250px; border: double #CACACA 3px; padding: 10px 10px 10px 10px ;
-                         text-align: center; font-size: 0.8em;                                  }
+                         text-align: center; font-size: 0.78em;                                 }
 .web_galerie           { display: flex; flex-wrap: wrap                                         }
 .web_galerie_image     { flex: 0 0 32%; border: 1px solid #CACACA; padding: 10px 10px 10px 10px ;
                         text-align: center; font-size: 0.9em; margin: 1px;                      }

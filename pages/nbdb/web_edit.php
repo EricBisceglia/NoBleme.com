@@ -274,7 +274,7 @@ $dynamique_url = (!isset($_GET['id'])) ? 'web_edit' : 'web_edit?id='.$web_id;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Liste des catégories
 
-// Si c'est une édition, on va chercher la liste des catégories auxquelles la page appartient
+// On va chercher la liste des catégories auxquelles la page appartient
 if(isset($_GET['id']))
 {
   $qpagecategories = query("  SELECT  nbdb_web_page_categorie.FKnbdb_web_categorie AS 'pc_id'
@@ -297,8 +297,11 @@ $qcategories = query("  SELECT    nbdb_web_categorie.id       AS 'c_id' ,
 $check_categories = '';
 while($dcategories = mysqli_fetch_array($qcategories))
 {
-  $temp_checked      = (isset($_GET['id']) && in_array($dcategories['c_id'], $page_categories)) ? ' checked' : '';
-  $check_categories .= '<input id="web_categorie_'.$dcategories['c_id'].'" name="web_categorie_'.$dcategories['c_id'].'"" type="checkbox"'.$temp_checked.'>&nbsp;<label class="label-inline" for="web_categorie_'.$dcategories['c_id'].'">'.predata($dcategories['c_titre']).'</label><br>';
+  if(!isset($_POST['web_preview']))
+    $temp_checked     = (in_array($dcategories['c_id'], $page_categories)) ? ' checked' : '';
+  else
+    $temp_checked     = (isset($_POST['web_categorie_'.$dcategories['c_id']])) ? ' checked' : '';
+  $check_categories  .= '<input id="web_categorie_'.$dcategories['c_id'].'" name="web_categorie_'.$dcategories['c_id'].'"" type="checkbox"'.$temp_checked.'>&nbsp;<label class="label-inline" for="web_categorie_'.$dcategories['c_id'].'">'.predata($dcategories['c_titre']).'</label><br>';
 }
 
 
@@ -317,13 +320,13 @@ $qperiodes = query("  SELECT    nbdb_web_periode.id           AS 'p_id'     ,
                                 nbdb_web_periode.annee_fin    ASC ");
 
 // On prépare le menu déroulant
-$temp_selected    = (isset($_GET['id']) && !$web_periode) ? ' selected' : '';
+$temp_selected    = (isset($web_periode) && !$web_periode) ? ' selected' : '';
 $select_periodes  = '<option value="0"'.$temp_selected.'></option>';
 
 // Et on remplit le menu déroulant
 while($dperiodes = mysqli_fetch_array($qperiodes))
 {
-  $temp_selected    = (isset($_GET['id']) && $web_periode == $dperiodes['p_id']) ? ' selected' : '';
+  $temp_selected    = (isset($web_periode) && $web_periode == $dperiodes['p_id']) ? ' selected' : '';
   $temp_annees      = ($dperiodes['p_debut']) ? $dperiodes['p_debut'].' - ' : 'XXXX - ';
   $temp_annees      = ($dperiodes['p_fin']) ? $temp_annees.$dperiodes['p_fin'] : $temp_annees.' XXXX';
   $select_periodes .= '<option value="'.$dperiodes['p_id'].'"'.$temp_selected.'>'.$temp_annees.' &nbsp; '.predata($dperiodes['p_titre']).'</option>';
@@ -359,9 +362,15 @@ if(!getxhr()) { /***************************************************************
 
       <div class="texte align_justify">
 
+        <br>
+        <br>
+
         <h3 class="alinea texte_noir">
           <?=$web_titre_fr?> :
         </h3>
+
+        <br>
+        <br>
 
         <p>
           <?=$web_definition_fr?>
@@ -381,9 +390,15 @@ if(!getxhr()) { /***************************************************************
 
       <div class="texte align_justify">
 
+        <br>
+        <br>
+
         <h3 class="alinea texte_noir">
           <?=$web_titre_en?>:
         </h3>
+
+        <br>
+        <br>
 
         <p>
           <?=$web_definition_en?>
