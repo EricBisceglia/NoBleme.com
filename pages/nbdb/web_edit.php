@@ -297,10 +297,12 @@ $qcategories = query("  SELECT    nbdb_web_categorie.id       AS 'c_id' ,
 $check_categories = '';
 while($dcategories = mysqli_fetch_array($qcategories))
 {
-  if(!isset($_POST['web_preview']))
+  if(isset($_POST['web_preview']))
+    $temp_checked     = (isset($_POST['web_categorie_'.$dcategories['c_id']])) ? ' checked' : '';
+  else if(isset($_GET['id']))
     $temp_checked     = (in_array($dcategories['c_id'], $page_categories)) ? ' checked' : '';
   else
-    $temp_checked     = (isset($_POST['web_categorie_'.$dcategories['c_id']])) ? ' checked' : '';
+    $temp_checked     = '';
   $check_categories  .= '<input id="web_categorie_'.$dcategories['c_id'].'" name="web_categorie_'.$dcategories['c_id'].'"" type="checkbox"'.$temp_checked.'>&nbsp;<label class="label-inline" for="web_categorie_'.$dcategories['c_id'].'">'.predata($dcategories['c_titre']).'</label><br>';
 }
 

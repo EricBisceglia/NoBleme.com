@@ -23,7 +23,7 @@ $page_desc  = "Liste des pages de l'encyclopédie de la culture internet, des ob
 
 // CSS & JS
 $css  = array('nbdb');
-$js   = array('dynamique');
+$js   = array('dynamique', 'nbdb/web_pages');
 
 
 
@@ -207,6 +207,7 @@ EOD;
 
   // Header
   $trad['web_search']     = "Chercher une page dans l'encyclopédie";
+  $trad['web_search2']    = "Chercher dans les titres uniquement";
   $trad['web_selecteur']  = "Sélectionner une catégorie ou une période";
   $trad['web_nocat']      = "Pages non catégorisées";
 
@@ -226,6 +227,7 @@ else if($lang == 'EN')
 
   // Header
   $trad['web_search']     = "Search the encyclopedia for a specific page";
+  $trad['web_search2']    = "Search page titles only";
   $trad['web_selecteur']  = "Select a category or an era";
   $trad['web_nocat']      = "Uncategorized pages";
   $trad['description']    = <<<EOD
@@ -278,7 +280,7 @@ if(!getxhr()) { /***************************************************************
             <fieldset>
 
               <label for="web_pages_categorie"><?=$trad['web_selecteur']?></label>
-              <select id="web_pages_categorie" name="web_pages_categorie" class="web_pages_selecteur_categorie" onchange="dynamique('<?=$chemin?>', 'web_pages?categorie='+dynamique_prepare('web_pages_categorie'), 'web_pages_liste', '', 0); document.getElementById('web_pages_periode').selectedIndex = 0;  document.getElementById('web_pages_search').value = '';">
+              <select id="web_pages_categorie" name="web_pages_categorie" class="web_pages_selecteur_categorie" onchange="web_pages_select_categorie('<?=$chemin?>');">
                 <option value="0"></option>
                 <?=$select_categories?>
                 <option value="-1"><?=$trad['web_nocat']?></option>
@@ -290,7 +292,7 @@ if(!getxhr()) { /***************************************************************
               <?php } ?>
               <br>
 
-              <select id="web_pages_periode" name="web_pages_periode" class="web_pages_selecteur_periode" onchange="dynamique('<?=$chemin?>', 'web_pages?periode='+dynamique_prepare('web_pages_periode'), 'web_pages_liste', '', 0); document.getElementById('web_pages_categorie').selectedIndex = 0;  document.getElementById('web_pages_search').value = '';">
+              <select id="web_pages_periode" name="web_pages_periode" class="web_pages_selecteur_periode" onchange="web_pages_select_periode('<?=$chemin?>');">
                 <option value="0"></option>
                 <?=$select_periodes?>
               </select>
@@ -303,7 +305,7 @@ if(!getxhr()) { /***************************************************************
               <br>
 
               <label for="web_pages_search"><?=$trad['web_search']?></label>
-              <input id="web_pages_search" name="web_pages_search" class="web_pages_champ_recherche" type="text" onkeyup="dynamique('<?=$chemin?>', 'web_pages', 'web_pages_liste', 'search='+dynamique_prepare('web_pages_search'), 0); document.getElementById('web_pages_periode').selectedIndex = 0; document.getElementById('web_pages_categorie').selectedIndex = 0;"><br>
+              <input id="web_pages_search" name="web_pages_search" class="web_pages_champ_recherche" type="text" onkeyup="web_pages_recherche('<?=$chemin?>');"><br>
 
             </fieldset>
           </form>
