@@ -112,6 +112,7 @@ if(!$dwebimage['i_nom'])
 
 // Mise à jour des infos de la page
 $page_url   .= $dwebimage['i_nom'];
+$page_nom   .= (tronquer_chaine($dwebimage['i_nom'], 25, '...'));
 $page_titre .= $dwebimage['i_nom'];
 $page_desc  .= ($dwebimage['i_tags']) ? " ".predata($dwebimage['i_tags']) : "";
 $shorturl   .= $dwebimage['i_id'];

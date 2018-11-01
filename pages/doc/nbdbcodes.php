@@ -162,6 +162,47 @@ $css  = array('doc', 'nbdb');
 
             <tr>
               <td class="texte_noir">
+                [[trends:mot]]
+              </td>
+              <td>
+                <?=nbdbcode('[[trends:mot]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+              </td>
+            </tr>
+            <tr>
+              <td class="texte_noir">
+                [[trends2:mot|mot]]
+              </td>
+              <td>
+                <?=nbdbcode('[[trends2:uno|deux]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+              </td>
+            </tr>
+            <tr>
+              <td class="texte_noir">
+                [[trends3:mot|mot|mot]]
+              </td>
+              <td>
+                <?=nbdbcode('[[trends3:uno|deux|trois]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+              </td>
+            </tr>
+            <tr>
+              <td class="texte_noir">
+                [[trends4:mot|mot|mot|mot]]
+              </td>
+              <td>
+                <?=nbdbcode('[[trends4:uno|deux|trois|quatre]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+              </td>
+            </tr>
+            <tr>
+              <td class="texte_noir">
+                [[trends5:mot|mot|mot|mot|mot]]
+              </td>
+              <td>
+                <?=nbdbcode('[[trends5:uno|deux|trois|quatre|cinq]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir">
                 [[galerie]]<br>
                 <br>
                 [[galerie:image.png]]<br>

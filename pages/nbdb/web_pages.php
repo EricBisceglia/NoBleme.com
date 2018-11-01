@@ -248,7 +248,7 @@ EOD;
 /*                                                                                                                                       */
 if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
 
-      <div class="texte align_justify" id="">
+      <div class="texte align_justify">
 
         <h1>
           <a href="<?=$chemin?>pages/nbdb/web">
@@ -275,7 +275,9 @@ if(!getxhr()) { /***************************************************************
           <?=$trad['description']?>
         </p>
 
-        <p class="texte_noir gras">
+        <br>
+
+        <div class="gras">
           <form method="POST">
             <fieldset>
 
@@ -309,69 +311,73 @@ if(!getxhr()) { /***************************************************************
 
             </fieldset>
           </form>
-        </p>
+        </div>
+
+        <br>
 
         <?php } ?>
 
         <div id="web_pages_liste">
 
-        <?php if(isset($categorie_desc)) { ?>
+          <?php if(isset($categorie_desc)) { ?>
 
-        <hr class="separateur_contenu">
-        <br>
+          <hr class="separateur_contenu">
+          <br>
 
-        <h4>
-          <?=$trad['web_categorie']?> <?=$categorie_titre?>
-        </h4>
+          <h4>
+            <?=$trad['web_categorie']?> <?=$categorie_titre?>
+          </h4>
 
-        <?php if($categorie_desc) { ?>
-        <p>
-          <?=$categorie_desc?>
-        </p>
-        <?php } ?>
+          <?php if($categorie_desc) { ?>
+          <p>
+            <?=$categorie_desc?>
+          </p>
+          <?php } ?>
 
-        <br>
-        <hr class="separateur_contenu">
-        <br>
+          <br>
+          <hr class="separateur_contenu">
+          <br>
 
-        <?php } if(isset($periode_desc)) { ?>
+          <?php } if(isset($periode_desc)) { ?>
 
-        <hr class="separateur_contenu">
-        <br>
+          <hr class="separateur_contenu">
+          <br>
 
-        <h4>
-          <?=$trad['web_periode']?> <?=$periode_titre?>
-        </h4>
+          <h4>
+            <?=$trad['web_periode']?> <?=$periode_titre?>
+          </h4>
 
-        <?php if($periode_desc) { ?>
-        <p>
-          <?=$periode_desc?>
-        </p>
-        <?php } ?>
+          <?php if($periode_desc) { ?>
+          <p>
+            <?=$periode_desc?>
+          </p>
+          <?php } ?>
 
-        <br>
-        <hr class="separateur_contenu">
-        <br>
+          <br>
+          <hr class="separateur_contenu">
+          <br>
 
-        <?php } ?>
+          <?php } ?>
 
-        <?php for($i=0;$i<$nweb;$i++) { ?>
+          <?php for($i=0;$i<$nweb;$i++) { ?>
 
-        <?php if($i == 0 || $web_lettre[$i] != $web_lettre[$i-1]) { ?>
+          <?php if($i == 0 || $web_lettre[$i] != $web_lettre[$i-1]) { ?>
 
-        <br>
-        <h4><?=$web_lettre[$i]?></h4>
-        <br>
+          <br>
+          <h4><?=$web_lettre[$i]?></h4>
+          <br>
 
-        <?php } ?>
+          <?php } ?>
 
-        <ul>
-          <li>
-            <a class="<?=$web_titre_css[$i]?>" href="<?=$chemin?>pages/nbdb/web?page=<?=$web_titre_url[$i]?>"><?=$web_titre[$i]?></a> <?=$web_redirect[$i]?>
-          </li>
-        </ul>
+          <ul>
+            <li>
+              <a class="<?=$web_titre_css[$i]?>" href="<?=$chemin?>pages/nbdb/web?page=<?=$web_titre_url[$i]?>"><?=$web_titre[$i]?></a> <?=$web_redirect[$i]?>
+            </li>
+          </ul>
 
-        <?php } ?>
+          <?php } ?>
+
+        </div>
 
       </div>
 

@@ -557,10 +557,11 @@ EOD;
         </p>
 
         <br>
+        <br>
 
-        <p>
+        <div class="align_justify">
           <?=$web_contenu?>
-        </p>
+        </div>
 
         <br>
 

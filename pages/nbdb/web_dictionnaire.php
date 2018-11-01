@@ -450,9 +450,11 @@ if(!getxhr()) { /***************************************************************
           <?=$definition_titre?><?=$trad['dico_colon']?>
         </p>
 
-        <p>
+        <br>
+
+        <div class="align_justify">
           <?=$definition_contenu?>
-        </p>
+        </div>
 
         <br>
         <br>

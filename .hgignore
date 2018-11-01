@@ -2,3 +2,4 @@ syntax: glob
 inc/conf.inc.php
 ircbot.txt
 google3*8.html
+img/nbdb_web/*
