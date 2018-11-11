@@ -38,8 +38,9 @@ if(isset($_POST['flux_go']))
 {
   // On prépare la liste des flux possibles
   if($lang == 'FR')
-    $liste_flux = array('flux_nbdbweb'            ,
-                        'flux_irl'                ,
+    $liste_flux = array('flux_irl'                ,
+                        'flux_nbdbweb'            ,
+                        'flux_nbdbdico'           ,
                         'flux_devblog'            ,
                         'flux_todo'               ,
                         'flux_todo_fini'          ,
@@ -51,8 +52,9 @@ if(isset($_POST['flux_go']))
                         'flux_forumpost_fr'       ,
                         'flux_forumpost_en'       );
   else
-    $liste_flux = array('flux_nbdbweb'            ,
-                        'flux_irl'                ,
+    $liste_flux = array('flux_irl'                ,
+                        'flux_nbdbweb'            ,
+                        'flux_nbdbdico'           ,
                         'flux_forum_fr'           ,
                         'flux_forum_en'           ,
                         'flux_forumpost_fr'       ,
@@ -126,10 +128,11 @@ EOD;
   $trad['flux_error']     = "Vous devez cocher au moins une case pour générer un flux !";
   $trad['flux_s_all']     = "Sélectionner tous les flux RSS";
   $trad['flux_s_none']    = "Tout déselectionner";
-  $trad['flux_s_nbdbweb'] = "Encyclopédie de la culture internet";
-  $trad['flux_nbdbweb']   = "Nouveau contenu dans l'encyclopédie de la culture internet";
   $trad['flux_s_irl']     = "Rencontres irl";
   $trad['flux_irl']       = "Organisation de nouvelles IRL";
+  $trad['flux_s_nbdbweb'] = "Encyclopédie de la culture internet";
+  $trad['flux_nbdbweb']   = "Nouveau contenu dans l'encyclopédie de la culture internet";
+  $trad['flux_nbdbdico']  = "Nouveau contenu dans le dictionnaire de la culture internet";
   $trad['flux_s_forum']   = "Forum NoBleme";
   $trad['flux_forum']     = "Nouveaux sujets sur le forum";
   $trad['flux_forumpost'] = "Messages postés sur le forum";
@@ -171,10 +174,11 @@ EOD;
   $trad['flux_error']     = "You must check at least one box to generate a feed !";
   $trad['flux_s_all']     = "Select all RSS feeds";
   $trad['flux_s_none']    = "Unselect all feeds";
-  $trad['flux_s_nbdbweb'] = "Encyclopedia of internet culture";
-  $trad['flux_nbdbweb']   = "New content in the encyclopedia of internet culture";
   $trad['flux_s_irl']     = "Real life meetups";
   $trad['flux_irl']       = "Real life meetups";
+  $trad['flux_s_nbdbweb'] = "Encyclopedia of internet culture";
+  $trad['flux_nbdbweb']   = "New content in the encyclopedia of internet culture";
+  $trad['flux_nbdbdico']  = "New content in the dictionary of internet culture";
   $trad['flux_s_forum']   = "NoBleme forum";
   $trad['flux_forum']     = "New forum threads";
   $trad['flux_forumpost'] = "Posts on the forum";
@@ -307,8 +311,8 @@ EOD;
               <option value="0">&nbsp;</option>
               <option value="all"><?=$trad['flux_s_all']?></option>
               <option value="none"><?=$trad['flux_s_none']?></option>
-              <option value="nbdbweb"><?=$trad['flux_s_nbdbweb']?></option>
               <option value="irl"><?=$trad['flux_s_irl']?></option>
+              <option value="nbdbweb"><?=$trad['flux_s_nbdbweb']?></option>
               <option value="forum_fr"><?=$trad['flux_s_forum']?> <?=$trad['flux_forum_fr']?></option>
               <option value="forum_en"><?=$trad['flux_s_forum']?> <?=$trad['flux_forum_en']?></option>
               <option value="forum_all"><?=$trad['flux_s_forum']?> <?=$trad['flux_forum_all']?></option>
@@ -320,11 +324,14 @@ EOD;
             </select><br>
             <br>
 
+            <input id="flux_irl" name="flux_irl" type="checkbox">
+            <label class="label-inline" for="flux_irl"><?=$trad['flux_irl']?></label><br>
+
             <input id="flux_nbdbweb" name="flux_nbdbweb" type="checkbox">
             <label class="label-inline" for="flux_nbdbweb"><?=$trad['flux_nbdbweb']?></label><br>
 
-            <input id="flux_irl" name="flux_irl" type="checkbox">
-            <label class="label-inline" for="flux_irl"><?=$trad['flux_irl']?></label><br>
+            <input id="flux_nbdbdico" name="flux_nbdbdico" type="checkbox">
+            <label class="label-inline" for="flux_nbdbdico"><?=$trad['flux_nbdbdico']?></label><br>
 
             <?php if($lang == 'FR') { ?>
 

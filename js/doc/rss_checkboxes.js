@@ -14,11 +14,17 @@ function rss_check_boxes()
 
   // NBDB - Encyclopédie de la culture web
   if(type == 'all' || type == 'nbdbweb')
+  {
     document.getElementById("flux_nbdbweb").checked = true;
+    document.getElementById("flux_nbdbdico").checked = true;
+  }
   else
+  {
     document.getElementById("flux_nbdbweb").checked = false;
+    document.getElementById("flux_nbdbdico").checked = false;
+  }
 
-    // Rencontres IRL
+  // Rencontres IRL
   if(type == 'all' || type == 'irl')
     document.getElementById("flux_irl").checked = true;
   else
