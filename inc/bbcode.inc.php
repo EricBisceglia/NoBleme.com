@@ -189,8 +189,11 @@ function bbcode($post, $xhr=NULL)
   // [code]Bloc de code[/code]
   $post = preg_replace('/\[code\](.*?)\[\/code\]/is','<pre class="monospace alinea wrap">$1</pre>', $post);
 
-  // [youtube]http://www.image.com/image.jpg[/youtube]
+  // [youtube]videoid[/youtube]
   $post = preg_replace('/\[youtube\](.*?)\[\/youtube\]/is',"<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/$1\" frameborder=\"0\" gesture=\"media\" allow=\"encrypted-media\" allowfullscreen></iframe>", $post);
+
+  // [twitter]tweetid[/twitter]
+  $post = preg_replace('/\[twitter\](.*?)\[\/twitter\]/is',"<script type=\"text/javascript\"> function loadx(data) { document.write(data.html); } </script><script type=\"text/javascript\" src=\"https://api.twitter.com/1/statuses/oembed.json?id=$1&callback=loadx\"></script> <div class='twitter' onLoad='loadx().html'/></div>", $post);
 
   // [quote]Citation[/quote]
   $temp = ($lang == 'FR') ? 'Citation :' : 'Quote:';

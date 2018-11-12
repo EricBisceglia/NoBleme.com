@@ -522,6 +522,21 @@ EOD;
               </td>
             </tr>
 
+            <tr>
+              <td>
+                Twitter
+              </td>
+              <td>
+                [twitter][/twitter]
+              </td>
+              <td>
+                [twitter]855477729084440576[/twitter]
+              </td>
+              <td class="align_center">
+                <?=bbcode('[twitter]855477729084440576[/twitter]');?>
+              </td>
+            </tr>
+
           </tbody>
         </table>
 
