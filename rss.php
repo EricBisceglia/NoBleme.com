@@ -110,7 +110,7 @@ $qrss .= "  UNION
                         forum_message.timestamp_creation    AS 'rss_date'     ,
                         forum_sujet.titre                   AS 'rss_titre'    ,
                         forum_message.contenu               AS 'rss_contenu'  ,
-                        ''                                  AS 'rss_user'     ,
+                        forum_sujet.id                      AS 'rss_user'     ,
                         'forum_fr'                          AS 'rss_type'
               FROM      forum_message
               LEFT JOIN forum_sujet ON forum_message.FKforum_sujet = forum_sujet.id
@@ -126,7 +126,7 @@ $qrss .= "  UNION
                         forum_message.timestamp_creation    AS 'rss_date'     ,
                         forum_sujet.titre                   AS 'rss_titre'    ,
                         forum_message.contenu               AS 'rss_contenu'  ,
-                        ''                                  AS 'rss_user'     ,
+                        forum_sujet.id                      AS 'rss_user'     ,
                         'forum_en'                          AS 'rss_type'
               FROM      forum_message
               LEFT JOIN forum_sujet ON forum_message.FKforum_sujet = forum_sujet.id
@@ -302,7 +302,7 @@ for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
   // Forum : messages
   else if($drss['rss_type'] == 'forum_fr' || $drss['rss_type'] == 'forum_en')
   {
-    $rss_url[$nrss]     = "pages/forum/sujet?id=".$drss['rss_id'];
+    $rss_url[$nrss]     = "pages/forum/sujet?id=".$drss['rss_user']."#".$drss['rss_id'];
     $rss_date[$nrss]    = predata(date('r', $drss['rss_date']));
     $rss_titre[$nrss]   = (!isset($_GET['lang_en'])) ? "Forum NoBleme : Nouveau message" : "NoBleme forum: New post";
     $rss_contenu[$nrss] = '<b><u>'.predata($drss['rss_titre']).'</u></b><br><br>'.bbcode(predata($drss['rss_contenu'], 1));
