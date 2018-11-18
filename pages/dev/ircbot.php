@@ -46,10 +46,12 @@ if(isset($_POST['botMessage']) && $_POST['botMessage'])
 
 if(isset($_POST['botCommit']) && $_POST['botCommit'])
 {
-  $ircbot_commit = "Nouveau commit dans le dépôt public de NoBleme: ".$_POST['botCommit'];
+  $ircbot_commit_fr = "Nouveau commit dans le dépôt public de NoBleme : ".$_POST['botCommit'];
+  $ircbot_commit_en = "Changes have been made to NoBleme's source code: ".$_POST['botCommit'];
   if($_POST['botCommitTitre'])
     $ircbot_commit .= " - ".$_POST['botCommitTitre'];
-  ircbot($chemin,$ircbot_commit,"#dev");
+  ircbot($chemin, $ircbot_commit_fr, "#dev");
+  ircbot($chemin, $ircbot_commit_en, "#english");
 }
 
 

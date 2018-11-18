@@ -144,8 +144,8 @@ if(isset($_POST['forum_add_titre']))
     }
     else
     {
-      ircbot($chemin, $add_pseudo_raw." opened a new thread on the forum: ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id, "#english");
-      ircbot($chemin, $add_pseudo_raw." opened a new thread on the forum: ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id, "#forum");
+      ircbot($chemin, $add_pseudo_raw." opened a new thread on the forum: ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id."&english", "#english");
+      ircbot($chemin, $add_pseudo_raw." opened a new thread on the forum: ".$add_titre_raw." - ".$GLOBALS['url_site']."pages/forum/sujet?id=".$sujet_id."&english", "#forum");
     }
   }
   else

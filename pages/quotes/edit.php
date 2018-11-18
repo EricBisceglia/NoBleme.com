@@ -138,7 +138,7 @@ EOD;
     activite_nouveau('quote', 0, 0, NULL, $misc_id);
 
     // Et via le bot IRC
-    ircbot($chemin, "Miscellanée #".$misc_id." ajoutée à la collection: ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#NoBleme");
+    ircbot($chemin, "Miscellanée #".$misc_id." ajoutée à la collection : ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#NoBleme");
 
     // On rediriger vers la liste des miscellanées
     exit(header("Location: ".$chemin."pages/quotes/index"));

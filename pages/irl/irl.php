@@ -97,8 +97,8 @@ if(isset($_POST['irl_add_pseudo']) && $_POST['irl_add_pseudo'] && getmod('irl'))
   activite_nouveau('irl_add_participant', 1, 0, $pseudonyme, $irl_id, $action_titre, $sysop);
 
   // Bot IRC
-  ircbot($chemin, $_POST["irl_add_pseudo"]." a rejoint l'IRL du ".$action_titre, "#NoBleme");
-  ircbot($chemin, $_POST["irl_add_pseudo"]." will attend the ".$action_titre_en." meetup", "#english");
+  ircbot($chemin, $_POST["irl_add_pseudo"]." a rejoint l'IRL du ".$action_titre.": ".$GLOBALS['url_site']."pages/irl/irl?id=".$irl_id, "#NoBleme");
+  ircbot($chemin, $_POST["irl_add_pseudo"]." will attend the ".$action_titre_en." real life meetup: ".$GLOBALS['url_site']."pages/irl/irl?id=".$irl_id."&english", "#english");
 }
 
 

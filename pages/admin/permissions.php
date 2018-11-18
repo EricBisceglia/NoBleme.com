@@ -52,7 +52,8 @@ if(isset($_POST['permissions_go']))
     $permissions_modfr      = '';
     $permissions_moden      = '';
     $permissions_action     = 'droits_delete';
-    $permissions_ircbot     = " ne fait plus partie de l'équipe administrative de NoBleme";
+    $permissions_ircbot_fr  = " ne fait plus partie de l'équipe administrative de NoBleme";
+    $permissions_ircbot_en  = " is no longer part ofNoBleme's administrative team";
   }
   else if($permissions_droits == 'sysop')
   {
@@ -61,14 +62,16 @@ if(isset($_POST['permissions_go']))
     $permissions_modfr      = '';
     $permissions_moden      = '';
     $permissions_action     = 'droits_sysop';
-    $permissions_ircbot     = " rejoint l'équipe administrative de NoBleme en tant que sysop";
+    $permissions_ircbot_fr  = " rejoint l'équipe administrative de NoBleme en tant que sysop";
+    $permissions_ircbot_en  = " has joined NoBleme's administrative team as a sysop";
   }
   else
   {
     $permissions_sysop      = 0;
     $permissions_moderateur = $permissions_droits;
     $permissions_action     = 'droits_mod';
-    $permissions_ircbot     = " rejoint l'équipe administrative de NoBleme en tant que modérateur";
+    $permissions_ircbot_fr = " rejoint l'équipe administrative de NoBleme en tant que modérateur";
+    $permissions_ircbot_en = " has joined NoBleme's administrative team as a moderator";
     if($permissions_droits == 'irl')
     {
       $permissions_modfr      = 'Rencontres IRL';
@@ -94,8 +97,9 @@ if(isset($_POST['permissions_go']))
   activite_nouveau($permissions_action, 0, 0, $permissions_pseudo);
   activite_nouveau($permissions_action, 1, 0, $permissions_pseudo);
 
-  // On notifie #nobleme
-  ircbot($chemin, getpseudo($permissions_id).$permissions_ircbot." - ".$GLOBALS['url_site']."pages/nobleme/admins", "#nobleme");
+  // On notifie IRC
+  ircbot($chemin, getpseudo($permissions_id).$permissions_ircbot_fr." - ".$GLOBALS['url_site']."pages/nobleme/admins", "#nobleme");
+  ircbot($chemin, getpseudo($permissions_id).$permissions_ircbot_en." - ".$GLOBALS['url_site']."pages/nobleme/admins?english", "#english");
 
   // Et on redirige vers le profil de l'user
   header("Location: ".$chemin."pages/user/user?id=".$permissions_id);

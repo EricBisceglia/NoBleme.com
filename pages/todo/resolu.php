@@ -84,6 +84,7 @@ if(isset($_POST['todo_solved_go']))
       {
         $todo_edit_source_raw = $_POST['todo_edit_source'];
         ircbot($chemin, "Nouveau commit sur le dépôt public de NoBleme : ".$todo_edit_source_raw, "#dev");
+        ircbot($chemin, "Changes have been made to NoBleme's source code: ".$todo_edit_source_raw, "#english");
       }
     }
   }

@@ -83,7 +83,7 @@ if(isset($_POST['web_dico_add']) || isset($_POST['web_dico_edit']))
       if($edit_dico_titre_fr)
         ircbot($chemin, "Nouvelle entrée dans le dictionnaire de la culture internet : ".$edit_dico_titre_fr_raw." - ".$GLOBALS['url_site']."pages/nbdb/web_dictionnaire?id=".$edit_dico_id, "#NoBleme");
       if($edit_dico_titre_en)
-        ircbot($chemin, "New entry in the dictionary of internet culture : ".$edit_dico_titre_en_raw." - ".$GLOBALS['url_site']."pages/nbdb/web_dictionnaire?id=".$edit_dico_id, "#english");
+        ircbot($chemin, "New entry in the dictionary of internet culture : ".$edit_dico_titre_en_raw." - ".$GLOBALS['url_site']."pages/nbdb/web_dictionnaire?id=".$edit_dico_id."&english", "#english");
     }
   }
 
@@ -116,7 +116,7 @@ if(isset($_POST['web_dico_add']) || isset($_POST['web_dico_edit']))
       if($edit_dico_titre_fr)
         ircbot($chemin, "Une entrée du dictionnaire de la culture internet a été modifiée : ".$edit_dico_titre_fr_raw." - ".$GLOBALS['url_site']."pages/nbdb/web_dictionnaire?id=".$edit_dico_id, "#NoBleme");
       if($edit_dico_titre_en)
-        ircbot($chemin, "An entry in the dictionary of internet culture has been modified : ".$edit_dico_titre_en_raw." - ".$GLOBALS['url_site']."pages/nbdb/web_dictionnaire?id=".$edit_dico_id, "#english");
+        ircbot($chemin, "An entry in the dictionary of internet culture has been modified : ".$edit_dico_titre_en_raw." - ".$GLOBALS['url_site']."pages/nbdb/web_dictionnaire?id=".$edit_dico_id."&english", "#english");
     }
   }
 
