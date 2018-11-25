@@ -8,6 +8,7 @@
                         text-align: center; font-size: 0.9em; margin: 1px;                      }
 .web_galerie_hr        { height: 1px; background: #CACACA; border: 0px                          ;
                          margin: 10px -10px 10px -10px;                                         }
+.web_copypasta         { font-size: 1.2em; padding: 5px 14px; }
 
 /********************************************************** DICTIONNAIRE DU WEB **********************************************************/
 .web_dico_alerte_conteneur { padding-left: 15px; padding-top: 8px; align-items: center; text-align: justify; }

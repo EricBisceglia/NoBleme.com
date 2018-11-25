@@ -24,8 +24,9 @@ $langue_page = array('FR','EN');
 $page_titre = ($lang == 'FR') ? "NBDB : Culture internet" : "NBDB: Internet culture";
 $page_desc  = "Encyclopédie de la culture internet, des obscurs bulletin boards d'antan aux memes modernes.";
 
-// CSS
-$css = array('doc', 'nbdb');
+// CSS & JS
+$css  = array('doc', 'nbdb');
+$js   = array('highlight');
 
 
 

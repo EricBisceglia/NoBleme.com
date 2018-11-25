@@ -68,8 +68,9 @@
 .spaced          { padding-left: 6px; padding-right: 6px;     }
 .vspaced         { padding-bottom: 6px; padding-top: 6px;     }
 .bigpadding      { padding-top: 5.0rem;                       }
-.nopadding       { padding: 0px;                   }
+.nopadding       { padding: 0px;                              }
 .nowrap          { white-space: nowrap;                       }
+.dowrap          { white-space: normal;                       }
 .scrollbar       { overflow-x: scroll;                        }
 .vscrollbar      { overflow-y: scroll;                        }
 

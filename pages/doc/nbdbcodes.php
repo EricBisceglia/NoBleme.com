@@ -112,6 +112,15 @@ $css  = array('doc', 'nbdb');
 
             <tr>
               <td class="texte_noir">
+                [[copypasta=id]]Texte[[/copypasta]]
+              </td>
+              <td class="align_left">
+                <?=nbdbcode('[[copypasta=id]]Ce texte sera copié dans le presse papiers lorsque vous double cliquerez dessus[[/copypasta]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir">
                 [[image:image.png]]
               </td>
               <td>

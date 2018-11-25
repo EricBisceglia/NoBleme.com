@@ -23,7 +23,7 @@ $page_desc  = "Liste des pages de l'encyclopédie de la culture internet, des ob
 
 // CSS & JS
 $css  = array('nbdb');
-$js   = array('dynamique', 'nbdb/web_pages');
+$js   = array('dynamique', 'highlight', 'nbdb/web_pages');
 
 
 

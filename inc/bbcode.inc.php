@@ -360,7 +360,7 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
   // [[youtube:urlyoutube]]
   $post = preg_replace('/\[\[youtube:(.*?)\]\]/i','<div class="align_center"><iframe width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
 
-  // [galerie][/galerie]
+  // [[galerie]][[/galerie]]
   $post = preg_replace('/\[\[galerie\]\](.*?)\[\[\/galerie\]\]/is','<div class="web_galerie">$1</div>', $post);
 
   // [[galerie:urlyoutube|youtube|légende]]
@@ -404,6 +404,9 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
   <script type="text/javascript">
     trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"$1","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$2","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$3","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$4","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$5","geo":"","time":"2004-01-01 '.date('Y-m-d').'"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=$1,$2,$3,$4,$5","guestPath":"https://trends.google.com:443/trends/embed/"});
   </script>', $post);
+
+  // [[copypasta=id]]Texte[[/copypasta]]
+  $post = preg_replace('/\[\[copypasta\=(.*?)\]\](.*?)\[\[\/copypasta\]\]/is','<pre onclick="highlight(\'copypasta_$1\');" class="monospace spaced dowrap web_copypasta" id="copypasta_$1">$2</pre>', $post);
 
   // Et on renvoie la chaine traitée
   return $post;

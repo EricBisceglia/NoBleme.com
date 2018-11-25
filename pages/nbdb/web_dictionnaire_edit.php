@@ -24,7 +24,8 @@ $langue_page = array('FR');
 $page_titre = "NBDB : Administration";
 
 // CSS
-$css = array('nbdb');
+$css  = array('nbdb');
+$js   = array('highlight');
 
 
 

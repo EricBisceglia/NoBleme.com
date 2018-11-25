@@ -26,7 +26,7 @@ $page_desc  = "Dictionnaire des termes propres à la culture internet.";
 
 // CSS & JS
 $css  = array('nbdb');
-$js   = array('dynamique');
+$js   = array('dynamique', 'highlight');
 
 
 

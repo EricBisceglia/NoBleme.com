@@ -25,7 +25,7 @@ $page_titre = "NBDB : Administration";
 
 // CSS & JS
 $css  = array('nbdb');
-$js   = array('dynamique');
+$js   = array('dynamique', 'highlight');
 
 
 
