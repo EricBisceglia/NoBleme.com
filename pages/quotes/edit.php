@@ -104,10 +104,12 @@ if(isset($_POST['misc_contenu']))
 {
   // Assainissement du postdata
   $misc_contenu = postdata_vide('misc_contenu', 'string', '');
+  $misc_nsfw    = (isset($_POST['misc_nsfw'])) ? 1 : 0;
 
   // On met à jour la miscellanée
   query(" UPDATE  quotes
-          SET     quotes.contenu  = '$misc_contenu'
+          SET     quotes.contenu  = '$misc_contenu' ,
+                  quotes.nsfw     = '$misc_nsfw'
           WHERE   quotes.id       = '$misc_id' ");
 
   // Si c'est une nouvelle miscellanée...
@@ -161,6 +163,7 @@ EOD;
 $qmisc = mysqli_fetch_array(query(" SELECT    quotes.id           AS 'q_id'       ,
                                               quotes.timestamp    AS 'q_time'     ,
                                               quotes.contenu      AS 'q_contenu'  ,
+                                              quotes.nsfw         AS 'q_nsfw'     ,
                                               quotes.valide_admin AS 'q_valide'   ,
                                               membres.pseudonyme  AS 'm_auteur'
                                     FROM      quotes
@@ -173,6 +176,7 @@ $misc_date    = ($qmisc['q_time']) ? 'le '.predata(jourfr(date('Y-m-d', $qmisc['
 $misc_auteur  = predata($qmisc['m_auteur']);
 $misc_valide  = $qmisc['q_valide'];
 $misc_contenu = $qmisc['q_contenu'];
+$misc_nsfw    = ($qmisc['q_nsfw']) ? ' checked' : '';
 $misc_preview = (isset($_POST['misc_preview'])) ? predata($_POST['misc_preview'], 1, 1) : predata($qmisc['q_contenu'], 1, 1);
 
 // On a aussi besoin des membres liés à la miscellanée
@@ -234,6 +238,10 @@ if(!getxhr()) { /***************************************************************
 
             <label for="misc_contenu">Modifier le contenu de la miscellanée :</label>
             <textarea class="indiv" id="misc_contenu" name="misc_contenu" style="height:250px" onkeyup="previsualiser_miscellanee('<?=$chemin?>', <?=$misc_id?>);"><?=$misc_contenu?></textarea><br>
+            <br>
+
+            <input id="misc_nsfw" name="misc_nsfw" type="checkbox"<?=$misc_nsfw?>>
+            <label class="label-inline" for="misc_nsfw">Cette citation est NSFW</label><br>
             <br>
 
             <?php if(!$misc_valide) { ?>

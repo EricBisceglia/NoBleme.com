@@ -36,6 +36,7 @@ $js = array('dynamique');
 $qmisc = "    SELECT    quotes.id           AS 'q_id'       ,
                         quotes.timestamp    AS 'q_time'     ,
                         quotes.contenu      AS 'q_contenu'  ,
+                        quotes.nsfw         AS 'q_nsfw'     ,
                         quotes.valide_admin AS 'q_valide'
               FROM      quotes
               WHERE     1 = 1 ";
@@ -68,6 +69,7 @@ for($nmisc = 0; $dmisc = mysqli_fetch_array($qmisc); $nmisc++)
   $misc_contenu[$nmisc] = ($dmisc['q_valide']) ? '' : '<span class="texte_negatif">---- MISCELLANÉE NON VALIDÉE ! ----<br>';
   $misc_contenu[$nmisc] .= predata($dmisc['q_contenu'], 1, 1);
   $misc_contenu[$nmisc] .= ($dmisc['q_valide']) ? '' : '<br>---- MISCELLANÉE NON VALIDÉE ! ----</span>';
+  $misc_nsfw[$nmisc]    = (niveau_nsfw()) ? 0 : $dmisc['q_nsfw'];
 
   // On a aussi besoin des membres liés à la miscellanée
   $tempid               = $dmisc['q_id'];
@@ -122,6 +124,10 @@ if(!getxhr()) { /***************************************************************
           L'intégralité de ces citations proviennent de NoBleme. La majorité viennent du <a class="gras" href="<?=$chemin?>pages/irc/index">serveur IRC</a>, les autres du <a class="gras" href="<?=$chemin?>pages/forum/index">forum</a> ou des <a class="gras" href="<?=$chemin?>pages/irl/index">rencontres IRL</a>. Si vous êtes diverti par du contenu qui a été écrit sur NoBleme, n'hésitez pas à proposer que ce contenu soit intégré aux miscellanées en <a class="gras" href="<?=$chemin?>pages/quotes/add">cliquant ici</a>.
         </p>
 
+        <p>
+          Certaines miscellanées sont <span class="flou">floutées</span> car elles contiennent du contenu vulgaire, et requièrent que vous passiez le curseur de votre souris dessus afin de les réveler. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="<?=$chemin?>pages/user/nsfw">options de vulgarité</a> de votre compte.
+        </p>
+
         <br>
 
         <fieldset>
@@ -151,7 +157,14 @@ if(!getxhr()) { /***************************************************************
             - <a class="gras" href="<?=$chemin?>pages/quotes/edit?id=<?=$misc_id[$i]?>">Modifier</a> - <a class="gras" href="<?=$chemin?>pages/quotes/delete?id=<?=$misc_id[$i]?>">Supprimer</a>
             <?php } ?>
             <br>
-            <?=$misc_contenu[$i]?>
+
+            <?php if($misc_nsfw[$i]) { ?>
+            <span class="flou">
+              <?=$misc_contenu[$i]?>
+            </span>
+            <?php } else { ?>
+              <?=$misc_contenu[$i]?>
+            <?php } ?>
           </p>
 
           <?php } if(!getxhr()) { ?>

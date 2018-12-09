@@ -350,7 +350,7 @@ function ircbot($chemin,$message_irc,$canal_irc=NULL,$formattage=NULL)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction générant un surnom aléatoire pour un unvité
+// Fonction générant un surnom aléatoire pour un invité
 //
 // Utilisation: surnom_mignon();
 

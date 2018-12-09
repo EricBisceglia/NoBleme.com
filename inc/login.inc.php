@@ -463,3 +463,26 @@ function guestonly($lang='FR')
   if(loggedin())
     erreur($message);
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction renvoyant le niveau de NSFW que le membre désire voir
+//
+// Exemple d'utilisation:
+// niveau_nsfw();
+
+function niveau_nsfw()
+{
+  // Si l'utilisateur n'est pas connecté, on floute tout
+  if(!loggedin())
+    return 0;
+
+  // Sinon, on va chercher le niveau de NSFW
+  $membre_id  = postdata($_SESSION['user'], 'int', 0);
+  $dnsfw      = mysqli_fetch_array(query("  SELECT  membres.voir_nsfw AS 'm_nsfw'
+                                            FROM    membres
+                                            WHERE   membres.id = '$membre_id' "));
+  return $dnsfw['m_nsfw'];
+}

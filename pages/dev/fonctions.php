@@ -765,6 +765,14 @@ $js  = array('toggle', 'highlight', 'dev/reference');
                 <?=getadmin(42);?>
               </td>
             </tr>
+            <tr>
+              <td class="align_center">
+                niveau_nsfw();
+              </td>
+              <td class="gras align_center">
+                <?=niveau_nsfw();?>
+              </td>
+            </tr>
           </tbody>
         </table>
 

@@ -964,6 +964,7 @@ $sidemenu['user_profil']          = ($lang == 'FR') ? "Profil public"           
 $sidemenu['user_profil_self']     = ($lang == 'FR') ? "Voir mon profil public"  : "My public profile";
 $sidemenu['user_profil_edit']     = ($lang == 'FR') ? "Modifier mon profil"     : "Edit my profile";
 $sidemenu['user_reglages']        = ($lang == 'FR') ? "Réglages du compte"      : "Account settings";
+$sidemenu['user_reglages_nsfw']   = ($lang == 'FR') ? "Options de vulgarité"    : "Adult content options";
 $sidemenu['user_reglages_email']  = ($lang == 'FR') ? "Changer d'e-mail"        : "Change my e-mail";
 $sidemenu['user_reglages_pass']   = ($lang == 'FR') ? "Changer de mot de passe" : "Change my password";
 $sidemenu['user_reglages_pseudo'] = ($lang == 'FR') ? "Changer de pseudonyme"   : "Change my nickname";
@@ -1015,6 +1016,12 @@ $sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    
             <div class="header_sidemenu_titre">
               <?=$sidemenu['user_reglages']?>
             </div>
+
+            <a href="<?=$chemin?>pages/user/nsfw">
+              <div class="<?=header_class('ReglagesNSFW',$header_sidemenu,'side')?>">
+                <?=$sidemenu['user_reglages_nsfw']?>
+              </div>
+            </a>
 
             <a href="<?=$chemin?>pages/user/email">
               <div class="<?=header_class('ChangerEmail',$header_sidemenu,'side')?>">

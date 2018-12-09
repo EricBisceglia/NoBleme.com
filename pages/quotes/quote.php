@@ -73,9 +73,10 @@ $page_titre .= $misc_id;
 /*****************************************************************************************************************************************/
 
 // On va chercher la miscellanée
-$qmisc = mysqli_fetch_array(query(" SELECT    quotes.id         AS 'q_id'   ,
-                                              quotes.timestamp  AS 'q_time' ,
-                                              quotes.contenu    AS 'q_contenu'
+$qmisc = mysqli_fetch_array(query(" SELECT    quotes.id         AS 'q_id'       ,
+                                              quotes.timestamp  AS 'q_time'     ,
+                                              quotes.contenu    AS 'q_contenu'  ,
+                                              quotes.nsfw       AS 'q_nsfw'
                                     FROM      quotes
                                     WHERE     quotes.id = '$misc_id' "));
 
@@ -83,6 +84,7 @@ $qmisc = mysqli_fetch_array(query(" SELECT    quotes.id         AS 'q_id'   ,
 $misc_id      = $qmisc['q_id'];
 $misc_date    = ($qmisc['q_time']) ? '<span class="gras">du '.predata(jourfr(date('Y-m-d', $qmisc['q_time']))).'</span>' : '';
 $misc_contenu = predata($qmisc['q_contenu'], 1, 1);
+$misc_nsfw    = (niveau_nsfw()) ? 0 : $qmisc['q_nsfw'];
 
 // On a aussi besoin des membres liés à la miscellanée
 $tempid       = $qmisc['q_id'];
@@ -121,7 +123,15 @@ $misc_pseudos = ($temp_pseudos) ? '<span class="gras">(</span>'.$temp_pseudos.'<
           - <a class="gras" href="<?=$chemin?>pages/quotes/edit?id=<?=$misc_id?>">Modifier</a> - <a class="gras" href="<?=$chemin?>pages/quotes/delete?id=<?=$misc_id?>">Supprimer</a>
           <?php } ?>
           <br>
-          <?=$misc_contenu?><br>
+
+          <?php if($misc_nsfw) { ?>
+          <span class="flou">
+            <?=$misc_contenu?>
+          </span>
+          <?php } else { ?>
+            <?=$misc_contenu?>
+          <?php } ?>
+
         </p>
 
       </div>

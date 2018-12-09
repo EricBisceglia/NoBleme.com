@@ -18,9 +18,17 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 //                                            !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP !!!!!                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Dernière activité des membres
+// Ajouter un champ NSFW aux citations
 
-sql_creer_champ('membres', 'derniere_activite', 'INT(11) UNSIGNED NOT NULL', 'derniere_visite_ip');
+sql_creer_champ('quotes', 'nsfw', 'TINYINT(1)', 'FKauteur');
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Ajouter des options NSFW aux membres
+
+sql_creer_champ('membres', 'voir_nsfw', 'TINYINT(2)', 'profil');
 
 
 
