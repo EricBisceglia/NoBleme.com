@@ -56,9 +56,15 @@ function rss_check_boxes()
 
   // Miscellanées
   if(type == 'all' || type == 'misc')
-    document.getElementById("flux_misc").checked = true;
+  {
+    document.getElementById("flux_misc_fr").checked = true;
+    document.getElementById("flux_misc_en").checked = true;
+  }
   else
-    document.getElementById("flux_misc").checked = false;
+  {
+    document.getElementById("flux_misc_fr").checked = false;
+    document.getElementById("flux_misc_en").checked = false;
+  }
 
   // Coin des écrivains
   if(type == 'all' || type == 'ecrivains')

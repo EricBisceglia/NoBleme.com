@@ -791,45 +791,84 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
 
 <?php } ################################################## MENU LATÉRAL : LIRE ###########################################################
 // Préparation des traductions des titres du menu
-$sidemenu['nbdb_titre']       = ($lang == 'FR') ? "NBDB"                      : "NoBleme Database";
-$sidemenu['nbdb_index']       = ($lang == 'FR') ? "Base d'informations"       : "The NoBleme Database";
-$sidemenu['nbdb_web_encyclo'] = ($lang == 'FR') ? "Encyclopédie du web"       : "Internet encyclopedia";
-$sidemenu['nbdb_web_e_liste'] = ($lang == 'FR') ? "Liste des pages"           : "List of all pages";
-$sidemenu['nbdb_web_e_rand']  = ($lang == 'FR') ? "Page au hasard"            : "Random page";
-$sidemenu['nbdb_web_dico']    = ($lang == 'FR') ? "Dictionnaire du web"       : "Internet dictionnary";
+$sidemenu['lire_nbdb_titre']        = ($lang == 'FR') ? "NBDB"                      : "NoBleme Database";
+$sidemenu['lire_nbdb_index']        = ($lang == 'FR') ? "Base d'informations"       : "The NoBleme Database";
+$sidemenu['lire_nbdb_web_encyclo']  = ($lang == 'FR') ? "Encyclopédie du web"       : "Internet encyclopedia";
+$sidemenu['lire_nbdb_web_e_liste']  = ($lang == 'FR') ? "Liste des pages"           : "List of all pages";
+$sidemenu['lire_nbdb_web_e_rand']   = ($lang == 'FR') ? "Page au hasard"            : "Random page";
+$sidemenu['lire_nbdb_web_dico']     = ($lang == 'FR') ? "Dictionnaire du web"       : "Internet dictionnary";
+$sidemenu['lire_quotes_titre']      = ($lang == 'FR') ? "Miscellanées"              : "Miscellanea";
+$sidemenu['lire_quotes_liste']      = ($lang == 'FR') ? "Paroles de NoBlemeux"      : "Quote database";
+$sidemenu['lire_quotes_random']     = ($lang == 'FR') ? "Miscellanée au hasard"     : "Random quote";
+$sidemenu['lire_quotes_stats']      = ($lang == 'FR') ? "Stats des miscellanées"    : "Miscellanea stats";
+$sidemenu['lire_quotes_proposer']   = ($lang == 'FR') ? "Proposer une miscellanée"  : "Submit a new quote";
 /* #################################################################################################### */ if($header_menu == 'Lire') { ?>
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['nbdb_titre']?>
+              <?=$sidemenu['lire_nbdb_titre']?>
             </div>
 
             <a href="<?=$chemin?>pages/nbdb/index">
               <div class="<?=header_class('NBDBIndex',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nbdb_index']?>
+                <?=$sidemenu['lire_nbdb_index']?>
               </div>
             </a>
 
             <a href="<?=$chemin?>pages/nbdb/web">
               <div class="<?=header_class('NBDBEncycloWeb',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nbdb_web_encyclo']?>
+                <?=$sidemenu['lire_nbdb_web_encyclo']?>
               </div>
             </a>
 
             <a href="<?=$chemin?>pages/nbdb/web_pages">
               <div class="<?=header_class('NBDBEncycloListe',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nbdb_web_e_liste']?>
+                <?=$sidemenu['lire_nbdb_web_e_liste']?>
               </div>
             </a>
 
             <a href="<?=$chemin?>pages/nbdb/web?random">
               <div class="<?=header_class('NBDBEncycloRand',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nbdb_web_e_rand']?>
+                <?=$sidemenu['lire_nbdb_web_e_rand']?>
               </div>
             </a>
 
             <a href="<?=$chemin?>pages/nbdb/web_dictionnaire">
               <div class="<?=header_class('NBDBDicoWeb',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nbdb_web_dico']?>
+                <?=$sidemenu['lire_nbdb_web_dico']?>
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              <?=$sidemenu['lire_quotes_titre']?>
+            </div>
+
+            <a href="<?=$chemin?>pages/quotes/index">
+              <div class="<?=header_class('MiscIndex',$header_sidemenu,'side')?>">
+                <?=$sidemenu['lire_quotes_liste']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/quotes/quote?random">
+              <div class="<?=header_class('MiscRandom',$header_sidemenu,'side')?>">
+                <?=$sidemenu['lire_quotes_random']?>
+              </div>
+            </a>
+
+            <?php if($lang == 'FR') { ?>
+
+            <a href="<?=$chemin?>pages/quotes/stats">
+              <div class="<?=header_class('MiscStats',$header_sidemenu,'side')?>">
+                <?=$sidemenu['lire_quotes_stats']?>
+              </div>
+            </a>
+
+            <?php } ?>
+
+            <a href="<?=$chemin?>pages/quotes/add">
+              <div class="<?=header_class('MiscAdd',$header_sidemenu,'side')?>">
+                <?=$sidemenu['lire_quotes_proposer']?>
               </div>
             </a>
 
@@ -856,36 +895,6 @@ $sidemenu['nbdb_web_dico']    = ($lang == 'FR') ? "Dictionnaire du web"       : 
             <a href="<?=$chemin?>pages/ecrivains/publier">
               <div class="<?=header_class('EcrivainsPublier',$header_sidemenu,'side')?>">
                 Publier un texte
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_titre">
-              Miscellanées
-            </div>
-
-            <a href="<?=$chemin?>pages/quotes/index">
-              <div class="<?=header_class('MiscIndex',$header_sidemenu,'side')?>">
-                Paroles de NoBlemeux
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/quotes/quote?random">
-              <div class="<?=header_class('MiscRandom',$header_sidemenu,'side')?>">
-                Miscellanée au hasard
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/quotes/stats">
-              <div class="<?=header_class('MiscStats',$header_sidemenu,'side')?>">
-                Stats des miscellanées
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/quotes/add">
-              <div class="<?=header_class('MiscAdd',$header_sidemenu,'side')?>">
-                Proposer une miscellanée
               </div>
             </a>
 

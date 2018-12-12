@@ -486,11 +486,18 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   //*************************************************************************************************************************************//
   // Nouvelle miscellanée
 
-  else if($type === 'quote')
+  else if($type === 'quote_new_fr')
   {
     $retour['css']  = 'texte_noir vert_background_clair';
     $retour['href'] = $chemin.'pages/quotes/quote?id='.$id;
     $retour['FR']   = 'Miscellanée #'.$id.' ajoutée à la collection';
+  }
+  else if($type === 'quote_new_en')
+  {
+    $retour['css']  = 'texte_noir vert_background_clair';
+    $retour['href'] = $chemin.'pages/quotes/quote?id='.$id;
+    $retour['FR']   = 'Miscellanée anglophone #'.$id.' ajoutée à la collection';
+    $retour['EN']   = 'Miscellanea #'.$id.' added to the collection';
   }
 
 

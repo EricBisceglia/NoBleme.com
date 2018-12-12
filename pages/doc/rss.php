@@ -44,7 +44,8 @@ if(isset($_POST['flux_go']))
                         'flux_devblog'            ,
                         'flux_todo'               ,
                         'flux_todo_fini'          ,
-                        'flux_misc'               ,
+                        'flux_misc_fr'            ,
+                        'flux_misc_en'            ,
                         'flux_ecrivains'          ,
                         'flux_ecrivains_concours' ,
                         'flux_forum_fr'           ,
@@ -55,6 +56,8 @@ if(isset($_POST['flux_go']))
     $liste_flux = array('flux_irl'                ,
                         'flux_nbdbweb'            ,
                         'flux_nbdbdico'           ,
+                        'flux_misc_fr'            ,
+                        'flux_misc_en'            ,
                         'flux_forum_fr'           ,
                         'flux_forum_en'           ,
                         'flux_forumpost_fr'       ,
@@ -133,6 +136,9 @@ EOD;
   $trad['flux_s_nbdbweb'] = "Encyclopédie de la culture internet";
   $trad['flux_nbdbweb']   = "Nouveau contenu dans l'encyclopédie de la culture internet";
   $trad['flux_nbdbdico']  = "Nouveau contenu dans le dictionnaire de la culture internet";
+  $trad['flux_s_misc']    = "Miscellanées";
+  $trad['flux_misc_fr']   = "Nouvelles miscellanées (français)";
+  $trad['flux_misc_en']   = "Nouvelles miscellanées (anglais)";
   $trad['flux_s_forum']   = "Forum NoBleme";
   $trad['flux_forum']     = "Nouveaux sujets sur le forum";
   $trad['flux_forumpost'] = "Messages postés sur le forum";
@@ -179,6 +185,9 @@ EOD;
   $trad['flux_s_nbdbweb'] = "Encyclopedia of internet culture";
   $trad['flux_nbdbweb']   = "New content in the encyclopedia of internet culture";
   $trad['flux_nbdbdico']  = "New content in the dictionary of internet culture";
+  $trad['flux_s_misc']    = "Quote database";
+  $trad['flux_misc_fr']   = "New quotes in the miscellanea (in french)";
+  $trad['flux_misc_en']   = "New quotes in the miscellanea (in english)";
   $trad['flux_s_forum']   = "NoBleme forum";
   $trad['flux_forum']     = "New forum threads";
   $trad['flux_forumpost'] = "Posts on the forum";
@@ -313,11 +322,11 @@ EOD;
               <option value="none"><?=$trad['flux_s_none']?></option>
               <option value="irl"><?=$trad['flux_s_irl']?></option>
               <option value="nbdbweb"><?=$trad['flux_s_nbdbweb']?></option>
+              <option value="misc"><?=$trad['flux_s_misc']?></option>
               <option value="forum_fr"><?=$trad['flux_s_forum']?> <?=$trad['flux_forum_fr']?></option>
               <option value="forum_en"><?=$trad['flux_s_forum']?> <?=$trad['flux_forum_en']?></option>
               <option value="forum_all"><?=$trad['flux_s_forum']?> <?=$trad['flux_forum_all']?></option>
               <?php if($lang == 'FR') { ?>
-              <option value="misc">Miscellanées</option>
               <option value="ecrivains">Coin des écrivains</option>
               <option value="dev">Développement de NoBleme</option>
               <?php } ?>
@@ -332,6 +341,24 @@ EOD;
 
             <input id="flux_nbdbdico" name="flux_nbdbdico" type="checkbox">
             <label class="label-inline" for="flux_nbdbdico"><?=$trad['flux_nbdbdico']?></label><br>
+
+            <?php if($lang == 'FR') { ?>
+
+            <input id="flux_misc_fr" name="flux_misc_fr" type="checkbox">
+            <label class="label-inline" for="flux_misc_fr"><?=$trad['flux_misc_fr']?></label><br>
+
+            <input id="flux_misc_en" name="flux_misc_en" type="checkbox">
+            <label class="label-inline" for="flux_misc_en"><?=$trad['flux_misc_en']?></label><br>
+
+            <?php } else { ?>
+
+            <input id="flux_misc_en" name="flux_misc_en" type="checkbox">
+            <label class="label-inline" for="flux_misc_en"><?=$trad['flux_misc_en']?></label><br>
+
+            <input id="flux_misc_fr" name="flux_misc_fr" type="checkbox">
+            <label class="label-inline" for="flux_misc_fr"><?=$trad['flux_misc_fr']?></label><br>
+
+            <?php } ?>
 
             <?php if($lang == 'FR') { ?>
 
@@ -362,9 +389,6 @@ EOD;
             <?php if($lang != 'FR') { ?>
             <div class="hidden">
             <?php } ?>
-
-            <input id="flux_misc" name="flux_misc" type="checkbox">
-            <label class="label-inline" for="flux_misc">Nouvelles miscellanées</label><br>
 
             <input id="flux_ecrivains" name="flux_ecrivains" type="checkbox">
             <label class="label-inline" for="flux_ecrivains">Textes du coin des écrivains</label><br>

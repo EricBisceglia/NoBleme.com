@@ -103,14 +103,19 @@ if(isset($_POST['misc_action']) && $_POST['misc_action'] == 'supprimer')
 if(isset($_POST['misc_contenu']))
 {
   // Assainissement du postdata
+  $misc_date    = postdata_vide('misc_date', 'string', '');
+  $misc_date    = ($misc_date) ? strtotime($misc_date) : 0;
   $misc_contenu = postdata_vide('misc_contenu', 'string', '');
+  $misc_langue  = postdata_vide('misc_langue', 'string', 'FR');
   $misc_nsfw    = (isset($_POST['misc_nsfw'])) ? 1 : 0;
 
   // On met à jour la miscellanée
   query(" UPDATE  quotes
-          SET     quotes.contenu  = '$misc_contenu' ,
-                  quotes.nsfw     = '$misc_nsfw'
-          WHERE   quotes.id       = '$misc_id' ");
+          SET     quotes.timestamp  = '$misc_date'    ,
+                  quotes.contenu    = '$misc_contenu' ,
+                  quotes.langue     = '$misc_langue'  ,
+                  quotes.nsfw       = '$misc_nsfw'
+          WHERE   quotes.id         = '$misc_id' ");
 
   // Si c'est une nouvelle miscellanée...
   if(isset($_POST['misc_approve']))
@@ -127,22 +132,42 @@ if(isset($_POST['misc_contenu']))
 
     // ...pour lui envoyer un message de félicitations
     $misc_auteur      = $qauteurmisc['FKauteur'];
-    $misc_message     = <<<EOD
+    if($misc_langue == 'FR')
+    {
+      $misc_message   = <<<EOD
 [b]Félicitations, votre proposition de miscellanée a été acceptée ![/b]
 
 Vous pouvez retrouver la miscellanée #{$misc_id} en [url={$chemin}pages/quotes/quote?id={$misc_id}]cliquant ici[/url].
 
 Votre contribution aux miscellanées de NoBleme est appréciée. N'hésitez pas à soumettre d'autres propositions de miscellanées dans le futur !
 EOD;
-    envoyer_notif($misc_auteur, "Proposition de miscellanée acceptée", postdata($misc_message));
+      envoyer_notif($misc_auteur, "Proposition de miscellanée acceptée", postdata($misc_message));
+    }
+    else
+    {
+      $misc_message   = <<<EOD
+[b]Congratulations, your quote proposal has been approved![/b]
+
+You can read miscellanea #{$misc_id} by [url={$chemin}pages/quotes/quote?id={$misc_id}]clicking here[/url].
+
+Your contribution to NoBleme's quote database is appreciated. Do not hesitate to submit more quote proposals in the future!
+EOD;
+      envoyer_notif($misc_auteur, "Quote proposal approved", postdata($misc_message));
+    }
 
     // On va aussi mettre une notification dans l'activité récente
-    activite_nouveau('quote', 0, 0, NULL, $misc_id);
+    activite_nouveau('quote_new_'.changer_casse($misc_langue, 'min'), 0, 0, NULL, $misc_id);
 
     // Et via le bot IRC
-    ircbot($chemin, "Miscellanée #".$misc_id." ajoutée à la collection : ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#NoBleme");
+    if($misc_langue == 'FR')
+      ircbot($chemin, "Miscellanée #".$misc_id." ajoutée à la collection : ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#NoBleme");
+    else
+    {
+      ircbot($chemin, "[ANGLOPHONE] Miscellanée #".$misc_id." ajoutée à la collection : ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#NoBleme");
+      ircbot($chemin, "Miscellanea #".$misc_id." added to the collection: ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#english");
+    }
 
-    // On rediriger vers la liste des miscellanées
+    // On redirige vers la liste des miscellanées
     exit(header("Location: ".$chemin."pages/quotes/index"));
   }
 
@@ -162,6 +187,7 @@ EOD;
 // On va chercher la miscellanée
 $qmisc = mysqli_fetch_array(query(" SELECT    quotes.id           AS 'q_id'       ,
                                               quotes.timestamp    AS 'q_time'     ,
+                                              quotes.langue       AS 'q_lang'     ,
                                               quotes.contenu      AS 'q_contenu'  ,
                                               quotes.nsfw         AS 'q_nsfw'     ,
                                               quotes.valide_admin AS 'q_valide'   ,
@@ -171,13 +197,16 @@ $qmisc = mysqli_fetch_array(query(" SELECT    quotes.id           AS 'q_id'     
                                     WHERE     quotes.id = '$misc_id' "));
 
 // Préparation des données pour l'affichage
-$misc_id      = $qmisc['q_id'];
-$misc_date    = ($qmisc['q_time']) ? 'le '.predata(jourfr(date('Y-m-d', $qmisc['q_time']))) : '';
-$misc_auteur  = predata($qmisc['m_auteur']);
-$misc_valide  = $qmisc['q_valide'];
-$misc_contenu = $qmisc['q_contenu'];
-$misc_nsfw    = ($qmisc['q_nsfw']) ? ' checked' : '';
-$misc_preview = (isset($_POST['misc_preview'])) ? predata($_POST['misc_preview'], 1, 1) : predata($qmisc['q_contenu'], 1, 1);
+$misc_id        = $qmisc['q_id'];
+$misc_date      = ($qmisc['q_time']) ? 'le '.predata(jourfr(date('Y-m-d', $qmisc['q_time']))) : '';
+$misc_auteur    = predata($qmisc['m_auteur']);
+$misc_valide    = $qmisc['q_valide'];
+$misc_contenu   = $qmisc['q_contenu'];
+$misc_editdate  = ($qmisc['q_time']) ? date('d-m-Y', $qmisc['q_time']) : '';
+$misc_lang_fr   = ($qmisc['q_lang'] == 'FR') ? ' selected' : '';
+$misc_lang_en   = ($qmisc['q_lang'] == 'EN') ? ' selected' : '';
+$misc_nsfw      = ($qmisc['q_nsfw']) ? ' checked' : '';
+$misc_preview   = (isset($_POST['misc_preview'])) ? predata($_POST['misc_preview'], 1, 1) : predata($qmisc['q_contenu'], 1, 1);
 
 // On a aussi besoin des membres liés à la miscellanée
 $tempid       = $qmisc['q_id'];
@@ -240,6 +269,17 @@ if(!getxhr()) { /***************************************************************
             <textarea class="indiv" id="misc_contenu" name="misc_contenu" style="height:250px" onkeyup="previsualiser_miscellanee('<?=$chemin?>', <?=$misc_id?>);"><?=$misc_contenu?></textarea><br>
             <br>
 
+            <label for="misc_date">Date de la citation (Y-m-d)</label>
+            <input type="text" id="misc_date" name="misc_date" class="indiv" value="<?=$misc_editdate?>"><br>
+            <br>
+
+            <label for="misc_langue">Langue de la citation</label>
+            <select id="misc_langue" name="misc_langue" class="indiv">
+              <option value="FR"<?=$misc_lang_fr?>>Français</option>
+              <option value="EN"<?=$misc_lang_en?>>Anglais</option>
+            </select><br>
+            <br>
+
             <input id="misc_nsfw" name="misc_nsfw" type="checkbox"<?=$misc_nsfw?>>
             <label class="label-inline" for="misc_nsfw">Cette citation est NSFW</label><br>
             <br>
@@ -249,6 +289,9 @@ if(!getxhr()) { /***************************************************************
             <?php } else { ?>
             <input type="submit" value="MODIFIER LA MISCELLANÉE">
             <?php } ?>
+
+            <br>
+            <br>
 
             <p>
               <label>Prévisualisation de la miscellanée :</label>

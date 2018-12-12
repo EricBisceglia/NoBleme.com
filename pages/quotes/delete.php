@@ -57,6 +57,7 @@ if(isset($_POST['misc_raison']))
 
   // On va chercher des infos sur la miscellanée rejetée
   $qmisc = mysqli_fetch_array(query(" SELECT    quotes.contenu  AS 'q_contenu'  ,
+                                                quotes.langue   AS 'q_langue'   ,
                                                 membres.id      AS 'm_auteur'
                                       FROM      quotes
                                       LEFT JOIN membres ON quotes.FKauteur = membres.id
@@ -65,8 +66,10 @@ if(isset($_POST['misc_raison']))
   // On envoie un message de rejet à l'auteur
   $misc_auteur      = $qmisc['m_auteur'];
   $misc_contenu_raw = $qmisc['q_contenu'];
-  $misc_raison      = ($misc_raison) ? $misc_raison : "Aucune raison spécifiée";
-  $misc_message     = <<<EOD
+  if($qmisc['q_langue'] == 'FR')
+  {
+    $misc_raison      = ($misc_raison) ? $misc_raison : "Aucune raison spécifiée";
+    $misc_message     = <<<EOD
 [b]Votre proposition de miscellanée a été refusée.[/b]
 
 [b]Raison du refus :[/b] {$misc_raison}
@@ -77,6 +80,22 @@ if(isset($_POST['misc_raison']))
 Même si votre miscellanée a été refusée, votre proposition de contribution aux miscellanées de NoBleme est appréciée. Nous préférons conserver la qualité plutôt que la quantité, par conséquent les critères de sélection sont sévères. N'hésitez pas à soumettre d'autres propositions de miscellanées dans le futur !
 EOD;
   envoyer_notif($misc_auteur, "Proposition de miscellanée refusée", postdata($misc_message));
+  }
+  else
+  {
+    $misc_raison      = ($misc_raison) ? $misc_raison : "No reason has been specified";
+    $misc_message     = <<<EOD
+[b]Your quote proposal has been rejected.[/b]
+
+[b]Reason for the rejection:[/b] {$misc_raison}
+
+[b]Contents of the proposal:[/b]
+[quote]{$misc_contenu_raw}[/quote]
+
+Even though your proposal has been rejected, your contribution to NoBleme is appreciated. We try to focus quality over quantity when selecting quotes, and thus most of them will end up rejected. Don't hesitate to submit more in the future!
+EOD;
+  envoyer_notif($misc_auteur, "Quote proposal rejected", postdata($misc_message));
+  }
 }
 
 if(isset($_POST['misc_delete']))
@@ -90,7 +109,7 @@ if(isset($_POST['misc_delete']))
           WHERE       quotes_membres.FKquotes = '$misc_id' ");
 
   // On supprime l'activité récente liée
-  activite_supprimer('quote', 0, 0, NULL, $misc_id);
+  activite_supprimer('quote_', 0, 0, NULL, $misc_id, 1);
 
   // Redirection vers les miscellanées
   exit(header("Location: ".$chemin."pages/quotes/index?admin"));

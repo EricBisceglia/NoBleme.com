@@ -119,7 +119,7 @@ if(isset($_POST['activite_type']))
                   OR        activite.action_type LIKE 'devblog'
                   OR        activite.action_type LIKE 'todo_%' )";
   else if($activite_type == 'misc')
-    $qactrec .= " AND       activite.action_type LIKE 'quote' ";
+    $qactrec .= " AND       activite.action_type LIKE 'quote_%' ";
   else if($activite_type == 'nbdb')
     $qactrec .= " AND       activite.action_type LIKE 'nbdb_%' ";
 }

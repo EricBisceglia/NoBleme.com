@@ -136,7 +136,7 @@ $qrss .= "  UNION
               ORDER BY  forum_message.timestamp_creation DESC
               LIMIT     100 ) ";
 
-if(isset($_GET['flux_misc']) && !isset($_GET['lang_en']))
+if(isset($_GET['flux_misc_fr']))
 $qrss .= "  UNION
             ( SELECT    quotes.id                           AS 'rss_id'       ,
                         quotes.timestamp                    AS 'rss_date'     ,
@@ -147,6 +147,22 @@ $qrss .= "  UNION
               FROM      quotes
               WHERE     quotes.valide_admin = 1
               AND       quotes.timestamp > 0
+              AND       quotes.langue LIKE 'FR'
+              ORDER BY  quotes.timestamp DESC
+              LIMIT     30 ) ";
+
+if(isset($_GET['flux_misc_en']))
+$qrss .= "  UNION
+            ( SELECT    quotes.id                           AS 'rss_id'       ,
+                        quotes.timestamp                    AS 'rss_date'     ,
+                        ''                                  AS 'rss_titre'    ,
+                        quotes.contenu                      AS 'rss_contenu'  ,
+                        ''                                  AS 'rss_user'     ,
+                        'misc'                              AS 'rss_type'
+              FROM      quotes
+              WHERE     quotes.valide_admin = 1
+              AND       quotes.timestamp > 0
+              AND       quotes.langue LIKE 'EN'
               ORDER BY  quotes.timestamp DESC
               LIMIT     30 ) ";
 
@@ -313,7 +329,7 @@ for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
   {
     $rss_url[$nrss]     = "pages/quotes/quote?id=".$drss['rss_id'];
     $rss_date[$nrss]    = predata(date('r', $drss['rss_date']));
-    $rss_titre[$nrss]   = "Nouvelle miscellanée : #".$drss['rss_id'];
+    $rss_titre[$nrss]   = (!isset($_GET['lang_en'])) ? "Nouvelle miscellanée : #".$drss['rss_id'] : "New quote : #".$drss['rss_id'];
     $rss_contenu[$nrss] = predata($drss['rss_contenu'], 1);
   }
 

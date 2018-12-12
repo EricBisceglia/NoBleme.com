@@ -18,17 +18,17 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 //                                            !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP !!!!!                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Ajouter un champ NSFW aux citations
+// Rendre les miscellanées bilingues
 
-sql_creer_champ('quotes', 'nsfw', 'TINYINT(1)', 'FKauteur');
+sql_creer_champ('quotes', 'langue', 'TINYTEXT', 'timestamp');
 
+query(" UPDATE  quotes
+        SET     quotes.langue = 'FR'
+        WHERE   quotes.langue IS NULL ");
 
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Ajouter des options NSFW aux membres
-
-sql_creer_champ('membres', 'voir_nsfw', 'TINYINT(2)', 'profil');
+query(" UPDATE  activite
+        SET     activite.action_type  =     'quote_new_fr'
+        WHERE   activite.action_type  LIKE  'quote' ");
 
 
 
