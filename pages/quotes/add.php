@@ -77,8 +77,8 @@ if(isset($_POST['misc_contenu']))
         ircbot($chemin, "Miscellanée #".$misc_id." ajoutée à la collection : ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#NoBleme");
       else
       {
-        ircbot($chemin, "[ANGLOPHONE] Miscellanée #".$misc_id." ajoutée à la collection : ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#NoBleme");
-        ircbot($chemin, "Miscellanea #".$misc_id." added to the collection: ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#english");
+        ircbot($chemin, "Miscellanée anglophone #".$misc_id." ajoutée à la collection : ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#NoBleme");
+        ircbot($chemin, "Quote #".$misc_id." added to the collection: ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id."&english", "#english");
       }
 
       // Puis on redirige vers la page de modification de la citation pour y lier des membres

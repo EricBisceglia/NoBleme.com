@@ -145,7 +145,7 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
 {
   // On va avoir besoin de l'ID pour la suppression, ainsi que de la date de l'action
   $activite_id[$nactrec]      = $dactrec['id'];
-  $activite_date[$nactrec]    = ilya($dactrec['timestamp']);
+  $activite_date[$nactrec]    = ilya($dactrec['timestamp'], $lang);
 
   // On prépare le contenu à afficher
   $temp_activite                  = activite_recente($chemin, isset($_GET['mod']), $dactrec['action_type'], $dactrec['FKmembres'], $dactrec['pseudonyme'], $dactrec['action_id'], $dactrec['action_titre'], $dactrec['parent']);
