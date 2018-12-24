@@ -87,12 +87,17 @@ if (isset($_POST["register_pseudo"]))
 
     // Création du compte
     query(" INSERT INTO membres
-            SET         pseudonyme    = '$register_pseudo'  ,
-                        pass          = '$register_pass'    ,
-                        admin         = '0'                 ,
-                        sysop         = '0'                 ,
-                        email         = '$register_email'   ,
-                        date_creation = '$date_creation'    ");
+            SET         membres.pseudonyme            = '$register_pseudo'  ,
+                        membres.pass                  = '$register_pass'    ,
+                        membres.admin                 = 0                   ,
+                        membres.sysop                 = 0                   ,
+                        membres.moderateur            = 0                   ,
+                        membres.email                 = '$register_email'   ,
+                        membres.date_creation         = '$date_creation'    ,
+                        membres.derniere_visite       = '$date_creation'    ,
+                        membres.derniere_visite_page  = 'Index'             ,
+                        membres.derniere_visite_url   = 'index.php'         ,
+                        membres.derniere_activite     = '$date_creation'    ");
 
     // Activité récente
     $new_user = mysqli_insert_id($db);
