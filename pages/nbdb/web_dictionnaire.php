@@ -144,7 +144,7 @@ if(!$dico_id)
   $definition_lang = changer_casse($lang, 'min');
 
   // On spéficie si on veut les redirections ou non
-  $where_definition_redirections = getadmin() ? " " : " AND nbdb_web_definition.redirection_$definition_lang LIKE '' ";
+  $where_definition_redirections = (getadmin() && isset($_GET['redirections'])) ? " " : " AND nbdb_web_definition.redirection_$definition_lang LIKE '' ";
 
   // On va chercher la liste des définitions pour notre langue
   $qdefinition = query("  SELECT    nbdb_web_definition.redirection_$definition_lang  AS 'd_redirect' ,
@@ -290,9 +290,19 @@ if(!getxhr()) { /***************************************************************
         </form>
 
         <br>
-        <br>
 
-        <h4><?=$trad['dico_trandom']?></h4>
+        <h4>
+          <?=$trad['dico_trandom']?>
+          <?php if($est_admin && !isset($_GET['redirections'])) { ?>
+          <a class="gras valign_middle" href="<?=$chemin?>pages/nbdb/web_dictionnaire?redirections">
+            <img src="<?=$chemin?>img/icones/lien.svg" alt="R">
+          </a>
+          <?php } else if($est_admin && isset($_GET['redirections'])) { ?>
+          <a class="gras valign_middle" href="<?=$chemin?>pages/nbdb/web_dictionnaire">
+            <img src="<?=$chemin?>img/icones/x.svg" alt="R">
+          </a>
+          <?php } ?>
+        </h4>
 
         <br>
 

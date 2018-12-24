@@ -41,7 +41,7 @@ $js   = array('dynamique', 'highlight', 'nbdb/web_pages');
 $web_lang = changer_casse($lang, 'min');
 
 // On spéficie si on veut les redirections ou non
-$where_web_redirections = getadmin() ? " " : " AND nbdb_web_page.redirection_$web_lang LIKE '' ";
+$where_web_redirections = (getadmin() && isset($_GET['redirections'])) ? " " : " AND nbdb_web_page.redirection_$web_lang LIKE '' ";
 
 // On spéficie si on filtre par catégorie ou non
 $filtre_categorie     = (isset($_GET['categorie'])) ? postdata($_GET['categorie'], 'int', 0) : 0;
@@ -364,7 +364,18 @@ if(!getxhr()) { /***************************************************************
           <?php if($i == 0 || $web_lettre[$i] != $web_lettre[$i-1]) { ?>
 
           <br>
-          <h4><?=$web_lettre[$i]?></h4>
+          <h4>
+            <?=$web_lettre[$i]?>
+            <?php if(!$i && $est_admin && !isset($_GET['redirections'])) { ?>
+            <a class="gras valign_middle" href="<?=$chemin?>pages/nbdb/web_pages?redirections">
+              <img src="<?=$chemin?>img/icones/lien.svg" alt="R">
+            </a>
+            <?php } else if(!$i && $est_admin && isset($_GET['redirections'])) { ?>
+            <a class="gras valign_middle" href="<?=$chemin?>pages/nbdb/web_pages">
+              <img src="<?=$chemin?>img/icones/x.svg" alt="R">
+            </a>
+            <?php } ?>
+          </h4>
           <br>
 
           <?php } ?>
