@@ -146,12 +146,17 @@ if(!$dico_id)
   // On spéficie si on veut les redirections ou non
   $where_definition_redirections = (getadmin() && isset($_GET['redirections'])) ? " " : " AND nbdb_web_definition.redirection_$definition_lang LIKE '' ";
 
+  // On spécifie s'il y a une recherche en cours ou non
+  $where_search       = postdata_vide('search', 'string', '');
+  $where_dico_search  = ($where_search) ? " AND nbdb_web_definition.titre_$definition_lang LIKE '%$where_search%' " : '';
+
   // On va chercher la liste des définitions pour notre langue
   $qdefinition = query("  SELECT    nbdb_web_definition.redirection_$definition_lang  AS 'd_redirect' ,
                                     nbdb_web_definition.titre_$definition_lang        AS 'd_titre'
                           FROM      nbdb_web_definition
                           WHERE     nbdb_web_definition.titre_$definition_lang  NOT LIKE ''
                                     $where_definition_redirections
+                                    $where_dico_search
                           ORDER BY  nbdb_web_definition.titre_$definition_lang REGEXP '^[a-z]' DESC  ,
                                     nbdb_web_definition.titre_$definition_lang                       ");
 
@@ -285,7 +290,7 @@ if(!getxhr()) { /***************************************************************
         <form method="POST">
           <fieldset>
             <label for="web_dico_search"><?=$trad['dico_search']?></label>
-            <input id="web_dico_search" name="web_dico_search" class="indiv" type="text">
+            <input id="web_dico_search" name="web_dico_search" class="indiv" type="text" onkeyup="dynamique('<?=$chemin?>', 'web_dictionnaire', 'web_pages_liste', 'search=' + dynamique_prepare('web_dico_search'), 0);">
           </fieldset>
         </form>
 
@@ -312,23 +317,32 @@ if(!getxhr()) { /***************************************************************
           </li>
         </ul>
 
-        <?php for($i=0;$i<$ndefinition;$i++) { ?>
+        <?php } } if(!$dico_id) { ?>
 
-        <?php if($i == 0 || $definition_lettre[$i] != $definition_lettre[$i-1]) { ?>
+        <div id="web_pages_liste">
 
-        <br>
-        <h4><?=$definition_lettre[$i]?></h4>
-        <br>
+          <?php for($i=0;$i<$ndefinition;$i++) { ?>
 
-        <?php } ?>
+          <?php if($i == 0 || $definition_lettre[$i] != $definition_lettre[$i-1]) { ?>
 
-        <ul>
-          <li>
-            <a class="<?=$definition_titre_css[$i]?>" href="<?=$chemin?>pages/nbdb/web_dictionnaire?define=<?=$definition_titre_url[$i]?>"><?=$definition_titre[$i]?></a> <?=$definition_redirect[$i]?>
-          </li>
-        </ul>
+          <br>
+          <h4><?=$definition_lettre[$i]?></h4>
+          <br>
 
-        <?php } ?>
+          <?php } ?>
+
+          <ul>
+            <li>
+              <a class="<?=$definition_titre_css[$i]?>" href="<?=$chemin?>pages/nbdb/web_dictionnaire?define=<?=$definition_titre_url[$i]?>"><?=$definition_titre[$i]?></a> <?=$definition_redirect[$i]?>
+            </li>
+          </ul>
+
+          <?php } ?>
+
+        </div>
+
+        <?php } if(!getxhr()) { ?>
+        <?php if(!$dico_id) { ?>
 
       </div>
 
