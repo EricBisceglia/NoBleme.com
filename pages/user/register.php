@@ -91,7 +91,7 @@ if (isset($_POST["register_pseudo"]))
                         membres.pass                  = '$register_pass'    ,
                         membres.admin                 = 0                   ,
                         membres.sysop                 = 0                   ,
-                        membres.moderateur            = 0                   ,
+                        membres.moderateur            = ''                  ,
                         membres.email                 = '$register_email'   ,
                         membres.date_creation         = '$date_creation'    ,
                         membres.derniere_visite       = '$date_creation'    ,

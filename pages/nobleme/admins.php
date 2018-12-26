@@ -65,7 +65,7 @@ for($nadmins = 0 ; $dadmins = mysqli_fetch_array($qadmins) ; $nadmins++)
     $admins_role[$nadmins]  = 'Sysop';
     $admins_zones[$nadmins] = ($lang == 'FR') ? 'Tout le site' : 'Whole website';
   }
-  else if($dadmins['moderateur'])
+  else
   {
     $admins_css[$nadmins]   = 'vert_background gras texte_nobleme_fonce';
     $admins_css2[$nadmins]  = 'gras texte_nobleme_fonce nohover';

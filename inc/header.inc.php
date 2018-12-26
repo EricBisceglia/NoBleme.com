@@ -557,24 +557,28 @@ $sidemenu['masquer']  = ($lang == 'FR') ? 'Masquer le menu latéral'   : 'Hide t
 
 <?php ################################################### MENU LATÉRAL : NOBLEME #########################################################
 // Préparation des traductions des titres du menu
-$sidemenu['nb_accueil']     = ($lang == 'FR') ? "Page d'accueil"        : "Home page";
-$sidemenu['nb_activite']    = ($lang == 'FR') ? "Activité récente"      : "Recent activity";
-$sidemenu['nb_communaute']  = ($lang == 'FR') ? "Communauté"            : "Community";
-$sidemenu['nb_enligne']     = ($lang == 'FR') ? "Qui est en ligne"      : "Who's online";
-$sidemenu['nb_admins']      = ($lang == 'FR') ? "Équipe administrative" : "Staff and admins";
-$sidemenu['nb_membres']     = ($lang == 'FR') ? "Liste des membres"     : "Registered user list";
-$sidemenu['nb_annivs']      = ($lang == 'FR') ? "Anniversaires"         : "Member birthdays";
-$sidemenu['nb_irls']        = ($lang == 'FR') ? "Rencontres IRL"        : "Real life meetups";
-$sidemenu['nb_irlstats']    = ($lang == 'FR') ? "Statistiques des IRL"  : "RL meetup stats";
-$sidemenu['nb_aide']        = ($lang == 'FR') ? "Aide & Informations"   : "Help / Documentation";
-$sidemenu['nb_doc']         = ($lang == 'FR') ? "Documentation du site" : "Website documentation";
-$sidemenu['nb_nobleme']     = ($lang == 'FR') ? "Qu'est-ce que NoBleme" : "What is NoBleme";
-$sidemenu['nb_coc']         = ($lang == 'FR') ? "Code de conduite"      : "Code of conduct";
-$sidemenu['nb_rss']         = ($lang == 'FR') ? "Flux RSS"              : "RSS feeds";
-$sidemenu['nb_dev']         = ($lang == 'FR') ? "Développement"         : "Development";
-$sidemenu['nb_coulisses']   = ($lang == 'FR') ? "Coulisses de NoBleme"  : "Behind the scenes";
-$sidemenu['nb_bug']         = ($lang == 'FR') ? "Rapporter un bug"      : "Report a bug";
-$sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Request a feature";
+$sidemenu['nb_accueil']     = ($lang == 'FR') ? "Page d'accueil"                : "Home page";
+$sidemenu['nb_activite']    = ($lang == 'FR') ? "Activité récente"              : "Recent activity";
+$sidemenu['nb_communaute']  = ($lang == 'FR') ? "Communauté"                    : "Community";
+$sidemenu['nb_enligne']     = ($lang == 'FR') ? "Qui est en ligne"              : "Who's online";
+$sidemenu['nb_admins']      = ($lang == 'FR') ? "Équipe administrative"         : "Staff and admins";
+$sidemenu['nb_membres']     = ($lang == 'FR') ? "Liste des membres"             : "Registered user list";
+$sidemenu['nb_annivs']      = ($lang == 'FR') ? "Anniversaires"                 : "Member birthdays";
+$sidemenu['nb_irls']        = ($lang == 'FR') ? "Rencontres IRL"                : "Real life meetups";
+$sidemenu['nb_irlstats']    = ($lang == 'FR') ? "Statistiques des IRL"          : "RL meetup stats";
+$sidemenu['nb_aide']        = ($lang == 'FR') ? "Aide & Informations"           : "Help / Documentation";
+$sidemenu['nb_doc']         = ($lang == 'FR') ? "Documentation du site"         : "Website documentation";
+$sidemenu['nb_nobleme']     = ($lang == 'FR') ? "Qu'est-ce que NoBleme"         : "What is NoBleme";
+$sidemenu['nb_coc']         = ($lang == 'FR') ? "Code de conduite"              : "Code of conduct";
+$sidemenu['nb_rss']         = ($lang == 'FR') ? "Flux RSS"                      : "RSS feeds";
+$sidemenu['nb_dev']         = ($lang == 'FR') ? "Développement"                 : "Development";
+$sidemenu['nb_coulisses']   = ($lang == 'FR') ? "Coulisses de NoBleme"          : "Behind the scenes";
+$sidemenu['nb_bug']         = ($lang == 'FR') ? "Rapporter un bug"              : "Report a bug";
+$sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"          : "Request a feature";
+$sidemenu['nb_legal']       = ($lang == 'FR') ? "Mentions légales"              : "Legal notice";
+$sidemenu['nb_confidence']  = ($lang == 'FR') ? "Politique de confidentialité"  : "Privacy policy";
+$sidemenu['nb_persodata']   = ($lang == 'FR') ? "Vos données personnelles"      : "Your personal data";
+$sidemenu['nb_oubli']       = ($lang == 'FR') ? "Droit à l'oubli"               : "Right to be forgotten";
 /* ################################################################################################# */ if($header_menu == 'NoBleme') { ?>
 
             <div class="header_sidemenu_titre">
@@ -708,6 +712,30 @@ $sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"  : "Requ
             <a href="<?=$chemin?>pages/todo/request?bug">
               <div class="<?=header_class('OuvrirTicketBug',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_bug']?>
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              <?=$sidemenu['nb_legal']?>
+            </div>
+
+            <a href="<?=$chemin?>pages/doc/mentions_legales">
+              <div class="<?=header_class('MentionsLegales',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_confidence']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/doc/donnees_personnelles">
+              <div class="<?=header_class('DonneesPersonnelles',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_persodata']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/doc/droit_oubli">
+              <div class="<?=header_class('DroitOubli',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_oubli']?>
               </div>
             </a>
 

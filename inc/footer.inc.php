@@ -6,6 +6,8 @@
 $page_views = isset($pageviews) ? "Cette page a été consultée ".$pageviews." fois" : "";
 
 
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Version actuelle
 
@@ -18,17 +20,21 @@ $version = "Version ".$dversion['v_version'].", build ".$dversion['v_build'];
 $version .= ($lang == 'FR') ? " du ".jourfr($dversion['v_date'], 'FR') : " - ".jourfr($dversion['v_date'], 'EN');
 
 
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Contenu multilingue
 
-$trad['footer_dev'] = ($lang == 'FR') ? "Développé et administré par " : "Developed and administered by ";
+$trad['footer_lien']  = ($lang == 'FR') ? "pages/todo/roadmap" : "pages/nobleme/coulisses";
+$trad['footer_legal'] = ($lang == 'FR') ? "Mentions légales &amp; confidentialité" : "Legal notices and privacy policy";
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Temps de chargement
 
 $time_chargement  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
-
 
 
 
@@ -52,9 +58,9 @@ $time_chargement  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
         <a href="<?=$chemin?>pages/admin/pageviews"><?=$page_views?></a><br>
         <a>Page chargée en <?=$time_chargement?>s avec <?=$GLOBALS['query']?> requêtes</a><br>
         <?php } ?>
-        <a href="<?=$chemin?>pages/todo/roadmap"><?=$version?></a><br>
-        <a href="<?=$chemin?>pages/user/user?id=1"><?=$trad['footer_dev']?> <span class="gras">Bad</span></a><br>
-        <a href="<?=$chemin?>pages/doc/nobleme">NoBleme.com : 2005 - <?=date('Y')?></a>
+        <a href="<?=$chemin?><?=$trad['footer_lien']?>"><?=$version?></a><br>
+        <a href="<?=$chemin?>pages/doc/mentions_legales"><?=$trad['footer_legal']?></a><br>
+        <a href="<?=$chemin?>pages/doc/nobleme">&copy; NoBleme.com : 2005 - <?=date('Y')?></a>
       </footer>
     </div>
   </div>
