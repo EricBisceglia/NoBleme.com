@@ -570,6 +570,7 @@ $sidemenu['nb_aide']        = ($lang == 'FR') ? "Aide & Informations"           
 $sidemenu['nb_doc']         = ($lang == 'FR') ? "Documentation du site"         : "Website documentation";
 $sidemenu['nb_nobleme']     = ($lang == 'FR') ? "Qu'est-ce que NoBleme"         : "What is NoBleme";
 $sidemenu['nb_coc']         = ($lang == 'FR') ? "Code de conduite"              : "Code of conduct";
+$sidemenu['nb_api']         = ($lang == 'FR') ? "API publique"                  : "Public API";
 $sidemenu['nb_rss']         = ($lang == 'FR') ? "Flux RSS"                      : "RSS feeds";
 $sidemenu['nb_dev']         = ($lang == 'FR') ? "Développement"                 : "Development";
 $sidemenu['nb_coulisses']   = ($lang == 'FR') ? "Coulisses de NoBleme"          : "Behind the scenes";
@@ -660,6 +661,12 @@ $sidemenu['nb_oubli']       = ($lang == 'FR') ? "Droit à l'oubli"              
             <a href="<?=$chemin?>pages/doc/coc">
               <div class="<?=header_class('CoC',$header_sidemenu,'side')?>">
                 <?=$sidemenu['nb_coc']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/doc/api">
+              <div class="<?=header_class('API',$header_sidemenu,'side')?>">
+                <?=$sidemenu['nb_api']?>
               </div>
             </a>
 
