@@ -437,7 +437,7 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
           <div class="<?=header_class('NoBleme',$header_menu,'top')?>">NOBLEME</div>
         </a>
 
-        <a class="header_topmenu_lien" href="<?=$chemin?>pages/forum/index">
+        <a class="header_topmenu_lien" href="<?=$chemin?>pages/irc/index">
           <div class="<?=header_class('Discuter',$header_menu,'top')?>"><?=$menu['discuter']?></div>
         </a>
 
@@ -764,36 +764,6 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
 /* ################################################################################################ */ if($header_menu == 'Discuter') { ?>
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['bla_forum']?>
-            </div>
-
-            <a href="<?=$chemin?>pages/forum/index">
-              <div class="<?=header_class('ForumIndex',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_forum_sujets']?>
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/forum/new">
-              <div class="<?=header_class('ForumNew',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_forum_ouvrir']?>
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/forum/recherche">
-              <div class="<?=header_class('ForumRecherche',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_forum_recherche']?>
-              </div>
-            </a>
-
-            <a href="<?=$chemin?>pages/forum/filtres">
-              <div class="<?=header_class('ForumFiltrage',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_forum_filtrage']?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_titre">
               <?=$sidemenu['bla_irc']?>
             </div>
 
@@ -818,6 +788,36 @@ $sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"   
             <a href="<?=$chemin?>pages/irc/canaux">
               <div class="<?=header_class('IRCCanaux',$header_sidemenu,'side')?>">
                 <?=$sidemenu['bla_irc_canaux']?>
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_titre">
+              <?=$sidemenu['bla_forum']?>
+            </div>
+
+            <a href="<?=$chemin?>pages/forum/index">
+              <div class="<?=header_class('ForumIndex',$header_sidemenu,'side')?>">
+                <?=$sidemenu['bla_forum_sujets']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/forum/new">
+              <div class="<?=header_class('ForumNew',$header_sidemenu,'side')?>">
+                <?=$sidemenu['bla_forum_ouvrir']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/forum/recherche">
+              <div class="<?=header_class('ForumRecherche',$header_sidemenu,'side')?>">
+                <?=$sidemenu['bla_forum_recherche']?>
+              </div>
+            </a>
+
+            <a href="<?=$chemin?>pages/forum/filtres">
+              <div class="<?=header_class('ForumFiltrage',$header_sidemenu,'side')?>">
+                <?=$sidemenu['bla_forum_filtrage']?>
               </div>
             </a>
 

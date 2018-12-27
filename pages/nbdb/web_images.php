@@ -24,7 +24,7 @@ $page_titre = "NBDB : Administration";
 
 // CSS & JS
 $css  = array('nbdb');
-$js   = array('dynamique', 'toggle', 'clipboard');
+$js   = array('dynamique', 'toggle', 'clipboard', 'nbdb/web_images');
 
 
 
@@ -208,7 +208,7 @@ if(!getxhr()) { /***************************************************************
               <br>
               <?php } ?>
 
-              <input type="file" name="web_images_upload_fichier" id="web_images_upload_fichier" class="web_image_upload"><br>
+              <input type="file" name="web_images_upload_fichier" id="web_images_upload_fichier" class="web_image_upload" onchange="web_images_transfert_nom_fichier();"><br>
               <br>
 
               <div class="flexcontainer">
