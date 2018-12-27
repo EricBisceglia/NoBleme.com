@@ -150,6 +150,7 @@ if($lang == 'FR')
   // Formulaire
   $trad['reg_nick']     = "Pseudonyme";
   $trad['reg_pass']     = "Mot de passe";
+  $trad['reg_inscr']    = "Inscription";
   $trad['reg_souvenir'] = "Se souvenir de moi";
 
   // Mot de passe oublié
@@ -183,6 +184,7 @@ else if($lang == 'EN')
   // Formulaire
   $trad['reg_nick']     = "Nickname";
   $trad['reg_pass']     = "Password";
+  $trad['reg_inscr']    = "Register";
   $trad['reg_souvenir'] = "Remember me";
 
   // Mot de passe oublié
@@ -249,6 +251,8 @@ EOD;
 
         <h1 class="indiv align_center"><?=$trad['titre']?></h1>
 
+        <br>
+
         <p class="align_center gras moinsgros">
           <a href="<?=$chemin?>pages/user/register"><?=$trad['register']?></a>
         </p>
@@ -266,26 +270,36 @@ EOD;
 
       </div>
 
-      <div class="minitexte">
+      <br>
+
+      <div class="minitexte2">
 
         <form method="POST" action="login">
           <fieldset>
+
             <label for="login_pseudo"><?=$trad['reg_nick']?></label>
             <input id="login_pseudo" name="login_pseudo" class="indiv" type="text" value="<?=$login_pseudo?>"><br>
             <br>
+
             <label for="login_pass"><?=$trad['reg_pass']?></label>
             <input id="login_pass" name="login_pass" class="indiv" type="password"><br>
             <br>
+            <br>
+
             <div class="float-right">
               <input id="login_souvenir" name="login_souvenir" type="checkbox"<?=$login_souvenir?>>
               <label class="label-inline" for="login_souvenir"><?=$trad['reg_souvenir']?></label>
             </div>
             <input value="<?=$trad['titre']?>" type="submit">
+            &nbsp;&nbsp;
+            <button type="button" class="button-outline" onclick="location.href='<?=$chemin?>pages/user/register'"><?=$trad['reg_inscr']?></button>
+
           </fieldset>
         </form>
 
       </div>
 
+      <br>
       <br>
 
 <?php /***********************************************************************************************************************************/

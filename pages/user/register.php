@@ -205,21 +205,24 @@ if($lang == 'FR')
   $trad['reg_quest2'] = "Les images gores sont-elle tolérées ?";
   $trad['reg_repq21'] = "Oui";
   $trad['reg_repq22'] = "Non";
-  $trad['reg_repq23'] = "J'en sais rien, j'ai pas lu";
-  $trad['reg_quest3'] = "Si je m'engueule avec quelqu'un, je fais quoi ?";
+  $trad['reg_repq23'] = "Je n'ai pas lu les règles";
+  $trad['reg_quest3'] = "Je m'engueule de façon virulente avec quelqu'un, je fais quoi ?";
   $trad['reg_repq31'] = "J'étale ça en public";
-  $trad['reg_repq32'] = "Je résous ça en privé";
-  $trad['reg_quest4'] = "Si je suis aggressif avec les autres, qu'est-ce qui se passe ?";
+  $trad['reg_repq32'] = "Je tente de résoudre ça en privé";
+  $trad['reg_quest4'] = "Je suis aggressif avec les autres, qu'est-ce qui va m'arriver ?";
   $trad['reg_repq41'] = "Je me fais bannir";
-  $trad['reg_repq42'] = "Rien, on est dans un pays libre !";
+  $trad['reg_repq42'] = "La liberté d'expression me protège !";
 
   // Code de conduite
   $trad['reg_coc']    = <<<EOD
 <p>
-  NoBleme est un site cool où les gens sont relax. Il n'y a pas de restriction d'âge, et peu de restrictions de contenu. Il y a juste un code de conduite minimaliste à respecter, afin de tous cohabiter paisiblement. Pour s'assurer que tout le monde lise le code de conduite (il est court), vous devez répondre à des questions à son sujet lors de la création de votre compte.
+  NoBleme est un site à l'ambiance relax. Il n'y a pas de restriction d'âge, et peu de restrictions de contenu. Il y a juste un code de conduite minimaliste à respecter, afin de tous cohabiter paisiblement. Pour s'assurer que tout le monde lise le code de conduite (il est court), vous devez répondre à des questions à son sujet lors de la création de votre compte.
 </p>
 <br>
 <ul>
+  <li>
+    Tout <span class="gras">contenu illégal</span> sera immédiatement <span class="gras">envoyé à la police</span>. Ne jouez pas avec le feu.
+  </li>
   <li>
     Vu qu'il n'y a pas de restriction d'âge, les <span class="gras">images pornographiques</span> ou suggestives <span class="gras">sont interdites</span>.
   </li>
@@ -227,7 +230,7 @@ if($lang == 'FR')
     Les <span class="gras">images gores</span> ou à tendance dégueulasse sont <span class="gras">également interdites</span>. NoBleme n'est pas le lieu pour ça.
   </li>
   <li>
-    Tout <span class="gras">contenu illégal</span> sera immédiatement <span class="gras">envoyé à la police</span>. Ne jouez pas avec le feu, ce n'est pas le bon site pour en discuter.
+    L'<span class="gras">incitation à la haine</span> et les <span class="gras">propos discriminatoires</span> auront pour réponse un <span class="gras">bannissement immédiat et permanent</span>.
   </li>
   <li>
     Si vous pouvez régler une situation tendue en privé plutôt qu'en public, faites l'effort, sinon vous finirez tous les deux bannis.
@@ -235,12 +238,9 @@ if($lang == 'FR')
   <li>
     Les trolls, provocateurs gratuits, et emmerdeurs de service pourront être bannis sans sommation s'ils abusent trop.
   </li>
-  <li>
-    L'écriture SMS et la grammaire sans effort sont à éviter autant que possible. Prenez le temps de bien écrire, ça sera apprécié.
-  </li>
 </ul>
 <br>
-On est avant tout sur NoBleme pour passer du bon temps. Si vos actions ou votre langage empêchent d'autres personnes de passer du bon temps, c'est un peu nul, non ? Essayez de rester tolérants, ce n'est pas un grand effort, et tout le monde en bénéficie.<br>
+On est avant tout sur NoBleme pour passer du bon temps. Si vos actions ou votre langage empêchent d'autres personnes de passer du bon temps, c'est un peu nul, non ? Essayez d'être bienveillants : ce n'est pas un grand effort, et tout le monde en bénéficie.<br>
 <br>
 EOD;
 }
@@ -271,32 +271,35 @@ else if($lang == 'EN')
   $trad['reg_quest2'] = "Can I post gore images?";
   $trad['reg_repq21'] = "Yes";
   $trad['reg_repq22'] = "No";
-  $trad['reg_repq23'] = "Didn't read, don't know lol";
-  $trad['reg_quest3'] = "If I'm arguing with someone, what should I do?";
+  $trad['reg_repq23'] = "I didn't read the rules";
+  $trad['reg_quest3'] = "I'm having a tense argument with someone, what should I do?";
   $trad['reg_repq31'] = "Spread it publicly";
-  $trad['reg_repq32'] = "Solve it privately";
-  $trad['reg_quest4'] = "If I'm being aggressive towards others, what will happen to me?";
+  $trad['reg_repq32'] = "Try my best to solve it privately";
+  $trad['reg_quest4'] = "I'm being aggressive towards others, what will happen to me?";
   $trad['reg_repq41'] = "I will get banned";
-  $trad['reg_repq42'] = "Nothing, this is a free country!";
+  $trad['reg_repq42'] = "Nothing, free speech protects me!";
 
   // Code de conduite
   $trad['reg_coc']    = <<<EOD
 <p>
-  NoBleme is a chill community where people are relaxed. There is no restriction on age or content. However, in order to all coexist peacefully, there is a minimalistic code of conduct that everyone should respect. In order to ensure that everyone reads it (it's short), you will have to answer a few questions about it when registering your account.
+  NoBleme is a small community with a laid back mood. There is no age restriction, and very few restrictions on content. However, in order to all coexist peacefully, there is a minimalistic code of conduct that everyone should respect. In order to ensure that everyone reads it (it's short), you will have to answer a few questions about it when registering your account.
 </p>
 <br>
 <ul>
   <li>
-    Since there is no age restriction <span class="gras">pornography</span> or suggestive content <span class="gras">is forbidden</span>.
+    Obviously, <span class="gras">illegal content</span> will immediately be <span class="gras">sent to the police</span>. Don't play with fire.
   </li>
   <li>
-    All <span class="gras">gore images</span> and other disgusting things are <span class="gras">also forbidden</span>. NoBleme is not the right place for it.
+    Since NoBleme has no age restriction <span class="gras">pornography</span> or extra suggestive content <span class="gras">is forbidden</span>.
   </li>
   <li>
-    Obviously, <span class="gras">illegal content</span> will immediately be <span class="gras">sent to the police</span>. Don't play with fire, there are other websites for that.
+    All <span class="gras">gore images</span> and other disgusting things are <span class="gras">also forbidden</span>. NoBleme is not the right place for that.
   </li>
   <li>
-    If you have to argue with someone or must solve a tense situation, do it privately. If done publicly, you will end up banned.
+    Any form of <span class="gras">hate speech, discrimination, or incitation to violence</span> will be met with an <span class="gras">immediate and permanent ban</span>.
+  </li>
+  <li>
+    If you have to argue with someone about a tense situation, do it in private. If done publicly, you will both end up banned.
   </li>
   <li>
     Trolls and other kinds of purposeful agitators will be banned without a warning if they try to test boundaries.
