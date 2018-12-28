@@ -37,7 +37,7 @@ $js   = array('toggle', 'dynamique', 'todo/liste_taches');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ajouter une nouvelle tâche
 
-if(isset($_POST['todo_add_go']) && getadmin())
+if(isset($_POST['todo_add_go']) && $est_admin)
 {
   // Permissions
   adminonly($lang);

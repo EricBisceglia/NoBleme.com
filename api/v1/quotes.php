@@ -62,7 +62,7 @@ for($nmisc = 0; $dmisc = mysqli_fetch_array($qmisc); $nmisc++)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Envoi du JSON
 
-// S'il n'y a pas de retour, on envoie une 204
+// S'il n'y a pas de retour, on envoie une 404
 if($return_json == array())
   exit(header("HTTP/1.0 404 Not Found"));
 

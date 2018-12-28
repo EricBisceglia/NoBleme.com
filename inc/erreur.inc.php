@@ -25,6 +25,29 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 function erreur($message, $chemin='./../../', $lang=NULL, $menu_principal='NoBleme', $menu_lateral='Accueil')
 {
+  // L'user est-il connecté ?
+  $est_connecte = (isset($_SESSION['user'])) ? $_SESSION['user'] : 0;
+
+  // L'user est-il mod, sysop, ou admin ?
+  if(!$est_connecte)
+  {
+    $est_admin      = 0;
+    $est_sysop      = 0;
+    $est_moderateur = 0;
+  }
+  else
+  {
+    $id_user = postdata($est_connecte, 'int', 0);
+    $ddroits = mysqli_fetch_array(query(" SELECT  membres.admin       AS 'm_admin'  ,
+                                                  membres.sysop       AS 'm_sysop'  ,
+                                                  membres.moderateur  AS 'm_mod'
+                                          FROM    membres
+                                          WHERE   membres.id = '$id_user' "));
+    $est_admin      = $ddroits['m_admin'];
+    $est_sysop      = ($est_admin || $ddroits['m_sysop']) ? 1 : 0;
+    $est_moderateur = $ddroits['m_mod'];
+  }
+
   // Détermination de la langue à utiliser
   $temp_lang  = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
   $lang       = ($lang) ? $lang : $temp_lang;

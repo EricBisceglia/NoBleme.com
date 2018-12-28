@@ -233,7 +233,7 @@ EOD;
 
             <h5>
               <?=$trad['cat_titre']?>
-              <?php if(getadmin()) { ?>
+              <?php if($est_admin) { ?>
               <a href="<?=$chemin?>pages/forum/filtres_modifier">
                 &nbsp;<img class="pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="18">
               </a>

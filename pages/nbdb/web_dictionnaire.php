@@ -106,7 +106,7 @@ if($dico_id)
                                             WHERE   nbdb_web_definition.id = '$dico_id' "));
 
   // Si c'est une redirection, on redirige vers la bonne page
-  if($ddefinition['d_redirect'] && $ddefinition['d_redirect'] != $ddefinition['d_titre'] && !getadmin())
+  if($ddefinition['d_redirect'] && $ddefinition['d_redirect'] != $ddefinition['d_titre'] && !$est_admin)
     exit(header("Location: ".$chemin."pages/nbdb/web_dictionnaire?define=".urlencode($ddefinition['d_redirect'])));
 
   // S'il n'y a pas de définition dans notre langue, on dégage
@@ -144,7 +144,7 @@ if(!$dico_id)
   $definition_lang = changer_casse($lang, 'min');
 
   // On spéficie si on veut les redirections ou non
-  $where_definition_redirections = (getadmin() && isset($_GET['redirections'])) ? " " : " AND nbdb_web_definition.redirection_$definition_lang LIKE '' ";
+  $where_definition_redirections = ($est_admin && isset($_GET['redirections'])) ? " " : " AND nbdb_web_definition.redirection_$definition_lang LIKE '' ";
 
   // On spécifie s'il y a une recherche en cours ou non
   $where_search       = postdata_vide('search', 'string', '');

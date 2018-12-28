@@ -10,6 +10,58 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Session sécurisée pour remplacer les sessions normales pas super secures de PHP
+// Le token de la session est régénéré à chaque nouveau chargement de page
+// À invoquer au début des pages utilisant des sessions, à la place de session_start
+
+function session_start_securise()
+{
+  // Token public qui sert à identifier la session générale
+  $nom_session = 'nobleme_session_secure';
+
+  // On va forcer la session à ne passer que par les cookies
+  if (ini_set('session.use_only_cookies', 1) === FALSE) {
+      exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Impossible de démarrer une session sécurisée, merci de ne pas bloquer les cookies</body></html>');
+  }
+
+  // On chope le cookie actuel
+  $cookieParams = session_get_cookie_params();
+
+  // On prépare un nouveau cookie à chaque changement de page
+  session_set_cookie_params(  $cookieParams["lifetime"] ,
+                              $cookieParams["path"]     ,
+                              $cookieParams["domain"]   ,
+                              false                     ,  // Une fois que je peux garantir le https partout, mettre true ici
+                              true                      ); // Cette ligne fait que le session id ne peut pas être chopé par du js
+
+  // Et on démarre la session
+  session_name($nom_session);
+  session_start();
+  session_regenerate_id();
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction de salage d'un mot de passe
+// Renvoie le mot de passe salé
+//
+// Exemple d'utilisation:
+// salage("monpass");
+
+function salage($pass,$old=NULL)
+{
+  if($old)
+    return crypt($pass,$GLOBALS['salage']);
+  else
+    return sha1($pass.$GLOBALS['salage']);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ouverture de la session et vérification de l'identité
 
 // Déjà, on ouvre la session
@@ -42,6 +94,40 @@ if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
   // Sinon, on détruit le cookie
   else
     setcookie("nobleme_memory", "", time()-630720000, "/");
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// On commence par déterminer les niveaux d'accès auxquels l'user a le droit
+//
+// $est_connecte    permet de savoir si l'user est connecté à son compte - si oui, contient son id d'utilisateur
+// $est_admin       permet de savoir si l'user est administrateur
+// $est_sysop       permet de savoir si l'user est sysop
+// $est_moderateur  permet de savoir si l'user est modérateur - si oui, contient les sections du site qu'il modère
+
+// L'user est-il connecté ?
+$est_connecte = (isset($_SESSION['user'])) ? $_SESSION['user'] : 0;
+
+// L'user est-il mod, sysop, ou admin ?
+if(!$est_connecte)
+{
+  $est_admin      = 0;
+  $est_sysop      = 0;
+  $est_moderateur = 0;
+}
+else
+{
+  $id_user = postdata($est_connecte, 'int', 0);
+  $ddroits = mysqli_fetch_array(query(" SELECT  membres.admin       AS 'm_admin'  ,
+                                                membres.sysop       AS 'm_sysop'  ,
+                                                membres.moderateur  AS 'm_mod'
+                                        FROM    membres
+                                        WHERE   membres.id = '$id_user' "));
+  $est_admin      = $ddroits['m_admin'];
+  $est_sysop      = ($est_admin || $ddroits['m_sysop']) ? 1 : 0;
+  $est_moderateur = $ddroits['m_mod'];
 }
 
 
@@ -170,18 +256,12 @@ $trad = array();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Nouvelle fonction de salage d'un mot de passe
-// Renvoie le mot de passe salé
-//
-// Exemple d'utilisation:
-// salage("monpass");
+// Fonction de vérification du login
+// Renvoie TRUE si l'utilisateur est connecté, renvoie FALSE s'il n'est pas connecté
 
-function salage($pass,$old=NULL)
+function loggedin()
 {
-  if($old)
-    return crypt($pass,$GLOBALS['salage']);
-  else
-    return sha1($pass.$GLOBALS['salage']);
+  return (isset($_SESSION['user']));
 }
 
 
@@ -207,21 +287,6 @@ function logout()
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction de vérification du login
-// Renvoie TRUE si l'utilisateur est connecté, renvoie FALSE s'il n'est pas connecté
-
-function loggedin()
-{
-  if(isset($_SESSION['user']))
-    return TRUE;
-  else
-    return FALSE;
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction de récupération du pseudo
 // Renvoie le pseudonyme de l'utilisateur à partir de son userid
 //
@@ -239,8 +304,10 @@ function getpseudo($id=NULL)
     return '';
 
   // On renvoie le pseudonyme
-  $qpseudo = mysqli_fetch_array(query(" SELECT membres.pseudonyme FROM membres WHERE id = '$id' "));
-    return $qpseudo['pseudonyme'];
+  $dpseudo = mysqli_fetch_array(query(" SELECT  membres.pseudonyme
+                                        FROM    membres
+                                        WHERE   membres.id = '$id' "));
+    return $dpseudo['pseudonyme'];
 }
 
 
@@ -253,7 +320,7 @@ function getpseudo($id=NULL)
 // Exemple d'utilisation:
 // getmod('irl','1');
 
-function getmod($section=NULL,$user=NULL)
+function getmod($section=NULL, $user=NULL)
 {
   // Si on spécifie pas d'user, on prend la session en cours
   if(!$user && isset($_SESSION['user']))
@@ -309,8 +376,11 @@ function getsysop($user=NULL)
     $user = $_SESSION['user'];
 
   // On vérifie si l'user est sysop ou admin
-  $qdroits = mysqli_fetch_array(query(" SELECT membres.sysop, membres.admin FROM membres WHERE id = '$user' "));
-  if($qdroits['sysop'] || $qdroits['admin'])
+  $ddroits = mysqli_fetch_array(query(" SELECT  membres.sysop ,
+                                                membres.admin
+                                        FROM    membres
+                                        WHERE   membres.id = '$user' "));
+  if($ddroits['sysop'] || $ddroits['admin'])
     return 1;
   else
     return 0;
@@ -337,8 +407,10 @@ function getadmin($user=NULL)
     return 0;
 
   // On vérifie si l'user est admin
-  $qdroits = mysqli_fetch_array(query(" SELECT membres.admin FROM membres WHERE id = '$user' "));
-    return $qdroits['admin'];
+  $ddroits = mysqli_fetch_array(query(" SELECT  membres.admin
+                                        FROM    membres
+                                        WHERE   membres.id = '$user' "));
+    return $ddroits['admin'];
 }
 
 

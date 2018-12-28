@@ -42,7 +42,7 @@ $qmisc = "    SELECT    quotes.id           AS 'q_id'       ,
               WHERE     1 = 1 ";
 
 // Version admin ou non
-if(!getadmin())
+if(!$est_admin)
   $qmisc .= " AND       quotes.valide_admin = 1 ";
 
 // Recherche

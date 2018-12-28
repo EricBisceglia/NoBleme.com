@@ -36,7 +36,7 @@ $page_desc  = "Intéractions entre NoBlemeux qui ont été conservées pour la p
 if(isset($_POST['misc_contenu']))
 {
   // Mesure anti flood
-  if(!getadmin())
+  if(!$est_admin)
     antiflood();
 
   // Assainissement du postdata

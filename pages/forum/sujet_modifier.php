@@ -252,14 +252,14 @@ else if($lang == 'EN')
             <br>
 
             <label for="sujet_edit_categorie"><?=$trad['edit_categorie']?></label>
-            <?php if(getadmin()) { ?>
+            <?php if($est_admin) { ?>
             <div class="flexcontainer">
               <div style="flex:15">
             <?php } ?>
             <select id="sujet_edit_categorie" name="sujet_edit_categorie" class="indiv">
               <?=$select_categorie?>
             </select><br>
-            <?php if(getadmin()) { ?>
+            <?php if($est_admin) { ?>
               </div>
               <div style="flex:1" class="align_center">
                 <a href="<?=$chemin?>pages/forum/filtres_modifier">

@@ -118,7 +118,7 @@ if($web_id)
                                       WHERE     nbdb_web_page.id = '$web_id' "));
 
   // Si c'est une redirection, on redirige vers la bonne page
-  if($dweb['w_redirect'] && $dweb['w_redirect'] != $dweb['w_titre'] && !getadmin())
+  if($dweb['w_redirect'] && $dweb['w_redirect'] != $dweb['w_titre'] && !$est_admin)
     exit(header("Location: ".$chemin."pages/nbdb/web?page=".urlencode($dweb['w_redirect'])));
 
   // S'il n'y a pas de page dans notre langue, on dégage

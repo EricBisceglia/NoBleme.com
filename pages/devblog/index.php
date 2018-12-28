@@ -57,7 +57,7 @@ for($ndevblogs = 0; $ddevblogs = mysqli_fetch_array($qdevblogs); $ndevblogs++)
 
         <h1>
           Blogs de développement
-          <?php if(getadmin()) { ?>
+          <?php if($est_admin) { ?>
           <a href="<?=$chemin?>pages/devblog/add">
             <img src="<?=$chemin?>img/icones/ajouter.svg" alt="+" class="pointeur" height="30">
           </a>

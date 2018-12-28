@@ -59,11 +59,6 @@ else
 if($langue_error)
   $langue_error = ($lang == 'FR') ? "Cette page n'est disponible qu'en anglais et n'a pas de traduction française." : "Sorry! This page is only available in french and does not have an english translation.";
 
-// On va chercher le statut de l'utilisateur
-$est_connecte = loggedin();
-$est_sysop    = ($est_connecte) ? getsysop() : 0;
-$est_admin    = ($est_connecte) ? getadmin() : 0;
-
 
 
 
@@ -124,7 +119,7 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
     $pageviews = $pageviews_array["vues"] + 1;
 
     // On update la BDD si l'user n'est pas un admin
-    if(((loggedin() && !getadmin()) || !loggedin()))
+    if(((loggedin() && !$est_admin) || !loggedin()))
       query(" UPDATE  pageviews
               SET     pageviews.vues      = pageviews.vues + 1 ,
                       pageviews.nom_page  = '$page_nom_propre'
@@ -331,7 +326,7 @@ if (!isset($page_desc))
 $page_desc = meta_fix($page_desc);
 
 // Si admin, alerte si la longueur est > les 158 caractères max ou < les 25 caractères min
-if(loggedin() && getadmin())
+if($est_admin)
 {
   if(strlen($page_desc) > 25 && strlen($page_desc) < 155)
     $alerte_meta = "";

@@ -331,7 +331,7 @@ else if($lang == 'EN')
 
             <div class="profil_cadre align_center">
 
-              <?php if(getsysop()) { ?>
+              <?php if($est_sysop) { ?>
               <button class="profil_bouton button-outline" onclick="window.location.href = '<?=$chemin?>pages/sysop/profil?id=<?=$user_id?>';">MODIFIER LE PROFIL</button>
               &nbsp;
               <button class="profil_bouton button-outline" onclick="window.location.href = '<?=$chemin?>pages/sysop/ban?id=<?=$user_id?>';"><?=$profil_sysop_ban?></button>
@@ -433,7 +433,7 @@ else if($lang == 'EN')
                 A proposé <span class="gras texte_noir"><?=$profil_todo?></span> tâche<?=($profil_todo == 1) ? '' : 's'?>
               </div>
 
-              <?php } if($profil_email && getadmin()) { ?>
+              <?php } if($profil_email && $est_admin) { ?>
               <hr class="profil_hr">
               <span class="gras">E-mail du compte</span><br>
               <?=$profil_email?>

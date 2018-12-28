@@ -106,7 +106,7 @@ $devblog_next_titre = predata($qnextdevblog['titre']);
 
         <h4 class="alinea">
           <?=$devblog_titre?>
-          <?php if(getadmin()) { ?>
+          <?php if($est_admin) { ?>
           <a href="<?=$chemin?>pages/devblog/edit?id=<?=$devblog_id?>">
             <img src="<?=$chemin?>img/icones/modifier.svg" alt="M" class="pointeur">
           </a>

@@ -51,7 +51,7 @@ $activite_dynamique_url = (!isset($_GET['mod'])) ? "activite" : "activite?mod";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Suppression d'une entrée dans la liste
 
-if(isset($_POST['activite_delete']) && getadmin())
+if(isset($_POST['activite_delete']) && $est_admin)
 {
   $activite_delete = postdata($_POST['activite_delete']);
   query(" DELETE FROM activite      WHERE activite.id               = '$activite_delete' ");
@@ -91,7 +91,7 @@ $qactrec = "    SELECT    activite.id           ,
                 FROM      activite              ";
 
 // Activité récente ou log de modération
-if(isset($_GET['mod']) && getsysop())
+if(isset($_GET['mod']) && $est_sysop)
   $qactrec .= " WHERE     activite.log_moderation = 1 ";
 else
   $qactrec .= " WHERE     activite.log_moderation = 0 ";
@@ -321,7 +321,7 @@ if(!getxhr()) { /***************************************************************
                 <?php } if(isset($_GET['mod']) && $activite_diff[$i]) { ?>
                 <img class="valign_center" src="<?=$chemin?>img/icones/info.svg" alt="i"
                       onclick="toggle_row('activite_hidden<?=$i?>',1);">
-                <?php } if(getadmin()) { ?>
+                <?php } if($est_admin) { ?>
                 <img class="valign_center" src="<?=$chemin?>img/icones/supprimer.svg" alt="X"
                       onclick="var ok = confirm('Confirmation'); if(ok == true) {
                       dynamique('<?=$chemin?>', '<?=$activite_dynamique_url?>', 'activite_table',

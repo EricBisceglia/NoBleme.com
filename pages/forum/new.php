@@ -360,7 +360,7 @@ EOD;
 
                 <label class="texte_noir forum_nouveau_sujet_option forum_nouveau_sujet_label">
                   <?=$trad['cat_categorie']?>
-                  <?php if(getadmin()) { ?>
+                  <?php if($est_admin) { ?>
                   <a href="<?=$chemin?>pages/forum/filtres_modifier">
                     &nbsp;<img class="pointeur" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="16">
                   </a>

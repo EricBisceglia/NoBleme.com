@@ -56,7 +56,7 @@ if($qcheckmisc['valide_admin'] === NULL)
   exit(header("Location: ".$chemin."pages/quotes/index"));
 
 // Si la miscellanée est pas validée et qu'on est pas admin, on dégage
-if(!$qcheckmisc['valide_admin'] && !getadmin())
+if(!$qcheckmisc['valide_admin'] && !$est_admin)
   exit(header("Location: ".$chemin."pages/quotes/index"));
 
 // Maintenant, on peut compléter les infos de la page
@@ -165,7 +165,7 @@ EOD;
 
         <p class="monospace align_left">
           <a class="gras" href="<?=$chemin?>pages/quotes/quote?id=<?=$misc_id?>"><?=$trad['titre']?> #<?=$misc_id?></a> <?=$misc_date?> <?=$misc_pseudos?>
-          <?php if(getadmin()) { ?>
+          <?php if($est_admin) { ?>
           - <a class="gras" href="<?=$chemin?>pages/quotes/edit?id=<?=$misc_id?>">Modifier</a> - <a class="gras" href="<?=$chemin?>pages/quotes/delete?id=<?=$misc_id?>">Supprimer</a>
           <?php } ?>
           <br>

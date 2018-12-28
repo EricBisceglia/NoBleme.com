@@ -104,7 +104,7 @@ $todo_approuve    = ($qtodo['t_valide']) ? 1 : 0;
 
     <?=$todo_contenu?><br>
 
-    <?php if(getadmin()) { ?>
+    <?php if($est_admin) { ?>
 
     <br>
     <br>
