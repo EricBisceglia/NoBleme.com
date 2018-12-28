@@ -16,6 +16,7 @@ include_once 'reglages.inc.php';        // Réglages préliminaires à l'utilisa
 include_once 'erreur.inc.php';          // Fonction permettant de générer une page d'erreur
 include_once 'sql.inc.php';             // Connexion à la base de données MySQL
 include_once 'post.inc.php';            // Fonctions de traitement des données
+include_once 'session.inc.php';         // Gestion des sessions de données
 include_once 'login.inc.php';           // Gestion de la connexion des utilisateurs
 include_once 'date.inc.php';            // Fonctions de traitement de la date
 include_once 'bbcode.inc.php';          // BBCodes et émoticones
