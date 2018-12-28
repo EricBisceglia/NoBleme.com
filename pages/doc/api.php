@@ -65,6 +65,7 @@ EOD;
 Les données sont renvoyées <span class="gras">triées par quote_timestamp</span>, par ordre antéchronologique (<span class="gras">du plus récent au plus ancien</span>).
 EOD;
   $trad['apimisc_qid']        = "ID unique de la citation";
+  $trad['apimisc_qurl']       = "URL à laquelle se trouve la citation";
   $trad['apimisc_timestamp']  = "Date d'ajout de la citation, sous forme d'un timestamp UNIX";
   $trad['apimisc_langue']     = "Langue de la citation";
   $trad['apimisc_contenu']    = "Contenu de la citation";
@@ -121,6 +122,7 @@ EOD;
 The quotes are returned <span class="gras">sorted by quote_timestamp</span>, in reverse chronological order (<span class="gras">most recent first</span>).
 EOD;
   $trad['apimisc_qid']        = "Unique quote ID";
+  $trad['apimisc_qurl']       = "URL at which the quote can be found";
   $trad['apimisc_timestamp']  = "Date at which the quote was added, as an UNIX timestamp";
   $trad['apimisc_langue']     = "Language of the quote";
   $trad['apimisc_contenu']    = "Contents of the quote";
@@ -224,6 +226,18 @@ EOD;
               </td>
               <td>
                 <?=$trad['apimisc_qid']?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir gras">
+                quote_url
+              </td>
+              <td class="align_center spaced">
+                STRING
+              </td>
+              <td>
+                <?=$trad['apimisc_qurl']?>
               </td>
             </tr>
 
