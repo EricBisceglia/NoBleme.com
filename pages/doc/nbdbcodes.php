@@ -43,6 +43,13 @@ $css  = array('doc', 'nbdb');
         <br>
         <br>
 
+        <p>
+          Une version NSFW (floutage) de tous les NBDBCodes image/vidéo existe également, en rajoutant -nsfw au nom du tag (exemple: [[image-nsfw:]] au lieu de [[image:]], [[galerie-nsfw:]] au lieu de [[galerie:]], etc.)
+        </p>
+
+        <br>
+        <br>
+
         <table class="fullgrid titresnoirs">
           <thead>
             <tr>
@@ -116,6 +123,15 @@ $css  = array('doc', 'nbdb');
               </td>
               <td class="align_left">
                 <?=nbdbcode('[[copypasta=id]]Ce texte sera copié dans le presse papiers lorsque vous double cliquerez dessus[[/copypasta]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir">
+                [[copypasta-nsfw=id]]Texte[[/copypasta-nsfw]]
+              </td>
+              <td class="align_left">
+                <?=nbdbcode('[[copypasta-nsfw=xx]]Ce texte sera copié dans le presse papiers lorsque vous double cliquerez dessus[[/copypasta-nsfw]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
               </td>
             </tr>
 

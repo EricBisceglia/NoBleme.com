@@ -265,6 +265,7 @@ CREATE TABLE IF NOT EXISTS `membres` (
   `habite` tinytext COLLATE utf8mb4_unicode_ci,
   `metier` tinytext COLLATE utf8mb4_unicode_ci,
   `profil` longtext COLLATE utf8mb4_unicode_ci,
+  `voir_nsfw` tinyint(2) DEFAULT NULL,
   `forum_messages` int(11) UNSIGNED NOT NULL,
   `forum_lang` tinytext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
@@ -303,6 +304,7 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_definition` (
   `redirection_en` mediumtext COLLATE utf8mb4_unicode_ci,
   `definition_fr` longtext COLLATE utf8mb4_unicode_ci,
   `definition_en` longtext COLLATE utf8mb4_unicode_ci,
+  `contenu_floute` tinyint(1) DEFAULT NULL,
   `est_vulgaire` tinyint(1) DEFAULT NULL,
   `est_politise` tinyint(1) DEFAULT NULL,
   `est_incorrect` tinyint(1) DEFAULT NULL,
@@ -317,6 +319,7 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_image` (
   `timestamp_upload` int(11) UNSIGNED NOT NULL,
   `nom_fichier` mediumtext COLLATE utf8mb4_unicode_ci,
   `tags` mediumtext COLLATE utf8mb4_unicode_ci,
+  `nsfw` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -334,6 +337,7 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_page` (
   `mois_apparition` int(2) DEFAULT NULL,
   `annee_popularisation` int(4) DEFAULT NULL,
   `mois_popularisation` int(2) DEFAULT NULL,
+  `contenu_floute` tinyint(1) DEFAULT NULL,
   `est_vulgaire` tinyint(1) DEFAULT NULL,
   `est_politise` tinyint(1) DEFAULT NULL,
   `est_incorrect` tinyint(1) DEFAULT NULL,
@@ -396,8 +400,10 @@ DROP TABLE IF EXISTS `quotes`;
 CREATE TABLE IF NOT EXISTS `quotes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `timestamp` int(11) UNSIGNED NOT NULL,
+  `langue` tinytext COLLATE utf8mb4_unicode_ci,
   `contenu` longtext COLLATE utf8mb4_unicode_ci,
   `FKauteur` int(11) NOT NULL,
+  `nsfw` tinyint(1) DEFAULT NULL,
   `valide_admin` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_membres` (`FKauteur`)
@@ -470,15 +476,6 @@ CREATE TABLE IF NOT EXISTS `version` (
 ALTER TABLE `forum_message` ADD FULLTEXT KEY `index_contenu` (`contenu`);
 
 ALTER TABLE `forum_sujet` ADD FULLTEXT KEY `index_titre` (`titre`);
-
-ALTER TABLE `nbdb_web_categorie` ADD FULLTEXT KEY `index_description_fr` (`description_fr`);
-ALTER TABLE `nbdb_web_categorie` ADD FULLTEXT KEY `index_description_en` (`description_en`);
-
-ALTER TABLE `nbdb_web_definition` ADD FULLTEXT KEY `index_definition_en` (`definition_en`);
-ALTER TABLE `nbdb_web_definition` ADD FULLTEXT KEY `index_definition_fr` (`definition_fr`);
-
-ALTER TABLE `nbdb_web_page` ADD FULLTEXT KEY `index_contenu_en` (`contenu_en`);
-ALTER TABLE `nbdb_web_page` ADD FULLTEXT KEY `index_contenu_fr` (`contenu_fr`);
 
 ALTER TABLE `pageviews` ADD FULLTEXT KEY `index_recherche` (`nom_page`,`url_page`);
 

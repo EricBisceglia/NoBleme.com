@@ -23,8 +23,9 @@ $langue_page = array('FR','EN');
 $page_titre = ($lang == 'FR') ? "NBDB : " : "NBDB: ";
 $page_desc  = "Encyclopédie de la culture internet, des obscurs bulletin boards d'antan aux memes modernes.";
 
-// JS
-$js = array('clipboard');
+// CSS & JS
+$css  = array('nbdb');
+$js   = array('clipboard');
 
 
 
@@ -44,6 +45,7 @@ if(isset($_GET['random']))
   // On va chercher une image au pif dans la liste
   $qrandomimg = mysqli_fetch_array(query("  SELECT    nbdb_web_image.nom_fichier AS 'i_nom'
                                             FROM      nbdb_web_image
+                                            WHERE     nbdb_web_image.nsfw = 0
                                             ORDER BY  RAND()
                                             LIMIT     1 "));
 
@@ -102,7 +104,8 @@ if(!isset($web_image_nom))
 // On va chercher les infos sur l'image
 $dwebimage = mysqli_fetch_array(query(" SELECT  nbdb_web_image.id           AS 'i_id'   ,
                                                 nbdb_web_image.nom_fichier  AS 'i_nom'  ,
-                                                nbdb_web_image.tags         AS 'i_tags'
+                                                nbdb_web_image.tags         AS 'i_tags' ,
+                                                nbdb_web_image.nsfw         AS 'i_nsfw'
                                         FROM    nbdb_web_image
                                         WHERE   nbdb_web_image.nom_fichier LIKE '$web_image_nom' "));
 
@@ -120,6 +123,8 @@ $shorturl   .= $dwebimage['i_id'];
 // Préparation des données pour l'affichage
 $web_image_titre    = urldecode($dwebimage['i_nom']);
 $web_image_fichier  = urlencode($dwebimage['i_nom']);
+$web_image_nsfw     = ((niveau_nsfw() < 2) && $dwebimage['i_nsfw']) ? 1 : 0;
+$web_image_flou     = ((niveau_nsfw() < 2) && $dwebimage['i_nsfw']) ? ' class="web_nsfw_flou"' : '';
 
 
 
@@ -196,6 +201,9 @@ $nimage_total = $nimage_web + $nimage_dico + $nimage_categorie + $nimage_periode
 if($lang == 'FR')
 {
   // Header
+  $trad['image_nsfw']         = <<<EOD
+Cette image est floutée car elle contient du contenu vulgaire ou sensible, vous devez passer votre curseur dessus pour l'afficher. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="{$chemin}pages/user/nsfw">options de vulgarité</a> de votre compte.
+EOD;
   $trad['image_utilisation']  = "Cette image est utilisée sur la page suivante :";
   $trad['image_utilisations'] = "Cette image est utilisée sur les pages suivantes :";
   $trad['image_nullepart']    = "Cette image n'est utilisée sur aucune page de l'encyclopédie de la culture internet pour le moment.";
@@ -215,6 +223,9 @@ EOD;
 else if($lang == 'EN')
 {
   // Header
+  $trad['image_nsfw']         = <<<EOD
+This image is blurred due to its crude or sensitive content. Hover your mouse cursor over it in order to reveal its contents. If you are bothered by the blurring or have no need for it, you can permanently disable it in the <a class="gras" href="{$chemin}pages/user/nsfw">adult content options</a> of your account.
+EOD;
   $trad['image_utilisation']  = "This image is used in the following page:";
   $trad['image_utilisations'] = "This image is used in the following pages:";
   $trad['image_nullepart']    = "This image hasn't been used in any page of the encyclopedia of internet culture so far.";
@@ -249,6 +260,18 @@ EOD;
     <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/image.svg" alt="X" height="26" onclick="pressepapiers('[[galerie:<?=$web_image_nom_encoded?>]]');">
     <?php } ?>
   </h2>
+
+  <?php if($web_image_nsfw) { ?>
+
+  <br>
+
+  <div class="minitexte3">
+
+    <p><?=$trad['image_nsfw']?></p>
+
+  </div>
+
+  <?php } ?>
 
   <br>
   <br>
@@ -300,7 +323,7 @@ EOD;
   <br>
 
   <div class="align_center">
-    <img src="<?=$chemin?>img/nbdb_web/<?=$web_image_fichier?>">
+    <img src="<?=$chemin?>img/nbdb_web/<?=$web_image_fichier?>"<?=$web_image_flou?>>
   </div>
 
   <br>

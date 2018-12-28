@@ -43,13 +43,15 @@ if(!verifier_existence('nbdb_web_image', $image_id))
 
 // On va chercher les infos sur l'image
 $dimage = mysqli_fetch_array(query("  SELECT  nbdb_web_image.nom_fichier  AS 'i_nom'  ,
-                                              nbdb_web_image.tags         AS 'i_tags'
+                                              nbdb_web_image.tags         AS 'i_tags' ,
+                                              nbdb_web_image.nsfw         AS 'i_nsfw'
                                       FROM    nbdb_web_image
                                       WHERE   nbdb_web_image.id = '$image_id' "));
 
 // Et on les prépare pour l'affichage
 $image_nom  = predata($dimage['i_nom']);
 $image_tags = predata($dimage['i_tags']);
+$image_nsfw = ($dimage['i_nsfw']) ? ' checked' : '';
 
 
 
@@ -72,7 +74,11 @@ $image_tags = predata($dimage['i_tags']);
       <input id="web_edit_image_tags_<?=$image_id?>" name="web_edit_image_nom_<?=$image_id?>" class="indiv" type="text" value="<?=$image_tags?>"><br>
       <br>
 
-      <button onclick="toggle_oneway('web_images_edition_<?=$image_id?>', 0, 1); dynamique('<?=$chemin?>', 'web_images?edit', 'web_images_tableau', 'web_images_id=<?=$image_id?>&amp;web_images_tags='+dynamique_prepare('web_edit_image_tags_<?=$image_id?>'), 1);">MODIFIER LES INFORMATIONS</button>
+      <input id="web_edit_image_nsfw_<?=$image_id?>" name="web_edit_image_nsfw_<?=$image_id?>" type="checkbox"<?=$image_nsfw?>>
+      <label class="label-inline" for="web_edit_image_nsfw_<?=$image_id?>">Cette image est NSFW</label><br>
+      <br>
+
+      <button onclick="toggle_oneway('web_images_edition_<?=$image_id?>', 0, 1); dynamique('<?=$chemin?>', 'web_images?edit', 'web_images_tableau', 'web_images_id=<?=$image_id?>&amp;web_images_tags='+dynamique_prepare('web_edit_image_tags_<?=$image_id?>')+'&amp;web_images_nsfw='+document.getElementById('web_edit_image_nsfw_<?=$image_id?>').checked, 1);">MODIFIER LES INFORMATIONS</button>
       &nbsp;
       <button class="button-clear" onclick="toggle_oneway('web_images_edition_<?=$image_id?>', 0, 1);">MASQUER LE FORMULAIRE</button>
 

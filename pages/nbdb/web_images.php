@@ -52,6 +52,7 @@ if(isset($_POST['web_images_upload_go']) && isset($_FILES['web_images_upload_fic
     // Assainissement du postdata
     $web_images_upload_nom  = postdata_vide('web_images_upload_nom', 'string', '');
     $web_images_upload_tags = postdata_vide('web_images_upload_tags', 'string', '');
+    $web_images_upload_nsfw = isset($_POST['web_images_upload_nsfw']) ? 1 : 0;
     $web_images_upload_img  = urlencode(str_replace(' ', '_', $web_images_upload_nom)).'.'.pathinfo($_FILES['web_images_upload_fichier']['name'], PATHINFO_EXTENSION);
     $web_images_upload_path = $chemin."img/nbdb_web/".$web_images_upload_img;
     $web_images_upload_temp = $_FILES['web_images_upload_fichier']['tmp_name'];
@@ -74,7 +75,8 @@ if(isset($_POST['web_images_upload_go']) && isset($_FILES['web_images_upload_fic
       query(" INSERT INTO nbdb_web_image
               SET         nbdb_web_image.timestamp_upload = '$timestamp'              ,
                           nbdb_web_image.nom_fichier      = '$web_images_upload_nom'  ,
-                          nbdb_web_image.tags             = '$web_images_upload_tags' ");
+                          nbdb_web_image.tags             = '$web_images_upload_tags' ,
+                          nbdb_web_image.nsfw             = '$web_images_upload_nsfw' ");
     }
 
     // Si l'upload ne s'est pas bien passé, on met un message d'erreur
@@ -94,11 +96,13 @@ if(isset($_GET['edit']))
   // On récupère le postdata
   $image_edit_id    = postdata_vide('web_images_id', 'int', 0);
   $image_edit_tags  = postdata_vide('web_images_tags', 'string', '');
+  $image_edit_nsfw  = ($_POST['web_images_nsfw'] == 'true') ? 1 : 0;
 
   // Et on met à jour les infos de l'image
   query(" UPDATE  nbdb_web_image
-          SET     nbdb_web_image.tags = '$image_edit_tags'
-          WHERE   nbdb_web_image.id = '$image_edit_id' ");
+          SET     nbdb_web_image.tags = '$image_edit_tags' ,
+                  nbdb_web_image.nsfw = '$image_edit_nsfw'
+          WHERE   nbdb_web_image.id   = '$image_edit_id' ");
 }
 
 
@@ -147,7 +151,8 @@ if(isset($_GET['delete']))
 $qimages  =   " SELECT    nbdb_web_image.id               AS 'i_id'   ,
                           nbdb_web_image.timestamp_upload AS 'i_date' ,
                           nbdb_web_image.nom_fichier      AS 'i_nom'  ,
-                          nbdb_web_image.tags             AS 'i_tags'
+                          nbdb_web_image.tags             AS 'i_tags' ,
+                          nbdb_web_image.nsfw             AS 'i_nsfw'
                 FROM      nbdb_web_image
                 WHERE     1 = 1 ";
 
@@ -172,11 +177,13 @@ $qimages = query($qimages);
 // On les prépare le contenu du tableau pour l'affichage
 for($nimages = 0; $dimages = mysqli_fetch_array($qimages); $nimages++)
 {
-  $image_id[$nimages]   = $dimages['i_id'];
-  $image_nom[$nimages]  = predata(urldecode($dimages['i_nom']));
-  $image_lien[$nimages] = urlencode(predata($dimages['i_nom']));
-  $image_date[$nimages] = date('y/m/d H:i', $dimages['i_date']);
-  $image_tags[$nimages] = str_replace(';', '<br>', $dimages['i_tags']);
+  $image_id[$nimages]       = $dimages['i_id'];
+  $image_nom[$nimages]      = predata(urldecode($dimages['i_nom']));
+  $image_lien[$nimages]     = urlencode(predata($dimages['i_nom']));
+  $image_date[$nimages]     = date('y/m/d H:i', $dimages['i_date']);
+  $image_tags[$nimages]     = str_replace(';', '<br>', $dimages['i_tags']);
+  $image_nsfw[$nimages]     = ($dimages['i_nsfw']) ? ' texte_negatif' : '';
+  $image_nsfwtag[$nimages]  = ($dimages['i_nsfw']) ? '-nsfw' : '';
 }
 
 
@@ -228,6 +235,10 @@ if(!getxhr()) { /***************************************************************
 
                 </div>
               </div>
+              <br>
+
+              <input id="web_images_upload_nsfw" name="web_images_upload_nsfw" type="checkbox">
+              <label class="label-inline" for="web_images_upload_nsfw">Cette image est NSFW</label><br>
 
               <br>
               <input value="UPLOADER UNE IMAGE DANS L'ENCYCLOPÉDIE DE LA CULTURE INTERNET" type="submit" name="web_images_upload_go">
@@ -292,13 +303,13 @@ if(!getxhr()) { /***************************************************************
             <tr>
 
               <td>
-                <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/copier.svg" alt="X" height="24" onclick="pressepapiers('[[image:<?=$image_lien[$i]?>]]');">
-                <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/image.svg" alt="X" height="24" onclick="pressepapiers('[[galerie:<?=$image_lien[$i]?>]]');">
+                <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/copier.svg" alt="X" height="24" onclick="pressepapiers('[[image<?=$image_nsfwtag[$i]?>:<?=$image_lien[$i]?>]]');">
+                <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/image.svg" alt="X" height="24" onclick="pressepapiers('[[galerie<?=$image_nsfwtag[$i]?>:<?=$image_lien[$i]?>]]');">
               </td>
 
               <td class="spaced">
                 <div class="tooltip-container" onmouseover="document.getElementById('web_images_preview_<?=$image_nom[$i]?>').src = '<?=$chemin?>img/nbdb_web/<?=$image_lien[$i]?>'; document.getElementById('web_images_preview_<?=$image_nom[$i]?>').style.maxHeight = '250px';">
-                  <a class="gras" href="<?=$chemin?>pages/nbdb/web_image?image=<?=$image_lien[$i]?>">
+                  <a class="gras<?=$image_nsfw[$i]?>" href="<?=$chemin?>pages/nbdb/web_image?image=<?=$image_lien[$i]?>">
                     <?=$image_nom[$i]?>
                     <span class="tooltip web_image_preview">
                       <img id="web_images_preview_<?=$image_nom[$i]?>" class="valign_middle pointeur" src="<?=$chemin?>img/icones/chargement.svg" alt="Chargement">

@@ -57,8 +57,9 @@ $where_web_search = ($where_search) ? " AND nbdb_web_page.titre_$web_lang LIKE '
 
 // On va chercher la liste des définitions pour notre langue
 if(!isset($_GET['categorie']) || !$filtre_categorie)
-  $qweb = query(" SELECT    nbdb_web_page.redirection_$web_lang  AS 'd_redirect' ,
-                            nbdb_web_page.titre_$web_lang        AS 'd_titre'
+  $qweb = query(" SELECT    nbdb_web_page.redirection_$web_lang AS 'd_redirect' ,
+                            nbdb_web_page.titre_$web_lang       AS 'd_titre'    ,
+                            nbdb_web_page.est_vulgaire          AS 'd_vulgaire'
                   FROM      nbdb_web_page
                   WHERE     nbdb_web_page.titre_$web_lang  NOT LIKE ''
                             $where_web_redirections
@@ -69,8 +70,9 @@ if(!isset($_GET['categorie']) || !$filtre_categorie)
 
 // La requête est différente si on cherche par catégorie
 else if($filtre_categorie > 0)
-  $qweb = query(" SELECT    nbdb_web_page.redirection_$web_lang  AS 'd_redirect' ,
-                            nbdb_web_page.titre_$web_lang        AS 'd_titre'
+  $qweb = query(" SELECT    nbdb_web_page.redirection_$web_lang AS 'd_redirect' ,
+                            nbdb_web_page.titre_$web_lang       AS 'd_titre'    ,
+                            nbdb_web_page.est_vulgaire          AS 'd_vulgaire'
                   FROM      nbdb_web_page_categorie
                   LEFT JOIN nbdb_web_page ON nbdb_web_page_categorie.FKnbdb_web_page = nbdb_web_page.id
                   WHERE     nbdb_web_page.titre_$web_lang  NOT LIKE ''
@@ -82,8 +84,9 @@ else if($filtre_categorie > 0)
 
 // Et encore différente si on veut les pages non catégorisées
 else
-  $qweb = query(" SELECT    nbdb_web_page.redirection_$web_lang  AS 'd_redirect' ,
-                            nbdb_web_page.titre_$web_lang        AS 'd_titre'
+  $qweb = query(" SELECT    nbdb_web_page.redirection_$web_lang AS 'd_redirect' ,
+                            nbdb_web_page.titre_$web_lang       AS 'd_titre'    ,
+                            nbdb_web_page.est_vulgaire          AS 'd_vulgaire'
                   FROM      nbdb_web_page
                   LEFT JOIN nbdb_web_page_categorie ON nbdb_web_page_categorie.FKnbdb_web_page = nbdb_web_page.id
                   WHERE     nbdb_web_page.titre_$web_lang  NOT LIKE ''
@@ -102,6 +105,7 @@ for($nweb = 0 ; $dweb = mysqli_fetch_array($qweb) ; $nweb++)
   $web_titre_css[$nweb] = ($dweb['d_redirect']) ? 'gras texte_noir' : 'gras';
   $web_titre_url[$nweb] = urlencode($dweb['d_titre']);
   $web_redirect[$nweb]  = ($dweb['d_redirect']) ? ' -> '.predata($dweb['d_redirect']) : '';
+  $web_vulgaire[$nweb]  = ($dweb['d_vulgaire']) ? '<img class="valign_middle web_dico_nsfw" src="'.$chemin.'img/icones/avertissement.svg" alt="!" height="20">': '';
 }
 
 
@@ -202,7 +206,7 @@ if($lang == 'FR')
   $trad['titre']          = "Encyclopédie de la culture web";
   $trad['soustitre']      = "Documentation de l'histoire des memes et de la culture d'internet";
   $trad['description']    = <<<EOD
-  Vous trouverez ci-dessous la liste de toutes les pages formant <a class="gras" href="{$chemin}pages/nbdb/web">l'encyclopédie de la culture internet</a>. Le contenu couvert par cette encyclopédie étant très large, vous pouvez utiliser les menus déroulants situés juste en dessous pour filtrer les pages appartenant à une catégorie ou à une période spécifique. En dessous, vous trouverez également un champ de recherche, au cas où vous seriez à la recherche d'une page spécifique.
+  Vous trouverez ci-dessous la liste de toutes les pages formant <a class="gras" href="{$chemin}pages/nbdb/web">l'encyclopédie de la culture internet</a>. Le contenu couvert par cette encyclopédie étant très large, vous pouvez utiliser les menus déroulants situés juste en dessous pour filtrer les pages appartenant à une catégorie ou à une période spécifique. En dessous, vous trouverez également un champ de recherche, au cas où vous seriez à la recherche d'une page spécifique. Les définitions dont le titre est suivi d'un point d'exclamation portent sur du contenu vulgaire ou dégueulasse.
 EOD;
 
   // Header
@@ -231,7 +235,7 @@ else if($lang == 'EN')
   $trad['web_selecteur']  = "Select a category or an era";
   $trad['web_nocat']      = "Uncategorized pages";
   $trad['description']    = <<<EOD
-  On this page, you will find a list of all the entries in the <a class="gras" href="{$chemin}pages/nbdb/web">encyclopedia of internet culture</a>. Since the encyclopedia covers a lot of varied content, you can use the dropdown menus below to show pages belonging to a specific category or era. Below them, you will find a text field, in case you are looking for a specific page.
+  On this page, you will find a list of all the entries in the <a class="gras" href="{$chemin}pages/nbdb/web">encyclopedia of internet culture</a>. Since the encyclopedia covers a lot of varied content, you can use the dropdown menus below to show pages belonging to a specific category or era. Below them, you will find a text field, in case you are looking for a specific page. Be warned, entries whose name are followed by an exclamation mark are about gross or nasty content.
 EOD;
 
   // Catégories et périodes
@@ -382,7 +386,7 @@ if(!getxhr()) { /***************************************************************
 
           <ul>
             <li>
-              <a class="<?=$web_titre_css[$i]?>" href="<?=$chemin?>pages/nbdb/web?page=<?=$web_titre_url[$i]?>"><?=$web_titre[$i]?></a> <?=$web_redirect[$i]?>
+              <a class="<?=$web_titre_css[$i]?>" href="<?=$chemin?>pages/nbdb/web?page=<?=$web_titre_url[$i]?>"><?=$web_titre[$i]?></a> <?=$web_redirect[$i]?><?=$web_vulgaire[$i]?>
             </li>
           </ul>
 

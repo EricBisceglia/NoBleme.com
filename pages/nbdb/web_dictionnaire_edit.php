@@ -50,6 +50,7 @@ if(isset($_POST['web_dico_add']) || isset($_POST['web_dico_edit']))
   $edit_dico_titre_en_raw   = (isset($_POST['web_dico_titre_en'])) ? $_POST['web_dico_titre_en'] : '';
   $edit_dico_contenu_fr     = postdata_vide('web_dico_definition_fr', 'string', '');
   $edit_dico_contenu_en     = postdata_vide('web_dico_definition_en', 'string', '');
+  $edit_dico_floute         = isset($_POST['web_dico_floute']) ? 1 : 0;
   $edit_dico_vulgaire       = isset($_POST['web_dico_vulgaire']) ? 1 : 0;
   $edit_dico_politise       = isset($_POST['web_dico_politise']) ? 1 : 0;
   $edit_dico_incorrect      = isset($_POST['web_dico_incorrect']) ? 1 : 0;
@@ -67,6 +68,7 @@ if(isset($_POST['web_dico_add']) || isset($_POST['web_dico_edit']))
                         nbdb_web_definition.redirection_en  = '$edit_dico_redirection_en' ,
                         nbdb_web_definition.definition_fr   = '$edit_dico_contenu_fr'     ,
                         nbdb_web_definition.definition_en   = '$edit_dico_contenu_en'     ,
+                        nbdb_web_definition.contenu_floute  = '$edit_dico_floute'         ,
                         nbdb_web_definition.est_vulgaire    = '$edit_dico_vulgaire'       ,
                         nbdb_web_definition.est_politise    = '$edit_dico_politise'       ,
                         nbdb_web_definition.est_incorrect   = '$edit_dico_incorrect'      ");
@@ -102,6 +104,7 @@ if(isset($_POST['web_dico_add']) || isset($_POST['web_dico_edit']))
                     nbdb_web_definition.redirection_en  = '$edit_dico_redirection_en' ,
                     nbdb_web_definition.definition_fr   = '$edit_dico_contenu_fr'     ,
                     nbdb_web_definition.definition_en   = '$edit_dico_contenu_en'     ,
+                    nbdb_web_definition.contenu_floute  = '$edit_dico_floute'         ,
                     nbdb_web_definition.est_vulgaire    = '$edit_dico_vulgaire'       ,
                     nbdb_web_definition.est_politise    = '$edit_dico_politise'       ,
                     nbdb_web_definition.est_incorrect   = '$edit_dico_incorrect'
@@ -150,6 +153,7 @@ if(isset($_POST['web_dico_preview']))
   $dico_contenu_en    = $_POST['web_dico_definition_en'];
   $dico_definition_fr = nbdbcode(bbcode(predata($_POST['web_dico_definition_fr'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie('FR'), nbdb_web_liste_pages_dictionnaire('FR'));
   $dico_definition_en = nbdbcode(bbcode(predata($_POST['web_dico_definition_en'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie('EN'), nbdb_web_liste_pages_dictionnaire('EN'));
+  $dico_floute        = isset($_POST['web_dico_floute']) ? ' checked' : '';
   $dico_vulgaire      = isset($_POST['web_dico_vulgaire']) ? ' checked' : '';
   $dico_politise      = isset($_POST['web_dico_politise']) ? ' checked' : '';
   $dico_incorrect     = isset($_POST['web_dico_incorrect']) ? ' checked' : '';
@@ -174,6 +178,7 @@ else if(isset($_GET['id']))
                                               nbdb_web_definition.redirection_en  AS 'd_redirect_en'  ,
                                               nbdb_web_definition.definition_fr   AS 'd_contenu_fr'   ,
                                               nbdb_web_definition.definition_en   AS 'd_contenu_en'   ,
+                                              nbdb_web_definition.contenu_floute  AS 'd_floute'       ,
                                               nbdb_web_definition.est_vulgaire    AS 'd_vulgaire'     ,
                                               nbdb_web_definition.est_politise    AS 'd_politise'     ,
                                               nbdb_web_definition.est_incorrect   AS 'd_incorrect'
@@ -187,6 +192,7 @@ else if(isset($_GET['id']))
   $dico_redirect_en = predata($ddico['d_redirect_en']);
   $dico_contenu_fr  = $ddico['d_contenu_fr'];
   $dico_contenu_en  = $ddico['d_contenu_en'];
+  $dico_floute      = ($ddico['d_floute']) ? ' checked' : '';
   $dico_vulgaire    = ($ddico['d_vulgaire']) ? ' checked' : '';
   $dico_politise    = ($ddico['d_politise']) ? ' checked' : '';
   $dico_incorrect   = ($ddico['d_incorrect']) ? ' checked' : '';
@@ -203,6 +209,7 @@ else
   $dico_redirect_en = '';
   $dico_contenu_fr  = '';
   $dico_contenu_en  = '';
+  $dico_floute      = '';
   $dico_vulgaire    = '';
   $dico_politise    = '';
   $dico_incorrect   = '';
@@ -339,8 +346,10 @@ else
             <div class="texte">
 
               <label>Avertissements à afficher avant la définition</label>
+              <input id="web_dico_floute" name="web_dico_floute" type="checkbox"<?=$dico_floute?>>
+              <label class="label-inline" for="web_dico_floute">Contient du contenu flouté car NSFW</label><br>
               <input id="web_dico_vulgaire" name="web_dico_vulgaire" type="checkbox"<?=$dico_vulgaire?>>
-              <label class="label-inline" for="web_dico_vulgaire">Vulgaire (NSFW)</label><br>
+              <label class="label-inline" for="web_dico_vulgaire">Porte sur un sujet vulgaire ou dégueulasse</label><br>
               <input id="web_dico_politise" name="web_dico_politise" type="checkbox"<?=$dico_politise?>>
               <label class="label-inline" for="web_dico_politise">Sujet politisé (parle de sujets de société sur lesquels tout le monde n'est pas d'accord)</label><br>
               <input id="web_dico_incorrect" name="web_dico_incorrect" type="checkbox"<?=$dico_incorrect?>>

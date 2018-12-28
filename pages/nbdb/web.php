@@ -54,6 +54,7 @@ if(isset($_GET['random']))
                                             FROM      nbdb_web_page
                                             WHERE     nbdb_web_page.titre_$web_lang    NOT LIKE ''
                                             AND       nbdb_web_page.redirection_$web_lang  LIKE ''
+                                            AND       nbdb_web_page.est_vulgaire              = 0
                                             ORDER BY  RAND()
                                             LIMIT     1 "));
   $web_id           = $dwebrandom['w_id'];
@@ -108,6 +109,7 @@ if($web_id)
                                                 nbdb_web_page.mois_apparition             AS 'w_apparition_m'     ,
                                                 nbdb_web_page.annee_popularisation        AS 'w_popularisation_y' ,
                                                 nbdb_web_page.mois_popularisation         AS 'w_popularisation_m' ,
+                                                nbdb_web_page.contenu_floute              AS 'w_floute'           ,
                                                 nbdb_web_page.est_vulgaire                AS 'w_vulgaire'         ,
                                                 nbdb_web_page.est_politise                AS 'w_politise'         ,
                                                 nbdb_web_page.est_incorrect               AS 'w_incorrect'        ,
@@ -130,6 +132,7 @@ if($web_id)
   $web_redirect_url     = ($dweb['w_redirect']) ? urlencode($dweb['w_redirect']) : '';
   $web_titre            = predata($dweb['w_titre']);
   $web_contenu          = nbdbcode(bbcode(predata($dweb['w_contenu'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang));
+  $web_floute           = (niveau_nsfw() < 2 && $dweb['w_floute']) ? 1 : 0;
   $web_vulgaire         = $dweb['w_vulgaire'];
   $web_politise         = $dweb['w_politise'];
   $web_incorrect        = $dweb['w_incorrect'];
@@ -207,8 +210,11 @@ EOD;
   $trad['web_autre']        = "Autre page au hasard";
   $trad['web_bilingue']     = "This page is available in english aswell";
   $trad['web_bilingue_2']   = "Cette page est disponible en anglais également";
+  $trad['web_floutage']     = <<<EOD
+Certains contenus de cette page sont floutés car ils sont de nature vulgaire ou sensible. Pour les afficher en clair, vous devez passer votre curseur dessus. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="{$chemin}pages/user/nsfw">options de vulgarité</a> de votre compte.
+EOD;
   $trad['web_vulgaire']     = "LA PAGE CI-DESSOUS CONTIENT DU CONTENU VULGAIRE OU DÉGUEULASSE";
-  $trad['web_politise']     = "La page ci-dessous est politisée : elle aborde un sujet de société d'une façon avec laquelle tout le monde ne sera pas forcément d'accord. Le but de cette encyclopédie n'est pas de plaire à tous, mais plutôt de présenter des faits de façon objective, en tentant d'être aussi neutre que possible, quitte à froisser certaines opinions.";
+  $trad['web_politise']     = "La page ci-dessous est politisée : elle aborde un sujet de société d'une façon avec laquelle tout le monde ne sera pas forcément d'accord. Le but de cette encyclopédie n'est pas de plaire à tous, mais plutôt de présenter des faits de façon objective, quitte à froisser certaines opinions.";
   $trad['web_incorrect']    = "Le but de cette encyclopédie est de documenter toute la culture internet, même dans ses aspects offensants. La page ci-dessous porte sur un sujet politiquement incorrect : il est très fortement conseillé de ne pas utiliser ce terme publiquement, car il a de mauvaises connotations.";
 
   // Contenu d'une page spécifique
@@ -253,8 +259,11 @@ EOD;
   $trad['web_autre']        = "Another random page";
   $trad['web_bilingue']     = "This page is available in french aswell";
   $trad['web_bilingue_2']   = "Cette page est disponible en français également";
-  $trad['web_vulgaire']     = "THE FOLLOWING PAGE CONTAINS RUDE<br>AND/OR GROSS CONTENT";
-  $trad['web_politise']     = "The following page is politically loaded: it concerns an aspect of society on which people tend to have disagreements. The goal of this encyclopedia is not to please everyone, but rather to try to bring facts objectively, with a point of view as neutral as possible, even if it often means being in disagreement with some strong opinions.";
+  $trad['web_floutage']     = <<<EOD
+Some contents on this page are blurred due to their crude or sensitive nature. Hover your mouse cursor over them in order to reveal their contents. If you are bothered by the blurring or have no need for it, you can permanently disable it in the <a class="gras" href="{$chemin}pages/user/nsfw">adult content options</a> of your account.
+EOD;
+  $trad['web_vulgaire']     = "THE FOLLOWING PAGE CONTAINS NASTY AND/OR GROSS CONTENT";
+  $trad['web_politise']     = "The following page is politically loaded: it concerns an aspect of society on which people tend to have disagreements. The goal of this encyclopedia is not to paint a skewed view of society, but rather to try to bring facts objectively, even if it means displeasing some crowds.";
   $trad['web_incorrect']    = "This encyclopedia's goal is to document internet culture as a whole, including its offensive and irrespectful aspects. The following page concerns a politically incorrect topic: it is heavily suggested that you do not use it publicly, as it has extremely negative connotations.";
 
   // Contenu d'une page spécifique
@@ -483,6 +492,12 @@ EOD;
           </a>
           <?php } ?>
         </h5>
+
+        <?php if($web_floute) { ?>
+
+        <p><?=$trad['web_floutage']?></p>
+
+        <?php } ?>
 
         <br>
         <br>

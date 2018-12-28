@@ -55,6 +55,7 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
   $edit_web_apparition_m      = postdata_vide('web_apparition_m', 'int', 0);
   $edit_web_popularisation_y  = postdata_vide('web_popularisation_y', 'int', 0);
   $edit_web_popularisation_m  = postdata_vide('web_popularisation_m', 'int', 0);
+  $edit_web_floute            = isset($_POST['web_floute']) ? 1 : 0;
   $edit_web_vulgaire          = isset($_POST['web_vulgaire']) ? 1 : 0;
   $edit_web_politise          = isset($_POST['web_politise']) ? 1 : 0;
   $edit_web_incorrect         = isset($_POST['web_incorrect']) ? 1 : 0;
@@ -77,6 +78,7 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
                         nbdb_web_page.mois_apparition       = '$edit_web_apparition_m'      ,
                         nbdb_web_page.annee_popularisation  = '$edit_web_popularisation_y'  ,
                         nbdb_web_page.mois_popularisation   = '$edit_web_popularisation_m'  ,
+                        nbdb_web_page.contenu_floute        = '$edit_web_floute'            ,
                         nbdb_web_page.est_vulgaire          = '$edit_web_vulgaire'          ,
                         nbdb_web_page.est_politise          = '$edit_web_politise'          ,
                         nbdb_web_page.est_incorrect         = '$edit_web_incorrect'         ");
@@ -117,6 +119,7 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
                     nbdb_web_page.mois_apparition       = '$edit_web_apparition_m'      ,
                     nbdb_web_page.annee_popularisation  = '$edit_web_popularisation_y'  ,
                     nbdb_web_page.mois_popularisation   = '$edit_web_popularisation_m'  ,
+                    nbdb_web_page.contenu_floute        = '$edit_web_floute'            ,
                     nbdb_web_page.est_vulgaire          = '$edit_web_vulgaire'          ,
                     nbdb_web_page.est_politise          = '$edit_web_politise'          ,
                     nbdb_web_page.est_incorrect         = '$edit_web_incorrect'
@@ -190,6 +193,7 @@ if(isset($_POST['web_preview']))
   $web_apparition_m     = predata($_POST['web_apparition_m']);
   $web_popularisation_y = predata($_POST['web_popularisation_y']);
   $web_popularisation_m = predata($_POST['web_popularisation_m']);
+  $web_floute           = isset($_POST['web_floute']) ? ' checked' : '';
   $web_vulgaire         = isset($_POST['web_vulgaire']) ? ' checked' : '';
   $web_politise         = isset($_POST['web_politise']) ? ' checked' : '';
   $web_incorrect        = isset($_POST['web_incorrect']) ? ' checked' : '';
@@ -219,6 +223,7 @@ else if(isset($_GET['id']))
                                               nbdb_web_page.mois_apparition       AS 'w_apparition_m'     ,
                                               nbdb_web_page.annee_popularisation  AS 'w_popularisation_y' ,
                                               nbdb_web_page.mois_popularisation   AS 'w_popularisation_m' ,
+                                              nbdb_web_page.contenu_floute        AS 'w_floute'           ,
                                               nbdb_web_page.est_vulgaire          AS 'w_vulgaire'         ,
                                               nbdb_web_page.est_politise          AS 'w_politise'         ,
                                               nbdb_web_page.est_incorrect         AS 'w_incorrect'
@@ -237,6 +242,7 @@ else if(isset($_GET['id']))
   $web_apparition_m     = ($dweb['w_apparition_m']) ? $dweb['w_apparition_m'] : '';
   $web_popularisation_y = ($dweb['w_popularisation_y']) ? $dweb['w_popularisation_y'] : '';
   $web_popularisation_m = ($dweb['w_popularisation_m']) ? $dweb['w_popularisation_m'] : '';
+  $web_floute           = ($dweb['w_floute']) ? ' checked' : '';
   $web_vulgaire         = ($dweb['w_vulgaire']) ? ' checked' : '';
   $web_politise         = ($dweb['w_politise']) ? ' checked' : '';
   $web_incorrect        = ($dweb['w_incorrect']) ? ' checked' : '';
@@ -258,6 +264,7 @@ else
   $web_popularisation_y = '';
   $web_popularisation_m = '';
   $web_popularisation   = '';
+  $web_floute           = '';
   $web_vulgaire         = '';
   $web_politise         = '';
   $web_incorrect        = '';
@@ -536,8 +543,10 @@ if(!getxhr()) { /***************************************************************
               <br>
 
               <label>Avertissements à afficher avant la définition</label>
+              <input id="web_floute" name="web_floute" type="checkbox"<?=$web_floute?>>
+              <label class="label-inline" for="web_floute">Contient du contenu flouté car NSFW</label><br>
               <input id="web_vulgaire" name="web_vulgaire" type="checkbox"<?=$web_vulgaire?>>
-              <label class="label-inline" for="web_vulgaire">Vulgaire (NSFW)</label><br>
+              <label class="label-inline" for="web_vulgaire">Porte sur un sujet vulgaire ou dégueulasse</label><br>
               <input id="web_politise" name="web_politise" type="checkbox"<?=$web_politise?>>
               <label class="label-inline" for="web_politise">Sujet politisé (parle de sujets de société sur lesquels tout le monde n'est pas d'accord)</label><br>
               <input id="web_incorrect" name="web_incorrect" type="checkbox"<?=$web_incorrect?>>

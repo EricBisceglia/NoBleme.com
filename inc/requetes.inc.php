@@ -18,17 +18,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 //                                            !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP !!!!!                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Rendre les miscellanées bilingues
+// Permettre de tag des contenus comme NSFW
 
-sql_creer_champ('quotes', 'langue', 'TINYTEXT', 'timestamp');
+sql_creer_champ('nbdb_web_page', 'contenu_floute', 'TINYINT(1)', 'mois_popularisation');
+sql_creer_champ('nbdb_web_definition', 'contenu_floute', 'TINYINT(1)', 'definition_en');
+sql_creer_champ('nbdb_web_image', 'nsfw', 'TINYINT(1)', 'tags');
 
-query(" UPDATE  quotes
-        SET     quotes.langue = 'FR'
-        WHERE   quotes.langue IS NULL ");
-
-query(" UPDATE  activite
-        SET     activite.action_type  =     'quote_new_fr'
-        WHERE   activite.action_type  LIKE  'quote' ");
 
 
 
