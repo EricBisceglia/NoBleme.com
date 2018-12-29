@@ -137,7 +137,7 @@ $web_image_flou     = ((niveau_nsfw() < 2) && $dwebimage['i_nsfw']) ? ' class="w
 $image_lang = changer_casse($lang, 'min');
 
 // On prépare le nom de l'image pour la recherche
-$web_image_nom_encoded = urlencode($web_image_nom);
+$web_image_nom_encoded = ':'.urlencode($web_image_nom);
 
 // On prépare la chaine des pages dans lesquelles l'image apparait
 $web_image_pages_utilisation = '';
@@ -145,7 +145,7 @@ $web_image_pages_utilisation = '';
 // On va chercher dans l'encyclopédie de la culture web
 $qimage_web = query(" SELECT    nbdb_web_page.titre_$image_lang AS 'w_titre'
                       FROM      nbdb_web_page
-                      WHERE     MATCH(nbdb_web_page.contenu_$image_lang) AGAINST ('$web_image_nom_encoded' IN BOOLEAN MODE)
+                      WHERE     nbdb_web_page.contenu_$image_lang LIKE '%$web_image_nom_encoded%'
                       ORDER BY  nbdb_web_page.titre_$image_lang ASC ");
 
 // Puis on prépare les titres pour l'affichage
@@ -158,7 +158,7 @@ for($nimage_web = 0; $dimage_web = mysqli_fetch_array($qimage_web); $nimage_web+
 // On va chercher dans le dictionnaire de la culture web
 $qimage_dico = query("  SELECT    nbdb_web_definition.titre_$image_lang AS 'd_titre'
                         FROM      nbdb_web_definition
-                        WHERE     MATCH(nbdb_web_definition.definition_$image_lang) AGAINST ('$web_image_nom_encoded' IN BOOLEAN MODE)
+                        WHERE     nbdb_web_definition.definition_$image_lang LIKE '%$web_image_nom_encoded%'
                         ORDER BY  nbdb_web_definition.titre_$image_lang ASC ");
 
 // Puis on prépare les titres pour l'affichage
@@ -172,7 +172,7 @@ for($nimage_dico = 0; $dimage_dico = mysqli_fetch_array($qimage_dico); $nimage_d
 $qimage_categorie = query(" SELECT    nbdb_web_categorie.id                 AS 'c_id' ,
                                       nbdb_web_categorie.titre_$image_lang  AS 'c_titre'
                             FROM      nbdb_web_categorie
-                            WHERE     MATCH(nbdb_web_categorie.description_$image_lang) AGAINST ('$web_image_nom_encoded' IN BOOLEAN MODE)
+                            WHERE     nbdb_web_categorie.description_$image_lang LIKE '%$web_image_nom_encoded%'
                             ORDER BY  nbdb_web_categorie.titre_$image_lang ASC ");
 
 // Puis on prépare les titres pour l'affichage
@@ -187,7 +187,7 @@ for($nimage_categorie = 0; $dimage_categorie = mysqli_fetch_array($qimage_catego
 $qimage_periode = query(" SELECT    nbdb_web_periode.id                 AS 'p_id' ,
                                     nbdb_web_periode.titre_$image_lang  AS 'p_titre'
                           FROM      nbdb_web_periode
-                          WHERE     MATCH(nbdb_web_periode.description_$image_lang) AGAINST ('$web_image_nom_encoded' IN BOOLEAN MODE)
+                          WHERE     nbdb_web_periode.description_$image_lang LIKE '%$web_image_nom_encoded%'
                           ORDER BY  nbdb_web_periode.titre_$image_lang ASC ");
 
 // Puis on prépare les titres pour l'affichage
