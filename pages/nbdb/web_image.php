@@ -121,6 +121,7 @@ $page_desc  .= ($dwebimage['i_tags']) ? " ".predata($dwebimage['i_tags']) : "";
 $shorturl   .= $dwebimage['i_id'];
 
 // Préparation des données pour l'affichage
+$web_image_id       = postdata($dwebimage['i_id'], 'int', 0);
 $web_image_titre    = urldecode($dwebimage['i_nom']);
 $web_image_fichier  = urlencode($dwebimage['i_nom']);
 $web_image_nsfw     = ((niveau_nsfw() < 2) && $dwebimage['i_nsfw']) ? 1 : 0;
@@ -138,6 +139,9 @@ $image_lang = changer_casse($lang, 'min');
 // On prépare le nom de l'image pour la recherche
 $web_image_nom_encoded = urlencode($web_image_nom);
 
+// On prépare la chaine des pages dans lesquelles l'image apparait
+$web_image_pages_utilisation = '';
+
 // On va chercher dans l'encyclopédie de la culture web
 $qimage_web = query(" SELECT    nbdb_web_page.titre_$image_lang AS 'w_titre'
                       FROM      nbdb_web_page
@@ -146,7 +150,10 @@ $qimage_web = query(" SELECT    nbdb_web_page.titre_$image_lang AS 'w_titre'
 
 // Puis on prépare les titres pour l'affichage
 for($nimage_web = 0; $dimage_web = mysqli_fetch_array($qimage_web); $nimage_web++)
-  $image_web[$nimage_web] = predata($dimage_web['w_titre']);
+{
+  $image_web[$nimage_web]       = predata($dimage_web['w_titre']);
+  $web_image_pages_utilisation .= (!$web_image_pages_utilisation) ? 'web:'.$dimage_web['w_titre'] : ';web:'.$dimage_web['w_titre'];
+}
 
 // On va chercher dans le dictionnaire de la culture web
 $qimage_dico = query("  SELECT    nbdb_web_definition.titre_$image_lang AS 'd_titre'
@@ -156,7 +163,10 @@ $qimage_dico = query("  SELECT    nbdb_web_definition.titre_$image_lang AS 'd_ti
 
 // Puis on prépare les titres pour l'affichage
 for($nimage_dico = 0; $dimage_dico = mysqli_fetch_array($qimage_dico); $nimage_dico++)
-  $image_dico[$nimage_dico] = predata($dimage_dico['d_titre']);
+{
+  $image_dico[$nimage_dico]     = predata($dimage_dico['d_titre']);
+  $web_image_pages_utilisation .= (!$web_image_pages_utilisation) ? 'dico:'.$dimage_dico['d_titre'] : ';dico:'.$dimage_dico['d_titre'];
+}
 
 // On va chercher dans les catégories des pages
 $qimage_categorie = query(" SELECT    nbdb_web_categorie.id                 AS 'c_id' ,
@@ -170,6 +180,7 @@ for($nimage_categorie = 0; $dimage_categorie = mysqli_fetch_array($qimage_catego
 {
   $image_categorie_id[$nimage_categorie]  = $dimage_categorie['c_id'];
   $image_categorie[$nimage_categorie]     = predata($dimage_categorie['c_titre']);
+  $web_image_pages_utilisation           .= (!$web_image_pages_utilisation) ? 'categorie:'.$dimage_categorie['c_titre'] : ';categorie:'.$dimage_categorie['c_titre'];
 }
 
 // On va chercher dans les périodes
@@ -184,10 +195,17 @@ for($nimage_periode = 0; $dimage_periode = mysqli_fetch_array($qimage_periode); 
 {
   $image_periode_id[$nimage_periode]  = $dimage_periode['p_id'];
   $image_periode[$nimage_periode]     = predata($dimage_periode['p_titre']);
+  $web_image_pages_utilisation       .= (!$web_image_pages_utilisation) ? 'periode:'.$dimage_periode['p_titre'] : ';periode:'.$dimage_periode['p_titre'];
 }
 
 // On fait le total des comptes d'utilisation
 $nimage_total = $nimage_web + $nimage_dico + $nimage_categorie + $nimage_periode;
+
+// On met à jour les pages où l'image est utilisée
+$web_image_pages_utilisation = postdata($web_image_pages_utilisation, 'string', '');
+query(" UPDATE  nbdb_web_image
+        SET     nbdb_web_image.pages_utilisation_$image_lang  = '$web_image_pages_utilisation'
+        WHERE   nbdb_web_image.id                             = '$web_image_id' ");
 
 
 

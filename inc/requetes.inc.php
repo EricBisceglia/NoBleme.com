@@ -18,12 +18,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 //                                            !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP !!!!!                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Permettre de tag des contenus comme NSFW
+// Lieux d'utilisation des images dans la NBDB
 
-sql_creer_champ('nbdb_web_page', 'contenu_floute', 'TINYINT(1)', 'mois_popularisation');
-sql_creer_champ('nbdb_web_definition', 'contenu_floute', 'TINYINT(1)', 'definition_en');
-sql_creer_champ('nbdb_web_image', 'nsfw', 'TINYINT(1)', 'tags');
-
+sql_supprimer_champ('nbdb_web_image', 'pages_utilisation');
+sql_creer_champ('nbdb_web_image', 'pages_utilisation_fr', 'MEDIUMTEXT', 'nsfw');
+sql_creer_champ('nbdb_web_image', 'pages_utilisation_en', 'MEDIUMTEXT', 'pages_utilisation_fr');
+query(" UPDATE nbdb_web_image SET nbdb_web_image.nsfw = 0 WHERE nbdb_web_image.nsfw IS NULL ");
+query(" UPDATE nbdb_web_image SET nbdb_web_image.pages_utilisation_fr = '' WHERE nbdb_web_image.pages_utilisation_fr IS NULL ");
+query(" UPDATE nbdb_web_image SET nbdb_web_image.pages_utilisation_en = '' WHERE nbdb_web_image.pages_utilisation_en IS NULL ");
 
 
 

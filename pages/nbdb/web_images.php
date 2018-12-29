@@ -148,17 +148,23 @@ if(isset($_GET['delete']))
 // Tableau des images
 
 // On va chercher les infos sur les images
-$qimages  =   " SELECT    nbdb_web_image.id               AS 'i_id'   ,
-                          nbdb_web_image.timestamp_upload AS 'i_date' ,
-                          nbdb_web_image.nom_fichier      AS 'i_nom'  ,
-                          nbdb_web_image.tags             AS 'i_tags' ,
-                          nbdb_web_image.nsfw             AS 'i_nsfw'
+$qimages  =   " SELECT    nbdb_web_image.id                   AS 'i_id'       ,
+                          nbdb_web_image.timestamp_upload     AS 'i_date'     ,
+                          nbdb_web_image.nom_fichier          AS 'i_nom'      ,
+                          nbdb_web_image.tags                 AS 'i_tags'     ,
+                          nbdb_web_image.nsfw                 AS 'i_nsfw'     ,
+                          nbdb_web_image.pages_utilisation_fr AS 'i_pages_fr' ,
+                          nbdb_web_image.pages_utilisation_en AS 'i_pages_en'
                 FROM      nbdb_web_image
                 WHERE     1 = 1 ";
 
 // Recherche
 if($search_images_nom = urlencode(postdata_vide('web_images_search_nom', 'string', '')))
   $qimages .= " AND       nbdb_web_image.nom_fichier LIKE '%$search_images_nom%' ";
+if($search_images_pages_fr = postdata_vide('web_images_search_pages_fr', 'string', ''))
+  $qimages .= " AND       nbdb_web_image.pages_utilisation_fr LIKE '%$search_images_pages_fr%' ";
+if($search_images_pages_en = postdata_vide('web_images_search_pages_en', 'string', ''))
+  $qimages .= " AND       nbdb_web_image.pages_utilisation_fr LIKE '%$search_images_pages_en%' ";
 if($search_images_tags = postdata_vide('web_images_search_tags', 'string', ''))
   $qimages .= " AND       nbdb_web_image.tags LIKE '%$search_images_tags%' ";
 
@@ -166,8 +172,12 @@ if($search_images_tags = postdata_vide('web_images_search_tags', 'string', ''))
 $images_tri = postdata_vide('web_images_tri', 'string', '');
 if($images_tri == 'nom')
   $qimages .= " ORDER BY  nbdb_web_image.nom_fichier ASC ";
+else if($images_tri == 'pages_fr')
+  $qimages .= " ORDER BY  nbdb_web_image.pages_utilisation_fr != '' , nbdb_web_image.pages_utilisation_fr ASC ";
+else if($images_tri == 'pages_en')
+  $qimages .= " ORDER BY  nbdb_web_image.pages_utilisation_en != '' , nbdb_web_image.pages_utilisation_en ASC ";
 else if($images_tri == 'tags')
-  $qimages .= " ORDER BY  nbdb_web_image.tags = '' , nbdb_web_image.tags ASC ";
+  $qimages .= " ORDER BY  nbdb_web_image.tags != '' , nbdb_web_image.tags ASC ";
 else
   $qimages .= " ORDER BY  nbdb_web_image.timestamp_upload DESC ";
 
@@ -184,6 +194,53 @@ for($nimages = 0; $dimages = mysqli_fetch_array($qimages); $nimages++)
   $image_tags[$nimages]     = str_replace(';', '<br>', $dimages['i_tags']);
   $image_nsfw[$nimages]     = ($dimages['i_nsfw']) ? ' texte_negatif' : '';
   $image_nsfwtag[$nimages]  = ($dimages['i_nsfw']) ? '-nsfw' : '';
+
+  // Utilisation dans les pages - français
+  if($dimages['i_pages_fr'])
+  {
+    $temp_pages_array = '';
+    $temp_pages = explode(';', $dimages['i_pages_fr']);
+    foreach($temp_pages as $temp_pages_transform)
+    {
+      if($temp_pages_array)
+        $temp_pages_array .= '<br>';
+      $temp_data_page = explode(':', $temp_pages_transform, 2);
+      if($temp_data_page[0] == 'web')
+        $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web?page='.urlencode($temp_data_page[1]).'&francais>'.$temp_data_page[1].'</a>';
+      else if($temp_data_page[0] == 'dico')
+        $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web_dictionnaire?define='.urlencode($temp_data_page[1]).'&francais>Dico : '.$temp_data_page[1].'</a>';
+      else if($temp_data_page[0] == 'categorie')
+        $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web_pages?francais">Catégorie : '.urlencode($temp_data_page[1]).'</a>';
+      else if($temp_data_page[0] == 'periode')
+        $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web_pages?francais">Période : '.urlencode($temp_data_page[1]).'</a>';
+    }
+    $temp_pages_array_fr = $temp_pages_array;
+  }
+
+  // Utilisation dans les pages - anglais
+  if($dimages['i_pages_en'])
+  {
+    $temp_pages_array = '';
+    $temp_pages = explode(';', $dimages['i_pages_en']);
+    foreach($temp_pages as $temp_pages_transform)
+    {
+      if($temp_pages_array)
+        $temp_pages_array .= '<br>';
+      $temp_data_page = explode(':', $temp_pages_transform, 2);
+      if($temp_data_page[0] == 'web')
+        $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web?page='.urlencode($temp_data_page[1]).'&english>'.$temp_data_page[1].'</a>';
+      else if($temp_data_page[0] == 'dico')
+        $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web_dictionnaire?define='.urlencode($temp_data_page[1]).'&english>Dico : '.$temp_data_page[1].'</a>';
+      else if($temp_data_page[0] == 'categorie')
+        $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web_pages?english">Catégorie : '.urlencode($temp_data_page[1]).'</a>';
+      else if($temp_data_page[0] == 'periode')
+        $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web_pages?english">Période : '.urlencode($temp_data_page[1]).'</a>';
+    }
+  }
+
+  // Fin de la préparation de l'utilisation dans les pages
+  $image_pages_fr[$nimages] = ($dimages['i_pages_fr']) ? $temp_pages_array_fr : '';
+  $image_pages_en[$nimages] = ($dimages['i_pages_en']) ? $temp_pages_array : '';
 }
 
 
@@ -252,7 +309,7 @@ if(!getxhr()) { /***************************************************************
       <hr class="separateur_contenu">
       <br>
 
-      <div class="tableau" id="web_images_tableau">
+      <div class="tableau2" id="web_images_tableau">
 
       <?php } if(!getxhr() || isset($_POST['web_images_tri']) || isset($_POST['web_images_id'])) { ?>
 
@@ -269,6 +326,12 @@ if(!getxhr()) { /***************************************************************
               <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'web_images', 'web_images_tableau', 'web_images_tri=date', 1);">
                 MISE EN LIGNE
               </th>
+              <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'web_images', 'web_images_tableau', 'web_images_tri=pages_fr', 1);">
+                PAGES - FR
+              </th>
+              <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'web_images', 'web_images_tableau', 'web_images_tri=pages_en', 1);">
+                PAGES - EN
+              </th>
               <th class="pointeur" onclick="dynamique('<?=$chemin?>', 'web_images', 'web_images_tableau', 'web_images_tri=tags', 1);">
                 TAGS
               </th>
@@ -282,13 +345,19 @@ if(!getxhr()) { /***************************************************************
                 &nbsp;
               </th>
               <th>
-                <input class="intable" size="1" id="web_images_search_nom" onkeyup="dynamique('<?=$chemin?>', 'web_images', 'web_images_tbody', 'web_images_search_nom='+dynamique_prepare('web_images_search_nom')+'&web_images_search_tags='+dynamique_prepare('web_images_search_tags'), 1);">
+                <input class="intable" size="1" id="web_images_search_nom" onkeyup="web_images_tableau_recherche('<?=$chemin?>');">
               </th>
               <th>
                 &nbsp;
               </th>
               <th>
-                <input class="intable" size="1" id="web_images_search_tags" onkeyup="dynamique('<?=$chemin?>', 'web_images', 'web_images_tbody', 'web_images_search_nom='+dynamique_prepare('web_images_search_nom')+'&web_images_search_tags='+dynamique_prepare('web_images_search_tags'), 1);">
+                <input class="intable" size="1" id="web_images_search_pages_fr" onkeyup="web_images_tableau_recherche('<?=$chemin?>');">
+              </th>
+              <th>
+                <input class="intable" size="1" id="web_images_search_pages_en" onkeyup="web_images_tableau_recherche('<?=$chemin?>');">
+              </th>
+              <th>
+                <input class="intable" size="1" id="web_images_search_tags" onkeyup="web_images_tableau_recherche('<?=$chemin?>');">
               </th>
               <th>
                 &nbsp;
@@ -320,6 +389,14 @@ if(!getxhr()) { /***************************************************************
 
               <td>
                 <?=$image_date[$i]?>
+              </td>
+
+              <td>
+                <?=$image_pages_fr[$i]?>
+              </td>
+
+              <td>
+                <?=$image_pages_en[$i]?>
               </td>
 
               <td>
