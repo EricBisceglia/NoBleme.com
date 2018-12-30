@@ -22,7 +22,7 @@ $qrss = "   ( SELECT    ''                                  AS 'rss_id'       ,
               FROM      vars_globales
               WHERE     vars_globales.mise_a_jour LIKE 'sql_cheat_code' ) ";
 
-if(isset($_GET['flux_nbdbweb']))
+if(isset($_GET['flux_nbdbweb']) && !isset($_GET['lang_en']))
 $qrss .= "  UNION
             ( SELECT    activite.action_id                  AS 'rss_id'       ,
                         activite.timestamp                  AS 'rss_date'     ,
@@ -31,12 +31,13 @@ $qrss .= "  UNION
                         activite.action_type                AS 'rss_user'     ,
                         'nbdbweb'                           AS 'rss_type'
               FROM      activite
-              WHERE   ( activite.action_type  LIKE 'nbdb_web_page_new'
+              WHERE     activite.action_titre != ''
+              AND     ( activite.action_type  LIKE 'nbdb_web_page_new'
               OR        activite.action_type  LIKE 'nbdb_web_page_edit' )
               ORDER BY  activite.timestamp DESC
               LIMIT     100 ) ";
 
-if(isset($_GET['flux_nbdbdico']))
+if(isset($_GET['flux_nbdbdico']) && !isset($_GET['lang_en']))
 $qrss .= "  UNION
             ( SELECT    activite.action_id                  AS 'rss_id'       ,
                         activite.timestamp                  AS 'rss_date'     ,
@@ -45,7 +46,38 @@ $qrss .= "  UNION
                         activite.action_type                AS 'rss_user'     ,
                         'nbdbdico'                          AS 'rss_type'
               FROM      activite
-              WHERE   ( activite.action_type  LIKE 'nbdb_web_definition_new'
+              WHERE     activite.action_titre != ''
+              AND     ( activite.action_type  LIKE 'nbdb_web_definition_new'
+              OR        activite.action_type  LIKE 'nbdb_web_definition_edit' )
+              ORDER BY  activite.timestamp DESC
+              LIMIT     100 ) ";
+
+if(isset($_GET['flux_nbdbweb']) && isset($_GET['lang_en']))
+$qrss .= "  UNION
+            ( SELECT    activite.action_id                  AS 'rss_id'       ,
+                        activite.timestamp                  AS 'rss_date'     ,
+                        activite.action_titre               AS 'rss_titre'    ,
+                        activite.parent                     AS 'rss_contenu'  ,
+                        activite.action_type                AS 'rss_user'     ,
+                        'nbdbweb'                           AS 'rss_type'
+              FROM      activite
+              WHERE     activite.parent != ''
+              AND     ( activite.action_type  LIKE 'nbdb_web_page_new'
+              OR        activite.action_type  LIKE 'nbdb_web_page_edit' )
+              ORDER BY  activite.timestamp DESC
+              LIMIT     100 ) ";
+
+if(isset($_GET['flux_nbdbdico']) && isset($_GET['lang_en']))
+$qrss .= "  UNION
+            ( SELECT    activite.action_id                  AS 'rss_id'       ,
+                        activite.timestamp                  AS 'rss_date'     ,
+                        activite.action_titre               AS 'rss_titre'    ,
+                        activite.parent                     AS 'rss_contenu'  ,
+                        activite.action_type                AS 'rss_user'     ,
+                        'nbdbdico'                          AS 'rss_type'
+              FROM      activite
+              WHERE     activite.parent != ''
+              AND     ( activite.action_type  LIKE 'nbdb_web_definition_new'
               OR        activite.action_type  LIKE 'nbdb_web_definition_edit' )
               ORDER BY  activite.timestamp DESC
               LIMIT     100 ) ";
@@ -280,12 +312,12 @@ for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
     if($drss['rss_user'] == 'nbdb_web_page_new')
     {
       $rss_titre[$nrss]   = (!isset($_GET['lang_en'])) ? "Nouvelle page dans l'encyclopédie de la culture web" : "New entry in the encyclopedia of internet culture";
-      $rss_contenu[$nrss] = (!isset($_GET['lang_en'])) ? "Nouvelle page : <b>".predata($drss['rss_titre'])."</b>" : "New entry : <b>".predata($drss['rss_titre'])."</b>" ;
+      $rss_contenu[$nrss] = (!isset($_GET['lang_en'])) ? "Nouvelle page : <b>".predata($drss['rss_titre'])."</b>" : "New entry : <b>".predata($drss['rss_contenu'])."</b>" ;
     }
     else
     {
       $rss_titre[$nrss]   = (!isset($_GET['lang_en'])) ? "Page modifiée l'encyclopédie de la culture web" : "Modified entry in the encyclopedia of internet culture";
-      $rss_contenu[$nrss] = (!isset($_GET['lang_en'])) ? "Page modifiée : <b>".predata($drss['rss_titre'])."</b>" : "Modified entry : <b>".predata($drss['rss_titre'])."</b>";
+      $rss_contenu[$nrss] = (!isset($_GET['lang_en'])) ? "Page modifiée : <b>".predata($drss['rss_titre'])."</b>" : "Modified entry : <b>".predata($drss['rss_contenu'])."</b>";
     }
   }
 
@@ -297,12 +329,12 @@ for($nrss = 0; $drss = mysqli_fetch_array($qrss); $nrss++)
     if($drss['rss_user'] == 'nbdb_web_definition_new')
     {
       $rss_titre[$nrss]   = (!isset($_GET['lang_en'])) ? "Nouvelle définition dans le dictionnaire de la culture web" : "New definition in the dictionary of internet culture";
-      $rss_contenu[$nrss] = (!isset($_GET['lang_en'])) ? "Nouvelle définition : <b>".predata($drss['rss_titre'])."</b>" : "New definition : <b>".predata($drss['rss_titre'])."</b>" ;
+      $rss_contenu[$nrss] = (!isset($_GET['lang_en'])) ? "Nouvelle définition : <b>".predata($drss['rss_titre'])."</b>" : "New definition : <b>".predata($drss['rss_contenu'])."</b>" ;
     }
     else
     {
       $rss_titre[$nrss]   = (!isset($_GET['lang_en'])) ? "Définition modifiée le dictionnaire de la culture web" : "Modified definition in the dictionary of internet culture";
-      $rss_contenu[$nrss] = (!isset($_GET['lang_en'])) ? "Définition modifiée : <b>".predata($drss['rss_titre'])."</b>" : "Modified definition : <b>".predata($drss['rss_titre'])."</b>";
+      $rss_contenu[$nrss] = (!isset($_GET['lang_en'])) ? "Définition modifiée : <b>".predata($drss['rss_titre'])."</b>" : "Modified definition : <b>".predata($drss['rss_contenu'])."</b>";
     }
   }
 
