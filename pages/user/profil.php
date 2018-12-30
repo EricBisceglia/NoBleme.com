@@ -67,6 +67,16 @@ if(isset($_POST['profil_modifier']))
   $edit_langue = ($edit_langue_fr) ? 'FR' : '';
   $edit_langue = ($edit_langue_en) ? $edit_langue.'EN' : $edit_langue;
 
+  // On récupère des infos pour le diff
+  $dprofilavant = mysqli_fetch_array(query("  SELECT  membres.langue        AS 'm_lang'   ,
+                                                      membres.anniversaire  AS 'm_anniv'  ,
+                                                      membres.genre         AS 'm_genre'  ,
+                                                      membres.habite        AS 'm_habite' ,
+                                                      membres.metier        AS 'm_metier' ,
+                                                      membres.profil        AS 'm_texte'
+                                              FROM    membres
+                                              WHERE   membres.id = '$profil_id' "));
+
   // On met à jour le profil
   query(" UPDATE  membres
           SET     membres.langue        = '$edit_langue'    ,
@@ -78,8 +88,22 @@ if(isset($_POST['profil_modifier']))
           WHERE   membres.id = '$profil_id' ");
 
   // On met une notification dans le log de modération
-  $pseudonyme = postdata(getpseudo($profil_id), 'string');
-  activite_nouveau('profil', 1, $profil_id, $pseudonyme);
+  $pseudonyme   = postdata(getpseudo($profil_id), 'string');
+  $activite_id  = activite_nouveau('profil', 1, $profil_id, $pseudonyme);
+
+  // Ainsi qu'un historique des changements
+  $profil_avant_langue  = postdata($dprofilavant['m_lang'], 'string');
+  $profil_avant_anniv   = postdata($dprofilavant['m_anniv'], 'string');
+  $profil_avant_genre   = postdata($dprofilavant['m_genre'], 'string');
+  $profil_avant_habite  = postdata($dprofilavant['m_habite'], 'string');
+  $profil_avant_metier  = postdata($dprofilavant['m_metier'], 'string');
+  $profil_avant_texte   = postdata($dprofilavant['m_texte'], 'string');
+  activite_diff($activite_id, 'Texte', $profil_avant_texte, $edit_texte, 1);
+  activite_diff($activite_id, 'Langues parlées', $profil_avant_langue, $edit_langue, 1);
+  activite_diff($activite_id, 'Date de naissance', $profil_avant_anniv, $edit_naissance, 1);
+  activite_diff($activite_id, 'Genre', $profil_avant_genre, $edit_genre, 1);
+  activite_diff($activite_id, 'Ville / Région / Pays', $profil_avant_habite, $edit_habite, 1);
+  activite_diff($activite_id, 'Métier / Occupation', $profil_avant_metier, $edit_metier, 1);
 
   // On envoie un message sur #sysop avec le bot IRC pour qu'un sysop vérifie que ça soit pas du contenu abusif
   ircbot($chemin, getpseudo($profil_id)." a modifié son profil public - ".$GLOBALS['url_site']."pages/user/user?id=".$profil_id, "#sysop");
