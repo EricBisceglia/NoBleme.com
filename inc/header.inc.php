@@ -886,15 +886,11 @@ $sidemenu['lire_quotes_proposer']   = ($lang == 'FR') ? "Proposer une miscellan√
               </div>
             </a>
 
-            <?php if($lang == 'FR') { ?>
-
             <a href="<?=$chemin?>pages/quotes/stats">
               <div class="<?=header_class('MiscStats',$header_sidemenu,'side')?>">
                 <?=$sidemenu['lire_quotes_stats']?>
               </div>
             </a>
-
-            <?php } ?>
 
             <a href="<?=$chemin?>pages/quotes/add">
               <div class="<?=header_class('MiscAdd',$header_sidemenu,'side')?>">

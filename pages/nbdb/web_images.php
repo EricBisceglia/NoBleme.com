@@ -206,7 +206,7 @@ for($nimages = 0; $dimages = mysqli_fetch_array($qimages); $nimages++)
         $temp_pages_array .= '<br>';
       $temp_data_page = explode(':', $temp_pages_transform, 2);
       if($temp_data_page[0] == 'web')
-        $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web?page='.urlencode($temp_data_page[1]).'&francais>'.$temp_data_page[1].'</a>';
+        $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web?page='.urlencode($temp_data_page[1]).'&francais>Web : '.$temp_data_page[1].'</a>';
       else if($temp_data_page[0] == 'dico')
         $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web_dictionnaire?define='.urlencode($temp_data_page[1]).'&francais>Dico : '.$temp_data_page[1].'</a>';
       else if($temp_data_page[0] == 'categorie')
@@ -228,7 +228,7 @@ for($nimages = 0; $dimages = mysqli_fetch_array($qimages); $nimages++)
         $temp_pages_array .= '<br>';
       $temp_data_page = explode(':', $temp_pages_transform, 2);
       if($temp_data_page[0] == 'web')
-        $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web?page='.urlencode($temp_data_page[1]).'&english>'.$temp_data_page[1].'</a>';
+        $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web?page='.urlencode($temp_data_page[1]).'&english>Web : '.$temp_data_page[1].'</a>';
       else if($temp_data_page[0] == 'dico')
         $temp_pages_array .= '<a href='.$chemin.'pages/nbdb/web_dictionnaire?define='.urlencode($temp_data_page[1]).'&english>Dico : '.$temp_data_page[1].'</a>';
       else if($temp_data_page[0] == 'categorie')
