@@ -24,6 +24,9 @@ function bbcode($post, $xhr=NULL)
   // Détermination de la langue utilisée
   $lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
 
+  // Détermination du niveau de vie privée demandé par l'utilisateur
+  $niveau_vie_privee = niveau_vie_privee();
+
   // Fix temporaire pour les XSS gratuits.
   // Il faut vraiment que je trouve mieux que ça comme solution... Franchement, si quelqu'un a une solution, je suis preneur.
   $post = str_ireplace(".svg",".&zwnj;svg",$post);       # Je ne veux pas de SVG, c'est exploitable avec CDATA
@@ -190,10 +193,16 @@ function bbcode($post, $xhr=NULL)
   $post = preg_replace('/\[code\](.*?)\[\/code\]/is','<pre class="monospace alinea wrap">$1</pre>', $post);
 
   // [youtube]videoid[/youtube]
-  $post = preg_replace('/\[youtube\](.*?)\[\/youtube\]/is',"<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/$1\" frameborder=\"0\" gesture=\"media\" allow=\"encrypted-media\" allowfullscreen></iframe>", $post);
+  if(!$niveau_vie_privee['youtube'])
+    $post = preg_replace('/\[youtube\](.*?)\[\/youtube\]/is',"<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/$1\" frameborder=\"0\" gesture=\"media\" allow=\"encrypted-media\" allowfullscreen></iframe>", $post);
+  else
+    $post = preg_replace('/\[youtube\](.*?)\[\/youtube\]/is',"<div><a class=\"gras\" href=\"https://www.youtube.com/watch?v=$1\">YouTube: $1</a></div>", $post);
 
   // [twitter]tweetid[/twitter]
-  $post = preg_replace('/\[twitter\](.*?)\[\/twitter\]/is',"<script type=\"text/javascript\"> function loadx(data) { document.write(data.html); } </script><script type=\"text/javascript\" src=\"https://api.twitter.com/1/statuses/oembed.json?id=$1&callback=loadx\"></script> <div class='twitter' onLoad='loadx().html'/></div>", $post);
+  if(!$niveau_vie_privee['twitter'])
+    $post = preg_replace('/\[twitter\](.*?)\[\/twitter\]/is',"<script type=\"text/javascript\"> function loadx(data) { document.write(data.html); } </script><script type=\"text/javascript\" src=\"https://api.twitter.com/1/statuses/oembed.json?id=$1&callback=loadx\"></script> <div class='twitter' onLoad='loadx().html'/></div>", $post);
+  else
+    $post = preg_replace('/\[twitter\](.*?)\[\/twitter\]/is',"<div><a class=\"gras\" href=\"http://www.twitter.com/statuses/$1\">Tweet: $1</a></div>", $post);
 
   // [quote]Citation[/quote]
   $temp = ($lang == 'FR') ? 'Citation :' : 'Quote:';
@@ -298,10 +307,21 @@ function bbcode($post, $xhr=NULL)
 
 function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictionnaire)
 {
+  // Détermination de la langue utilisée
+  $lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
+
+  // Préparation du vocabulaire à utiliser
+  $temp_lang_video_off = ($lang == 'FR') ? 'Cette vidéo est masquée (<a href="'.$chemin.'pages/user/privacy">options de vie privée</a>)' : 'This video is hidden (<a href="'.$chemin.'pages/user/privacy">privacy options</a>)';
+  $temp_lang_video_off_small = ($lang == 'FR') ? 'Vidéo masquée (<a href="'.$chemin.'pages/user/privacy">options de vie privée</a>)' : 'Video hidden (<a href="'.$chemin.'pages/user/privacy">privacy options</a>)';
+  $temp_lang_trends_off = ($lang == 'FR') ? 'Ce graphe Google trends est masqué (<a href="'.$chemin.'pages/user/privacy">options de vie privée</a>)' : 'This Google trends graph is hidden (<a href="'.$chemin.'pages/user/privacy">privacy options</a>)';
+
   // Est-ce qu'on floute ou non les contenus ?
   $floutage   = (niveau_nsfw() < 2) ? 'class="web_nsfw_flou"' : '';
   $floutage2  = (niveau_nsfw() < 2) ? 'class="web_nsfw_flou2"' : '';
   $floutage3  = (niveau_nsfw() < 1) ? ' web_nsfw_flou3' : '';
+
+  // Détermination du niveau de vie privée demandé par l'utilisateur
+  $niveau_vie_privee = niveau_vie_privee();
 
   // === Sous-titre ===
   $post = str_replace("=== ", "<span class=\"moinsgros gras texte_grisfonce\">", $post, $open);
@@ -366,31 +386,55 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
   $post = preg_replace('/\[\[image-nsfw:(.*?)\]\]/i','<a href="'.$chemin.'pages/nbdb/web_image?image=$1"><img '.$floutage.' src="'.$chemin.'img/nbdb_web/$1" alt="$1"></a>', $post);
 
   // [[youtube:urlyoutube|gauche|description de la vidéo]]
-  $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $post);
+  if(!$niveau_vie_privee['youtube'])
+    $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $post);
+  else
+    $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><a class="gras" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off.'</span><br><br>$3</div>', $post);
 
   // [[youtube:urlyoutube|gauche]]
-  $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+  if(!$niveau_vie_privee['youtube'])
+    $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+  else
+    $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><a class="gras" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off.'</span></div>', $post);
 
   // [[youtube:urlyoutube]]
-  $post = preg_replace('/\[\[youtube:(.*?)\]\]/i','<div class="align_center"><iframe width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+  if(!$niveau_vie_privee['youtube'])
+    $post = preg_replace('/\[\[youtube:(.*?)\]\]/i','<div class="align_center"><iframe width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+  else
+    $post = preg_replace('/\[\[youtube:(.*?)\]\]/i','<div class="align_center"><a class="gras" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off.'</span></div>', $post);
 
   // [[youtube-nsfw:urlyoutube|gauche|description de la vidéo]]
-  $post = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $post);
+  if(!$niveau_vie_privee['youtube'])
+    $post = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $post);
+  else
+    $post = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><a class="gras" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off.'</span><br><br>$3</div>', $post);
 
   // [[youtube-nsfw:urlyoutube|gauche]]
-  $post = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+  if(!$niveau_vie_privee['youtube'])
+    $post = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+  else
+    $post = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><a class="gras" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off.'</span></div>', $post);
 
   // [[youtube-nsfw:urlyoutube]]
-  $post = preg_replace('/\[\[youtube-nsfw:(.*?)\]\]/i','<div class="align_center"><iframe '.$floutage2.' width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+  if(!$niveau_vie_privee['youtube'])
+    $post = preg_replace('/\[\[youtube-nsfw:(.*?)\]\]/i','<div class="align_center"><iframe '.$floutage2.' width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+  else
+    $post = preg_replace('/\[\[youtube-nsfw:(.*?)\]\]/i','<div class="align_center"><a class="gras" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off.'</span></div>', $post);
 
   // [[galerie]][[/galerie]]
   $post = preg_replace('/\[\[galerie\]\](.*?)\[\[\/galerie\]\]/is','<div class="web_galerie">$1</div>', $post);
 
   // [[galerie:urlyoutube|youtube|légende]]
-  $post = preg_replace('/\[\[galerie:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr">$2</div>', $post);
+  if(!$niveau_vie_privee['youtube'])
+    $post = preg_replace('/\[\[galerie:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="wyb_galerie_hr">$2</div>', $post);
+  else
+    $post = preg_replace('/\[\[galerie:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><a class="gras" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off_small.'</span><br><br>$2</div>', $post);
 
   // [[galerie:urlyoutube|youtube]]
-  $post = preg_replace('/\[\[galerie:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr"></div>', $post);
+  if(!$niveau_vie_privee['youtube'])
+    $post = preg_replace('/\[\[galerie:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr"></div>', $post);
+  else
+    $post = preg_replace('/\[\[galerie:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><a class="gras" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off_small.'</span></div>', $post);
 
   // [[galerie:image.png|description de l'image]]
   $post = preg_replace('/\[\[galerie:(.*?)\|(.*?)\]\]/i','<div class="web_galerie_image"><div style="height:150px"><a href="'.$chemin.'pages/nbdb/web_image?image=$1"><img src="'.$chemin.'img/nbdb_web/$1" alt="$1" style="max-height:150px"></a></div><hr class="web_galerie_hr">$2</div>', $post);
@@ -399,10 +443,16 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
   $post = preg_replace('/\[\[galerie:(.*?)\]\]/i','<div class="web_galerie_image"><a href="'.$chemin.'pages/nbdb/web_image?image=$1"><img src="'.$chemin.'img/nbdb_web/$1" alt="$1" style="max-height:150px"></a></div>', $post);
 
   // [[galerie-nsfw:urlyoutube|youtube|légende]]
-  $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr">$2</div>', $post);
+  if(!$niveau_vie_privee['youtube'])
+    $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr">$2</div>', $post);
+  else
+    $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><a class="gras" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off_small.'</span><br><br>$2</div>', $post);
 
   // [[galerie-nsfw:urlyoutube|youtube]]
-  $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr"></div>', $post);
+  if(!$niveau_vie_privee['youtube'])
+    $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr"></div>', $post);
+  else
+    $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><a class="gras" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off_small.'</span></div>', $post);
 
   // [[galerie-nsfw:image.png|description de l'image]]
   $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_galerie_image"><div style="height:150px"><a href="'.$chemin.'pages/nbdb/web_image?image=$1"><img '.$floutage2.' src="'.$chemin.'img/nbdb_web/$1" alt="$1" style="max-height:150px"></a></div><hr class="web_galerie_hr">$2</div>', $post);
@@ -411,34 +461,49 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
   $post = preg_replace('/\[\[galerie-nsfw:(.*?)\]\]/i','<div class="web_galerie_image"><a href="'.$chemin.'pages/nbdb/web_image?image=$1"><img '.$floutage2.' src="'.$chemin.'img/nbdb_web/$1" alt="$1" style="max-height:150px"></a></div>', $post);
 
   // [[trends:mot]]
-  $post = preg_replace('/\[\[trends:(.*?)\]\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
+  if(!$niveau_vie_privee['trends'])
+    $post = preg_replace('/\[\[trends:(.*?)\]\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
   <script type="text/javascript">
     trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"$1","geo":"","time":"2004-01-01 '.date('Y-m-d').'"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=$1","guestPath":"https://trends.google.com:443/trends/embed/"});
   </script>', $post);
+  else
+    $post = preg_replace('/\[\[trends:(.*?)\]\]/i','<div class="align_center"><a class="moinsgros gras" href="https://trends.google.com/trends/explore?q=$1">Google trends: $1</a><br><span class="maigre">'.$temp_lang_trends_off.'</span></div>', $post);
 
   // [[trends2:mot|mot]]
-  $post = preg_replace('/\[\[trends2:(.*?)\|(.*?)\]\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
+  if(!$niveau_vie_privee['trends'])
+    $post = preg_replace('/\[\[trends2:(.*?)\|(.*?)\]\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
   <script type="text/javascript">
     trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"$1","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$2","geo":"","time":"2004-01-01 '.date('Y-m-d').'"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=$1,$2","guestPath":"https://trends.google.com:443/trends/embed/"});
   </script>', $post);
+  else
+    $post = preg_replace('/\[\[trends2:(.*?)\|(.*?)\]\]/i','<div class="align_center"><a class="moinsgros gras" href="https://trends.google.com/trends/explore?q=$1,$2">Google trends: $1, $2</a><br><span class="maigre">'.$temp_lang_trends_off.'</span></div>', $post);
 
   // [[trends3:mot|mot|mot]]
-  $post = preg_replace('/\[\[trends3:(.*?)\|(.*?)\|(.*?)\]\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
+  if(!$niveau_vie_privee['trends'])
+    $post = preg_replace('/\[\[trends3:(.*?)\|(.*?)\|(.*?)\]\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
   <script type="text/javascript">
     trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"$1","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$2","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$3","geo":"","time":"2004-01-01 '.date('Y-m-d').'"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=$1,$2,$3","guestPath":"https://trends.google.com:443/trends/embed/"});
   </script>', $post);
+  else
+    $post = preg_replace('/\[\[trends3:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="align_center"><a class="moinsgros gras" href="https://trends.google.com/trends/explore?q=$1,$2,$3">Google trends: $1, $2, $3</a><br><span class="maigre">'.$temp_lang_trends_off.'</span></div>', $post);
 
   // [[trends4:mot|mot|mot|mot]]
-  $post = preg_replace('/\[\[trends4:(.*?)\|(.*?)\|(.*?)\|(.*?)\]\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
+  if(!$niveau_vie_privee['trends'])
+    $post = preg_replace('/\[\[trends4:(.*?)\|(.*?)\|(.*?)\|(.*?)\]\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
   <script type="text/javascript">
     trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"$1","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$2","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$3","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$4","geo":"","time":"2004-01-01 '.date('Y-m-d').'"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=$1,$2,$3,$4","guestPath":"https://trends.google.com:443/trends/embed/"});
   </script>', $post);
+  else
+    $post = preg_replace('/\[\[trends4:(.*?)\|(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="align_center"><a class="moinsgros gras" href="https://trends.google.com/trends/explore?q=$1,$2,$3,$4">Google trends: $1, $2, $3, $4</a><br><span class="maigre">'.$temp_lang_trends_off.'</span></div>', $post);
 
   // [[trends5:mot|mot|mot|mot|mot]]
-  $post = preg_replace('/\[\[trends5:(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\]\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
+  if(!$niveau_vie_privee['trends'])
+    $post = preg_replace('/\[\[trends5:(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\]\]/i','<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1605_RC01/embed_loader.js"></script>
   <script type="text/javascript">
     trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"$1","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$2","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$3","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$4","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$5","geo":"","time":"2004-01-01 '.date('Y-m-d').'"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=$1,$2,$3,$4,$5","guestPath":"https://trends.google.com:443/trends/embed/"});
   </script>', $post);
+  else
+    $post = preg_replace('/\[\[trends5:(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="align_center"><a class="moinsgros gras" href="https://trends.google.com/trends/explore?q=$1,$2,$3,$4,$5">Google trends: $1, $2, $3, $4, $5</a><br><span class="maigre">'.$temp_lang_trends_off.'</span></div>', $post);
 
   // [[copypasta=id]]Texte[[/copypasta]]
   $post = preg_replace('/\[\[copypasta\=(.*?)\]\](.*?)\[\[\/copypasta\]\]/is','<pre onclick="highlight(\'copypasta_$1\');" class="monospace spaced dowrap web_copypasta" id="copypasta_$1">$2</pre>', $post);

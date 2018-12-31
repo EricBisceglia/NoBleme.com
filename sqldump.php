@@ -266,6 +266,9 @@ CREATE TABLE IF NOT EXISTS `membres` (
   `metier` tinytext COLLATE utf8mb4_unicode_ci,
   `profil` longtext COLLATE utf8mb4_unicode_ci,
   `voir_nsfw` tinyint(2) DEFAULT NULL,
+  `voir_tweets` tinyint(1) DEFAULT NULL,
+  `voir_youtube` tinyint(1) DEFAULT NULL,
+  `voir_google_trends` tinyint(1) DEFAULT NULL,
   `forum_messages` int(11) UNSIGNED NOT NULL,
   `forum_lang` tinytext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
@@ -320,6 +323,8 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_image` (
   `nom_fichier` mediumtext COLLATE utf8mb4_unicode_ci,
   `tags` mediumtext COLLATE utf8mb4_unicode_ci,
   `nsfw` tinyint(1) DEFAULT NULL,
+  `pages_utilisation_fr` mediumtext COLLATE utf8mb4_unicode_ci,
+  `pages_utilisation_en` mediumtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

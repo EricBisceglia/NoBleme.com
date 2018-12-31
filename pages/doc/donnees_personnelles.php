@@ -82,7 +82,7 @@ Sachez par ailleurs que NoBleme ne conserve que le strict nécessaire sur vous 
 - Aucune statistique personnelle n'est conservée sur le site (tout est anonymisé)
 EOD;
   $trad['desc3']      = <<<EOD
-Voici donc la liste des données personnelles que NoBleme conserve sur vous, et pour chacune d'elles ce qui justifie de les conserver :
+Des contenus tiers (vidéos YouTube, tweets, etc.) peuvent être inclus dans certaines pages du site. Nous ne pouvons pas contrôler ce que ces tiers font de vos données personnelles, par conséquent, vous pouvez choisir si vous le désirez de ne pas les afficher sur NoBleme sur la page « <a class="gras" href="{$chemin}pages/user/privacy">Options de vie privée</a> ».
 EOD;
 
   // Adresse IP
@@ -147,7 +147,7 @@ You should also know that NoBleme only keeps the strict minimum amount of your p
 - No personal statisticts are kept on the website (everything is anonymized)
 EOD;
   $trad['desc3']      = <<<EOD
-Below is the list of all the personal data NoBleme keeps on you, and why it's being kept:
+Third party content (YouTube videos, tweets, etc.) can be included in some of the website's pages. We cannot control how these third parties use your personal data, therefore you have the option to completely hide those contents in order to make sure you are not being tracked by them at all through the "<a class="gras" href="{$chemin}pages/user/privacy">Privacy options</a>" page.
 EOD;
 
   // Adresse IP

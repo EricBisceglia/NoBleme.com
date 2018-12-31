@@ -524,3 +524,32 @@ function niveau_nsfw()
                                             WHERE   membres.id = '$membre_id' "));
   return $dnsfw['m_nsfw'];
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction renvoyant le niveau de protection de la vie privée que le membre a choisi, sous forme de tableau
+//
+// Exemple d'utilisation:
+// niveau_vie_privee();
+
+function niveau_vie_privee()
+{
+  // Si l'utilisateur n'est pas connecté, on floute tout
+  if(!loggedin())
+    return 0;
+
+  // On va chercher les options de l'utilisateur
+  $membre_id  = postdata($_SESSION['user'], 'int', 0);
+  $dvieprivee = mysqli_fetch_array(query("  SELECT  membres.voir_tweets         AS 'm_twitter'  ,
+                                                    membres.voir_youtube        AS 'm_youtube'  ,
+                                                    membres.voir_google_trends  AS 'm_trends'
+                                            FROM    membres
+                                            WHERE   membres.id = '$membre_id' "));
+
+  // Et on renvoie tout ça dans un tableau
+  return array( 'twitter' => $dvieprivee['m_twitter'] ,
+                'youtube' => $dvieprivee['m_youtube'] ,
+                'trends'  => $dvieprivee['m_trends'] );
+}

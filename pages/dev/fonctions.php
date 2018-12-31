@@ -773,6 +773,14 @@ $js  = array('toggle', 'highlight', 'dev/reference');
                 <?=niveau_nsfw();?>
               </td>
             </tr>
+            <tr>
+              <td class="align_center">
+                niveau_vie_privee()['twitter'];
+              </td>
+              <td class="gras align_center">
+                <?=niveau_vie_privee()['twitter'];?>
+              </td>
+            </tr>
           </tbody>
         </table>
 
