@@ -1,6 +1,10 @@
 Options +FollowSymlinks -MultiViews
 RewriteEngine On
 
+# Forcer le https
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
+
 # Pour retirer le .php à la fin des urls
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
