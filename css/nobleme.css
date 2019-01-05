@@ -104,6 +104,8 @@ hr.separateur_contenu { height: 1px; background:#78A1BC; border: 0px; margin-lef
 
 p.nopadding { padding-top: 0px; }
 
+button.grosbouton { border-radius: .4rem; font-size: 2.0rem; height: 5.0rem; letter-spacing: .2rem; padding: 0 3.0rem; }
+
 del { background: #DB4141; text-decoration: none; font-weight: bold; color: #000000; padding-left: 5px; padding-right: 5px; }
 ins { background: #3CE052; text-decoration: none; font-weight: bold; color: #000000; padding-left: 5px; padding-right: 5px; }
 

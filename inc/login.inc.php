@@ -477,9 +477,9 @@ function useronly($lang='FR')
     }
 
     if($lang == 'FR')
-      erreur("Cette page n'est utilisable que par les utilisateurs connectés.<br><br>Connectez-vous à votre compte en <a href=\"".$chemin."pages/user/login\">cliquant ici</a>,<br>ou créez-vous un compte en <a href=\"".$chemin."pages/user/register\">cliquant ici</a>.");
+      erreur("<br>Cette page n'est utilisable que par les utilisateurs connectés.<br><br><br><a href=\"".$chemin."pages/user/login\"><button class=\"grosbouton\">SE CONNECTER</button></a><a href=\"".$chemin."pages/user/register\">&nbsp;&nbsp;&nbsp;&nbsp;<button class=\"grosbouton button-outline\">CRÉER UN COMPTE</button></a>");
     else
-      erreur("This page is for registered users only.<br><br>Log into your account by <a href=\"".$chemin."pages/user/login\">clicking here</a>,<br>or create an account by <a href=\"".$chemin."pages/user/register\">clicking here</a>.");
+      erreur("<br>This page is for registered users only.<br><br><br><a href=\"".$chemin."pages/user/login\"><button class=\"grosbouton\">LOGIN</button></a><a href=\"".$chemin."pages/user/register\">&nbsp;&nbsp;&nbsp;&nbsp;<button class=\"grosbouton button-outline\">REGISTER</button></a>");
   }
 }
 
