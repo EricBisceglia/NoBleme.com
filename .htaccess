@@ -1,11 +1,16 @@
 Options +FollowSymlinks -MultiViews
 RewriteEngine On
 
+# Rediriger les sous-domaines
+RewriteCond %{HTTP_HOST} ^(.+)\.nobleme.com [nc]
+RewriteRule ^(.*)$ http://nobleme.com/$1 [R=301,L]
+
 # Forcer le https
 RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} nobleme.com
 RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
 
-# Pour retirer le .php à la fin des urls
+# Retirer le .php à la fin des urls
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC]
