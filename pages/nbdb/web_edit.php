@@ -295,14 +295,20 @@ if(isset($_GET['id']))
 }
 
 // On va chercher les catégories
-$qcategories = query("  SELECT    nbdb_web_categorie.id       AS 'c_id' ,
-                                  nbdb_web_categorie.titre_fr AS 'c_titre'
+$qcategories = query("  SELECT    nbdb_web_categorie.id             AS 'c_id'       ,
+                                  nbdb_web_categorie.titre_fr       AS 'c_titre_fr' ,
+                                  nbdb_web_categorie.titre_en       AS 'c_titre_en' ,
+                                  nbdb_web_categorie.description_fr AS 'c_desc_fr'  ,
+                                  nbdb_web_categorie.description_en AS 'c_desc_en'
                         FROM      nbdb_web_categorie
                         ORDER BY  nbdb_web_categorie.ordre_affichage ASC ");
 
 // Puis on prépare les checkboxes
-$check_categories = '';
-while($dcategories = mysqli_fetch_array($qcategories))
+$temp_pages_web_fr  = nbdb_web_liste_pages_encyclopedie('FR');
+$temp_pages_web_en  = nbdb_web_liste_pages_encyclopedie('EN');
+$temp_pages_dico_fr = nbdb_web_liste_pages_dictionnaire('FR');
+$temp_pages_dico_en = nbdb_web_liste_pages_dictionnaire('EN');
+for($ncategories = 0; $dcategories = mysqli_fetch_array($qcategories); $ncategories++)
 {
   if(isset($_POST['web_preview']))
     $temp_checked     = (isset($_POST['web_categorie_'.$dcategories['c_id']])) ? ' checked' : '';
@@ -310,7 +316,12 @@ while($dcategories = mysqli_fetch_array($qcategories))
     $temp_checked     = (in_array($dcategories['c_id'], $page_categories)) ? ' checked' : '';
   else
     $temp_checked     = '';
-  $check_categories  .= '<input id="web_categorie_'.$dcategories['c_id'].'" name="web_categorie_'.$dcategories['c_id'].'"" type="checkbox"'.$temp_checked.'>&nbsp;<label class="label-inline" for="web_categorie_'.$dcategories['c_id'].'">'.predata($dcategories['c_titre']).'</label><br>';
+  $categories_id[$ncategories]        = $dcategories['c_id'];
+  $categories_checked[$ncategories]   = $temp_checked;
+  $categories_titre_fr[$ncategories]  = predata($dcategories['c_titre_fr']);
+  $categories_titre_en[$ncategories]  = predata($dcategories['c_titre_en']);
+  $categories_desc_fr[$ncategories]   = nbdbcode(bbcode(predata($dcategories['c_desc_fr'], 1)), $chemin, $temp_pages_web_fr, $temp_pages_dico_fr);
+  $categories_desc_en[$ncategories]   = nbdbcode(bbcode(predata($dcategories['c_desc_en'], 1)), $chemin, $temp_pages_web_en, $temp_pages_dico_en);
 }
 
 
@@ -493,7 +504,31 @@ if(!getxhr()) { /***************************************************************
               </label>
               <div id="web_categories">
                 <?php } if(!getxhr() || isset($_POST['reload_categories'])) { ?>
-                <?=$check_categories?>
+
+                <?php for($i=0;$i<$ncategories;$i++) { ?>
+
+                <div class="tooltip-container">
+                  <input id="web_categorie_<?=$categories_id[$i]?>" name="web_categorie_<?=$categories_id[$i]?>" type="checkbox"<?=$categories_checked[$i]?>>
+                  <label class="label-inline" for="web_categorie_<?=$categories_id[$i]?>">
+                    <?=$categories_titre_fr[$i]?>
+                  </label>
+                  <span class="tooltip" style="width:400px">
+                    <h6 class="align_center">
+                      <?=$categories_titre_fr[$i]?>
+                    </h6>
+                    <hr>
+                    <?=$categories_desc_fr[$i]?>
+                    <hr>
+                    <h6 class="align_center">
+                      <?=$categories_titre_en[$i]?>
+                    </h6>
+                    <hr>
+                    <?=$categories_desc_en[$i]?>
+                  </span>
+                </div>
+
+                <?php } ?>
+
                 <?php } if(!getxhr()) { ?>
               </div>
               <br>

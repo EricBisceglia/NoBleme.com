@@ -347,7 +347,7 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
   foreach($resultats[0] as $pattern)
   {
     $temp_style = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), $liste_pages_encyclopedie)) ? 'gras' : 'texte_negatif';
-    $post = str_replace($pattern, '<a class="'.$temp_style.'" href="'.$chemin.'pages/nbdb/web?page='.$resultats[1][$i].'">'.$resultats[2][$i].'</a>', $post);
+    $post = str_replace($pattern, '<a class="'.$temp_style.'" href="'.$chemin.'pages/nbdb/web?page='.rawurlencode($resultats[1][$i]).'">'.$resultats[2][$i].'</a>', $post);
     $i++;
   }
 
@@ -357,7 +357,7 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
   foreach($resultats[0] as $pattern)
   {
     $temp_style = (in_array(changer_casse(html_entity_decode($resultats[1][$i], ENT_QUOTES), 'min'), $liste_pages_dictionnaire)) ? 'gras' : 'texte_negatif';
-    $post = str_replace($pattern, '<a class="'.$temp_style.'" href="'.$chemin.'pages/nbdb/web_dictionnaire?define='.$resultats[1][$i].'">'.$resultats[2][$i].'</a>', $post);
+    $post = str_replace($pattern, '<a class="'.$temp_style.'" href="'.$chemin.'pages/nbdb/web_dictionnaire?define='.rawurlencode($resultats[1][$i]).'">'.$resultats[2][$i].'</a>', $post);
     $i++;
   }
 
@@ -387,37 +387,37 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
 
   // [[youtube:urlyoutube|gauche|description de la vidéo]]
   if(!$niveau_vie_privee['youtube'])
-    $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $post);
+    $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe style="width:100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $post);
   else
     $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><a class="gras" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off.'</span><br><br>$3</div>', $post);
 
   // [[youtube:urlyoutube|gauche]]
   if(!$niveau_vie_privee['youtube'])
-    $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+    $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe style="width:100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
   else
     $post = preg_replace('/\[\[youtube:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><a class="gras" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off.'</span></div>', $post);
 
   // [[youtube:urlyoutube]]
   if(!$niveau_vie_privee['youtube'])
-    $post = preg_replace('/\[\[youtube:(.*?)\]\]/i','<div class="align_center"><iframe width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+    $post = preg_replace('/\[\[youtube:(.*?)\]\]/i','<div class="align_center"><iframe width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
   else
     $post = preg_replace('/\[\[youtube:(.*?)\]\]/i','<div class="align_center"><a class="gras" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off.'</span></div>', $post);
 
   // [[youtube-nsfw:urlyoutube|gauche|description de la vidéo]]
   if(!$niveau_vie_privee['youtube'])
-    $post = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $post);
+    $post = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $post);
   else
     $post = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><a class="gras" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off.'</span><br><br>$3</div>', $post);
 
   // [[youtube-nsfw:urlyoutube|gauche]]
   if(!$niveau_vie_privee['youtube'])
-    $post = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+    $post = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
   else
     $post = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_flotteur web_flottement_$2"><a class="gras" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off.'</span></div>', $post);
 
   // [[youtube-nsfw:urlyoutube]]
   if(!$niveau_vie_privee['youtube'])
-    $post = preg_replace('/\[\[youtube-nsfw:(.*?)\]\]/i','<div class="align_center"><iframe '.$floutage2.' width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
+    $post = preg_replace('/\[\[youtube-nsfw:(.*?)\]\]/i','<div class="align_center"><iframe '.$floutage2.' width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $post);
   else
     $post = preg_replace('/\[\[youtube-nsfw:(.*?)\]\]/i','<div class="align_center"><a class="gras" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off.'</span></div>', $post);
 
@@ -426,13 +426,13 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
 
   // [[galerie:urlyoutube|youtube|légende]]
   if(!$niveau_vie_privee['youtube'])
-    $post = preg_replace('/\[\[galerie:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="wyb_galerie_hr">$2</div>', $post);
+    $post = preg_replace('/\[\[galerie:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><iframe style="width:100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="wyb_galerie_hr">$2</div>', $post);
   else
     $post = preg_replace('/\[\[galerie:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><a class="gras" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off_small.'</span><br><br>$2</div>', $post);
 
   // [[galerie:urlyoutube|youtube]]
   if(!$niveau_vie_privee['youtube'])
-    $post = preg_replace('/\[\[galerie:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><iframe width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr"></div>', $post);
+    $post = preg_replace('/\[\[galerie:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><iframe style="width:100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr"></div>', $post);
   else
     $post = preg_replace('/\[\[galerie:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><a class="gras" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off_small.'</span></div>', $post);
 
@@ -444,13 +444,13 @@ function nbdbcode($post, $chemin, $liste_pages_encyclopedie, $liste_pages_dictio
 
   // [[galerie-nsfw:urlyoutube|youtube|légende]]
   if(!$niveau_vie_privee['youtube'])
-    $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr">$2</div>', $post);
+    $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr">$2</div>', $post);
   else
     $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_galerie_image"><a class="gras" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off_small.'</span><br><br>$2</div>', $post);
 
   // [[galerie-nsfw:urlyoutube|youtube]]
   if(!$niveau_vie_privee['youtube'])
-    $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr"></div>', $post);
+    $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><iframe '.$floutage2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr"></div>', $post);
   else
     $post = preg_replace('/\[\[galerie-nsfw:(.*?)\|youtube\]\]/i','<div class="web_galerie_image"><a class="gras" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="maigre">'.$temp_lang_video_off_small.'</span></div>', $post);
 
