@@ -52,12 +52,8 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
         <h5>Code source de NoBleme</h5>
 
         <p>
-          Le code source de NoBleme est hébergé dans un dépôt public sur Bitbucket :
+          Le code source de NoBleme est hébergé dans un dépôt public sur GitHub : <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">NoBleme sur GitHub</a>
         </p>
-
-        <br>
-
-        <button class="button button-outline" onclick="var sourcecode = window.open('https://bitbucket.org/EricBisceglia/nobleme.com/src/', '_blank'); sourcecode.focus;">VOIR LE CODE SOURCE DE NOBLEME</button>
 
         <p>
           Par désir de transparence, l'intégralité du code source de NoBleme est open sourcé : Si vous vous avez des connaissances en développement et que vous vous demandez comment un aspect de NoBleme est géré, vous pouvez trouver la réponse à vos questions dans la source publique du site.
@@ -68,15 +64,11 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
         </p>
 
         <p>
-          La source du site est très vieille (le site est dévelopé en continu depuis 2005), et utilise par choix des technologies qui ne sont pas très modernes (PHP procédural sans framework, javascript sans framework, MySQL), mais elle est tout de même modernisée régulièrement afin de rester en concordance technologique avec son temps.
+          La source du site est très vieille (le site est dévelopé en continu depuis 2005), et utilise des technologies qui ne sont pas très modernes (PHP procédural sans framework, javascript sans framework, MySQL), mais elle est tout de même modernisée régulièrement afin de rester en concordance technologique avec son temps. Ce style ancien est un choix : je prends tout simplement plus de plaisir à coder de cette façon.
         </p>
 
         <p>
           L'intégralité du code source est commenté de façon exhaustive, et les commentaires sont faits pour être aussi explicites que possible. Ainsi, même si vous ne maitrisez pas totalement les langages de programmation utilisés, vous devriez quand même pouvoir suivre la logique du code sur n'importe quelle page.
-        </p>
-
-        <p>
-          Le choix de Bitucket pour héberger la source est technologique : Le dépôt de NoBleme est versionné avec <a class="gras" href="https://fr.wikipedia.org/wiki/Mercurial">Mercurial</a> plutôt que git (préférence personnelle), ce qui exclut d'utiliser des sites comme Github qui ne gèrent pas Mercurial. Au moment de la création du dépôt, parmi les sites gratuits qui géraient Mercurial, Bitbucket avait la meilleure infrastructure et le plus de fonctionnalités utiles. Le choix était donc logique.
         </p>
 
         <br>
@@ -85,11 +77,11 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
         <h5>Contribuer au code source de NoBleme</h5>
 
         <p>
-          Lorsque je travaille seul sur un projet, ma méthode de développement est très pointilleuse et perfectionniste. Par conséquent, je préfère refuser toutes les contributions à NoBleme, car je risque de toutes les rejeter.
+          Si vous avez repéré un problème dans le code source de NoBleme ou que vous avez des ajouts constructifs à y faire, vous pouvez <a class="gras" href="<?=$chemin?>pages/todo/request?bug">ouvrir un ticket</a> et/ou venir en discuter <a class="gras" href="<?=$chemin?>pages/irc/index">sur IRC</a>.
         </p>
 
         <p>
-          Si vous avez repéré un problème dans le code source de NoBleme ou que vous avez des ajouts constructifs à y faire, vous pouvez <a class="gras" href="<?=$chemin?>pages/todo/request?bug">ouvrir un ticket</a> et/ou venir en discuter <a class="gras" href="<?=$chemin?>pages/irc/index">sur IRC</a>. Même si je rejette les contributions directes, ce type de contributions indirectes est toujours très fortement apprécié.
+          Si jamais vous vous sentez assez courageux pour contribuer directement à NoBleme, le code source du site est ouvert aux contributions du public. Codez vos changements dans votre propre branche, assurez-vous de respecter le style du code déjà existant, faites une <a class="gras" href="https://help.github.com/en/articles/about-pull-requests">pull request</a> sur la branche develop du <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">dépôt NoBleme sur GitHub</a>, et votre contribution sera acceptée si elle est intéressante ou utile.
         </p>
 
         <br>
@@ -173,7 +165,7 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
             Je me sers de temps en temps de <a class="gras" href="https://winscp.net/eng/docs/lang:fr">WinSCP</a> pour transmettre des fichiers
           </li>
           <li>
-           Le <a class="gras" href="https://fr.wikipedia.org/wiki/Logiciel_de_gestion_de_versions">versionnage</a> se fait dans un dépôt <a class="gras" href="https://fr.wikipedia.org/wiki/Mercurial">Mercurial</a> que je gère via <a class="gras" href="https://tortoisehg.bitbucket.io/">TortoiseHg</a>
+           Le <a class="gras" href="https://fr.wikipedia.org/wiki/Logiciel_de_gestion_de_versions">versionnage</a> se fait dans un dépôt <a class="gras" href="https://fr.wikipedia.org/wiki/Git">Git</a> qui est publié sur <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">GitHub</a>
           </li>
         </ul>
 
@@ -205,12 +197,8 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
         <h5>NoBleme's source code</h5>
 
         <p>
-          NoBleme's source code is hosted on a public Bitbucket repository:
+          NoBleme's source code is hosted on a public GitHub repository: <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">NoBleme on GitHub</a>
         </p>
-
-        <br>
-
-        <button class="button button-outline" onclick="var sourcecode = window.open('https://bitbucket.org/EricBisceglia/nobleme.com/src/', '_blank'); sourcecode.focus;">CLICK TO SEE NOBLEME'S SOURCE CODE</button>
 
         <p>
           NoBleme's source code was made public for transparency reasons: If you happen to be experienced in development and wonder how some of NoBleme's features work, you can find answers to your questions in this public repository.
@@ -221,15 +209,11 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
         </p>
 
         <p>
-          The website's source code is rather old in places (development has been ongoing since 2005), and uses technologies that can feel antiquated (procedural PHP without any framework, raw javascript, MySQL), but still gets updated and kept up to date as the technologies it uses evolve over time.
+          The website's source code is rather old in places (development has been ongoing since 2005), and uses technologies that can feel antiquated (procedural PHP without any framework, raw javascript, MySQL), but still gets updated and kept up to date as the technologies it uses evolve over time. Sticking to this older style is a design choice, for the simple reason that I take pleasure in coding like this.
         </p>
 
         <p>
           Every file in the repository is exhaustively commented, but sadly it's all in french. This might make the source code complicated to understand if you're not familiar with the languages used on the website. I am comfortable coding in both french and english, and will pick either depending on the project requirements. Since NoBleme started as a purely french website, I picked french for its documentation.
-        </p>
-
-        <p>
-          The choice of Bitbucket over another website is a technological choice: NoBleme's repository uses <a class="gras" href="https://en.wikipedia.org/wiki/Mercurial">Mercurial</a> rather than git (personal preference), which prevents the use of websites that support only Git (such as Github). Out of the free version control hosting websites that supported Mercurial when I open sourced NoBleme, Bitbucket was the one with the best infrastructure and features, thus the logical choice.
         </p>
 
         <br>
@@ -238,11 +222,11 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
         <h5>Contributing to NoBleme's source</h5>
 
         <p>
-          When I work alone on a project, I tend to code in a very pedantic and perfectionist way. This means that most direct code contributions tend to feel improper, and I end up rejecting them all.
+          If you have found an issue in NoBleme's source code or want to do some constructive criticism, you can <a class="gras" href="<?=$chemin?>pages/todo/request?bug">make a proposal</a> and/or come talk about it <a class="gras" href="<?=$chemin?>pages/irc/index">on IRC</a>. Even though I do not accept direct contributions, this kind of indirect contribution through feedback is highly appreciated.
         </p>
 
         <p>
-          If you have found an issue in NoBleme's source code or want to do some constructive criticism, you can <a class="gras" href="<?=$chemin?>pages/todo/request?bug">make a proposal</a> and/or come talk about it <a class="gras" href="<?=$chemin?>pages/irc/index">on IRC</a>. Even though I do not accept direct contributions, this kind of indirect contribution through feedback is highly appreciated.
+          If you feel brave enough to directly contribute to NoBleme's source code, it is open to public contributions. Write your changes in your own branch, make sure you respect the coding style of the already existing code, make a <a class="gras" href="https://help.github.com/en/articles/about-pull-requests">pull request</a> on the develop branch of <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">NoBleme's repository on GitHub</a>, and your contribution should be accepted if it is interesting or useful.
         </p>
 
         <br>
@@ -326,7 +310,7 @@ $page_desc  = "Un regard à travers la facade du site, droit dans les entrailles
             I sometimes use <a class="gras" href="https://winscp.net/eng/docs/start">WinSCP</a> to transfer files and do backups
           </li>
           <li>
-           <a class="gras" href="https://en.wikipedia.org/wiki/Software_versioning">Versioning</a> is done in a <a class="gras" href="https://en.wikipedia.org/wiki/Mercurial">Mercurial</a> repository which I manage using <a class="gras" href="https://tortoisehg.bitbucket.io/">TortoiseHg</a>
+           <a class="gras" href="https://en.wikipedia.org/wiki/Software_versioning">Versioning</a> is done in a <a class="gras" href="https://en.wikipedia.org/wiki/Git">Git</a> repository which is published on <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">GitHub</a>
           </li>
         </ul>
 

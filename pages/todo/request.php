@@ -101,7 +101,7 @@ if($lang == 'FR')
     $trad['bug_soustitre']    = "NoBleme vous remercie d'avance de votre aide";
     $trad['bug_desc']         = <<<EOD
 <p>
-  Si vous avez identifié un problème dans le fonctionnement de NoBleme ou dans son <a class="gras" href="https://bitbucket.org/EricBisceglia/nobleme.com/src/">code source</a>, remplissez le formulaire ci-dessous en détaillant autant que possible la nature du problème que vous avez découvert.
+  Si vous avez identifié un problème dans le fonctionnement de NoBleme ou dans son <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">code source</a>, remplissez le formulaire ci-dessous en détaillant autant que possible la nature du problème que vous avez découvert.
 </p>
 <p>
   Une fois que <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> aura reçu votre rapport de bug, vous recevrez une <a class="gras" href="{$chemin}pages/user/notifications">notification</a> vous informant de l'état du suivi de votre bug. Merci d'avance pour votre contribution à NoBleme !
@@ -160,7 +160,7 @@ else if($lang == 'EN')
     $trad['bug_soustitre']    = "NoBleme thanks you for your help";
     $trad['bug_desc']         = <<<EOD
 <p>
-  If you have found a flaw by using NoBleme or browsing its <a class="gras" href="https://bitbucket.org/EricBisceglia/nobleme.com/src/">source code</a>, please fill up the form below and make sure to detail the issue as much as you can.
+  If you have found a flaw by using NoBleme or browsing its <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">source code</a>, please fill up the form below and make sure to detail the issue as much as you can.
 </p>
 <p>
   Once <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> has read your bug report, you will receive a <a class="gras" href="{$chemin}pages/user/notifications">notification</a> informing you about the status of your bug report. Thanks in advance for your contribution to NoBleme!
