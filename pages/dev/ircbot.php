@@ -156,7 +156,7 @@ else
 
         <form method="POST">
           <fieldset>
-            <label for="botCommit">URL du commit | <a href="https://bitbucket.org/EricBisceglia/nobleme.com/commits/all">Bitbucket</a></label>
+            <label for="botCommit">URL du commit | <a href="https://github.com/EricBisceglia/NoBleme.com/commits/develop">GitHub</a></label>
             <input id="botCommit" name="botCommit" class="indiv" type="text"><br>
             <br>
             <label for="botCommitTitre">Titre du commit</label>

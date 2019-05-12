@@ -50,7 +50,7 @@ $page_nom = "Administre secrètement le site";
         <h4>Faire une mise à jour</h4>
 
         <p>
-          <input type="checkbox"> Commit les changements et vérifier que le commit ait bien été push dans <a href="https://bitbucket.org/EricBisceglia/nobleme.com/commits/all">le dépôt public</a><br>
+          <input type="checkbox"> Commit les changements et vérifier que le commit ait bien été push dans <a href="https://github.com/EricBisceglia/NoBleme.com/commits/develop">le dépôt public</a><br>
           <input type="checkbox"> Commencer par faire un backup complet du www et du sql du site en production<br>
           <input type="checkbox"> Avant de faire la mise à jour en production, <a href="<?=$chemin?>pages/dev/fermeture">fermer le site au public</a> si nécessaire<br>
           <input type="checkbox"> Aller sur la version en production du site et <a href="<?=$chemin?>pages/dev/sql">faire les requêtes SQL</a> s'il y en a<br>
@@ -68,7 +68,7 @@ $page_nom = "Administre secrètement le site";
         <h4>Après une mise à jour</h4>
 
         <p>
-          <input type="checkbox"> Choper l'url du dernier commit dans <a href="https://bitbucket.org/EricBisceglia/nobleme.com/commits/all">le dépôt public</a> et le partager publiquement sur #dev via <a href="<?=$chemin?>pages/dev/ircbot">le bot IRC</a><br>
+          <input type="checkbox"> Choper l'url du dernier commit dans <a href="https://github.com/EricBisceglia/NoBleme.com/commits/develop">le dépôt public</a> et le partager publiquement sur #dev via <a href="<?=$chemin?>pages/dev/ircbot">le bot IRC</a><br>
           <input type="checkbox"> Archiver les backups du www et du sql et en faire une copie de sauvegarde sur HDD externe<br>
           <input type="checkbox"> Supprimer les requêtes qui ne sont plus nécessaires dans la source de /pages/dev/sql.php<br>
           <input type="checkbox"> Félicitations, la mise à jour est finie et tout s'est bien passé <?=bbcode(":)")?>

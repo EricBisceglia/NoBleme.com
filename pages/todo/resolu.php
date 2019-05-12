@@ -186,7 +186,7 @@ $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
             </select><br>
             <br>
 
-            <label for="todo_edit_source">Code source du patch | <a href="https://bitbucket.org/EricBisceglia/nobleme.com/commits/all">Bitbucket</a></label>
+            <label for="todo_edit_source">Code source du patch | <a href="https://github.com/EricBisceglia/NoBleme.com/commits/develop">GitHub</a></label>
             <input id="todo_edit_source" name="todo_edit_source" class="indiv" type="text" value="<?=$todo_source?>"><br>
             <br>
 
