@@ -427,7 +427,7 @@ EOD;
         </p>
 
         <p>
-          Le code source de NoBleme est entièrement libre et open source, publié sous une license permissive qui permet de le réutiliser. Il est visible publiquement sur Bitbucket : <a class="gras" href="https://bitbucket.org/EricBisceglia/nobleme.com/overview">voir le code source de NoBleme.com</a><br>
+          Le code source de NoBleme est entièrement libre et open source, publié sous une license permissive qui permet de le réutiliser. Il est visible publiquement sur GitHub : <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">voir le code source de NoBleme.com</a><br>
           <br>
           Vous trouverez plus d'informations sur les aspects techniques du développement de NoBleme.com et sur mes convictions de développeur en visitant les <a class="gras" href="<?=$chemin?>pages/nobleme/coulisses">coulisses de NoBleme</a>
         </p>
@@ -695,7 +695,7 @@ EOD;
         </p>
 
         <p>
-          NoBleme's source code is entirely free and open source, published under a permissive license that lets you reuse parts of it if you desire. It is publicly available on Bitbucket: <a class="gras" href="https://bitbucket.org/EricBisceglia/nobleme.com/overview">NoBleme.com's source code</a><br>
+          NoBleme's source code is entirely free and open source, published under a permissive license that lets you reuse parts of it if you desire. It is publicly available on GitHub: <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">NoBleme.com's source code</a><br>
         </p>
 
         <br>
