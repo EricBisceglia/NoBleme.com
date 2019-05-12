@@ -311,6 +311,7 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_definition` (
   `est_vulgaire` tinyint(1) DEFAULT NULL,
   `est_politise` tinyint(1) DEFAULT NULL,
   `est_incorrect` tinyint(1) DEFAULT NULL,
+  `notes_admin` longtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_titre_fr` (`titre_fr`(25)),
   KEY `index_titre_en` (`titre_en`(25))
@@ -325,6 +326,15 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_image` (
   `nsfw` tinyint(1) DEFAULT NULL,
   `pages_utilisation_fr` mediumtext COLLATE utf8mb4_unicode_ci,
   `pages_utilisation_en` mediumtext COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `nbdb_web_notes_admin`;
+CREATE TABLE IF NOT EXISTS `nbdb_web_notes_admin` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `notes_admin` longtext COLLATE utf8mb4_unicode_ci,
+  `brouillon_fr` longtext COLLATE utf8mb4_unicode_ci,
+  `brouillon_en` longtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -346,6 +356,7 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_page` (
   `est_vulgaire` tinyint(1) DEFAULT NULL,
   `est_politise` tinyint(1) DEFAULT NULL,
   `est_incorrect` tinyint(1) DEFAULT NULL,
+  `notes_admin` longtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_periode` (`FKnbdb_web_periode`),
   KEY `index_apparition` (`annee_apparition`,`mois_apparition`),

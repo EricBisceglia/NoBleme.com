@@ -18,12 +18,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 //                                            !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP !!!!!                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Option pour désactiver google trends dans la NBDB
+// Champs privés dans l'encyclopédie et le dictionnaire de la culture web
 
-sql_creer_champ('membres', 'voir_tweets', 'TINYINT(1)', 'voir_nsfw');
-sql_creer_champ('membres', 'voir_youtube', 'TINYINT(1)', 'voir_tweets');
-sql_creer_champ('membres', 'voir_google_trends', 'TINYINT(1)', 'voir_youtube');
-
+sql_creer_champ('nbdb_web_definition', 'notes_admin', 'LONGTEXT', 'est_incorrect');
+sql_creer_champ('nbdb_web_page', 'notes_admin', 'LONGTEXT', 'est_incorrect');
+sql_creer_table('nbdb_web_notes_admin');
+sql_creer_champ('nbdb_web_notes_admin', 'notes_admin', 'LONGTEXT', 'id');
+sql_creer_champ('nbdb_web_notes_admin', 'brouillon_fr', 'LONGTEXT', 'notes_admin');
+sql_creer_champ('nbdb_web_notes_admin', 'brouillon_en', 'LONGTEXT', 'brouillon_fr');
 
 
 

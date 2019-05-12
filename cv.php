@@ -54,7 +54,7 @@ if(isset($_GET['fr']))
 if($lang == 'FR')
 {
   // CV: Titres
-  $trad['soustitre']      = "Développeur informatique";
+  $trad['soustitre']      = "Technical manager<br>Senior developer";
   $trad['langlink']       = "en";
   $trad['langswitch']     = "Click here for the english version";
   $trad['domicile']       = "Habite Paris, France";
@@ -67,9 +67,11 @@ if($lang == 'FR')
   $trad['aujourdhui']     = "Aujourd'hui";
   $trad['work_mtd2']      = "CTO (Directeur informatique)";
   $trad['work_free2']     = "Sous secret professionel";
-  $trad['work_mtd']       = "Développeur de l'intranet";
+  $trad['work_mtd']       = "Lead developer de l'intranet";
   $trad['work_meca']      = "Développement logiciel interne";
   $trad['work_free']      = "Développement de jeux en flash";
+  $trad['work_phpsymfo']  = "Stack PHP/Symfony";
+  $trad['work_phpstack']  = "Stack basé sur du PHP";
 
   // CV: Projets personnels
   $trad['projets']        = "Projets personnels";
@@ -106,9 +108,8 @@ if($lang == 'FR')
   $trad['extra_text']     = <<<EOD
 Vous trouverez des exemples illustrés de mes compétences dans le <a class="gras souligne" href="cv?portfolio#portfolio">portfolio</a> qui accompagne ce CV.<br>
 <br>
-Outre le développement informatique (ma passion principale), je suis un passionné de littérature, histoire, sociologie, game design, science-fiction, et musique moderne.<br>
+Outre le développement informatique (ma passion principale), je suis un passionné de littérature, histoire, sociologie, game design, science-fiction, et de musique moderne.<br>
 Je gère l'héritage culturel de la collection <a class="gras" href="http://www.jazzhot.net/PBEvents.asp?ItmID=23592">photographique</a> et <a class="gras" href="http://bdzoom.com/60445/actualites/deces-de-jacques-bisceglia/">littéraire</a> de mon défunt père, <a class="gras" href="https://www.citizenjazz.com/Jacques-Bisceglia-par-Jerome-Merli.html">Jacques Bisceglia</a>.<br>
-J'ai pratiqué le roller de vitesse en compétition de 2003 à 2005, et je continue à le pratiquer en amateur.<br>
 <br>
 N'hésitez pas à me contacter via mon email <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> ou sur <a class="gras" href="{$chemin}pages/irc/index">IRC</a>.
 EOD;
@@ -120,7 +121,7 @@ EOD;
 else if($lang == 'EN')
 {
   // CV: Titres
-  $trad['soustitre']      = "Senior developer";
+  $trad['soustitre']      = "Technical manager<br>Senior developer";
   $trad['langlink']       = "fr";
   $trad['langswitch']     = "Click here for the french version";
   $trad['domicile']       = "Lives in Paris, France";
@@ -131,11 +132,13 @@ else if($lang == 'EN')
   // CV: Parcours professionel
   $trad['parcours']       = "Work experience";
   $trad['aujourdhui']     = "Today";
-  $trad['work_mtd2']      = "CTO + lead developer";
+  $trad['work_mtd2']      = "CTO (executive)";
   $trad['work_free2']     = "Details protected by a NDA";
-  $trad['work_mtd']       = "Intranet development";
+  $trad['work_mtd']       = "Lead developer";
   $trad['work_meca']      = "Custom software development";
   $trad['work_free']      = "Flash game development";
+  $trad['work_phpsymfo']  = "PHP/Symfony stack";
+  $trad['work_phpstack']  = "PHP based stack";
 
   // CV: Projets personnels
   $trad['projets']        = "Personal projets";
@@ -174,7 +177,6 @@ You will find illustrated examples of my skills in the <a class="gras souligne" 
 <br>
 Other than computer programming (my main passion), I am passionate about literature, history, sociology, game design, science fiction, and modern music.<br>
 I manage the cultural inheritance (photographs and books) of my deceased father, <a class="gras" href="http://inconstantsol.blogspot.fr/2013/03/jacques-bisceglia-1940-2013.html">Jacques Bisceglia</a>.<br>
-I've practiced competitive rollerblading from 2003 to 2005, and still practice it as an amateur.<br>
 <br>
 Do not hesitate to contact me by e-mail at <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> or through <a class="gras" href="{$chemin}pages/irc/index">IRC</a>.
 EOD;
@@ -199,7 +201,6 @@ EOD;
           <div style="flex:1">
             <h1>Éric Bisceglia</h1>
             <h5><?=$trad['soustitre']?></h5>
-            <a class="gras souligne" href="cv?<?=$trad['langlink']?>"><?=$trad['langswitch']?></a>
           </div>
 
           <div class="align_right" style="flex:1;">
@@ -207,7 +208,8 @@ EOD;
               <?=$trad['domicile']?><br>
               <?=$trad['active']?><br>
               <?=$trad['naissance']?><br>
-              E-mail : <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a>
+              E-mail : <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a><br>
+              <a class="gras souligne" href="cv?<?=$trad['langlink']?>"><?=$trad['langswitch']?></a>
             </p>
           </div>
 
@@ -222,7 +224,8 @@ EOD;
         <div class="flexcontainer">
 
           <div style="flex:auto">
-            2016 - <?=$trad['aujourdhui']?><br>
+            2019 - <?=$trad['aujourdhui']?><br>
+            2016 - 2018<br>
             2015 - 2016<br>
             2010 - 2015<br>
             2009 - 2010<br>
@@ -230,15 +233,17 @@ EOD;
           </div>
 
           <div style="flex:auto">
+            <a class="gras" href="http://www.wynd.eu">Wynd</a> - Technical manager<br>
             <a class="gras" href="http://www.mtd-finance.fr">MTD Finance</a> - <?=$trad['work_mtd2']?><br>
-            <span class="gras texte_noir">Freelance</span> - <?=$trad['work_free2']?><br>
+            <span class="gras texte_noir">Consulting</span> - <?=$trad['work_free2']?><br>
             <a class="gras" href="http://www.mtd-finance.fr">MTD Finance</a> - <?=$trad['work_mtd']?><br>
             <a class="gras" href="http://www.mecamatic.fr">Mécamatic</a> - <?=$trad['work_meca']?><br>
             <span class="gras texte_noir">Freelance</span> - <?=$trad['work_free']?>
           </div>
 
           <div style="flex:auto">
-            PHP - MySQL - JavaScript<br>
+            <?=$trad['work_phpsymfo']?> - Management<br>
+            <?=$trad['work_phpstack']?> - Management<br>
             Python - PostgreSQL - React.js<br>
             PHP - MySQL - JavaScript<br>
             Filemaker - Perl - AppleScript<br>
@@ -309,8 +314,8 @@ EOD;
             PHP ; SQL ; JavaScript ; HTML/CSS<br>
             C ; C++ ; Python ; Perl ; Java<br>
             MySQL ; PostgreSQL ; Filemaker<br>
-            FreeBSD ; Linux ; Windows ; OSX<br>
-            Hg/Git/SVN ; Flash/ActionScript ; GtkRadiant ; Qt
+            Windows ; OSX ; Linux ; FreeBSD<br>
+            Git/Hg/SVN ; Flash/ActionScript ; GtkRadiant
           </div>
 
         </div>
