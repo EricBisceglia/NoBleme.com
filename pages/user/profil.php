@@ -242,7 +242,7 @@ EOD;
   $trad['gauche_anniv']   = "Date of birth";
   $trad['gauche_genre']   = "Gender";
   $trad['gauche_tgenre']  = "Male, female, etc.     35 character limit";
-  $trad['gauche_habite']  = "City / Countr:";
+  $trad['gauche_habite']  = "City / Country:";
   $trad['gauche_thabite'] = "The place where you live     35 character limit";
   $trad['gauche_metier']  = "Job / Occupation";
   $trad['gauche_tmetier'] = "Your life's main activity     35 character limit";
