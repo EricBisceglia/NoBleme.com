@@ -270,3 +270,231 @@ function sql_insertion_valeur($condition, $requete)
   if(!mysqli_num_rows(query($condition)))
     query($requete);
 }
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                        HISTORIQUE DES REQUÊTES                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                Permet de rejouer toutes les requêtes qui ne se sont pas encore jouées,                                */
+/*                      afin d'assurer une montée de version depuis n'importe quelle version précédente de NoBleme                       */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                           VERSION 3 BUILD 8                                                           */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+// #496 - Option pour désactiver google trends
+
+sql_creer_champ('membres', 'voir_tweets', 'TINYINT(1)', 'voir_nsfw');
+sql_creer_champ('membres', 'voir_youtube', 'TINYINT(1)', 'voir_tweets');
+sql_creer_champ('membres', 'voir_google_trends', 'TINYINT(1)', 'voir_youtube');
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #477 - Permettre de tag des contenus de la NBDB comme NSFW
+
+sql_creer_champ('nbdb_web_page', 'contenu_floute', 'TINYINT(1)', 'mois_popularisation');
+sql_creer_champ('nbdb_web_definition', 'contenu_floute', 'TINYINT(1)', 'definition_en');
+sql_creer_champ('nbdb_web_image', 'nsfw', 'TINYINT(1)', 'tags');
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                           VERSION 3 BUILD 7                                                           */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+// #505 - Rendre les miscellanées bilingues
+
+sql_creer_champ('quotes', 'langue', 'TINYTEXT', 'timestamp');
+
+query(" UPDATE  quotes
+        SET     quotes.langue = 'FR'
+        WHERE   quotes.langue IS NULL ");
+
+query(" UPDATE  activite
+        SET     activite.action_type  =     'quote_new_fr'
+        WHERE   activite.action_type  LIKE  'quote' ");
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Dernière activité des membres
+
+sql_creer_champ('membres', 'derniere_activite', 'INT(11) UNSIGNED NOT NULL', 'derniere_visite_ip');
+
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                           VERSION 3 BUILD 6                                                           */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+// #505 - Rendre les miscellanées bilingues// Indexs fulltext pour les recherches dans la NBDB
+
+sql_creer_index('nbdb_web_page', 'index_contenu_en', 'contenu_en', 1);
+sql_creer_index('nbdb_web_page', 'index_contenu_fr', 'contenu_fr', 1);
+
+sql_creer_index('nbdb_web_definition', 'index_definition_en', 'definition_en', 1);
+sql_creer_index('nbdb_web_definition', 'index_definition_fr', 'definition_fr', 1);
+
+sql_creer_index('nbdb_web_categorie', 'index_description_fr', 'description_fr', 1);
+sql_creer_index('nbdb_web_categorie', 'index_description_en', 'description_en', 1);
+
+sql_creer_index('nbdb_web_definition', 'index_definition_fr', 'definition_fr', 1);
+sql_creer_index('nbdb_web_definition', 'index_definition_en', 'definition_en', 1);
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Indexs manquants
+
+sql_creer_index('automatisation', 'index_action', 'action_id');
+
+sql_creer_index('ecrivains_concours', 'index_gagnant', 'FKecrivains_texte_gagnant, FKmembres_gagnant');
+
+sql_creer_index('ecrivains_concours_vote', 'index_texte', 'FKecrivains_concours');
+sql_creer_index('ecrivains_concours_vote', 'index_concours', 'FKecrivains_texte');
+sql_creer_index('ecrivains_concours_vote', 'index_membre', 'FKmembres');
+sql_creer_index('ecrivains_concours_vote', 'index_poids', 'poids_vote, FKmembres, FKecrivains_texte, FKecrivains_concours');
+
+sql_creer_index('ecrivains_note', 'index_texte', 'FKecrivains_texte');
+sql_creer_index('ecrivains_note', 'index_membre', 'FKmembres');
+sql_creer_index('ecrivains_note', 'index_note', 'note');
+
+sql_creer_index('ecrivains_texte', 'index_auteur', 'anonyme, FKmembres');
+sql_creer_index('ecrivains_texte', 'index_concours', 'FKecrivains_concours');
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Pages
+
+sql_creer_table('nbdb_web_page');
+
+sql_creer_champ('nbdb_web_page', 'FKnbdb_web_periode', 'INT(11) UNSIGNED NOT NULL', 'id');
+sql_creer_champ('nbdb_web_page', 'titre_fr', 'MEDIUMTEXT', 'FKnbdb_web_periode');
+sql_creer_champ('nbdb_web_page', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+sql_creer_champ('nbdb_web_page', 'redirection_fr', 'MEDIUMTEXT', 'titre_en');
+sql_creer_champ('nbdb_web_page', 'redirection_en', 'MEDIUMTEXT', 'redirection_fr');
+sql_creer_champ('nbdb_web_page', 'contenu_fr', 'LONGTEXT', 'redirection_en');
+sql_creer_champ('nbdb_web_page', 'contenu_en', 'LONGTEXT', 'contenu_fr');
+sql_creer_champ('nbdb_web_page', 'annee_apparition', 'INT(4)', 'contenu_en');
+sql_creer_champ('nbdb_web_page', 'mois_apparition', 'INT(2)', 'annee_apparition');
+sql_creer_champ('nbdb_web_page', 'annee_popularisation', 'INT(4)', 'mois_apparition');
+sql_creer_champ('nbdb_web_page', 'mois_popularisation', 'INT(2)', 'annee_popularisation');
+sql_creer_champ('nbdb_web_page', 'est_vulgaire', 'TINYINT(1)', 'mois_popularisation');
+sql_creer_champ('nbdb_web_page', 'est_politise', 'TINYINT(1)', 'est_vulgaire');
+sql_creer_champ('nbdb_web_page', 'est_incorrect', 'TINYINT(1)', 'est_politise');
+
+sql_creer_index('nbdb_web_page', 'index_periode', 'FKnbdb_web_periode');
+sql_creer_index('nbdb_web_page', 'index_apparition', 'annee_apparition, mois_apparition');
+sql_creer_index('nbdb_web_page', 'index_popularisation', 'annee_popularisation, mois_popularisation');
+sql_creer_index('nbdb_web_page', 'index_titre_fr', 'titre_fr (25)');
+sql_creer_index('nbdb_web_page', 'index_titre_en', 'titre_en (25)');
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Définitions
+
+sql_creer_table('nbdb_web_definition');
+
+sql_creer_champ('nbdb_web_definition', 'titre_fr', 'MEDIUMTEXT', 'id');
+sql_creer_champ('nbdb_web_definition', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+sql_creer_champ('nbdb_web_definition', 'redirection_fr', 'MEDIUMTEXT', 'titre_en');
+sql_creer_champ('nbdb_web_definition', 'redirection_en', 'MEDIUMTEXT', 'redirection_fr');
+sql_creer_champ('nbdb_web_definition', 'definition_fr', 'LONGTEXT', 'redirection_en');
+sql_creer_champ('nbdb_web_definition', 'definition_en', 'LONGTEXT', 'definition_fr');
+sql_creer_champ('nbdb_web_definition', 'est_vulgaire', 'TINYINT(1)', 'definition_en');
+sql_creer_champ('nbdb_web_definition', 'est_politise', 'TINYINT(1)', 'est_vulgaire');
+sql_creer_champ('nbdb_web_definition', 'est_incorrect', 'TINYINT(1)', 'est_politise');
+
+sql_creer_index('nbdb_web_definition', 'index_titre_fr', 'titre_fr (25)');
+sql_creer_index('nbdb_web_definition', 'index_titre_en', 'titre_en (25)');
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Périodes
+
+sql_creer_table('nbdb_web_periode');
+
+sql_creer_champ('nbdb_web_periode', 'titre_fr', 'MEDIUMTEXT', 'id');
+sql_creer_champ('nbdb_web_periode', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+sql_creer_champ('nbdb_web_periode', 'description_fr', 'MEDIUMTEXT', 'titre_en');
+sql_creer_champ('nbdb_web_periode', 'description_en', 'MEDIUMTEXT', 'description_fr');
+sql_creer_champ('nbdb_web_periode', 'annee_debut', 'INT(4)', 'description_en');
+sql_creer_champ('nbdb_web_periode', 'annee_fin', 'INT(4)', 'annee_debut');
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Catégories
+
+sql_creer_table('nbdb_web_categorie');
+
+sql_creer_champ('nbdb_web_categorie', 'titre_fr', 'MEDIUMTEXT', 'id');
+sql_creer_champ('nbdb_web_categorie', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
+sql_creer_champ('nbdb_web_categorie', 'ordre_affichage', 'INT(11) UNSIGNED NOT NULL', 'titre_en');
+sql_creer_champ('nbdb_web_categorie', 'description_fr', 'MEDIUMTEXT', 'ordre_affichage');
+sql_creer_champ('nbdb_web_categorie', 'description_en', 'MEDIUMTEXT', 'description_fr');
+
+sql_creer_index('nbdb_web_categorie', 'index_ordre_affichage', 'ordre_affichage');
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Catégories des pages
+
+sql_creer_table('nbdb_web_page_categorie');
+
+sql_creer_champ('nbdb_web_page_categorie', 'FKnbdb_web_page', 'INT(11) UNSIGNED NOT NULL', 'id');
+sql_creer_champ('nbdb_web_page_categorie', 'FKnbdb_web_categorie', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_page');
+
+sql_creer_index('nbdb_web_page_categorie', 'index_pages', 'FKnbdb_web_page, FKnbdb_web_categorie');
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Nouvelle table : NBDB - Encyclopédie du web - Images
+
+sql_creer_table('nbdb_web_image');
+
+sql_creer_champ('nbdb_web_image', 'timestamp_upload', 'INT(11) UNSIGNED NOT NULL', 'id');
+sql_creer_champ('nbdb_web_image', 'nom_fichier', 'MEDIUMTEXT', 'timestamp_upload');
+sql_creer_champ('nbdb_web_image', 'tags', 'MEDIUMTEXT', 'nom_fichier');
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                           VERSION 3 BUILD 5                                                           */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+// Changement structurel du coin des écrivains
+
+sql_supprimer_champ('ecrivains_concours', 'FKforum_sujet');
+sql_renommer_champ('ecrivains_concours', 'date_debut', 'timestamp_debut', 'INT(11) UNSIGNED NOT NULL');
+sql_renommer_champ('ecrivains_concours', 'date_fin', 'timestamp_fin', 'INT(11) UNSIGNED NOT NULL');
+
+sql_creer_champ('ecrivains_concours', 'FKmembres_gagnant', 'INT(11) UNSIGNED NOT NULL', 'id');
+sql_creer_champ('ecrivains_concours', 'FKecrivains_texte_gagnant', 'INT(11) UNSIGNED NOT NULL', 'FKmembres_gagnant');
+sql_creer_champ('ecrivains_concours', 'num_participants', 'INT(11) UNSIGNED NOT NULL', 'timestamp_fin');
+sql_creer_champ('ecrivains_concours_vote', 'poids_vote', 'INT(11) UNSIGNED NOT NULL', 'FKmembres');
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Table pour les cron
+
+sql_creer_table("automatisation", " id                  INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
+                                    action_id           INT(11) UNSIGNED NOT NULL                             ,
+                                    action_type         MEDIUMTEXT                                            ,
+                                    action_description  MEDIUMTEXT                                            ,
+                                    action_timestamp    INT(11) UNSIGNED NOT NULL                             ");
