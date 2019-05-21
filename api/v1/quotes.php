@@ -71,8 +71,5 @@ if($return_json == array())
 // On annonce que c'est du json
 header("Content-Type: application/json; charset=UTF-8");
 
-// On vire le BOM
-$return_json = str_replace("\xEF\xBB\xBF",'',$return_json);
-
 // Puis on affiche le JSON
 echo json_encode($return_json, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE);
