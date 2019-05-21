@@ -49,6 +49,7 @@ for($nmisc = 0; $dmisc = mysqli_fetch_array($qmisc); $nmisc++)
   $tempobject         = array(
     'id'        => $dmisc['q_id']                                               ,
     'url'       => $GLOBALS['url_site'].'pages/quotes/quote?id='.$dmisc['q_id'] ,
+    'shorturl'  => $GLOBALS['url_site'].'s?m='.$dmisc['q_id'] ,
     'timestamp' => $dmisc['q_timestamp']                                        ,
     'lang'      => $dmisc['q_lang']                                             ,
     'text'      => str_replace(PHP_EOL, " ", $dmisc['q_contenu'])               ,
@@ -70,5 +71,8 @@ if($return_json == array())
 // On annonce que c'est du json
 header("Content-Type: application/json; charset=UTF-8");
 
+// On vire le BOM
+$return_json = str_replace("\xEF\xBB\xBF",'',$return_json);
+
 // Puis on affiche le JSON
-echo json_encode($return_json, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+echo json_encode($return_json, JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE);
