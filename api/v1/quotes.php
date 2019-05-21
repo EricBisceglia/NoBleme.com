@@ -47,12 +47,12 @@ $return_json = array();
 for($nmisc = 0; $dmisc = mysqli_fetch_array($qmisc); $nmisc++)
 {
   $tempobject         = array(
-    'quote_id'        => $dmisc['q_id']                                               ,
-    'quote_url'       => $GLOBALS['url_site'].'pages/quotes/quote?id='.$dmisc['q_id'] ,
-    'quote_timestamp' => $dmisc['q_timestamp']                                        ,
-    'quote_lang'      => $dmisc['q_lang']                                             ,
-    'quote_text'      => str_replace(PHP_EOL, " ", $dmisc['q_contenu'])               ,
-    'quote_nsfw'      => ($dmisc['q_nsfw']) ? true : false
+    'id'        => $dmisc['q_id']                                               ,
+    'url'       => $GLOBALS['url_site'].'pages/quotes/quote?id='.$dmisc['q_id'] ,
+    'timestamp' => $dmisc['q_timestamp']                                        ,
+    'lang'      => $dmisc['q_lang']                                             ,
+    'text'      => str_replace(PHP_EOL, " ", $dmisc['q_contenu'])               ,
+    'nsfw'      => ($dmisc['q_nsfw']) ? true : false
   );
   array_push($return_json, $tempobject);
 }
