@@ -72,7 +72,7 @@ if(isset($_POST['web_notes_prev']) || isset($_POST['web_notes_edit']))
 /*****************************************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Récupération des notes
+// Récupération des notes globales
 
 if(!isset($_POST['web_notes_prev']))
 {
@@ -86,6 +86,30 @@ if(!isset($_POST['web_notes_prev']))
   $web_notes_global = $dnotes['web_notes_global'];
   $web_notes_fr     = $dnotes['web_notes_fr'];
   $web_notes_en     = $dnotes['web_notes_en'];
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Liste des pages contenant des notes
+
+// On va récupérer toutes les notes
+$qwebnotes = query("  SELECT    nbdb_web_page.id          AS 'web_page_id'  ,
+                                nbdb_web_page.titre_fr    AS 'web_page_fr'  ,
+                                nbdb_web_page.titre_en    AS 'web_page_en'  ,
+                                nbdb_web_page.notes_admin AS 'web_notes'
+                      FROM      nbdb_web_page
+                      WHERE     nbdb_web_page.notes_admin != ''
+                      ORDER BY  nbdb_web_page.titre_fr  ASC ");
+
+// Puis on les prépare pour l'affichage
+for($nwebnotes = 0; $dwebnotes = mysqli_fetch_array($qwebnotes); $nwebnotes++)
+{
+  $web_liste_notes_id[$nwebnotes]   = predata($dwebnotes['web_page_id']);
+  $web_liste_notes_fr[$nwebnotes]   = predata($dwebnotes['web_page_fr']);
+  $web_liste_notes_en[$nwebnotes]   = predata($dwebnotes['web_page_en']);
+  $web_liste_notes_text[$nwebnotes] = bbcode(predata($dwebnotes['web_notes'], 1));
 }
 
 
@@ -190,8 +214,50 @@ if(!isset($_POST['web_notes_prev']))
       </div>
 
       <br>
+      <br>
       <hr class="separateur_contenu">
       <br>
+      <br>
+
+      <div class="tableau">
+
+        <table class="grid titresnoirs altc">
+          <thead>
+
+            <tr class="moinsgros gras">
+              <th>
+                PAGE
+              </th>
+              <th>
+                NOTES
+              </th>
+            </tr>
+
+          </thead>
+          <tbody>
+
+            <?php for($i=0;$i<$nwebnotes;$i++) { ?>
+
+              <tr>
+                <td class="gras align_center">
+                  <a href="<?=$chemin?>pages/nbdb/web?id=<?=$web_liste_notes_id[$i]?>"><?=$web_liste_notes_fr[$i]?></a>
+                  <?php if($web_liste_notes_fr[$i] && $web_liste_notes_en[$i]) { ?>
+                  <br>
+                  <?php } if($web_liste_notes_fr[$i] != $web_liste_notes_en[$i]) { ?>
+                    <a href="<?=$chemin?>pages/nbdb/web?id=<?=$web_liste_notes_id[$i]?>"><?=$web_liste_notes_en[$i]?></a>
+                  <?php } ?>
+                </td>
+                <td class="spaced">
+                  <?=$web_liste_notes_text[$i]?>
+                </td>
+              </tr>
+
+            <?php } ?>
+
+          </tbody>
+        </table>
+
+      </div>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */

@@ -594,7 +594,7 @@ if(!getxhr()) { /***************************************************************
               <label class="label-inline" for="web_incorrect">Politiquement incorrect (terme dont l'usage est déconseillé)</label><br>
               <br>
 
-              <label for="web_notes_admin">Commentaires / remarques (notes privées)</label>
+              <label for="web_notes_admin">Notes privées d'administration (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a>)</label>
               <textarea id="web_notes_admin" name="web_notes_admin" class="indiv web_encyclo_edit_note"><?=$web_notes_admin?></textarea><br>
               <br>
 
