@@ -407,6 +407,32 @@ EOD;
 
         <br>
 
+        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_images';">
+          <div class="align_center doc_minibordure">
+            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+              Administration : Images
+            </h5>
+            <span class="doc_minipadding">
+              Liste des images et des lieux où elles sont utilisées
+            </span>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_notes_admin';">
+          <div class="align_center doc_minibordure">
+            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+              Administration : Notes privées
+            </h5>
+            <span class="doc_minipadding">
+              Notes privées globales et liées aux pages individuelles
+            </span>
+          </div>
+        </div>
+
+        <br>
+
         <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_missing';">
           <div class="align_center doc_minibordure">
             <h5 class="doc_minipadding_bot doc_minibordure_bot">
