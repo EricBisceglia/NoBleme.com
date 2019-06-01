@@ -94,14 +94,14 @@ if(!isset($_POST['web_notes_prev']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Liste des pages contenant des notes
 
-// On va récupérer toutes les notes
+// On va récupérer toutes les notes de l'encyclopédie
 $qwebnotes = query("  SELECT    nbdb_web_page.id          AS 'web_page_id'  ,
                                 nbdb_web_page.titre_fr    AS 'web_page_fr'  ,
                                 nbdb_web_page.titre_en    AS 'web_page_en'  ,
                                 nbdb_web_page.notes_admin AS 'web_notes'
                       FROM      nbdb_web_page
                       WHERE     nbdb_web_page.notes_admin != ''
-                      ORDER BY  nbdb_web_page.titre_fr  ASC ");
+                      ORDER BY  nbdb_web_page.titre_fr    ASC ");
 
 // Puis on les prépare pour l'affichage
 for($nwebnotes = 0; $dwebnotes = mysqli_fetch_array($qwebnotes); $nwebnotes++)
@@ -110,6 +110,24 @@ for($nwebnotes = 0; $dwebnotes = mysqli_fetch_array($qwebnotes); $nwebnotes++)
   $web_liste_notes_fr[$nwebnotes]   = predata($dwebnotes['web_page_fr']);
   $web_liste_notes_en[$nwebnotes]   = predata($dwebnotes['web_page_en']);
   $web_liste_notes_text[$nwebnotes] = bbcode(predata($dwebnotes['web_notes'], 1));
+}
+
+// On va récupérer toutes les notes du dictionnaire
+$qdiconotes = query(" SELECT    nbdb_web_definition.id          AS 'dico_id'        ,
+                                nbdb_web_definition.titre_fr    AS 'dico_titre_fr'  ,
+                                nbdb_web_definition.titre_en    AS 'dico_titre_en'  ,
+                                nbdb_web_definition.notes_admin AS 'dico_notes'
+                      FROM      nbdb_web_definition
+                      WHERE     nbdb_web_definition.notes_admin != ''
+                      ORDER BY  nbdb_web_definition.titre_fr    ASC ");
+
+// Puis on les prépare pour l'affichage
+for($ndiconotes = 0; $ddiconotes = mysqli_fetch_array($qdiconotes); $ndiconotes++)
+{
+  $dico_liste_notes_id[$ndiconotes]   = predata($ddiconotes['dico_id']);
+  $dico_liste_notes_fr[$ndiconotes]   = predata($ddiconotes['dico_titre_fr']);
+  $dico_liste_notes_en[$ndiconotes]   = predata($ddiconotes['dico_titre_en']);
+  $dico_liste_notes_text[$ndiconotes] = bbcode(predata($ddiconotes['dico_notes'], 1));
 }
 
 
@@ -239,17 +257,39 @@ for($nwebnotes = 0; $dwebnotes = mysqli_fetch_array($qwebnotes); $nwebnotes++)
             <?php for($i=0;$i<$nwebnotes;$i++) { ?>
 
               <tr>
+
                 <td class="gras align_center">
                   <a href="<?=$chemin?>pages/nbdb/web?id=<?=$web_liste_notes_id[$i]?>"><?=$web_liste_notes_fr[$i]?></a>
                   <?php if($web_liste_notes_fr[$i] && $web_liste_notes_en[$i]) { ?>
                   <br>
                   <?php } if($web_liste_notes_fr[$i] != $web_liste_notes_en[$i]) { ?>
-                    <a href="<?=$chemin?>pages/nbdb/web?id=<?=$web_liste_notes_id[$i]?>"><?=$web_liste_notes_en[$i]?></a>
+                  <a href="<?=$chemin?>pages/nbdb/web?id=<?=$web_liste_notes_id[$i]?>"><?=$web_liste_notes_en[$i]?></a>
                   <?php } ?>
                 </td>
+
                 <td class="spaced">
                   <?=$web_liste_notes_text[$i]?>
                 </td>
+
+              </tr>
+
+              <?php } for($i=0;$i<$ndiconotes;$i++) { ?>
+
+              <tr>
+
+                <td class="gras align_center">
+                  <a href="<?=$chemin?>pages/nbdb/web_dictionnaire?id=<?=$dico_liste_notes_id[$i]?>"><?=$dico_liste_notes_fr[$i]?></a>
+                  <?php if($dico_liste_notes_fr[$i] && $dico_liste_notes_en[$i]) { ?>
+                  <br>
+                  <?php } if($dico_liste_notes_fr[$i] != $dico_liste_notes_en[$i]) { ?>
+                  <a href="<?=$chemin?>pages/nbdb/web_dictionnaire?id=<?=$dico_liste_notes_id[$i]?>"><?=$dico_liste_notes_en[$i]?></a>
+                  <?php } ?>
+                </td>
+
+                <td class="spaced">
+                  <?=$dico_liste_notes_text[$i]?>
+                </td>
+
               </tr>
 
             <?php } ?>

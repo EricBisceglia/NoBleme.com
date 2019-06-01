@@ -240,8 +240,8 @@ else if(isset($_GET['id']))
   $web_titre_en         = predata($dweb['w_titre_en']);
   $web_redirect_fr      = predata($dweb['w_redirect_fr']);
   $web_redirect_en      = predata($dweb['w_redirect_en']);
-  $web_contenu_fr       = $dweb['w_contenu_fr'];
-  $web_contenu_en       = $dweb['w_contenu_en'];
+  $web_contenu_fr       = predata($dweb['w_contenu_fr']);
+  $web_contenu_en       = predata($dweb['w_contenu_en']);
   $web_apparition_y     = ($dweb['w_apparition_y']) ? $dweb['w_apparition_y'] : '';
   $web_apparition_m     = ($dweb['w_apparition_m']) ? $dweb['w_apparition_m'] : '';
   $web_popularisation_y = ($dweb['w_popularisation_y']) ? $dweb['w_popularisation_y'] : '';
