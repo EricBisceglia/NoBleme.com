@@ -27,6 +27,7 @@
 
 /********************************************* MODIFIER UNE ENTRÉE DE L'ENCYCLOPÉDIE DU WEB **********************************************/
 .web_encyclo_edit               { height: 300px; }
+.web_encyclo_edit_note          { height: 100px; }
 .web_encyclo_periode_container  { width: 400px;  }
 .web_encyclo_dates              { width: 110px;  }
 .web_encyclo_dates_container    { width: 230px;  }
