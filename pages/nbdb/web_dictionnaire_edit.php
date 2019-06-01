@@ -54,6 +54,7 @@ if(isset($_POST['web_dico_add']) || isset($_POST['web_dico_edit']))
   $edit_dico_vulgaire       = isset($_POST['web_dico_vulgaire']) ? 1 : 0;
   $edit_dico_politise       = isset($_POST['web_dico_politise']) ? 1 : 0;
   $edit_dico_incorrect      = isset($_POST['web_dico_incorrect']) ? 1 : 0;
+  $edit_dico_notes_admin    = postdata_vide('web_dico_notes_admin', 'string', '');
   $edit_dico_activite       = isset($_POST['web_dico_activite']) ? 1 : 0;
   $edit_dico_irc            = isset($_POST['web_dico_irc']) ? 1 : 0;
 
@@ -71,7 +72,8 @@ if(isset($_POST['web_dico_add']) || isset($_POST['web_dico_edit']))
                         nbdb_web_definition.contenu_floute  = '$edit_dico_floute'         ,
                         nbdb_web_definition.est_vulgaire    = '$edit_dico_vulgaire'       ,
                         nbdb_web_definition.est_politise    = '$edit_dico_politise'       ,
-                        nbdb_web_definition.est_incorrect   = '$edit_dico_incorrect'      ");
+                        nbdb_web_definition.est_incorrect   = '$edit_dico_incorrect'      ,
+                        nbdb_web_definition.notes_admin     = '$edit_dico_notes_admin'    ");
 
     // On récupère l'ID
     $edit_dico_id = mysqli_insert_id($db);
@@ -107,7 +109,8 @@ if(isset($_POST['web_dico_add']) || isset($_POST['web_dico_edit']))
                     nbdb_web_definition.contenu_floute  = '$edit_dico_floute'         ,
                     nbdb_web_definition.est_vulgaire    = '$edit_dico_vulgaire'       ,
                     nbdb_web_definition.est_politise    = '$edit_dico_politise'       ,
-                    nbdb_web_definition.est_incorrect   = '$edit_dico_incorrect'
+                    nbdb_web_definition.est_incorrect   = '$edit_dico_incorrect'      ,
+                    nbdb_web_definition.notes_admin     = '$edit_dico_notes_admin'
             WHERE   nbdb_web_definition.id              = '$edit_dico_id'             ");
 
     // Activité récente
@@ -181,7 +184,8 @@ else if(isset($_GET['id']))
                                               nbdb_web_definition.contenu_floute  AS 'd_floute'       ,
                                               nbdb_web_definition.est_vulgaire    AS 'd_vulgaire'     ,
                                               nbdb_web_definition.est_politise    AS 'd_politise'     ,
-                                              nbdb_web_definition.est_incorrect   AS 'd_incorrect'
+                                              nbdb_web_definition.est_incorrect   AS 'd_incorrect'    ,
+                                              nbdb_web_definition.notes_admin     AS 'd_notes_admin'
                                       FROM    nbdb_web_definition
                                       WHERE   nbdb_web_definition.id = '$dico_id' "));
 
@@ -190,12 +194,13 @@ else if(isset($_GET['id']))
   $dico_titre_en    = predata($ddico['d_titre_en']);
   $dico_redirect_fr = predata($ddico['d_redirect_fr']);
   $dico_redirect_en = predata($ddico['d_redirect_en']);
-  $dico_contenu_fr  = $ddico['d_contenu_fr'];
-  $dico_contenu_en  = $ddico['d_contenu_en'];
+  $dico_contenu_fr  = predata($ddico['d_contenu_fr']);
+  $dico_contenu_en  = predata($ddico['d_contenu_en']);
   $dico_floute      = ($ddico['d_floute']) ? ' checked' : '';
   $dico_vulgaire    = ($ddico['d_vulgaire']) ? ' checked' : '';
   $dico_politise    = ($ddico['d_politise']) ? ' checked' : '';
   $dico_incorrect   = ($ddico['d_incorrect']) ? ' checked' : '';
+  $dico_notes_admin = predata($ddico['d_notes_admin']);
   $dico_activite    = '';
   $dico_irc         = '';
 }
@@ -213,6 +218,7 @@ else
   $dico_vulgaire    = '';
   $dico_politise    = '';
   $dico_incorrect   = '';
+  $dico_notes_admin = '';
   $dico_activite    = ' checked';
   $dico_irc         = ' checked';
 }
@@ -354,6 +360,10 @@ else
               <label class="label-inline" for="web_dico_politise">Sujet politisé (parle de sujets de société sur lesquels tout le monde n'est pas d'accord)</label><br>
               <input id="web_dico_incorrect" name="web_dico_incorrect" type="checkbox"<?=$dico_incorrect?>>
               <label class="label-inline" for="web_dico_incorrect">Politiquement incorrect (terme dont l'usage est déconseillé)</label><br>
+              <br>
+
+              <label for="web_dico_notes_admin">Notes privées d'administration (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a>)</label>
+              <textarea id="web_dico_notes_admin" name="web_dico_notes_admin" class="indiv web_encyclo_edit_note"><?=$dico_notes_admin?></textarea><br>
               <br>
 
               <?php if(isset($_GET['id'])) { ?>

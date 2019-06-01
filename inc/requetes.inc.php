@@ -24,18 +24,13 @@ $derniere_requete = sql_check_id_requete();
 //                                            !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP !!!!!                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #543 - Historique des requêtes SQL
+// #533 : Pas besoin d'id pour les notes admin de la NBDB
 
-// Je laisse volontairement ce bloc de commentaires pour avoir une référence à la prochaine requête
-// Cette requête se trouve également en bas du fichier
-
-/*
-if($derniere_requete < 16)
+if($derniere_requete < 17)
 {
-  sql_creer_champ("vars_globales", "derniere_requete_sql", "TINYINT(1) NOT NULL", "mise_a_jour");
-  sql_update_id_requete(16);
+  sql_supprimer_champ("nbdb_web_notes_admin", "id");
+  sql_update_id_requete(17);
 }
-*/
 
 
 

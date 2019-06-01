@@ -59,6 +59,7 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
   $edit_web_vulgaire          = isset($_POST['web_vulgaire']) ? 1 : 0;
   $edit_web_politise          = isset($_POST['web_politise']) ? 1 : 0;
   $edit_web_incorrect         = isset($_POST['web_incorrect']) ? 1 : 0;
+  $edit_web_notes_admin       = postdata_vide('web_notes_admin', 'string', '');
   $edit_web_activite          = isset($_POST['web_activite']) ? 1 : 0;
   $edit_web_irc               = isset($_POST['web_irc']) ? 1 : 0;
 
@@ -81,7 +82,8 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
                         nbdb_web_page.contenu_floute        = '$edit_web_floute'            ,
                         nbdb_web_page.est_vulgaire          = '$edit_web_vulgaire'          ,
                         nbdb_web_page.est_politise          = '$edit_web_politise'          ,
-                        nbdb_web_page.est_incorrect         = '$edit_web_incorrect'         ");
+                        nbdb_web_page.est_incorrect         = '$edit_web_incorrect'         ,
+                        nbdb_web_page.notes_admin           = '$edit_web_notes_admin'       ");
 
     // On récupère l'ID
     $edit_web_id = mysqli_insert_id($db);
@@ -122,7 +124,8 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
                     nbdb_web_page.contenu_floute        = '$edit_web_floute'            ,
                     nbdb_web_page.est_vulgaire          = '$edit_web_vulgaire'          ,
                     nbdb_web_page.est_politise          = '$edit_web_politise'          ,
-                    nbdb_web_page.est_incorrect         = '$edit_web_incorrect'
+                    nbdb_web_page.est_incorrect         = '$edit_web_incorrect'         ,
+                    nbdb_web_page.notes_admin           = '$edit_web_notes_admin'
             WHERE   nbdb_web_page.id                    = '$edit_web_id'              ");
 
     // Activité récente
@@ -226,7 +229,8 @@ else if(isset($_GET['id']))
                                               nbdb_web_page.contenu_floute        AS 'w_floute'           ,
                                               nbdb_web_page.est_vulgaire          AS 'w_vulgaire'         ,
                                               nbdb_web_page.est_politise          AS 'w_politise'         ,
-                                              nbdb_web_page.est_incorrect         AS 'w_incorrect'
+                                              nbdb_web_page.est_incorrect         AS 'w_incorrect'        ,
+                                              nbdb_web_page.notes_admin           AS 'w_notes_admin'
                                       FROM    nbdb_web_page
                                       WHERE   nbdb_web_page.id = '$web_id' "));
 
@@ -236,8 +240,8 @@ else if(isset($_GET['id']))
   $web_titre_en         = predata($dweb['w_titre_en']);
   $web_redirect_fr      = predata($dweb['w_redirect_fr']);
   $web_redirect_en      = predata($dweb['w_redirect_en']);
-  $web_contenu_fr       = $dweb['w_contenu_fr'];
-  $web_contenu_en       = $dweb['w_contenu_en'];
+  $web_contenu_fr       = predata($dweb['w_contenu_fr']);
+  $web_contenu_en       = predata($dweb['w_contenu_en']);
   $web_apparition_y     = ($dweb['w_apparition_y']) ? $dweb['w_apparition_y'] : '';
   $web_apparition_m     = ($dweb['w_apparition_m']) ? $dweb['w_apparition_m'] : '';
   $web_popularisation_y = ($dweb['w_popularisation_y']) ? $dweb['w_popularisation_y'] : '';
@@ -246,6 +250,7 @@ else if(isset($_GET['id']))
   $web_vulgaire         = ($dweb['w_vulgaire']) ? ' checked' : '';
   $web_politise         = ($dweb['w_politise']) ? ' checked' : '';
   $web_incorrect        = ($dweb['w_incorrect']) ? ' checked' : '';
+  $web_notes_admin      = predata($dweb['w_notes_admin']);
   $web_activite         = '';
   $web_irc              = '';
 }
@@ -268,6 +273,7 @@ else
   $web_vulgaire         = '';
   $web_politise         = '';
   $web_incorrect        = '';
+  $web_notes_admin      = '';
   $web_activite         = ' checked';
   $web_irc              = ' checked';
 }
@@ -586,6 +592,10 @@ if(!getxhr()) { /***************************************************************
               <label class="label-inline" for="web_politise">Sujet politisé (parle de sujets de société sur lesquels tout le monde n'est pas d'accord)</label><br>
               <input id="web_incorrect" name="web_incorrect" type="checkbox"<?=$web_incorrect?>>
               <label class="label-inline" for="web_incorrect">Politiquement incorrect (terme dont l'usage est déconseillé)</label><br>
+              <br>
+
+              <label for="web_notes_admin">Notes privées d'administration (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a>)</label>
+              <textarea id="web_notes_admin" name="web_notes_admin" class="indiv web_encyclo_edit_note"><?=$web_notes_admin?></textarea><br>
               <br>
 
               <?php if(isset($_GET['id'])) { ?>
