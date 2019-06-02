@@ -110,7 +110,9 @@ $qtodo = "    SELECT    todo.id                   AS 't_id'         ,
                         todo_categorie.id         AS 'c_id'         ,
                         todo_categorie.titre_fr   AS 'c_titre_fr'   ,
                         todo_categorie.titre_en   AS 'c_titre_en'   ,
-                        todo_roadmap.version      AS 'r_nom'        ,
+                        todo_roadmap.id           AS 'r_id'         ,
+                        todo_roadmap.version_fr   AS 'r_version_fr' ,
+                        todo_roadmap.version_en   AS 'r_version_en' ,
                         membres.pseudonyme        AS 'm_pseudo'     ,
                         membres.id                AS 'm_id'
               FROM      todo
@@ -253,7 +255,8 @@ for($ntodo = 0; $dtodo = mysqli_fetch_array($qtodo); $ntodo++)
   $todo_importance[$ntodo]  = (!$dtodo['t_valide']) ? '<span class="gras">NON VALIDÉ !</span>' : $todo_importance[$ntodo];
   $temp_lang_categorie      = ($lang == 'FR') ? $dtodo['c_titre_fr'] : $dtodo['c_titre_en'];
   $todo_categorie[$ntodo]   = ($dtodo['c_id']) ? predata($temp_lang_categorie) : '';
-  $todo_objectif[$ntodo]    = ($dtodo['r_nom']) ? predata($dtodo['r_nom']) : '';
+  $temp_lang_roadmap        = ($lang == 'FR') ? $dtodo['r_version_fr'] : $dtodo['r_version_en'];
+  $todo_objectif[$ntodo]    = ($dtodo['r_id']) ? predata($temp_lang_roadmap) : '';
   $todo_prive[$ntodo]       = (!$dtodo['t_public']) ? 'ADMIN' : '';
   $todo_approuve[$ntodo]    = ($dtodo['t_valide']) ? 1 : 0;
 }
@@ -302,19 +305,19 @@ $qcategories = query("  SELECT    todo_categorie.id           AS 'c_id' ,
                                   todo_categorie.titre_$lang  AS 'c_titre'
                         FROM      todo_categorie
                         ORDER BY  todo_categorie.titre_$lang ASC ");
-$select_categorie = '<option value="0">Aucune catégorie</option>';
+$select_categorie = ($lang == 'FR') ? '<option value="0">Aucune catégorie</option>' : '<option value="0">Uncategorized</option>';
 while($dcategories = mysqli_fetch_array($qcategories))
   $select_categorie .= '<option value="'.$dcategories['c_id'].'">'.predata($dcategories['c_titre']).'</option>';
 
 
 // Objectifs
-$qobjectifs = query(" SELECT    todo_roadmap.id ,
-                                todo_roadmap.version
+$qobjectifs = query(" SELECT    todo_roadmap.id             AS 'r_id'   ,
+                                todo_roadmap.version_$lang  AS 'r_version'
                       FROM      todo_roadmap
                       ORDER BY  todo_roadmap.id_classement DESC ");
-$select_objectif = '<option value="0">Aucun objectif</option>';
+$select_objectif = ($lang == 'FR') ? '<option value="0">Aucun objectif</option>' : '<option value="0">No goal</option>';
 while($dobjectifs = mysqli_fetch_array($qobjectifs))
-  $select_objectif .= '<option value="'.$dobjectifs['id'].'">'.predata($dobjectifs['version']).'</option>';
+  $select_objectif .= '<option value="'.$dobjectifs['r_id'].'">'.predata($dobjectifs['r_version']).'</option>';
 
 
 
@@ -333,7 +336,8 @@ if(isset($_GET['id']))
   $page_url = "pages/todo/index?id=".$todo_id[0];
 
   // Titre et description
-  $page_titre = "Tâche #".$todo_id[0]." : ".$todo_full_titre[0];
+  $temp_lang  = ($lang == 'FR') ? 'Tâche' : 'Task';
+  $page_titre = $temp_lang." #".$todo_id[0]." : ".$todo_full_titre[0];
   $page_desc  = "Tâche liée au développement de NoBleme : ".$todo_full_titre[0];
 }
 

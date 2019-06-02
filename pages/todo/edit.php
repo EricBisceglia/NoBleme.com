@@ -192,16 +192,16 @@ while($dcategories = mysqli_fetch_array($qcategories))
 
 
 // Objectifs
-$qobjectifs = query(" SELECT    todo_roadmap.id ,
-                                todo_roadmap.version
+$qobjectifs = query(" SELECT    todo_roadmap.id             AS 'r_id' ,
+                                todo_roadmap.version_$lang  AS 'r_version'
                       FROM      todo_roadmap
                       ORDER BY  todo_roadmap.id_classement DESC ");
 $selected         = (!$qtodo['t_objectif']) ? ' selected' : '';
 $select_objectif  = '<option value="0"'.$selected.'>Aucun objectif</option>';
 while($dobjectifs = mysqli_fetch_array($qobjectifs))
 {
-  $selected         = ($dobjectifs['id'] == $qtodo['t_objectif']) ? ' selected' : '';
-  $select_objectif .= '<option value="'.$dobjectifs['id'].'"'.$selected.'>'.predata($dobjectifs['version']).'</option>';
+  $selected         = ($dobjectifs['r_id'] == $qtodo['t_objectif']) ? ' selected' : '';
+  $select_objectif .= '<option value="'.$dobjectifs['r_id'].'"'.$selected.'>'.predata($dobjectifs['r_version']).'</option>';
 }
 
 

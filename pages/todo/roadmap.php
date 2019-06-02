@@ -15,10 +15,10 @@ $page_nom = "Lit le plan de route";
 $page_url = "pages/todo/roadmap";
 
 // Langues disponibles
-$langue_page = array('FR');
+$langue_page = array('FR', 'EN');
 
 // Titre et description
-$page_titre = "Plan de route";
+$page_titre = ($lang == 'FR') ? "Plan de route" : "Roadmap";
 $page_desc  = "Historique et futur du développement de NoBleme";
 
 // CSS
@@ -34,9 +34,9 @@ $css = array('todo');
 /*****************************************************************************************************************************************/
 
 // On va chercher les roadmaps
-$qroadmaps = query("  SELECT    todo_roadmap.id           ,
-                                todo_roadmap.version      ,
-                                todo_roadmap.description
+$qroadmaps = query("  SELECT    todo_roadmap.id                 AS 'r_id'       ,
+                                todo_roadmap.version_$lang      AS 'r_version'  ,
+                                todo_roadmap.description_$lang  AS 'r_desc'
                       FROM      todo_roadmap
                       ORDER BY  todo_roadmap.id_classement DESC ");
 
@@ -44,12 +44,12 @@ $qroadmaps = query("  SELECT    todo_roadmap.id           ,
 $temp_admin = getadmin() ? ' ' : ' AND todo.public = 1 ';
 for($nroadmaps = 0; $droadmaps = mysqli_fetch_array($qroadmaps); $nroadmaps++)
 {
-  $roadmap_id[$nroadmaps]           = $droadmaps['id'];
-  $roadmap_nom[$nroadmaps]          = predata($droadmaps['version']);
-  $roadmap_description[$nroadmaps]  = bbcode(predata($droadmaps['description'], 1));
+  $roadmap_id[$nroadmaps]           = $droadmaps['r_id'];
+  $roadmap_nom[$nroadmaps]          = predata($droadmaps['r_version']);
+  $roadmap_description[$nroadmaps]  = bbcode(predata($droadmaps['r_desc'], 1));
 
   // Pour chaque roadmap, on va chercher les tâches liées
-  $temp_roadmap_id          = $droadmaps['id'];
+  $temp_roadmap_id          = $droadmaps['r_id'];
   $todo_a_faire[$nroadmaps] = 0;
   $qtodo = query("  SELECT    todo.id                   AS 't_id'           ,
                               todo.importance           AS 't_importance'   ,

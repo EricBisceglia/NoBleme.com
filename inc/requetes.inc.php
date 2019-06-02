@@ -31,6 +31,13 @@ if($derniere_requete < 19)
   sql_renommer_champ("todo_categorie", "categorie", "titre_fr", "TINYTEXT");
   sql_creer_champ("todo_categorie", "titre_en", "TINYTEXT", "titre_fr");
   query(" UPDATE todo_categorie SET todo_categorie.titre_en = todo_categorie.titre_fr ");
+
+  sql_renommer_champ("todo_roadmap", "version", "version_fr", "TINYTEXT");
+  sql_renommer_champ("todo_roadmap", "description", "description_fr", "MEDIUMTEXT");
+  sql_creer_champ("todo_roadmap", "version_en", "TINYTEXT", "version_fr");
+  sql_creer_champ("todo_roadmap", "description_en", "MEDIUMTEXT", "description_fr");
+  query(" UPDATE todo_roadmap SET todo_roadmap.version_en = todo_roadmap.version_fr ");
+  query(" UPDATE todo_roadmap SET todo_roadmap.description_en = todo_roadmap.description_fr ");
   //sql_update_id_requete(19);
 }
 
