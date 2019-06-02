@@ -23,7 +23,7 @@ function todo_importance($importance, $lang='FR', $style=NULL)
   switch($importance)
   {
     case 5:
-      $importance_texte = ($lang == 'FR') ? 'Urgent' : 'Urgent';
+      $importance_texte = ($lang == 'FR') ? 'Urgent' : 'Emergency';
       if($style)
         $returnme = '<span class="gras souligne">'.$importance_texte.'</span>';
       else

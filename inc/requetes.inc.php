@@ -38,6 +38,7 @@ if($derniere_requete < 19)
   sql_creer_champ("todo_roadmap", "description_en", "MEDIUMTEXT", "description_fr");
   query(" UPDATE todo_roadmap SET todo_roadmap.version_en = todo_roadmap.version_fr ");
   query(" UPDATE todo_roadmap SET todo_roadmap.description_en = todo_roadmap.description_fr ");
+
   //sql_update_id_requete(19);
 }
 

@@ -396,10 +396,10 @@ EOD;
   $trad['todo_table_b_trouvee']   = "TÂCHE TROUVÉE";
   $trad['todo_table_b_trouvees']  = "TÂCHES TROUVÉES";
   $trad['todo_table_b_dont']      = "DONT";
-  $trad['todo_table_b_et']        = "ET";
-  $trad['todo_table_b_soit']      = "SOIT";
   $trad['todo_table_b_finies']    = "FINIES";
+  $trad['todo_table_b_et']        = "ET";
   $trad['todo_table_b_todo']      = "À FAIRE";
+  $trad['todo_table_b_soit']      = "SOIT";
   $trad['todo_table_b_nbsolved']  = "RÉSOLUES";
   $trad['todo_table_b_reset']     = "CLIQUER ICI POUR REMETTRE À ZÉRO LA RECHERCHE";
 
@@ -447,10 +447,10 @@ EOD;
   $trad['todo_table_b_trouvee']   = "TASK FOUND";
   $trad['todo_table_b_trouvees']  = "TASKS FOUND";
   $trad['todo_table_b_dont']      = "INCLUDING";
-  $trad['todo_table_b_et']        = "AND";
-  $trad['todo_table_b_soit']      = "TOTAL";
   $trad['todo_table_b_finies']    = "FINISHED";
+  $trad['todo_table_b_et']        = "AND";
   $trad['todo_table_b_todo']      = "STILL OPEN";
+  $trad['todo_table_b_soit']      = "TOTAL";
   $trad['todo_table_b_nbsolved']  = "SOLVED";
   $trad['todo_table_b_reset']     = "CLICK HERE TO RESET YOUR SEARCH";
 
