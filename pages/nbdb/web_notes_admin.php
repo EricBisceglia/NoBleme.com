@@ -41,25 +41,34 @@ $css = array('nbdb');
 if(isset($_POST['web_notes_prev']) || isset($_POST['web_notes_edit']))
 {
   // Assainissement du postdata
-  $web_notes_global = postdata_vide('web_notes_global', 'string', '');
-  $web_notes_fr     = postdata_vide('web_notes_fr', 'string', '');
-  $web_notes_en     = postdata_vide('web_notes_en', 'string', '');
+  $web_notes_global     = postdata_vide('web_notes_global', 'string', '');
+  $web_notes_fr         = postdata_vide('web_notes_fr', 'string', '');
+  $web_notes_en         = postdata_vide('web_notes_en', 'string', '');
+  $web_template_global  = postdata_vide('web_template_global', 'string', '');
+  $web_template_fr      = postdata_vide('web_template_fr', 'string', '');
+  $web_template_en      = postdata_vide('web_template_en', 'string', '');
 
   // On supprime le contenu des notes
   query(" TRUNCATE nbdb_web_notes_admin ");
 
   // Mise à jour
   query(" INSERT INTO nbdb_web_notes_admin
-          SET         nbdb_web_notes_admin.notes_admin  = '$web_notes_global' ,
-                      nbdb_web_notes_admin.brouillon_fr = '$web_notes_fr'     ,
-                      nbdb_web_notes_admin.brouillon_en = '$web_notes_en'     ");
+          SET         nbdb_web_notes_admin.notes_admin      = '$web_notes_global'     ,
+                      nbdb_web_notes_admin.brouillon_fr     = '$web_notes_fr'         ,
+                      nbdb_web_notes_admin.brouillon_en     = '$web_notes_en'         ,
+                      nbdb_web_notes_admin.template_global  = '$web_template_global'  ,
+                      nbdb_web_notes_admin.template_fr      = '$web_template_fr'      ,
+                      nbdb_web_notes_admin.template_en      = '$web_template_en'      ");
 
   // Préparation des prévisualisations
-  $web_notes_global   = ($_POST['web_notes_global']);
-  $web_notes_fr       = ($_POST['web_notes_fr']);
-  $web_notes_en       = ($_POST['web_notes_en']);
-  $web_notes_fr_prev  = nbdbcode(bbcode(predata($_POST['web_notes_fr'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie('FR'), nbdb_web_liste_pages_dictionnaire('FR'));
-  $web_notes_en_prev  = nbdbcode(bbcode(predata($_POST['web_notes_en'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie('FR'), nbdb_web_liste_pages_dictionnaire('FR'));
+  $web_notes_global     = predata($_POST['web_notes_global']);
+  $web_notes_fr         = predata($_POST['web_notes_fr']);
+  $web_notes_en         = predata($_POST['web_notes_en']);
+  $web_template_global  = predata($_POST['web_template_global']);
+  $web_template_fr      = predata($_POST['web_template_fr']);
+  $web_template_en      = predata($_POST['web_template_en']);
+  $web_notes_fr_prev    = nbdbcode(bbcode(predata($_POST['web_notes_fr'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie('FR'), nbdb_web_liste_pages_dictionnaire('FR'));
+  $web_notes_en_prev    = nbdbcode(bbcode(predata($_POST['web_notes_en'], 1)), $chemin, nbdb_web_liste_pages_encyclopedie('FR'), nbdb_web_liste_pages_dictionnaire('FR'));
 }
 
 
@@ -77,15 +86,21 @@ if(isset($_POST['web_notes_prev']) || isset($_POST['web_notes_edit']))
 if(!isset($_POST['web_notes_prev']))
 {
   // On va chercher la liste des notes
-  $dnotes = mysqli_fetch_array(query("  SELECT  nbdb_web_notes_admin.notes_admin  AS 'web_notes_global' ,
-                                                nbdb_web_notes_admin.brouillon_fr AS 'web_notes_fr'     ,
-                                                nbdb_web_notes_admin.brouillon_en AS 'web_notes_en'
+  $dnotes = mysqli_fetch_array(query("  SELECT  nbdb_web_notes_admin.notes_admin      AS 'web_notes_global'     ,
+                                                nbdb_web_notes_admin.brouillon_fr     AS 'web_notes_fr'         ,
+                                                nbdb_web_notes_admin.brouillon_en     AS 'web_notes_en'         ,
+                                                nbdb_web_notes_admin.template_global  AS 'web_template_global'  ,
+                                                nbdb_web_notes_admin.template_fr      AS 'web_template_fr'      ,
+                                                nbdb_web_notes_admin.template_en      AS 'web_template_en'
                                         FROM    nbdb_web_notes_admin "));
 
   // Puis on les prépare pour l'affichage
-  $web_notes_global = $dnotes['web_notes_global'];
-  $web_notes_fr     = $dnotes['web_notes_fr'];
-  $web_notes_en     = $dnotes['web_notes_en'];
+  $web_notes_global     = predata($dnotes['web_notes_global']);
+  $web_notes_fr         = predata($dnotes['web_notes_fr']);
+  $web_notes_en         = predata($dnotes['web_notes_en']);
+  $web_template_global  = predata($dnotes['web_template_global']);
+  $web_template_fr      = predata($dnotes['web_template_fr']);
+  $web_template_en      = predata($dnotes['web_template_en']);
 }
 
 
@@ -206,26 +221,51 @@ for($ndiconotes = 0; $ddiconotes = mysqli_fetch_array($qdiconotes); $ndiconotes+
       <?php } ?>
       <?php } ?>
 
-      <div class="texte">
+      <div class="tableau">
 
         <form method="POST">
           <fieldset>
 
-            <label for="web_notes_global">Notes globales</label>
-            <textarea id="web_notes_global" name="web_notes_global" class="indiv web_encyclo_edit_brouillon"><?=$web_notes_global?></textarea><br>
-            <br>
+            <div class="flexcontainer">
+              <div style="flex:12">
 
-            <label for="web_notes_fr">Brouillon français</label>
-            <textarea id="web_notes_fr" name="web_notes_fr" class="indiv web_encyclo_edit_brouillon"><?=$web_notes_fr?></textarea><br>
-            <br>
+                <label for="web_notes_global">Notes globales</label>
+                <textarea id="web_notes_global" name="web_notes_global" class="indiv web_encyclo_edit_brouillon"><?=$web_notes_global?></textarea><br>
+                <br>
 
-            <label for="web_notes_en">Brouillon anglais</label>
-            <textarea id="web_notes_en" name="web_notes_en" class="indiv web_encyclo_edit_brouillon"><?=$web_notes_en?></textarea><br>
-            <br>
+                <label for="web_notes_fr">Brouillon français</label>
+                <textarea id="web_notes_fr" name="web_notes_fr" class="indiv web_encyclo_edit_brouillon"><?=$web_notes_fr?></textarea><br>
+                <br>
+
+                <label for="web_notes_en">Brouillon anglais</label>
+                <textarea id="web_notes_en" name="web_notes_en" class="indiv web_encyclo_edit_brouillon"><?=$web_notes_en?></textarea><br>
+                <br>
+
+              </div>
+              <div style="flex:1">
+                &nbsp;
+              </div>
+              <div style="flex:4">
+
+                <label for="web_template_global">Snippets utiles</label>
+                <textarea id="web_template_global" name="web_template_global" class="indiv web_encyclo_edit_brouillon"><?=$web_template_global?></textarea><br>
+                <br>
+
+                <label for="web_template_fr">Template français</label>
+                <textarea id="web_template_fr" name="web_template_fr" class="indiv web_encyclo_edit_brouillon"><?=$web_template_fr?></textarea><br>
+                <br>
+
+                <label for="web_template_en">Template anglais</label>
+                <textarea id="web_template_en" name="web_template_en" class="indiv web_encyclo_edit_brouillon"><?=$web_template_en?></textarea><br>
+                <br>
+
+              </div>
+            </div>
 
             <input value="ENREGISTRER ET PRÉVISUALISER LES BROUILLONS" class="button button-outline" type="submit" name="web_notes_prev">
             &nbsp;
             <input value="ENREGISTRER LES NOTES PRIVÉES" type="submit" name="web_notes_edit">
+
           </fieldset>
         </form>
 

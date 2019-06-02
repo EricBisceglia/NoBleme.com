@@ -24,12 +24,14 @@ $derniere_requete = sql_check_id_requete();
 //                                            !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP !!!!!                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #533 : Pas besoin d'id pour les notes admin de la NBDB
+// #547 : Nouveaux champs privés pour les templates dans la NBDB
 
-if($derniere_requete < 17)
+if($derniere_requete < 18)
 {
-  sql_supprimer_champ("nbdb_web_notes_admin", "id");
-  sql_update_id_requete(17);
+  sql_creer_champ("nbdb_web_notes_admin", "template_global", "LONGTEXT", "brouillon_en");
+  sql_creer_champ("nbdb_web_notes_admin", "template_fr", "LONGTEXT", "template_global");
+  sql_creer_champ("nbdb_web_notes_admin", "template_en", "LONGTEXT", "template_fr");
+  sql_update_id_requete(18);
 }
 
 
@@ -673,3 +675,13 @@ sql_update_id_requete(15);
 
 sql_creer_champ("vars_globales", "derniere_requete_sql", "TINYINT(1) NOT NULL", "mise_a_jour");
 sql_update_id_requete(16);
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #533 : Pas besoin d'id pour les notes admin de la NBDB
+
+if($derniere_requete < 17)
+{
+  sql_supprimer_champ("nbdb_web_notes_admin", "id");
+  sql_update_id_requete(17);
+}
