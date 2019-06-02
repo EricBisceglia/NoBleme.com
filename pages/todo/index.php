@@ -262,10 +262,10 @@ if($todo_search_id && $ntodo == 1)
   $dtodo            = mysqli_fetch_array($qtodo);
   $shorturl         = "t=".$todo_search_id;
   $todo_titre_full  = predata($dtodo['t_titre']);
-  $todo_soumis_le   = predata(jourfr(date('Y-m-d', $dtodo['t_creation'])));
+  $todo_soumis_le   = predata(jourfr(date('Y-m-d', $dtodo['t_creation']), $lang));
   $todo_soumis_id   = $dtodo['m_id'];
   $todo_resolu      = ($dtodo['t_resolution']) ? 1 : 0;
-  $todo_resolu_le   = predata(jourfr(date('Y-m-d', $dtodo['t_resolution'])));
+  $todo_resolu_le   = predata(jourfr(date('Y-m-d', $dtodo['t_resolution']), $lang));
   $todo_source      = ($dtodo['t_source']) ? predata($dtodo['t_source']) : 0;
   $todo_contenu     = bbcode(predata($dtodo['t_contenu'], 1));
   $todo_modifier    = ($dtodo['t_valide']) ? 'MODIFIER' : 'APPROUVER';
@@ -380,15 +380,28 @@ EOD;
   $trad['todo_table_resolution']  = "RÉSOLUTION";
 
   // Tableau : Recherche
-  $trad['todo_table_trouvee']     = "TÂCHE TROUVÉE";
-  $trad['todo_table_trouvees']    = "TÂCHES TROUVÉES";
-  $trad['todo_table_dont']        = "DONT";
-  $trad['todo_table_et']          = "ET";
-  $trad['todo_table_soit']        = "SOIT";
-  $trad['todo_table_finies']      = "FINIES";
-  $trad['todo_table_todo']        = "À FAIRE";
-  $trad['todo_table_solved']      = "RÉSOLUES";
-  $trad['todo_table_reset']       = "CLIQUER ICI POUR REMETTRE À ZÉRO LA RECHERCHE";
+  $trad['todo_table_s_public']    = "Public";
+  $trad['todo_table_s_prive']     = "Privé";
+  $trad['todo_table_s_solved']    = "Résolu";
+  $trad['todo_table_s_unsolved']  = "Non résolu";
+
+  // Tableau : Barre d'état
+  $trad['todo_table_b_trouvee']   = "TÂCHE TROUVÉE";
+  $trad['todo_table_b_trouvees']  = "TÂCHES TROUVÉES";
+  $trad['todo_table_b_dont']      = "DONT";
+  $trad['todo_table_b_et']        = "ET";
+  $trad['todo_table_b_soit']      = "SOIT";
+  $trad['todo_table_b_finies']    = "FINIES";
+  $trad['todo_table_b_todo']      = "À FAIRE";
+  $trad['todo_table_b_nbsolved']  = "RÉSOLUES";
+  $trad['todo_table_b_reset']     = "CLIQUER ICI POUR REMETTRE À ZÉRO LA RECHERCHE";
+
+  // Tâche
+  $trad['todo_task_task']         = "Tâche";
+  $trad['todo_task_proposee']     = "Tâche proposée le";
+  $trad['todo_task_auteur']       = "par";
+  $trad['todo_task_solved']       = "Tâche résolue le";
+  $trad['todo_task_source']       = "code source du patch";
 }
 
 
@@ -418,15 +431,28 @@ EOD;
   $trad['todo_table_resolution']  = "SOLVED";
 
   // Tableau : Recherche
-  $trad['todo_table_trouvee']     = "TASK FOUND";
-  $trad['todo_table_trouvees']    = "TASKS FOUND";
-  $trad['todo_table_dont']        = "INCLUDING";
-  $trad['todo_table_et']          = "AND";
-  $trad['todo_table_soit']        = "TOTAL";
-  $trad['todo_table_finies']      = "FINISHED";
-  $trad['todo_table_todo']        = "STILL OPEN";
-  $trad['todo_table_solved']      = "SOLVED";
-  $trad['todo_table_reset']       = "CLICK HERE TO RESET YOUR SEARCH";
+  $trad['todo_table_s_public']    = "Public";
+  $trad['todo_table_s_prive']     = "Private";
+  $trad['todo_table_s_solved']    = "Solved";
+  $trad['todo_table_s_unsolved']  = "Unsolved";
+
+  // Tableau : Barre d'état
+  $trad['todo_table_b_trouvee']   = "TASK FOUND";
+  $trad['todo_table_b_trouvees']  = "TASKS FOUND";
+  $trad['todo_table_b_dont']      = "INCLUDING";
+  $trad['todo_table_b_et']        = "AND";
+  $trad['todo_table_b_soit']      = "TOTAL";
+  $trad['todo_table_b_finies']    = "FINISHED";
+  $trad['todo_table_b_todo']      = "STILL OPEN";
+  $trad['todo_table_b_nbsolved']  = "SOLVED";
+  $trad['todo_table_b_reset']     = "CLICK HERE TO RESET YOUR SEARCH";
+
+  // Tâche
+  $trad['todo_task_task']         = "Task";
+  $trad['todo_task_proposee']     = "Task opened on";
+  $trad['todo_task_auteur']       = "by";
+  $trad['todo_task_solved']       = "Task solved on";
+  $trad['todo_task_source']       = "patch source code";
 }
 
 
@@ -603,8 +629,8 @@ if(!getxhr()) { /***************************************************************
               <th>
                 <select class="table_search intable" id="todo_search_prive" onchange="todolist_tableau('<?=$chemin?>');">
                   <option value="-1">&nbsp;</option>
-                  <option value="1">Public</option>
-                  <option value="0">Privé</option>
+                  <option value="1"><?=$trad['todo_table_s_public']?></option>
+                  <option value="0"><?=$trad['todo_table_s_prive']?></option>
                 </select>
               </th>
               <?php } ?>
@@ -647,8 +673,8 @@ if(!getxhr()) { /***************************************************************
               <th>
                 <select class="table_search intable" id="todo_search_etat" onchange="todolist_tableau('<?=$chemin?>');">
                   <option value="-1">&nbsp;</option>
-                  <option value="1">Résolu</option>
-                  <option value="0">Non résolu</option>
+                  <option value="1"><?=$trad['todo_table_s_solved']?></option>
+                  <option value="0"><?=$trad['todo_table_s_unsolved']?></option>
                 </select>
               </th>
               <th>
@@ -671,15 +697,15 @@ if(!getxhr()) { /***************************************************************
               <td colspan="9" class="noir texte_blanc gras">
               <?php } ?>
                 <?php if($ntodo > 1) { ?>
-                <?=$ntodo?> <?=$trad['todo_table_trouvees']?>
+                <?=$ntodo?> <?=$trad['todo_table_b_trouvees']?>
                 <?php } else { ?>
-                <?=$ntodo?> <?=$trad['todo_table_trouvee']?>
+                <?=$ntodo?> <?=$trad['todo_table_b_trouvee']?>
                 <?php } ?>
-                &nbsp;<span class="texte_positif"><?=$trad['todo_table_dont']?> <?=$todo_finies?> <?=$trad['todo_table_finies']?></span>
-                &nbsp;<span class="texte_negatif"><?=$trad['todo_table_et']?> <?=$todo_a_faire?> <?=$trad['todo_table_todo']?></span>
-                &nbsp;<span class="texte_neutre"><?=$trad['todo_table_soit']?> <?=$todo_resolues?> <?=$trad['todo_table_solved']?></span>
+                &nbsp;<span class="texte_positif"><?=$trad['todo_table_b_dont']?> <?=$todo_finies?> <?=$trad['todo_table_b_finies']?></span>
+                &nbsp;<span class="texte_negatif"><?=$trad['todo_table_b_et']?> <?=$todo_a_faire?> <?=$trad['todo_table_b_todo']?></span>
+                &nbsp;<span class="texte_neutre"><?=$trad['todo_table_b_soit']?> <?=$todo_resolues?> <?=$trad['todo_table_b_nbsolved']?></span>
                 <?php if($todo_preset_id || (getxhr() && $todo_tri != 'raz')) { ?>
-                &nbsp;- &nbsp;<span><?=$trad['todo_table_reset']?></span>
+                &nbsp;- &nbsp;<span><?=$trad['todo_table_b_reset']?></span>
                 <?php } ?>
               </td>
             </tr>
@@ -731,15 +757,15 @@ if(!getxhr()) { /***************************************************************
                   <br>
 
                   <span class="moinsgros gras">
-                    <a href="<?=$chemin?>pages/todo/index?id=<?=$todo_id[$i]?>">Tâche #<?=$todo_id[$i]?></a> : <?=$todo_titre_full?>
+                    <a href="<?=$chemin?>pages/todo/index?id=<?=$todo_id[$i]?>"><?=$trad['todo_task_task']?> #<?=$todo_id[$i]?></a> : <?=$todo_titre_full?>
                   </span><br>
 
                   <span class="italique">
-                    Tâche proposée le <?=$todo_soumis_le?> par <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$todo_soumis_id?>"><?=$todo_createur[$i]?></a><br>
+                    <?=$trad['todo_task_proposee']?> <?=$todo_soumis_le?> <?=$trad['todo_task_auteur']?> <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$todo_soumis_id?>"><?=$todo_createur[$i]?></a><br>
                     <?php if($todo_resolu) { ?>
-                    Tâche résolue le <?=$todo_resolu_le?>
+                      <?=$trad['todo_task_solved']?> <?=$todo_resolu_le?>
                     <?php if($todo_source) { ?>
-                    : <a href="<?=$todo_source?>">code source du patch</a>
+                    : <a href="<?=$todo_source?>"><?=$trad['todo_task_source']?></a>
                     <?php } ?>
                     <br>
                     <?php } ?>
