@@ -15,10 +15,10 @@ $page_nom = "Décortique la liste des tâches";
 $page_url = "pages/todo/index";
 
 // Langues disponibles
-$langue_page = array('FR');
+$langue_page = array('FR', 'EN');
 
 // Titre et description
-$page_titre = "Liste des tâches";
+$page_titre = ($lang == 'FR') ? "Liste des tâches" : "To-do list";
 $page_desc  = "Liste de tâches accomplies ou à accomplir dans le développement de NoBleme";
 
 // CSS & JS
@@ -244,13 +244,14 @@ for($ntodo = 0; $dtodo = mysqli_fetch_array($qtodo); $ntodo++)
   $todo_titre[$ntodo]       = predata(tronquer_chaine($dtodo['t_titre'], 50, '...'));
   $todo_full_titre[$ntodo]  = predata($dtodo['t_titre']);
   $todo_createur[$ntodo]    = predata($dtodo['m_pseudo']);
-  $todo_creation[$ntodo]    = predata(ilya($dtodo['t_creation']));
-  $todo_resolution[$ntodo]  = ($dtodo['t_resolution']) ? predata(ilya($dtodo['t_resolution'])) : 'Non résolu';
-  $todo_importance[$ntodo]  = (!$dtodo['t_resolution']) ? todo_importance($dtodo['t_importance'], 1) : 'Résolu';
+  $todo_creation[$ntodo]    = predata(ilya($dtodo['t_creation'], $lang));
+  $temp_lang_resolution     = ($lang == 'FR') ? 'Non résolu' : 'Unsolved';
+  $todo_resolution[$ntodo]  = ($dtodo['t_resolution']) ? predata(ilya($dtodo['t_resolution'], $lang)) : $temp_lang_resolution;
+  $todo_importance[$ntodo]  = (!$dtodo['t_resolution']) ? todo_importance($dtodo['t_importance'], $lang, 1) : $temp_lang_resolution;
   $todo_importance[$ntodo]  = (!$dtodo['t_valide']) ? '<span class="gras">NON VALIDÉ !</span>' : $todo_importance[$ntodo];
   $todo_categorie[$ntodo]   = ($dtodo['c_nom']) ? predata($dtodo['c_nom']) : '';
   $todo_objectif[$ntodo]    = ($dtodo['r_nom']) ? predata($dtodo['r_nom']) : '';
-  $todo_prive[$ntodo]       = (!$dtodo['t_public']) ? 'PRIVÉ' : '';
+  $todo_prive[$ntodo]       = (!$dtodo['t_public']) ? 'ADMIN' : '';
   $todo_approuve[$ntodo]    = ($dtodo['t_valide']) ? 1 : 0;
 }
 
@@ -290,7 +291,7 @@ for($i=date('Y');$i>=2012;$i--)
 // Importance
 $select_importance = '';
 for($i=0;$i<=5;$i++)
-  $select_importance .= '<option value="'.$i.'">'.todo_importance($i).'</option>';
+  $select_importance .= '<option value="'.$i.'">'.todo_importance($i, $lang).'</option>';
 
 
 // Catégories
@@ -351,6 +352,89 @@ if(isset($_GET['add']) && $todo_admin)
 
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
+/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+if($lang == 'FR')
+{
+  // Header
+  $trad['titre']                  = "Liste des tâches";
+  $trad['soustitre']              = "Suivi du développement de NoBleme";
+  $trad['desc1']                  = <<<EOD
+La liste des tâches regroupe les rapports de bugs et demandes de fonctionnalités liés au développement de NoBleme. Pour voir les détails d'une tâche dans le tableau, cliquez n'importe où sur la ligne contenant la tâche en question. Vous pouvez faire des recherches dans la liste des tâches à l'aide des champs et menus déroulants situés en haut du tableau.
+EOD;
+  $trad['desc2']                  = <<<EOD
+Si vous avez trouvé un bug sur NoBleme, vous pouvez <a class="gras" href="<?=$chemin?>pages/todo/request?bug">soumettre un rapport de bug</a>.<br>
+Si vous avez une idée de fonctionnalité qui pourrait être ajoutée au site, vous pouvez <a class="gras" href="<?=$chemin?>pages/todo/request">quémander un feature</a>.
+EOD;
+
+  // Tableau : Titres
+  $trad['todo_table_prive']       = "ADMIN";
+  $trad['todo_table_importance']  = "IMPORTANCE";
+  $trad['todo_table_creation']    = "CRÉATION";
+  $trad['todo_table_createur']    = "CRÉATEUR";
+  $trad['todo_table_categorie']   = "CATÉGORIE";
+  $trad['todo_table_desc']        = "DESCRIPTION";
+  $trad['todo_table_objectif']    = "OBJECTIF";
+  $trad['todo_table_resolution']  = "RÉSOLUTION";
+
+  // Tableau : Recherche
+  $trad['todo_table_trouvee']     = "TÂCHE TROUVÉE";
+  $trad['todo_table_trouvees']    = "TÂCHES TROUVÉES";
+  $trad['todo_table_dont']        = "DONT";
+  $trad['todo_table_et']          = "ET";
+  $trad['todo_table_soit']        = "SOIT";
+  $trad['todo_table_finies']      = "FINIES";
+  $trad['todo_table_todo']        = "À FAIRE";
+  $trad['todo_table_solved']      = "RÉSOLUES";
+  $trad['todo_table_reset']       = "CLIQUER ICI POUR REMETTRE À ZÉRO LA RECHERCHE";
+}
+
+
+/*****************************************************************************************************************************************/
+
+else if($lang == 'EN')
+{
+  // Header
+  $trad['titre']                  = "To-do list";
+  $trad['soustitre']              = "A peek into NoBleme's development";
+  $trad['desc1']                  = <<<EOD
+This page is used to list all the bugs and functional changes related to NoBleme's evolution, past and future. Click on any task to open its description. You can do searches within the to-do list using the text fields and dropdown menus located right below the top row of the table below.
+EOD;
+  $trad['desc2']                  = <<<EOD
+If you happen tofind a bug on NoBleme, please <a class="gras" href="<?=$chemin?>pages/todo/request?bug">submit a bug report</a>.<br>
+If you have an idea for a new feature that could be added to the website, you can <a class="gras" href="<?=$chemin?>pages/todo/request">suggest a new feature</a>.
+EOD;
+
+  // Tableau : Titres
+  $trad['todo_table_prive']       = "ADMIN";
+  $trad['todo_table_importance']  = "STATUS";
+  $trad['todo_table_creation']    = "CREATED";
+  $trad['todo_table_createur']    = "REPORTER";
+  $trad['todo_table_categorie']   = "CATEGORY";
+  $trad['todo_table_desc']        = "DESCRIPTION";
+  $trad['todo_table_objectif']    = "GOAL";
+  $trad['todo_table_resolution']  = "SOLVED";
+
+  // Tableau : Recherche
+  $trad['todo_table_trouvee']     = "TASK FOUND";
+  $trad['todo_table_trouvees']    = "TASKS FOUND";
+  $trad['todo_table_dont']        = "INCLUDING";
+  $trad['todo_table_et']          = "AND";
+  $trad['todo_table_soit']        = "TOTAL";
+  $trad['todo_table_finies']      = "FINISHED";
+  $trad['todo_table_todo']        = "STILL OPEN";
+  $trad['todo_table_solved']      = "SOLVED";
+  $trad['todo_table_reset']       = "CLICK HERE TO RESET YOUR SEARCH";
+}
+
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
 if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
@@ -359,9 +443,9 @@ if(!getxhr()) { /***************************************************************
 
         <h1>
           <?php if(isset($_GET['id'])) { ?>
-          <a href="<?=$chemin?>pages/todo/index">Liste des tâches</a>
+          <a href="<?=$chemin?>pages/todo/index"><?=$trad['titre']?></a>
           <?php } else { ?>
-          Liste des tâches
+          <?=$trad['titre']?>
           <?php } ?>
           <?php if($todo_admin) { ?>
           <img class="pointeur" src="<?=$chemin?>img/icones/ajouter.svg" alt="+" onclick="todolist_ajouter_tache();" height="30">
@@ -371,15 +455,16 @@ if(!getxhr()) { /***************************************************************
           </a>
         </h1>
 
-        <h5>Suivi du développement de NoBleme</h5>
+        <h5>
+          <?=$trad['soustitre']?>
+        </h5>
 
         <p>
-          La liste des tâches regroupe les rapports de bugs et demandes de fonctionnalités liés au développement de NoBleme. Pour voir les détails d'une tâche dans le tableau, cliquez n'importe où sur la ligne contenant la tâche en question. Vous pouvez faire des recherches dans la liste des tâches à l'aide des champs et menus déroulants situés en haut du tableau.
+          <?=$trad['desc1']?>
         </p>
 
         <p>
-          Si vous avez trouvé un bug sur NoBleme, vous pouvez <a class="gras" href="<?=$chemin?>pages/todo/request?bug">soumettre un rapport de bug</a>.<br>
-          Si vous avez une idée de fonctionnalité qui pourrait être ajoutée au site, vous pouvez <a class="gras" href="<?=$chemin?>pages/todo/request">quémander un feature</a>.<br>
+          <?=$trad['desc2']?>
         </p>
 
       </div>
@@ -482,29 +567,29 @@ if(!getxhr()) { /***************************************************************
               </th>
               <?php if($todo_admin) { ?>
               <th onclick="todolist_tableau('<?=$chemin?>', 'prive');">
-                PRIVÉ
+                <?=$trad['todo_table_prive']?>
               </th>
               <?php } ?>
               <th onclick="todolist_tableau('<?=$chemin?>', 'importance');">
-                IMPORTANCE
+                <?=$trad['todo_table_importance']?>
               </th>
               <th onclick="todolist_tableau('<?=$chemin?>', 'creation');">
-                CRÉATION
+                <?=$trad['todo_table_creation']?>
               </th>
               <th onclick="todolist_tableau('<?=$chemin?>', 'createur');">
-                CRÉATEUR
+                <?=$trad['todo_table_createur']?>
               </th>
               <th onclick="todolist_tableau('<?=$chemin?>', 'categorie');">
-                CATÉGORIE
+                <?=$trad['todo_table_categorie']?>
               </th>
               <th onclick="todolist_tableau('<?=$chemin?>', 'description');">
-                DESCRIPTION
+                <?=$trad['todo_table_desc']?>
               </th>
               <th onclick="todolist_tableau('<?=$chemin?>', 'objectif');">
-                OBJECTIF
+                <?=$trad['todo_table_objectif']?>
               </th>
               <th colspan="2" onclick="todolist_tableau('<?=$chemin?>', 'resolution');">
-                RÉSOLUTION
+                <?=$trad['todo_table_resolution']?>
               </th>
             </tr>
 
@@ -586,15 +671,15 @@ if(!getxhr()) { /***************************************************************
               <td colspan="9" class="noir texte_blanc gras">
               <?php } ?>
                 <?php if($ntodo > 1) { ?>
-                <?=$ntodo?> TÂCHES TROUVÉES
+                <?=$ntodo?> <?=$trad['todo_table_trouvees']?>
                 <?php } else { ?>
-                <?=$ntodo?> TÂCHE TROUVÉE
+                <?=$ntodo?> <?=$trad['todo_table_trouvee']?>
                 <?php } ?>
-                &nbsp;<span class="texte_positif">DONT <?=$todo_finies?> FINIES</span>
-                &nbsp;<span class="texte_negatif">ET <?=$todo_a_faire?> À FAIRE</span>
-                &nbsp;<span class="texte_neutre">SOIT <?=$todo_resolues?> RÉSOLUES</span>
+                &nbsp;<span class="texte_positif"><?=$trad['todo_table_dont']?> <?=$todo_finies?> <?=$trad['todo_table_finies']?></span>
+                &nbsp;<span class="texte_negatif"><?=$trad['todo_table_et']?> <?=$todo_a_faire?> <?=$trad['todo_table_todo']?></span>
+                &nbsp;<span class="texte_neutre"><?=$trad['todo_table_soit']?> <?=$todo_resolues?> <?=$trad['todo_table_solved']?></span>
                 <?php if($todo_preset_id || (getxhr() && $todo_tri != 'raz')) { ?>
-                &nbsp; - &nbsp;<span>CLIQUER ICI POUR REMETTRE À ZÉRO LA RECHERCHE</span>
+                &nbsp;- &nbsp;<span><?=$trad['todo_table_reset']?></span>
                 <?php } ?>
               </td>
             </tr>

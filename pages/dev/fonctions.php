@@ -1052,10 +1052,18 @@ $js  = array('toggle', 'highlight', 'dev/reference');
             </tr>
             <tr>
               <td class="align_center">
-                todo_importance(5,1);
+                todo_importance(3, 'EN');
               </td>
               <td class="align_center">
-                <?=todo_importance(5,1);?>
+                <?=todo_importance(3, 'EN');?>
+              </td>
+            </tr>
+            <tr>
+              <td class="align_center">
+                todo_importance(4, 'FR', 1);
+              </td>
+              <td class="align_center">
+                <?=todo_importance(4, 'FR', 1);?>
               </td>
             </tr>
           </tbody>
