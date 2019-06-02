@@ -331,11 +331,12 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_image` (
 
 DROP TABLE IF EXISTS `nbdb_web_notes_admin`;
 CREATE TABLE IF NOT EXISTS `nbdb_web_notes_admin` (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `notes_admin` longtext COLLATE utf8mb4_unicode_ci,
   `brouillon_fr` longtext COLLATE utf8mb4_unicode_ci,
   `brouillon_en` longtext COLLATE utf8mb4_unicode_ci,
-  PRIMARY KEY (`id`)
+  `template_global` longtext COLLATE utf8mb4_unicode_ci,
+  `template_fr` longtext COLLATE utf8mb4_unicode_ci,
+  `template_en` longtext COLLATE utf8mb4_unicode_ci
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `nbdb_web_page`;
@@ -441,8 +442,10 @@ CREATE TABLE IF NOT EXISTS `todo` (
   `FKmembres` int(11) DEFAULT NULL,
   `timestamp` int(11) DEFAULT NULL,
   `importance` int(11) DEFAULT NULL,
-  `titre` mediumtext COLLATE utf8mb4_unicode_ci,
-  `contenu` longtext COLLATE utf8mb4_unicode_ci,
+  `titre_fr` mediumtext COLLATE utf8mb4_unicode_ci,
+  `titre_en` mediumtext COLLATE utf8mb4_unicode_ci,
+  `contenu_fr` mediumtext COLLATE utf8mb4_unicode_ci,
+  `contenu_en` mediumtext COLLATE utf8mb4_unicode_ci,
   `FKtodo_categorie` int(11) DEFAULT NULL,
   `FKtodo_roadmap` int(11) DEFAULT NULL,
   `valide_admin` tinyint(1) DEFAULT NULL,
@@ -458,7 +461,8 @@ CREATE TABLE IF NOT EXISTS `todo` (
 DROP TABLE IF EXISTS `todo_categorie`;
 CREATE TABLE IF NOT EXISTS `todo_categorie` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `categorie` tinytext COLLATE utf8mb4_unicode_ci,
+  `titre_fr` tinytext COLLATE utf8mb4_unicode_ci,
+  `titre_en` tinytext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -466,8 +470,10 @@ DROP TABLE IF EXISTS `todo_roadmap`;
 CREATE TABLE IF NOT EXISTS `todo_roadmap` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_classement` int(11) DEFAULT NULL,
-  `version` tinytext COLLATE utf8mb4_unicode_ci,
-  `description` mediumtext COLLATE utf8mb4_unicode_ci,
+  `version_fr` tinytext COLLATE utf8mb4_unicode_ci,
+  `version_en` tinytext COLLATE utf8mb4_unicode_ci,
+  `description_fr` mediumtext COLLATE utf8mb4_unicode_ci,
+  `description_en` mediumtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `index_classement` (`id_classement`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -475,6 +481,7 @@ CREATE TABLE IF NOT EXISTS `todo_roadmap` (
 DROP TABLE IF EXISTS `vars_globales`;
 CREATE TABLE IF NOT EXISTS `vars_globales` (
   `mise_a_jour` tinyint(1) NOT NULL,
+  `derniere_requete_sql` tinyint(1) NOT NULL,
   `last_pageview_check` int(11) NOT NULL,
   UNIQUE KEY `mise_a_jour` (`mise_a_jour`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -493,6 +500,16 @@ ALTER TABLE `forum_message` ADD FULLTEXT KEY `index_contenu` (`contenu`);
 
 ALTER TABLE `forum_sujet` ADD FULLTEXT KEY `index_titre` (`titre`);
 
+ALTER TABLE `nbdb_web_categorie` ADD FULLTEXT KEY `index_description_fr` (`description_fr`);
+ALTER TABLE `nbdb_web_categorie` ADD FULLTEXT KEY `index_description_en` (`description_en`);
+
+ALTER TABLE `nbdb_web_definition` ADD FULLTEXT KEY `index_definition_en` (`definition_en`);
+ALTER TABLE `nbdb_web_definition` ADD FULLTEXT KEY `index_definition_fr` (`definition_fr`);
+
+ALTER TABLE `nbdb_web_page` ADD FULLTEXT KEY `index_contenu_en` (`contenu_en`);
+ALTER TABLE `nbdb_web_page` ADD FULLTEXT KEY `index_contenu_fr` (`contenu_fr`);
+
 ALTER TABLE `pageviews` ADD FULLTEXT KEY `index_recherche` (`nom_page`,`url_page`);
 
-ALTER TABLE `todo` ADD FULLTEXT KEY `index_titre` (`titre`);
+ALTER TABLE `todo` ADD FULLTEXT KEY `index_titre_en` (`titre_en`);
+ALTER TABLE `todo` ADD FULLTEXT KEY `index_titre_fr` (`titre_fr`);

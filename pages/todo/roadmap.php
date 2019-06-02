@@ -57,12 +57,13 @@ for($nroadmaps = 0; $droadmaps = mysqli_fetch_array($qroadmaps); $nroadmaps++)
                               todo_categorie.id         AS 'c_id'           ,
                               todo_categorie.titre_fr   AS 'c_titre_fr'     ,
                               todo_categorie.titre_en   AS 'c_titre_en'     ,
-                              todo.titre                AS 't_description'  ,
+                              todo.titre_$lang          AS 't_description'  ,
                               todo.timestamp_fini       AS 't_resolution'   ,
                               todo.public               AS 't_public'
                     FROM      todo
                     LEFT JOIN todo_categorie ON todo.FKtodo_categorie = todo_categorie.id
                     WHERE     todo.valide_admin     = 1
+                    AND       todo.titre_$lang     != ''
                     $temp_admin
                     AND       todo.FKtodo_roadmap   = '$temp_roadmap_id'
                     ORDER BY  (todo.timestamp_fini != 0)        ,

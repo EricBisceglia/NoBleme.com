@@ -99,14 +99,14 @@ $todo_admin   = getadmin();
 
 // On va chercher la liste des tâches
 $qtodo = "    SELECT    todo.id                   AS 't_id'         ,
-                        todo.titre                AS 't_titre'      ,
+                        todo.titre_$lang          AS 't_titre'      ,
                         todo.timestamp            AS 't_creation'   ,
                         todo.timestamp_fini       AS 't_resolution' ,
                         todo.importance           AS 't_importance' ,
                         todo.valide_admin         AS 't_valide'     ,
                         todo.public               AS 't_public'     ,
                         todo.source               AS 't_source'     ,
-                        todo.contenu              AS 't_contenu'    ,
+                        todo.contenu_$lang        AS 't_contenu'    ,
                         todo_categorie.id         AS 'c_id'         ,
                         todo_categorie.titre_fr   AS 'c_titre_fr'   ,
                         todo_categorie.titre_en   AS 'c_titre_en'   ,
@@ -119,7 +119,7 @@ $qtodo = "    SELECT    todo.id                   AS 't_id'         ,
               LEFT JOIN membres         ON todo.FKmembres         = membres.id
               LEFT JOIN todo_categorie  ON todo.FKtodo_categorie  = todo_categorie.id
               LEFT JOIN todo_roadmap    ON todo.FKtodo_roadmap    = todo_roadmap.id
-              WHERE     1 = 1 ";
+              WHERE     todo.titre_$lang != '' ";
 if(!$todo_admin)
   $qtodo .= " AND       todo.valide_admin = 1
               AND       todo.public       = 1 ";
@@ -155,7 +155,7 @@ if($todo_search_categorie == 0)
 if($todo_search_categorie > 0)
   $qtodo .= " AND       todo.FKtodo_categorie                     = '$todo_search_categorie' ";
 if($todo_search_description)
-  $qtodo .= " AND       todo.titre                                LIKE '%$todo_search_description%' ";
+  $qtodo .= " AND       todo.titre_$lang                          LIKE '%$todo_search_description%' ";
 if($todo_search_objectif == 0)
   $qtodo .= " AND       todo.FKtodo_roadmap                       = 0 ";
 if($todo_search_objectif > 0)
@@ -196,7 +196,7 @@ else if($todo_tri == 'createur')
 else if($todo_tri == 'categorie')
   $qtodo .= " ORDER BY  todo.valide_admin           ASC   ,
                         (todo.FKtodo_categorie = 0)       ,
-                        todo_categorie.categorie    ASC   ,
+                        todo_categorie.titre_$lang  ASC   ,
                         (todo.timestamp_fini != 0)        ,
                         todo.timestamp_fini         DESC  ,
                         todo.importance             DESC  ,
@@ -205,7 +205,7 @@ else if($todo_tri == 'categorie')
                         todo.timestamp              DESC  ";
 else if($todo_tri == 'description')
   $qtodo .= " ORDER BY  todo.valide_admin           ASC   ,
-                        todo.titre                  ASC   ,
+                        todo.titre_$lang            ASC   ,
                         todo.timestamp              DESC  ";
 else if($todo_tri == 'objectif')
   $qtodo .= " ORDER BY  todo.valide_admin           ASC   ,

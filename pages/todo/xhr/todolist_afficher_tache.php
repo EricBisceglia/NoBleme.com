@@ -39,11 +39,11 @@ $todo_chemin  = postdata_vide('todo_chemin', 'string', $chemin);
 /*****************************************************************************************************************************************/
 
 // On va chercher les infos sur la tâche
-$qtodo = mysqli_fetch_array(query(" SELECT    todo.titre          AS 't_titre'    ,
+$qtodo = mysqli_fetch_array(query(" SELECT    todo.titre_$lang    AS 't_titre'    ,
                                               todo.timestamp      AS 't_soumis'   ,
                                               todo.timestamp_fini AS 't_resolu'   ,
                                               todo.source         AS 't_source'   ,
-                                              todo.contenu        AS 't_contenu'  ,
+                                              todo.contenu_$lang  AS 't_contenu'  ,
                                               todo.valide_admin   AS 't_valide'   ,
                                               membres.id          AS 'm_id'       ,
                                               membres.pseudonyme  AS 'm_pseudo'
