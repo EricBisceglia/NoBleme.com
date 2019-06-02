@@ -37,7 +37,8 @@ if(isset($_POST['categorie_add']))
 {
   // On insère une nouvelle catégorie vierge
   query(" INSERT INTO todo_categorie
-          SET         todo_categorie.categorie = '-' ");
+          SET         todo_categorie.titre_fr = '-' ,
+                      todo_categorie.titre_en = '-' ");
 }
 
 
@@ -49,13 +50,15 @@ if(isset($_POST['categorie_add']))
 if(isset($_POST['categorie_edit']))
 {
   // On assainit le postdata
-  $categorie_edit_id  = postdata_vide('categorie_edit', 'int', 0);
-  $categorie_edit_nom = postdata_vide('categorie_nom', 'string', '');
+  $categorie_edit_id        = postdata_vide('categorie_edit', 'int', 0);
+  $categorie_edit_titre_fr  = postdata_vide('categorie_titre_fr', 'string', '');
+  $categorie_edit_titre_en  = postdata_vide('categorie_titre_en', 'string', '');
 
   // Et on met à jour la catégorie
   query(" UPDATE  todo_categorie
-          SET     todo_categorie.categorie  = '$categorie_edit_nom'
-          WHERE   todo_categorie.id         = '$categorie_edit_id' ");
+          SET     todo_categorie.titre_fr = '$categorie_edit_titre_fr'  ,
+                  todo_categorie.titre_en = '$categorie_edit_titre_en'
+          WHERE   todo_categorie.id       = '$categorie_edit_id'        ");
 }
 
 
@@ -89,16 +92,18 @@ if(isset($_POST['categorie_delete']))
 /*****************************************************************************************************************************************/
 
 // On va chercher la liste des catégories
-$qcategories = query("  SELECT    todo_categorie.id ,
-                                  todo_categorie.categorie
+$qcategories = query("  SELECT    todo_categorie.id       AS 'c_id'       ,
+                                  todo_categorie.titre_fr AS 'c_titre_fr' ,
+                                  todo_categorie.titre_en AS 'c_titre_en'
                         FROM      todo_categorie
-                        ORDER BY  todo_categorie.categorie ASC ");
+                        ORDER BY  todo_categorie.titre_fr ASC ");
 
 // On les prépare pour l'affichage
 for($ncategories = 0; $dcategories = mysqli_fetch_array($qcategories); $ncategories++)
 {
-  $categorie_id[$ncategories]   = $dcategories['id'];
-  $categorie_nom[$ncategories]  = predata($dcategories['categorie']);
+  $categorie_id[$ncategories]       = $dcategories['c_id'];
+  $categorie_titre_fr[$ncategories] = predata($dcategories['c_titre_fr']);
+  $categorie_titre_en[$ncategories] = predata($dcategories['c_titre_en']);
 }
 
 
@@ -121,14 +126,17 @@ if(!getxhr()) { /***************************************************************
 
       <br>
 
-      <div class="microtexte">
+      <div class="minitexte2">
 
         <table class="titresnoirs grid fullgrid hiddenaltc2">
 
           <thead>
             <tr class="grisclair">
               <th>
-                CATÉGORIE
+                FRANÇAIS
+              </th>
+              <th>
+                ANGLAIS
               </th>
             </tr>
           </thead>
@@ -137,7 +145,7 @@ if(!getxhr()) { /***************************************************************
             <?php } ?>
 
             <tr class="hidden">
-              <td>
+              <td colspan="2">
                 &nbsp;
               </td>
             </tr>
@@ -145,11 +153,14 @@ if(!getxhr()) { /***************************************************************
             <?php for($i=0;$i<$ncategories;$i++) { ?>
             <tr class="pointeur" onclick="categorie_formulaire_edition('<?=$chemin?>', <?=$categorie_id[$i]?>);">
               <td class="gras">
-                <?=$categorie_nom[$i]?>
+                <?=$categorie_titre_fr[$i]?>
+              </td>
+              <td class="gras">
+                <?=$categorie_titre_en[$i]?>
               </td>
             </tr>
             <tr class="hidden" id="categorie_edit_container_<?=$categorie_id[$i]?>">
-              <td class="align_left spaced" id="categorie_edit_<?=$categorie_id[$i]?>">
+              <td colspan="2" class="align_left spaced" id="categorie_edit_<?=$categorie_id[$i]?>">
                 &nbsp;
               </td>
             </tr>

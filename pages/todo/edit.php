@@ -178,16 +178,16 @@ $todo_valide_admin  = $qtodo['t_valide'];
 // Menus déroulants
 
 // Catégories
-$qcategories = query("  SELECT    todo_categorie.id ,
-                                  todo_categorie.categorie
+$qcategories = query("  SELECT    todo_categorie.id           AS 'c_id' ,
+                                  todo_categorie.titre_$lang  AS 'c_lang'
                         FROM      todo_categorie
-                        ORDER BY  todo_categorie.categorie ASC ");
+                        ORDER BY  todo_categorie.titre_$lang  ASC ");
 $selected         = (!$qtodo['t_categorie']) ? ' selected' : '';
 $select_categorie = '<option value="0"'.$selected.'>Aucune catégorie</option>';
 while($dcategories = mysqli_fetch_array($qcategories))
 {
-  $selected           = ($dcategories['id'] == $qtodo['t_categorie']) ? ' selected' : '';
-  $select_categorie  .= '<option value="'.$dcategories['id'].'"'.$selected.'>'.predata($dcategories['categorie']).'</option>';
+  $selected           = ($dcategories['c_id'] == $qtodo['t_categorie']) ? ' selected' : '';
+  $select_categorie  .= '<option value="'.$dcategories['c_id'].'"'.$selected.'>'.predata($dcategories['c_lang']).'</option>';
 }
 
 

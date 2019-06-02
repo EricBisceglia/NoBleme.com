@@ -107,7 +107,9 @@ $qtodo = "    SELECT    todo.id                   AS 't_id'         ,
                         todo.public               AS 't_public'     ,
                         todo.source               AS 't_source'     ,
                         todo.contenu              AS 't_contenu'    ,
-                        todo_categorie.categorie  AS 'c_nom'        ,
+                        todo_categorie.id         AS 'c_id'         ,
+                        todo_categorie.titre_fr   AS 'c_titre_fr'   ,
+                        todo_categorie.titre_en   AS 'c_titre_en'   ,
                         todo_roadmap.version      AS 'r_nom'        ,
                         membres.pseudonyme        AS 'm_pseudo'     ,
                         membres.id                AS 'm_id'
@@ -249,7 +251,8 @@ for($ntodo = 0; $dtodo = mysqli_fetch_array($qtodo); $ntodo++)
   $todo_resolution[$ntodo]  = ($dtodo['t_resolution']) ? predata(ilya($dtodo['t_resolution'], $lang)) : $temp_lang_resolution;
   $todo_importance[$ntodo]  = (!$dtodo['t_resolution']) ? todo_importance($dtodo['t_importance'], $lang, 1) : $temp_lang_resolution;
   $todo_importance[$ntodo]  = (!$dtodo['t_valide']) ? '<span class="gras">NON VALIDÉ !</span>' : $todo_importance[$ntodo];
-  $todo_categorie[$ntodo]   = ($dtodo['c_nom']) ? predata($dtodo['c_nom']) : '';
+  $temp_lang_categorie      = ($lang == 'FR') ? $dtodo['c_titre_fr'] : $dtodo['c_titre_en'];
+  $todo_categorie[$ntodo]   = ($dtodo['c_id']) ? predata($temp_lang_categorie) : '';
   $todo_objectif[$ntodo]    = ($dtodo['r_nom']) ? predata($dtodo['r_nom']) : '';
   $todo_prive[$ntodo]       = (!$dtodo['t_public']) ? 'ADMIN' : '';
   $todo_approuve[$ntodo]    = ($dtodo['t_valide']) ? 1 : 0;
@@ -295,13 +298,13 @@ for($i=0;$i<=5;$i++)
 
 
 // Catégories
-$qcategories = query("  SELECT    todo_categorie.id ,
-                                  todo_categorie.categorie
+$qcategories = query("  SELECT    todo_categorie.id           AS 'c_id' ,
+                                  todo_categorie.titre_$lang  AS 'c_titre'
                         FROM      todo_categorie
-                        ORDER BY  todo_categorie.categorie ASC ");
+                        ORDER BY  todo_categorie.titre_$lang ASC ");
 $select_categorie = '<option value="0">Aucune catégorie</option>';
 while($dcategories = mysqli_fetch_array($qcategories))
-  $select_categorie .= '<option value="'.$dcategories['id'].'">'.predata($dcategories['categorie']).'</option>';
+  $select_categorie .= '<option value="'.$dcategories['c_id'].'">'.predata($dcategories['c_titre']).'</option>';
 
 
 // Objectifs
@@ -454,7 +457,6 @@ EOD;
   $trad['todo_task_solved']       = "Task solved on";
   $trad['todo_task_source']       = "patch source code";
 }
-
 
 
 

@@ -52,8 +52,9 @@ function categorie_modifier(chemin, id)
   toggle_row('categorie_edit_container_' + id, 1);
 
   // On prépare le postdata
-  postdata  = 'categorie_edit=' + encodeURIComponent(id);
-  postdata += '&categorie_nom=' + dynamique_prepare('categorie_nom_'+id);
+  postdata  = 'categorie_edit='       + encodeURIComponent(id);
+  postdata += '&categorie_titre_fr='  + dynamique_prepare('categorie_titre_fr_'+id);
+  postdata += '&categorie_titre_en='  + dynamique_prepare('categorie_titre_en_'+id);
 
   // On envoie la demande en XHR
   dynamique(chemin, 'edit_categories', 'categories_tbody', postdata, 1);

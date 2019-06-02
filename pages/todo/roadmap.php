@@ -54,7 +54,9 @@ for($nroadmaps = 0; $droadmaps = mysqli_fetch_array($qroadmaps); $nroadmaps++)
   $qtodo = query("  SELECT    todo.id                   AS 't_id'           ,
                               todo.importance           AS 't_importance'   ,
                               todo.timestamp            AS 't_creation'     ,
-                              todo_categorie.categorie  AS 't_categorie'    ,
+                              todo_categorie.id         AS 'c_id'           ,
+                              todo_categorie.titre_fr   AS 'c_titre_fr'     ,
+                              todo_categorie.titre_en   AS 'c_titre_en'     ,
                               todo.titre                AS 't_description'  ,
                               todo.timestamp_fini       AS 't_resolution'   ,
                               todo.public               AS 't_public'
@@ -77,7 +79,8 @@ for($nroadmaps = 0; $droadmaps = mysqli_fetch_array($qroadmaps); $nroadmaps++)
     $todo_prive[$nroadmaps][$ntodo[$nroadmaps]]       = (!$dtodo['t_public']) ? 'PRIVÉ' : '';
     $todo_importance[$nroadmaps][$ntodo[$nroadmaps]]  = (!$dtodo['t_resolution']) ? todo_importance($dtodo['t_importance'], 1) : 'Résolu';
     $todo_creation[$nroadmaps][$ntodo[$nroadmaps]]    = predata(ilya($dtodo['t_creation']));
-    $todo_categorie[$nroadmaps][$ntodo[$nroadmaps]]   = ($dtodo['t_categorie']) ? predata($dtodo['t_categorie']) : '';
+    $temp_lang_categorie                              = ($lang == 'FR') ? $dtodo['c_titre_fr'] : $dtodo['c_titre_en'];
+    $todo_categorie[$nroadmaps][$ntodo[$nroadmaps]]   = ($dtodo['c_id']) ? predata($temp_lang_categorie) : '';
     $todo_description[$nroadmaps][$ntodo[$nroadmaps]] = predata(tronquer_chaine($dtodo['t_description'], 50, '...'));
     $todo_resolution[$nroadmaps][$ntodo[$nroadmaps]]  = ($dtodo['t_resolution']) ? predata(ilya($dtodo['t_resolution'])) : 'Non résolu';
   }

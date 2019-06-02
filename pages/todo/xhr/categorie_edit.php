@@ -36,16 +36,18 @@ $chemin_xhr   = postdata_vide('chemin', 'string', '');
 /*****************************************************************************************************************************************/
 
 // On va chercher les données de la catégorie qu'on veut modifier
-$qcategorie = mysqli_fetch_array(query("  SELECT    todo_categorie.categorie
+$qcategorie = mysqli_fetch_array(query("  SELECT    todo_categorie.titre_fr AS 'c_titre_fr' ,
+                                                    todo_categorie.titre_en AS 'c_titre_en'
                                           FROM      todo_categorie
                                           WHERE     todo_categorie.id = '$categorie_id' "));
 
 // Si l'entrée existe pas, on s'arrête là
-if($qcategorie['categorie'] === NULL)
+if($qcategorie['c_titre_fr'] === NULL)
   exit();
 
 // Sinon, on prépare les données pour l'affichage
-$categorie_nom = predata($qcategorie['categorie']);
+$categorie_titre_fr = predata($qcategorie['c_titre_fr']);
+$categorie_titre_en = predata($qcategorie['c_titre_en']);
 
 
 
@@ -60,11 +62,17 @@ $categorie_nom = predata($qcategorie['categorie']);
 
 <fieldset>
 
-  <input id="categorie_nom_<?=$categorie_id?>" name="categorie_nom_<?=$categorie_id?>" class="indiv" type="text" value="<?=$categorie_nom?>"><br>
+  <label for="categorie_titre_fr_<?=$categorie_id?>">Titre français :</label>
+  <input id="categorie_titre_fr_<?=$categorie_id?>" name="categorie_titre_fr_<?=$categorie_id?>" class="indiv" type="text" value="<?=$categorie_titre_fr?>"><br>
+  <br>
+
+  <label for="categorie_titre_en_<?=$categorie_id?>">Titre anglais :</label>
+  <input id="categorie_titre_en_<?=$categorie_id?>" name="categorie_titre_en_<?=$categorie_id?>" class="indiv" type="text" value="<?=$categorie_titre_en?>"><br>
   <br>
 
   <div class="align_center">
-    <button onclick="categorie_modifier('<?=$chemin_xhr?>', <?=$categorie_id?>);">MODIFIER</button><br>
+    <button onclick="categorie_modifier('<?=$chemin_xhr?>', <?=$categorie_id?>);">MODIFIER</button>
+    &nbsp;
     <button class="button-outline" onclick="categorie_supprimer('<?=$chemin_xhr?>', <?=$categorie_id?>);">SUPPRIMER</button>
   </div>
 

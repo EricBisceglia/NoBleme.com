@@ -24,14 +24,14 @@ $derniere_requete = sql_check_id_requete();
 //                                            !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP !!!!!                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #547 : Nouveaux champs privés pour les templates dans la NBDB
+// #542 : Rendre la liste des tâches bilingues
 
-if($derniere_requete < 18)
+if($derniere_requete < 19)
 {
-  sql_creer_champ("nbdb_web_notes_admin", "template_global", "LONGTEXT", "brouillon_en");
-  sql_creer_champ("nbdb_web_notes_admin", "template_fr", "LONGTEXT", "template_global");
-  sql_creer_champ("nbdb_web_notes_admin", "template_en", "LONGTEXT", "template_fr");
-  sql_update_id_requete(18);
+  sql_renommer_champ("todo_categorie", "categorie", "titre_fr", "TINYTEXT");
+  sql_creer_champ("todo_categorie", "titre_en", "TINYTEXT", "titre_fr");
+  query(" UPDATE todo_categorie SET todo_categorie.titre_en = todo_categorie.titre_fr ");
+  //sql_update_id_requete(19);
 }
 
 
@@ -684,4 +684,16 @@ if($derniere_requete < 17)
 {
   sql_supprimer_champ("nbdb_web_notes_admin", "id");
   sql_update_id_requete(17);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #547 : Nouveaux champs privés pour les templates dans la NBDB
+
+if($derniere_requete < 18)
+{
+  sql_creer_champ("nbdb_web_notes_admin", "template_global", "LONGTEXT", "brouillon_en");
+  sql_creer_champ("nbdb_web_notes_admin", "template_fr", "LONGTEXT", "template_global");
+  sql_creer_champ("nbdb_web_notes_admin", "template_en", "LONGTEXT", "template_fr");
+  sql_update_id_requete(18);
 }
