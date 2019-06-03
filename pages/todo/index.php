@@ -43,8 +43,10 @@ if(isset($_POST['todo_add_go']) && $est_admin)
   adminonly($lang);
 
   // Assainissement du postdata
-  $todo_add_titre       = postdata_vide('todo_add_titre', 'string', '');
-  $todo_add_description = postdata_vide('todo_add_description', 'string', '');
+  $todo_add_titre_fr    = postdata_vide('todo_add_titre_fr', 'string', '');
+  $todo_add_titre_en    = postdata_vide('todo_add_titre_en', 'string', '');
+  $todo_add_desc_fr     = postdata_vide('todo_add_desc_fr', 'string', '');
+  $todo_add_desc_en     = postdata_vide('todo_add_desc_en', 'string', '');
   $todo_add_categorie   = postdata_vide('todo_add_categorie', 'int', 0);
   $todo_add_objectif    = postdata_vide('todo_add_objectif', 'int', 0);
   $todo_add_importance  = postdata_vide('todo_add_importance', 'int', 0);
@@ -56,8 +58,10 @@ if(isset($_POST['todo_add_go']) && $est_admin)
           SET         todo.FKmembres        = 1                       ,
                       todo.timestamp        = '$timestamp'            ,
                       todo.importance       = '$todo_add_importance'  ,
-                      todo.titre            = '$todo_add_titre'       ,
-                      todo.contenu          = '$todo_add_description' ,
+                      todo.titre_fr         = '$todo_add_titre_fr'    ,
+                      todo.titre_en         = '$todo_add_titre_en'    ,
+                      todo.contenu_fr       = '$todo_add_desc_fr'     ,
+                      todo.contenu_en       = '$todo_add_desc_en'     ,
                       todo.FKtodo_categorie = '$todo_add_categorie'   ,
                       todo.FKtodo_roadmap   = '$todo_add_objectif'    ,
                       todo.valide_admin     = 1                       ,
@@ -71,12 +75,16 @@ if(isset($_POST['todo_add_go']) && $est_admin)
     // Activité récente
     $todo_add_id      = mysqli_insert_id($db);
     $todo_add_pseudo  = postdata(getpseudo(), 'string');
-    activite_nouveau('todo_new', 0, 1, $todo_add_pseudo, $todo_add_id, $todo_add_titre);
+    activite_nouveau('todo_new', 0, 1, $todo_add_pseudo, $todo_add_id, $todo_add_titre_fr, $todo_add_titre_en);
 
     // Bot IRC
-    $todo_add_pseudo_raw  = getpseudo();
-    $todo_add_titre_raw   = $_POST['todo_add_titre'];
-    ircbot($chemin, $todo_add_pseudo_raw." a ouvert une tâche : ".$todo_add_titre_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_add_id, "#dev");
+    $todo_add_pseudo_raw    = getpseudo();
+    $todo_add_titre_fr_raw  = $_POST['todo_add_titre_fr'];
+    $todo_add_titre_en_raw  = $_POST['todo_add_titre_en'];
+    if($todo_add_titre_fr_raw)
+      ircbot($chemin, $todo_add_pseudo_raw." a ouvert une tâche : ".$todo_add_titre_fr_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_add_id, "#dev");
+      if($todo_add_titre_en_raw)
+      ircbot($chemin, $todo_add_pseudo_raw." opened a new task: ".$todo_add_titre_en_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_add_id."&english", "#english");
   }
 }
 
@@ -509,18 +517,39 @@ if(!getxhr()) { /***************************************************************
         <hr class="separateur_contenu">
         <br>
 
-        <div class="texte">
+        <div class="texte3">
 
           <form method="POST" id="todolist_add_form">
             <fieldset>
 
-              <label for="todo_add_titre">Titre de la tâche</label>
-              <input id="todo_add_titre" name="todo_add_titre" class="indiv" type="text"><br>
-              <br>
+              <div class="flexcontainer">
+                <div style="flex:7">
 
-              <label for="todo_add_description">Description</label>
-              <textarea id="todo_add_description" name="todo_add_description" class="indiv" style="height:100px"></textarea><br>
-              <br>
+                  <label for="todo_add_titre_fr">Titre en français</label>
+                  <input id="todo_add_titre_fr" name="todo_add_titre_fr" class="indiv" type="text"><br>
+                  <br>
+
+                  <label for="todo_add_desc_fr">Description en français (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a>)</label>
+                  <textarea id="todo_add_desc_fr" name="todo_add_desc_fr" class="indiv" style="height:100px"></textarea><br>
+                  <br>
+
+                </div>
+                <div style="flex:1">
+                  &nbsp;
+                </div>
+                <div style="flex:7">
+
+
+                  <label for="todo_add_titre_en">Titre en anglais</label>
+                  <input id="todo_add_titre_en" name="todo_add_titre_en" class="indiv" type="text"><br>
+                  <br>
+
+                  <label for="todo_add_desc_en">Description en anglais (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a>)</label>
+                  <textarea id="todo_add_desc_en" name="todo_add_desc_en" class="indiv" style="height:100px"></textarea><br>
+                  <br>
+
+                </div>
+              </div>
 
               <label for="todo_add_categorie">Catégorie</label>
               <div class="flexcontainer">

@@ -48,7 +48,8 @@ if(isset($_POST['todo_delete']) || isset($_POST['todo_reject']))
   if(isset($_POST['todo_reject']))
   {
     // On a besoin de choper des infos sur la tâche avant de la supprimer
-    $qtodo = mysqli_fetch_array(query(" SELECT    todo.contenu        AS 't_contenu'  ,
+    $qtodo = mysqli_fetch_array(query(" SELECT    todo.contenu_fr     AS 't_contenu_fr' ,
+                                                  todo.contenu_fr     AS 't_contenu_en' ,
                                                   membres.id          AS 'm_id'
                                         FROM      todo
                                         LEFT JOIN membres ON todo.FKmembres = membres.id
@@ -59,7 +60,7 @@ if(isset($_POST['todo_delete']) || isset($_POST['todo_reject']))
   query(" DELETE FROM todo
           WHERE       todo.id = '$todo_id' ");
 
-  // Ainsi que l'entrée dans l'activité récente
+  // Ainsi que les entrées dans l'activité récente
   activite_supprimer('todo_', 0, 0, NULL, $todo_id, 1);
 
   if(isset($_POST['todo_reject']))
@@ -69,8 +70,9 @@ if(isset($_POST['todo_delete']) || isset($_POST['todo_reject']))
     $todo_delete_raison = $_POST['todo_delete_raison'];
 
     // On envoie un message de rejet à l'auteur
-    $todo_auteur      = $qtodo['m_id'];
-    $todo_contenu_raw = $qtodo['t_contenu'];
+    $todo_auteur          = $qtodo['m_id'];
+    $todo_contenu_fr_raw  = $qtodo['t_contenu_fr'];
+    $todo_contenu_en_raw  = $qtodo['t_contenu_en'];
 
     // Selon si on veut l'envoyer en français...
     if($todo_delete_lang == 'FR')
@@ -83,7 +85,7 @@ if(isset($_POST['todo_delete']) || isset($_POST['todo_reject']))
 [b]Raison du refus :[/b] {$todo_raison}
 
 [b]Contenu de la proposition :[/b]
-[quote]{$todo_contenu_raw}[/quote]
+[quote]{$todo_contenu_fr_raw}[/quote]
 
 Même si votre proposition a été refusée, votre contribution à NoBleme est appréciée.
 N'hésitez pas à continuer à contribuer dans le futur !
@@ -99,7 +101,7 @@ EOD;
 [b]Reason for refusal:[/b] {$todo_raison}
 
 [b]Your proposal was:[/b]
-[quote]{$todo_contenu_raw}[/quote]
+[quote]{$todo_contenu_en_raw}[/quote]
 
 Even though your proposal was rejected, your contribution to NoBleme is appreciated.
 Don't hesitate to continue contributing in the future !
@@ -124,21 +126,25 @@ EOD;
 /*****************************************************************************************************************************************/
 
 // On a besoin de quelques infos sur la tâche
-$qtodo = mysqli_fetch_array(query(" SELECT    membres.pseudonyme  AS 'm_pseudo' ,
-                                              todo.valide_admin   AS 't_valide' ,
-                                              todo.titre          AS 't_titre'  ,
-                                              todo.contenu        AS 't_contenu'
+$qtodo = mysqli_fetch_array(query(" SELECT    membres.pseudonyme  AS 'm_pseudo'     ,
+                                              todo.valide_admin   AS 't_valide'     ,
+                                              todo.titre_fr       AS 't_titre_fr'   ,
+                                              todo.titre_en       AS 't_titre_en'   ,
+                                              todo.contenu_fr     AS 't_contenu_fr' ,
+                                              todo.contenu_en     AS 't_contenu_en'
                                     FROM      todo
                                     LEFT JOIN membres ON todo.FKmembres = membres.id
                                     WHERE     todo.id = '$todo_id' "));
 
 // Si la tâche existe pas, on sort
-if($qtodo['t_titre'] === NULL)
+if($qtodo['t_titre_fr'] === NULL && $qtodo['t_titre_en'] === NULL)
   exit(header("Location: ".$chemin."pages/todo/index"));
 
 // On prépare tout ça pour l'affichage
-$todo_titre         = predata($qtodo['t_titre']);
-$todo_contenu       = bbcode(predata($qtodo['t_contenu'], 1));
+$todo_titre_fr      = predata($qtodo['t_titre_fr']);
+$todo_titre_en      = predata($qtodo['t_titre_en']);
+$todo_contenu_fr    = bbcode(predata($qtodo['t_contenu_fr'], 1));
+$todo_contenu_en    = bbcode(predata($qtodo['t_contenu_en'], 1));
 $todo_valide_admin  = $qtodo['t_valide'];
 $todo_pseudonyme    = predata($qtodo['m_pseudo']);
 
@@ -161,7 +167,14 @@ $todo_pseudonyme    = predata($qtodo['m_pseudo']);
 
         <h5>Confirmer la suppression de la tâche suivante :</h5>
 
-        <h5 class="texte_negatif"><?=$todo_titre?></h5>
+        <h5 class="texte_negatif">
+          <?=$todo_titre_fr?>
+          <?php if($todo_titre_fr && $todo_titre_en) { ?>
+          <br>
+          <?php } ?>
+          <?=$todo_titre_en?>
+        </h5>
+
         <br>
 
         <?php } else { ?>
@@ -169,7 +182,11 @@ $todo_pseudonyme    = predata($qtodo['m_pseudo']);
         <h5>Confirmer le rejet de la proposition de <?=$todo_pseudonyme?> :</h5>
 
         <br>
-        <?=$todo_contenu?><br>
+        <?=$todo_contenu_fr?><br>
+        <br>
+
+        <br>
+        <?=$todo_contenu_en?><br>
         <br>
 
         <?php } ?>
