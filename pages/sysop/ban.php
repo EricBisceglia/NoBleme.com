@@ -88,7 +88,7 @@ EOD;
   $temp_jour = ($ban_jours == 1) ? ' jour' : ' jours';
   $temp_days = ($ban_jours == 1) ? ' day'  : ' days';
   ircbot($chemin, getpseudo($ban_id)." a été banni de NoBleme pendant ".$ban_jours.$temp_jour." - ".$GLOBALS['url_site']."pages/user/user?id=".$ban_id, "#nobleme");
-  ircbot($chemin, getpseudo($ban_id)." has been banned from NoBleme for ".$ban_jours.$temp_days." - ".$GLOBALS['url_site']."pages/user/user?id=".$ban_id."&english", "#english");
+  ircbot($chemin, getpseudo($ban_id)." has been banned from NoBleme for ".$ban_jours.$temp_days." - ".$GLOBALS['url_site']."pages/user/user?id=".$ban_id, "#english");
   ircbot($chemin, getpseudo()." a banni ".getpseudo($ban_id)." pendant ".$ban_jours.$temp_jour." - ".$GLOBALS['url_site']."pages/sysop/pilori", "#sysop");
 
   // Et on redirige vers le profil de l'user

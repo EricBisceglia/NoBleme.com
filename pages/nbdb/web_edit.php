@@ -98,7 +98,7 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
       if($edit_web_titre_fr)
         ircbot($chemin, "Nouvelle entrée dans l'encyclopédie de la culture internet : ".$edit_web_titre_fr_raw." - ".$GLOBALS['url_site']."pages/nbdb/web?id=".$edit_web_id, "#NoBleme");
       if($edit_web_titre_en)
-        ircbot($chemin, "New entry in the encyclopedia of internet culture : ".$edit_web_titre_en_raw." - ".$GLOBALS['url_site']."pages/nbdb/web?id=".$edit_web_id."&english", "#english");
+        ircbot($chemin, "New entry in the encyclopedia of internet culture : ".$edit_web_titre_en_raw." - ".$GLOBALS['url_site']."pages/nbdb/web?id=".$edit_web_id, "#english");
     }
   }
 
@@ -138,7 +138,7 @@ if(isset($_POST['web_add']) || isset($_POST['web_edit']))
       if($edit_web_titre_fr)
         ircbot($chemin, "Une entrée de l'encyclopédie de la culture internet a été modifiée : ".$edit_web_titre_fr_raw." - ".$GLOBALS['url_site']."pages/nbdb/web?id=".$edit_web_id, "#NoBleme");
       if($edit_web_titre_en)
-        ircbot($chemin, "An entry in the encyclopedia of internet culture has been modified : ".$edit_web_titre_en_raw." - ".$GLOBALS['url_site']."pages/nbdb/web?id=".$edit_web_id."&english", "#english");
+        ircbot($chemin, "An entry in the encyclopedia of internet culture has been modified : ".$edit_web_titre_en_raw." - ".$GLOBALS['url_site']."pages/nbdb/web?id=".$edit_web_id, "#english");
     }
   }
 

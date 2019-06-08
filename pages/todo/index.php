@@ -84,7 +84,7 @@ if(isset($_POST['todo_add_go']) && $est_admin)
     if($todo_add_titre_fr_raw)
       ircbot($chemin, $todo_add_pseudo_raw." a ouvert une tâche : ".$todo_add_titre_fr_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_add_id, "#dev");
       if($todo_add_titre_en_raw)
-      ircbot($chemin, $todo_add_pseudo_raw." opened a new task: ".$todo_add_titre_en_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_add_id."&english", "#english");
+      ircbot($chemin, $todo_add_pseudo_raw." opened a new task: ".$todo_add_titre_en_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_add_id, "#english");
   }
 }
 
