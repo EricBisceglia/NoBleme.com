@@ -126,10 +126,15 @@ $qtodo = "    SELECT    todo.id                   AS 't_id'         ,
               FROM      todo
               LEFT JOIN membres         ON todo.FKmembres         = membres.id
               LEFT JOIN todo_categorie  ON todo.FKtodo_categorie  = todo_categorie.id
-              LEFT JOIN todo_roadmap    ON todo.FKtodo_roadmap    = todo_roadmap.id
-              WHERE     todo.titre_$lang != '' ";
-if(!$todo_admin)
-  $qtodo .= " AND       todo.valide_admin = 1
+              LEFT JOIN todo_roadmap    ON todo.FKtodo_roadmap    = todo_roadmap.id ";
+if($todo_admin && !isset($_GET['id']))
+  $qtodo .= " WHERE     todo.titre_$lang != ''
+              OR        todo.valide_admin = 0 ";
+else if($todo_admin)
+  $qtodo .= " WHERE     todo.titre_$lang != '' ";
+else
+  $qtodo .= " WHERE     todo.titre_$lang != ''
+              AND       todo.valide_admin = 1
               AND       todo.public       = 1 ";
 
 // Assainissement du postdata des recherches

@@ -37,6 +37,9 @@ $page_desc  = (isset($_GET['bug'])) ? "Rapporter un bug dans le fonctionnement d
 // Ouverture d'un rapport de bug
 if(isset($_POST['bug_ok']) || isset($_POST['feature_ok']))
 {
+  // Mesure anti flood
+  antiflood();
+
   // Assainissement du postdata
   $todo_contenu = postdata_vide('rapport_contenu', 'string', '');
 
@@ -49,8 +52,10 @@ if(isset($_POST['bug_ok']) || isset($_POST['feature_ok']))
     query(" INSERT INTO todo
             SET         todo.FKmembres          = '$todo_submitter' ,
                         todo.timestamp          = '$todo_timestamp' ,
-                        todo.titre              = '$todo_pseudo'    ,
-                        todo.contenu            = '$todo_contenu'   ,
+                        todo.titre_fr           = '$todo_pseudo'    ,
+                        todo.titre_en           = '$todo_pseudo'    ,
+                        todo.contenu_fr         = '$todo_contenu'   ,
+                        todo.contenu_en         = '$todo_contenu'   ,
                         todo.valide_admin       = 0                 ,
                         todo.public             = 1                 ,
                         todo.timestamp_fini     = 0                 ");
@@ -72,7 +77,7 @@ EOD;
     envoyer_notif(1, postdata($todo_titre), postdata($todo_message));
 
     // On notifie via IRC
-    ircbot($chemin, "Bad: Oh non, ".$todo_pseudo." a soumis un rapport de bug, va voir ce que tu en penses.", "#sysop");
+    ircbot($chemin, "Bad: ".$todo_pseudo." a ouvert un ticket, va voir ce que tu en penses.", "#sysop");
 
     // On redirige vers un message de validation
     if(isset($_POST['bug_ok']))
