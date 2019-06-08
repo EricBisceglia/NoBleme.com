@@ -545,7 +545,10 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   {
     $retour['css']  = 'texte_noir vert_background_clair';
     $retour['href'] = $chemin.'pages/todo/index?id='.$id;
-    $retour['FR']   = "Tache résolue : ".predata(tronquer_chaine($titre, 70, '...'));
+    if($titre)
+      $retour['FR']   = "Tache résolue : ".predata(tronquer_chaine($titre, 70, '...'));
+    if($parent)
+      $retour['EN']   = "Task solved: ".predata(tronquer_chaine($parent, 75, '...'));
   }
 
 

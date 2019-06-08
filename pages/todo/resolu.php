@@ -46,23 +46,27 @@ $todo_id = postdata($_GET['id'], 'int');
 if(isset($_POST['todo_solved_go']))
 {
   // Assainissement du postdata
-  $todo_edit_resolu       = postdata_vide('todo_edit_resolu', 'int', 0);
-  $todo_edit_source       = postdata_vide('todo_edit_source', 'string', '');
-  $todo_edit_titre        = postdata_vide('todo_edit_titre', 'string', '');
-  $todo_edit_description  = postdata_vide('todo_edit_description', 'string', '');
-  $todo_edit_objectif     = postdata_vide('todo_edit_objectif', 'int', 0);
-  $todo_edit_public       = postdata_vide('todo_edit_public', 'int', 0);
-  $todo_timestamp_fini    = ($todo_edit_resolu) ? time() : 0;
+  $todo_edit_resolu     = postdata_vide('todo_edit_resolu', 'int', 0);
+  $todo_edit_source     = postdata_vide('todo_edit_source', 'string', '');
+  $todo_edit_titre_fr   = postdata_vide('todo_edit_titre_fr', 'string', '');
+  $todo_edit_titre_en   = postdata_vide('todo_edit_titre_en', 'string', '');
+  $todo_edit_contenu_fr = postdata_vide('todo_edit_contenu_fr', 'string', '');
+  $todo_edit_contenu_en = postdata_vide('todo_edit_contenu_en', 'string', '');
+  $todo_edit_objectif   = postdata_vide('todo_edit_objectif', 'int', 0);
+  $todo_edit_public     = postdata_vide('todo_edit_public', 'int', 0);
+  $todo_timestamp_fini  = ($todo_edit_resolu) ? time() : 0;
 
   // Mise à jour de la tâche
   query(" UPDATE  todo
-          SET     todo.titre            = '$todo_edit_titre'        ,
-                  todo.contenu          = '$todo_edit_description'  ,
-                  todo.FKtodo_roadmap   = '$todo_edit_objectif'     ,
-                  todo.public           = '$todo_edit_public'       ,
-                  todo.timestamp_fini   = '$todo_timestamp_fini'    ,
+          SET     todo.titre_fr         = '$todo_edit_titre_fr'   ,
+                  todo.titre_en         = '$todo_edit_titre_en'   ,
+                  todo.contenu_fr       = '$todo_edit_contenu_fr' ,
+                  todo.contenu_en       = '$todo_edit_contenu_en' ,
+                  todo.FKtodo_roadmap   = '$todo_edit_objectif'   ,
+                  todo.public           = '$todo_edit_public'     ,
+                  todo.timestamp_fini   = '$todo_timestamp_fini'  ,
                   todo.source           = '$todo_edit_source'
-          WHERE   todo.id               = '$todo_id'                ");
+          WHERE   todo.id               = '$todo_id'              ");
 
   if($todo_edit_resolu)
   {
@@ -75,15 +79,19 @@ if(isset($_POST['todo_solved_go']))
     if($qcheckactivite['id'] === NULL)
     {
       // Si non, on l'insère dans l'activité récente
-      activite_nouveau('todo_fini', 0, 0, NULL, $todo_id, $todo_edit_titre);
+      activite_nouveau('todo_fini', 0, 0, NULL, $todo_id, $todo_edit_titre_fr, $todo_edit_titre_en);
 
       // Et on notifie via le bot IRC
-      $todo_edit_titre_raw = $_POST['todo_edit_titre'];
-      ircbot($chemin, "Tâche résolue : ".$todo_edit_titre_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_id, "#dev");
+      $todo_edit_titre_raw_fr = $_POST['todo_edit_titre_fr'];
+      $todo_edit_titre_raw_en = $_POST['todo_edit_titre_en'];
+      if($todo_edit_titre_raw_fr)
+        ircbot($chemin, "Tâche résolue : ".$todo_edit_titre_raw_fr." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_id, "#dev");
+      if($todo_edit_titre_raw_en)
+        ircbot($chemin, "Task solved: ".$todo_edit_titre_raw_en." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_id, "#english");
       if($todo_edit_source)
       {
         $todo_edit_source_raw = $_POST['todo_edit_source'];
-        ircbot($chemin, "Nouveau commit sur le dépôt public de NoBleme : ".$todo_edit_source_raw, "#dev");
+        ircbot($chemin, "Le code source de NoBleme a été modifié : ".$todo_edit_source_raw, "#dev");
         ircbot($chemin, "Changes have been made to NoBleme's source code: ".$todo_edit_source_raw, "#english");
       }
     }
@@ -109,23 +117,27 @@ if(isset($_POST['todo_solved_go']))
 // Données du formulaire
 
 // On a besoin de quelques infos sur la tâche
-$qtodo = mysqli_fetch_array(query(" SELECT    todo.titre            AS 't_titre'    ,
-                                              todo.contenu          AS 't_contenu'  ,
-                                              todo.public           AS 't_public'   ,
-                                              todo.FKtodo_roadmap   AS 't_objectif' ,
-                                              todo.timestamp_fini   AS 't_fini'     ,
+$qtodo = mysqli_fetch_array(query(" SELECT    todo.titre_fr         AS 't_titre_fr'   ,
+                                              todo.titre_en         AS 't_titre_en'   ,
+                                              todo.contenu_fr       AS 't_contenu_fr' ,
+                                              todo.contenu_en       AS 't_contenu_en' ,
+                                              todo.public           AS 't_public'     ,
+                                              todo.FKtodo_roadmap   AS 't_objectif'   ,
+                                              todo.timestamp_fini   AS 't_fini'       ,
                                               todo.source           AS 't_source'
                                     FROM      todo
                                     WHERE     todo.id = '$todo_id' "));
 
 // Si la tâche existe pas, on sort
-if($qtodo['t_titre'] === NULL)
+if($qtodo['t_titre_fr'] === NULL && $qtodo['t_titre_en'] === NULL)
   exit(header("Location: ".$chemin."pages/todo/index"));
 
 // On prépare tout ça pour l'affichage
-$todo_titre   = predata($qtodo['t_titre']);
-$todo_contenu = predata($qtodo['t_contenu']);
-$todo_source  = predata($qtodo['t_source']);
+$todo_titre_fr      = predata($qtodo['t_titre_fr']);
+$todo_titre_en      = predata($qtodo['t_titre_en']);
+$todo_contenu_fr    = predata($qtodo['t_contenu_fr']);
+$todo_contenu_en    = predata($qtodo['t_contenu_en']);
+$todo_source        = predata($qtodo['t_source']);
 
 
 
@@ -134,16 +146,16 @@ $todo_source  = predata($qtodo['t_source']);
 // Menus déroulants
 
 // Objectifs
-$qobjectifs = query(" SELECT    todo_roadmap.id ,
-                                todo_roadmap.version
+$qobjectifs = query(" SELECT    todo_roadmap.id             AS 'r_id'     ,
+                                todo_roadmap.version_$lang  AS 'r_version'
                       FROM      todo_roadmap
                       ORDER BY  todo_roadmap.id_classement DESC ");
 $selected         = (!$qtodo['t_objectif']) ? ' selected' : '';
 $select_objectif  = '<option value="0"'.$selected.'>Aucun objectif</option>';
 while($dobjectifs = mysqli_fetch_array($qobjectifs))
 {
-  $selected         = ($dobjectifs['id'] == $qtodo['t_objectif']) ? ' selected' : '';
-  $select_objectif .= '<option value="'.$dobjectifs['id'].'"'.$selected.'>'.predata($dobjectifs['version']).'</option>';
+  $selected         = ($dobjectifs['r_id'] == $qtodo['t_objectif']) ? ' selected' : '';
+  $select_objectif .= '<option value="'.$dobjectifs['r_id'].'"'.$selected.'>'.predata($dobjectifs['r_version']).'</option>';
 }
 
 
@@ -162,15 +174,19 @@ $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-      <div class="texte">
+      <div class="texte3">
 
-        <h1>Résoudre une tâche</h1>
+        <h1 class="align_center">
+          Résoudre une tâche
+        </h1>
 
-        <h5>
-          Tâche #<?=$todo_id?> : <?=$todo_titre?>
-        </h5>
+        <?php if($todo_titre_en) { ?>
+        <h5 class="align_center">Task #<?=$todo_id?>: <?=$todo_titre_en?></h5>
+        <?php } if($todo_titre_fr) { ?>
+        <h5 class="align_center">Tâche #<?=$todo_id?> : <?=$todo_titre_fr?></h5>
+        <?php } ?>
 
-        <h5>
+        <h5 class="align_center">
           <a class="gras" href="<?=$chemin?>pages/todo/index?id=<?=$todo_id?>"><?=$GLOBALS['url_site']?>pages/todo/index?id=<?=$todo_id?></a>
         </h5>
 
@@ -186,7 +202,7 @@ $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
             </select><br>
             <br>
 
-            <label for="todo_edit_source">Code source du patch | <a href="https://github.com/EricBisceglia/NoBleme.com/commits/develop">GitHub</a></label>
+            <label for="todo_edit_source">Code source du patch (<a href="https://github.com/EricBisceglia/NoBleme.com/pulls?utf8=%E2%9C%93&q=is%3Apr">GitHub</a>)</label>
             <input id="todo_edit_source" name="todo_edit_source" class="indiv" type="text" value="<?=$todo_source?>"><br>
             <br>
 
@@ -211,13 +227,33 @@ $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
             </select><br>
             <br>
 
-            <label for="todo_edit_titre">Titre de la tâche</label>
-            <input id="todo_edit_titre" name="todo_edit_titre" class="indiv" type="text" value="<?=$todo_titre?>"><br>
-            <br>
+            <div class="flexcontainer">
+              <div style="flex:7">
 
-            <label for="todo_edit_description">Description</label>
-            <textarea id="todo_edit_description" name="todo_edit_description" class="indiv" style="height:100px"><?=$todo_contenu?></textarea><br>
-            <br>
+                <label for="todo_edit_titre_fr">Titre en français</label>
+                <input id="todo_edit_titre_fr" name="todo_edit_titre_fr" class="indiv" type="text" value="<?=$todo_titre_fr?>"><br>
+                <br>
+
+                <label for="todo_edit_contenu_fr">Description en français (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a>)</label>
+                <textarea id="todo_edit_contenu_fr" name="todo_edit_contenu_fr" class="indiv" style="height:100px"><?=$todo_contenu_fr?></textarea><br>
+                <br>
+
+              </div>
+              <div style="flex:1">
+                &nbsp;
+              </div>
+              <div style="flex:7">
+
+                <label for="todo_edit_titre_en">Titre en anglais</label>
+                <input id="todo_edit_titre_en" name="todo_edit_titre_en" class="indiv" type="text" value="<?=$todo_titre_en?>"><br>
+                <br>
+
+                <label for="todo_edit_contenu_en">Description en anglais (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a>)</label>
+                <textarea id="todo_edit_contenu_en" name="todo_edit_contenu_en" class="indiv" style="height:100px"><?=$todo_contenu_en?></textarea><br>
+                <br>
+
+              </div>
+            </div>
 
             <input value="CHANGER L'ÉTAT DE LA TÂCHE" type="submit" name="todo_solved_go"><br>
 
