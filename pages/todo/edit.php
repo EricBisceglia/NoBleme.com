@@ -47,24 +47,28 @@ $todo_id = postdata($_GET['id'], 'int');
 if(isset($_POST['todo_edit_go']) || isset($_POST['todo_approve_go']))
 {
   // Assainissement du postdata
-  $todo_edit_lang         = postdata_vide('todo_edit_lang', 'string', 'FR');
-  $todo_edit_titre        = postdata_vide('todo_edit_titre', 'string', '');
-  $todo_edit_description  = postdata_vide('todo_edit_description', 'string', '');
-  $todo_edit_categorie    = postdata_vide('todo_edit_categorie', 'int', 0);
-  $todo_edit_objectif     = postdata_vide('todo_edit_objectif', 'int', 0);
-  $todo_edit_importance   = postdata_vide('todo_edit_importance', 'int', 0);
-  $todo_edit_public       = postdata_vide('todo_edit_public', 'int', 0);
+  $todo_edit_lang       = postdata_vide('todo_edit_lang', 'string', 'FR');
+  $todo_edit_titre_fr   = postdata_vide('todo_edit_titre_fr', 'string', '');
+  $todo_edit_titre_en   = postdata_vide('todo_edit_titre_en', 'string', '');
+  $todo_edit_contenu_fr = postdata_vide('todo_edit_contenu_fr', 'string', '');
+  $todo_edit_contenu_en = postdata_vide('todo_edit_contenu_en', 'string', '');
+  $todo_edit_categorie  = postdata_vide('todo_edit_categorie', 'int', 0);
+  $todo_edit_objectif   = postdata_vide('todo_edit_objectif', 'int', 0);
+  $todo_edit_importance = postdata_vide('todo_edit_importance', 'int', 0);
+  $todo_edit_public     = postdata_vide('todo_edit_public', 'int', 0);
 
   // Mise à jour de la tâche
   query(" UPDATE  todo
-          SET     todo.titre            = '$todo_edit_titre'        ,
-                  todo.contenu          = '$todo_edit_description'  ,
-                  todo.FKtodo_categorie = '$todo_edit_categorie'    ,
-                  todo.FKtodo_roadmap   = '$todo_edit_objectif'     ,
-                  todo.importance       = '$todo_edit_importance'   ,
-                  todo.public           = '$todo_edit_public'       ,
+          SET     todo.titre_fr         = '$todo_edit_titre_fr'   ,
+                  todo.titre_en         = '$todo_edit_titre_en'   ,
+                  todo.contenu_fr       = '$todo_edit_contenu_fr' ,
+                  todo.contenu_en       = '$todo_edit_contenu_en' ,
+                  todo.FKtodo_categorie = '$todo_edit_categorie'  ,
+                  todo.FKtodo_roadmap   = '$todo_edit_objectif'   ,
+                  todo.importance       = '$todo_edit_importance' ,
+                  todo.public           = '$todo_edit_public'     ,
                   todo.valide_admin     = 1
-          WHERE   todo.id               = '$todo_id'                ");
+          WHERE   todo.id               = '$todo_id'              ");
 
   // Si c'est une nouvelle tâche...
   if(isset($_POST['todo_approve_go']))
@@ -82,11 +86,15 @@ if(isset($_POST['todo_edit_go']) || isset($_POST['todo_approve_go']))
     {
       // On crée une entrée dans l'activité récente
       $todo_edit_pseudo = postdata(getpseudo(), 'string');
-      activite_nouveau('todo_new', 0, $todo_edit_submitter, $todo_edit_pseudo, $todo_id, $todo_edit_titre);
+      activite_nouveau('todo_new', 0, $todo_edit_submitter, $todo_edit_pseudo, $todo_id, $todo_edit_titre_fr, $todo_edit_titre_en);
 
       // On notifie IRC
-      $todo_edit_titre_raw  = $_POST['todo_edit_titre'];
-      ircbot($chemin, $todo_edit_pseudo_raw." a ouvert une tâche : ".$todo_edit_titre_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_id, "#dev");
+      $todo_edit_titre_fr_raw = $_POST['todo_edit_titre_fr'];
+      $todo_edit_titre_en_raw = $_POST['todo_edit_titre_en'];
+      if($todo_edit_titre_fr_raw)
+        ircbot($chemin, $todo_edit_pseudo_raw." a ouvert une tâche : ".$todo_edit_titre_fr_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_id, "#dev");
+      if($todo_edit_titre_en_raw)
+        ircbot($chemin, $todo_edit_pseudo_raw." opened a new task: ".$todo_edit_titre_en_raw." - ".$GLOBALS['url_site']."pages/todo/index?id=".$todo_id."&english", "#english");
     }
 
     // On prépare un message privé en français
@@ -104,7 +112,7 @@ N'hésitez pas à soumettre d'autres propositions dans le futur !
 EOD;
       else
       {
-        $todo_titre_raw = $_POST['todo_edit_titre'];
+        $todo_titre_raw = $_POST['todo_edit_titre_fr'];
         $todo_message   = <<<EOD
 [b]Votre proposition a été acceptée ![/b]
 
@@ -120,14 +128,27 @@ EOD;
     else
     {
       $todo_titre_message = "Proposal approved";
-      $todo_message       = <<<EOD
+      if($todo_edit_public)
+        $todo_message   = <<<EOD
 [b]Your proposal has been approved![/b]
 
-You have submitted a bug request or feature proposal which has been approved and added into NoBleme's todo list. Sadly, as the todo list is available only in french, it would be pointless to give you a link to the ticket that was opened for your proposal.
+You can view task #{$todo_id} by [url={$chemin}pages/todo/index?id={$todo_id}]clicking here[/url].
 
 Your contribution to NoBleme's development is appreciated.
 Don't hesitate to submit other bug reports or feature requests in the future.
 EOD;
+      else
+      {
+        $todo_titre_raw = $_POST['todo_edit_titre_en'];
+        $todo_message   = <<<EOD
+[b]Your proposal has been approved![/b]
+
+A private task named [b]{$todo_titre_raw}[/b] has been opened. It has been marked as private, thus will not appear in the [url={$chemin}pages/todo/index]to-do list[/url], but has been taken into account.
+
+Your contribution to NoBleme's development is appreciated.
+Don't hesitate to submit other bug reports or feature requests in the future.
+EOD;
+      }
     }
 
     // Et on envoie le message privé
@@ -152,8 +173,10 @@ EOD;
 
 // On a besoin de quelques infos sur la tâche
 $qtodo = mysqli_fetch_array(query(" SELECT    todo.valide_admin     AS 't_valide'     ,
-                                              todo.titre            AS 't_titre'      ,
-                                              todo.contenu          AS 't_contenu'    ,
+                                              todo.titre_fr         AS 't_titre_fr'   ,
+                                              todo.titre_en         AS 't_titre_en'   ,
+                                              todo.contenu_fr       AS 't_contenu_fr' ,
+                                              todo.contenu_en       AS 't_contenu_en' ,
                                               todo.FKtodo_categorie AS 't_categorie'  ,
                                               todo.FKtodo_roadmap   AS 't_objectif'   ,
                                               todo.importance       AS 't_importance' ,
@@ -162,13 +185,15 @@ $qtodo = mysqli_fetch_array(query(" SELECT    todo.valide_admin     AS 't_valide
                                     WHERE     todo.id = '$todo_id' "));
 
 // Si la tâche existe pas, on sort
-if($qtodo['t_titre'] === NULL)
+if($qtodo['t_titre_fr'] === NULL && $qtodo['t_titre_en'] === NULL)
   exit(header("Location: ".$chemin."pages/todo/index"));
 
 // On prépare tout ça pour l'affichage
-$todo_titre         = predata($qtodo['t_titre']);
-$todo_contenu_full  = bbcode(predata($qtodo['t_contenu'], 1));
-$todo_contenu       = $qtodo['t_valide'] ? (predata($qtodo['t_contenu'])) : '';
+$todo_titre_fr      = predata($qtodo['t_titre_fr']);
+$todo_titre_en      = predata($qtodo['t_titre_en']);
+$todo_contenu_full  = ($qtodo['t_contenu_fr']) ? bbcode(predata($qtodo['t_contenu_fr'], 1)) : bbcode(predata($qtodo['t_contenu_en'], 1));
+$todo_contenu_fr    = $qtodo['t_valide'] ? (predata($qtodo['t_contenu_fr'])) : '';
+$todo_contenu_en    = $qtodo['t_valide'] ? (predata($qtodo['t_contenu_en'])) : '';
 $todo_valide_admin  = $qtodo['t_valide'];
 
 
@@ -229,21 +254,26 @@ $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-      <div class="texte">
+      <div class="texte3">
 
         <?php if($todo_valide_admin) { ?>
 
-        <h1>Modifier une tâche</h1>
+        <h1 class="align_center">
+          Modifier une tâche
+        </h1>
 
         <?php } else { ?>
 
-        <h2>Approuver une proposition de tâche</h2>
+        <h1 class="align_center">
+          Approuver une proposition de tâche
+        </h2>
 
         <br>
         <?=$todo_contenu_full?><br>
 
         <?php } ?>
 
+        <br>
         <br>
 
         <form method="POST">
@@ -258,13 +288,34 @@ $select_visibilite .= '<option value="0"'.$selected.'>Privé</option>';
             <br>
             <?php } ?>
 
-            <label for="todo_edit_titre">Titre</label>
-            <input id="todo_edit_titre" name="todo_edit_titre" class="indiv" type="text" value="<?=$todo_titre?>"><br>
-            <br>
+            <div class="flexcontainer">
+              <div style="flex:7">
 
-            <label for="todo_edit_description">Description</label>
-            <textarea id="todo_edit_description" name="todo_edit_description" class="indiv" style="height:100px"><?=$todo_contenu?></textarea><br>
-            <br>
+                <label for="todo_edit_titre_fr">Titre en français</label>
+                <input id="todo_edit_titre_fr" name="todo_edit_titre_fr" class="indiv" type="text" value="<?=$todo_titre_fr?>"><br>
+                <br>
+
+                <label for="todo_edit_contenu_fr">Description en français (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a>)</label>
+                <textarea id="todo_edit_contenu_fr" name="todo_edit_contenu_fr" class="indiv" style="height:100px"><?=$todo_contenu_fr?></textarea><br>
+                <br>
+
+              </div>
+              <div style="flex:1">
+                &nbsp;
+              </div>
+              <div style="flex:7">
+
+                <label for="todo_edit_titre_en">Titre en anglais</label>
+                <input id="todo_edit_titre_en" name="todo_edit_titre_en" class="indiv" type="text" value="<?=$todo_titre_en?>"><br>
+                <br>
+
+                <label for="todo_edit_contenu_en">Description en anglais (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a>)</label>
+                <textarea id="todo_edit_contenu_en" name="todo_edit_contenu_en" class="indiv" style="height:100px"><?=$todo_contenu_en?></textarea><br>
+                <br>
+
+              </div>
+            </div>
+
 
             <label for="todo_edit_categorie">Catégorie</label>
             <div class="flexcontainer">
