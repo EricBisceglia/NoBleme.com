@@ -17,7 +17,8 @@ function todolist_tableau(chemin, tri)
     document.getElementById('todo_tri').value = tri;
 
   // On prépare le postdata
-  postdata  = "todo_tri=" + dynamique_prepare('todo_tri');
+  postdata   = "todo_search=1";
+  postdata  += "&todo_tri=" + dynamique_prepare('todo_tri');
   if(tri != 'raz')
   {
     postdata += '&todo_search_id='          + dynamique_prepare('todo_search_id');
