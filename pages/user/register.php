@@ -105,7 +105,7 @@ if (isset($_POST["register_pseudo"]))
 
     // Bot IRC NoBleme
     ircbot($chemin, "Nouveau membre enregistré sur le site : ".$_POST["register_pseudo"]." - ".$GLOBALS['url_site']."pages/user/user?id=".$new_user, "#NoBleme");
-    ircbot($chemin, "A new member registered on the website: ".$_POST["register_pseudo"]." - ".$GLOBALS['url_site']."pages/user/user?id=".$new_user."&english", "#english");
+    ircbot($chemin, "A new member registered on the website: ".$_POST["register_pseudo"]." - ".$GLOBALS['url_site']."pages/user/user?id=".$new_user, "#english");
 
     // Préparation du message de bienvenue
     if($lang == 'FR')

@@ -532,7 +532,10 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   else if($type === 'todo_new')
   {
     $retour['href'] = $chemin.'pages/todo/index?id='.$id;
-    $retour['FR']   = predata($pseudonyme)." a ouvert une tâche : ".predata(tronquer_chaine($titre, 50, '...'));
+    if($titre)
+      $retour['FR'] = predata($pseudonyme)." a ouvert une tâche : ".predata(tronquer_chaine($titre, 50, '...'));
+    if($parent)
+      $retour['EN'] = predata($pseudonyme)." has opened a new task: ".predata(tronquer_chaine($parent, 50, '...'));
   }
 
   //***************************************************************************************************************************************
@@ -542,7 +545,10 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   {
     $retour['css']  = 'texte_noir vert_background_clair';
     $retour['href'] = $chemin.'pages/todo/index?id='.$id;
-    $retour['FR']   = "Tache résolue : ".predata(tronquer_chaine($titre, 70, '...'));
+    if($titre)
+      $retour['FR']   = "Tache résolue : ".predata(tronquer_chaine($titre, 70, '...'));
+    if($parent)
+      $retour['EN']   = "Task solved: ".predata(tronquer_chaine($parent, 75, '...'));
   }
 
 

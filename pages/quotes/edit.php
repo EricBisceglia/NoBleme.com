@@ -164,7 +164,7 @@ EOD;
     else
     {
       ircbot($chemin, "Miscellanée anglophone #".$misc_id." ajoutée à la collection : ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#NoBleme");
-      ircbot($chemin, "Quote #".$misc_id." added to the collection: ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id."&english", "#english");
+      ircbot($chemin, "Quote #".$misc_id." added to the collection: ".$GLOBALS['url_site']."pages/quotes/quote?id=".$misc_id, "#english");
     }
 
     // On redirige vers la liste des miscellanées

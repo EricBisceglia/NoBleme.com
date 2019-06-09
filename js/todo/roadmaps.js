@@ -54,8 +54,10 @@ function roadmap_modifier(chemin, id)
   // On prépare le postdata
   postdata  = 'roadmap_edit='         + encodeURIComponent(id);
   postdata += '&roadmap_classement='  + dynamique_prepare('roadmap_classement_'+id);
-  postdata += '&roadmap_titre='       + dynamique_prepare('roadmap_titre_'+id);
-  postdata += '&roadmap_description=' + dynamique_prepare('roadmap_description_'+id);
+  postdata += '&roadmap_titre_fr='    + dynamique_prepare('roadmap_titre_fr_'+id);
+  postdata += '&roadmap_titre_en='    + dynamique_prepare('roadmap_titre_en_'+id);
+  postdata += '&roadmap_desc_fr='     + dynamique_prepare('roadmap_desc_fr_'+id);
+  postdata += '&roadmap_desc_en='     + dynamique_prepare('roadmap_desc_en_'+id);
 
   // On envoie la demande en XHR
   dynamique(chemin, 'edit_roadmaps', 'roadmaps_tbody', postdata, 1);

@@ -54,16 +54,21 @@ if(isset($_POST['roadmap_add']))
 if(isset($_POST['roadmap_edit']))
 {
   // On assainit le postdata
+
   $roadmap_edit_id          = postdata_vide('roadmap_edit', 'int', 0);
   $roadmap_edit_classement  = postdata_vide('roadmap_classement', 'int', 0);
-  $roadmap_edit_titre       = postdata_vide('roadmap_titre', 'string', '');
-  $roadmap_edit_description = postdata_vide('roadmap_description', 'string', '');
+  $roadmap_edit_titre_fr    = postdata_vide('roadmap_titre_fr', 'string', '');
+  $roadmap_edit_titre_en    = postdata_vide('roadmap_titre_en', 'string', '');
+  $roadmap_edit_desc_fr     = postdata_vide('roadmap_desc_fr', 'string', '');
+  $roadmap_edit_desc_en     = postdata_vide('roadmap_desc_en', 'string', '');
 
   // Et on met à jour le plan de route
   query(" UPDATE  todo_roadmap
           SET     todo_roadmap.id_classement  = '$roadmap_edit_classement'  ,
-                  todo_roadmap.version        = '$roadmap_edit_titre'       ,
-                  todo_roadmap.description    = '$roadmap_edit_description'
+                  todo_roadmap.version_fr     = '$roadmap_edit_titre_fr'    ,
+                  todo_roadmap.version_en     = '$roadmap_edit_titre_en'    ,
+                  todo_roadmap.description_fr = '$roadmap_edit_desc_fr'     ,
+                  todo_roadmap.description_en = '$roadmap_edit_desc_en'
           WHERE   todo_roadmap.id             = '$roadmap_edit_id' ");
 }
 
@@ -98,18 +103,20 @@ if(isset($_POST['roadmap_delete']))
 /*****************************************************************************************************************************************/
 
 // On va chercher la liste des plans de route
-$qroadmaps = query("  SELECT    todo_roadmap.id             ,
-                                todo_roadmap.id_classement  ,
-                                todo_roadmap.version
+$qroadmaps = query("  SELECT    todo_roadmap.id               AS 'r_id'         ,
+                                todo_roadmap.id_classement    AS 'r_classement' ,
+                                todo_roadmap.version_fr       AS 'r_version_fr' ,
+                                todo_roadmap.version_en       AS 'r_version_en'
                       FROM      todo_roadmap
                       ORDER BY  todo_roadmap.id_classement DESC ");
 
 // On les prépare pour l'affichage
 for($nroadmaps = 0; $droadmaps = mysqli_fetch_array($qroadmaps); $nroadmaps++)
 {
-  $roadmap_id[$nroadmaps]         = $droadmaps['id'];
-  $roadmap_classement[$nroadmaps] = $droadmaps['id_classement'];
-  $roadmap_version[$nroadmaps]    = predata($droadmaps['version']);
+  $roadmap_id[$nroadmaps]         = $droadmaps['r_id'];
+  $roadmap_classement[$nroadmaps] = $droadmaps['r_classement'];
+  $roadmap_version_fr[$nroadmaps] = predata($droadmaps['r_version_fr']);
+  $roadmap_version_en[$nroadmaps] = predata($droadmaps['r_version_en']);
 }
 
 
@@ -121,7 +128,7 @@ for($nroadmaps = 0; $droadmaps = mysqli_fetch_array($qroadmaps); $nroadmaps++)
 /*                                                                                                                                       */
 if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
 
-      <div class="minitexte2">
+      <div class="minitexte3">
 
         <h1 class="align_center">
           Plans de route
@@ -139,7 +146,10 @@ if(!getxhr()) { /***************************************************************
                 CLASSEMENT
               </th>
               <th>
-                VERSION
+                FRANÇAIS
+              </th>
+              <th>
+                ANGLAIS
               </th>
             </tr>
           </thead>
@@ -148,7 +158,7 @@ if(!getxhr()) { /***************************************************************
             <?php } ?>
 
             <tr class="hidden">
-              <td colspan="2">
+              <td colspan="3">
                 &nbsp;
               </td>
             </tr>
@@ -159,11 +169,14 @@ if(!getxhr()) { /***************************************************************
                 <?=$roadmap_classement[$i]?>
               </td>
               <td>
-                <?=$roadmap_version[$i]?>
+                <?=$roadmap_version_fr[$i]?>
+              </td>
+              <td>
+                <?=$roadmap_version_en[$i]?>
               </td>
             </tr>
             <tr class="hidden" id="roadmap_edit_container_<?=$roadmap_id[$i]?>">
-              <td colspan="2" class="align_left spaced" id="roadmap_edit_<?=$roadmap_id[$i]?>">
+              <td colspan="3" class="align_left spaced" id="roadmap_edit_<?=$roadmap_id[$i]?>">
                 &nbsp;
               </td>
             </tr>

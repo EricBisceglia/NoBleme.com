@@ -569,6 +569,8 @@ $sidemenu['nb_api']         = ($lang == 'FR') ? "API publique"                  
 $sidemenu['nb_rss']         = ($lang == 'FR') ? "Flux RSS"                      : "RSS feeds";
 $sidemenu['nb_dev']         = ($lang == 'FR') ? "Développement"                 : "Development";
 $sidemenu['nb_coulisses']   = ($lang == 'FR') ? "Coulisses de NoBleme"          : "Behind the scenes";
+$sidemenu['nb_todo']        = ($lang == 'FR') ? "Liste des tâches"              : "To-do list";
+$sidemenu['nb_roadmap']     = ($lang == 'FR') ? "Plan de route"                 : "Roadmap";
 $sidemenu['nb_bug']         = ($lang == 'FR') ? "Rapporter un bug"              : "Report a bug";
 $sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"          : "Request a feature";
 $sidemenu['nb_legal']       = ($lang == 'FR') ? "Mentions légales"              : "Legal notice";
@@ -691,19 +693,19 @@ $sidemenu['nb_oubli']       = ($lang == 'FR') ? "Droit à l'oubli"              
               </div>
             </a>
 
+            <?php } ?>
+
             <a href="<?=$chemin?>pages/todo/index">
               <div class="<?=header_class('TodoList',$header_sidemenu,'side')?>">
-                Liste des tâches
+                <?=$sidemenu['nb_todo']?>
               </div>
             </a>
 
             <a href="<?=$chemin?>pages/todo/roadmap">
               <div class="<?=header_class('Roadmap',$header_sidemenu,'side')?>">
-                Plan de route
+                <?=$sidemenu['nb_roadmap']?>
               </div>
             </a>
-
-            <?php } ?>
 
             <a href="<?=$chemin?>pages/todo/request">
               <div class="<?=header_class('OuvrirTicket',$header_sidemenu,'side')?>">

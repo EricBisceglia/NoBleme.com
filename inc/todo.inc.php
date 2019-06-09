@@ -13,43 +13,55 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Fonction renvoyant un ordre de priorité à partir d'une valeur entre 0 et 5
 // Utilisé pour la liste des tâches
 //
-// Le paramètre optionnel permet de décider si on veut du style html ou non
+// $lang  (optionnel) détermine la langue utilisée
+// $style (optionnel) détermine si on veut du style HTML ou non
 //
 // Utilisation: todo_importance($valeur,1);
 
-function todo_importance($importance,$style=NULL)
+function todo_importance($importance, $lang='FR', $style=NULL)
 {
   switch($importance)
   {
     case 5:
+      $importance_texte = ($lang == 'FR') ? 'Urgent' : 'Emergency';
       if($style)
-        $returnme = '<span class="gras souligne">Urgent</span>';
+        $returnme = '<span class="gras souligne">'.$importance_texte.'</span>';
       else
-        $returnme = 'Urgent';
+        $returnme = $importance_texte;
     break;
+
     case 4:
+      $importance_texte = ($lang == 'FR') ? 'Important' : 'Important';
       if($style)
-        $returnme = '<span class="gras">Important</span>';
+        $returnme = '<span class="gras">'.$importance_texte.'</span>';
       else
-        $returnme = 'Important';
+        $returnme = $importance_texte;
     break;
+
     case 3:
-      $returnme = 'À considérer';
+      $importance_texte = ($lang == 'FR') ? 'À considérer' : 'To consider';
+      $returnme = $importance_texte;
     break;
+
     case 2:
-      $returnme = 'Y\'a le temps';
+      $importance_texte = ($lang == 'FR') ? "Y'a le temps" : "There's still time";
+      $returnme = $importance_texte;
     break;
+
     case 1:
+      $importance_texte = ($lang == 'FR') ? 'Pas pressé' : 'No hurry';
       if($style)
-        $returnme = '<span class="italique">Pas pressé</span>';
+        $returnme = '<span class="italique">'.$importance_texte.'</span>';
       else
-        $returnme = 'Pas pressé';
+        $returnme = $importance_texte;
     break;
+
     default:
+      $importance_texte = ($lang == 'FR') ? 'À faire un jour' : 'Maybe some day';
       if($style)
-        $returnme = '<span class="italique">À faire un jour</span>';
+        $returnme = '<span class="italique">'.$importance_texte.'</span>';
       else
-        $returnme = 'À faire un jour';
+        $returnme = $importance_texte;
   }
   return $returnme;
 }

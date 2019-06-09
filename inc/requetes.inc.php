@@ -7,32 +7,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
   exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Vous n\'êtes pas censé accéder à cette page, dehors!</body></html>');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Besoin global : Récupération de l'id de dernière requete
-
-$derniere_requete = sql_check_id_requete();
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Cette page contient les requêtes à effectuer lors d'une mise à jour afin de faire des changements structurels sur le site             //
-// Elle ne peut être appelée que par un administrateur via la page /pages/dev/requetes                                                   //
-// Les requêtes ne sont pas conservées d'une mise à jour à l'autre.                                                                      //
-// À la place, il faut importer la structure de données du site depuis le fichier sqldump.php qui se trouve à la racine du site          //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-//                                            !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP !!!!!                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #547 : Nouveaux champs privés pour les templates dans la NBDB
-
-if($derniere_requete < 18)
-{
-  sql_creer_champ("nbdb_web_notes_admin", "template_global", "LONGTEXT", "brouillon_en");
-  sql_creer_champ("nbdb_web_notes_admin", "template_fr", "LONGTEXT", "template_global");
-  sql_creer_champ("nbdb_web_notes_admin", "template_en", "LONGTEXT", "template_fr");
-  sql_update_id_requete(18);
-}
+// Cette page contient les requêtes à effectuer lors d'une mise à jour afin de faire des changements structurels sur le site
+// Elle ne peut être appelée que par un administrateur via la page /pages/dev/requetes
+// Un fichier sqldump.php se trouve à la racine du site et permet de reproduire la structure de données du site
 
 
 
@@ -47,7 +24,7 @@ if($derniere_requete < 18)
 /*                                                                                                                                       */
 /* Liste des fonctions contenues dans ce fichier:                                                                                        */
 /*                                                                                                                                       */
-/* sql_check_id_requete();                                                                                                            */
+/* sql_check_id_requete();                                                                                                               */
 /* sql_update_id_requete($id);                                                                                                           */
 /*                                                                                                                                       */
 /* sql_creer_table($nom_table);                                                                                                          */
@@ -61,6 +38,7 @@ if($derniere_requete < 18)
 /* sql_supprimer_champ($nom_table, $nom_champ);                                                                                          */
 /*                                                                                                                                       */
 /* sql_creer_index($nom_table, $nom_index, $nom_champs, $fulltext);                                                                      */
+/* sql_supprimer_index($nom_table, $nom_index);                                                                                          */
 /*                                                                                                                                       */
 /* sql_insertion_valeur($condition, $requete);                                                                                           */
 /*                                                                                                                                       */
@@ -350,6 +328,27 @@ function sql_creer_index($nom_table, $nom_index, $nom_champs, $fulltext=NULL)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Suppression d'un index dans une table existante
+//
+// Exemple: sql_supprimer_index("nom_table", "index_cc")
+
+function sql_supprimer_index($nom_table, $nom_index)
+{
+  // On va chercher si l'index existe
+  $qindex = query(" SHOW INDEX FROM ".$nom_table." WHERE key_name LIKE '".$nom_index."' ");
+
+  // S'il existe, on le supprime
+  if(mysqli_num_rows($qindex))
+  {
+    query(" ALTER TABLE ".$nom_table."
+            DROP INDEX ".$nom_index );
+  }
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ajout d'une entrée dans une table
 //
 /* Exemple :
@@ -379,7 +378,9 @@ function sql_insertion_valeur($condition, $requete)
 /*                      afin d'assurer une montée de version depuis n'importe quelle version précédente de NoBleme                       */
 /*                                                                                                                                       */
 /*****************************************************************************************************************************************/
+// Besoin global : Récupération de l'id de dernière requete
 
+$derniere_requete = sql_check_id_requete();
 
 
 
@@ -400,8 +401,9 @@ if($derniere_requete < 1)
   sql_creer_champ('ecrivains_concours', 'FKecrivains_texte_gagnant', 'INT(11) UNSIGNED NOT NULL', 'FKmembres_gagnant');
   sql_creer_champ('ecrivains_concours', 'num_participants', 'INT(11) UNSIGNED NOT NULL', 'timestamp_fin');
   sql_creer_champ('ecrivains_concours_vote', 'poids_vote', 'INT(11) UNSIGNED NOT NULL', 'FKmembres');
+
+  sql_update_id_requete(1);
 }
-sql_update_id_requete(1);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -414,8 +416,9 @@ if($derniere_requete < 2)
                                       action_type         MEDIUMTEXT                                            ,
                                       action_description  MEDIUMTEXT                                            ,
                                       action_timestamp    INT(11) UNSIGNED NOT NULL                             ");
+
+  sql_update_id_requete(2);
 }
-sql_update_id_requete(2);
 
 
 
@@ -440,8 +443,9 @@ if($derniere_requete < 3)
 
   sql_creer_index('nbdb_web_definition', 'index_definition_fr', 'definition_fr', 1);
   sql_creer_index('nbdb_web_definition', 'index_definition_en', 'definition_en', 1);
+
+  sql_update_id_requete(3);
 }
-sql_update_id_requete(3);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -464,8 +468,9 @@ if($derniere_requete < 4)
 
   sql_creer_index('ecrivains_texte', 'index_auteur', 'anonyme, FKmembres');
   sql_creer_index('ecrivains_texte', 'index_concours', 'FKecrivains_concours');
+
+  sql_update_id_requete(4);
 }
-sql_update_id_requete(4);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -495,8 +500,9 @@ if($derniere_requete < 5)
   sql_creer_index('nbdb_web_page', 'index_popularisation', 'annee_popularisation, mois_popularisation');
   sql_creer_index('nbdb_web_page', 'index_titre_fr', 'titre_fr (25)');
   sql_creer_index('nbdb_web_page', 'index_titre_en', 'titre_en (25)');
+
+  sql_update_id_requete(5);
 }
-sql_update_id_requete(5);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -518,8 +524,9 @@ if($derniere_requete < 6)
 
   sql_creer_index('nbdb_web_definition', 'index_titre_fr', 'titre_fr (25)');
   sql_creer_index('nbdb_web_definition', 'index_titre_en', 'titre_en (25)');
+
+  sql_update_id_requete(6);
 }
-sql_update_id_requete(6);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -535,8 +542,9 @@ if($derniere_requete < 7)
   sql_creer_champ('nbdb_web_periode', 'description_en', 'MEDIUMTEXT', 'description_fr');
   sql_creer_champ('nbdb_web_periode', 'annee_debut', 'INT(4)', 'description_en');
   sql_creer_champ('nbdb_web_periode', 'annee_fin', 'INT(4)', 'annee_debut');
+
+  sql_update_id_requete(7);
 }
-sql_update_id_requete(7);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -553,8 +561,9 @@ if($derniere_requete < 8)
   sql_creer_champ('nbdb_web_categorie', 'description_en', 'MEDIUMTEXT', 'description_fr');
 
   sql_creer_index('nbdb_web_categorie', 'index_ordre_affichage', 'ordre_affichage');
+
+  sql_update_id_requete(8);
 }
-sql_update_id_requete(8);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -568,8 +577,9 @@ if($derniere_requete < 9)
   sql_creer_champ('nbdb_web_page_categorie', 'FKnbdb_web_categorie', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_page');
 
   sql_creer_index('nbdb_web_page_categorie', 'index_pages', 'FKnbdb_web_page, FKnbdb_web_categorie');
+
+  sql_update_id_requete(9);
 }
-sql_update_id_requete(9);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -582,8 +592,9 @@ if($derniere_requete < 10)
   sql_creer_champ('nbdb_web_image', 'timestamp_upload', 'INT(11) UNSIGNED NOT NULL', 'id');
   sql_creer_champ('nbdb_web_image', 'nom_fichier', 'MEDIUMTEXT', 'timestamp_upload');
   sql_creer_champ('nbdb_web_image', 'tags', 'MEDIUMTEXT', 'nom_fichier');
+
+  sql_update_id_requete(10);
 }
-sql_update_id_requete(10);
 
 
 
@@ -606,8 +617,9 @@ if($derniere_requete < 11)
   query(" UPDATE  activite
           SET     activite.action_type  =     'quote_new_fr'
           WHERE   activite.action_type  LIKE  'quote' ");
+
+  sql_update_id_requete(11);
 }
-sql_update_id_requete(11);
 
 
 
@@ -615,8 +627,11 @@ sql_update_id_requete(11);
 // Dernière activité des membres
 
 if($derniere_requete < 12)
+{
   sql_creer_champ('membres', 'derniere_activite', 'INT(11) UNSIGNED NOT NULL', 'derniere_visite_ip');
-sql_update_id_requete(12);
+
+  sql_update_id_requete(12);
+}
 
 
 
@@ -633,8 +648,9 @@ if($derniere_requete < 13)
   sql_creer_champ('membres', 'voir_tweets', 'TINYINT(1)', 'voir_nsfw');
   sql_creer_champ('membres', 'voir_youtube', 'TINYINT(1)', 'voir_tweets');
   sql_creer_champ('membres', 'voir_google_trends', 'TINYINT(1)', 'voir_youtube');
+
+  sql_update_id_requete(13);
 }
-sql_update_id_requete(13);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -645,8 +661,9 @@ if($derniere_requete < 14)
   sql_creer_champ('nbdb_web_page', 'contenu_floute', 'TINYINT(1)', 'mois_popularisation');
   sql_creer_champ('nbdb_web_definition', 'contenu_floute', 'TINYINT(1)', 'definition_en');
   sql_creer_champ('nbdb_web_image', 'nsfw', 'TINYINT(1)', 'tags');
+
+  sql_update_id_requete(14);
 }
-sql_update_id_requete(14);
 
 
 
@@ -666,15 +683,15 @@ if($derniere_requete < 15)
   sql_creer_champ('nbdb_web_notes_admin', 'notes_admin', 'LONGTEXT', 'id');
   sql_creer_champ('nbdb_web_notes_admin', 'brouillon_fr', 'LONGTEXT', 'notes_admin');
   sql_creer_champ('nbdb_web_notes_admin', 'brouillon_en', 'LONGTEXT', 'brouillon_fr');
+
+  sql_update_id_requete(15);
 }
-sql_update_id_requete(15);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #543 - Historique des requêtes SQL
 
 sql_creer_champ("vars_globales", "derniere_requete_sql", "TINYINT(1) NOT NULL", "mise_a_jour");
-sql_update_id_requete(16);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -683,5 +700,55 @@ sql_update_id_requete(16);
 if($derniere_requete < 17)
 {
   sql_supprimer_champ("nbdb_web_notes_admin", "id");
+
   sql_update_id_requete(17);
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #547 : Nouveaux champs privés pour les templates dans la NBDB
+
+if($derniere_requete < 18)
+{
+  sql_creer_champ("nbdb_web_notes_admin", "template_global", "LONGTEXT", "brouillon_en");
+  sql_creer_champ("nbdb_web_notes_admin", "template_fr", "LONGTEXT", "template_global");
+  sql_creer_champ("nbdb_web_notes_admin", "template_en", "LONGTEXT", "template_fr");
+
+  sql_update_id_requete(18);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #542 : Rendre la liste des tâches bilingues
+
+if($derniere_requete < 19)
+{
+  sql_renommer_champ("todo", "titre", "titre_fr", "MEDIUMTEXT");
+  sql_creer_champ("todo", "titre_en", "MEDIUMTEXT", "titre_fr");
+  sql_renommer_champ("todo", "contenu", "contenu_fr", "MEDIUMTEXT");
+  sql_creer_champ("todo", "contenu_en", "MEDIUMTEXT", "contenu_fr");
+
+  sql_supprimer_index("todo", "index_titre");
+  sql_creer_index("todo", "index_titre_fr", "titre_fr", 1);
+  sql_creer_index("todo", "index_titre_en", "titre_en", 1);
+
+  sql_renommer_champ("todo_categorie", "categorie", "titre_fr", "TINYTEXT");
+  sql_creer_champ("todo_categorie", "titre_en", "TINYTEXT", "titre_fr");
+  query(" UPDATE todo_categorie SET todo_categorie.titre_en = todo_categorie.titre_fr ");
+
+  sql_renommer_champ("todo_roadmap", "version", "version_fr", "TINYTEXT");
+  sql_renommer_champ("todo_roadmap", "description", "description_fr", "MEDIUMTEXT");
+  sql_creer_champ("todo_roadmap", "version_en", "TINYTEXT", "version_fr");
+  sql_creer_champ("todo_roadmap", "description_en", "MEDIUMTEXT", "description_fr");
+  query(" UPDATE todo_roadmap SET todo_roadmap.version_en = todo_roadmap.version_fr ");
+  query(" UPDATE todo_roadmap SET todo_roadmap.description_en = todo_roadmap.description_fr ");
+
+  sql_update_id_requete(19);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+//                         !!!!! PENSER À METTRE À JOUR SQLDUMP.PHP APRÈS CHAQUE MODIFICATION STRUCTURELLE !!!!!                         //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
