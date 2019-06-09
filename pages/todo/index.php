@@ -127,7 +127,9 @@ $qtodo = "    SELECT    todo.id                   AS 't_id'         ,
               LEFT JOIN membres         ON todo.FKmembres         = membres.id
               LEFT JOIN todo_categorie  ON todo.FKtodo_categorie  = todo_categorie.id
               LEFT JOIN todo_roadmap    ON todo.FKtodo_roadmap    = todo_roadmap.id ";
-if($todo_admin && !isset($_GET['id']))
+
+// On affiche des résultats différents selon si l'user est un admin ou non
+if($todo_admin && !isset($_GET['id']) && !isset($_POST['todo_search']))
   $qtodo .= " WHERE     todo.titre_$lang != ''
               OR        todo.valide_admin = 0 ";
 else if($todo_admin)
@@ -136,7 +138,6 @@ else
   $qtodo .= " WHERE     todo.titre_$lang != ''
               AND       todo.valide_admin = 1
               AND       todo.public       = 1 ";
-
 // Assainissement du postdata des recherches
 $todo_preset_id           = isset($_GET['id']) ? postdata($_GET['id'], 'int') : 0;
 $todo_search_id           = postdata_vide('todo_search_id', 'int', $todo_preset_id);
