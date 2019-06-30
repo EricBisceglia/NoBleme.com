@@ -3,8 +3,9 @@
 /*                                                             INITIALISATION                                                            */
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
-include './../../inc/includes.inc.php'; // Inclusions communes
-include './../../inc/requetes.inc.php'; // Requêtes SQL en attente d'exécution
+include_once './../../inc/sql.inc.php';      // Opening the MySQL connection
+include_once './../../inc/requetes.inc.php'; // Queries awaiting execution
+include_once './../../inc/includes.inc.php'; // Common inclusions
 
 // Permissions
 adminonly($lang);
