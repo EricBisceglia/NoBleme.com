@@ -1,17 +1,19 @@
-<?php header("Location: ."); /************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                              DUMP DE LA STRUCTURE DE LA BASE DE DONNÉES                                               */
-/*                                                                                                                                       */
-/******************************************************************************************************************************************
-/*                                                                                                                                       */
-/*  Méthode d'exportation : Personnalisée                                                                                                */
-/*  Ne pas exporter les données (structure uniquement)                                                                                   */
-/*  Afficher les résultats (ne pas diriger vers un fichier)                                                                              */
-/*  Ne pas afficher les commentaires                                                                                                     */
-/*  Ajouter tous les énoncés sauf la valeur des auto increment                                                                           */
-/*  Syntaxe : N'utiliser aucun mode prédéfini (insert into T values X)                                                                   */
-/*                                                                                                                                       */
-/******************************************************************************************************************************************
+/*! **************************************************************************************************************************************/
+/*!                                                                                                                                      */
+/*!                                                  DUMP OF THE DATABASE'S STRUCTURE                                                    */
+/*!                                                                                                                                      */
+/*! **************************************************************************************************************************************/
+/*!                                                                                                                                      */
+/*! Below (commented) is a personal reminder of the options I use in PHPMyAdmin to generate this dump, you can ignore it :)              */
+/*!                                                                                                                                      */
+/*! Export method: Custom                                                                                                                */
+/*! Uncheck data (export structure only)                                                                                                 */
+/*! View output as text (do not save output to a file)                                                                                   */
+/*! Uncheck the displaying of comments                                                                                                   */
+/*! Check every statement except one: uncheck the auto_increment value                                                                   */
+/*! Syntax to use: neither of the above (insert into tbl_name values (1,2,3))                                                            */
+/*!                                                                                                                                      */
+/*! **************************************************************************************************************************************/
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";

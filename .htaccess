@@ -1,25 +1,30 @@
 Options +FollowSymlinks -MultiViews
 RewriteEngine On
 
-# Rediriger les sous-domaines
+# Redirect subdomains to the main domain name
 RewriteCond %{HTTP_HOST} ^(.+)\.nobleme.com [nc]
 RewriteRule ^(.*)$ http://nobleme.com/$1 [R=301,L]
 
-# Forcer le https
+# Enforce https
 RewriteCond %{HTTPS} off
 RewriteCond %{HTTP_HOST} nobleme.com
 RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
 
-# Retirer le .php à la fin des urls
+# Remove .php from the end of urls
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC]
 
-# Fichier de 404 personnalisé
+# Custom 404 page
 ErrorDocument 404 http://nobleme.com/pages/nobleme/404
 
-# Empêcher l'accès au .txt du bot
+# Don't allow ircbot.txt access except when debugging in localhost
 <Files "ircbot.txt">
   Deny from all
   Allow from 127.0.0.1
+</Files>
+
+# Don't allow direct access to sqldump.sql
+<Files "sqldump.sql">
+  Deny from all
 </Files>
