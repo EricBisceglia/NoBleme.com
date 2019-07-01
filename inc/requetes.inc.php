@@ -131,24 +131,26 @@ function sql_update_query_id($id)
     $qdescribe = query(" DESCRIBE vars_globales");
 
   // We proceed only if the field exists
-  $query_ok = 0;
+  $field_exists = 0;
   while($ddescribe = mysqli_fetch_array($qdescribe))
   {
-    if($ddescribe['Field'] == "derniere_requete_sql")
-      $query_ok = 1;
+    if($query_ok)
+      $field_exists = ($ddescribe['Field'] != "latest_query_id") ? 1 : $field_exists;
+    else
+      $field_exists = ($ddescribe['Field'] != "derniere_requete_sql") ? 1 : $field_exists;
   }
 
   // If we aren't allowed to run this query, we abort here
-  if(!$query_ok)
+  if(!$field_exists)
     return;
 
   // Data sanitization
-  $id = postdata($id, "int", 0);
+  $id = intval($id);
 
   // Update the id in the database
   if($query_ok)
     query(" UPDATE  system_variables
-            SET     system_variables.derniere_requete_sql = $id ");
+            SET     system_variables.latest_query_id = $id ");
   else
     query(" UPDATE  vars_globales
             SET     vars_globales.derniere_requete_sql = $id ");
@@ -427,12 +429,13 @@ function sql_create_index($table_name, $index_name, $field_names, $fulltext=NULL
   // We check whether the index already exists
   $qindex = query(" SHOW INDEX FROM ".$table_name." WHERE key_name LIKE '".$index_name."' ");
 
-  // If it does not exist yet, then we can create it
+  // If it does not exist yet, then we can create it, and run a check to populate the indexes
   if(!mysqli_num_rows($qindex))
   {
     $temp_fulltext = ($fulltext) ? ' FULLTEXT ' : '';
     query(" ALTER TABLE ".$table_name."
             ADD ".$temp_fulltext." INDEX ".$index_name." (".$field_names."); ");
+    query(" CHECK TABLE ".$table_name." ");
   }
 }
 
@@ -457,11 +460,12 @@ function sql_delete_index($table_name, $index_name)
   // We check whether the index already exists
   $qindex = query(" SHOW INDEX FROM ".$table_name." WHERE key_name LIKE '".$index_name."' ");
 
-  // If it exists, we delete it
+  // If it exists, we delete it, and run a check to depopulate the indexes
   if(mysqli_num_rows($qindex))
   {
     query(" ALTER TABLE ".$table_name."
             DROP INDEX ".$index_name );
+    query(" CHECK TABLE ".$table_name." ");
   }
 }
 
@@ -887,7 +891,7 @@ if($last_query < 19)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #544 - Translation and optimization of all tables - System tables
 
-if($last_query < 25)
+if($last_query < 20)
 {
   sql_rename_table('automatisation', 'system_scheduler');
   sql_rename_table('vars_globales', 'system_variables');
@@ -925,7 +929,7 @@ if($last_query < 21)
   sql_rename_table('activite_diff', 'logs_activity_archives');
 
   sql_change_field_type('logs_activity', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('logs_activity', 'timestamp', 'activity_timestamp', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('logs_activity', 'timestamp', 'happened_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('logs_activity', 'log_moderation', 'is_moderators_only', 'TINYINT NOT NULL DEFAULT 0');
   sql_rename_field('logs_activity', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('logs_activity', 'pseudonyme', 'nickname', 'VARCHAR(45) DEFAULT NULL');
@@ -955,8 +959,90 @@ if($last_query < 21)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #544 - Translation and optimization of all tables - Stats tables
+
+if($last_query < 22)
+{
+  sql_rename_table('pageviews', 'stats_pageviews');
+
+  sql_change_field_type('stats_pageviews', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('stats_pageviews', 'nom_page', 'page_name', 'VARCHAR(255) DEFAULT NULL');
+  sql_rename_field('stats_pageviews', 'url_page', 'page_url', 'TEXT DEFAULT NULL');
+  sql_rename_field('stats_pageviews', 'vues', 'view_count', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('stats_pageviews', 'vues_lastvisit', 'view_count_archive', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_delete_index('stats_pageviews', 'index_tri');
+  sql_delete_index('stats_pageviews', 'index_recherche');
+  sql_create_index('stats_pageviews', 'index_view_count_stats', 'view_count, view_count_archive');
+
+  sql_update_query_id(22);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #544 - Translation and optimization of all tables - Dev tables
+
+if($last_query < 23)
+{
+  sql_rename_table('devblog', 'dev_blog');
+  sql_rename_table('todo', 'dev_todo');
+  sql_rename_table('todo_categorie', 'dev_todo_categories');
+  sql_rename_table('todo_roadmap', 'dev_todo_milestones');
+
+  sql_change_field_type('dev_blog', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('dev_blog', 'timestamp', 'posted_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('dev_blog', 'titre', 'title', 'VARCHAR(255)');
+  sql_rename_field('dev_blog', 'contenu', 'body', 'LONGTEXT NOT NULL');
+
+  sql_change_field_type('dev_todo', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('dev_todo', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('dev_todo', 'timestamp', 'created_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('dev_todo', 'importance', 'priority_level', 'TINYINT UNSIGNED NOt NULL DEFAULT 0');
+  sql_rename_field('dev_todo', 'titre_fr', 'title_fr', 'TEXT NOT NULL');
+  sql_rename_field('dev_todo', 'titre_en', 'title_en', 'TEXT NOT NULL');
+  sql_rename_field('dev_todo', 'contenu_fr', 'body_fr', 'TEXT NOT NULL');
+  sql_rename_field('dev_todo', 'contenu_en', 'body_en', 'TEXT NOT NULL');
+  sql_rename_field('dev_todo', 'FKtodo_categorie', 'fk_dev_todo_categories', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('dev_todo', 'fk_dev_todo_categories', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
+  sql_rename_field('dev_todo', 'FKtodo_roadmap', 'fk_dev_todo_milestones', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('dev_todo', 'fk_dev_todo_milestones', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_dev_todo_categories');
+  sql_rename_field('dev_todo', 'timestamp_fini', 'finished_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('dev_todo', 'finished_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'created_at');
+  sql_rename_field('dev_todo', 'valide_admin', 'admin_validation', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('dev_todo', 'admin_validation', 'INT UNSIGNED NOT NULL DEFAULT 0', 'finished_at');
+  sql_rename_field('dev_todo', 'public', 'is_public', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('dev_todo', 'is_public', 'INT UNSIGNED NOT NULL DEFAULT 0', 'admin_validation');
+  sql_rename_field('dev_todo', 'source', 'source_code_link', 'TEXT NOT NULL');
+  sql_delete_index('dev_todo', 'index_membres');
+  sql_delete_index('dev_todo', 'index_categorie');
+  sql_delete_index('dev_todo', 'index_roadmap');
+  sql_delete_index('dev_todo', 'index_titre_en');
+  sql_delete_index('dev_todo', 'index_titre_fr');
+  sql_create_index('dev_todo', 'index_authors', 'fk_users');
+  sql_create_index('dev_todo', 'index_categories', 'fk_dev_todo_categories');
+  sql_create_index('dev_todo', 'index_milestones', 'fk_dev_todo_milestones');
+  sql_create_index('dev_todo', 'index_title_fr', 'title_fr', 1);
+  sql_create_index('dev_todo', 'index_title_en', 'title_en', 1);
+
+  sql_change_field_type('dev_todo_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('dev_todo_categories', 'titre_fr', 'title_fr', 'VARCHAR(255) NOT NULL');
+  sql_rename_field('dev_todo_categories', 'titre_en', 'title_en', 'VARCHAR(255) NOT NULL');
+
+  sql_change_field_type('dev_todo_milestones', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('dev_todo_milestones', 'id_classement', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('dev_todo_milestones', 'version_fr', 'title_fr', 'TEXT NOT NULL');
+  sql_rename_field('dev_todo_milestones', 'version_en', 'title_en', 'TEXT NOT NULL');
+  sql_rename_field('dev_todo_milestones', 'description_fr', 'summary_fr', 'MEDIUMTEXT NOT NULL');
+  sql_rename_field('dev_todo_milestones', 'description_en', 'summary_en', 'MEDIUMTEXT NOT NULL');
+  sql_delete_index('dev_todo_milestones', 'index_classement');
+  sql_create_index('dev_todo_milestones', 'index_sorting_order', 'sorting_order');
+
+  sql_update_query_id(23);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                       //
 //                     !!!!! REMEMBER TO UPDATE SQLDUMP.SQL AT THE PROJECT ROOT AFTER EVERY STRUCTURAL CHANGE !!!!!                      //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-exit('<br>-----<br>Done.');
+exit('<br>-----<br>Done -> '.$last_query);
