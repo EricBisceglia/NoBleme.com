@@ -930,8 +930,9 @@ if($last_query < 21)
 
   sql_change_field_type('logs_activity', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('logs_activity', 'timestamp', 'happened_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('logs_activity', 'log_moderation', 'is_moderators_only', 'TINYINT NOT NULL DEFAULT 0');
+  sql_rename_field('logs_activity', 'log_moderation', 'is_moderators_only', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('logs_activity', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('logs_activity', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_rename_field('logs_activity', 'pseudonyme', 'nickname', 'VARCHAR(45) DEFAULT NULL');
   sql_rename_field('logs_activity', 'action_type', 'activity_type', 'VARCHAR(40) DEFAULT NULL');
   sql_rename_field('logs_activity', 'action_id', 'activity_id', 'INT UNSIGNED NOT NULL DEFAULT 0');
@@ -983,66 +984,224 @@ if($last_query < 22)
 
 if($last_query < 23)
 {
-  sql_rename_table('devblog', 'dev_blog');
-  sql_rename_table('todo', 'dev_todo');
-  sql_rename_table('todo_categorie', 'dev_todo_categories');
-  sql_rename_table('todo_roadmap', 'dev_todo_milestones');
+  sql_rename_table('devblog', 'dev_blogs');
+  sql_rename_table('todo', 'dev_tasks');
+  sql_rename_table('todo_categorie', 'dev_tasks_categories');
+  sql_rename_table('todo_roadmap', 'dev_tasks_milestones');
 
-  sql_change_field_type('dev_blog', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('dev_blog', 'timestamp', 'posted_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('dev_blog', 'titre', 'title', 'VARCHAR(255)');
-  sql_rename_field('dev_blog', 'contenu', 'body', 'LONGTEXT NOT NULL');
+  sql_change_field_type('dev_blogs', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('dev_blogs', 'timestamp', 'posted_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('dev_blogs', 'titre', 'title', 'VARCHAR(255)');
+  sql_rename_field('dev_blogs', 'contenu', 'body', 'LONGTEXT NOT NULL');
 
-  sql_change_field_type('dev_todo', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('dev_todo', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('dev_todo', 'timestamp', 'created_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('dev_todo', 'importance', 'priority_level', 'TINYINT UNSIGNED NOt NULL DEFAULT 0');
-  sql_rename_field('dev_todo', 'titre_fr', 'title_fr', 'TEXT NOT NULL');
-  sql_rename_field('dev_todo', 'titre_en', 'title_en', 'TEXT NOT NULL');
-  sql_rename_field('dev_todo', 'contenu_fr', 'body_fr', 'TEXT NOT NULL');
-  sql_rename_field('dev_todo', 'contenu_en', 'body_en', 'TEXT NOT NULL');
-  sql_rename_field('dev_todo', 'FKtodo_categorie', 'fk_dev_todo_categories', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('dev_todo', 'fk_dev_todo_categories', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
-  sql_rename_field('dev_todo', 'FKtodo_roadmap', 'fk_dev_todo_milestones', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('dev_todo', 'fk_dev_todo_milestones', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_dev_todo_categories');
-  sql_rename_field('dev_todo', 'timestamp_fini', 'finished_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('dev_todo', 'finished_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'created_at');
-  sql_rename_field('dev_todo', 'valide_admin', 'admin_validation', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('dev_todo', 'admin_validation', 'INT UNSIGNED NOT NULL DEFAULT 0', 'finished_at');
-  sql_rename_field('dev_todo', 'public', 'is_public', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('dev_todo', 'is_public', 'INT UNSIGNED NOT NULL DEFAULT 0', 'admin_validation');
-  sql_rename_field('dev_todo', 'source', 'source_code_link', 'TEXT NOT NULL');
-  sql_delete_index('dev_todo', 'index_membres');
-  sql_delete_index('dev_todo', 'index_categorie');
-  sql_delete_index('dev_todo', 'index_roadmap');
-  sql_delete_index('dev_todo', 'index_titre_en');
-  sql_delete_index('dev_todo', 'index_titre_fr');
-  sql_create_index('dev_todo', 'index_authors', 'fk_users');
-  sql_create_index('dev_todo', 'index_categories', 'fk_dev_todo_categories');
-  sql_create_index('dev_todo', 'index_milestones', 'fk_dev_todo_milestones');
-  sql_create_index('dev_todo', 'index_title_fr', 'title_fr', 1);
-  sql_create_index('dev_todo', 'index_title_en', 'title_en', 1);
+  sql_change_field_type('dev_tasks', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('dev_tasks', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('dev_tasks', 'timestamp', 'created_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('dev_tasks', 'importance', 'priority_level', 'TINYINT UNSIGNED NOt NULL DEFAULT 0');
+  sql_rename_field('dev_tasks', 'titre_fr', 'title_fr', 'TEXT NOT NULL');
+  sql_rename_field('dev_tasks', 'titre_en', 'title_en', 'TEXT NOT NULL');
+  sql_move_field('dev_tasks', 'title_fr', 'TEXT NOT NULL', 'title_en');
+  sql_rename_field('dev_tasks', 'contenu_fr', 'body_fr', 'TEXT NOT NULL');
+  sql_rename_field('dev_tasks', 'contenu_en', 'body_en', 'TEXT NOT NULL');
+  sql_move_field('dev_tasks', 'body_fr', 'TEXT NOT NULL', 'body_en');
+  sql_rename_field('dev_tasks', 'FKtodo_categorie', 'fk_dev_tasks_categories', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('dev_tasks', 'fk_dev_todo_categories', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
+  sql_rename_field('dev_tasks', 'FKtodo_roadmap', 'fk_dev_tasks_milestones', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('dev_tasks', 'fk_dev_todo_milestones', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_dev_tasks_categories');
+  sql_rename_field('dev_tasks', 'timestamp_fini', 'finished_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('dev_tasks', 'finished_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'created_at');
+  sql_rename_field('dev_tasks', 'valide_admin', 'admin_validation', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('dev_tasks', 'admin_validation', 'INT UNSIGNED NOT NULL DEFAULT 0', 'finished_at');
+  sql_rename_field('dev_tasks', 'public', 'is_public', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('dev_tasks', 'is_public', 'INT UNSIGNED NOT NULL DEFAULT 0', 'admin_validation');
+  sql_rename_field('dev_tasks', 'source', 'source_code_link', 'TEXT NOT NULL');
+  sql_delete_index('dev_tasks', 'index_membres');
+  sql_delete_index('dev_tasks', 'index_categorie');
+  sql_delete_index('dev_tasks', 'index_roadmap');
+  sql_delete_index('dev_tasks', 'index_titre_en');
+  sql_delete_index('dev_tasks', 'index_titre_fr');
+  sql_create_index('dev_tasks', 'index_authors', 'fk_users');
+  sql_create_index('dev_tasks', 'index_categories', 'fk_dev_tasks_categories');
+  sql_create_index('dev_tasks', 'index_milestones', 'fk_dev_tasks_milestones');
+  sql_create_index('dev_tasks', 'index_title_en', 'title_en', 1);
+  sql_create_index('dev_tasks', 'index_title_fr', 'title_fr', 1);
 
-  sql_change_field_type('dev_todo_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('dev_todo_categories', 'titre_fr', 'title_fr', 'VARCHAR(255) NOT NULL');
-  sql_rename_field('dev_todo_categories', 'titre_en', 'title_en', 'VARCHAR(255) NOT NULL');
+  sql_change_field_type('dev_tasks_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('dev_tasks_categories', 'titre_fr', 'title_fr', 'VARCHAR(255) NOT NULL');
+  sql_rename_field('dev_tasks_categories', 'titre_en', 'title_en', 'VARCHAR(255) NOT NULL');
+  sql_move_field('dev_tasks_categories', 'title_fr', 'VARCHAR(255) NOT NULL', 'title_en');
 
-  sql_change_field_type('dev_todo_milestones', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('dev_todo_milestones', 'id_classement', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('dev_todo_milestones', 'version_fr', 'title_fr', 'TEXT NOT NULL');
-  sql_rename_field('dev_todo_milestones', 'version_en', 'title_en', 'TEXT NOT NULL');
-  sql_rename_field('dev_todo_milestones', 'description_fr', 'summary_fr', 'MEDIUMTEXT NOT NULL');
-  sql_rename_field('dev_todo_milestones', 'description_en', 'summary_en', 'MEDIUMTEXT NOT NULL');
-  sql_delete_index('dev_todo_milestones', 'index_classement');
-  sql_create_index('dev_todo_milestones', 'index_sorting_order', 'sorting_order');
+  sql_change_field_type('dev_tasks_milestones', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('dev_tasks_milestones', 'id_classement', 'sorting_order', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('dev_tasks_milestones', 'version_fr', 'title_fr', 'TEXT NOT NULL');
+  sql_rename_field('dev_tasks_milestones', 'version_en', 'title_en', 'TEXT NOT NULL');
+  sql_move_field('dev_tasks_milestones', 'title_fr', 'TEXT NOT NULL', 'title_en');
+  sql_rename_field('dev_tasks_milestones', 'description_fr', 'summary_fr', 'MEDIUMTEXT NOT NULL');
+  sql_rename_field('dev_tasks_milestones', 'description_en', 'summary_en', 'MEDIUMTEXT NOT NULL');
+  sql_move_field('dev_tasks_milestones', 'summary_fr', 'MEDIUMTEXT NOT NULL', 'summary_en');
+  sql_delete_index('dev_tasks_milestones', 'index_classement');
+  sql_create_index('dev_tasks_milestones', 'index_sorting_order', 'sorting_order');
 
   sql_update_query_id(23);
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #544 - Translation and optimization of all tables - Writer's corner
+
+if($last_query < 24)
+{
+  sql_rename_table('ecrivains_texte', 'writings_texts');
+  sql_rename_table('ecrivains_note', 'writings_comments');
+  sql_rename_table('ecrivains_concours', 'writings_contests');
+  sql_rename_table('ecrivains_concours_vote', 'writings_contests_votes');
+
+  sql_change_field_type('writings_texts', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('writings_texts', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_texts', 'FKecrivains_concours', 'fk_writings_contests', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_texts', 'anonyme', 'is_anonymous', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_texts', 'timestamp_creation', 'created_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_texts', 'timestamp_modification', 'edited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_texts', 'niveau_feedback', 'desired_feedback_level', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_texts', 'titre', 'title', 'TEXT NOT NULL');
+  sql_rename_field('writings_texts', 'note_moyenne', 'average_rating', 'DECIMAL(2,1) NOT NULL DEFAULT 0');
+  sql_rename_field('writings_texts', 'longueur_text', 'character_count', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('writings_texts', 'title', 'TEXT NOT NULL', 'character_count');
+  sql_rename_field('writings_texts', 'contenu', 'body', 'LONGTEXT NOT NULL');
+  sql_delete_index('writings_texts', 'index_auteur');
+  sql_delete_index('writings_texts', 'index_concours');
+  sql_create_index('writings_texts', 'index_author', 'fk_users, is_anonymous');
+  sql_create_index('writings_texts', 'index_contest', 'fk_writings_contests');
+
+  sql_change_field_type('writings_comments', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('writings_comments', 'FKecrivains_texte', 'fk_writings_texts', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_comments', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_comments', 'timestamp', 'posted_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_comments', 'note', 'rating', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_comments', 'anonyme', 'is_anonymous', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_comments', 'message', 'message_body', 'MEDIUMTEXT NOT NULL');
+  sql_delete_index('writings_comments', 'index_texte');
+  sql_delete_index('writings_comments', 'index_membre');
+  sql_delete_index('writings_comments', 'index_note');
+  sql_create_index('writings_comments', 'index_author', 'fk_users, is_anonymous');
+  sql_create_index('writings_comments', 'index_text', 'fk_writings_texts');
+  sql_create_index('writings_comments', 'index_ratings', 'rating');
+
+  sql_change_field_type('writings_contests', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('writings_contests', 'FKmembres_gagnant', 'fk_users_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_contests', 'FKecrivains_texte_gagnant', 'fk_writings_writings_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_contests', 'timestamp_debut', 'started_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_contests', 'timestamp_fin', 'ended_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_contests', 'num_participants', 'nb_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_contests', 'titre', 'contest_name', 'TEXT NOT NULL');
+  sql_rename_field('writings_contests', 'sujet', 'contest_topic', 'TEXT NOT NULL');
+  sql_delete_index('writings_contests', 'index_gagnant');
+  sql_create_index('writings_contests', 'index_winner', 'fk_users_winner');
+  sql_create_index('writings_contests', 'index_winning_text', 'fk_writings_writings_winner');
+
+  sql_change_field_type('writings_contests_votes', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('writings_contests_votes', 'FKecrivains_concours', 'fk_writings_contests', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_contests_votes', 'FKecrivains_texte', 'fk_writings_texts', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_contests_votes', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_contests_votes', 'poids_vote', 'vote_weight', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_delete_index('writings_contests_votes', 'index_texte');
+  sql_delete_index('writings_contests_votes', 'index_concours');
+  sql_delete_index('writings_contests_votes', 'index_membre');
+  sql_delete_index('writings_contests_votes', 'index_poids');
+  sql_create_index('writings_contests_votes', 'index_author', 'fk_users');
+  sql_create_index('writings_contests_votes', 'index_contest', 'fk_writings_contests');
+  sql_create_index('writings_contests_votes', 'index_text', 'fk_writings_texts');
+  sql_create_index('writings_contests_votes', 'index_ratings', 'vote_weight, fk_writings_contests, fk_writings_texts');
+
+  sql_update_query_id(24);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #544 - Translation and optimization of all tables - Forum
+
+if($last_query < 25)
+{
+  sql_rename_table('forum_sujet', 'forum_threads');
+  sql_rename_table('forum_message', 'forum_messages');
+  sql_rename_table('forum_categorie', 'forum_categories');
+  sql_rename_table('forum_filtrage', 'forum_categories_filters');
+
+  sql_change_field_type('forum_threads', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('forum_threads', 'FKmembres_createur', 'fk_users_author', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_threads', 'FKmembres_dernier_message', 'fk_users_last_message', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_threads', 'FKforum_categorie', 'fk_forum_categories', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_threads', 'timestamp_creation', 'created_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_threads', 'timestamp_dernier_message', 'last_message_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_threads', 'apparence', 'thread_format', 'VARCHAR(50) NOT NULL');
+  sql_rename_field('forum_threads', 'classification', 'thread_type', 'VARCHAR(50) NOT NULL');
+  sql_rename_field('forum_threads', 'public', 'is_private', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  query(" UPDATE forum_threads SET forum_threads.is_private = 2 WHERE forum_threads.is_private = 1 ");
+  query(" UPDATE forum_threads SET forum_threads.is_private = 1 WHERE forum_threads.is_private = 0 ");
+  query(" UPDATE forum_threads SET forum_threads.is_private = 0 WHERE forum_threads.is_private = 2 ");
+  sql_rename_field('forum_threads', 'ouvert', 'is_closed', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  query(" UPDATE forum_threads SET forum_threads.is_closed = 2 WHERE forum_threads.is_closed = 1 ");
+  query(" UPDATE forum_threads SET forum_threads.is_closed = 1 WHERE forum_threads.is_closed = 0 ");
+  query(" UPDATE forum_threads SET forum_threads.is_closed = 0 WHERE forum_threads.is_closed = 2 ");
+  sql_rename_field('forum_threads', 'epingle', 'is_pinned', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_threads', 'langue', 'language', 'VARCHAR(10) NOT NULL');
+  sql_rename_field('forum_threads', 'titre', 'title', 'TEXT NOT NULL');
+  sql_rename_field('forum_threads', 'nombre_reponses', 'nb_messages', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('forum_threads', 'nb_messages', 'INT UNSIGNED NOT NULL DEFAULT 0', 'is_pinned');
+  sql_delete_index('forum_threads', 'index_createur');
+  sql_delete_index('forum_threads', 'index_dernier');
+  sql_delete_index('forum_threads', 'index_categorie');
+  sql_delete_index('forum_threads', 'index_chronologie');
+  sql_delete_index('forum_threads', 'index_titre');
+  sql_create_index('forum_threads', 'index_author', 'fk_users_author');
+  sql_create_index('forum_threads', 'index_latest_contributor', 'fk_users_last_message');
+  sql_create_index('forum_threads', 'index_category', 'fk_forum_categories');
+  sql_create_index('forum_threads', 'index_chronology', 'last_message_at');
+  sql_create_index('forum_threads', 'index_title', 'title', 1);
+
+  sql_change_field_type('forum_messages', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('forum_messages', 'FKforum_sujet', 'fk_forum_threads', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_messages', 'FKforum_message_parent', 'fk_forum_messages_parent', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_messages', 'FKmembres', 'fk_author', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_messages', 'timestamp_creation', 'posted_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_messages', 'timestamp_modification', 'edited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_messages', 'message_supprime', 'deleted_message', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_messages', 'contenu', 'body', 'LONGTEXT NOT NULL');
+  sql_delete_index('forum_messages', 'index_sujet');
+  sql_delete_index('forum_messages', 'index_parent');
+  sql_delete_index('forum_messages', 'index_membres');
+  sql_delete_index('forum_messages', 'index_chronologie');
+  sql_delete_index('forum_messages', 'index_contenu');
+  sql_create_index('forum_messages', 'index_author', 'fk_author');
+  sql_create_index('forum_messages', 'index_thread', 'fk_forum_threads');
+  sql_create_index('forum_messages', 'index_hierarchy', 'fk_forum_messages_parent');
+  sql_create_index('forum_messages', 'index_contents', 'body', 1);
+
+  sql_change_field_type('forum_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('forum_categories', 'par_defaut', 'is_default_category', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_categories', 'classement', 'display_order', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_categories', 'nom_fr', 'title_fr', 'TEXT NOT NULL');
+  sql_rename_field('forum_categories', 'nom_en', 'title_en', 'TEXT NOT NULL');
+  sql_move_field('forum_categories', 'title_fr', 'TEXT NOT NULL', 'title_en');
+  sql_rename_field('forum_categories', 'description_fr', 'explanation_fr', 'TEXT NOT NULL');
+  sql_rename_field('forum_categories', 'description_en', 'explanation_en', 'TEXT NOT NULL');
+  sql_move_field('forum_categories', 'explanation_fr', 'TEXT NOT NULL', 'explanation_en');
+  sql_delete_index('forum_categories', 'index_classement');
+  sql_create_index('forum_categories', 'index_display_order', 'display_order');
+
+  sql_change_field_type('forum_categories_filters', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('forum_categories_filters', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('forum_categories_filters', 'FKforum_categorie', 'fk_forum_categories', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_delete_index('forum_categories_filters', 'index_membres');
+  sql_delete_index('forum_categories_filters', 'index_categorie');
+  sql_create_index('forum_categories_filters', 'index_user_filters', 'fk_users, fk_forum_categories');
+
+  sql_update_query_id(25);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                       //
 //                     !!!!! REMEMBER TO UPDATE SQLDUMP.SQL AT THE PROJECT ROOT AFTER EVERY STRUCTURAL CHANGE !!!!!                      //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-exit('<br>-----<br>Done -> '.$last_query);
+exit('<br>-----<br>Done -> '.sql_check_query_id());
