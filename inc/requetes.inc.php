@@ -1,49 +1,51 @@
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                      THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                                      */
-/*                                                                                                                                       */
-// Include only /*************************************************************************************************************************/
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
+/*                                                                                                                   */
+// Include only /*****************************************************************************************************/
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { header("Location: ./../pages/nobleme/404") ; die(); }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // This page contains all SQL queries that will be ran during an update of the website
 // It can only be called by a website admin through the page /pages/dev/requetes
 // A bunch of functions for manipulating SQL are included in this page, making it a proto-ORM of sorts
-// Queries are done in such a way that they can only be ran once, avoiding needless strain on the database or queries overwriting eachother
+// Queries are done in such a way that they can only be ran once, avoiding a lot of potential silly situations
 
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                 FUNCTIONS USED FOR STRUCTURAL QUERIES                                                 */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
-/*               These functions allow for "safe" manipulation of the database, and should only be used within this file.                */
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/* sql_check_query_id();                                                                                                                 */
-/* sql_update_query_id($id);                                                                                                             */
-/*                                                                                                                                       */
-/* sql_create_table($table_name);                                                                                                        */
-/* sql_rename_table($table_name, $new_name);                                                                                             */
-/* sql_empty_table($table_name);                                                                                                         */
-/* sql_delete_table($table_name);                                                                                                        */
-/*                                                                                                                                       */
-/* sql_create_field($table_name, $field_name, $field_type, $after_field_name);                                                           */
-/* sql_rename_field($table_name, $old_field_name, $new_field_name, $field_type);                                                         */
-/* sql_change_field_type($table_name, $field_name, $field_type)                                                                          */
-/* sql_move_field($table_name, $field_name, $field_type, $after_field_name)                                                              */
-/* sql_delete_field($table_name, $field_name);                                                                                           */
-/*                                                                                                                                       */
-/* sql_create_index($table_name, $index_name, $field_names, $fulltext);                                                                  */
-/* sql_delete_index($table_name, $index_name);                                                                                           */
-/*                                                                                                                                       */
-/* sql_insert_value($condition, $query);                                                                                                 */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                       FUNCTIONS USED FOR STRUCTURAL QUERIES                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+/*     These functions allow for "safe" manipulation of the database, and should only be used within this file.      */
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/* sql_check_query_id();                                                                                             */
+/* sql_update_query_id($id);                                                                                         */
+/*                                                                                                                   */
+/* sql_create_table($table_name);                                                                                    */
+/* sql_rename_table($table_name, $new_name);                                                                         */
+/* sql_empty_table($table_name);                                                                                     */
+/* sql_delete_table($table_name);                                                                                    */
+/*                                                                                                                   */
+/* sql_create_field($table_name, $field_name, $field_type, $after_field_name);                                       */
+/* sql_rename_field($table_name, $old_field_name, $new_field_name, $field_type);                                     */
+/* sql_change_field_type($table_name, $field_name, $field_type)                                                      */
+/* sql_move_field($table_name, $field_name, $field_type, $after_field_name)                                          */
+/* sql_delete_field($table_name, $field_name);                                                                       */
+/*                                                                                                                   */
+/* sql_create_index($table_name, $index_name, $field_names, $fulltext);                                              */
+/* sql_delete_index($table_name, $index_name);                                                                       */
+/*                                                                                                                   */
+/* sql_insert_value($condition, $query);                                                                             */
+/*                                                                                                                   */
+/* sql_sanitize_data($data)                                                                                          */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Checks whether a query should be ran or not
 //
 // Example: if(sql_check_query_id() < 10) { run_query(); }
@@ -103,7 +105,7 @@ function sql_check_query_id()
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Updates the id of the last query that was ran
 //
 // Example: sql_update_query_id(69);
@@ -159,20 +161,20 @@ function sql_update_query_id($id)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Creates a new table which will only contain one field called "id", an auto incremented primary key
 //
 // Example: sql_create_table("my_table");
 
 function sql_create_table($table_name)
 {
-  return query(" CREATE TABLE IF NOT EXISTS ".$table_name." ( id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=MyISAM;");
+  return query(" CREATE TABLE IF NOT EXISTS ".$table_name." ( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=MyISAM;");
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Renames an existing table
 //
 // Example: sql_rename_table("table_name", "new_name");
@@ -198,7 +200,7 @@ function sql_rename_table($table_name, $new_name)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Gets rid of all the data in an existing table
 //
 // Example: sql_empty_table("table_name");
@@ -220,7 +222,7 @@ function sql_empty_table($table_name)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Deletes an existing table
 //
 // Example: sql_delete_table("table_name");
@@ -233,7 +235,7 @@ function sql_delete_table($table_name)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Creates a new field in an existing table
 //
 // Example: sql_create_field("my_table", "my_field", "INT(11) UNSIGNED NOT NULL", "some_existing_field");
@@ -275,7 +277,7 @@ function sql_create_field($table_name, $field_name, $field_type, $after_field_na
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Renames an existng field in an existing table
 //
 // Example: sql_rename_field("my_table", "old_name", "new_name", "MEDIUMTEXT");
@@ -314,7 +316,7 @@ function sql_rename_field($table_name, $old_field_name, $new_field_name, $field_
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Changes the type of an existing field in an existing table
 //
 // Example: sql_change_field_type("my_table", "my_field", "MEDIUMTEXT");
@@ -343,7 +345,7 @@ function sql_change_field_type($table_name, $field_name, $field_type)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Moves an existing field after another existing field in an existing table
 //
 // Example: sql_empty_table("table_name");
@@ -379,7 +381,7 @@ function sql_move_field($table_name, $field_name, $field_type, $after_field_name
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Deletes an existing field in an existing table
 //
 // Example: sql_delete_field("my_table", "my_field");
@@ -408,10 +410,10 @@ function sql_delete_field($table_name, $field_name)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Creates an index in an existing table
 //
-// $field_names             can be one or multiple field names, contained in a string (example "my_field" or "my_field, my_other_field")
+// $field_names             string of one or more field names (ex. "my_field" or "my_field, my_other_field")
 // $fulltext    (optional)  makes it a fulltext index if any value is entered for this option
 //
 // Example: sql_create_index("my_table", "index_name", "field_name, other_field_name(10)")
@@ -442,7 +444,7 @@ function sql_create_index($table_name, $index_name, $field_names, $fulltext=NULL
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Deletes an existing index in an existing table
 //
 // Example: sql_delete_index("my_table", "my_index")
@@ -472,7 +474,7 @@ function sql_delete_index($table_name, $index_name)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Inserts a value in an existing table
 //
 // $condition   is a query to check whether the field already exists
@@ -495,30 +497,43 @@ function sql_insert_value($condition, $query)
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                             QUERY HISTORY                                                             */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                    Allows replaying of all past queries that haven't been run yet                                     */
-/*                        in order to ensure a version upgrade between any two versions of NoBleme goes smoothly                         */
-/*                                                                                                                                       */
-/*                           Before version 3, query history was not recorded, hence the lack of older content                           */
-/*                          Before version 4, table and field names were in french, hence the non-english stuff                          */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Sanitizes data before its insertion in a database
+//
+// Example: sql_sanitize_data("Str'ing");
+
+function sql_sanitize_data($data)
+{
+  return trim(mysqli_real_escape_string($GLOBALS['db'], $data));
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   QUERY HISTORY                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                          Allows replaying of all past queries that haven't been run yet                           */
+/*              in order to ensure a version upgrade between any two versions of NoBleme goes smoothly               */
+/*                                                                                                                   */
+/*                 Before version 3, query history was not recorded, hence the lack of older content                 */
+/*                Before version 4, table and field names were in french, hence the non-english stuff                */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 // Global requirement: fetch the id of the last query that was run
 
 $last_query = sql_check_query_id();
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                           VERSION 3 BUILD 5                                                           */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 VERSION 3 BUILD 5                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 // Structural change of the writer's corner
 
 if($last_query < 1)
@@ -536,7 +551,7 @@ if($last_query < 1)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Table used to simulate cronjobs
 
 if($last_query < 2)
@@ -553,11 +568,11 @@ if($last_query < 2)
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                           VERSION 3 BUILD 6                                                           */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 VERSION 3 BUILD 6                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 // Fulltext indexes for internet encyclopedia & dictionary search
 
 if($last_query < 3)
@@ -578,7 +593,7 @@ if($last_query < 3)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Missing indexes
 
 if($last_query < 4)
@@ -603,7 +618,7 @@ if($last_query < 4)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // New table: NBDB - Encyclopedia of internet culture
 
 if($last_query < 5)
@@ -635,7 +650,7 @@ if($last_query < 5)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // New table: NBDB - Dictionary of internet culture
 
 if($last_query < 6)
@@ -659,7 +674,7 @@ if($last_query < 6)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // New table: NBDB - Internet culture eras
 
 if($last_query < 7)
@@ -677,7 +692,7 @@ if($last_query < 7)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // New table: NBDB - Internet culture categories
 
 if($last_query < 8)
@@ -696,7 +711,7 @@ if($last_query < 8)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // New table: NBDB - Internet culture page categories
 
 if($last_query < 9)
@@ -712,7 +727,7 @@ if($last_query < 9)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // New table: NBDB - Internet culture images
 
 if($last_query < 10)
@@ -729,11 +744,11 @@ if($last_query < 10)
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                           VERSION 3 BUILD 7                                                           */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 VERSION 3 BUILD 7                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 // #505 - Make quotes bilingual
 
 if($last_query < 11)
@@ -753,7 +768,7 @@ if($last_query < 11)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Store latest user activity
 
 if($last_query < 12)
@@ -766,11 +781,11 @@ if($last_query < 12)
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                           VERSION 3 BUILD 8                                                           */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 VERSION 3 BUILD 8                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 // #496 - Option to turn off google trends
 
 if($last_query < 13)
@@ -783,7 +798,7 @@ if($last_query < 13)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #477 - Allow tagging of internet culture encyclopedia/dictionary content as NSFW
 
 if($last_query < 14)
@@ -798,11 +813,11 @@ if($last_query < 14)
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                           VERSION 3 BUILD 9                                                           */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 VERSION 3 BUILD 9                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 // #533 - Private comments in the encyclopedia of interent culture
 
 if($last_query < 15)
@@ -818,7 +833,7 @@ if($last_query < 15)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #543 - SQL query history (this page!)
 
 if($last_query < 16)
@@ -829,7 +844,7 @@ if($last_query < 16)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #533 - Internet culture encyclopedia private comments do not need an id
 
 if($last_query < 17)
@@ -840,7 +855,7 @@ if($last_query < 17)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #547 - Private templates for the internet culture encyclopedia
 
 if($last_query < 18)
@@ -853,7 +868,7 @@ if($last_query < 18)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #542 - Make the to-do list bilingual
 
 if($last_query < 19)
@@ -882,13 +897,13 @@ if($last_query < 19)
 }
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                           VERSION 4 BUILD 1                                                           */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 VERSION 4 BUILD 1                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #544 - Translation and optimization of all tables - System tables
 
 if($last_query < 20)
@@ -920,7 +935,7 @@ if($last_query < 20)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #544 - Translation and optimization of all tables - Log tables
 
 if($last_query < 21)
@@ -959,7 +974,7 @@ if($last_query < 21)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #544 - Translation and optimization of all tables - Stats tables
 
 if($last_query < 22)
@@ -979,7 +994,7 @@ if($last_query < 22)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #544 - Translation and optimization of all tables - Dev tables
 
 if($last_query < 23)
@@ -1046,7 +1061,7 @@ if($last_query < 23)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #544 - Translation and optimization of all tables - Writer's corner
 
 if($last_query < 24)
@@ -1117,7 +1132,7 @@ if($last_query < 24)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #544 - Translation and optimization of all tables - Forum
 
 if($last_query < 25)
@@ -1199,9 +1214,168 @@ if($last_query < 25)
   sql_update_query_id(25);
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-//                     !!!!! REMEMBER TO UPDATE SQLDUMP.SQL AT THE PROJECT ROOT AFTER EVERY STRUCTURAL CHANGE !!!!!                      //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #544 - Translation and optimization of all tables - Users (includes splitting users into multiple tables)
+
+if($last_query < 26)
+{
+  sql_rename_table('membres', 'users');
+  sql_create_table('users_profile');
+  sql_create_table('users_settings');
+  sql_create_table('users_stats');
+  sql_rename_table('invites', 'users_guests');
+  sql_rename_table('membres_essais_login', 'users_login_attempts');
+  sql_rename_table('notifications', 'users_private_messages');
+
+  sql_change_field_type('users', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('users', 'pseudonyme', 'nickname', 'VARCHAR(45) NOT NULL');
+  sql_rename_field('users', 'pass', 'password', 'MEDIUMTEXT NOT NULL');
+  sql_rename_field('users', 'admin', 'is_administrator', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('users', 'sysop', 'is_global_moderator', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('users', 'moderateur', 'moderator_rights', 'VARCHAR(255) NOT NULL');
+  query(" UPDATE users SET users.moderator_rights = '' WHERE users.moderator_rights LIKE '0' ");
+  query(" UPDATE users SET users.moderator_rights = 'meetups' WHERE users.moderator_rights LIKE 'irl' ");
+  sql_create_field('users', 'is_moderator', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'moderator_rights');
+  sql_move_field('users', 'is_moderator', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'is_global_moderator');
+  query(" UPDATE users SET users.is_moderator = 0 WHERE users.moderator_rights = '' ");
+  query(" UPDATE users SET users.is_moderator = 1 WHERE users.moderator_rights != '' ");
+  sql_rename_field('users', 'moderateur_description_fr', 'moderator_title_fr', 'VARCHAR(255) NOT NULL');
+  sql_rename_field('users', 'moderateur_description_en', 'moderator_title_en', 'VARCHAR(255) NOT NULL');
+  sql_move_field('users', 'moderator_title_fr', 'VARCHAR(255) NOT NULL', 'moderator_title_en');
+  sql_rename_field('users', 'derniere_visite', 'last_visited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('users', 'derniere_visite_page', 'last_visited_page', "VARCHAR(510) NOT NULL");
+  sql_rename_field('users', 'derniere_visite_url', 'last_visited_url', "VARCHAR(510) NOT NULL");
+  sql_rename_field('users', 'derniere_visite_ip', 'current_ip_address', "VARCHAR(135) NOT NULL DEFAULT '0.0.0.0'");
+  sql_rename_field('users', 'derniere_activite', 'last_action_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('users', 'last_action_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'last_visited_at');
+  sql_rename_field('users', 'banni_date', 'is_banned_until', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('users', 'banni_raison', 'is_banned_because', 'TEXT NOT NULL');
+  sql_delete_index('users', 'index_login');
+  sql_delete_index('users', 'index_droits');
+  sql_create_index('users', 'index_access_rights', 'is_administrator, is_global_moderator, is_moderator, moderator_rights(127)');
+  sql_create_index('users', 'index_doppelgangers', 'current_ip_address');
+  sql_create_index('users', 'index_banned', 'is_banned_until');
+
+  sql_create_field('users_profile', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('users_profile', 'email_address', 'VARCHAR(510) NOT NULL', 'fk_users');
+  sql_create_field('users_profile', 'created_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'email_address');
+  sql_create_field('users_profile', 'spoken_languages', 'VARCHAR(12) NOT NULL', 'created_at');
+  sql_create_field('users_profile', 'gender', 'VARCHAR(105) NOT NULL', 'spoken_languages');
+  sql_create_field('users_profile', 'birthday', "DATE NOT NULL DEFAULT '0000-00-00'", 'created_at');
+  sql_create_field('users_profile', 'lives_at', 'VARCHAR(105) NOT NULL', 'gender');
+  sql_create_field('users_profile', 'occupation', 'VARCHAR(105) NOT NULL', 'lives_at');
+  sql_create_field('users_profile', 'profile_text', 'LONGTEXT NOT NULL', 'occupation');
+  $qusers = query(" SELECT  users.id            AS 'u_id'         ,
+                            users.email         AS 'u_mail'       ,
+                            users.date_creation AS 'u_created'    ,
+                            users.langue        AS 'u_languages'  ,
+                            users.genre         AS 'u_gender'     ,
+                            users.anniversaire  AS 'u_birthday'   ,
+                            users.habite        AS 'u_lives_at'   ,
+                            users.metier        AS 'u_occupation' ,
+                            users.profil        AS 'u_profile'
+                    FROM    users ");
+  while($dusers = mysqli_fetch_array($qusers))
+    query(" INSERT INTO users_profile
+            SET         users_profile.fk_users          = '".sql_sanitize_data($dusers['u_id'])."'         ,
+                        users_profile.email_address     = '".sql_sanitize_data($dusers['u_mail'])."'       ,
+                        users_profile.created_at        = '".sql_sanitize_data($dusers['u_created'])."'    ,
+                        users_profile.spoken_languages  = '".sql_sanitize_data($dusers['u_languages'])."'  ,
+                        users_profile.gender            = '".sql_sanitize_data($dusers['u_gender'])."'     ,
+                        users_profile.birthday          = '".sql_sanitize_data($dusers['u_birthday'])."'   ,
+                        users_profile.lives_at          = '".sql_sanitize_data($dusers['u_lives_at'])."'   ,
+                        users_profile.occupation        = '".sql_sanitize_data($dusers['u_occupation'])."' ,
+                        users_profile.profile_text      = '".sql_sanitize_data($dusers['u_profile'])."'    ");
+  sql_create_index('users_profile', 'index_user', 'fk_users');
+
+  sql_create_field('users_settings', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('users_settings', 'show_nsfw_content', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
+  sql_create_field('users_settings', 'hide_tweets', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'show_nsfw_content');
+  sql_create_field('users_settings', 'hide_youtube', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_tweets');
+  sql_create_field('users_settings', 'hide_google_trends', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_youtube');
+  sql_create_field('users_settings', 'forum_shown_languages', 'VARCHAR(12) NOT NULL', 'hide_google_trends');
+  $qusers = query(" SELECT  users.id                  AS 'u_id'       ,
+                            users.voir_nsfw           AS 'u_nsfw'     ,
+                            users.voir_tweets         AS 'u_tweets'   ,
+                            users.voir_youtube        AS 'u_youtube'  ,
+                            users.voir_google_trends  AS 'u_trends'   ,
+                            users.forum_lang          AS 'u_forumlang'
+                    FROM    users ");
+  while($dusers = mysqli_fetch_array($qusers))
+    query(" INSERT INTO users_settings
+            SET         users_settings.fk_users               = '".sql_sanitize_data($dusers['u_id'])."'        ,
+                        users_settings.show_nsfw_content      = '".sql_sanitize_data($dusers['u_nsfw'])."'      ,
+                        users_settings.hide_tweets            = '".sql_sanitize_data($dusers['u_tweets'])."'    ,
+                        users_settings.hide_youtube           = '".sql_sanitize_data($dusers['u_youtube'])."'   ,
+                        users_settings.hide_google_trends     = '".sql_sanitize_data($dusers['u_trends'])."'    ,
+                        users_settings.forum_shown_languages  = '".sql_sanitize_data($dusers['u_forumlang'])."' ");
+  sql_create_index('users_settings', 'index_user', 'fk_users');
+  sql_create_index('users_settings', 'index_nsfw_filter', 'show_nsfw_content');
+
+  sql_create_field('users_stats', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('users_stats', 'forum_message_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
+  $qusers = query(" SELECT  users.id              AS 'u_id' ,
+                            users.forum_messages  AS 'u_forum'
+                    FROM    users ");
+  while($dusers = mysqli_fetch_array($qusers))
+    query(" INSERT INTO users_stats
+            SET         users_stats.fk_users             = '".sql_sanitize_data($dusers['u_id'])."'    ,
+                        users_stats.forum_message_count  = '".sql_sanitize_data($dusers['u_forum'])."' ");
+  sql_create_index('users_stats', 'index_user', 'fk_users');
+
+  sql_delete_field('users', 'email');
+  sql_delete_field('users', 'date_creation');
+  sql_delete_field('users', 'langue');
+  sql_delete_field('users', 'genre');
+  sql_delete_field('users', 'anniversaire');
+  sql_delete_field('users', 'habite');
+  sql_delete_field('users', 'metier');
+  sql_delete_field('users', 'profil');
+  sql_delete_field('users', 'voir_nsfw');
+  sql_delete_field('users', 'voir_tweets');
+  sql_delete_field('users', 'voir_youtube');
+  sql_delete_field('users', 'voir_google_trends');
+  sql_delete_field('users', 'forum_messages');
+  sql_delete_field('users', 'forum_lang');
+
+  sql_change_field_type('users_guests', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('users_guests', 'ip', 'ip_address', "VARCHAR(135) NOT NULL DEFAULT '0.0.0.0'");
+  sql_rename_field('users_guests', 'surnom', 'randomly_assigned_name', 'VARCHAR(510) NOT NULL');
+  sql_rename_field('users_guests', 'derniere_visite', 'last_visited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('users_guests', 'derniere_visite_page', 'last_visited_page', "VARCHAR(510) NOT NULL");
+  sql_rename_field('users_guests', 'derniere_visite_url', 'last_visited_url', "VARCHAR(510) NOT NULL");
+  sql_delete_index('users_guests', 'ip');
+
+  sql_change_field_type('users_login_attempts', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('users_login_attempts', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('users_login_attempts', 'timestamp', 'attempted_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('users_login_attempts', 'ip', 'ip_address', "VARCHAR(135) NOT NULL DEFAULT '0.0.0.0'");
+  sql_move_field('users_login_attempts', 'ip_address', "VARCHAR(135) NOT NULL DEFAULT '0.0.0.0'", 'fk_users');
+  sql_delete_index('users_login_attempts', 'index_membres');
+  sql_create_index('users_login_attempts', 'index_users', 'fk_users');
+  sql_create_index('users_login_attempts', 'index_guests', 'ip_address');
+
+  sql_change_field_type('users_private_messages', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('users_private_messages', 'FKmembres_destinataire', 'fk_users_recipient', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('users_private_messages', 'FKmembres_envoyeur', 'fk_users_sender', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('users_private_messages', 'date_envoi', 'sent_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('users_private_messages', 'date_consultation', 'read_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('users_private_messages', 'titre', 'title', 'TEXT NOT NULL');
+  sql_rename_field('users_private_messages', 'contenu', 'body', 'LONGTEXT NOT NULL');
+  sql_delete_index('users_private_messages', 'index_destinataire');
+  sql_delete_index('users_private_messages', 'index_envoyeur');
+  sql_delete_index('users_private_messages', 'index_chronologie');
+  sql_create_index('users_private_messages', 'index_inbox', 'fk_users_recipient');
+  sql_create_index('users_private_messages', 'index_outbox', 'fk_users_sender');
+
+  sql_update_query_id(26);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                   //
+//           !!!!! REMEMBER TO UPDATE SQLDUMP.SQL AT THE PROJECT ROOT AFTER EVERY STRUCTURAL CHANGE !!!!!            //
+//                                                                                                                   //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 exit('<br>-----<br>Done -> '.sql_check_query_id());
