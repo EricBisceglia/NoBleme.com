@@ -37,14 +37,14 @@ session_start_securise();
 if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
 {
   // Allons chercher une liste des users existants
-  $users = query(" SELECT membres.pseudonyme, membres.id FROM membres ");
+  $users = query(" SELECT users.nickname, users.id FROM users ");
 
   // Et comparons les pseudos saltés au contenu du cookie
   $cookie_ok = 0;
   while($userlist = mysqli_fetch_array($users))
   {
     // On sale l'user à tester
-    $usertest = salage($userlist['pseudonyme']);
+    $usertest = salage($userlist['nickname']);
 
     // Et on compare
     if ($usertest == $_COOKIE['nobleme_memory'])
@@ -86,11 +86,11 @@ if(!$est_connecte)
 else
 {
   $id_user = postdata($est_connecte, 'int', 0);
-  $ddroits = mysqli_fetch_array(query(" SELECT  membres.admin       AS 'm_admin'  ,
-                                                membres.sysop       AS 'm_sysop'  ,
-                                                membres.moderateur  AS 'm_mod'
-                                        FROM    membres
-                                        WHERE   membres.id = '$id_user' "));
+  $ddroits = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'm_admin'  ,
+                                                users.is_global_moderator AS 'm_sysop'  ,
+                                                users.is_moderator        AS 'm_mod'
+                                        FROM    users
+                                        WHERE   users.id = '$id_user' "));
   $est_admin      = $ddroits['m_admin'];
   $est_sysop      = ($est_admin || $ddroits['m_sysop']) ? 1 : 0;
   $est_moderateur = $ddroits['m_mod'];
@@ -108,15 +108,15 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && loggedin())
   $userid = $_SESSION['user'];
 
   // On récupère les infos de ban sur l'user
-  $queryban = query(" SELECT membres.banni_date FROM membres WHERE id = '$userid' ");
+  $queryban = query(" SELECT users.is_banned_until FROM users WHERE id = '$userid' ");
 
   while($databan = mysqli_fetch_array($queryban))
   {
     // On check si l'user est banni
-    if($databan["banni_date"] != 0)
+    if($databan["is_banned_until"] != 0)
     {
       // On check si le ban est fini ou pas
-      if($databan["banni_date"] > time())
+      if($databan["is_banned_until"] > time())
       {
         // Redéfinition du $chemin
         // La base est différente selon si on est en localhost ou en prod
@@ -144,10 +144,10 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && loggedin())
       }
       else
         // S'il est fini, on le retire
-        query(" UPDATE  membres
-                SET     membres.banni_date    = '0' ,
-                        membres.banni_raison  = ''
-                WHERE   membres.id            = '$userid' ");
+        query(" UPDATE  users
+                SET     users.is_banned_until   = '0' ,
+                        users.is_banned_because = ''
+                WHERE   users.id                = '$userid' ");
     }
   }
 }
@@ -270,10 +270,10 @@ function getpseudo($id=NULL)
     return '';
 
   // On renvoie le pseudonyme
-  $dpseudo = mysqli_fetch_array(query(" SELECT  membres.pseudonyme
-                                        FROM    membres
-                                        WHERE   membres.id = '$id' "));
-    return $dpseudo['pseudonyme'];
+  $dpseudo = mysqli_fetch_array(query(" SELECT  users.nickname
+                                        FROM    users
+                                        WHERE   users.id = '$id' "));
+    return $dpseudo['nickname'];
 }
 
 
@@ -299,22 +299,22 @@ function getmod($section=NULL, $user=NULL)
   // Si c'est un mod de la section concernée, on renvoie 1
   if($section)
   {
-    $qdroits = mysqli_fetch_array(query(" SELECT membres.moderateur FROM membres WHERE id = '$user' AND moderateur LIKE '%$section%' "));
-    if($qdroits['moderateur'])
+    $qdroits = mysqli_fetch_array(query(" SELECT users.moderator_rights FROM users WHERE id = '$user' AND moderator_rights LIKE '%$section%' "));
+    if($qdroits['moderator_rights'])
       return 1;
   }
 
   // Si on ne spécifie pas de section, on va vérifier si c'est un mod et on renvoie 1 si oui
   if(!$section)
   {
-    $qdroits = mysqli_fetch_array(query(" SELECT membres.moderateur FROM membres WHERE id = '$user' AND moderateur != '' "));
-    if($qdroits['moderateur'])
+    $qdroits = mysqli_fetch_array(query(" SELECT users.moderator_rights FROM users WHERE id = '$user' AND moderator_rights != '' "));
+    if($qdroits['moderator_rights'])
       return 1;
   }
 
   // Si c'est un sysop ou un admin, on renvoie aussi 1
-  $qdroits = mysqli_fetch_array(query(" SELECT membres.sysop, membres.admin FROM membres WHERE id = '$user' "));
-  if($qdroits['sysop'] || $qdroits['admin'])
+  $qdroits = mysqli_fetch_array(query(" SELECT users.is_global_moderator, users.is_administrator FROM users WHERE id = '$user' "));
+  if($qdroits['is_global_moderator'] || $qdroits['is_administrator'])
     return 1;
 
   // Sinon on renvoie 0
@@ -342,11 +342,11 @@ function getsysop($user=NULL)
     $user = $_SESSION['user'];
 
   // On vérifie si l'user est sysop ou admin
-  $ddroits = mysqli_fetch_array(query(" SELECT  membres.sysop ,
-                                                membres.admin
-                                        FROM    membres
-                                        WHERE   membres.id = '$user' "));
-  if($ddroits['sysop'] || $ddroits['admin'])
+  $ddroits = mysqli_fetch_array(query(" SELECT  users.is_global_moderator ,
+                                                users.is_administrator
+                                        FROM    users
+                                        WHERE   users.id = '$user' "));
+  if($ddroits['is_global_moderator'] || $ddroits['is_administrator'])
     return 1;
   else
     return 0;
@@ -373,10 +373,10 @@ function getadmin($user=NULL)
     return 0;
 
   // On vérifie si l'user est admin
-  $ddroits = mysqli_fetch_array(query(" SELECT  membres.admin
-                                        FROM    membres
-                                        WHERE   membres.id = '$user' "));
-    return $ddroits['admin'];
+  $ddroits = mysqli_fetch_array(query(" SELECT  users.is_administrator
+                                        FROM    users
+                                        WHERE   users.id = '$user' "));
+    return $ddroits['is_administrator'];
 }
 
 
@@ -519,9 +519,9 @@ function niveau_nsfw()
 
   // Sinon, on va chercher le niveau de NSFW
   $membre_id  = postdata($_SESSION['user'], 'int', 0);
-  $dnsfw      = mysqli_fetch_array(query("  SELECT  membres.voir_nsfw AS 'm_nsfw'
-                                            FROM    membres
-                                            WHERE   membres.id = '$membre_id' "));
+  $dnsfw      = mysqli_fetch_array(query("  SELECT  users_settings.show_nsfw_content AS 'm_nsfw'
+                                            FROM    users_settings
+                                            WHERE   users_settings.fk_users = '$membre_id' "));
   return $dnsfw['m_nsfw'];
 }
 
@@ -542,11 +542,11 @@ function niveau_vie_privee()
 
   // On va chercher les options de l'utilisateur
   $membre_id  = postdata($_SESSION['user'], 'int', 0);
-  $dvieprivee = mysqli_fetch_array(query("  SELECT  membres.voir_tweets         AS 'm_twitter'  ,
-                                                    membres.voir_youtube        AS 'm_youtube'  ,
-                                                    membres.voir_google_trends  AS 'm_trends'
-                                            FROM    membres
-                                            WHERE   membres.id = '$membre_id' "));
+  $dvieprivee = mysqli_fetch_array(query("  SELECT  users_settings.hide_tweets         AS 'm_twitter'  ,
+                                                    users_settings.hide_youtube        AS 'm_youtube'  ,
+                                                    users_settings.hide_google_trends  AS 'm_trends'
+                                            FROM    users_settings
+                                            WHERE   users_settings.fk_users = '$membre_id' "));
 
   // Et on renvoie tout ça dans un tableau
   return array( 'twitter' => $dvieprivee['m_twitter'] ,
