@@ -1657,6 +1657,17 @@ if($last_query < 30)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #544 - Translation and optimization of all tables - Adjustments (can't get everything right on the first try)
+
+if($last_query < 31)
+{
+  sql_rename_field('system_scheduler', 'task_timestamp', 'planned_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+
+  sql_update_query_id(31);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                   //
 //           !!!!! REMEMBER TO UPDATE SQLDUMP.SQL AT THE PROJECT ROOT AFTER EVERY STRUCTURAL CHANGE !!!!!            //
 //                                                                                                                   //

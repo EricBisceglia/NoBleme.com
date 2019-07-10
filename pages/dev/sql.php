@@ -3,7 +3,6 @@
 /*                                                             INITIALISATION                                                            */
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
-include_once './../../inc/sql.inc.php';      // Opening the MySQL connection
 include_once './../../inc/requetes.inc.php'; // Queries awaiting execution
 include_once './../../inc/includes.inc.php'; // Common inclusions
 

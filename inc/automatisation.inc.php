@@ -44,12 +44,12 @@ function automatisation($action_type, $action_id, $action_timestamp, $action_des
 
 // On commence par aller chercher s'il y a des tâches planifiées en attente d'exécution
 $timestamp        = time();
-$qautomatisation  = query(" SELECT  automatisation.id                 AS 'a_id'     ,
-                                    automatisation.action_id          AS 'a_action' ,
-                                    automatisation.action_type        AS 'a_type'   ,
-                                    automatisation.action_description AS 'a_desc'
-                            FROM    automatisation
-                            WHERE   automatisation.action_timestamp <= '$timestamp' ");
+$qautomatisation  = query(" SELECT  system_scheduler.id               AS 'a_id'     ,
+                                    system_scheduler.task_id          AS 'a_action' ,
+                                    system_scheduler.task_type        AS 'a_type'   ,
+                                    system_scheduler.task_description AS 'a_desc'
+                            FROM    system_scheduler
+                            WHERE   system_scheduler.planned_at       <= '$timestamp' ");
 
 // S'il y a des tâches à effectuer, on s'en occupe
 while($dautomatisation = mysqli_fetch_array($qautomatisation))

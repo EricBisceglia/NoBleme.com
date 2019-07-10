@@ -69,7 +69,7 @@ if($langue_error)
 /****************************************************************************************************************************************/
 
 // Récupération de l'état de maj
-$checkmaj = query(" SELECT vars_globales.mise_a_jour FROM vars_globales ");
+$checkmaj = query(" SELECT system_variables.update_in_progress AS 'mise_a_jour' FROM system_variables ");
 $majcheck = mysqli_fetch_array($checkmaj);
 
 // Si maj, on ferme la machine (sauf pour les admins)
@@ -107,9 +107,9 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
   $page_url_propre = postdata($page_url, 'string');
 
   // Requête pour récupérer les pageviews sur la page courante
-  $view_query = query(" SELECT  pageviews.vues
-                        FROM    pageviews
-                        WHERE   pageviews.url_page  = '$page_url_propre' ");
+  $view_query = query(" SELECT  stats_pageviews.view_count AS 'vues'
+                        FROM    stats_pageviews
+                        WHERE   stats_pageviews.page_url = '$page_url_propre' ");
 
   // Si la requête renvoie un résultat, reste plus qu'à incrémenter les pageviews
   if (mysqli_num_rows($view_query) != 0)
@@ -121,9 +121,9 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
     // On update la BDD si l'user n'est pas un admin
     if(((loggedin() && !$est_admin) || !loggedin()))
       query(" UPDATE  pageviews
-              SET     pageviews.vues      = pageviews.vues + 1 ,
-                      pageviews.nom_page  = '$page_nom_propre'
-              WHERE   pageviews.url_page  = '$page_url_propre' ");
+              SET     stats_pageviews.view_count  = pageviews.view_count + 1 ,
+                      stats_pageviews.page_name   = '$page_nom_propre'
+              WHERE   stats_pageviews.page_url    = '$page_url_propre' ");
   }
 
   // Sinon, il faut créer l'entrée de la page et lui donner son premier pageview
@@ -133,10 +133,10 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
     $pageviews = 1;
 
     // On update la BDD
-    query(" INSERT INTO pageviews
-            SET         pageviews.nom_page  = '$page_nom_propre'  ,
-                        pageviews.url_page  = '$page_url_propre'  ,
-                        pageviews.vues      = 1                   ");
+    query(" INSERT INTO stats_pageviews
+            SET         stats_pageviews.page_name   = '$page_nom_propre'  ,
+                        stats_pageviews.page_url    = '$page_url_propre'  ,
+                        stats_pageviews.view_count  = 1                   ");
   }
 }
 
@@ -165,12 +165,12 @@ if(loggedin())
   $visite_ip    = postdata($_SERVER["REMOTE_ADDR"], 'string');
 
   // Puis on fait la requête d'update
-  query(" UPDATE  membres
-          SET     membres.derniere_visite       = '$visite_timestamp' ,
-                  membres.derniere_visite_page  = '$activite_page'      ,
-                  membres.derniere_visite_url   = '$activite_url'       ,
-                  membres.derniere_visite_ip    = '$visite_ip'
-          WHERE   membres.id                    = '$visite_user' ");
+  query(" UPDATE  users
+          SET     users.last_visited_at     = '$visite_timestamp' ,
+                  users.last_visited_page   = '$activite_page'      ,
+                  users.last_visited_url    = '$activite_url'       ,
+                  users.current_ip_address  = '$visite_ip'
+          WHERE   users.id                  = '$visite_user' ");
 }
 // Sinon on a affaire a un invité
 else
@@ -219,10 +219,10 @@ else
 if (loggedin())
 {
   // Requête
-  $qnotif = query(" SELECT  notifications.id
-                    FROM    notifications
-                    WHERE   notifications.date_consultation       = 0
-                    AND     notifications.FKmembres_destinataire  = ".$_SESSION['user']."
+  $qnotif = query(" SELECT  users_private_messages.id
+                    FROM    users_private_messages
+                    WHERE   users_private_messages.read_at            = 0
+                    AND     users_private_messages.fk_users_recipient = ".$_SESSION['user']."
                     LIMIT   1 " );
 
   // Préparation des données pour l'affichage
