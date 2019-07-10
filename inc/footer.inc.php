@@ -53,14 +53,14 @@ $time_chargement  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
 
       <footer>
         <?php if(isset($shorturl)) { ?>
-        <a href="<?=$chemin?>s?<?=$shorturl?>">Lien court vers cette page</a><br>
+        <a href="<?=$path?>s?<?=$shorturl?>">Lien court vers cette page</a><br>
         <?php } if(loggedin() && $est_admin) { ?>
-        <a href="<?=$chemin?>pages/admin/pageviews"><?=$page_views?></a><br>
+        <a href="<?=$path?>pages/admin/pageviews"><?=$page_views?></a><br>
         <a>Page chargée en <?=$time_chargement?>s avec <?=$GLOBALS['query']?> requêtes</a><br>
         <?php } ?>
-        <a href="<?=$chemin?><?=$trad['footer_lien']?>"><?=$version?></a><br>
-        <a href="<?=$chemin?>pages/doc/mentions_legales"><?=$trad['footer_legal']?></a><br>
-        <a href="<?=$chemin?>pages/doc/nobleme">&copy; NoBleme.com : 2005 - <?=date('Y')?></a>
+        <a href="<?=$path?><?=$trad['footer_lien']?>"><?=$version?></a><br>
+        <a href="<?=$path?>pages/doc/mentions_legales"><?=$trad['footer_legal']?></a><br>
+        <a href="<?=$path?>pages/doc/nobleme">&copy; NoBleme.com : 2005 - <?=date('Y')?></a>
       </footer>
     </div>
   </div>

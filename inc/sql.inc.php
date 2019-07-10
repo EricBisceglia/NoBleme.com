@@ -17,7 +17,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1" )
   $GLOBALS['db'] = @mysqli_connect('127.0.0.1', 'root', '', 'nobleme') or die ('Erreur SQL ! Connexion &agrave; la base de donn&eacute;es impossible');
 else
-  $GLOBALS['db'] = @mysqli_connect('localhost', 'root', $GLOBALS['mysql_pass'], 'nobleme') or die ('Erreur SQL ! Connexion &agrave; la base de donn&eacute;es impossible');
+  $GLOBALS['db'] = @mysqli_connect('localhost', $GLOBALS['mysql_user'], $GLOBALS['mysql_pass'], 'nobleme') or die ('Erreur SQL ! Connexion &agrave; la base de donn&eacute;es impossible');
 
 mysqli_set_charset($GLOBALS['db'], "utf8");
 $GLOBALS['query'] = -1;

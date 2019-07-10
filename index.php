@@ -59,14 +59,14 @@ $agenobleme = date('Y')-2005;
 
         <h5 class="bigpadding">Visite guidée minimaliste du site</h5>
 
-        <p>Si vous vous demandez d'où NoBleme vient et à quoi sert NoBleme, vous pouvez trouver la réponse à ces questions dans la page <a class="gras" href="<?=$chemin?>pages/doc/nobleme">qu'est-ce que NoBleme</a> de la <a class="gras" href="<?=$chemin?>pages/doc">documentation du site</a></p>
+        <p>Si vous vous demandez d'où NoBleme vient et à quoi sert NoBleme, vous pouvez trouver la réponse à ces questions dans la page <a class="gras" href="<?=$path?>pages/doc/nobleme">qu'est-ce que NoBleme</a> de la <a class="gras" href="<?=$path?>pages/doc">documentation du site</a></p>
 
-        <p>Notre attraction principale pour les visiteurs perdus est <a class="gras" href="<?=$chemin?>pages/nbdb/index">l'encyclopédie de la culture internet</a>, une documentation de l'histoire d'internet et des memes qu'on y trouve.</p>
+        <p>Notre attraction principale pour les visiteurs perdus est <a class="gras" href="<?=$path?>pages/nbdb/index">l'encyclopédie de la culture internet</a>, une documentation de l'histoire d'internet et des memes qu'on y trouve.</p>
 
-        <p>Maintenant que vous avez une vague idée de ce que NoBleme représente, peut-être êtes vous assez curieux pour avoir envie d'intéragir avec la communauté NoBlemeuse. Si c'est le cas, venez nous rejoindre là où nous sommes toujours actifs : sur notre <a class="gras" href="<?=$chemin?>pages/irc/index">serveur de discussion IRC</a>.</p>
+        <p>Maintenant que vous avez une vague idée de ce que NoBleme représente, peut-être êtes vous assez curieux pour avoir envie d'intéragir avec la communauté NoBlemeuse. Si c'est le cas, venez nous rejoindre là où nous sommes toujours actifs : sur notre <a class="gras" href="<?=$path?>pages/irc/index">serveur de discussion IRC</a>.</p>
 
         <p>N'hésitez pas à vous balader sur le site pour découvrir son contenu, et bon séjour sur NoBleme !</p>
-        <a class="alinea gras" href="<?=$chemin?>pages/user/user?id=1">- Bad</a>
+        <a class="alinea gras" href="<?=$path?>pages/user/user?id=1">- Bad</a>
 
       </div>
 
@@ -91,7 +91,7 @@ $agenobleme = date('Y')-2005;
         <p>When switching from french to english, you will probably have noticed that you have access to fewer elements on the left side navigation menu. This is because the non translated (french only) pages are removed from the navigation menu when browsing the website in english, for your convenience. Keep in mind that most of these removed pages are about things that do not translate to english, such as quotes from conversations in french, games that are played solely in french, etc.</p>
 
         <p>Don't hesitate to look around the website, and enjoy your stay on NoBleme!</p>
-        <a class="alinea" href="<?=$chemin?>pages/user/user?id=1">- Bad</a>
+        <a class="alinea" href="<?=$path?>pages/user/user?id=1">- Bad</a>
 
       </div>
 

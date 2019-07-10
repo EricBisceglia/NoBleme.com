@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { header("Location: ./../pages/nobleme/404") ; die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
@@ -21,8 +21,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Ensure the page is only usable by website administrators
 
 // Include pages that are required to make MySQL queries
-include_once 'reglages.inc.php';  // General settings
-include_once 'erreur.inc.php';    // Error management
+include_once 'settings.inc.php';  // General settings
+include_once 'error.inc.php';     // Error management
 include_once 'sql.inc.php';       // MySQL connection
 
 // If the database still uses the old data structure, then we need to skip the other includes
@@ -35,9 +35,8 @@ while($dtablelist = mysqli_fetch_array($qtablelist))
 if(!$old_structure)
 {
   // Include pages that are required to check user rights
-  include_once 'post.inc.php';      // Data sanitization
-  include_once 'session.inc.php';   // Session management
-  include_once 'login.inc.php';     // User rights management
+  include_once 'sanitization.inc.php';  // Data sanitization
+  include_once 'users.inc.php';         // User rights management
 
   // Only allow admins to use this page
   if(!getadmin())
