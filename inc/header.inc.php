@@ -6,7 +6,13 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF'])))
   exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Vous n\'êtes pas censé accéder à cette page, dehors!</body></html>');
 
-
+// Necessary temporary stuff
+$est_admin = isset($est_admin) ? $est_admin : 0;
+$est_admin = isset($is_admin) ? $is_admin : $est_admin;
+$est_sysop = isset($est_sysop) ? $est_sysop : 0;
+$est_sysop = isset($is_sysop) ? $is_sysop : $est_sysop;
+$header_menu = isset($menu_main) ? $menu_main : $header_menu;
+$header_sidemenu = isset($menu_side) ? $menu_side : $header_sidemenu;
 
 
 /****************************************************************************************************************************************/

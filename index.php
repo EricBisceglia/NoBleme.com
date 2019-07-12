@@ -21,8 +21,7 @@ $page_titre = ($lang == 'FR') ? "Accueil" : "Homepage";
 $page_desc  = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
 
 
-
-
+error('test', '');
 /*****************************************************************************************************************************************/
 /*                                                                                                                                       */
 /*                                                        PRÉPARATION DES DONNÉES                                                        */

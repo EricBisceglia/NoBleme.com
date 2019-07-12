@@ -1,101 +1,91 @@
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                 CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST INCLUDE PAR UNE AUTRE PAGE                                */
-/*                                                                                                                                       */
-// Include only /*************************************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF'])))
-  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Vous n\'êtes pas censé accéder à cette page, dehors!</body></html>');
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
+/*                                                                                                                   */
+// Include only /*****************************************************************************************************/
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction de renvoi d'une page d'erreur
-// A n'utiliser qu'avant l'inclusion du header!
-// Se conclut par un exit();
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Error management function, use it when you need to throw an error and abort everything else
+// Includes the header and footer though, so the contents of both will be ran
+// Concludes with an exit(), thus nothing can be ran after the error
 //
-// $message                     est le message d'erreur à écrire
-// $chemin          (optionnel) est le chemin relatif jusqu'à l'index du site
-// $lang            (optionnel) est la langue actuellement utilisée
-// $menu_principal  (optionnel) est le menu principal du header dans lequel on se trouve
-// $menu_lateral    (optionnel) est le menu latéral du header dans lequel on se trouve
+// $message               is the error message that will be displayed (can include HTML)
+// $path      (optional)  is the relative path to the index of the website (defaults to being 2 folders from the root)
+// $lang      (optional)  is the currently used language (defaults to english if nothing is stored in the session)
+// $menu_main (optional)  is the main header menu to be highlighted (defaults to the main section ('NoBleme'))
+// $menu_side (optional)  is the side header menu to be highlighted (defaults to the home page ('Homepage'))
 //
-// Exemple d'utilisation:
-// erreur("Chiens interdits, même tenus en laisse", $chemin, $lang);
+// Example usage
+// error("Please do not access this page", $path, $lang, 'NoBleme', 'Homepage');
 
-function erreur($message, $chemin='./../../', $lang=NULL, $menu_principal='NoBleme', $menu_lateral='Accueil')
+function error($message, $path = './../../', $lang = NULL, $menu_main = 'NoBleme', $menu_side = 'Homepage')
 {
-  // L'user est-il connecté ?
-  $est_connecte = (isset($_SESSION['user'])) ? $_SESSION['user'] : 0;
+  // Is the user logged in? - check from the session (required by the header)
+  $is_logged_in = (isset($_SESSION['user'])) ? $_SESSION['user'] : 0;
 
-  // L'user est-il mod, sysop, ou admin ?
-  if(!$est_connecte)
+  // Does the user have special permissions? (required by the header)
+  if(!$is_logged_in)
   {
-    $est_admin      = 0;
-    $est_sysop      = 0;
-    $est_moderateur = 0;
+    $is_admin             = 0;
+    $is_global_moderator  = 0;
+    $is_moderator         = 0;
   }
   else
   {
-    $id_user = postdata($est_connecte, 'int', 0);
-    $ddroits = mysqli_fetch_array(query(" SELECT  membres.admin       AS 'm_admin'  ,
-                                                  membres.sysop       AS 'm_sysop'  ,
-                                                  membres.moderateur  AS 'm_mod'
-                                          FROM    membres
-                                          WHERE   membres.id = '$id_user' "));
-    $est_admin      = $ddroits['m_admin'];
-    $est_sysop      = ($est_admin || $ddroits['m_sysop']) ? 1 : 0;
-    $est_moderateur = $ddroits['m_mod'];
+    $id_user = postdata($is_logged_in, 'int', 0);
+    $ddroits = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'm_admin'      ,
+                                                  users.is_global_moderator AS 'm_globalmod'  ,
+                                                  users.is_moderator        AS 'm_mod'
+                                          FROM    users
+                                          WHERE   users.id = '$id_user' "));
+    $is_admin             = $ddroits['m_admin'];
+    $is_global_moderator  = ($is_admin || $ddroits['m_globalmod']) ? 1 : 0;
+    $is_moderator         = $ddroits['m_mod'];
   }
 
-  // Détermination de la langue à utiliser
-  $temp_lang  = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
+  // We also need to figure out the user's language - take it from the session if it is there (required by the header)
+  $temp_lang  = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
   $lang       = ($lang) ? $lang : $temp_lang;
 
-  // Menus du header
-  $header_menu      = $menu_principal;
-  $header_sidemenu  = $menu_lateral;
-
-  // Erreur
+  // We must inform the header that this is an error being thrown
   $error_mode = 1;
 
-  // Titre et description
-  $langue_page  = array('FR','EN');
-  $page_titre   = ($lang == 'FR') ? "Erreur" : "Error";
-  $page_desc    = "Ceci est une page d'erreur. Vous allez oublier l'existence de cette page. Ne paniquez pas, le flash rouge est normal.";
+  // Available languages, title, description, and internal page name are required by the header too
+  $page_lang  = array('EN', 'FR');
+  $page_title = ($lang == 'EN') ? "Error" : "Error";
+  $page_desc  = ($lang == 'EN') ? "This is an error page. You will forget about this page's mere existence. Don't panic, the red flashing light is part of the process": "Ceci est une page d'erreur. Vous allez oublier l'existence de cette page. Ne paniquez pas, le flash rouge est normal.";
+  $page_name = "Se prend une erreur";
 
-  // Identification
-  $page_nom = "Se prend une erreur";
-
-  // Contenu multilingue
+  // Translations (multilingual content)
   $trad = array();
-  $trad['ohno'] = ($lang == 'FR') ? "OH NON &nbsp;: (" : "OH NO &nbsp;: (";
-  $trad['oups'] = ($lang == 'FR') ? "VOUS AVEZ RENCONTRÉ UNE ERREUR" : "YOU HAVE ENCOUNTERED AN ERROR";
+  $trad['ohno'] = ($lang == 'EN') ? "OH NO &nbsp;: (" : "OH NON &nbsp;: (";
+  $trad['oops'] = ($lang == 'EN') ? "YOU HAVE ENCOUNTERED AN ERROR" : "VOUS AVEZ RENCONTRÉ UNE ERREUR";
 
-  // HTML
-  include $chemin.'inc/header.inc.php';
+  // We open the HTML by including the header
+  include $path.'inc/header.inc.php';
   ?>
 
-  <br>
-  <br>
-  <br>
-  <br>
-
-  <div class="indiv align_center">
-    <h3><?=$trad['ohno']?></h3>
-    <br>
-    <h3><?=$trad['oups']?></h3>
-    <br>
-    <br>
-     <br>
-    <h3><?=$message?></h3>
+  <!-- Custom error message -->
+  <div class="indiv align_center error_container">
+    <h3 class="small_error_gap">
+      <?=$trad['ohno']?>
+    </h3>
+    <h3 class="big_error_gap">
+      <?=$trad['oops']?>
+    </h3>
+    <h3>
+      <?=$message?>
+    </h3>
   </div>
 
-  <br>
-  <br>
-  <br>
-
   <?php
-  include './../../inc/footer.inc.php';
+  // We close the HTML by including the footer
+  include $path.'inc/footer.inc.php';
+
+  // Finally we exit out of here to make sure nothing else is ran afterwards
   exit ();
 }

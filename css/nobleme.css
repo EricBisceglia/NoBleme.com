@@ -128,3 +128,8 @@ table.noborder td                            { border: 0px !important;          
 select.table_search                          { height: auto; padding:0px; font-weight: normal; border-radius: 0;                    }
 td.bas_noir, th.bas_noir, tr.bas_noir > td, tr.bas_noir > th { border-bottom: 1px solid #000000 !important;                         }
 td.bas_noir_epais, th.bas_noir_epais, tr.bas_noir_epais > td, tr.bas_noir_epais > th { border-bottom: 2px solid #000000 !important; }
+
+/*************************************************** PAGE D'ERREUR ***************************************************/
+div.error_container { margin-top: 100px; margin-bottom: 100px; }
+h3.small_error_gap { margin-bottom: 50px; }
+h3.big_error_gap { margin-bottom: 100px; }
