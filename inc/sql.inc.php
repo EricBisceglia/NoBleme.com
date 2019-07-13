@@ -19,7 +19,7 @@ $GLOBALS['query'] = -1;
 
 // We use this opportunity to set the global charset - it requires one necessary query, hence why counter starts at -1
 mysqli_set_charset($GLOBALS['db'], "utf8");
-query('SET NAMES utf8mb4');
+query(' SET NAMES utf8mb4 ');
 
 
 
@@ -31,10 +31,13 @@ query('SET NAMES utf8mb4');
  * As it is basically a global wrapper for MySQL usage, you should always use this function when executing a query.
  * Keep in mind that no sanitization/escaping is being done here, you must add your own (see sanitization.inc.php).
  *
- * @param   string  $query          The query that you want to run.
- * @param   any     $ignore_errors  (optional) Do not stop execution if an error is encountered.
+ * @example query(" SELECT table.field FROM table ");
+ * @example query(" INSERT INTO table SET table.field = $value ");
  *
- * @return  mysqli_result           The result of the query that was just ran.
+ * @param   string      $query                      The query that you want to run.
+ * @param   string|int  $ignore_errors  (OPTIONAL)  Do not stop execution if an error is encountered.
+ *
+ * @return  object                                  The result of the query, in the form of a mysqli_object.
  */
 
 function query($query, $ignore_errors=NULL)
@@ -48,7 +51,7 @@ function query($query, $ignore_errors=NULL)
 
   // Otherwise, we run the query and stop the script if anything goes wrong
   else
-    $query_result = mysqli_query($GLOBALS['db'],$query) or die ('MySQL error:<br>'.mysqli_error($GLOBALS['db']));
+    $query_result = mysqli_query($GLOBALS['db'],$query) or die ("MySQL error:<br>".mysqli_error($GLOBALS['db']));
 
   // We're done and can now return the mysqli_result
   return $query_result;

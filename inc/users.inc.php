@@ -119,7 +119,7 @@ if(!$est_connecte)
 }
 else
 {
-  $id_user = postdata($est_connecte, 'int', 0);
+  $id_user = sanitize($est_connecte, 'int', 0);
   $ddroits = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'm_admin'  ,
                                                 users.is_global_moderator AS 'm_sysop'  ,
                                                 users.is_moderator        AS 'm_mod'
@@ -552,7 +552,7 @@ function niveau_nsfw()
     return 0;
 
   // Sinon, on va chercher le niveau de NSFW
-  $membre_id  = postdata($_SESSION['user'], 'int', 0);
+  $membre_id  = sanitize($_SESSION['user'], 'int', 0);
   $dnsfw      = mysqli_fetch_array(query("  SELECT  users_settings.show_nsfw_content AS 'm_nsfw'
                                             FROM    users_settings
                                             WHERE   users_settings.fk_users = '$membre_id' "));
@@ -575,7 +575,7 @@ function niveau_vie_privee()
     return 0;
 
   // On va chercher les options de l'utilisateur
-  $membre_id  = postdata($_SESSION['user'], 'int', 0);
+  $membre_id  = sanitize($_SESSION['user'], 'int', 0);
   $dvieprivee = mysqli_fetch_array(query("  SELECT  users_settings.hide_tweets         AS 'm_twitter'  ,
                                                     users_settings.hide_youtube        AS 'm_youtube'  ,
                                                     users_settings.hide_google_trends  AS 'm_trends'

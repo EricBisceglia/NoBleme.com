@@ -109,8 +109,8 @@ else
 if(isset($page_nom) && isset($page_url) && !isset($error_mode))
 {
   // Réparation des erreurs au cas où
-  $page_nom_propre = postdata($page_nom, 'string');
-  $page_url_propre = postdata($page_url, 'string');
+  $page_nom_propre = sanitize($page_nom, 'string');
+  $page_url_propre = sanitize($page_url, 'string');
 
   // Requête pour récupérer les pageviews sur la page courante
   $view_query = query(" SELECT  stats_pageviews.view_count AS 'vues'
@@ -164,11 +164,11 @@ if(loggedin())
   $visite_user      = $_SESSION['user'];
 
   // Nettoyage des données au cas où
-  $activite_page  = postdata($activite_page, 'string');
-  $activite_url   = postdata($activite_url, 'string');
+  $activite_page  = sanitize($activite_page, 'string');
+  $activite_url   = sanitize($activite_url, 'string');
 
   // IP de l'user
-  $visite_ip    = postdata($_SERVER["REMOTE_ADDR"], 'string');
+  $visite_ip    = sanitize($_SERVER["REMOTE_ADDR"], 'string');
 
   // Puis on fait la requête d'update
   query(" UPDATE  users
@@ -186,19 +186,19 @@ else
   query(" DELETE FROM invites WHERE invites.derniere_visite < '$guest_limit' ");
 
   // On va chercher s'il existe
-  $guest_ip = postdata($_SERVER["REMOTE_ADDR"], 'string');
+  $guest_ip = sanitize($_SERVER["REMOTE_ADDR"], 'string');
   $qguest   = query(" SELECT invites.ip FROM invites WHERE invites.ip = '$guest_ip' ");
 
   // On crée l'invité si nécessaire
   if(!mysqli_num_rows($qguest))
   {
-    $guest_nom = postdata(surnom_mignon(), 'string');
+    $guest_nom = sanitize(surnom_mignon(), 'string');
     query(" INSERT INTO invites SET invites.ip = '$guest_ip', invites.surnom = '$guest_nom' ");
   }
 
   // Nettoyage des données au cas où
-  $activite_page  = postdata($activite_page, 'string');
-  $activite_url   = postdata($activite_url, 'string');
+  $activite_page  = sanitize($activite_page, 'string');
+  $activite_url   = sanitize($activite_url, 'string');
 
   // Et on met à jour les données
   $guest_timestamp = time();
@@ -477,7 +477,7 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
 
 <?php ###################################################### GESTION DU LOGIN ############################################################
 // Préparation des traductions des phrases liées au compte
-$getpseudo              = predata(getpseudo());
+$getpseudo              = sanitize_output(getpseudo());
 $submenu['message']     = ($lang == 'FR') ? "$getpseudo, vous avez reçu un nouveau message, cliquez ici pour le lire !" : "$getpseudo, you have recieved a new message, click here to read it!";
 $submenu['connecté']    = ($lang == 'FR') ? "Vous êtes connecté en tant que $getpseudo. Cliquez ici pour modifier votre profil et/ou gérer votre compte" : "You are logged in as $getpseudo. Click here to edit your profile and/or manage your account.";
 $submenu['deconnexion'] = ($lang == 'FR') ? "Déconnexion" : "Log out";

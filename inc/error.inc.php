@@ -16,18 +16,18 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * Includes header.inc.php and footer.inc.php, so the contents of both will be ran - keep this in mind.
  * This obviously means that you should not run this function after the header has already been included.
  *
- * @example error("Please do not access this page", $path, $lang, "NoBleme", "Homepage");
+ * @example error("You do not have the required rights to access this page", $path, $lang, "NoBleme", "Homepage");
  *
- * @param string  $message    The error message that will be displayed (can include HTML).
- * @param string  $path       (optional) The relative path to the root of the website (defaults to 2 folders away).
- * @param string  $lang       (optional) The currently used language (defaults to session stored value, or to english).
- * @param string  $menu_main  (optional) The main header menu to be highlighted (defaults to 'NoBleme').
- * @param string  $menu_side  (optional) The side header menu to be highlighted (defaults to 'Homepage').
+ * @param   string  $message                The error message that will be displayed (can include HTML).
+ * @param   string  $path       (OPTIONAL)  The relative path to the root of the website (defaults to 2 folders away).
+ * @param   string  $lang       (OPTIONAL)  The current language (defaults to session stored value, or to english).
+ * @param   string  $menu_main  (OPTIONAL)  The main header menu to be highlighted (defaults to 'NoBleme').
+ * @param   string  $menu_side  (OPTIONAL)  The side header menu to be highlighted (defaults to 'Homepage').
  *
- * @return void Returns nothing.
+ * @return  void
  */
 
-function error($message, $path = './../../', $lang = NULL, $menu_main = "NoBleme", $menu_side = "Homepage")
+function error($message, $path="./../../", $lang=NULL, $menu_main="NoBleme", $menu_side="Homepage")
 {
   // Is the user logged in? - check from the session (required by the header)
   $is_logged_in = (isset($_SESSION['user'])) ? $_SESSION['user'] : 0;
@@ -43,7 +43,7 @@ function error($message, $path = './../../', $lang = NULL, $menu_main = "NoBleme
   else
   {
     // Let's sanitize the user id, just in case
-    $id_user = postdata($is_logged_in, 'int', 0);
+    $id_user = sanitize($is_logged_in, 'int', 0);
 
     // Now we can go look for his user rights
     $ddroits = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'm_admin'      ,
