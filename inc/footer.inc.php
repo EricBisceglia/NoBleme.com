@@ -36,9 +36,6 @@ $trad['footer_legal'] = ($lang == 'FR') ? "Mentions légales &amp; confidentiali
 $time_chargement  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
 
 
-// Close the connexion
-mysqli_close($GLOBALS['db']);
-
 
 
 

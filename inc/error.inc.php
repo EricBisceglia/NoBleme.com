@@ -30,7 +30,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 function error($message, $path="./../../", $lang=NULL, $menu_main="NoBleme", $menu_side="Homepage")
 {
   // Is the user logged in? - check from the session (required by the header)
-  $is_logged_in = (isset($_SESSION['user'])) ? $_SESSION['user'] : 0;
+  $is_logged_in = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : 0;
 
   // Does the user have special permissions? (required by the header)
   if(!$is_logged_in)
@@ -46,16 +46,16 @@ function error($message, $path="./../../", $lang=NULL, $menu_main="NoBleme", $me
     $id_user = sanitize($is_logged_in, 'int', 0);
 
     // Now we can go look for his user rights
-    $ddroits = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'm_admin'      ,
+    $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'm_admin'      ,
                                                   users.is_global_moderator AS 'm_globalmod'  ,
                                                   users.is_moderator        AS 'm_mod'
                                           FROM    users
                                           WHERE   users.id = '$id_user' "));
 
     // And we can set them as variables, which the header will use
-    $is_admin             = $ddroits['m_admin'];
-    $is_global_moderator  = ($is_admin || $ddroits['m_globalmod']) ? 1 : 0;
-    $is_moderator         = $ddroits['m_mod'];
+    $is_admin             = $drights['m_admin'];
+    $is_global_moderator  = ($is_admin || $drights['m_globalmod']) ? 1 : 0;
+    $is_moderator         = $drights['m_mod'];
   }
 
   // We also need to figure out the user's language - take it from the session if it is there (required by the header)
@@ -72,9 +72,9 @@ function error($message, $path="./../../", $lang=NULL, $menu_main="NoBleme", $me
   $page_name = "Se prend une erreur";
 
   // Translation of the text strings before display (bilingual content)
-  $trad = array();
-  $trad['ohno'] = ($lang == 'EN') ? "OH NO &nbsp;: (" : "OH NON &nbsp;: (";
-  $trad['oops'] = ($lang == 'EN') ? "YOU HAVE ENCOUNTERED AN ERROR" : "VOUS AVEZ RENCONTRÉ UNE ERREUR";
+  $text = array();
+  $text['ohno'] = ($lang == 'EN') ? "OH NO &nbsp;: (" : "OH NON &nbsp;: (";
+  $text['oops'] = ($lang == 'EN') ? "YOU HAVE ENCOUNTERED AN ERROR" : "VOUS AVEZ RENCONTRÉ UNE ERREUR";
 
   // We open the HTML part by including the header
   include_once $path."inc/header.inc.php";
@@ -83,10 +83,10 @@ function error($message, $path="./../../", $lang=NULL, $menu_main="NoBleme", $me
   <!-- Custom error message -->
   <div class="indiv align_center error_container">
     <h3 class="small_error_gap">
-      <?=$trad['ohno']?>
+      <?=$text['ohno']?>
     </h3>
     <h3 class="big_error_gap">
-      <?=$trad['oops']?>
+      <?=$text['oops']?>
     </h3>
     <h3>
       <?=$message?>

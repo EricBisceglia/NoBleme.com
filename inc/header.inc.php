@@ -125,9 +125,9 @@ if(isset($page_nom) && isset($page_url) && !isset($error_mode))
     $pageviews = $pageviews_array["vues"] + 1;
 
     // On update la BDD si l'user n'est pas un admin
-    if(((loggedin() && !$est_admin) || !loggedin()))
-      query(" UPDATE  pageviews
-              SET     stats_pageviews.view_count  = pageviews.view_count + 1 ,
+    if(((user_is_logged_in() && !$est_admin) || !user_is_logged_in()))
+      query(" UPDATE  stats_pageviews
+              SET     stats_pageviews.view_count  = stats_pageviews.view_count + 1 ,
                       stats_pageviews.page_name   = '$page_nom_propre'
               WHERE   stats_pageviews.page_url    = '$page_url_propre' ");
   }
@@ -157,7 +157,7 @@ $activite_page  = (isset($page_nom)) ? $page_nom  : 'Page non listée';
 $activite_url   = (isset($page_url)) ? $page_url  : '';
 
 // On s'assure que l'user soit connecté
-if(loggedin())
+if(user_is_logged_in())
 {
   // On prépare la date et l'user
   $visite_timestamp = time();
@@ -183,17 +183,17 @@ else
 {
   // On nettoie les vieilles infos
   $guest_limit = time() - 86400;
-  query(" DELETE FROM invites WHERE invites.derniere_visite < '$guest_limit' ");
+  query(" DELETE FROM users_guests WHERE users_guests.last_visited_at < '$guest_limit' ");
 
   // On va chercher s'il existe
   $guest_ip = sanitize($_SERVER["REMOTE_ADDR"], 'string');
-  $qguest   = query(" SELECT invites.ip FROM invites WHERE invites.ip = '$guest_ip' ");
+  $qguest   = query(" SELECT users_guests.ip_address FROM users_guests WHERE users_guests.ip_address = '$guest_ip' ");
 
   // On crée l'invité si nécessaire
   if(!mysqli_num_rows($qguest))
   {
     $guest_nom = sanitize(surnom_mignon(), 'string');
-    query(" INSERT INTO invites SET invites.ip = '$guest_ip', invites.surnom = '$guest_nom' ");
+    query(" INSERT INTO users_guests SET users_guests.ip_address = '$guest_ip', users_guests.randomly_assigned_name = '$guest_nom' ");
   }
 
   // Nettoyage des données au cas où
@@ -202,11 +202,11 @@ else
 
   // Et on met à jour les données
   $guest_timestamp = time();
-  query(" UPDATE  invites
-          SET     invites.derniere_visite       = '$guest_timestamp'  ,
-                  invites.derniere_visite_page  = '$activite_page'      ,
-                  invites.derniere_visite_url   = '$activite_url'
-          WHERE   invites.ip                    = '$guest_ip'         ");
+  query(" UPDATE  users_guests
+          SET     users_guests.last_visited_at       = '$guest_timestamp'  ,
+                  users_guests.last_visited_page  = '$activite_page'      ,
+                  users_guests.last_visited_url   = '$activite_url'
+          WHERE   users_guests.ip_address                    = '$guest_ip'         ");
 }
 
 
@@ -222,7 +222,7 @@ else
 // Récupération des notifications
 
 // Si l'user est connecté
-if (loggedin())
+if (user_is_logged_in())
 {
   // Requête
   $qnotif = query(" SELECT  users_private_messages.id
@@ -477,7 +477,7 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
 
 <?php ###################################################### GESTION DU LOGIN ############################################################
 // Préparation des traductions des phrases liées au compte
-$getpseudo              = sanitize_output(getpseudo());
+$getpseudo              = sanitize_output(user_get_nickname());
 $submenu['message']     = ($lang == 'FR') ? "$getpseudo, vous avez reçu un nouveau message, cliquez ici pour le lire !" : "$getpseudo, you have recieved a new message, click here to read it!";
 $submenu['connecté']    = ($lang == 'FR') ? "Vous êtes connecté en tant que $getpseudo. Cliquez ici pour modifier votre profil et/ou gérer votre compte" : "You are logged in as $getpseudo. Click here to edit your profile and/or manage your account.";
 $submenu['deconnexion'] = ($lang == 'FR') ? "Déconnexion" : "Log out";
@@ -485,7 +485,7 @@ $submenu['connexion']   = ($lang == 'FR') ? "Vous n'êtes pas connecté: Cliquez
 ####################################################################################################################################### ?>
 
     <div class="menu_sub<?=$css_mise_a_jour2?>">
-      <?php if(loggedin()) {
+      <?php if(user_is_logged_in()) {
             if($notifications) { ?>
       <div class="header_topmenu_zone">
         <a id="nouveaux_messages" class="menu_sub_lien nouveaux_messages" href="<?=$path?>pages/user/notifications">

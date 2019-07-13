@@ -1,97 +1,56 @@
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                 CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST INCLUDE PAR UNE AUTRE PAGE                                */
-/*                                                                                                                                       */
-// Include only /*************************************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF'])))
-  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Vous n\'êtes pas censé accéder à cette page, dehors!</body></html>');
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
+/*                                                                                                                   */
+// Include only /*****************************************************************************************************/
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Session sécurisée pour remplacer les sessions normales pas super secures de PHP
-// Le token de la session est régénéré à chaque nouveau chargement de page
-// À invoquer au début des pages utilisant des sessions, à la place de session_start
-
-function session_start_securise()
-{
-  // Token public qui sert à identifier la session générale
-  $nom_session = 'nobleme_session_secure';
-
-  // On va forcer la session à ne passer que par les cookies
-  if (ini_set('session.use_only_cookies', 1) === FALSE) {
-      exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Impossible de démarrer une session sécurisée, merci de ne pas bloquer les cookies</body></html>');
-  }
-
-  // On chope le cookie actuel
-  $cookieParams = session_get_cookie_params();
-
-  // On prépare un nouveau cookie à chaque changement de page
-  session_set_cookie_params(  $cookieParams["lifetime"] ,
-                              $cookieParams["path"]     ,
-                              $cookieParams["domain"]   ,
-                              false                     ,  // Une fois que je peux garantir le https partout, mettre true ici
-                              true                      ); // Cette ligne fait que le session id ne peut pas être chopé par du js
-
-  // Et on démarre la session
-  session_name($nom_session);
-  session_start();
-  session_regenerate_id();
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction de salage d'un mot de passe
-// Renvoie le mot de passe salé
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// First off, we need to open a session and check the user's identity.
 //
-// Exemple d'utilisation:
-// salage("monpass");
+// TODO:  This whole process is really bad security wise, and inefficient too. It must be rewritten ASAP:
+//          - It exposes the encryption method used for passwords.
+//          - It forces me to make encrypt_data() insecure since it is called on every page load thus needs to be fast.
+//          - It compares the cookie to every single user for some reason.
+//          - It makes it possible to impersonate people.
+//          - It does not use tokens for auth but rather something built from the nickname.
+//          - The cookie name is stupid too tbh.
+//          - Yeah I just plain don't like this whole thing. Also the comments are minimum effort.
 
-function salage($pass,$old=NULL)
-{
-  if($old)
-    return crypt($pass,$GLOBALS['salt_key']);
-  else
-    return sha1($pass.$GLOBALS['salt_key']);
-}
+// Let's begin by opening the session
+secure_session_start();
 
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Ouverture de la session et vérification de l'identité
-
-// Déjà, on ouvre la session
-session_start_securise();
-
-// Et maintenant, on va check si le cookie est légitime
+// To store and retrieve identify, let's go check if there is a valid cookie
 if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
 {
-  // Allons chercher une liste des users existants
-  $users = query(" SELECT users.nickname, users.id FROM users ");
+  // We need to fetch a list of users
+  $qusers = query(" SELECT  users.id        AS 'u_id' ,
+                            users.nickname  AS 'u_nick'
+                    FROM    users ");
 
-  // Et comparons les pseudos saltés au contenu du cookie
+  // Let's compare encrypted nicknames to the cookie's contents
   $cookie_ok = 0;
-  while($userlist = mysqli_fetch_array($users))
+  while($dusers = mysqli_fetch_array($qusers))
   {
-    // On sale l'user à tester
-    $usertest = salage($userlist['nickname']);
+    // We encrypt the nicknames
+    $user_test = encrypt_data($dusers['u_nick']);
 
-    // Et on compare
-    if ($usertest == $_COOKIE['nobleme_memory'])
+    // Then compare them to the data stored in the session cookie
+    if ($user_test == $_COOKIE['nobleme_memory'])
     {
       $cookie_ok = 1;
-      $cookie_id = $userlist['id'];
+      $cookie_id = $dusers['u_id'];
     }
   }
 
-  // Si c'est bon, on a plus qu'à assigner une session
+  // If we found a match, we can insert user id in a session variable
   if ($cookie_ok)
-    $_SESSION['user'] = $cookie_id;
-  // Sinon, on détruit le cookie
+    $_SESSION['user_id'] = $cookie_id;
+
+  // If not, then we should destroy the cookie
   else
     setcookie("nobleme_memory", "", time()-630720000, "/");
 }
@@ -99,215 +58,279 @@ if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// On commence par déterminer les niveaux d'accès auxquels l'user a le droit
-//
-// $est_connecte    permet de savoir si l'user est connecté à son compte - si oui, contient son id d'utilisateur
-// $est_admin       permet de savoir si l'user est administrateur
-// $est_sysop       permet de savoir si l'user est sysop
-// $est_moderateur  permet de savoir si l'user est modérateur - si oui, contient les sections du site qu'il modère
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Next up, we can check if the user is connected and what his access rights are
 
-// L'user est-il connecté ?
-$est_connecte = (isset($_SESSION['user'])) ? $_SESSION['user'] : 0;
+// Let's figure out if the user is connected or not according to session data
+$is_logged_in = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : 0;
 
-// L'user est-il mod, sysop, ou admin ?
-if(!$est_connecte)
+// Does the user have special permissions? (required by the header)
+if(!$is_logged_in)
 {
-  $est_admin      = 0;
-  $est_sysop      = 0;
-  $est_moderateur = 0;
+  // By default we assume he does not
+  $is_admin             = 0;
+  $is_global_moderator  = 0;
+  $is_moderator         = 0;
 }
 else
 {
-  $id_user = sanitize($est_connecte, 'int', 0);
-  $ddroits = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'm_admin'  ,
-                                                users.is_global_moderator AS 'm_sysop'  ,
+  // Let's sanitize the user id, just in case
+  $id_user = sanitize($is_logged_in, 'int', 0);
+
+  // Now we can go look for his user rights
+  $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'm_admin'      ,
+                                                users.is_global_moderator AS 'm_globalmod'  ,
                                                 users.is_moderator        AS 'm_mod'
                                         FROM    users
                                         WHERE   users.id = '$id_user' "));
-  $est_admin      = $ddroits['m_admin'];
-  $est_sysop      = ($est_admin || $ddroits['m_sysop']) ? 1 : 0;
-  $est_moderateur = $ddroits['m_mod'];
+
+  // And we can set them as variables, which the header will use
+  $is_admin             = $drights['m_admin'];
+  $is_global_moderator  = ($is_admin || $drights['m_globalmod']) ? 1 : 0;
+  $is_moderator         = $drights['m_mod'];
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Vérification de si l'user est banni
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Language management
 
-// On s'assure de pas être sur banned.php pour pas looper stupidement
-if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && loggedin())
-{
-  $userid = $_SESSION['user'];
-
-  // On récupère les infos de ban sur l'user
-  $queryban = query(" SELECT users.is_banned_until FROM users WHERE id = '$userid' ");
-
-  while($databan = mysqli_fetch_array($queryban))
-  {
-    // On check si l'user est banni
-    if($databan["is_banned_until"] != 0)
-    {
-      // On check si le ban est fini ou pas
-      if($databan["is_banned_until"] > time())
-      {
-        // Redéfinition du $chemin
-        // La base est différente selon si on est en localhost ou en prod
-        if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1")
-          $count_base = 3;
-        else
-          $count_base = 2;
-
-        // Déterminer à combien de dossiers de la racine on est
-        $longueur = count(explode( '/', $_SERVER['REQUEST_URI']));
-
-        // Si on est à la racine, laisser le chemin tel quel
-        if($longueur <= $count_base)
-          $chemin = "";
-
-        // Sinon, partir de ./ puis déterminer le nombre de ../ à rajouter
-        else
-        {
-          $chemin = "./";
-          for ($i=0 ; $i<($longueur-$count_base) ; $i++)
-            $chemin .= "../";
-        }
-        // Redirection vers la page de ban
-        header("Location: ".$chemin."pages/user/banned");
-      }
-      else
-        // S'il est fini, on le retire
-        query(" UPDATE  users
-                SET     users.is_banned_until   = '0' ,
-                        users.is_banned_because = ''
-                WHERE   users.id                = '$userid' ");
-    }
-  }
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Gestion de la langue
-
-// Détermination de la langue si elle n'est pas encore déterminée
+// If there is no language in the session, we need to get one
 if(!isset($_SESSION['lang']))
 {
-  // Par défaut (si on a pas de cookie) en met en français
+  // If there is no language cookie, then the default language, in case of no cookie, is set to french (for now)
   if(!isset($_COOKIE['nobleme_language']))
   {
+    // We create the cookie and assign the language to the session
     setcookie("nobleme_language", 'FR' , 2147483647, "/");
     $_SESSION['lang'] = 'FR';
   }
-  // Sinon on lui donne la valeur du cookie
+
+  // If the language cookie exists, we set the session language to the one in the cookie
   else
     $_SESSION['lang'] = $_COOKIE['nobleme_language'];
 }
 
-// Changement de langue demandée en cliquant sur le drapeau
+// If the user clicks on the language flag, we need to change the language
 if(isset($_GET['changelang']))
 {
-  // On détermine la nouvelle langue
+  // We get the language that the user is currently not using
   $changelang = ($_SESSION['lang'] == 'EN') ? 'FR' : 'EN';
 
-  // On change le cookie de langue et la session en cours
+  // Then change the cookie and session language to the new one
   setcookie("nobleme_language", $changelang , 2147483647 , "/");
   $_SESSION['lang'] = $changelang;
 }
 
-// Changement de langue imposé par l'URL
+// If the URL contains a request to change language, then we fullfill that request
 if(isset($_GET['english']) || isset($_GET['anglais']))
 {
+  // Change the cookie and session language to english on request
   setcookie("nobleme_language", "EN" , 2147483647 , "/");
   $_SESSION['lang'] = "EN";
 }
-if(isset($_GET['francais']) || isset($_GET['french']))
+
+// In case more than one language change request is being done, then english will be the final language
+else if(isset($_GET['francais']) || isset($_GET['french']))
 {
+  // Change the cookie and session language to french on request
   setcookie("nobleme_language", "FR" , 2147483647 , "/");
   $_SESSION['lang'] = "FR";
 }
 
-// Si on a changé le langue, on reload pour virer l'url spéciale
+// If we just changed language, then we clean up the URL and reload the page
 if(isset($_GET['english']) || isset($_GET['anglais']) || isset($_GET['francais']) || isset($_GET['french']) || isset($_GET['changelang']))
 {
-  // On vire les paramètres dont on ne veut plus dans l'url
+  // We get rid of all the language related query parameters
   unset($_GET['english']);
   unset($_GET['anglais']);
   unset($_GET['francais']);
   unset($_GET['french']);
   unset($_GET['changelang']);
 
-  // On reconstruit l'URL
+  // We re-build the URL, with all its other query parameters intact
   $url_self     = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
   $url_rebuild  = urldecode(http_build_query($_GET));
   $url_rebuild  = ($url_rebuild) ? $url_self.'?'.$url_rebuild : $url_self;
 
-  // Et on recharge la page
+  // And we reload the page by giving it the cleaned up rebuilt URL
   exit(header("Location: ".$url_rebuild));
 }
 
-// Détermination de la langue utilisée
+// After all this, we can use the $lang variable to store the language for the duration of the session
 $lang = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
-$trad = array();
+
+// We also initialize the $text array, which will be used to prepare translations for display in the page
+$text = array();
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction de vérification du login
-// Renvoie TRUE si l'utilisateur est connecté, renvoie FALSE s'il n'est pas connecté
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// One final check: Let's see if the user is banned or not
 
-function loggedin()
+// First off, to avoid infinite loops, we make sure that we aren't already on banned.php and that the user is logged in
+if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && user_is_logged_in())
 {
-  return (isset($_SESSION['user']));
+  // We fetch user id from the session
+  $id_user = $_SESSION['user_id'];
+
+  // Let's sanitize the user id, just in case
+  $id_user = sanitize($id_user, 'int', 0);
+
+  // We need to check whether the user is banned, obviously
+  $dbanned = mysqli_fetch_array(query(" SELECT  users.is_banned_until AS 'ban_end'
+                                        FROM    users
+                                        WHERE   users.id = '$id_user' "));
+
+  // If the user is banned, we proceed
+  if($dbanned["ban_end"])
+  {
+    // If the ban is still active, then we need to redirect the user
+    if($dbanned["ban_end"] > time())
+      exit(header("Location: ".$path."pages/user/banned"));
+
+    // If the ban has ended, then we can remove it
+    else
+      query(" UPDATE  users
+              SET     users.is_banned_until   = '0' ,
+                      users.is_banned_because = ''
+              WHERE   users.id                = '$id_user' ");
+  }
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction de logout
-// Déconnecte tout simplement l'utilisateur
 
-function logout()
+/**
+ * Starts a session.
+ *
+ * Look, I just don't trust PHP sessions. I'm not a fan of them, ok? Call this instead of session_start().
+ * A new session token is generated on every page load, to ensure full regen of everything.
+ *
+ * @return void
+ */
+
+function secure_session_start()
 {
-  // Nullifier le cookie
-  setcookie("nobleme_memory", "", time()-630720000, "/");
+  // This public token will be used to identify the session name
+  $session_name = 'nobleme_session_secure';
 
-  // Détruire la session
+  // This is where it gets tricky, we'll force this session to only use cookies
+  if (ini_set('session.use_only_cookies', 1) === FALSE) {
+      exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Can not start secure session. Please enable cookies.</body></html>');
+  }
+
+  // Then we go fetch the current cookie
+  $cookieParams = session_get_cookie_params();
+
+  // We prepare a session cookie every time we load a new page
+  session_set_cookie_params(  $cookieParams["lifetime"] ,
+                              $cookieParams["path"]     ,
+                              $cookieParams["domain"]   ,
+                              false                     ,  // Enforce HTTPS - TODO be brave and set it to true
+                              true                      ); // Ensures this can't be caught by js
+
+  // Now we can actually start the session
+  session_name($session_name);
+  session_start();
+  session_regenerate_id();
+}
+
+
+
+
+/**
+ * Encrypts data.
+ *
+ * This is the function used to hash passwords or other data.
+ *
+ * @param string    $data               The data to encrypt.
+ * @param int|null  $old    (OPTIONAL)  Will use the old (insecure) encryption method instead of the current one.
+ *
+ * @return string                       The encrypted data.
+ */
+
+function encrypt_data($data, $old=NULL)
+{
+  // If we are using the old method, we call crypt
+  if($old)
+    return crypt($data, $GLOBALS['salt_key']);
+
+  // If not, then we use sha1 with our salt key
+  else
+    return sha1($data.$GLOBALS['salt_key']);
+}
+
+
+
+
+/**
+ * Checks whether the user is logged in.
+ *
+ * @return boolean  Simply enough returns true/1 if logged in, false/0 if logged out.
+ */
+
+function user_is_logged_in()
+{
+  // As simple as it seems, we grab the value in the session
+  return isset($_SESSION['user_id']);
+}
+
+
+
+
+/**
+ * Logs the user out of his account.
+ *
+ * @return void
+ */
+
+function user_log_out()
+{
+  // First we destroy the session cookie
+  setcookie('nobleme_memory', '', time()-630720000, "/");
+
+  // Then we destroy the session itself
   session_destroy();
 
-  // Actualiser la page
-  header("location: ".$_SERVER['PHP_SELF']."");
+  // And finally we reload the whole page
+  exit(header("location: ".$_SERVER['PHP_SELF']));
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction de récupération du pseudo
-// Renvoie le pseudonyme de l'utilisateur à partir de son userid
-//
-// Exemple d'utilisation:
-// getpseudo('1');
+/**
+ * Returns a user's nickname from his id.
+ *
+ * @param   int   $user_id  (OPTIONAL)  If no id is specified, it will try to return the nickname of the current user
+ *
+ * @return  string                      The user's nickame.
+ */
 
-function getpseudo($id=NULL)
+function user_get_nickname($user_id=NULL)
 {
-  // Si on spécifie pas d'id, on prend la session en cours
-  if(!$id && isset($_SESSION['user']))
-    $id = $_SESSION['user'];
+  // If no id is specified, we grab the one currently stored in the session
+  if(!$user_id && isset($_SESSION['user_id']))
+    $user_id = $_SESSION['user_id'];
 
-  // Si on a pas d'id, on renvoie rien
-  if(!$id)
-    return '';
+  // If no id is stored in the session, then this is a guest, we return nothing
+  else if(!$user_id)
+    return;
 
-  // On renvoie le pseudonyme
-  $dpseudo = mysqli_fetch_array(query(" SELECT  users.nickname
-                                        FROM    users
-                                        WHERE   users.id = '$id' "));
-    return $dpseudo['nickname'];
+  // We need to sanitize the id
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // Now we can go fetch the nickname
+  $dnickname = mysqli_fetch_array(query(" SELECT  users.nickname AS 'nickname'
+                                          FROM    users
+                                          WHERE   users.id = '$user_id' "));
+
+  // Whatever the database gave us (could be NULL), we return that
+  return $dnickname['nickname'];
 }
 
 
@@ -323,8 +346,8 @@ function getpseudo($id=NULL)
 function getmod($section=NULL, $user=NULL)
 {
   // Si on spécifie pas d'user, on prend la session en cours
-  if(!$user && isset($_SESSION['user']))
-    $user = $_SESSION['user'];
+  if(!$user && isset($_SESSION['user_id']))
+    $user = $_SESSION['user_id'];
 
   // Si on a pas d'user, on renvoie 0
   if(!$user)
@@ -368,12 +391,12 @@ function getmod($section=NULL, $user=NULL)
 function getsysop($user=NULL)
 {
   // Si on a pas de session en cours, on renvoie 0
-  if(!$user && !isset($_SESSION['user']))
+  if(!$user && !isset($_SESSION['user_id']))
     return 0;
 
   // Si on spécifie pas d'user, on prend la session en cours
-  if(!$user && isset($_SESSION['user']))
-    $user = $_SESSION['user'];
+  if(!$user && isset($_SESSION['user_id']))
+    $user = $_SESSION['user_id'];
 
   // On vérifie si l'user est sysop ou admin
   $ddroits = mysqli_fetch_array(query(" SELECT  users.is_global_moderator ,
@@ -399,8 +422,8 @@ function getsysop($user=NULL)
 function getadmin($user=NULL)
 {
   // Si on spécifie pas d'user, on prend la session en cours
-  if(!$user && isset($_SESSION['user']))
-    $user = $_SESSION['user'];
+  if(!$user && isset($_SESSION['user_id']))
+    $user = $_SESSION['user_id'];
 
   // Si on a pas d'user, on renvoie 0
   if(!$user)
@@ -434,12 +457,12 @@ function sysoponly($lang='FR', $section=NULL)
     // On vérifie si l'user est un admin
     if(!$section)
     {
-      if(!getsysop($_SESSION['user']))
+      if(!getsysop($_SESSION['user_id']))
         erreur($message);
     }
     else
     {
-      if(!getsysop($_SESSION['user']) && !getmod($section,$_SESSION['user']))
+      if(!getsysop($_SESSION['user_id']) && !getmod($section,$_SESSION['user_id']))
         erreur($message);
     }
   }
@@ -552,7 +575,7 @@ function niveau_nsfw()
     return 0;
 
   // Sinon, on va chercher le niveau de NSFW
-  $membre_id  = sanitize($_SESSION['user'], 'int', 0);
+  $membre_id  = sanitize($_SESSION['user_id'], 'int', 0);
   $dnsfw      = mysqli_fetch_array(query("  SELECT  users_settings.show_nsfw_content AS 'm_nsfw'
                                             FROM    users_settings
                                             WHERE   users_settings.fk_users = '$membre_id' "));
@@ -575,7 +598,7 @@ function niveau_vie_privee()
     return 0;
 
   // On va chercher les options de l'utilisateur
-  $membre_id  = sanitize($_SESSION['user'], 'int', 0);
+  $membre_id  = sanitize($_SESSION['user_id'], 'int', 0);
   $dvieprivee = mysqli_fetch_array(query("  SELECT  users_settings.hide_tweets         AS 'm_twitter'  ,
                                                     users_settings.hide_youtube        AS 'm_youtube'  ,
                                                     users_settings.hide_google_trends  AS 'm_trends'
@@ -586,4 +609,28 @@ function niveau_vie_privee()
   return array( 'twitter' => $dvieprivee['m_twitter'] ,
                 'youtube' => $dvieprivee['m_youtube'] ,
                 'trends'  => $dvieprivee['m_trends'] );
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction générant un surnom aléatoire pour un invité
+//
+// Utilisation: surnom_mignon();
+
+function surnom_mignon()
+{
+  // Liste de mots (les adjectif1 doivent prendre un espace s'ils ne se collent pas au nom)
+  $adjectif1 = array("Petit ", "Gros ", "Sale ", "Grand ", "Bel ", "Doux ", "L'", "Un ", "Cet ", "Ce ", "Premier ", "Gentil ", "Méchant ", "Bout d'", "Le ", "Capitaine ", "Quel ", "Saint ", "Chétif ", "Président ", "Général ", "Dernier ", "L'unique ", "Ex ", "Archi ", "Méga ", "Micro ", "Fort ", "Demi ", "Cadavre de ", "Âme d'", "Fils du ", "Futur ", "Second ", "Meta-");
+
+  $nom = array("ours", "oiseau", "chat", "chien", "canard", "pigeon", "haricot", "arbre", "rongeur", "pot de miel", "indien", "gazon", "paysan", "crouton", "mollusque", "bouc", "éléphant", "sanglier", "journal", "singe", "cœur", "félin", "", "morse", "phoque", "miquet", "kévin", "monstre", "meuble", "frelon", "robot", "slip", "cousin", "frère", "internet", "type", "copain", "raton", "mouton", "VIP");
+
+  $âdjectif2 = array("solitaire", "mignon", "moche", "farouche", "mystérieux", "con", "lourdingue", "glandeur", "douteux", "noir", "blanc", "rose", "mauve", "chaotique", "pâle", "raciste", "rigolo", "choupinet", "borgne", "douteux", "baltique", "fatigué", "", "peureux", "millénaire", "belge", "bouseux", "crade", "des champs", "urbain", "sourd", "techno", "fatigué", "cornu", "mort", "cool", "moelleux");
+
+  // On assemble le surnom
+  $surnom = $adjectif1[rand(0,(count($adjectif1)-1))].$nom[rand(0,(count($nom)-1))]." ".$âdjectif2[rand(0,(count($âdjectif2)-1))];
+
+  // Et on balance la sauce
+  return($surnom);
 }

@@ -35,9 +35,9 @@ function sanitize($data, $type=NULL, $min=NULL, $max=NULL, $padding="_")
   {
     if(!is_float($data))
       $data = floatval($data);
-    if($min && $data < $min)
+    if($min !== NULL && $data < $min)
       $data = $min;
-    if($max && $data > $max)
+    if($max !== NULL && $data > $max)
       $data = $max;
   }
 
@@ -46,9 +46,9 @@ function sanitize($data, $type=NULL, $min=NULL, $max=NULL, $padding="_")
   {
     if(!is_int($data))
       $data = intval($data);
-    if($min && $data < $min)
+    if($min !== NULL && $data < $min)
       $data = $min;
-    if($max && $data > $max)
+    if($max !== NULL && $data > $max)
       $data = $max;
   }
 
