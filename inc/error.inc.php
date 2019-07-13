@@ -8,21 +8,26 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Error management function, use it when you need to throw an error and abort everything else
-// Includes the header and footer though, so the contents of both will be ran
-// Concludes with an exit(), thus nothing can be ran after the error
-//
-// $message               is the error message that will be displayed (can include HTML)
-// $path      (optional)  is the relative path to the index of the website (defaults to being 2 folders from the root)
-// $lang      (optional)  is the currently used language (defaults to english if nothing is stored in the session)
-// $menu_main (optional)  is the main header menu to be highlighted (defaults to the main section ('NoBleme'))
-// $menu_side (optional)  is the side header menu to be highlighted (defaults to the home page ('Homepage'))
-//
-// Example usage
-// error("Please do not access this page", $path, $lang, 'NoBleme', 'Homepage');
+/**
+ * Throw an error page.
+ *
+ * The global error management function, use it when you need to abort the execution of the logic in a page.
+ * Concludes with an exit(), thus nothing else can be ran after the error is thrown, the script just ends here.
+ * Includes header.inc.php and footer.inc.php, so the contents of both will be ran - keep this in mind.
+ * This obviously means that you should not run this function after the header has already been included.
+ *
+ * @example error("Please do not access this page", $path, $lang, "NoBleme", "Homepage");
+ *
+ * @param string  $message    The error message that will be displayed (can include HTML).
+ * @param string  $path       (optional) The relative path to the root of the website (defaults to 2 folders away).
+ * @param string  $lang       (optional) The currently used language (defaults to session stored value, or to english).
+ * @param string  $menu_main  (optional) The main header menu to be highlighted (defaults to 'NoBleme').
+ * @param string  $menu_side  (optional) The side header menu to be highlighted (defaults to 'Homepage').
+ *
+ * @return void Returns nothing.
+ */
 
-function error($message, $path = './../../', $lang = NULL, $menu_main = 'NoBleme', $menu_side = 'Homepage')
+function error($message, $path = './../../', $lang = NULL, $menu_main = "NoBleme", $menu_side = "Homepage")
 {
   // Is the user logged in? - check from the session (required by the header)
   $is_logged_in = (isset($_SESSION['user'])) ? $_SESSION['user'] : 0;
@@ -30,18 +35,24 @@ function error($message, $path = './../../', $lang = NULL, $menu_main = 'NoBleme
   // Does the user have special permissions? (required by the header)
   if(!$is_logged_in)
   {
+    // By default we assume he does not
     $is_admin             = 0;
     $is_global_moderator  = 0;
     $is_moderator         = 0;
   }
   else
   {
+    // Let's sanitize the user id, just in case
     $id_user = postdata($is_logged_in, 'int', 0);
+
+    // Now we can go look for his user rights
     $ddroits = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'm_admin'      ,
                                                   users.is_global_moderator AS 'm_globalmod'  ,
                                                   users.is_moderator        AS 'm_mod'
                                           FROM    users
                                           WHERE   users.id = '$id_user' "));
+
+    // And we can set them as variables, which the header will use
     $is_admin             = $ddroits['m_admin'];
     $is_global_moderator  = ($is_admin || $ddroits['m_globalmod']) ? 1 : 0;
     $is_moderator         = $ddroits['m_mod'];
@@ -60,13 +71,13 @@ function error($message, $path = './../../', $lang = NULL, $menu_main = 'NoBleme
   $page_desc  = ($lang == 'EN') ? "This is an error page. You will forget about this page's mere existence. Don't panic, the red flashing light is part of the process": "Ceci est une page d'erreur. Vous allez oublier l'existence de cette page. Ne paniquez pas, le flash rouge est normal.";
   $page_name = "Se prend une erreur";
 
-  // Translations (multilingual content)
+  // Translation of the text strings before display (bilingual content)
   $trad = array();
   $trad['ohno'] = ($lang == 'EN') ? "OH NO &nbsp;: (" : "OH NON &nbsp;: (";
   $trad['oops'] = ($lang == 'EN') ? "YOU HAVE ENCOUNTERED AN ERROR" : "VOUS AVEZ RENCONTRÉ UNE ERREUR";
 
-  // We open the HTML by including the header
-  include $path.'inc/header.inc.php';
+  // We open the HTML part by including the header
+  include_once $path."inc/header.inc.php";
   ?>
 
   <!-- Custom error message -->
@@ -83,8 +94,8 @@ function error($message, $path = './../../', $lang = NULL, $menu_main = 'NoBleme
   </div>
 
   <?php
-  // We close the HTML by including the footer
-  include $path.'inc/footer.inc.php';
+  // We close the HTML part by including the footer
+  include_once $path."inc/footer.inc.php";
 
   // Finally we exit out of here to make sure nothing else is ran afterwards
   exit ();

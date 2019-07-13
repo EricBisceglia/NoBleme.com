@@ -1,45 +1,55 @@
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                 CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST INCLUDE PAR UNE AUTRE PAGE                                */
-/*                                                                                                                                       */
-// Include only /*************************************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF'])))
-  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Vous n\'êtes pas censé accéder à cette page, dehors!</body></html>');
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
+/*                                                                                                                   */
+// Include only /*****************************************************************************************************/
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Connexion à la base de données
-// S'effectue automatiquement au chargement d'une page incluant ce fichier
-// Détecte si le script est sur le localhost ou en prod
-// Fixe le charset
 
-if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1" )
-  $GLOBALS['db'] = @mysqli_connect('127.0.0.1', 'root', '', 'nobleme') or die ('Erreur SQL ! Connexion &agrave; la base de donn&eacute;es impossible');
-else
-  $GLOBALS['db'] = @mysqli_connect('localhost', $GLOBALS['mysql_user'], $GLOBALS['mysql_pass'], 'nobleme') or die ('Erreur SQL ! Connexion &agrave; la base de donn&eacute;es impossible');
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// We begin this file by opening a connexion to the MySQL database - include it any time you need to run a query
 
-mysqli_set_charset($GLOBALS['db'], "utf8");
+// Open the connexion and store it for this session's length into a global variable
+$GLOBALS['db'] = @mysqli_connect($GLOBALS['mysql_host'], $GLOBALS['mysql_user'], $GLOBALS['mysql_pass'], 'nobleme') or die ('MySQL error: Connexion failed.');
+
+// We also initialize a session specific global query counter, used by admins to see the number of queries in a page
 $GLOBALS['query'] = -1;
+
+// We use this opportunity to set the global charset - it requires one necessary query, hence why counter starts at -1
+mysqli_set_charset($GLOBALS['db'], "utf8");
 query('SET NAMES utf8mb4');
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction permettant de faire une requête et d'en retourner le message d'erreur en cas d'échec
-//
-// $ignore est un paramètre optionnel qui ignore les erreurs
-//
-// Exemple d'utilisation:
-// $ma_requete = query("SELECT * FROM ma_bdd");
+/**
+ * Execute a MySQL query.
+ *
+ * This function will use the global connexion to the database to execute a MySQL query.
+ * As it is basically a global wrapper for MySQL usage, you should always use this function when executing a query.
+ * Keep in mind that no sanitization/escaping is being done here, you must add your own (see sanitization.inc.php).
+ *
+ * @param   string  $query          The query that you want to run.
+ * @param   any     $ignore_errors  (optional) Do not stop execution if an error is encountered.
+ *
+ * @return  mysqli_result           The result of the query that was just ran.
+ */
 
-function query($requete, $ignore=NULL)
+function query($query, $ignore_errors=NULL)
 {
+  // First off let's increment the global query counter for this session
   $GLOBALS['query']++;
-  if($ignore)
-    $query = mysqli_query($GLOBALS['db'],$requete);
+
+  // If errors are ignored, we just run the query and whatever happens happens
+  if($ignore_errors)
+    $query_result = @mysqli_query($GLOBALS['db'],$query);
+
+  // Otherwise, we run the query and stop the script if anything goes wrong
   else
-    $query = mysqli_query($GLOBALS['db'],$requete) or die ('Erreur SQL !<br>'.mysqli_error($GLOBALS['db']));
-  return $query;
+    $query_result = mysqli_query($GLOBALS['db'],$query) or die ('MySQL error:<br>'.mysqli_error($GLOBALS['db']));
+
+  // We're done and can now return the mysqli_result
+  return $query_result;
 }

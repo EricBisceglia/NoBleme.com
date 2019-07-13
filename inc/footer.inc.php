@@ -7,7 +7,6 @@ $page_views = isset($pageviews) ? "Cette page a été consultée ".$pageviews." 
 
 
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Version actuelle
 
@@ -35,6 +34,10 @@ $trad['footer_legal'] = ($lang == 'FR') ? "Mentions légales &amp; confidentiali
 // Temps de chargement
 
 $time_chargement  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
+
+
+// Close the connexion
+mysqli_close($GLOBALS['db']);
 
 
 
