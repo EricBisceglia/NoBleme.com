@@ -345,3 +345,147 @@ function ircbot($chemin,$message_irc,$canal_irc=NULL,$formattage=NULL)
   else
     return 0;
 }
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Arrête le processus de la page abruptement si elle n'est pas appelée par la fonction js dynamique();
+//
+// Utilisation: xhronly();
+
+function xhronly()
+{
+  if(!isset($_SERVER['HTTP_DYNAMIQUE']))
+    exit();
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Détecte si la page est appelée par du XHR ou non
+//
+// Utilisation: getxhr();
+
+function getxhr()
+{
+  return (isset($_SERVER['HTTP_DYNAMIQUE'])) ? 1 : 0;
+}
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction renvoyant la différence entre deux arrays de strings
+//
+// Renvoie un array des différences, à utiliser avec la fonction diff()
+//
+// Inspiré de la méthode de diff par array de Paul Butler http://www.paulbutler.org/
+
+  function diff_raw($old, $new)
+  {
+    $matrix = array();
+    $maxlen = 0;
+    foreach($old as $oindex => $ovalue){
+      $nkeys = array_keys($new, $ovalue);
+      foreach($nkeys as $nindex){
+        $matrix[$oindex][$nindex] = isset($matrix[$oindex - 1][$nindex - 1]) ?
+          $matrix[$oindex - 1][$nindex - 1] + 1 : 1;
+        if($matrix[$oindex][$nindex] > $maxlen){
+          $maxlen = $matrix[$oindex][$nindex];
+          $omax = $oindex + 1 - $maxlen;
+          $nmax = $nindex + 1 - $maxlen;
+        }
+      }
+    }
+    if($maxlen == 0) return array(array('d'=>$old, 'i'=>$new));
+    return array_merge(
+      diff_raw(array_slice($old, 0, $omax), array_slice($new, 0, $nmax)),
+      array_slice($new, $nmax, $maxlen),
+      diff_raw(array_slice($old, $omax + $maxlen), array_slice($new, $nmax + $maxlen))
+    );
+  }
+
+
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Fonction renvoyant une différence formatée et lisible entre deux strings
+  //
+  // Utilisation: diff("Mon texte", "Nouveau texte");
+
+  function diff($old, $new)
+  {
+    $return = '';
+    $diff = diff_raw(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
+    foreach($diff as $k)
+    {
+      if(is_array($k))
+          $return .= (!empty($k['d'])?"&nbsp;<del>&nbsp;".implode(' ',$k['d'])."&nbsp;</del>&nbsp;":'').(!empty($k['i'])?"&nbsp;<ins>&nbsp;".implode(' ',$k['i'])."&nbsp;</ins>&nbsp;":'');
+      else
+        $return .= $k . ' ';
+    }
+    return $return;
+  }
+
+
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction cherchant un mot dans une chaîne de caractères et renvoyant un certain nombre de mots avant et après le mot trouvé
+//
+// Utilisation: search_wrap("canard", "Je suis un canard dans une phrase longue", 2);
+
+function search_wrap($recherche, $texte, $nombre_mots_autour)
+{
+  $recherche = preg_quote($recherche, '/');
+  $texte = preg_quote($texte, '/');
+  // On commence par découper les mots en ignorant la casse
+  $mots = preg_split('/\s+/u', changer_casse($texte, 'min'));
+
+  // Si on trouve le mot dans la phrase, on récupère sa position
+  $recuperation_mots  = preg_grep("/".changer_casse($recherche, 'min').".*/", $mots);
+  $position_mots      = array_keys($recuperation_mots);
+
+  // Puis on reprend les mots dans leur forme réelle
+  $mots = preg_split('/\s+/u', $texte);
+
+  // Si on a repéré le mot, on met sa première occurence dans une variable
+  if(count($position_mots))
+    $position = $position_mots[0];
+
+  // Puis on récupère tout ce qui vient avant/après
+  if (isset($position))
+  {
+    // D'abord on a besoin des positions de début et de fin selon le nombre de mots qu'on veut récupérer
+    $debut  = (($position - $nombre_mots_autour) > 0) ? $position - $nombre_mots_autour : 0;
+    $fin    = ((($position + ($nombre_mots_autour + 1)) < count($mots)) ? $position + ($nombre_mots_autour + 1) : count($mots)) - $debut;
+
+    // Ensuite on découpe les mots en un tableau
+    $slice  = array_slice($mots, $debut, $fin);
+
+    // On met des ... au début et à la fin du tableau si nécessaire
+    $debut  = ($debut > 0) ? "..." : "";
+    $fin    = ($position + ($nombre_mots_autour + 1) < count($mots)) ? "..." : "";
+
+    // Puis on assemble ce tableau en une chaine de caractères qu'on renvoie
+    return stripslashes($debut.implode(' ', $slice).$fin);
+  }
+
+  // Si on a été perdu à une étape, on renvoie rien
+  else
+    return "";
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fonction appliquant du HTML autour de toutes les occurences d'un mot particulier dans une chaine de caractères
+//
+// Utilisation: html_autour("canard", "Je suis un canard dans une phrase", '<span class="gras">', "</span>");
+
+function html_autour($recherche, $texte, $html_avant, $html_apres)
+{
+  $recherche = preg_quote($recherche, '/');
+  $texte = preg_quote($texte, '/');
+  return stripslashes(preg_replace("/($recherche)/i", "$html_avant$1$html_apres", $texte));
+}

@@ -16,8 +16,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * Includes header.inc.php and footer.inc.php, so the contents of both will be ran - keep this in mind.
  * This obviously means that you should not run this function after the header has already been included.
  *
- * @example error_page("You must be logged in to access this page.", $path, $lang, "NoBleme", "Homepage");
- *
  * @param   string  $message                The error message that will be displayed (can include HTML).
  * @param   string  $path       (OPTIONAL)  The relative path to the root of the website (defaults to 2 folders away).
  * @param   string  $lang       (OPTIONAL)  The current language (defaults to session stored value, or to english).

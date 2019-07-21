@@ -16,7 +16,7 @@ $dversion = mysqli_fetch_array(query("  SELECT    system_versions.version AS 'v_
                                         FROM      system_versions
                                         ORDER BY  system_versions.id DESC LIMIT 1 "));
 $version = "Version ".$dversion['v_version'].", build ".$dversion['v_build'];
-$version .= ($lang == 'FR') ? " du ".jourfr($dversion['v_date'], 'FR') : " - ".jourfr($dversion['v_date'], 'EN');
+$version .= ($lang == 'FR') ? " du ".date_to_text($dversion['v_date'], 'FR', 1) : " - ".date_to_text($dversion['v_date'], 'EN', 1);
 
 
 

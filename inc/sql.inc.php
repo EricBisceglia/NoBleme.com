@@ -31,9 +31,6 @@ query(' SET NAMES utf8mb4 ');
  * As it is basically a global wrapper for MySQL usage, you should always use this function when executing a query.
  * Keep in mind that no sanitization/escaping is being done here, you must add your own (see sanitization.inc.php).
  *
- * @example query(" SELECT table.field FROM table ");
- * @example query(" INSERT INTO table SET table.field = $value ");
- *
  * @param   string      $query                      The query that you want to run.
  * @param   string|int  $ignore_errors  (OPTIONAL)  Do not stop execution if an error is encountered.
  *

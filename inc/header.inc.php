@@ -40,8 +40,8 @@ if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0
 // Préparation des URLs pour la déconnexion et le changement de langue
 $url_logout   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
 $url_langue   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
-$url_logout   = destroy_html($url_logout);
-$url_langue   = destroy_html($url_langue);
+$url_logout   = sanitize_html_output($url_logout);
+$url_langue   = sanitize_html_output($url_langue);
 
 // Déconnexion
 if(isset($_GET['logout']))
@@ -329,7 +329,7 @@ if (!isset($page_desc))
   $page_desc = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
 
 // On remplace les caractères interdits pour éviter les conneries
-$page_desc = meta_fix($page_desc);
+$page_desc = html_fix_meta_tags($page_desc);
 
 // Si admin, alerte si la longueur est > les 158 caractères max ou < les 25 caractères min
 if($est_admin)
@@ -392,7 +392,7 @@ function header_class($element, $actuel, $menu)
 /*************************************************************************************************************************************/ ?>
 
 <!DOCTYPE html>
-<html lang="<?=changer_casse($lang,'min')?>">
+<html lang="<?=string_change_case($lang,'lowercase')?>">
   <head>
     <title><?=$page_titre?></title>
     <link rel="shortcut icon" href="<?=$path?>img/divers/favicon.ico">

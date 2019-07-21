@@ -8,6 +8,25 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 
+/**
+ * Removes accentuated latin characters from a string.
+ *
+ * @param   string $string  The string which is about to lose its accents.
+ *
+ * @return  string          The string, without its latin accents.
+ */
+
+function string_remove_accents($string)
+{
+  // Simply enough, we prepare two arrays: accents and their non accentuated equivalents
+  $accents    = explode(",","ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,Ø,Å,Á,À,Â,Ä,È,É,Ê,Ë,Í,Î,Ï,Ì,Ò,Ó,Ô,Ö,Ú,Ù,Û,Ü,Ÿ,Ç,Æ,Œ");
+  $no_accents = explode(",","c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,o,O,A,A,A,A,A,E,E,E,E,I,I,I,I,O,O,O,O,U,U,U,U,Y,C,AE,OE");
+
+  // We then replace any occurence of the first set of characters by its equivalent in the second
+  return str_replace($accents, $no_accents, $string);
+}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Renvoie un tableau contenant la liste des pages de l'encyclopédie du web

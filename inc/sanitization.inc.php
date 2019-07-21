@@ -11,13 +11,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * Sanitizes data.
  *
  * To protect ourselves from MySQL injections or just plain breaking of MySQL, we need to sanitize the data we use.
- * This function also allows you to ensure that data is of a specific type, useful given the way PHP treats types.
+ * This function also allows you to ensure that data is of a specific type, useful given the way PHP treats types.
  * For ints and floats, it also allows you to ensure that the number's value is between a set minimum and maximum.
  * For strings, it allows you to ensure that the string's length is between a minimum and maximum size.
- *
- * @example sanitize("My string", "string"); // Ensures that "My string" is a string
- * @example sanitize($some_boolean, "int", 0, 1); // Ensures that $some_boolean is a boolean
- * @example sanitize($_POST['user_input'], "string", 5, 15); // Ensures that some postdata is a string of 5 to 15 chars
  *
  * @param   string|int|float  $data               The data to be sanitized.
  * @param   string|null       $type    (OPTIONAL) The expected data type: "string", "int", "float", or "double".
@@ -41,7 +37,7 @@ function sanitize($data, $type=NULL, $min=NULL, $max=NULL, $padding="_")
       $data = $max;
   }
 
-  // For ints, we ensure that it is an int, else we convert it, then we ensure that it is between min and max values
+  // For ints, we ensure that it is an int, else we convert it, then we ensure that it is between min and max values
   else if($type == "int")
   {
     if(!is_int($data))
@@ -52,7 +48,7 @@ function sanitize($data, $type=NULL, $min=NULL, $max=NULL, $padding="_")
       $data = $max;
   }
 
-  // For strings, we ensure that it is a string, else we convert it to one
+  // For strings, we ensure that it is a string, else we convert it to one
   else if($type == "string")
   {
     if(!is_string($data))
@@ -83,9 +79,6 @@ function sanitize($data, $type=NULL, $min=NULL, $max=NULL, $padding="_")
  * This function is a wrapper around the sanitize() function.
  * It provides more options and convenience when dealing with data from $_POST or $_GET values.
  *
- * @example sanitize_input('POST', 'some_post', 'int', 0); // Will retrieve 'some_post' if it exists, else return 0.
- * @example sanitize_input('GET', 'page_name', 'string'); // Will return the URL parameter 'page_name', else NULL.
- *
  * @param   string                $input_type                 The type of input: 'POST' or 'GET'.
  * @param   string                $input_name                 The input's name (eg. for $_POST['abc'], this is 'abc').
  * @param   string                $data_type                  The expected data type ('string', 'int', 'float').
@@ -103,7 +96,7 @@ function sanitize_input($input_type, $input_name, $data_type, $default_value=NUL
   if($input_type == 'POST')
     $data = (isset($_POST[$input_name])) ? $_POST[$input_name] : $default_value;
 
-  // Same thing if we are dealing with $_GET
+  // Same thing if we are dealing with $_GET
   if($input_type == 'GET')
     $data = (isset($_GET[$input_name])) ? $_GET[$input_name] : $default_value;
 
@@ -115,16 +108,14 @@ function sanitize_input($input_type, $input_name, $data_type, $default_value=NUL
 
 
 /**
- * Sanitizes data before outputting it as HTML.
+ * Sanitizes data before outputting it as HTML.
  *
  * Before printing some data, you might want to sanitize it so that it interacts as expected with HTML rules.
  * Applying this function will prevent users from using HTML themselves, and thus avoid potential silly XSS issues.
  *
- * @example sanitize_output('My string<hr>contains HTML', 0, 0);
- *
  * @param string  $data                             The data to be sanitized.
- * @param int     $prevent_line_breaks  (OPTIONAL)  If value is 0 or unset, will remove the line breaks from your data.
- * @param int     $preserve_backslashes (OPTIONAL)  If value is 0 or unset, backslashes will be removed from your data.
+ * @param int     $prevent_line_breaks  (OPTIONAL)  If value is 0 or unset, will remove the line breaks from your data.
+ * @param int     $preserve_backslashes (OPTIONAL)  If value is 0 or unset, backslashes will be removed from your data.
  *
  * @return string                                   The sanitized data, ready to be printed in your HTML.
  */
@@ -134,6 +125,47 @@ function sanitize_output($data, $preserve_line_breaks=0, $preserve_backslashes=0
   // First off, we need to get rid of all the HTML tags in the data - and if necessary to remove backslashes
   $data = ($preserve_backslashes) ? htmlentities($data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));
 
-  // We can now return the sanitized data, optionally with line breaks
+  // We can now return the sanitized data, optionally with line breaks
   return ($preserve_line_breaks) ? nl2br($data) : $data;
+}
+
+
+
+
+/**
+ * Sanitizes a string for usage in HTML.
+ *
+ * This function makes sure a string can not have any unwanted properties when used in HTML.
+ *
+ * @param   string  $string A string from which any possible unwanted behavior or XSS should be scrapped.
+ *
+ * @return  string          The cleaned up string.
+ */
+
+function sanitize_html_output($string)
+{
+  // First we get rid of the HTML tags
+  $string = htmlentities($string);
+
+  // Basic cleanup: Get rid of absusable tags, then restore the HTML
+  $string = str_replace(array('&amp;','&lt;','&gt;'), array('&amp;amp;','&amp;lt;','&amp;gt;'), $string);
+  $string = preg_replace('/(&#*\w+)[\x00-\x20]+;/u', '$1;', $string);
+  $string = preg_replace('/(&#x*[0-9A-F]+);*/iu', '$1;', $string);
+  $string = html_entity_decode($string, ENT_COMPAT, 'UTF-8');
+
+  // We don't want any property that begins with 'on' or 'xmlns'
+  $string = preg_replace('#(<[^>]+?[\x00-\x20"\'])(?:on|xmlns)[^>]*+>#iu', '$1>', $string);
+
+  // There's a few abusable things that can happen in javascript which we definitely need to deal with
+  $string = preg_replace('#([a-z]*)[\x00-\x20]*=[\x00-\x20]*([`\'"]*)[\x00-\x20]*j[\x00-\x20]*a[\x00-\x20]*v[\x00-\x20]*a[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2nojavascript...', $string);
+  $string = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*v[\x00-\x20]*b[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2novbscript...', $string);
+  $string = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*-moz-binding[\x00-\x20]*:#u', '$1=$2nomozbinding...', $string);
+
+  // Let's also clean up IE related issues (oldie but goodie, never forget about IE's existence... sadly)
+  $string = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?expression[\x00-\x20]*\([^>]*+>#i', '$1>', $string);
+  $string = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?behaviour[\x00-\x20]*\([^>]*+>#i', '$1>', $string);
+  $string = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:*[^>]*+>#iu', '$1>', $string);
+
+  // We can now return the sanitized string
+  return $string;
 }

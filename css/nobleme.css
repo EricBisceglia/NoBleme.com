@@ -130,6 +130,8 @@ td.bas_noir, th.bas_noir, tr.bas_noir > td, tr.bas_noir > th { border-bottom: 1p
 td.bas_noir_epais, th.bas_noir_epais, tr.bas_noir_epais > td, tr.bas_noir_epais > th { border-bottom: 2px solid #000000 !important; }
 
 /*************************************************** PAGE D'ERREUR ***************************************************/
-div.error_container { margin-top: 100px; margin-bottom: 100px; }
-h3.small_error_gap { margin-bottom: 50px; }
-h3.big_error_gap { margin-bottom: 100px; }
+div.error_container       { margin-top: 100px; margin-bottom: 100px;  }
+h3.small_error_gap        { margin-bottom: 50px;                      }
+h3.big_error_gap          { margin-bottom: 100px;                     }
+button.above_login_button { margin-top: 100px;                        }
+button.login_register_gap { margin-right: 50px;                       }

@@ -341,8 +341,6 @@ function user_get_nickname($user_id=NULL)
  *
  * Defaults to checking whether current user is a moderator unless the $user_id optional parameter is specified.
  *
- * @example user_is_moderator('forum'); // Checks if the user can see moderator tools on the forum
- *
  * @param   string|null  $website_section  (OPTIONAL)  Checks if the user has moderator rights over a specific area.
  * @param   int|null     $user_id          (OPTIONAL)  Checks if user with a specific id is a moderator.
  *
@@ -470,8 +468,6 @@ function user_is_administrator($user_id=NULL)
  * Any user who does not have the required rights will get rejected and see an error page.
  * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
  *
- * @example user_restrict_to_moderators($lang, 'forum'); // Shows an error page to users that can't moderate the forum.
- *
  * @param   string|null $lang             (OPTIONAL)  The language used in the error message.
  * @param   string|null $website_section  (OPTIONAL)  The section of the website on which moderators must have rights.
  *
@@ -556,9 +552,9 @@ function user_restrict_to_users($lang='EN', $path="./../../")
   if(!user_is_logged_in())
   {
     if($lang == 'EN')
-      error_page("<br>This page is restricted to logged in users.<br><br><br><a href=\"".$path."pages/user/login\"><button class=\"grosbouton\">LOGIN</button></a><a href=\"".$path."pages/user/register\">&nbsp;&nbsp;&nbsp;&nbsp;<button class=\"grosbouton button-outline\">REGISTER</button></a>");
+      error_page("This page is restricted to logged in users.<br><a href=\"".$path."pages/user/login\"><button class=\"grosbouton login_register_gap above_login_button\">LOGIN</button></a><a href=\"".$path."pages/user/register\"><button class=\"grosbouton button-outline\">REGISTER</button></a>");
     else
-      error_page("<br>Cette page est réservée aux utilisateurs connectés.<br><br><br><a href=\"".$path."pages/user/login\"><button class=\"grosbouton\">SE CONNECTER</button></a><a href=\"".$path."pages/user/register\">&nbsp;&nbsp;&nbsp;&nbsp;<button class=\"grosbouton button-outline\">CRÉER UN COMPTE</button></a>");
+      error_page("Cette page est réservée aux utilisateurs connectés.<br><a href=\"".$path."pages/user/login\"><button class=\"grosbouton login_register_gap above_login_button\">SE CONNECTER</button></a><a href=\"".$path."pages/user/register\"><button class=\"grosbouton button-outline\">CRÉER UN COMPTE</button></a>");
   }
 }
 
