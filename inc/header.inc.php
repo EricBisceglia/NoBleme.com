@@ -161,7 +161,7 @@ if(user_is_logged_in())
 {
   // On prépare la date et l'user
   $visite_timestamp = time();
-  $visite_user      = $_SESSION['user'];
+  $visite_user      = $_SESSION['user_id'];
 
   // Nettoyage des données au cas où
   $activite_page  = sanitize($activite_page, 'string');
@@ -228,7 +228,7 @@ if (user_is_logged_in())
   $qnotif = query(" SELECT  users_private_messages.id
                     FROM    users_private_messages
                     WHERE   users_private_messages.read_at            = 0
-                    AND     users_private_messages.fk_users_recipient = ".$_SESSION['user']."
+                    AND     users_private_messages.fk_users_recipient = ".$_SESSION['user_id']."
                     LIMIT   1 " );
 
   // Préparation des données pour l'affichage

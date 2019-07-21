@@ -7,7 +7,7 @@ include_once './../../inc/queries.inc.php';  // Queries awaiting execution
 include_once './../../inc/includes.inc.php'; // Common inclusions
 
 // Limit page access based on user rights
-adminonly($lang);
+user_restrict_to_users($lang);
 
 // Change the display of header menus
 $header_menu      = 'Dev';
@@ -24,7 +24,7 @@ $page_nom = "Administre secrètement le site";
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                              HTML : DISPLAY THE DATA                                              */
+/*                                              HTML : DISPLAY THE DATA                                              */
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
 

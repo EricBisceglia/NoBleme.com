@@ -39,7 +39,7 @@ if(!$old_structure)
   include_once 'users.inc.php';         // User rights management
 
   // Only allow admins to use this page
-  if(!getadmin())
+  if(!user_is_administrator())
     exit(header("Location: .."));
 }
 

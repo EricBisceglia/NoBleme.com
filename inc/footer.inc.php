@@ -54,7 +54,7 @@ $time_chargement  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
       <footer>
         <?php if(isset($shorturl)) { ?>
         <a href="<?=$path?>s?<?=$shorturl?>">Lien court vers cette page</a><br>
-        <?php } if(loggedin() && $est_admin) { ?>
+        <?php } if(user_is_logged_in() && $est_admin) { ?>
         <a href="<?=$path?>pages/admin/pageviews"><?=$page_views?></a><br>
         <a>Page chargée en <?=$time_chargement?>s avec <?=$GLOBALS['query']?> requêtes</a><br>
         <?php } ?>

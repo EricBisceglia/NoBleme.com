@@ -207,8 +207,8 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && user_is_logged_in())
 /**
  * Starts a session.
  *
- * Look, I just don't trust PHP sessions. I'm not a fan of them, ok? Call this instead of session_start().
- * A new session token is generated on every page load, to ensure full regen of everything.
+ * Look, I just don't trust PHP sessions. I'm not a fan of them, ok? Call this instead of session_start().
+ * A new session token is generated on every page load, to ensure full regen of everything.
  *
  * @return void
  */
@@ -306,9 +306,9 @@ function user_log_out()
 /**
  * Returns a user's nickname from his id.
  *
- * @param   int   $user_id  (OPTIONAL)  If no id is specified, it will try to return the nickname of the current user
+ * @param   int|null   $user_id  (OPTIONAL) If no id is specified, it will try to return the nickname of current user.
  *
- * @return  string                      The user's nickame.
+ * @return  string                          The user's nickame.
  */
 
 function user_get_nickname($user_id=NULL)
@@ -336,301 +336,354 @@ function user_get_nickname($user_id=NULL)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction de check si modérateur d'une section à partir de l'id de l'user
-// Renvoie 1 si l'user est modérateur de la section, 0 s'il ne l'est pas
-//
-// Exemple d'utilisation:
-// getmod('irl','1');
+/**
+ * Checks if an user has moderator rights (or above).
+ *
+ * Defaults to checking whether current user is a moderator unless the $user_id optional parameter is specified.
+ *
+ * @example user_is_moderator('forum'); // Checks if the user can see moderator tools on the forum
+ *
+ * @param   string|null  $website_section  (OPTIONAL)  Checks if the user has moderator rights over a specific area.
+ * @param   int|null     $user_id          (OPTIONAL)  Checks if user with a specific id is a moderator.
+ *
+ * @return  bool                                  Returns 1 if the user has moderator rights, 0 if he doesn't.
+ */
 
-function getmod($section=NULL, $user=NULL)
+function user_is_moderator($website_section=NULL, $user_id=NULL)
 {
-  // Si on spécifie pas d'user, on prend la session en cours
-  if(!$user && isset($_SESSION['user_id']))
-    $user = $_SESSION['user_id'];
+  // If no user id is specified, we use the current active session instead
+  if(!$user_id && isset($_SESSION['user_id']))
+    $user_id = $_SESSION['user_id'];
 
-  // Si on a pas d'user, on renvoie 0
-  if(!$user)
+  // If no user is specified, this means we're logged out, in this case we can return 0
+  if(!$user_id)
     return 0;
 
-  // Si c'est un mod de la section concernée, on renvoie 1
-  if($section)
-  {
-    $qdroits = mysqli_fetch_array(query(" SELECT users.moderator_rights FROM users WHERE id = '$user' AND moderator_rights LIKE '%$section%' "));
-    if($qdroits['moderator_rights'])
-      return 1;
-  }
+  // Sanitize user id
+  $user_id = sanitize($user_id, 'int', 0);
 
-  // Si on ne spécifie pas de section, on va vérifier si c'est un mod et on renvoie 1 si oui
-  if(!$section)
-  {
-    $qdroits = mysqli_fetch_array(query(" SELECT users.moderator_rights FROM users WHERE id = '$user' AND moderator_rights != '' "));
-    if($qdroits['moderator_rights'])
-      return 1;
-  }
+  // Go fetch user rights
+  $drights = mysqli_fetch_array(query(" SELECT  users.moderator_rights    AS 'u_mod_area' ,
+                                                users.is_moderator        AS 'u_mod'      ,
+                                                users.is_global_moderator AS 'u_global'   ,
+                                                users.is_administrator    AS 'u_admin'
+                                        FROM    users
+                                        WHERE   users.id = '$user_id' "));
 
-  // Si c'est un sysop ou un admin, on renvoie aussi 1
-  $qdroits = mysqli_fetch_array(query(" SELECT users.is_global_moderator, users.is_administrator FROM users WHERE id = '$user' "));
-  if($qdroits['is_global_moderator'] || $qdroits['is_administrator'])
+  // If user is an admin or a global mod, then we return 1
+  if($drights['u_global'] || $drights['u_admin'])
     return 1;
 
-  // Sinon on renvoie 0
+  // If user is a moderator and there's no specified section, then we return 1
+  if($drights['u_mod'] && !$website_section)
+    return 1;
+
+  // If user is a moderator and we specified a website section, then we check whether he is allowed to moderate it
+  if($drights['u_mod'] && $website_section && strpos($drights['u_mod_area'], $website_section))
+    return 1;
+
+  // If none of the above were matches, then the user shouldn't have access and we can return 0
   return 0;
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction de check si sysop à partir de l'id de l'user
-// Renvoie 1 si l'user est sysop, 0 s'il ne l'est pas
-//
-// Exemple d'utilisation:
-// getsysop('1');
+/**
+ * Checks if an user is a global moderator (or above).
+ *
+ * Defaults to checking whether current user is a global moderator unless the $user_id optional parameter is specified.
+ *
+ * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is a global moderator.
+ *
+ * @return  bool                            Returns 1 if the user has global moderator rights, 0 if he doesn't.
+ */
 
-function getsysop($user=NULL)
+function user_is_global_moderator($user_id=NULL)
 {
-  // Si on a pas de session en cours, on renvoie 0
-  if(!$user && !isset($_SESSION['user_id']))
+  // If no user id is specified, we use the current active session instead
+  if(!$user_id && isset($_SESSION['user_id']))
+    $user_id = $_SESSION['user_id'];
+
+  // If no user is specified, this means we're logged out, in this case we can return 0
+  if(!$user_id)
     return 0;
 
-  // Si on spécifie pas d'user, on prend la session en cours
-  if(!$user && isset($_SESSION['user_id']))
-    $user = $_SESSION['user_id'];
+  // Sanitize user id
+  $user_id = sanitize($user_id, 'int', 0);
 
-  // On vérifie si l'user est sysop ou admin
-  $ddroits = mysqli_fetch_array(query(" SELECT  users.is_global_moderator ,
-                                                users.is_administrator
+  // Go fetch user rights
+  $drights = mysqli_fetch_array(query(" SELECT  users.is_global_moderator AS 'u_global' ,
+                                                users.is_administrator    AS 'u_admin'
                                         FROM    users
-                                        WHERE   users.id = '$user' "));
-  if($ddroits['is_global_moderator'] || $ddroits['is_administrator'])
+                                        WHERE   users.id = '$user_id' "));
+
+  // If user is an admin or a global mod, then we return 1
+  if($drights['u_global'] || $drights['u_admin'])
     return 1;
-  else
-    return 0;
+
+  // If none of the above were matches, then the user shouldn't have access and we can return 0
+  return 0;
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction de check si admin à partir de l'id de l'user
-// Renvoie 1 si l'user est admin, 0 s'il ne l'est pas
-//
-// Exemple d'utilisation:
-// getadmin('1');
+/**
+ * Checks if an user is an administrator.
+ *
+ * Defaults to checking whether current user is an administrator unless the $user_id optional parameter is specified.
+ *
+ * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is an administrator.
+ *
+ * @return  bool                            Returns 1 if the user has administrator rights, 0 if he doesn't.
+ */
 
-function getadmin($user=NULL)
+function user_is_administrator($user_id=NULL)
 {
-  // Si on spécifie pas d'user, on prend la session en cours
-  if(!$user && isset($_SESSION['user_id']))
-    $user = $_SESSION['user_id'];
+  // If no user id is specified, we use the current active session instead
+  if(!$user_id && isset($_SESSION['user_id']))
+    $user_id = $_SESSION['user_id'];
 
-  // Si on a pas d'user, on renvoie 0
-  if(!$user)
+  // If no user is specified, this means we're logged out, in this case we can return 0
+  if(!$user_id)
     return 0;
 
-  // On vérifie si l'user est admin
-  $ddroits = mysqli_fetch_array(query(" SELECT  users.is_administrator
+  // Sanitize user id
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // Go fetch user rights
+  $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator AS 'u_admin'
                                         FROM    users
-                                        WHERE   users.id = '$user' "));
-    return $ddroits['is_administrator'];
+                                        WHERE   users.id = '$user_id' "));
+
+  // We return 1 if the user is an administrator, 0 if he isn't
+  return $drights['u_admin'];
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction interdisant l'accès à une page si l'utilisateur n'est pas un sysop
-// Si le second paramètre est rempli, autorise également les modérateurs d'une section spécifique
-//
-// Exemple d'utilisation:
-// sysoponly('FR', 'irls');
+/**
+ * Allows access only to global or local moderators (or above).
+ *
+ * Any user who does not have the required rights will get rejected and see an error page.
+ * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
+ *
+ * @example user_restrict_to_moderators($lang, 'forum'); // Shows an error page to users that can't moderate the forum.
+ *
+ * @param   string|null $lang             (OPTIONAL)  The language used in the error message.
+ * @param   string|null $website_section  (OPTIONAL)  The section of the website on which moderators must have rights.
+ *
+ * @return  void
+ */
 
-function sysoponly($lang='FR', $section=NULL)
+function user_restrict_to_moderators($lang='EN', $website_section=NULL)
 {
-  // On prépare le message selon la langue
-  $message = ($lang == 'FR') ? "Cette page est réservée aux administrateurs.<br><br>Ouste !" : 'This page is for admins only<br><br>Shoo!';
+  // We prepare the error message that will be displayed
+  $error_message = ($lang == 'EN') ? "This page is restricted to website staff only." : "Cette page est réservée aux équipes de modération du site.";
 
-  // On vérifie si l'user est connecté et est un admin
-  if(loggedin())
+  // First off, we check if the user is logged in
+  if(user_is_logged_in())
   {
-    // On vérifie si l'user est un admin
-    if(!$section)
+    // If no website section is specified, we check if the user has global moderator rights, else we throw the error
+    if(!$website_section)
     {
-      if(!getsysop($_SESSION['user_id']))
-        erreur($message);
+      if(!user_is_global_moderator($_SESSION['user_id']))
+        error_page($error_message);
     }
+    // If a section is specified, we check if the user has global or local moderator rights, else we throw the error
     else
     {
-      if(!getsysop($_SESSION['user_id']) && !getmod($section,$_SESSION['user_id']))
-        erreur($message);
+      if(!user_is_global_moderator($_SESSION['user_id']) && !user_is_moderator($website_section, $_SESSION['user_id']))
+        error_page($error_message);
     }
   }
+  // If the user is logged out, we throw the error
   else
-    erreur($message);
+    error_page($error_message);
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction interdisant l'accès à une page si l'utilisateur n'est pas un admin
-//
-// Exemple d'utilisation:
-// adminonly();
+/**
+ * Allows access only to administartors.
+ *
+ * Any user who does not have the required rights will get rejected and see an error page.
+ * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
+ *
+ * @param   string|null $lang (OPTIONAL)  The language used in the error message.
+ *
+ * @return  void
+ */
 
-function adminonly($lang='FR')
+function user_restrict_to_administrators($lang='EN')
 {
-  // On prépare le message selon la langue
-  $message = ($lang == 'FR') ? "Cette page est réservée aux administrateurs.<br><br>Ouste !" : 'This page is for admins only<br><br>Shoo!';
+  // We prepare the error message that will be displayed
+  $error_message = ($lang == 'EN') ? "This page is restricted to website administrators only." : "Cette page est réservée aux équipes d'administration du site.";
 
-  // On vérifie si l'user est connecté et est un admin
-  if(loggedin())
+  // First off, we check if the user is logged in
+  if(user_is_logged_in())
   {
-    // On vérifie si l'user est un admin
-    if(!getadmin())
-      erreur($message);
+    // If the user isn't an administrator, we throw the error
+    if(!user_is_administrator())
+      error_page($error_message);
   }
+  // If the user is logged out, we throw the error
   else
-    erreur($message);
+    error_page($error_message);
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction interdisant l'accès à une page si l'utilisateur n'est pas connecté
-//
-// Exemple d'utilisation:
-// useronly();
+/**
+ * Allows access only to logged in users.
+ *
+ * Any user who does not have the required rights will get rejected and see an error page.
+ * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
+ *
+ * @param   string|null $lang (OPTIONAL)  The language used in the error message.
+ * @param   string|null $path (OPTIONAL)  The relative path to the root of the website (defaults to 2 folders away).
+ *
+ * @return  void
+ */
 
-function useronly($lang='FR')
+function user_restrict_to_users($lang='EN', $path="./../../")
 {
-  // On vérifie si l'user est connecté
-  if(!loggedin())
+  // If the user is not logged in, we throw an error page asking the user to log in or register
+  if(!user_is_logged_in())
   {
-    // Trouver où on est sur le site
-    // Similaire à la recherche de $chemin dans /inc/header.php
-
-    // La base est différente selon si on est en localhost ou en prod
-    if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1")
-      $count_base = 3;
+    if($lang == 'EN')
+      error_page("<br>This page is restricted to logged in users.<br><br><br><a href=\"".$path."pages/user/login\"><button class=\"grosbouton\">LOGIN</button></a><a href=\"".$path."pages/user/register\">&nbsp;&nbsp;&nbsp;&nbsp;<button class=\"grosbouton button-outline\">REGISTER</button></a>");
     else
-      $count_base = 2;
-
-    // Déterminer à combien de dossiers de la racine on est
-    $longueur = count(explode( '/', $_SERVER['REQUEST_URI']));
-
-    // Si on est à la racine, laisser le chemin tel quel
-    if($longueur <= $count_base)
-      $chemin = "";
-
-    // Sinon, partir de ./ puis déterminer le nombre de ../ à rajouter
-    else
-    {
-      $chemin = "./";
-      for ($i=0 ; $i<($longueur-$count_base) ; $i++)
-        $chemin .= "../";
-    }
-
-    if($lang == 'FR')
-      erreur("<br>Cette page n'est utilisable que par les utilisateurs connectés.<br><br><br><a href=\"".$chemin."pages/user/login\"><button class=\"grosbouton\">SE CONNECTER</button></a><a href=\"".$chemin."pages/user/register\">&nbsp;&nbsp;&nbsp;&nbsp;<button class=\"grosbouton button-outline\">CRÉER UN COMPTE</button></a>");
-    else
-      erreur("<br>This page is for registered users only.<br><br><br><a href=\"".$chemin."pages/user/login\"><button class=\"grosbouton\">LOGIN</button></a><a href=\"".$chemin."pages/user/register\">&nbsp;&nbsp;&nbsp;&nbsp;<button class=\"grosbouton button-outline\">REGISTER</button></a>");
+      error_page("<br>Cette page est réservée aux utilisateurs connectés.<br><br><br><a href=\"".$path."pages/user/login\"><button class=\"grosbouton\">SE CONNECTER</button></a><a href=\"".$path."pages/user/register\">&nbsp;&nbsp;&nbsp;&nbsp;<button class=\"grosbouton button-outline\">CRÉER UN COMPTE</button></a>");
   }
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction interdisant l'accès à une page si l'utilisateur est connecté
-//
-// Exemple d'utilisation:
-// guestonly();
+/**
+ * Allows access only to guests (not logged into an account).
+ *
+ * Any user who does not have the required rights will get rejected and see an error page.
+ * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
+ *
+ * @param   string|null $lang (OPTIONAL)  The language used in the error message.
+ *
+ * @return  void
+ */
 
-function guestonly($lang='FR')
+function user_restrict_to_guests($lang='EN')
 {
-  // On prépare le message selon la langue
-  $message = ($lang == 'FR') ? "Cette page n'est accessible qu'aux invités." : "This page is accessible by guests only.";
+  // We prepare the error message that will be displayed
+  $error_message = ($lang == 'EN') ? "This page cannot be used while logged into an account." : "Cette page n'est pas utilisable lorsque vous êtes connecté à un compte.";
 
-  // On vérifie si l'user est connecté
-  if(loggedin())
-    erreur($message);
+  // If the user is logged in, we throw the error
+  if(user_is_logged_in())
+    error_page($error_message);
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction renvoyant le niveau de NSFW que le membre désire voir
-//
-// Exemple d'utilisation:
-// niveau_nsfw();
+/**
+ * NSFW filter settings of the current user.
+ *
+ * There are several levels of NSFW filters, all this function does is return the current level of the user.
+ * If the user is logged out, we consider that we should hide all NSFW content by default.
+ *
+ * @return int The current NSFW filter level of the user.
+ */
 
-function niveau_nsfw()
+function user_settings_nsfw()
 {
-  // Si l'utilisateur n'est pas connecté, on floute tout
-  if(!loggedin())
+  // If the user isn't logged in, then we return 0
+  if(!user_is_logged_in())
     return 0;
 
-  // Sinon, on va chercher le niveau de NSFW
-  $membre_id  = sanitize($_SESSION['user_id'], 'int', 0);
-  $dnsfw      = mysqli_fetch_array(query("  SELECT  users_settings.show_nsfw_content AS 'm_nsfw'
-                                            FROM    users_settings
-                                            WHERE   users_settings.fk_users = '$membre_id' "));
-  return $dnsfw['m_nsfw'];
+  // We sanitize the user id
+  $user_id = sanitize($_SESSION['user_id'], 'int', 0);
+
+  // We fetch the current nsfw level of the user
+  $dnsfw = mysqli_fetch_array(query(" SELECT  users_settings.show_nsfw_content AS 'user_nsfw'
+                                      FROM    users_settings
+                                      WHERE   users_settings.fk_users = '$user_id' "));
+
+  // We return whichever value we got from the database
+  return $dnsfw['user_nsfw'];
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction renvoyant le niveau de protection de la vie privée que le membre a choisi, sous forme de tableau
-//
-// Exemple d'utilisation:
-// niveau_vie_privee();
+/**
+ * Third party content privacy settings of the current user.
+ *
+ * This function returns whether the user wants to hide any Twitter, Youtube, etc. data when browsing the website.
+ * If the user is logged out, we consider that we should show all third party content by default.
+ *
+ * @return array The current third party privacy settings of the user, in the form of an array.
+ */
 
-function niveau_vie_privee()
+function user_settings_privacy()
 {
-  // Si l'utilisateur n'est pas connecté, on floute tout
-  if(!loggedin())
-    return 0;
+  // By default, we set all of the privacy values to 0
+  $privacy_twitter  = 0;
+  $privacy_youtube  = 0;
+  $privacy_trends   = 0;
 
-  // On va chercher les options de l'utilisateur
-  $membre_id  = sanitize($_SESSION['user_id'], 'int', 0);
-  $dvieprivee = mysqli_fetch_array(query("  SELECT  users_settings.hide_tweets         AS 'm_twitter'  ,
-                                                    users_settings.hide_youtube        AS 'm_youtube'  ,
-                                                    users_settings.hide_google_trends  AS 'm_trends'
+  // If the user is logged in, we go fetch his third party privacy settings
+  if(user_is_logged_in())
+  {
+    // We sanitize the user id
+    $user_id = sanitize($_SESSION['user_id'], 'int', 0);
+
+    // We go fetch the required settings
+    $dprivacy = mysqli_fetch_array(query("  SELECT  users_settings.hide_tweets         AS 'user_twitter'  ,
+                                                    users_settings.hide_youtube        AS 'user_youtube'  ,
+                                                    users_settings.hide_google_trends  AS 'user_trends'
                                             FROM    users_settings
-                                            WHERE   users_settings.fk_users = '$membre_id' "));
+                                            WHERE   users_settings.fk_users = '$user_id' "));
 
-  // Et on renvoie tout ça dans un tableau
-  return array( 'twitter' => $dvieprivee['m_twitter'] ,
-                'youtube' => $dvieprivee['m_youtube'] ,
-                'trends'  => $dvieprivee['m_trends'] );
+    // We set the privacy values to those wanted by the user
+    $privacy_twitter  = $dprivacy['user_twitter'];
+    $privacy_youtube  = $dprivacy['user_youtube'];
+    $privacy_trends   = $dprivacy['user_trends'];
+  }
+
+  // We can now return those privacy settings, neatly folded in a cozy array
+  return array( 'twitter' => $privacy_twitter ,
+                'youtube' => $privacy_youtube ,
+                'trends'  => $privacy_trends  );
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction générant un surnom aléatoire pour un invité
-//
-// Utilisation: surnom_mignon();
+/**
+ * Generates a random nickname for a guest.
+ *
+ * The nicknames are taken from an array of possible words instead of a database to minimize queries.
+ * It doesn't create the best nicknames, but hey, good enough.
+ * The nickname returned is in french. There is no english equivalent to this function for now. Sorry.
+ *
+ * @return string The randomly generated nickname.
+ */
 
-function surnom_mignon()
+function user_generate_random_nickname()
 {
-  // Liste de mots (les adjectif1 doivent prendre un espace s'ils ne se collent pas au nom)
-  $adjectif1 = array("Petit ", "Gros ", "Sale ", "Grand ", "Bel ", "Doux ", "L'", "Un ", "Cet ", "Ce ", "Premier ", "Gentil ", "Méchant ", "Bout d'", "Le ", "Capitaine ", "Quel ", "Saint ", "Chétif ", "Président ", "Général ", "Dernier ", "L'unique ", "Ex ", "Archi ", "Méga ", "Micro ", "Fort ", "Demi ", "Cadavre de ", "Âme d'", "Fils du ", "Futur ", "Second ", "Meta-");
+  // Random word list: The first qualifier should end with a space if it's not directly attached to the core name
+  $qualifier1 = array("Petit ", "Gros ", "Sale ", "Grand ", "Beau ", "Doux ", "Un ", "Premier ", "Gentil ", "Méchant ", "Le ", "Capitaine ", "Quel ", "Saint ", "Chétif ", "Président ", "Général ", "Dernier ", "L'unique ", "Ex-", "Archi ", "Méga ", "Micro ", "Fort ", "Demi ", "Futur ", "Second ", "Meta-", "Long ", "Double ", "Simple ", "Fourbe ", "Mini ");
 
-  $nom = array("ours", "oiseau", "chat", "chien", "canard", "pigeon", "haricot", "arbre", "rongeur", "pot de miel", "indien", "gazon", "paysan", "crouton", "mollusque", "bouc", "éléphant", "sanglier", "journal", "singe", "cœur", "félin", "", "morse", "phoque", "miquet", "kévin", "monstre", "meuble", "frelon", "robot", "slip", "cousin", "frère", "internet", "type", "copain", "raton", "mouton", "VIP");
+  // Random word list: The core name that will be assigned to the guest
+  $core_name = array("ours", "oiseau", "chat", "chien", "canard", "pigeon", "haricot", "arbre", "rongeur", "pot de miel", "gazon", "paysan", "crouton", "mollusque", "bouc", "éléphant", "sanglier", "journal", "singe", "cœur", "félin", "", "morse", "phoque", "miquet", "kévin", "monstre", "meuble", "frelon", "robot", "slip", "cousin", "frère", "internet", "type", "copain", "raton", "mouton", "VIP", "pape", "globule", "adversaire", "caca", "crotiau", "roi", "prince");
 
-  $âdjectif2 = array("solitaire", "mignon", "moche", "farouche", "mystérieux", "con", "lourdingue", "glandeur", "douteux", "noir", "blanc", "rose", "mauve", "chaotique", "pâle", "raciste", "rigolo", "choupinet", "borgne", "douteux", "baltique", "fatigué", "", "peureux", "millénaire", "belge", "bouseux", "crade", "des champs", "urbain", "sourd", "techno", "fatigué", "cornu", "mort", "cool", "moelleux");
+  // Random word list: A second qualifier that goes after the core name
+  $qualifier2 = array("solitaire", "mignon", "moche", "farouche", "mystérieux", "lourdingue", "glandeur", "douteux", "noir", "blanc", "rose", "mauve", "chaotique", "pâle", "raciste", "rigolo", "choupinet", "borgne", "douteux", "baltique", "fatigué", "", "peureux", "millénaire", "bouseux", "crade", "des champs", "des villes", "des plaines", "urbain", "sourd", "techno", "fatigué", "cornu", "mort", "cool", "moelleux", "futé", "gourmand", "en slip", "naturiste", "trop cuit", "cru");
 
-  // On assemble le surnom
-  $surnom = $adjectif1[rand(0,(count($adjectif1)-1))].$nom[rand(0,(count($nom)-1))]." ".$âdjectif2[rand(0,(count($âdjectif2)-1))];
-
-  // Et on balance la sauce
-  return($surnom);
+  // Now we can assemble and return the nickname
+  return $qualifier1[rand(0,(count($qualifier1)-1))].$core_name[rand(0,(count($core_name)-1))]." ".$qualifier2[rand(0,(count($qualifier2)-1))];
 }
