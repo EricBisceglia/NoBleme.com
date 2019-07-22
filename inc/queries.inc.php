@@ -1660,9 +1660,35 @@ if($last_query < 30)
 
 if($last_query < 31)
 {
+  sql_rename_table('logs_activity_archives', 'logs_activity_details');
   sql_rename_field('system_scheduler', 'task_timestamp', 'planned_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_contests', 'fk_writings_writings_winner', 'fk_writings_texts_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_create_field('system_variables', 'last_scheduler_execution', 'INT UNSIGNED NOT NULL DEFAULT 0', 'latest_query_id');
 
   sql_update_query_id(31);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #544 - Translation and optimization of all tables - Translation of the contents of tables
+
+if($last_query < 32)
+{
+  query(" UPDATE  logs_activity
+          SET     logs_activity.activity_type    = 'writers_contest_vote'
+          WHERE   logs_activity.activity_type LIKE 'ecrivains_concours_vote' ");
+  query(" UPDATE  logs_activity
+          SET     logs_activity.activity_type    = 'writers_contest_winner'
+          WHERE   logs_activity.activity_type LIKE 'ecrivains_concours_gagnant' ");
+
+  query(" UPDATE  system_scheduler
+          SET     system_scheduler.task_type    = 'writers_contest_vote'
+          WHERE   system_scheduler.task_type LIKE 'ecrivains_concours_vote' ");
+  query(" UPDATE  system_scheduler
+          SET     system_scheduler.task_type    = 'writers_contest_end'
+          WHERE   system_scheduler.task_type LIKE 'ecrivains_concours_fin' ");
+
+  sql_update_query_id(32);
 }
 
 

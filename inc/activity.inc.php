@@ -382,7 +382,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   //***************************************************************************************************************************************
   // Concours du coin des écrivains ouvert aux votes
 
-  else if($type === 'ecrivains_concours_vote')
+  else if($type === 'writers_contest_vote')
   {
     $retour['css']  = 'texte_noir vert_background_clair';
     $retour['href'] = $chemin.'pages/ecrivains/concours?id='.$id;
@@ -392,7 +392,7 @@ function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, 
   //***************************************************************************************************************************************
   // Concours du coin des écrivains ouvert aux votes
 
-  else if($type === 'ecrivains_concours_gagnant')
+  else if($type === 'writers_contest_winner')
   {
     $retour['css']  = 'texte_noir vert_background';
     $retour['href'] = $chemin.'pages/ecrivains/concours?id='.$id;

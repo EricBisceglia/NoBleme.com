@@ -163,8 +163,8 @@ CREATE TABLE IF NOT EXISTS `logs_activity` (
   KEY `index_activity_type` (`activity_type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `logs_activity_archives`;
-CREATE TABLE IF NOT EXISTS `logs_activity_archives` (
+DROP TABLE IF EXISTS `logs_activity_details`;
+CREATE TABLE IF NOT EXISTS `logs_activity_details` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_logs_activity` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `content_description` text COLLATE utf8mb4_unicode_ci,
@@ -335,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `stats_pageviews` (
 DROP TABLE IF EXISTS `system_scheduler`;
 CREATE TABLE IF NOT EXISTS `system_scheduler` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `task_timestamp` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `planned_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `task_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `task_type` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `task_description` text COLLATE utf8mb4_unicode_ci,
@@ -347,6 +347,7 @@ DROP TABLE IF EXISTS `system_variables`;
 CREATE TABLE IF NOT EXISTS `system_variables` (
   `update_in_progress` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `latest_query_id` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
+  `last_scheduler_execution` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `last_pageview_check` int(10) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`update_in_progress`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -479,7 +480,7 @@ DROP TABLE IF EXISTS `writings_contests`;
 CREATE TABLE IF NOT EXISTS `writings_contests` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_users_winner` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fk_writings_writings_winner` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `fk_writings_texts_winner` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `started_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `ended_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `nb_users` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -487,7 +488,7 @@ CREATE TABLE IF NOT EXISTS `writings_contests` (
   `contest_topic` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_winner` (`fk_users_winner`),
-  KEY `index_winning_text` (`fk_writings_writings_winner`)
+  KEY `index_winning_text` (`fk_writings_texts_winner`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `writings_contests_votes`;

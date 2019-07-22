@@ -64,7 +64,7 @@ if(isset($_POST['concours_creer']))
 
   // Automatisation de la fin du concours
   $concours_new_id = mysqli_insert_id($db);
-  automatisation('ecrivains_concours_vote', $concours_new_id, $concours_new_fin);
+  automatisation('writers_contest_vote', $concours_new_id, $concours_new_fin);
 
   // Activité récente
   activite_nouveau('ecrivains_concours_new', 0, 0, 0, $concours_new_id, $concours_new_titre);
@@ -108,7 +108,7 @@ if($id_concours && isset($_POST['concours_modifier']))
 
   // Déplacement de l'automatisation de la fin du concours si nécessaire
   if($dautomatisation['a_id'])
-    automatisation('ecrivains_concours_vote', $id_concours, $concours_edit_fin);
+    automatisation('writers_contest_vote', $id_concours, $concours_edit_fin);
 
   // Redirection
   exit(header("Location: ".$chemin."pages/ecrivains/concours?id=".$id_concours));

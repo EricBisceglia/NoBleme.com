@@ -110,7 +110,7 @@ function envoyer_notif($en_destinataire,$en_titre,$en_contenu,$sender=NULL,$sile
 //
 // Utilisation: $activite_id = activite_nouveau('truc_edit', 0, 0, 'Bad', 42, 'Le truc édité');
 
-function activite_nouveau($type_action, $log_moderation, $membre_id=0, $membre_pseudonyme=NULL, $action_id=0, $action_titre=NULL, $action_parent=NULL, $justification=NULL)
+function log_activity($type_action, $log_moderation, $membre_id=0, $membre_pseudonyme=NULL, $action_id=0, $action_titre=NULL, $action_parent=NULL, $justification=NULL)
 {
   // On crée la nouvelle activité
   $timestamp = time();

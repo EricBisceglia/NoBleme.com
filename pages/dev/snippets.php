@@ -6,7 +6,7 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Permissions
-adminonly($lang);
+user_restrict_to_administrators($lang);
 
 // Menus du header
 $header_menu      = 'Dev';
