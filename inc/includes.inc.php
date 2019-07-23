@@ -6,8 +6,6 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // These files should be included in every single page of the website
 // It is more convenient to include one file (this one) which will then proceed to include all other files

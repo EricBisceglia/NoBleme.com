@@ -6,7 +6,6 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The following global variables are your local settings - set them accordingly, otherwise NoBleme will not work
 // Duplicate this file, then remove the .DEFAULT (rename it to "configuration.inc.php") and fill up these variables:

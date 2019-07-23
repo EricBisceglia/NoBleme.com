@@ -4,7 +4,7 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
-include './../../inc/activite.inc.php'; // Traitement de l'activité recente
+include './../../inc/activity.inc.php'; // Traitement de l'activité recente
 
 // Permissions
 if(isset($_GET['mod']))

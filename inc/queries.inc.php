@@ -5,6 +5,7 @@
 // Include only /*****************************************************************************************************/
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                This page contains all SQL queries that will be ran during an update of the website                */
@@ -21,9 +22,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Ensure the page is only usable by website administrators
 
 // Include pages that are required to make MySQL queries
-include_once 'settings.inc.php';  // General settings
-include_once 'error.inc.php';     // Error management
-include_once 'sql.inc.php';       // MySQL connection
+include_once 'settings.inc.php';      // General settings
+include_once 'error.inc.php';         // Error management
+include_once 'sql.inc.php';           // MySQL connection
+include_once 'sanitization.inc.php';  // Data sanitization
 
 // If the database still uses the old data structure, then we need to skip the other includes
 $old_structure = 0;
@@ -35,7 +37,6 @@ while($dtablelist = mysqli_fetch_array($qtablelist))
 if(!$old_structure)
 {
   // Include pages that are required to check user rights
-  include_once 'sanitization.inc.php';  // Data sanitization
   include_once 'users.inc.php';         // User rights management
 
   // Only allow admins to use this page
@@ -946,8 +947,8 @@ if($last_query < 20)
 
   sql_change_field_type('system_scheduler', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('system_scheduler', 'action_id', 'task_id', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('system_scheduler', 'action_type', 'task_type', 'VARCHAR(40) DEFAULT NULL');
-  sql_rename_field('system_scheduler', 'action_description', 'task_description', 'TEXT DEFAULT NULL');
+  sql_rename_field('system_scheduler', 'action_type', 'task_type', 'VARCHAR(40) NOT NULL');
+  sql_rename_field('system_scheduler', 'action_description', 'task_description', 'TEXT NOT NULL');
   sql_rename_field('system_scheduler', 'action_timestamp', 'task_timestamp', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_move_field('system_scheduler', 'task_timestamp', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_delete_index('system_scheduler', 'index_action');
@@ -959,8 +960,8 @@ if($last_query < 20)
   sql_delete_index('system_variables', 'mise_a_jour');
 
   sql_change_field_type('system_versions', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_change_field_type('system_versions', 'version', 'VARCHAR(20) DEFAULT NULL');
-  sql_change_field_type('system_versions', 'build', 'VARCHAR(10) DEFAULT NULL');
+  sql_change_field_type('system_versions', 'version', 'VARCHAR(20) NOT NULL');
+  sql_change_field_type('system_versions', 'build', 'VARCHAR(10) NOT NULL');
   sql_create_index('system_versions', 'index_full_version', 'version, build');
 
   sql_update_query_id(20);
@@ -980,13 +981,13 @@ if($last_query < 21)
   sql_rename_field('logs_activity', 'log_moderation', 'is_moderators_only', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('logs_activity', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_move_field('logs_activity', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_rename_field('logs_activity', 'pseudonyme', 'nickname', 'VARCHAR(45) DEFAULT NULL');
-  sql_rename_field('logs_activity', 'action_type', 'activity_type', 'VARCHAR(40) DEFAULT NULL');
+  sql_rename_field('logs_activity', 'pseudonyme', 'nickname', 'VARCHAR(45) NOT NULL');
+  sql_rename_field('logs_activity', 'action_type', 'activity_type', 'VARCHAR(40) NOT NULL');
   sql_rename_field('logs_activity', 'action_id', 'activity_id', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_move_field('logs_activity', 'activity_id', 'INT UNSIGNED NOT NULL DEFAULT 0', 'nickname');
-  sql_rename_field('logs_activity', 'action_titre', 'activity_summary', 'TEXT DEFAULT NULL');
-  sql_rename_field('logs_activity', 'parent', 'activity_parent', 'TEXT DEFAULT NULL');
-  sql_rename_field('logs_activity', 'justification', 'moderation_reason', 'TEXT DEFAULT NULL');
+  sql_rename_field('logs_activity', 'action_titre', 'activity_summary', 'TEXT NOT NULL');
+  sql_rename_field('logs_activity', 'parent', 'activity_parent', 'TEXT NOT NULL');
+  sql_rename_field('logs_activity', 'justification', 'moderation_reason', 'TEXT NOT NULL');
   sql_delete_index('logs_activity', 'index_membres');
   sql_delete_index('logs_activity', 'index_action');
   sql_delete_index('logs_activity', 'index_type');
@@ -996,9 +997,9 @@ if($last_query < 21)
 
   sql_change_field_type('logs_activity_archives', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('logs_activity_archives', 'FKactivite', 'fk_logs_activity', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('logs_activity_archives', 'titre_diff', 'content_description', 'TEXT DEFAULT NULL');
-  sql_rename_field('logs_activity_archives', 'diff_avant', 'content_before', 'MEDIUMTEXT DEFAULT NULL');
-  sql_rename_field('logs_activity_archives', 'diff_apres', 'content_after', 'MEDIUMTEXT DEFAULT NULL');
+  sql_rename_field('logs_activity_archives', 'titre_diff', 'content_description', 'TEXT NOT NULL');
+  sql_rename_field('logs_activity_archives', 'diff_avant', 'content_before', 'MEDIUMTEXT NOT NULL');
+  sql_rename_field('logs_activity_archives', 'diff_apres', 'content_after', 'MEDIUMTEXT NOT NULL');
   sql_delete_index('logs_activity_archives', 'index_activite');
   sql_create_index('logs_activity_archives', 'index_logs_activity', 'fk_logs_activity');
 
@@ -1014,8 +1015,8 @@ if($last_query < 22)
   sql_rename_table('pageviews', 'stats_pageviews');
 
   sql_change_field_type('stats_pageviews', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('stats_pageviews', 'nom_page', 'page_name', 'VARCHAR(255) DEFAULT NULL');
-  sql_rename_field('stats_pageviews', 'url_page', 'page_url', 'TEXT DEFAULT NULL');
+  sql_rename_field('stats_pageviews', 'nom_page', 'page_name', 'VARCHAR(255) NOT NULL');
+  sql_rename_field('stats_pageviews', 'url_page', 'page_url', 'TEXT NOT NULL');
   sql_rename_field('stats_pageviews', 'vues', 'view_count', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('stats_pageviews', 'vues_lastvisit', 'view_count_archive', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_delete_index('stats_pageviews', 'index_tri');
@@ -1661,8 +1662,11 @@ if($last_query < 30)
 if($last_query < 31)
 {
   sql_rename_table('logs_activity_archives', 'logs_activity_details');
+
+  sql_rename_field('logs_activity', 'is_moderators_only', 'is_administrators_only', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('system_scheduler', 'task_timestamp', 'planned_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_contests', 'fk_writings_writings_winner', 'fk_writings_texts_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
+
   sql_create_field('system_variables', 'last_scheduler_execution', 'INT UNSIGNED NOT NULL DEFAULT 0', 'latest_query_id');
 
   sql_update_query_id(31);
@@ -1674,13 +1678,6 @@ if($last_query < 31)
 
 if($last_query < 32)
 {
-  query(" UPDATE  logs_activity
-          SET     logs_activity.activity_type    = 'writers_contest_vote'
-          WHERE   logs_activity.activity_type LIKE 'ecrivains_concours_vote' ");
-  query(" UPDATE  logs_activity
-          SET     logs_activity.activity_type    = 'writers_contest_winner'
-          WHERE   logs_activity.activity_type LIKE 'ecrivains_concours_gagnant' ");
-
   query(" UPDATE  system_scheduler
           SET     system_scheduler.task_type    = 'writers_contest_vote'
           WHERE   system_scheduler.task_type LIKE 'ecrivains_concours_vote' ");
@@ -1688,9 +1685,52 @@ if($last_query < 32)
           SET     system_scheduler.task_type    = 'writers_contest_end'
           WHERE   system_scheduler.task_type LIKE 'ecrivains_concours_fin' ");
 
+  $logs_activity_translation = array( 'version'                         => 'dev_version'                    ,
+                                      'devblog'                         => 'dev_blog'                       ,
+                                      'todo_new'                        => 'dev_task_new'                   ,
+                                      'todo_fini'                       => 'dev_task_finished'              ,
+                                      'register'                        => 'user_register'                  ,
+                                      'profil'                          => 'user_profile_edit'              ,
+                                      'profil_edit'                     => 'user_admin_edit_profile'        ,
+                                      'editpass'                        => 'user_admin_edit_password'       ,
+                                      'ban'                             => 'user_banned'                    ,
+                                      'deban'                           => 'user_unbanned'                  ,
+                                      'droits_delete'                   => 'user_rights_delete'             ,
+                                      'droits_mod'                      => 'user_rights_moderator'          ,
+                                      'droits_sysop'                    => 'user_rights_global_moderator'   ,
+                                      'forum_new'                       => 'forum_thread_new'               ,
+                                      'forum_edit'                      => 'forum_thread_edit'              ,
+                                      'forum_delete'                    => 'forum_thread_delete'            ,
+                                      'forum_new_message'               => 'forum_message_new'              ,
+                                      'forum_edit_message'              => 'forum_message_edit'             ,
+                                      'forum_delete_message'            => 'forum_message_delete'           ,
+                                      'irl_new'                         => 'meetup_new'                     ,
+                                      'irl_edit'                        => 'meetup_edit'                    ,
+                                      'irl_delete'                      => 'meetup_delete'                  ,
+                                      'irl_add_participant'             => 'meetup_people_new'              ,
+                                      'irl_edit_participant'            => 'meetup_people_edit'             ,
+                                      'irl_del_participant'             => 'meetup_people_delete'           ,
+                                      'ecrivains_new'                   => 'writings_text_new'              ,
+                                      'ecrivains_edit'                  => 'writings_text_edit'             ,
+                                      'ecrivains_delete'                => 'writings_text_delete'           ,
+                                      'ecrivains_reaction_new'          => 'writings_comment_new'           ,
+                                      'ecrivains_reaction_new_anonyme'  => 'writings_comment_new_anonymous' ,
+                                      'ecrivains_reaction_delete'       => 'writings_comment_delete'        ,
+                                      'ecrivains_concours_new'          => 'writings_contest_new'           ,
+                                      'ecrivains_concours_gagnant'      => 'writings_contest_winner'        ,
+                                      'ecrivains_concours_vote'         => 'writings_contest_vote'          );
+
+  foreach($logs_activity_translation as $original_log => $translated_log)
+  {
+    $original_log   = sanitize($original_log, 'string');
+    $translated_log = sanitize($translated_log, 'string');
+    query(" UPDATE  logs_activity
+            SET     logs_activity.activity_type    = '$translated_log'
+            WHERE   logs_activity.activity_type LIKE '$original_log' ");
+  }
+
   sql_update_query_id(32);
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                   //

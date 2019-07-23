@@ -1,582 +1,568 @@
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                 CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST INCLUDE PAR UNE AUTRE PAGE                                */
-/*                                                                                                                                       */
-// Include only /*************************************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF'])))
-  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Vous n\'êtes pas censé accéder à cette page, dehors!</body></html>');
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
+/*                                                                                                                   */
+// Include only /*****************************************************************************************************/
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Cette page transforme l'activité récente stockée dans la base de données en contenu prêt à être affiché publiquement                  //
-//                                                                                                                                       //
-// Le contenu produit est utilisé à la fois pour l'activité récente et pour le log de modération                                         //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Transforme une activité récente en résultat formaté
-//
-// $chemin                    est le chemin relatif jusqu'à la racine du site
-// $modlog                    précise s'il s'agit de l'activité récente (0) ou du log de modération (1)
-// $type                      est le type d'activité à traiter
-// $userid        (optionnel) est l'ID du compte de l'utilisateur lié à l'activité
-// $pseudonyme    (optionnel) est le pseudonyme de l'utilisateur lié à l'activité
-// $id            (optionnel) est l'ID de la table liée à l'activité
-// $titre         (optionnel) est le titre utilisé pour construire le texte de l'activité
-// $parent        (optionnel) est le titre ou pseudonyme d'un élément parent à l'activité en question
-//
-// Renvoie un tableau de données contenant :
-// $retour['css']   le style à appliquer à la ligne (si vide, l'action ne sera pas stylée)
-// $retour['href]   le chemin relatif de l'URL vers laquelle l'activité récente pointe (si vide, l'action ne sera pas cliquable)
-// $retour['FR']    la description de l'activité, en français (si vide, l'action n'apparait pas lorsque la page est consultée en français)
-// $retour['EN']    la description de l'activité, en anglais (si vide, l'action n'apparait pas lorsque la page est consultée en anglais)
-//
-// Utilisation: activite_recente($chemin, 0, 'register', 1, 'Bad');
+/**
+ * Transforms an entry of the `logs_activity` table into human readable content.
+ *
+ * This whole function is pretty self explanatory.
+ * Basically you grab a whole line of the `logs_activity` table and you drop it through this function.
+ * The output will be an array of values ready to be used for the recent activity page or the administrative logs page.
+ *
+ * @param   string      $path                     Relative path to the root of the website (usually is "./../../").
+ * @param   bool        $admins_only              Is the log public (0) or private (1).
+ * @param   string      $type                     Identifies the type of activity being processed.
+ * @param   int|null    $userid       (OPTIONAL)  ID of the user being implicated by the activity log.
+ * @param   string|null $nickname     (OPTIONAL)  Nickname of the user being implicated by the activity log.
+ * @param   int|null    $id           (OPTIONAL)  ID of the action/element of the activity in the log.
+ * @param   string|null $title        (OPTIONAL)  Title of the activity in the log.
+ * @param   string|null $parent       (OPTIONAL)  Title of the parent element of the activity in the log.
+ *
+ * @return  array                                 Returns an array of elements allowing you to format the activity log;
+ *                                                return['css']   is the style of the table line (if empty, no style);
+ *                                                return['href']  is the url of the activity (if empty, not clickable);
+ *                                                return['EN']    is the activity in english (if empty, french only);
+ *                                                return['FR']    is the activity in french (if empty, english only).
+ */
 
-function activite_recente($chemin, $modlog, $type, $userid=0, $pseudonyme=NULL, $id=0, $titre=NULL, $parent=NULL)
+function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NULL, $id=0, $title=NULL, $parent=NULL)
 {
 
+  //*****************************************************************************************************************//
+  //                                             DEVELOPMENT / INTERNALS                                             //
+  //*****************************************************************************************************************//
+  // New version of the website
 
-
-
-  //*************************************************************************************************************************************//
-  //                                                               MEMBRES                                                               //
-  //*************************************************************************************************************************************//
-  // Nouvel utilisateur
-
-  if($type === 'register')
+  if($type === 'dev_version')
   {
-    $retour['css']  = 'texte_blanc nobleme_clair';
-    $retour['href'] = $chemin.'pages/user/user?id='.$userid;
-    $retour['FR']   = predata($pseudonyme)." s'est inscrit(e) sur NoBleme !";
-    $retour['EN']   = predata($pseudonyme)." registered on NoBleme!";
+    $return['css']  = 'gras texte_blanc positif';
+    $return['href'] = $path.'pages/todo/roadmap';
+    $return['EN']   = "New version of NoBleme.com: ".sanitize_output($title);
+    $return['FR']   = "Nouvelle version de NoBleme.com : ".sanitize_output($title);
   }
 
-  //***************************************************************************************************************************************
-  // Utilisateur modifie son profil
+  //*******************************************************************************************************************
+  // New development blog
 
-  else if($type === 'profil')
+  else if($type === 'dev_blog')
   {
-    $retour['href'] = $chemin.'pages/user/user?id='.$userid;
-    $retour['FR']   = predata($pseudonyme).' a modifié son profil public';
-    $retour['EN']   = predata($pseudonyme).' edited his public profile';
+    $return['css']  = 'texte_noir vert_background';
+    $return['href'] = $path.'pages/devblog/devblog?id='.$id;
+    $return['FR']   = "Nouveau devblog publié : ".sanitize_output(string_truncate($title, 50, '...'));
   }
 
-  //***************************************************************************************************************************************
-  // Profil d'un user modifié par un admin
+  //*******************************************************************************************************************
+  // New task in the to-do list
 
-  else if($type === 'profil_edit')
+  else if($type === 'dev_task_new')
   {
-    $retour['css']  = 'neutre texte_blanc';
-    $retour['href'] = $chemin.'pages/user/user?id='.$userid;
-    $retour['FR']   = predata($parent).' a modifié le profil public de '.predata($pseudonyme);
-    $retour['EN']   = predata($parent).' edited '.predata($pseudonyme).'\'s public profile';
+    $return['href'] = $path.'pages/todo/index?id='.$id;
+    if($title)
+      $return['EN'] = sanitize_output($nickname)." has opened a new task: ".sanitize_output(string_truncate($parent, 50, '...'));
+    if($parent)
+      $return['FR'] = sanitize_output($nickname)." a ouvert une tâche : ".sanitize_output(string_truncate($title, 50, '...'));
+
   }
 
-  //***************************************************************************************************************************************
-  // Mot de passe d'un user modifié par un admin
+  //*******************************************************************************************************************
+  // Task solved in the to-do list
 
-  else if($type === 'editpass')
+  else if($type === 'dev_task_finished')
   {
-    $retour['css']  = 'neutre texte_blanc';
-    $retour['href'] = $chemin.'pages/user/user?id='.$userid;
-    $retour['FR']   = predata($parent).' a modifié le mot de passe de '.predata($pseudonyme);
-    $retour['EN']   = predata($parent).' changed '.predata($pseudonyme).'\'s password';
+    $return['css']  = 'texte_noir vert_background_clair';
+    $return['href'] = $path.'pages/todo/index?id='.$id;
+    if($title)
+      $return['EN']   = "Task solved: ".sanitize_output(string_truncate($parent, 75, '...'));
+    if($parent)
+      $return['FR']   = "Tache résolue : ".sanitize_output(string_truncate($title, 70, '...'));
   }
 
-  //***************************************************************************************************************************************
-  // Utilisateur banni
 
-  else if($type === 'ban' && !$modlog)
+  //*****************************************************************************************************************//
+  //                                                      USERS                                                      //
+  //*****************************************************************************************************************//
+  // New user registered
+
+  else if($type === 'user_register')
   {
-    $retour['css']  = 'negatif texte_blanc gras';
-    $retour['href'] = $chemin.'pages/user/user?id='.$userid;
+    $return['css']  = 'texte_blanc nobleme_clair';
+    $return['href'] = $path.'pages/user/user?id='.$userid;
+    $return['EN']   = sanitize_output($nickname)." registered on NoBleme!";
+    $return['FR']   = sanitize_output($nickname)." s'est inscrit(e) sur NoBleme !";
+  }
+
+  //*******************************************************************************************************************
+  // A user edited his public profile
+
+  else if($type === 'user_profile_edit')
+  {
+    $return['href'] = $path.'pages/user/user?id='.$userid;
+    $return['EN']   = sanitize_output($nickname).' edited his public profile';
+    $return['FR']   = sanitize_output($nickname).' a modifié son profil public';
+  }
+
+  //*******************************************************************************************************************
+  // A user profile has been edited by an administrator
+
+  else if($type === 'user_admin_edit_profile')
+  {
+    $return['css']  = 'neutre texte_blanc';
+    $return['href'] = $path.'pages/user/user?id='.$userid;
+    $return['EN']   = sanitize_output($parent).' edited '.sanitize_output($nickname)."'s public profile";
+    $return['FR']   = sanitize_output($parent).' a modifié le profil public de '.sanitize_output($nickname);
+  }
+
+  //*******************************************************************************************************************
+  // A user's password has been changed by an administrator
+
+  else if($type === 'user_admin_edit_password')
+  {
+    $return['css']  = 'neutre texte_blanc';
+    $return['href'] = $path.'pages/user/user?id='.$userid;
+    $return['EN']   = sanitize_output($parent).' changed '.sanitize_output($nickname)."'s password";
+    $return['FR']   = sanitize_output($parent).' a modifié le mot de passe de '.sanitize_output($nickname);
+  }
+
+  //*******************************************************************************************************************
+  // A user has been banned from the website
+
+  else if($type === 'user_banned' && !$admins_only)
+  {
+    $return['css']  = 'negatif texte_blanc gras';
+    $return['href'] = $path.'pages/user/user?id='.$userid;
     $temp           = ($id > 1) ? 's' : '';
-    $retour['FR']   = predata($pseudonyme).' a été banni(e) pendant '.$id.' jour'.$temp;
-    $retour['EN']   = predata($pseudonyme).' has been banned for '.$id.' day'.$temp;
+    $return['EN']   = sanitize_output($nickname).' has been banned for '.$id.' day'.$temp;
+    $return['FR']   = sanitize_output($nickname).' a été banni(e) pendant '.$id.' jour'.$temp;
   }
-  else if($type == 'ban')
+  else if($type == 'user_banned')
   {
-    $retour['css']  = 'negatif texte_blanc gras';
-    $retour['href'] = $chemin.'pages/sysop/pilori';
+    $return['css']  = 'negatif texte_blanc gras';
+    $return['href'] = $path.'pages/sysop/pilori';
     $temp           = ($id > 1) ? 's' : '';
-    $retour['FR']   = predata($parent).' a banni '.predata($pseudonyme).' pendant '.$id.' jour'.$temp;
-    $retour['EN']   = predata($parent).' banned '.predata($pseudonyme).' for '.$id.' day'.$temp;
+    $return['EN']   = sanitize_output($parent).' banned '.sanitize_output($nickname).' for '.$id.' day'.$temp;
+    $return['FR']   = sanitize_output($parent).' a banni '.sanitize_output($nickname).' pendant '.$id.' jour'.$temp;
   }
 
-  //***************************************************************************************************************************************
-  // Utilisateur débanni
+  //*******************************************************************************************************************
+  // A banned user has been reinstated on the website
 
-  else if($type === 'deban' && !$modlog)
+  else if($type === 'user_unbanned' && !$admins_only)
   {
-    $retour['css']  = 'positif texte_blanc gras';
-    $retour['href'] = $chemin.'pages/user/user?id='.$userid;
-    $retour['FR']   = predata($pseudonyme).' a été débanni(e)';
-    $retour['EN']   = predata($pseudonyme).' has been unbanned';
+    $return['css']  = 'positif texte_blanc gras';
+    $return['href'] = $path.'pages/user/user?id='.$userid;
+    $return['EN']   = sanitize_output($nickname).' has been unbanned';
+    $return['FR']   = sanitize_output($nickname).' a été débanni(e)';
   }
-  else if($type == 'deban')
+  else if($type == 'user_unbanned')
   {
-    $retour['css']  = 'positif texte_blanc gras';
-    $retour['href'] = $chemin.'pages/sysop/pilori';
-    $retour['FR']   = predata($parent).' a débanni '.predata($pseudonyme);
-    $retour['EN']   = predata($parent).' has unbanned '.predata($pseudonyme);
+    $return['css']  = 'positif texte_blanc gras';
+    $return['href'] = $path.'pages/sysop/pilori';
+    $return['EN']   = sanitize_output($parent).' has unbanned '.sanitize_output($nickname);
+    $return['FR']   = sanitize_output($parent).' a débanni '.sanitize_output($nickname);
   }
 
-  //***************************************************************************************************************************************
-  // Permissions: Plus aucun droit
+  //*******************************************************************************************************************
+  // A user has been stripped from all his special access rights
 
-  else if($type === 'droits_delete')
+  else if($type === 'user_rights_delete')
   {
-    $retour['css']  = 'negatif texte_blanc gras';
-    $retour['href'] = $chemin.'pages/nobleme/admins';
-    $retour['FR']   = predata($pseudonyme)." ne fait plus partie de l'équipe administrative";
-    $retour['EN']   = predata($pseudonyme)." is not part of the administrative team anymore";
+    $return['css']  = 'negatif texte_blanc gras';
+    $return['href'] = $path.'pages/nobleme/admins';
+    $return['EN']   = sanitize_output($nickname)." is not part of the administrative team anymore";
+    $return['FR']   = sanitize_output($nickname)." ne fait plus partie de l'équipe administrative";
   }
 
-  //***************************************************************************************************************************************
-  // Permissions: Plus aucun droit
+  //*******************************************************************************************************************
+  // A user has become a moderator
 
-  else if($type === 'droits_mod')
+  else if($type === 'user_rights_moderator')
   {
-    $retour['css']  = 'vert_background texte_noir';
-    $retour['href'] = $chemin.'pages/nobleme/admins';
-    $retour['FR']   = predata($pseudonyme)." a rejoint l'équipe administrative en tant que modérateur";
-    $retour['EN']   = predata($pseudonyme)." has joined the administrative team as a moderator";
+    $return['css']  = 'vert_background texte_noir';
+    $return['href'] = $path.'pages/nobleme/admins';
+    $return['EN']   = sanitize_output($nickname)." has joined the administrative team as a moderator";
+    $return['FR']   = sanitize_output($nickname)." a rejoint l'équipe administrative en tant que modérateur";
   }
 
-  //***************************************************************************************************************************************
-  // Permissions: Plus aucun droit
+  //*******************************************************************************************************************
+  // A user has become a global moderator
 
-  else if($type === 'droits_sysop')
+  else if($type === 'user_rights_global_moderator')
   {
-    $retour['css']  = 'neutre texte_blanc gras';
-    $retour['href'] = $chemin.'pages/nobleme/admins';
-    $retour['FR']   = predata($pseudonyme)." a rejoint l'équipe administrative en tant que sysop";
-    $retour['EN']   = predata($pseudonyme)." has joined the administrative team as a sysop";
+    $return['css']  = 'neutre texte_blanc gras';
+    $return['href'] = $path.'pages/nobleme/admins';
+    $return['EN']   = sanitize_output($nickname)." has joined the administrative team as a global moderator";
+    $return['FR']   = sanitize_output($nickname)." a rejoint l'équipe administrative en tant que modérateur global";
   }
 
 
 
 
-  //*************************************************************************************************************************************//
-  //                                                                FORUM                                                                //
-  //*************************************************************************************************************************************//
-  // Nouveau sujet
+  //*****************************************************************************************************************//
+  //                                                REAL LIFE MEETUPS                                                //
+  //*****************************************************************************************************************//
+  // New meetup
 
-  else if($type === 'forum_new' && !$modlog)
+  else if($type === 'meetup_new' && !$admins_only)
   {
-    $retour['css']  = 'texte_noir vert_background_clair';
-    $retour['href'] = $chemin.'pages/forum/sujet?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a ouvert un sujet sur le forum : '.predata(tronquer_chaine($titre, 50, '...'));
-    $retour['EN']   = predata($pseudonyme).' opened a forum topic: '.predata(tronquer_chaine($titre, 50, '...'));
+    $return['css']  = 'texte_noir vert_background_clair';
+    $return['href'] = $path.'pages/irl/irl?id='.$id;
+    $return['EN']   = 'New real life meetup planned';
+    $return['FR']   = 'Nouvelle rencontre IRL planifiée le '.sanitize_output($title);
   }
-  else if($type === 'forum_new')
+  else if($type === 'meetup_new')
   {
-    $retour['css']  = 'texte_noir vert_background_clair';
-    $retour['href'] = $chemin.'pages/forum/sujet?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a ouvert un sujet privé sur le forum : '.predata(tronquer_chaine($titre, 45, '...'));
-    $retour['EN']   = predata($pseudonyme).' opened a private forum topic: '.predata(tronquer_chaine($titre, 45, '...'));
+    $return['css']  = 'texte_noir vert_background_clair';
+    $return['href'] = $path.'pages/irl/irl?id='.$id;
+    $return['FR']   = sanitize_output($nickname).' a crée une nouvelle IRL le '.sanitize_output($title);
   }
 
-  //***************************************************************************************************************************************
-  // Nouveau message
+  //*******************************************************************************************************************
+  // A meetup has been modified
 
-  else if($type === 'forum_new_message' && !$modlog)
+  else if($type === 'meetup_edit')
   {
-    $retour['href'] = $chemin.'pages/forum/sujet?id='.$parent.'#'.$id;
-    $retour['FR']   = predata($pseudonyme).' a répondu au sujet du forum '.predata(tronquer_chaine($titre, 50, '...'));
-    $retour['EN']   = predata($pseudonyme).' replied to the forum topic '.predata(tronquer_chaine($titre, 50, '...'));
+    $return['href'] = $path.'pages/irl/irl?id='.$id;
+    $return['FR']   = sanitize_output($nickname).' a modifié l\'IRL du '.sanitize_output($title);
   }
-  else if($type === 'forum_new_message')
+
+  //*******************************************************************************************************************
+  // A meetup has been deleted
+
+  else if($type === 'meetup_delete')
   {
-    $retour['href'] = $chemin.'pages/forum/sujet?id='.$parent.'#'.$id;
-    $retour['FR']   = predata($pseudonyme).' a répondu au sujet privé du forum '.predata(tronquer_chaine($titre, 45, '...'));
-    $retour['EN']   = predata($pseudonyme).' replied to the private forum topic '.predata(tronquer_chaine($titre, 45, '...'));
+    $return['css']  = 'mise_a_jour texte_blanc';
+    $return['FR']   = sanitize_output($nickname)." a supprimé l'IRL du ".sanitize_output($title);
   }
 
-  //***************************************************************************************************************************************
-  // Suppression d'un message
+  //*******************************************************************************************************************
+  // A new person joined a meetup
 
-  else if($type === 'forum_delete_message')
+  else if($type === 'meetup_people_new' && !$admins_only)
   {
-    $retour['css']  = 'mise_a_jour_background';
-    $retour['href'] = $chemin.'pages/forum/sujet?id='.$id;
-    if($pseudonyme == $titre)
-    {
-      $retour['FR']   = predata($pseudonyme).' a supprimé un de ses messages sur le forum';
-      $retour['EN']   = predata($pseudonyme).' deleted one of his messages on the forum';
-    }
-    else
-    {
-      $retour['FR']   = predata($pseudonyme).' a supprimé un message de '.$titre.' sur le forum';
-      $retour['EN']   = predata($pseudonyme).' deleted a message by '.$titre.' on the forum';
-    }
+    $return['href'] = $path.'pages/irl/irl?id='.$id;
+    $return['EN']   = sanitize_output($nickname).' joined a real life meetup';
+    $return['FR']   = sanitize_output($nickname).' a rejoint l\'IRL du '.sanitize_output($title);
   }
-
-  //***************************************************************************************************************************************
-  // Modification d'un message
-
-  else if($type === 'forum_edit_message')
+  else if($type === 'meetup_people_new')
   {
-    $retour['href'] = $chemin.'pages/forum/sujet?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a modifié un message de '.$titre.' sur le forum';
-    $retour['EN']   = predata($pseudonyme).' edited a message by '.$titre.' on the forum';
+    $return['href'] = $path.'pages/irl/irl?id='.$id;
+    $return['FR']   = sanitize_output($parent).' a ajouté '.sanitize_output($nickname).' à l\'IRL du '.sanitize_output($title);
   }
 
-  //***************************************************************************************************************************************
-  // Modification d'un sujet
+  //*******************************************************************************************************************
+  // A person's info has been edited in a meetup
 
-  else if($type === 'forum_edit')
+  else if($type === 'meetup_people_edit')
   {
-    $retour['href'] = $chemin.'pages/forum/sujet?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a modifié le sujet du forum '.predata(tronquer_chaine($titre, 45, '...'));
+    $return['href'] = $path.'pages/irl/irl?id='.$id;
+    $return['FR']   = sanitize_output($parent).' a modifié les infos de '.sanitize_output($nickname).' dans l\'IRL du '.sanitize_output($title);
   }
 
-  //***************************************************************************************************************************************
-  // Suppression d'un sujet
+  //*******************************************************************************************************************
+  // A person has been removed from a meetup
 
-  else if($type === 'forum_delete')
+  else if($type === 'meetup_people_delete' && !$admins_only)
   {
-    $retour['css']  = 'mise_a_jour texte_blanc';
-    $retour['FR']   = predata($pseudonyme).' a supprimé le sujet du forum '.predata(tronquer_chaine($titre, 45, '...'));
+    $return['href'] = $path.'pages/irl/irl?id='.$id;
+    $return['EN']   = sanitize_output($nickname).' left a real life meetup';
+    $return['FR']   = sanitize_output($nickname).' a quitté l\'IRL du '.sanitize_output($title);
+  }
+  else if($type === 'meetup_people_delete')
+  {
+    $return['href'] = $path.'pages/irl/irl?id='.$id;
+    $return['FR']   = sanitize_output($parent).' a supprimé '.sanitize_output($nickname).' de l\'IRL du '.sanitize_output($title);
   }
 
 
 
 
-  //*************************************************************************************************************************************//
-  //                                                                 NBDB                                                                //
-  //*************************************************************************************************************************************//
-  // Encyclopédie du web : Nouvelle page
+  //*****************************************************************************************************************//
+  //                                     NBDB: ENCYCLOPEDIA OF INTERNET CULTURE                                      //
+  //*****************************************************************************************************************//
+  // New page
 
   else if($type === 'nbdb_web_page_new')
   {
-    $retour['css']  = 'texte_noir vert_background_clair';
-    $retour['href'] = $chemin.'pages/nbdb/web?id='.$id;
-    $retour['FR']   = ($titre) ? 'Nouvelle page dans l\'encyclopédie du web : '.predata(tronquer_chaine($titre, 45, '...')) : '';
-    $retour['EN']   = ($parent) ? 'New page in the internet encyclopedia : '.predata(tronquer_chaine($parent, 50, '...')) : '';
+    $return['css']  = 'texte_noir vert_background_clair';
+    $return['href'] = $path.'pages/nbdb/web?id='.$id;
+    $return['EN']   = ($parent) ? 'New page in the internet encyclopedia : '.sanitize_output(string_truncate($parent, 50, '...')) : '';
+    $return['FR']   = ($title) ? 'Nouvelle page dans l\'encyclopédie du web : '.sanitize_output(string_truncate($title, 45, '...')) : '';
   }
 
-  //*************************************************************************************************************************************//
-  // Encyclopédie du web : Modification d'une page
+  //*******************************************************************************************************************
+  // A page has been modified
 
   else if($type === 'nbdb_web_page_edit')
   {
-    $retour['css']  = '';
-    $retour['href'] = $chemin.'pages/nbdb/web?id='.$id;
-    $retour['FR']   = ($titre) ? 'Page modifiée dans l\'encyclopédie du web : '.predata(tronquer_chaine($titre, 45, '...')) : '';
-    $retour['EN']   = ($parent) ? 'Page modified in the internet encyclopedia : '.predata(tronquer_chaine($parent, 50, '...')) : '';
+    $return['css']  = '';
+    $return['href'] = $path.'pages/nbdb/web?id='.$id;
+    $return['EN']   = ($parent) ? 'Page modified in the internet encyclopedia : '.sanitize_output(string_truncate($parent, 50, '...')) : '';
+    $return['FR']   = ($title) ? 'Page modifiée dans l\'encyclopédie du web : '.sanitize_output(string_truncate($title, 45, '...')) : '';
   }
 
-  //*************************************************************************************************************************************//
-  // Encyclopédie du web : Suppression d'une page
+  //*******************************************************************************************************************
+  // A page has been deleted
 
   else if($type === 'nbdb_web_page_delete')
   {
-    $retour['css']  = '';
-    $retour['href'] = $chemin.'pages/nbdb/web';
-    $retour['FR']   = ($titre) ? 'Page supprimée dans l\'encyclopédie du web : '.predata(tronquer_chaine($titre, 40, '...')) : '';
-    $retour['EN']   = ($parent) ? 'Page deleted in the internet encyclopedia : '.predata(tronquer_chaine($parent, 50, '...')) : '';
+    $return['css']  = '';
+    $return['href'] = $path.'pages/nbdb/web';
+    $return['EN']   = ($parent) ? 'Page deleted in the internet encyclopedia : '.sanitize_output(string_truncate($parent, 50, '...')) : '';
+    $return['FR']   = ($title) ? 'Page supprimée dans l\'encyclopédie du web : '.sanitize_output(string_truncate($title, 40, '...')) : '';
   }
 
-  //*************************************************************************************************************************************//
-  // Dictionnaire du web : Nouvelle entrée
+  //*******************************************************************************************************************
+  // New dictionary definition
 
   else if($type === 'nbdb_web_definition_new')
   {
-    $retour['css']  = 'texte_noir vert_background_clair';
-    $retour['href'] = $chemin.'pages/nbdb/web_dictionnaire?id='.$id;
-    $retour['FR']   = ($titre) ? 'Nouvelle entrée dans le dictionnaire du web : '.predata(tronquer_chaine($titre, 45, '...')) : '';
-    $retour['EN']   = ($parent) ? 'New entry in the internet dictionary : '.predata(tronquer_chaine($parent, 55, '...')) : '';
+    $return['css']  = 'texte_noir vert_background_clair';
+    $return['href'] = $path.'pages/nbdb/web_dictionnaire?id='.$id;
+    $return['EN']   = ($parent) ? 'New entry in the internet dictionary : '.sanitize_output(string_truncate($parent, 55, '...')) : '';
+    $return['FR']   = ($title) ? 'Nouvelle entrée dans le dictionnaire du web : '.sanitize_output(string_truncate($title, 45, '...')) : '';
   }
 
-  //*************************************************************************************************************************************//
-  // Dictionnaire du web : Modification d'une entrée
+  //*******************************************************************************************************************
+  // A dictionary definition has been edited
 
   else if($type === 'nbdb_web_definition_edit')
   {
-    $retour['css']  = '';
-    $retour['href'] = $chemin.'pages/nbdb/web_dictionnaire?id='.$id;
-    $retour['FR']   = ($titre) ? 'Entrée modifiée dans le dictionnaire du web : '.predata(tronquer_chaine($titre, 45, '...')) : '';
-    $retour['EN']   = ($parent) ? 'Entry modified in the internet dictionary : '.predata(tronquer_chaine($parent, 55, '...')) : '';
+    $return['css']  = '';
+    $return['href'] = $path.'pages/nbdb/web_dictionnaire?id='.$id;
+    $return['EN']   = ($parent) ? 'Entry modified in the internet dictionary : '.sanitize_output(string_truncate($parent, 55, '...')) : '';
+    $return['FR']   = ($title) ? 'Entrée modifiée dans le dictionnaire du web : '.sanitize_output(string_truncate($title, 45, '...')) : '';
   }
 
-  //*************************************************************************************************************************************//
-  // Dictionnaire du web : Suppression d'une entrée
+  //*******************************************************************************************************************
+  // A dictionary definition has been deleted
 
   else if($type === 'nbdb_web_definition_delete')
   {
-    $retour['css']  = '';
-    $retour['href'] = $chemin.'pages/nbdb/web_dictionnaire';
-    $retour['FR']   = ($titre) ? 'Entrée supprimée dans le dictionnaire du web : '.predata(tronquer_chaine($titre, 40, '...')) : '';
-    $retour['EN']   = ($parent) ? 'Entry deleted in the internet dictionary : '.predata(tronquer_chaine($parent, 55, '...')) : '';
+    $return['css']  = '';
+    $return['href'] = $path.'pages/nbdb/web_dictionnaire';
+    $return['EN']   = ($parent) ? 'Entry deleted in the internet dictionary : '.sanitize_output(string_truncate($parent, 55, '...')) : '';
+    $return['FR']   = ($title) ? 'Entrée supprimée dans le dictionnaire du web : '.sanitize_output(string_truncate($title, 40, '...')) : '';
   }
 
 
 
 
-  //*************************************************************************************************************************************//
-  //                                                          COIN DES ÉCRIVAINS                                                         //
-  //*************************************************************************************************************************************//
-  // Nouveau texte
-
-  else if($type === 'ecrivains_new')
-  {
-    $retour['css']  = 'texte_noir vert_background_clair';
-    $retour['href'] = $chemin.'pages/ecrivains/texte?id='.$id;
-    $retour['FR']   = ($pseudonyme != 'Anonyme') ? predata($pseudonyme).' a publié un texte : '.predata(tronquer_chaine($titre, 70, '...')) : 'Nouveau texte publié : '.predata(tronquer_chaine($titre, 70, '...'));
-  }
-
-  //*************************************************************************************************************************************//
-  // Modification d'un texte
-
-  else if($type === 'ecrivains_edit')
-  {
-    $retour['href'] = $chemin.'pages/ecrivains/texte?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a modifié le contenu d\'un texte : '.predata(tronquer_chaine($titre, 50, '...'));
-  }
-
-  //*************************************************************************************************************************************//
-  // Suppression d'un texte
-
-  else if($type === 'ecrivains_delete')
-  {
-    $retour['css']  = 'mise_a_jour texte_blanc';
-    $retour['FR']   = predata($pseudonyme).' a supprimé un texte du coin des écrivains : '.predata(tronquer_chaine($titre, 40, '...'));
-  }
-
-  //*************************************************************************************************************************************//
-  // Réaction à un texte
-
-  else if($type === 'ecrivains_reaction_new')
-  {
-    $retour['href'] = $chemin.'pages/ecrivains/texte?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a réagi au texte '.predata(tronquer_chaine($titre, 70, '...'));
-  }
-  else if($type === 'ecrivains_reaction_new_anonyme')
-  {
-    $retour['href'] = $chemin.'pages/ecrivains/texte?id='.$id;
-    $retour['FR']   = 'Nouvelle réaction anonyme au texte '.predata(tronquer_chaine($titre, 60, '...'));
-  }
-
-  //***************************************************************************************************************************************
-  // Suppression d'une réaction à un texte
-
-  else if($type === 'ecrivains_reaction_delete')
-  {
-    $retour['css']  = 'mise_a_jour_background';
-    $retour['href'] = $chemin.'pages/ecrivains/texte?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a supprimé une réaction de '.$titre.' dans le coin des écrivains';
-  }
-
-  //***************************************************************************************************************************************
-  // Nouveau concours du coin des écrivains
-
-  else if($type === 'ecrivains_concours_new')
-  {
-    $retour['css']  = 'texte_noir vert_background';
-    $retour['href'] = $chemin.'pages/ecrivains/concours?id='.$id;
-    $retour['FR']   = 'Nouveau concours du coin des écrivains : '.predata(tronquer_chaine($titre, 50, '...'));
-  }
-
-  //***************************************************************************************************************************************
-  // Concours du coin des écrivains ouvert aux votes
-
-  else if($type === 'writers_contest_vote')
-  {
-    $retour['css']  = 'texte_noir vert_background_clair';
-    $retour['href'] = $chemin.'pages/ecrivains/concours?id='.$id;
-    $retour['FR']   = 'Concours du coin des écrivains ouvert aux votes : '.predata(tronquer_chaine($titre, 40, '...'));
-  }
-
-  //***************************************************************************************************************************************
-  // Concours du coin des écrivains ouvert aux votes
-
-  else if($type === 'writers_contest_winner')
-  {
-    $retour['css']  = 'texte_noir vert_background';
-    $retour['href'] = $chemin.'pages/ecrivains/concours?id='.$id;
-    $retour['FR']   = $pseudonyme.' a gagné le concours du coin des écrivains : '.predata(tronquer_chaine($titre, 30, '...'));
-  }
-
-
-
-
-  //*************************************************************************************************************************************//
-  //                                                                 IRL                                                                 //
-  //*************************************************************************************************************************************//
-  // Nouvelle IRL
-
-  else if($type === 'irl_new' && !$modlog)
-  {
-    $retour['css']  = 'texte_noir vert_background_clair';
-    $retour['href'] = $chemin.'pages/irl/irl?id='.$id;
-    $retour['FR']   = 'Nouvelle rencontre IRL planifiée le '.predata($titre);
-    $retour['EN']   = 'New real life meetup planned';
-  }
-  else if($type === 'irl_new')
-  {
-    $retour['css']  = 'texte_noir vert_background_clair';
-    $retour['href'] = $chemin.'pages/irl/irl?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a crée une nouvelle IRL le '.predata($titre);
-  }
-
-  //***************************************************************************************************************************************
-  // IRL modifiée
-
-  else if($type === 'irl_edit')
-  {
-    $retour['href'] = $chemin.'pages/irl/irl?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a modifié l\'IRL du '.predata($titre);
-  }
-
-  //***************************************************************************************************************************************
-  // Suppression d'une IRL
-
-  else if($type === 'irl_delete')
-  {
-    $retour['css']  = 'mise_a_jour texte_blanc';
-    $retour['FR']   = predata($pseudonyme)." a supprimé l'IRL du ".predata($titre);
-  }
-
-  //***************************************************************************************************************************************
-  // Nouveau participant à une IRL
-
-  else if($type === 'irl_add_participant' && !$modlog)
-  {
-    $retour['href'] = $chemin.'pages/irl/irl?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a rejoint l\'IRL du '.predata($titre);
-    $retour['EN']   = predata($pseudonyme).' joined a real life meetup';
-  }
-  else if($type === 'irl_add_participant')
-  {
-    $retour['href'] = $chemin.'pages/irl/irl?id='.$id;
-    $retour['FR']   = predata($parent).' a ajouté '.predata($pseudonyme).' à l\'IRL du '.predata($titre);
-  }
-
-  //***************************************************************************************************************************************
-  // Participant modifié dans une IRL
-
-  else if($type === 'irl_edit_participant')
-  {
-    $retour['href'] = $chemin.'pages/irl/irl?id='.$id;
-    $retour['FR']   = predata($parent).' a modifié les infos de '.predata($pseudonyme).' dans l\'IRL du '.predata($titre);
-  }
-
-  //***************************************************************************************************************************************
-  // Participant supprimé d'une IRL
-
-  else if($type === 'irl_del_participant' && !$modlog)
-  {
-    $retour['href'] = $chemin.'pages/irl/irl?id='.$id;
-    $retour['FR']   = predata($pseudonyme).' a quitté l\'IRL du '.predata($titre);
-    $retour['EN']   = predata($pseudonyme).' left a real life meetup';
-  }
-  else if($type === 'irl_del_participant')
-  {
-    $retour['href'] = $chemin.'pages/irl/irl?id='.$id;
-    $retour['FR']   = predata($parent).' a supprimé '.predata($pseudonyme).' de l\'IRL du '.predata($titre);
-  }
-
-
-
-
-  //*************************************************************************************************************************************//
-  //                                                            MISCELLANÉES                                                             //
-  //*************************************************************************************************************************************//
-  // Nouvelle miscellanée
+  //*****************************************************************************************************************//
+  //                                                     QUOTES                                                      //
+  //*****************************************************************************************************************//
+  // New quote
 
   else if($type === 'quote_new_fr')
   {
-    $retour['css']  = 'texte_noir vert_background_clair';
-    $retour['href'] = $chemin.'pages/quotes/quote?id='.$id;
-    $retour['FR']   = 'Miscellanée #'.$id.' ajoutée à la collection';
+    $return['css']  = 'texte_noir vert_background_clair';
+    $return['href'] = $path.'pages/quotes/quote?id='.$id;
+    $return['FR']   = 'Miscellanée #'.$id.' ajoutée à la collection';
   }
   else if($type === 'quote_new_en')
   {
-    $retour['css']  = 'texte_noir vert_background_clair';
-    $retour['href'] = $chemin.'pages/quotes/quote?id='.$id;
-    $retour['FR']   = 'Miscellanée anglophone #'.$id.' ajoutée à la collection';
-    $retour['EN']   = 'Miscellanea #'.$id.' added to the collection';
+    $return['css']  = 'texte_noir vert_background_clair';
+    $return['href'] = $path.'pages/quotes/quote?id='.$id;
+    $return['EN']   = 'Miscellanea #'.$id.' added to the collection';
+    $return['FR']   = 'Miscellanée anglophone #'.$id.' ajoutée à la collection';
   }
 
 
 
 
-  //*************************************************************************************************************************************//
-  //                                                            DÉVELOPPEMENT                                                            //
-  //*************************************************************************************************************************************//
-  // Nouvelle version
+  //*****************************************************************************************************************//
+  //                                                      FORUM                                                      //
+  //*****************************************************************************************************************//
+  // New thread
 
-  else if($type === 'version')
+  else if($type === 'forum_thread_new' && !$admins_only)
   {
-    $retour['css']  = 'gras texte_blanc positif';
-    $retour['href'] = $chemin.'pages/todo/roadmap';
-    $retour['FR']   = "Nouvelle version de NoBleme.com : ".predata($titre);
-    $retour['EN']   = "New version of NoBleme.com: ".predata($titre);
+    $return['css']  = 'texte_noir vert_background_clair';
+    $return['href'] = $path.'pages/forum/sujet?id='.$id;
+    $return['EN']   = sanitize_output($nickname).' opened a forum topic: '.sanitize_output(string_truncate($title, 50, '...'));
+    $return['FR']   = sanitize_output($nickname).' a ouvert un sujet sur le forum : '.sanitize_output(string_truncate($title, 50, '...'));
   }
-
-  //***************************************************************************************************************************************
-  // Nouveau devblog
-
-  else if($type === 'devblog')
+  else if($type === 'forum_thread_new')
   {
-    $retour['css']  = 'texte_noir vert_background';
-    $retour['href'] = $chemin.'pages/devblog/devblog?id='.$id;
-    $retour['FR']   = "Nouveau devblog publié : ".predata(tronquer_chaine($titre, 50, '...'));
+    $return['css']  = 'texte_noir vert_background_clair';
+    $return['href'] = $path.'pages/forum/sujet?id='.$id;
+    $return['EN']   = sanitize_output($nickname).' opened a private forum topic: '.sanitize_output(string_truncate($title, 45, '...'));
+    $return['FR']   = sanitize_output($nickname).' a ouvert un sujet privé sur le forum : '.sanitize_output(string_truncate($title, 45, '...'));
   }
 
-  //***************************************************************************************************************************************
-  // Nouvelle tâche
+  //*******************************************************************************************************************
+  // A thread has been edited
 
-  else if($type === 'todo_new')
+  else if($type === 'forum_thread_edit')
   {
-    $retour['href'] = $chemin.'pages/todo/index?id='.$id;
-    if($titre)
-      $retour['FR'] = predata($pseudonyme)." a ouvert une tâche : ".predata(tronquer_chaine($titre, 50, '...'));
-    if($parent)
-      $retour['EN'] = predata($pseudonyme)." has opened a new task: ".predata(tronquer_chaine($parent, 50, '...'));
+    $return['href'] = $path.'pages/forum/sujet?id='.$id;
+    $return['FR']   = sanitize_output($nickname).' a modifié le sujet du forum '.sanitize_output(string_truncate($title, 45, '...'));
   }
 
-  //***************************************************************************************************************************************
-  // Tâche résolue
+  //*******************************************************************************************************************
+  // A thread has been deleted
 
-  else if($type === 'todo_fini')
+  else if($type === 'forum_thread_delete')
   {
-    $retour['css']  = 'texte_noir vert_background_clair';
-    $retour['href'] = $chemin.'pages/todo/index?id='.$id;
-    if($titre)
-      $retour['FR']   = "Tache résolue : ".predata(tronquer_chaine($titre, 70, '...'));
-    if($parent)
-      $retour['EN']   = "Task solved: ".predata(tronquer_chaine($parent, 75, '...'));
+    $return['css']  = 'mise_a_jour texte_blanc';
+    $return['FR']   = sanitize_output($nickname).' a supprimé le sujet du forum '.sanitize_output(string_truncate($title, 45, '...'));
+  }
+
+  //*******************************************************************************************************************
+  // New message posted
+
+  else if($type === 'forum_message_new' && !$admins_only)
+  {
+    $return['href'] = $path.'pages/forum/sujet?id='.$parent.'#'.$id;
+    $return['EN']   = sanitize_output($nickname).' replied to the forum topic '.sanitize_output(string_truncate($title, 50, '...'));
+    $return['FR']   = sanitize_output($nickname).' a répondu au sujet du forum '.sanitize_output(string_truncate($title, 50, '...'));
+  }
+  else if($type === 'forum_message_new')
+  {
+    $return['href'] = $path.'pages/forum/sujet?id='.$parent.'#'.$id;
+    $return['EN']   = sanitize_output($nickname).' replied to the private forum topic '.sanitize_output(string_truncate($title, 45, '...'));
+    $return['FR']   = sanitize_output($nickname).' a répondu au sujet privé du forum '.sanitize_output(string_truncate($title, 45, '...'));
+  }
+
+  //*******************************************************************************************************************
+  // A message has been edited
+
+  else if($type === 'forum_message_edit')
+  {
+    $return['href'] = $path.'pages/forum/sujet?id='.$id;
+    $return['EN']   = sanitize_output($nickname).' edited a message by '.$title.' on the forum';
+    $return['FR']   = sanitize_output($nickname).' a modifié un message de '.$title.' sur le forum';
+  }
+
+  //*******************************************************************************************************************
+  // A message has been deleted
+
+  else if($type === 'forum_message_delete')
+  {
+    $return['css']  = 'mise_a_jour_background';
+    $return['href'] = $path.'pages/forum/sujet?id='.$id;
+    if($nickname == $title)
+    {
+      $return['EN']   = sanitize_output($nickname).' deleted one of his messages on the forum';
+      $return['FR']   = sanitize_output($nickname).' a supprimé un de ses messages sur le forum';
+    }
+    else
+    {
+      $return['EN']   = sanitize_output($nickname).' deleted a message by '.$title.' on the forum';
+      $return['FR']   = sanitize_output($nickname).' a supprimé un message de '.$title.' sur le forum';
+    }
   }
 
 
 
 
-  //*************************************************************************************************************************************//
-  //                                                         RETOUR DES DONNÉES                                                          //
-  //*************************************************************************************************************************************//
-  // On remplit un cas par défaut, au cas où le type d'activité demandé ne serait pas encore rempli dans cette fonction
+  //*****************************************************************************************************************//
+  //                                                 WRITER'S CORNER                                                 //
+  //*****************************************************************************************************************//
+  // New writing published
 
+  else if($type === 'ecrivains_new')
+  {
+    $return['css']  = 'texte_noir vert_background_clair';
+    $return['href'] = $path.'pages/ecrivains/texte?id='.$id;
+    $return['FR']   = ($nickname != 'Anonyme') ? sanitize_output($nickname).' a publié un texte : '.sanitize_output(string_truncate($title, 70, '...')) : 'Nouveau texte publié : '.sanitize_output(string_truncate($title, 70, '...'));
+  }
+
+  //*******************************************************************************************************************
+  // A writing has been edited
+
+  else if($type === 'ecrivains_edit')
+  {
+    $return['href'] = $path.'pages/ecrivains/texte?id='.$id;
+    $return['FR']   = sanitize_output($nickname).' a modifié le contenu d\'un texte : '.sanitize_output(string_truncate($title, 50, '...'));
+  }
+
+  //*******************************************************************************************************************
+  // A writing has been deleted
+
+  else if($type === 'ecrivains_delete')
+  {
+    $return['css']  = 'mise_a_jour texte_blanc';
+    $return['FR']   = sanitize_output($nickname).' a supprimé un texte du coin des écrivains : '.sanitize_output(string_truncate($title, 40, '...'));
+  }
+
+  //*******************************************************************************************************************
+  // Comment added to a writing
+
+  else if($type === 'writings_comment_new')
+  {
+    $return['href'] = $path.'pages/ecrivains/texte?id='.$id;
+    $return['FR']   = sanitize_output($nickname).' a réagi au texte '.sanitize_output(string_truncate($title, 70, '...'));
+  }
+  else if($type === 'writings_comment_new_anonymous')
+  {
+    $return['href'] = $path.'pages/ecrivains/texte?id='.$id;
+    $return['FR']   = 'Nouvelle réaction anonyme au texte '.sanitize_output(string_truncate($title, 60, '...'));
+  }
+
+  //*******************************************************************************************************************
+  // A comment has been deleted
+
+  else if($type === 'writings_comment_delete')
+  {
+    $return['css']  = 'mise_a_jour_background';
+    $return['href'] = $path.'pages/ecrivains/texte?id='.$id;
+    $return['FR']   = sanitize_output($nickname).' a supprimé une réaction de '.$title.' dans le coin des écrivains';
+  }
+
+  //*******************************************************************************************************************
+  // New writing contest
+
+  else if($type === 'writings_contest_new')
+  {
+    $return['css']  = 'texte_noir vert_background';
+    $return['href'] = $path.'pages/ecrivains/concours?id='.$id;
+    $return['FR']   = 'Nouveau concours du coin des écrivains : '.sanitize_output(string_truncate($title, 50, '...'));
+  }
+
+  //*******************************************************************************************************************
+  // Writing contest open for voting
+
+  else if($type === 'writings_contest_winner')
+  {
+    $return['css']  = 'texte_noir vert_background_clair';
+    $return['href'] = $path.'pages/ecrivains/concours?id='.$id;
+    $return['FR']   = 'Concours du coin des écrivains ouvert aux votes : '.sanitize_output(string_truncate($title, 40, '...'));
+  }
+
+  //*******************************************************************************************************************
+  // Writing contest finished
+
+  else if($type === 'writings_contest_vote')
+  {
+    $return['css']  = 'texte_noir vert_background';
+    $return['href'] = $path.'pages/ecrivains/concours?id='.$id;
+    $return['FR']   = $nickname.' a gagné le concours du coin des écrivains : '.sanitize_output(string_truncate($title, 30, '...'));
+  }
+
+
+
+  //*****************************************************************************************************************//
+  //                                                 DEFAULT VALUES                                                  //
+  //*****************************************************************************************************************//
+  // If no activity type has been matched, we return some default content
   else
   {
-    $retour['css']  = '';
-    $retour['href'] = '';
-    $retour['FR']   = "Ceci ne devrait pas apparaitre ici, oups (".$type.")";
-    $retour['EN']   = "This should not appear here, oops (".$type.")";
+    $return['css']  = '';
+    $return['href'] = '';
+    $return['EN']   = "This should not appear here, oops (".$type.")";
+    $return['FR']   = "Ceci ne devrait pas apparaitre ici, oups (".$type.")";
   }
 
-  //***************************************************************************************************************************************
-  // Si jamais des valeurs de retour sont vides, on leur met une valeur par défaut (par exemple si on ne veut pas styler / pas de lien)
+  // If some values were left empty, we replace them with an empty string
+  $return['css']  = (isset($return['css']))  ? $return['css']  : "";
+  $return['href'] = (isset($return['href'])) ? $return['href'] : "";
+  $return['FR']   = (isset($return['FR']))   ? $return['FR']   : "";
+  $return['EN']   = (isset($return['EN']))   ? $return['EN']   : "";
 
-  $retour['css']  = (isset($retour['css']))  ? $retour['css']  : "";
-  $retour['href'] = (isset($retour['href'])) ? $retour['href'] : "";
-  $retour['FR']   = (isset($retour['FR']))   ? $retour['FR']   : "";
-  $retour['EN']   = (isset($retour['EN']))   ? $retour['EN']   : "";
-
-  //***************************************************************************************************************************************
-  // Il ne reste plus qu'à renvoyer le tableau contenant les données
-
-  return $retour;
+  // We're all done now, time to return the data
+  return $return;
 }

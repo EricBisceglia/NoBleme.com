@@ -150,13 +150,13 @@ CREATE TABLE IF NOT EXISTS `logs_activity` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_users` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `happened_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `is_moderators_only` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `nickname` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_administrators_only` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `nickname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `activity_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `activity_type` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `activity_summary` text COLLATE utf8mb4_unicode_ci,
-  `activity_parent` text COLLATE utf8mb4_unicode_ci,
-  `moderation_reason` text COLLATE utf8mb4_unicode_ci,
+  `activity_type` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activity_summary` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activity_parent` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `moderation_reason` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_related_users` (`fk_users`),
   KEY `index_related_foreign_keys` (`activity_id`),
@@ -167,9 +167,9 @@ DROP TABLE IF EXISTS `logs_activity_details`;
 CREATE TABLE IF NOT EXISTS `logs_activity_details` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_logs_activity` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `content_description` text COLLATE utf8mb4_unicode_ci,
-  `content_before` mediumtext COLLATE utf8mb4_unicode_ci,
-  `content_after` mediumtext COLLATE utf8mb4_unicode_ci,
+  `content_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content_before` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content_after` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_logs_activity` (`fk_logs_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -324,8 +324,8 @@ CREATE TABLE IF NOT EXISTS `quotes_users` (
 DROP TABLE IF EXISTS `stats_pageviews`;
 CREATE TABLE IF NOT EXISTS `stats_pageviews` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `page_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `page_url` text COLLATE utf8mb4_unicode_ci,
+  `page_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `page_url` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `view_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `view_count_archive` int(10) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -337,8 +337,8 @@ CREATE TABLE IF NOT EXISTS `system_scheduler` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `planned_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `task_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `task_type` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `task_description` text COLLATE utf8mb4_unicode_ci,
+  `task_type` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `task_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_task_id` (`task_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -355,8 +355,8 @@ CREATE TABLE IF NOT EXISTS `system_variables` (
 DROP TABLE IF EXISTS `system_versions`;
 CREATE TABLE IF NOT EXISTS `system_versions` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `version` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `build` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `version` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `build` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_full_version` (`version`,`build`)
