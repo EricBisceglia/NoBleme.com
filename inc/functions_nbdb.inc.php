@@ -35,19 +35,19 @@ function string_remove_accents($string)
 //
 // Utilisation: nbdb_web_liste_pages_encyclopedie($lang);
 
-function nbdb_web_liste_pages_encyclopedie($lang)
+function nbdb_web_list_pages($lang)
 {
   // On spécifie la langue à chercher
-  $web_lang = changer_casse($lang, 'min');
+  $web_lang = string_change_case($lang, 'lowercase');
 
   // On va chercher la liste des noms de pages
-  $qweb = query(" SELECT  nbdb_web_page.titre_$web_lang AS 'w_titre'
-                  FROM    nbdb_web_page ");
+  $qweb = query(" SELECT  nbdb_web_pages.title_$web_lang AS 'w_titre'
+                  FROM    nbdb_web_pages ");
 
   // On les colle dans un tableau
   $liste_pages = array();
   while($dweb = mysqli_fetch_array($qweb))
-    array_push($liste_pages, changer_casse(html_entity_decode($dweb['w_titre'], ENT_QUOTES), 'min'));
+    array_push($liste_pages, string_change_case(html_entity_decode($dweb['w_titre'], ENT_QUOTES), 'lowercase'));
 
   // Et on renvoie le tableau
   return $liste_pages;
@@ -63,19 +63,19 @@ function nbdb_web_liste_pages_encyclopedie($lang)
 //
 // Utilisation: nbdb_web_liste_pages_dictionnaire($lang);
 
-function nbdb_web_liste_pages_dictionnaire($lang)
+function nbdb_web_list_definitions($lang)
 {
   // On spécifie la langue à chercher
-  $web_lang = changer_casse($lang, 'min');
+  $web_lang = string_change_case($lang, 'lowercase');
 
   // On va chercher la liste des noms de pages
-  $qweb = query(" SELECT  nbdb_web_definition.titre_$web_lang AS 'w_titre'
-                  FROM    nbdb_web_definition ");
+  $qweb = query(" SELECT  nbdb_web_definitions.title_$web_lang AS 'w_titre'
+                  FROM    nbdb_web_definitions ");
 
   // On les colle dans un tableau
   $liste_pages = array();
   while($dweb = mysqli_fetch_array($qweb))
-    array_push($liste_pages, changer_casse(html_entity_decode($dweb['w_titre'], ENT_QUOTES), 'min'));
+    array_push($liste_pages, string_change_case(html_entity_decode($dweb['w_titre'], ENT_QUOTES), 'lowercase'));
 
   // Et on renvoie le tableau
   return $liste_pages;

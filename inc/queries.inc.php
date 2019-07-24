@@ -1729,6 +1729,39 @@ if($last_query < 32)
             WHERE   logs_activity.activity_type LIKE '$original_log' ");
   }
 
+  query(" UPDATE  nbdb_web_pages
+          SET     nbdb_web_pages.definition_en = REPLACE(nbdb_web_pages.definition_en, '[[dico:', '[[definition:') ");
+  query(" UPDATE  nbdb_web_pages
+          SET     nbdb_web_pages.definition_fr = REPLACE(nbdb_web_pages.definition_fr, '[[dico:', '[[definition:') ");
+  query(" UPDATE  nbdb_web_definitions
+          SET     nbdb_web_definitions.definition_en = REPLACE(nbdb_web_definitions.definition_en, '[[dico:', '[[definition:') ");
+  query(" UPDATE  nbdb_web_definitions
+          SET     nbdb_web_definitions.definition_fr = REPLACE(nbdb_web_definitions.definition_fr, '[[dico:', '[[definition:') ");
+  query(" UPDATE  nbdb_web_pages
+          SET     nbdb_web_pages.definition_en = REPLACE(nbdb_web_pages.definition_en, '[[lien:', '[[link:') ");
+  query(" UPDATE  nbdb_web_pages
+          SET     nbdb_web_pages.definition_fr = REPLACE(nbdb_web_pages.definition_fr, '[[lien:', '[[link:') ");
+  query(" UPDATE  nbdb_web_definitions
+          SET     nbdb_web_definitions.definition_en = REPLACE(nbdb_web_definitions.definition_en, '[[lien:', '[[link:') ");
+  query(" UPDATE  nbdb_web_definitions
+          SET     nbdb_web_definitions.definition_fr = REPLACE(nbdb_web_definitions.definition_fr, '[[lien:', '[[link:') ");
+  query(" UPDATE  nbdb_web_pages
+          SET     nbdb_web_pages.definition_en = REPLACE(nbdb_web_pages.definition_en, '[[galerie', '[[gallery') ");
+  query(" UPDATE  nbdb_web_pages
+          SET     nbdb_web_pages.definition_fr = REPLACE(nbdb_web_pages.definition_fr, '[[galerie', '[[gallery') ");
+  query(" UPDATE  nbdb_web_definitions
+          SET     nbdb_web_definitions.definition_en = REPLACE(nbdb_web_definitions.definition_en, '[[galerie', '[[gallery') ");
+  query(" UPDATE  nbdb_web_definitions
+          SET     nbdb_web_definitions.definition_fr = REPLACE(nbdb_web_definitions.definition_fr, '[[galerie', '[[gallery') ");
+  query(" UPDATE  nbdb_web_pages
+          SET     nbdb_web_pages.definition_en = REPLACE(nbdb_web_pages.definition_en, '/galerie]]', '/gallery]]') ");
+  query(" UPDATE  nbdb_web_pages
+          SET     nbdb_web_pages.definition_fr = REPLACE(nbdb_web_pages.definition_fr, '/galerie]]', '/gallery]]') ");
+  query(" UPDATE  nbdb_web_definitions
+          SET     nbdb_web_definitions.definition_en = REPLACE(nbdb_web_definitions.definition_en, '/galerie]]', '/gallery]]') ");
+  query(" UPDATE  nbdb_web_definitions
+          SET     nbdb_web_definitions.definition_fr = REPLACE(nbdb_web_definitions.definition_fr, '/galerie]]', '/gallery]]') ");
+
   sql_update_query_id(32);
 }
 
