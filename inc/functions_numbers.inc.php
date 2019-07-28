@@ -6,95 +6,98 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 
+/**
+ * Ensures a number is preceded by its sign.
+ *
+ * @param   int|double $number  The number in question.
+ *
+ * @return  string|int|double   The same number, but signed.
+ */
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Renvoie un nombre avec le bon signe
-//
-// Exemple d'utilisation :
-// $nombre_signed = signe_nombre($nombre)
-
-function signe_nombre($nombre)
+function number_prepend_sign($number)
 {
-  if($nombre > 0)
-    return '+'.$nombre;
+  // If the number is above 0, then we prepend a plus to it
+  if($number > 0)
+    return '+'.$number;
+
+  // Otherwise, we do nothing
   else
-    return $nombre;
+    return $number;
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Renvoie un style css en fonction d'un contenu selon s'il est positif, neutre, ou négatif
-// Si $hex est rempli, renvoie un hex de couleur au lieu d'une classe css
-//
-// Exemple d'utilisation :
-// $couleur_contenu = format_positif($contenu);
+/**
+ * Returns a styling depending on whether the number is positive, zero, or negative.
+ *
+ * @param   int|double  $number                       The value for which we want a styling.
+ * @param   bool|null   $return_color_hex (OPTIONAL)  If set, then return a hexadecimal color value instead of a style.
+ *
+ * @return  string                                    The css styling or hexadecimal code corresponding to the value.
+ */
 
-function format_positif($contenu,$hex=NULL)
+function number_styling($number, $return_color_hex=0)
 {
-  if(!$hex)
+  // If we want a hex code, then we return a hex code for each case
+  if($return_color_hex)
   {
-    if($contenu > 0)
-      return 'positif';
-    else if($contenu == 0)
-      return 'neutre';
-    else
-      return 'negatif';
-  }
-  else
-  {
-    if($contenu > 0)
+    if($number > 0)
       return '339966';
-    else if($contenu == 0)
-      return 'EB8933';
-    else
+    else if($number < 0)
       return 'FF0000';
+    else
+      return 'EB8933';
   }
+
+  // Otherwise, we return the corresponding css styling
+  if($number > 0)
+    return 'positive';
+  else if($number < 0)
+    return 'negative';
+  else
+    return 'neutral';
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Formatte un nombre selon plusieurs formats possibles
-// $nombre est le nombre à formatter
-// $format est le type de format à y appliquer
-// Si $decimales est précisé, affiche ce nombre de décimales après la virgule (lorsque c'est possible)
-// Si $signe est précisé, affiche le signe + si le nombre est positif
-//
-// Exemple d'utilisation :
-// $prix = format_nombre($nombre,"prix")
+/**
+ * Changes the formatting of a number.
+ *
+ * I initially wanted to use number_format, but it was already taken by PHP's stdlib. Oh well.
+ *
+ * @param   int|double  $number                   The number to format.
+ * @param   string|null $format       (OPTIONAL)  The format of the returned number.
+ *                                                "number", "price", "price_cents", "percentage", "percentage_point"
+ * @param   int|null    $decimals     (OPTIONAL)  Which amount of decimals should be returned.
+ * @param   bool|null   $prepend_sign (OPTIONAL)  Should a sign always precede the returned number.
+ *
+ * @return  int|double|string                     The formatted number.
+ */
 
-function format_nombre($nombre,$format,$decimales=NULL,$signe=NULL)
+function number_display_format($number, $format="number", $decimals=0, $prepend_sign=0)
 {
-  // Nombre de décimales (en option) pour les pourcentages et les points
-  $decimales = (!is_null($decimales)) ? $decimales : 1;
+  // Format: standard format - 10,01
+  if($format == "number")
+    $number = number_format((float)$number, 0, ',', '&nbsp;');
 
-  // Formater un prix
-  if($format == "nombre")
-    $format_nombre = number_format((float)$nombre, 0, ',', ' ');
+  // Format: price - 10 € (we ignore decimals)
+  if($format == "price")
+    $number = number_format((float)$number, 0, ',', '&nbsp;')."&nbsp;€";
 
-  // Formater un prix
-  if($format == "prix")
-    $format_nombre = number_format((float)$nombre, 0, ',', ' ')." €";
+  // Format: price with cents - 10,01 € (we limit to 2 decimals)
+  if($format == "price_cents")
+    $number = number_format((float)$number, 2, ',', '&nbsp;')."&nbsp;€";
 
-  // Formater un prix avec centimes
-  if($format == "centimes")
-    $format_nombre = number_format((float)$nombre, 2, ',', ' ')." €";
+  // Format: percentage - 10,01 %
+  else if($format == "percentage")
+    $number = number_format((float)$number, $decimals, ',', '&nbsp;')."&nbsp;%";
 
-  // Formater un pourcentage
-  else if($format == "pourcentage")
-    $format_nombre = number_format((float)$nombre, $decimales, ',', '')." %";
+  // Format: percentage point - 10,01 p%
+  else if($format == "percentage_point")
+    $number = number_format((float)$number, $decimals, ',', '&nbsp;')."&nbsp;p%";
 
-  // Formater un point de pourcentage
-  else if($format == "point")
-    $format_nombre = number_format((float)$nombre, $decimales, ',', '')." p%";
-
-  // Application du signe si nécessaire
-  if($signe && $nombre > 0)
-    $format_nombre = '+'.$format_nombre;
-
-  // On renvoie le résultat
-  return $format_nombre;
+  // Retern the number, with an extra sign if necessary
+  return ($prepend_sign && $number > 0) ? '+'.$number : $number;
 }

@@ -7,9 +7,9 @@
 .nobleme_clair          { background: #78A1BC;  }
 .nobleme_fonce          { background: #37536B;  }
 .edited                 { background: #47D38D;  }
-.positif                { background: #339966;  }
+.positive               { background: #339966;  }
 .neutre                 { background: #EB8933;  }
-.negatif, .erreur       { background: #FF0000;  }
+.negative, .erreur      { background: #FF0000;  }
 .vert_background        { background: #B3E28E;  }
 .vert_background_clair  { background: #DAEEAA;  }
 .mise_a_jour_background { background: #F9E5E5;  }

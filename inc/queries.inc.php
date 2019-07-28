@@ -1685,6 +1685,25 @@ if($last_query < 32)
           SET     system_scheduler.task_type    = 'writers_contest_end'
           WHERE   system_scheduler.task_type LIKE 'ecrivains_concours_fin' ");
 
+  query(" UPDATE  forum_threads
+          SET     forum_threads.thread_format    = 'thread'
+          WHERE   forum_threads.thread_format LIKE 'Fil' ");
+  query(" UPDATE  forum_threads
+          SET     forum_threads.thread_format    = 'thread_anonymous'
+          WHERE   forum_threads.thread_format LIKE 'Anonyme' ");
+  query(" UPDATE  forum_threads
+          SET     forum_threads.thread_type    = 'standard'
+          WHERE   forum_threads.thread_type LIKE 'Standard' ");
+  query(" UPDATE  forum_threads
+          SET     forum_threads.thread_type    = 'serious'
+          WHERE   forum_threads.thread_type LIKE 'Sérieux' ");
+  query(" UPDATE  forum_threads
+          SET     forum_threads.thread_type    = 'debate'
+          WHERE   forum_threads.thread_type LIKE 'Débat' ");
+  query(" UPDATE  forum_threads
+          SET     forum_threads.thread_type    = 'game'
+          WHERE   forum_threads.thread_type LIKE 'Jeu' ");
+
   $logs_activity_translation = array( 'version'                         => 'dev_version'                    ,
                                       'devblog'                         => 'dev_blog'                       ,
                                       'todo_new'                        => 'dev_task_new'                   ,

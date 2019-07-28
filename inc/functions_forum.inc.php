@@ -1,124 +1,133 @@
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                 CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST INCLUDE PAR UNE AUTRE PAGE                                */
-/*                                                                                                                                       */
-// Include only /*************************************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF'])))
-  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Vous n\'êtes pas censé accéder à cette page, dehors!</body></html>');
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
+/*                                                                                                                   */
+// Include only /*****************************************************************************************************/
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 
+/**
+ * Fetch the full name of a forum thread mode.
+ *
+ * Forum threads have unique modes, which are stored in the database using short names.
+ * This function fetches their mode in a specified format, simply enough.
+ *
+ * @param   string      $mode               The short name of the forum thread mode.
+ * @param   string      $format             The expected format of the returned value ('short' or 'full').
+ * @param   string|null $lang   (OPTIONAL)  The language in which the returned string will be.
+ *
+ * @return  string                          The full name of the forum thread mode.
+ */
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Renvoie le nom de l'option d'un sujet de discussion
-//
-// $option              est le nom de l'option sur laquelle on veut des infos
-// $format              est le format dans lequel on veut que les infos soient renvoyées
-// $lang    (optionnel) est la langue dans laquelle renvoyer l'option
-//
-// Utilisation: forum_option_info('Anonyme', 'Complet', 'FR');
-
-function forum_option_info($option, $format, $lang="FR")
+function forum_fetch_mode($mode, $format, $lang="EN")
 {
-  // Au cas où, on met la valeur de retour à 0
-  $return = 0;
-
-  // Format : Nom court
-  if($format == 'court')
+  // If we want a short name, we parse the possible modes
+  if($format == 'short')
   {
-    // Apparence
-    if($option == 'Fil')
-      $return = ($lang == 'FR') ? 'Fil' : 'Thread';
-    if($option == 'Anonyme')
-      $return = ($lang == 'FR') ? 'Anonyme' : 'Anonymous';
+    // Thread formats
+    if($mode == 'thread')
+      return ($lang == 'EN') ? 'Thread': 'Fil';
+    else if($mode == 'thread_anonymous')
+      return ($lang == 'EN') ? 'Anonymous' : 'Anonyme';
 
-    // Classification
-    if($option == 'Standard')
-      $return = ($lang == 'FR') ? '' : '';
-    if($option == 'Sérieux')
-      $return = ($lang == 'FR') ? 'Sérieux' : 'Serious';
-    if($option == 'Débat')
-      $return = ($lang == 'FR') ? 'Débat' : 'Debate';
-    if($option == 'Jeu')
-      $return = ($lang == 'FR') ? 'Jeu de forum' : 'Forum game';
+    // Thread types
+    else if($mode == 'standard')
+      return ($lang == 'EN') ? '' : '';
+    else if($mode == 'serious')
+      return ($lang == 'EN') ? 'Serious' : 'Sérieux';
+    else if($mode == 'debate')
+      return ($lang == 'EN') ? 'Debate' : 'Débat';
+    else if($mode == 'game')
+      return ($lang == 'EN') ? 'Forum game' : 'Jeu de forum';
   }
 
-  // Format : Nom complet
-  else if($format == 'complet')
+  // If we want a full name, we parse the possible modes
+  else if($format == 'full')
   {
-    // Apparence
-    if($option == 'Fil')
-      $return = ($lang == 'FR') ? 'Fil de discussion' : 'Linear thread';
-    if($option == 'Anonyme')
-      $return = ($lang == 'FR') ? 'Fil de discussion anonyme' : 'Anonymous thread';
+    // Thread formats
+    if($mode == 'thread')
+      return ($lang == 'EN') ? 'Linear thread' : 'Fil de discussion';
+    else if($mode == 'thread_anonymous')
+      return ($lang == 'EN') ? 'Anonymous thread' : 'Fil de discussion anonyme';
 
-    // Classification
-    if($option == 'Standard')
-      $return = ($lang == 'FR') ? 'Sujet standard' : 'Standard topic';
-    if($option == 'Sérieux')
-      $return = ($lang == 'FR') ? 'Sujet sérieux' : 'Serious topic';
-    if($option == 'Débat')
-      $return = ($lang == 'FR') ? 'Débat d\'opinion' : 'Debate';
-    if($option == 'Jeu')
-      $return = ($lang == 'FR') ? 'Jeu de forum' : 'Forum game';
+    // Thread types
+    else if($mode == 'standard')
+      return ($lang == 'EN') ? 'Standard topic' : 'Sujet standard';
+    else if($mode == 'serious')
+      return ($lang == 'EN') ? 'Serious topic' : 'Sujet sérieux';
+    else if($mode == 'debate')
+      return ($lang == 'EN') ? 'Debate' : 'Débat d\'opinion';
+    else if($mode == 'game')
+      return ($lang == 'EN') ? 'Forum game' : 'Jeu de forum';
   }
 
-  // On renvoie la valeur demandée
-  return $return;
+  // If we don't match anything, we return an empty string.
+  return '';
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Recompte le nombre de messages postés par l'user
-//
-// $id est l'id du membre dont on veut recompter les messages
-//
-// Utilisation forum_recompter_messages_membre(1);
+/**
+ * Counts the number of forum messages posted by an user.
+ *
+ * @param   int $user_id (OPTIONAL) The id of the user whose post count we want to update.
+ *
+ * @return  int                     The post count of the user.
+ */
 
-function forum_recompter_messages_membre($id=0)
+function forum_update_user_message_count($user_id=0)
 {
-  // On va chercher tous les messages qu'on peut recompter
-  $qcompte = mysqli_fetch_array(query(" SELECT    COUNT(*) AS 'count_messages'
-                                        FROM      forum_message
-                                        LEFT JOIN forum_sujet ON forum_message.FKforum_sujet = forum_sujet.id
-                                        WHERE     forum_message.FKmembres         =         '$id'
-                                        AND       forum_sujet.public              =         1
-                                        AND       forum_sujet.apparence           NOT LIKE  'Anonyme'
-                                        AND       forum_sujet.classification      NOT LIKE  'Jeu' "));
+  // We fetch the sum of all the messages that we're allowed to count
+  $dposts = mysqli_fetch_array(query("  SELECT    COUNT(*) AS 'message_count'
+                                        FROM      forum_messages
+                                        LEFT JOIN forum_threads ON forum_messages.fk_forum_threads = forum_threads.id
+                                        WHERE     forum_messages.fk_author                         = '$user_id'
+                                        AND       forum_threads.is_private                         = 0
+                                        AND       forum_threads.thread_format               NOT LIKE 'thread_anonymous'
+                                        AND       forum_threads.thread_type                 NOT LIKE 'game' "));
 
-  // Et on met à jour le compte de messages de l'user
-  $compte_messages = $qcompte['count_messages'];
-  query(" UPDATE membres SET forum_messages = '$compte_messages' WHERE membres.id = '$id' ");
+  // Data sanitization
+  $user_id        = sanitize($user_id, 'int', 0);
+  $message_count  = sanitize($dposts['message_count'], 'int', 0);
 
-  // Au cas où ça pourrait servir, on renvoie le nouveau postcount
-  return $compte_messages;
+  // We can now update the user's message count
+  query(" UPDATE  users_stats
+          SET     users_stats.forum_message_count = '$message_count'
+          WHERE   users_stats.id                  = '$user_id' ");
+
+  // Might aswell return the message count
+  return $message_count;
 }
 
 
 
 
+/**
+ * Counts the number of forum messages posted in a forum thread.
+ *
+ * @param   int $thread_id (OPTIONAL) The id of the thread whose post count we want to update.
+ *
+ * @return  int                       The post count of the thread.
+ */
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Recompte le nombre de messages postés dans un sujet
-//
-// $id est l'id du sujet dont on veut recompter les messages
-//
-// Utilisation forum_recompter_messages_sujet(1);
-
-function forum_recompter_messages_sujet($id=0)
+function forum_update_thread_message_count($thread_id=0)
 {
-  // On va chercher tous les messages qu'on peut recompter
-  $qcompte = mysqli_fetch_array(query(" SELECT    COUNT(*) AS 'count_messages'
-                                        FROM      forum_message
-                                        LEFT JOIN forum_sujet ON forum_message.FKforum_sujet = forum_sujet.id
-                                        WHERE     forum_message.FKforum_sujet = '$id' "));
+  // We fetch the sum of all of the thread's messages
+  $dposts = mysqli_fetch_array(query("  SELECT    COUNT(*) AS 'message_count'
+                                        FROM      forum_messages
+                                        LEFT JOIN forum_threads ON forum_messages.fk_forum_threads  = forum_threads.id
+                                        WHERE     forum_messages.fk_forum_threads                   = '$thread_id' "));
 
-  // Et on met à jour le compte de messages du sujet
-  $compte_messages = ($qcompte['count_messages'] - 1);
-  query(" UPDATE forum_sujet SET nombre_reponses = '$compte_messages' WHERE forum_sujet.id = '$id' ");
+  // Data sanitization
+  $thread_id        = sanitize($thread_id, 'int', 0);
+  $message_count    = sanitize($dposts['message_count'], 'int', 0);
 
-  // Au cas où ça pourrait servir, on renvoie le nouveau postcount
-  return $compte_messages;
+  // We can now update the thread's message count
+  query(" UPDATE  forum_threads
+          SET     forum_threads.nb_messages = '$message_count'
+          WHERE   forum_threads.id          = '$thread_id' ");
+
+  // Might aswell return the message count
+  return $message_count;
 }

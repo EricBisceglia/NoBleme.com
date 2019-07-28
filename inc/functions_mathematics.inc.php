@@ -6,19 +6,35 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Calcul le pourcentage qu'un nombre représente d'un autre nombre
-// $nombre est le nombre qui est un pourcent du total
-// $total est le total dont le nombre est un pourcent
-// Si $croissance est rempli, calcule une croissance au lieu d'un pourcentage d'un nombre
-//
-// Exemple d'utilisation :
-// $pourcentage = calcul_pourcentage($nombre,$total);
+/**
+ * The percentage of a number that another number represents.
+ *
+ * @param   double  $number The number which is a percentage of a total.
+ * @param   double  $total  The total of which another number is a percentage of.
+ *
+ * @return  double          This function returns $number as a percentage of $total.
+ */
 
-function calcul_pourcentage($nombre, $total, $croissance=NULL)
+function maths_percentage_of($number, $total)
 {
-  if(!$croissance)
-    return ($total) ? (($nombre/$total)*100) : 0;
-  else
-    return ($total) ? (($nombre/$total)*100)-100 : 0;
+  // Simple enough, we do the calculation and return it (and we avoid division by zero)
+  return ($total) ? (($number/$total)*100) : 0;
+}
+
+
+
+
+/**
+ * Growth in percent from one value to another.
+ *
+ * @param   double  $before The value before the growth.
+ * @param   double  $after  The value after the growth.
+ *
+ * @return  double          Growth in % between the two values.
+ */
+
+function math_percentage_growth($before, $after)
+{
+  // Simple enough, we do the calculation and return it (and we avoid division by zero)
+  return ($before) ? (($after/$before)*100)-100 : 0;
 }

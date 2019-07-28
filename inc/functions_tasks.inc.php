@@ -1,67 +1,58 @@
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                 CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST INCLUDE PAR UNE AUTRE PAGE                                */
-/*                                                                                                                                       */
-// Include only /*************************************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF'])))
-  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Vous n\'êtes pas censé accéder à cette page, dehors!</body></html>');
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
+/*                                                                                                                   */
+// Include only /*****************************************************************************************************/
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 
+/**
+ * Plaintext description of a task's priority level.
+ *
+ * @param   int         $priority_level             The priority level of the task as stored in the database (an int).
+ * @param   string|null $lang           (OPTIONAL)  The language used for the description of the priority level.
+ * @param   bool|null   $styled         (OPTIONAL)  If set, returns a styled description with HTML tags.
+ *
+ * @return  string                                  A plaintext description of the priority level.
+ */
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction renvoyant un ordre de priorité à partir d'une valeur entre 0 et 5
-// Utilisé pour la liste des tâches
-//
-// $lang  (optionnel) détermine la langue utilisée
-// $style (optionnel) détermine si on veut du style HTML ou non
-//
-// Utilisation: todo_importance($valeur,1);
-
-function todo_importance($importance, $lang='FR', $style=NULL)
+function task_priority($priority_level, $lang='FR', $styled=0)
 {
-  switch($importance)
+  // No trickery here, we simply parse priority levels one by one using a switch
+  switch($priority_level)
   {
+    // 5 -> Urgent task: We prepare the translated strings, and return the result (styled or not)
     case 5:
-      $importance_texte = ($lang == 'FR') ? 'Urgent' : 'Emergency';
-      if($style)
-        $returnme = '<span class="gras souligne">'.$importance_texte.'</span>';
-      else
-        $returnme = $importance_texte;
+      $temp = ($lang == 'EN') ? 'Emergency' : 'Urgent';
+      return (!$styled) ? $temp : '<span class="gras souligne">'.$temp.'</span>';
     break;
 
+    // 4 -> Important task: We prepare the translated strings, and return the result (styled or not)
     case 4:
-      $importance_texte = ($lang == 'FR') ? 'Important' : 'Important';
-      if($style)
-        $returnme = '<span class="gras">'.$importance_texte.'</span>';
-      else
-        $returnme = $importance_texte;
+      $temp = ($lang == 'EN') ? 'Important' : 'Important';
+      return (!$styled) ? $temp : '<span class="gras">'.$temp.'</span>';
     break;
 
+    // 3 -> Averagely important task: We prepare the translated strings, and return the result
     case 3:
-      $importance_texte = ($lang == 'FR') ? 'À considérer' : 'To consider';
-      $returnme = $importance_texte;
+      return ($lang == 'EN') ? 'To consider' : 'À considérer';
     break;
 
+    // 2 -> Not too important task: We prepare the translated strings, and return the result
     case 2:
-      $importance_texte = ($lang == 'FR') ? "Y'a le temps" : "There's still time";
-      $returnme = $importance_texte;
+      return ($lang == 'EN') ? "There's still time" : "Y'a le temps";
     break;
 
+    // 1 -> Low importance task: We prepare the translated strings, and return the result (styled or not)
     case 1:
-      $importance_texte = ($lang == 'FR') ? 'Pas pressé' : 'No hurry';
-      if($style)
-        $returnme = '<span class="italique">'.$importance_texte.'</span>';
-      else
-        $returnme = $importance_texte;
+      $temp = ($lang == 'EN') ? 'No hurry' : 'Pas pressé';
+      return (!$styled) ? $temp : '<span class="italique">'.$temp.'</span>';
     break;
 
+    // 0 (or other) -> Background task: We prepare the translated strings, and return the result (styled or not)
     default:
-      $importance_texte = ($lang == 'FR') ? 'À faire un jour' : 'Maybe some day';
-      if($style)
-        $returnme = '<span class="italique">'.$importance_texte.'</span>';
-      else
-        $returnme = $importance_texte;
+      $temp = ($lang == 'EN') ? 'Maybe some day' : 'À faire un jour';
+      return (!$styled) ? $temp : '<span class="italique">'.$temp.'</span>';
+    break;
   }
-  return $returnme;
 }

@@ -192,7 +192,7 @@ else
   // On crée l'invité si nécessaire
   if(!mysqli_num_rows($qguest))
   {
-    $guest_nom = sanitize(surnom_mignon(), 'string');
+    $guest_nom = sanitize(user_get_nickname(), 'string');
     query(" INSERT INTO users_guests SET users_guests.ip_address = '$guest_ip', users_guests.randomly_assigned_name = '$guest_nom' ");
   }
 
