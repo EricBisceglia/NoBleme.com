@@ -1659,13 +1659,14 @@ if($last_query < 30)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #544 - Translation and optimization of all tables - Adjustments (can't get everything right on the first try)
 
-if($last_query < 31)
+if($last_query < 35)
 {
   sql_rename_table('logs_activity_archives', 'logs_activity_details');
 
   sql_rename_field('logs_activity', 'is_moderators_only', 'is_administrators_only', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('system_scheduler', 'task_timestamp', 'planned_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_contests', 'fk_writings_writings_winner', 'fk_writings_texts_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_contests', 'nb_users', 'nb_entries', 'INT UNSIGNED NOT NULL DEFAULT 0');
 
   sql_create_field('system_variables', 'last_scheduler_execution', 'INT UNSIGNED NOT NULL DEFAULT 0', 'latest_query_id');
 

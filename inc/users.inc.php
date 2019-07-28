@@ -302,6 +302,21 @@ function user_log_out()
 
 
 /**
+ * Returns a user's id.
+ *
+ * @return int The user's id / 0 if logged out.
+ */
+
+function user_get_id()
+{
+  // As simple as it sounds, we return the value stored in the session if the user is logged in, else 0
+  return (user_is_logged_in()) ? $_SESSION['user_id'] : 0;
+}
+
+
+
+
+/**
  * Returns a user's nickname from his id.
  *
  * @param   int|null   $user_id  (OPTIONAL) If no id is specified, it will try to return the nickname of current user.

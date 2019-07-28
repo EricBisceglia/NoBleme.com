@@ -6,69 +6,86 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 
+/**
+ * Checks if a user is allowed to vote in writer's corner contests.
+ *
+ * The current rule is that only administrators, global moderators, moderators, and people who have taken part as
+ * authors in previous writer's contests are allowed to vote. This function looks whether the user satisfies this rule.
+ *
+ * @param   int|null $user_id (OPTIONAL) Specifies the ID of the user to check - if null, current user.
+ *
+ * @return  bool                         Is the user allowed to vote in writer's corner contests.
+ */
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Détermine si le membre a le droit de voter dans un concours du coin des écrivains
-//
-// Utilisation: ecrivains_concours_peut_voter();
-
-function ecrivains_concours_peut_voter()
+function writings_contest_can_vote($user_id=NULL)
 {
-  // Par défaut, l'user n'a pas le droit de voter
-  $peut_voter = 0;
+  // If the user is logged out, then he can't vote
+  if(is_null($user_id) && !user_is_logged_in())
+    return 0;
 
-  // On vérifie déjà si l'user fait partie de l'équipe administrative - si oui, il peut voter
-  if(getadmin() || getsysop() || getmod())
-    $peut_voter = 1;
+  // Let's fetch and sanitize the user's ID
+  $user_id = (!is_null($user_id)) ? $user_id : user_get_id();
+  $user_id = sanitize($user_id, 'int', 0);
 
-  // Sinon, on vérifie s'il a participé à un concours d'écriture fini dans le passé
-  if(!$peut_voter && loggedin())
+  // We can now fetch some info about the user
+  $duser = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'u_admin'      ,
+                                              users.is_global_moderator AS 'u_global_mod' ,
+                                              users.is_moderator        AS 'u_mod'
+                                      FROM    users
+                                      WHERE   users.id = '$user_id' "));
+
+  // If the user is part of the administrative team, then he can vote
+  $can_vote = ($duser['u_admin'] || $duser['u_global_mod'] || $duser['u_mod']) ? 1 : 0;
+
+  // Otherwise, we check if the user has contributed a writing to a past contest in the writer's corner
+  if(!$can_vote)
   {
-    // Pour ce faire, on parcourt la liste des anciens participants
-    $qcheckconcours = query(" SELECT    membres.id  AS 'm_id'
-                              FROM      membres
-                              LEFT JOIN ecrivains_texte     ON membres.id                           = ecrivains_texte.FKmembres
-                              LEFT JOIN ecrivains_concours  ON ecrivains_texte.FKecrivains_concours = ecrivains_concours.id
-                              WHERE     ecrivains_concours.FKmembres_gagnant > 0
-                              GROUP BY  membres.id ");
-
-    // Puis on vérifie si l'user est dans la liste
-    $membre = $_SESSION['user'];
-    while($dcheckconcours = mysqli_fetch_array($qcheckconcours))
-    {
-      if($membre == $dcheckconcours['m_id'])
-        $peut_voter = 1;
-    }
+    $dtext = mysqli_fetch_array(query(" SELECT    writings_texts.id AS 't_id'
+                                        FROM      writings_texts
+                                        LEFT JOIN writings_contests
+                                               ON writings_texts.fk_writings_contests = writings_contests.id
+                                        WHERE     writings_contests.fk_users_winner > 0
+                                        AND       writings_texts.fk_users = '$user_id' "));
+    $can_vote = ($dtext['t_id']) ? 1 : 0;
   }
 
-  // Et finalement, on renvoie si l'user a le droit de vote ou non
-  return $peut_voter;
+  // We can now return whether the user is allowed to vote
+  return $can_vote;
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Recompte le nombre de textes liés à un concours d'écriture
-//
-// $concours est l'id du concours en question
-//
-// Utilisation: ecrivains_concours_compter_textes($concours);
+/**
+ * Updates the number of texts in a writer's corner contest.
+ *
+ * @param   int $contest_id The ID of the contest which needs re-counting.
+ *
+ * @return  int             The number of texts in the contest.
+ */
 
-function ecrivains_concours_compter_textes($concours)
+function writings_contest_update_texts_count($contest_id)
 {
-  // On compte les textes
-  $dconcourscompter = mysqli_fetch_array(query("  SELECT  COUNT(ecrivains_texte.id) AS 'num_textes'
-                                                  FROM    ecrivains_texte
-                                                  WHERE   ecrivains_texte.FKecrivains_concours = '$concours' "));
+  // If the specified ID is 0, we don't get tricked into counting all texts linked to no existing contest and return 0
+  if(!$contest_id)
+    return 0;
 
-  // Et on met à jour le résultat
-  $num_textes = $dconcourscompter['num_textes'];
-  query(" UPDATE  ecrivains_concours
-          SET     ecrivains_concours.num_participants = '$num_textes'
-          WHERE   ecrivains_concours.id               = '$concours' ");
+  // We begin by sanitizing the contest id
+  $contest_id = sanitize($contest_id, 'int', 0);
 
-  // Au cas où, on renvoie le résultat
-  return $num_textes;
+  // We can now fetch the number of texts in the contest
+  $dtexts = mysqli_fetch_array(query("  SELECT  COUNT(writings_texts.id) AS 'w_num'
+                                        FROM    writings_texts
+                                        WHERE   writings_texts.fk_writings_contests = '$contest_id' "));
+
+  // We sanitize the returned value - just in case
+  $nb_texts = sanitize($dtexts['w_num'], 'int', 0);
+
+  // We can now update the contest with the info
+  query(" UPDATE  writings_contests
+          SET     writings_contests.nb_entries  = '$nb_texts'
+          WHERE   writings_contests.id          = '$contest_id' ");
+
+  // In case it could be useful, we return the number of texts in the specified contest
+  return $nb_texts;
 }

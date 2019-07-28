@@ -94,5 +94,5 @@ function error_page($message, $path="./../../", $lang=NULL, $menu_main="NoBleme"
   include_once $path."inc/footer.inc.php";
 
   // Finally we exit out of here to make sure nothing else is ran afterwards
-  exit ();
+  exit();
 }

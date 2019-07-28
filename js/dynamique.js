@@ -44,7 +44,7 @@ function dynamique(chemin, page_a_charger, element_cible , postdata, noloadbar, 
   // Envoi de la requête sous forme de postdata
   xhr.open("POST", page_a_charger, true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-  xhr.setRequestHeader("Dynamique", "yup");
+  xhr.setRequestHeader("XHR", "yup");
   xhr.send(postdata);
 
   // Attente du retour des données

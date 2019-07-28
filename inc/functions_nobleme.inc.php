@@ -6,485 +6,598 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                   //
+//     The functions in this file are fairly global, at least one of them is guaranteed to be used by most pages     //
+//   However, since some pages don't need them, they will not be included by default when running includes.inc.php   //
+//                                                                                                                   //
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   GENERIC TOOLS                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
+/**
+ * Does a row already exist in a table.
+ *
+ * @param   string  $table  Name of the table.
+ * @param   int     $id     ID of the row.
+ *
+ * @return  bool            Whether the row exists or not.
+ */
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction vérifiant que le membre n'ait pas déjà fait une action récemment
-//
-// Utilisation: antiflood($lang);
-
-function antiflood()
+function database_row_exists($table, $id)
 {
-  // On prépare certains messages bilingues
-  $lang                 = (!isset($_SESSION['lang'])) ? 'FR' : $_SESSION['lang'];
-  $temp_lang_loggedout  = ($lang == 'FR') ? 'Vous devez être connecté pour effectuer cette action' : 'You can only do this action while logged into your account';
-  $temp_lang_flood      = ($lang == 'FR') ? 'Vous devez attendre quelques secondes entre chaque action<br><br>Réessayez dans 10 secondes' : 'You must wait a bit between each action on the website<br><br>Try doing it again in 10 seconds';
+  // We sanitize the data before running the query
+  $table  = sanitize($table, 'string');
+  $id     = sanitize($id, 'int', 0);
 
-  // Si on a affaire à un user pas connecté, on s'arrête là
-  if(!loggedin())
-    erreur($temp_lang_loggedout);
-
-  // Sinon, on va chercher la dernière activité du membre
-  else
-  {
-    // On assainit l'ID
-    $membre_id = postdata($_SESSION['user'], 'int', 0);
-
-    // On va chercher la dernière activité
-    $dactivite = mysqli_fetch_array(query(" SELECT  membres.derniere_activite AS 'm_activite'
-                                            FROM    membres
-                                            WHERE   membres.id = '$membre_id' "));
-
-    // Si elle n'existe pas, erreur
-    if($dactivite['m_activite'] == NULL)
-      erreur($temp_lang_loggedout, NULL, $lang);
-
-    // Si la dernière activité est trop récente, erreur
-    $timestamp = time();
-    if(($timestamp - $dactivite['m_activite']) <= 10 )
-      erreur($temp_lang_flood);
-
-    // Si ça passe, on met à jour la date de dernière activité
-    query(" UPDATE  membres
-            SET     membres.derniere_activite = '$timestamp'
-            WHERE   membres.id = '$membre_id' ");
-
-    // On laisse passer l'activité
-    return 1;
-  }
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction envoyant un message privé type "message système" à un utilisateur à partir de son ID
-//
-// Utilisation: envoyer_notif($destinataire,$titre,$contenu,$silent);
-//
-// Si $sender est NULL, alors le message sera un message système
-// Si $silent est set, alors le message sera considéré comme déjà lu
-
-function envoyer_notif($en_destinataire,$en_titre,$en_contenu,$sender=NULL,$silent=NULL)
-{
-  // Préparation des données
-  $en_date    = time();
-  $en_titre   = $en_titre;
-  $en_contenu = $en_contenu;
-
-  // Message système ou pm
-  $en_sender = 0;
-  if($sender)
-    $en_sender = $sender;
-
-  // Notification silencieuse
-  $en_consult = 0;
-  if($silent)
-    $en_consult = time();
-
-  // Insertion des données
-  query(" INSERT INTO   notifications
-          SET           notifications.FKmembres_destinataire  = '$en_destinataire'  ,
-                        notifications.FKmembres_envoyeur      = '$en_sender'        ,
-                        notifications.date_envoi              = '$en_date'          ,
-                        notifications.date_consultation       = '$en_consult'       ,
-                        notifications.titre                   = '$en_titre'         ,
-                        notifications.contenu                 = '$en_contenu'       ");
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Insère une entrée dans la table activite, retourne l'id de l'activité qui vient d'être crée
-//
-// type_action                    est le le type d'action, pour son traitement dans pages/nobleme/activite
-// log_moderation                 définit si c'est public (0) ou un log de modération (1)
-// membre_id          (optionnel) est l'ID du membre lié à l'activité
-// membre_pseudonyme  (optionnel) est le pseudonyme du membre lié à l'activité
-// action_id          (optionnel) est l'id d'une table externe auquel l'action est lié
-// action_titre       (optionnel) est le titre de l'action, pour son traitement dans pages/nobleme/activite
-// action_parent      (optionnel) est un élément parent à l'action, pour son traitement dans pages/nobleme/activite
-// justification      (optionnel) est la justification de l'action dans le log de modération
-//
-// Utilisation: $activite_id = activite_nouveau('truc_edit', 0, 0, 'Bad', 42, 'Le truc édité');
-
-function log_activity($type_action, $log_moderation, $membre_id=0, $membre_pseudonyme=NULL, $action_id=0, $action_titre=NULL, $action_parent=NULL, $justification=NULL)
-{
-  // On crée la nouvelle activité
-  $timestamp = time();
-  query(" INSERT INTO activite
-          SET         activite.timestamp      = '$timestamp'          ,
-                      activite.log_moderation = '$log_moderation'     ,
-                      activite.FKmembres      = '$membre_id'          ,
-                      activite.pseudonyme     = '$membre_pseudonyme'  ,
-                      activite.action_type    = '$type_action'        ,
-                      activite.action_id      = '$action_id'          ,
-                      activite.action_titre   = '$action_titre'       ,
-                      activite.parent         = '$action_parent'      ,
-                      activite.justification  = '$justification'      ");
-
-  // Puis on renvoie l'id de l'activité fraichement crée
-  return(mysqli_insert_id($GLOBALS['db']));
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Insère une entrée dans la table activite_diff
-//
-// id                     est l'id de l'activité liée au diff
-// titre                  est le titre du diff
-// avant                  est le contenu qui était présent avant le diff
-// apres      (optionnel) est le contenu qui en remplace un autre dans le diff
-// optionnel  (optionnel) spécifie que le diff ne doit être crée que si le contenu d'après est différent du contenu d'avant
-//
-// Utilisation: activite_diff(1, 'Valeur', 3, 5, 1);
-
-function activite_diff($id, $titre, $avant, $apres=NULL, $optionnel=NULL)
-{
-  // Si le contenu est trop grand, on ne crée pas de diff
-  $apres = (strlen($apres) > 10000) ? NULL : $apres;
-
-  // On crée le diff (si nécessaire)
-  if(!$optionnel || $avant != $apres)
-    query(" INSERT INTO activite_diff
-            SET         FKactivite  = '$id'     ,
-                        titre_diff  = '$titre'  ,
-                        diff_avant  = '$avant'  ,
-                        diff_apres  = '$apres'  ");
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Purge le contenu de la table activite_diff qui n'est lié à aucune entrée dans la table activite
-//
-// Utilisation: purger_diff_orphelins()
-
-function purger_diff_orphelins()
-{
-  // On va chercher les orphelins
-  $qorphelins = query(" SELECT    activite_diff.id AS 'd_id'
-                        FROM      activite_diff
-                        LEFT JOIN activite ON activite_diff.FKactivite = activite.id
-                        WHERE     activite.id IS NULL ");
-
-  // Et on les asphyxie discrètement
-  while($dorphelins = mysqli_fetch_array($qorphelins))
-  {
-    $id_orphelin = $dorphelins['d_id'];
-    query(" DELETE FROM activite_diff
-            WHERE       activite_diff.id = '$id_orphelin' ");
-  }
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Supprime une entrée dans la table activite ainsi que toutes les entrées liées dans activite_diff
-//
-// type_action                    est le le type d'activité à supprimer
-// log_moderation     (optionnel) définit si c'est public (0) ou un log de modération (1)
-// membre_id          (optionnel) est l'ID du membre lié à l'activité à supprimer
-// membre_pseudonyme  (optionnel) est le pseudonyme du membre lié à l'activité à supprimer
-// action_id          (optionnel) est l'id d'une table externe à laquelle l'activité est lié
-// type_action_tout   (optionnel) s'il est rempli, supprime toutes les actions de ce type
-//
-// Utilisation: activite_supprimer('truc_edit', 42);
-
-function activite_supprimer($type_action, $log_moderation=0, $membre_id=0, $membre_pseudonyme=NULL, $action_id=0, $type_action_tout=0)
-{
-  // On construit la requête selon les paramètres qui sont remplis ou non
-  $activite_supprimer    = "  DELETE FROM activite ";
-
-  // Type d'action, englobant toutes les actions du type ou non
-  if(!$type_action_tout)
-    $activite_supprimer .= "  WHERE       activite.action_type    LIKE  '$type_action' ";
-  else
-    $activite_supprimer .= "  WHERE       activite.action_type    LIKE  '$type_action%' ";
-
-  // Activité récente ou log de modération
-  $activite_supprimer .= "    AND         activite.log_moderation =     '$log_moderation' ";
-
-  // Autres paramètres
-  if($membre_id)
-    $activite_supprimer .= "  AND         activite.FKmembres      =     '$membre_id' ";
-  if($membre_pseudonyme)
-    $activite_supprimer .= "  AND         activite.pseudonyme     LIKE  '$membre_pseudonyme' ";
-  if($action_id)
-    $activite_supprimer .= "  AND         activite.action_id      =     '$action_id' ";
-
-  // On supprime l'activité
-  query($activite_supprimer);
-
-  // Et on envoie une purge des diffs potentiellement orphelins suite à la suppression
-  purger_diff_orphelins();
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction vérifiant l'existence d'une entrée dans une table de la base de données
-//
-// $table   est le nom de la table
-// $id      est l'id à chercher dans la table
-//
-// Utilisation: verifier_existence('membres', 1);
-
-function verifier_existence($table, $id)
-{
-  // On va vérifier si le champ existe
-  $qcheck = mysqli_fetch_array(query("  SELECT  ".$table.".id AS 't_id'
+  // We go check whether the row exists
+  $dcheck = mysqli_fetch_array(query("  SELECT  ".$table.".id AS 'r_id'
                                         FROM    $table
                                         WHERE   ".$table.".id = '".$id."' "));
 
-  // Puis on revoie 1 ou 0 selon si l'id existe ou non
-  $return = ($qcheck['t_id']) ? 1 : 0;
+  // We return whether the row exists or not
+  return ($dcheck['r_id']) ? 1 : 0;
+}
+
+
+
+/**
+ * Is the page being called through XHR.
+ *
+ * @return  bool  Whether the page is being called through XHR or not.
+ */
+
+function page_is_xhr()
+{
+  // Return whether the XHR header is set
+  return (isset($_SERVER['HTTP_XHR'])) ? 1 : 0;
+}
+
+
+
+
+/**
+ * Throws a 404 if the page is not being called through XHR.
+ *
+ * @param   string|null $path The path to the root of the website (defaults to 2 folders away from root).
+ *
+ * @return  void
+ */
+
+function allow_only_xhr($path='./../../')
+{
+  // If the XHR header is not set, throw a 404
+  if(!page_is_xhr())
+    exit(header("Location: ".$path."pages/nobleme/404")); die();
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                         SEARCHING AND DIFFERENCE CHECKING                                         */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Returns a raw diff between two string arrays.
+ *
+ * This function is a prerequisite for the more useful diff_strings() function to work properly.
+ * The core logic was taken from Paul Butler's simplediff through arrays method @ https://github.com/paulgb/simplediff.
+ *
+ * @param   array $old  An array of strings, the older version of the texts being compared.
+ * @param   array $new  An array of strings, the newer version of the texts being compared.
+ *
+ * @return  array       An array of strings, showcasing the differences between the two arrays of strings.
+ */
+
+function diff_raw_string_arrays($old, $new)
+{
+  // We prepare the variables
+  $matrix = array();
+  $maxlen = 0;
+
+  // Finds the largest substring in common between the two arrays
+  foreach($old as $oindex => $ovalue)
+  {
+    $nkeys = array_keys($new, $ovalue);
+    foreach($nkeys as $nindex)
+    {
+      $matrix[$oindex][$nindex] = isset($matrix[$oindex - 1][$nindex - 1]) ?
+        $matrix[$oindex - 1][$nindex - 1] + 1 : 1;
+      if($matrix[$oindex][$nindex] > $maxlen){
+        $maxlen = $matrix[$oindex][$nindex];
+        $omax = $oindex + 1 - $maxlen;
+        $nmax = $nindex + 1 - $maxlen;
+      }
+    }
+  }
+
+  // If we have found a difference, we return it in an array of arrays of strings
+  // The deleted content is in an array called 'd', and the inserted content in an array called 'i'
+  if($maxlen == 0) return array(array('d'=>$old, 'i'=>$new));
+
+  // As long as there are differences, we run this function recursively until all differences are identified
+  // Content which is not different is returned at the root of the returned array, not within a 'd' or 'i' array
+  return array_merge(
+    diff_raw_string_arrays(array_slice($old, 0, $omax), array_slice($new, 0, $nmax)),
+    array_slice($new, $nmax, $maxlen),
+    diff_raw_string_arrays(array_slice($old, $omax + $maxlen), array_slice($new, $nmax + $maxlen))
+  );
+}
+
+
+
+
+/**
+ * Returns a human readable list of differences between two strings.
+ *
+ * The differences are treated word by word and not character by character.
+ * The output contains HTML tags, as we use <del> and <ins> to highlight the differences.
+ * The core logic was taken from Paul Butler's simplediff through arrays method @ https://github.com/paulgb/simplediff.
+ *
+ * @param   string $old  The older version of the texts being compared.
+ * @param   string $new  The newer version of the texts being compared.
+ *
+ * @return  string       Human readable list of differences between the two arrays.
+ */
+
+function diff_strings($old, $new)
+{
+  // We break both strings in arrays of words, then run diff_raw_string_arrays() on them
+  $diff = diff_raw_string_arrays(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
+
+  // We initialize the future returned string
+  $return = '';
+
+  // We walk through the array of differences returned by diff_raw_string_arrays()
+  foreach($diff as $k)
+  {
+    // If the element is an array, then we're dealing with a difference - we wrap it between <del> or <ins> tags
+    if(is_array($k))
+        $return .= (!empty($k['d'])?"&nbsp;<del>&nbsp;".implode(' ',$k['d'])."&nbsp;</del>&nbsp;":'').(!empty($k['i'])?"&nbsp;<ins>&nbsp;".implode(' ',$k['i'])."&nbsp;</ins>&nbsp;":'');
+    // Otherwise there's no difference, we leave it as is
+    else
+      $return .= $k . ' ';
+  }
+
+  // We return the recomposed string
   return $return;
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Renvoie une (ou aucune) propriété CSS correspondant à un menu de navigation du header, selon si l'option est sélectionnée ou non
-//
-// Le premier paramètre est l'option de menu actuellement sélectionnée
-// Le second paramètre est l'option de menu dont on veut récupérer le CSS
-// Le troisième paramètre est le type de menu (0 -> menu principal / 1 -> sous-menu / 2 -> menu latéral)
-//
-// Utilisation: menu_css($header_menu,'communaute',0)
+/**
+ * Searches for a string in a text, along with the words surrounding said string.
+ *
+ * @param   string    $search                       The string being searched.
+ * @param   string    $text                         The text in which to search for the string.
+ * @param   int|null  $nb_words_around  (OPTIONAL)  Number of words around the string to return.
+ *
+ * @return  string                                  The searched string and the words around it (or an empty string).
+ */
 
-function menu_css($menu_postdata, $menu_objet, $menu_type)
+function search_string_context($search, $text, $nb_words_around=1)
 {
-  // Si l'entrée est sélectionnée, on renvoie le CSS approprié
-  if($menu_postdata == $menu_objet)
-  {
-    if($menu_type == 0)
-      return ' menu_main_item_selected';
-    else if($menu_type == 1)
-      return ' menu_sub_item_selected';
-    else if($menu_type == 2)
-      return ' menu_side_item_selected';
-  }
+  // We escape special characters
+  $search = preg_quote($search, '/');
+  $text   = preg_quote($text, '/');
 
-  // Si elle n'est pas sélectionnée, on ne renvoie rien, sauf dans le cas du menu secret
-  else
+  // First we split the text into an array of words and make them all lowercase (this way we search case insensitively)
+  $words = preg_split('/\s+/u', string_change_case($text, 'lowercase'));
+
+  // We search for the string in the array of words, and mark its positions in an array if we find it
+  $fetch_words      = preg_grep("/".string_change_case($search, 'lowercase').".*/", $words);
+  $words_positions  = array_keys($fetch_words);
+
+  // We split the text into an array of words again, but without changing case this time
+  $words = preg_split('/\s+/u', $text);
+
+  // If we managed to find the string, we fetch its first position
+  if(count($words_positions))
+    $position = $words_positions[0];
+
+  // If we did not have any matches, we return an empty array
+  if(!isset($position))
+    return '';
+
+  // We fetch the start and end positions based on the number of words that we are wrapping around the result
+  $start  = (($position - $nb_words_around) > 0) ? $position - $nb_words_around : 0;
+  $end    = ((($position + ($nb_words_around + 1)) < count($words)) ? $position + ($nb_words_around + 1) : count($words)) - $start;
+
+  // We slice the array by keeping only the words that we need (anything between start and end positions)
+  $slice  = array_slice($words, $start, $end);
+
+  // If needed, we add ... at the beginning and/or end of the array
+  $start  = ($start > 0) ? "..." : "";
+  $end    = ($position + ($nb_words_around + 1) < count($words)) ? "..." : "";
+
+  // We can now assemble this array into a string and return it
+  return stripslashes($start.implode(' ', $slice).$end);
+}
+
+
+
+
+/**
+ * Wraps HTML tags around every occurence of a string in a text.
+ *
+ * @param   string  $search     The string being searched.
+ * @param   string  $text       The text in which the string is being searched.
+ * @param   string  $open_tag   The tag to place before each occurence of the string.
+ * @param   string  $close_tag  The tag to place after each occurence oft he string.
+ *
+ * @return  string              The result of the operation.
+ */
+
+function search_string_wrap_html($search, $text, $open_tag, $close_tag)
+{
+  // We escape special characters
+  $search = preg_quote($search, '/');
+  $text   = preg_quote($text, '/');
+
+  // We use a regex to do the trick and return the result
+  return stripslashes(preg_replace("/($search)/i", "$open_tag$1$close_tag", $text));
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 PRIVATE MESSAGES                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Sends a private message to an user.
+ *
+ * @param   string    $title                        The message's title.
+ * @param   string    $body                         The message's body.
+ * @param   int|null  $recipient        (OPTIONAL)  The ID of the user which gets the message - if 0, current user.
+ * @param   int|null  $sender           (OPTIONAL)  The ID of the suer sending the message - if 0, system notification.
+ * @param   bool|null $is_silent        (OPTIONAL)  If set, the message arrives as already read.
+ * @param   bool|null $do_not_sanitize  (OPTIONAL)  If set, the data will not be sanitized.
+ *
+ * @return  bool                                    Whether the message was sent or not.
+ */
+
+function private_message_send($title, $body, $recipient=0, $sender=0, $is_silent=0, $do_not_sanitize=0)
+{
+  // If the user is not logged in but expected to be the sender, we do not send the message
+  if(!$recipient && !user_is_logged_in())
+    return 0;
+
+  // Sanitize and prepare the data
+  $title      = ($do_not_sanitize) ? $title : sanitize($title, 'string');
+  $body       = ($do_not_sanitize) ? $body : sanitize($body, 'string');
+  $recipient  = ($recipient) ? sanitize($recipient, 'int', 0) : sanitize(user_get_id(), 'int', 0);
+  $sender     = sanitize($sender, 'int', 0);
+  $sent_at    = sanitize(time(), 'int', 0);
+  $read_at    = ($is_silent) ? sanitize(time(), 'int', 0) : 0;
+
+  // If the recipient does not exist, we do not send the message
+  if(!database_row_exists('users', $recipient))
+    return 0;
+
+  // If the sender does not exist, we do not send the message either
+  if($sender && !database_row_exists('users', $sender))
+    return 0;
+
+  // We send the message by inserting a new row in the private messages table
+  query(" INSERT INTO   users_private_messages
+          SET           users_private_messages.fk_users_recipient = '$recipient'  ,
+                        users_private_messages.fk_users_sender    = '$sender'     ,
+                        users_private_messages.sent_at            = '$sent_at'    ,
+                        users_private_messages.read_at            = '$read_at'    ,
+                        users_private_messages.title              = '$title'      ,
+                        users_private_messages.body               = '$body'       ");
+
+  // We return 1 to show the message was sent
+  return 1;
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                ACTIVITY MANAGEMENT                                                */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Throws an error if the user is currently flooding the website, then updates the last activity date.
+ *
+ * Keep in mind, since an error is being thrown, this interrupts the rest of the process of the page.
+ *
+ * @param   string|null $lang       (OPTIONAL)  The language currently being used.
+ * @param   string|null $path       (OPTIONAL)  The path to the root of the website (defaults to 2 folders from root).
+ * @param   string|null $menu_main  (OPTIONAL)  The main menu element to highlight in the menu bar in case of error.
+ * @param   string|null $menu_side  (OPTIONAL)  The side menu element to highlight in the sidebar in case of error.
+ * @param   int|null    $user_id    (OPTIONAL)  Specifies the ID of the user to check - if null, current user.
+ *
+ * @return  bool                                Is the user allowed to post content to the website.
+ */
+
+function flood_check($path='./../../', $lang='EN', $menu_main='NoBleme', $menu_side='Homepage', $user_id=NULL)
+{
+  // We need to prepare some translated strings
+  $lang_login = ($lang == 'EN') ? 'You can only do this action while logged into your account' : 'Vous devez être connecté pour effectuer cette action';
+  $lang_wait  = ($lang == 'EN') ? 'You must wait a bit between each action on the website<br><br>Try doing it again in 10 seconds' : 'Vous devez attendre quelques secondes entre chaque action<br><br>Réessayez dans 10 secondes';
+
+  // If the user is logged out, then he shouldn't be able to do any actions, we throw an error
+  if(is_null($user_id) && !user_is_logged_in())
+    error_page($lang_login, $path, $lang, $menu_main, $menu_side);
+
+  // Let's fetch and sanitize the user's ID
+  $user_id = (!is_null($user_id)) ? $user_id : user_get_id();
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // We can go fetch the user's recent activity
+  $dactivity = mysqli_fetch_array(query(" SELECT  users.last_action_at AS 'u_last'
+                                          FROM    users
+                                          WHERE   users.id = '$user_id' "));
+
+  // If the last activity for the user happened less than 10 seconds ago, we throw an error
+  $timestamp = time();
+  if(($timestamp - $dactivity['u_last']) <= 10 )
+    error_page($lang_wait, $path, $lang, $menu_main, $menu_side);
+
+  // We can now update the last activity of the user
+  query(" UPDATE  users
+          SET     users.last_action_at  = '$timestamp'
+          WHERE   users.id              = '$user_id' ");
+
+  // Just in case, we return 1
+  return 1;
+}
+
+
+
+
+/**
+ * Adds an entry to the recent activity logs.
+ *
+ * @param   string          $activity_type                      The identifier of the activity log's type.
+ * @param   bool|null       $is_administrators_only (OPTIONAL)  Is it a public activity log or a moderation log.
+ * @param   int|null        $fk_users               (OPTIONAL)  ID of the user implicated in the activity log.
+ * @param   string|null     $nickname               (OPTIONAL)  Nickname of the user implicated in the activity log.
+ * @param   int|null        $activity_id            (OPTIONAL)  ID of the item linked to the activity log.
+ * @param   string|null     $activity_summary       (OPTIONAL)  Summary of the activity log.
+ * @param   string|int|null $activity_parent        (OPTOINAL)  Summary or ID of the parent to the item in question.
+ * @param   string|null     $moderation_reason      (OPTOINAL)  Reason specified by the moderator for the activity.
+ * @param   bool|null       $do_not_sanitize        (OPTOINAL)  If set, do not sanitize the data.
+ *
+ * @return  int                                                 The ID of the newly inserted activity log.
+ */
+
+function log_activity($activity_type, $is_administrators_only=0, $fk_users=0, $nickname=NULL, $activity_id=0, $activity_summary=NULL, $activity_parent=NULL, $moderation_reason=NULL, $do_not_sanitize=0)
+{
+  // We sanitize and prepare the data
+  $timestamp              = sanitize(time(), 'int', 0);
+  $activity_type          = sanitize($activity_type, 'string');
+  $is_administrators_only = sanitize($is_administrators_only, 'int', 0, 1);
+  $fk_users               = sanitize($fk_users, 'int', 0);
+  $nickname               = ($do_not_sanitize) ? $nickname : sanitize($nickname, 'string');
+  $activity_id            = sanitize($activity_id, 'int', 0);
+  $activity_summary       = ($do_not_sanitize) ? $activity_summary : sanitize($activity_summary, 'string');
+  $activity_parent        = ($do_not_sanitize) ? $activity_parent : sanitize($activity_parent, 'string');
+  $moderation_reason      = ($do_not_sanitize) ? $moderation_reason : sanitize($moderation_reason, 'string');
+
+  // We create the activity log by inserting it in the table
+  query(" INSERT INTO logs_activity
+          SET         logs_activity.happened_at             = '$timestamp'              ,
+                      logs_activity.is_administrators_only  = '$is_administrators_only' ,
+                      logs_activity.fk_users                = '$fk_users'               ,
+                      logs_activity.nickname                = '$nickname'               ,
+                      logs_activity.activity_type           = '$activity_type'          ,
+                      logs_activity.activity_id             = '$activity_id'            ,
+                      logs_activity.activity_summary        = '$activity_summary'       ,
+                      logs_activity.activity_parent         = '$activity_parent'        ,
+                      logs_activity.moderation_reason       = '$moderation_reason'      ");
+
+  // We end this by returning the ID of the newly created activity log
+  return(mysqli_insert_id($GLOBALS['db']));
+}
+
+
+
+
+/**
+ * Adds an entry to the recent activity detailed logs.
+ *
+ * @param   int         $linked_activity_log              ID of the recent activity log to which this is linked.
+ * @param   string      $description                      Description of the detailed activity log.
+ * @param   string      $before                           Previous value of the content.
+ * @param   string|null $after                (OPTIONAL)  Current value of the content.
+ * @param   bool|null   $optional             (OPTIONAL)  The log will only be created if before / after are different.
+ * @param   bool|null   $do_not_sanitize      (OPTOINAL)  If set, do not sanitize the data.
+ *
+ * @return  void
+ */
+
+function log_activity_details($linked_activity_log, $description, $before, $after=NULL, $optional=0, $do_not_sanitize = 0)
+{
+  // If no diff log should be created, we exit now
+  if($optional && ($before == $after))
+    return 0;
+
+  // In order to avoid strain caused by the diff functions, we do not create a diff log if $after is too long
+  $after = (strlen($after) > 10000) ? NULL : $after;
+
+  // We sanitize the data if required
+  $linked_activity_log  = sanitize($linked_activity_log, 'int', 0);
+  $description          = ($do_not_sanitize) ? $description : sanitize($description, 'string');
+  $before               = ($do_not_sanitize) ? $before : sanitize($before, 'string');
+  $after                = ($do_not_sanitize) ? $after : sanitize($after, 'string');
+
+  // We can now create the detailed log
+  query(" INSERT INTO logs_activity_details
+          SET         logs_activity_details.fk_logs_activity    = '$linked_activity_log'  ,
+                      logs_activity_details.content_description = '$description'          ,
+                      logs_activity_details.content_before      = '$before'               ,
+                      logs_activity_details.content_after       = '$after'                ");
+}
+
+
+
+
+/**
+ * Deletes all orphan entries in the detailed activity logs.
+ *
+ * This will remove all entries in thes logs_activity_details table which have no linked entry in logs_activity.
+ *
+ * @return  void
+ */
+
+function log_activity_purge_orphan_diffs()
+{
+  // We fetch all orphan diffs
+  $qorphans = query(" SELECT    logs_activity_details.id AS 'd_id'
+                      FROM      logs_activity_details
+                      LEFT JOIN logs_activity ON logs_activity_details.fk_logs_activity = logs_activity.id
+                      WHERE     logs_activity.id IS NULL ");
+
+  // And we stealthily choke them to death
+  while($dorphans = mysqli_fetch_array($qorphans))
   {
-    if($menu_objet == 'secrets' && $menu_type == 0)
-      return ' menu_main_item_secrets';
-    else
-      return '';
+    $orphan_id = sanitize($dorphans['d_id'], 'int', 0);
+    query(" DELETE FROM logs_activity_details
+            WHERE       logs_activity_details.id = '$orphan_id' ");
   }
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction envoyant un message qui sera broadcasté par le bot IRC NoBleme s'il est en ligne
-//
-// Le premier paramètre optionnel permet de spécifier un canal sur lequel écrire le message
-// Le second paramètre optionnel autorise les codes de formattage de texte
-//
-// Utilisation: ircbot($chemin,"PRIVMSG #NoBleme :Bonjour !");
-// Utilisation: ircbot($chemin,"Bonjour !","#NoBleme");
+/**
+ * Deletes an entry in the activity logs.
+ *
+ * @param   string          $activity_type                      The identifier of the activity log's type.
+ * @param   bool|null       $is_administrators_only (OPTIONAL)  Is it a public activity log or a moderation log.
+ * @param   int|null        $fk_users               (OPTIONAL)  ID of the user implicated in the activity log.
+ * @param   string|null     $nickname               (OPTIONAL)  Nickname of the user implicated in the activity log.
+ * @param   int|null        $activity_id            (OPTIONAL)  ID of the item linked to the activity log.
+ * @param   bool|null       $global_type_wipe       (OPTOINAL)  Deletes all logs of type beginning like $activity_type.
+ *
+ * @return  void
+ */
 
-function ircbot($chemin,$message_irc,$canal_irc=NULL,$formattage=NULL)
+function activite_supprimer($activity_type, $is_administrators_only=0, $fk_users=0, $nickname=NULL, $activity_id=0, $global_type_wipe=0)
 {
-  // On assainit le message
-  $message_irc = str_replace("\\n", '', $message_irc);
-  $message_irc = str_replace("\\r", '', $message_irc);
-  $message_irc = str_replace("\\t", '', $message_irc);
+  // We begin by sanitizing the data
+  $activity_type          = sanitize($activity_type, 'string');
+  $is_administrators_only = sanitize($is_administrators_only, 'int', 0, 1);
+  $fk_users               = sanitize($fk_users, 'int', 0);
+  $nickname               = sanitize($nickname, 'string');
+  $activity_id            = sanitize($activity_id, 'int', 0);
+  $global_type_wipe       = sanitize($global_type_wipe, 'int', 0, 1);
 
-  // On formatte le message si c'est autorisé
-  if($formattage)
+  // We begin building our query
+  $qactivity    = " DELETE FROM logs_activity ";
+
+  // Depending on whether this is a global type wipe or not, we do a different kind of string matching
+  if(!$global_type_wipe)
+    $qactivity .= " WHERE       logs_activity.activity_type           LIKE  '$activity_type' ";
+  else
+    $qactivity .= " WHERE       logs_activity.activity_type           LIKE  '$activity_type%' ";
+
+  // We treat public and private logs separately
+  $qactivity .= "   AND         logs_activity.is_administrators_only  =     '$is_administrators_only' ";
+
+  // Optional parameters
+  if($fk_users)
+    $qactivity .= " AND         logs_activity.fk_users                =     '$fk_users' ";
+  if($nickname)
+    $qactivity .= " AND         logs_activity.nickname                LIKE  '$nickname' ";
+  if($activity_id)
+    $qactivity .= " AND         logs_activity.activity_id             =     '$activity_id' ";
+
+  // We can now run the query and delete the activity
+  query($qactivity);
+
+  // We purge all orphaned detailed activity logs
+  log_activity_purge_orphan_diffs();
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      IRC BOT                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
+/**
+ * Uses the IRC bot to broadcast a message.
+ *
+ * @param   string      $message                              The message to send.
+ * @param   string|null $channel                  (OPTIONAL)  The IRC channel on which the message should be sent.
+ * @param   string|null $path                     (OPTIONAL)  Path to the website root (defaults to 2 folders away).
+ * @param   bool|null   $allow_special_formatting (OPTIONAL)  Allow IRC formatting characters in the message.
+ *
+ * @return  bool                                              Whether the message has been queued in the bot's file.
+ */
+
+function ircbot($message, $channel=NULL, $path='./../../', $allow_special_formatting=0)
+{
+  // We sanitize the message for IRC usage
+  $message = str_replace("\\n", '', $message);
+  $message = str_replace("\\r", '', $message);
+  $message = str_replace("\\t", '', $message);
+
+  // If allowed, we apply special formatting to the message
+  if($allow_special_formatting)
   {
-    // Substitution des bytes de formattage
-    $message_irc = str_replace('%O',chr(0x0f),$message_irc);        // Remise à zéro
-    $message_irc = str_replace('%B',chr(0x02),$message_irc);        // Gras
-    $message_irc = str_replace('%I',chr(0x1d),$message_irc);        // Italique
-    $message_irc = str_replace('%U',chr(0x1f),$message_irc);        // Souligné
-    $message_irc = str_replace('%C00',chr(0x03).'00',$message_irc); // Couleur : Blanc
-    $message_irc = str_replace('%C01',chr(0x03).'01',$message_irc); // Couleur : Noir
-    $message_irc = str_replace('%C02',chr(0x03).'02',$message_irc); // Couleur : Bleu
-    $message_irc = str_replace('%C03',chr(0x03).'03',$message_irc); // Couleur : Vert
-    $message_irc = str_replace('%C04',chr(0x03).'04',$message_irc); // Couleur : Rouge
-    $message_irc = str_replace('%C05',chr(0x03).'05',$message_irc); // Couleur : Marron
-    $message_irc = str_replace('%C06',chr(0x03).'06',$message_irc); // Couleur : Violet
-    $message_irc = str_replace('%C07',chr(0x03).'07',$message_irc); // Couleur : Orange
-    $message_irc = str_replace('%C08',chr(0x03).'08',$message_irc); // Couleur : Jaune
-    $message_irc = str_replace('%C09',chr(0x03).'09',$message_irc); // Couleur : Vert clair
-    $message_irc = str_replace('%C10',chr(0x03).'10',$message_irc); // Couleur : Bleu vert
-    $message_irc = str_replace('%C11',chr(0x03).'11',$message_irc); // Couleur : Cyan clair
-    $message_irc = str_replace('%C12',chr(0x03).'12',$message_irc); // Couleur : Bleu clair
-    $message_irc = str_replace('%C13',chr(0x03).'13',$message_irc); // Couleur : Rose
-    $message_irc = str_replace('%C14',chr(0x03).'14',$message_irc); // Couleur : Gris
+    // Swap special characters for bytes
+    $message = str_replace('%O',chr(0x0f),$message);        // Reset
+    $message = str_replace('%B',chr(0x02),$message);        // Bold
+    $message = str_replace('%I',chr(0x1d),$message);        // Italics
+    $message = str_replace('%U',chr(0x1f),$message);        // Underline
+    $message = str_replace('%C00',chr(0x03).'00',$message); // Color: White
+    $message = str_replace('%C01',chr(0x03).'01',$message); // Color: Black
+    $message = str_replace('%C02',chr(0x03).'02',$message); // Color: Blue
+    $message = str_replace('%C03',chr(0x03).'03',$message); // Color: Green
+    $message = str_replace('%C04',chr(0x03).'04',$message); // Color: Red
+    $message = str_replace('%C05',chr(0x03).'05',$message); // Color: Brown
+    $message = str_replace('%C06',chr(0x03).'06',$message); // Color: Purple
+    $message = str_replace('%C07',chr(0x03).'07',$message); // Color: Orange
+    $message = str_replace('%C08',chr(0x03).'08',$message); // Color: Yellow
+    $message = str_replace('%C09',chr(0x03).'09',$message); // Color: Light green
+    $message = str_replace('%C10',chr(0x03).'10',$message); // Color: Teal
+    $message = str_replace('%C11',chr(0x03).'11',$message); // Color: Light cyan
+    $message = str_replace('%C12',chr(0x03).'12',$message); // Color: Ligh blue
+    $message = str_replace('%C13',chr(0x03).'13',$message); // Color: Pink
+    $message = str_replace('%C14',chr(0x03).'14',$message); // Color: Grey
 
-    // Bytes de formattage personnalisés / combinés
-    $message_irc = str_replace('%NB',chr(0x02).chr(0x03).'00,01',$message_irc);               // Fond noir, texte blanc gras
-    $message_irc = str_replace('%TROLL',chr(0x1f).chr(0x02).chr(0x03).'08,13',$message_irc);  // Fond rose, texte jaune gras, souligné
+    // Custom made bytes
+    $message = str_replace('%NB',chr(0x02).chr(0x03).'00,01',$message);              // Bold white on black
+    $message = str_replace('%TROLL',chr(0x1f).chr(0x02).chr(0x03).'08,13',$message); // Bold underlined yellow on green
   }
 
-  // Si on peut écrire dans le fichier, on remplace son contenu par le message
-  if($fichier_ircbot = fopen($chemin.'ircbot.txt', "a"))
+  // If we are allowed to write in the file, then we queue a message
+  if($fichier_ircbot = fopen($path.'ircbot.txt', "a"))
   {
-    if(!$canal_irc)
-      file_put_contents($chemin.'ircbot.txt', time()." ".substr($message_irc,0,450).PHP_EOL, FILE_APPEND);
+    // Depending on whether a channel is specifiied, the message is sent to the server or to a channel
+    if(!$channel)
+      file_put_contents($path.'ircbot.txt', time()." ".substr($message,0,450).PHP_EOL, FILE_APPEND);
     else
-      file_put_contents($chemin.'ircbot.txt', time()." PRIVMSG ".$canal_irc." :".substr($message_irc,0,450).PHP_EOL, FILE_APPEND);
+      file_put_contents($path.'ircbot.txt', time()." PRIVMSG ".$channel." :".substr($message,0,450).PHP_EOL, FILE_APPEND);
+
+    // Close the IRCbot file
     fclose($fichier_ircbot);
+
+    // We return 1 now that the work is done
     return 1;
   }
+  // If we can't write in the IRCbot file, we return 0
   else
     return 0;
-}
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Arrête le processus de la page abruptement si elle n'est pas appelée par la fonction js dynamique();
-//
-// Utilisation: xhronly();
-
-function xhronly()
-{
-  if(!isset($_SERVER['HTTP_DYNAMIQUE']))
-    exit();
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Détecte si la page est appelée par du XHR ou non
-//
-// Utilisation: getxhr();
-
-function getxhr()
-{
-  return (isset($_SERVER['HTTP_DYNAMIQUE'])) ? 1 : 0;
-}
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction renvoyant la différence entre deux arrays de strings
-//
-// Renvoie un array des différences, à utiliser avec la fonction diff()
-//
-// Inspiré de la méthode de diff par array de Paul Butler http://www.paulbutler.org/
-
-  function diff_raw($old, $new)
-  {
-    $matrix = array();
-    $maxlen = 0;
-    foreach($old as $oindex => $ovalue){
-      $nkeys = array_keys($new, $ovalue);
-      foreach($nkeys as $nindex){
-        $matrix[$oindex][$nindex] = isset($matrix[$oindex - 1][$nindex - 1]) ?
-          $matrix[$oindex - 1][$nindex - 1] + 1 : 1;
-        if($matrix[$oindex][$nindex] > $maxlen){
-          $maxlen = $matrix[$oindex][$nindex];
-          $omax = $oindex + 1 - $maxlen;
-          $nmax = $nindex + 1 - $maxlen;
-        }
-      }
-    }
-    if($maxlen == 0) return array(array('d'=>$old, 'i'=>$new));
-    return array_merge(
-      diff_raw(array_slice($old, 0, $omax), array_slice($new, 0, $nmax)),
-      array_slice($new, $nmax, $maxlen),
-      diff_raw(array_slice($old, $omax + $maxlen), array_slice($new, $nmax + $maxlen))
-    );
-  }
-
-
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Fonction renvoyant une différence formatée et lisible entre deux strings
-  //
-  // Utilisation: diff("Mon texte", "Nouveau texte");
-
-  function diff($old, $new)
-  {
-    $return = '';
-    $diff = diff_raw(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
-    foreach($diff as $k)
-    {
-      if(is_array($k))
-          $return .= (!empty($k['d'])?"&nbsp;<del>&nbsp;".implode(' ',$k['d'])."&nbsp;</del>&nbsp;":'').(!empty($k['i'])?"&nbsp;<ins>&nbsp;".implode(' ',$k['i'])."&nbsp;</ins>&nbsp;":'');
-      else
-        $return .= $k . ' ';
-    }
-    return $return;
-  }
-
-
-
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction cherchant un mot dans une chaîne de caractères et renvoyant un certain nombre de mots avant et après le mot trouvé
-//
-// Utilisation: search_wrap("canard", "Je suis un canard dans une phrase longue", 2);
-
-function search_wrap($recherche, $texte, $nombre_mots_autour)
-{
-  $recherche = preg_quote($recherche, '/');
-  $texte = preg_quote($texte, '/');
-  // On commence par découper les mots en ignorant la casse
-  $mots = preg_split('/\s+/u', changer_casse($texte, 'min'));
-
-  // Si on trouve le mot dans la phrase, on récupère sa position
-  $recuperation_mots  = preg_grep("/".changer_casse($recherche, 'min').".*/", $mots);
-  $position_mots      = array_keys($recuperation_mots);
-
-  // Puis on reprend les mots dans leur forme réelle
-  $mots = preg_split('/\s+/u', $texte);
-
-  // Si on a repéré le mot, on met sa première occurence dans une variable
-  if(count($position_mots))
-    $position = $position_mots[0];
-
-  // Puis on récupère tout ce qui vient avant/après
-  if (isset($position))
-  {
-    // D'abord on a besoin des positions de début et de fin selon le nombre de mots qu'on veut récupérer
-    $debut  = (($position - $nombre_mots_autour) > 0) ? $position - $nombre_mots_autour : 0;
-    $fin    = ((($position + ($nombre_mots_autour + 1)) < count($mots)) ? $position + ($nombre_mots_autour + 1) : count($mots)) - $debut;
-
-    // Ensuite on découpe les mots en un tableau
-    $slice  = array_slice($mots, $debut, $fin);
-
-    // On met des ... au début et à la fin du tableau si nécessaire
-    $debut  = ($debut > 0) ? "..." : "";
-    $fin    = ($position + ($nombre_mots_autour + 1) < count($mots)) ? "..." : "";
-
-    // Puis on assemble ce tableau en une chaine de caractères qu'on renvoie
-    return stripslashes($debut.implode(' ', $slice).$fin);
-  }
-
-  // Si on a été perdu à une étape, on renvoie rien
-  else
-    return "";
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction appliquant du HTML autour de toutes les occurences d'un mot particulier dans une chaine de caractères
-//
-// Utilisation: html_autour("canard", "Je suis un canard dans une phrase", '<span class="gras">', "</span>");
-
-function html_autour($recherche, $texte, $html_avant, $html_apres)
-{
-  $recherche = preg_quote($recherche, '/');
-  $texte = preg_quote($texte, '/');
-  return stripslashes(preg_replace("/($recherche)/i", "$html_avant$1$html_apres", $texte));
 }

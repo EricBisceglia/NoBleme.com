@@ -161,7 +161,7 @@ if(user_is_logged_in())
 {
   // On prépare la date et l'user
   $visite_timestamp = time();
-  $visite_user      = $_SESSION['user_id'];
+  $visite_user      = user_get_id();
 
   // Nettoyage des données au cas où
   $activite_page  = sanitize($activite_page, 'string');
