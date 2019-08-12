@@ -154,10 +154,71 @@ for($ndiconotes = 0; $ddiconotes = mysqli_fetch_array($qdiconotes); $ndiconotes+
 /*                                                                                                                                       */
 /************************************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-      <h2 class="align_center">NBDB - Administration - Notes privées</h2>
+      <h2 class="align_center">
+        NBDB - Administration - Notes privées
+        <a href="<?=$chemin?>pages/nbdb/web_images">
+          &nbsp;<img class="valign_middle pointeur" src="<?=$chemin?>img/icones/upload.svg" alt="+" height="30">
+        </a>
+      </h2>
 
       <br>
       <hr class="separateur_contenu">
+      <br>
+
+      <div class="tableau">
+
+        <form method="POST">
+          <fieldset>
+
+            <div class="flexcontainer">
+              <div style="flex:12">
+
+                <label for="web_notes_global">Notes globales</label>
+                <textarea id="web_notes_global" name="web_notes_global" class="indiv web_encyclo_edit_note"><?=$web_notes_global?></textarea><br>
+                <br>
+
+                <label for="web_notes_en">Brouillon anglais (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> + <a class="gras" href="<?=$chemin?>pages/doc/nbdbcodes">NBDBCodes</a>)</label>
+                <textarea id="web_notes_en" name="web_notes_en" class="indiv web_encyclo_edit_brouillon"><?=$web_notes_en?></textarea><br>
+                <br>
+
+                <label for="web_notes_fr">Brouillon français (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> + <a class="gras" href="<?=$chemin?>pages/doc/nbdbcodes">NBDBCodes</a>)</label>
+                <textarea id="web_notes_fr" name="web_notes_fr" class="indiv web_encyclo_edit_brouillon"><?=$web_notes_fr?></textarea><br>
+                <br>
+
+              </div>
+              <div style="flex:1">
+                &nbsp;
+              </div>
+              <div style="flex:4">
+
+                <label for="web_template_global">Snippets utiles</label>
+                <textarea id="web_template_global" name="web_template_global" class="indiv web_encyclo_edit_note"><?=$web_template_global?></textarea><br>
+                <br>
+
+                <label for="web_template_en">Template anglais</label>
+                <textarea id="web_template_en" name="web_template_en" class="indiv web_encyclo_edit_brouillon"><?=$web_template_en?></textarea><br>
+                <br>
+
+                <label for="web_template_fr">Template français</label>
+                <textarea id="web_template_fr" name="web_template_fr" class="indiv web_encyclo_edit_brouillon"><?=$web_template_fr?></textarea><br>
+                <br>
+
+              </div>
+            </div>
+
+            <input value="ENREGISTRER ET PRÉVISUALISER LES BROUILLONS" class="button button-outline" type="submit" name="web_notes_prev">
+            &nbsp;
+            <input value="ENREGISTRER LES NOTES PRIVÉES" type="submit" name="web_notes_edit">
+
+          </fieldset>
+        </form>
+
+      </div>
+
+      <br>
+      <br>
+      <hr class="separateur_contenu">
+      <br>
       <br>
 
       <?php if(isset($_POST['web_notes_prev'])) { ?>
@@ -223,62 +284,6 @@ for($ndiconotes = 0; $ddiconotes = mysqli_fetch_array($qdiconotes); $ndiconotes+
 
       <div class="tableau">
 
-        <form method="POST">
-          <fieldset>
-
-            <div class="flexcontainer">
-              <div style="flex:12">
-
-                <label for="web_notes_global">Notes globales</label>
-                <textarea id="web_notes_global" name="web_notes_global" class="indiv web_encyclo_edit_brouillon"><?=$web_notes_global?></textarea><br>
-                <br>
-
-                <label for="web_notes_fr">Brouillon français</label>
-                <textarea id="web_notes_fr" name="web_notes_fr" class="indiv web_encyclo_edit_brouillon"><?=$web_notes_fr?></textarea><br>
-                <br>
-
-                <label for="web_notes_en">Brouillon anglais</label>
-                <textarea id="web_notes_en" name="web_notes_en" class="indiv web_encyclo_edit_brouillon"><?=$web_notes_en?></textarea><br>
-                <br>
-
-              </div>
-              <div style="flex:1">
-                &nbsp;
-              </div>
-              <div style="flex:4">
-
-                <label for="web_template_global">Snippets utiles</label>
-                <textarea id="web_template_global" name="web_template_global" class="indiv web_encyclo_edit_brouillon"><?=$web_template_global?></textarea><br>
-                <br>
-
-                <label for="web_template_fr">Template français</label>
-                <textarea id="web_template_fr" name="web_template_fr" class="indiv web_encyclo_edit_brouillon"><?=$web_template_fr?></textarea><br>
-                <br>
-
-                <label for="web_template_en">Template anglais</label>
-                <textarea id="web_template_en" name="web_template_en" class="indiv web_encyclo_edit_brouillon"><?=$web_template_en?></textarea><br>
-                <br>
-
-              </div>
-            </div>
-
-            <input value="ENREGISTRER ET PRÉVISUALISER LES BROUILLONS" class="button button-outline" type="submit" name="web_notes_prev">
-            &nbsp;
-            <input value="ENREGISTRER LES NOTES PRIVÉES" type="submit" name="web_notes_edit">
-
-          </fieldset>
-        </form>
-
-      </div>
-
-      <br>
-      <br>
-      <hr class="separateur_contenu">
-      <br>
-      <br>
-
-      <div class="tableau">
-
         <table class="grid titresnoirs altc">
           <thead>
 
@@ -299,11 +304,11 @@ for($ndiconotes = 0; $ddiconotes = mysqli_fetch_array($qdiconotes); $ndiconotes+
               <tr>
 
                 <td class="gras align_center">
-                  <a href="<?=$chemin?>pages/nbdb/web?id=<?=$web_liste_notes_id[$i]?>"><?=$web_liste_notes_fr[$i]?></a>
+                  <a href="<?=$chemin?>pages/nbdb/web_edit?id=<?=$web_liste_notes_id[$i]?>"><?=$web_liste_notes_fr[$i]?></a>
                   <?php if($web_liste_notes_fr[$i] && $web_liste_notes_en[$i]) { ?>
                   <br>
                   <?php } if($web_liste_notes_fr[$i] != $web_liste_notes_en[$i]) { ?>
-                  <a href="<?=$chemin?>pages/nbdb/web?id=<?=$web_liste_notes_id[$i]?>"><?=$web_liste_notes_en[$i]?></a>
+                  <a href="<?=$chemin?>pages/nbdb/web_edit?id=<?=$web_liste_notes_id[$i]?>"><?=$web_liste_notes_en[$i]?></a>
                   <?php } ?>
                 </td>
 
@@ -318,11 +323,11 @@ for($ndiconotes = 0; $ddiconotes = mysqli_fetch_array($qdiconotes); $ndiconotes+
               <tr>
 
                 <td class="gras align_center">
-                  <a href="<?=$chemin?>pages/nbdb/web_dictionnaire?id=<?=$dico_liste_notes_id[$i]?>"><?=$dico_liste_notes_fr[$i]?></a>
+                  <a href="<?=$chemin?>pages/nbdb/web_dictionnaire_edit?id=<?=$dico_liste_notes_id[$i]?>"><?=$dico_liste_notes_fr[$i]?></a>
                   <?php if($dico_liste_notes_fr[$i] && $dico_liste_notes_en[$i]) { ?>
                   <br>
                   <?php } if($dico_liste_notes_fr[$i] != $dico_liste_notes_en[$i]) { ?>
-                  <a href="<?=$chemin?>pages/nbdb/web_dictionnaire?id=<?=$dico_liste_notes_id[$i]?>"><?=$dico_liste_notes_en[$i]?></a>
+                  <a href="<?=$chemin?>pages/nbdb/web_dictionnaire_edit?id=<?=$dico_liste_notes_id[$i]?>"><?=$dico_liste_notes_en[$i]?></a>
                   <?php } ?>
                 </td>
 
