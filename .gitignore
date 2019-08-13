@@ -1,5 +1,5 @@
 # Config should not be committed
-inc/conf.inc.php
+inc/configuration.inc.php
 
 # IRCBot .txt file fills up during tests
 ircbot.txt

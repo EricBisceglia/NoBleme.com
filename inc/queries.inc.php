@@ -949,13 +949,17 @@ if($last_query < 20)
   sql_rename_field('system_scheduler', 'action_id', 'task_id', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('system_scheduler', 'action_type', 'task_type', 'VARCHAR(40) NOT NULL');
   sql_rename_field('system_scheduler', 'action_description', 'task_description', 'TEXT NOT NULL');
-  sql_rename_field('system_scheduler', 'action_timestamp', 'task_timestamp', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('system_scheduler', 'task_timestamp', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_rename_field('system_scheduler', 'action_timestamp', 'planned_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('system_scheduler', 'planned_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_delete_index('system_scheduler', 'index_action');
   sql_create_index('system_scheduler', 'index_task_id', 'task_id');
 
   sql_rename_field('system_variables', 'mise_a_jour', 'update_in_progress', 'INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY');
+  query(" UPDATE system_variables SET system_variables.update_in_progress = 2 WHERE system_variables.update_in_progress = 1 ");
+  query(" UPDATE system_variables SET system_variables.update_in_progress = 1 WHERE system_variables.update_in_progress = 0 ");
+  query(" UPDATE system_variables SET system_variables.update_in_progress = 0 WHERE system_variables.update_in_progress = 2 ");
   sql_rename_field('system_variables', 'derniere_requete_sql', 'latest_query_id', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_create_field('system_variables', 'last_scheduler_execution', 'INT UNSIGNED NOT NULL DEFAULT 0', 'latest_query_id');
   sql_change_field_type('system_variables', 'last_pageview_check', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_delete_index('system_variables', 'mise_a_jour');
 
@@ -974,11 +978,11 @@ if($last_query < 20)
 if($last_query < 21)
 {
   sql_rename_table('activite', 'logs_activity');
-  sql_rename_table('activite_diff', 'logs_activity_archives');
+  sql_rename_table('activite_diff', 'logs_activity_details');
 
   sql_change_field_type('logs_activity', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('logs_activity', 'timestamp', 'happened_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('logs_activity', 'log_moderation', 'is_moderators_only', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('logs_activity', 'log_moderation', 'is_administrators_only', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('logs_activity', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_move_field('logs_activity', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_rename_field('logs_activity', 'pseudonyme', 'nickname', 'VARCHAR(45) NOT NULL');
@@ -995,13 +999,13 @@ if($last_query < 21)
   sql_create_index('logs_activity', 'index_related_foreign_keys', 'activity_id');
   sql_create_index('logs_activity', 'index_activity_type', 'activity_type(40)');
 
-  sql_change_field_type('logs_activity_archives', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('logs_activity_archives', 'FKactivite', 'fk_logs_activity', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('logs_activity_archives', 'titre_diff', 'content_description', 'TEXT NOT NULL');
-  sql_rename_field('logs_activity_archives', 'diff_avant', 'content_before', 'MEDIUMTEXT NOT NULL');
-  sql_rename_field('logs_activity_archives', 'diff_apres', 'content_after', 'MEDIUMTEXT NOT NULL');
-  sql_delete_index('logs_activity_archives', 'index_activite');
-  sql_create_index('logs_activity_archives', 'index_logs_activity', 'fk_logs_activity');
+  sql_change_field_type('logs_activity_details', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('logs_activity_details', 'FKactivite', 'fk_logs_activity', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('logs_activity_details', 'titre_diff', 'content_description', 'TEXT NOT NULL');
+  sql_rename_field('logs_activity_details', 'diff_avant', 'content_before', 'MEDIUMTEXT NOT NULL');
+  sql_rename_field('logs_activity_details', 'diff_apres', 'content_after', 'MEDIUMTEXT NOT NULL');
+  sql_delete_index('logs_activity_details', 'index_activite');
+  sql_create_index('logs_activity_details', 'index_logs_activity', 'fk_logs_activity');
 
   sql_update_query_id(21);
 }
@@ -1137,15 +1141,15 @@ if($last_query < 24)
 
   sql_change_field_type('writings_contests', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('writings_contests', 'FKmembres_gagnant', 'fk_users_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_contests', 'FKecrivains_texte_gagnant', 'fk_writings_writings_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_contests', 'FKecrivains_texte_gagnant', 'fk_writings_texts_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_contests', 'timestamp_debut', 'started_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_contests', 'timestamp_fin', 'ended_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_contests', 'num_participants', 'nb_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_contests', 'num_participants', 'nb_entries', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_contests', 'titre', 'contest_name', 'TEXT NOT NULL');
   sql_rename_field('writings_contests', 'sujet', 'contest_topic', 'TEXT NOT NULL');
   sql_delete_index('writings_contests', 'index_gagnant');
   sql_create_index('writings_contests', 'index_winner', 'fk_users_winner');
-  sql_create_index('writings_contests', 'index_winning_text', 'fk_writings_writings_winner');
+  sql_create_index('writings_contests', 'index_winning_text', 'fk_writings_texts_winner');
 
   sql_change_field_type('writings_contests_votes', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('writings_contests_votes', 'FKecrivains_concours', 'fk_writings_contests', 'INT UNSIGNED NOT NULL DEFAULT 0');
@@ -1656,28 +1660,12 @@ if($last_query < 30)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #544 - Translation and optimization of all tables - Adjustments (can't get everything right on the first try)
-
-if($last_query < 35)
-{
-  sql_rename_table('logs_activity_archives', 'logs_activity_details');
-
-  sql_rename_field('logs_activity', 'is_moderators_only', 'is_administrators_only', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('system_scheduler', 'task_timestamp', 'planned_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_contests', 'fk_writings_writings_winner', 'fk_writings_texts_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_contests', 'nb_users', 'nb_entries', 'INT UNSIGNED NOT NULL DEFAULT 0');
-
-  sql_create_field('system_variables', 'last_scheduler_execution', 'INT UNSIGNED NOT NULL DEFAULT 0', 'latest_query_id');
-
-  sql_update_query_id(31);
-}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #544 - Translation and optimization of all tables - Translation of the contents of tables
 
-if($last_query < 32)
+if($last_query < 31)
 {
   query(" UPDATE  system_scheduler
           SET     system_scheduler.task_type    = 'writers_contest_vote'
@@ -1782,7 +1770,7 @@ if($last_query < 32)
   query(" UPDATE  nbdb_web_definitions
           SET     nbdb_web_definitions.definition_fr = REPLACE(nbdb_web_definitions.definition_fr, '/galerie]]', '/gallery]]') ");
 
-  sql_update_query_id(32);
+  sql_update_query_id(31);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
