@@ -59,6 +59,28 @@ EOD;
   $trad['api_optionnel']      = "Optionnel";
   $trad['api_exemples']       = "Exemples d'utilisation :";
 
+  // Encyclopédie de la culture web
+  $trad['apinbdb_titre']      = "Encyclopedie de la culture web";
+  $trad['apinbdb_tri']        = <<<EOD
+Les données sont renvoyées <span class="gras">triées par titre</span>, dans l'ordre alphabétique.
+EOD;
+  $trad['apinbdb_ruuid']      = "Un identifiant unique, sans rapport avec la page";
+  $trad['apinbdb_rtype']      = "Type de page ('encyclopedia' ou 'dictionary' de la culture internet)";
+  $trad['apinbdb_rurl']       = "URL à laquelle se trouve la page";
+  $trad['apinbdb_rshorturl']  = "Version courte de l'URL à laquelle se trouve la page";
+  $trad['apinbdb_rtitle']     = "Titre de la page";
+  $trad['apinbdb_rbody']      = "Contenu de la page";
+  $trad['apinbdb_plang']      = "Renvoie les pages dans une langue spécifique ('FR' ou 'EN') - en anglais par défaut";
+  $trad['apinbdb_ptype']      = "Renvoie les pages d'un type spécifique ('encyclopedia' ou 'dictionary' ou 'both')";
+  $trad['apinbdb_ptitle']     = "Renvoie les titres contenant une chaîne de caractères spécifique";
+  $trad['apinbdb_psearch']    = "Renvoie les pages dont le contenu contient une chaîne de caractères spécifique";
+  $trad['apinbdb_exemples']   = <<<EOD
+<span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/nbdb</span> - Renvoie toutes les pages<br>
+<span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/nbdb?lang=FR</span> - Renvoie toutes les pages, en français<br>
+<span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/nbdb?lang=EN&type=dictionary</span> - Renvoie toutes les pages du dico de la culture web, en anglais<br>
+<span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/nbdb?title=hog&search=cochonou</span> - Les pages ayant 'hog' dans le titre et contenant 'cochonou'
+EOD;
+
   // Miscellanées
   $trad['apimisc_titre']      = "Miscellanées (citations)";
   $trad['apimisc_tri']        = <<<EOD
@@ -72,18 +94,12 @@ EOD;
   $trad['apimisc_contenu']    = "Contenu de la citation";
   $trad['apimisc_nsfw']       = "Si true, la citation est NSFW (contient du contenu vulgaire ou sensible)";
   $trad['apimisc_id']         = "Renvoie une citation spécifique";
-  $trad['apimisc_lang']       = "Renvoie les citations dans une langue spécifique";
+  $trad['apimisc_lang']       = "Renvoie les citations dans une langue spécifique ('FR' ou 'EN')";
   $trad['apimisc_search']     = "Renvoie les citations contenant la chaîne de caractères";
   $trad['apimisc_exemples']   = <<<EOD
 <span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/quotes</span> - Renvoie toutes les miscellanées<br>
 <span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/quotes?id=14</span> - Renvoie uniquement la miscellanée #14<br>
 <span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/quotes?lang=FR&search=Paris</span> - Renvoie les miscellanées en français contenant "Paris"
-EOD;
-
-  // À suivre
-  $trad['apitodo_titre']      = "Contenu à venir...";
-  $trad['apitodo_desc']       = <<<EOD
-Pour le moment, l'API publique de NoBleme ne permet que d'accéder aux miscellanées. Plus de contenu est prévu d'être accessible via cette API dès que <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> aura le temps de le coder, notemment <a class="gras" href="{$chemin}pages/nbdb/web">l'encyclopédie de la culture internet</a>, les <a class="gras" href="{$chemin}pages/nobleme/membres">profils utilisateur</a>, et l'<a class="gras" href="{$chemin}pages/nobleme/activite">activité récente</a>.
 EOD;
 }
 
@@ -117,6 +133,28 @@ EOD;
   $trad['api_optionnel']      = "Optional";
   $trad['api_exemples']       = "Usage examples:";
 
+  // Encyclopédie de la culture web
+  $trad['apinbdb_titre']      = "Encyclopedia of internet culture";
+  $trad['apinbdb_tri']        = <<<EOD
+The pages are returned <span class="gras">sorted by title</span>, in alphabetical order.
+EOD;
+  $trad['apinbdb_ruuid']      = "A unique identifier, unrelated to the entry";
+  $trad['apinbdb_rtype']      = "Type of entry ('encyclopedia' or 'dictionary' of internet culture)";
+  $trad['apinbdb_rurl']       = "URL at which the entry can be found";
+  $trad['apinbdb_rshorturl']  = "Short version of the URL at which the entry can be found";
+  $trad['apinbdb_rtitle']     = "Title of the entry";
+  $trad['apinbdb_rbody']      = "Body of the entry";
+  $trad['apinbdb_plang']      = "Returns entries in a specific language ('EN' or 'FR') - defaults to english if not set";
+  $trad['apinbdb_ptype']      = "Returns entries of a specific type ('encyclopedia' or 'dictionary' or 'both')";
+  $trad['apinbdb_ptitle']     = "Searches entries titles for a specific string";
+  $trad['apinbdb_psearch']    = "Searches entries contents for a specific string";
+  $trad['apinbdb_exemples']   = <<<EOD
+<span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/nbdb</span> - Returns all entries<br>
+<span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/nbdb?lang=FR</span> - Returns all entries, in french<br>
+<span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/nbdb?lang=EN&type=dictionary</span> - Returns all entries of the dictionary of internet culture, in english<br>
+<span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/nbdb?title=hog&search=piggo</span> - Returns all entries containing 'hog' in the title and 'piggo' in the body
+EOD;
+
   // Miscellanées
   $trad['apimisc_titre']      = "Miscellanea (quotes)";
   $trad['apimisc_tri']        = <<<EOD
@@ -130,18 +168,12 @@ EOD;
   $trad['apimisc_contenu']    = "Contents of the quote";
   $trad['apimisc_nsfw']       = "If true, the quote is NSFW (contains crude or sensitive things)";
   $trad['apimisc_id']         = "Returns a specific quote";
-  $trad['apimisc_lang']       = "Returns quotes in a specific language";
+  $trad['apimisc_lang']       = "Returns quotes in a specific language ('EN' or 'FR')";
   $trad['apimisc_search']     = "Returns quotes containing a specific string";
   $trad['apimisc_exemples']   = <<<EOD
 <span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/quotes</span> - Returns all quotes<br>
 <span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/quotes?id=349</span> - Returns only quote #349<br>
 <span class="texte_noir gras">{$GLOBALS['url_site']}api/v1/quotes?lang=EN&search=phone</span> - Returns all english quotes containing "Phone"
-EOD;
-
-  // À suivre
-  $trad['apitodo_titre']      = "More to come...";
-  $trad['apitodo_desc']       = <<<EOD
-For now, NoBleme's public API only allows you to query the miscellanea. More content is to come through this API as soon as <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> finds the time for it, including but not limited to the <a class="gras" href="{$chemin}pages/nbdb/web">encyclopedia of internet culture</a>, the <a class="gras" href="{$chemin}pages/nobleme/membres">public user profiles</a>, and the <a class="gras" href="{$chemin}pages/nobleme/activite">recent activity</a>.
 EOD;
 }
 
@@ -168,12 +200,209 @@ EOD;
 
       </div>
 
+      <br>
+      <br>
 
+      <hr class="separateur_contenu">
 
+      <br>
+      <br>
 
-<?php #####################################################################################################################################
-#                                                               MISCELLANÉES                                                               #
-######################################################################################################################################## ?>
+      <div class="texte2">
+
+        <h4>
+          <a href="<?=$chemin?>pages/nbdb/web"><?=$trad['apinbdb_titre']?></a>
+        </h4>
+
+        <p>
+          <pre onclick="highlight('pre_complet');" class="spaced moinsgros gras texte_noir" id="pre_complet" style="max-height:300px"><?=$GLOBALS['url_site']?>api/v1/nbdb</pre>
+        </p>
+
+        <br>
+
+        <h6 class="moinsgros souligne"><?=$trad['api_renvoi']?></h6>
+
+        <p><?=$trad['apinbdb_tri']?></p>
+
+        <br>
+
+        <table class="fullgrid indiv">
+
+          <thead>
+            <tr class="grisclair texte_noir gras">
+              <th>
+                <?=$trad['api_champ']?>
+              </th>
+              <th>
+                <?=$trad['api_type']?>
+              </th>
+              <th>
+                <?=$trad['api_contenu']?>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td class="texte_noir gras">
+                uuid
+              </td>
+              <td class="align_center spaced">
+                ID
+              </td>
+              <td>
+                <?=$trad['apinbdb_ruuid']?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir gras">
+                type
+              </td>
+              <td class="align_center spaced">
+                STRING
+              </td>
+              <td>
+                <?=$trad['apinbdb_rtype']?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir gras">
+                url
+              </td>
+              <td class="align_center spaced">
+                STRING
+              </td>
+              <td>
+                <?=$trad['apinbdb_rurl']?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir gras">
+                shorturl
+              </td>
+              <td class="align_center spaced">
+                STRING
+              </td>
+              <td>
+                <?=$trad['apinbdb_rshorturl']?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir gras">
+                title
+              </td>
+              <td class="align_center spaced">
+                STRING
+              </td>
+              <td>
+                <?=$trad['apinbdb_rtitle']?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir gras">
+                contents
+              </td>
+              <td class="align_center spaced">
+                STRING
+              </td>
+              <td>
+                <?=$trad['apinbdb_rbody']?>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <h6 class="moinsgros souligne"><?=$trad['api_params']?></h6>
+
+        <br>
+
+        <table class="fullgrid indiv">
+
+          <thead>
+            <tr class="grisclair texte_noir gras">
+              <th>
+                <?=$trad['api_param']?>
+              </th>
+              <th>
+                <?=$trad['api_importance']?>
+              </th>
+              <th>
+                <?=$trad['api_desc']?>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td class="texte_noir gras">
+                lang={string}
+              </td>
+              <td class="italique align_center spaced">
+                <?=$trad['api_optionnel']?>
+              </td>
+              <td>
+                <?=$trad['apinbdb_plang']?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir gras">
+                type={string}
+              </td>
+              <td class="italique align_center spaced">
+                <?=$trad['api_optionnel']?>
+              </td>
+              <td>
+                <?=$trad['apinbdb_ptype']?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir gras">
+                title={string}
+              </td>
+              <td class="italique align_center spaced">
+                <?=$trad['api_optionnel']?>
+              </td>
+              <td>
+                <?=$trad['apinbdb_ptitle']?>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="texte_noir gras">
+                search={string}
+              </td>
+              <td class="italique align_center spaced">
+                <?=$trad['api_optionnel']?>
+              </td>
+              <td>
+                <?=$trad['apinbdb_psearch']?>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+
+        <br>
+        <br>
+
+        <h6 class="moinsgros souligne"><?=$trad['api_exemples']?></h6>
+
+        <p><?=$trad['apinbdb_exemples']?></p>
+
+      </div>
 
       <br>
       <br>
@@ -379,28 +608,10 @@ EOD;
 
       </div>
 
-
-
-
-<?php #####################################################################################################################################
-#                                                                À SUIVRE                                                                 #
-######################################################################################################################################## ?>
-
       <br>
       <br>
 
       <hr class="separateur_contenu">
-
-      <br>
-      <br>
-
-      <div class="texte">
-
-        <h4><?=$trad['apitodo_titre']?></h4>
-
-        <p><?=$trad['apitodo_desc']?></p>
-
-      </div>
 
 <?php /***********************************************************************************************************************************/
 /*                                                                                                                                       */
