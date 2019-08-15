@@ -130,10 +130,12 @@ for($nmisc = 0; $dnbdb = mysqli_fetch_array($qnbdb); $nmisc++)
   if($nbdb_type == 'both' || ($nbdb_type == 'encyclopedia' && $dnbdb['n_type'] == 'web') || ($nbdb_type == 'dictionary' && $dnbdb['n_type'] == 'dico'))
   {
     $tempobject   = array(
-      'url'       => $GLOBALS['url_site'].'pages/nbdb/web?id='.$dnbdb['n_id'] ,
-      'shorturl'  => $GLOBALS['url_site'].'s?w='.$dnbdb['n_id']               ,
-      'title'     => str_replace(PHP_EOL, " ", $dnbdb['n_titre'])             ,
-      'contents'  => str_replace(PHP_EOL, " ", $nbdb_body)
+      'uuid'      => $nmisc                                                       ,
+      'type'      => ($dnbdb['n_type'] == 'web') ? 'encyclopedia' : 'dictionary'  ,
+      'url'       => ($dnbdb['n_type'] == 'web') ? $GLOBALS['url_site'].'pages/nbdb/web?id='.$dnbdb['n_id'] : $GLOBALS['url_site'].'pages/nbdb/web_dictionnaire?id='.$dnbdb['n_id']             ,
+      'shorturl'  => ($dnbdb['n_type'] == 'web') ? $GLOBALS['url_site'].'s?w='.$dnbdb['n_id'] : $GLOBALS['url_site'].'s?wd='.$dnbdb['n_id']                                                   ,
+      'title'     => str_replace(PHP_EOL, " ", $dnbdb['n_titre'])                 ,
+      'body'      => str_replace(PHP_EOL, " ", $nbdb_body)
     );
     array_push($return_json, $tempobject);
   }
