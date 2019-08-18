@@ -10,11 +10,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Prepare the footer's contents
 
 // Current pageview count
-$pageviews = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $pageviews, 1) : "";
+$pageviews = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $pageviews, 1) : '';
 
 // Load time and query count
 $load_time  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3).'s';
-$metrics    = __('footer_loadtime').$load_time.__('with', 1, 1, 1).$GLOBALS['query'].__('query', $GLOBALS['query'], 1);
+$metrics    = sanitize_output(__('footer_loadtime').$load_time.__('with', 1, 1, 1).$GLOBALS['query'].__('query', $GLOBALS['query'], 1));
 
 // Current version
 $dversion = mysqli_fetch_array(query("  SELECT    system_versions.version AS 'v_version'  ,
@@ -22,7 +22,7 @@ $dversion = mysqli_fetch_array(query("  SELECT    system_versions.version AS 'v_
                                                   system_versions.date    AS 'v_date'
                                         FROM      system_versions
                                         ORDER BY  system_versions.id DESC LIMIT 1 "));
-$version = __('version', 1, 0, 1).$dversion['v_version'].",".__('build', 1, 1, 1).$dversion['v_build'].__('footer_version_prefix', 1, 1, 1).date_to_text($dversion['v_date'], $lang, 1);
+$version = sanitize_output(__('footer_version', 1, 0, 1, array($dversion['v_version'], $dversion['v_build'], date_to_text($dversion['v_date'], $lang, 1))));
 
 // Copyright ending date
 $copyright_date = date('Y');

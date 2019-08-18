@@ -4,10 +4,11 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
-include './../../inc/nbdb.inc.php';     // Inclusions liées à la NBDB
+include './../../inc/functions_nbdb.inc.php';     // Inclusions liées à la NBDB
+include './../../inc/bbcodes.inc.php';
 
 // Permissions
-adminonly();
+user_restrict_to_administrators();
 
 // Menus du header
 $header_menu      = 'NoBleme';
@@ -69,7 +70,7 @@ $css  = array('doc', 'nbdb');
                 == Titre ==
               </td>
               <td>
-                <?=nbdbcode('== Ceci est un titre ==', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('== Ceci est un titre ==', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
 
@@ -78,7 +79,7 @@ $css  = array('doc', 'nbdb');
                 === Sous-titre ===
               </td>
               <td>
-                <?=nbdbcode('=== Ceci est un sous-titre ===', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('=== Ceci est un sous-titre ===', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
 
@@ -87,7 +88,7 @@ $css  = array('doc', 'nbdb');
                 [[web:page|titre alternatif]]
               </td>
               <td>
-                <?=nbdbcode('[[web:Poop da scoop di poop|Scoop di poop]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[web:Poop da scoop di poop|Scoop di poop]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
 
@@ -96,7 +97,7 @@ $css  = array('doc', 'nbdb');
                 [[dico:page|titre alternatif]]
               </td>
               <td>
-                <?=nbdbcode('[[dico:troll|Troll]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[dico:troll|Troll]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
 
@@ -105,7 +106,7 @@ $css  = array('doc', 'nbdb');
                 [[lien:http://www.lien.com]]
               </td>
               <td>
-                <?=nbdbcode('[[lien:http://www.nobleme.com/]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[lien:http://www.nobleme.com/]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
             <tr>
@@ -113,7 +114,7 @@ $css  = array('doc', 'nbdb');
                [[lien:http://www.lien.com|titre]]
               </td>
               <td>
-                <?=nbdbcode('[[lien:http://www.nobleme.com/|NoBleme]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[lien:http://www.nobleme.com/|NoBleme]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
 
@@ -122,7 +123,7 @@ $css  = array('doc', 'nbdb');
                 [[copypasta=id]]Texte[[/copypasta]]
               </td>
               <td class="align_left">
-                <?=nbdbcode('[[copypasta=id]]Ce texte sera copié dans le presse papiers lorsque vous double cliquerez dessus[[/copypasta]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[copypasta=id]]Ce texte sera copié dans le presse papiers lorsque vous double cliquerez dessus[[/copypasta]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
 
@@ -131,7 +132,7 @@ $css  = array('doc', 'nbdb');
                 [[copypasta-nsfw=id]]Texte[[/copypasta-nsfw]]
               </td>
               <td class="align_left">
-                <?=nbdbcode('[[copypasta-nsfw=xx]]Ce texte sera copié dans le presse papiers lorsque vous double cliquerez dessus[[/copypasta-nsfw]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[copypasta-nsfw=xx]]Ce texte sera copié dans le presse papiers lorsque vous double cliquerez dessus[[/copypasta-nsfw]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
 
@@ -140,7 +141,7 @@ $css  = array('doc', 'nbdb');
                 [[image:image.png]]
               </td>
               <td>
-                <?=nbdbcode('[[image:Image_de_test_pour_les_exemples.png]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[image:Image_de_test_pour_les_exemples.png]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
             <tr>
@@ -148,7 +149,7 @@ $css  = array('doc', 'nbdb');
                 [[image:image.png|gauche]]
               </td>
               <td>
-                <?=nbdbcode('[[image:Image_de_test_pour_les_exemples.png|gauche]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image
+                <?=nbdbcodes('[[image:Image_de_test_pour_les_exemples.png|gauche]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image
               </td>
             </tr>
             <tr>
@@ -156,7 +157,7 @@ $css  = array('doc', 'nbdb');
                 [[image:image.png|droite|Légende]]
               </td>
               <td>
-                <?=nbdbcode('[[image:Image_de_test_pour_les_exemples.png|droite|Légende]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image
+                <?=nbdbcodes('[[image:Image_de_test_pour_les_exemples.png|droite|Légende]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image Il y a du texte à côté de cette image
               </td>
             </tr>
 
@@ -165,7 +166,7 @@ $css  = array('doc', 'nbdb');
                 [[youtube:hash]]
               </td>
               <td>
-                <?=nbdbcode('[[youtube:LDU_Txk06tM]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[youtube:LDU_Txk06tM]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
             <tr>
@@ -173,7 +174,7 @@ $css  = array('doc', 'nbdb');
                 [[youtube:hash|gauche]]
               </td>
               <td>
-                <?=nbdbcode('[[youtube:LDU_Txk06tM|gauche]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo
+                <?=nbdbcodes('[[youtube:LDU_Txk06tM|gauche]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo
               </td>
             </tr>
             <tr>
@@ -181,7 +182,7 @@ $css  = array('doc', 'nbdb');
                 [[youtube:hash|droite|Légende]]
               </td>
               <td>
-                <?=nbdbcode('[[youtube:LDU_Txk06tM|droite|Légende]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo
+                <?=nbdbcodes('[[youtube:LDU_Txk06tM|droite|Légende]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo Il y a du texte à côté de cette vidéo
               </td>
             </tr>
 
@@ -190,7 +191,7 @@ $css  = array('doc', 'nbdb');
                 [[trends:mot]]
               </td>
               <td>
-                <?=nbdbcode('[[trends:mot]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[trends:mot]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
             <tr>
@@ -198,7 +199,7 @@ $css  = array('doc', 'nbdb');
                 [[trends2:mot|mot]]
               </td>
               <td>
-                <?=nbdbcode('[[trends2:uno|deux]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[trends2:uno|deux]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
             <tr>
@@ -206,7 +207,7 @@ $css  = array('doc', 'nbdb');
                 [[trends3:mot|mot|mot]]
               </td>
               <td>
-                <?=nbdbcode('[[trends3:uno|deux|trois]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[trends3:uno|deux|trois]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
             <tr>
@@ -214,7 +215,7 @@ $css  = array('doc', 'nbdb');
                 [[trends4:mot|mot|mot|mot]]
               </td>
               <td>
-                <?=nbdbcode('[[trends4:uno|deux|trois|quatre]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[trends4:uno|deux|trois|quatre]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
             <tr>
@@ -222,7 +223,7 @@ $css  = array('doc', 'nbdb');
                 [[trends5:mot|mot|mot|mot|mot]]
               </td>
               <td>
-                <?=nbdbcode('[[trends5:uno|deux|trois|quatre|cinq]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                <?=nbdbcodes('[[trends5:uno|deux|trois|quatre|cinq]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
 
@@ -238,14 +239,14 @@ $css  = array('doc', 'nbdb');
                 [[/galerie]]
               </td>
               <td>
-                <?=nbdbcode(' [[galerie]]
+                <?=nbdbcodes(' [[galerie]]
                                 [[galerie:Image_de_test_pour_les_exemples.png]]
                                 [[galerie:Image_de_test_pour_les_exemples.png]]
                                 [[galerie:Image_de_test_pour_les_exemples.png|Légende]]
                                 [[galerie:LDU_Txk06tM|youtube]]
                                 [[galerie:LDU_Txk06tM|youtube]]
                                 [[galerie:LDU_Txk06tM|youtube|Légende]]
-                              [[/galerie]]', $chemin, nbdb_web_liste_pages_encyclopedie($lang), nbdb_web_liste_pages_dictionnaire($lang))?>
+                              [[/galerie]]', $path, nbdb_web_list_pages($lang), nbdb_web_list_definitions($lang))?>
               </td>
             </tr>
 

@@ -23,15 +23,35 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   int|null    (OPTIONAL)  $amount         Amount of elements: 1 or null is singular, anything else is plural.
  * @param   int|null    (OPTIONAL)  $spaces_before  Number of spaces to insert before the translation.
  * @param   int|null    (OPTIONAL)  $spaces_after   Number of spaces to append to the end of the translation.
+ * @param   array|null  (OPTIONAL)  $preset_values  An array of values to be included in the phrase.
  *
  * @return  string                          The translated string, or an empty string if no translation was found.
  */
 
-function __($string, $amount=null, $spaces_before=0, $spaces_after=0)
+function __($string, $amount=null, $spaces_before=0, $spaces_after=0, $preset_values=array())
 {
   // If there are no global translations, return nothing
   if(!isset($GLOBALS['translations']))
     return '';
+  // If required, use the plural version of the string if it exists (plural translation names ends in a '+')
+  if(!is_null($amount) && is_int($amount) && $amount != 1 && isset($GLOBALS['translations'][$string.'+']))
+    $returned_string = $GLOBALS['translations'][$string.'+'];
+
+  // Otherwise, use the requested string
+  if(isset($GLOBALS['translations'][$string]))
+    $returned_string = $GLOBALS['translations'][$string];
+
+  // If we have no string to return, return an empty string
+  if(!isset($returned_string))
+    return '';
+
+  // Look for content to replace if required
+  if(is_array($preset_values) && !empty($preset_values))
+  {
+    // Walk through all elements in the provided array and replace them using a regex
+    foreach($preset_values as $key => $value)
+      $returned_string = str_replace("{{".($key + 1)."}}", $value, $returned_string);
+  }
 
   // Prepare the spaces to prepend to the string
   if(is_int($spaces_before) && $spaces_before > 0)
@@ -45,12 +65,8 @@ function __($string, $amount=null, $spaces_before=0, $spaces_after=0)
   else
     $spaces_after = '';
 
-  // If required, return the plural version of the string if it exists (plural translation names ends in a '+')
-  if(!is_null($amount) && is_int($amount) && $amount != 1 && isset($GLOBALS['translations'][$string.'+']))
-    return $spaces_before.$GLOBALS['translations'][$string.'+'].$spaces_after;
-
-  // Otherwise, return the string (or nothing if it does not exist)
-  return isset($GLOBALS['translations'][$string]) ? $spaces_before.$GLOBALS['translations'][$string].$spaces_after : '';
+  // Return the string, with the requested spaces around it
+  return $spaces_before.$returned_string.$spaces_after;
 }
 
 
@@ -124,17 +140,12 @@ ___('query+', 'EN', 'queries');
 ___('query',  'FR', 'requête');
 ___('query+', 'FR', 'requêtes');
 
-___('version', 'EN', 'version');
-___('version', 'FR', 'version');
-
-___('build', 'EN', 'build');
-___('build', 'FR', 'build');
 
 
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                COMMON TRANSLATIONS                                                */
+/*                                                   COMMON FILES                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -165,11 +176,43 @@ ___('footer_pageviews', 'FR', "Cette page a été consultée ");
 ___('footer_loadtime', 'EN', "Page loaded in ");
 ___('footer_loadtime', 'FR', "Page chargée en ");
 
-___('footer_version_prefix', 'EN', '-');
-___('footer_version_prefix', 'FR', 'du');
+___('footer_version', 'EN', 'Version {{1}}, build {{2}} - {{3}}');
+___('footer_version', 'FR', 'Version {{1}}, build {{2}} du {{3}}');
 
 ___('footer_shorturl', 'EN', "Shorter link alternative");
 ___('footer_shorturl', 'FR', "Lien court vers cette page");
 
 ___('footer_legal', 'EN', "Legal notices and privacy policy");
 ___('footer_legal', 'FR', "Mentions légales &amp; confidentialité");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                BBCODES / NBDBCODES                                                */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// BBCodes
+___('bbcodes_quote',    'EN', "Quote:");
+___('bbcodes_quote',    'FR', "Citation :");
+___('bbcodes_quote_by', 'EN', "Quote by");
+___('bbcodes_quote_by', 'FR', "Citation de");
+
+___('bbcodes_spoiler',      'EN', 'SPOILER');
+___('bbcodes_spoiler',      'FR', 'SPOILER');
+___('bbcodes_spoiler_hide', 'EN', "HIDE SPOILER CONTENTS");
+___('bbcodes_spoiler_hide', 'FR', "MASQUER LE CONTENU CACHÉ");
+___('bbcodes_spoiler_show', 'EN', "SHOW SPOILER CONTENTS");
+___('bbcodes_spoiler_show', 'FR', "VOIR LE CONTENU CACHÉ");
+
+
+// NBDBCodes
+___('nbdbcodes_video_hidden',       'EN', "This video is hidden (<a href=\"{{1}}pages/user/privacy\">privacy options</a>)");
+___('nbdbcodes_video_hidden',       'FR', "Cette vidéo est masquée (<a href=\"{{1}}pages/user/privacy\">options de vie privée</a>)");
+___('nbdbcodes_video_hidden_small', 'EN', "Video hidden (<a href=\"{{1}}pages/user/privacy\">privacy options</a>)");
+___('nbdbcodes_video_hidden_small', 'FR', "Vidéo masquée (<a href=\"{{1}}pages/user/privacy\">options de vie privée</a>)");
+
+___('nbdbcodes_trends_hidden', 'EN', "This Google trends graph is hidden (<a href=\"{{1}}pages/user/privacy\">privacy options</a>)");
+___('nbdbcodes_trends_hidden', 'FR', "Ce graphe Google trends est masqué (<a href=\"{{1}}pages/user/privacy\">options de vie privée</a>)");

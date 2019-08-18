@@ -39,8 +39,8 @@ if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0
 // Préparation des URLs pour la déconnexion et le changement de langue
 $url_logout   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
 $url_langue   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
-$url_logout   = sanitize_html_output($url_logout);
-$url_langue   = sanitize_html_output($url_langue);
+$url_logout   = sanitize_output($url_logout);
+$url_langue   = sanitize_output($url_langue);
 
 // Déconnexion
 if(isset($_GET['logout']))

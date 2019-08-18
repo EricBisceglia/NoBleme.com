@@ -4,6 +4,7 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/bbcodes.inc.php';
 
 // Menus du header
 $header_menu      = 'NoBleme';
@@ -35,7 +36,7 @@ if($lang == 'FR')
   // Description
   $trad['titre']            = "Émoticônes";
   $trad['soustitre']        = "Pour donner de la vie aux messages";
-  $temp_bbcode              = bbcode("XD");
+  $temp_bbcode              = bbcodes("XD");
   $trad['description']      = <<<EOD
 <p>
   Les émoticônes sont des petites images amusantes qui remplacent automatiquement certaines combinaisons de caractères dans vos messages. Elles expriment diverses émotions, et vous permettent de rendre vos messages un peu plus vivants, si vous le désirez.
@@ -48,7 +49,7 @@ EOD;
   $trad['source']           = "Source des émoticônes de NoBleme";
   $trad['source_desc']      = <<<EOD
 <p>
-  Toutes les émoticônes utilisées sur NoBleme sont prises au projet <a class="gras" href="http://chatzilla.hacksrus.com/">ChatZilla</a>. Ce choix est le produit d'une ancienne tradition NoBlemeuse d'utiliser ces émoticônes particulièrement amusants à l'époque où la majorité d'entre nous utilisaient ChatZilla pour se conneter à <a class="gras" href="{$chemin}pages/irc/index">notre serveur IRC</a>.
+  Toutes les émoticônes utilisées sur NoBleme sont prises au projet <a class="gras" href="http://chatzilla.hacksrus.com/">ChatZilla</a>. Ce choix est le produit d'une ancienne tradition NoBlemeuse d'utiliser ces émoticônes particulièrement amusants à l'époque où la majorité d'entre nous utilisaient ChatZilla pour se conneter à <a class="gras" href="{$path}pages/irc/index">notre serveur IRC</a>.
 </p>
 <p>
   ChatZilla, ainsi que le contenu qui lui est lié (incluant les émoticônes) sont protégés par la MPL (Mozilla Public Licence), qui autorise la réutilisation de son contenu sous diverses <a class="gras" href="https://www.mozilla.org/en-US/MPL/2.0/FAQ/">conditions et clauses</a>, que NoBleme s'efforce de respecter. L'équipe de développement de ChatZilla a été contactée au sujet de l'utilisation de ces émoticônes, et a donné son autorisation tant que la licence MPL est respectée.
@@ -86,7 +87,7 @@ else if($lang == 'EN')
   // Description
   $trad['titre']            = "Emotes";
   $trad['soustitre']        = "Making your messages feel alive";
-  $temp_bbcode              = bbcode("XD");
+  $temp_bbcode              = bbcodes("XD");
   $trad['description']      = <<<EOD
 <p>
   Emotes are amusing little images that will automatically replace certain character combinations in your messages. They allow you to show a range of emotions through simple images, and can be used to make your message feel a bit more alive if you so desire.
@@ -99,7 +100,7 @@ EOD;
   $trad['source']           = "Source of NoBleme's emotes";
   $trad['source_desc']      = <<<EOD
 <p>
-  All the emotes used on NoBleme were taken from the <a class="gras" href="http://chatzilla.hacksrus.com/">ChatZilla</a> project. This choice is the product of a long standing NoBleme tradition of loving these funny little exaggerated emotes, back in the day when most of us used ChatZilla to connect to <a class="gras" href="{$chemin}pages/irc/index">our IRC server</a>.
+  All the emotes used on NoBleme were taken from the <a class="gras" href="http://chatzilla.hacksrus.com/">ChatZilla</a> project. This choice is the product of a long standing NoBleme tradition of loving these funny little exaggerated emotes, back in the day when most of us used ChatZilla to connect to <a class="gras" href="{$path}pages/irc/index">our IRC server</a>.
 </p>
 <p>
   ChatZilla, aswell as the contents linked to it, are protected by the MPL (Mozilla Public Licence), which allows reuse of its contents as long as <a class="gras" href="https://www.mozilla.org/en-US/MPL/2.0/FAQ/">certain conditions</a> are respected, which NoBleme obviously does its best to respect. The ChatZilla development team was contacted aswell, and gave us their approval for emote reuse as long as we keep respecting the MPL licence.
@@ -179,7 +180,7 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode(":-)")?>
+                <?=bbcodes(":-)")?>
               </td>
               <td class="monospace">
                 :-)
@@ -191,7 +192,7 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode(":-D")?>
+                <?=bbcodes(":-D")?>
               </td>
               <td class="monospace">
                 :-D
@@ -203,7 +204,7 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode(":-DD")?>
+                <?=bbcodes(":-DD")?>
               </td>
               <td class="monospace">
                 :-DD
@@ -215,7 +216,7 @@ EOD;
 
             <tr>
               <td rowspan="2">
-                <?=bbcode("XD")?>
+                <?=bbcodes("XD")?>
               </td>
               <td class="monospace">
                 XD
@@ -232,7 +233,7 @@ EOD;
 
             <tr>
               <td rowspan="2">
-                <?=bbcode(":-P")?>
+                <?=bbcodes(":-P")?>
               </td>
               <td class="monospace">
                 :-P
@@ -249,7 +250,7 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode(":-(")?>
+                <?=bbcodes(":-(")?>
               </td>
               <td class="monospace">
                 :-(
@@ -261,7 +262,7 @@ EOD;
 
             <tr>
               <td rowspan="2">
-                <?=bbcode(":'(")?>
+                <?=bbcodes(":'(")?>
               </td>
               <td class="monospace">
                 :'(
@@ -278,7 +279,7 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode("):C")?>
+                <?=bbcodes("):C")?>
               </td>
               <td class="monospace">
                 ):C
@@ -290,7 +291,7 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode("):(")?>
+                <?=bbcodes("):(")?>
               </td>
               <td class="monospace">
                 ):(
@@ -302,7 +303,7 @@ EOD;
 
             <tr>
               <td rowspan="2">
-                <?=bbcode("B-)")?>
+                <?=bbcodes("B-)")?>
               </td>
               <td class="monospace">
                 B-)
@@ -319,7 +320,7 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode(";-)")?>
+                <?=bbcodes(";-)")?>
               </td>
               <td class="monospace">
                 ;-)
@@ -331,7 +332,7 @@ EOD;
 
             <tr>
               <td rowspan="2">
-                <?=bbcode(":-#")?>
+                <?=bbcodes(":-#")?>
               </td>
               <td class="monospace">
                 :-")
@@ -348,7 +349,7 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode("9_9")?>
+                <?=bbcodes("9_9")?>
               </td>
               <td class="monospace">
                 9_9
@@ -360,7 +361,7 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode(":-|")?>
+                <?=bbcodes(":-|")?>
               </td>
               <td class="monospace">
                 :-|
@@ -372,7 +373,7 @@ EOD;
 
             <tr>
               <td rowspan="2">
-                <?=bbcode(":-S")?>
+                <?=bbcodes(":-S")?>
               </td>
               <td class="monospace">
                 :-S
@@ -389,7 +390,7 @@ EOD;
 
             <tr>
               <td rowspan="2">
-                <?=bbcode(":-O")?>
+                <?=bbcodes(":-O")?>
               </td>
               <td class="monospace">
                 :-O
@@ -406,7 +407,7 @@ EOD;
 
             <tr>
               <td>
-                <?=bbcode("o_O")?>
+                <?=bbcodes("o_O")?>
               </td>
               <td class="monospace">
                 o_O
@@ -417,7 +418,7 @@ EOD;
             </tr>
             <tr>
               <td>
-                <?=bbcode("O_o")?>
+                <?=bbcodes("O_o")?>
               </td>
               <td class="monospace">
                 O_o
@@ -425,7 +426,7 @@ EOD;
             </tr>
             <tr>
               <td rowspan="2">
-                <?=bbcode("O_O")?>
+                <?=bbcodes("O_O")?>
               </td>
               <td class="monospace">
                 O_O

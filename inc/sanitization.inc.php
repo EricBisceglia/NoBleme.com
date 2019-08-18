@@ -121,47 +121,118 @@ function sanitize_output($data, $preserve_line_breaks=0, $preserve_backslashes=0
   // First off, get rid of all the HTML tags in the data - and if necessary remove backslashes
   $data = ($preserve_backslashes) ? htmlentities($data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));
 
-  // Return the sanitized data, optionally with line breaks
-  return ($preserve_line_breaks) ? nl2br($data) : $data;
-}
-
-
-
-
-/**
- * Sanitizes a string for usage in HTML.
- *
- * This function makes sure a string can not have any unwanted properties when used in HTML.
- *
- * @param   string  $string A string from which any possible unwanted behavior or XSS should be scrapped.
- *
- * @return  string          The cleaned up string.
- */
-
-function sanitize_html_output($string)
-{
   // Get rid of the HTML tags
-  $string = htmlentities($string);
+  $data = htmlentities($data);
 
   // Basic cleanup: Get rid of absusable tags, then restore the HTML
-  $string = str_replace(array('&amp;','&lt;','&gt;'), array('&amp;amp;','&amp;lt;','&amp;gt;'), $string);
-  $string = preg_replace('/(&#*\w+)[\x00-\x20]+;/u', '$1;', $string);
-  $string = preg_replace('/(&#x*[0-9A-F]+);*/iu', '$1;', $string);
-  $string = html_entity_decode($string, ENT_COMPAT, 'UTF-8');
+  $data = str_replace(array('&amp;','&lt;','&gt;'), array('&amp;amp;','&amp;lt;','&amp;gt;'), $data);
+  $data = preg_replace('/(&#*\w+)[\x00-\x20]+;/u', '$1;', $data);
+  $data = preg_replace('/(&#x*[0-9A-F]+);*/iu', '$1;', $data);
+  $data = html_entity_decode($data, ENT_COMPAT, 'UTF-8');
 
   // We don't want any property that begins with 'on' or 'xmlns'
-  $string = preg_replace('#(<[^>]+?[\x00-\x20"\'])(?:on|xmlns)[^>]*+>#iu', '$1>', $string);
+  $data = preg_replace('#(<[^>]+?[\x00-\x20"\'])(?:on|xmlns)[^>]*+>#iu', '$1>', $data);
 
   // There's a few abusable things that can happen in javascript which definitely need to dealt with
-  $string = preg_replace('#([a-z]*)[\x00-\x20]*=[\x00-\x20]*([`\'"]*)[\x00-\x20]*j[\x00-\x20]*a[\x00-\x20]*v[\x00-\x20]*a[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2nojavascript...', $string);
-  $string = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*v[\x00-\x20]*b[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2novbscript...', $string);
-  $string = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*-moz-binding[\x00-\x20]*:#u', '$1=$2nomozbinding...', $string);
+  $data = preg_replace('#([a-z]*)[\x00-\x20]*=[\x00-\x20]*([`\'"]*)[\x00-\x20]*j[\x00-\x20]*a[\x00-\x20]*v[\x00-\x20]*a[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2nojavascript...', $data);
+  $data = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*v[\x00-\x20]*b[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2novbscript...', $data);
+  $data = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*-moz-binding[\x00-\x20]*:#u', '$1=$2nomozbinding...', $data);
 
   // Let's also clean up IE related issues (oldie but goodie, never forget about IE's existence... sadly)
-  $string = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?expression[\x00-\x20]*\([^>]*+>#i', '$1>', $string);
-  $string = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?behaviour[\x00-\x20]*\([^>]*+>#i', '$1>', $string);
-  $string = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:*[^>]*+>#iu', '$1>', $string);
+  $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?expression[\x00-\x20]*\([^>]*+>#i', '$1>', $data);
+  $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?behaviour[\x00-\x20]*\([^>]*+>#i', '$1>', $data);
+  $data = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:*[^>]*+>#iu', '$1>', $data);
 
-  // Return the sanitized string
-  return $string;
+  // XSS prevention attempts.
+  // This is poor quality code. Anyone who has a better solution, please give it to me, I really want it.
+  $data = str_ireplace(".svg",".&zwnj;svg",$data);       # SVGs are exploitable through CDATA, deny them
+  $data = str_ireplace("xmlns","xmlns&zwnj;",$data);     # XMLNS trolling attempts denial
+  $data = str_ireplace("onclick","onclick&zwnj;",$data); # Guess it's time to manually handle all js events...
+  $data = str_ireplace("oncontextmenu","oncontextmenu&zwnj;",$data);
+  $data = str_ireplace("ondblclick","ondblclick&zwnj;",$data);
+  $data = str_ireplace("onmousedown","onmousedown&zwnj;",$data);
+  $data = str_ireplace("onmouseenter","onmouseenter&zwnj;",$data);
+  $data = str_ireplace("onmouseleave","onmouseleave&zwnj;",$data);
+  $data = str_ireplace("onmousemove","onmousemove&zwnj;",$data);
+  $data = str_ireplace("onmouseover","onmouseover&zwnj;",$data);
+  $data = str_ireplace("onmouseout","onmouseout&zwnj;",$data);
+  $data = str_ireplace("onmouseup","onmouseup&zwnj;",$data);
+  $data = str_ireplace("onkeydown","onkeydown&zwnj;",$data);
+  $data = str_ireplace("onkeypress","onkeypress&zwnj;",$data);
+  $data = str_ireplace("onkeyup","onkeyup&zwnj;",$data);
+  $data = str_ireplace("onabort","onabort&zwnj;",$data);
+  $data = str_ireplace("onbeforeunload","onbeforeunload&zwnj;",$data);
+  $data = str_ireplace("onerror","onerror&zwnj;",$data);
+  $data = str_ireplace("onhashchange","onhashchange&zwnj;",$data);
+  $data = str_ireplace("onload","onload&zwnj;",$data);
+  $data = str_ireplace("onpageshow","onpageshow&zwnj;",$data);
+  $data = str_ireplace("onpagehide","onpagehide&zwnj;",$data);
+  $data = str_ireplace("onresize","onresize&zwnj;",$data);
+  $data = str_ireplace("onscroll","onscroll&zwnj;",$data);
+  $data = str_ireplace("onunload","onunload&zwnj;",$data);
+  $data = str_ireplace("onblur","onblur&zwnj;",$data);
+  $data = str_ireplace("onchange","onchange&zwnj;",$data);
+  $data = str_ireplace("onfocus","onfocus&zwnj;",$data);
+  $data = str_ireplace("onfocusin","onfocusin&zwnj;",$data);
+  $data = str_ireplace("onfocusout","onfocusout&zwnj;",$data);
+  $data = str_ireplace("oninput","oninput&zwnj;",$data);
+  $data = str_ireplace("oninvalid","oninvalid&zwnj;",$data);
+  $data = str_ireplace("onreset","onreset&zwnj;",$data);
+  $data = str_ireplace("onsearch","onsearch&zwnj;",$data);
+  $data = str_ireplace("onselect","onselect&zwnj;",$data);
+  $data = str_ireplace("onsubmit","onsubmit&zwnj;",$data);
+  $data = str_ireplace("ondrag","ondrag&zwnj;",$data);
+  $data = str_ireplace("ondragend","ondragend&zwnj;",$data);
+  $data = str_ireplace("ondragenter","ondragenter&zwnj;",$data);
+  $data = str_ireplace("ondragleave","ondragleave&zwnj;",$data);
+  $data = str_ireplace("ondragover","ondragover&zwnj;",$data);
+  $data = str_ireplace("ondragstart","ondragstart&zwnj;",$data);
+  $data = str_ireplace("ondrop","ondrop&zwnj;",$data);
+  $data = str_ireplace("oncopy","oncopy&zwnj;",$data);
+  $data = str_ireplace("oncut","oncut&zwnj;",$data);
+  $data = str_ireplace("onpaste","onpaste&zwnj;",$data);
+  $data = str_ireplace("onafterprint","onafterprint&zwnj;",$data);
+  $data = str_ireplace("onbeforeprint","onbeforeprint&zwnj;",$data);
+  $data = str_ireplace("onabort","onabort&zwnj;",$data);
+  $data = str_ireplace("oncanplay","oncanplay&zwnj;",$data);
+  $data = str_ireplace("oncanplaythrough","oncanplaythrough&zwnj;",$data);
+  $data = str_ireplace("ondurationchange","ondurationchange&zwnj;",$data);
+  $data = str_ireplace("onemptied","onemptied&zwnj;",$data);
+  $data = str_ireplace("onended","onended&zwnj;",$data);
+  $data = str_ireplace("onloadeddata","onloadeddata&zwnj;",$data);
+  $data = str_ireplace("onloadedmetadata","onloadedmetadata&zwnj;",$data);
+  $data = str_ireplace("onloadstart","onloadstart&zwnj;",$data);
+  $data = str_ireplace("onpause","onpause&zwnj;",$data);
+  $data = str_ireplace("onplay","onplay&zwnj;",$data);
+  $data = str_ireplace("onplaying","onplaying&zwnj;",$data);
+  $data = str_ireplace("onprogress","onprogress&zwnj;",$data);
+  $data = str_ireplace("onratechange","onratechange&zwnj;",$data);
+  $data = str_ireplace("onseeked","onseeked&zwnj;",$data);
+  $data = str_ireplace("onseeking","onseeking&zwnj;",$data);
+  $data = str_ireplace("onstalled","onstalled&zwnj;",$data);
+  $data = str_ireplace("onsuspend","onsuspend&zwnj;",$data);
+  $data = str_ireplace("ontimeupdate","ontimeupdate&zwnj;",$data);
+  $data = str_ireplace("onvolumechange","onvolumechange&zwnj;",$data);
+  $data = str_ireplace("onwaiting","onwaiting&zwnj;",$data);
+  $data = str_ireplace("animationend","animationend&zwnj;",$data);
+  $data = str_ireplace("animationiteration","animationiteration&zwnj;",$data);
+  $data = str_ireplace("animationstart","animationstart&zwnj;",$data);
+  $data = str_ireplace("transitionend","transitionend&zwnj;",$data);
+  $data = str_ireplace("onmessage","onmessage&zwnj;",$data);
+  $data = str_ireplace("onopen","onopen&zwnj;",$data);
+  $data = str_ireplace("ononline","ononline&zwnj;",$data);
+  $data = str_ireplace("onoffline","onoffline&zwnj;",$data);
+  $data = str_ireplace("onpopstate","onpopstate&zwnj;",$data);
+  $data = str_ireplace("onmousewheel","onmousewheel&zwnj;",$data);
+  $data = str_ireplace("onshow","onshow&zwnj;",$data);
+  $data = str_ireplace("onstorage","onstorage&zwnj;",$data);
+  $data = str_ireplace("ontoggle","ontoggle&zwnj;",$data);
+  $data = str_ireplace("onwheel","onwheel&zwnj;",$data);
+  $data = str_ireplace("ontouchcancel","ontouchcancel&zwnj;",$data);
+  $data = str_ireplace("ontouchend","ontouchend&zwnj;",$data);
+  $data = str_ireplace("ontouchmove","ontouchmove&zwnj;",$data);
+  $data = str_ireplace("ontouchstart","ontouchstart&zwnj;",$data);
+
+  // Return the sanitized data, optionally with line breaks
+  return ($preserve_line_breaks) ? nl2br($data) : $data;
 }
