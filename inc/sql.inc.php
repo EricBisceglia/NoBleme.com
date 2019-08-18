@@ -7,15 +7,15 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// We begin this file by opening a connexion to the MySQL database - include it any time you need to run a query
+// Open a connexion to the MySQL database - include it any time you need to run a query
 
-// Open the connexion and store it for this session's length into a global variable
+// Initialize the connexion and store it for this session's length into a global variable
 $GLOBALS['db'] = @mysqli_connect($GLOBALS['mysql_host'], $GLOBALS['mysql_user'], $GLOBALS['mysql_pass'], 'nobleme') or die ('MySQL error: Connexion failed.');
 
-// We also initialize a session specific global query counter, used by admins to see the number of queries in a page
+// Initialize a session specific global query counter, used by admins for metrics (number of queries in a page)
 $GLOBALS['query'] = -1;
 
-// We use this opportunity to set the global charset - it requires one necessary query, hence why counter starts at -1
+// We use this opportunity to set the global charset - it uses one mandatory query, hence why counter starts at -1
 mysqli_set_charset($GLOBALS['db'], "utf8");
 query(' SET NAMES utf8mb4 ');
 
@@ -40,14 +40,14 @@ function query($query, $ignore_errors=NULL)
   // First off let's increment the global query counter for this session
   $GLOBALS['query']++;
 
-  // If errors are ignored, we just run the query and whatever happens happens
+  // If errors are ignored, just run the query and whatever happens happens
   if($ignore_errors)
     $query_result = @mysqli_query($GLOBALS['db'],$query);
 
-  // Otherwise, we run the query and stop the script if anything goes wrong
+  // Otherwise, run the query and stop the script if anything goes wrong
   else
     $query_result = mysqli_query($GLOBALS['db'],$query) or die ("MySQL error:<br>".mysqli_error($GLOBALS['db']));
 
-  // We're done and can now return the mysqli_result
+  // Return the result of the query
   return $query_result;
 }

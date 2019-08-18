@@ -25,7 +25,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 function sanitize($data, $type=NULL, $min=NULL, $max=NULL, $padding="_")
 {
-  // For floats, we ensure that it is a float, else we convert it, then we ensure that it is between min and max values
+  // For floats, ensure that it is a float, else convert it, then we ensure that it is between min and max values
   if($type == "float" || $type == "double")
   {
     if(!is_float($data))
@@ -36,7 +36,7 @@ function sanitize($data, $type=NULL, $min=NULL, $max=NULL, $padding="_")
       $data = $max;
   }
 
-  // For ints, we ensure that it is an int, else we convert it, then we ensure that it is between min and max values
+  // For ints, ensure that it is an int, else convert it, then ensure that it is between min and max values
   else if($type == "int")
   {
     if(!is_int($data))
@@ -47,26 +47,23 @@ function sanitize($data, $type=NULL, $min=NULL, $max=NULL, $padding="_")
       $data = $max;
   }
 
-  // For strings, we ensure that it is a string, else we convert it to one
+  // For strings, ensure that it is a string, else convert it to one
   else if($type == "string")
   {
     if(!is_string($data))
       $data = strval($data);
 
-    // If the string is below min value, we pad its length with underscores
+    // If the string is below min value, pad its length with underscores
     if($min && strlen($data) < $min)
       $data = str_pad($data, $min, $padding);
 
-    // If the string is above max value, we strip it to max length
+    // If the string is above max value, strip it to max length
     if($max && strlen($data) > $max)
       $data = mb_substr($data, 0, $max);
   }
 
-  // We sanitize the data by trimming any trailing whitespace and removing any characters that could break MySQL
-  $data = trim(mysqli_real_escape_string($GLOBALS['db'], $data));
-
-  // We can now return the sanitized data
-  return $data;
+  // Sanitize the data by trimming any trailing whitespace and removing any characters that could break MySQL
+  return trim(mysqli_real_escape_string($GLOBALS['db'], $data));
 }
 
 
@@ -91,15 +88,15 @@ function sanitize($data, $type=NULL, $min=NULL, $max=NULL, $padding="_")
 
 function sanitize_input($input_type, $input_name, $data_type, $default_value=NULL, $min=NULL, $max=NULL, $padding=NULL)
 {
-  // If we are dealing with $_POST, we fetch the value (if it exists)
+  // When dealing with $_POST, fetch the value (if it exists)
   if($input_type == 'POST')
     $data = (isset($_POST[$input_name])) ? $_POST[$input_name] : $default_value;
 
-  // Same thing if we are dealing with $_GET
+  // Same thing if dealing with $_GET
   if($input_type == 'GET')
     $data = (isset($_GET[$input_name])) ? $_GET[$input_name] : $default_value;
 
-  // We need to sanitize the data, then we can return it
+  // Sanitize the data, then return it
   return sanitize($data, $data_type, $min, $max, $padding);
 }
 
@@ -121,10 +118,10 @@ function sanitize_input($input_type, $input_name, $data_type, $default_value=NUL
 
 function sanitize_output($data, $preserve_line_breaks=0, $preserve_backslashes=0)
 {
-  // First off, we need to get rid of all the HTML tags in the data - and if necessary to remove backslashes
+  // First off, get rid of all the HTML tags in the data - and if necessary remove backslashes
   $data = ($preserve_backslashes) ? htmlentities($data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));
 
-  // We can now return the sanitized data, optionally with line breaks
+  // Return the sanitized data, optionally with line breaks
   return ($preserve_line_breaks) ? nl2br($data) : $data;
 }
 
@@ -143,7 +140,7 @@ function sanitize_output($data, $preserve_line_breaks=0, $preserve_backslashes=0
 
 function sanitize_html_output($string)
 {
-  // First we get rid of the HTML tags
+  // Get rid of the HTML tags
   $string = htmlentities($string);
 
   // Basic cleanup: Get rid of absusable tags, then restore the HTML
@@ -155,7 +152,7 @@ function sanitize_html_output($string)
   // We don't want any property that begins with 'on' or 'xmlns'
   $string = preg_replace('#(<[^>]+?[\x00-\x20"\'])(?:on|xmlns)[^>]*+>#iu', '$1>', $string);
 
-  // There's a few abusable things that can happen in javascript which we definitely need to deal with
+  // There's a few abusable things that can happen in javascript which definitely need to dealt with
   $string = preg_replace('#([a-z]*)[\x00-\x20]*=[\x00-\x20]*([`\'"]*)[\x00-\x20]*j[\x00-\x20]*a[\x00-\x20]*v[\x00-\x20]*a[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2nojavascript...', $string);
   $string = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*v[\x00-\x20]*b[\x00-\x20]*s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:#iu', '$1=$2novbscript...', $string);
   $string = preg_replace('#([a-z]*)[\x00-\x20]*=([\'"]*)[\x00-\x20]*-moz-binding[\x00-\x20]*:#u', '$1=$2nomozbinding...', $string);
@@ -165,6 +162,6 @@ function sanitize_html_output($string)
   $string = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?behaviour[\x00-\x20]*\([^>]*+>#i', '$1>', $string);
   $string = preg_replace('#(<[^>]+?)style[\x00-\x20]*=[\x00-\x20]*[`\'"]*.*?s[\x00-\x20]*c[\x00-\x20]*r[\x00-\x20]*i[\x00-\x20]*p[\x00-\x20]*t[\x00-\x20]*:*[^>]*+>#iu', '$1>', $string);
 
-  // We can now return the sanitized string
+  // Return the sanitized string
   return $string;
 }

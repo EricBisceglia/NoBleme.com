@@ -158,7 +158,7 @@ function diff_strings($old, $new)
   {
     // If the element is an array, then we're dealing with a difference - we wrap it between <del> or <ins> tags
     if(is_array($k))
-        $return .= (!empty($k['d'])?"&nbsp;<del>&nbsp;".implode(' ',$k['d'])."&nbsp;</del>&nbsp;":'').(!empty($k['i'])?"&nbsp;<ins>&nbsp;".implode(' ',$k['i'])."&nbsp;</ins>&nbsp;":'');
+        $return .= (!empty($k['d'])?" <del> ".implode(' ',$k['d'])." </del> ":'').(!empty($k['i'])?" <ins> ".implode(' ',$k['i'])." </ins> ":'');
     // Otherwise there's no difference, we leave it as is
     else
       $return .= $k . ' ';

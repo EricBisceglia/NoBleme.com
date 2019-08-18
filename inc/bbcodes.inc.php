@@ -315,7 +315,7 @@ function bbcodes($message, $lang='EN', $path="./../../", $privacy_level=array('t
   // [space] Yeah this literally just adds some unbreakable spaces, then a breakable one to avoid overflow
 
   // Solved with a regex
-  $message = preg_replace('/\[space\]/is','&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ', $message);
+  $message = preg_replace('/\[space\]/is','      ', $message);
 
 
   /*******************************************************************************************************************/

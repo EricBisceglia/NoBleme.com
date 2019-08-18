@@ -80,23 +80,23 @@ function number_display_format($number, $format="number", $decimals=0, $prepend_
 {
   // Format: standard format - 10,01
   if($format == "number")
-    $number = number_format((float)$number, 0, ',', '&nbsp;');
+    $number = number_format((float)$number, 0, ',', ' ');
 
   // Format: price - 10 € (we ignore decimals)
   if($format == "price")
-    $number = number_format((float)$number, 0, ',', '&nbsp;')."&nbsp;€";
+    $number = number_format((float)$number, 0, ',', ' ')." €";
 
   // Format: price with cents - 10,01 € (we limit to 2 decimals)
   if($format == "price_cents")
-    $number = number_format((float)$number, 2, ',', '&nbsp;')."&nbsp;€";
+    $number = number_format((float)$number, 2, ',', ' ')." €";
 
   // Format: percentage - 10,01 %
   else if($format == "percentage")
-    $number = number_format((float)$number, $decimals, ',', '&nbsp;')."&nbsp;%";
+    $number = number_format((float)$number, $decimals, ',', ' ')." %";
 
   // Format: percentage point - 10,01 p%
   else if($format == "percentage_point")
-    $number = number_format((float)$number, $decimals, ',', '&nbsp;')."&nbsp;p%";
+    $number = number_format((float)$number, $decimals, ',', ' ')." p%";
 
   // Retern the number, with an extra sign if necessary
   return ($prepend_sign && $number > 0) ? '+'.$number : $number;

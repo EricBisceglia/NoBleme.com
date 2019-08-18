@@ -7,38 +7,25 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Prepare the info to be displayed in the footer
+// Prepare the footer's contents
 
 // Current pageview count
-$pageviews = isset($pageviews) ? "Cette page a été consultée ".$pageviews." fois" : "";
+$pageviews = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $pageviews, 1) : "";
 
-
-// Metrics: load time
+// Load time and query count
 $load_time  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3).'s';
+$metrics    = __('footer_loadtime').$load_time.__('with', 1, 1, 1).$GLOBALS['query'].__('query', $GLOBALS['query'], 1);
 
-// Metrics: Prepare the text for the metrics
-$metrics    = ($lang == 'EN') ? "Page loaded in $load_time with ".$GLOBALS['query']." queries" : "Page chargée en $load_time avec ".$GLOBALS['query']." requêtes";
-
-
-// Current version: fetch the data
+// Current version
 $dversion = mysqli_fetch_array(query("  SELECT    system_versions.version AS 'v_version'  ,
                                                   system_versions.build   AS 'v_build'    ,
                                                   system_versions.date    AS 'v_date'
                                         FROM      system_versions
                                         ORDER BY  system_versions.id DESC LIMIT 1 "));
-$version = "Version ".$dversion['v_version'].", build ".$dversion['v_build'];
-
-// Current version: prepare the text for both languages
-$version .= ($lang == 'EN') ? " - ".date_to_text($dversion['v_date'], 'EN', 1) : " du ".date_to_text($dversion['v_date'], 'FR', 1);
-
+$version = __('version', 1, 0, 1).$dversion['v_version'].",".__('build', 1, 1, 1).$dversion['v_build'].__('footer_version_prefix', 1, 1, 1).date_to_text($dversion['v_date'], $lang, 1);
 
 // Copyright ending date
 $copyright_date = date('Y');
-
-
-// Multilingual content
-$text['footer_shorturl']  = ($lang == 'EN') ? "Shorter link alternative" : "Lien court vers cette page";
-$text['footer_legal']     = ($lang == 'EN') ? "Legal notices and privacy policy" : "Mentions légales &amp; confidentialité";
 
 
 
@@ -59,11 +46,11 @@ $text['footer_legal']     = ($lang == 'EN') ? "Legal notices and privacy policy"
       <footer>
 
         <?php
-        # If the page can be called through a short URL, we display it in the footer
+        # If the page can be called through a short URL, display it in the footer
         if(isset($shorturl)) {  ?>
 
         <a href="<?=$path?>s?<?=$shorturl?>">
-          <?=$text['footer_shorturl']?>
+          <?=__('footer_shorturl')?>
         </a><br>
 
         <?php
@@ -88,7 +75,7 @@ $text['footer_legal']     = ($lang == 'EN') ? "Legal notices and privacy policy"
         </a><br>
 
         <a href="<?=$path?>pages/doc/mentions_legales">
-          <?=$text['footer_legal']?>
+          <?=__('footer_legal')?>
         </a><br>
 
         <a href="<?=$path?>pages/doc/nobleme">

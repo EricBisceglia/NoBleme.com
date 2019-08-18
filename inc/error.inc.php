@@ -31,58 +31,53 @@ function error_page($message, $path="./../../", $lang=NULL, $menu_main="NoBleme"
   // Does the user have special permissions? (required by the header)
   if(!$is_logged_in)
   {
-    // By default we assume he does not
+    // By default, assume he does not
     $is_admin             = 0;
     $is_global_moderator  = 0;
     $is_moderator         = 0;
   }
   else
   {
-    // Let's sanitize the user id, just in case
+    // Sanitize the user id, just in case
     $id_user = sanitize($is_logged_in, 'int', 0);
 
-    // Now we can go look for his user rights
+    // Fetch the user's access rights
     $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'm_admin'      ,
                                                   users.is_global_moderator AS 'm_globalmod'  ,
                                                   users.is_moderator        AS 'm_mod'
                                           FROM    users
                                           WHERE   users.id = '$id_user' "));
 
-    // And we can set them as variables, which the header will use
+    // Set them as variables, the header needs them
     $is_admin             = $drights['m_admin'];
     $is_global_moderator  = ($is_admin || $drights['m_globalmod']) ? 1 : 0;
     $is_moderator         = $drights['m_mod'];
   }
 
-  // We also need to figure out the user's language - take it from the session if it is there (required by the header)
+  // Figure out the user's language if required, from the session if it is there (required by the header)
   $temp_lang  = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
   $lang       = ($lang) ? $lang : $temp_lang;
 
-  // We must inform the header that this is an error being thrown
+  // Inform the header that an error is being thrown
   $error_mode = 1;
 
   // Available languages, title, description, and internal page name are required by the header too
   $page_lang  = array('EN', 'FR');
   $page_title = ($lang == 'EN') ? "Error" : "Error";
   $page_desc  = ($lang == 'EN') ? "This is an error page. You will forget about this page's mere existence. Don't panic, the red flashing light is part of the process": "Ceci est une page d'erreur. Vous allez oublier l'existence de cette page. Ne paniquez pas, le flash rouge est normal.";
-  $page_name = "Se prend une erreur";
+  $page_name  = ($lang == 'EN') ? "Faces an error page" : "Se prend une erreur";
 
-  // Translation of the text strings before display (bilingual content)
-  $text = array();
-  $text['ohno'] = ($lang == 'EN') ? "OH NO &nbsp;: (" : "OH NON &nbsp;: (";
-  $text['oops'] = ($lang == 'EN') ? "YOU HAVE ENCOUNTERED AN ERROR" : "VOUS AVEZ RENCONTRÉ UNE ERREUR";
-
-  // We open the HTML part by including the header
+  // Oopen the HTML part by including the header
   include_once $path."inc/header.inc.php";
   ?>
 
   <!-- Custom error message -->
   <div class="indiv align_center error_container">
     <h3 class="small_error_gap">
-      <?=$text['ohno']?>
+      <?=__('error_ohno');?>
     </h3>
     <h3 class="big_error_gap">
-      <?=$text['oops']?>
+      <?=__('error_encountered');?>
     </h3>
     <h3>
       <?=$message?>
@@ -90,9 +85,9 @@ function error_page($message, $path="./../../", $lang=NULL, $menu_main="NoBleme"
   </div>
 
   <?php
-  // We close the HTML part by including the footer
+  // Close the HTML part by including the footer
   include_once $path."inc/footer.inc.php";
 
-  // Finally we exit out of here to make sure nothing else is ran afterwards
+  // Throw an exit(); to ensure nothing else is ran after the error is displayed
   exit();
 }
