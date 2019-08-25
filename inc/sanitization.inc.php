@@ -9,8 +9,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Sanitizes data.
  *
- * To protect ourselves from MySQL injections or just plain breaking of MySQL, we need to sanitize the data we use.
- * This function also allows you to ensure that data is of a specific type, useful given the way PHP treats types.
+ * To protect ourselves from MySQL injections or just plain breaking of MySQL, data needs to be sanitized.
+ * This function also ensures that data is of a specific type, useful given the very flexible way PHP treats types.
  * For ints and floats, it also allows you to ensure that the number's value is between a set minimum and maximum.
  * For strings, it allows you to ensure that the string's length is between a minimum and maximum size.
  *
@@ -25,7 +25,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 function sanitize($data, $type=NULL, $min=NULL, $max=NULL, $padding="_")
 {
-  // For floats, ensure that it is a float, else convert it, then we ensure that it is between min and max values
+  // For floats, ensure that it is a float, else convert it, then ensure that it is between min and max values
   if($type == "float" || $type == "double")
   {
     if(!is_float($data))

@@ -18,7 +18,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 /**
- * Does a row already exist in a table.
+ * Checks whether a row already exist in a table.
  *
  * @param   string  $table  Name of the table.
  * @param   int     $id     ID of the row.
@@ -28,16 +28,16 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 function database_row_exists($table, $id)
 {
-  // We sanitize the data before running the query
+  // Sanitize the data before running the query
   $table  = sanitize($table, 'string');
   $id     = sanitize($id, 'int', 0);
 
-  // We go check whether the row exists
+  // Check whether the row exists
   $dcheck = mysqli_fetch_array(query("  SELECT  ".$table.".id AS 'r_id'
                                         FROM    $table
                                         WHERE   ".$table.".id = '".$id."' "));
 
-  // We return whether the row exists or not
+  // Return the result
   return ($dcheck['r_id']) ? 1 : 0;
 }
 
@@ -96,7 +96,7 @@ function allow_only_xhr($path='./../../')
 
 function diff_raw_string_arrays($old, $new)
 {
-  // We prepare the variables
+  // Prepare the variables
   $matrix = array();
   $maxlen = 0;
 
@@ -116,12 +116,12 @@ function diff_raw_string_arrays($old, $new)
     }
   }
 
-  // If we have found a difference, we return it in an array of arrays of strings
+  // If a difference has been found, return it in an array of arrays of strings
   // The deleted content is in an array called 'd', and the inserted content in an array called 'i'
   if($maxlen == 0) return array(array('d'=>$old, 'i'=>$new));
 
-  // As long as there are differences, we run this function recursively until all differences are identified
-  // Content which is not different is returned at the root of the returned array, not within a 'd' or 'i' array
+  // As long as there are differences, run this function recursively until all differences are identified
+  // Content without differences is returned at the root of the returned array, not within a 'd' or 'i' sub-array
   return array_merge(
     diff_raw_string_arrays(array_slice($old, 0, $omax), array_slice($new, 0, $nmax)),
     array_slice($new, $nmax, $maxlen),
@@ -147,24 +147,24 @@ function diff_raw_string_arrays($old, $new)
 
 function diff_strings($old, $new)
 {
-  // We break both strings in arrays of words, then run diff_raw_string_arrays() on them
+  // Break both strings in arrays of words, then run diff_raw_string_arrays() on them
   $diff = diff_raw_string_arrays(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
 
-  // We initialize the future returned string
+  // Initialize the future returned string
   $return = '';
 
-  // We walk through the array of differences returned by diff_raw_string_arrays()
+  // Walk through the array of differences returned by diff_raw_string_arrays()
   foreach($diff as $k)
   {
-    // If the element is an array, then we're dealing with a difference - we wrap it between <del> or <ins> tags
+    // If the element is an array, then there is a difference - wrap it between <del> or <ins> tags
     if(is_array($k))
         $return .= (!empty($k['d'])?" <del> ".implode(' ',$k['d'])." </del> ":'').(!empty($k['i'])?" <ins> ".implode(' ',$k['i'])." </ins> ":'');
-    // Otherwise there's no difference, we leave it as is
+    // Otherwise there's no difference, leave it as is
     else
       $return .= $k . ' ';
   }
 
-  // We return the recomposed string
+  // Return the recomposed string
   return $return;
 }
 
@@ -183,40 +183,40 @@ function diff_strings($old, $new)
 
 function search_string_context($search, $text, $nb_words_around=1)
 {
-  // We escape special characters
+  // Escape special characters
   $search = preg_quote($search, '/');
   $text   = preg_quote($text, '/');
 
-  // First we split the text into an array of words and make them all lowercase (this way we search case insensitively)
+  // Split the text into an array of words and make them all lowercase (this way the search becomes case insensitive)
   $words = preg_split('/\s+/u', string_change_case($text, 'lowercase'));
 
-  // We search for the string in the array of words, and mark its positions in an array if we find it
+  // Search for the string in the array of words, and mark its positions in an array if found
   $fetch_words      = preg_grep("/".string_change_case($search, 'lowercase').".*/", $words);
   $words_positions  = array_keys($fetch_words);
 
-  // We split the text into an array of words again, but without changing case this time
+  // Split the text into an array of words again, but without changing case this time
   $words = preg_split('/\s+/u', $text);
 
-  // If we managed to find the string, we fetch its first position
+  // If the string has been found, fetch its first position
   if(count($words_positions))
     $position = $words_positions[0];
 
-  // If we did not have any matches, we return an empty array
+  // If the string has not been found, return an empty string
   if(!isset($position))
     return '';
 
-  // We fetch the start and end positions based on the number of words that we are wrapping around the result
+  // Fetch the start and end positions based on the number of words that should be wrapped around the result
   $start  = (($position - $nb_words_around) > 0) ? $position - $nb_words_around : 0;
   $end    = ((($position + ($nb_words_around + 1)) < count($words)) ? $position + ($nb_words_around + 1) : count($words)) - $start;
 
-  // We slice the array by keeping only the words that we need (anything between start and end positions)
+  // Purge the useless array contents, keeping only the needed words (anything between start and end positions)
   $slice  = array_slice($words, $start, $end);
 
-  // If needed, we add ... at the beginning and/or end of the array
+  // If needed, add suspension points at the beginning and/or end of the array
   $start  = ($start > 0) ? "..." : "";
   $end    = ($position + ($nb_words_around + 1) < count($words)) ? "..." : "";
 
-  // We can now assemble this array into a string and return it
+  // Assemble this array of words into a string and return it
   return stripslashes($start.implode(' ', $slice).$end);
 }
 
@@ -236,11 +236,11 @@ function search_string_context($search, $text, $nb_words_around=1)
 
 function search_string_wrap_html($search, $text, $open_tag, $close_tag)
 {
-  // We escape special characters
+  // Escape special characters
   $search = preg_quote($search, '/');
   $text   = preg_quote($text, '/');
 
-  // We use a regex to do the trick and return the result
+  // Use a regex to do the trick and return the result
   return stripslashes(preg_replace("/($search)/i", "$open_tag$1$close_tag", $text));
 }
 
@@ -268,7 +268,7 @@ function search_string_wrap_html($search, $text, $open_tag, $close_tag)
 
 function private_message_send($title, $body, $recipient=0, $sender=0, $is_silent=0, $do_not_sanitize=0)
 {
-  // If the user is not logged in but expected to be the sender, we do not send the message
+  // If there is no recipient and current user is not logged in, no message should be sent
   if(!$recipient && !user_is_logged_in())
     return 0;
 
@@ -280,15 +280,15 @@ function private_message_send($title, $body, $recipient=0, $sender=0, $is_silent
   $sent_at    = sanitize(time(), 'int', 0);
   $read_at    = ($is_silent) ? sanitize(time(), 'int', 0) : 0;
 
-  // If the recipient does not exist, we do not send the message
+  // If the recipient does not exist, do not send the message
   if(!database_row_exists('users', $recipient))
     return 0;
 
-  // If the sender does not exist, we do not send the message either
+  // If the sender does not exist, do not send the message either
   if($sender && !database_row_exists('users', $sender))
     return 0;
 
-  // We send the message by inserting a new row in the private messages table
+  // Send the message by inserting a new row in the private messages table
   query(" INSERT INTO   users_private_messages
           SET           users_private_messages.fk_users_recipient = '$recipient'  ,
                         users_private_messages.fk_users_sender    = '$sender'     ,
@@ -297,7 +297,7 @@ function private_message_send($title, $body, $recipient=0, $sender=0, $is_silent
                         users_private_messages.title              = '$title'      ,
                         users_private_messages.body               = '$body'       ");
 
-  // We return 1 to show the message was sent
+  // Return 1 to show the message was sent
   return 1;
 }
 
@@ -315,45 +315,44 @@ function private_message_send($title, $body, $recipient=0, $sender=0, $is_silent
  *
  * Keep in mind, since an error is being thrown, this interrupts the rest of the process of the page.
  *
- * @param   string|null $lang       (OPTIONAL)  The language currently being used.
- * @param   string|null $path       (OPTIONAL)  The path to the root of the website (defaults to 2 folders from root).
  * @param   string|null $menu_main  (OPTIONAL)  The main menu element to highlight in the menu bar in case of error.
  * @param   string|null $menu_side  (OPTIONAL)  The side menu element to highlight in the sidebar in case of error.
+ * @param   string|null $path       (OPTIONAL)  The path to the root of the website (defaults to 2 folders from root).
  * @param   int|null    $user_id    (OPTIONAL)  Specifies the ID of the user to check - if null, current user.
+ * @param   string|null $lang       (OPTIONAL)  The language to use for the error - if null, current user's language.
  *
  * @return  bool                                Is the user allowed to post content to the website.
  */
 
-function flood_check($path='./../../', $lang='EN', $menu_main='NoBleme', $menu_side='Homepage', $user_id=NULL)
+function flood_check($menu_main='NoBleme', $menu_side='Homepage', $path='./../../', $user_id=null, $lang=null)
 {
-  // We need to prepare some translated strings
-  $lang_login = ($lang == 'EN') ? 'You can only do this action while logged into your account' : 'Vous devez être connecté pour effectuer cette action';
-  $lang_wait  = ($lang == 'EN') ? 'You must wait a bit between each action on the website<br><br>Try doing it again in 10 seconds' : 'Vous devez attendre quelques secondes entre chaque action<br><br>Réessayez dans 10 secondes';
+  // Fetch the user's language if required
+  $lang = (!$lang) ? user_get_language() : $lang;
 
-  // If the user is logged out, then he shouldn't be able to do any actions, we throw an error
+  // If the user is logged out, then he shouldn't be able to do any actions: throw an error
   if(is_null($user_id) && !user_is_logged_in())
-    error_page($lang_login, $path, $lang, $menu_main, $menu_side);
+    error_page(__('error_flood_login'), $path, $lang, $menu_main, $menu_side);
 
-  // Let's fetch and sanitize the user's ID
+  // Fetch and sanitize the user's ID
   $user_id = (!is_null($user_id)) ? $user_id : user_get_id();
   $user_id = sanitize($user_id, 'int', 0);
 
-  // We can go fetch the user's recent activity
+  // Fetch the user's recent activity
   $dactivity = mysqli_fetch_array(query(" SELECT  users.last_action_at AS 'u_last'
                                           FROM    users
                                           WHERE   users.id = '$user_id' "));
 
-  // If the last activity for the user happened less than 10 seconds ago, we throw an error
+  // If the last activity for the user happened less than 10 seconds ago, throw an error
   $timestamp = time();
   if(($timestamp - $dactivity['u_last']) <= 10 )
-    error_page($lang_wait, $path, $lang, $menu_main, $menu_side);
+    error_page(__('error_flood_wait'), $path, $lang, $menu_main, $menu_side);
 
-  // We can now update the last activity of the user
+  // Update the last activity of the user
   query(" UPDATE  users
           SET     users.last_action_at  = '$timestamp'
           WHERE   users.id              = '$user_id' ");
 
-  // Just in case, we return 1
+  // Just in case, return 1
   return 1;
 }
 
@@ -378,7 +377,7 @@ function flood_check($path='./../../', $lang='EN', $menu_main='NoBleme', $menu_s
 
 function log_activity($activity_type, $is_administrators_only=0, $fk_users=0, $nickname=NULL, $activity_id=0, $activity_summary=NULL, $activity_parent=NULL, $moderation_reason=NULL, $do_not_sanitize=0)
 {
-  // We sanitize and prepare the data
+  // Sanitize and prepare the data
   $timestamp              = sanitize(time(), 'int', 0);
   $activity_type          = sanitize($activity_type, 'string');
   $is_administrators_only = sanitize($is_administrators_only, 'int', 0, 1);
@@ -389,7 +388,7 @@ function log_activity($activity_type, $is_administrators_only=0, $fk_users=0, $n
   $activity_parent        = ($do_not_sanitize) ? $activity_parent : sanitize($activity_parent, 'string');
   $moderation_reason      = ($do_not_sanitize) ? $moderation_reason : sanitize($moderation_reason, 'string');
 
-  // We create the activity log by inserting it in the table
+  // Create the activity log by inserting it in the table
   query(" INSERT INTO logs_activity
           SET         logs_activity.happened_at             = '$timestamp'              ,
                       logs_activity.is_administrators_only  = '$is_administrators_only' ,
@@ -401,7 +400,7 @@ function log_activity($activity_type, $is_administrators_only=0, $fk_users=0, $n
                       logs_activity.activity_parent         = '$activity_parent'        ,
                       logs_activity.moderation_reason       = '$moderation_reason'      ");
 
-  // We end this by returning the ID of the newly created activity log
+  // Return the ID of the newly created activity log
   return(mysqli_insert_id($GLOBALS['db']));
 }
 
@@ -423,20 +422,20 @@ function log_activity($activity_type, $is_administrators_only=0, $fk_users=0, $n
 
 function log_activity_details($linked_activity_log, $description, $before, $after=NULL, $optional=0, $do_not_sanitize = 0)
 {
-  // If no diff log should be created, we exit now
+  // If there are no differences, do not create a detailed activity log
   if($optional && ($before == $after))
     return 0;
 
-  // In order to avoid strain caused by the diff functions, we do not create a diff log if $after is too long
+  // In order to avoid strain caused by the diff functions, do not create a diff log if $after is too long
   $after = (strlen($after) > 10000) ? NULL : $after;
 
-  // We sanitize the data if required
+  // Sanitize the data if required
   $linked_activity_log  = sanitize($linked_activity_log, 'int', 0);
   $description          = ($do_not_sanitize) ? $description : sanitize($description, 'string');
   $before               = ($do_not_sanitize) ? $before : sanitize($before, 'string');
   $after                = ($do_not_sanitize) ? $after : sanitize($after, 'string');
 
-  // We can now create the detailed log
+  // Create the detailed log
   query(" INSERT INTO logs_activity_details
           SET         logs_activity_details.fk_logs_activity    = '$linked_activity_log'  ,
                       logs_activity_details.content_description = '$description'          ,
@@ -457,13 +456,13 @@ function log_activity_details($linked_activity_log, $description, $before, $afte
 
 function log_activity_purge_orphan_diffs()
 {
-  // We fetch all orphan diffs
+  // Fetch all orphan diffs
   $qorphans = query(" SELECT    logs_activity_details.id AS 'd_id'
                       FROM      logs_activity_details
                       LEFT JOIN logs_activity ON logs_activity_details.fk_logs_activity = logs_activity.id
                       WHERE     logs_activity.id IS NULL ");
 
-  // And we stealthily choke them to death
+  // Stealthily choke them to death
   while($dorphans = mysqli_fetch_array($qorphans))
   {
     $orphan_id = sanitize($dorphans['d_id'], 'int', 0);
@@ -490,7 +489,7 @@ function log_activity_purge_orphan_diffs()
 
 function activite_supprimer($activity_type, $is_administrators_only=0, $fk_users=0, $nickname=NULL, $activity_id=0, $global_type_wipe=0)
 {
-  // We begin by sanitizing the data
+  // Begin by sanitizing the data
   $activity_type          = sanitize($activity_type, 'string');
   $is_administrators_only = sanitize($is_administrators_only, 'int', 0, 1);
   $fk_users               = sanitize($fk_users, 'int', 0);
@@ -498,16 +497,16 @@ function activite_supprimer($activity_type, $is_administrators_only=0, $fk_users
   $activity_id            = sanitize($activity_id, 'int', 0);
   $global_type_wipe       = sanitize($global_type_wipe, 'int', 0, 1);
 
-  // We begin building our query
+  // Begin building the query
   $qactivity    = " DELETE FROM logs_activity ";
 
-  // Depending on whether this is a global type wipe or not, we do a different kind of string matching
+  // Depending on whether this is a global type wipe or not, do a different kind of string matching
   if(!$global_type_wipe)
     $qactivity .= " WHERE       logs_activity.activity_type           LIKE  '$activity_type' ";
   else
     $qactivity .= " WHERE       logs_activity.activity_type           LIKE  '$activity_type%' ";
 
-  // We treat public and private logs separately
+  // Treat public and private logs separately
   $qactivity .= "   AND         logs_activity.is_administrators_only  =     '$is_administrators_only' ";
 
   // Optional parameters
@@ -518,10 +517,10 @@ function activite_supprimer($activity_type, $is_administrators_only=0, $fk_users
   if($activity_id)
     $qactivity .= " AND         logs_activity.activity_id             =     '$activity_id' ";
 
-  // We can now run the query and delete the activity
+  // Run the query and delete the activity
   query($qactivity);
 
-  // We purge all orphaned detailed activity logs
+  // Purge all orphaned detailed activity logs
   log_activity_purge_orphan_diffs();
 }
 
@@ -548,12 +547,12 @@ function activite_supprimer($activity_type, $is_administrators_only=0, $fk_users
 
 function ircbot($message, $channel=NULL, $path='./../../', $allow_special_formatting=0)
 {
-  // We sanitize the message for IRC usage
+  // Sanitize the message for IRC usage
   $message = str_replace("\\n", '', $message);
   $message = str_replace("\\r", '', $message);
   $message = str_replace("\\t", '', $message);
 
-  // If allowed, we apply special formatting to the message
+  // If allowed, apply special formatting to the message
   if($allow_special_formatting)
   {
     // Swap special characters for bytes
@@ -582,7 +581,7 @@ function ircbot($message, $channel=NULL, $path='./../../', $allow_special_format
     $message = str_replace('%TROLL',chr(0x1f).chr(0x02).chr(0x03).'08,13',$message); // Bold underlined yellow on green
   }
 
-  // If we are allowed to write in the file, then we queue a message
+  // If the file can be written in, then queue a message in it
   if($fichier_ircbot = fopen($path.'ircbot.txt', "a"))
   {
     // Depending on whether a channel is specifiied, the message is sent to the server or to a channel
@@ -594,10 +593,10 @@ function ircbot($message, $channel=NULL, $path='./../../', $allow_special_format
     // Close the IRCbot file
     fclose($fichier_ircbot);
 
-    // We return 1 now that the work is done
+    // Return 1 now that the work is done
     return 1;
   }
-  // If we can't write in the IRCbot file, we return 0
+  // If the file can't be written in, return 0
   else
     return 0;
 }

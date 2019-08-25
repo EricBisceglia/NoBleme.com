@@ -29,7 +29,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 function string_truncate($string, $length, $suffix='')
 {
-  // If we need to truncate the string, then we do it and apply the suffix - else, we return the string as is
+  // If the string needs to be truncated, then do it and apply the suffix, else return the string as is
   return (mb_strlen($string, 'UTF-8') > $length) ? mb_substr($string, 0, $length, 'UTF-8').$suffix : $string;
 }
 
@@ -73,11 +73,11 @@ function string_change_case($string, $case)
 
 function string_remove_accents($string)
 {
-  // Simply enough, we prepare two arrays: accents and their non accentuated equivalents
+  // Simply enough, prepare two arrays: accents and their non accentuated equivalents
   $accents    = explode(",","ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,Ø,Å,Á,À,Â,Ä,È,É,Ê,Ë,Í,Î,Ï,Ì,Ò,Ó,Ô,Ö,Ú,Ù,Û,Ü,Ÿ,Ç,Æ,Œ");
   $no_accents = explode(",","c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,o,O,A,A,A,A,A,E,E,E,E,I,I,I,I,O,O,O,O,U,U,U,U,Y,C,AE,OE");
 
-  // We then replace any occurence of the first set of characters by its equivalent in the second
+  // Replace any occurence of the first set of characters by its equivalent in the second
   return str_replace($accents, $no_accents, $string);
 }
 
@@ -103,10 +103,10 @@ function string_remove_accents($string)
 
 function date_better_strftime($format, $timestamp)
 {
-  // We add an extra parameter to strftime using the date standard function
+  // Add an extra parameter to strftime using the date standard function
   $format = str_replace('%O', date('S', $timestamp), $format);
 
-  // We return the formatted output
+  // Return the formatted output
   return strftime($format, $timestamp);
 }
 
@@ -119,17 +119,17 @@ function date_better_strftime($format, $timestamp)
  * Because date is not locale aware and strftime lacks some functionalities, we'll need to do some extra work here...
  * If we want ordinal numbers in dates in both french and english, we'll need to be able to return french ordinals.
  *
- * @param   int     $timestamp  The timestamp of the date we want to ordinalize.
+ * @param   int     $timestamp  The timestamp of the date to ordinalize.
  *
  * @return  string              The formatted output.
  */
 
 function date_french_ordinal($timestamp)
 {
-  // We get the full day from the timestamp
+  // Get the full day from the timestamp
   $full_day = date('d', $timestamp);
 
-  // If the full day is 1, we return an ordinal. Else, we don't. French is simple with dates, isn't it?
+  // If the full day is 1, return an ordinal. Else, don't. French is simple with dates, isn't it?
   if($full_day == 1)
     return 'er';
   else
@@ -147,51 +147,52 @@ function date_french_ordinal($timestamp)
  * If no date is specified, it returns the current date instead.
  *
  * @param   string|int|null $date       The MySQL date or timestamp that we want to transform.
- * @param   string|null     $lang       The language in which we want to display the result.
  * @param   int|null        $strip_day  If 1, strips the day's name. If 2, strips the whole day.
+ * @param   string|null     $lang       The language in which we want to display the result, defaults to current lang.
  *
  * @return  string                      The required date, in plaintext.
  */
 
-function date_to_text($date=NULL, $lang="EN", $strip_day=0)
+function date_to_text($date=NULL, $strip_day=0, $lang=null)
 {
-  // If no date has been entered, we use the current timestamp instead
+  // If no date has been entered, use the current timestamp instead
   $date = (!$date) ? time() : $date;
 
-  // If we are dealing with a MySQL date, we transform it into a timestamp
+  // If we are dealing with a MySQL date, transform it into a timestamp
   $date = (!is_numeric($date)) ? strtotime($date) : $date;
 
-  // We set the correct locale for times
+  // Set the correct locale for times
+  $lang = (!$lang) ? user_get_language() : $lang;
   if($lang == 'EN')
     setlocale(LC_TIME, "en_US.UTF-8", 'eng');
   else
     setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 
-  // We can now return the formatted date - each language has its own date formatting rules
+  // Return the formatted date - each language has its own date formatting rules
   if(!$strip_day)
   {
     if($lang == 'EN')
       return date_better_strftime('%A, %B %#d%O, %Y', $date);
     else
-      return string_change_case(strftime('%A %#d'.date_french_ordinal($date).' %B %Y', $date), "initials");
+      return string_change_case(utf8_encode(strftime('%A %#d'.date_french_ordinal($date).' %B %Y', $date)), "initials");
   }
 
-  // We need to also treat this situation differently if we are stripping part of the day
+  // Treat this situation differently if the day needs to be stripped
   else if($strip_day == 1)
   {
     if($lang == 'EN')
       return date_better_strftime('%B %#d%O, %Y', $date);
     else
-      return strftime('%#d'.date_french_ordinal($date), $date).' '.string_change_case(strftime('%B %Y', $date), "initials");
+      return utf8_encode(strftime('%#d'.date_french_ordinal($date), $date).' '.string_change_case(strftime('%B %Y', $date), "initials"));
   }
 
-  // And differently aswell if we are stripping the full day
+  // And differently aswell if the full day is being stripped
   else
   {
     if($lang == 'EN')
       return date_better_strftime('%B %Y', $date);
     else
-      return string_change_case(strftime('%B %Y', $date), "initials");
+      return string_change_case(utf8_encode(strftime('%B %Y', $date)), "initials");
   }
 }
 
@@ -212,11 +213,11 @@ function date_to_text($date=NULL, $lang="EN", $strip_day=0)
 
 function date_to_ddmmyy($date)
 {
-  // If the date is not set or '0000-00-00', then we return null
+  // If the date is not set or '0000-00-00', return null
   if(!$date || $date == '0000-00-00')
     return NULL;
 
-  // Else, we return the date in the DD/MM/YY format
+  // Else, return the date in the DD/MM/YY format
   return date('d/m/y',strtotime($date));
 }
 
@@ -237,7 +238,7 @@ function date_to_ddmmyy($date)
 
 function date_to_mysql($date)
 {
-  // If the date is DD/MM/YYYY, we convert it to the correct format
+  // If the date is DD/MM/YYYY, convert it to the correct format
   if(strlen($date) == 10)
     $date = date('Y-m-d', strtotime(str_replace('/', '-', $date)));
 
@@ -245,15 +246,15 @@ function date_to_mysql($date)
   else if(strlen($date) == 8)
     $date = date('Y-m-d', strtotime(substr($date,6,2).'-'.substr($date,3,2).'-'.substr($date,0,2)));
 
-  // Otherwise, we return the absence of a MySQL date
+  // Otherwise, return the absence of a MySQL date
   else
     return '0000-00-00';
 
-  // If the converted date is incorrect, then we also return the absence of a MySQL date
+  // If the converted date is incorrect, also return the absence of a MySQL date
   if($date == '1970-01-01')
     return '0000-00-00';
 
-  // We can now return the converted date
+  // Return the converted date
   return $date;
 }
 
@@ -279,7 +280,7 @@ function date_to_mysql($date)
 
 function html_fix_meta_tags($string)
 {
-  // We replace illegal characters by their legal counterparcs
+  // Replace illegal characters by their legal counterparcs
   $string = str_replace("'","&#39;",$string);
   $string = str_replace("\"","&#34;",$string);
   $string = str_replace("<","&#60;",$string);
@@ -291,6 +292,6 @@ function html_fix_meta_tags($string)
   $string = str_replace("(","&#40;",$string);
   $string = str_replace(")","&#41;",$string);
 
-  // And we return the modified string
+  // Return the modified string
   return $string;
 }

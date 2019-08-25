@@ -38,7 +38,7 @@ function __($string, $amount=null, $spaces_before=0, $spaces_after=0, $preset_va
     $returned_string = $GLOBALS['translations'][$string.'+'];
 
   // Otherwise, use the requested string
-  if(isset($GLOBALS['translations'][$string]))
+  else if(isset($GLOBALS['translations'][$string]))
     $returned_string = $GLOBALS['translations'][$string];
 
   // If we have no string to return, return an empty string
@@ -145,51 +145,6 @@ ___('query+', 'FR', 'requêtes');
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                   COMMON FILES                                                    */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Error messages
-
-// Strings thrown by the functions on this very page
-___('error_duplicate_translation', 'EN', 'Error: Duplicate translation name - ');
-___('error_duplicate_translation', 'FR', 'Erreur : Traduction déjà existante - ');
-
-
-// Strings required by the function that throws the errors
-___('error_ohno', 'EN', "OH NO  : (");
-___('error_ohno', 'FR', "OH NON  : (");
-
-___('error_encountered', 'EN', "YOU HAVE ENCOUNTERED AN ERROR");
-___('error_encountered', 'FR', "VOUS AVEZ RENCONTRÉ UNE ERREUR");
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Footer
-
-___('footer_pageviews', 'EN', "This page has been seen ");
-___('footer_pageviews', 'FR', "Cette page a été consultée ");
-
-___('footer_loadtime', 'EN', "Page loaded in ");
-___('footer_loadtime', 'FR', "Page chargée en ");
-
-___('footer_version', 'EN', 'Version {{1}}, build {{2}} - {{3}}');
-___('footer_version', 'FR', 'Version {{1}}, build {{2}} du {{3}}');
-
-___('footer_shorturl', 'EN', "Shorter link alternative");
-___('footer_shorturl', 'FR', "Lien court vers cette page");
-
-___('footer_legal', 'EN', "Legal notices and privacy policy");
-___('footer_legal', 'FR', "Mentions légales &amp; confidentialité");
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
 /*                                                BBCODES / NBDBCODES                                                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -216,3 +171,123 @@ ___('nbdbcodes_video_hidden_small', 'FR', "Vidéo masquée (<a href=\"{{1}}pages
 
 ___('nbdbcodes_trends_hidden', 'EN', "This Google trends graph is hidden (<a href=\"{{1}}pages/user/privacy\">privacy options</a>)");
 ___('nbdbcodes_trends_hidden', 'FR', "Ce graphe Google trends est masqué (<a href=\"{{1}}pages/user/privacy\">options de vie privée</a>)");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   COMMON FILES                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Error messages
+
+// Strings thrown by the functions on this very page
+___('error_duplicate_translation', 'EN', 'Error: Duplicate translation name - ');
+___('error_duplicate_translation', 'FR', 'Erreur : Traduction déjà existante - ');
+
+
+// Strings required by the function that throws the errors
+___('error_ohno', 'EN', "OH NO  : (");
+___('error_ohno', 'FR', "OH NON  : (");
+
+___('error_encountered', 'EN', "YOU HAVE ENCOUNTERED AN ERROR");
+___('error_encountered', 'FR', "VOUS AVEZ RENCONTRÉ UNE ERREUR");
+
+
+// Flood check
+___('error_flood_login', 'EN', "You can only do this action while logged into your account");
+___('error_flood_login', 'FR', "Vous devez être connecté pour effectuer cette action");
+___('error_flood_wait', 'EN', "You must wait a bit between each action on the website<br><br>Try doing it again in 10 seconds");
+___('error_flood_wait', 'FR', "Vous devez attendre quelques secondes entre chaque action<br><br>Réessayez dans 10 secondes");
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Time differentials
+
+// Past actions
+___('time_diff_past_future', 'EN', "In the future");
+___('time_diff_past_future', 'FR', "Dans le futur");
+___('time_diff_past_now', 'EN', "Right now");
+___('time_diff_past_now', 'FR', "En ce moment même");
+___('time_diff_past_second', 'EN', "A second ago");
+___('time_diff_past_second', 'FR', "Il y a 1 seconde");
+___('time_diff_past_seconds', 'EN', "{{1}} seconds ago");
+___('time_diff_past_seconds', 'FR', "Il y a {{1}} secondes");
+___('time_diff_past_minute', 'EN', "A minute ago");
+___('time_diff_past_minute', 'FR', "Il y a 1 minute");
+___('time_diff_past_minutes', 'EN', "{{1}} minutes ago");
+___('time_diff_past_minutes', 'FR', "Il y a {{1}} minutes");
+___('time_diff_past_hour', 'EN', "A hour ago");
+___('time_diff_past_hour', 'FR', "Il y a 1 heure");
+___('time_diff_past_hours', 'EN', "{{1}} hours ago");
+___('time_diff_past_hours', 'FR', "Il y a {{1}} heures");
+___('time_diff_past_day', 'EN', "Yesterday");
+___('time_diff_past_day', 'FR', "Hier");
+___('time_diff_past_2days', 'EN', "2 days ago");
+___('time_diff_past_2days', 'FR', "Avant-hier");
+___('time_diff_past_days', 'EN', "{{1}} days ago");
+___('time_diff_past_days', 'FR', "Il y a {{1}} jours");
+___('time_diff_past_year', 'EN', "A year ago");
+___('time_diff_past_year', 'FR', "L'année dernière");
+___('time_diff_past_years', 'EN', "{{1}} years ago");
+___('time_diff_past_years', 'FR', "Il y a {{1}} ans");
+___('time_diff_past_century', 'EN', "A century ago");
+___('time_diff_past_century', 'FR', "Le siècle dernier");
+___('time_diff_past_long', 'EN', "An extremely long time ago");
+___('time_diff_past_long', 'FR', "Il y a très très longtemps");
+
+// Future actions
+___('time_diff_future_past', 'EN', "In the past");
+___('time_diff_future_past', 'FR', "Dans le passé");
+___('time_diff_future_second', 'EN', "In 1 second");
+___('time_diff_future_second', 'FR', "Dans 1 seconde");
+___('time_diff_future_seconds', 'EN', "In {{1}} seconds");
+___('time_diff_future_seconds', 'FR', "Dans {{1}} secondes");
+___('time_diff_future_minute', 'EN', "In 1 minute");
+___('time_diff_future_minute', 'FR', "Dans 1 minute");
+___('time_diff_future_minutes', 'EN', "In {{1}} minutes");
+___('time_diff_future_minutes', 'FR', "Dans {{1}} minutes");
+___('time_diff_future_hour', 'EN', "In 1 hour");
+___('time_diff_future_hour', 'FR', "Dans 1 heure");
+___('time_diff_future_hours', 'EN', "In {{1}} hours");
+___('time_diff_future_hours', 'FR', "Dans {{1}} heures");
+___('time_diff_future_day', 'EN', "Tomorrow");
+___('time_diff_future_day', 'FR', "Demain");
+___('time_diff_future_2days', 'EN', "In 2 days");
+___('time_diff_future_2days', 'FR', "Après-demain");
+___('time_diff_future_days', 'EN', "In {{1}} days");
+___('time_diff_future_days', 'FR', "Dans {{1}} jours");
+___('time_diff_future_year', 'EN', "In 1 year");
+___('time_diff_future_year', 'FR', "Dans 1 an");
+___('time_diff_future_years', 'EN', "In {{1}} years");
+___('time_diff_future_years', 'FR', "Dans {{1}} ans");
+___('time_diff_future_century', 'EN', "Next century");
+___('time_diff_future_century', 'FR', "Dans un siècle");
+___('time_diff_future_long', 'EN', "In an extremely long time");
+___('time_diff_future_long', 'FR', "Dans très très longtemps");
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Footer
+
+___('footer_pageviews', 'EN', "This page has been seen ");
+___('footer_pageviews', 'FR', "Cette page a été consultée ");
+
+___('footer_loadtime', 'EN', "Page loaded in ");
+___('footer_loadtime', 'FR', "Page chargée en ");
+
+___('footer_version', 'EN', 'Version {{1}}, build {{2}} - {{3}}');
+___('footer_version', 'FR', 'Version {{1}}, build {{2}} du {{3}}');
+
+___('footer_shorturl', 'EN', "Shorter link alternative");
+___('footer_shorturl', 'FR', "Lien court vers cette page");
+
+___('footer_legal', 'EN', "Legal notices and privacy policy");
+___('footer_legal', 'FR', "Mentions légales &amp; confidentialité");

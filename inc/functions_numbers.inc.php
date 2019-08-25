@@ -16,11 +16,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 function number_prepend_sign($number)
 {
-  // If the number is above 0, then we prepend a plus to it
+  // If the number is above 0, then prepend a plus to it
   if($number > 0)
     return '+'.$number;
 
-  // Otherwise, we do nothing
+  // Otherwise, do nothing
   else
     return $number;
 }
@@ -31,7 +31,7 @@ function number_prepend_sign($number)
 /**
  * Returns a styling depending on whether the number is positive, zero, or negative.
  *
- * @param   int|double  $number                       The value for which we want a styling.
+ * @param   int|double  $number                       The value from which the style will be determined.
  * @param   bool|null   $return_color_hex (OPTIONAL)  If set, then return a hexadecimal color value instead of a style.
  *
  * @return  string                                    The css styling or hexadecimal code corresponding to the value.
@@ -39,7 +39,7 @@ function number_prepend_sign($number)
 
 function number_styling($number, $return_color_hex=0)
 {
-  // If we want a hex code, then we return a hex code for each case
+  // Hex codes
   if($return_color_hex)
   {
     if($number > 0)
@@ -50,7 +50,7 @@ function number_styling($number, $return_color_hex=0)
       return 'EB8933';
   }
 
-  // Otherwise, we return the corresponding css styling
+  // CSS stylings
   if($number > 0)
     return 'positive';
   else if($number < 0)
@@ -78,26 +78,26 @@ function number_styling($number, $return_color_hex=0)
 
 function number_display_format($number, $format="number", $decimals=0, $prepend_sign=0)
 {
-  // Format: standard format - 10,01
+  // Standard format - 10,01
   if($format == "number")
     $number = number_format((float)$number, 0, ',', ' ');
 
-  // Format: price - 10 € (we ignore decimals)
+  // Price - 10 € (ignore decimals)
   if($format == "price")
     $number = number_format((float)$number, 0, ',', ' ')." €";
 
-  // Format: price with cents - 10,01 € (we limit to 2 decimals)
+  // Price with cents - 10,01 € (limit to 2 decimals)
   if($format == "price_cents")
     $number = number_format((float)$number, 2, ',', ' ')." €";
 
-  // Format: percentage - 10,01 %
+  // Percentage - 10,01 %
   else if($format == "percentage")
     $number = number_format((float)$number, $decimals, ',', ' ')." %";
 
-  // Format: percentage point - 10,01 p%
+  // Percentage point - 10,01 p%
   else if($format == "percentage_point")
     $number = number_format((float)$number, $decimals, ',', ' ')." p%";
 
-  // Retern the number, with an extra sign if necessary
+  // Return the number, with an extra sign if necessary
   return ($prepend_sign && $number > 0) ? '+'.$number : $number;
 }

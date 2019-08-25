@@ -548,7 +548,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*****************************************************************************************************************//
   //                                                 DEFAULT VALUES                                                  //
   //*****************************************************************************************************************//
-  // If no activity type has been matched, we return some default content
+  // If no activity type has been matched, return some default content
   else
   {
     $return['css']  = '';
@@ -557,12 +557,12 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
     $return['FR']   = "Ceci ne devrait pas apparaitre ici, oups (".$type.")";
   }
 
-  // If some values were left empty, we replace them with an empty string
+  // If some values were left empty, replace them with an empty string
   $return['css']  = (isset($return['css']))  ? $return['css']  : "";
   $return['href'] = (isset($return['href'])) ? $return['href'] : "";
   $return['FR']   = (isset($return['FR']))   ? $return['FR']   : "";
   $return['EN']   = (isset($return['EN']))   ? $return['EN']   : "";
 
-  // We're all done now, time to return the data
+  // Time to return the data
   return $return;
 }

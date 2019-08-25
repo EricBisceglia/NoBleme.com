@@ -14,7 +14,7 @@ $pageviews = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $
 
 // Load time and query count
 $load_time  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3).'s';
-$metrics    = sanitize_output(__('footer_loadtime').$load_time.__('with', 1, 1, 1).$GLOBALS['query'].__('query', $GLOBALS['query'], 1));
+$metrics    = __('footer_loadtime').$load_time.__('with', 1, 1, 1).$GLOBALS['query'].__('query', $GLOBALS['query'], 1);
 
 // Current version
 $dversion = mysqli_fetch_array(query("  SELECT    system_versions.version AS 'v_version'  ,

@@ -32,7 +32,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  */
 function schedule_task($action_type, $action_id, $action_planned_at, $action_description=NULL, $sanitize_data=0)
 {
-  // If sanitization is required, then we do it
+  // If sanitization is required, then do it
   if($sanitize_data)
   {
     $action_type        = sanitize($action_type, 'string');
@@ -41,12 +41,12 @@ function schedule_task($action_type, $action_id, $action_planned_at, $action_des
     $action_description = sanitize($action_description, 'string');
   }
 
-  // If the task already exists, we delete it
+  // If the task already exists, delete it
   query(" DELETE FROM system_scheduler
           WHERE       system_scheduler.task_id    =     '$action_id'
           AND         system_scheduler.task_type  LIKE  '$action_type' ");
 
-  // We can now create the new task in the scheduler
+  // Create the new task in the scheduler
   query(" INSERT INTO system_scheduler
           SET         system_scheduler.task_id          = '$action_id'          ,
                       system_scheduler.task_type        = '$action_type'        ,
@@ -60,24 +60,24 @@ function schedule_task($action_type, $action_id, $action_planned_at, $action_des
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Processing of all the tasks ready to be ran
 
-// We don't want to run this more than once every 15 seconds, since it could cause a deadlock due to the LOCK queue
+// This shouldn't run more than once every 15 seconds, to avoid a MySQL deadlock caused by the LOCK queue
 $timestamp = time();
 
-// For this, we need the timestamp of the most recent scheduler execution
+// Fetch the timestamp of the most recent scheduler execution
 $dcheck_scheduler = mysqli_fetch_array(query("  SELECT  system_variables.last_scheduler_execution AS 'scheduler_last'
                                                 FROM    system_variables "));
 
-// If this timestamp is more than 15 seconds ago, then we should run the scheduler
+// If this timestamp is more than 15 seconds old, run the scheduler
 if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
 {
-  // We begin by updating the timestamp of the latest scheduler execution
+  // Update the timestamp of the latest scheduler execution
   query(" UPDATE  system_variables
           SET     system_variables.last_scheduler_execution = '$timestamp' ");
 
-  // First off, we need to lock the table so that the action can not be ran twice
+  // Lock the table so that the action can not be ran twice
   query(" LOCK TABLES system_scheduler WRITE ");
 
-  // Then we go check if any scheduled task is waiting to be ran
+  // Go check if any scheduled task is waiting to be ran
   $timestamp  = time();
   $qscheduler = query(" SELECT  system_scheduler.task_id          AS 't_id'   ,
                                 system_scheduler.task_type        AS 't_type' ,
@@ -85,10 +85,10 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
                         FROM    system_scheduler
                         WHERE   system_scheduler.planned_at       <= '$timestamp' ");
 
-  // We parse the list of potential tasks awaiting execution
+  // Parse the list of potential tasks awaiting execution
   while($dscheduler = mysqli_fetch_array($qscheduler))
   {
-    // On prépare les infos liées à la tâche à automatiser
+    // Prepare data related to the task about to be ran
     $scheduler_action_id = $dscheduler['t_id'];
     $scheduler_type      = $dscheduler['t_type'];
     $scheduler_desc      = sanitize($dscheduler['t_desc'], 'string');
@@ -104,19 +104,19 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
 
     if($scheduler_type == 'writers_contest_vote')
     {
-      // We check whether the requested contest exists
+      // Check whether the requested contest exists
       $dcheck_contest = mysqli_fetch_array(query("  SELECT  writings_contests.contest_name AS 'c_name'
                                                     FROM    writings_contests
                                                     WHERE   writings_contests.id = '$scheduler_action_id' "));
 
-      // If it does exist, we can proceed
+      // If it does exist, proceed
       if($dcheck_contest['c_name'])
       {
-        // We create an entry in recent activity
+        // Create an entry in the recent activity
         $contest_title = sanitize($dcheck_contest['c_name'], 'string');
         log_activity('writers_contest_vote', 0, 0, 0, $scheduler_action_id, $contest_title);
 
-        // We announce on IRC that voting is open
+        // Announce on IRC that voting is open
         $contest_title_raw = $dcheck_contest['c_name'];
         ircbot($path, 'Fin de la participation au concours du coin des écrivains : '.$contest_title_raw.' - Les votes sont ouverts pendant 10 jours : '.$GLOBALS['url_site'].'pages/ecrivains/concours?id='.$scheduler_action_id, '#NoBleme');
         ircbot($path, 'Fin de la participation au concours du coin des écrivains : '.$contest_title_raw.' - Les votes sont ouverts pendant 10 jours : '.$GLOBALS['url_site'].'pages/ecrivains/concours?id='.$scheduler_action_id, '#write');
@@ -133,25 +133,25 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
 
     else if($scheduler_type == 'writers_contest_end')
     {
-      // We check whether the requested contest exists
+      // Check whether the requested contest exists
       $dcheck_contest = mysqli_fetch_array(query("  SELECT  writings_contests.contest_name AS 'c_name'
                                                     FROM    writings_contests
                                                     WHERE   writings_contests.id = '$scheduler_action_id' "));
 
-      // If it exists, we need to figure out who won the contest
+      // If it exists, figure out who won the contest
       if($dcheck_contest['c_name'])
       {
-        // We fetch all texts with the highest score, in a random order (we pick a random winner in case of draw)
+        // Fetch all texts with the highest score, in a random order (in case of draw, a random winner will be picked)
         $qwritings = query("  SELECT    writings_texts.id AS 'w_id'
                               FROM      writings_texts
                               WHERE     writings_texts.fk_writings_contests = '$scheduler_action_id'
                               ORDER BY  RAND() ");
 
-        // We prepare the variabes we'll use to pick the winner
+        // Prepare the variabes which will be used to pick the winner
         $writings_top_rating  = 0;
         $contest_winner_id    = 0;
 
-        // We go fetch the ratings of all writings in the contest
+        // Fetch the ratings of all writings in the contest
         while($dwritings = mysqli_fetch_array($qwritings))
         {
           $writing_id = $dwritings['w_id'];
@@ -161,7 +161,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
                                         WHERE   writings_contests_votes.fk_writings_contests  = '$scheduler_action_id'
                                         AND     writings_contests_votes.fk_writings_texts     = '$writing_id' "));
 
-          // We check whether this text has won the contest
+          // Check whether the parsed text is now leading in points
           if($dratings['c_rating'] > $writings_top_rating)
           {
             $writings_top_rating  = $dratings['c_rating'];
@@ -169,12 +169,12 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
           }
         }
 
-        // Now that we have a winner, we can update the contest
+        // Now that a winner has been picked, update the contest
         query(" UPDATE  writings_contests
                 SET     writings_contests.fk_writings_texts_winner  = '$contest_winner_id'
                 WHERE   writings_contests.id                        = '$scheduler_action_id' ");
 
-        // We fetch details about the winning writing
+        // Fetch details about the winning writing
         $dwinner = mysqli_fetch_array(query(" SELECT    writings_texts.is_anonymous AS 'w_anon' ,
                                                         users.id                    AS 'u_id'   ,
                                                         users.nickname              AS 'u_nick'
@@ -182,7 +182,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
                                               LEFT JOIN users ON writings_texts.fk_users = users.id
                                               WHERE     writings_texts.id = '$contest_winner_id' "));
 
-        // If the text isn't anonymous, we can update the contest by linking it to the winner
+        // If the text isn't anonymous, update the contest by linking it to the winner
         if(!$dwinner['w_anon'])
         {
           $winner_id = $dwinner['u_id'];
@@ -191,12 +191,12 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
                   WHERE   writings_contests.id              = '$scheduler_action_id' ");
         }
 
-        // We create an entry in recent activity
+        // Create an entry in recent activity
         $contest_title  = sanitize($dcheck_contest['c_name'], 'string');
         $contest_winner = ($dwinner['w_anon']) ? 'Un auteur anonyme' : sanitize($dwinner['u_nick'], 'string');
         log_activity('writers_contest_winner', 0, 0, $contest_winner, $scheduler_action_id, $contest_title);
 
-        // We announce the winner on IRC
+        // Announce the winner on IRC
         $contest_title_raw  = $dcheck_contest['c_name'];
         $contest_winner_raw = ($dwinner['w_anon']) ? 'Un auteur anonyme' : $dwinner['u_nick'];
         ircbot($path, $contest_winner_raw.' a gagné le concours du coin des écrivains  : '.$contest_title_raw.' - '.$GLOBALS['url_site'].'pages/ecrivains/concours?id='.$scheduler_action_id, '#NoBleme');
@@ -210,12 +210,12 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
     //***************************************************************************************************************//
     //                                      THE SCHEDULED TASK HAS BEEN TREATED                                      //
     //***************************************************************************************************************//
-    // We can now delete the entry from the scheduler
+    // Delete the entry from the scheduler
 
     query(" DELETE FROM   system_scheduler
             WHERE         system_scheduler.id = '$scheduler_action_id' ");
   }
 
-  // Now that every scheduled task has been treated, we release the database lock so that normal activity can resume
+  // Now that every scheduled task has been treated, release the database lock so that normal activity can resume
   query(" UNLOCK TABLES ");
 }

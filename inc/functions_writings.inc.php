@@ -23,11 +23,11 @@ function writings_contest_can_vote($user_id=NULL)
   if(is_null($user_id) && !user_is_logged_in())
     return 0;
 
-  // Let's fetch and sanitize the user's ID
+  // Fetch and sanitize the user's ID
   $user_id = (!is_null($user_id)) ? $user_id : user_get_id();
   $user_id = sanitize($user_id, 'int', 0);
 
-  // We can now fetch some info about the user
+  // Fetch some info about the user
   $duser = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'u_admin'      ,
                                               users.is_global_moderator AS 'u_global_mod' ,
                                               users.is_moderator        AS 'u_mod'
@@ -37,7 +37,7 @@ function writings_contest_can_vote($user_id=NULL)
   // If the user is part of the administrative team, then he can vote
   $can_vote = ($duser['u_admin'] || $duser['u_global_mod'] || $duser['u_mod']) ? 1 : 0;
 
-  // Otherwise, we check if the user has contributed a writing to a past contest in the writer's corner
+  // Otherwise, check if the user has contributed a writing to a past contest in the writer's corner
   if(!$can_vote)
   {
     $dtext = mysqli_fetch_array(query(" SELECT    writings_texts.id AS 't_id'
@@ -49,7 +49,7 @@ function writings_contest_can_vote($user_id=NULL)
     $can_vote = ($dtext['t_id']) ? 1 : 0;
   }
 
-  // We can now return whether the user is allowed to vote
+  // Return whether the user is allowed to vote
   return $can_vote;
 }
 
@@ -66,26 +66,26 @@ function writings_contest_can_vote($user_id=NULL)
 
 function writings_contest_update_texts_count($contest_id)
 {
-  // If the specified ID is 0, we don't get tricked into counting all texts linked to no existing contest and return 0
+  // If the specified ID is 0, don't get tricked into counting all texts linked to no existing contest and return 0
   if(!$contest_id)
     return 0;
 
-  // We begin by sanitizing the contest id
+  // Sanitize the contest id
   $contest_id = sanitize($contest_id, 'int', 0);
 
-  // We can now fetch the number of texts in the contest
+  // Fetch the number of texts in the contest
   $dtexts = mysqli_fetch_array(query("  SELECT  COUNT(writings_texts.id) AS 'w_num'
                                         FROM    writings_texts
                                         WHERE   writings_texts.fk_writings_contests = '$contest_id' "));
 
-  // We sanitize the returned value - just in case
+  // Sanitize the returned value - just in case
   $nb_texts = sanitize($dtexts['w_num'], 'int', 0);
 
-  // We can now update the contest with the info
+  // Update the contest with the info
   query(" UPDATE  writings_contests
           SET     writings_contests.nb_entries  = '$nb_texts'
           WHERE   writings_contests.id          = '$contest_id' ");
 
-  // In case it could be useful, we return the number of texts in the specified contest
+  // In case it could be useful, return the number of texts in the specified contest
   return $nb_texts;
 }

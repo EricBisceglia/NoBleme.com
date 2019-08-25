@@ -10,47 +10,46 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * Returns in plain text how long ago a timestamp happened.
  *
  * @param   string      $timestamp              The timestamp at which the event happened.
- * @param   string|null $lang       (OPTIONAL)  The language in which the text should be.
  *
  * @return  string                              A plain text description of how long ago the event happened.
  */
 
-function time_since($timestamp, $lang="EN")
+function time_since($timestamp)
 {
-  // We will base our result on the difference between the event and the current timestamp
+  // Base the result on the difference between the event and the current timestamp
   $time_since = time() - $timestamp;
 
-  // We can now proceed to return the time difference in plain text
+  // Return the time difference in plain text
   if($time_since < 0)
-    return ($lang == 'EN') ? "In the future" : "Dans le futur";
+    return __('time_diff_past_future');
   else if ($time_since == 0)
-    return ($lang == 'EN') ? "Right now" : "En ce moment même";
+    return __('time_diff_past_now');
   else if ($time_since == 1)
-    return ($lang == 'EN') ? "A second ago" : "Il y a 1 seconde";
+    return __('time_diff_past_second');
   else if ($time_since <= 60)
-    return ($lang == 'EN') ? $time_since." seconds ago" : "Il y a ".$time_since." secondes";
+    return __('time_diff_past_seconds', $time_since, 0, 0, array($time_since));
   else if ($time_since <= 120)
-    return ($lang == 'EN') ? "A minute ago" : "Il y a 1 minute";
+    return __('time_diff_past_minute');
   else if ($time_since <= 3600)
-    return ($lang == 'EN') ? floor($time_since/60)." minutes ago" : "Il y a ".floor($time_since/60)." minutes";
+    return __('time_diff_past_minutes', $time_since, 0, 0, array(floor($time_since/60)));
   else if ($time_since <= 7200)
-    return ($lang == 'EN') ? "An hour ago" : "Il y a 1 heure";
+    return __('time_diff_past_hour');
   else if ($time_since <= 86400)
-    return ($lang == 'EN') ? floor($time_since/3600)." hours ago" : "Il y a ".floor($time_since/3600)." heures";
+    return __('time_diff_past_hours', $time_since, 0, 0, array(floor($time_since/3600)));
   else if ($time_since <= 172800)
-    return ($lang == 'EN') ? "Yesterday" : "Hier";
+    return __('time_diff_past_day');
   else if ($time_since <= 259200)
-    return ($lang == 'EN') ? floor($time_since/86400)." days ago" : "Avant-hier";
+    return __('time_diff_past_2days');
   else if ($time_since <= 31536000)
-    return ($lang == 'EN') ? floor($time_since/86400)." days ago" : "Il y a ".floor($time_since/86400)." jours";
+    return __('time_diff_past_days', $time_since, 0, 0, array(floor($time_since/86400)));
   else if ($time_since <= 63072000)
-    return ($lang == 'EN') ? "A year ago" : "L'année dernière";
+    return __('time_diff_past_year');
   else if ($time_since <= 3153600000)
-    return ($lang == 'EN') ? floor($time_since/31536000)." years ago" : "Il y a ".floor($time_since/31536000)." ans";
+    return __('time_diff_past_years', $time_since, 0, 0, array(floor($time_since/31536000)));
   else if ($time_since <= 6307200000)
-    return ($lang == 'EN') ?  "A century ago" : "Le siècle dernier";
+    return __('time_diff_past_century');
   else
-    return ($lang == 'EN') ? "An extremely long time ago" : "Il y a très très longtemps";
+    return __('time_diff_past_long');
 }
 
 
@@ -67,38 +66,38 @@ function time_since($timestamp, $lang="EN")
 
 function time_until($timestamp, $lang="EN")
 {
-  // We will base our result on the difference between the event and the current timestamp
+  // Base the result on the difference between the event and the current timestamp
   $time_until = $timestamp - time();
 
-  // We can now proceed to return the time difference in plain text
+  // Return the time difference in plain text
   if($time_until < 0)
-    return ($lang == 'EN') ? "In the past" : "Dans le passé";
+    return __('time_diff_future_past');
   else if ($time_until == 0)
-    return ($lang == 'EN') ? "Right now" : "En ce moment même";
+    return __('time_diff_past_now');
   else if ($time_until == 1)
-    return ($lang == 'EN') ? "In 1 second" : "Dans 1 seconde";
+    return __('time_diff_future_second');
   else if ($time_until < 60)
-    return ($lang == 'EN') ? "In ".$time_until." seconds" : "Dans ".$time_until." secondes";
+    return __('time_diff_future_seconds', $time_until, 0, 0, array($time_until));
   else if ($time_until < 120)
-    return ($lang == 'EN') ? "In 1 minute" : "Dans 1 minute";
+    return __('time_diff_future_minute');
   else if ($time_until < 3600)
-    return ($lang == 'EN') ? "In ".floor($time_until/60)." minutes" : "Dans ".floor($time_until/60)." minutes";
+    return __('time_diff_future_minutes', $time_until, 0, 0, array(floor($time_until/60)));
   else if ($time_until < 7200)
-    return ($lang == 'EN') ? "In 1 hour" : "Dans 1 heure";
+    return __('time_diff_future_hour');
   else if ($time_until < 86400)
-    return ($lang == 'EN') ? "In ".floor($time_until/3600)." hours" : "Dans ".floor($time_until/3600)." heures";
+    return __('time_diff_future_hours', $time_until, 0, 0, array(floor($time_until/3600)));
   else if ($time_until < 172800)
-    return ($lang == 'EN') ? "Tomorrow" : "Demain";
+    return __('time_diff_future_day');
   else if ($time_until < 259200)
-    return ($lang == 'EN') ? "In ".floor($time_until/86400)." days" : "Après-demain";
+    return __('time_diff_future_2days');
   else if ($time_until < 31536000)
-    return ($lang == 'EN') ? "In ".floor($time_until/86400)." days" : "Dans ".floor($time_until/86400)." jours";
+    return  __('time_diff_future_days', $time_until, 0, 0, array(floor($time_until/86400)));
   else if ($time_until < 63072000)
-    return ($lang == 'EN') ? "In 1 year" : "Dans 1 an";
+    return __('time_diff_future_year');
   else if ($time_until < 3153600000)
-    return ($lang == 'EN') ? "In ".floor($time_until/31536000)." years" : "Dans ".floor($time_until/31536000)." ans";
+    return __('time_diff_future_years', $time_until, 0, 0, array(floor($time_until/31536000)));
   else if ($time_until < 6307200000)
-    return ($lang == 'EN') ?  "Next century" : "Dans un siècle";
+    return __('time_diff_future_century');
   else
-    return ($lang == 'EN') ? "In an extremely long time" : "Dans très très longtemps";
+    return __('time_diff_future_long');
 }

@@ -10,49 +10,44 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * Plaintext description of a task's priority level.
  *
  * @param   int         $priority_level             The priority level of the task as stored in the database (an int).
- * @param   string|null $lang           (OPTIONAL)  The language used for the description of the priority level.
  * @param   bool|null   $styled         (OPTIONAL)  If set, returns a styled description with HTML tags.
  *
  * @return  string                                  A plaintext description of the priority level.
  */
 
-function task_priority($priority_level, $lang='FR', $styled=0)
+function task_priority($priority_level, $styled=0)
 {
-  // No trickery here, we simply parse priority levels one by one using a switch
+  // No trickery here, simply parse priority levels one by one using a switch
   switch($priority_level)
   {
-    // 5 -> Urgent task: We prepare the translated strings, and return the result (styled or not)
+    // 5 -> Urgent task
     case 5:
-      $temp = ($lang == 'EN') ? 'Emergency' : 'Urgent';
-      return (!$styled) ? $temp : '<span class="gras souligne">'.$temp.'</span>';
+      return (!$styled) ? __('task_priority_5') : '<span class="gras souligne">'.__('task_priority_5').'</span>';
     break;
 
-    // 4 -> Important task: We prepare the translated strings, and return the result (styled or not)
+    // 4 -> Important task
     case 4:
-      $temp = ($lang == 'EN') ? 'Important' : 'Important';
-      return (!$styled) ? $temp : '<span class="gras">'.$temp.'</span>';
+      return (!$styled) ? __('task_priority_5') : '<span class="gras">'.__('task_priority_4').'</span>';
     break;
 
-    // 3 -> Averagely important task: We prepare the translated strings, and return the result
+    // 3 -> Averagely important task
     case 3:
-      return ($lang == 'EN') ? 'To consider' : 'À considérer';
+      return __('task_priority_3');
     break;
 
-    // 2 -> Not too important task: We prepare the translated strings, and return the result
+    // 2 -> Not too important task
     case 2:
-      return ($lang == 'EN') ? "There's still time" : "Y'a le temps";
+      return __('task_priority_2');
     break;
 
-    // 1 -> Low importance task: We prepare the translated strings, and return the result (styled or not)
+    // 1 -> Low importance task
     case 1:
-      $temp = ($lang == 'EN') ? 'No hurry' : 'Pas pressé';
-      return (!$styled) ? $temp : '<span class="italique">'.$temp.'</span>';
+      return (!$styled) ? __('task_priority_1') : '<span class="italique">'.__('task_priority_1').'</span>';
     break;
 
-    // 0 (or other) -> Background task: We prepare the translated strings, and return the result (styled or not)
+    // 0 (or other) -> Background task
     default:
-      $temp = ($lang == 'EN') ? 'Maybe some day' : 'À faire un jour';
-      return (!$styled) ? $temp : '<span class="italique">'.$temp.'</span>';
+      return (!$styled) ? __('task_priority_0') : '<span class="italique">'.__('task_priority_0').'</span>';
     break;
   }
 }

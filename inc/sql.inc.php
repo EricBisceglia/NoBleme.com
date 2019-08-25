@@ -15,7 +15,7 @@ $GLOBALS['db'] = @mysqli_connect($GLOBALS['mysql_host'], $GLOBALS['mysql_user'],
 // Initialize a session specific global query counter, used by admins for metrics (number of queries in a page)
 $GLOBALS['query'] = -1;
 
-// We use this opportunity to set the global charset - it uses one mandatory query, hence why counter starts at -1
+// Use this opportunity to set the global charset - it uses one mandatory query, hence why counter starts at -1
 mysqli_set_charset($GLOBALS['db'], "utf8");
 query(' SET NAMES utf8mb4 ');
 

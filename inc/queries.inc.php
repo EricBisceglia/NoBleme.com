@@ -18,22 +18,19 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*         If you want to modifiy the database structure, do it by adding content to the bottom of this page         */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Ensure the page is only usable by website administrators
-
 // Include pages that are required to make MySQL queries
 include_once 'settings.inc.php';      // General settings
 include_once 'error.inc.php';         // Error management
 include_once 'sql.inc.php';           // MySQL connection
 include_once 'sanitization.inc.php';  // Data sanitization
 
-// If the database still uses the old data structure, then we need to skip the other includes
+// If the database still uses the old data structure, then skip the other includes
 $old_structure = 0;
 $qtablelist = query(" SHOW TABLES ");
 while($dtablelist = mysqli_fetch_array($qtablelist))
   $old_structure = ($dtablelist[0] == 'vars_globales') ? 1 : $old_structure;
 
-// If we use the current data structure, we must proceed with the checks
+// If the database uses the current data structure, proceed with the checks
 if(!$old_structure)
 {
   // Include pages that are required to check user rights
@@ -54,42 +51,20 @@ if(!$old_structure)
 /*********************************************************************************************************************/
 /*     These functions allow for "safe" manipulation of the database, and should only be used within this file.      */
 /*********************************************************************************************************************/
-/*                                                                                                                   */
-/* sql_check_query_id();                                                                                             */
-/* sql_update_query_id($id);                                                                                         */
-/*                                                                                                                   */
-/* sql_create_table($table_name);                                                                                    */
-/* sql_rename_table($table_name, $new_name);                                                                         */
-/* sql_empty_table($table_name);                                                                                     */
-/* sql_delete_table($table_name);                                                                                    */
-/*                                                                                                                   */
-/* sql_create_field($table_name, $field_name, $field_type, $after_field_name);                                       */
-/* sql_rename_field($table_name, $old_field_name, $new_field_name, $field_type);                                     */
-/* sql_change_field_type($table_name, $field_name, $field_type)                                                      */
-/* sql_move_field($table_name, $field_name, $field_type, $after_field_name)                                          */
-/* sql_delete_field($table_name, $field_name);                                                                       */
-/*                                                                                                                   */
-/* sql_create_index($table_name, $index_name, $field_names, $fulltext);                                              */
-/* sql_delete_index($table_name, $index_name);                                                                       */
-/*                                                                                                                   */
-/* sql_insert_value($condition, $query);                                                                             */
-/*                                                                                                                   */
-/* sql_sanitize_data($data)                                                                                          */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Checks whether a query should be ran or not
-//
-// Example: if(sql_check_query_id() < 10) { run_query(); }
+/**
+ * Checks whether a query should be ran or not.
+ *
+ * @return void
+ */
 
 function sql_check_query_id()
 {
-  // As the name of the global variables table has been changed, we need to check everything twice
+  // As the name of the global variables table has been changed, check everything twice
   $query_ok     = 0;
   $query_ok_old = 0;
 
-  // We proceed only if the table exists
+  // Proceed only if the table exists
   $qtablelist = query(" SHOW TABLES ");
   while($dtablelist = mysqli_fetch_array($qtablelist))
   {
@@ -97,15 +72,15 @@ function sql_check_query_id()
     $query_ok_old = ($dtablelist[0] == 'vars_globales')     ? 1 : $query_ok_old;
   }
   if(!$query_ok && !$query_ok_old)
-    return 0;
+    return;
 
-  // If it does exist, then we need its structure
+  // If it does exist, then fetch need its structure
   if($query_ok)
     $qdescribe = query(" DESCRIBE system_variables ");
   else
     $qdescribe = query(" DESCRIBE vars_globales ");
 
-  // We proceed only if the field exists
+  // Proceed only if the field exists
   $field_exists = 0;
   while($ddescribe = mysqli_fetch_array($qdescribe))
   {
@@ -115,11 +90,11 @@ function sql_check_query_id()
       $field_exists = ($ddescribe['Field'] != "derniere_requete_sql") ? 1 : $field_exists;
   }
 
-  // If we aren't allowed to run this query, we abort here
+  // If the query can't be run, abort here
   if(!$field_exists)
-    return 0;
+    return;
 
-  // We are now allowed to fetch the id of the last query that was ran
+  // Fetch the id of the last query that was ran
   if($query_ok)
     $last_query = mysqli_fetch_array(query("  SELECT    system_variables.latest_query_id AS 'latest_query_id'
                                               FROM      system_variables
@@ -131,25 +106,28 @@ function sql_check_query_id()
                                               ORDER BY  vars_globales.derniere_requete_sql DESC
                                               LIMIT     1 "));
 
-  // We return that id
+  // Return that id
   return $last_query['latest_query_id'];
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Updates the id of the last query that was ran
-//
-// Example: sql_update_query_id(69);
+/**
+ * Updates th ID of the last query that was ran.
+ *
+ * @param   int $id ID of the query.
+ *
+ * @return  void
+ */
 
 function sql_update_query_id($id)
 {
-  // As the name of the global variables table has been changed, we need to check everything twice
+  // As the name of the global variables table has been changed, check everything twice
   $query_ok     = 0;
   $query_ok_old = 0;
 
-  // We proceed only if the table exists
+  // Proceed only if the table exists
   $qtablelist = query(" SHOW TABLES ");
   while($dtablelist = mysqli_fetch_array($qtablelist))
   {
@@ -157,15 +135,15 @@ function sql_update_query_id($id)
     $query_ok_old = ($dtablelist[0] == 'vars_globales')     ? 1 : $query_ok_old;
   }
   if(!$query_ok && !$query_ok_old)
-    return 0;
+    return;
 
-  // If it does exist, then we need its structure
+  // If it does exist, then fetch its structure
   if($query_ok)
     $qdescribe = query(" DESCRIBE system_variables");
   else
     $qdescribe = query(" DESCRIBE vars_globales");
 
-  // We proceed only if the field exists
+  // Proceed only if the field exists
   $field_exists = 0;
   while($ddescribe = mysqli_fetch_array($qdescribe))
   {
@@ -175,7 +153,7 @@ function sql_update_query_id($id)
       $field_exists = ($ddescribe['Field'] != "derniere_requete_sql") ? 1 : $field_exists;
   }
 
-  // If we aren't allowed to run this query, we abort here
+  // If the query can't be ran, abort
   if(!$field_exists)
     return;
 
@@ -194,27 +172,35 @@ function sql_update_query_id($id)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Creates a new table which will only contain one field called "id", an auto incremented primary key
-//
-// Example: sql_create_table("my_table");
+/**
+ * Creates a new table.
+ *
+ * The table will only contain one field, called "id", an auto incremented primary key.
+ *
+ * @return void
+ */
 
 function sql_create_table($table_name)
 {
+  // Create the table
   return query(" CREATE TABLE IF NOT EXISTS ".$table_name." ( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=MyISAM;");
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Renames an existing table
-//
-// Example: sql_rename_table("table_name", "new_name");
+/**
+ * Renames an existing table.
+ *
+ * @param   string  $table_name The old name of the table.
+ * @param   string  $new_name   The new name of the table.
+ *
+ * @return void
+ */
 
 function sql_rename_table($table_name, $new_name)
 {
-  // We proceed only if the table exists and the new table name is not taken
+  // Proceed only if the table exists and the new table name is not taken
   $query_old_ok = 0;
   $query_new_ok = 1;
   $qtablelist   = query(" SHOW TABLES ");
@@ -224,121 +210,140 @@ function sql_rename_table($table_name, $new_name)
     $query_new_ok = ($dtablelist[0] == $new_name)   ? 0 : $query_new_ok;
   }
   if(!$query_old_ok || !$query_new_ok)
-    return 0;
+    return;
 
-  // We can now rename the table
+  // Rename the table
   query(" ALTER TABLE $table_name RENAME $new_name ");
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Gets rid of all the data in an existing table
-//
-// Example: sql_empty_table("table_name");
+/**
+ * Gets rid of all the data in an existing table
+ *
+ * @param   string  $table_name The table's name.
+ *
+ * @return  void
+ */
 
 function sql_empty_table($table_name)
 {
-  // We proceed only if the table exists
+  // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
   while($dtablelist = mysqli_fetch_array($qtablelist))
     $query_ok = ($dtablelist[0] == $table_name) ? 1 : $query_ok;
   if(!$query_ok)
-    return 0;
+    return;
 
-  // We can now purge the table's contents
+  // Purge the table's contents
   query(" TRUNCATE TABLE ".$table_name);
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Deletes an existing table
-//
-// Example: sql_delete_table("table_name");
+/**
+ * Deletes an existing table.
+ *
+ * @param   string  $table_name The table's name.
+ *
+ * @return  void
+ */
 
 function sql_delete_table($table_name)
 {
+  // Delete the table
   query(" DROP TABLE IF EXISTS ".$table_name);
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Creates a new field in an existing table
-//
-// Example: sql_create_field("my_table", "my_field", "INT(11) UNSIGNED NOT NULL", "some_existing_field");
+/**
+ * Creates a new field in an existing table.
+ *
+ * @param   string  $table_name       The existing table's name.
+ * @param   string  $field_name       The new field's name.
+ * @param   string  $field_type       The new field's MySQL type.
+ * @param   string  $after_field_name Where to place the new field - name of the field that will be before the new one.
+ *
+ * @return void
+ */
 
 function sql_create_field($table_name, $field_name, $field_type, $after_field_name)
 {
-  // We proceed only if the table exists
+  // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
   while($dtablelist = mysqli_fetch_array($qtablelist))
     $query_ok = ($dtablelist[0] == $table_name) ? 1 : $query_ok;
   if(!$query_ok)
-    return 0;
+    return;
 
-  // We need to fetch the table's structure
+  // Fetch the table's structure
   $qdescribe = query(" DESCRIBE ".$table_name);
 
-  // We proceed only if the preceeding field exists
+  // Proceed only if the preceeding field exists
   $query_ok = 0;
   while($ddescribe = mysqli_fetch_array($qdescribe))
     $query_ok = ($ddescribe['Field'] == $after_field_name) ? 1 : $query_ok;
   if(!$query_ok)
     return;
 
-  // We need to fetch the table's structure yet again
+  // Fetch the table's structure yet again
   $qdescribe = query(" DESCRIBE ".$table_name);
 
-  // We proceed only if the field doesn't already exist
+  // Proceed only if the field doesn't already exist
   $query_ko = 0;
   while($ddescribe = mysqli_fetch_array($qdescribe))
     $query_ko = ($ddescribe['Field'] == $field_name) ? 1 : $query_ko;
   if($query_ko)
     return;
 
-  // We can now run the query
+  // Run the query
   query(" ALTER TABLE ".$table_name." ADD ".$field_name." ".$field_type." AFTER ".$after_field_name);
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Renames an existng field in an existing table
-//
-// Example: sql_rename_field("my_table", "old_name", "new_name", "MEDIUMTEXT");
+/**
+ * Renames an existing field in an existing table.
+ *
+ * @param   string  $table_name     The existing table's name.
+ * @param   string  $old_field_name The field's old name.
+ * @param   string  $new_field_name The field's new name.
+ * @param   string  $field_type     The MySQL type of the field.
+ *
+ * @return  void
+ */
 
 function sql_rename_field($table_name, $old_field_name, $new_field_name, $field_type)
 {
-  // We proceed only if the table exists
+  // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
   while($dtablelist = mysqli_fetch_array($qtablelist))
     $query_ok = ($dtablelist[0] == $table_name) ? 1 : $query_ok;
   if(!$query_ok)
-    return 0;
+    return;
 
-  // We need to fetch the table's structure
+  // Fetch the table's structure
   $qdescribe = query(" DESCRIBE ".$table_name);
 
-  // We continue only if the new field name doesn't exist
+  // Continue only if the new field name doesn't exist
   while($ddescribe = mysqli_fetch_array($qdescribe))
   {
     if ($ddescribe['Field'] == $new_field_name)
       return;
   }
 
-  // We need to fetch the table's structure yet again
+  // Fetch the table's structure yet again
   $qdescribe = query(" DESCRIBE ".$table_name);
 
-  // If the field exists in the table, we rename it
+  // If the field exists in the table, rename it
   while($ddescribe = mysqli_fetch_array($qdescribe))
   {
     if($ddescribe['Field'] == $old_field_name)
@@ -349,25 +354,30 @@ function sql_rename_field($table_name, $old_field_name, $new_field_name, $field_
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Changes the type of an existing field in an existing table
-//
-// Example: sql_change_field_type("my_table", "my_field", "MEDIUMTEXT");
+/**
+ * Changes the type of an existing field in an existing table.
+ *
+ * @param   string  $table_name The existing table's name.
+ * @param   string  $field_name The existing field's name.
+ * @param   string  $field_type The MySQL type to give the field.
+ *
+ * @return  void
+ */
 
 function sql_change_field_type($table_name, $field_name, $field_type)
 {
-  // We proceed only if the table exists
+  // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
   while($dtablelist = mysqli_fetch_array($qtablelist))
     $query_ok = ($dtablelist[0] == $table_name) ? 1 : $query_ok;
   if(!$query_ok)
-    return 0;
+    return;
 
-  // We need to fetch the table's structure
+  // Fetch the table's structure
   $qdescribe = query(" DESCRIBE ".$table_name);
 
-  // If the field exists in the table, we rename it
+  // If the field exists in the table, rename it
   while($ddescribe = mysqli_fetch_array($qdescribe))
   {
     if($ddescribe['Field'] == $field_name)
@@ -378,25 +388,29 @@ function sql_change_field_type($table_name, $field_name, $field_type)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Moves an existing field after another existing field in an existing table
-//
-// Example: sql_empty_table("table_name");
+/**
+ * Moves an existing field in an existing table.
+ *
+ * @param   string  $table_name       The existing table's name.
+ * @param   string  $field_name       The existing field's name.
+ * @param   string  $field_type       The MySQL type of the field.
+ * @param   string  $after_field_name Where to place this field - name of the existing field after which it should be.
+ */
 
 function sql_move_field($table_name, $field_name, $field_type, $after_field_name)
 {
-  // We proceed only if the table exists
+  // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
   while($dtablelist = mysqli_fetch_array($qtablelist))
     $query_ok = ($dtablelist[0] == $table_name) ? 1 : $query_ok;
   if(!$query_ok)
-    return 0;
+    return;
 
-  // We need to fetch the table's structure
+  // Fetch the table's structure
   $qdescribe = query(" DESCRIBE ".$table_name);
 
-  // We continue only if both of the field names actually exist
+  // Continue only if both of the field names actually exist
   $field_ok       = 0;
   $field_after_ok = 0;
   while($ddescribe = mysqli_fetch_array($qdescribe))
@@ -407,32 +421,36 @@ function sql_move_field($table_name, $field_name, $field_type, $after_field_name
   if(!$field_ok || !$field_after_ok)
     return;
 
-  // We can now move the field
+  // Move the field
   query(" ALTER TABLE ".$table_name." MODIFY COLUMN ".$field_name." ".$field_type." AFTER ".$after_field_name);
 }
 
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Deletes an existing field in an existing table
-//
-// Example: sql_delete_field("my_table", "my_field");
+/**
+ * Deletes an existing field in an existing table.
+ *
+ * @param   string  $table_name The existing table's name.
+ * @param   string  $field_name The existing field's name
+ *
+ * @return  void
+ */
 
 function sql_delete_field($table_name, $field_name)
 {
-  // We proceed only if the table exists
+  // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
   while($dtablelist = mysqli_fetch_array($qtablelist))
     $query_ok = ($dtablelist[0] == $table_name) ? 1 : $query_ok;
   if(!$query_ok)
-    return 0;
+    return;
 
-  // We need to fetch the table's structure
+  // Fetch the table's structure
   $qdescribe = query(" DESCRIBE ".$table_name);
 
-  // If the field exists in the table, we delete it
+  // If the field exists in the table, delete it
   while($ddescribe = mysqli_fetch_array($qdescribe))
   {
     if($ddescribe['Field'] == $field_name)
@@ -443,28 +461,31 @@ function sql_delete_field($table_name, $field_name)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Creates an index in an existing table
-//
-// $field_names             string of one or more field names (ex. "my_field" or "my_field, my_other_field")
-// $fulltext    (optional)  makes it a fulltext index if any value is entered for this option
-//
-// Example: sql_create_index("my_table", "index_name", "field_name, other_field_name(10)")
+/**
+ * Creates an index in an existing table.
+ *
+ * @param   string    $table_name               The name of the existing table.
+ * @param   string    $index_name               The name of the index that will be created.
+ * @param   string    $field_names              One or more fields to be indexed (eg. "my_field, other_field").
+ * @param   int|null  $fulltext     (OPTIONAL)  If set, the index will be created as fulltext.
+ *
+ * @return  void
+ */
 
 function sql_create_index($table_name, $index_name, $field_names, $fulltext=NULL)
 {
-  // We proceed only if the table exists
+  // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
   while($dtablelist = mysqli_fetch_array($qtablelist))
     $query_ok = ($dtablelist[0] == $table_name) ? 1 : $query_ok;
   if(!$query_ok)
-    return 0;
+    return;
 
-  // We check whether the index already exists
+  // Check whether the index already exists
   $qindex = query(" SHOW INDEX FROM ".$table_name." WHERE key_name LIKE '".$index_name."' ");
 
-  // If it does not exist yet, then we can create it, and run a check to populate the indexes
+  // If it does not exist yet, then can create it and run a check to populate the table's indexes
   if(!mysqli_num_rows($qindex))
   {
     $temp_fulltext = ($fulltext) ? ' FULLTEXT ' : '';
@@ -477,25 +498,29 @@ function sql_create_index($table_name, $index_name, $field_names, $fulltext=NULL
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Deletes an existing index in an existing table
-//
-// Example: sql_delete_index("my_table", "my_index")
+/**
+ * Deletes an existing index in an existing table.
+ *
+ * @param   string  $table_name The existing table's name.
+ * @param   string  $index_name The existing index's name.
+ *
+ * @return  void
+ */
 
 function sql_delete_index($table_name, $index_name)
 {
-  // We proceed only if the table exists
+  // Proceed only if the table exists
   $query_ok   = 0;
   $qtablelist = query(" SHOW TABLES ");
   while($dtablelist = mysqli_fetch_array($qtablelist))
     $query_ok = ($dtablelist[0] == $table_name) ? 1 : $query_ok;
   if(!$query_ok)
-    return 0;
+    return;
 
-  // We check whether the index already exists
+  // Check whether the index already exists
   $qindex = query(" SHOW INDEX FROM ".$table_name." WHERE key_name LIKE '".$index_name."' ");
 
-  // If it exists, we delete it, and run a check to depopulate the indexes
+  // If it exists, delete it and run a check to depopulate the index
   if(mysqli_num_rows($qindex))
   {
     query(" ALTER TABLE ".$table_name."
@@ -507,22 +532,22 @@ function sql_delete_index($table_name, $index_name)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Inserts a value in an existing table
-//
-// $condition   is a query to check whether the field already exists
-// $query       is the query to be run to insert the value
-//
-/* Example:
-sql_insert_value(" SELECT my_string, my_int FROM my_table WHERE my_string LIKE 'test' AND my_int = 1 ",
-" INSERT INTO my_table
-  SET         my_string = 'test'  ,
-              my_int    = 1       ");
-*/
+/**
+ * Inserts a value in an existing table.
+ *
+ * The only way to clarify the way this function works is with a concrete example, so here you go:
+ * sql_insert_value(" SELECT my_string, my_int FROM my_table WHERE my_string LIKE 'test' AND my_int = 1 ",
+ * " INSERT INTO my_table SET my_string = 'test' , my_int = 1 ");
+ *
+ * @param   string  $condition  A condition that must be matched before the query is ran.
+ * @param   string  $query      The query to be ran to insert the value.
+ *
+ * @return  void
+ */
 
 function sql_insert_value($condition, $query)
 {
-  // If the condition is met, we run the query
+  // If the condition is met, run the query
   if(!mysqli_num_rows(query($condition)))
     query($query);
 }
@@ -530,13 +555,17 @@ function sql_insert_value($condition, $query)
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Sanitizes data before its insertion in a database
-//
-// Example: sql_sanitize_data("Str'ing");
+/**
+ * Sanitizes data for MySQL queries.
+ *
+ * @param   string  $data The data to sanitize.
+ *
+ * @return  void
+ */
 
 function sql_sanitize_data($data)
 {
+  // Sanitize the data using the currently open MySQL connection
   return trim(mysqli_real_escape_string($GLOBALS['db'], $data));
 }
 

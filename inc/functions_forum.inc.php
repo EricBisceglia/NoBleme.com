@@ -14,14 +14,17 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  *
  * @param   string      $mode               The short name of the forum thread mode.
  * @param   string      $format             The expected format of the returned value ('short' or 'full').
- * @param   string|null $lang   (OPTIONAL)  The language in which the returned string will be.
+ * @param   string|null $lang   (OPTIONAL)  The language of the returned string, defaults to user's current language.
  *
  * @return  string                          The full name of the forum thread mode.
  */
 
-function forum_fetch_mode($mode, $format, $lang="EN")
+function forum_fetch_mode($mode, $format, $lang=null)
 {
-  // If we want a short name, we parse the possible modes
+  // Fetch the user's language if required
+  $lang = (!$lang) ? user_get_language() : $lang;
+
+  // Short mode
   if($format == 'short')
   {
     // Thread formats
@@ -41,7 +44,7 @@ function forum_fetch_mode($mode, $format, $lang="EN")
       return ($lang == 'EN') ? 'Forum game' : 'Jeu de forum';
   }
 
-  // If we want a full name, we parse the possible modes
+  // Full mode
   else if($format == 'full')
   {
     // Thread formats
@@ -61,7 +64,7 @@ function forum_fetch_mode($mode, $format, $lang="EN")
       return ($lang == 'EN') ? 'Forum game' : 'Jeu de forum';
   }
 
-  // If we don't match anything, we return an empty string.
+  // Return an empty string if no match was found
   return '';
 }
 
@@ -71,14 +74,14 @@ function forum_fetch_mode($mode, $format, $lang="EN")
 /**
  * Counts the number of forum messages posted by an user.
  *
- * @param   int $user_id (OPTIONAL) The id of the user whose post count we want to update.
+ * @param   int $user_id (OPTIONAL) The id of the user whose post count should be updated.
  *
  * @return  int                     The post count of the user.
  */
 
 function forum_update_user_message_count($user_id=0)
 {
-  // We fetch the sum of all the messages that we're allowed to count
+  // Fetch the sum of all the messages that count
   $dposts = mysqli_fetch_array(query("  SELECT    COUNT(*) AS 'message_count'
                                         FROM      forum_messages
                                         LEFT JOIN forum_threads ON forum_messages.fk_forum_threads = forum_threads.id
@@ -91,7 +94,7 @@ function forum_update_user_message_count($user_id=0)
   $user_id        = sanitize($user_id, 'int', 0);
   $message_count  = sanitize($dposts['message_count'], 'int', 0);
 
-  // We can now update the user's message count
+  // Update the user's message count
   query(" UPDATE  users_stats
           SET     users_stats.forum_message_count = '$message_count'
           WHERE   users_stats.id                  = '$user_id' ");
@@ -106,14 +109,14 @@ function forum_update_user_message_count($user_id=0)
 /**
  * Counts the number of forum messages posted in a forum thread.
  *
- * @param   int $thread_id (OPTIONAL) The id of the thread whose post count we want to update.
+ * @param   int $thread_id (OPTIONAL) The id of the thread whose post count should be updated.
  *
  * @return  int                       The post count of the thread.
  */
 
 function forum_update_thread_message_count($thread_id=0)
 {
-  // We fetch the sum of all of the thread's messages
+  // Fetch the sum of all of the thread's messages
   $dposts = mysqli_fetch_array(query("  SELECT    COUNT(*) AS 'message_count'
                                         FROM      forum_messages
                                         LEFT JOIN forum_threads ON forum_messages.fk_forum_threads  = forum_threads.id
@@ -123,7 +126,7 @@ function forum_update_thread_message_count($thread_id=0)
   $thread_id        = sanitize($thread_id, 'int', 0);
   $message_count    = sanitize($dposts['message_count'], 'int', 0);
 
-  // We can now update the thread's message count
+  // Update the thread's message count
   query(" UPDATE  forum_threads
           SET     forum_threads.nb_messages = '$message_count'
           WHERE   forum_threads.id          = '$thread_id' ");

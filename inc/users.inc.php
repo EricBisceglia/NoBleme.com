@@ -121,7 +121,7 @@ if(isset($_GET['changelang']))
   $_SESSION['lang'] = $changelang;
 }
 
-// If the URL contains a request to change to a specific language, then we fullfill that request
+// If the URL contains a request to change to a specific language, then fullfill that request
 if(isset($_GET['english']) || isset($_GET['anglais']))
 {
   // Change the cookie and session language to english on request
@@ -165,7 +165,7 @@ $lang = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // One final check: Is the user banned
 
-// First off, to avoid infinite loops, make sure that we aren't already on banned.php and that the user is logged in
+// First off, to avoid infinite loops, make sure that the user is loggsed in and isn't already on the banned.php page
 if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && user_is_logged_in())
 {
   // Fetch user id from the session
@@ -284,7 +284,7 @@ function user_get_language()
 
 function user_is_logged_in()
 {
-  // As simple as it seems, we grab the value in the session
+  // As simple as it seems, grab the value in the session
   return isset($_SESSION['user_id']);
 }
 
@@ -467,7 +467,7 @@ function user_is_administrator($user_id=NULL)
   if(!$user_id && isset($_SESSION['user_id']))
     $user_id = $_SESSION['user_id'];
 
-  // If no user is specified, this means the user is a guest, in this case we can return 0
+  // If no user is specified, this means the user is a guest, in this case return 0
   if(!$user_id)
     return 0;
 
@@ -613,7 +613,7 @@ function user_restrict_to_guests($lang='EN')
  * NSFW filter settings of the current user.
  *
  * There are several levels of NSFW filters, all this function does is return the current level of the user.
- * If the user is logged out, we consider that we should hide all NSFW content by default.
+ * If the user is logged out, all NSFW content should be hidden by default.
  *
  * @return int The current NSFW filter level of the user.
  */
@@ -632,7 +632,7 @@ function user_settings_nsfw()
                                       FROM    users_settings
                                       WHERE   users_settings.fk_users = '$user_id' "));
 
-  // Return whichever value we got from the database
+  // Return the user's nsfw settings
   return $dnsfw['user_nsfw'];
 }
 
@@ -643,7 +643,7 @@ function user_settings_nsfw()
  * Third party content privacy settings of the current user.
  *
  * This function returns whether the user wants to hide any Twitter, Youtube, etc. data when browsing the website.
- * If the user is logged out, we consider that we should show all third party content by default.
+ * If the user is logged out, all third party content should be allowed by default.
  *
  * @return array The current third party privacy settings of the user, in the form of an array.
  */
