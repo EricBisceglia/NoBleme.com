@@ -197,6 +197,16 @@ ___('error_encountered', 'EN', "YOU HAVE ENCOUNTERED AN ERROR");
 ___('error_encountered', 'FR', "VOUS AVEZ RENCONTRÉ UNE ERREUR");
 
 
+// Forbidden page
+___('error_forbidden', 'EN', "This page should not be accessed");
+___('error_forbidden', 'FR', "Vous ne devriez pas accéder à cette page");
+
+
+// Website update
+___('error_website_update', 'EN', 'An update is in progress, NoBleme is temporarily closed. Come back in a few minutes.');
+___('error_website_update', 'FR', 'Une mise à jour est en cours, NoBleme est temporairement fermé. Revenez dans quelques minutes.');
+
+
 // Flood check
 ___('error_flood_login', 'EN', "You can only do this action while logged into your account");
 ___('error_flood_login', 'FR', "Vous devez être connecté pour effectuer cette action");
@@ -270,6 +280,16 @@ ___('time_diff_future_century', 'EN', "Next century");
 ___('time_diff_future_century', 'FR', "Dans un siècle");
 ___('time_diff_future_long', 'EN', "In an extremely long time");
 ___('time_diff_future_long', 'FR', "Dans très très longtemps");
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Header
+
+// Language warning
+___('header_language_error', 'EN', "Sorry! This page is only available in french and does not have an english translation yet.");
+___('header_language_error', 'FR', "Désolé ! Cette page n'est disponible qu'en anglais et n'a pas encore de traduction française.");
 
 
 

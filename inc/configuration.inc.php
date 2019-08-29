@@ -11,6 +11,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Duplicate this file, then remove the .DEFAULT (rename it to "configuration.inc.php") and fill up these variables:
 
 $GLOBALS['website_url']   = 'http://127.0.0.1/nobleme/';  // URL of the website root
+$GLOBALS['domain_name']   = 'nobleme.com';                // Domain name on which the website is being used
 $GLOBALS['mysql_host']    = 'localhost';                  // MySQL server address
 $GLOBALS['mysql_user']    = 'root';                       // MySQL user login
 $GLOBALS['mysql_pass']    = '';                           // MySQL user password

@@ -690,20 +690,42 @@ function user_settings_privacy()
  * It doesn't create the best nicknames, but hey, good enough.
  * The nickname returned is in french. There is no english equivalent to this function for now. Sorry.
  *
- * @return string The randomly generated nickname.
+ * @param   string|null  $lang  (OPTIONAL)  The language in which the nickname will be generated.
+ *
+ * @return  string                          The randomly generated nickname.
  */
 
-function user_generate_random_nickname($lang)
+function user_generate_random_nickname($lang='EN')
 {
-  // Random word list: The first qualifier should end with a space if it's not directly attached to the core name
-  $qualifier1 = array("Petit ", "Gros ", "Sale ", "Grand ", "Beau ", "Doux ", "Un ", "Premier ", "Gentil ", "Méchant ", "Le ", "Capitaine ", "Quel ", "Saint ", "Chétif ", "Président ", "Général ", "Dernier ", "L'unique ", "Ex-", "Archi ", "Méga ", "Micro ", "Fort ", "Demi ", "Futur ", "Second ", "Meta-", "Long ", "Double ", "Simple ", "Fourbe ", "Mini ");
+  // English logic
+  if($lang == 'EN')
+  {
+    // Random word list: A main qualifier
+    $qualifier1 = array("Lonely ", "Cute ", "Mr. ", "Ms. ", "President ", "Generic ", "Dirty ", "The ", "Forever ", "Never ", "Always ", "Painful ", "Very ", "Ugly ", "Dangerously ", "Mysterious ", "Chaotic ", "Pale ", "Funny ", "Cute ", "One eyed ", "European ", "American ", "Asian ", "Silly ", "Millenial ", "Dirty ", "Techno ", "Tired ", "Horned ", "Dead ", "Cool ", "Naked ", "Overcooked ", "Raw ", "One ", "First ", "Past ", "Some ");
 
-  // Random word list: The core name that will be assigned to the guest
-  $core_name = array("ours", "oiseau", "chat", "chien", "canard", "pigeon", "haricot", "arbre", "rongeur", "pot de miel", "gazon", "paysan", "crouton", "mollusque", "bouc", "éléphant", "sanglier", "journal", "singe", "cœur", "félin", "", "morse", "phoque", "miquet", "kévin", "monstre", "meuble", "frelon", "robot", "slip", "cousin", "frère", "internet", "type", "copain", "raton", "mouton", "VIP", "pape", "globule", "adversaire", "caca", "crotiau", "roi", "prince");
+    // Random word list: A second qualifier that goes after the first one name
+    $qualifier2 = array("small ", "big ", "tall ", "pretty ", "beautiful ", "soft ",  "nice ", "evil ", "thin ", "tiny ", "last ", "unique ", "ex-", "mega ", "micro ", "strong ", "half ", "future ", "second ", "meta-", "long ", "double ", "simple ", "vicious ", "mini ", "blue ", "red ", "lazy ", "odd ", "black ", "white ", "pink ", "clever ", "super", "", "", "", "", "");
 
-  // Random word list: A second qualifier that goes after the core name
-  $qualifier2 = array("solitaire", "mignon", "moche", "farouche", "mystérieux", "lourdingue", "glandeur", "douteux", "noir", "blanc", "rose", "mauve", "chaotique", "pâle", "raciste", "rigolo", "choupinet", "borgne", "douteux", "baltique", "fatigué", "", "peureux", "millénaire", "bouseux", "crade", "des champs", "des villes", "des plaines", "urbain", "sourd", "techno", "fatigué", "cornu", "mort", "cool", "moelleux", "futé", "gourmand", "en slip", "naturiste", "trop cuit", "cru");
+    // Random word list: The core name that will be assigned to the guest
+    $core_name = array("bear", "bird", "cat", "dog", "duck", "pidgeon", "bean", "tree", "rodent", "honeypot", "lawn", "peasant", "crumb", "goat", "elephant", "wild boar", "newspaper", "monkey", "heart", "seal", "dummy", "princess", "monster", "furniture", "wasp", "robot", "underwear", "cousin", "brother", "internet", "dude", "buddy", "rat", "sheep", "VIP", "pope", "blood cell", "opponent", "poo", "poopie", "king", "queen");
 
-  // Asemble and return the nickname
-  return $qualifier1[rand(0,(count($qualifier1)-1))].$core_name[rand(0,(count($core_name)-1))]." ".$qualifier2[rand(0,(count($qualifier2)-1))];
+    // Asemble and return the nickname
+    return $qualifier1[rand(0,(count($qualifier1)-1))].$qualifier2[rand(0,(count($qualifier2)-1))].$core_name[rand(0,(count($core_name)-1))];
+  }
+
+  // French logic
+  if($lang == 'FR')
+  {
+    // Random word list: The first qualifier should end with a space if it's not directly attached to the core name
+    $qualifier1 = array("Petit ", "Gros ", "Sale ", "Grand ", "Beau ", "Doux ", "Un ", "Premier ", "Gentil ", "Méchant ", "Le ", "Capitaine ", "Quel ", "Saint ", "Chétif ", "Président ", "Général ", "Dernier ", "L'unique ", "Ex-", "Archi ", "Méga ", "Micro ", "Fort ", "Demi ", "Futur ", "Second ", "Meta-", "Long ", "Double ", "Simple ", "Fourbe ", "Mini ");
+
+    // Random word list: The core name that will be assigned to the guest
+    $core_name = array("ours", "oiseau", "chat", "chien", "canard", "pigeon", "haricot", "arbre", "rongeur", "pot de miel", "gazon", "paysan", "crouton", "mollusque", "bouc", "éléphant", "sanglier", "journal", "singe", "cœur", "félin", "", "morse", "phoque", "miquet", "kévin", "monstre", "meuble", "frelon", "robot", "slip", "cousin", "frère", "internet", "type", "copain", "raton", "mouton", "VIP", "pape", "globule", "adversaire", "caca", "crotiau", "roi", "prince");
+
+    // Random word list: A second qualifier that goes after the core name
+    $qualifier2 = array("solitaire", "mignon", "moche", "farouche", "mystérieux", "lourdingue", "glandeur", "douteux", "noir", "blanc", "rose", "mauve", "chaotique", "pâle", "raciste", "rigolo", "choupinet", "borgne", "douteux", "baltique", "fatigué", "", "peureux", "millénaire", "bouseux", "crade", "des champs", "des villes", "des plaines", "urbain", "sourd", "techno", "fatigué", "cornu", "mort", "cool", "moelleux", "futé", "gourmand", "en slip", "naturiste", "trop cuit", "cru");
+
+    // Asemble and return the nickname
+    return $qualifier1[rand(0,(count($qualifier1)-1))].$core_name[rand(0,(count($core_name)-1))]." ".$qualifier2[rand(0,(count($qualifier2)-1))];
+  }
 }

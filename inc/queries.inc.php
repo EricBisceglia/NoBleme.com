@@ -1310,7 +1310,8 @@ if($last_query < 26)
   sql_rename_field('users', 'moderateur_description_en', 'moderator_title_en', 'VARCHAR(255) NOT NULL');
   sql_move_field('users', 'moderator_title_fr', 'VARCHAR(255) NOT NULL', 'moderator_title_en');
   sql_rename_field('users', 'derniere_visite', 'last_visited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('users', 'derniere_visite_page', 'last_visited_page', "VARCHAR(510) NOT NULL");
+  sql_rename_field('users', 'derniere_visite_page', 'last_visited_page_en', "VARCHAR(510) NOT NULL");
+  sql_create_field('users', 'last_visited_page_fr', "VARCHAR(510) NOT NULL", 'last_visited_page_en');
   sql_rename_field('users', 'derniere_visite_url', 'last_visited_url', "VARCHAR(510) NOT NULL");
   sql_rename_field('users', 'derniere_visite_ip', 'current_ip_address', "VARCHAR(135) NOT NULL DEFAULT '0.0.0.0'");
   sql_rename_field('users', 'derniere_activite', 'last_action_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
@@ -1407,9 +1408,11 @@ if($last_query < 26)
 
   sql_change_field_type('users_guests', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('users_guests', 'ip', 'ip_address', "VARCHAR(135) NOT NULL DEFAULT '0.0.0.0'");
-  sql_rename_field('users_guests', 'surnom', 'randomly_assigned_name', 'VARCHAR(510) NOT NULL');
+  sql_rename_field('users_guests', 'surnom', 'randomly_assigned_name_en', 'VARCHAR(510) NOT NULL');
+  sql_create_field('users_guests', 'randomly_assigned_name_fr', 'VARCHAR(510) NOT NULL', 'randomly_assigned_name_en');
   sql_rename_field('users_guests', 'derniere_visite', 'last_visited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('users_guests', 'derniere_visite_page', 'last_visited_page', "VARCHAR(510) NOT NULL");
+  sql_rename_field('users_guests', 'derniere_visite_page', 'last_visited_page_en', "VARCHAR(510) NOT NULL");
+  sql_create_field('users_guests', 'last_visited_page_fr', "VARCHAR(510) NOT NULL", 'last_visited_page_en');
   sql_rename_field('users_guests', 'derniere_visite_url', 'last_visited_url', "VARCHAR(510) NOT NULL");
   sql_delete_index('users_guests', 'ip');
 

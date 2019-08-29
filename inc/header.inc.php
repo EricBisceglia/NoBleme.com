@@ -5,48 +5,74 @@
 // Include only /*****************************************************************************************************/
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
 
-// Necessary temporary stuff
-$est_admin = isset($est_admin) ? $est_admin : 0;
-$est_admin = isset($is_admin) ? $is_admin : $est_admin;
-$est_sysop = isset($est_sysop) ? $est_sysop : 0;
-$est_sysop = isset($is_sysop) ? $is_sysop : $est_sysop;
-$header_menu = isset($menu_main) ? $menu_main : $header_menu;
-$header_sidemenu = isset($menu_side) ? $menu_side : $header_sidemenu;
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                 THIS PAGE CAN ONLY BE USED IN SPECIFIC SITUATIONS                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Restrictions and prerequisites
+
+// If we are on a subdomain, strip the subdomain from the url - prepare some data required for this action
+$subdomain_check    = explode('.',$_SERVER['HTTP_HOST']);
+$domain_name        = explode('.',$GLOBALS['domain_name']);
+$domain_name_start  = $domain_name[0];
+$domain_name_end    = $domain_name[1];
+
+// This website should really only be used on localhost, 127.0.0.1, ::1, and whatever the website's domain name is
+if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0.1"  && $_SERVER["SERVER_NAME"] != "::1" && $_SERVER["SERVER_NAME"] != "[::1]" && $subdomain_check[0] != $domain_name_start && $domain_name_end != 'com')
+  header("Location: "."http://".$subdomain_check[1].".".$subdomain_check[2].$_SERVER['REQUEST_URI']);
+
+// If the user permission variables don't exist, stop here
+if(!isset($is_admin) || !isset($is_global_moderator) || !isset($is_moderator))
+  exit(__('error_forbidden'));
+
+// If the user doesn't have a set language, stop here
+if(!isset($lang))
+  exit(__('error_forbidden'));
 
 
-/****************************************************************************************************************************************/
-/*                                                                                                                                      */
-/*                                                    REDIRECTION DES SOUS-DOMAINES                                                     */
-/*                                                                                                                                      */
-/****************************************************************************************************************************************/
-
-// On récupère le sous-domaine en cours
-$le_subd = explode('.',$_SERVER['HTTP_HOST']);
-
-// Et on redirige vers le lieu approprié
-if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0.1"  && $le_subd[0] != 'nobleme' && $le_subd[1] != 'com')
-  header("Location: "."http://".$le_subd[1].".".$le_subd[2].$_SERVER['REQUEST_URI']);
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Default variable values (those are required by the header but it's fine if they're not set)
+
+// If there are no header menu / header sidemenu variables, reset them to their default value
+$header_menu      = (!isset($header_menu) || $header_menu == '') ? 'NoBleme' : $header_menu;
+$header_sidemenu  = (!isset($header_sidemenu)) ? 'Homepage' : $header_sidemenu;
+
+// Check whether the page exist in the user's current language - if not, throw an error message
+$lang_error = (isset($page_lang) && !in_array($lang, $page_lang)) ? 1 : 0;
+
+// If page names and URLs for user activity are not set, give them a default value
+$activity_page_en = (isset($page_name_en))  ? $page_name_en   : 'Unlisted page';
+$activity_page_fr = (isset($page_name_fr))  ? $page_name_fr   : 'Page non listée';
+$activity_url     = (isset($page_url))      ? $page_url       : '';
 
 
-/****************************************************************************************************************************************/
-/*                                                                                                                                      */
-/*                                                   GESTION DU LOGIN ET DE LA LANGUE                                                   */
-/*                                                                                                                                      */
-/****************************************************************************************************************************************/
 
-// Préparation des URLs pour la déconnexion et le changement de langue
-$url_logout   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
-$url_langue   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
-$url_logout   = sanitize_output($url_logout);
-$url_langue   = sanitize_output($url_langue);
 
-// Déconnexion
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  LOGIN / LOGOUT                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Creation of URLs to use for logging out and changing language
+$url_logout = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
+$url_lang   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
+$url_logout = sanitize_output($url_logout);
+$url_lang   = sanitize_output($url_lang);
+
+// Logout
 if(isset($_GET['logout']))
 {
-  // Déconnexion & redirection
+  // Log the user out
   logout();
+
+  // Redirect to the page without the 'logout' query param
   unset($_GET['logout']);
   $url_self     = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
   $url_rebuild  = urldecode(http_build_query($_GET));
@@ -54,158 +80,135 @@ if(isset($_GET['logout']))
   exit(header("Location: ".$url_rebuild));
 }
 
-// On va chercher si la langue choisie est couverte par la page
-if(isset($langue_page))
-  $langue_error = (!in_array($lang, $langue_page)) ? 1 : 0;
-else
-  $langue_error = 0;
-
-// Et on prépare les strings d'erreur selon la langue
-if($langue_error)
-  $langue_error = ($lang == 'FR') ? "Cette page n'est disponible qu'en anglais et n'a pas de traduction française." : "Sorry! This page is only available in french and does not have an english translation.";
 
 
 
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 WEBSITE SHUTDOWN                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
-/****************************************************************************************************************************************/
-/*                                                                                                                                      */
-/*                                                      CHECK MISE À JOUR EN COURS                                                      */
-/*                                                                                                                                      */
-/****************************************************************************************************************************************/
+// Check if a website update is in progress
+$qupdate  = query(" SELECT  system_variables.update_in_progress AS 'update'
+                    FROM    system_variables
+                    LIMIT   1 ");
+$dupdate = mysqli_fetch_array($qupdate);
 
-// Récupération de l'état de maj
-$checkmaj = query(" SELECT system_variables.update_in_progress AS 'mise_a_jour' FROM system_variables ");
-$majcheck = mysqli_fetch_array($checkmaj);
+// If yes, close the website to anyone who's not an admin
+if($dupdate['update'] && !$is_admin)
+  exit(__('error_website_update'));
 
-// Si maj, on ferme la machine (sauf pour les admins)
-if($majcheck['mise_a_jour'] && !$est_admin)
-  exit('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head><body>Une mise à jour est en cours, NoBleme est temporairement fermé.<br><br>Revenez dans quelques minutes.<br><br><br><br>An update is in progress, NoBleme is temporarily closed.<br><br>Come back in a few minutes.</body></html>');
+// During updates, change some of the CSS properties to remind admins that the website is closed
+$website_update_css   = ($dupdate['update']) ? " website_update" : "";
+$website_update_css2  = ($dupdate['update']) ? " website_update_background" : "";
 
-// CSS spécial pendant les mises à jour
-if(!$majcheck['mise_a_jour'])
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      METRICS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// View count of the current page
+
+// We only go through this if the page name and url are set before the header
+if(isset($page_name_en) && isset($page_url) && !isset($error_mode))
 {
-  $css_mise_a_jour  = "";
-  $css_mise_a_jour2 = "";
-}
-else
-{
-  $css_mise_a_jour  = " mise_a_jour";
-  $css_mise_a_jour2 = " mise_a_jour_background";
-}
+  // Sanitize data before using it in queries
+  $page_name_sanitized  = sanitize($page_name_en, 'string');
+  $page_url_sanitized   = sanitize($page_url, 'string');
 
-
-
-
-/****************************************************************************************************************************************/
-/*                                                                                                                                      */
-/*                                                        GESTION DES PAGEVIEWS                                                         */
-/*                                                                                                                                      */
-/****************************************************************************************************************************************/
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Récupération puis création ou incrémentation du pageview count de la page liée
-
-if(isset($page_nom) && isset($page_url) && !isset($error_mode))
-{
-  // Réparation des erreurs au cas où
-  $page_nom_propre = sanitize($page_nom, 'string');
-  $page_url_propre = sanitize($page_url, 'string');
-
-  // Requête pour récupérer les pageviews sur la page courante
-  $view_query = query(" SELECT  stats_pageviews.view_count AS 'vues'
+  // Fetch current page's view count
+  $qpageviews = query(" SELECT  stats_pageviews.view_count AS 'p_views'
                         FROM    stats_pageviews
-                        WHERE   stats_pageviews.page_url = '$page_url_propre' ");
+                        WHERE   stats_pageviews.page_url = '$page_url_sanitized' ");
 
-  // Si la requête renvoie un résultat, reste plus qu'à incrémenter les pageviews
-  if (mysqli_num_rows($view_query) != 0)
-  {
-    // On définit le nombre de pageviews
-    $pageviews_array = mysqli_fetch_array($view_query);
-    $pageviews = $pageviews_array["vues"] + 1;
+  // Define the current view count (used in the footer for metrics)
+  $dpageviews = mysqli_fetch_array($qpageviews);
+  $pageviews  = ($dpageviews["p_views"]) ? ($dpageviews["p_views"] + 1) : 1;
 
-    // On update la BDD si l'user n'est pas un admin
-    if(((user_is_logged_in() && !$est_admin) || !user_is_logged_in()))
-      query(" UPDATE  stats_pageviews
-              SET     stats_pageviews.view_count  = stats_pageviews.view_count + 1 ,
-                      stats_pageviews.page_name   = '$page_nom_propre'
-              WHERE   stats_pageviews.page_url    = '$page_url_propre' ");
-  }
+  // If the page exists, increment its view count (unless user is an admin)
+  if(!$is_admin && mysqli_num_rows($qpageviews) != 0)
+    query(" UPDATE  stats_pageviews
+            SET     stats_pageviews.view_count  = stats_pageviews.view_count + 1 ,
+                    stats_pageviews.page_name   = '$page_name_sanitized'
+            WHERE   stats_pageviews.page_url    = '$page_url_sanitized' ");
 
-  // Sinon, il faut créer l'entrée de la page et lui donner son premier pageview
-  else
-  {
-    // On définit le nombre de pageviews
-    $pageviews = 1;
-
-    // On update la BDD
+  // If it doesn't, create the page and give it its first pageview
+  else if(!$dpageviews["p_views"])
     query(" INSERT INTO stats_pageviews
-            SET         stats_pageviews.page_name   = '$page_nom_propre'  ,
-                        stats_pageviews.page_url    = '$page_url_propre'  ,
-                        stats_pageviews.view_count  = 1                   ");
-  }
+            SET         stats_pageviews.page_name   = '$page_name_sanitized'  ,
+                        stats_pageviews.page_url    = '$page_url_sanitized'   ,
+                        stats_pageviews.view_count  = 1                       ");
 }
 
 
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Traitement de l'activité récente / dernière page visitée
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// User and guest activity
 
-// On récupère le nom et l'url de la page s'ils sont précisés
-$activite_page  = (isset($page_nom)) ? $page_nom  : 'Page non listée';
-$activite_url   = (isset($page_url)) ? $page_url  : '';
+// Fetch and sanitize all the data required to track recent activity
+$activity_timestamp         = time();
+$activity_ip                = sanitize($_SERVER["REMOTE_ADDR"], 'string');
+$activity_page_en_sanitized = sanitize($activity_page_en, 'string');
+$activity_page_fr_sanitized = sanitize($activity_page_fr, 'string');
+$activity_url_sanitized     = sanitize($activity_url, 'string');
 
-// On s'assure que l'user soit connecté
+// Logged in user activity
 if(user_is_logged_in())
 {
-  // On prépare la date et l'user
-  $visite_timestamp = time();
-  $visite_user      = user_get_id();
+  // Fetch the user's ID and sanitize it
+  $activity_user  = sanitize(user_get_id(), 'int', 0);
 
-  // Nettoyage des données au cas où
-  $activite_page  = sanitize($activite_page, 'string');
-  $activite_url   = sanitize($activite_url, 'string');
-
-  // IP de l'user
-  $visite_ip    = sanitize($_SERVER["REMOTE_ADDR"], 'string');
-
-  // Puis on fait la requête d'update
+  // Update user activity
   query(" UPDATE  users
-          SET     users.last_visited_at     = '$visite_timestamp' ,
-                  users.last_visited_page   = '$activite_page'      ,
-                  users.last_visited_url    = '$activite_url'       ,
-                  users.current_ip_address  = '$visite_ip'
-          WHERE   users.id                  = '$visite_user' ");
+          SET     users.last_visited_at       = '$activity_timestamp'         ,
+                  users.last_visited_page_en  = '$activity_page_en_sanitized' ,
+                  users.last_visited_page_fr  = '$activity_page_fr_sanitized' ,
+                  users.last_visited_url      = '$activity_url_sanitized'     ,
+                  users.current_ip_address    = '$activity_ip'
+          WHERE   users.id                    = '$activity_user'              ");
 }
-// Sinon on a affaire a un invité
+
+// Guest activity
 else
 {
-  // On nettoie les vieilles infos
+  // Clean up older guest activity
   $guest_limit = time() - 86400;
-  query(" DELETE FROM users_guests WHERE users_guests.last_visited_at < '$guest_limit' ");
+  query(" DELETE FROM users_guests
+          WHERE       users_guests.last_visited_at < '$guest_limit' ");
 
-  // On va chercher s'il existe
-  $guest_ip = sanitize($_SERVER["REMOTE_ADDR"], 'string');
-  $qguest   = query(" SELECT users_guests.ip_address FROM users_guests WHERE users_guests.ip_address = '$guest_ip' ");
+  // Check whether the guest already exists in the database
+  $qguest   = query(" SELECT  users_guests.ip_address AS 'g_ip'
+                      FROM    users_guests
+                      WHERE   users_guests.ip_address = '$activity_ip' ");
 
-  // On crée l'invité si nécessaire
+  // Create the guest if it does not exist
   if(!mysqli_num_rows($qguest))
   {
-    $guest_nom = sanitize(user_get_nickname(), 'string');
-    query(" INSERT INTO users_guests SET users_guests.ip_address = '$guest_ip', users_guests.randomly_assigned_name = '$guest_nom' ");
+    // Generate a random nickname
+    $guest_name_en = sanitize(user_generate_random_nickname('EN'), 'string');
+    $guest_name_fr = sanitize(user_generate_random_nickname('FR'), 'string');
+
+    // Create the guest
+    query(" INSERT INTO users_guests
+            SET         users_guests.ip_address                 = '$activity_ip'    ,
+                        users_guests.randomly_assigned_name_en  = '$guest_name_en'  ,
+                        users_guests.randomly_assigned_name_fr  = '$guest_name_fr'  ");
   }
 
-  // Nettoyage des données au cas où
-  $activite_page  = sanitize($activite_page, 'string');
-  $activite_url   = sanitize($activite_url, 'string');
-
   // Et on met à jour les données
-  $guest_timestamp = time();
   query(" UPDATE  users_guests
-          SET     users_guests.last_visited_at       = '$guest_timestamp'  ,
-                  users_guests.last_visited_page  = '$activite_page'      ,
-                  users_guests.last_visited_url   = '$activite_url'
-          WHERE   users_guests.ip_address                    = '$guest_ip'         ");
+          SET     users_guests.last_visited_at      = '$activity_timestamp'         ,
+                  users_guests.last_visited_page_en = '$activity_page_en_sanitized' ,
+                  users_guests.last_visited_page_fr = '$activity_page_fr_sanitized' ,
+                  users_guests.last_visited_url     = '$activity_url_sanitized'
+          WHERE   users_guests.ip_address           = '$activity_ip'                ");
 }
 
 
@@ -308,14 +311,14 @@ if(date('d-m') == '01-04' && $_SERVER["SERVER_NAME"] != "localhost" && $_SERVER[
 // Préparation du titre de la page, sera uniquement NoBleme si aucun titre n'est précisé, et précédé d'un @ en localhost
 
 if(isset($page_url) && $page_url == "cv")
-  $page_titre = $page_titre;
-else if (!isset($page_titre))
-  $page_titre = 'NoBleme';
+  $page_title = $page_title;
+else if (!isset($page_title))
+  $page_title = 'NoBleme';
 else
-  $page_titre = 'NoBleme - '.$page_titre;
+  $page_title = 'NoBleme - '.$page_title;
 
 if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1")
-  $page_titre = "@ ".$page_titre;
+  $page_title = "@ ".$page_title;
 
 
 
@@ -324,25 +327,25 @@ if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0
 // Préparation de la meta description de la page
 
 // Si pas de description, truc générique par défaut
-if (!isset($page_desc))
-  $page_desc = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
+if (!isset($page_description))
+  $page_description = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
 
 // On remplace les caractères interdits pour éviter les conneries
-$page_desc = html_fix_meta_tags($page_desc);
+$page_description = html_fix_meta_tags($page_description);
 
 // Si admin, alerte si la longueur est > les 158 caractères max ou < les 25 caractères min
-if($est_admin)
+if($is_admin)
 {
-  if(strlen($page_desc) > 25 && strlen($page_desc) < 155)
+  if(strlen($page_description) > 25 && strlen($page_description) < 155)
     $alerte_meta = "";
-  else if (strlen($page_desc) <= 25)
+  else if (strlen($page_description) <= 25)
   {
-    $alerte_meta  = "Description meta trop courte (".strlen($page_desc)." <= 25)";
+    $alerte_meta  = "Description meta trop courte (".strlen($page_description)." <= 25)";
     $css_maj      = "maj";
   }
   else
   {
-    $alerte_meta  = "Description meta trop longue (".strlen($page_desc)." >= 155)";
+    $alerte_meta  = "Description meta trop longue (".strlen($page_description)." >= 155)";
     $css_maj      = "maj";
   }
 }
@@ -355,10 +358,6 @@ else
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Remise à zéro des variables de menu si jamais elles sont vides
 
-if(!isset($header_menu) || $header_menu == '')
-  $header_menu = 'NoBleme';
-if(!isset($header_sidemenu))
-  $header_sidemenu = '';
 
 
 
@@ -393,12 +392,12 @@ function header_class($element, $actuel, $menu)
 <!DOCTYPE html>
 <html lang="<?=string_change_case($lang,'lowercase')?>">
   <head>
-    <title><?=$page_titre?></title>
+    <title><?=$page_title?></title>
     <link rel="shortcut icon" href="<?=$path?>img/divers/favicon.ico">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="description" content="<?=$page_desc?>">
-    <meta property="og:title" content="<?=$page_titre?>">
-    <meta property="og:description" content="<?=$page_desc?>">
+    <meta name="description" content="<?=$page_description?>">
+    <meta property="og:title" content="<?=$page_title?>">
+    <meta property="og:description" content="<?=$page_description?>">
     <meta property="og:url" content="<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
     <meta property="og:site_name" content="NoBleme.com">
     <meta property="og:image" content="<?=$GLOBALS['website_url']?>img/divers/404_gauche.png">
@@ -428,7 +427,7 @@ $menu['jouer']    = ($lang == 'FR') ? 'JOUER'     : 'PLAY';
 $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
 /* ######################################################################### */ if(!isset($_GET["popup"]) && !isset($_GET["popout"])) { ?>
 
-    <div class="header_topmenu<?=$css_mise_a_jour?>">
+    <div class="header_topmenu<?=$website_update_css?>">
       <div id="header_titres" class="header_topmenu_zone">
 
         <a class="header_topmenu_lien" href="<?=$path?>index">
@@ -447,19 +446,19 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
           <div class="<?=header_class('Jouer',$header_menu,'top')?>"><?=$menu['jouer']?></div>
         </a>
 
-        <?php if($est_sysop) { ?>
+        <?php if($is_global_moderator) { ?>
         <a class="header_topmenu_lien" href="<?=$path?>pages/nobleme/activite?mod">
           <div class="<?=header_class('Admin',$header_menu,'top')?>">ADMIN</div>
         </a>
 
-        <?php } if($est_admin) { ?>
+        <?php } if($is_admin) { ?>
         <a class="header_topmenu_lien" href="<?=$path?>pages/dev/ircbot">
           <div class="<?=header_class('Dev',$header_menu,'top')?>">DEV</div>
         </a>
         <?php } ?>
       </div>
       <div class="header_topmenu_zone header_topmenu_flag">
-        <a href="<?=$url_langue?>">
+        <a href="<?=$url_lang?>">
           <?php if($lang == 'FR') { ?>
           <img class="header_topmenu_flagimg" src="<?=$path?>img/icones/lang_en.png" alt="EN">
           <?php } else { ?>
@@ -481,7 +480,7 @@ $submenu['deconnexion'] = ($lang == 'FR') ? "Déconnexion" : "Log out";
 $submenu['connexion']   = ($lang == 'FR') ? "Vous n'êtes pas connecté: Cliquez ici pour vous identifier ou vous enregistrer" : "You are not logged in: Click here to login or register.";
 ####################################################################################################################################### ?>
 
-    <div class="menu_sub<?=$css_mise_a_jour2?>">
+    <div class="menu_sub<?=$website_update_css2?>">
       <?php if(user_is_logged_in()) {
             if($notifications) { ?>
       <div class="header_topmenu_zone">
@@ -542,7 +541,7 @@ $sidemenu['masquer']  = ($lang == 'FR') ? 'Masquer le menu latéral'   : 'Hide t
       <div class="header_side_nomenu" id="header_nomenu" onclick="document.getElementById('header_sidemenu').style.display = 'flex'; document.getElementById('header_nomenu').style.display = 'none';">
         <?=$sidemenu['afficher']?>
       </div>
-      <nav id="header_sidemenu" class="header_sidemenu_mobile<?=$css_mise_a_jour2?>">
+      <nav id="header_sidemenu" class="header_sidemenu_mobile<?=$website_update_css2?>">
         <div class="header_sidemenu">
           <div>
             <div class="header_sidemenu_item header_sidemenu_desktop" onclick="document.getElementById('header_nomenu').style.display = 'flex'; document.getElementById('header_sidemenu').style.display = 'none';">
@@ -1139,7 +1138,7 @@ $sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    
               </div>
             </a>
 
-            <?php if($est_admin) { ?>
+            <?php if($is_admin) { ?>
 
             <hr class="header_sidemenu_hr">
 
@@ -1268,10 +1267,10 @@ $sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    
         <?=$alerte_meta?>
       </div>
 
-      <?php } if($langue_error) { ?>
+      <?php } if($lang_error) { ?>
 
       <div class="gros gras texte_erreur align_center monospace">
-        <?=$langue_error?>
+        <?=__('header_language_error');?>
       </div>
 
       <br>

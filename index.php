@@ -5,20 +5,21 @@
 // Inclusions /***************************************************************************************************************************/
 include './inc/includes.inc.php'; // Inclusions communes
 
-// Menus du header
+// Header menus
 $header_menu      = 'NoBleme';
 $header_sidemenu  = 'Accueil';
 
-// Identification
-$page_nom = "Traine sur l'index du site";
-$page_url = "index";
+// Available languages
+$page_lang    = array('FR', 'EN');
 
-// Langues disponibles
-$langue_page = array('FR', 'EN');
+// Recent activity
+$page_name_en = "Hangs out on the homepage";
+$page_name_fr = "Traine sur l'index du site";
+$page_url     = "index";
 
-// Titre et description
-$page_titre = ($lang == 'FR') ? "Accueil" : "Homepage";
-$page_desc  = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
+// Title and description
+$page_title       = ($lang == 'EN') ? "Homepage" : "Accueil";
+$page_description = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
 
 
 
