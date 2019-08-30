@@ -295,3 +295,33 @@ function html_fix_meta_tags($string)
   // Return the modified string
   return $string;
 }
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   PAGE STYLING                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Returns the CSS classes to use for header menus.
+ *
+ * This gives different results based on whether an element is currently selected or not.
+ *
+ * @param string  $menu_element         The element of the menu for which we want CSS classes.
+ * @param string  $current_menu_element The currently selected menu element (for the page in use).
+ * @param string  $menu_type            The type of menu for which we want a styling (top or side menu).
+ */
+
+function header_menu_css($menu_element, $current_menu_element, $menu_type)
+{
+  // Main (top) menu
+  if($menu_type == 'top')
+    return (strtolower($menu_element) == strtolower($current_menu_element)) ? 'header_topmenu_titre header_topmenu_selected' : 'header_topmenu_titre';
+
+  // Side menu
+  else if($menu_type == 'side')
+    return (strtolower($menu_element) == strtolower($current_menu_element)) ? 'header_sidemenu_item header_sidemenu_selected' : 'header_sidemenu_item';
+}

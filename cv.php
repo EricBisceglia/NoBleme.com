@@ -16,7 +16,7 @@ $_GET['popup'] = 1;
 $langue_page = array('FR','EN');
 
 // Titre et description
-$page_titre = ($lang == 'FR') ? "CV de Éric Bisceglia" : "Éric Bisceglia's CV";
+$page_title = ($lang == 'FR') ? "CV de Éric Bisceglia" : "Éric Bisceglia's CV";
 $page_desc  = "Curriculum Vitæ de Éric Bisceglia, développeur.";
 
 // CSS
@@ -111,7 +111,7 @@ Vous trouverez des exemples illustrés de mes compétences dans le <a class="gra
 Outre le développement informatique (ma passion principale), je suis un passionné de littérature, histoire, sociologie, game design, science-fiction, et de musique moderne.<br>
 Je gère l'héritage culturel de la collection <a class="gras" href="http://www.jazzhot.net/PBEvents.asp?ItmID=23592">photographique</a> et <a class="gras" href="http://bdzoom.com/60445/actualites/deces-de-jacques-bisceglia/">littéraire</a> de mon défunt père, <a class="gras" href="https://www.citizenjazz.com/Jacques-Bisceglia-par-Jerome-Merli.html">Jacques Bisceglia</a>.<br>
 <br>
-N'hésitez pas à me contacter via mon email <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> ou sur <a class="gras" href="{$chemin}pages/irc/index">IRC</a>.
+N'hésitez pas à me contacter via mon email <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> ou sur <a class="gras" href="{$path}pages/irc/index">IRC</a>.
 EOD;
 }
 
@@ -178,7 +178,7 @@ You will find illustrated examples of my skills in the <a class="gras souligne" 
 Other than computer programming (my main passion), I am passionate about literature, history, sociology, game design, science fiction, and modern music.<br>
 I manage the cultural inheritance (photographs and books) of my deceased father, <a class="gras" href="http://inconstantsol.blogspot.fr/2013/03/jacques-bisceglia-1940-2013.html">Jacques Bisceglia</a>.<br>
 <br>
-Do not hesitate to contact me by e-mail at <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> or through <a class="gras" href="{$chemin}pages/irc/index">IRC</a>.
+Do not hesitate to contact me by e-mail at <a href="mailto:bisceglia.eric@gmail.com">bisceglia.eric@gmail.com</a> or through <a class="gras" href="{$path}pages/irc/index">IRC</a>.
 EOD;
 }
 
@@ -423,13 +423,13 @@ EOD;
           <br>
           À l'origine, NoBleme devait servir à héberger les vidéos d'un ami étudiant en cinéma, aspirant à devenir réalisateur. Le défi technologique était énorme, à une époque où les sites de streaming vidéo publics et gratuits (tels YouTube) n'existaient pas encore.<br>
           <br>
-          Au fur et à mesure des années, une communauté internet s'est crée autour de NoBleme. La partie streaming vidéo a rapidement disparu (trop intense en ressources serveur pour la conserver), et NoBleme est devenu un site généraliste centré sur sa communauté, qui organise régulièrement des <a class="gras" href="<?=$chemin?>pages/irl/index">rencontres IRL</a>.
+          Au fur et à mesure des années, une communauté internet s'est crée autour de NoBleme. La partie streaming vidéo a rapidement disparu (trop intense en ressources serveur pour la conserver), et NoBleme est devenu un site généraliste centré sur sa communauté, qui organise régulièrement des <a class="gras" href="<?=$path?>pages/irl/index">rencontres IRL</a>.
         </p>
 
         <p>
           Le code source de NoBleme est entièrement libre et open source, publié sous une license permissive qui permet de le réutiliser. Il est visible publiquement sur GitHub : <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">voir le code source de NoBleme.com</a><br>
           <br>
-          Vous trouverez plus d'informations sur les aspects techniques du développement de NoBleme.com et sur mes convictions de développeur en visitant les <a class="gras" href="<?=$chemin?>pages/nobleme/coulisses">coulisses de NoBleme</a>
+          Vous trouverez plus d'informations sur les aspects techniques du développement de NoBleme.com et sur mes convictions de développeur en visitant les <a class="gras" href="<?=$path?>pages/nobleme/coulisses">coulisses de NoBleme</a>
         </p>
 
         <br>
@@ -464,32 +464,32 @@ EOD;
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_struct1.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_struct1.png" alt="SteelDB"><br>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_struct2.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_struct2.png" alt="SteelDB"><br>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_struct3.png" alt="SteelDB"><br>
-        <br>
-        <hr>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_dossier.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_struct3.png" alt="SteelDB"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_ddp.png" alt="SteelDB"><br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_ddp_details.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_dossier.png" alt="SteelDB"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_entreprise.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_ddp.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_ddp_details.png" alt="SteelDB"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_hotel.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_entreprise.png" alt="SteelDB"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_pdf.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_hotel.png" alt="SteelDB"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$path?>img/portfolio/steeldb_pdf.png" alt="SteelDB"><br>
 
         <br>
         <br>
@@ -522,15 +522,15 @@ EOD;
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/dix_tableau.png" alt="Starcraft Dix"><br>
+        <img src="<?=$path?>img/portfolio/dix_tableau.png" alt="Starcraft Dix"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/dix_stats.png" alt="Starcraft Dix"><br>
+        <img src="<?=$path?>img/portfolio/dix_stats.png" alt="Starcraft Dix"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/dix_search.png" alt="Starcraft Dix"><br>
+        <img src="<?=$path?>img/portfolio/dix_search.png" alt="Starcraft Dix"><br>
 
         <br>
         <br>
@@ -563,19 +563,19 @@ EOD;
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_index.png" alt="NRM Online"><br>
+        <img src="<?=$path?>img/portfolio/nrm_index.png" alt="NRM Online"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_robot.png" alt="NRM Online"><br>
+        <img src="<?=$path?>img/portfolio/nrm_robot.png" alt="NRM Online"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_assign.png" alt="NRM Online"><br>
+        <img src="<?=$path?>img/portfolio/nrm_assign.png" alt="NRM Online"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_combat.png" alt="NRM Online"><br>
+        <img src="<?=$path?>img/portfolio/nrm_combat.png" alt="NRM Online"><br>
 
         <br>
         <br>
@@ -592,7 +592,7 @@ EOD;
         </p>
 
         <p>
-          Le temps est passé, et la vie a  évolué. Je me suis mis à travailler le week-end, des amis ont déménagé, organiser des sessions de jeux de rôle devenait de plus en plus compliqué. Heureusement, internet était en train de se propager, et nous permettait de continuer à jouer via des serveurs de <a class="gras" href="<?=$chemin?>pages/irc/index">chat IRC</a>.
+          Le temps est passé, et la vie a  évolué. Je me suis mis à travailler le week-end, des amis ont déménagé, organiser des sessions de jeux de rôle devenait de plus en plus compliqué. Heureusement, internet était en train de se propager, et nous permettait de continuer à jouer via des serveurs de <a class="gras" href="<?=$path?>pages/irc/index">chat IRC</a>.
         </p>
 
         <p>
@@ -620,31 +620,31 @@ EOD;
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_main.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_main.png" alt="NoBlemeRPG"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_perso.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_perso.png" alt="NoBlemeRPG"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_aptitude.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_aptitude.png" alt="NoBlemeRPG"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_item.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_item.png" alt="NoBlemeRPG"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_monstre.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_monstre.png" alt="NoBlemeRPG"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_search.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_search.png" alt="NoBlemeRPG"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_session.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_session.png" alt="NoBlemeRPG"><br>
         <br>
         <br>
 
@@ -691,7 +691,7 @@ EOD;
           <br>
           Originally, NoBleme was meant to be a video streaming platform for content made by a friend who was studying movie making. The technological challenge was huge back in the day, as free streaming websites (such as YouTube) weren't a common thing yet.<br>
           <br>
-          Time passed, and an internet community appeared on NoBleme. The video streaming part quickly disappeared (too ressource intensive for the server), and NoBleme became a general purpose website centered on its community, which regularly organized <a class="gras" href="<?=$chemin?>pages/irl/index">real life meetups</a>.
+          Time passed, and an internet community appeared on NoBleme. The video streaming part quickly disappeared (too ressource intensive for the server), and NoBleme became a general purpose website centered on its community, which regularly organized <a class="gras" href="<?=$path?>pages/irl/index">real life meetups</a>.
         </p>
 
         <p>
@@ -730,32 +730,32 @@ EOD;
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_struct1.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_struct1.png" alt="SteelDB"><br>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_struct2.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_struct2.png" alt="SteelDB"><br>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_struct3.png" alt="SteelDB"><br>
-        <br>
-        <hr>
-        <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_dossier.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_struct3.png" alt="SteelDB"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_ddp.png" alt="SteelDB"><br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_ddp_details.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_dossier.png" alt="SteelDB"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_entreprise.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_ddp.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_ddp_details.png" alt="SteelDB"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_hotel.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_entreprise.png" alt="SteelDB"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/steeldb_pdf.png" alt="SteelDB"><br>
+        <img src="<?=$path?>img/portfolio/steeldb_hotel.png" alt="SteelDB"><br>
+        <br>
+        <hr>
+        <br>
+        <img src="<?=$path?>img/portfolio/steeldb_pdf.png" alt="SteelDB"><br>
 
         <br>
         <br>
@@ -788,15 +788,15 @@ EOD;
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/dix_tableau.png" alt="Starcraft Dix"><br>
+        <img src="<?=$path?>img/portfolio/dix_tableau.png" alt="Starcraft Dix"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/dix_stats.png" alt="Starcraft Dix"><br>
+        <img src="<?=$path?>img/portfolio/dix_stats.png" alt="Starcraft Dix"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/dix_search.png" alt="Starcraft Dix"><br>
+        <img src="<?=$path?>img/portfolio/dix_search.png" alt="Starcraft Dix"><br>
 
         <br>
         <br>
@@ -829,19 +829,19 @@ EOD;
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_index.png" alt="NRM Online"><br>
+        <img src="<?=$path?>img/portfolio/nrm_index.png" alt="NRM Online"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_robot.png" alt="NRM Online"><br>
+        <img src="<?=$path?>img/portfolio/nrm_robot.png" alt="NRM Online"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_assign.png" alt="NRM Online"><br>
+        <img src="<?=$path?>img/portfolio/nrm_assign.png" alt="NRM Online"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nrm_combat.png" alt="NRM Online"><br>
+        <img src="<?=$path?>img/portfolio/nrm_combat.png" alt="NRM Online"><br>
 
         <br>
         <br>
@@ -858,7 +858,7 @@ EOD;
         </p>
 
         <p>
-          Time passed, and life changed. I started working on week-ends, some friends moved away, and hosting game sessions became increasingly impossible. Luckily, the internet was starting to spread, and allowed us to continue playing our role playing games through <a class="gras" href="<?=$chemin?>pages/irc/index">IRC chat</a>.
+          Time passed, and life changed. I started working on week-ends, some friends moved away, and hosting game sessions became increasingly impossible. Luckily, the internet was starting to spread, and allowed us to continue playing our role playing games through <a class="gras" href="<?=$path?>pages/irc/index">IRC chat</a>.
         </p>
 
         <p>
@@ -886,31 +886,31 @@ EOD;
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_main.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_main.png" alt="NoBlemeRPG"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_perso.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_perso.png" alt="NoBlemeRPG"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_aptitude.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_aptitude.png" alt="NoBlemeRPG"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_item.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_item.png" alt="NoBlemeRPG"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_monstre.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_monstre.png" alt="NoBlemeRPG"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_search.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_search.png" alt="NoBlemeRPG"><br>
         <br>
         <hr>
         <br>
-        <img src="<?=$chemin?>img/portfolio/nbrpg_session.png" alt="NoBlemeRPG"><br>
+        <img src="<?=$path?>img/portfolio/nbrpg_session.png" alt="NoBlemeRPG"><br>
         <br>
         <br>
 

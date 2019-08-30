@@ -14,7 +14,7 @@ $header_menu      = 'Dev';
 $header_sidemenu  = 'MajRequetes';
 
 // Page title and description
-$page_titre = "Dev: Requêtes SQL";
+$page_title = "Dev: Requêtes SQL";
 
 // Internal page identification
 $page_nom = "Administre secrètement le site";
