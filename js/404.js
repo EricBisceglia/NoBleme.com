@@ -81,11 +81,11 @@ function this_page_is_a_404()
     {
       // On passe à la ligne suivante
       str_length=texte404[index].length;
-      setTimeout("ecrire_404()",500);
+      setTimeout("this_page_is_a_404()",500);
     }
   }
   else
     // On passe au caractère suivant
-    setTimeout("ecrire_404()",40);
+    setTimeout("this_page_is_a_404()",40);
 
 }

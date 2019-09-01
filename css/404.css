@@ -1,24 +1,24 @@
 /************************************************************** Erreur 404 ***************************************************************/
 html { background:#000000; }
 
-textarea.texte404 { background: #000000; border: 0px solid #000000; color: #CACACA  ;
-                    text-align: center; overflow: auto; resize: none; height:167px  }
+textarea.text404 { background: #000000; border: 0px solid #000000; color: #CACACA  ;
+                   text-align: center; overflow: auto; resize: none; height:167px  }
 
-td.img404        { width: 300px;       }
-img.img404gauche { margin-right: 10px; }
-img.img404droite { margin-left: 10px;  }
+td.img404       { width: 300px;       }
+img.img404left  { margin-right: 10px; }
+img.img404right { margin-left: 10px;  }
 
 .header_topmenu                                         { background: #000000; border-bottom: 1px solid #CACACA; }
-.header_topmenu_titre                                   { background: #000000; color: #CACACA;                   }
-.header_topmenu_titre > a                               { color: #CACACA;                                        }
-.header_topmenu_titre:hover                             { background: #000000; color: #78A1BC;                   }
-.header_topmenu_titre:hover > a                         { color: #78A1BC;                                        }
-.header_topmenu_titre.header_topmenu_selected           { background: #000000;                                   }
-.header_topmenu_titre.header_topmenu_selected > a       { color: #CACACA;                                        }
-.header_topmenu_titre.header_topmenu_selected:hover     { background: #000000; color: #78A1BC;                   }
-.header_topmenu_titre.header_topmenu_selected:hover > a { color: #78A1BC;                                        }
+.header_topmenu_title                                   { background: #000000; color: #CACACA;                   }
+.header_topmenu_title > a                               { color: #CACACA;                                        }
+.header_topmenu_title:hover                             { background: #000000; color: #78A1BC;                   }
+.header_topmenu_title:hover > a                         { color: #78A1BC;                                        }
+.header_topmenu_title.header_topmenu_selected           { background: #000000;                                   }
+.header_topmenu_title.header_topmenu_selected > a       { color: #CACACA;                                        }
+.header_topmenu_title.header_topmenu_selected:hover     { background: #000000; color: #78A1BC;                   }
+.header_topmenu_title.header_topmenu_selected:hover > a { color: #78A1BC;                                        }
 .header_topmenu_flag                                    { display: none;                                         }
-.menu_sub                                               { display: none;                                         }
+.header_infobar                                         { display: none;                                         }
 .header_sidemenu                                        { display: none;                                         }
 .header_side_nomenu                                     { display: none;                                         }
 footer > a                                              { color: #CACACA; font-weight: thin;                     }

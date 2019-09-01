@@ -22,12 +22,12 @@ function task_priority($priority_level, $styled=0)
   {
     // 5 -> Urgent task
     case 5:
-      return (!$styled) ? __('task_priority_5') : '<span class="gras souligne">'.__('task_priority_5').'</span>';
+      return (!$styled) ? __('task_priority_5') : '<span class="bold underlined">'.__('task_priority_5').'</span>';
     break;
 
     // 4 -> Important task
     case 4:
-      return (!$styled) ? __('task_priority_5') : '<span class="gras">'.__('task_priority_4').'</span>';
+      return (!$styled) ? __('task_priority_5') : '<span class="bold">'.__('task_priority_4').'</span>';
     break;
 
     // 3 -> Averagely important task
@@ -42,12 +42,12 @@ function task_priority($priority_level, $styled=0)
 
     // 1 -> Low importance task
     case 1:
-      return (!$styled) ? __('task_priority_1') : '<span class="italique">'.__('task_priority_1').'</span>';
+      return (!$styled) ? __('task_priority_1') : '<span class="italics">'.__('task_priority_1').'</span>';
     break;
 
     // 0 (or other) -> Background task
     default:
-      return (!$styled) ? __('task_priority_0') : '<span class="italique">'.__('task_priority_0').'</span>';
+      return (!$styled) ? __('task_priority_0') : '<span class="italics">'.__('task_priority_0').'</span>';
     break;
   }
 }

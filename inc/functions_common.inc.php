@@ -319,7 +319,7 @@ function header_menu_css($menu_element, $current_menu_element, $menu_type)
 {
   // Main (top) menu
   if($menu_type == 'top')
-    return (strtolower($menu_element) == strtolower($current_menu_element)) ? 'header_topmenu_titre header_topmenu_selected' : 'header_topmenu_titre';
+    return (strtolower($menu_element) == strtolower($current_menu_element)) ? 'header_topmenu_title header_topmenu_selected' : 'header_topmenu_title';
 
   // Side menu
   else if($menu_type == 'side')

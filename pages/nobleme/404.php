@@ -6,11 +6,12 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Titre et description
-$page_titre = "Perdus dans l'espace !";
+$page_title = "Perdus dans l'espace !";
 $page_desc  = "Erreur 404 : Page non trouvée";
 
 // Identification
-$page_nom = "Erreur 404 : Page non trouvée";
+$page_name_en = "Error 404: Page not found";
+$page_name_fr = "Erreur 404 : Page non trouvée";
 $page_url = "pages/nobleme/404";
 
 // CSS & JS
@@ -21,7 +22,7 @@ $js  = array('404');
 header("HTTP/1.0 404 Not Found");
 
 // Pour trigger l'erreur 404
-$this_page_is_a_404 = 1;
+$this_page_is_a_404 = '';
 
 
 /*****************************************************************************************************************************************/
@@ -35,8 +36,8 @@ $this_page_is_a_404 = 1;
     <br>
 
     <div class="indiv align_center">
-      <a class="blank" href="<?=$chemin?>">
-        <img src="<?=$chemin?>img/divers/404_titre_<?=changer_casse($lang, 'min')?>.png" alt="Erreur 404 : Perdus dans l'espace">
+      <a class="blank" href="<?=$path?>">
+        <img src="<?=$path?>img/divers/404_titre_<?=string_change_case($lang, 'lowercase')?>.png" alt="Erreur 404 : Perdus dans l'espace">
       </a>
     </div>
 
@@ -51,13 +52,13 @@ $this_page_is_a_404 = 1;
       <table class="indiv">
         <tr>
           <td class="img404 noborder">
-            <img class="img404gauche" src="<?=$chemin?>img/divers/404_gauche.png" alt=" ">
+            <img class="img404left" src="<?=$path?>img/divers/404_gauche.png" alt=" ">
           </td>
           <td class="noborder">
-            <textarea class="indiv texte404" rows="10" id="text404" readonly></textarea>
+            <textarea class="indiv text404" rows="10" id="text404" readonly></textarea>
           </td>
           <td class="img404 noborder">
-            <img class="img404droite" src="<?=$chemin?>img/divers/404_droite.gif" alt=" ">
+            <img class="img404right" src="<?=$path?>img/divers/404_droite.gif" alt=" ">
           </td>
         </tr>
       </table>

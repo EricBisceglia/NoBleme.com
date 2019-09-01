@@ -103,25 +103,25 @@ input[type='submit']:focus, input[type='submit']:hover
 input[type='reset'][disabled]:focus, input[type='reset'][disabled]:hover, input[type='submit'][disabled]:focus,
 input[type='submit'][disabled]:hover
   { background-color: #37536B; border-color: #37536B;                                                   }
-.button.button-outline, button.button-outline, input[type='reset'].button-outline, input[type='submit'].button-outline
+.button.button_outline, button.button_outline, input[type='reset'].button_outline, input[type='submit'].button_outline
   { background-color: transparent; color: #37536B;                                                      }
-.button.button-outline:focus, .button.button-outline:hover, button.button-outline:focus, button.button-outline:hover,
-input[type='reset'].button-outline:focus, input[type='reset'].button-outline:hover,
-input[type='submit'].button-outline:focus, input[type='submit'].button-outline:hover
+.button.button_outline:focus, .button.button_outline:hover, button.button_outline:focus, button.button_outline:hover,
+input[type='reset'].button_outline:focus, input[type='reset'].button_outline:hover,
+input[type='submit'].button_outline:focus, input[type='submit'].button_outline:hover
   { background-color: transparent; border-color: #555555; color: #555555;                               }
-.button.button-outline[disabled]:focus, .button.button-outline[disabled]:hover, button.button-outline[disabled]:focus,
-button.button-outline[disabled]:hover, input[type='reset'].button-outline[disabled]:focus,
-input[type='reset'].button-outline[disabled]:hover, input[type='submit'].button-outline[disabled]:focus,
-input[type='submit'].button-outline[disabled]:hover
+.button.button_outline[disabled]:focus, .button.button_outline[disabled]:hover, button.button_outline[disabled]:focus,
+button.button_outline[disabled]:hover, input[type='reset'].button_outline[disabled]:focus,
+input[type='reset'].button_outline[disabled]:hover, input[type='submit'].button_outline[disabled]:focus,
+input[type='submit'].button_outline[disabled]:hover
   { border-color: inherit; color: #37536B;                                                              }
-.button.button-clear, button.button-clear, input[type='reset'].button-clear, input[type='submit'].button-clear
+.button.button_clear, button.button_clear, input[type='reset'].button_clear, input[type='submit'].button_clear
   { background-color: transparent; border-color: transparent; color: #37536B;                           }
-.button.button-clear:focus, .button.button-clear:hover, button.button-clear:focus, button.button-clear:hover,
-input[type='reset'].button-clear:focus, input[type='reset'].button-clear:hover, input[type='submit'].button-clear:focus,
-input[type='submit'].button-clear:hover
+.button.button_clear:focus, .button.button_clear:hover, button.button_clear:focus, button.button_clear:hover,
+input[type='reset'].button_clear:focus, input[type='reset'].button_clear:hover, input[type='submit'].button_clear:focus,
+input[type='submit'].button_clear:hover
   { background-color: transparent; border-color: transparent; color: #555555;                           }
-.button.button-clear[disabled]:focus, .button.button-clear[disabled]:hover, button.button-clear[disabled]:focus,
-button.button-clear[disabled]:hover, input[type='reset'].button-clear[disabled]:focus,
-input[type='reset'].button-clear[disabled]:hover, input[type='submit'].button-clear[disabled]:focus,
-input[type='submit'].button-clear[disabled]:hover
+.button.button_clear[disabled]:focus, .button.button_clear[disabled]:hover, button.button_clear[disabled]:focus,
+button.button_clear[disabled]:hover, input[type='reset'].button_clear[disabled]:focus,
+input[type='reset'].button_clear[disabled]:hover, input[type='submit'].button_clear[disabled]:focus,
+input[type='submit'].button_clear[disabled]:hover
   { color: #37536B;                                                                                     }

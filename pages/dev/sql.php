@@ -29,9 +29,9 @@ $css = array('dev');
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-      <div class="texte dev_queries_block">
+      <div class="width_50 dev_queries_block">
 
-        <h1 class="positive texte_blanc align_center">
+        <h1 class="positive text_white align_center">
           <?=__('dev_queries_ok')?>
         </h1>
 

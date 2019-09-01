@@ -1,18 +1,18 @@
 /*************************************************************** NBDBCODES ***************************************************************/
-.web_flottement_gauche { float: left; margin: 5px 15px 5px 0px;                                 }
-.web_flottement_droite { float: right; margin: 5px 0px 5px 15px;                                }
-.web_flotteur          { width: 250px; border: double #CACACA 3px; padding: 10px 10px 10px 10px ;
+.web_float_left       { float: left; margin: 5px 15px 5px 0px;                                 }
+.web_float_right      { float: right; margin: 5px 0px 5px 15px;                                }
+.web_floater          { width: 250px; border: double #CACACA 3px; padding: 10px 10px 10px 10px ;
                         text-align: center; font-size: 0.78em;                                  }
-.web_nsfw_flou         { filter: blur(20px);                                                    }
-.web_nsfw_flou:hover   { filter: none;                                                          }
-.web_nsfw_flou2        { filter: blur(10px);                                                    }
-.web_nsfw_flou2:hover  { filter: none;                                                          }
-.web_nsfw_flou3        { filter: blur(5px);                                                     }
-.web_nsfw_flou3:hover  { filter: none;                                                          }
-.web_galerie           { display: flex; flex-wrap: wrap                                         }
-.web_galerie_image     { flex: 0 0 32%; border: 1px solid #CACACA; padding: 10px 10px 10px 10px ;
+.web_nsfw_blur         { filter: blur(20px);                                                    }
+.web_nsfw_blur:hover   { filter: none;                                                          }
+.web_nsfw_blur2        { filter: blur(10px);                                                    }
+.web_nsfw_blur2:hover  { filter: none;                                                          }
+.web_nsfw_blur3        { filter: blur(5px);                                                     }
+.web_nsfw_blur3:hover  { filter: none;                                                          }
+.web_gallery           { display: flex; flex-wrap: wrap                                         }
+.web_gallery_image     { flex: 0 0 32%; border: 1px solid #CACACA; padding: 10px 10px 10px 10px ;
                        text-align: center; font-size: 0.9em; margin: 1px;                       }
-.web_galerie_hr        { height: 1px; background: #CACACA; border: 0px                          ;
+.web_gallery_hr        { height: 1px; background: #CACACA; border: 0px                          ;
                         margin: 10px -10px 10px -10px;                                          }
 .web_copypasta         { font-size: 1.2em; padding: 5px 14px;                                   }
 

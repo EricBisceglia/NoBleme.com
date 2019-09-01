@@ -44,7 +44,7 @@ $agenobleme = date('Y')-2005;
 
       <?php if($lang == 'FR') { ?>
 
-      <div class="texte">
+      <div class="width_50">
 
         <h1>NoBleme.com</h1>
 

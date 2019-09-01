@@ -383,39 +383,39 @@ $javascripts .= '
 
       <div id="header_titres" class="header_topmenu_zone">
 
-        <a class="header_topmenu_lien" href="<?=$path?>index">
+        <a class="header_topmenu_link" href="<?=$path?>index">
           <div class="<?=header_menu_css('NoBleme',$header_menu,'top')?>">
             <?=__('menu_top_nobleme')?>
           </div>
         </a>
 
-        <a class="header_topmenu_lien" href="<?=$path?>pages/irc/index">
+        <a class="header_topmenu_link" href="<?=$path?>pages/irc/index">
           <div class="<?=header_menu_css('Talk',$header_menu,'top')?>">
             <?=__('menu_top_talk')?>
           </div>
         </a>
 
-        <a class="header_topmenu_lien" href="<?=$path?>pages/nbdb/index">
+        <a class="header_topmenu_link" href="<?=$path?>pages/nbdb/index">
           <div class="<?=header_menu_css('Read',$header_menu,'top')?>">
             <?=__('menu_top_read')?>
           </div>
         </a>
 
-        <a class="header_topmenu_lien" href="<?=$path?>pages/nbrpg/index">
+        <a class="header_topmenu_link" href="<?=$path?>pages/nbrpg/index">
           <div class="<?=header_menu_css('Play',$header_menu,'top')?>">
           <?=__('menu_top_play')?>
           </div>
         </a>
 
         <?php if($is_global_moderator) { ?>
-        <a class="header_topmenu_lien" href="<?=$path?>pages/nobleme/activite?mod">
+        <a class="header_topmenu_link" href="<?=$path?>pages/nobleme/activite?mod">
           <div class="<?=header_menu_css('Admin',$header_menu,'top')?>">
             <?=__('menu_top_admin')?>
           </div>
         </a>
 
         <?php } if($is_admin) { ?>
-        <a class="header_topmenu_lien" href="<?=$path?>pages/dev/ircbot">
+        <a class="header_topmenu_link" href="<?=$path?>pages/dev/ircbot">
           <div class="<?=header_menu_css('Dev',$header_menu,'top')?>">
             <?=__('menu_top_dev')?>
           </div>
@@ -439,13 +439,13 @@ $javascripts .= '
 
 <?php ########################################### LOGIN / STATUS BAR ############################################### ?>
 
-    <div id="statusbar_nomenu" class="menu_sub_standard menu_sub<?=$website_update_css2?>">
+    <div id="statusbar_nomenu" class="header_infobar_standard header_infobar<?=$website_update_css2?>">
 
       <?php if(user_is_logged_in()) {
             if($nb_private_messages) { ?>
 
       <div class="header_topmenu_zone">
-        <a id="nouveaux_messages" class="menu_sub_lien nouveaux_messages" href="<?=$path?>pages/user/notifications">
+        <a id="header_infobar_notification" class="header_infobar_link header_infobar_notification" href="<?=$path?>pages/user/notifications">
           <?=__('header_status_message', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
         </a>
       </div>
@@ -453,7 +453,7 @@ $javascripts .= '
       <?php } else { ?>
 
       <div class="header_topmenu_zone">
-        <a id="nouveaux_messages"  class="menu_sub_lien" href="<?=$path?>pages/user/notifications">
+        <a id="header_infobar_notification"  class="header_infobar_link" href="<?=$path?>pages/user/notifications">
           <?=__('header_status_logged_in', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
         </a>
       </div>
@@ -461,7 +461,7 @@ $javascripts .= '
       <?php } ?>
 
       <div class="header_topmenu_zone">
-        <a class="menu_sub_lien" href="<?=$url_logout?>">
+        <a class="header_infobar_link" href="<?=$url_logout?>">
           <?=__('header_status_logout')?>
         </a>
       </div>
@@ -469,7 +469,7 @@ $javascripts .= '
       <?php } else { ?>
 
       <div class="header_topmenu_zone">
-        <a class="menu_sub_lien" href="<?=$path?>pages/user/login">
+        <a class="header_infobar_link" href="<?=$path?>pages/user/login">
           <?=__('header_status_login')?>
         </a>
       </div>
@@ -478,13 +478,13 @@ $javascripts .= '
 
     </div>
 
-    <div id="statusbar_menu" class="menu_sub_responsive menu_sub<?=$website_update_css2?>">
+    <div id="statusbar_menu" class="header_infobar_responsive header_infobar<?=$website_update_css2?>">
 
       <?php if(user_is_logged_in()) {
             if($nb_private_messages) { ?>
 
       <div class="header_topmenu_zone">
-        <a id="nouveaux_messages" class="menu_sub_lien nouveaux_messages" href="<?=$path?>pages/user/notifications">
+        <a id="header_infobar_notification" class="header_infobar_link header_infobar_notification" href="<?=$path?>pages/user/notifications">
           <?=__('header_status_message_short', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
         </a>
       </div>
@@ -492,7 +492,7 @@ $javascripts .= '
       <?php } else { ?>
 
       <div class="header_topmenu_zone">
-        <a id="nouveaux_messages"  class="menu_sub_lien" href="<?=$path?>pages/user/notifications">
+        <a id="header_infobar_notification"  class="header_infobar_link" href="<?=$path?>pages/user/notifications">
           <?=__('header_status_logged_in_short', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
         </a>
       </div>
@@ -500,7 +500,7 @@ $javascripts .= '
       <?php } ?>
 
       <div class="header_topmenu_zone">
-        <a class="menu_sub_lien" href="<?=$url_logout?>">
+        <a class="header_infobar_link" href="<?=$url_logout?>">
           <?=__('header_status_logout')?>
         </a>
       </div>
@@ -508,7 +508,7 @@ $javascripts .= '
       <?php } else { ?>
 
       <div class="header_topmenu_zone">
-        <a class="menu_sub_lien" href="<?=$path?>pages/user/login">
+        <a class="header_infobar_link" href="<?=$path?>pages/user/login">
           <?=__('header_status_login_short')?>
         </a>
       </div>
@@ -519,7 +519,7 @@ $javascripts .= '
 
 <?php ################################################ SIDE MENU ################################################### ?>
 
-    <div class="containermenu">
+    <div class="header_side_menu_container">
 
       <div class="header_side_nomenu" id="header_nomenu" onclick="document.getElementById('header_sidemenu').style.display = 'flex'; document.getElementById('header_nomenu').style.display = 'none';">
         <?=__('menu_side_display');?>
@@ -537,7 +537,7 @@ $javascripts .= '
 
 <?php /* ######################################## SIDE MENU: NOBLEME ########### */ if ($header_menu == 'NoBleme') { ?>
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_nobleme_title')?>
             </div>
 
@@ -555,7 +555,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_nobleme_community')?>
             </div>
 
@@ -597,7 +597,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_nobleme_help')?>
             </div>
 
@@ -633,7 +633,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_nobleme_dev')?>
             </div>
 
@@ -675,7 +675,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_nobleme_legal')?>
             </div>
 
@@ -699,7 +699,7 @@ $javascripts .= '
 
 <?php } /* ######################################## SIDE MENU: TALK ########## */ else if ($header_menu == 'Talk') { ?>
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_talk_irc')?>
             </div>
 
@@ -729,7 +729,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_talk_forum')?>
             </div>
 
@@ -759,7 +759,7 @@ $javascripts .= '
 
 <?php } /* ########################################## SIDE MENU: READ ######## */ else if ($header_menu == 'Read') { ?>
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_read_nbdb')?>
             </div>
 
@@ -795,7 +795,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_read_quotes')?>
             </div>
 
@@ -825,7 +825,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_read_writers')?>
             </div>
 
@@ -849,7 +849,7 @@ $javascripts .= '
 
 <?php } /* ########################################## SIDE MENU: PLAY ######## */ else if ($header_menu == 'Play') { ?>
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_play_nbrpg')?>
             </div>
 
@@ -867,7 +867,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_play_nrm')?>
             </div>
 
@@ -885,7 +885,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_play_radikal')?>
             </div>
 
@@ -897,7 +897,7 @@ $javascripts .= '
 
 <?php } /* ########################################## SIDE MENU: USER ######## */ else if ($header_menu == 'User') { ?>
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_user_pms')?>
             </div>
 
@@ -921,7 +921,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_user_profile')?>
             </div>
 
@@ -939,7 +939,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_user_settings')?>
             </div>
 
@@ -981,7 +981,7 @@ $javascripts .= '
 
 <?php } /* ######################################### SIDE MENU: ADMIN ####### */ else if ($header_menu == 'Admin') { ?>
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_admin_activity')?>
             </div>
 
@@ -993,7 +993,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_admin_users')?>
             </div>
 
@@ -1025,7 +1025,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_admin_tools')?>
             </div>
 
@@ -1037,7 +1037,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_admin_stats')?>
             </div>
 
@@ -1059,7 +1059,7 @@ $javascripts .= '
 
             <?php if($is_admin) { ?>
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_dev_ircbot')?>
             </div>
 
@@ -1071,7 +1071,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_dev_website')?>
             </div>
 
@@ -1101,7 +1101,7 @@ $javascripts .= '
 
             <hr class="header_sidemenu_hr">
 
-            <div class="header_sidemenu_titre">
+            <div class="header_sidemenu_title">
               <?=__('menu_side_dev_doc')?>
             </div>
 
@@ -1137,7 +1137,7 @@ $javascripts .= '
 //                                                                                                                   //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
 
-    <div class="flex_element contenu_page">
+    <div class="header_main_page_container header_main_page">
 
       <?php } if($meta_alert != "") { ?>
 
