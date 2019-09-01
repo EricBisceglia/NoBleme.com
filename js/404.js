@@ -63,7 +63,7 @@ var str_length=texte404[0].length;
 var contents, row;
 
 // Puis on parcourt l'array
-function ecrire_404()
+function this_page_is_a_404()
 {
   // Initialisation
   contents='';

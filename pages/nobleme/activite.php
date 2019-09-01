@@ -5,10 +5,13 @@
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
 include './../../inc/activity.inc.php'; // Traitement de l'activité recente
+include './../../inc/functions_time.inc.php';
+include './../../inc/functions_nobleme.inc.php';
+include './../../inc/bbcodes.inc.php';
 
 // Permissions
 if(isset($_GET['mod']))
-  sysoponly($lang);
+  user_restrict_to_global_moderators($lang);
 
 // Menus du header
 $header_menu      = (!isset($_GET['mod'])) ? 'NoBleme' : 'Admin';
@@ -79,53 +82,53 @@ if(isset($_POST['activite_delete']) && $est_admin)
 // $activite_diff[$nactrec]         - (optionnel) Différences stockées dans le log
 
 // On commence par aller chercher toute l'activité récente
-$qactrec = "    SELECT    activite.id           ,
-                          activite.timestamp    ,
-                          activite.pseudonyme   ,
-                          activite.FKmembres    ,
-                          activite.action_type  ,
-                          activite.action_id    ,
-                          activite.action_titre ,
-                          activite.parent       ,
-                          activite.justification
-                FROM      activite              ";
+$qactrec = "    SELECT    logs_activity.id                ,
+                          logs_activity.happened_at       ,
+                          logs_activity.nickname          ,
+                          logs_activity.fk_users          ,
+                          logs_activity.activity_type     ,
+                          logs_activity.activity_id       ,
+                          logs_activity.activity_summary  ,
+                          logs_activity.activity_parent   ,
+                          logs_activity.moderation_reason
+                FROM      logs_activity              ";
 
 // Activité récente ou log de modération
-if(isset($_GET['mod']) && $est_sysop)
-  $qactrec .= " WHERE     activite.log_moderation = 1 ";
+if(isset($_GET['mod']) && $is_global_moderator)
+  $qactrec .= " WHERE     logs_activity.is_administrators_only = 1 ";
 else
-  $qactrec .= " WHERE     activite.log_moderation = 0 ";
+  $qactrec .= " WHERE     logs_activity.is_administrators_only = 0 ";
 
 // On rajoute la recherche si y'en a une
 if(isset($_POST['activite_type']))
 {
   $activite_type = postdata($_POST['activite_type']);
   if($activite_type == 'membres')
-    $qactrec .= " AND     ( activite.action_type LIKE 'register'
-                  OR        activite.action_type LIKE 'profil'
-                  OR        activite.action_type LIKE 'profil_%'
-                  OR        activite.action_type LIKE 'droits_%'
-                  OR        activite.action_type LIKE 'ban'
-                  OR        activite.action_type LIKE 'deban'
-                  OR        activite.action_type LIKE 'editpass' ) ";
+    $qactrec .= " AND     ( logs_activity.activity_type LIKE 'register'
+                  OR        logs_activity.activity_type LIKE 'profil'
+                  OR        logs_activity.activity_type LIKE 'profil_%'
+                  OR        logs_activity.activity_type LIKE 'droits_%'
+                  OR        logs_activity.activity_type LIKE 'ban'
+                  OR        logs_activity.activity_type LIKE 'deban'
+                  OR        logs_activity.activity_type LIKE 'editpass' ) ";
   else if($activite_type == 'forum')
-    $qactrec .= " AND       activite.action_type LIKE 'forum_%' ";
+    $qactrec .= " AND       logs_activity.activity_type LIKE 'forum_%' ";
   else if($activite_type == 'irl')
-    $qactrec .= " AND       activite.action_type LIKE 'irl_%' ";
+    $qactrec .= " AND       logs_activity.activity_type LIKE 'irl_%' ";
   else if($activite_type == 'ecrivains')
-    $qactrec .= " AND       activite.action_type LIKE 'ecrivains_%' ";
+    $qactrec .= " AND       logs_activity.activity_type LIKE 'ecrivains_%' ";
   else if($activite_type == 'dev')
-    $qactrec .= " AND     ( activite.action_type LIKE 'version'
-                  OR        activite.action_type LIKE 'devblog'
-                  OR        activite.action_type LIKE 'todo_%' )";
+    $qactrec .= " AND     ( logs_activity.activity_type LIKE 'version'
+                  OR        logs_activity.activity_type LIKE 'devblog'
+                  OR        logs_activity.activity_type LIKE 'todo_%' )";
   else if($activite_type == 'misc')
-    $qactrec .= " AND       activite.action_type LIKE 'quote_%' ";
+    $qactrec .= " AND       logs_activity.activity_type LIKE 'quote_%' ";
   else if($activite_type == 'nbdb')
-    $qactrec .= " AND       activite.action_type LIKE 'nbdb_%' ";
+    $qactrec .= " AND       logs_activity.activity_type LIKE 'nbdb_%' ";
 }
 
 // On trie
-$qactrec .= "   ORDER BY  activite.timestamp DESC ";
+$qactrec .= "   ORDER BY  logs_activity.happened_at DESC ";
 
 // On décide combien on en select
 if(isset($_POST['activite_num']))
@@ -145,37 +148,37 @@ for($nactrec = 0 ; $dactrec = mysqli_fetch_array($qactrec) ; $nactrec++)
 {
   // On va avoir besoin de l'ID pour la suppression, ainsi que de la date de l'action
   $activite_id[$nactrec]      = $dactrec['id'];
-  $activite_date[$nactrec]    = ilya($dactrec['timestamp'], $lang);
+  $activite_date[$nactrec]    = time_since($dactrec['happened_at'], $lang);
 
   // On prépare le contenu à afficher
-  $temp_activite                  = activite_recente($chemin, isset($_GET['mod']), $dactrec['action_type'], $dactrec['FKmembres'], $dactrec['pseudonyme'], $dactrec['action_id'], $dactrec['action_titre'], $dactrec['parent']);
+  $temp_activite                  = log_activity_parse($path, isset($_GET['mod']), $dactrec['activity_type'], $dactrec['fk_users'], $dactrec['nickname'], $dactrec['activity_id'], $dactrec['activity_summary'], $dactrec['activity_parent']);
   $activite_css[$nactrec]         = $temp_activite['css'];
   $activite_href[$nactrec]        = $temp_activite['href'];
   $activite_desc[$nactrec]['FR']  = $temp_activite['FR'];
   $activite_desc[$nactrec]['EN']  = $temp_activite['EN'];
-  $activite_raison[$nactrec]      = ($dactrec['justification']) ? predata($dactrec['justification']) : "";
+  $activite_raison[$nactrec]      = ($dactrec['moderation_reason']) ? sanitize($dactrec['moderation_reason']) : "";
 
   // On va chercher les diffs s'il y en a
   $activite_diff[$nactrec]  = "";
-  $qdiff                    = query(" SELECT    activite_diff.titre_diff  ,
-                                                activite_diff.diff_avant  ,
-                                                activite_diff.diff_apres
-                                      FROM      activite_diff
-                                      WHERE     activite_diff.FKactivite = '".$dactrec['id']."'
-                                      ORDER BY  activite_diff.id ASC ");
+  $qdiff                    = query(" SELECT    logs_activity_details.content_description ,
+                                                logs_activity_details.content_before      ,
+                                                logs_activity_details.content_after
+                                      FROM      logs_activity_details
+                                      WHERE     logs_activity_details.fk_logs_activity = '".$dactrec['id']."'
+                                      ORDER BY  logs_activity_details.id ASC ");
 
   // On parcourt les diffs pour les préparer pour l'affichage
   while($ddiff = mysqli_fetch_array($qdiff))
   {
-    if($ddiff['titre_diff'])
+    if($ddiff['content_description'])
     {
-      if($ddiff['diff_apres'])
-        $activite_diff[$nactrec] .= '<span class="gras">'.predata($ddiff['titre_diff']).' :</span> '.bbcode(diff(predata($ddiff['diff_avant'], 1), predata($ddiff['diff_apres'], 1))).'<br><br>';
+      if($ddiff['content_after'])
+        $activite_diff[$nactrec] .= '<span class="gras">'.sanitize($ddiff['content_description']).' :</span> '.bbcodes(diff_strings(sanitize($ddiff['content_before'], 1), sanitize($ddiff['content_after'], 1))).'<br><br>';
       else
-        $activite_diff[$nactrec] .= '<span class="gras">'.predata($ddiff['titre_diff']).' :</span> '.bbcode(predata($ddiff['diff_avant'], 1)).'<br><br>';
+        $activite_diff[$nactrec] .= '<span class="gras">'.sanitize($ddiff['content_description']).' :</span> '.bbcodes(sanitize($ddiff['content_before'], 1)).'<br><br>';
     }
     else
-      $activite_diff[$nactrec] .= bbcode(predata($ddiff['diff_avant'])).'<br><br>';
+      $activite_diff[$nactrec] .= bbcodes(sanitize($ddiff['content_before'])).'<br><br>';
   }
 }
 
@@ -240,7 +243,7 @@ else if($lang == 'EN')
 /*                                                                                                                                       */
 /*                                                         AFFICHAGE DES DONNÉES                                                         */
 /*                                                                                                                                       */
-if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
+if(!page_is_xhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
 
       <div class="texte2">
 
@@ -251,7 +254,7 @@ if(!getxhr()) { /***************************************************************
         <h1 class="indiv align_center"><?=$trad['titre_mod']?></h1>
         <br>
         <p>
-          Certains logs de modération ont des icônes à droite de la ligne ( <img class="valign_middle" src="<?=$chemin?>img/icones/info.svg" alt="i" height="18"> et <img class="valign_middle" src="<?=$chemin?>img/icones/help.svg" alt="?" height="18"> ).<br>
+          Certains logs de modération ont des icônes à droite de la ligne ( <img class="valign_middle" src="<?=$path?>img/icones/info.svg" alt="i" height="18"> et <img class="valign_middle" src="<?=$path?>img/icones/help.svg" alt="?" height="18"> ).<br>
           Vous pouvez cliquer dessus pour afficher la justification de l'action et/ou le contenu qui a été modifié/supprimé.
         </p>
         <?php } ?>
@@ -260,7 +263,7 @@ if(!getxhr()) { /***************************************************************
 
         <p class="indiv align_center">
           <select id="activite_num"
-                  onchange="dynamique('<?=$chemin?>', '<?=$activite_dynamique_url?>', 'activite_table',
+                  onchange="dynamique('<?=$path?>', '<?=$activite_dynamique_url?>', 'activite_table',
                   'activite_num='+dynamique_prepare('activite_num')+
                   '&activite_type='+dynamique_prepare('activite_type'), 1);">
             <option value="100">100</option>
@@ -269,7 +272,7 @@ if(!getxhr()) { /***************************************************************
           </select>
           <span class="gros gras spaced valign_bottom"><?=$trad['titretable']?></span>
           <select id="activite_type"
-                  onchange="dynamique('<?=$chemin?>', '<?=$activite_dynamique_url?>', 'activite_table',
+                  onchange="dynamique('<?=$path?>', '<?=$activite_dynamique_url?>', 'activite_table',
                   'activite_num='+dynamique_prepare('activite_num')+
                   '&activite_type='+dynamique_prepare('activite_type'), 1);">
             <option value="tout"><?=$trad['ar_tout']?></option>
@@ -316,15 +319,15 @@ if(!getxhr()) { /***************************************************************
               </td>
               <td class="pointeur nowrap <?=$activite_css[$i]?>">
                 <?php if(isset($_GET['mod']) && $activite_raison[$i]) { ?>
-                <img class="valign_center" src="<?=$chemin?>img/icones/help.svg" alt="?"
+                <img class="valign_center" src="<?=$path?>img/icones/help.svg" alt="?"
                       onclick="toggle_row('activite_hidden<?=$i?>',1);">
                 <?php } if(isset($_GET['mod']) && $activite_diff[$i]) { ?>
-                <img class="valign_center" src="<?=$chemin?>img/icones/info.svg" alt="i"
+                <img class="valign_center" src="<?=$path?>img/icones/info.svg" alt="i"
                       onclick="toggle_row('activite_hidden<?=$i?>',1);">
                 <?php } if($est_admin) { ?>
-                <img class="valign_center" src="<?=$chemin?>img/icones/supprimer.svg" alt="X"
+                <img class="valign_center" src="<?=$path?>img/icones/supprimer.svg" alt="X"
                       onclick="var ok = confirm('Confirmation'); if(ok == true) {
-                      dynamique('<?=$chemin?>', '<?=$activite_dynamique_url?>', 'activite_table',
+                      dynamique('<?=$path?>', '<?=$activite_dynamique_url?>', 'activite_table',
                       'activite_num='+dynamique_prepare('activite_num')+
                       '&activite_type='+dynamique_prepare('activite_type')+
                       '&activite_delete='+<?=$activite_id[$i]?>, 1); }">

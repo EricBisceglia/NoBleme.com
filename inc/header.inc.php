@@ -158,7 +158,7 @@ $activity_ip                = sanitize($_SERVER["REMOTE_ADDR"], 'string');
 $activity_page_en_sanitized = sanitize($activity_page_en, 'string');
 $activity_page_fr_sanitized = sanitize($activity_page_fr, 'string');
 $activity_url_sanitized     = sanitize($activity_url, 'string');
-$activity_user              = (user_is_logged_in()) ? sanitize(user_get_id(), 'int', 0) : 0;
+$activity_user              = (user_is_logged_in()) ? sanitize(user_get_id(), 'int', 0) : 0;
 
 // Logged in user activity
 if(user_is_logged_in())
@@ -322,8 +322,9 @@ if (isset($css))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // JavaScript files
 
-// By default none are included (line break to preserve indentation)
-$javascripts = '';
+// Include the default javascript files (weird line breaks are for indentation)
+$javascripts = '
+    <script src="'.$path.'js/common.js"> </script>';
 
 // If extra JS files are set, add them to the list
 if (isset($js))
@@ -370,57 +371,63 @@ $javascripts .= '
     <?=$javascripts?>
   </head>
 
-  <?php if(isset($cette_page_est_404)) { ?>
-<body id="body" onload="ecrire_404();">
+  <?php if(isset($this_page_is_a_404)) { ?>
+<body id="body" onload="this_page_is_a_404();">
   <?php } else if(isset($onload)) { ?>
 <body id="body" onload="<?=$onload?>">
   <?php } else { ?>
 <body id="body">
   <?php } ?>
 
-
-
-
-    <!-- ################################  HEADER  ################################ -->
-
-<?php ####################################################### MENU PRINCIPAL #############################################################
-// Préparation des traductions des titres
-$menu['discuter'] = ($lang == 'FR') ? 'DISCUTER'  : 'TALK';
-$menu['jouer']    = ($lang == 'FR') ? 'JOUER'     : 'PLAY';
-$menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
-/* ######################################################################### */ if(!isset($_GET["popup"]) && !isset($_GET["popout"])) { ?>
+<?php /* ############################################## TOP MENU ################### */ if(!isset($_GET["popup"])) { ?>
 
     <div class="header_topmenu<?=$website_update_css?>">
+
       <div id="header_titres" class="header_topmenu_zone">
 
         <a class="header_topmenu_lien" href="<?=$path?>index">
-          <div class="<?=header_menu_css('NoBleme',$header_menu,'top')?>">NOBLEME</div>
+          <div class="<?=header_menu_css('NoBleme',$header_menu,'top')?>">
+            <?=__('menu_top_nobleme')?>
+          </div>
         </a>
 
         <a class="header_topmenu_lien" href="<?=$path?>pages/irc/index">
-          <div class="<?=header_menu_css('Discuter',$header_menu,'top')?>"><?=$menu['discuter']?></div>
+          <div class="<?=header_menu_css('Talk',$header_menu,'top')?>">
+            <?=__('menu_top_talk')?>
+          </div>
         </a>
 
         <a class="header_topmenu_lien" href="<?=$path?>pages/nbdb/index">
-          <div class="<?=header_menu_css('Lire',$header_menu,'top')?>"><?=$menu['lire']?></div>
+          <div class="<?=header_menu_css('Read',$header_menu,'top')?>">
+            <?=__('menu_top_read')?>
+          </div>
         </a>
 
         <a class="header_topmenu_lien" href="<?=$path?>pages/nbrpg/index">
-          <div class="<?=header_menu_css('Jouer',$header_menu,'top')?>"><?=$menu['jouer']?></div>
+          <div class="<?=header_menu_css('Play',$header_menu,'top')?>">
+          <?=__('menu_top_play')?>
+          </div>
         </a>
 
         <?php if($is_global_moderator) { ?>
         <a class="header_topmenu_lien" href="<?=$path?>pages/nobleme/activite?mod">
-          <div class="<?=header_menu_css('Admin',$header_menu,'top')?>">ADMIN</div>
+          <div class="<?=header_menu_css('Admin',$header_menu,'top')?>">
+            <?=__('menu_top_admin')?>
+          </div>
         </a>
 
         <?php } if($is_admin) { ?>
         <a class="header_topmenu_lien" href="<?=$path?>pages/dev/ircbot">
-          <div class="<?=header_menu_css('Dev',$header_menu,'top')?>">DEV</div>
+          <div class="<?=header_menu_css('Dev',$header_menu,'top')?>">
+            <?=__('menu_top_dev')?>
+          </div>
         </a>
         <?php } ?>
+
       </div>
+
       <div class="header_topmenu_zone header_topmenu_flag">
+
         <a href="<?=$url_lang?>">
           <?php if($lang == 'FR') { ?>
           <img class="header_topmenu_flagimg" src="<?=$path?>img/icones/lang_en.png" alt="EN">
@@ -428,676 +435,552 @@ $menu['lire']     = ($lang == 'FR') ? 'LIRE'      : 'READ';
           <img class="header_topmenu_flagimg" src="<?=$path?>img/icones/lang_fr.png" alt="FR">
           <?php } ?>
         </a>
+
       </div>
     </div>
 
-
-
-
-<?php ###################################################### GESTION DU LOGIN ############################################################
-// Préparation des traductions des phrases liées au compte
-$getpseudo              = sanitize_output(user_get_nickname());
-$submenu['message']     = ($lang == 'FR') ? "$getpseudo, vous avez reçu $nb_private_messages nouveaux messages, cliquez ici pour les lire !" : "$getpseudo, you have recieved $nb_private_messages new messages, click here to read them!";
-$submenu['connecté']    = ($lang == 'FR') ? "Vous êtes connecté en tant que $getpseudo. Cliquez ici pour modifier votre profil et/ou gérer votre compte" : "You are logged in as $getpseudo. Click here to edit your profile and/or manage your account.";
-$submenu['deconnexion'] = ($lang == 'FR') ? "Déconnexion" : "Log out";
-$submenu['connexion']   = ($lang == 'FR') ? "Vous n'êtes pas connecté: Cliquez ici pour vous identifier ou vous enregistrer" : "You are not logged in: Click here to login or register.";
-####################################################################################################################################### ?>
+<?php ########################################### LOGIN / STATUS BAR ############################################### ?>
 
     <div class="menu_sub<?=$website_update_css2?>">
+
       <?php if(user_is_logged_in()) {
             if($nb_private_messages) { ?>
+
       <div class="header_topmenu_zone">
         <a id="nouveaux_messages" class="menu_sub_lien nouveaux_messages" href="<?=$path?>pages/user/notifications">
-          <?=$submenu['message']?>
+          <?=__('header_status_message', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
         </a>
       </div>
+
       <?php } else { ?>
+
       <div class="header_topmenu_zone">
         <a id="nouveaux_messages"  class="menu_sub_lien" href="<?=$path?>pages/user/notifications">
-          <?=$submenu['connecté']?>
+          <?=__('header_status_logged_in', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
         </a>
       </div>
+
       <?php } ?>
+
       <div class="header_topmenu_zone">
         <a class="menu_sub_lien" href="<?=$url_logout?>">
-          <?=$submenu['deconnexion']?>
+          <?=__('header_status_logout')?>
         </a>
       </div>
+
       <?php } else { ?>
+
       <div class="header_topmenu_zone">
         <a class="menu_sub_lien" href="<?=$path?>pages/user/login">
-          <?=$submenu['connexion']?>
+          <?=__('header_status_login')?>
         </a>
       </div>
+
       <?php } ?>
+
     </div>
 
-
-
-
-<?php ######################################################## MENU LATÉRAL ##############################################################
-// Préparation des traductions
-$sidemenu['afficher'] = ($lang == 'FR') ? 'Afficher le menu latéral'  : 'Show the side menu';
-$sidemenu['masquer']  = ($lang == 'FR') ? 'Masquer le menu latéral'   : 'Hide the side menu';
-####################################################################################################################################### ?>
-
-    <script>
-    // Faire disparaitre la suggestion de menu latéral quand on scrolle
-    window.addEventListener('scroll', function() {
-
-      // On applique ceci seulement si le menu est caché
-      if(window.getComputedStyle(document.getElementById('header_sidemenu')).display == 'none')
-      {
-        // On détecte où en est le scrolling
-        var currentscroll = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
-
-        // Si on est en haut, on affiche, sinon, on masque
-        if(!currentscroll)
-          document.getElementById('header_nomenu').style.display = 'inline';
-        else
-          document.getElementById('header_nomenu').style.display = 'none';
-      }
-    }, true);
-    </script>
+<?php ################################################ SIDE MENU ################################################### ?>
 
     <div class="containermenu">
+
       <div class="header_side_nomenu" id="header_nomenu" onclick="document.getElementById('header_sidemenu').style.display = 'flex'; document.getElementById('header_nomenu').style.display = 'none';">
-        <?=$sidemenu['afficher']?>
+        <?=__('menu_side_display');?>
       </div>
+
       <nav id="header_sidemenu" class="header_sidemenu_mobile<?=$website_update_css2?>">
         <div class="header_sidemenu">
           <div>
+
             <div class="header_sidemenu_item header_sidemenu_desktop" onclick="document.getElementById('header_nomenu').style.display = 'flex'; document.getElementById('header_sidemenu').style.display = 'none';">
-              <?=$sidemenu['masquer']?>
+              <?=__('menu_side_hide')?>
             </div>
+
             <hr class="header_sidemenu_hr header_sidemenu_desktop">
 
-
-
-
-<?php ################################################### MENU LATÉRAL : NOBLEME #########################################################
-// Préparation des traductions des titres du menu
-$sidemenu['nb_accueil']     = ($lang == 'FR') ? "Page d'accueil"                : "Home page";
-$sidemenu['nb_activite']    = ($lang == 'FR') ? "Activité récente"              : "Recent activity";
-$sidemenu['nb_communaute']  = ($lang == 'FR') ? "Communauté"                    : "Community";
-$sidemenu['nb_enligne']     = ($lang == 'FR') ? "Qui est en ligne"              : "Who's online";
-$sidemenu['nb_admins']      = ($lang == 'FR') ? "Équipe administrative"         : "Staff and admins";
-$sidemenu['nb_membres']     = ($lang == 'FR') ? "Liste des membres"             : "Registered user list";
-$sidemenu['nb_annivs']      = ($lang == 'FR') ? "Anniversaires"                 : "Member birthdays";
-$sidemenu['nb_irls']        = ($lang == 'FR') ? "Rencontres IRL"                : "Real life meetups";
-$sidemenu['nb_irlstats']    = ($lang == 'FR') ? "Statistiques des IRL"          : "RL meetup stats";
-$sidemenu['nb_aide']        = ($lang == 'FR') ? "Aide & Informations"           : "Help / Documentation";
-$sidemenu['nb_doc']         = ($lang == 'FR') ? "Documentation du site"         : "Website documentation";
-$sidemenu['nb_nobleme']     = ($lang == 'FR') ? "Qu'est-ce que NoBleme"         : "What is NoBleme";
-$sidemenu['nb_coc']         = ($lang == 'FR') ? "Code de conduite"              : "Code of conduct";
-$sidemenu['nb_api']         = ($lang == 'FR') ? "API publique"                  : "Public API";
-$sidemenu['nb_rss']         = ($lang == 'FR') ? "Flux RSS"                      : "RSS feeds";
-$sidemenu['nb_dev']         = ($lang == 'FR') ? "Développement"                 : "Development";
-$sidemenu['nb_coulisses']   = ($lang == 'FR') ? "Coulisses de NoBleme"          : "Behind the scenes";
-$sidemenu['nb_todo']        = ($lang == 'FR') ? "Liste des tâches"              : "To-do list";
-$sidemenu['nb_roadmap']     = ($lang == 'FR') ? "Plan de route"                 : "Roadmap";
-$sidemenu['nb_bug']         = ($lang == 'FR') ? "Rapporter un bug"              : "Report a bug";
-$sidemenu['nb_feature']     = ($lang == 'FR') ? "Quémander un feature"          : "Request a feature";
-$sidemenu['nb_legal']       = ($lang == 'FR') ? "Mentions légales"              : "Legal notice";
-$sidemenu['nb_confidence']  = ($lang == 'FR') ? "Politique de confidentialité"  : "Privacy policy";
-$sidemenu['nb_persodata']   = ($lang == 'FR') ? "Vos données personnelles"      : "Your personal data";
-$sidemenu['nb_oubli']       = ($lang == 'FR') ? "Droit à l'oubli"               : "Right to be forgotten";
-/* ################################################################################################# */ if($header_menu == 'NoBleme') { ?>
+<?php /* ######################################## SIDE MENU: NOBLEME ########### */ if ($header_menu == 'NoBleme') { ?>
 
             <div class="header_sidemenu_titre">
-              NoBleme.com
+              <?=__('menu_side_nobleme_title')?>
             </div>
 
             <a href="<?=$path?>index">
-              <div class="<?=header_menu_css('Accueil',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_accueil']?>
+              <div class="<?=header_menu_css('Homepage',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_homepage')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/nobleme/activite">
-              <div class="<?=header_menu_css('ActiviteRecente',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_activite']?>
+              <div class="<?=header_menu_css('Activity',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_activity')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['nb_communaute']?>
+              <?=__('menu_side_nobleme_community')?>
             </div>
 
             <a href="<?=$path?>pages/nobleme/online?noguest">
-              <div class="<?=header_menu_css('QuiEstEnLigne',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_enligne']?>
+              <div class="<?=header_menu_css('Online',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_online')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/nobleme/admins">
-              <div class="<?=header_menu_css('EquipeAdmin',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_admins']?>
+              <div class="<?=header_menu_css('Staff',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_staff')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/nobleme/membres">
-              <div class="<?=header_menu_css('ListeDesMembres',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_membres']?>
+              <div class="<?=header_menu_css('Userlist',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_userlist')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/nobleme/anniversaires">
-              <div class="<?=header_menu_css('Anniversaires',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_annivs']?>
+              <div class="<?=header_menu_css('Birthdays',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_birthdays')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/irl/index">
-              <div class="<?=header_menu_css('IRL',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_irls']?>
+              <div class="<?=header_menu_css('Meetups',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_meetups')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/irl/stats">
-              <div class="<?=header_menu_css('IRLstats',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_irlstats']?>
+              <div class="<?=header_menu_css('Meetupsstats',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_meetup_stats')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['nb_aide']?>
+              <?=__('menu_side_nobleme_help')?>
             </div>
 
             <a href="<?=$path?>pages/doc/index">
-              <div class="<?=header_menu_css('Doc',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_doc']?>
+              <div class="<?=header_menu_css('Documentation',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_documentation')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/doc/nobleme">
-              <div class="<?=header_menu_css('QuEstCeQueNoBleme',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_nobleme']?>
+              <div class="<?=header_menu_css('Whatsnobleme',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_what_is')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/doc/coc">
-              <div class="<?=header_menu_css('CoC',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_coc']?>
+              <div class="<?=header_menu_css('COC',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_coc')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/doc/api">
               <div class="<?=header_menu_css('API',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_api']?>
+                <?=__('menu_side_nobleme_api')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/doc/rss">
               <div class="<?=header_menu_css('RSS',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_rss']?>
+                <?=__('menu_side_nobleme_rss')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['nb_dev']?>
+              <?=__('menu_side_nobleme_dev')?>
             </div>
 
             <a href="<?=$path?>pages/nobleme/coulisses">
-              <div class="<?=header_menu_css('Coulisses',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_coulisses']?>
+              <div class="<?=header_menu_css('Behindscenes',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_behind_scenes')?>
               </div>
             </a>
-
-            <?php if($lang == 'FR') { ?>
 
             <a href="<?=$path?>pages/devblog/index">
               <div class="<?=header_menu_css('Devblog',$header_sidemenu,'side')?>">
-                Blog de développement
+                <?=__('menu_side_nobleme_devblog')?>
               </div>
             </a>
 
-            <?php } ?>
-
             <a href="<?=$path?>pages/todo/index">
-              <div class="<?=header_menu_css('TodoList',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_todo']?>
+              <div class="<?=header_menu_css('Todolist',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_todolist')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/todo/roadmap">
               <div class="<?=header_menu_css('Roadmap',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_roadmap']?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>pages/todo/request">
-              <div class="<?=header_menu_css('OuvrirTicket',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_feature']?>
+                <?=__('menu_side_nobleme_roadmap')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/todo/request?bug">
-              <div class="<?=header_menu_css('OuvrirTicketBug',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_bug']?>
+              <div class="<?=header_menu_css('Bugreport',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_report_bug')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>pages/todo/request">
+              <div class="<?=header_menu_css('Featurerequest',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_feature')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['nb_legal']?>
+              <?=__('menu_side_nobleme_legal')?>
             </div>
 
             <a href="<?=$path?>pages/doc/mentions_legales">
-              <div class="<?=header_menu_css('MentionsLegales',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_confidence']?>
+              <div class="<?=header_menu_css('Privacy',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_privacy')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/doc/donnees_personnelles">
-              <div class="<?=header_menu_css('DonneesPersonnelles',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_persodata']?>
+              <div class="<?=header_menu_css('Personaldata',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_personal_data')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/doc/droit_oubli">
-              <div class="<?=header_menu_css('DroitOubli',$header_sidemenu,'side')?>">
-                <?=$sidemenu['nb_oubli']?>
+              <div class="<?=header_menu_css('Forgetme',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_forget_me')?>
               </div>
             </a>
 
-
-
-
-<?php } ################################################ MENU LATÉRAL : DISCUTER #########################################################
-// Préparation des traductions des titres du menu
-$sidemenu['bla_forum']            = ($lang == 'FR') ? "Forum de discussion"       : "Discussion forum";
-$sidemenu['bla_forum_sujets']     = ($lang == 'FR') ? "Sujets de discussion"      : "Latest forum topics";
-$sidemenu['bla_forum_ouvrir']     = ($lang == 'FR') ? "Ouvrir un nouveau sujet"   : "Open a new topic";
-$sidemenu['bla_forum_recherche']  = ($lang == 'FR') ? "Recherche sur le forum"    : "Search the forum";
-$sidemenu['bla_forum_filtrage']   = ($lang == 'FR') ? "Préférences de filtrage"   : "Filtering preferences";
-$sidemenu['bla_irc']              = ($lang == 'FR') ? "Serveur de chat IRC"       : "IRC chat server";
-$sidemenu['bla_irc_what']         = ($lang == 'FR') ? "Qu'est-ce que IRC"         : "What is IRC";
-$sidemenu['bla_irc_clic']         = ($lang == 'FR') ? "Rejoindre la conversation" : "Join the conversation";
-$sidemenu['bla_irc_canaux']       = ($lang == 'FR') ? "Liste des canaux"          : "Channel list";
-$sidemenu['bla_irc_services']     = ($lang == 'FR') ? "Commandes et services"     : "Commands and services";
-/* ################################################################################################ */ if($header_menu == 'Discuter') { ?>
+<?php } /* ######################################## SIDE MENU: TALK ########## */ else if ($header_menu == 'Talk') { ?>
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['bla_irc']?>
+              <?=__('menu_side_talk_irc')?>
             </div>
 
             <a href="<?=$path?>pages/irc/index">
               <div class="<?=header_menu_css('IRC',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_irc_what']?>
+                <?=__('menu_side_talk_irc_intro')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/irc/client">
-              <div class="<?=header_menu_css('IRCClient',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_irc_clic']?>
+              <div class="<?=header_menu_css('IRCjoin',$header_sidemenu,'side')?>">
+                <?=__('menu_side_talk_irc_join')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/irc/services">
-              <div class="<?=header_menu_css('IRCServices',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_irc_services']?>
+              <div class="<?=header_menu_css('IRCservices',$header_sidemenu,'side')?>">
+                <?=__('menu_side_talk_irc_services')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/irc/canaux">
-              <div class="<?=header_menu_css('IRCCanaux',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_irc_canaux']?>
+              <div class="<?=header_menu_css('IRCchannels',$header_sidemenu,'side')?>">
+                <?=__('menu_side_talk_irc_channels')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['bla_forum']?>
+              <?=__('menu_side_talk_forum')?>
             </div>
 
             <a href="<?=$path?>pages/forum/index">
-              <div class="<?=header_menu_css('ForumIndex',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_forum_sujets']?>
+              <div class="<?=header_menu_css('Forum',$header_sidemenu,'side')?>">
+                <?=__('menu_side_talk_forum_topics')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/forum/new">
-              <div class="<?=header_menu_css('ForumNew',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_forum_ouvrir']?>
+              <div class="<?=header_menu_css('Forumnew',$header_sidemenu,'side')?>">
+                <?=__('menu_side_talk_forum_new')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/forum/recherche">
-              <div class="<?=header_menu_css('ForumRecherche',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_forum_recherche']?>
+              <div class="<?=header_menu_css('Forumsearch',$header_sidemenu,'side')?>">
+                <?=__('menu_side_talk_forum_search')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/forum/filtres">
-              <div class="<?=header_menu_css('ForumFiltrage',$header_sidemenu,'side')?>">
-                <?=$sidemenu['bla_forum_filtrage']?>
+              <div class="<?=header_menu_css('Forumsettings',$header_sidemenu,'side')?>">
+                <?=__('menu_side_talk_forum_preferences')?>
               </div>
             </a>
 
-
-
-
-<?php } ################################################## MENU LATÉRAL : LIRE ###########################################################
-// Préparation des traductions des titres du menu
-$sidemenu['lire_nbdb_titre']        = ($lang == 'FR') ? "NBDB"                      : "NoBleme Database";
-$sidemenu['lire_nbdb_index']        = ($lang == 'FR') ? "Base d'informations"       : "The NoBleme Database";
-$sidemenu['lire_nbdb_web_encyclo']  = ($lang == 'FR') ? "Encyclopédie du web"       : "Internet encyclopedia";
-$sidemenu['lire_nbdb_web_e_liste']  = ($lang == 'FR') ? "Liste des pages"           : "List of all pages";
-$sidemenu['lire_nbdb_web_e_rand']   = ($lang == 'FR') ? "Page au hasard"            : "Random page";
-$sidemenu['lire_nbdb_web_dico']     = ($lang == 'FR') ? "Dictionnaire du web"       : "Internet dictionnary";
-$sidemenu['lire_quotes_titre']      = ($lang == 'FR') ? "Miscellanées"              : "Miscellanea";
-$sidemenu['lire_quotes_liste']      = ($lang == 'FR') ? "Paroles de NoBlemeux"      : "Quote database";
-$sidemenu['lire_quotes_random']     = ($lang == 'FR') ? "Miscellanée au hasard"     : "Random quote";
-$sidemenu['lire_quotes_stats']      = ($lang == 'FR') ? "Stats des miscellanées"    : "Miscellanea stats";
-$sidemenu['lire_quotes_proposer']   = ($lang == 'FR') ? "Proposer une miscellanée"  : "Submit a new quote";
-/* #################################################################################################### */ if($header_menu == 'Lire') { ?>
+<?php } /* ########################################## SIDE MENU: READ ######## */ else if ($header_menu == 'Read') { ?>
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['lire_nbdb_titre']?>
+              <?=__('menu_side_read_nbdb')?>
             </div>
 
             <a href="<?=$path?>pages/nbdb/index">
-              <div class="<?=header_menu_css('NBDBIndex',$header_sidemenu,'side')?>">
-                <?=$sidemenu['lire_nbdb_index']?>
+              <div class="<?=header_menu_css('NBDB',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_nbdb_index')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/nbdb/web">
-              <div class="<?=header_menu_css('NBDBEncycloWeb',$header_sidemenu,'side')?>">
-                <?=$sidemenu['lire_nbdb_web_encyclo']?>
+              <div class="<?=header_menu_css('NBDBweb',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_nbdb_web')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/nbdb/web_pages">
-              <div class="<?=header_menu_css('NBDBEncycloListe',$header_sidemenu,'side')?>">
-                <?=$sidemenu['lire_nbdb_web_e_liste']?>
+              <div class="<?=header_menu_css('NBDBwebpages',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_nbdb_web_pages')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/nbdb/web?random">
-              <div class="<?=header_menu_css('NBDBEncycloRand',$header_sidemenu,'side')?>">
-                <?=$sidemenu['lire_nbdb_web_e_rand']?>
+              <div class="<?=header_menu_css('NBDBwebrandom',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_nbdb_web_random')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/nbdb/web_dictionnaire">
-              <div class="<?=header_menu_css('NBDBDicoWeb',$header_sidemenu,'side')?>">
-                <?=$sidemenu['lire_nbdb_web_dico']?>
+              <div class="<?=header_menu_css('NBDBwebdict',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_nbdb_web_dictionary')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['lire_quotes_titre']?>
+              <?=__('menu_side_read_quotes')?>
             </div>
 
             <a href="<?=$path?>pages/quotes/index">
-              <div class="<?=header_menu_css('MiscIndex',$header_sidemenu,'side')?>">
-                <?=$sidemenu['lire_quotes_liste']?>
+              <div class="<?=header_menu_css('Quotes',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_quotes_list')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/quotes/quote?random">
-              <div class="<?=header_menu_css('MiscRandom',$header_sidemenu,'side')?>">
-                <?=$sidemenu['lire_quotes_random']?>
+              <div class="<?=header_menu_css('Quotesrandom',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_quotes_random')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/quotes/stats">
-              <div class="<?=header_menu_css('MiscStats',$header_sidemenu,'side')?>">
-                <?=$sidemenu['lire_quotes_stats']?>
+              <div class="<?=header_menu_css('Quotesstats',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_quotes_stats')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/quotes/add">
-              <div class="<?=header_menu_css('MiscAdd',$header_sidemenu,'side')?>">
-                <?=$sidemenu['lire_quotes_proposer']?>
+              <div class="<?=header_menu_css('Quotessubmit',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_quotes_submit')?>
               </div>
             </a>
-
-            <?php if($lang == 'FR') { ?>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              Coin des écrivains
+              <?=__('menu_side_read_writers')?>
             </div>
 
             <a href="<?=$path?>pages/ecrivains/index">
-              <div class="<?=header_menu_css('EcrivainsListe',$header_sidemenu,'side')?>">
-                Écrits de NoBlemeux
+              <div class="<?=header_menu_css('Writers',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_writers_writings')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/ecrivains/concours_liste">
-              <div class="<?=header_menu_css('EcrivainsConcours',$header_sidemenu,'side')?>">
-                Concours d'écriture
+              <div class="<?=header_menu_css('Writerscontests',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_writers_contests')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/ecrivains/publier">
-              <div class="<?=header_menu_css('EcrivainsPublier',$header_sidemenu,'side')?>">
-                Publier un texte
+              <div class="<?=header_menu_css('Writerspublish',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_writers_publish')?>
               </div>
             </a>
 
-            <?php } ?>
-
-
-
-
-<?php } ################################################## MENU LATÉRAL : JOUER ##########################################################
-// Préparation des traductions des titres du menu
-$sidemenu['jeu_nbrpg_index']  = ($lang == 'FR') ? "Qu'est-ce que le NBRPG"  : "What is the NBRPG";
-$sidemenu['jeu_nrm_rip']      = ($lang == 'FR') ? "En souvenir du NRM"      : "Remembering the NRM";
-$sidemenu['jeu_nrm_podium']   = ($lang == 'FR') ? "Champions du passé"      : "Champions of the past";
-$sidemenu['jeu_radikal']      = ($lang == 'FR') ? "Projet: Radikal"         : "Project: Radikal";
-$sidemenu['jeu_radikal_hype'] = ($lang == 'FR') ? "Le prochain jeu NoBleme" : "The next NoBleme game";
-/* ################################################################################################### */ if($header_menu == 'Jouer') { ?>
+<?php } /* ########################################## SIDE MENU: PLAY ######## */ else if ($header_menu == 'Play') { ?>
 
             <div class="header_sidemenu_titre">
-              NoBlemeRPG
+              <?=__('menu_side_play_nbrpg')?>
             </div>
 
             <a href="<?=$path?>pages/nbrpg/index">
-              <div class="<?=header_menu_css('NBRPGWhat',$header_sidemenu,'side')?>">
-                <?=$sidemenu['jeu_nbrpg_index']?>
+              <div class="<?=header_menu_css('NBRPG',$header_sidemenu,'side')?>">
+                <?=__('menu_side_play_nbrpg_intro')?>
               </div>
             </a>
 
-            <?php if($lang == 'FR') { ?>
             <a href="<?=$path?>pages/nbrpg/archives">
-              <div class="<?=header_menu_css('NBRPGArchives',$header_sidemenu,'side')?>">
-                Sessions archivées
+              <div class="<?=header_menu_css('NBRPGarchives',$header_sidemenu,'side')?>">
+                <?=__('menu_side_play_nbrpg_archives')?>
               </div>
             </a>
-            <?php } ?>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              NRM Online
+              <?=__('menu_side_play_nrm')?>
             </div>
 
             <a href="<?=$path?>pages/nrm/index">
               <div class="<?=header_menu_css('NRM',$header_sidemenu,'side')?>">
-                <?=$sidemenu['jeu_nrm_rip']?>
+                <?=__('menu_side_play_nrm_memory')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/nrm/podium">
-              <div class="<?=header_menu_css('NRMPodium',$header_sidemenu,'side')?>">
-                <?=$sidemenu['jeu_nrm_podium']?>
+              <div class="<?=header_menu_css('NRMpodium',$header_sidemenu,'side')?>">
+                <?=__('menu_side_play_nrm_podium')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['jeu_radikal']?>
+              <?=__('menu_side_play_radikal')?>
             </div>
 
             <a href="<?=$path?>pages/radikal/hype">
-              <div class="<?=header_menu_css('RadikalHype',$header_sidemenu,'side')?>">
-                <?=$sidemenu['jeu_radikal_hype']?>
+              <div class="<?=header_menu_css('Radikal',$header_sidemenu,'side')?>">
+                <?=__('menu_side_play_radikal_next')?>
               </div>
             </a>
 
-
-
-
-<?php } ################################################# MENU LATÉRAL : COMPTE ##########################################################
-// Préparation des traductions des titres du menu
-$sidemenu['user_notifs']          = ($lang == 'FR') ? "Messagerie privée"       : "Private messages";
-$sidemenu['user_notifs_inbox']    = ($lang == 'FR') ? "Boîte de réception"      : "Account inbox";
-$sidemenu['user_notifs_outbox']   = ($lang == 'FR') ? "Messages envoyés"        : "Sent messages";
-$sidemenu['user_notifs_envoyer']  = ($lang == 'FR') ? "Composer un message"     : "Write a message";
-$sidemenu['user_profil']          = ($lang == 'FR') ? "Profil public"           : "Public profile";
-$sidemenu['user_profil_self']     = ($lang == 'FR') ? "Voir mon profil public"  : "My public profile";
-$sidemenu['user_profil_edit']     = ($lang == 'FR') ? "Modifier mon profil"     : "Edit my profile";
-$sidemenu['user_reglages']        = ($lang == 'FR') ? "Réglages du compte"      : "Account settings";
-$sidemenu['user_reglages_prive']  = ($lang == 'FR') ? "Options de vie privée"   : "Privacy options";
-$sidemenu['user_reglages_nsfw']   = ($lang == 'FR') ? "Options de vulgarité"    : "Adult content options";
-$sidemenu['user_reglages_email']  = ($lang == 'FR') ? "Changer d'e-mail"        : "Change my e-mail";
-$sidemenu['user_reglages_pass']   = ($lang == 'FR') ? "Changer de mot de passe" : "Change my password";
-$sidemenu['user_reglages_pseudo'] = ($lang == 'FR') ? "Changer de pseudonyme"   : "Change my nickname";
-$sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    : "Delete my account";
-/* ################################################################################################## */ if($header_menu == 'Compte') { ?>
+<?php } /* ########################################## SIDE MENU: USER ######## */ else if ($header_menu == 'User') { ?>
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['user_notifs']?>
+              <?=__('menu_side_user_pms')?>
             </div>
 
             <a href="<?=$path?>pages/user/notifications">
-              <div class="<?=header_menu_css('Notifications',$header_sidemenu,'side')?>">
-                <?=$sidemenu['user_notifs_inbox']?>
+              <div class="<?=header_menu_css('PMinbox',$header_sidemenu,'side')?>">
+                <?=__('menu_side_user_pms_inbox')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/user/notifications?envoyes">
-              <div class="<?=header_menu_css('MessagesEnvoyes',$header_sidemenu,'side')?>">
-                <?=$sidemenu['user_notifs_outbox']?>
+              <div class="<?=header_menu_css('PMoutbox',$header_sidemenu,'side')?>">
+                <?=__('menu_side_user_pms_outbox')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/user/pm">
-              <div class="<?=header_menu_css('ComposerMessage',$header_sidemenu,'side')?>">
-                <?=$sidemenu['user_notifs_envoyer']?>
+              <div class="<?=header_menu_css('PMwrite',$header_sidemenu,'side')?>">
+                <?=__('menu_side_user_pms_write')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['user_profil']?>
+              <?=__('menu_side_user_profile')?>
             </div>
 
             <a href="<?=$path?>pages/user/user">
-              <div class="<?=header_menu_css('MonProfil',$header_sidemenu,'side')?>">
-                <?=$sidemenu['user_profil_self']?>
+              <div class="<?=header_menu_css('Profile',$header_sidemenu,'side')?>">
+                <?=__('menu_side_user_profile_self')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/user/profil">
-              <div class="<?=header_menu_css('ModifierProfil',$header_sidemenu,'side')?>">
-                <?=$sidemenu['user_profil_edit']?>
+              <div class="<?=header_menu_css('Profileedit',$header_sidemenu,'side')?>">
+                <?=__('menu_side_user_profile_edit')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              <?=$sidemenu['user_reglages']?>
+              <?=__('menu_side_user_settings')?>
             </div>
 
             <a href="<?=$path?>pages/user/privacy">
-              <div class="<?=header_menu_css('ReglagesViePrivee',$header_sidemenu,'side')?>">
-                <?=$sidemenu['user_reglages_prive']?>
+              <div class="<?=header_menu_css('Settingsprivacy',$header_sidemenu,'side')?>">
+                <?=__('menu_side_user_settings_privacy')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/user/nsfw">
-              <div class="<?=header_menu_css('ReglagesNSFW',$header_sidemenu,'side')?>">
-                <?=$sidemenu['user_reglages_nsfw']?>
+              <div class="<?=header_menu_css('Settingsnsfw',$header_sidemenu,'side')?>">
+                <?=__('menu_side_user_settings_nsfw')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/user/email">
-              <div class="<?=header_menu_css('ChangerEmail',$header_sidemenu,'side')?>">
-                <?=$sidemenu['user_reglages_email']?>
+              <div class="<?=header_menu_css('Settingsemail',$header_sidemenu,'side')?>">
+                <?=__('menu_side_user_settings_email')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/user/pass">
-              <div class="<?=header_menu_css('ChangerPass',$header_sidemenu,'side')?>">
-                <?=$sidemenu['user_reglages_pass']?>
+              <div class="<?=header_menu_css('Settingspassword',$header_sidemenu,'side')?>">
+                <?=__('menu_side_user_settings_password')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/user/pseudo">
-              <div class="<?=header_menu_css('ChangerPseudo',$header_sidemenu,'side')?>">
-                <?=$sidemenu['user_reglages_pseudo']?>
+              <div class="<?=header_menu_css('Settingsnickname',$header_sidemenu,'side')?>">
+                <?=__('menu_side_user_settings_nickname')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/user/delete">
-              <div class="<?=header_menu_css('SupprimerCompte',$header_sidemenu,'side')?>">
-                <?=$sidemenu['user_reglages_delete']?>
+              <div class="<?=header_menu_css('Settingsdelete',$header_sidemenu,'side')?>">
+                <?=__('menu_side_user_settings_delete')?>
               </div>
             </a>
 
-
-
-
-<?php } /* ############################################## MENU LATÉRAL : ADMIN ####################### */ if($header_menu == 'Admin') { ?>
+<?php } /* ######################################### SIDE MENU: ADMIN ####### */ else if ($header_menu == 'Admin') { ?>
 
             <div class="header_sidemenu_titre">
-              Activité récente
+              <?=__('menu_side_admin_activity')?>
             </div>
 
             <a href="<?=$path?>pages/nobleme/activite?mod">
               <div class="<?=header_menu_css('Modlogs',$header_sidemenu,'side')?>">
-                Logs de modération
+                <?=__('menu_side_admin_modlogs')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              Gestion des membres
+              <?=__('menu_side_admin_users')?>
             </div>
 
             <a href="<?=$path?>pages/sysop/pilori">
-              <div class="<?=header_menu_css('Pilori',$header_sidemenu,'side')?>">
-                Pilori des bannis
+              <div class="<?=header_menu_css('Banned',$header_sidemenu,'side')?>">
+                <?=__('menu_side_admin_banned')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/sysop/ban">
-              <div class="<?=header_menu_css('Bannir',$header_sidemenu,'side')?>">
-                Bannir un utilisateur
+              <div class="<?=header_menu_css('Ban',$header_sidemenu,'side')?>">
+                <?=__('menu_side_admin_ban')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/sysop/profil">
-              <div class="<?=header_menu_css('ModifierProfil',$header_sidemenu,'side')?>">
-                Modifier un profil
+              <div class="<?=header_menu_css('Profile',$header_sidemenu,'side')?>">
+                <?=__('menu_side_admin_profile')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/sysop/pass">
-              <div class="<?=header_menu_css('ChangerPass',$header_sidemenu,'side')?>">
-                Changer un mot de passe
+              <div class="<?=header_menu_css('Password',$header_sidemenu,'side')?>">
+                <?=__('menu_side_admin_password')?>
               </div>
             </a>
 
@@ -1106,118 +989,116 @@ $sidemenu['user_reglages_delete'] = ($lang == 'FR') ? "Supprimer mon compte"    
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              Outils administratifs
+              <?=__('menu_side_admin_tools')?>
             </div>
 
             <a href="<?=$path?>pages/admin/permissions">
-              <div class="<?=header_menu_css('Permissions',$header_sidemenu,'side')?>">
-                Changer les permissions
+              <div class="<?=header_menu_css('Rights',$header_sidemenu,'side')?>">
+                <?=__('menu_side_admin_rights')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              Statistiques
+              <?=__('menu_side_admin_stats')?>
             </div>
 
             <a href="<?=$path?>pages/admin/pageviews">
               <div class="<?=header_menu_css('Pageviews',$header_sidemenu,'side')?>">
-                Popularité des pages
+                <?=__('menu_side_admin_pageviews')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/admin/doppelganger">
               <div class="<?=header_menu_css('Doppelganger',$header_sidemenu,'side')?>">
-                Doppelgänger
+                <?=__('menu_side_admin_doppelganger')?>
               </div>
             </a>
 
             <?php } ?>
 
+<?php } /* ########################################## SIDE MENU: ADMIN ######## */ else if ($header_menu == 'Dev') { ?>
 
-
-
-<?php } /* ################################################ MENU LATÉRAL : DEV ######################### */ if($header_menu == 'Dev') { ?>
+            <?php if($is_admin) { ?>
 
             <div class="header_sidemenu_titre">
-              Bot IRC NoBleme
+              <?=__('menu_side_dev_ircbot')?>
             </div>
 
             <a href="<?=$path?>pages/dev/ircbot">
               <div class="<?=header_menu_css('IRCbot',$header_sidemenu,'side')?>">
-                Gestion du bot IRC
+                <?=__('menu_side_dev_ircbot_management')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              Gestion du site
+              <?=__('menu_side_dev_website')?>
             </div>
 
             <a href="<?=$path?>pages/dev/maj">
-              <div class="<?=header_menu_css('MajChecklist',$header_sidemenu,'side')?>">
-                Mise à jour : Checklist
+              <div class="<?=header_menu_css('Checklist',$header_sidemenu,'side')?>">
+                <?=__('menu_side_dev_checklist')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/dev/sql">
-              <div class="<?=header_menu_css('MajRequetes',$header_sidemenu,'side')?>">
-                Requêtes SQL
+              <div class="<?=header_menu_css('SQL',$header_sidemenu,'side')?>">
+                <?=__('menu_side_dev_sql')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/dev/fermeture">
-              <div class="<?=header_menu_css('MajFermeture',$header_sidemenu,'side')?>">
-                Ouvrir/fermer le site
+              <div class="<?=header_menu_css('Close',$header_sidemenu,'side')?>">
+                <?=__('menu_side_dev_close')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/dev/version">
-              <div class="<?=header_menu_css('MajVersion',$header_sidemenu,'side')?>">
-                Numéro de version
+              <div class="<?=header_menu_css('Release',$header_sidemenu,'side')?>">
+                <?=__('menu_side_dev_release')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_titre">
-              Références de code
+              <?=__('menu_side_dev_doc')?>
             </div>
 
             <a href="<?=$path?>pages/dev/snippets">
               <div class="<?=header_menu_css('Snippets',$header_sidemenu,'side')?>">
-                Snippets de code
+                <?=__('menu_side_dev_doc_snippets')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/dev/reference">
-              <div class="<?=header_menu_css('Reference',$header_sidemenu,'side')?>">
-                Référence HTML / CSS
+              <div class="<?=header_menu_css('HTML',$header_sidemenu,'side')?>">
+                <?=__('menu_side_dev_doc_html')?>
               </div>
             </a>
 
             <a href="<?=$path?>pages/dev/fonctions">
-              <div class="<?=header_menu_css('Fonctions',$header_sidemenu,'side')?>">
-                Référence des fonctions
+              <div class="<?=header_menu_css('Functions',$header_sidemenu,'side')?>">
+                <?=__('menu_side_dev_doc_functions')?>
               </div>
             </a>
 
+            <?php } ?>
 
-          <?php } ?>
+            <?php } ?>
 
           </div>
         </div>
       </nav>
 
-  <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //                                                                                                                                    //
-  //                                                           FIN DES MENUS                                                            //
-  //                                                                                                                                    //
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
-
-    <!-- ################################  BODY  ################################ -->
+<?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                   //
+//                                             END HEADER AND BEGIN PAGE                                             //
+//                                                                                                                   //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
 
     <div class="flex_element contenu_page">
 

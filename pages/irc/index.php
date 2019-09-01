@@ -6,7 +6,7 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = 'Discuter';
+$header_menu      = 'Talk';
 $header_sidemenu  = 'IRC';
 
 // Identification

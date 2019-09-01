@@ -6,7 +6,7 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 
 // Menus du header
-$header_menu      = 'Lire';
+$header_menu      = 'Read';
 $header_sidemenu  = 'NBDBIndex';
 
 // Identification

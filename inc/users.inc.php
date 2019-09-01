@@ -528,6 +528,37 @@ function user_restrict_to_moderators($lang='EN', $website_section=NULL)
 
 
 /**
+ * Allows access only to global moderators (or above).
+ *
+ * Any user who does not have the required rights will get rejected and see an error page.
+ * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
+ *
+ * @param   string|null $lang             (OPTIONAL)  The language used in the error message.
+ *
+ * @return  void
+ */
+
+function user_restrict_to_global_moderators($lang='EN')
+{
+  // Prepare the error message that will be displayed
+  $error_message = ($lang == 'EN') ? "This page is restricted to website staff only." : "Cette page est réservée aux équipes de modération du site.";
+
+  // Check if the user is logged in
+  if(user_is_logged_in())
+  {
+    // Check if the user has global moderator rights
+    if(!user_is_global_moderator($_SESSION['user_id']))
+      error_page($error_message);
+  }
+  // If the user is logged out, throw the error
+  else
+    error_page($error_message);
+}
+
+
+
+
+/**
  * Allows access only to administartors.
  *
  * Any user who does not have the required rights will get rejected and see an error page.

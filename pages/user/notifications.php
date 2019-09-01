@@ -4,12 +4,13 @@
 /*                                                                                                                                       */
 // Inclusions /***************************************************************************************************************************/
 include './../../inc/includes.inc.php'; // Inclusions communes
+include './../../inc/functions_time.inc.php';
 
 // Permissions
-useronly($lang);
+user_restrict_to_users();
 
 // Menus du header
-$header_menu      = 'Compte';
+$header_menu      = 'User';
 $header_sidemenu  = (!isset($_GET['envoyes'])) ? 'Notifications' : 'MessagesEnvoyes';
 
 // Identification
@@ -39,20 +40,20 @@ $js   = array('toggle', 'dynamique', 'user/notifications');
 /*****************************************************************************************************************************************/
 
 // On va chercher les messages
-$userid     = $_SESSION['user'];
-$qmessages  = "   SELECT    notifications.id                AS 'm_id'   ,
-                            notifications.date_consultation AS 'm_lu'   ,
-                            notifications.date_envoi        AS 'm_date' ,
-                            membres.pseudonyme              AS 'm_user' ,
-                            notifications.titre             AS 'm_titre'
-                  FROM      notifications ";
+$userid     = $_SESSION['user_id'];
+$qmessages  = "   SELECT    users_private_messages.id       AS 'm_id'   ,
+                            users_private_messages.read_at  AS 'm_lu'   ,
+                            users_private_messages.sent_at  AS 'm_date' ,
+                            users.nickname                  AS 'm_user' ,
+                            users_private_messages.title     AS 'm_titre'
+                  FROM      users_private_messages ";
 if(!isset($_GET['envoyes']))
-  $qmessages .= " LEFT JOIN membres ON notifications.FKmembres_envoyeur = membres.id
-                  WHERE     notifications.FKmembres_destinataire = '$userid' ";
+  $qmessages .= " LEFT JOIN users ON users_private_messages.fk_users_sender = users.id
+                  WHERE     users_private_messages.fk_users_recipient = '$userid' ";
 else
-  $qmessages .= " LEFT JOIN membres ON notifications.FKmembres_destinataire = membres.id
-                  WHERE     notifications.FKmembres_envoyeur = '$userid' ";
-$qmessages  .= "  ORDER BY  notifications.date_envoi DESC ";
+  $qmessages .= " LEFT JOIN users ON users_private_messages.fk_users_recipient = users.id
+                  WHERE     users_private_messages.fk_users_sender = '$userid' ";
+$qmessages  .= "  ORDER BY  users_private_messages.sent_at DESC ";
 
 // Et on les prépare pour l'affichage
 $qmessages = query($qmessages);
@@ -61,11 +62,11 @@ for($nmessages = 0 ; $dmessages = mysqli_fetch_array($qmessages) ; $nmessages++)
 {
   $messages_id[$nmessages]    = $dmessages['m_id'];
   $messages_css[$nmessages]   = (!$dmessages['m_lu']) ? ' gras' : '';
-  $messages_date[$nmessages]  = ilya($dmessages['m_date'], $lang);
-  $messages_user[$nmessages]  = ($dmessages['m_user']) ? predata($dmessages['m_user']) : 'Message système';
+  $messages_date[$nmessages]  = time_since($dmessages['m_date'], $lang);
+  $messages_user[$nmessages]  = ($dmessages['m_user']) ? sanitize($dmessages['m_user']) : 'Message système';
   $messages_user[$nmessages]  = (!$dmessages['m_user'] && $lang != 'FR') ? 'System notification' : $messages_user[$nmessages];
   $messages_ucss[$nmessages]  = (!$dmessages['m_user']) ? ' class="italique"' : '';
-  $messages_titre[$nmessages] = predata(tronquer_chaine($dmessages['m_titre'], 40, '...'));
+  $messages_titre[$nmessages] = sanitize(string_truncate($dmessages['m_titre'], 40, '...'));
   $message_envoye[$nmessages] = (isset($_GET['envoyes'])) ? ' , 1 ' : '';
   $messages_non_lus          += (!$dmessages['m_lu']) ? 1 : 0;
 }

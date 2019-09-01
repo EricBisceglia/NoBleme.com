@@ -36,63 +36,46 @@ $copyright_date = date('Y');
 /*                                                                                                                   */
 /******************************************************************************************************************/ ?>
 
-      <!-- ################################  FOOTER  ################################ -->
+        <?php if(!isset($_GET["popup"]) && !isset($_GET["xhr"])) { ?>
 
-      <?php
-      # Do not show the footer if the page is a popup or is called through xhr
-      if(!isset($_GET["popup"]) && !isset($_GET["xhr"])) {
-      ?>
+        <footer>
 
-      <footer>
+          <?php if(isset($shorturl)) {  ?>
 
-        <?php
-        # If the page can be called through a short URL, display it in the footer
-        if(isset($shorturl)) {  ?>
+          <a href="<?=$path?>s?<?=$shorturl?>">
+            <?=__('footer_shorturl')?>
+          </a><br>
 
-        <a href="<?=$path?>s?<?=$shorturl?>">
-          <?=__('footer_shorturl')?>
-        </a><br>
+          <?php } if($is_admin) { ?>
 
-        <?php
-        # If the user is an admin, show metrics for this page
-        } if($is_admin) { ?>
+          <a href="<?=$path?>pages/admin/pageviews">
+            <?=$pageviews?>
+          </a><br>
 
-        <a href="<?=$path?>pages/admin/pageviews">
-          <?=$pageviews?>
-        </a><br>
+          <a>
+            <?=$metrics?>
+          </a><br>
 
-        <a>
-          <?=$metrics?>
-        </a><br>
+          <?php } ?>
 
-        <?php } ?>
+          <a href="<?=$path?>pages/todo/roadmap">
+            <?=$version?>
+          </a><br>
 
-        <?php
-        # Footer concludes with version number, legal mentions, and copyright notice ?>
+          <a href="<?=$path?>pages/doc/mentions_legales">
+            <?=__('footer_legal')?>
+          </a><br>
 
-        <a href="<?=$path?>pages/todo/roadmap">
-          <?=$version?>
-        </a><br>
+          <a href="<?=$path?>pages/doc/nobleme">
+            &copy; NoBleme.com : 2005 - <?=$copyright_date?>
+          </a>
 
-        <a href="<?=$path?>pages/doc/mentions_legales">
-          <?=__('footer_legal')?>
-        </a><br>
+        </footer>
 
-        <a href="<?=$path?>pages/doc/nobleme">
-          &copy; NoBleme.com : 2005 - <?=$copyright_date?>
-        </a>
-
-      </footer>
-
-    <?php
-    # The time has come to close the divs that set up the layout of the page (header and side menu) ?>
-
+      </div>
     </div>
-  </div>
 
-  <?php
-  # End of the conditions for potentially hiding the footer (popup or xhr)
-  } ?>
+    <?php } ?>
 
   </body>
 </html>
