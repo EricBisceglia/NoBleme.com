@@ -177,6 +177,21 @@ ___('nbdbcodes_trends_hidden', 'FR', "Ce graphe Google trends est masqué (<a hr
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                 ACTIVITY MESSAGES                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Admin actions
+___('activity_admin_en', 'EN', 'Administrating the website');
+___('activity_admin_en', 'FR', 'Administrating the website');
+___('activity_admin_fr', 'EN', 'Administre secrètement le site');
+___('activity_admin_fr', 'FR', 'Administre secrètement le site');
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                   COMMON FILES                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -302,12 +317,20 @@ ___('header_status_message', 'EN', "{{1}}, you have recieved a new private messa
 ___('header_status_message', 'FR', "{{1}}, vous avez reçu un nouveau message privé, cliquez ici pour le lire !");
 ___('header_status_message+', 'EN', "{{1}}, you have recieved {{2}} new private messages, click here to read them!");
 ___('header_status_message+', 'FR', "{{1}}, vous avez reçu {{2}} nouveaux messages privés, cliquez ici pour les lire !");
+___('header_status_message_short', 'EN', "{{1}}: New private message!");
+___('header_status_message_short', 'FR', "{{1}} : Nouveau message privé !");
+___('header_status_message_short+', 'EN', "{{1}}: {{2}} new private messages!");
+___('header_status_message_short+', 'FR', "{{1}} : {{2}} nouveaux messages privés !");
 ___('header_status_logged_in', 'EN', "Vous êtes connecté en tant que {{1}}. Cliquez ici pour gérer votre compte ou modifier votre profil.");
 ___('header_status_logged_in', 'FR', "You are logged in as {{1}}. Click here to manage your account or edit your profile.");
+___('header_status_logged_in_short', 'EN', "{{1}}: Manage my account.");
+___('header_status_logged_in_short', 'FR', "{{1}} : Gérer mon compte");
 ___('header_status_logout', 'EN', "Log out");
 ___('header_status_logout', 'FR', "Déconnexion");
 ___('header_status_login', 'EN', "You are not logged in: Click here to login or register.");
 ___('header_status_login', 'FR', "Vous n'êtes pas connecté: Cliquez ici pour vous identifier ou vous enregistrer.");
+___('header_status_login_short', 'EN', "Logged out: Click here to login or register.");
+___('header_status_login_short', 'FR', "Cliquez ici pour vous identifier ou vous enregistrer.");
 
 
 

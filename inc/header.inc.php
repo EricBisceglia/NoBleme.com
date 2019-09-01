@@ -86,8 +86,6 @@ $website_update_css2  = ($dupdate['update']) ? " website_update_background" : ""
 // Creation of URLs to use for logging out and changing language
 $url_logout = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
 $url_lang   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
-$url_logout = sanitize_output($url_logout);
-$url_lang   = sanitize_output($url_lang);
 
 // Logout
 if(isset($_GET['logout']))
@@ -441,7 +439,7 @@ $javascripts .= '
 
 <?php ########################################### LOGIN / STATUS BAR ############################################### ?>
 
-    <div class="menu_sub<?=$website_update_css2?>">
+    <div id="statusbar_nomenu" class="menu_sub_standard menu_sub<?=$website_update_css2?>">
 
       <?php if(user_is_logged_in()) {
             if($nb_private_messages) { ?>
@@ -473,6 +471,45 @@ $javascripts .= '
       <div class="header_topmenu_zone">
         <a class="menu_sub_lien" href="<?=$path?>pages/user/login">
           <?=__('header_status_login')?>
+        </a>
+      </div>
+
+      <?php } ?>
+
+    </div>
+
+    <div id="statusbar_menu" class="menu_sub_responsive menu_sub<?=$website_update_css2?>">
+
+      <?php if(user_is_logged_in()) {
+            if($nb_private_messages) { ?>
+
+      <div class="header_topmenu_zone">
+        <a id="nouveaux_messages" class="menu_sub_lien nouveaux_messages" href="<?=$path?>pages/user/notifications">
+          <?=__('header_status_message_short', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
+        </a>
+      </div>
+
+      <?php } else { ?>
+
+      <div class="header_topmenu_zone">
+        <a id="nouveaux_messages"  class="menu_sub_lien" href="<?=$path?>pages/user/notifications">
+          <?=__('header_status_logged_in_short', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
+        </a>
+      </div>
+
+      <?php } ?>
+
+      <div class="header_topmenu_zone">
+        <a class="menu_sub_lien" href="<?=$url_logout?>">
+          <?=__('header_status_logout')?>
+        </a>
+      </div>
+
+      <?php } else { ?>
+
+      <div class="header_topmenu_zone">
+        <a class="menu_sub_lien" href="<?=$path?>pages/user/login">
+          <?=__('header_status_login_short')?>
         </a>
       </div>
 

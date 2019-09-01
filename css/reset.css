@@ -1,22 +1,20 @@
-/******************** REMISE À ZÉRO DU CSS POUR GARANTIR LA COMPATIBILITÉ ENTRE LES MOTEURS DE RENDU DES NAVIGATEURS *********************/
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset,
-form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption,
-footer, header, hgroup, menu, nav, output, section, summary, time, mark, audio, video
-{ margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; }
-
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block;                               }
-body                                                                                    { line-height: 1; min-height:100vh;             }
-ol, ul                                                                                  { list-style: none;                             }
-blockquote, q                                                                           { quotes: none;                                 }
-blockquote:before, blockquote:after, q:before, q:after                                  { content: ''; content: none;                   }
-table                                                                                   { border-collapse: collapse; border-spacing: 0; }
-/*****************************************************************************************************************************************/
-/******************************* UTILISE DES SECTIONS DE MILLIGRAM v1.2.0 PAR CJ PATOILO (SOUS LICENCE MIT) ******************************/
-/********************************** USES SECTIONS OF MILLIGRAM v1.2.0 BY CJ PATOILO (UNDER MIT LICENCE) **********************************/
-/*************************************** https://github.com/milligram/milligram/blob/master/license **************************************/
-/*****************************************************************************************************************************************/
-/************************************************ IMPORTATIONS DE POLICES PERSONNALISÉES *************************************************/
+/*********************************************************************************************************************/
+/************************ USES SECTIONS OF MILLIGRAM v1.2.0 BY CJ PATOILO (UNDER MIT LICENCE) ************************/
+/***************************** https://github.com/milligram/milligram/blob/master/license ****************************/
+/*********************************************************************************************************************/
+/********************** RESET CSS SO THAT HOPEFULLY EVERYTHING LOOKS THE SAME ON EVERY BROWSER ***********************/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address,
+big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul,
+li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details,
+embed, figure, figcaption, footer, header, hgroup, menu, nav, output, section, summary, time, mark, audio, video
+  { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; }
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+body                                                    { line-height: 1; min-height:100vh;               }
+ol, ul                                                  { list-style: none;                               }
+blockquote, q                                           { quotes: none;                                   }
+blockquote:before, blockquote:after, q:before, q:after  { content: ''; content: none;                     }
+table                                                   { border-collapse: collapse; border-spacing: 0;   }
+/*************************************************** CUSTOM FONTS ****************************************************/
 @font-face { font-family: 'NoBleme'                                         ;
   src:  url('./fonts/Roboto.eot?#iefix') format('embedded-opentype')        ,
         url('./fonts/Roboto.woff') format('woff')                           ,
@@ -37,43 +35,43 @@ table                                                                           
         url('./fonts/Open-sans.woff') format('woff')                        ,
         url('./fonts/Open-sans.ttf')  format('truetype')                    ,
         url('./fonts/Open-sans.svg#svgFontName') format('svg');             }
-/************************************** DÉFINITION DES STYLES PAR DÉFAUT DE CERTAINS TAGS GÉNÉRIQUES *************************************/
-             *, *:after, *:before { box-sizing: inherit;                                                                             }
-                             html { box-sizing: border-box; font-size: 62.5%;                                                        }
-                             body { color: #555555; font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif       ;
-                                    font-size: 1.6em; font-weight: 300; letter-spacing: .01em; line-height: 1.45;                    }
-                                a { color: #37536B; text-decoration: none;                                                           }
-                 a:focus, a:hover { color: #78A1BC;                                                                                  }
-                            table { width: 100%;                                                                                     }
-                           td, th { border-bottom: 0.1rem solid #E1E1E1; padding: 1.2rem 1.5rem;                                     }
-   td:first-child, th:first-child { padding-left: 0;                                                                                 }
-     td:last-child, th:last-child { padding-right: 0;                                                                                }
-                              img { max-width: 100%;                                                                                 }
-                           button { margin-bottom: 1.0rem;                                                                           }
-                        li, table { margin-bottom: 0.4rem;                                                                           }
-                                p { padding-top: 2.5rem; text-align: justify;                                                        }
-                               ul { list-style: circle inside;                                                                       }
-                       blockquote { border-left: 0.3rem solid #D1D1D1; padding: 1rem 1.5rem;                                         }
-          blockquote *:last-child { margin-bottom: 0;                                                                                }
-                             code { background: #F4F5F6; font-size: 86%; margin: 0 .2rem; padding: .2rem .5rem; white-space: nowrap; }
-                              pre { background: #F4F5F6; border-left: 0.3rem solid #37536B;                                          }
-                       pre > code { border-radius: 0; display: block; padding: 1rem 1.5rem; white-space: pre;                        }
-           h1, h2, h3, h4, h5, h6 { font-weight: 300; letter-spacing: -.1rem; color:#333333                                          ;
-                                    font-family: 'NoBleme-header', 'Helvetica', 'Arial'   ;                                          }
-                               h1 { font-size: 5.0rem;                                                                               }
-                               h2 { font-size: 4.2rem;                                                                               }
-                               h3 { font-size: 3.6rem;                                                                               }
-                               h4 { font-size: 3.0rem;                                                                               }
-                               h5 { font-size: 2.4rem;                                                                               }
-                               h6 { font-size: 1.5rem;                                                                               }
-@media (max-width: 1024px) {   body { font-size: 1.9em;                                                                              }
-                               h1 { font-size: 6.0rem;                                                                               }
-                               h2 { font-size: 5.0rem;                                                                               }
-                               h3 { font-size: 4.0rem;                                                                               }
-                               h4 { font-size: 3.0rem;                                                                               }
-                               h5 { font-size: 2.5rem;                                                                               }
-                               h6 { font-size: 2.0rem;                                                                             } }
-/************************************************************** FORMULAIRES **************************************************************/
+/******************************* DEFAULT STYLES OF GENERIC TAGS FOR THE WHOLE WEBSITE ********************************/
+*, *:after, *:before    { box-sizing: inherit;                                                                        }
+html                    { box-sizing: border-box; font-size: 62.5%;                                                   }
+body                    { color: #555555; font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif  ;
+                          font-size: 1.6em; font-weight: 300; letter-spacing: .01em; line-height: 1.45;               }
+a                       { color: #37536B; text-decoration: none;                                                      }
+a:focus, a:hover        { color: #78A1BC;                                                                             }
+table                   { width: 100%;                                                                                }
+td, th                  { border-bottom: 0.1rem solid #E1E1E1; padding: 1.2rem 1.5rem;                                }
+td:first-child, th:first-child { padding-left: 0;                                                                     }
+td:last-child, th:last-child { padding-right: 0;                                                                      }
+img                     { max-width: 100%;                                                                            }
+button                  { margin-bottom: 1.0rem;                                                                      }
+li, table               { margin-bottom: 0.4rem;                                                                      }
+p                       { padding-top: 2.5rem; text-align: justify;                                                   }
+ul                      { list-style: circle inside;                                                                  }
+blockquote              { border-left: 0.3rem solid #D1D1D1; padding: 1rem 1.5rem;                                    }
+blockquote *:last-child { margin-bottom: 0;                                                                           }
+code               { background: #F4F5F6; font-size: 86%; margin: 0 .2rem; padding: .2rem .5rem; white-space: nowrap; }
+pre                     { background: #F4F5F6; border-left: 0.3rem solid #37536B;                                     }
+pre > code              { border-radius: 0; display: block; padding: 1rem 1.5rem; white-space: pre;                   }
+h1, h2, h3, h4, h5, h6  { font-weight: 300; letter-spacing: -.1rem; color:#333333                                     ;
+                          font-family: 'NoBleme-header', 'Helvetica', 'Arial';                                        }
+h1                      { font-size: 5.0rem;                                                                          }
+h2                      { font-size: 4.2rem;                                                                          }
+h3                      { font-size: 3.6rem;                                                                          }
+h4                      { font-size: 3.0rem;                                                                          }
+h5                      { font-size: 2.4rem;                                                                          }
+h6                      { font-size: 1.5rem;                                                                          }
+@media (max-width: 1024px) { body { font-size: 4.0em;                                                                 }
+h1                      { font-size: 10.0rem;                                                                         }
+h2                      { font-size: 8.0rem;                                                                          }
+h3                      { font-size: 7.0rem;                                                                          }
+h4                      { font-size: 6.0rem;                                                                          }
+h5                      { font-size: 5.0rem;                                                                          }
+h6                      { font-size: 4.5rem;                                                                        } }
+/******************************************************* FORMS *******************************************************/
 textarea
   { min-height: 6.5rem;                                                                                 }
 label, legend
@@ -101,8 +99,9 @@ input[type='submit']:focus, input[type='submit']:hover
   { background-color: #555555; border-color: #555555; color: #FFFFFF; outline: 0;                       }
 .button[disabled], button[disabled], input[type='reset'][disabled], input[type='submit'][disabled]
   { cursor: default; opacity: .5;                                                                       }
-.button[disabled]:focus, .button[disabled]:hover, button[disabled]:focus, button[disabled]:hover, input[type='reset'][disabled]:focus,
-input[type='reset'][disabled]:hover, input[type='submit'][disabled]:focus, input[type='submit'][disabled]:hover
+.button[disabled]:focus, .button[disabled]:hover, button[disabled]:focus, button[disabled]:hover,
+input[type='reset'][disabled]:focus, input[type='reset'][disabled]:hover, input[type='submit'][disabled]:focus,
+input[type='submit'][disabled]:hover
   { background-color: #37536B; border-color: #37536B;                                                   }
 .button.button-outline, button.button-outline, input[type='reset'].button-outline, input[type='submit'].button-outline
   { background-color: transparent; color: #37536B;                                                      }

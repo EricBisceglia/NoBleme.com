@@ -1,13 +1,13 @@
-// Faire disparaitre la suggestion de menu latéral quand on scrolle
-window.addEventListener('scroll', function() {
-
-  // On applique ceci seulement si le menu est caché
+// Stop showing the side menu suggestion when scrolling
+window.addEventListener('scroll', function()
+{
+  // Only do this if the side menu is hidden
   if(window.getComputedStyle(document.getElementById('header_sidemenu')).display == 'none')
   {
-    // On détecte où en est le scrolling
+    // Detect where the scroll bar is at
     var currentscroll = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
 
-    // Si on est en haut, on affiche, sinon, on masque
+    // If on top of the page, show the menu again
     if(!currentscroll)
       document.getElementById('header_nomenu').style.display = 'inline';
     else

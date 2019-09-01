@@ -2,51 +2,40 @@
 /*                                                                                                                   */
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
-// Inclusions /*******************************************************************************************************/
+// File inclusions /**************************************************************************************************/
 include_once './../../inc/queries.inc.php';  // Queries awaiting execution
 include_once './../../inc/includes.inc.php'; // Common inclusions
+include_once './../../lang/dev.lang.php';    // Translations
 
 // Limit page access based on user rights
-user_restrict_to_users($lang);
+user_restrict_to_administrators();
 
-// Change the display of header menus
+// Selected menu and sidemenu
 $header_menu      = 'Dev';
-$header_sidemenu  = 'MajRequetes';
+$header_sidemenu  = 'SQL';
 
-// Page title and description
-$page_title = "Dev: Requêtes SQL";
+// Available languages, page title, activity, and description
+$page_lang    = array('EN', 'FR');
+$page_title   = __('dev_queries_title');
+$page_name_en = __('activity_admin_en');
+$page_name_fr = __('activity_admin_fr');
 
-// Internal page identification
-$page_nom = "Administre secrètement le site";
-
-
-
+// Extra CSS files
+$css = array('dev');
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                              HTML : DISPLAY THE DATA                                              */
+/*                                              HTML: DISPLAY THE DATA                                               */
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+      <div class="texte dev_queries_block">
 
-      <div class="texte">
-
-        <h1 class="positif texte_blanc align_center">LES REQUÊTES ONT ÉTÉ EFFECTUÉES AVEC SUCCÈS</h1>
+        <h1 class="positive texte_blanc align_center">
+          <?=__('dev_queries_ok')?>
+        </h1>
 
       </div>
-
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
