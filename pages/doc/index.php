@@ -105,9 +105,9 @@ else if($lang == 'EN')
 
       <div class="minitexte2">
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/nobleme';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/nobleme';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_nobleme']?>
             </h5>
             <span class="doc_minipadding">
@@ -118,9 +118,9 @@ else if($lang == 'EN')
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/coc';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/coc';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_coc']?>
             </h5>
             <span class="doc_minipadding">
@@ -131,9 +131,9 @@ else if($lang == 'EN')
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/rss';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/rss';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_rss']?>
             </h5>
             <span class="doc_minipadding">
@@ -146,9 +146,9 @@ else if($lang == 'EN')
 
         <div class="flexcontainer">
           <div style="flex:10;">
-            <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/emotes';">
-              <div class="align_center doc_minibordure">
-                <h5 class="doc_minipadding_bot doc_minibordure_bot">
+            <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/emotes';">
+              <div class="align_center doc_miniborder">
+                <h5 class="doc_minipadding_bot doc_miniborder_bot">
                   <?=$trad['doct_emotes']?>
                 </h5>
                 <span class="doc_minipadding">
@@ -161,9 +161,9 @@ else if($lang == 'EN')
             &nbsp;
           </div>
           <div style="flex:10;">
-            <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/bbcodes';">
-              <div class="align_center doc_minibordure">
-                <h5 class="doc_minipadding_bot doc_minibordure_bot">
+            <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/bbcodes';">
+              <div class="align_center doc_miniborder">
+                <h5 class="doc_minipadding_bot doc_miniborder_bot">
                   <?=$trad['doct_bbcodes']?>
                 </h5>
                 <span class="doc_minipadding">
@@ -176,9 +176,9 @@ else if($lang == 'EN')
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/raccourcis';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/raccourcis';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_shorturl']?>
             </h5>
             <span class="doc_minipadding">
@@ -189,9 +189,9 @@ else if($lang == 'EN')
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nobleme/admins';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/nobleme/admins';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_admin']?>
             </h5>
             <span class="doc_minipadding">

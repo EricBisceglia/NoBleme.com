@@ -219,7 +219,7 @@ if(!getxhr()) { /***************************************************************
                   <br>
 
                   <label for="categorie_description_fr">Description (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> + <a class="gras" href="<?=$chemin?>pages/doc/nbdbcodes">NBDBCodes</a>)</label>
-                  <textarea id="categorie_description_fr" name="categorie_description_fr" class="indiv web_dico_edit"><?=$categorie_afficher_desc_fr?></textarea>
+                  <textarea id="categorie_description_fr" name="categorie_description_fr" class="indiv web_dict_edit"><?=$categorie_afficher_desc_fr?></textarea>
 
                 </div>
 
@@ -238,7 +238,7 @@ if(!getxhr()) { /***************************************************************
                   <br>
 
                   <label for="categorie_description_en">Description (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> + <a class="gras" href="<?=$chemin?>pages/doc/nbdbcodes">NBDBCodes</a>)</label>
-                  <textarea id="categorie_description_en" name="categorie_description_en" class="indiv web_dico_edit"><?=$categorie_afficher_desc_en?></textarea>
+                  <textarea id="categorie_description_en" name="categorie_description_en" class="indiv web_dict_edit"><?=$categorie_afficher_desc_en?></textarea>
 
                 </div>
               </div>

@@ -9,7 +9,7 @@
 // chemin             est le chemin jusqu'à la racine du site
 // id     (optionnel) spécifie l'id du message prévisualisé
 
-function forum_ecrire_reponse_previsualisation(chemin, id)
+function forum_reply_preview(chemin, id)
 {
   if(typeof(id) === 'undefined')
   {
@@ -17,7 +17,7 @@ function forum_ecrire_reponse_previsualisation(chemin, id)
     document.getElementById('forum_ecrire_reponse_container').style.display = 'block';
 
     // Et on génère la prévisualisation en XHR
-    dynamique(chemin, './xhr/previsualiser_message.php', 'forum_ecrire_reponse_previsualisation', 'message='+dynamique_prepare('forum_ecrire_reponse'), 1);
+    dynamique(chemin, './xhr/previsualiser_message.php', 'forum_reply_preview', 'message='+dynamique_prepare('forum_ecrire_reponse'), 1);
   }
   else
   {

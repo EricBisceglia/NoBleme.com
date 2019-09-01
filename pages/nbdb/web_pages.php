@@ -105,7 +105,7 @@ for($nweb = 0 ; $dweb = mysqli_fetch_array($qweb) ; $nweb++)
   $web_titre_css[$nweb] = ($dweb['d_redirect']) ? 'gras texte_noir' : 'gras';
   $web_titre_url[$nweb] = urlencode($dweb['d_titre']);
   $web_redirect[$nweb]  = ($dweb['d_redirect']) ? ' -> '.predata($dweb['d_redirect']) : '';
-  $web_vulgaire[$nweb]  = ($dweb['d_vulgaire']) ? '<img class="valign_middle web_dico_nsfw" src="'.$chemin.'img/icones/avertissement.svg" alt="!" height="20">': '';
+  $web_vulgaire[$nweb]  = ($dweb['d_vulgaire']) ? '<img class="valign_middle web_dict_nsfw" src="'.$chemin.'img/icones/avertissement.svg" alt="!" height="20">': '';
 }
 
 
@@ -286,7 +286,7 @@ if(!getxhr()) { /***************************************************************
             <fieldset>
 
               <label for="web_pages_categorie"><?=$trad['web_selecteur']?></label>
-              <select id="web_pages_categorie" name="web_pages_categorie" class="web_pages_selecteur_categorie" onchange="web_pages_select_categorie('<?=$chemin?>');">
+              <select id="web_pages_categorie" name="web_pages_categorie" class="web_pages_category_selector" onchange="web_pages_select_categorie('<?=$chemin?>');">
                 <option value="0"></option>
                 <?=$select_categories?>
                 <option value="-1"><?=$trad['web_nocat']?></option>
@@ -298,7 +298,7 @@ if(!getxhr()) { /***************************************************************
               <?php } ?>
               <br>
 
-              <select id="web_pages_periode" name="web_pages_periode" class="web_pages_selecteur_periode" onchange="web_pages_select_periode('<?=$chemin?>');">
+              <select id="web_pages_periode" name="web_pages_periode" class="web_pages_era_selector" onchange="web_pages_select_periode('<?=$chemin?>');">
                 <option value="0"></option>
                 <?=$select_periodes?>
               </select>
@@ -311,7 +311,7 @@ if(!getxhr()) { /***************************************************************
               <br>
 
               <label for="web_pages_search"><?=$trad['web_search']?></label>
-              <input id="web_pages_search" name="web_pages_search" class="web_pages_champ_recherche" type="text" onkeyup="web_pages_recherche('<?=$chemin?>');"><br>
+              <input id="web_pages_search" name="web_pages_search" class="web_pages_search_field" type="text" onkeyup="web_pages_recherche('<?=$chemin?>');"><br>
 
             </fieldset>
           </form>

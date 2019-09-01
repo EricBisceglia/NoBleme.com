@@ -1,7 +1,7 @@
-/*************************************************************** NBDBCODES ***************************************************************/
-.web_float_left       { float: left; margin: 5px 15px 5px 0px;                                 }
-.web_float_right      { float: right; margin: 5px 0px 5px 15px;                                }
-.web_floater          { width: 250px; border: double #CACACA 3px; padding: 10px 10px 10px 10px ;
+/***************************************************** NBDBCODES *****************************************************/
+.web_float_left        { float: left; margin: 5px 15px 5px 0px;                                 }
+.web_float_right       { float: right; margin: 5px 0px 5px 15px;                                }
+.web_floater           { width: 250px; border: double #CACACA 3px; padding: 10px 10px 10px 10px ;
                         text-align: center; font-size: 0.78em;                                  }
 .web_nsfw_blur         { filter: blur(20px);                                                    }
 .web_nsfw_blur:hover   { filter: none;                                                          }
@@ -16,26 +16,24 @@
                         margin: 10px -10px 10px -10px;                                          }
 .web_copypasta         { font-size: 1.2em; padding: 5px 14px;                                   }
 
-/********************************************************** DICTIONNAIRE DU WEB **********************************************************/
-.web_dico_nsfw             { margin-bottom: 3px;                                                             }
-.web_dico_alerte_conteneur { padding-left: 15px; padding-top: 8px; align-items: center; text-align: justify; }
+/*********************************************** INTERNET ENCYCLOPEDIA ***********************************************/
+.web_pages_search_field       { width: 300px;                     }
+.web_pages_category_selector  { width: 250px; margin-bottom: 5px; }
+.web_pages_era_selector       { width: 250px;                     }
 
-/*********************************************** LISTE DES PAGES DE L'ENCYCLOPÉDIE DU WEB ************************************************/
-.web_pages_champ_recherche     { width: 300px;                     }
-.web_pages_selecteur_categorie { width: 250px; margin-bottom: 5px; }
-.web_pages_selecteur_periode   { width: 250px;                     }
+.web_pages_edit             { height: 300px; }
+.web_pages_edit_notes       { height: 200px; }
+.web_pages_edit_note        { height: 100px; }
+.web_pages_era_container    { width: 400px;  }
+.web_pages_dates            { width: 110px;  }
+.web_pages_dates_container  { width: 230px;  }
 
-/********************************************* MODIFIER UNE ENTRÉE DE L'ENCYCLOPÉDIE DU WEB **********************************************/
-.web_encyclo_edit               { height: 300px; }
-.web_encyclo_edit_brouillon     { height: 200px; }
-.web_encyclo_edit_note          { height: 100px; }
-.web_encyclo_periode_container  { width: 400px;  }
-.web_encyclo_dates              { width: 110px;  }
-.web_encyclo_dates_container    { width: 230px;  }
+/************************************************ INTERNET DICTIONARY ************************************************/
+.web_dict_nsfw    { margin-bottom: 3px;                                                             }
+.web_dict_warning { padding-left: 15px; padding-top: 8px; align-items: center; text-align: justify; }
 
-/********************************************** MODIFIER UNE ENTRÉE DU DICTIONNAIRE DU WEB ***********************************************/
-.web_dico_edit { height: 250px; }
+.web_dict_edit { height: 250px; }
 
-/******************************************* ADMINISTRATION DES IMAGES DU DICTIONNAIRE DU WEB ********************************************/
+/*************************************** INTERNET ENCYCLOPEDIA ADMINISTRATION ****************************************/
 .web_image_upload  { font-size: 1.5em; color: #CACACA; border-radius: 2px; }
 .web_image_preview { margin-top: -120px !important;                        }

@@ -25,7 +25,7 @@ $page_titre = "Modifier un texte";
 $page_desc  = "Modifier un texte qui a été publié dans le coin des écrivains de NoBleme";
 
 // CSS
-$css = array('ecrivains');
+$css = array('writings');
 
 
 
@@ -222,7 +222,7 @@ while($dconcours = mysqli_fetch_array($qconcours))
             <br>
 
             <label for="modifier_contenu">Contenu du texte (vous pouvez utiliser des <a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> pour formater le texte)</label>
-            <textarea id="modifier_contenu" name="modifier_contenu" class="indiv composer_texte"><?=$texte_edit_contenu_raw?></textarea><br>
+            <textarea id="modifier_contenu" name="modifier_contenu" class="indiv write_text"><?=$texte_edit_contenu_raw?></textarea><br>
             <br>
 
             <?php if(isset($erreur)) { ?>

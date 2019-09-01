@@ -205,51 +205,51 @@ EOD;
 
 <br>
 
-<table class="forum_sujet_entete forum_nouveau_sujet_petitexemple">
+<table class="forum_thread_header forum_new_thread_example">
   <tbody>
-    <tr class="forum_sujet_entete">
-      <td class="valign_middle align_center forum_sujet_entete_titre">
-        <span class="gras forum_sujet_entete_titre"><?=$trad['fil_sujet']?></span>
-        <img src="./../../img/icones/lang_<?=changer_casse($lang, 'min')?>_clear.png" alt="<?=$lang?>" class="valign_middle forum_sujet_entete_lang" height="15">
+    <tr class="forum_thread_header">
+      <td class="valign_middle align_center forum_thread_header_title">
+        <span class="gras forum_thread_header_title"><?=$trad['fil_sujet']?></span>
+        <img src="./../../img/icones/lang_<?=changer_casse($lang, 'min')?>_clear.png" alt="<?=$lang?>" class="valign_middle forum_thread_header_lang" height="15">
       </td>
     </tr>
   </tbody>
 </table>
 
-<table class="forum_sujet_message forum_nouveau_sujet_petitexemple">
+<table class="forum_thread_message forum_new_thread_example">
   <tbody>
-    <tr class="forum_sujet_message">
-      <td class="align_center valign_top nowrap forum_sujet_message_gauche">
+    <tr class="forum_thread_message">
+      <td class="align_center valign_top nowrap forum_thread_message_gauche">
         <a class="gras pointeur"><?=$trad['fil_1_pseudo']?></a><br>
         <?=$trad['fil_1_date']?>
       </td>
-      <td class="valign_top forum_sujet_message_contenu">
+      <td class="valign_top forum_thread_message_body">
         <?=$trad['fil_1_contenu']?>
       </td>
     </tr>
   </tbody>
 </table>
-<table class="forum_sujet_message forum_nouveau_sujet_petitexemple">
+<table class="forum_thread_message forum_new_thread_example">
   <tbody>
-    <tr class="forum_sujet_message">
-      <td class="align_center valign_top nowrap forum_sujet_message_gauche">
+    <tr class="forum_thread_message">
+      <td class="align_center valign_top nowrap forum_thread_message_gauche">
         <a class="gras pointeur"><?=$trad['fil_2_pseudo']?></a><br>
         <?=$trad['fil_2_date']?>
       </td>
-      <td class="valign_top forum_sujet_message_contenu">
+      <td class="valign_top forum_thread_message_body">
         <?=$trad['fil_2_contenu']?>
       </td>
     </tr>
   </tbody>
 </table>
-<table class="forum_sujet_message forum_nouveau_sujet_petitexemple">
+<table class="forum_thread_message forum_new_thread_example">
   <tbody>
-    <tr class="forum_sujet_message">
-      <td class="align_center valign_top nowrap forum_sujet_message_gauche">
+    <tr class="forum_thread_message">
+      <td class="align_center valign_top nowrap forum_thread_message_gauche">
         <a class="gras pointeur"><?=$trad['fil_3_pseudo']?></a><br>
         <?=$trad['fil_3_date']?>
       </td>
-      <td class="valign_top forum_sujet_message_contenu">
+      <td class="valign_top forum_thread_message_body">
         <?=$trad['fil_3_contenu']?>
       </td>
     </tr>
@@ -271,51 +271,51 @@ EOD;
 
 <br>
 
-<table class="forum_sujet_entete forum_nouveau_sujet_petitexemple">
+<table class="forum_thread_header forum_new_thread_example">
   <tbody>
-    <tr class="forum_sujet_entete">
-      <td class="valign_middle align_center forum_sujet_entete_titre">
-        <span class="gras forum_sujet_entete_titre"><?=$trad['fil_sujet']?></span>
-        <img src="./../../img/icones/lang_<?=changer_casse($lang, 'min')?>_clear.png" alt="<?=$lang?>" class="valign_middle forum_sujet_entete_lang" height="15">
+    <tr class="forum_thread_header">
+      <td class="valign_middle align_center forum_thread_header_title">
+        <span class="gras forum_thread_header_title"><?=$trad['fil_sujet']?></span>
+        <img src="./../../img/icones/lang_<?=changer_casse($lang, 'min')?>_clear.png" alt="<?=$lang?>" class="valign_middle forum_thread_header_lang" height="15">
       </td>
     </tr>
   </tbody>
 </table>
 
-<table class="forum_sujet_message forum_nouveau_sujet_petitexemple">
+<table class="forum_thread_message forum_new_thread_example">
   <tbody>
-    <tr class="forum_sujet_message">
-      <td class="align_center valign_top nowrap forum_sujet_message_gauche">
+    <tr class="forum_thread_message">
+      <td class="align_center valign_top nowrap forum_thread_message_gauche">
         <span class="gras"><?=$trad['anon_pseudo']?></span><br>
         <?=$trad['fil_1_date']?>
       </td>
-      <td class="valign_top forum_sujet_message_contenu">
+      <td class="valign_top forum_thread_message_body">
         <?=$trad['fil_1_contenu']?>
       </td>
     </tr>
   </tbody>
 </table>
-<table class="forum_sujet_message forum_nouveau_sujet_petitexemple">
+<table class="forum_thread_message forum_new_thread_example">
   <tbody>
-    <tr class="forum_sujet_message">
-      <td class="align_center valign_top nowrap forum_sujet_message_gauche">
+    <tr class="forum_thread_message">
+      <td class="align_center valign_top nowrap forum_thread_message_gauche">
         <span class="gras"><?=$trad['anon_pseudo']?></span><br>
         <?=$trad['fil_2_date']?>
       </td>
-      <td class="valign_top forum_sujet_message_contenu">
+      <td class="valign_top forum_thread_message_body">
         <?=$trad['fil_2_contenu']?>
       </td>
     </tr>
   </tbody>
 </table>
-<table class="forum_sujet_message forum_nouveau_sujet_petitexemple">
+<table class="forum_thread_message forum_new_thread_example">
   <tbody>
-    <tr class="forum_sujet_message">
-      <td class="align_center valign_top nowrap forum_sujet_message_gauche">
+    <tr class="forum_thread_message">
+      <td class="align_center valign_top nowrap forum_thread_message_gauche">
         <span class="gras"><?=$trad['anon_pseudo']?></span><br>
         <?=$trad['fil_3_date']?>
       </td>
-      <td class="valign_top forum_sujet_message_contenu">
+      <td class="valign_top forum_thread_message_body">
         <?=$trad['fil_3_contenu']?>
       </td>
     </tr>

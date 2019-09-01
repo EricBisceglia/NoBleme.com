@@ -25,7 +25,7 @@ $page_titre = "Coin des écrivains";
 $page_desc  = "Coin des écrivains de NoBleme";
 
 // CSS & JS
-$css  = array('ecrivains');
+$css  = array('writings');
 $js   = array('dynamique', 'ecrivains/texte');
 
 

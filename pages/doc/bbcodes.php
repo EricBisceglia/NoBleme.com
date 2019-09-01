@@ -570,11 +570,11 @@ EOD;
         <br>
 
         <label for="bbcodes_testarea"><?=$trad['exp_instructions']?></label>
-        <textarea id="bbcodes_testarea" name="bbcodes_testarea" class="indiv bbcodes_cadre bbcodes_message" onkeyup="dynamique('<?=$chemin?>', './../user/xhr/previsualiser_bbcodes.php', 'bbcodes_previsualisation', 'message=' + dynamique_prepare('bbcodes_testarea'), 1 );"><?=$trad['exp_default']?></textarea><br>
+        <textarea id="bbcodes_testarea" name="bbcodes_testarea" class="indiv bbcodes_frame bbcodes_message" onkeyup="dynamique('<?=$chemin?>', './../user/xhr/previsualiser_bbcodes.php', 'bbcodes_preview', 'message=' + dynamique_prepare('bbcodes_testarea'), 1 );"><?=$trad['exp_default']?></textarea><br>
         <br>
 
         <label><?=$trad['exp_previs']?></label>
-        <div id="bbcodes_previsualisation" class="vscrollbar bbcodes_cadre bbcodes_previsualisation">
+        <div id="bbcodes_preview" class="vscrollbar bbcodes_frame bbcodes_preview">
           <?=bbcode($trad['exp_default'])?>
         </div>
 

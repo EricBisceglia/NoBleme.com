@@ -319,9 +319,9 @@ EOD;
 
       <div class="minitexte2">
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web?page=Introduction';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web?page=Introduction';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_intro']?>
             </h5>
             <span class="doc_minipadding">
@@ -332,9 +332,9 @@ EOD;
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_pages';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_pages';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_liste']?>
             </h5>
             <span class="doc_minipadding">
@@ -346,9 +346,9 @@ EOD;
         <br>
 
         <!--
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_timeline';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_timeline';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_chronologie']?>
             </h5>
             <span class="doc_minipadding">
@@ -362,9 +362,9 @@ EOD;
 
         <div class="flexcontainer">
           <div style="flex:10;">
-            <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web?random';">
-              <div class="align_center doc_minibordure">
-                <h5 class="doc_minipadding_bot doc_minibordure_bot">
+            <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web?random';">
+              <div class="align_center doc_miniborder">
+                <h5 class="doc_minipadding_bot doc_miniborder_bot">
                   <?=$trad['doct_random']?>
                 </h5>
                 <span class="doc_minipadding">
@@ -377,9 +377,9 @@ EOD;
             &nbsp;
           </div>
           <div style="flex:10;">
-            <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/rss?preselection=nbdb_web';">
-              <div class="align_center doc_minibordure">
-                <h5 class="doc_minipadding_bot doc_minibordure_bot">
+            <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/doc/rss?preselection=nbdb_web';">
+              <div class="align_center doc_miniborder">
+                <h5 class="doc_minipadding_bot doc_miniborder_bot">
                   <?=$trad['doct_rss']?>
                 </h5>
                 <span class="doc_minipadding">
@@ -392,9 +392,9 @@ EOD;
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/user/pm?user=1';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/user/pm?user=1';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_suggerer']?>
             </h5>
             <span class="doc_minipadding">
@@ -407,9 +407,9 @@ EOD;
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_images';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_images';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               Administration : Images
             </h5>
             <span class="doc_minipadding">
@@ -420,9 +420,9 @@ EOD;
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_notes_admin';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_notes_admin';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               Administration : Notes privées
             </h5>
             <span class="doc_minipadding">
@@ -433,9 +433,9 @@ EOD;
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_missing';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_missing';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               Administration : Pages manquantes
             </h5>
             <span class="doc_minipadding">
@@ -530,7 +530,7 @@ EOD;
 
         <?php if($web_vulgaire) { ?>
 
-        <div class="flexcontainer web_dico_alerte_conteneur">
+        <div class="flexcontainer web_dict_warning">
           <div style="flex:1" class="align_center">
             <img src="<?=$chemin?>img/icones/avertissement.svg" alt="!" height="70">
           </div>
@@ -546,7 +546,7 @@ EOD;
 
         <?php } if($web_politise) { ?>
 
-        <div class="flexcontainer web_dico_alerte_conteneur">
+        <div class="flexcontainer web_dict_warning">
           <div style="flex:1" class="align_center" class="valign_middle">
             <img src="<?=$chemin?>img/icones/avertissement.svg" alt="!" height="50">
           </div>
@@ -562,7 +562,7 @@ EOD;
 
         <?php } if($web_incorrect) { ?>
 
-        <div class="flexcontainer web_dico_alerte_conteneur">
+        <div class="flexcontainer web_dict_warning">
           <div style="flex:1" class="align_center" class="valign_middle">
             <img src="<?=$chemin?>img/icones/avertissement.svg" alt="!" height="50">
           </div>

@@ -21,7 +21,7 @@ $page_titre = ($lang == 'FR') ? "Statistiques des miscellanées" : "Miscellanea 
 $page_desc  = "Intéractions entre NoBlemeux qui ont été conservées pour la postérité";
 
 // CSS & JS
-$css = array('onglets');
+$css = array('tabs');
 $js  = array('onglets', 'dynamique');
 
 

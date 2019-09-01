@@ -362,11 +362,11 @@ EOD;
 
             <br>
 
-            <textarea id="profilTexte" name="profilTexte" class="indiv profil_textarea" lines="20" onkeyup="previsualiser_profil('<?=$chemin?>');"><?=$profil_texte?></textarea><br>
+            <textarea id="profilTexte" name="profilTexte" class="indiv profile_textarea" lines="20" onkeyup="previsualiser_profil('<?=$chemin?>');"><?=$profil_texte?></textarea><br>
             <br>
-            <div id="profil_previsualisation_container"<?=$profil_hidden?>>
+            <div id="profile_preview_container"<?=$profil_hidden?>>
               <label><?=$trad['droite_prev']?>:</label>
-              <div id="profil_previsualisation" class="vscrollbar profil_previsualisation">
+              <div id="profile_preview" class="vscrollbar profile_preview">
                 <?=$profil_preview?>
               </div>
               <br>

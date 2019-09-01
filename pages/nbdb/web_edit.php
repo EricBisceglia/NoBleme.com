@@ -469,7 +469,7 @@ if(!getxhr()) { /***************************************************************
                 <br>
 
                 <label for="web_definition_fr">Contenu de l'article (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> + <a class="gras" href="<?=$chemin?>pages/doc/nbdbcodes">NBDBCodes</a>)</label>
-                <textarea id="web_definition_fr" name="web_definition_fr" class="indiv web_encyclo_edit"><?=$web_contenu_fr?></textarea><br>
+                <textarea id="web_definition_fr" name="web_definition_fr" class="indiv web_pages_edit"><?=$web_contenu_fr?></textarea><br>
 
               </div>
               <div style="flex:1">
@@ -491,7 +491,7 @@ if(!getxhr()) { /***************************************************************
                 <br>
 
                 <label for="web_definition_en">Contenu de l'article (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> + <a class="gras" href="<?=$chemin?>pages/doc/nbdbcodes">NBDBCodes</a>)</label>
-                <textarea id="web_definition_en" name="web_definition_en" class="indiv web_encyclo_edit"><?=$web_contenu_en?></textarea><br>
+                <textarea id="web_definition_en" name="web_definition_en" class="indiv web_pages_edit"><?=$web_contenu_en?></textarea><br>
 
               </div>
             </div>
@@ -539,7 +539,7 @@ if(!getxhr()) { /***************************************************************
               </div>
               <br>
 
-              <div class="web_encyclo_periode_container">
+              <div class="web_pages_era_container">
                 <label for="web_periode">
                   Période à laquelle la page appartient
                   <a target="_blank" href="<?=$chemin?>pages/nbdb/web_periodes_edit">
@@ -556,29 +556,29 @@ if(!getxhr()) { /***************************************************************
               <br>
 
               <label for="web_apparition">Date d'apparition (mois/année)</label>
-              <div class="flexcontainer web_encyclo_dates_container">
+              <div class="flexcontainer web_pages_dates_container">
                 <div style="flex:5">
-                  <input id="web_apparition_m" name="web_apparition_m" class="indiv web_encyclo_dates" type="text" value="<?=$web_apparition_m?>">
+                  <input id="web_apparition_m" name="web_apparition_m" class="indiv web_pages_dates" type="text" value="<?=$web_apparition_m?>">
                 </div>
                 <div style="flex:1">
                   &nbsp;
                 </div>
                 <div style="flex:5">
-                <input id="web_apparition_y" name="web_apparition_y" class="indiv web_encyclo_dates" type="text" value="<?=$web_apparition_y?>">
+                <input id="web_apparition_y" name="web_apparition_y" class="indiv web_pages_dates" type="text" value="<?=$web_apparition_y?>">
                 </div>
               </div>
               <br>
 
               <label for="web_apparition">Date de popularisation (mois/année)</label>
-              <div class="flexcontainer web_encyclo_dates_container">
+              <div class="flexcontainer web_pages_dates_container">
                 <div style="flex:5">
-                <input id="web_popularisation_m" name="web_popularisation_m" class="indiv web_encyclo_dates" type="text" value="<?=$web_popularisation_m?>">
+                <input id="web_popularisation_m" name="web_popularisation_m" class="indiv web_pages_dates" type="text" value="<?=$web_popularisation_m?>">
                 </div>
                 <div style="flex:1">
                   &nbsp;
                 </div>
                 <div style="flex:5">
-                  <input id="web_popularisation_y" name="web_popularisation_y" class="indiv web_encyclo_dates" type="text" value="<?=$web_popularisation_y?>">
+                  <input id="web_popularisation_y" name="web_popularisation_y" class="indiv web_pages_dates" type="text" value="<?=$web_popularisation_y?>">
                 </div>
               </div>
               <br>
@@ -595,7 +595,7 @@ if(!getxhr()) { /***************************************************************
               <br>
 
               <label for="web_notes_admin">Notes privées d'administration (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a>)</label>
-              <textarea id="web_notes_admin" name="web_notes_admin" class="indiv web_encyclo_edit_note"><?=$web_notes_admin?></textarea><br>
+              <textarea id="web_notes_admin" name="web_notes_admin" class="indiv web_pages_edit_note"><?=$web_notes_admin?></textarea><br>
               <br>
 
               <?php if(isset($_GET['id'])) { ?>

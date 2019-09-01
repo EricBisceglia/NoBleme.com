@@ -22,7 +22,7 @@ $page_titre = ($lang == 'FR') ? "Plan de route" : "Roadmap";
 $page_desc  = "Historique et futur du développement de NoBleme";
 
 // CSS
-$css = array('todo');
+$css = array('tasks');
 
 
 
@@ -76,7 +76,7 @@ for($nroadmaps = 0; $droadmaps = mysqli_fetch_array($qroadmaps); $nroadmaps++)
   {
     $todo_a_faire[$nroadmaps]                        += (!$dtodo['t_resolution']) ? 1 : 0;
     $todo_id[$nroadmaps][$ntodo[$nroadmaps]]          = $dtodo['t_id'];
-    $todo_css[$nroadmaps][$ntodo[$nroadmaps]]         = ($dtodo['t_resolution']) ? 'todo_resolu' : 'todo_importance_'.$dtodo['t_importance'];
+    $todo_css[$nroadmaps][$ntodo[$nroadmaps]]         = ($dtodo['t_resolution']) ? 'todo_solved' : 'todo_importance_'.$dtodo['t_importance'];
     $todo_prive[$nroadmaps][$ntodo[$nroadmaps]]       = (!$dtodo['t_public']) ? 'ADMIN' : '';
     $temp_lang_resolution                             = ($lang == 'FR') ? 'Résolu' : 'Solved';
     $todo_importance[$nroadmaps][$ntodo[$nroadmaps]]  = (!$dtodo['t_resolution']) ? todo_importance($dtodo['t_importance'], $lang, 1) : $temp_lang_resolution;

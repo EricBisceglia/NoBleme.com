@@ -1,0 +1,6 @@
+/************************************************* PREVIEW A MEETUP **************************************************/
+textarea.meetups_details  { height: 150px;                                                   }
+div.meetups_preview       { max-height: 150px; border: 1px solid #CACACA; padding-top: 10px; }
+
+/*************************************************** EDIT A MEETUP ***************************************************/
+img.meetups_add_user { margin-bottom: 10px; }

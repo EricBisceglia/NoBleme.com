@@ -22,7 +22,7 @@ $page_titre = ($lang == 'FR') ? "Liste des tâches" : "To-do list";
 $page_desc  = "Liste de tâches accomplies ou à accomplir dans le développement de NoBleme";
 
 // CSS & JS
-$css  = array('todo');
+$css  = array('tasks');
 $js   = array('toggle', 'dynamique', 'todo/liste_taches');
 
 
@@ -256,7 +256,7 @@ $todo_a_faire = 0;
 for($ntodo = 0; $dtodo = mysqli_fetch_array($qtodo); $ntodo++)
 {
   $todo_a_faire            += (!$dtodo['t_resolution']) ? 1 : 0;
-  $todo_css[$ntodo]         = ($dtodo['t_resolution']) ? 'todo_resolu' : 'todo_importance_'.$dtodo['t_importance'];
+  $todo_css[$ntodo]         = ($dtodo['t_resolution']) ? 'todo_solved' : 'todo_importance_'.$dtodo['t_importance'];
   $todo_css[$ntodo]         = (!$dtodo['t_valide']) ? 'negatif texte_blanc' : $todo_css[$ntodo];
   $todo_id[$ntodo]          = $dtodo['t_id'];
   $todo_titre[$ntodo]       = predata(tronquer_chaine($dtodo['t_titre'], 50, '...'));

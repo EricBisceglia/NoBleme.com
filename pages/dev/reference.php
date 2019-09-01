@@ -26,7 +26,7 @@ $page_titre = "Dev: Référence CSS";
 $page_nom = "Administre secrètement le site";
 
 // CSS & JS
-$css  = array('onglets', 'dev');
+$css  = array('tabs', 'dev');
 $js   = array('onglets', 'toggle', 'highlight', 'dynamique', 'clipboard', 'dev/reference');
 
 

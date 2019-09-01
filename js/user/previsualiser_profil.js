@@ -11,9 +11,9 @@
 function previsualiser_profil(chemin)
 {
   // On affiche l'encadré de preview au cas où il serait encore masqué
-  document.getElementById('profil_previsualisation_container').style.display = 'block';
+  document.getElementById('profile_preview_container').style.display = 'block';
 
   // Et on génère la prévisualisation en XHR
-  dynamique(chemin, './xhr/previsualiser_bbcodes.php', 'profil_previsualisation',
+  dynamique(chemin, './xhr/previsualiser_bbcodes.php', 'profile_preview',
             'message=' + dynamique_prepare('profilTexte'), 1 );
 }

@@ -179,7 +179,7 @@ if(isset($_GET['id']))
             <input id="profil_metier" name="profil_metier" class="indiv" type="text" value="<?=$profil_metier?>" maxlength="35"><br>
             <br>
             <label for="profil_texte">Texte libre (partie droite):</label>
-            <textarea id="profil_texte" name="profil_texte" class="indiv profil_textarea" lines="20"><?=$profil_texte?></textarea><br>
+            <textarea id="profil_texte" name="profil_texte" class="indiv profile_textarea" lines="20"><?=$profil_texte?></textarea><br>
             <br>
             <input value="Modifier le profil de <?=$profil_pseudo?>" type="submit" name="profil_go">
           </fieldset>

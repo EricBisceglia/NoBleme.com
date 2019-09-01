@@ -21,7 +21,7 @@ $page_titre = ($lang == 'FR') ? "Commandes IRC" : "IRC commands";
 $page_desc  = "Commandes et services utilisés sur le serveur de discussion IRC de NoBleme";
 
 // CSS & JS
-$css  = array('onglets');
+$css  = array('tabs');
 $js   = array('onglets');
 
 

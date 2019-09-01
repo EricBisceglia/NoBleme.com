@@ -111,9 +111,9 @@ EOD;
 
       <div class="minitexte3">
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_web_encyclo']?>
             </h5>
             <span class="doc_minipadding">
@@ -124,9 +124,9 @@ EOD;
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_dictionnaire';">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/nbdb/web_dictionnaire';">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_web_dico']?>
             </h5>
             <span class="doc_minipadding">
@@ -137,9 +137,9 @@ EOD;
 
         <br>
 
-        <div class="doc_minipadding doc_minibordure">
-          <div class="align_center doc_minibordure">
-            <h5 class="doc_minipadding_bot doc_minibordure_bot">
+        <div class="doc_minipadding doc_miniborder">
+          <div class="align_center doc_miniborder">
+            <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_web_wip']?>
             </h5>
             <span class="doc_minipadding">

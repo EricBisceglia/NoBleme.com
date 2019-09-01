@@ -39,7 +39,7 @@ $js   = array('highlight');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ajout ou modification d'une définition
 
-if(isset($_POST['web_dico_add']) || isset($_POST['web_dico_edit']))
+if(isset($_POST['web_dico_add']) || isset($_POST['web_dict_edit']))
 {
   // Assainissement du postdata
   $edit_dico_titre_fr       = postdata_vide('web_dico_titre_fr', 'string', '');
@@ -93,7 +93,7 @@ if(isset($_POST['web_dico_add']) || isset($_POST['web_dico_edit']))
   }
 
   // Modification d'une définition
-  if(isset($_POST['web_dico_edit']))
+  if(isset($_POST['web_dict_edit']))
   {
     // On a besoin de l'ID
     $edit_dico_id = postdata($_GET['id'], 'int', 0);
@@ -319,7 +319,7 @@ else
                 <br>
 
                 <label for="web_dico_definition_fr">Contenu de la définition (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> + <a class="gras" href="<?=$chemin?>pages/doc/nbdbcodes">NBDBCodes</a>)</label>
-                <textarea id="web_dico_definition_fr" name="web_dico_definition_fr" class="indiv web_dico_edit"><?=$dico_contenu_fr?></textarea><br>
+                <textarea id="web_dico_definition_fr" name="web_dico_definition_fr" class="indiv web_dict_edit"><?=$dico_contenu_fr?></textarea><br>
 
               </div>
               <div style="flex:1">
@@ -341,7 +341,7 @@ else
                 <br>
 
                 <label for="web_dico_definition_en">Contenu de la définition (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> + <a class="gras" href="<?=$chemin?>pages/doc/nbdbcodes">NBDBCodes</a>)</label>
-                <textarea id="web_dico_definition_en" name="web_dico_definition_en" class="indiv web_dico_edit"><?=$dico_contenu_en?></textarea><br>
+                <textarea id="web_dico_definition_en" name="web_dico_definition_en" class="indiv web_dict_edit"><?=$dico_contenu_en?></textarea><br>
 
               </div>
             </div>
@@ -363,7 +363,7 @@ else
               <br>
 
               <label for="web_dico_notes_admin">Notes privées d'administration (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a>)</label>
-              <textarea id="web_dico_notes_admin" name="web_dico_notes_admin" class="indiv web_encyclo_edit_note"><?=$dico_notes_admin?></textarea><br>
+              <textarea id="web_dico_notes_admin" name="web_dico_notes_admin" class="indiv web_pages_edit_note"><?=$dico_notes_admin?></textarea><br>
               <br>
 
               <?php if(isset($_GET['id'])) { ?>
@@ -382,7 +382,7 @@ else
               <?php if(!isset($_GET['id'])) { ?>
               <input value="AJOUTER LA DÉFINITION AU DICTIONNAIRE DU WEB" type="submit" name="web_dico_add">
               <?php } else { ?>
-              <input value="MODIFIER LA DÉFINITION" type="submit" name="web_dico_edit">
+              <input value="MODIFIER LA DÉFINITION" type="submit" name="web_dict_edit">
               <?php } ?>
 
             </div>

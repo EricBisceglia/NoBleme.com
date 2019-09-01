@@ -1,0 +1,17 @@
+/******************************************************* TABS ********************************************************/
+ul.tab                { overflow: hidden; border: 1px solid #CACACA; background-color: #E9E9E9;           }
+ul.tab li             { float: left; list-style:none; margin-bottom:0px;                                  }
+ul.tab li a           { display: inline-block; text-align: center; transition: 0.69s; font-size: 1.2em    ;
+                      padding-top: 10px; padding-bottom: 10px; padding-left: 20px; padding-right: 20px;   ;
+                      cursor: pointer; font-weight: bold; color: #000000;                                 }
+ul.tab li a:hover     { background-color: #DADADA;                                                        }
+.active_tab           { background-color: #CACACA;                                                        }
+.tab_contents         { border: 1px solid #CACACA; border-top: none                                       ;
+                      padding-top: 10px; padding-left: 10px; padding-right: 10px; padding-bottom: 10px    ;
+                      animation: tab_click 1.5s;                                                          }
+@keyframes tab_click  { from { opacity: 0; } to { opacity: 1; }                                           }
+a.tab_blink           { animation-name: tab_blink; animation-iteration-count: infinite                    ;
+                      animation-duration: 2000ms;                                                         }
+@keyframes tab_blink  { from { color: #FF0000; } to { color: #000000; }                                   }
+a.tab_blink:hover     { animation-name: tab_blink; animation-iteration-count: infinite                    ;
+                      animation-duration: 2000ms;                                                         }

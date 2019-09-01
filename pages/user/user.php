@@ -329,117 +329,117 @@ else if($lang == 'EN')
         <div class="flexcontainer">
           <div style="flex:15">
 
-            <div class="profil_cadre align_center">
+            <div class="profile_frame align_center">
 
               <?php if($est_sysop) { ?>
-              <button class="profil_bouton button-outline" onclick="window.location.href = '<?=$chemin?>pages/sysop/profil?id=<?=$user_id?>';">MODIFIER LE PROFIL</button>
+              <button class="profile_button button-outline" onclick="window.location.href = '<?=$chemin?>pages/sysop/profil?id=<?=$user_id?>';">MODIFIER LE PROFIL</button>
               &nbsp;
-              <button class="profil_bouton button-outline" onclick="window.location.href = '<?=$chemin?>pages/sysop/ban?id=<?=$user_id?>';"><?=$profil_sysop_ban?></button>
+              <button class="profile_button button-outline" onclick="window.location.href = '<?=$chemin?>pages/sysop/ban?id=<?=$user_id?>';"><?=$profil_sysop_ban?></button>
 
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <?php } if (loggedin() && $user_id == $_SESSION['user']) { ?>
-              <button class="profil_bouton" onclick="window.location.href = '<?=$chemin?>pages/user/profil';"><?=$trad['bouton_profil']?></button>
+              <button class="profile_button" onclick="window.location.href = '<?=$chemin?>pages/user/profil';"><?=$trad['bouton_profil']?></button>
               <?php } else { ?>
-              <button class="profil_bouton" onclick="window.location.href = '<?=$chemin?>pages/user/pm?user=<?=$user_id?>';"><?=$trad['bouton_message']?></button>
+              <button class="profile_button" onclick="window.location.href = '<?=$chemin?>pages/user/pm?user=<?=$user_id?>';"><?=$trad['bouton_message']?></button>
               <?php } ?>
 
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/nobleme/membres';">
                 <span class="gras"><?=$trad['user_creation']?></span><br>
                 <?=$trad['usert_creation'].$profil_creation?>
               </div>
 
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/nobleme/online';">
                 <span class="gras"><?=$trad['user_activite']?></span><br>
                 <?=$profil_activite?>
               </div>
 
               <?php if($profil_genre) { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <span class="gras"><?=$trad['user_genre']?></span><br>
               <?=$profil_genre?>
 
               <?php } if($profil_anniv) { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/nobleme/anniversaires';">
                 <span class="gras"><?=$trad['user_age']?></span><br>
                 <?=$profil_age.$trad['user_anniv'].$profil_anniv?>
               </div>
 
               <?php } if($profil_lieu) { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <span class="gras"><?=$trad['user_lieu']?></span><br>
               <?=$profil_lieu?>
 
               <?php } if($profil_metier) { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <span class="gras"><?=$trad['user_metier']?></span><br>
               <?=$profil_metier?>
 
               <?php } if($profil_forum || $profil_forum_2) { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/forum/index';">
                 <span class="gras"><?=$trad['user_forum']?></span><br>
                 <?=$trad['usert_forum']?>
               </div>
 
               <?php } if($profil_irl) { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/irl/stats';">
                 <span class="gras"><?=$trad['user_irl']?></span><br>
                 <?=$trad['usert_irl']?>
               </div>
 
               <?php } if($profil_ecrivains && $lang == 'FR') { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/ecrivains/index';">
                 <span class="gras">Coin des écrivains</span><br>
                 <?=$profil_ecrivains?>
               </div>
 
               <?php } if($profil_concoursecr && $lang == 'FR') { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/ecrivains/concours_liste';">
                 <span class="gras">Concours du coin des écrivains</span><br>
                 <?=$profil_concoursecr?>
               </div>
 
               <?php } if($profil_gagnantcecr && $lang == 'FR') { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/ecrivains/concours_liste';">
                 <span class="gras">Gagnant du concours du coin des écrivains</span><br>
                 <?=$profil_gagnantcecr?>
               </div>
 
               <?php } if($profil_quotes && $lang == 'FR') { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/quotes/stats';">
                 <span class="gras">Miscellanées</span><br>
                 Est apparu <span class="gras texte_noir"><?=$profil_quotes?></span> fois
               </div>
 
               <?php } if($profil_quotesub && $lang == 'FR') { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/quotes/stats';">
                 <span class="gras">Proposition de miscellanées</span><br>
                 A proposé <span class="gras texte_noir"><?=$profil_quotesub?></span> miscellanée<?=($profil_quotesub == 1) ? '' : 's'?>
               </div>
 
               <?php } if($profil_todo && $lang == 'FR') { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <div class="pointeur" onclick="window.location.href = '<?=$chemin?>pages/todo/index';">
                 <span class="gras">Liste des tâches</span><br>
                 A proposé <span class="gras texte_noir"><?=$profil_todo?></span> tâche<?=($profil_todo == 1) ? '' : 's'?>
               </div>
 
               <?php } if($profil_email && $est_admin) { ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
               <span class="gras">E-mail du compte</span><br>
               <?=$profil_email?>
 
               <?php } ?>
-              <hr class="profil_hr">
+              <hr class="profile_hr">
 
             </div>
 
@@ -451,7 +451,7 @@ else if($lang == 'EN')
 
           <div style="flex:20">
 
-            <div class="profil_cadre"><?=$profil_contenu?></div>
+            <div class="profile_frame"><?=$profil_contenu?></div>
 
           </div>
         </div>

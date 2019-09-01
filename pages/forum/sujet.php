@@ -741,75 +741,75 @@ EOD;
         <br>
         <br>
 
-        <table class="forum_sujet_entete">
+        <table class="forum_thread_header">
           <tbody>
-            <tr class="forum_sujet_entete">
+            <tr class="forum_thread_header">
 
-              <td rowspan="<?=$rowspan_titre?>" class="align_center valign_top nowrap forum_sujet_entete_gauche">
+              <td rowspan="<?=$rowspan_titre?>" class="align_center valign_top nowrap forum_thread_header_left">
                 <fieldset>
 
                   <label class="texte_noir"><?=$sujet_reponses?> <?=$trad['reponses']?></label>
 
-                  <a class="gras forum_sujet_entete_recent" href="#<?=$reponse_id[$nreponses-1]?>"><?=$trad['gotolast']?></a><br>
+                  <a class="gras forum_thread_header_recent" href="#<?=$reponse_id[$nreponses-1]?>"><?=$trad['gotolast']?></a><br>
 
                   <?php if($moderateur_forum) { ?>
                   <a href="<?=$chemin?>pages/forum/sujet_modifier?id=<?=$sujet_id?>">
-                    <img class="pointeur forum_sujet_entete_actions" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="25">
+                    <img class="pointeur forum_thread_header_actions" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="25">
                   </a>
                   <a href="<?=$chemin?>pages/forum/sujet_supprimer?id=<?=$sujet_id?>">
-                    <img class="pointeur forum_sujet_entete_actions" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" height="25">
+                    <img class="pointeur forum_thread_header_actions" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" height="25">
                   </a>
                   <?php } ?>
 
                 </fieldset>
               </td>
 
-              <td class="valign_middle align_center forum_sujet_entete_titre">
-                <span class="texte_noir gras forum_sujet_entete_titre"><?=$sujet_titre?></span>
-                <img src="<?=$chemin?>img/icones/lang_<?=$sujet_langue?>_clear.png" alt="<?=$sujet_langue_caps?>" class="valign_middle forum_sujet_entete_lang" height="18">
+              <td class="valign_middle align_center forum_thread_header_title">
+                <span class="texte_noir gras forum_thread_header_title"><?=$sujet_titre?></span>
+                <img src="<?=$chemin?>img/icones/lang_<?=$sujet_langue?>_clear.png" alt="<?=$sujet_langue_caps?>" class="valign_middle forum_thread_header_lang" height="18">
               </td>
 
             </tr>
 
             <?php if($sujet_epingle) { ?>
             <tr>
-              <td class="align_center texte_positif gras forum_sujet_entete_description">
+              <td class="align_center texte_positif gras forum_thread_header_description">
                 <?=$trad['warn_epingle']?>
               </td>
             </tr>
             <?php } if(!$sujet_ouvert) { ?>
             <tr>
-              <td class="align_center texte_negatif gras forum_sujet_entete_description">
+              <td class="align_center texte_negatif gras forum_thread_header_description">
                 <?=$trad['warn_ferme']?>
               </td>
             </tr>
             <?php } if(!$sujet_public) { ?>
             <tr>
-              <td class="align_center texte_neutre gras forum_sujet_entete_description">
+              <td class="align_center texte_neutre gras forum_thread_header_description">
                 <?=$trad['warn_prive']?>
               </td>
             </tr>
             <?php } if($sujet_apparence == 'Anonyme') { ?>
             <tr>
-              <td class="align_center texte_noir forum_sujet_entete_description">
+              <td class="align_center texte_noir forum_thread_header_description">
                 <?=$trad['warn_anonyme']?>
               </td>
             </tr>
             <?php } if($sujet_classification == 'Sérieux') { ?>
             <tr>
-              <td class="align_center texte_noir forum_sujet_entete_description">
+              <td class="align_center texte_noir forum_thread_header_description">
                 <?=$trad['warn_serieux']?>
               </td>
             </tr>
             <?php } if($sujet_classification == 'Débat') { ?>
             <tr>
-              <td class="align_center texte_noir forum_sujet_entete_description">
+              <td class="align_center texte_noir forum_thread_header_description">
                 <?=$trad['warn_debat']?>
               </td>
             </tr>
             <?php } if($sujet_classification == 'Jeu') { ?>
             <tr>
-              <td class="align_center forum_sujet_entete_description">
+              <td class="align_center forum_thread_header_description">
                 <?=$trad['warn_jeu']?>
               </td>
             </tr>
@@ -827,11 +827,11 @@ EOD;
 
         <br id="<?=$reponse_id[$i]?>">
 
-        <table class="forum_sujet_message">
+        <table class="forum_thread_message">
           <tbody id="message_<?=$reponse_id[$i]?>">
-            <tr class="forum_sujet_message">
+            <tr class="forum_thread_message">
 
-              <td class="align_center valign_top nowrap forum_sujet_message_gauche">
+              <td class="align_center valign_top nowrap forum_thread_message_gauche">
 
                 <?php if($sujet_apparence == 'Anonyme' && !$administrateur_forum) { ?>
                 <?=$trad['mess_anon']?>
@@ -844,29 +844,29 @@ EOD;
 
               </td>
 
-              <td rowspan="2" class="valign_top forum_sujet_message_contenu">
+              <td rowspan="2" class="valign_top forum_thread_message_body">
                 <?=$reponse_contenu[$i]?>
               </td>
 
             </tr>
             <tr>
-              <td rowspan="<?=$reponse_rowspan[$i]?>" class="align_center valign_bottom nowrap forum_sujet_message_gauche">
+              <td rowspan="<?=$reponse_rowspan[$i]?>" class="align_center valign_bottom nowrap forum_thread_message_gauche">
 
-                <a class="forum_sujet_message_info" href="<?=$chemin?>pages/forum/sujet?id=<?=$sujet_id?>#<?=$reponse_id[$i]?>"><?=$trad['mess_poste']?> <?=$reponse_creation[$i]?></a><br>
+                <a class="forum_thread_message_info" href="<?=$chemin?>pages/forum/sujet?id=<?=$sujet_id?>#<?=$reponse_id[$i]?>"><?=$trad['mess_poste']?> <?=$reponse_creation[$i]?></a><br>
 
                 <?php if($reponse_edit[$i]) { ?>
-                <span class="texte_noir forum_sujet_message_info"><?=$trad['mess_edite']?> <?=$reponse_edit[$i]?></span><br>
+                <span class="texte_noir forum_thread_message_info"><?=$trad['mess_edite']?> <?=$reponse_edit[$i]?></span><br>
                 <?php } ?>
 
                 <?php if(loggedin()) { ?>
                 <a href="<?=$chemin?>pages/forum/sujet?id=<?=$sujet_id?>&amp;quote=<?=$reponse_id[$i]?>#sujet_repondre">
-                  <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/quote.png" alt="Q" height="18" title="Citer le message">
+                  <img class="pointeur forum_thread_message_actions" src="<?=$chemin?>img/icones/quote.png" alt="Q" height="18" title="Citer le message">
                 </a>
                 <?php } ?>
                 <?php if($moderateur_forum) { ?>
-                <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="18" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'edit')">
+                <img class="pointeur forum_thread_message_actions" src="<?=$chemin?>img/icones/modifier.svg" alt="M" height="18" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'edit')">
                 <?php if($i) { ?>
-                <img class="pointeur forum_sujet_message_actions" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" height="18" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'delete')">
+                <img class="pointeur forum_thread_message_actions" src="<?=$chemin?>img/icones/supprimer.svg" alt="X" height="18" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'delete')">
                 <?php } ?>
                 <?php } ?>
 
@@ -876,19 +876,19 @@ EOD;
             <?php if(loggedin() && $reponse_auteur_id[$i] == $_SESSION['user']) { ?>
             <?php if($reponse_peut_edit[$i] && !$i) { ?>
             <tr>
-              <td class="forum_sujet_message_actions">
+              <td class="forum_thread_message_actions">
                 <a class="pointeur" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'edit')"><?=$trad['mess_edit']?></a>
               </td>
             </tr>
             <?php } else if ($reponse_peut_edit[$i]) { ?>
             <tr>
-              <td class="forum_sujet_message_actions">
+              <td class="forum_thread_message_actions">
                 <a class="pointeur" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'edit')"><?=$trad['mess_edit']?></a> - <a class="pointeur" onclick="forum_modifier_message('<?=$chemin?>', <?=$reponse_id[$i]?>, 'delete')"><?=$trad['mess_supp']?></a>
               </td>
             </tr>
             <?php } else { ?>
             <tr>
-              <td class="forum_sujet_message_actions italique">
+              <td class="forum_thread_message_actions italique">
                 <?=$trad['mess_nocando']?>
               </td>
             </tr>
@@ -902,19 +902,19 @@ EOD;
 
         <br id="sujet_repondre">
 
-        <table class="forum_sujet_message">
+        <table class="forum_thread_message">
           <tbody>
-            <tr class="forum_sujet_message">
+            <tr class="forum_thread_message">
 
               <?php if(loggedin() && $sujet_ouvert) { ?>
 
-              <td class="forum_sujet_message_contenu">
+              <td class="forum_thread_message_body">
 
                 <form method="POST" id="forum_poster_reponse">
                   <fieldset>
 
                     <label for="forum_ecrire_reponse" id="forum_ecrire_reponse_label"><?=$trad['reply_label']?></label>
-                    <textarea id="forum_ecrire_reponse" name="forum_ecrire_reponse" class="indiv forum_ecrire_reponse_composition" onkeyup="forum_ecrire_reponse_previsualisation('<?=$chemin?>');"><?=$reponse_quote_raw?></textarea><br>
+                    <textarea id="forum_ecrire_reponse" name="forum_ecrire_reponse" class="indiv forum_reply_body" onkeyup="forum_reply_preview('<?=$chemin?>');"><?=$reponse_quote_raw?></textarea><br>
                     <br>
 
                     <button type="button" onclick="forum_ecrire_reponse_envoyer();"><?=$trad['reply_go']?></button>
@@ -922,7 +922,7 @@ EOD;
                     <div id="forum_ecrire_reponse_container"<?=$reponse_hidden?>>
                       <br>
                       <label><?=$trad['reply_prev']?></label>
-                      <div class="vscrollbar forum_ecrire_reponse_previsualisation" id="forum_ecrire_reponse_previsualisation">
+                      <div class="vscrollbar forum_reply_preview" id="forum_reply_preview">
                         <?=$reponse_quote?>
                       </div>
                       <br>

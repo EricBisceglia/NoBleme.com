@@ -24,7 +24,7 @@ $page_titre = ($lang == 'FR') ? "IRL du " : "";
 $page_desc  = "Organisation de rencontres en personne entre les NoBlemeux";
 
 // CSS & JS
-$css  = array('irl');
+$css  = array('meetups');
 $js   = array('toggle', 'dynamique', 'irl/editer_irl');
 
 
@@ -142,8 +142,8 @@ if(isset($_POST['irl_edit_id']) && $_POST['irl_edit_id'] && getmod('irl'))
 
   // On va chercher les infos sur le participant pour le diff
   $edit_irl_date        = postdata(jourfr($qcheckirlp['irl_date']));
-  $edit_irl_details_fr  = postdata($qcheckirlp['irlp_details_fr']);
-  $edit_irl_details_en  = postdata($qcheckirlp['irlp_details_en']);
+  $edit_meetups_details_fr  = postdata($qcheckirlp['irlp_details_fr']);
+  $edit_meetups_details_en  = postdata($qcheckirlp['irlp_details_en']);
   $edit_irl_confirme    = ($qcheckirlp['irlp_confirme']) ? 'Oui' : 'Non';
 
   // Modification de l'entrée
@@ -162,8 +162,8 @@ if(isset($_POST['irl_edit_id']) && $_POST['irl_edit_id'] && getmod('irl'))
 
   // Diff
   $irl_edit_confirme  = ($irl_edit_confirme) ? 'Oui' : 'Non';
-  activite_diff($activite_id, 'Détails (français)'  , $edit_irl_details_fr  , $irl_edit_details_fr  , 1);
-  activite_diff($activite_id, 'Détails (anglais)'   , $edit_irl_details_en  , $irl_edit_details_en  , 1);
+  activite_diff($activite_id, 'Détails (français)'  , $edit_meetups_details_fr  , $irl_edit_details_fr  , 1);
+  activite_diff($activite_id, 'Détails (anglais)'   , $edit_meetups_details_en  , $irl_edit_details_en  , 1);
   activite_diff($activite_id, 'Présence confirmée'  , $edit_irl_confirme    , $irl_edit_confirme    , 1);
 }
 
@@ -341,7 +341,7 @@ $irl_futur    = (strtotime($qcheckirl['date']) >= strtotime(date('Y-m-d'))) ? 1 
 $irl_colspan  = ($irl_futur) ? 5 : 4;
 $irl_dans     = changer_casse(dans(strtotime($qcheckirl['date']), $lang), 'min');
 $irl_date     = datefr($qcheckirl['date'], $lang);
-$irl_details  = ($lang == 'FR') ? bbcode(predata($qirl['details_fr'], 1)) : bbcode(predata($qirl['details_en'], 1));
+$meetups_details  = ($lang == 'FR') ? bbcode(predata($qirl['details_fr'], 1)) : bbcode(predata($qirl['details_en'], 1));
 
 
 
@@ -400,7 +400,7 @@ Cette page contient des informations sur une future <a class="gras" href="{$chem
 <br>
 Si vous comptez venir à cette IRL, il est <span class="souligne">impératif</span> de prévenir à l'avance un membre de <a class="gras" href="{$chemin}pages/nobleme/admins">l'équipe administrative</a> du site, de préférence via <a class="gras" href="{$chemin}pages/irc/index">le serveur de discussion IRC</a> (ou sinon par message privé).
 EOD;
-  $trad['irl_details']        = "Organisation de l'IRL";
+  $trad['meetups_details']        = "Organisation de l'IRL";
 
   // Participants
   $trad['irlp_membres_zero']  = "Aucun NoBlemeux n'est inscrit à cette IRL pour le moment";
@@ -428,7 +428,7 @@ This page contains information on a future <a class="gras" href="{$chemin}pages/
 <br>
 If you intend to join this meetup, it is <span class="souligne">mandatory</span> to warn a member of NoBleme's <a class="gras" href="{$chemin}pages/nobleme/admins">administrative team</a> in advance, if possible through our <a class="gras" href="{$chemin}pages/irc/index">IRC chat server</a> (otherwise by private message).
 EOD;
-  $trad['irl_details']        = "Meetup details";
+  $trad['meetups_details']        = "Meetup details";
 
   // Participants
   $trad['irlp_membres_zero']  = "Nobody is attending this meetup so far";
@@ -472,9 +472,9 @@ if(!getxhr()) { /***************************************************************
         <br>
         <br>
 
-        <h5><?=$trad['irl_details']?></h5>
+        <h5><?=$trad['meetups_details']?></h5>
 
-        <p><?=$irl_details?></p>
+        <p><?=$meetups_details?></p>
 
         <br>
         <br>
@@ -487,7 +487,7 @@ if(!getxhr()) { /***************************************************************
           <?php } else { ?>
           <?=$trad['irlp_membres_passe']?>
           <?php } if($irl_mod) { ?>
-          &nbsp;&nbsp;<img class="valign_middle pointeur irl_ajouter_personne" src="<?=$chemin?>img/icones/ajouter_personne.svg" alt="+" height="30" onclick="toggle_row('irl_ajouter_participant');">
+          &nbsp;&nbsp;<img class="valign_middle pointeur meetups_add_user" src="<?=$chemin?>img/icones/ajouter_personne.svg" alt="+" height="30" onclick="toggle_row('irl_ajouter_participant');">
           <?php } ?>
         </h5>
 

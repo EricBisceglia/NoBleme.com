@@ -174,7 +174,7 @@ if(!$dico_id)
     $definition_titre_css[$ndefinition] = ($ddefinition['d_redirect']) ? 'gras texte_noir' : 'gras';
     $definition_titre_url[$ndefinition] = urlencode($ddefinition['d_titre']);
     $definition_redirect[$ndefinition]  = ($ddefinition['d_redirect']) ? ' -> '.predata($ddefinition['d_redirect']) : '';
-    $definition_vulgaire[$ndefinition]  = ($ddefinition['d_vulgaire']) ? '<img class="valign_middle web_dico_nsfw" src="'.$chemin.'img/icones/avertissement.svg" alt="!" height="20">': '';
+    $definition_vulgaire[$ndefinition]  = ($ddefinition['d_vulgaire']) ? '<img class="valign_middle web_dict_nsfw" src="'.$chemin.'img/icones/avertissement.svg" alt="!" height="20">': '';
   }
 }
 
@@ -439,7 +439,7 @@ if(!getxhr()) { /***************************************************************
 
         <?php if($definition_vulgaire) { ?>
 
-        <div class="flexcontainer web_dico_alerte_conteneur">
+        <div class="flexcontainer web_dict_warning">
           <div style="flex:1" class="align_center">
             <img src="<?=$chemin?>img/icones/avertissement.svg" alt="!" height="70">
           </div>
@@ -455,7 +455,7 @@ if(!getxhr()) { /***************************************************************
 
         <?php } if($definition_politise) { ?>
 
-        <div class="flexcontainer web_dico_alerte_conteneur">
+        <div class="flexcontainer web_dict_warning">
           <div style="flex:1" class="align_center" class="valign_middle">
             <img src="<?=$chemin?>img/icones/avertissement.svg" alt="!" height="50">
           </div>
@@ -471,7 +471,7 @@ if(!getxhr()) { /***************************************************************
 
         <?php } if($definition_incorrect) { ?>
 
-        <div class="flexcontainer web_dico_alerte_conteneur">
+        <div class="flexcontainer web_dict_warning">
           <div style="flex:1" class="align_center" class="valign_middle">
             <img src="<?=$chemin?>img/icones/avertissement.svg" alt="!" height="50">
           </div>

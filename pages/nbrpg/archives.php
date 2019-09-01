@@ -21,7 +21,7 @@ $page_titre = "NBRPG : Archives";
 $page_desc  = "Sessions de jeu archivées du NoBlemeRPG";
 
 // CSS & JS
-$css  = array('onglets');
+$css  = array('tabs');
 $js   = array('onglets');
 
 

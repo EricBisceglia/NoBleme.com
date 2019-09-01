@@ -21,7 +21,7 @@ $page_titre = ($lang == 'FR') ? "Statistiques des IRL" : "Real life meetup stats
 $page_desc  = "Statistiques des rencontres IRL des NoBlemeux";
 
 // CSS & JS
-$css = array('onglets');
+$css = array('tabs');
 $js  = array('onglets');
 
 

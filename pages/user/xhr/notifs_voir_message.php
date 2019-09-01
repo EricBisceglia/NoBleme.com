@@ -166,7 +166,7 @@ EOD;
 /*                                                                                                                                       */
 /***************************************************************************************************************************************/?>
 
-<div class="indiv align_left notif_cadre notif_grand_cadre">
+<div class="indiv align_left pm_frame pm_frame_big">
   <br>
   <span class="alinea gras souligne"><?=$message_titre?></span><br>
   <br>
@@ -176,7 +176,7 @@ EOD;
   <?php } ?>
 </div>
 
-<div class="indiv align_left notif_cadre notif_grand_cadre">
+<div class="indiv align_left pm_frame pm_frame_big">
   <br>
   <?=$message_texte?><br>
   <br>
@@ -184,7 +184,7 @@ EOD;
 
 <?php if(!isset($_POST['envoye'])) { ?>
 
-<div class="indiv align_left notif_cadre notif_grand_cadre hidden" id="message_reponse_<?=$message_id?>">
+<div class="indiv align_left pm_frame pm_frame_big hidden" id="message_reponse_<?=$message_id?>">
   <fieldset>
 
     <label for="message_destinataire_<?=$message_id?>"><?=$trad['m_destinataire']?></label>
@@ -196,7 +196,7 @@ EOD;
     <br>
 
     <label for="message_textarea_<?=$message_id?>"><?=$trad['m_corps']?></label>
-    <textarea id="message_textarea_<?=$message_id?>" name="message_textarea_<?=$message_id?>" class="indiv notif_message"
+    <textarea id="message_textarea_<?=$message_id?>" name="message_textarea_<?=$message_id?>" class="indiv pm_body"
               onkeyup=" notification_previsualiser('<?=$chemin?>', '<?=$message_id?>');">[quote=<?=$message_envoyeur?>]
 <?=$message_corps?>
 
@@ -205,7 +205,7 @@ EOD;
 
     <div id="message_previsualisation_container_<?=$message_id?>">
       <label><?=$trad['m_preview']?></label>
-      <div id="message_previsualisation_<?=$message_id?>" class="vscrollbar notif_previsualisation notif_cadre">
+      <div id="message_previsualisation_<?=$message_id?>" class="vscrollbar pm_preview pm_frame">
         <?=$message_texte?>
       </div>
       <br>
@@ -220,16 +220,16 @@ EOD;
 
 <div class="flexcontainer" id="message_actions_<?=$message_id?>">
 
-  <div  class="pointeur notif_cadre notif_cadre_gauche" style="flex:1;" onclick="notification_formulaire_reponse('<?=$message_id?>', 1);">
-    <button class="button button-outline notif_cadre_bouton"><?=$trad['m_rep_citer']?></button>
+  <div  class="pointeur pm_frame pm_frame_left" style="flex:1;" onclick="notification_formulaire_reponse('<?=$message_id?>', 1);">
+    <button class="button button-outline pm_frame_button"><?=$trad['m_rep_citer']?></button>
   </div>
 
-  <div  class="pointeur notif_cadre notif_cadre_milieu" style="flex:1;" onclick="notification_formulaire_reponse('<?=$message_id?>');">
-    <button class="button button-outline notif_cadre_bouton"><?=$trad['m_rep_non']?></button>
+  <div  class="pointeur pm_frame pm_frame_middle" style="flex:1;" onclick="notification_formulaire_reponse('<?=$message_id?>');">
+    <button class="button button-outline pm_frame_button"><?=$trad['m_rep_non']?></button>
   </div>
 
-  <div  class="pointeur notif_cadre notif_cadre_droite" style="flex:1;" onclick="notification_supprimer('<?=$chemin?>', '<?=$message_id?>', '<?=$trad['m_confirm']?>')">
-    <button class="button notif_cadre_bouton"><?=$trad['m_supprimer']?></button>
+  <div  class="pointeur pm_frame pm_frame_right" style="flex:1;" onclick="notification_supprimer('<?=$chemin?>', '<?=$message_id?>', '<?=$trad['m_confirm']?>')">
+    <button class="button pm_frame_button"><?=$trad['m_supprimer']?></button>
   </div>
 
 </div>

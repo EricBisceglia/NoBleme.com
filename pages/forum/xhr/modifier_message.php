@@ -120,7 +120,7 @@ EOD;
 /***************************************************************************************************************************************/?>
 
 <tr>
-  <td class="forum_modifier_message_corps">
+  <td class="forum_edit_body">
 
     <form method="POST" id="forum_poster_reponse_<?=$edit_id?>">
       <fieldset>
@@ -145,7 +145,7 @@ EOD;
         <?php if($action_type == 'edit') { ?>
 
         <label for="forum_modifier_message_<?=$edit_id?>" id="forum_ecrire_reponse_label_<?=$edit_id?>"><?=$trad['edit_label']?></label>
-        <textarea id="forum_modifier_message_<?=$edit_id?>" name="forum_modifier_message_<?=$edit_id?>" class="indiv forum_ecrire_reponse_composition" onkeyup="forum_ecrire_reponse_previsualisation('<?=$chemin?>', <?=$edit_id?>);"><?=$message_contenu?></textarea><br>
+        <textarea id="forum_modifier_message_<?=$edit_id?>" name="forum_modifier_message_<?=$edit_id?>" class="indiv forum_reply_body" onkeyup="forum_reply_preview('<?=$chemin?>', <?=$edit_id?>);"><?=$message_contenu?></textarea><br>
         <br>
 
         <input type="submit" value="<?=$trad['edit_go']?>" name="forum_modifier_message_go">
@@ -153,7 +153,7 @@ EOD;
         <div id="forum_ecrire_reponse_container_<?=$edit_id?>">
           <br>
           <label><?=$trad['edit_prev']?></label>
-          <div class="vscrollbar forum_ecrire_reponse_previsualisation" id="forum_modifier_message_previsualisation_<?=$edit_id?>">
+          <div class="vscrollbar forum_reply_preview" id="forum_modifier_message_previsualisation_<?=$edit_id?>">
             <?=$message_contenu_formate?>
           </div>
           <br>

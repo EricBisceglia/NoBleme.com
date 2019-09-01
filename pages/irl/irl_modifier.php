@@ -23,7 +23,7 @@ $langue_page = array('FR');
 $page_titre = (!isset($_GET['id'])) ? "Créer une IRL" : "Modifier une IRL";
 
 // CSS & JS
-$css  = array('irl');
+$css  = array('meetups');
 $js   = array('dynamique', 'irl/previsualiser_irl');
 
 
@@ -272,24 +272,24 @@ else
             <br>
 
             <label for="irl_edit_details_fr">Détails/instructions en français (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> autorisés)</label>
-            <textarea id="irl_edit_details_fr" name="irl_edit_details_fr" class="indiv irl_details" onkeyup="previsualiser_irl('<?=$chemin?>');"><?=$irl_edit_details_fr?></textarea><br>
+            <textarea id="irl_edit_details_fr" name="irl_edit_details_fr" class="indiv meetups_details" onkeyup="previsualiser_irl('<?=$chemin?>');"><?=$irl_edit_details_fr?></textarea><br>
             <br>
 
-            <div id="irl_previsualisation_fr_container"<?=$irl_hidden?>>
+            <div id="meetups_preview_fr_container"<?=$irl_hidden?>>
               <label>Prévisualisation en direct:</label>
-              <div class="vscrollbar irl_previsualisation" id="irl_previsualisation_fr">
+              <div class="vscrollbar meetups_preview" id="meetups_preview_fr">
                 <?=$irl_previsualiser_fr?>
               </div>
               <br>
             </div>
 
             <label for="irl_edit_details_en">Détails/instructions en anglais (<a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> autorisés)</label>
-            <textarea id="irl_edit_details_en" name="irl_edit_details_en" class="indiv irl_details" onkeyup="previsualiser_irl('<?=$chemin?>');"><?=$irl_edit_details_en?></textarea><br>
+            <textarea id="irl_edit_details_en" name="irl_edit_details_en" class="indiv meetups_details" onkeyup="previsualiser_irl('<?=$chemin?>');"><?=$irl_edit_details_en?></textarea><br>
             <br>
 
-            <div id="irl_previsualisation_en_container"<?=$irl_hidden?>>
+            <div id="meetups_preview_en_container"<?=$irl_hidden?>>
               <label>Prévisualisation en direct:</label>
-              <div class="vscrollbar irl_previsualisation" id="irl_previsualisation_en">
+              <div class="vscrollbar meetups_preview" id="meetups_preview_en">
                 <?=$irl_previsualiser_en?>
               </div>
               <br>

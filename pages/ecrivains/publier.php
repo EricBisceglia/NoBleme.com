@@ -25,7 +25,7 @@ $page_titre = "Publier un texte";
 $page_desc  = "Un lieu de partage public pour créations littéraires entre amateurs";
 
 // CSS
-$css = array('ecrivains');
+$css = array('writings');
 
 
 
@@ -219,7 +219,7 @@ $select_feedback .= '<option value="0"'.$temp_selected.'>Je ne veux aucun retour
             <br>
 
             <label for="publier_contenu">Contenu du texte (vous pouvez utiliser des <a class="gras" href="<?=$chemin?>pages/doc/bbcodes">BBCodes</a> pour formater le texte)</label>
-            <textarea id="publier_contenu" name="publier_contenu" class="indiv composer_texte"><?=$texte_contenu?></textarea><br>
+            <textarea id="publier_contenu" name="publier_contenu" class="indiv write_text"><?=$texte_contenu?></textarea><br>
             <br>
 
             <label>Publier ce texte anonymement (vous n'apparaitrez pas comme auteur du texte)</label>

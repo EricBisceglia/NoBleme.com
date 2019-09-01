@@ -21,7 +21,7 @@ $page_titre = ($lang == 'FR') ? "Client IRC" : "IRC client";
 $page_desc  = "Rejoindre le serveur de discussion IRC de NoBleme";
 
 // CSS & JS
-$css  = array('onglets');
+$css  = array('tabs');
 $js   = array('onglets');
 
 

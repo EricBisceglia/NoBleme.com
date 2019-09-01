@@ -314,51 +314,51 @@ EOD;
             <form method="POST" id="forum_choisir_options">
               <fieldset>
 
-                <label class="texte_noir forum_nouveau_sujet_option"><?=$trad['cat_apparence']?></label>
+                <label class="texte_noir forum_new_thread_option"><?=$trad['cat_apparence']?></label>
 
                 <input id="forum_presentation_fil" name="forum_presentation_fil" type="checkbox" onchange="forum_ouvrir_sujet_categories('apparence', 'forum_presentation_fil');" checked>
-                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                <div class="pointeur label-inline gras forum_new_thread_option">
                   <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'fil');"><?=forum_option_info('Fil', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <input id="forum_presentation_anonyme" name="forum_presentation_anonyme" type="checkbox" onchange="forum_ouvrir_sujet_categories('apparence', 'forum_presentation_anonyme');">
-                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                <div class="pointeur label-inline gras forum_new_thread_option">
                   <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'anonyme');"><?=forum_option_info('Anonyme', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <br>
 
-                <label class="texte_noir forum_nouveau_sujet_option forum_nouveau_sujet_label"><?=$trad['cat_class']?></label>
+                <label class="texte_noir forum_new_thread_option forum_new_thread_label"><?=$trad['cat_class']?></label>
 
                 <input id="forum_type_standard" name="forum_type_standard" type="checkbox" onchange="forum_ouvrir_sujet_categories('classification', 'forum_type_standard');" checked>
-                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                <div class="pointeur label-inline gras forum_new_thread_option">
                   <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'standard');"><?=forum_option_info('Standard', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <input id="forum_type_serieux" name="forum_type_serieux" type="checkbox" onchange="forum_ouvrir_sujet_categories('classification', 'forum_type_serieux');">
-                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                <div class="pointeur label-inline gras forum_new_thread_option">
                   <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'serieux');"><?=forum_option_info('Sérieux', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <input id="forum_type_debat" name="forum_type_debat" type="checkbox" onchange="forum_ouvrir_sujet_categories('classification', 'forum_type_debat');">
-                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                <div class="pointeur label-inline gras forum_new_thread_option">
                   <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'debat');"><?=forum_option_info('Débat', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <input id="forum_type_jeu" name="forum_type_jeu" type="checkbox" onchange="forum_ouvrir_sujet_categories('classification', 'forum_type_jeu');">
-                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                <div class="pointeur label-inline gras forum_new_thread_option">
                   <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', 'jeu');"><?=forum_option_info('Jeu', 'complet', $lang)?></a>
                 </div>
                 <br>
 
                 <br>
 
-                <label class="texte_noir forum_nouveau_sujet_option forum_nouveau_sujet_label">
+                <label class="texte_noir forum_new_thread_option forum_new_thread_label">
                   <?=$trad['cat_categorie']?>
                   <?php if($est_admin) { ?>
                   <a href="<?=$chemin?>pages/forum/filtres_modifier">
@@ -370,7 +370,7 @@ EOD;
                 <input type="hidden" id="forum_categorie_num" value="<?=$ncategories?>">
                 <?php for($i=0;$i<$ncategories;$i++) { ?>
                 <input id="forum_categorie_<?=$i?>" name="forum_categorie_<?=$categorie_id[$i]?>" type="checkbox" onchange="forum_ouvrir_sujet_categories('categorisation', <?=$i?>);"<?=$categorie_checked[$i]?>>
-                <div class="pointeur label-inline gras forum_nouveau_sujet_option">
+                <div class="pointeur label-inline gras forum_new_thread_option">
                   <a onclick="forum_ouvrir_sujet_explications('<?=$chemin?>', '<?=$categorie_id[$i]?>');"><?=$categorie_nom[$i]?></a>
                 </div>
                 <br>
@@ -387,10 +387,10 @@ EOD;
 
           </div>
 
-          <div class="forum_nouveau_sujet_cadre" style="flex:3" id="forum_explications">
+          <div class="forum_new_thread_frame" style="flex:3" id="forum_explications">
 
-            <div class="indiv forum_nouveau_sujet_valignhack_1">
-              <div class="indiv forum_nouveau_sujet_valignhack_2">
+            <div class="indiv forum_new_thread_valignhack_1">
+              <div class="indiv forum_new_thread_valignhack_2">
                 <div class="indiv align_center">
                   <?=$trad['cat_placeholder']?>
                 </div>
@@ -451,7 +451,7 @@ EOD;
             <br>
 
             <label for="forum_add_contenu" id="forum_add_contenu_label"><?=$trad['comp_contenu']?></label>
-            <textarea id="forum_add_contenu" name="forum_add_contenu" class="indiv forum_nouveau_sujet_composition" onkeyup="forum_ouvrir_sujet_previsualisation('<?=$chemin?>');"></textarea><br>
+            <textarea id="forum_add_contenu" name="forum_add_contenu" class="indiv forum_new_thread_body" onkeyup="forum_ouvrir_sujet_previsualisation('<?=$chemin?>');"></textarea><br>
             <br>
 
             <button type="button" onclick="forum_ouvrir_sujet_envoyer();"><?=$trad['comp_go']?></button>
@@ -459,7 +459,7 @@ EOD;
             <div id="forum_add_previsualisation_container" class="hidden">
               <br>
               <label><?=$trad['comp_prev']?></label>
-              <div class="vscrollbar forum_nouveau_sujet_previsualisation" id="forum_add_previsualisation">
+              <div class="vscrollbar forum_new_thread_preview" id="forum_add_previsualisation">
                 &nbsp;
               </div>
               <br>
