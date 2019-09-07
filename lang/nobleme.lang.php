@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../pages/nobleme/404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -51,3 +51,18 @@ ___('nobleme_home_tour', 'FR', <<<EOT
 {{link|pages/user/user?id=1|- Bad|indented bold|1|}}
 EOT
 );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     404 ERROR                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Page settings
+___('nobleme_404_title', 'EN', "Lost in space");
+___('nobleme_404_title', 'FR', "Perdus dans l'espace");
+___('nobleme_404_description', 'EN', "Error 404: Page not found…");
+___('nobleme_404_description', 'FR', "Erreur 404 : Page non trouvée…");

@@ -75,7 +75,7 @@ $header_sidemenu  = '';
 
 // Identification
 $page_nom = "Administre secrètement le site";
-$page_url = "pages/nobleme/404";
+$page_url = "404";
 
 // Lien court
 $shorturl = "raccourcis";
@@ -205,7 +205,7 @@ $header_sidemenu  = '';
 
 // Identification
 $page_nom = "Administre secrètement le site";
-$page_url = "pages/nobleme/404";
+$page_url = "404";
 
 // Lien court
 $shorturl = "raccourcis";

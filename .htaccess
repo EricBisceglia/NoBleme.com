@@ -16,7 +16,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC]
 
 # Custom 404 page
-ErrorDocument 404 http://nobleme.com/pages/nobleme/404
+ErrorDocument 404 http://nobleme.com/404
 
 # Don't allow ircbot.txt access except when debugging in localhost
 <Files "ircbot.txt">

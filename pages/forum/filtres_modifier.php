@@ -14,7 +14,7 @@ $header_sidemenu  = 'ForumFiltrage';
 
 // Identification
 $page_nom = "Administre secrètement le site";
-$page_url = "pages/nobleme/404";
+$page_url = "404";
 
 // Titre et description
 $page_titre = "Catégories de filtrage du forum";

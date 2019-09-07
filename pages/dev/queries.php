@@ -24,7 +24,7 @@ $page_name_fr = __('activity_admin_fr');
 // Title and description
 $page_title = __('dev_queries_title');
 
-// Extra CSS files
+// Extra CSS
 $css = array('dev');
 
 
