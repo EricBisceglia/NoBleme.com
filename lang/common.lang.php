@@ -18,6 +18,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * The translations are stored in the global variable called $GLOBALS['translations'].
  * Translations can optionally have a plural version, in this case append a '+' to the end of 'phrase_name'.
  * If you request a plural and no plural is found by the function, it will return the singular version of the phrase.
+ * Inside those translations, links can be built using the {{link|href|text|style|internal|path}} format.
+ * The last 3 parameters of this format are optional - see the doc of the __link() function for details.
  *
  * @param   string                  $string         The string identifying the phrase to be translated.
  * @param   int|null    (OPTIONAL)  $amount         Amount of elements: 1 or null is singular, anything else is plural.
@@ -43,7 +45,7 @@ function __($string, $amount=null, $spaces_before=0, $spaces_after=0, $preset_va
 
   // If we have no string to return, return an empty string
   if(!isset($returned_string))
-    return '';
+    return "";
 
   // Look for content to replace if required
   if(is_array($preset_values) && !empty($preset_values))
@@ -52,6 +54,12 @@ function __($string, $amount=null, $spaces_before=0, $spaces_after=0, $preset_va
     foreach($preset_values as $key => $value)
       $returned_string = str_replace("{{".($key + 1)."}}", $value, $returned_string);
   }
+
+  // Replace URLs if needed, using a regex that looks for {{link|href|text|style|internal|path}} (last 3 are optional)
+  $returned_string = preg_replace('/\{\{link\|(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", "$4", "$5"), $returned_string);
+  $returned_string = preg_replace('/\{\{link\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", "$4"), $returned_string);
+  $returned_string = preg_replace('/\{\{link\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3"), $returned_string);
+  $returned_string = preg_replace('/\{\{link\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2"), $returned_string);
 
   // Prepare the spaces to prepend to the string
   if(is_int($spaces_before) && $spaces_before > 0)
@@ -123,9 +131,21 @@ function debug_duplicate_translations()
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Just words
-___('with', 'EN', 'with');
-___('with', 'FR', 'avec');
+// Website name
+___('nobleme', 'EN', "NoBleme");
+___('nobleme', 'FR', "NoBleme");
+___('nobleme.com', 'EN', "NoBleme.com");
+___('nobleme.com', 'FR', "NoBleme.com");
+
+
+// Words
+___('with', 'EN', "with");
+___('with', 'FR', "avec");
+
+___('query',  'EN', "query");
+___('query+', 'EN', "queries");
+___('query',  'FR', "requête");
+___('query+', 'FR', "requêtes");
 
 
 // Quantifiers / amounts
@@ -133,12 +153,6 @@ ___('times',  'EN', "time");
 ___('times+', 'EN', "times");
 ___('times',  'FR', "fois");
 
-
-// Technical stuff
-___('query',  'EN', 'query');
-___('query+', 'EN', 'queries');
-___('query',  'FR', 'requête');
-___('query+', 'FR', 'requêtes');
 
 
 
@@ -266,6 +280,7 @@ ___('time_diff_past_century', 'FR', "Le siècle dernier");
 ___('time_diff_past_long', 'EN', "An extremely long time ago");
 ___('time_diff_past_long', 'FR', "Il y a très très longtemps");
 
+
 // Future actions
 ___('time_diff_future_past', 'EN', "In the past");
 ___('time_diff_future_past', 'FR', "Dans le passé");
@@ -306,11 +321,13 @@ ___('time_diff_future_long', 'FR', "Dans très très longtemps");
 ___('header_language_error', 'EN', "Sorry! This page is only available in french and does not have an english translation yet.");
 ___('header_language_error', 'FR', "Désolé ! Cette page n'est disponible qu'en anglais et n'a pas encore de traduction française.");
 
+
 // Meta description length warning
 ___('header_meta_error_short', 'EN', "The meta description tag is too short ({{1}} <= 25)");
 ___('header_meta_error_short', 'FR', "Le tag meta de description est trop court ({{1}} <= 25)");
 ___('header_meta_error_long', 'EN', "The meta description tag is too long ({{1}} => 155)");
 ___('header_meta_error_long', 'FR', "Le tag meta de description est trop long ({{1}} => 155)");
+
 
 // Status bar
 ___('header_status_message', 'EN', "{{1}}, you have recieved a new private message, click here to read it!");
@@ -321,16 +338,19 @@ ___('header_status_message_short', 'EN', "{{1}}: New private message!");
 ___('header_status_message_short', 'FR', "{{1}} : Nouveau message privé !");
 ___('header_status_message_short+', 'EN', "{{1}}: {{2}} new private messages!");
 ___('header_status_message_short+', 'FR', "{{1}} : {{2}} nouveaux messages privés !");
+
 ___('header_status_logged_in', 'EN', "Vous êtes connecté en tant que {{1}}. Cliquez ici pour gérer votre compte ou modifier votre profil.");
 ___('header_status_logged_in', 'FR', "You are logged in as {{1}}. Click here to manage your account or edit your profile.");
 ___('header_status_logged_in_short', 'EN', "{{1}}: Manage my account.");
 ___('header_status_logged_in_short', 'FR', "{{1}} : Gérer mon compte");
-___('header_status_logout', 'EN', "Log out");
-___('header_status_logout', 'FR', "Déconnexion");
+
 ___('header_status_login', 'EN', "You are not logged in: Click here to login or register.");
 ___('header_status_login', 'FR', "Vous n'êtes pas connecté: Cliquez ici pour vous identifier ou vous enregistrer.");
 ___('header_status_login_short', 'EN', "Logged out: Click here to login or register.");
 ___('header_status_login_short', 'FR', "Cliquez ici pour vous identifier ou vous enregistrer.");
+
+___('header_status_logout', 'EN', "Log out");
+___('header_status_logout', 'FR', "Déconnexion");
 
 
 
@@ -352,19 +372,20 @@ ___('menu_top_admin', 'FR', "ADMIN");
 ___('menu_top_dev', 'EN', "DEV");
 ___('menu_top_dev', 'FR', "DEV");
 
+
 // Side menu actions
 ___('menu_side_display', 'EN', 'Show the side menu');
 ___('menu_side_display', 'FR', 'Afficher le menu latéral');
 ___('menu_side_hide', 'EN', 'Hide the side menu');
 ___('menu_side_hide', 'FR', 'Masquer le menu latéral');
 
+
 // Side menu: NoBleme
-___('menu_side_nobleme_title', 'EN', "NoBleme.com");
-___('menu_side_nobleme_title', 'FR', "NoBleme.com");
 ___('menu_side_nobleme_homepage', 'EN', "Home page");
 ___('menu_side_nobleme_homepage', 'FR', "Page d'accueil");
 ___('menu_side_nobleme_activity', 'EN', "Recent activity");
 ___('menu_side_nobleme_activity', 'FR', "Activité récente");
+
 ___('menu_side_nobleme_community', 'EN', "Community");
 ___('menu_side_nobleme_community', 'FR', "Communauté");
 ___('menu_side_nobleme_online', 'EN', "Who's online");
@@ -379,6 +400,7 @@ ___('menu_side_nobleme_meetups', 'EN', "Real life meetups");
 ___('menu_side_nobleme_meetups', 'FR', "Rencontres IRL");
 ___('menu_side_nobleme_meetup_stats', 'EN', "RL meetup stats");
 ___('menu_side_nobleme_meetup_stats', 'FR', "Statistiques des IRL");
+
 ___('menu_side_nobleme_help', 'EN', "Help / Documentation");
 ___('menu_side_nobleme_help', 'FR', "Aide & Informations");
 ___('menu_side_nobleme_documentation', 'EN', "Website documentation");
@@ -391,6 +413,7 @@ ___('menu_side_nobleme_api', 'EN', "API publique");
 ___('menu_side_nobleme_api', 'FR', "Public API");
 ___('menu_side_nobleme_rss', 'EN', "RSS feeds");
 ___('menu_side_nobleme_rss', 'FR', "Flux RSS");
+
 ___('menu_side_nobleme_dev', 'EN', "Development");
 ___('menu_side_nobleme_dev', 'FR', "Développement");
 ___('menu_side_nobleme_behind_scenes', 'EN', "Behind the scenes");
@@ -405,6 +428,7 @@ ___('menu_side_nobleme_report_bug', 'EN', "Report a bug");
 ___('menu_side_nobleme_report_bug', 'FR', "Rapporter un bug");
 ___('menu_side_nobleme_feature', 'EN', "Request a feature");
 ___('menu_side_nobleme_feature', 'FR', "Quémander un feature");
+
 ___('menu_side_nobleme_legal', 'EN', "Legal notice");
 ___('menu_side_nobleme_legal', 'FR', "Mentions légales");
 ___('menu_side_nobleme_privacy', 'EN', "Privacy policy");
@@ -413,6 +437,7 @@ ___('menu_side_nobleme_personal_data', 'EN', "Your personal data");
 ___('menu_side_nobleme_personal_data', 'FR', "Vos données personnelles");
 ___('menu_side_nobleme_forget_me', 'EN', "Right to be forgotten");
 ___('menu_side_nobleme_forget_me', 'FR', "Droit à l'oubli");
+
 
 // Side menu: Talk
 ___('menu_side_talk_irc', 'EN', "IRC chat server");
@@ -425,6 +450,7 @@ ___('menu_side_talk_irc_services', 'EN', "Commands and services");
 ___('menu_side_talk_irc_services', 'FR', "Commandes et services");
 ___('menu_side_talk_irc_channels', 'EN', "Channel list");
 ___('menu_side_talk_irc_channels', 'FR', "Liste des canaux");
+
 ___('menu_side_talk_forum', 'EN', "Discussion forum");
 ___('menu_side_talk_forum', 'FR', "Forum de discussion");
 ___('menu_side_talk_forum_topics', 'EN', "Latest forum topics");
@@ -435,6 +461,7 @@ ___('menu_side_talk_forum_search', 'EN', "Search the forum");
 ___('menu_side_talk_forum_search', 'FR', "Recherche sur le forum");
 ___('menu_side_talk_forum_preferences', 'EN', "Filtering preferences");
 ___('menu_side_talk_forum_preferences', 'FR', "Préférences de filtrage");
+
 
 // Side menu: Read
 ___('menu_side_read_nbdb', 'EN', "NBDB");
@@ -449,6 +476,7 @@ ___('menu_side_read_nbdb_web_random', 'EN', "Random page");
 ___('menu_side_read_nbdb_web_random', 'FR', "Page au hasard");
 ___('menu_side_read_nbdb_web_dictionary', 'EN', "Internet dictionnary");
 ___('menu_side_read_nbdb_web_dictionary', 'FR', "Dictionnaire du web");
+
 ___('menu_side_read_quotes', 'EN', "Miscellanea");
 ___('menu_side_read_quotes', 'FR', "Miscellanées");
 ___('menu_side_read_quotes_list', 'EN', "Quote database");
@@ -459,6 +487,7 @@ ___('menu_side_read_quotes_stats', 'EN', "Quote statistics");
 ___('menu_side_read_quotes_stats', 'FR', "Stats des citations");
 ___('menu_side_read_quotes_submit', 'EN', "Submit a new quote");
 ___('menu_side_read_quotes_submit', 'FR', "Proposer une citation");
+
 ___('menu_side_read_writers', 'EN', "Writer's corner");
 ___('menu_side_read_writers', 'FR', "Coin des écrivains");
 ___('menu_side_read_writers_writings', 'EN', "NoBleme's writings");
@@ -468,6 +497,7 @@ ___('menu_side_read_writers_contests', 'FR', "Concours d'écriture");
 ___('menu_side_read_writers_publish', 'EN', "Publish a writing");
 ___('menu_side_read_writers_publish', 'FR', "Publier un écrit");
 
+
 // Side menu: Play
 ___('menu_side_play_nbrpg', 'EN', "NoBlemeRPG");
 ___('menu_side_play_nbrpg', 'FR', "NoBlemeRPG");
@@ -475,16 +505,19 @@ ___('menu_side_play_nbrpg_intro', 'EN', "What is the NBRPG");
 ___('menu_side_play_nbrpg_intro', 'FR', "Qu'est-ce que le NBRPG");
 ___('menu_side_play_nbrpg_archives', 'EN', "Archived sessions");
 ___('menu_side_play_nbrpg_archives', 'FR', "Sessions archivées");
+
 ___('menu_side_play_nrm', 'EN', "NRM Online");
 ___('menu_side_play_nrm', 'FR', "NRM Online");
 ___('menu_side_play_nrm_memory', 'EN', "Remembering the NRM");
 ___('menu_side_play_nrm_memory', 'FR', "En souvenir du NRM");
 ___('menu_side_play_nrm_podium', 'EN', "Champions of the past");
 ___('menu_side_play_nrm_podium', 'FR', "Champions du passé");
+
 ___('menu_side_play_radikal', 'EN', "Project: Radikal");
 ___('menu_side_play_radikal', 'FR', "Projet : Radikal");
 ___('menu_side_play_radikal_next', 'EN', "NoBleme's next game");
 ___('menu_side_play_radikal_next', 'FR', "Le prochain jeu NoBleme");
+
 
 // Side menu: User
 ___('menu_side_user_pms', 'EN', "Private messages");
@@ -495,12 +528,14 @@ ___('menu_side_user_pms_outbox', 'EN', "Sent messages");
 ___('menu_side_user_pms_outbox', 'FR', "Messages envoyés");
 ___('menu_side_user_pms_write', 'EN', "Write a message");
 ___('menu_side_user_pms_write', 'FR', "Écrire un message");
+
 ___('menu_side_user_profile', 'EN', "Public profile");
 ___('menu_side_user_profile', 'FR', "Profil public");
 ___('menu_side_user_profile_self', 'EN', "My public profile");
 ___('menu_side_user_profile_self', 'FR', "Voir mon profil public");
 ___('menu_side_user_profile_edit', 'EN', "Edit my profile");
 ___('menu_side_user_profile_edit', 'FR', "Modifier mon profil");
+
 ___('menu_side_user_settings', 'EN', "Account settings");
 ___('menu_side_user_settings', 'FR', "Réglages du compte");
 ___('menu_side_user_settings_privacy', 'EN', "Privacy options");
@@ -516,11 +551,13 @@ ___('menu_side_user_settings_nickname', 'FR', "Changer de pseudonyme");
 ___('menu_side_user_settings_delete', 'EN', "Delete my account");
 ___('menu_side_user_settings_delete', 'FR', "Supprimer mon compte");
 
+
 // Side menu: Admin
 ___('menu_side_admin_activity', 'EN', "Website activity");
 ___('menu_side_admin_activity', 'FR', "Activité du site");
 ___('menu_side_admin_modlogs', 'EN', "Moderation logs");
 ___('menu_side_admin_modlogs', 'FR', "Logs de modération");
+
 ___('menu_side_admin_users', 'EN', "User management");
 ___('menu_side_admin_users', 'FR', "Gestion des membres");
 ___('menu_side_admin_banned', 'EN', "Banned users");
@@ -531,10 +568,12 @@ ___('menu_side_admin_profile', 'EN', "Edit a profile");
 ___('menu_side_admin_profile', 'FR', "Modifier un profil");
 ___('menu_side_admin_password', 'EN', "Reset a password");
 ___('menu_side_admin_password', 'FR', "Modifier un mot de passe");
+
 ___('menu_side_admin_tools', 'EN', "Administrative tools");
 ___('menu_side_admin_tools', 'FR', "Outils administratifs");
 ___('menu_side_admin_rights', 'EN', "User access rights");
 ___('menu_side_admin_rights', 'FR', "Changer les permissions");
+
 ___('menu_side_admin_stats', 'EN', "Stats");
 ___('menu_side_admin_stats', 'FR', "Statistiques");
 ___('menu_side_admin_pageviews', 'EN', "Pageviews");
@@ -542,11 +581,13 @@ ___('menu_side_admin_pageviews', 'FR', "Popularité des pages");
 ___('menu_side_admin_doppelganger', 'EN', "Doppelgänger");
 ___('menu_side_admin_doppelganger', 'FR', "Doppelgänger");
 
+
 // Side menu: Dev
 ___('menu_side_dev_ircbot', 'EN', "NoBleme IRC bot");
 ___('menu_side_dev_ircbot', 'FR', "Bot IRC NoBleme");
 ___('menu_side_dev_ircbot_management', 'EN', "IRC bot management");
 ___('menu_side_dev_ircbot_management', 'FR', "Gestion du bot IRC");
+
 ___('menu_side_dev_website', 'EN', "Website management");
 ___('menu_side_dev_website', 'FR', "Gestion du site");
 ___('menu_side_dev_checklist', 'EN', "Update checklist");
@@ -557,6 +598,7 @@ ___('menu_side_dev_close', 'EN', "Close the website");
 ___('menu_side_dev_close', 'FR', "Fermer le site");
 ___('menu_side_dev_release', 'EN', "Version numbers");
 ___('menu_side_dev_release', 'FR', "Numéros de version");
+
 ___('menu_side_dev_doc', 'EN', "Developer documentation");
 ___('menu_side_dev_doc', 'FR', "Documentation de dev");
 ___('menu_side_dev_doc_snippets', 'EN', "Code snippets");
@@ -586,3 +628,6 @@ ___('footer_shorturl', 'FR', "Lien court vers cette page");
 
 ___('footer_legal', 'EN', "Legal notices and privacy policy");
 ___('footer_legal', 'FR', "Mentions légales &amp; confidentialité");
+
+___('footer_copyright', 'EN', "&copy; NoBleme.com : 2005 - {{1}}");
+___('footer_copyright', 'FR', "&copy; NoBleme.com : 2005 - {{1}}");

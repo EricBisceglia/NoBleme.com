@@ -538,7 +538,7 @@ $javascripts .= '
 <?php /* ######################################## SIDE MENU: NOBLEME ########### */ if ($header_menu == 'NoBleme') { ?>
 
             <div class="header_sidemenu_title">
-              <?=__('menu_side_nobleme_title')?>
+              <?=__('nobleme.com')?>
             </div>
 
             <a href="<?=$path?>index">

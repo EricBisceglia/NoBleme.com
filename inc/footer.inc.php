@@ -42,33 +42,25 @@ $copyright_date = date('Y');
 
           <?php if(isset($shorturl)) {  ?>
 
-          <a href="<?=$path?>s?<?=$shorturl?>">
-            <?=__('footer_shorturl')?>
-          </a><br>
+          <?=__link("s?".$shorturl, __('footer_shorturl'), "", 1, $path);?><br>
 
           <?php } if($is_admin) { ?>
 
-          <a href="<?=$path?>pages/admin/pageviews">
-            <?=$pageviews?>
-          </a><br>
+          <?php if($pageviews) { ?>
 
-          <a>
-            <?=$metrics?>
-          </a><br>
+          <?=__link("pages/admin/pageviews", $pageviews, "", 1, $path);?><br>
 
           <?php } ?>
 
-          <a href="<?=$path?>pages/todo/roadmap">
-            <?=$version?>
-          </a><br>
+          <?=__link("", $metrics, "pointer", 0, $path);?><br>
 
-          <a href="<?=$path?>pages/doc/mentions_legales">
-            <?=__('footer_legal')?>
-          </a><br>
+          <?php } ?>
 
-          <a href="<?=$path?>pages/doc/nobleme">
-            &copy; NoBleme.com : 2005 - <?=$copyright_date?>
-          </a>
+          <?=__link("pages/todo/roadmap", $version, "", 1, $path);?><br>
+
+          <?=__link("pages/doc/mentions_legales", __('footer_legal'), "", 1, $path);?><br>
+
+          <?=__link("pages/doc/nobleme", __('footer_copyright', 0, 0, 0, array($copyright_date)), "", 1, $path);?><br>
 
         </footer>
 
