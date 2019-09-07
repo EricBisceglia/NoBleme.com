@@ -1081,7 +1081,7 @@ $javascripts .= '
               </div>
             </a>
 
-            <a href="<?=$path?>pages/dev/sql">
+            <a href="<?=$path?>pages/dev/queries">
               <div class="<?=header_menu_css('SQL',$header_sidemenu,'side')?>">
                 <?=__('menu_side_dev_sql')?>
               </div>

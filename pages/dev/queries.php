@@ -3,31 +3,39 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/queries.inc.php';  // Queries awaiting execution
+include_once './../../inc/queries.inc.php';  // Run all queries awaiting execution
 include_once './../../inc/includes.inc.php'; // Common inclusions
-include_once './../../lang/dev.lang.php';    // Translations
 
-// Limit page access based on user rights
+// Limite page access rights
 user_restrict_to_administrators();
 
-// Selected menu and sidemenu
+// Translations and available languages
+include_once './../../lang/dev.lang.php';
+$page_lang = array('FR', 'EN');
+
+// Menus
 $header_menu      = 'Dev';
 $header_sidemenu  = 'SQL';
 
-// Available languages, page title, activity, and description
-$page_lang    = array('EN', 'FR');
-$page_title   = __('dev_queries_title');
+// Recent activity
 $page_name_en = __('activity_admin_en');
 $page_name_fr = __('activity_admin_fr');
+
+// Title and description
+$page_title = __('dev_queries_title');
 
 // Extra CSS files
 $css = array('dev');
 
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                              HTML: DISPLAY THE DATA                                               */
+/*                                                     FRONT END                                                     */
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
+
 
       <div class="width_50 dev_queries_block">
 
@@ -39,6 +47,6 @@ $css = array('dev');
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                    END OF HTML                                                    */
+/*                                                    END OF PAGE                                                    */
 /*                                                                                                                   */
 /*******************************************************************************/ include './../../inc/footer.inc.php';

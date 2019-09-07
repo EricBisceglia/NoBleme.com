@@ -53,7 +53,7 @@ $page_nom = "Administre secrètement le site";
           <input type="checkbox"> Commit les changements et vérifier que le commit ait bien été push dans <a href="https://github.com/EricBisceglia/NoBleme.com/commits/develop">le dépôt public</a><br>
           <input type="checkbox"> Commencer par faire un backup complet du www et du sql du site en production<br>
           <input type="checkbox"> Avant de faire la mise à jour en production, <a href="<?=$chemin?>pages/dev/fermeture">fermer le site au public</a> si nécessaire<br>
-          <input type="checkbox"> Aller sur la version en production du site et <a href="<?=$chemin?>pages/dev/sql">faire les requêtes SQL</a> s'il y en a<br>
+          <input type="checkbox"> Aller sur la version en production du site et <a href="<?=$chemin?>pages/dev/queries">faire les requêtes SQL</a> s'il y en a<br>
           <input type="checkbox"> Mettre en ligne les fichiers modifiés dans le commit de la mise à jour<br>
           <input type="checkbox"> Mettre à jour le <a href="<?=$chemin?>pages/todo/roadmap">plan de route</a> et la <a href="<?=$chemin?>pages/todo/index">liste des tâches</a><br>
           <input type="checkbox"> Nouvelle version du site ? Si oui, <a href="<?=$chemin?>pages/dev/version">changer le numéro de version</a><br>

@@ -12,6 +12,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// Page settings
+___('nobleme_home_title', 'EN', "Homepage");
+___('nobleme_home_title', 'FR', "Accueil");
+
 // Welcome paragraph
 ___('nobleme_home_welcome_title', 'EN', "Welcome to NoBleme. What's this place all about?");
 ___('nobleme_home_welcome_title', 'FR', "Bienvenue sur NoBleme. Qu'est-ce que ce lieu ?");

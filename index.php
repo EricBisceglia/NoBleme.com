@@ -11,7 +11,7 @@ $page_lang = array('FR', 'EN');
 
 // Menus
 $header_menu      = 'NoBleme';
-$header_sidemenu  = 'Accueil';
+$header_sidemenu  = 'Homepage';
 
 // Recent activity
 $page_name_en = "Hangs out on the homepage";
@@ -19,7 +19,7 @@ $page_name_fr = "Traine sur l'index du site";
 $page_url     = "index";
 
 // Title and description
-$page_title       = ($lang == 'EN') ? "Homepage" : "Accueil";
+$page_title       = __('nobleme_home_title');
 $page_description = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
 
 
