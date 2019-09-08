@@ -274,8 +274,8 @@ EOD;
     <a href="<?=$chemin?>pages/nbdb/web_images">
       <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/upload.svg" alt="+" height="30">
     </a>
-    <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/copier.svg" alt="X" height="26" onclick="pressepapiers('[[image:<?=$web_image_nom_encoded?>]]');">
-    <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/image.svg" alt="X" height="26" onclick="pressepapiers('[[galerie:<?=$web_image_nom_encoded?>]]');">
+    <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/copier.svg" alt="X" height="26" onclick="to_clipboard('[[image:<?=$web_image_nom_encoded?>]]');">
+    <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/image.svg" alt="X" height="26" onclick="to_clipboard('[[galerie:<?=$web_image_nom_encoded?>]]');">
     <?php } ?>
   </h2>
 

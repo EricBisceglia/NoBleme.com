@@ -333,11 +333,6 @@ if (isset($js))
     <script src="'.$path.'js/'.$js[$i].'.js"> </script>';
 }
 
-// On april 1st, include a spinning penis rain (but not on local copies of the website or on the admin's CV)
-if(date('d-m') == '01-04' && $_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0.1"  && $_SERVER["SERVER_NAME"] != "::1" && $_SERVER["SERVER_NAME"] != "[::1]" && substr($_SERVER["PHP_SELF"],-6) != 'cv.php' && substr($_SERVER["PHP_SELF"],-2) != 'cv')
-  $javascripts .= '
-    <script src="'.$path.'js/festif.js"> </script>';
-
 // Add a line break at the end to preserve indentation
 $javascripts .= '
 ';
@@ -355,7 +350,7 @@ $javascripts .= '
 <html lang="<?=string_change_case($lang,'lowercase')?>">
   <head>
     <title><?=$page_title?></title>
-    <link rel="shortcut icon" href="<?=$path?>img/divers/favicon.ico">
+    <link rel="shortcut icon" href="<?=$path?>favicon.ico">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="description" content="<?=$page_description?>">
     <meta property="og:title" content="<?=$page_title?>">

@@ -2299,7 +2299,7 @@ Retours à la ligne</code></pre>'))
           <tbody>
             <tr>
               <td class="align_center">
-                <div class="pointeur gras texte_nobleme_fonce" onclick="pressepapiers('Du contenu dans le presse papiers');">
+                <div class="pointeur gras texte_nobleme_fonce" onclick="to_clipboard('Du contenu dans le presse papiers');">
                   Cliquez moi pour remplir le presse papiers
                 </div>
               </td>
@@ -2307,7 +2307,7 @@ Retours à la ligne</code></pre>'))
             <tr>
               <td>
                 <pre onclick="highlight('refhtml_clipboard');" class="monospace spaced scrollbar" id="refhtml_clipboard" style="max-width:500px;max-height:80px;margin-bottom:0"><?php
-                  echo(htmlspecialchars('<div onclick="pressepapiers(\'Ceci va dans le presse papiers\')">
+                  echo(htmlspecialchars('<div onclick="to_clipboard(\'Ceci va dans le presse papiers\')">
   Cliquer ici
 </div>'))
                 ?></pre>

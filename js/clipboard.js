@@ -1,32 +1,26 @@
-/******************************************************************************************************************************************
-**                                                                                                                                       **
-**                                    Fonction permettant de mettre du contenu dans le presse-papiers                                    **
-**                                                                                                                                       **
-*******************************************************************************************************************************************
-**                                                                                                                                       **
-**  Exemple d'utilisation :                                                                                                              **
-**                                                                                                                                       **
-**  <div onClick="pressepapiers('du contenu')">                                                                                          **
-**                                                                                                                                       **
-******************************************************************************************************************************************/
+/**
+ * Places some data in the user's clipboard.
+ *
+ * @param   {string}  contents  The contents that should be placed in the user's clipboard.
+ *
+ * @returns {void}
+ */
 
-function pressepapiers(contenu)
+function to_clipboard(contents)
 {
-  // On prépare un textarea temporaire, dans lequel on met notre contenu à copier
+  // Prepare a temporary textarea and place the contents in it
   var temparea    = document.createElement('textarea');
-  temparea.value  = contenu;
+  temparea.value  = contents;
 
-  // Pour éviter les éventuels problèmes, on en fait une textarea invisible et non éditable
+  // Place the textarea off screen and make it uneditable
   temparea.setAttribute('readonly', '');
   temparea.style = {position: 'absolute', left: '-9999px'};
-
-  // On crée la textarea
   document.body.appendChild(temparea);
 
-  // On copie le contenu de la textarea dans le presse-papiers
+  // Move the textarea's contents into the clipboard (if the browser allows it…)
   temparea.select();
   document.execCommand('copy');
 
-  // Il ne reste plus qu'à supprimer la textarea temporaire
+  // Delete the temporary textarea
   document.body.removeChild(temparea);
 }

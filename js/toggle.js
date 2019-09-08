@@ -1,101 +1,80 @@
-/******************************************************************************************************************************************
-**                                                                                                                                       **
-**                                          Change la visibilité d'un objet (visible/invisible)                                          **
-**                                                                                                                                       **
-*******************************************************************************************************************************************
-**                                                                                                                                       **
-**                                                              toggle_row                                                               **
-**                                                                                                                                       **
-**                                              Change la visibilité d'une ligne de tableau                                              **
-**                                                                                                                                       **
-**  Paramètres :                                                                                                                         **
-**                                                                                                                                       **
-**           monobjet : ID de la ligne d'une table dont la visibilité va être togglée                                                    **
-**              table : Paramètre optionnel, transforme l'élément en table-row au lieu de block, à utiliser pour les <tr>                **
-**                                                                                                                                       **
-**  Exemple d'utilisation :                                                                                                              **
-**                                                                                                                                       **
-**           onClick="toggle_row('monobjet')";                                                                                           **
-**                                                                                                                                       **
-******************************************************************************************************************************************/
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                            Functions related to controlling the visibility of elements                            */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
-function toggle_row(monobjet,table)
+/**
+ * Toggles the visibility state of an element.
+ *
+ * @param   {string}  element_id        The element whose visibility will be toggled.
+ * @param   {int}     [is_a_table_row]  This parameter should be set when working on a <tr> instead of a block.
+ *
+ * @returns {void}
+ */
+
+function toggle_element(element_id, is_a_table_row)
 {
-  // On récupère le statut de la ligne
-  var cssobjet = document.getElementById(monobjet);
-  var visobjet = cssobjet.currentStyle ? cssobjet.currentStyle.display : getComputedStyle(cssobjet,null).display;
+  // Fetch the selected element
+  var selected_element = document.getElementById(element_id);
 
-  // On toggle la visibilité de la ligne
-  if(visobjet == 'none')
-    cssobjet.style.display = (typeof table === 'undefined') ? 'block' : 'table-row';
+  // Check the current visibility state of the line
+  var element_visibility = selected_element.currentStyle ? selected_element.currentStyle.display : getComputedStyle(selected_element,null).display;
+
+  // Toggle it to the opposite visibility state
+  if(element_visibility == 'none')
+    selected_element.style.display = (typeof is_a_table_row === 'undefined') ? 'block' : 'table-row';
   else
-    cssobjet.style.display = 'none';
+    selected_element.style.display = 'none';
 }
 
 
 
 
-/******************************************************************************************************************************************
-**                                                                                                                                       **
-**                                                             toggle_class                                                              **
-**                                                                                                                                       **
-**                                     Change la visibilité des éléments ayant une classe spécifique                                     **
-**                                                                                                                                       **
-**  Paramètres :                                                                                                                         **
-**                                                                                                                                       **
-**           maclasse : nom de la classe dont la visibilité des éléments va être togglée                                                 **
-**                                                                                                                                       **
-**  Exemple d'utilisation :                                                                                                              **
-**                                                                                                                                       **
-**           onClick="toggle_class('maclasse')"                                                                                          **
-**                                                                                                                                       **
-******************************************************************************************************************************************/
+/**
+ * Toggles the visibility state of all elements of a specific class.
+ *
+ * @param   {string}  element_class The element whose visibility will be toggled.
+ *
+ * @returns {void}
+ */
 
-function toggle_class(maclasse)
+function toggle_class(element_class)
 {
-  // On met les éléments de la classe dans un tableau et
-  var arrayclass    = document.getElementsByClassName(maclasse);
+  // Fetch all elements with the selected class, it will place them in a table
+  var selected_class = document.getElementsByClassName(element_class);
 
-  // On récupère l'état actuel de visibilité d'un élément de la classe
-  var elementtest   = arrayclass[0];
-  var visclass      = elementtest.currentStyle ? elementtest.currentStyle.display : getComputedStyle(elementtest,null).display;
+  // Check the current visibility state of the first element of the class
+  var first_element     = selected_class[0];
+  var class_visibility  = first_element.currentStyle ? first_element.currentStyle.display : getComputedStyle(first_element,null).display;
 
-  // On définit la nouvelle visibilité
-  var newstatusclass = visclass == 'none' ? 'block' : 'none';
+  // Define the new visibility state to apply to the class
+  var new_visibility_state = class_visibility == 'none' ? 'block' : 'none';
 
-  // Reste plus qu'à toggler la visibilité de tous les éléments de la classe
-  for(var i = 0 ; i < arrayclass.length ; i++)
-    arrayclass[i].style.display = newstatusclass;
+  // Apply the changed visibility state to all elements of the class
+  for(var i = 0; i < selected_class.length; i++)
+    selected_class[i].style.display = new_visibility_state;
 }
 
 
 
+/**
+ * Sets the visibility state of an element.
+ *
+ * @param   {string}  element_id            The element whose visibility will be toggled.
+ * @param   {int}     will_be_made_visible  Whether the element will be hidden (0) or made visible (1).
+ * @param   {int}     [is_a_table_row]      This parameter should be set when working on a <tr> instead of a block.
+ *
+ * @returns {void}
+ */
 
-/******************************************************************************************************************************************
-**                                                                                                                                       **
-**                                                             toggle_oneway                                                             **
-**                                                                                                                                       **
-**                                                 Rend un élément visible ou invisible                                                  **
-**                                                                                                                                       **
-**  Paramètres :                                                                                                                         **
-**                                                                                                                                       **
-**           monobjet : ID de l'objet dont la visibilité va être togglée                                                                 **
-**             oneway : Sens dans lequel on veut faire une action (0 = masquer, 1 = afficher)                                            **
-**              table : Paramètre optionnel, transforme l'élément en table-row au lieu de block, à utiliser pour les <tr>                **
-**                                                                                                                                       **
-**  Exemple d'utilisation :                                                                                                              **
-**                                                                                                                                       **
-**           onClick="toggle_oneway('monobjet', 1)";                                                                                     **
-**                                                                                                                                       **
-******************************************************************************************************************************************/
-
-function toggle_oneway(monobjet, oneway, table)
+function toggle_oneway(element_id, will_be_made_visible, is_a_table_row)
 {
-  // Si on demande de masquer l'élément
-  if(!oneway)
-    document.getElementById(monobjet).style.display = 'none';
+  // Hide the requested element
+  if(!will_be_made_visible)
+    document.getElementById(element_id).style.display = 'none';
 
-  // Si on demande d'afficher l'élément
+  // Make the requested element visible
   else
-    document.getElementById(monobjet).style.display = (typeof table === 'undefined') ? 'block' : 'table-row';
+    document.getElementById(element_id).style.display = (typeof is_a_table_row === 'undefined') ? 'block' : 'table-row';
 }

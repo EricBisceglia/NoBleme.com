@@ -372,8 +372,8 @@ if(!getxhr()) { /***************************************************************
             <tr>
 
               <td>
-                <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/copier.svg" alt="X" height="24" onclick="pressepapiers('[[image<?=$image_nsfwtag[$i]?>:<?=$image_lien[$i]?>]]');">
-                <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/image.svg" alt="X" height="24" onclick="pressepapiers('[[galerie<?=$image_nsfwtag[$i]?>:<?=$image_lien[$i]?>]]');">
+                <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/copier.svg" alt="X" height="24" onclick="to_clipboard('[[image<?=$image_nsfwtag[$i]?>:<?=$image_lien[$i]?>]]');">
+                <img class="valign_middle pointeur" src="<?=$chemin?>img/icones/image.svg" alt="X" height="24" onclick="to_clipboard('[[galerie<?=$image_nsfwtag[$i]?>:<?=$image_lien[$i]?>]]');">
               </td>
 
               <td class="spaced">

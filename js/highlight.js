@@ -1,39 +1,21 @@
-/******************************************************************************************************************************************
-**                                                                                                                                       **
-**                                Fonction permettant de sélectionner le contenu d'un élément de la page                                 **
-**                                                                                                                                       **
-*******************************************************************************************************************************************
-**                                                                                                                                       **
-**  Exemple d'utilisation :                                                                                                              **
-**                                                                                                                                       **
-**  <pre id="sup" onClick="highlight('sup')">                                                                                            **
-**                                                                                                                                       **
-*******************************************************************************************************************************************
-**                                                                                                                                       **
-**    Note: Sur les vieux browsers et sur les versions modernes de IE, il est impossible de sélectionner plus d'un élément à la fois.    **
-**                     select() a beau être plus simple que getSelection().addRange(), c'est aussi très limitatif :(                     **
-**                                                                                                                                       **
-******************************************************************************************************************************************/
+/**
+ * Selects the contents of an element.
+ *
+ * This won't work in older browsers (IE8- etc.). I used to support them, but what's the point nowadays.
+ *
+ * @param   {string}  element_id  The element to select.
+ *
+ * @returns {void}
+ */
 
-function highlight(element)
+function select_element(element_id)
 {
-  // On chope l'élément à sélectionner
-  var selectme = document.getElementById(element);
+  // Fetch the requested element
+  var selected_element = document.getelement_idById(element_id);
 
-  // Petite ruse pour savoir si on est en quirks
-  if (!document.selection)
-  {
-    // Ce code est pour les browsers normaux
-    var selection = document.createRange();
-    selection.setStartBefore(selectme);
-    selection.setEndAfter(selectme);
-    window.getSelection().addRange(selection);
-  }
-  else
-  {
-    // Ce code est pour les vieux browsers
-    var selection = document.body.createTextRange();
-    selection.moveToElementText(selectme);
-    selection.select();
-  }
+  // Wrap the browser's selection range around it
+  var selection = document.createRange();
+  selection.setStartBefore(selected_element);
+  selection.setEndAfter(selected_element);
+  window.getSelection().addRange(selection);
 }

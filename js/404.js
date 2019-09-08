@@ -36,7 +36,15 @@ var cursor_position   = 0;
 var cursor_row        = 0;
 var current_row       = 0;
 
-// This function should be called onLoad on the 404 page
+
+/**
+ * Controls the text flow of the 404 error.
+ *
+ * This function should be called through onLoad on the 404 page.
+ *
+ * @returns {void}
+ */
+
 function this_page_is_a_404()
 {
   // Reset the contents of the textarea
