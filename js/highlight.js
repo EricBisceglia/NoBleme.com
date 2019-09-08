@@ -11,7 +11,7 @@
 function select_element(element_id)
 {
   // Fetch the requested element
-  var selected_element = document.getelement_idById(element_id);
+  var selected_element = document.getElementById(element_id);
 
   // Wrap the browser's selection range around it
   var selection = document.createRange();

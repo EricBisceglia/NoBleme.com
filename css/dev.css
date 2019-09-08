@@ -1,6 +1,8 @@
 /*************************************************** DOCUMENTATION ***************************************************/
-.border_all_blank   { border: 0px !important;                                            }
-.border_right_blank { border: 0px !important; border-right:5px solid #FFFFFF !important; }
+.dev_border_all_blank   { border: 0px !important;                                            }
+.dev_border_right_blank { border: 0px !important; border-right:5px solid #FFFFFF !important; }
+.dev_snippets_width     { margin: auto; max-width: 62em;                                     }
+.dev_snippets_container { margin-bottom: 3.0rem;                                             }
 
 /****************************************************** QUERIES ******************************************************/
 .dev_queries_block { margin-top: 15em; margin-bottom: 15em; }

@@ -602,7 +602,7 @@ ___('menu_side_dev_release', 'FR', "Numéros de version");
 ___('menu_side_dev_doc', 'EN', "Developer documentation");
 ___('menu_side_dev_doc', 'FR', "Documentation de dev");
 ___('menu_side_dev_doc_snippets', 'EN', "Code snippets");
-___('menu_side_dev_doc_snippets', 'FR', "Snippets de code");
+___('menu_side_dev_doc_snippets', 'FR', "Modèles de code");
 ___('menu_side_dev_doc_html', 'EN', "HTML / CSS");
 ___('menu_side_dev_doc_html', 'FR', "HTML / CSS");
 ___('menu_side_dev_doc_functions', 'EN', "Functions");

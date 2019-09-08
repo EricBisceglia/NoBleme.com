@@ -34,14 +34,14 @@ function toggle_element(element_id, is_a_table_row)
 /**
  * Toggles the visibility state of all elements of a specific class.
  *
- * @param   {string}  element_class The element whose visibility will be toggled.
+ * @param   {string}  element_class The class whose visibility will be toggled.
  *
  * @returns {void}
  */
 
 function toggle_class(element_class)
 {
-  // Fetch all elements with the selected class, it will place them in a table
+  // Fetch all elements with the selected class
   var selected_class = document.getElementsByClassName(element_class);
 
   // Check the current visibility state of the first element of the class
@@ -68,7 +68,7 @@ function toggle_class(element_class)
  * @returns {void}
  */
 
-function toggle_oneway(element_id, will_be_made_visible, is_a_table_row)
+function toggle_element_oneway(element_id, will_be_made_visible, is_a_table_row)
 {
   // Hide the requested element
   if(!will_be_made_visible)
@@ -77,4 +77,29 @@ function toggle_oneway(element_id, will_be_made_visible, is_a_table_row)
   // Make the requested element visible
   else
     document.getElementById(element_id).style.display = (typeof is_a_table_row === 'undefined') ? 'block' : 'table-row';
+}
+
+
+
+
+/**
+ * Sets the visibility state of an element.
+ *
+ * @param   {string}  element_class         The class whose visibility will be toggled.
+ * @param   {int}     will_be_made_visible  Whether the element will be hidden (0) or made visible (1).
+ *
+ * @returns {void}
+ */
+
+function toggle_class_oneway(element_class, will_be_made_visible)
+{
+  // Fetch all elements with the selected class
+  var selected_class = document.getElementsByClassName(element_class);
+
+  // Define the visibility state to apply
+  var visibility_state = (!will_be_made_visible) ? 'none' : 'block';
+
+  // Apply the changed visibility state to all elements of the class
+  for(var i = 0; i < selected_class.length; i++)
+    selected_class[i].style.display = visibility_state;
 }

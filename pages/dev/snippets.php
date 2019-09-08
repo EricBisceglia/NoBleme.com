@@ -1,377 +1,227 @@
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                             INITIALISATION                                                            */
-/*                                                                                                                                       */
-// Inclusions /***************************************************************************************************************************/
-include './../../inc/includes.inc.php'; // Inclusions communes
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       SETUP                                                       */
+/*                                                                                                                   */
+// File inclusions /**************************************************************************************************/
+include_once './../../inc/includes.inc.php'; // Common inclusions
 
-// Permissions
-user_restrict_to_administrators($lang);
+// Limit page access rights
+user_restrict_to_administrators();
 
-// Menus du header
+// Translations and available languages
+include_once './../../lang/dev.lang.php';
+$page_lang = array('FR', 'EN');
+
+// Menus
 $header_menu      = 'Dev';
 $header_sidemenu  = 'Snippets';
 
-// Titre et description
-$page_titre = "Dev: Formattage";
+// Recent activity
+$page_name_en = __('activity_admin_en');
+$page_name_fr = __('activity_admin_fr');
 
-// Identification
-$page_nom = "Administre secrètement le site";
+// Title and description
+$page_title = __('dev_snippets_title');
 
-// CSS & JS
+// Extra CSS & JS
 $css  = array('dev');
-$js   = array('highlight', 'toggle', 'dev/reference');
+$js   = array('toggle', 'clipboard', 'highlight');
 
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                         AFFICHAGE DES DONNÉES                                                         */
-/*                                                                                                                                       */
-/************************************************************************************************/ include './../../inc/header.inc.php'; ?>
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FRONT END                                                     */
+/*                                                                                                                   */
+/****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-      <table class="fullgrid titresnoirs margin_auto noresize" style="width:1150px;">
+
+      <table class="fullgrid blacktitles margin_auto noresize dev_snippets_width">
         <thead>
           <tr>
-            <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="formattage_tout_fermer();toggle_row('formattage_complet');">
-              PAGE COMPLÈTE
+          <th class="rowaltc pointer dev_border_right_blank"
+                onClick="toggle_class_oneway('snippets_section', 0); toggle_element('snippets_full');">
+              <?=__('dev_snippets_title_full')?>
             </th>
-            <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="formattage_tout_fermer();toggle_row('formattage_header');">
-              HEADER
+            <th class="rowaltc pointer dev_border_right_blank"
+                onClick="toggle_class_oneway('snippets_section', 0); toggle_element('snippets_blocks');">
+              <?=__('dev_snippets_title_blocks')?>
             </th>
-            <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="formattage_tout_fermer();toggle_row('formattage_separateurs');">
-              SÉPARATEURS
-            </th>
-            <th class="rowaltc moinsgros pointeur border_right_blank"
-                onClick="formattage_tout_fermer();toggle_row('formattage_html');">
-              HTML
+            <th class="rowaltc pointer dev_border_right_blank"
+                onClick="toggle_class_oneway('snippets_section', 0); toggle_element('snippets_header');">
+              <?=__('dev_snippets_title_header')?>
             </th>
           </tr>
         </thead>
       </table>
 
-      <br>
-      <br>
+      <div class="margin_auto snippets_section bigpadding dev_snippets_width" id="snippets_full">
 
-      <div class="margin_auto" id="formattage_complet" style="width:1170px">
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_full'); select_element('dev_snippets_pre_full');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_full">&lt;?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       SETUP                                                       */
+/*                                                                                                                   */
+// File inclusions /**************************************************************************************************/
+include_once './../../inc/includes.inc.php'; // Common inclusions
 
-        <pre onclick="highlight('pre_complet');" class="monospace spaced vscrollbar" id="pre_complet" style="max-height:300px">&lt;?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                             INITIALISATION                                                            */
-/*                                                                                                                                       */
-// Inclusions /***************************************************************************************************************************/
-include './../../inc/includes.inc.php'; // Inclusions communes
+// Limit page access rights
+user_restrict_to_guests();
 
-// Permissions
-guestonly($lang);
+// Translations and available languages
+include_once './../../lang/mytranslation.lang.php';
+$page_lang = array('FR', 'EN');
 
-// Menus du header
-$header_menu      = '';
-$header_sidemenu  = '';
+// Menus
+$header_menu      = 'NoBleme';
+$header_sidemenu  = 'Homepage';
 
-// Identification
-$page_nom = "Administre secrètement le site";
-$page_url = "404";
+// Recent activity
+$page_name_en = "Browses some random page";
+$page_name_fr = "Est sur une page au hasard";
 
-// Lien court
-$shorturl = "raccourcis";
+// Title and description
+$page_title = "Page title";
 
-// Langues disponibles
-$langue_page = array('FR','EN');
-
-// Titre et description
-$page_titre = ($lang == 'FR') ? "Titre" : "Title";
-$page_desc  = "Metadescription";
-
-// CSS &amp; JS
-$css  = array('admin');
-$js   = array('dynamique');
+// Extra CSS &amp; JS
+$css  = array('tabs');
+$js   = array('tabs');
 
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                        TRAITEMENT DU POST-DATA                                                        */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Titre
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     BACK END                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                        PRÉPARATION DES DONNÉES                                                        */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FRONT END                                                     */
+/*                                                                                                                   */
+/****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
+      &lt;div class="width_50">
 
-
-
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
-
-if($lang == 'FR')
-{
-  // Header
-  $trad['titre']      = "Titre";
-  $trad['soustitre']  = "Sous-titre";
-  $trad['desc']       = &lt;&lt;&lt;EOD
-Description de la page incluant mais ne se limitant pas à un &lt;a href="{$chemin}pages/dev/snippets"&gt;lien&lt;/a&gt;
-EOD;
-}
-
-
-/*****************************************************************************************************************************************/
-
-else if($lang == 'EN')
-{
-}
-
-
-
-
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                         AFFICHAGE DES DONNÉES                                                         */
-/*                                                                                                                                       */
-/************************************************************************************************/ include './../../inc/header.inc.php'; ?&gt;
-
-      &lt;div class="texte">
-
-        &lt;h1>&lt;?=$trad['titre']?&gt;&lt;/h1>
-
-        &lt;h5>&lt;?=$trad['soustitre']?&gt;&lt;/h5>
-
-        &lt;p>&lt;?=$trad['desc']?&gt;&lt;/p>
+        &lt;h1>
+          Title
+        &lt;/h1>
 
       &lt;/div>
 
-&lt;?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                              FIN DU HTML                                                              */
-/*                                                                                                                                       */
-/***************************************************************************************************/ include './../../inc/footer.inc.php';</pre>
-
-        <br>
-
-        <pre onclick="highlight('pre_complet_xhr');" class="monospace spaced vscrollbar" style="max-height:300px;" id="pre_complet_xhr">&lt;?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                             CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST APPELÉE DYNAMIQUEMENT PAR DU XHR                              */
-/*                                                                                                                                       */
-// Inclusions /***************************************************************************************************************************/
-include './../../../inc/includes.inc.php'; // Inclusions communes
-
-// Permissions
-xhronly();
-guestonly($lang);
-
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                         AFFICHAGE DES DONNÉES                                                         */
-/*                                                                                                                                       */
-/***************************************************************************************************************************************/?></pre>
+&lt;?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    END OF PAGE                                                    */
+/*                                                                                                                   */
+/*******************************************************************************/ include './../../inc/footer.inc.php';</pre>
 
       </div>
 
 
 
 
-      <div class="margin_auto hidden" id="formattage_header" style="width:1150px">
+      <div class="margin_auto snippets_section bigpadding dev_snippets_width hidden" id="snippets_blocks">
 
-        <pre onclick="highlight('pre_init');" class="monospace spaced" id="pre_init">&lt;?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                             INITIALISATION                                                            */
-/*                                                                                                                                       */
-// Inclusions /***************************************************************************************************************************/
-include './../../inc/includes.inc.php'; // Inclusions communes
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_separator'); select_element('dev_snippets_pre_blocks_separator');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_separator">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// </pre>
 
-// Permissions
-guestonly($lang);
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_back'); select_element('dev_snippets_pre_blocks_back');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_back">/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     BACK END                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/</pre>
 
-// Menus du header
-$header_menu      = '';
-$header_sidemenu  = '';
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_front_open'); select_element('dev_snippets_pre_blocks_front_open');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_front_open">/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FRONT END                                                     */
+/*                                                                                                                   */
+/****************************************************************************/ include './../../inc/header.inc.php'; ?></pre>
 
-// Identification
-$page_nom = "Administre secrètement le site";
-$page_url = "404";
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_front_xhr_open'); select_element('dev_snippets_pre_blocks_front_xhr_open');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_front_xhr_open">/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FRONT END                                                     */
+/*                                                                                                                   */
+if(!page_is_xhr()) { /*******************************************************/ include './../../inc/header.inc.php'; ?></pre>
 
-// Lien court
-$shorturl = "raccourcis";
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_front_close'); select_element('dev_snippets_pre_blocks_front_close');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_front_close">&lt;?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    END OF PAGE                                                    */
+/*                                                                                                                   */
+/*******************************************************************************/ include './../../inc/footer.inc.php';</pre>
 
-// Langues disponibles
-$langue_page = array('FR','EN');
-
-// Titre et description
-$page_titre = ($lang == 'FR') ? "Titre" : "Title";
-$page_desc  = "Metadescription";
-
-// CSS &amp; JS
-$css  = array('admin');
-$js   = array('dynamique');</pre>
-
-        <br>
-
-        <pre onclick="highlight('pre_xhr');" class="monospace spaced" id="pre_xhr">&lt;?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                             CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST APPELÉE DYNAMIQUEMENT PAR DU XHR                              */
-/*                                                                                                                                       */
-// Inclusions /***************************************************************************************************************************/
-include './../../../inc/includes.inc.php'; // Inclusions communes
-
-// Permissions
-xhronly();
-guestonly($lang);</pre>
-
-        <br>
-
-        <pre onclick="highlight('pre_include');" class="monospace spaced" style="overflow-x:scroll;" id="pre_include">&lt;?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                 CETTE PAGE NE PEUT S'OUVRIR QUE SI ELLE EST INCLUDE PAR UNE AUTRE PAGE                                */
-/*                                                                                                                                       */
-// Include only /*************************************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF'])))
-  exit('&lt;html&gt;&lt;head&gt;&lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;&lt;/head&gt;&lt;body&gt;Vous n\'êtes pas censé accéder à cette page, dehors!&lt;/body&gt;&lt;/html&gt;');</pre>
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_front_xhr_close'); select_element('dev_snippets_pre_blocks_front_xhr_close');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_front_xhr_close">&lt;?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    END OF PAGE                                                    */
+/*                                                                                                                   */
+include './../../inc/footer.inc.php'; /*****************************************************************************/ }</pre>
 
       </div>
 
 
 
 
-      <div class="margin_auto hidden" id="formattage_separateurs" style="width:1150px">
+      <div class="margin_auto snippets_section bigpadding dev_snippets_width hidden" id="snippets_header">
 
-        <pre onclick="highlight('pre_separateur');" class="monospace spaced" id="pre_separateur">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Titre</pre>
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_header'); select_element('dev_snippets_pre_header');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_header">&lt;?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       SETUP                                                       */
+/*                                                                                                                   */
+// File inclusions /**************************************************************************************************/
+include_once './../../inc/includes.inc.php'; // Common inclusions
 
-        <br>
+// Limit page access rights
+user_restrict_to_guests();
 
-        <pre onclick="highlight('pre_postdata');" class="monospace spaced" id="pre_postdata">/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                        TRAITEMENT DU POST-DATA                                                        */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/</pre>
+// Translations and available languages
+include_once './../../lang/mytranslation.lang.php';
+$page_lang = array('FR', 'EN');
 
-        <br>
+// Menus
+$header_menu      = 'NoBleme';
+$header_sidemenu  = 'Homepage';
 
-        <pre onclick="highlight('pre_paration');" class="monospace spaced" id="pre_paration">/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                        PRÉPARATION DES DONNÉES                                                        */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/</pre>
+// Recent activity
+$page_name_en = "Browses some random page";
+$page_name_fr = "Est sur une page au hasard";
 
-        <br>
+// Title and description
+$page_title = "Page title";
 
-        <pre onclick="highlight('pre_traduction');" class="monospace spaced" id="pre_traduction">/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                   TRADUCTION DU CONTENU MULTILINGUE                                                   */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
+// Extra CSS & JS
+$css  = array('tabs');
+$js   = array('tabs');</pre>
 
-if($lang == 'FR')
-{
-  // Header
-  $trad['titre']      = "Titre";
-  $trad['soustitre']  = "Sous-titre";
-  $trad['desc']       = &lt;&lt;&lt;EOD
-Description de la page incluant mais ne se limitant pas à un &lt;a href="{$chemin}pages/dev/snippets"&gt;lien&lt;/a&gt;
-EOD;
-}
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_headers_xhr'); select_element('dev_snippets_pre_headers_xhr');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_headers_xhr">&lt;?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       SETUP                                                       */
+/*                                                                                                                   */
+// File inclusions /**************************************************************************************************/
+include_once './../../inc/includes.inc.php'; // Common inclusions
 
+// Allow this page to be called only through XHR
+allew_only_xhr();
 
-/*****************************************************************************************************************************************/
+// Limit page access rights
+user_restrict_to_guests();
 
-else if($lang == 'EN')
-{
-}
+// Translations
+include_once './../../lang/mytranslation.lang.php';</pre>
 
-
-
-
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                         AFFICHAGE DES DONNÉES                                                         */
-/*                                                                                                                                       */
-/************************************************************************************************/ include './../../inc/header.inc.php'; ?&gt;
-
-      &lt;div class="texte">
-
-        &lt;h1>&lt;?=$trad['titre']?&gt;&lt;/h1>
-
-        &lt;h5>&lt;?=$trad['soustitre']?&gt;&lt;/h5>
-
-        &lt;p>&lt;?=$trad['desc']?&gt;&lt;/p>
-
-      &lt;/div>
-
-&lt;?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                              FIN DU HTML                                                              */
-/*                                                                                                                                       */
-/***************************************************************************************************/ include './../../inc/footer.inc.php';
-</pre>
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_headers_included'); select_element('dev_snippets_pre_headers_included');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_headers_included">&lt;?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
+/*                                                                                                                   */
+// Include only /*****************************************************************************************************/
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }</pre>
 
       </div>
 
-
-
-
-      <div class="margin_auto hidden" id="formattage_html" style="width:1150px">
-
-        <br>
-
-        <pre onclick="highlight('pre_html');" class="monospace spaced" id="pre_html">/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                         AFFICHAGE DES DONNÉES                                                         */
-/*                                                                                                                                       */
-/************************************************************************************************/ include './../../inc/header.inc.php'; ?&gt;
-
-      &lt;div class="texte">
-
-        &lt;h1>Titre&lt;/h1>
-
-        &lt;h5>Sous-titre&lt;/h5>
-
-        &lt;p>Contenu&lt;/p>
-
-      &lt;/div>
-
-&lt;?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                              FIN DU HTML                                                              */
-/*                                                                                                                                       */
-/***************************************************************************************************/ include './../../inc/footer.inc.php';</pre>
-
-        <br>
-
-        <pre onclick="highlight('pre_dynamique_header');" class="monospace spaced" id="pre_dynamique_header">/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                         AFFICHAGE DES DONNÉES                                                         */
-/*                                                                                                                                       */
-if(!getxhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?&gt;</pre>
-
-        <br>
-
-        <pre onclick="highlight('pre_dynamique_footer');" class="monospace spaced" id="pre_dynamique_footer">&lt;?php include './../../inc/footer.inc.php'; /*********************************************************************************************/
-/*                                                                                                                                       */
-/*                                                              FIN DU HTML                                                              */
-/*                                                                                                                                       */
-/***************************************************************************************************************************************/ }</pre>
-
-      </div>
-
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                              FIN DU HTML                                                              */
-/*                                                                                                                                       */
-/***************************************************************************************************/ include './../../inc/footer.inc.php';
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    END OF PAGE                                                    */
+/*                                                                                                                   */
+/*******************************************************************************/ include './../../inc/footer.inc.php';

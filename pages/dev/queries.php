@@ -6,7 +6,7 @@
 include_once './../../inc/queries.inc.php';  // Run all queries awaiting execution
 include_once './../../inc/includes.inc.php'; // Common inclusions
 
-// Limite page access rights
+// Limit page access rights
 user_restrict_to_administrators();
 
 // Translations and available languages
@@ -35,7 +35,6 @@ $css = array('dev');
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
-
 
       <div class="width_50 dev_queries_block">
 

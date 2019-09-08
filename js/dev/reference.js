@@ -5,20 +5,6 @@
 ******************************************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fonction permettant de fermer tous les onglets de /pages/dev/snippets.php
-
-function formattage_tout_fermer()
-{
-  document.getElementById('formattage_complet').style.display     = "none";
-  document.getElementById('formattage_header').style.display      = "none";
-  document.getElementById('formattage_separateurs').style.display = "none";
-  document.getElementById('formattage_html').style.display        = "none";
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction permettant de fermer tous les onglets de /pages/dev/reference.php
 
 function reference_css_tout_fermer()
