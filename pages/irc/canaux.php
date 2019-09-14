@@ -82,7 +82,7 @@ if($lang == 'FR')
   De par la nature bilingue du serveur IRC NoBleme, certains canaux sont francophones, d'autres sont anglophones. La langue d'un canal peut changer avec le temps, certains canaux francophones peuvent devenir bilingues ou même purement anglophones selon la langue parlée par les utilisateurs qui les fréquentent.
 </p>
 <p>
-  Si vous désirez créer votre propre canal IRC sur le serveur, référez vous à l'onglet CHANSERV de la page <a class="gras" href="{$chemin}pages/irc/services">commandes et services</a>, puis envoyez un message privé à <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> si vous désirez que votre canal soit ajouté à la liste publique des canaux IRC de NoBleme.
+  Si vous désirez créer votre propre canal IRC sur le serveur, référez vous à l'onglet CHANSERV de la page <a class="gras" href="{$chemin}pages/irc/services">commandes et services</a>, puis envoyez un message privé à <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> si vous désirez que votre canal soit ajouté à la liste publique des canaux IRC de NoBleme.
 </p>
 EOD;
 
@@ -113,7 +113,7 @@ else if($lang == 'EN')
   Due to the bilingual nature of NoBleme's IRC server, some channels will speak mainly french, others mainly english. Do not be afraid to join a channel listed as french only, we have enough bilingual french users that we can include you in our conversations, and maybe the channel will eventually become a bilingual one due to your presence like others have in the past.
 </p>
 <p>
-  If you wish to create your own channel on the server, follow instructions in the CHANSERV tab of the <a class="gras" href="{$chemin}pages/irc/services">commands and services</a> page, then send <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> a private message if you want your channel to be listed on NoBleme's public channel list.
+  If you wish to create your own channel on the server, follow instructions in the CHANSERV tab of the <a class="gras" href="{$chemin}pages/irc/services">commands and services</a> page, then send <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> a private message if you want your channel to be listed on NoBleme's public channel list.
 </p>
 EOD;
 

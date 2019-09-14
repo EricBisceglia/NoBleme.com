@@ -220,7 +220,7 @@ if($lang == 'FR')
 {
   // Header
   $trad['image_nsfw']         = <<<EOD
-Cette image est floutée car elle contient du contenu vulgaire ou sensible, vous devez passer votre curseur dessus pour l'afficher. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="{$chemin}pages/user/nsfw">options de vulgarité</a> de votre compte.
+Cette image est floutée car elle contient du contenu vulgaire ou sensible, vous devez passer votre curseur dessus pour l'afficher. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="{$chemin}pages/users/nsfw">options de vulgarité</a> de votre compte.
 EOD;
   $trad['image_utilisation']  = "Cette image est utilisée sur la page suivante :";
   $trad['image_utilisations'] = "Cette image est utilisée sur les pages suivantes :";
@@ -231,7 +231,7 @@ EOD;
   // Footer
   $trad['image_autre']        = "Autre image au hasard";
   $trad['image_disclaimer']   = <<<EOD
-Cette image est utilisée sur ce site internet dans un but encyclopédique : elle a été diffusée assez largement sur internet pour devenir une partie intégrante de la culture internet, et sert à documenter une facette de cette culture. Si vous êtes l'auteur de cette image et ne souhaitez pas qu'elle reste en ligne sur ce site, contactez moi avec une preuve que vous en êtes l'auteur par <a class="gras" href="{$chemin}pages/user/pm?user=1">message privé</a> et je supprimerai cette image au plus vite.
+Cette image est utilisée sur ce site internet dans un but encyclopédique : elle a été diffusée assez largement sur internet pour devenir une partie intégrante de la culture internet, et sert à documenter une facette de cette culture. Si vous êtes l'auteur de cette image et ne souhaitez pas qu'elle reste en ligne sur ce site, contactez moi avec une preuve que vous en êtes l'auteur par <a class="gras" href="{$chemin}pages/users/pm?user=1">message privé</a> et je supprimerai cette image au plus vite.
 EOD;
 }
 
@@ -242,7 +242,7 @@ else if($lang == 'EN')
 {
   // Header
   $trad['image_nsfw']         = <<<EOD
-This image is blurred due to its crude or sensitive content. Hover your mouse cursor over it in order to reveal its contents. If you are bothered by the blurring or have no need for it, you can permanently disable it in the <a class="gras" href="{$chemin}pages/user/nsfw">adult content options</a> of your account.
+This image is blurred due to its crude or sensitive content. Hover your mouse cursor over it in order to reveal its contents. If you are bothered by the blurring or have no need for it, you can permanently disable it in the <a class="gras" href="{$chemin}pages/users/nsfw">adult content options</a> of your account.
 EOD;
   $trad['image_utilisation']  = "This image is used in the following page:";
   $trad['image_utilisations'] = "This image is used in the following pages:";
@@ -253,7 +253,7 @@ EOD;
   // Footer
   $trad['image_autre']        = "Other random image";
   $trad['image_disclaimer']   = <<<EOD
-This image is used on this website for encyclopedic purposes : it was shared so much on the internet that it became an integral part of internet culture, and is used here to document this specific aspect of internet culture. If you are the author of this image and want it to be removed from this website, contact me with proof of authorship by <a class="gras" href="{$chemin}pages/user/pm?user=1">private message</a> and I will remove it from the website right away.
+This image is used on this website for encyclopedic purposes : it was shared so much on the internet that it became an integral part of internet culture, and is used here to document this specific aspect of internet culture. If you are the author of this image and want it to be removed from this website, contact me with proof of authorship by <a class="gras" href="{$chemin}pages/users/pm?user=1">private message</a> and I will remove it from the website right away.
 EOD;
 }
 

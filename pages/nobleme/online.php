@@ -76,9 +76,9 @@ for($nonline = 0 ; $donline = mysqli_fetch_array($qonline) ; $nonline++)
   if ($donline['type'] === 'guest')
     $online_pseudo[$nonline] = $donline['pseudo'];
   else if (!$donline['admin'] && !$donline['sysop'] && !$donline['mod'])
-    $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/user/user?id='.$donline['id'].'">'.predata($donline['pseudo']).'</a>';
+    $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/users/user?id='.$donline['id'].'">'.predata($donline['pseudo']).'</a>';
   else
-    $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/user/user?id='.$donline['id'].'"><span class="texte_blanc">'.predata($donline['pseudo']).'</span></a>';
+    $online_pseudo[$nonline] = '<a href="'.$chemin.'pages/users/user?id='.$donline['id'].'"><span class="texte_blanc">'.predata($donline['pseudo']).'</span></a>';
 
   // Les couleurs de fond
   if ($donline['type'] === 'guest')
@@ -130,7 +130,7 @@ if($lang == 'FR')
   $trad['soustitre']    = "La page officielle des traqueurs obsessifs et des curieux";
   $trad['description']  = "Cette page recense les visiteurs connectés ces dernières 48 heures, et la page de NoBleme qu'ils ont visité en dernier. Si plus de 1000 personnes se sont connectées ces dernières 48 heures, seules les 1000 activités les plus récentes apparaitront (sait-on jamais, c'est peut-être le cas dans une ligne temporelle différente).";
   $trad['couleurs']     = <<<EOD
-Afin de les distinguer, les <a href="{$chemin}pages/nobleme/membres">membres enregistrés</a> apparaissent sur fond <span class="texte_noir grisclair gras spaced">gris</span> , les <a href="{$chemin}pages/nobleme/admins">modérateurs</a> sur fond <span class="positif texte_blanc gras spaced">vert</span> , les <a href="{$chemin}pages/nobleme/admins">sysops</a> sur fond <span class="neutre texte_blanc gras spaced">orange</span> , et l'<a href="{$chemin}pages/user/user?id=1">administrateur</a> sur fond <span class="negatif texte_blanc gras spaced">rouge</span>.
+Afin de les distinguer, les <a href="{$chemin}pages/nobleme/membres">membres enregistrés</a> apparaissent sur fond <span class="texte_noir grisclair gras spaced">gris</span> , les <a href="{$chemin}pages/nobleme/admins">modérateurs</a> sur fond <span class="positif texte_blanc gras spaced">vert</span> , les <a href="{$chemin}pages/nobleme/admins">sysops</a> sur fond <span class="neutre texte_blanc gras spaced">orange</span> , et l'<a href="{$chemin}pages/users/user?id=1">administrateur</a> sur fond <span class="negatif texte_blanc gras spaced">rouge</span>.
 EOD;
 
   // Tableau
@@ -148,7 +148,7 @@ else if($lang == 'EN')
   $trad['soustitre']    = "The official home of obsessive stalkers, curious cats, and other weird animals";
   $trad['description']  = "This page lists all accounts that were active on NoBleme in the last 48 hours, sorted by latest activity. If more than 1000 people used the website in the last 48 hours, only the 1000 most recent users will appear (you never know, it could be the case in some alternate timeline, better be safe than sorry).";
   $trad['couleurs']     = <<<EOD
-In order to tell them apart from eachother, <a href="{$chemin}pages/nobleme/membres">registered users</a> will appear in <span class="texte_noir grisclair gras spaced">grey</span> , <a href="{$chemin}pages/nobleme/admins">moderators</a> in <span class="positif texte_blanc gras spaced">green</span> , <a href="{$chemin}pages/nobleme/admins">sysops</a> in <span class="neutre texte_blanc gras spaced">orange</span> , and the <a href="{$chemin}pages/user/user?id=1">administrator</a> in <span class="negatif texte_blanc gras spaced">red</span>.
+In order to tell them apart from eachother, <a href="{$chemin}pages/nobleme/membres">registered users</a> will appear in <span class="texte_noir grisclair gras spaced">grey</span> , <a href="{$chemin}pages/nobleme/admins">moderators</a> in <span class="positif texte_blanc gras spaced">green</span> , <a href="{$chemin}pages/nobleme/admins">sysops</a> in <span class="neutre texte_blanc gras spaced">orange</span> , and the <a href="{$chemin}pages/users/user?id=1">administrator</a> in <span class="negatif texte_blanc gras spaced">red</span>.
 EOD;
 
   // Tableau

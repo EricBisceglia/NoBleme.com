@@ -283,7 +283,7 @@ EOD;
 
               <td class="align_center nopadding">
                 <?php if($sujet_c_id[$i]) { ?>
-                <a class="gras<?=$sujet_c_css[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$sujet_c_id[$i]?>"><?=$sujet_c_pseudo[$i]?></a><br>
+                <a class="gras<?=$sujet_c_css[$i]?>" href="<?=$chemin?>pages/users/user?id=<?=$sujet_c_id[$i]?>"><?=$sujet_c_pseudo[$i]?></a><br>
                 <?php } else { ?>
                 <span class="gras"><?=$trad['liste_anon']?></span><br>
                 <?php } ?>
@@ -296,7 +296,7 @@ EOD;
 
               <td class="align_center nopadding">
                 <?php if($sujet_d_id[$i]) { ?>
-                <a class="gras<?=$sujet_d_css[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$sujet_d_id[$i]?>"><?=$sujet_d_pseudo[$i]?></a><br>
+                <a class="gras<?=$sujet_d_css[$i]?>" href="<?=$chemin?>pages/users/user?id=<?=$sujet_d_id[$i]?>"><?=$sujet_d_pseudo[$i]?></a><br>
                 <?php } else { ?>
                 <span class="gras"><?=$trad['liste_anon']?></span><br>
                 <?php } ?>

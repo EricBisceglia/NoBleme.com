@@ -14,7 +14,7 @@ $header_sidemenu  = 'ReglagesViePrivee';
 
 // Identification
 $page_nom = "En a marre des GAFAM";
-$page_url = "pages/user/privacy";
+$page_url = "pages/users/privacy";
 
 // Langues disponibles
 $langue_page = array('FR','EN');

@@ -10,7 +10,7 @@
 // Profils publics
 
 if(isset($_GET['u']))
-  exit(header("Location: ./pages/user/user?id=".intval($_GET['u'])));
+  exit(header("Location: ./pages/users/user?id=".intval($_GET['u'])));
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

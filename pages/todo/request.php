@@ -68,7 +68,7 @@ if(isset($_POST['bug_ok']) || isset($_POST['feature_ok']))
     $todo_titre       = (isset($_POST['bug_ok'])) ? "Rapport de bug" : "Demande de feature";
     $todo_type        = (isset($_POST['bug_ok'])) ? "proposition de tâche" : "demande de fonctionnalité";
     $todo_message     = <<<EOD
-Ouvert par [url={$chemin}pages/user/user?id={$todo_submitter}]{$todo_pseudo}[/url] le {$todo_date}
+Ouvert par [url={$chemin}pages/users/user?id={$todo_submitter}]{$todo_pseudo}[/url] le {$todo_date}
 [url={$chemin}pages/todo/edit?id={$todo_id}]Accepter la {$todo_type}[/url]
 [url={$chemin}pages/todo/delete?id={$todo_id}]Rejeter la {$todo_type}[/url]
 
@@ -109,7 +109,7 @@ if($lang == 'FR')
   Si vous avez identifié un problème dans le fonctionnement de NoBleme ou dans son <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">code source</a>, remplissez le formulaire ci-dessous en détaillant autant que possible la nature du problème que vous avez découvert.
 </p>
 <p>
-  Une fois que <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> aura reçu votre rapport de bug, vous recevrez une <a class="gras" href="{$chemin}pages/user/notifications">notification</a> vous informant de l'état du suivi de votre bug. Merci d'avance pour votre contribution à NoBleme !
+  Une fois que <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> aura reçu votre rapport de bug, vous recevrez une <a class="gras" href="{$chemin}pages/users/notifications">notification</a> vous informant de l'état du suivi de votre bug. Merci d'avance pour votre contribution à NoBleme !
 </p>
 EOD;
     $trad['bug_bouton']       = "ENVOYER LE RAPPORT DE BUG";
@@ -120,7 +120,7 @@ EOD;
     $trad['bug_ok_soustitre'] = "Votre rapport de bug a bien été envoyé";
     $trad['bug_ok_desc']      = <<<EOD
 <p>
-  Une fois que <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> aura reçu votre rapport de bug, vous recevrez une <a class="gras" href="{$chemin}pages/user/notifications">notification</a> vous informant de l'état du suivi de votre bug. Merci d'avoir soumis le rapport de bug !
+  Une fois que <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> aura reçu votre rapport de bug, vous recevrez une <a class="gras" href="{$chemin}pages/users/notifications">notification</a> vous informant de l'état du suivi de votre bug. Merci d'avoir soumis le rapport de bug !
 </p>
 EOD;
   }
@@ -135,7 +135,7 @@ EOD;
   Si vous avez une idée d'altération à une fonctionnalité actuelle qui rendrait l'utilisation du site plus agréable ou de nouvelle fonctionnalité qui serait utile au site, remplissez le formulaire ci-dessous en détaillant autant que possible votre désir. Assurez-vous toutefois avant que ce ne soit pas déjà dans la <a class="gras" href="{$chemin}pages/todo/index">liste des tâches</a>.
 </p>
 <p>
-  Une fois que <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> aura reçu votre demande de fonctionnalité, vous recevrez une <a class="gras" href="{$chemin}pages/user/notifications">notification</a> vous informant de si votre idée a été retenue ou non. Merci d'avance pour votre contribution à NoBleme !
+  Une fois que <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> aura reçu votre demande de fonctionnalité, vous recevrez une <a class="gras" href="{$chemin}pages/users/notifications">notification</a> vous informant de si votre idée a été retenue ou non. Merci d'avance pour votre contribution à NoBleme !
 </p>
 EOD;
     $trad['bug_bouton']       = "ENVOYER LA DEMANDE DE FONCTIONNALITÉ";
@@ -146,7 +146,7 @@ EOD;
     $trad['bug_ok_soustitre'] = "Votre demande de fonctionnalité a bien été envoyée";
     $trad['bug_ok_desc']      = <<<EOD
 <p>
-  Une fois que <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> aura reçu votre demande de fonctionnalité, vous recevrez une <a class="gras" href="{$chemin}pages/user/notifications">notification</a> vous informant de si votre idée a été retenue ou non. Merci d'avance pour votre contribution à NoBleme !
+  Une fois que <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> aura reçu votre demande de fonctionnalité, vous recevrez une <a class="gras" href="{$chemin}pages/users/notifications">notification</a> vous informant de si votre idée a été retenue ou non. Merci d'avance pour votre contribution à NoBleme !
 </p>
 EOD;
   }
@@ -168,7 +168,7 @@ else if($lang == 'EN')
   If you have found a flaw by using NoBleme or browsing its <a class="gras" href="https://github.com/EricBisceglia/NoBleme.com">source code</a>, please fill up the form below and make sure to detail the issue as much as you can.
 </p>
 <p>
-  Once <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> has read your bug report, you will receive a <a class="gras" href="{$chemin}pages/user/notifications">notification</a> informing you about the status of your bug report. Thanks in advance for your contribution to NoBleme!
+  Once <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> has read your bug report, you will receive a <a class="gras" href="{$chemin}pages/users/notifications">notification</a> informing you about the status of your bug report. Thanks in advance for your contribution to NoBleme!
 </p>
 EOD;
     $trad['bug_bouton']       = "SEND BUG REPORT";
@@ -179,7 +179,7 @@ EOD;
     $trad['bug_ok_soustitre'] = "Your bug report has been sent";
     $trad['bug_ok_desc']      = <<<EOD
 <p>
-  Once <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> has read your bug report, you will receive a <a class="gras" href="{$chemin}pages/user/notifications">message</a> informing you about the status of your bug report. Thank you for taking the time to do this!
+  Once <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> has read your bug report, you will receive a <a class="gras" href="{$chemin}pages/users/notifications">message</a> informing you about the status of your bug report. Thank you for taking the time to do this!
 </p>
 EOD;
   }
@@ -194,7 +194,7 @@ EOD;
   If you have an idea for an alteration to NoBleme that would improve the website, or an idea for a new feature that would benefit the website, please fill the form below to submit a feature request.
 </p>
 <p>
-  Once <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> has read your feature request, you will receive a <a class="gras" href="{$chemin}pages/user/notifications">message</a> informing you about the status of your feature request. Thanks in advance for your contribution to NoBleme!
+  Once <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> has read your feature request, you will receive a <a class="gras" href="{$chemin}pages/users/notifications">message</a> informing you about the status of your feature request. Thanks in advance for your contribution to NoBleme!
 </p>
 EOD;
     $trad['bug_bouton']       = "SEND FEATURE REQUEST";
@@ -205,7 +205,7 @@ EOD;
     $trad['bug_ok_soustitre'] = "Your feature request has been sent";
     $trad['bug_ok_desc']      = <<<EOD
 <p>
-  Once <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> has read your feature request, you will receive a <a class="gras" href="{$chemin}pages/user/notifications">message</a> informing you about the status of your feature request. Thank you for taking the time to do this!
+  Once <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> has read your feature request, you will receive a <a class="gras" href="{$chemin}pages/users/notifications">message</a> informing you about the status of your feature request. Thank you for taking the time to do this!
 </p>
 EOD;
   }

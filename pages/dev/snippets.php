@@ -16,12 +16,11 @@ $page_lang = array('FR', 'EN');
 $header_menu      = 'Dev';
 $header_sidemenu  = 'Snippets';
 
-// Recent activity
-$page_name_en = __('activity_admin_en');
-$page_name_fr = __('activity_admin_fr');
+// User activity
+$page_name = "admin";
 
 // Title and description
-$page_title = __('dev_snippets_title');
+$page_title = __('dev_snippets_page_title');
 
 // Extra CSS & JS
 $css  = array('dev');
@@ -76,12 +75,13 @@ $page_lang = array('FR', 'EN');
 $header_menu      = 'NoBleme';
 $header_sidemenu  = 'Homepage';
 
-// Recent activity
-$page_name_en = "Browses some random page";
-$page_name_fr = "Est sur une page au hasard";
+// User activity
+$page_name  = "some_page";
+$page_url   = "pages/nobleme/index";
 
 // Title and description
-$page_title = "Page title";
+$page_title       = __('use_a_translation');
+$page_description = __('use_a_translation');
 
 // Extra CSS &amp; JS
 $css  = array('tabs');
@@ -184,12 +184,13 @@ $page_lang = array('FR', 'EN');
 $header_menu      = 'NoBleme';
 $header_sidemenu  = 'Homepage';
 
-// Recent activity
-$page_name_en = "Browses some random page";
-$page_name_fr = "Est sur une page au hasard";
+// User activity
+$page_name  = "some_page";
+$page_url   = "pages/nobleme/index";
 
 // Title and description
-$page_title = "Page title";
+$page_title       = __('use_a_translation');
+$page_description = __('use_a_translation');
 
 // Extra CSS & JS
 $css  = array('tabs');

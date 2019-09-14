@@ -94,7 +94,7 @@ for($nmisc = 0; $dmisc = mysqli_fetch_array($qmisc); $nmisc++)
   for($nmiscpseudos = 0; $dmiscpseudos = mysqli_fetch_array($qmiscpseudos); $nmiscpseudos++)
   {
     $temp_pseudos      .= ($nmiscpseudos) ? ', ' : '';
-    $temp_pseudos      .= '<a href="'.$chemin.'pages/user/user?id='.$dmiscpseudos['qm_id'].'">'.predata($dmiscpseudos['qm_pseudo']).'</a>';
+    $temp_pseudos      .= '<a href="'.$chemin.'pages/users/user?id='.$dmiscpseudos['qm_id'].'">'.predata($dmiscpseudos['qm_pseudo']).'</a>';
   }
   $misc_pseudos[$nmisc] = ($temp_pseudos) ? '<span class="gras">(</span>'.$temp_pseudos.'<span class="gras">)</span>' : '';
 }
@@ -125,7 +125,7 @@ EOD;
 Les miscellanées sont des phrases, des monologues, des conversations entre les NoBlemeux qui sont été conservés pour la posterité. Elles vous sont présentées sur cette page par ordre antéchronologique. Si vous assistez à une conversation sur NoBleme et pensez qu'elle mérite de figurer dans les miscellanées, vous pouvez <a class="gras" href="{$chemin}pages/quotes/add">proposer une miscellanée</a>.
 EOD;
   $trad['desc3']                = <<<EOD
-Certaines miscellanées sont floutées car elles contiennent du contenu vulgaire ou sensible, et requièrent que vous passiez votre curseur dessus afin de les réveler. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="{$chemin}pages/user/nsfw">options de vulgarité</a> de votre compte.
+Certaines miscellanées sont floutées car elles contiennent du contenu vulgaire ou sensible, et requièrent que vous passiez votre curseur dessus afin de les réveler. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="{$chemin}pages/users/nsfw">options de vulgarité</a> de votre compte.
 EOD;
 
   // Formulaire de recherche
@@ -158,7 +158,7 @@ EOD;
 Miscellanea are phrases, monologues, or conversations between NoBleme users which are being kept here for posterity. They are presented to you on this page in reverse chronological order. If you witness a conversation on NoBleme and feel that it is worthy of being preserved here, you can <a class="gras" href="{$chemin}pages/quotes/add">submit a quote proposal</a>.
 EOD;
   $trad['desc3']                = <<<EOD
-Some miscellanea are blurred due to the crude or sensitive content they contain, and require you to hover your mouse cursor over them in order to reveal their contents. If you are bothered by the blurring or have no need for it, you can permanently disable it in the <a class="gras" href="{$chemin}pages/user/nsfw">adult content options</a> of your account.
+Some miscellanea are blurred due to the crude or sensitive content they contain, and require you to hover your mouse cursor over them in order to reveal their contents. If you are bothered by the blurring or have no need for it, you can permanently disable it in the <a class="gras" href="{$chemin}pages/users/nsfw">adult content options</a> of your account.
 EOD;
 
   // Formulaire de recherche

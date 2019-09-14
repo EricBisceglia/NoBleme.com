@@ -10,7 +10,7 @@ guestonly($lang);
 
 // Identification
 $page_nom = "Se crée un compte";
-$page_url = "pages/user/register";
+$page_url = "pages/users/register";
 
 // Langues disponibles
 $langue_page = array('FR','EN');
@@ -20,7 +20,7 @@ $page_titre = ($lang == 'FR') ? "Créer un compte" : "Register";
 $page_desc  = "Rejoindre la communauté NoBleme en se créant un compte";
 
 // JS
-$js = array('dynamique', '/user/register');
+$js = array('dynamique', '/users/register');
 
 
 
@@ -104,8 +104,8 @@ if (isset($_POST["register_pseudo"]))
     activite_nouveau('register', 0, $new_user, $register_pseudo);
 
     // Bot IRC NoBleme
-    ircbot($chemin, "Nouveau membre enregistré sur le site : ".$_POST["register_pseudo"]." - ".$GLOBALS['url_site']."pages/user/user?id=".$new_user, "#NoBleme");
-    ircbot($chemin, "A new member registered on the website: ".$_POST["register_pseudo"]." - ".$GLOBALS['url_site']."pages/user/user?id=".$new_user, "#english");
+    ircbot($chemin, "Nouveau membre enregistré sur le site : ".$_POST["register_pseudo"]." - ".$GLOBALS['url_site']."pages/users/user?id=".$new_user, "#NoBleme");
+    ircbot($chemin, "A new member registered on the website: ".$_POST["register_pseudo"]." - ".$GLOBALS['url_site']."pages/users/user?id=".$new_user, "#english");
 
     // Préparation du message de bienvenue
     if($lang == 'FR')
@@ -121,7 +121,7 @@ Bon séjour sur NoBleme !
 Si vous avez la moindre question, n'hésitez pas à répondre à ce message.
 
 Votre administrateur,
-[url={$chemin}pages/user/user?id=1]Bad[/url]
+[url={$chemin}pages/users/user?id=1]Bad[/url]
 EOD;
     else
       $temp_contenu = <<<EOD
@@ -136,7 +136,7 @@ Enjoy your stay on NoBleme!
 If you have any questions, feel free to reply to this message.
 
 Your admin,
-[url={$chemin}pages/user/user?id=1]Bad[/url]
+[url={$chemin}pages/users/user?id=1]Bad[/url]
 EOD;
 
     // Envoi du message de bienvenue

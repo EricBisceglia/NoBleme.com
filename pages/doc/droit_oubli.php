@@ -66,7 +66,7 @@ if($lang == 'FR')
 NoBleme conserve quelques données personnelles sur vous, dont vous pouvez avoir la liste complète ainsi que leur utilité au site sur la page « <a class="gras" href="{$chemin}pages/doc/donnees_personnelles">Vos données personnelles</a> ». En respect de la <a class="gras" href="{$chemin}pages/doc/mentions_legales">politique de confidentialité</a> de NoBleme et du <a class="gras" href="https://fr.wikipedia.org/wiki/R%C3%A8glement_g%C3%A9n%C3%A9ral_sur_la_protection_des_donn%C3%A9es">RGPD</a>, vous avez la possibilité de faire valoir votre <a class="gras" href="https://fr.wikipedia.org/wiki/Droit_%C3%A0_l%27oubli">droit à l'oubli</a> et de demander à ce que NoBleme supprime toutes vos données personnelles et tous vos cookies liés au site.
 EOD;
   $trad['desc2']      = <<<EOD
-Par ailleurs, en concordance avec le droit à l'oubli, si vous désirez que des contenus du site faisant référence à vous soient supprimés, vous pouvez en faire la demande en <a class="gras" href="{$chemin}pages/user/user?id=1">contactant l'administrateur du site</a>.
+Par ailleurs, en concordance avec le droit à l'oubli, si vous désirez que des contenus du site faisant référence à vous soient supprimés, vous pouvez en faire la demande en <a class="gras" href="{$chemin}pages/users/user?id=1">contactant l'administrateur du site</a>.
 EOD;
 
   // Formulaire
@@ -86,7 +86,7 @@ else if($lang == 'EN')
 NoBleme keeps a bit of personal data on you, of which you can find a complete list on the "<a class="gras" href="{$chemin}pages/doc/donnees_personnelles">Your personal data</a>" page. According to NoBleme's <a class="gras" href="{$chemin}pages/doc/mentions_legales">privacy policy</a> and the <a class="gras" href="https://en.wikipedia.org/wiki/General_Data_Protection_Regulation">GDPR</a>, you have the <a class="gras" href="https://en.wikipedia.org/wiki/Right_to_be_forgotten">right to be forgotten</a>, and can ask that NoBleme delete all the personal data that it keeps on you.
 EOD;
   $trad['desc2']      = <<<EOD
-As per the right to be forgotten, if you also desire the permanent deletion of some contents of the website which refer to you, you can make a demand for it by contacting the <a class="gras" href="{$chemin}pages/user/user?id=1">website's administrator</a>.
+As per the right to be forgotten, if you also desire the permanent deletion of some contents of the website which refer to you, you can make a demand for it by contacting the <a class="gras" href="{$chemin}pages/users/user?id=1">website's administrator</a>.
 EOD;
 
   // Formulaire

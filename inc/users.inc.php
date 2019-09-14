@@ -184,7 +184,7 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && user_is_logged_in())
   {
     // If the ban is still active, then redirect the user to a dedicated page for banned users
     if($dbanned["ban_end"] > time())
-      exit(header("Location: ".$path."pages/user/banned"));
+      exit(header("Location: ".$path."pages/users/banned"));
 
     // If the ban has ended, then remove it
     else
@@ -607,9 +607,9 @@ function user_restrict_to_users($lang='EN', $path="./../../")
   if(!user_is_logged_in())
   {
     if($lang == 'EN')
-      error_page("This page is restricted to logged in users.<br><a href=\"".$path."pages/user/login\"><button class=\"bigbutton login_register_gap above_login_button\">LOGIN</button></a><a href=\"".$path."pages/user/register\"><button class=\"bigbutton button_outline\">REGISTER</button></a>");
+      error_page("This page is restricted to logged in users.<br><a href=\"".$path."pages/users/login\"><button class=\"bigbutton login_register_gap above_login_button\">LOGIN</button></a><a href=\"".$path."pages/users/register\"><button class=\"bigbutton button_outline\">REGISTER</button></a>");
     else
-      error_page("Cette page est réservée aux utilisateurs connectés.<br><a href=\"".$path."pages/user/login\"><button class=\"bigbutton login_register_gap above_login_button\">SE CONNECTER</button></a><a href=\"".$path."pages/user/register\"><button class=\"bigbutton button_outline\">CRÉER UN COMPTE</button></a>");
+      error_page("Cette page est réservée aux utilisateurs connectés.<br><a href=\"".$path."pages/users/login\"><button class=\"bigbutton login_register_gap above_login_button\">SE CONNECTER</button></a><a href=\"".$path."pages/users/register\"><button class=\"bigbutton button_outline\">CRÉER UN COMPTE</button></a>");
   }
 }
 

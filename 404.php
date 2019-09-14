@@ -13,13 +13,12 @@ $page_lang = array('FR', 'EN');
 $header_menu      = 'NoBleme';
 $header_sidemenu  = 'Homepage';
 
-// Recent activity
-$page_name_en = "Error 404: Page not found";
-$page_name_fr = "Erreur 404 : Page non trouvée";
-$page_url     = "404";
+// User activity
+$page_name  = "404";
+$page_url   = "404";
 
 // Title and description
-$page_title       = __('nobleme_404_title');
+$page_title       = __('nobleme_404_page_title');
 $page_description = __('nobleme_404_description');
 
 // Extra CSS & JS

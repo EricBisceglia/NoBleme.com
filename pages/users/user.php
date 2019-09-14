@@ -11,7 +11,7 @@ $header_sidemenu  = 'ListeDesMembres';
 
 // Identification
 $page_nom = "Regarde le profil de ";
-$page_url = "pages/user/user?id=";
+$page_url = "pages/users/user?id=";
 
 // Lien court
 $shorturl = "u=";
@@ -338,9 +338,9 @@ else if($lang == 'EN')
 
               <hr class="profile_hr">
               <?php } if (loggedin() && $user_id == $_SESSION['user']) { ?>
-              <button class="profile_button" onclick="window.location.href = '<?=$chemin?>pages/user/profil';"><?=$trad['bouton_profil']?></button>
+              <button class="profile_button" onclick="window.location.href = '<?=$chemin?>pages/users/profil';"><?=$trad['bouton_profil']?></button>
               <?php } else { ?>
-              <button class="profile_button" onclick="window.location.href = '<?=$chemin?>pages/user/pm?user=<?=$user_id?>';"><?=$trad['bouton_message']?></button>
+              <button class="profile_button" onclick="window.location.href = '<?=$chemin?>pages/users/pm?user=<?=$user_id?>';"><?=$trad['bouton_message']?></button>
               <?php } ?>
 
               <hr class="profile_hr">

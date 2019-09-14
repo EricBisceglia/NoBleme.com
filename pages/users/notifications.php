@@ -15,7 +15,7 @@ $header_sidemenu  = (!isset($_GET['envoyes'])) ? 'Notifications' : 'MessagesEnvo
 
 // Identification
 $page_nom = "Consulte ses messages privés";
-$page_url = "pages/user/notifications";
+$page_url = "pages/users/notifications";
 
 // Langues disponibles
 $langue_page = array('FR','EN');

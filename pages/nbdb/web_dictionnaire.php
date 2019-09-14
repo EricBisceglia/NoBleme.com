@@ -210,7 +210,7 @@ EOD;
   // Définitions spécifiques
   $trad['dico_colon']     = " :";
   $trad['dico_floutage']  = <<<EOD
-Certains contenus de cette page sont floutés car ils sont de nature vulgaire ou sensible. Pour les afficher en clair, vous devez passer votre curseur dessus. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="{$chemin}pages/user/nsfw">options de vulgarité</a> de votre compte.
+Certains contenus de cette page sont floutés car ils sont de nature vulgaire ou sensible. Pour les afficher en clair, vous devez passer votre curseur dessus. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="{$chemin}pages/users/nsfw">options de vulgarité</a> de votre compte.
 EOD;
   $trad['dico_vulgaire']  = "LA DÉFINITION CI-DESSOUS CONTIENT DU CONTENU VULGAIRE OU DÉGUEULASSE";
   $trad['dico_politise']  = "La définition ci-dessous est politisée : elle aborde un sujet de société d'une façon avec laquelle tout le monde ne sera pas forcément d'accord. Le but de ce dictionnaire n'est pas de plaire à tous, mais plutôt de présenter des faits de façon objective, quitte à froisser certaines opinions.";
@@ -246,7 +246,7 @@ EOD;
   // Définitions spécifiques
   $trad['dico_colon']     = ":";
   $trad['dico_floutage']  = <<<EOD
-Some contents on this page are blurred due to their crude or sensitive nature. Hover your mouse cursor over them in order to reveal their contents. If you are bothered by the blurring or have no need for it, you can permanently disable it in the <a class="gras" href="{$chemin}pages/user/nsfw">adult content options</a> of your account.
+Some contents on this page are blurred due to their crude or sensitive nature. Hover your mouse cursor over them in order to reveal their contents. If you are bothered by the blurring or have no need for it, you can permanently disable it in the <a class="gras" href="{$chemin}pages/users/nsfw">adult content options</a> of your account.
 EOD;
   $trad['dico_vulgaire']  = "THE FOLLOWING DEFINITION CONTAINS NASTY AND/OR GROSS CONTENT";
   $trad['dico_politise']  = "The following definition is politically loaded: it concerns an aspect of society on which people tend to have disagreements. The goal of this dictionary is not to paint a skewed view of society, but rather to try to bring facts objectively, even if it means displeasing some crowds.";

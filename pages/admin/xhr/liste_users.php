@@ -73,7 +73,7 @@ for($nuserlist = 0; $duserlist = mysqli_fetch_array($quserlist) ; $nuserlist++)
     <?php for($i=0;$i<$nuserlist;$i++) { ?>
     <tr<?=$userlist_css[$i]?>>
       <td>
-        <a class="gras<?=$userlist_acss[$i]?>" href="<?=$userlist_chemin?>pages/user/user?id=<?=$userlist_id[$i]?>"><?=$userlist_pseudo[$i]?></a>
+        <a class="gras<?=$userlist_acss[$i]?>" href="<?=$userlist_chemin?>pages/users/user?id=<?=$userlist_id[$i]?>"><?=$userlist_pseudo[$i]?></a>
       </td>
       <td>
         <a class="gras<?=$userlist_acss[$i]?>" href="<?=$userlist_chemin?>pages/admin/permissions?id=<?=$userlist_id[$i]?>">Changer les permissions</a>

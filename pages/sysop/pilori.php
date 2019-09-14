@@ -98,7 +98,7 @@ for($nbannis = 0; $dbannis = mysqli_fetch_array($qbannis); $nbannis++)
             <?php for($i=0;$i<$nbannis;$i++) { ?>
             <tr>
               <td class="align_right spaced gras nowrap">
-                <a href="<?=$chemin?>pages/user/user?id=<?=$banni_id[$i]?>"><?=$banni_pseudo[$i]?></a>
+                <a href="<?=$chemin?>pages/users/user?id=<?=$banni_id[$i]?>"><?=$banni_pseudo[$i]?></a>
               </td>
               <td class="nowrap">
                 <?=$banni_fin[$i]?>

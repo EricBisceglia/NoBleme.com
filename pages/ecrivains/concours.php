@@ -459,7 +459,7 @@ if($concours_est_admin)
         <p>
           Le texte ayant gagné ce concours est : <a class="moinsgros gras" href="<?=$chemin?>pages/ecrivains/texte?id=<?=$concours_gagnant_texte?>"><?=$concours_gagnant_titre?></a><br>
           <?php if($concours_gagnant_id) { ?>
-          Félicitations à l'auteur de ce texte et au gagnant de ce concours, <a class="moinsgros gras texte_positif" href="<?=$chemin?>pages/user/user?id=<?=$concours_gagnant_id?>"><?=$concours_gagnant?></a>
+          Félicitations à l'auteur de ce texte et au gagnant de ce concours, <a class="moinsgros gras texte_positif" href="<?=$chemin?>pages/users/user?id=<?=$concours_gagnant_id?>"><?=$concours_gagnant?></a>
           <?php } else { ?>
           L'auteur de ce texte a choisi de rester <span class="gras texte_noir">anonyme</span>, félicitations tout de même à son auteur !
           <?php } ?>
@@ -528,7 +528,7 @@ if($concours_est_admin)
                 <?php if($texte_anonyme[$i]) { ?>
                 Anonyme
                 <?php } else { ?>
-                <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$texte_idauteur[$i]?>">
+                <a class="gras" href="<?=$chemin?>pages/users/user?id=<?=$texte_idauteur[$i]?>">
                   <?=$texte_auteur[$i]?>
                 </a>
                 <?php } ?>
@@ -596,7 +596,7 @@ if($concours_est_admin)
             <tr>
             <?php } ?>
               <td>
-                <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$voted_idmembre[$i]?>">
+                <a class="gras" href="<?=$chemin?>pages/users/user?id=<?=$voted_idmembre[$i]?>">
                   <?=$voted_membre[$i]?>
                 </a>
               </td>
@@ -604,7 +604,7 @@ if($concours_est_admin)
                 <?=$voted_choix[$i]?>
               </td>
               <td>
-                <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$voted_idauteur[$i]?>">
+                <a class="gras" href="<?=$chemin?>pages/users/user?id=<?=$voted_idauteur[$i]?>">
                   <?=$voted_auteur[$i]?>
                 </a>
               </td>

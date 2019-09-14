@@ -315,7 +315,7 @@ EOD;
   Toutefois, si vous n'êtes pas un régulier de NoBleme et désirez utiliser le serveur pour créer votre propre canal, votre canal se fera probablement fermer. Il existe de nombreux autres serveurs IRC (vous pouvez trouver une liste des plus populaires <a class="gras" href="http://irc.netsplit.de/networks/top100.php">assez facilement</a>), et je préfère que le serveur IRC de NoBleme reste un serveur centré sur la communauté du site.
 </p>
 <p class="spaced">
-  Si vous désirez créer un canal IRC public où tout le monde est bienvenu, envoyez un message privé à <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> pour qu'il soit ajouté à la <a class="gras" href="{$chemin}pages/irc/canaux">liste des canaux</a>, ce qui lui donnera de la visibilité.
+  Si vous désirez créer un canal IRC public où tout le monde est bienvenu, envoyez un message privé à <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> pour qu'il soit ajouté à la <a class="gras" href="{$chemin}pages/irc/canaux">liste des canaux</a>, ce qui lui donnera de la visibilité.
 </p>
 EOD;
 
@@ -380,7 +380,7 @@ EOD;
   $trad['akundo_titre']     = "Qui est Akundo ?";
   $trad['akundo_desc']      = <<<EOD
 <p class="spaced">
-  Akundo est ce que l'on appelle un bot, une non-intelligence artificielle appartenant à <a class="gras" href="{$chemin}pages/user/user?pseudo=ThArGos">ThArGos</a> qui est présent sur quelques canaux IRC du serveur NoBleme. Son utilité est de retenir et de régurgiter des bêtises à la demande.
+  Akundo est ce que l'on appelle un bot, une non-intelligence artificielle appartenant à <a class="gras" href="{$chemin}pages/users/user?pseudo=ThArGos">ThArGos</a> qui est présent sur quelques canaux IRC du serveur NoBleme. Son utilité est de retenir et de régurgiter des bêtises à la demande.
 </p>
 <p class="spaced">
   Akundo réagit à certains mots ou certaines phrases et renvoie une réponse prédéfinie. Notez toutefois que si vous abusez d'Akundo dans le seul but de polluer un canal de discussion, vous vous retrouverez exclu de ce canal.
@@ -403,7 +403,7 @@ EOD;
   Nulle part. Les déclencheurs qui font réagir Akundo sont changés régulièrement, et le but est qu'ils soient découverts par accident lors de conversations. Lorsqu'un déclencheur perd son aspect amusant ou pourrit trop les conversations, il sera supprimé ou renommé.
 </p>
 <p class="spaced">
-  Seuls <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> et <a class="gras" href="{$chemin}pages/user/user?pseudo=ThArGos">ThArGos</a> peuvent modifier les déclencheurs et définitions auxquels Akundo réagit.
+  Seuls <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> et <a class="gras" href="{$chemin}pages/users/user?pseudo=ThArGos">ThArGos</a> peuvent modifier les déclencheurs et définitions auxquels Akundo réagit.
 </p>
 EOD;
 
@@ -701,7 +701,7 @@ EOD;
   However, if you are not part of NoBleme's community and want to host your own channel on the server, it will probably end up getting closed. There are many other IRC servers (you can <a class="gras" href="http://irc.netsplit.de/networks/top100.php">easily</a> find a list of the most popular ones), and I would prefer NoBleme's IRC server to remain centered on the website's community.
 </p>
 <p class="spaced">
-  If the channel you want to create is meant to be public, you should send <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> a private message so that it gets added to the <a class="gras" href="{$chemin}pages/irc/canaux">channel list</a>, which will give some visibility to your channel.
+  If the channel you want to create is meant to be public, you should send <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> a private message so that it gets added to the <a class="gras" href="{$chemin}pages/irc/canaux">channel list</a>, which will give some visibility to your channel.
 </p>
 EOD;
 

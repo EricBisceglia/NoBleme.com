@@ -15,8 +15,8 @@ function previsualiser_irl(chemin)
   document.getElementById('meetups_preview_en_container').style.display = 'block';
 
   // Et on génère les prévisualisations en XHR
-  dynamique(chemin, './../user/xhr/previsualiser_bbcodes.php', 'meetups_preview_fr',
+  dynamique(chemin, './../users/xhr/previsualiser_bbcodes.php', 'meetups_preview_fr',
             'message=' + dynamique_prepare('irl_edit_details_fr'), 1 );
-  dynamique(chemin, './../user/xhr/previsualiser_bbcodes.php', 'meetups_preview_en',
+  dynamique(chemin, './../users/xhr/previsualiser_bbcodes.php', 'meetups_preview_en',
             'message=' + dynamique_prepare('irl_edit_details_en'), 1 );
 }

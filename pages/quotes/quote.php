@@ -102,7 +102,7 @@ $temp_pseudos = '';
 for($nmiscpseudos = 0; $dmiscpseudos = mysqli_fetch_array($qmiscpseudos); $nmiscpseudos++)
 {
   $temp_pseudos .= ($nmiscpseudos) ? ', ' : '';
-  $temp_pseudos .= '<a href="'.$chemin.'pages/user/user?id='.$dmiscpseudos['qm_id'].'">'.predata($dmiscpseudos['qm_pseudo']).'</a>';
+  $temp_pseudos .= '<a href="'.$chemin.'pages/users/user?id='.$dmiscpseudos['qm_id'].'">'.predata($dmiscpseudos['qm_pseudo']).'</a>';
 }
 $misc_pseudos = ($temp_pseudos) ? '<span class="gras">(</span>'.$temp_pseudos.'<span class="gras">)</span>' : '';
 
@@ -120,7 +120,7 @@ if($lang == 'FR')
   // Header
   $trad['titre']      = "Miscellanée";
   $trad['desc_nsfw']  = <<<EOD
-Cette citation est floutée car elle contient du contenu vulgaire ou sensible, vous devez passer votre curseur dessus pour lire son contenu. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="{$chemin}pages/user/nsfw">options de vulgarité</a> de votre compte.;
+Cette citation est floutée car elle contient du contenu vulgaire ou sensible, vous devez passer votre curseur dessus pour lire son contenu. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="{$chemin}pages/users/nsfw">options de vulgarité</a> de votre compte.;
 EOD;
 }
 
@@ -132,7 +132,7 @@ else if($lang == 'EN')
   // Header
   $trad['titre']      = "Quote";
   $trad['desc_nsfw']  = <<<EOD
-This quote is blurred due to its crude or sensitive content. Hover your mouse cursor over it in order to reveal its contents. If you are bothered by the blurring or have no need for it, you can permanently disable it in the <a class="gras" href="{$chemin}pages/user/nsfw">adult content options</a> of your account.
+This quote is blurred due to its crude or sensitive content. Hover your mouse cursor over it in order to reveal its contents. If you are bothered by the blurring or have no need for it, you can permanently disable it in the <a class="gras" href="{$chemin}pages/users/nsfw">adult content options</a> of your account.
 EOD;
 }
 

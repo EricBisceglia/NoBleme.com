@@ -14,7 +14,7 @@ $header_sidemenu  = 'ComposerMessage';
 
 // Identification
 $page_nom = "Compose un message privé";
-$page_url = "pages/user/pm";
+$page_url = "pages/users/pm";
 
 // Langues disponibles
 $langue_page = array('FR','EN');
@@ -106,7 +106,7 @@ if(isset($_POST['message_envoyer']))
     $message_a    = $dcheckpseudo['id'];
     $timestamp    = time();
     envoyer_notif($message_a, $envoyer_sujet, $envoyer_corps, $message_de);
-    header("Location: ".$chemin."pages/user/notifications?envoyes");
+    header("Location: ".$chemin."pages/users/notifications?envoyes");
   }
 }
 

@@ -123,7 +123,7 @@ else if($lang == 'EN')
   </span><br>
 
   <span class="italique">
-  <?=$trad['todo_task_proposee']?> <?=$todo_soumis_le?> <?=$trad['todo_task_auteur']?> <a class="gras" href="<?=$todo_chemin?>pages/user/user?id=<?=$todo_soumis_id?>"><?=$todo_soumis_par?></a><br>
+  <?=$trad['todo_task_proposee']?> <?=$todo_soumis_le?> <?=$trad['todo_task_auteur']?> <a class="gras" href="<?=$todo_chemin?>pages/users/user?id=<?=$todo_soumis_id?>"><?=$todo_soumis_par?></a><br>
     <?php if($todo_resolu) { ?>
       <?=$trad['todo_task_solved']?> <?=$todo_resolu_le?>
     <?php if($todo_source) { ?>

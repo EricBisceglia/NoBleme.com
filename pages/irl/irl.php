@@ -549,7 +549,7 @@ if(!getxhr()) { /***************************************************************
             <tr>
               <td class="gras">
                 <?php if($irlp_uid[$i]) { ?>
-                <a href="<?=$chemin?>pages/user/user?id=<?=$irlp_uid[$i]?>"><?=$irlp_pseudo[$i]?></a>
+                <a href="<?=$chemin?>pages/users/user?id=<?=$irlp_uid[$i]?>"><?=$irlp_pseudo[$i]?></a>
                 <?php } else { ?>
                 <?=$irlp_pseudo[$i]?>
                 <?php } ?>

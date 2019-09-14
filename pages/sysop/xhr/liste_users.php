@@ -80,7 +80,7 @@ for($nuserlist = 0; $duserlist = mysqli_fetch_array($quserlist) ; $nuserlist++)
     <?php for($i=0;$i<$nuserlist;$i++) { ?>
     <tr>
       <td>
-        <a class="gras" href="<?=$userlist_chemin?>pages/user/user?id=<?=$userlist_id[$i]?>"><?=$userlist_pseudo[$i]?></a>
+        <a class="gras" href="<?=$userlist_chemin?>pages/users/user?id=<?=$userlist_id[$i]?>"><?=$userlist_pseudo[$i]?></a>
       </td>
       <td>
         <a class="gras" href="<?=$userlist_chemin?>pages/sysop/<?=$userlist_lien?>?id=<?=$userlist_id[$i]?>"><?=$userlist_texte[$i]?></a>

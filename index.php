@@ -13,13 +13,12 @@ $page_lang = array('FR', 'EN');
 $header_menu      = 'NoBleme';
 $header_sidemenu  = 'Homepage';
 
-// Recent activity
-$page_name_en = "Hangs out on the homepage";
-$page_name_fr = "Traine sur l'index du site";
+// User activity
+$page_name    = "index";
 $page_url     = "index";
 
 // Title and description
-$page_title       = __('nobleme_home_title');
+$page_title       = __('nobleme_home_page_title');
 $page_description = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
 
 

@@ -87,12 +87,12 @@ EOD;
   // On notifie IRC de l'action
   $temp_jour = ($ban_jours == 1) ? ' jour' : ' jours';
   $temp_days = ($ban_jours == 1) ? ' day'  : ' days';
-  ircbot($chemin, getpseudo($ban_id)." a été banni de NoBleme pendant ".$ban_jours.$temp_jour." - ".$GLOBALS['url_site']."pages/user/user?id=".$ban_id, "#nobleme");
-  ircbot($chemin, getpseudo($ban_id)." has been banned from NoBleme for ".$ban_jours.$temp_days." - ".$GLOBALS['url_site']."pages/user/user?id=".$ban_id, "#english");
+  ircbot($chemin, getpseudo($ban_id)." a été banni de NoBleme pendant ".$ban_jours.$temp_jour." - ".$GLOBALS['url_site']."pages/users/user?id=".$ban_id, "#nobleme");
+  ircbot($chemin, getpseudo($ban_id)." has been banned from NoBleme for ".$ban_jours.$temp_days." - ".$GLOBALS['url_site']."pages/users/user?id=".$ban_id, "#english");
   ircbot($chemin, getpseudo()." a banni ".getpseudo($ban_id)." pendant ".$ban_jours.$temp_jour." - ".$GLOBALS['url_site']."pages/sysop/pilori", "#sysop");
 
   // Et on redirige vers le profil de l'user
-  header("Location: ".$chemin."pages/user/user?id=".$ban_id);
+  header("Location: ".$chemin."pages/users/user?id=".$ban_id);
 }
 
 
@@ -150,7 +150,7 @@ EOD;
   ircbot($chemin, getpseudo()." a débanni ".getpseudo($deban_id)." - ".$GLOBALS['url_site']."pages/nobleme/activite?mod", "#sysop");
 
   // Et on redirige vers le profil de l'user
-  header("Location: ".$chemin."pages/user/user?id=".$deban_id);
+  header("Location: ".$chemin."pages/users/user?id=".$deban_id);
 }
 
 
@@ -204,7 +204,7 @@ if(isset($_GET['id']))
 
         <?php } else if(isset($_GET['id']) && $ban_pseudo && $ban_etat) { ?>
 
-        <h5>Débannir <a href="<?=$chemin?>pages/user/user?id=<?=$ban_id?>"><?=$ban_pseudo?></a> de NoBleme</h5>
+        <h5>Débannir <a href="<?=$chemin?>pages/users/user?id=<?=$ban_id?>"><?=$ban_pseudo?></a> de NoBleme</h5>
         <br>
 
         <form method="POST">
@@ -218,7 +218,7 @@ if(isset($_GET['id']))
 
         <?php } else if(isset($_GET['id']) && $ban_pseudo) { ?>
 
-        <h5>Bannir <a href="<?=$chemin?>pages/user/user?id=<?=$ban_id?>"><?=$ban_pseudo?></a> de NoBleme</h5>
+        <h5>Bannir <a href="<?=$chemin?>pages/users/user?id=<?=$ban_id?>"><?=$ban_pseudo?></a> de NoBleme</h5>
         <br>
 
         <form method="POST">

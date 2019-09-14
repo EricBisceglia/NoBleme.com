@@ -13,8 +13,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 // Page settings
-___('nobleme_home_title', 'EN', "Homepage");
-___('nobleme_home_title', 'FR', "Accueil");
+___('nobleme_home_page_title', 'EN', "Homepage");
+___('nobleme_home_page_title', 'FR', "Accueil");
 
 // Welcome paragraph
 ___('nobleme_home_welcome_title', 'EN', "Welcome to NoBleme. What's this place all about?");
@@ -40,15 +40,15 @@ ___('nobleme_home_tour', 'EN', <<<EOT
 <p>NoBleme was originally created as a french community. This means that some of the website's features have no english translation and are only available in french. It does not mean that english speakers are not desired, as absolutely everyone is welcome on NoBleme, and many if not most of our users speak english.</p>
 <p>When switching from french to english, you will probably have noticed that you have access to fewer elements on the left side navigation menu. This is because the non translated (french only) pages are removed from the navigation menu when browsing the website in english, for your convenience. Keep in mind that most of these removed pages are about things that do not translate to english, such as quotes from conversations in french, games that are played solely in french, etc.</p>
 <p>Don't hesitate to look around the website, and enjoy your stay on NoBleme!</p>
-{{link|pages/user/user?id=1|- Bad|indented bold|1|}}
+{{link+++|pages/users/user?id=1|- Bad|indented bold|1|}}
 EOT
 );
 ___('nobleme_home_tour', 'FR', <<<EOT
-<p>Si vous vous demandez d'où NoBleme vient et à quoi sert NoBleme, vous pouvez trouver la réponse à ces questions dans la page {{link|pages/doc/nobleme|qu'est-ce que NoBleme ?|bold|1|}} de la {{link|pages/doc/index|documentation du site|bold|1|}}.</p>
-<p>Notre attraction principale pour les visiteurs perdus est {{link|pages/nbdb/index|l'encyclopédie de la culture Internet|bold|1|}}, une documentation de l'histoire d'internet et des memes qu'on y trouve.</p>
-<p>Maintenant que vous avez une vague idée de ce que NoBleme représente, peut-être êtes vous assez curieux pour avoir envie d'intéragir avec la communauté NoBlemeuse. Si c'est le cas, venez nous rejoindre là où nous sommes toujours actifs : sur notre {{link|pages/irc/index|serveur de discussion IRC|bold|1|}}.</p>
+<p>Si vous vous demandez d'où NoBleme vient et à quoi sert NoBleme, vous pouvez trouver la réponse à ces questions dans la page {{link+++|pages/doc/nobleme|qu'est-ce que NoBleme ?|bold|1|}} de la {{link+++|pages/doc/index|documentation du site|bold|1|}}.</p>
+<p>Notre attraction principale pour les visiteurs perdus est {{link+++|pages/nbdb/index|l'encyclopédie de la culture Internet|bold|1|}}, une documentation de l'histoire d'internet et des memes qu'on y trouve.</p>
+<p>Maintenant que vous avez une vague idée de ce que NoBleme représente, peut-être êtes vous assez curieux pour avoir envie d'intéragir avec la communauté NoBlemeuse. Si c'est le cas, venez nous rejoindre là où nous sommes toujours actifs : sur notre {{link+++|pages/irc/index|serveur de discussion IRC|bold|1|}}.</p>
 <p>N'hésitez pas à vous balader sur le site pour découvrir son contenu, et bon séjour sur NoBleme !</p>
-{{link|pages/user/user?id=1|- Bad|indented bold|1|}}
+{{link+++|pages/users/user?id=1|- Bad|indented bold|1|}}
 EOT
 );
 
@@ -62,7 +62,7 @@ EOT
 /*********************************************************************************************************************/
 
 // Page settings
-___('nobleme_404_title', 'EN', "Lost in space");
-___('nobleme_404_title', 'FR', "Perdus dans l'espace");
+___('nobleme_404_page_title', 'EN', "Lost in space");
+___('nobleme_404_page_title', 'FR', "Perdus dans l'espace");
 ___('nobleme_404_description', 'EN', "Error 404: Page not found…");
 ___('nobleme_404_description', 'FR', "Erreur 404 : Page non trouvée…");

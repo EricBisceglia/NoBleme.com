@@ -67,7 +67,7 @@ EOD;
 Comme dans un fil de discussion, les messages se suivent dans l'ordre chronologique, du plus ancien au plus récent. Toutefois, les pseudonymes des auteurs sont masqués, permettant ainsi d'avoir une conversation anonyme où chacun peut parler sans être identifié.
 EOD;
   $trad['anon_desc_2']      = <<<EOD
-Afin de préserver l'anonymité de chacun, les messages postés dans des fils de discussion anonymes n'augmentent pas le compte de messages postés sur le forum qui se trouve dans le <a class="gras" href="{$chemin_xhr}pages/user/user">profil public</a> de chaque utilisateur.
+Afin de préserver l'anonymité de chacun, les messages postés dans des fils de discussion anonymes n'augmentent pas le compte de messages postés sur le forum qui se trouve dans le <a class="gras" href="{$chemin_xhr}pages/users/user">profil public</a> de chaque utilisateur.
 EOD;
   $trad['anon_pseudo']      = "Anonyme";
 
@@ -108,7 +108,7 @@ EOD;
 Le sujet que vous voulez ouvrir n'est pas fait pour être une discussion traditionnelle. Il s'agit soit d'un jeu utilisant le forum comme support, soit d'un sujet qui est fait pour être délibérément stupide et avoir beaucoup de réponses non constructives.
 EOD;
   $trad['jeu_desc_2']       = <<<EOD
-Les messages postés dans les sujets classifiés comme des jeux de forum n'augmentent pas le compte de messages postés sur le forum qui se trouve dans le <a class="gras" href="{$chemin_xhr}pages/user/user">profil public</a> de chaque utilisateur.
+Les messages postés dans les sujets classifiés comme des jeux de forum n'augmentent pas le compte de messages postés sur le forum qui se trouve dans le <a class="gras" href="{$chemin_xhr}pages/users/user">profil public</a> de chaque utilisateur.
 EOD;
 }
 
@@ -141,7 +141,7 @@ EOD;
 As with a linear thread, replies follow each other chronologically. However, all nicknames are hidden, allowing you to have an anonymous conversation in which everyone can participate without fear of being identified.
 EOD;
   $trad['anon_desc_2']      = <<<EOD
-In order to preserve everyone's anonymity, replies posted in anonymous threads will not increase the forum post count in your <a class="gras" href="{$chemin_xhr}pages/user/user">public profile</a>.
+In order to preserve everyone's anonymity, replies posted in anonymous threads will not increase the forum post count in your <a class="gras" href="{$chemin_xhr}pages/users/user">public profile</a>.
 EOD;
   $trad['anon_pseudo']      = "Anonymous";
 
@@ -182,7 +182,7 @@ EOD;
 The topic you are about to open isn't meant to be a discussion. It is either a game that uses the forum as a platform, either a topic made to be deliberately stupid and expecting a lot of non constructive replies.
 EOD;
   $trad['jeu_desc_2']       = <<<EOD
-Since they do not contribute to the forum's quality, replies posted in forum game threads will not increase the forum post count in your <a class="gras" href="{$chemin_xhr}pages/user/user">public profile</a>.
+Since they do not contribute to the forum's quality, replies posted in forum game threads will not increase the forum post count in your <a class="gras" href="{$chemin_xhr}pages/users/user">public profile</a>.
 EOD;
 }
 

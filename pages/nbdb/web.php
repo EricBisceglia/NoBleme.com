@@ -211,7 +211,7 @@ EOD;
   $trad['web_bilingue']     = "This page is available in english aswell";
   $trad['web_bilingue_2']   = "Cette page est disponible en anglais également";
   $trad['web_floutage']     = <<<EOD
-Certains contenus de cette page sont floutés car ils sont de nature vulgaire ou sensible. Pour les afficher en clair, vous devez passer votre curseur dessus. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="{$chemin}pages/user/nsfw">options de vulgarité</a> de votre compte.
+Certains contenus de cette page sont floutés car ils sont de nature vulgaire ou sensible. Pour les afficher en clair, vous devez passer votre curseur dessus. Si le floutage vous ennuie, vous pouvez le désactiver de façon permanente via les <a class="gras" href="{$chemin}pages/users/nsfw">options de vulgarité</a> de votre compte.
 EOD;
   $trad['web_vulgaire']     = "LA PAGE CI-DESSOUS CONTIENT DU CONTENU VULGAIRE OU DÉGUEULASSE";
   $trad['web_politise']     = "La page ci-dessous est politisée : elle aborde un sujet de société d'une façon avec laquelle tout le monde ne sera pas forcément d'accord. Le but de cette encyclopédie n'est pas de plaire à tous, mais plutôt de présenter des faits de façon objective, quitte à froisser certaines opinions.";
@@ -260,7 +260,7 @@ EOD;
   $trad['web_bilingue']     = "This page is available in french aswell";
   $trad['web_bilingue_2']   = "Cette page est disponible en français également";
   $trad['web_floutage']     = <<<EOD
-Some contents on this page are blurred due to their crude or sensitive nature. Hover your mouse cursor over them in order to reveal their contents. If you are bothered by the blurring or have no need for it, you can permanently disable it in the <a class="gras" href="{$chemin}pages/user/nsfw">adult content options</a> of your account.
+Some contents on this page are blurred due to their crude or sensitive nature. Hover your mouse cursor over them in order to reveal their contents. If you are bothered by the blurring or have no need for it, you can permanently disable it in the <a class="gras" href="{$chemin}pages/users/nsfw">adult content options</a> of your account.
 EOD;
   $trad['web_vulgaire']     = "THE FOLLOWING PAGE CONTAINS NASTY AND/OR GROSS CONTENT";
   $trad['web_politise']     = "The following page is politically loaded: it concerns an aspect of society on which people tend to have disagreements. The goal of this encyclopedia is not to paint a skewed view of society, but rather to try to bring facts objectively, even if it means displeasing some crowds.";
@@ -392,7 +392,7 @@ EOD;
 
         <br>
 
-        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/user/pm?user=1';">
+        <div class="doc_minipadding doc_miniborder pointeur" onclick="window.location.href = '<?=$chemin?>pages/users/pm?user=1';">
           <div class="align_center doc_miniborder">
             <h5 class="doc_minipadding_bot doc_miniborder_bot">
               <?=$trad['doct_suggerer']?>

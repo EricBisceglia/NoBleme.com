@@ -344,7 +344,7 @@ if(!getxhr()) { /***************************************************************
 
         <h6>
           <?php if(!$texte_anonyme) { ?>
-          Publié dans le <a href="<?=$chemin?>pages/ecrivains/index">coin des écrivains</a> de NoBleme par <a href="<?=$chemin?>pages/user/user?id=<?=$texte_auteur_id?>"><?=$texte_auteur?></a> <?=$texte_creation?>
+          Publié dans le <a href="<?=$chemin?>pages/ecrivains/index">coin des écrivains</a> de NoBleme par <a href="<?=$chemin?>pages/users/user?id=<?=$texte_auteur_id?>"><?=$texte_auteur?></a> <?=$texte_creation?>
           <?php } else if($est_admin) { ?>
             Publié anonymement (<?=$texte_auteur?>) dans le <a href="<?=$chemin?>pages/ecrivains/index">coin des écrivains</a> de NoBleme <?=$texte_creation?>
           <?php } else { ?>
@@ -394,7 +394,7 @@ if(!getxhr()) { /***************************************************************
 
         <?php } else if($texte_feedback == 1) { ?>
 
-        <p>L'auteur de ce texte accepte les retours sur son texte, mais uniquement par messages privés. Vous ne pouvez pas laisser de notes sur ce texte, mais vous pouvez toutefois communiquer ce que vous en avez pensé en <a href="<?=$chemin?>pages/user/pm?user=<?=$texte_auteur_id?>">écrivant un message privé à <?=$texte_auteur?></a>.</p>
+        <p>L'auteur de ce texte accepte les retours sur son texte, mais uniquement par messages privés. Vous ne pouvez pas laisser de notes sur ce texte, mais vous pouvez toutefois communiquer ce que vous en avez pensé en <a href="<?=$chemin?>pages/users/pm?user=<?=$texte_auteur_id?>">écrivant un message privé à <?=$texte_auteur?></a>.</p>
 
         <br>
         <br>
@@ -435,7 +435,7 @@ if(!getxhr()) { /***************************************************************
           <?php } else if($reaction_anonyme[$i]) { ?>
           <span class="texte_noir gras">Anonyme</span>
           <?php } else { ?>
-          <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$reaction_userid[$i]?>"><?=$reaction_pseudo[$i]?></a>
+          <a class="gras" href="<?=$chemin?>pages/users/user?id=<?=$reaction_userid[$i]?>"><?=$reaction_pseudo[$i]?></a>
           <?php } ?>
           le <?=$reaction_date[$i]?>
           <?=$reaction_message[$i]?>
@@ -491,7 +491,7 @@ if(!getxhr()) { /***************************************************************
 
         <p>
           Vous devez être connecté à votre compte pour poster votre opinion sur ce texte.<br>
-          <a class="gras" href="<?=$chemin?>pages/user/login">Cliquez ici pour vous identifier ou vous enregistrer</a>
+          <a class="gras" href="<?=$chemin?>pages/users/login">Cliquez ici pour vous identifier ou vous enregistrer</a>
         </p>
 
         <?php } ?>

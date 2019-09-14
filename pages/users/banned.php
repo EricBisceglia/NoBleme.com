@@ -39,7 +39,7 @@ $qbanned = mysqli_fetch_array(query(" SELECT  membres.banni_date ,
 
 // Si l'user est pas banni, on le redirige
 if(!$qbanned['banni_date'])
-  exit(header("Location: ".$chemin."pages/user/user"));
+  exit(header("Location: ".$chemin."pages/users/user"));
 
 // Si l'user a purgé son ban, on le retire et on le redirige
 $timestamp = time();
@@ -49,7 +49,7 @@ if($timestamp > $qbanned['banni_date'])
           SET     membres.banni_date    = 0 ,
                   membres.banni_raison  = ''
           WHERE   membres.id = '$user_id' ");
-  exit(header("Location: ".$chemin."pages/user/user"));
+  exit(header("Location: ".$chemin."pages/users/user"));
 }
 
 // On prépare les infos pour l'affichage
@@ -82,7 +82,7 @@ Vous êtes banni jusqu'au <span class="texte_negatif gras">$ban_date à $ban_heu
 <br>
 Si vous trouvez ce ban injuste et désirez le contester, vous pouvez venir en discuter poliment avec l'équipe administrative du site sur notre serveur IRC en <a class="gras" href="https://client00.chat.mibbit.com/?url=irc%3A%2F%2Firc.nobleme.com%2FNoBleme&charset=UTF-8">cliquant ici</a>.<br>
 <br>
-En attendant, vous pouvez continuer à naviguer sur le site en tant qu'invité, <a class="gras" href="<?=$chemin?>pages/user/banned?logout">cliquez ici</a> pour vous déconnecter de votre compte. Si vous voulez jouer au plus malin et vous créer un nouveau compte pour contourner le ban, vous vous prendrez un bannissement par adresse IP.
+En attendant, vous pouvez continuer à naviguer sur le site en tant qu'invité, <a class="gras" href="<?=$chemin?>pages/users/banned?logout">cliquez ici</a> pour vous déconnecter de votre compte. Si vous voulez jouer au plus malin et vous créer un nouveau compte pour contourner le ban, vous vous prendrez un bannissement par adresse IP.
 EOD;
 }
 
@@ -102,7 +102,7 @@ Your account will be banned until <span class="texte_negatif gras">$ban_date à 
 <br>
 If you do not believe that you deserved a ban, you can come and politiely appeal to NoBleme's administrative staff on our IRC server by <a class="gras" href="https://client00.chat.mibbit.com/?url=irc%3A%2F%2Firc.nobleme.com%2Fenglish&charset=UTF-8">clicking here</a>.<br>
 <br>
-Meanwhile, you are free to browse the website as a guest, <a class="gras" href="<?=$chemin?>pages/user/banned?logout">click here</a> to log out of your account.<br>If you want to play clever kid and create a new account to go around the ban, you will end up IP banned.
+Meanwhile, you are free to browse the website as a guest, <a class="gras" href="<?=$chemin?>pages/users/banned?logout">click here</a> to log out of your account.<br>If you want to play clever kid and create a new account to go around the ban, you will end up IP banned.
 EOD;
 }
 

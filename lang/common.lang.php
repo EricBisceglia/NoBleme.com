@@ -56,9 +56,9 @@ function __($string, $amount=null, $spaces_before=0, $spaces_after=0, $preset_va
   }
 
   // Replace URLs if needed, using a regex that looks for {{link|href|text|style|internal|path}} (last 3 are optional)
-  $returned_string = preg_replace('/\{\{link\|(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", "$4", "$5"), $returned_string);
-  $returned_string = preg_replace('/\{\{link\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", "$4"), $returned_string);
-  $returned_string = preg_replace('/\{\{link\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3"), $returned_string);
+  $returned_string = preg_replace('/\{\{link\+\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", "$4", "$5"), $returned_string);
+  $returned_string = preg_replace('/\{\{link\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", "$4"), $returned_string);
+  $returned_string = preg_replace('/\{\{link\+\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3"), $returned_string);
   $returned_string = preg_replace('/\{\{link\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2"), $returned_string);
 
   // Prepare the spaces to prepend to the string
@@ -114,14 +114,83 @@ function ___($name, $lang, $translation)
  * This is a debugging function and should only be used locally during development.
  * To enforce this requirement, the function ends with an exit().
  *
+ * @param   int|null  $print_all  OPTIONAL  If set, prints all values in the array after the duplicates.
+ *
  * @return  void
  */
-function debug_duplicate_translations()
+
+function debug_duplicate_translations($print_all=null)
 {
   // We do a diff between the array before and after filtering all unique values, and dump it
-  exit(var_dump(array_unique(array_diff_assoc($GLOBALS['translations'],array_unique($GLOBALS['translations'])))));
+  $diff = var_dump(array_unique(array_diff_assoc($GLOBALS['translations'], array_unique($GLOBALS['translations']))));
+
+  // If no full printing is requested, exit with the differences
+  if(!$print_all)
+    exit($diff);
+
+  // Else, print all the existing translations
+  else
+  {
+    echo $diff.'<pre style="max-width: 100%; white-space: pre-wrap;">';
+    ksort($GLOBALS['translations']);
+    print_r($GLOBALS['translations']);
+    exit("</pre>");
+  }
 }
 
+
+
+
+/**
+ * Looks for similar activity names in the page names array.
+ *
+ * This is a debugging function and should only be used locally during development.
+ * To enforce this requirement, the function ends with an exit().
+ *
+ * @param   array     $page_names           The array containing all page names.
+ * @param   int|null  $print_all  OPTIONAL  If set, prints all values in the array after the duplicates.
+ *
+ * @return  void
+ */
+
+function debug_duplicate_page_names($page_names, $print_all=null)
+{
+  // We do a diff between the array before and after filtering all unique values, and dump it
+  $diff = var_dump(array_unique(array_diff_assoc($page_names, array_unique($page_names))));
+
+  // If no full printing is requested, exit with the differences
+  if(!$print_all)
+    exit($diff);
+
+  // Else, print all the existing user activities
+  else
+  {
+    echo $diff.'<pre style="max-width: 100%; white-space: pre-wrap;">';
+    ksort($page_names);
+    print_r($page_names);
+    exit("</pre>");
+  }
+}
+
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  RECENT ACTIVITY                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Assemble an array of all page names for usage in user activity
+$page_names = array(
+  'admin_en'  => "Administrating the website"     ,
+  'admin_fr'  => "Administre secrètement le site" ,
+  'index_en'  => "Hangs out on the homepage"      ,
+  'index_fr'  => "Traine sur l'index du site"     ,
+  '404_en'    => "Error 404: Page not found"      ,
+  '404_fr'    => "Erreur 404 : Page non trouvée"  ,
+);
 
 
 
@@ -178,28 +247,13 @@ ___('bbcodes_spoiler_show', 'FR', "VOIR LE CONTENU CACHÉ");
 
 
 // NBDBCodes
-___('nbdbcodes_video_hidden',       'EN', "This video is hidden (<a href=\"{{1}}pages/user/privacy\">privacy options</a>)");
-___('nbdbcodes_video_hidden',       'FR', "Cette vidéo est masquée (<a href=\"{{1}}pages/user/privacy\">options de vie privée</a>)");
-___('nbdbcodes_video_hidden_small', 'EN', "Video hidden (<a href=\"{{1}}pages/user/privacy\">privacy options</a>)");
-___('nbdbcodes_video_hidden_small', 'FR', "Vidéo masquée (<a href=\"{{1}}pages/user/privacy\">options de vie privée</a>)");
+___('nbdbcodes_video_hidden',       'EN', "This video is hidden (<a href=\"{{1}}pages/users/privacy\">privacy options</a>)");
+___('nbdbcodes_video_hidden',       'FR', "Cette vidéo est masquée (<a href=\"{{1}}pages/users/privacy\">options de vie privée</a>)");
+___('nbdbcodes_video_hidden_small', 'EN', "Video hidden (<a href=\"{{1}}pages/users/privacy\">privacy options</a>)");
+___('nbdbcodes_video_hidden_small', 'FR', "Vidéo masquée (<a href=\"{{1}}pages/users/privacy\">options de vie privée</a>)");
 
-___('nbdbcodes_trends_hidden', 'EN', "This Google trends graph is hidden (<a href=\"{{1}}pages/user/privacy\">privacy options</a>)");
-___('nbdbcodes_trends_hidden', 'FR', "Ce graphe Google trends est masqué (<a href=\"{{1}}pages/user/privacy\">options de vie privée</a>)");
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                 ACTIVITY MESSAGES                                                 */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Admin actions
-___('activity_admin_en', 'EN', 'Administrating the website');
-___('activity_admin_en', 'FR', 'Administrating the website');
-___('activity_admin_fr', 'EN', 'Administre secrètement le site');
-___('activity_admin_fr', 'FR', 'Administre secrètement le site');
+___('nbdbcodes_trends_hidden', 'EN', "This Google trends graph is hidden (<a href=\"{{1}}pages/users/privacy\">privacy options</a>)");
+___('nbdbcodes_trends_hidden', 'FR', "Ce graphe Google trends est masqué (<a href=\"{{1}}pages/users/privacy\">options de vie privée</a>)");
 
 
 

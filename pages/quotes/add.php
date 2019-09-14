@@ -91,7 +91,7 @@ if(isset($_POST['misc_contenu']))
       $misc_pseudo      = getpseudo();
       $misc_date        = jourfr(date('Y-m-d', $misc_timestamp));
       $misc_message     = <<<EOD
-Proposée par [url={$chemin}pages/user/user?id={$misc_submitter}]{$misc_pseudo}[/url] le {$misc_date}
+Proposée par [url={$chemin}pages/users/user?id={$misc_submitter}]{$misc_pseudo}[/url] le {$misc_date}
 [url={$chemin}pages/quotes/edit?id={$misc_id}]Accepter la proposition de miscellanée[/url]
 [url={$chemin}pages/quotes/delete?id={$misc_id}]Rejeter la proposition de miscellanée[/url]
 
@@ -130,7 +130,7 @@ Miscellanée : nom féminin, ordinairement au pluriel.<br>
 Bibliothèque hétéroclite, recueil de différents ouvrages qui n'ont quelquefois aucun rapport entre eux.
 EOD;
   $trad['misc_2']     = <<<EOD
-Si vous avez lu quelque chose d'amusant sur NoBleme, vous pouvez proposer d'immortaliser ce moment dans les miscellanées. Pour ce faire, tout ce que vous avez à faire est remplir le formulaire ci-dessous et patienter le temps de voir si votre proposition de miscellanée est acceptée ou rejetée par <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a>.
+Si vous avez lu quelque chose d'amusant sur NoBleme, vous pouvez proposer d'immortaliser ce moment dans les miscellanées. Pour ce faire, tout ce que vous avez à faire est remplir le formulaire ci-dessous et patienter le temps de voir si votre proposition de miscellanée est acceptée ou rejetée par <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a>.
 EOD;
   $trad['misc_3']     = <<<EOD
 Les critères sur lesquels les propositions de miscellanées sont jugées sont les suivants :<br>
@@ -148,7 +148,7 @@ EOD;
   $trad['mercimisc1'] = "Merci de votre contribution !";
   $trad['mercimisc2'] = "Votre proposition de miscellanée a été reçue par le système";
   $trad['mercimisc3'] = <<<EOD
-Une fois que <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> aura jugé votre miscellanée, vous recevrez un message privé vous informant de si elle a été acceptée ou refusée. Dans tous les cas, merci de votre contribution !
+Une fois que <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> aura jugé votre miscellanée, vous recevrez un message privé vous informant de si elle a été acceptée ou refusée. Dans tous les cas, merci de votre contribution !
 EOD;
 }
 
@@ -166,7 +166,7 @@ else if($lang == 'EN')
 Miscellanea: a collection of miscellaneous items, esp literary works.
 EOD;
   $trad['misc_2']     = <<<EOD
-If you read something funny on NoBleme, you might want it to be immortalized somewhere for posterity. For it to happen, all you have to do is fill the form below with the funny thing in question, and wait until your quote proposal gets accepted or rejected by <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a>.
+If you read something funny on NoBleme, you might want it to be immortalized somewhere for posterity. For it to happen, all you have to do is fill the form below with the funny thing in question, and wait until your quote proposal gets accepted or rejected by <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a>.
 EOD;
   $trad['misc_3']     = <<<EOD
 The criteria on which the quote proposals are judged are the following:<br>
@@ -184,7 +184,7 @@ EOD;
   $trad['mercimisc1'] = "Thank you for your contribution!";
   $trad['mercimisc2'] = "Your quote proposal has been registered in the system.";
   $trad['mercimisc3'] = <<<EOD
-<a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a> will now judge your quote and decide whether to keep it on the website or not. Once it is done, you will receive a private message informing you of its fate. Thanks a lot for your contribution!
+<a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a> will now judge your quote and decide whether to keep it on the website or not. Once it is done, you will receive a private message informing you of its fate. Thanks a lot for your contribution!
 EOD;
 }
 

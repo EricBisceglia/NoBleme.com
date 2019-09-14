@@ -3,28 +3,27 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/queries.inc.php';  // Run all queries awaiting execution
 include_once './../../inc/includes.inc.php'; // Common inclusions
 
 // Limit page access rights
-user_restrict_to_administrators();
+user_restrict_to_guests();
 
 // Translations and available languages
-include_once './../../lang/dev.lang.php';
+include_once './../../lang/users.lang.php';
 $page_lang = array('FR', 'EN');
 
 // Menus
-$header_menu      = 'Dev';
-$header_sidemenu  = 'SQL';
+$header_menu      = 'NoBleme';
+$header_sidemenu  = 'Homepage';
 
 // User activity
-$page_name = "admin";
+$page_name  = "users_forgotten";
+$page_url   = "pages/users/forgotten_password";
 
 // Title and description
-$page_title = __('dev_queries_page_title');
+$page_title       = __('users_forgotten_page_title');
+$page_description = __('users_forgotten_page_description');
 
-// Extra CSS
-$css = array('dev');
 
 
 
@@ -35,11 +34,15 @@ $css = array('dev');
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-      <div class="width_50 dev_queries_block">
+      <div class="width_50">
 
-        <h1 class="positive text_white align_center">
-          <?=__('dev_queries_ok')?>
+        <h1>
+          <?=__('users_forgotten_title')?>
         </h1>
+
+        <p>
+          <?=__('users_forgotten_body')?>
+        </p>
 
       </div>
 

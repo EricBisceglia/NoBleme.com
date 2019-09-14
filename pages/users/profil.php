@@ -14,7 +14,7 @@ $header_sidemenu  = 'ModifierProfil';
 
 // Identification
 $page_nom = "Modifie son profil public";
-$page_url = "pages/user/profil";
+$page_url = "pages/users/profil";
 
 // Langues disponibles
 $langue_page = array('FR','EN');
@@ -106,10 +106,10 @@ if(isset($_POST['profil_modifier']))
   activite_diff($activite_id, 'Métier / Occupation', $profil_avant_metier, $edit_metier, 1);
 
   // On envoie un message sur #sysop avec le bot IRC pour qu'un sysop vérifie que ça soit pas du contenu abusif
-  ircbot($chemin, getpseudo($profil_id)." a modifié son profil public - ".$GLOBALS['url_site']."pages/user/user?id=".$profil_id, "#sysop");
+  ircbot($chemin, getpseudo($profil_id)." a modifié son profil public - ".$GLOBALS['url_site']."pages/users/user?id=".$profil_id, "#sysop");
 
   // Et on redirige vers le profil public
-  exit(header("Location: ".$chemin."pages/user/user"));
+  exit(header("Location: ".$chemin."pages/users/user"));
 }
 
 
@@ -192,7 +192,7 @@ if($lang == 'FR')
   // Header
   $trad['titre']          = "Modifier mon profil public";
   $trad['desc']           = <<<EOD
-Cette page vous permet de modifier les éléments qui apparaissent sur votre <a href="{$chemin}pages/user/user" class="gras">profil public</a>. Bien entendu, l'intégralité de ces champs sont optionnels, c'est à vous de décider si vous voulez ou non que ces choses apparaissent publiquement. Si vous préférez rester anonyme, il n'y a aucune conséquence négative à laisser votre profil entièrement vide.
+Cette page vous permet de modifier les éléments qui apparaissent sur votre <a href="{$chemin}pages/users/user" class="gras">profil public</a>. Bien entendu, l'intégralité de ces champs sont optionnels, c'est à vous de décider si vous voulez ou non que ces choses apparaissent publiquement. Si vous préférez rester anonyme, il n'y a aucune conséquence négative à laisser votre profil entièrement vide.
 EOD;
 
   // Informations générales
@@ -228,7 +228,7 @@ else if($lang == 'EN')
   // Header
   $trad['titre']          = "Edit my public profile";
   $trad['desc']           = <<<EOD
-This page allows you to edit the contents of elements that appear on your <a href="{$chemin}pages/user/user" class="gras">public profile</a>. Of course, all of those fields are optional, it's up to you to decide whether you want to share those things publicly or not. If you would rather stay fully anonymous, there are no consequences to leaving your public profile empty.
+This page allows you to edit the contents of elements that appear on your <a href="{$chemin}pages/users/user" class="gras">public profile</a>. Of course, all of those fields are optional, it's up to you to decide whether you want to share those things publicly or not. If you would rather stay fully anonymous, there are no consequences to leaving your public profile empty.
 EOD;
 
 // Informations générales

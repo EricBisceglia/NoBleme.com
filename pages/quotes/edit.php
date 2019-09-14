@@ -247,7 +247,7 @@ if(!getxhr()) { /***************************************************************
           <?php } else { ?>
           <?php for($i=0;$i<$nmiscpseudos;$i++) { ?>
           <img class="pointeur" src="<?=$chemin?>img/icones/supprimer.svg" height="15" alt="X" onclick="miscellanee_membres_lies('<?=$chemin?>', <?=$misc_id?>, 'supprimer', <?=$miscpseudos_id[$i]?>);">
-          <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$miscpseudos_id[$i]?>"><?=$miscpseudos_pseudo[$i]?></a>
+          <a class="gras" href="<?=$chemin?>pages/users/user?id=<?=$miscpseudos_id[$i]?>"><?=$miscpseudos_pseudo[$i]?></a>
           <br>
           <?php } ?>
           <?php } ?>

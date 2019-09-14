@@ -85,13 +85,13 @@ if(isset($_POST['profil_go']))
 
   // On prépare le message privé à envoyer à l'user dont le profil a été changé
   $profil_pm = <<<EOD
-[url={$chemin}pages/user/user]Votre profil public[/url] a été modifié par un membre de [url={$chemin}pages/nobleme/admins]l'équipe administrative[/url].
+[url={$chemin}pages/users/user]Votre profil public[/url] a été modifié par un membre de [url={$chemin}pages/nobleme/admins]l'équipe administrative[/url].
 
 À l'avenir, assurez vous que le contenu de votre profil respecte le [url={$chemin}pages/doc/coc]code de conduite[/url] de NoBleme.
 
 
 
-A member of the [url={$chemin}pages/nobleme/admins]administrative team[/url] modified your [url={$chemin}pages/user/user]public profile[/url].
+A member of the [url={$chemin}pages/nobleme/admins]administrative team[/url] modified your [url={$chemin}pages/users/user]public profile[/url].
 
 In the future, make sure that your public profile respects NoBleme's [url={$chemin}pages/doc/coc]code of conduct[/url].
 EOD;
@@ -100,10 +100,10 @@ EOD;
   envoyer_notif($profil_id, "Profil public modifié / Public profile edited", postdata($profil_pm));
 
   // On notifie #sysop de l'action
-  ircbot($chemin, getpseudo()." a modifié le profil public de ".getpseudo($profil_id)." - ".$GLOBALS['url_site']."pages/user/user?id=".$profil_id, "#sysop");
+  ircbot($chemin, getpseudo()." a modifié le profil public de ".getpseudo($profil_id)." - ".$GLOBALS['url_site']."pages/users/user?id=".$profil_id, "#sysop");
 
   // Et on redirige vers le profil de l'user
-  header("Location: ".$chemin."pages/user/user?id=".$profil_id);
+  header("Location: ".$chemin."pages/users/user?id=".$profil_id);
 }
 
 
@@ -164,7 +164,7 @@ if(isset($_GET['id']))
 
         <?php } else if(isset($_GET['id']) && $profil_pseudo) { ?>
 
-        <h5>Modifier le profil de <a href="<?=$chemin?>pages/user/user?id=<?=$profil_id?>"><?=$profil_pseudo?></a></h5>
+        <h5>Modifier le profil de <a href="<?=$chemin?>pages/users/user?id=<?=$profil_id?>"><?=$profil_pseudo?></a></h5>
         <br>
 
         <form method="POST">

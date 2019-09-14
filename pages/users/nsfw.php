@@ -14,7 +14,7 @@ $header_sidemenu  = 'ReglagesNSFW';
 
 // Identification
 $page_nom = "Est confortable au boulot";
-$page_url = "pages/user/nsfw";
+$page_url = "pages/users/nsfw";
 
 // Langues disponibles
 $langue_page = array('FR','EN');

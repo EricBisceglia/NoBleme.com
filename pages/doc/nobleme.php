@@ -54,7 +54,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         <h5>Acte I : Avant NoBleme (2000-2005)</h5>
 
         <p>
-          Remontons dans le temps jusqu'à l'âge sombre d'internet. Nous sommes au début des années 2000, peu de français ont internet à domicile. Un lieu toutefois permet à tous d'accéder à internet : les cyber cafés. Dans ces boutiques, les gens vont payer pour jouer à des jeux vidéos, et certains de ces jeux requièrent internet pour accéder à leur contenu multijoueur. Parmi ces gamers de la première heure, le futur administrateur de NoBleme, <a class="gras" href="<?=$chemin?>pages/user/user?id=1">Bad</a>, fait du commerce de <a class="gras" href="https://fr.wikipedia.org/wiki/Magic_:_L%27Assembl%C3%A9e">cartes Magic</a> dans son collège, et se sert des bénéfices pour aller jouer à <a class="gras" href="https://fr.wikipedia.org/wiki/Quake_III_Arena">Quake</a> et <a class="gras" href="https://fr.wikipedia.org/wiki/StarCraft:_Brood_War">StarCraft</a> au cyber café du coin. Pour jouer compétitivement à ces jeux, il fallait nécessairement passer par des serveurs IRC et des forums, dans lesquels des communautés internet se développaient inévitablement à force de se fréquenter.
+          Remontons dans le temps jusqu'à l'âge sombre d'internet. Nous sommes au début des années 2000, peu de français ont internet à domicile. Un lieu toutefois permet à tous d'accéder à internet : les cyber cafés. Dans ces boutiques, les gens vont payer pour jouer à des jeux vidéos, et certains de ces jeux requièrent internet pour accéder à leur contenu multijoueur. Parmi ces gamers de la première heure, le futur administrateur de NoBleme, <a class="gras" href="<?=$chemin?>pages/users/user?id=1">Bad</a>, fait du commerce de <a class="gras" href="https://fr.wikipedia.org/wiki/Magic_:_L%27Assembl%C3%A9e">cartes Magic</a> dans son collège, et se sert des bénéfices pour aller jouer à <a class="gras" href="https://fr.wikipedia.org/wiki/Quake_III_Arena">Quake</a> et <a class="gras" href="https://fr.wikipedia.org/wiki/StarCraft:_Brood_War">StarCraft</a> au cyber café du coin. Pour jouer compétitivement à ces jeux, il fallait nécessairement passer par des serveurs IRC et des forums, dans lesquels des communautés internet se développaient inévitablement à force de se fréquenter.
         </p>
 
         <p>
@@ -377,7 +377,7 @@ $page_desc  = "Qu'est-ce que NoBleme ? Histoire du site, en résumé et en plus 
         <h5>The past: NoBleme's history (the short version)</h5>
 
         <p>
-          On march 19th 2005, NoBleme was created by <a class="gras" href="<?=$chemin?>pages/user/user?id=1">Bad</a> as an attempt to make his own website and community. Back then, small online communities without a central theme were a common thing on the internet, and NoBleme was yet another one of them.
+          On march 19th 2005, NoBleme was created by <a class="gras" href="<?=$chemin?>pages/users/user?id=1">Bad</a> as an attempt to make his own website and community. Back then, small online communities without a central theme were a common thing on the internet, and NoBleme was yet another one of them.
         </p>
 
         <p>

@@ -102,7 +102,7 @@ if(isset($_POST['permissions_go']))
   ircbot($chemin, getpseudo($permissions_id).$permissions_ircbot_en." - ".$GLOBALS['url_site']."pages/nobleme/admins?english", "#english");
 
   // Et on redirige vers le profil de l'user
-  header("Location: ".$chemin."pages/user/user?id=".$permissions_id);
+  header("Location: ".$chemin."pages/users/user?id=".$permissions_id);
 }
 
 
@@ -168,7 +168,7 @@ if(isset($_GET['id']))
 
         <?php } else if(isset($_GET['id']) && $permissions_pseudo) { ?>
 
-        <h5>Altérer les privilèges de <a href="<?=$chemin?>pages/user/user?id=<?=$permissions_id?>"><?=$permissions_pseudo?></a></h5>
+        <h5>Altérer les privilèges de <a href="<?=$chemin?>pages/users/user?id=<?=$permissions_id?>"><?=$permissions_pseudo?></a></h5>
         <br>
 
         <form method="POST">

@@ -38,7 +38,7 @@ if($lang == 'FR')
   $trad['titre']      = "NBDB : NoBleme Database";
   $trad['soustitre']  = "Collection de bases d'informations hébergées sur NoBleme";
   $trad['desc']       = <<<EOD
-La NBDB, signifiant NoBleme Database (en français « Base de données NoBleme ») est une collection de diverses bases d'informations portant chacune sur un sujet spécifique. Il n'y a pas de lien particulier entre les divers contenus de la NBDB, ils sont juste là parce que <a class="gras" href="{$chemin}pages/user/user?pseudo=Bad">Bad</a> est un collectionneur compulsif d'informations et tient à les partager plutôt qu'à les accumuler inutilement dans son coin.
+La NBDB, signifiant NoBleme Database (en français « Base de données NoBleme ») est une collection de diverses bases d'informations portant chacune sur un sujet spécifique. Il n'y a pas de lien particulier entre les divers contenus de la NBDB, ils sont juste là parce que <a class="gras" href="{$chemin}pages/users/user?pseudo=Bad">Bad</a> est un collectionneur compulsif d'informations et tient à les partager plutôt qu'à les accumuler inutilement dans son coin.
 EOD;
   $trad['desc_web']   = <<<EOD
 Le contenu principal de la NBDB, celui que cherchent la plupart des gens qui sont venus ici volontairement, est <a class="gras" href="{$chemin}pages/nbdb/web">l'encyclopédie de la culture internet</a>, une base de données historique cherchant à documenter l'évolution de la culture d'internet, des obscurs bulletin boards d'antan à la mémétique grand public moderne.
@@ -65,7 +65,7 @@ else if($lang == 'EN')
   $trad['titre']      = "NoBleme Database";
   $trad['soustitre']  = "Collection of knowledge bases hosted on NoBleme";
   $trad['desc']       = <<<EOD
-The NoBleme Database is a collection of knowledge bases pertaining to various different topics. There is no specific link between all those databases, other than <a class="gras" href="{$chemin}pages/user/user?pseudo=Bad">Bad</a> being a compulsive collector of useless knowledge and deciding to share it online rather than pointlessly keeping it all to himself.
+The NoBleme Database is a collection of knowledge bases pertaining to various different topics. There is no specific link between all those databases, other than <a class="gras" href="{$chemin}pages/users/user?pseudo=Bad">Bad</a> being a compulsive collector of useless knowledge and deciding to share it online rather than pointlessly keeping it all to himself.
 EOD;
   $trad['desc_web']   = <<<EOD
 The star content of the NoBleme Database, and what you're probably looking for if you came to this page with a purpose in mind, is the <a class="gras" href="{$chemin}pages/nbdb/web">encyclopedia of internet culture</a>, a historical archive documenting the very peculiar culture of the internet, from the underground bulletin board era to today's mainstream memetic culture.

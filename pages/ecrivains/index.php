@@ -180,7 +180,7 @@ if(!getxhr()) { /***************************************************************
                 <?php if($texte_anonyme[$i]) { ?>
                 Anonyme
                 <?php } else { ?>
-                <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$texte_idauteur[$i]?>">
+                <a class="gras" href="<?=$chemin?>pages/users/user?id=<?=$texte_idauteur[$i]?>">
                   <?=$texte_auteur[$i]?>
                 </a>
                 <?php } ?>

@@ -10,17 +10,17 @@ useronly($lang);
 
 // Menus du header
 $header_menu      = 'Compte';
-$header_sidemenu  = 'ChangerPseudo';
+$header_sidemenu  = 'SupprimerCompte';
 
 // Identification
-$page_nom = "Veut changer d'identité";
-$page_url = "pages/user/pseudo";
+$page_nom = "En a fini avec NoBleme";
+$page_url = "pages/users/delete";
 
 // Langues disponibles
 $langue_page = array('FR','EN');
 
 // Titre et description
-$page_titre = ($lang == 'FR') ? "Changer de pseudonyme" : "Change my nickname";
+$page_titre = ($lang == 'FR') ? "Supprimer mon compte" : "Delete my account";
 
 
 
@@ -33,11 +33,11 @@ $page_titre = ($lang == 'FR') ? "Changer de pseudonyme" : "Change my nickname";
 
 if($lang == 'FR')
 {
-  $trad['titre']      = "Changer de pseudonyme";
+  $trad['titre']      = "Supprimer mon compte";
   $trad['desc']       = <<<EOD
-Désolé, il n'est pas possible de changer son pseudonyme à volonté sur NoBleme. Permettre aux utilisateurs de changer de pseudonyme lorsqu'ils en ont envie causerait du chaos, permettrait des formes d'abus, rendrait certaines archives compliquées à lire, et ne servirait pas les intérêts de la communauté.<br>
+Désolé, il n'est pas possible de supprimer son compte à la demande sur NoBleme. Préserver l'intégrité des archives du site est pour nous quelque chose de très important, et permettre aux membres de supprimer des sections entières du passé est quelque chose qui nuirait à l'intégrité de ces archives.<br>
 <br>
-Toutefois, si vous avez une raison valide de vouloir changer votre pseudonyme (par exemple parce que vous êtes cible de harcèlement sur internet lié à votre identité et désirez en changer), vous pouvez <a class="gras" href="{$chemin}pages/user/pm?user=1">envoyer un message privé à Bad</a>. Si votre justification est considérée acceptable, votre pseudonyme sera changé.
+Toutefois, si vous avez une raison valide de vouloir supprimer votre compte (par exemple parce que vous êtes cible de harcèlement sur internet lié à votre identité), vous pouvez <a class="gras" href="{$chemin}pages/users/pm?user=1">envoyer un message privé à Bad</a>. Si votre justification est considérée acceptable, votre compte sera supprimé.
 EOD;
 }
 
@@ -46,11 +46,11 @@ EOD;
 
 else if($lang == 'EN')
 {
-  $trad['titre']      = "Change my nickname";
+  $trad['titre']      = "Delete my account";
   $trad['desc']       = <<<EOD
-Sorry, it isn't possible to change your nickname at will on NoBleme. Allowing users to change nicknames whenever they desire would cause chaos, would allow some forms of abuse, would make some archives complicated to read, and wouldn't serve the interests of the community.<br>
+Sorry, it isn't possible to delete your account at will on NoBleme. It is important to us that the website's archives remain intact. Deleting whole parts of its history would cause incoherences in the archives, which is something we want to avoid if possible.<br>
 <br>
-However, if you want to change your nickname for a valid reason (such as being a target of harrassment linked to your online identity) <a class="gras" href="{$chemin}pages/user/pm?user=1">send a private message to Bad</a>. If your justification for wanting to change is considered good enough, your nickname will be changed.
+However, if you want to delete your account for a valid reason (such as being a target of harrassment linked to your online identity) <a class="gras" href="{$chemin}pages/users/pm?user=1">send a private message to Bad</a> explinaing why you want your account gone. If your justification is considered good enough, your account will be deleted.
 EOD;
 }
 

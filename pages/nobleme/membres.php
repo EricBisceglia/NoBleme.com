@@ -200,17 +200,17 @@ if(!getxhr()) { /***************************************************************
             <?php } for($i=0;$i<$nmembres;$i++) { ?>
             <tr>
               <td<?=$m_css[$i]?>>
-                <a class="<?=$m_csshref[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$m_id[$i]?>">
+                <a class="<?=$m_csshref[$i]?>" href="<?=$chemin?>pages/users/user?id=<?=$m_id[$i]?>">
                   <?=$m_pseudo[$i]?>
                 </a>
               </td>
               <td<?=$m_css[$i]?>>
-                <a class="<?=$m_csshref[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$m_id[$i]?>">
+                <a class="<?=$m_csshref[$i]?>" href="<?=$chemin?>pages/users/user?id=<?=$m_id[$i]?>">
                   <?=$m_inscrit[$i]?>
                 </a>
               </td>
               <td<?=$m_css[$i]?>>
-                <a class="<?=$m_csshref[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$m_id[$i]?>">
+                <a class="<?=$m_csshref[$i]?>" href="<?=$chemin?>pages/users/user?id=<?=$m_id[$i]?>">
                   <?=$m_visite[$i]?>
                 </a>
               </td>

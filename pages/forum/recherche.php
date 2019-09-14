@@ -404,7 +404,7 @@ EOD;
               </td>
               <td>
                 <?php if($sujet_idauteur[$i]) { ?>
-                <a class="gras" href="<?=$chemin?>pages/user/user?id=<?=$sujet_idauteur[$i]?>"><?=$sujet_auteur[$i]?></a>
+                <a class="gras" href="<?=$chemin?>pages/users/user?id=<?=$sujet_idauteur[$i]?>"><?=$sujet_auteur[$i]?></a>
                 <?php } else { ?>
                 <?=$sujet_auteur[$i]?>
                 <?php } ?>

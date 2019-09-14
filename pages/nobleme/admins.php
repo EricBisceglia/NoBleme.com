@@ -176,19 +176,19 @@ EOD;
           </thead>
           <tbody class="align_center">
             <?php for($i=0;$i<$nadmins;$i++) { ?>
-            <tr class="pointeur <?=$admins_css[$i]?>" onclick="window.location.href = '<?=$chemin?>pages/user/user?id=<?=$admins_id[$i]?>'";>
+            <tr class="pointeur <?=$admins_css[$i]?>" onclick="window.location.href = '<?=$chemin?>pages/users/user?id=<?=$admins_id[$i]?>'";>
               <td>
-                <a class="<?=$admins_css2[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$admins_id[$i]?>">
+                <a class="<?=$admins_css2[$i]?>" href="<?=$chemin?>pages/users/user?id=<?=$admins_id[$i]?>">
                   <?=$admins_pseudo[$i]?>
                 </a>
               </td>
               <td>
-                <a class="<?=$admins_css2[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$admins_id[$i]?>">
+                <a class="<?=$admins_css2[$i]?>" href="<?=$chemin?>pages/users/user?id=<?=$admins_id[$i]?>">
                   <?=$admins_role[$i]?>
                 </a>
               </td>
               <td>
-                <a class="<?=$admins_css2[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$admins_id[$i]?>">
+                <a class="<?=$admins_css2[$i]?>" href="<?=$chemin?>pages/users/user?id=<?=$admins_id[$i]?>">
                   <?=$admins_zones[$i]?>
                 </a>
               </td>

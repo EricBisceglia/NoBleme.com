@@ -66,7 +66,7 @@ if($dmessage['m_a'] != $_SESSION['user'] && $dmessage['m_de_id'] != $_SESSION['u
 // Tout est bon, on peut préparer les données pour l'affichage
 $message_titre    = predata($dmessage['m_titre']);
 $temp_de_id       = (!isset($_POST['envoye'])) ? $dmessage['m_de_id'] : $dmessage['m_a'];
-$message_de       = ($dmessage['m_de']) ? '<a class="gras" href="'.$chemin_xhr.'pages/user/user?id='.$temp_de_id.'">'.predata($dmessage['m_de']).'</a>' : "le système";
+$message_de       = ($dmessage['m_de']) ? '<a class="gras" href="'.$chemin_xhr.'pages/users/user?id='.$temp_de_id.'">'.predata($dmessage['m_de']).'</a>' : "le système";
 $message_de       = (!$dmessage['m_de'] && $lang == 'EN') ? "the system" : $message_de;
 $message_date     = datefr(date('Y-m-d', $dmessage['m_date']), $lang);
 $message_heure    = date('H:i', $dmessage['m_date']);

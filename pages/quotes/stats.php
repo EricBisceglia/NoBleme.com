@@ -386,7 +386,7 @@ if(!getxhr()) { /***************************************************************
                 <?php for($i=0;$i<$nreguliers;$i++) { ?>
                 <tr>
                   <td class="gras">
-                    <a href="<?=$chemin?>pages/user/user?id=<?=$reguliers_id[$i]?>"><?=$reguliers_pseudo[$i]?></a>
+                    <a href="<?=$chemin?>pages/users/user?id=<?=$reguliers_id[$i]?>"><?=$reguliers_pseudo[$i]?></a>
                   </td>
                   <td>
                     <span class="gras"><?=$reguliers_nombre[$i]?></span> (<?=$reguliers_pourcent[$i]?>%)
@@ -427,7 +427,7 @@ if(!getxhr()) { /***************************************************************
                 <?php for($i=0;$i<$nmiscliste;$i++) { ?>
                 <tr>
                   <td class="gras">
-                    <a href="<?=$chemin?>pages/user/user?id=<?=$miscliste_id[$i]?>"><?=$miscliste_pseudo[$i]?></a>
+                    <a href="<?=$chemin?>pages/users/user?id=<?=$miscliste_id[$i]?>"><?=$miscliste_pseudo[$i]?></a>
                   </td>
                   <td<?=$miscliste_css[$i]?>>
                     <?=$miscliste_nombre[$i]?>
@@ -497,7 +497,7 @@ if(!getxhr()) { /***************************************************************
                   <?php for($i=0;$i<$nmisccontrib;$i++) { ?>
                   <tr>
                     <td class="gras">
-                      <a href="<?=$chemin?>pages/user/user?id=<?=$misccontrib_id[$i]?>"><?=$misccontrib_pseudo[$i]?></a>
+                      <a href="<?=$chemin?>pages/users/user?id=<?=$misccontrib_id[$i]?>"><?=$misccontrib_pseudo[$i]?></a>
                     </td>
                     <td>
                       <?=$misccontrib_nombre[$i]?>

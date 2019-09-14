@@ -35,7 +35,7 @@ if($lang == 'FR')
   $trad['titre']      = "Projet : Radikal";
   $trad['soustitre']  = "Le prochain jeu NoBlemeux, disponible Bientôt™";
   $trad['desc']       = <<<EOD
-En gestation depuis 2010, le Projet : Radikal est le prochain jeu NoBlemeux en développement. Comme tous les projets de <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a>, plusieurs itérations du jeu ont déjà été complétées, mais aucune n'était assez satisfaisante et tout recommence à zéro. Lorsque le bon équilibre entre intéressant, divertissant, et complexe aura été trouvé, le Projet : Radikal pourra ouvrir ses portes sur NoBleme. Patience !
+En gestation depuis 2010, le Projet : Radikal est le prochain jeu NoBlemeux en développement. Comme tous les projets de <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a>, plusieurs itérations du jeu ont déjà été complétées, mais aucune n'était assez satisfaisante et tout recommence à zéro. Lorsque le bon équilibre entre intéressant, divertissant, et complexe aura été trouvé, le Projet : Radikal pourra ouvrir ses portes sur NoBleme. Patience !
 EOD;
 }
 
@@ -48,7 +48,7 @@ else if($lang == 'EN')
   $trad['titre']      = "Project: Radikal";
   $trad['soustitre']  = "NoBleme's next game, coming Soon™";
   $trad['desc']       = <<<EOD
-Constantly gestating as an idea since 2010, Project: Radikal is NoBleme's next upcoming game. As with every one of <a class="gras" href="{$chemin}pages/user/user?id=1">Bad</a>'s projects, many iterations of the game have already been completed, but none felt good enough to release. Once the right balance between interesting, entertaining, and challenging will have been found, then Project: Radikal shall open its doors on NoBleme. Patience!
+Constantly gestating as an idea since 2010, Project: Radikal is NoBleme's next upcoming game. As with every one of <a class="gras" href="{$chemin}pages/users/user?id=1">Bad</a>'s projects, many iterations of the game have already been completed, but none felt good enough to release. Once the right balance between interesting, entertaining, and challenging will have been found, then Project: Radikal shall open its doors on NoBleme. Patience!
 EOD;
 }
 

@@ -119,7 +119,7 @@ if(isset($_GET['id']))
 
         <?php } else if(isset($_GET['id']) && $pass_pseudo) { ?>
 
-        <h5>Changer le mot de passe de <a href="<?=$chemin?>pages/user/user?id=<?=$pass_id?>"><?=$pass_pseudo?></a></h5>
+        <h5>Changer le mot de passe de <a href="<?=$chemin?>pages/users/user?id=<?=$pass_id?>"><?=$pass_pseudo?></a></h5>
         <br>
 
         <form method="POST">

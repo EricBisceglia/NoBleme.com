@@ -89,7 +89,7 @@ for($ndoppel = 0; $ddoppel = mysqli_fetch_array($qdoppel); $ndoppel++)
             <?php } ?>
             <tr>
               <td>
-                <a href="<?=$chemin?>pages/user/user?id=<?=$doppel_id[$i]?>"><?=$doppel_pseudo[$i]?></a>
+                <a href="<?=$chemin?>pages/users/user?id=<?=$doppel_id[$i]?>"><?=$doppel_pseudo[$i]?></a>
               </td>
               <td>
                 <?=$doppel_ip[$i]?>

@@ -143,7 +143,7 @@ for($nconcours = 0; $dconcours = mysqli_fetch_array($qconcours); $nconcours++)
               </td>
               <td class="<?=$concours_css[$i]?>">
                 <?php if($concours_fini[$i] && $concours_gagnant_id[$i]) { ?>
-                <a href="<?=$chemin?>pages/user/user?id=<?=$concours_gagnant_id[$i]?>">
+                <a href="<?=$chemin?>pages/users/user?id=<?=$concours_gagnant_id[$i]?>">
                 <?=$concours_gagnant[$i]?>
                 </a>
                 <?php } else if($concours_fini[$i] && !$concours_gagnant_id[$i]) { ?>

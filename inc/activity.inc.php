@@ -90,7 +90,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   else if($type === 'user_register')
   {
     $return['css']  = 'texte_blanc nobleme_clair';
-    $return['href'] = $path.'pages/user/user?id='.$userid;
+    $return['href'] = $path.'pages/users/user?id='.$userid;
     $return['EN']   = sanitize_output($nickname)." registered on NoBleme!";
     $return['FR']   = sanitize_output($nickname)." s'est inscrit(e) sur NoBleme !";
   }
@@ -100,7 +100,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   else if($type === 'user_profile_edit')
   {
-    $return['href'] = $path.'pages/user/user?id='.$userid;
+    $return['href'] = $path.'pages/users/user?id='.$userid;
     $return['EN']   = sanitize_output($nickname).' edited his public profile';
     $return['FR']   = sanitize_output($nickname).' a modifié son profil public';
   }
@@ -111,7 +111,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   else if($type === 'user_admin_edit_profile')
   {
     $return['css']  = 'neutre texte_blanc';
-    $return['href'] = $path.'pages/user/user?id='.$userid;
+    $return['href'] = $path.'pages/users/user?id='.$userid;
     $return['EN']   = sanitize_output($parent).' edited '.sanitize_output($nickname)."'s public profile";
     $return['FR']   = sanitize_output($parent).' a modifié le profil public de '.sanitize_output($nickname);
   }
@@ -122,7 +122,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   else if($type === 'user_admin_edit_password')
   {
     $return['css']  = 'neutre texte_blanc';
-    $return['href'] = $path.'pages/user/user?id='.$userid;
+    $return['href'] = $path.'pages/users/user?id='.$userid;
     $return['EN']   = sanitize_output($parent).' changed '.sanitize_output($nickname)."'s password";
     $return['FR']   = sanitize_output($parent).' a modifié le mot de passe de '.sanitize_output($nickname);
   }
@@ -133,7 +133,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   else if($type === 'user_banned' && !$admins_only)
   {
     $return['css']  = 'negatif texte_blanc gras';
-    $return['href'] = $path.'pages/user/user?id='.$userid;
+    $return['href'] = $path.'pages/users/user?id='.$userid;
     $temp           = ($id > 1) ? 's' : '';
     $return['EN']   = sanitize_output($nickname).' has been banned for '.$id.' day'.$temp;
     $return['FR']   = sanitize_output($nickname).' a été banni(e) pendant '.$id.' jour'.$temp;
@@ -153,7 +153,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   else if($type === 'user_unbanned' && !$admins_only)
   {
     $return['css']  = 'positif texte_blanc gras';
-    $return['href'] = $path.'pages/user/user?id='.$userid;
+    $return['href'] = $path.'pages/users/user?id='.$userid;
     $return['EN']   = sanitize_output($nickname).' has been unbanned';
     $return['FR']   = sanitize_output($nickname).' a été débanni(e)';
   }

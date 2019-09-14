@@ -288,7 +288,7 @@ EOD;
               <?php for($i=0;$i<$nhabitues;$i++) { ?>
               <tr>
                 <td class="gras">
-                  <a href="<?=$chemin?>pages/user/user?id=<?=$habitues_id[$i]?>"><?=$habitues_pseudo[$i]?></a>
+                  <a href="<?=$chemin?>pages/users/user?id=<?=$habitues_id[$i]?>"><?=$habitues_pseudo[$i]?></a>
                 </td>
                 <td>
                   <span class="gras"><?=$habitues_nombre[$i]?></span> (<?=$habitues_pourcent[$i]?>%)
@@ -329,7 +329,7 @@ EOD;
               <?php for($i=0;$i<$nirliste;$i++) { ?>
               <tr>
                 <td class="gras">
-                  <a href="<?=$chemin?>pages/user/user?id=<?=$irliste_id[$i]?>"><?=$irliste_pseudo[$i]?></a>
+                  <a href="<?=$chemin?>pages/users/user?id=<?=$irliste_id[$i]?>"><?=$irliste_pseudo[$i]?></a>
                 </td>
                 <td<?=$irliste_css[$i]?>>
                   <?=$irliste_nombre[$i]?>

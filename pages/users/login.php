@@ -1,32 +1,37 @@
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                             INITIALISATION                                                            */
-/*                                                                                                                                       */
-// Inclusions /***************************************************************************************************************************/
-include './../../inc/includes.inc.php'; // Inclusions communes
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       SETUP                                                       */
+/*                                                                                                                   */
+// File inclusions /**************************************************************************************************/
+include_once './../../inc/includes.inc.php'; // Common inclusions
 
-// Permissions
-guestonly($lang);
+// Limit page access rights
+user_restrict_to_guests();
 
-// Identification
-$page_nom = "Se connecte à son compte";
-$page_url = "pages/user/login";
+// Translations and available languages
+include_once './../../lang/users.lang.php';
+$page_lang = array('FR', 'EN');
 
-// Langues disponibles
-$langue_page = array('FR','EN');
+// Menus
+$header_menu      = 'NoBleme';
+$header_sidemenu  = 'Homepage';
 
-// Titre et description
-$page_titre = ($lang == 'FR') ? "Connexion" : "Login";
-$page_desc  = "Se connecter à son compte NoBleme pour profiter de tous les services du site";
+// User activity
+$page_name  = "users_login";
+$page_url   = "pages/users/login";
+
+// Title and description
+$page_title       = __('users_login_page_title');
+$page_description = __('users_login_page_description');
 
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                        TRAITEMENT DU POST-DATA                                                        */
-/*                                                                                                                                       */
-/*****************************************************************************************************************************************/
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     BACK END                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
 // Gestion de la connexion
 if(isset($_POST['login_pseudo']))
@@ -84,7 +89,7 @@ if(isset($_POST['login_pseudo']))
               query(" UPDATE membres SET pass = '$passtest' WHERE id = '$login_id' ");
           }
           else
-            $erreur = ($lang == 'FR') ? "Trop d'essais de connexion dans la dernière minute<br><a href=\"".$chemin."pages/user/login?oublie\" class=\"dark\">Mot de passe oublié ?</a>" : "Too many login attempts in the past minute<br><a href=\"".$chemin."pages/user/login?oublie\" class=\"dark\">Forgot your password?</a>";
+            $erreur = ($lang == 'FR') ? "Trop d'essais de connexion dans la dernière minute<br><a href=\"".$chemin."pages/users/login?oublie\" class=\"dark\">Mot de passe oublié ?</a>" : "Too many login attempts in the past minute<br><a href=\"".$chemin."pages/users/login?oublie\" class=\"dark\">Forgot your password?</a>";
         }
 
         // Si le pass est pas bon, dehors. Et tant qu'on y est, on log l'essai en cas de bruteforce
@@ -92,7 +97,7 @@ if(isset($_POST['login_pseudo']))
         {
           $timestamp  = time();
           query(" INSERT INTO membres_essais_login SET FKmembres = '$login_id' , timestamp = '$timestamp' , ip = '$brute_ip' ");
-          $erreur     = ($lang == 'FR') ? "Mot de passe incorrect<br><a href=\"".$chemin."pages/user/login?oublie\" class=\"dark\">Mot de passe oublié ?</a>" : "Incorrect password<br><a href=\"".$chemin."pages/user/login?oublie\" class=\"dark\">Forgot your password?</a>";
+          $erreur     = ($lang == 'FR') ? "Mot de passe incorrect<br><a href=\"".$chemin."pages/users/login?oublie\" class=\"dark\">Mot de passe oublié ?</a>" : "Incorrect password<br><a href=\"".$chemin."pages/users/login?oublie\" class=\"dark\">Forgot your password?</a>";
         }
         else if ($checkbruteforce['num_brute'] < 5)
         {
@@ -108,7 +113,7 @@ if(isset($_POST['login_pseudo']))
             $_SESSION['user'] = $login_id;
 
           // Puis on redirige vers l'inbox
-          header("location: ".$chemin."pages/user/notifications");
+          header("location: ".$chemin."pages/users/notifications");
         }
       }
     }
@@ -206,11 +211,11 @@ EOD;
 
 
 
-/*****************************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                         AFFICHAGE DES DONNÉES                                                         */
-/*                                                                                                                                       */
-/************************************************************************************************/ include './../../inc/header.inc.php'; ?>
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FRONT END                                                     */
+/*                                                                                                                   */
+/****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
 
       <div class="texte">
@@ -254,7 +259,7 @@ EOD;
         <br>
 
         <p class="align_center gras moinsgros">
-          <a href="<?=$chemin?>pages/user/register"><?=$trad['register']?></a>
+          <a href="<?=$chemin?>pages/users/register"><?=$trad['register']?></a>
         </p>
 
         <br>
@@ -292,7 +297,7 @@ EOD;
             </div>
             <input value="<?=$trad['titre']?>" type="submit">
             &nbsp;&nbsp;
-            <button type="button" class="button-outline" onclick="location.href='<?=$chemin?>pages/user/register'"><?=$trad['reg_inscr']?></button>
+            <button type="button" class="button-outline" onclick="location.href='<?=$chemin?>pages/users/register'"><?=$trad['reg_inscr']?></button>
 
           </fieldset>
         </form>
@@ -302,8 +307,8 @@ EOD;
       <br>
       <br>
 
-<?php /***********************************************************************************************************************************/
-/*                                                                                                                                       */
-/*                                                              FIN DU HTML                                                              */
-/*                                                                                                                                       */
-/***************************************************************************************************/ include './../../inc/footer.inc.php';
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    END OF PAGE                                                    */
+/*                                                                                                                   */
+/*******************************************************************************/ include './../../inc/footer.inc.php';

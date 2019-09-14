@@ -10,17 +10,17 @@ useronly($lang);
 
 // Menus du header
 $header_menu      = 'Compte';
-$header_sidemenu  = 'ChangerPass';
+$header_sidemenu  = 'ChangerEmail';
 
 // Identification
-$page_nom = "Protège son compte";
-$page_url = "pages/user/pass";
+$page_nom = "En a marre de son adresse e-mail";
+$page_url = "pages/users/email";
 
 // Langues disponibles
 $langue_page = array('FR','EN');
 
 // Titre et description
-$page_titre = ($lang == 'FR') ? "Changer de mot de passe" : "Change my password";
+$page_titre = ($lang == 'FR') ? "Changer d'e-mail" : "Change my e-mail";
 
 
 
@@ -32,45 +32,36 @@ $page_titre = ($lang == 'FR') ? "Changer de mot de passe" : "Change my password"
 /*****************************************************************************************************************************************/
 
 // On chope l'userid, si y'en a pas on arrête tout
-$user_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateur invalide', $chemin, $lang, 'Compte', 'ChangerPass');
+$user_id = (isset($_SESSION['user'])) ? $_SESSION['user'] : erreur('Utilisateur invalide', $chemin, $lang, 'Compte', 'ChangerEmail');
 
-// Modifier le mot de passe
-if(isset($_POST['passModifier']))
+// Modifier l'adresse e-mail
+if(isset($_POST['emailModifier']))
 {
-  // On commence par nettoyer le postdata
-  $pass_actuel    = postdata_vide('passActuel', 'string', '');
-  $pass_nouveau   = postdata_vide('passNouveau', 'string', '');
-  $pass_confirmer = postdata_vide('passConfirmer', 'string', '');
-
-  // Si une des entrées est vide, on envoie une erreur
-  if(!$pass_actuel || !$pass_nouveau || !$pass_confirmer)
-    $erreur = ($lang == 'FR') ? 'Tous les champs doivent être remplis' : 'You must fill all of the fields below';
-
-  // Si le mot de passe actuel est faux, on envoie une erreur
-  $cypher_actuel  = salage($pass_actuel);
-  $qpasscheck     = mysqli_fetch_array(query("  SELECT  membres.pass
-                                                FROM    membres
-                                                WHERE   membres.id = '$user_id' "));
-  if(!isset($erreur) && $cypher_actuel != $qpasscheck['pass'])
-    $erreur = ($lang == 'FR') ? 'Mot de passe actuel incorrect' : 'Incorrect current password';
-
-  // Si les nouveaux pass ne sont pas identiques, on envoie une erreur
-  if(!isset($erreur) && $pass_nouveau != $pass_confirmer)
-    $erreur = ($lang == 'FR') ? 'Les nouveaux mots de passe sont différents' : 'You entered two different new passwords';
-
-  // Si les nouveaux pass ne sont pas assez longs, on envoie une erreur
-  if(!isset($erreur) && mb_strlen($pass_nouveau) < 6)
-    $erreur = ($lang == 'FR') ? 'Nouveau mot de passe trop court' : 'Your new password is too short';
-
-  // Maintenant on peut changer le mot de passe
-  if(!isset($erreur))
-  {
-    $nouveau_pass = salage($pass_nouveau);
-    query(" UPDATE  membres
-            SET     membres.pass  = '$nouveau_pass'
-            WHERE   membres.id    = '$user_id' ");
-  }
+  $email = postdata_vide('emailCompte', 'string', '');
+  query(" UPDATE  membres
+          SET     membres.email = '$email'
+          WHERE   membres.id    = '$user_id' ");
+  $email_css = ' texte_positif gras';
 }
+else
+  $email_css = '';
+
+
+
+
+/*****************************************************************************************************************************************/
+/*                                                                                                                                       */
+/*                                                        PRÉPARATION DES DONNÉES                                                        */
+/*                                                                                                                                       */
+/*****************************************************************************************************************************************/
+
+// On va chercher l'e-mail actuel
+$qemail = mysqli_fetch_array(query("  SELECT  membres.email
+                                      FROM    membres
+                                      WHERE   membres.id = '$user_id' "));
+
+// Et on le prépare pour l'affichage
+$email = predata($qemail['email']);
 
 
 
@@ -84,14 +75,12 @@ if(isset($_POST['passModifier']))
 if($lang == 'FR')
 {
   // Header
-  $trad['titre']          = "Changer mon mot de passe";
-  $trad['pass_change']    = "Votre mot de passe a bien été changé";
+  $trad['titre']        = "Changer d'adresse e-mail";
+  $trad['desc']         = "Votre compte est lié à une adresse e-mail, dont NoBleme ne devrait normalement presque jamais se servir. Vous êtes même libre de supprimer l'adresse stockée et de n'avoir aucune adresse mail liée à votre compte, si vous le désirez. Toutefois, en cas de perte de votre mot de passe, posséder votre e-mail pourrait être un outil pratique pour récupérer l'accès à votre compte. À vous de voir !";
 
   // Formulaire
-  $trad['form_actuel']    = "Entrez votre mot de passe actuel";
-  $trad['form_nouveau']   = "Entrez votre nouveau mot de passe (6 caractères minimum)";
-  $trad['form_confirmer'] = "Entrez une seconde fois votre nouveau mot de passe";
-  $trad['form_submit']    = "CHANGER MON MOT DE PASSE";
+  $trad['form_titre']   = "Adresse e-mail liée à votre compte";
+  $trad['form_submit']  = "CHANGER MON ADRESSE E-MAIL";
 }
 
 
@@ -100,14 +89,12 @@ if($lang == 'FR')
 else if($lang == 'EN')
 {
   // Header
-  $trad['titre']          = "Change my password";
-  $trad['pass_change']    = "Your password has successfully been changed";
+  $trad['titre']        = "Change my e-mail address";
+  $trad['desc']         = "Your account is linked to an e-mail address, which NoBleme will barely ever make use of. You are even free to delete the address and not have any e-mail linked to your account if you want to. However, if you ever lose your password, having a valid e-mail address could be a helpful tool to recover your account. You decide!";
 
   // Formulaire
-  $trad['form_actuel']    = "Enter your current password";
-  $trad['form_nouveau']   = "Enter your new password (6 characters minimum)";
-  $trad['form_confirmer'] = "Enter your new password once again";
-  $trad['form_submit']    = "CHANGE MY PASSWORD";
+  $trad['form_titre']   = "E-mail address tied to your account";
+  $trad['form_submit']  = "CHANGE MY E-MAIL ADDRESS";
 }
 
 
@@ -121,35 +108,19 @@ else if($lang == 'EN')
 
       <div class="texte">
 
-        <h2><?=$trad['titre']?></h2>
+        <h1><?=$trad['titre']?></h1>
+
+        <p><?=$trad['desc']?></p>
 
         <br>
         <br>
-
-        <?php if(isset($erreur)) { ?>
-        <h4 class="negatif texte_blanc align_center"><?=$erreur?></h4>
-        <br>
-        <br>
-        <?php } else if(isset($nouveau_pass)) { ?>
-        <h4 class="positif texte_blanc align_center"><?=$trad['pass_change']?></h4>
-        <br>
-        <br>
-        <?php } ?>
 
         <form method="POST">
           <fieldset>
-            <label for="passActuel"><?=$trad['form_actuel']?></label>
-            <input id="passActuel" name="passActuel" class="indiv" type="password"><br>
+            <label for="emailCompte"><?=$trad['form_titre']?></label>
+            <input id="emailCompte" name="emailCompte" class="indiv<?=$email_css?>" type="text" value="<?=$email?>"><br>
             <br>
-            <br>
-            <label for="passNouveau"><?=$trad['form_nouveau']?></label>
-            <input id="passNouveau" name="passNouveau" class="indiv" type="password"><br>
-            <br>
-            <label for="passConfirmer"><?=$trad['form_confirmer']?></label>
-            <input id="passConfirmer" name="passConfirmer" class="indiv" type="password"><br>
-            <br>
-            <br>
-            <input value="<?=$trad['form_submit']?>" type="submit" name="passModifier">
+            <input value="<?=$trad['form_submit']?>" type="submit" name="emailModifier">
           </fieldset>
         </form>
 

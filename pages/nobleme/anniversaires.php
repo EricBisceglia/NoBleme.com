@@ -199,7 +199,7 @@ if($lang == 'FR')
   $trad['description']  = <<<EOD
 <p>
   Cette page contient deux tableaux permettant de voir deux types d'anniversaires à venir :<br>
-  Le premier liste les <span class="gras">anniversaires réels</span> (vous pouvez remplir le votre dans les <a href="{$chemin}pages/user/public">réglages de votre compte</a>).<br>
+  Le premier liste les <span class="gras">anniversaires réels</span> (vous pouvez remplir le votre dans les <a href="{$chemin}pages/users/public">réglages de votre compte</a>).<br>
   Le second liste les <span class="gras">anniversaires NoBlemeux</span>, basés sur la date de création des comptes.
 </p>
 <p>
@@ -228,7 +228,7 @@ else if($lang == 'EN')
   $trad['description']  = <<<EOD
 <p>
   Below are two tables which contain two different types of upcoming birthdays:<br>
-  The first one lists <span class="gras">real life birthdays</span> (you can set yours in your <a href="{$chemin}pages/user/public">account settings</a>).<br>
+  The first one lists <span class="gras">real life birthdays</span> (you can set yours in your <a href="{$chemin}pages/users/public">account settings</a>).<br>
   The second one lists <span class="gras">NoBleme anniversaries</span>, based on the registration date of accounts.
 </p>
 <p>
@@ -297,7 +297,7 @@ EOD;
                 <?php for($i=0;$i<$nannivirl;$i++) { ?>
                 <tr>
                   <td class="cadre_gris cadre_gris_haut align_center<?=$annivirl_css[$i]?>">
-                    <a class="<?=$annivirl_linkcss[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$annivirl_id[$i]?>"><?=$annivirl_pseudo[$i]?></a>
+                    <a class="<?=$annivirl_linkcss[$i]?>" href="<?=$chemin?>pages/users/user?id=<?=$annivirl_id[$i]?>"><?=$annivirl_pseudo[$i]?></a>
                   </td>
                  <td class="cadre_gris cadre_gris_haut align_center<?=$annivirl_css[$i]?>">
                    <?=$annivirl_date[$i]?>
@@ -336,7 +336,7 @@ EOD;
                 <?php for($i=0;$i<$nannivnb;$i++) { ?>
                 <tr>
                   <td class="cadre_gris cadre_gris_haut align_center<?=$anb_css[$i]?>">
-                    <a class="<?=$anb_linkcss[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$anb_id[$i]?>"><?=$anb_user[$i]?></a>
+                    <a class="<?=$anb_linkcss[$i]?>" href="<?=$chemin?>pages/users/user?id=<?=$anb_id[$i]?>"><?=$anb_user[$i]?></a>
                   </td>
                   <td class="cadre_gris cadre_gris_haut align_center<?=$anb_css[$i]?>">
                     <?=$anb_inscr[$i]?>

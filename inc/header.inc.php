@@ -47,9 +47,9 @@ $header_sidemenu  = (!isset($header_sidemenu)) ? 'Homepage' : $header_sidemenu;
 $lang_error = (isset($page_lang) && !in_array($lang, $page_lang)) ? 1 : 0;
 
 // If page names and URLs for user activity are not set, give them a default value
-$activity_page_en = (isset($page_name_en))  ? $page_name_en   : 'Unlisted page';
-$activity_page_fr = (isset($page_name_fr))  ? $page_name_fr   : 'Page non listée';
-$activity_url     = (isset($page_url))      ? $page_url       : '';
+$activity_url     = (isset($page_url)) ? $page_url : '';
+$activity_page_en = (isset($page_name) && isset($page_names[$page_name.'_en'])) ? $page_names[$page_name.'_en'] : 'Unlisted page';
+$activity_page_fr = (isset($page_name) && isset($page_names[$page_name.'_fr']))  ? $page_names[$page_name.'_fr']   : 'Page non listée';
 
 
 
@@ -91,7 +91,7 @@ $url_lang   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF'])
 if(isset($_GET['logout']))
 {
   // Log the user out
-  logout();
+  user_log_out();
 
   // Redirect to the page without the 'logout' query param
   unset($_GET['logout']);
@@ -440,7 +440,7 @@ $javascripts .= '
             if($nb_private_messages) { ?>
 
       <div class="header_topmenu_zone">
-        <a id="header_infobar_notification" class="header_infobar_link header_infobar_notification" href="<?=$path?>pages/user/notifications">
+        <a id="header_infobar_notification" class="header_infobar_link header_infobar_notification" href="<?=$path?>pages/users/notifications">
           <?=__('header_status_message', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
         </a>
       </div>
@@ -448,7 +448,7 @@ $javascripts .= '
       <?php } else { ?>
 
       <div class="header_topmenu_zone">
-        <a id="header_infobar_notification"  class="header_infobar_link" href="<?=$path?>pages/user/notifications">
+        <a id="header_infobar_notification"  class="header_infobar_link" href="<?=$path?>pages/users/notifications">
           <?=__('header_status_logged_in', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
         </a>
       </div>
@@ -464,7 +464,7 @@ $javascripts .= '
       <?php } else { ?>
 
       <div class="header_topmenu_zone">
-        <a class="header_infobar_link" href="<?=$path?>pages/user/login">
+        <a class="header_infobar_link" href="<?=$path?>pages/users/login">
           <?=__('header_status_login')?>
         </a>
       </div>
@@ -479,7 +479,7 @@ $javascripts .= '
             if($nb_private_messages) { ?>
 
       <div class="header_topmenu_zone">
-        <a id="header_infobar_notification" class="header_infobar_link header_infobar_notification" href="<?=$path?>pages/user/notifications">
+        <a id="header_infobar_notification" class="header_infobar_link header_infobar_notification" href="<?=$path?>pages/users/notifications">
           <?=__('header_status_message_short', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
         </a>
       </div>
@@ -487,7 +487,7 @@ $javascripts .= '
       <?php } else { ?>
 
       <div class="header_topmenu_zone">
-        <a id="header_infobar_notification"  class="header_infobar_link" href="<?=$path?>pages/user/notifications">
+        <a id="header_infobar_notification"  class="header_infobar_link" href="<?=$path?>pages/users/notifications">
           <?=__('header_status_logged_in_short', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
         </a>
       </div>
@@ -503,7 +503,7 @@ $javascripts .= '
       <?php } else { ?>
 
       <div class="header_topmenu_zone">
-        <a class="header_infobar_link" href="<?=$path?>pages/user/login">
+        <a class="header_infobar_link" href="<?=$path?>pages/users/login">
           <?=__('header_status_login_short')?>
         </a>
       </div>
@@ -896,19 +896,19 @@ $javascripts .= '
               <?=__('menu_side_user_pms')?>
             </div>
 
-            <a href="<?=$path?>pages/user/notifications">
+            <a href="<?=$path?>pages/users/notifications">
               <div class="<?=header_menu_css('PMinbox',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_pms_inbox')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/user/notifications?envoyes">
+            <a href="<?=$path?>pages/users/notifications?envoyes">
               <div class="<?=header_menu_css('PMoutbox',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_pms_outbox')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/user/pm">
+            <a href="<?=$path?>pages/users/pm">
               <div class="<?=header_menu_css('PMwrite',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_pms_write')?>
               </div>
@@ -920,13 +920,13 @@ $javascripts .= '
               <?=__('menu_side_user_profile')?>
             </div>
 
-            <a href="<?=$path?>pages/user/user">
+            <a href="<?=$path?>pages/users/user">
               <div class="<?=header_menu_css('Profile',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_profile_self')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/user/profil">
+            <a href="<?=$path?>pages/users/profil">
               <div class="<?=header_menu_css('Profileedit',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_profile_edit')?>
               </div>
@@ -938,37 +938,37 @@ $javascripts .= '
               <?=__('menu_side_user_settings')?>
             </div>
 
-            <a href="<?=$path?>pages/user/privacy">
+            <a href="<?=$path?>pages/users/privacy">
               <div class="<?=header_menu_css('Settingsprivacy',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_settings_privacy')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/user/nsfw">
+            <a href="<?=$path?>pages/users/nsfw">
               <div class="<?=header_menu_css('Settingsnsfw',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_settings_nsfw')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/user/email">
+            <a href="<?=$path?>pages/users/email">
               <div class="<?=header_menu_css('Settingsemail',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_settings_email')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/user/pass">
+            <a href="<?=$path?>pages/users/pass">
               <div class="<?=header_menu_css('Settingspassword',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_settings_password')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/user/pseudo">
+            <a href="<?=$path?>pages/users/pseudo">
               <div class="<?=header_menu_css('Settingsnickname',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_settings_nickname')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/user/delete">
+            <a href="<?=$path?>pages/users/delete">
               <div class="<?=header_menu_css('Settingsdelete',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_settings_delete')?>
               </div>

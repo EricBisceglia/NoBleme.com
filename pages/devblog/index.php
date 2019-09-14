@@ -70,7 +70,7 @@ for($ndevblogs = 0; $ddevblogs = mysqli_fetch_array($qdevblogs); $ndevblogs++)
         <h5>Points techniques et vulgarisations informatiques</h5>
 
         <p>
-          Cette section du site sert de plateforme à <a class="gras" href="<?=$chemin?>pages/user/user?id=1">Bad</a> pour partager des articles parlant de l'état du développement de NoBleme, du futur du site, ou d'autres sujets portants sur les métiers des sciences informatiques.
+          Cette section du site sert de plateforme à <a class="gras" href="<?=$chemin?>pages/users/user?id=1">Bad</a> pour partager des articles parlant de l'état du développement de NoBleme, du futur du site, ou d'autres sujets portants sur les métiers des sciences informatiques.
         </p>
 
         <br>

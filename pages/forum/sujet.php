@@ -678,7 +678,7 @@ EOD;
   $trad['reply_ferme']  = "CE SUJET A ÉTÉ FERMÉ PAR UN MEMBRE DE L'ÉQUIPE ADMINISTRATIVE<br>IL N'EST PAS POSSIBLE D'Y POSTER DE RÉPONSE";
   $trad['reply_guest']  = <<<EOD
 VOUS DEVEZ ÊTRE CONNECTÉ À VOTRE COMPTE POUR POSTER SUR LE FORUM NOBLEME<br>
-<a class="texte_nobleme_clair" href="{$chemin}pages/user/login">CLIQUEZ ICI</a> POUR VOUS CONNECTER À VOTRE COMPTE, OU <a class="texte_nobleme_clair" href="{$chemin}pages/user/login">CLIQUEZ ICI</a> POUR VOUS INSCRIRE SUR NOBLEME
+<a class="texte_nobleme_clair" href="{$chemin}pages/users/login">CLIQUEZ ICI</a> POUR VOUS CONNECTER À VOTRE COMPTE, OU <a class="texte_nobleme_clair" href="{$chemin}pages/users/login">CLIQUEZ ICI</a> POUR VOUS INSCRIRE SUR NOBLEME
 EOD;
 }
 
@@ -719,7 +719,7 @@ EOD;
   $trad['reply_ferme']  = "THIS TOPIC HAS BEEN CLOSED BY A MEMBER OF THE ADMINISTRATIVE TEAM<br>IT IS NOT POSSIBLE TO POST A REPLY TO THIS TOPIC";
   $trad['reply_guest']  = <<<EOD
 YOU MUST BE LOGGED INTO YOUR ACCOUNT BEFORE YOU CAN POST MESSAGES ON NOBLEME'S FORUM<br>
-<a class="texte_nobleme_clair" href="{$chemin}pages/user/login">CLICK HERE</a> TO LOG INTO YOUR ACCOUNT, OR <a class="texte_nobleme_clair" href="{$chemin}pages/user/login">CLICK HERE</a> TO REGISTER AN ACCOUNT ON NOBLEME
+<a class="texte_nobleme_clair" href="{$chemin}pages/users/login">CLICK HERE</a> TO LOG INTO YOUR ACCOUNT, OR <a class="texte_nobleme_clair" href="{$chemin}pages/users/login">CLICK HERE</a> TO REGISTER AN ACCOUNT ON NOBLEME
 EOD;
 }
 
@@ -836,9 +836,9 @@ EOD;
                 <?php if($sujet_apparence == 'Anonyme' && !$administrateur_forum) { ?>
                 <?=$trad['mess_anon']?>
                 <?php } else if($sujet_apparence == 'Anonyme' && $administrateur_forum) { ?>
-                Anon (<a class="gras<?=$reponse_auteur_css[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$reponse_auteur_id[$i]?>"><?=$reponse_auteur[$i]?></a>)
+                Anon (<a class="gras<?=$reponse_auteur_css[$i]?>" href="<?=$chemin?>pages/users/user?id=<?=$reponse_auteur_id[$i]?>"><?=$reponse_auteur[$i]?></a>)
                 <?php } else { ?>
-                <a class="gras<?=$reponse_auteur_css[$i]?>" href="<?=$chemin?>pages/user/user?id=<?=$reponse_auteur_id[$i]?>"><?=$reponse_auteur[$i]?></a><br>
+                <a class="gras<?=$reponse_auteur_css[$i]?>" href="<?=$chemin?>pages/users/user?id=<?=$reponse_auteur_id[$i]?>"><?=$reponse_auteur[$i]?></a><br>
                 <?=$reponse_auteur_nb[$i]?><br>
                 <?php } ?>
 
