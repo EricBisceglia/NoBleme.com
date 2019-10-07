@@ -82,8 +82,8 @@
 .flexcontainer   { display: -webkit-flex; display: flex;      }
 
 .clearfix:after  { clear: both; content: ' '; display: table; }
-.float-left      { float: left;                               }
-.float-right     { float: right;                              }
+.float_left      { float: left;                               }
+.float_right     { float: right;                              }
 
 /****************************************************** BBCODES ******************************************************/
 .bbcode_img           { max-width: 100%;                                                                              }
@@ -96,10 +96,10 @@
 .bbcode_spoiler_body  { padding: 3px; background-color: #FFFFFF; border: 1px solid #d8d8d8;                           }
 
 /***************************************************** TOOLTIPS ******************************************************/
-.tooltip-container                { cursor: pointer;                                                          }
-.tooltip-container .tooltip       { display: none; padding: 5px 8px 7px 10px; z-index: 1337; margin-top:-20px ;
+.tooltip_container                { cursor: pointer;                                                          }
+.tooltip_container .tooltip       { display: none; padding: 5px 8px 7px 10px; z-index: 1337; margin-top:-20px ;
                                     margin-left:15px ; font-size: 13px; cursor: normal;                       }
-.tooltip-container:hover .tooltip { display: inline; position: absolute; color: #000000;  text-align: left    ;
+.tooltip_container:hover .tooltip { display: inline; position: absolute; color: #000000;  text-align: left    ;
                                     background: #FFFFFF ; border-radius: 5px; border: 1px solid #37536B       ;
                                     box-shadow: 3px 3px 3px #37536B;                                          }
 

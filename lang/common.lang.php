@@ -207,7 +207,15 @@ ___('nobleme.com', 'EN', "NoBleme.com");
 ___('nobleme.com', 'FR', "NoBleme.com");
 
 
+// Punctuation
+___(':', 'EN', ":");
+___(':', 'FR', " :");
+
+
 // Common words
+___('error', 'EN', "error");
+___('error', 'FR', "erreur");
+
 ___('with', 'EN', "with");
 ___('with', 'FR', "avec");
 
@@ -215,6 +223,11 @@ ___('query',  'EN', "query");
 ___('query+', 'EN', "queries");
 ___('query',  'FR', "requête");
 ___('query+', 'FR', "requêtes");
+
+___('nickname', 'EN', "nickname");
+___('nickname', 'FR', "pseudonyme");
+___('password', 'EN', "password");
+___('password', 'FR', "mot de passe");
 
 
 // Quantifiers / amounts

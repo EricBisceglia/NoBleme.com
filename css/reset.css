@@ -76,7 +76,7 @@ textarea
   { min-height: 6.5rem;                                                                                 }
 label, legend
   { display: block; font-size: 1.6rem; font-weight: 700; margin-bottom: .5rem;                          }
-.label-inline
+.label_inline
   { display: inline-block; font-weight: normal; margin-left: .2rem;                                     }
 select
   { color: #555555; font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif          ;

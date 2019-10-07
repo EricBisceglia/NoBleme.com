@@ -104,7 +104,29 @@ function sanitize_input($input_type, $input_name, $data_type, $default_value=NUL
 
 
 /**
- * Sanitizes data before outputting it as HTML.
+ * Sanitizes data before outputting it in as HTML.
+ *
+ * @param string  $data                             The data to be sanitized.
+ * @param int     $prevent_line_breaks  (OPTIONAL)  If value is 0 or unset, will remove the line breaks from your data.
+ * @param int     $preserve_backslashes (OPTIONAL)  If value is 0 or unset, backslashes will be removed from your data.
+ *
+ * @return string                                   The sanitized data, ready to be printed in your HTML.
+ */
+
+function sanitize_output($data, $preserve_line_breaks=0, $preserve_backslashes=0)
+{
+  // Prepare the data for use in HTML
+  $data = ($preserve_backslashes) ? htmlentities($data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));
+
+  // Return the prepared data
+  return ($preserve_line_breaks) ? nl2br($data) : $data;
+}
+
+
+
+
+/**
+ * Sanitizes data before outputting it as HTML, for untrusted user data.
  *
  * Before printing some data, you might want to sanitize it so that it interacts as expected with HTML rules.
  * Applying this function will prevent users from using HTML themselves, and thus avoid potential silly XSS issues.
@@ -116,7 +138,7 @@ function sanitize_input($input_type, $input_name, $data_type, $default_value=NUL
  * @return string                                   The sanitized data, ready to be printed in your HTML.
  */
 
-function sanitize_output($data, $preserve_line_breaks=0, $preserve_backslashes=0)
+function sanitize_output_full($data, $preserve_line_breaks=0, $preserve_backslashes=0)
 {
   // First off, get rid of all the HTML tags in the data - and if necessary remove backslashes
   $data = ($preserve_backslashes) ? htmlentities($data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));

@@ -1,3 +1,6 @@
+/******************************************************* LOGIN *******************************************************/
+.remember_me { margin-top: 6px; }
+
 /************************************************** PUBLIC PROFILE ***************************************************/
 .profile_frame  { border: 1px solid #CACACA; height: 500px; padding: 10px; overflow-y: auto; word-break: normal; }
 .profile_hr     { height: 1px; background: #CACACA; border: 0px; margin-left: -10px; margin-right: -10px;        }

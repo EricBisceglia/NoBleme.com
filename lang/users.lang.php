@@ -32,6 +32,28 @@ ___('users_login_page_title', 'EN', 'Login');
 ___('users_login_page_title', 'FR', 'Connexion');
 
 
+// Login form
+___('users_login_form_create', 'EN', "Don't have an account? Click here to register one!");
+___('users_login_form_create', 'FR', "Vous n'avez pas de compte ? Cliquez ici pour en créer un !");
+___('users_login_form_remember', 'EN', "Stay logged in");
+___('users_login_form_remember', 'FR', "Rester connecté");
+___('users_login_form_register', 'EN', 'REGISTER');
+___('users_login_form_register', 'FR', 'INSCRIPTION');
+
+
+// Errors
+___('users_login_error_no_nickname', 'EN', "You must specify a nickname");
+___('users_login_error_no_nickname', 'FR', "Vous devez entrer un pseudonyme");
+___('users_login_error_no_password', 'EN', "You must specify a password");
+___('users_login_error_no_password', 'FR', "Vous devez entrer un mot de passe");
+___('users_login_error_bruteforce', 'EN', "You are trying to log in too often, please wait 10 minutes");
+___('users_login_error_bruteforce', 'FR', "Trop de tentatives de connexion, merci d'attendre 10 minutes");
+___('users_login_error_wrong_user', 'EN', "This nickname does not exist on the website");
+___('users_login_error_wrong_user', 'FR', "Ce pseudonyme n'existe pas sur le site");
+___('users_login_error_wrong_password', 'EN', "Incorrect password for this nickname");
+___('users_login_error_wrong_password', 'FR', "Mauvais mot de passe pour ce pseudonyme");
+
+
 
 
 /*********************************************************************************************************************/
@@ -43,6 +65,7 @@ ___('users_login_page_title', 'FR', 'Connexion');
 // Page title
 ___('users_forgotten_page_title', 'EN', 'Recover password');
 ___('users_forgotten_page_title', 'FR', 'Mot de passe oublié');
+
 
 // Body
 ___('users_forgotten_title', 'EN', 'Forgotten password');
