@@ -106,6 +106,13 @@ $user_login_remember_me = (isset($_POST['login_remember']) || !isset($_POST['log
 
             <label for="login_password"><?=string_change_case(__('password'), 'initials')?></label>
             <input id="login_password" name="login_password" class="indiv" type="password" value="<?=$user_login_password?>"><br>
+
+            <?php if(isset($_POST['login_nickname']) && $_POST['login_nickname'] && isset($_POST['login_password']) && $_POST['login_password']) { ?>
+
+              <p class="align_center"><?=__link('pages/users/forgotten_password', __('users_login_form_forgotten_password'), '')?></p>
+
+            <?php } ?>
+
             <br>
 
             <div class="float_right remember_me">

@@ -375,7 +375,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `moderator_title_fr` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `last_action_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `last_visited_page` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_visited_page_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_visited_page_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_url` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `current_ip_address` varchar(135) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0',
   `is_banned_until` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -390,9 +391,11 @@ DROP TABLE IF EXISTS `users_guests`;
 CREATE TABLE IF NOT EXISTS `users_guests` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `ip_address` varchar(135) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0',
-  `randomly_assigned_name` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `randomly_assigned_name_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `randomly_assigned_name_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `last_visited_page` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_visited_page_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_visited_page_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_url` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -483,7 +486,7 @@ CREATE TABLE IF NOT EXISTS `writings_contests` (
   `fk_writings_texts_winner` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `started_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `ended_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `nb_users` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `nb_entries` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `contest_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `contest_topic` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),

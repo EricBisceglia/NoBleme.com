@@ -37,6 +37,8 @@ ___('users_login_form_create', 'EN', "Don't have an account? Click here to regis
 ___('users_login_form_create', 'FR', "Vous n'avez pas de compte ? Cliquez ici pour en créer un !");
 ___('users_login_form_remember', 'EN', "Stay logged in");
 ___('users_login_form_remember', 'FR', "Rester connecté");
+___('users_login_form_forgotten_password', 'EN', "Forgot your account's password? Click here.");
+___('users_login_form_forgotten_password', 'FR', "Vous avez oublié votre mot de passe ? Cliquez ici.");
 ___('users_login_form_register', 'EN', 'REGISTER');
 ___('users_login_form_register', 'FR', 'INSCRIPTION');
 

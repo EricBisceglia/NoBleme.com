@@ -9,14 +9,17 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Open a connexion to the MySQL database - include it any time you need to run a query
 
-// Initialize the connexion and store it for this session's length into a global variable
-$GLOBALS['db'] = @mysqli_connect($GLOBALS['mysql_host'], $GLOBALS['mysql_user'], $GLOBALS['mysql_pass'], 'nobleme') or die ('MySQL error: Connexion failed.');
+// Initialize the connexion and store it for into a global variable - if requested, don't connect to the nobleme db
+if(isset($GLOBALS['sql_database_agnostic']))
+  $GLOBALS['db'] = @mysqli_connect($GLOBALS['mysql_host'], $GLOBALS['mysql_user'], $GLOBALS['mysql_pass']) or die ('MySQL error: Connexion failed.');
+else
+  $GLOBALS['db'] = @mysqli_connect($GLOBALS['mysql_host'], $GLOBALS['mysql_user'], $GLOBALS['mysql_pass'], 'nobleme') or die ('MySQL error: Connexion failed.');
 
 // Initialize a session specific global query counter, used by admins for metrics (number of queries in a page)
 $GLOBALS['query'] = -1;
 
 // Use this opportunity to set the global charset - it uses one mandatory query, hence why counter starts at -1
-mysqli_set_charset($GLOBALS['db'], "utf8");
+mysqli_set_charset($GLOBALS['db'], "utf8mb4");
 query(' SET NAMES utf8mb4 ');
 
 

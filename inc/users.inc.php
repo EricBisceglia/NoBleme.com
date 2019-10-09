@@ -86,6 +86,15 @@ else
   $is_admin             = $drights['m_admin'];
   $is_global_moderator  = ($is_admin || $drights['m_globalmod']) ? 1 : 0;
   $is_moderator         = $drights['m_mod'];
+
+  // If the user's account doesn't exist, log him out and set all permissions to 0
+  if($drights['m_admin'] === null)
+  {
+    user_log_out();
+    $is_admin             = 0;
+    $is_global_moderator  = 0;
+    $is_moderator         = 0;
+  }
 }
 
 
