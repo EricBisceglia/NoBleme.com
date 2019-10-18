@@ -4,14 +4,15 @@
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*       Running this script will create a new `nobleme` database or replace your existing `nobleme` database        */
+/*        Running this script will create a new `nobleme` database or replace any existing `nobleme` database        */
 /*                                                                                                                   */
 /*              It will be populated with the latest database schema required to make the website work               */
 /*    It will also include fixtures (demo data) so that you can actually interact with the website's various pages   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-// Only allow this page to be ran locally
-if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0.1"  && $_SERVER["SERVER_NAME"] != "::1" && $_SERVER["SERVER_NAME"] != "[::1]")
+// Only allow this page to be ran in dev mode, it wouldn't be nice to accidentally wipe production data, would it?
+include_once './inc/configuration.inc.php';
+if(!$GLOBALS['dev_mode'])
   exit(header("Location: ."));
 
 // Include global settings and the local configuration file
@@ -68,6 +69,8 @@ if(isset($_POST['fixtures_reset']))
       Are you sure you want to wipe any local database you have under the name <i>nobleme</i> then create a new one with baseline fixtures?<br>
       <br>
       If yes, <button name="fixtures_reset">click here</button> and clench your butt patiently until the (possibly lengthy) operation is done.<br>
+      <br>
+      There is no progress bar, but don't get fooled, if it's running then it's actually doing some work.<br>
       <br>
       If it does not work, you probably have incorrect settings in <i>/inc/configuration.inc.php</i>
     </form>

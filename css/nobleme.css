@@ -67,8 +67,10 @@
 
 .spaced          { padding-left: 6px; padding-right: 6px;     }
 .vspaced         { padding-bottom: 6px; padding-top: 6px;     }
-.bigpadding      { padding-top: 5.0rem;                       }
-.hugepadding     { padding-top: 10.0rem;                      }
+.padding_top     { padding-top: 2.5rem;                       }
+.bigpadding_top  { padding-top: 5.0rem;                       }
+.hugepadding_top { padding-top: 10.0rem;                      }
+.padding_bot     { padding-bottom: 2.5rem;                    }
 .bigpadding_bot  { padding-bottom: 5.0rem;                    }
 .hugepadding_bot { padding-bottom: 10.0rem;                   }
 .nopadding       { padding: 0px;                              }

@@ -54,3 +54,17 @@ function query($query, $ignore_errors=NULL)
   // Return the result of the query
   return $query_result;
 }
+
+
+
+
+/**
+ * Returns the ID of the latest inserted row.
+ *
+ * @return  int The ID of the latest inserted row.
+ */
+
+function query_id()
+{
+  return mysqli_insert_id($GLOBALS['db']);
+}

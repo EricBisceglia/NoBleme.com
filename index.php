@@ -57,7 +57,7 @@ $website_age = (date('n') < 3 || (date('n') == 3 && date('j') < 19)) ? $website_
 
         <?=__('nobleme_home_welcome', 0, 0 , 0, array($website_age))?>
 
-        <h5 class="bigpadding">
+        <h5 class="bigpadding_top">
           <?=__('nobleme_home_tour_title')?>
         </h5>
 

@@ -5,25 +5,24 @@
 //                    You should directly call it from HTML, eg. <img src="/inc/captcha.inc.php">                    //
 //                                                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// First off, open a new session for this, since it's included separately
-include './configuration.inc.php';
-include './sanitization.inc.php';
-include './sql.inc.php';
-include './users.inc.php';
-secure_session_start();
+// First off, open the current session for this, since it's going to be included separately
+session_name('nobleme_session_secure');
+session_start();
+session_regenerate_id();
 
 // Generate the random numbers
-$rand = rand(100000, 999999);
+$captcha_rand = rand(100000, 999999);
 
 // Place them in a session variable
-$_SESSION['captcha'] = $rand;
+$_SESSION['captcha'] = $captcha_rand;
 
 // Prepare the properties of the image
-$image      = imagecreate(65, 30);
-$text_color = imagecolorallocate($image, 127, 157, 177);
+$captcha_image      = imagecreate(70, 30);
+$captcha_background = imagecolorallocate($captcha_image, 233, 233, 233);
+$captcha_text_color = imagecolorallocate($captcha_image, 127, 157, 177);
 
 // Assemble the image
-imagestring($image, 5, 5, 8, $rand, $text_color);
+imagestring($captcha_image, 5, 8, 7, $captcha_rand, $captcha_text_color);
 
 // Send a header with an expilation date in the past to disable browser caching
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -38,7 +37,7 @@ header("Pragma: no-cache");
 header('Content-type: image/jpeg');
 
 // Print the image
-imagejpeg($image);
+imagejpeg($captcha_image);
 
-// Destroy it right away, because we're mean spirited people (or alternatively to free up memory)
-imagedestroy($image);
+// Destroy the image right away, no point keeping it in memory
+imagedestroy($captcha_image);

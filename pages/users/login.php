@@ -15,7 +15,7 @@ $page_lang = array('FR', 'EN');
 
 // Menus
 $header_menu      = 'NoBleme';
-$header_sidemenu  = 'Homepage';
+$header_sidemenu  = ' ';
 
 // User activity
 $page_name  = "users_login";
@@ -81,11 +81,19 @@ $user_login_remember_me = (isset($_POST['login_remember']) || !isset($_POST['log
           <?=__('users_login_page_title')?>
         </h1>
 
+        <?php if(isset($_GET['welcome'])) { ?>
+
+        <h5 class="align_center bigpadding_bot">
+          <?=__('users_login_welcome')?>
+        </h5>
+
+        <?php } else { ?>
+
         <h5 class="align_center bigpadding_bot">
           <?=__link('pages/users/register', __('users_login_form_create'), '')?>
         </h5>
 
-        <?php if(isset($user_login_attempt)) { ?>
+        <?php } if(isset($user_login_attempt)) { ?>
 
         <h5 class="align_center bigpadding_bot text_negative underlined">
           <?=string_change_case(__('error'), 'uppercase').__(':').' '.$user_login_attempt?>

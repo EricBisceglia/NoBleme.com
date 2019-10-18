@@ -17,6 +17,8 @@ $page_names['users_login_en']     = "Is logging into his account";
 $page_names['users_login_fr']     = "Se connecte à son compte";
 $page_names['users_forgotten_en'] = "Forgot his password";
 $page_names['users_forgotten_fr'] = "A oublié son mot de passe";
+$page_names['users_register_en']  = "Se crée un nouveau compte";
+$page_names['users_register_fr']  = "Is creating a new account";
 
 
 
@@ -27,9 +29,16 @@ $page_names['users_forgotten_fr'] = "A oublié son mot de passe";
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Page title
-___('users_login_page_title', 'EN', 'Login');
-___('users_login_page_title', 'FR', 'Connexion');
+// Page title and description
+___('users_login_page_title', 'EN', "Login");
+___('users_login_page_title', 'FR', "Connexion");
+___('users_login_page_description', 'EN', 'Log into your NoBleme account');
+___('users_login_page_description', 'FR', 'Se connecter à votre compte NoBleme');
+
+
+// Welcome message
+___('users_login_welcome', 'EN', "Welcome to NoBleme!<br>Your account has succesfully been created, you can now log in.");
+___('users_login_welcome', 'FR', "Bienvenue sur NoBleme !<br>Votre compte a été crée, vous pouvez maintenant vous y connecter.");
 
 
 // Login form
@@ -43,11 +52,11 @@ ___('users_login_form_register', 'EN', 'REGISTER');
 ___('users_login_form_register', 'FR', 'INSCRIPTION');
 
 
-// Errors
+// Error messages
 ___('users_login_error_no_nickname', 'EN', "You must specify a nickname");
-___('users_login_error_no_nickname', 'FR', "Vous devez entrer un pseudonyme");
+___('users_login_error_no_nickname', 'FR', "Vous devez saisir un pseudonyme");
 ___('users_login_error_no_password', 'EN', "You must specify a password");
-___('users_login_error_no_password', 'FR', "Vous devez entrer un mot de passe");
+___('users_login_error_no_password', 'FR', "Vous devez saisir un mot de passe");
 ___('users_login_error_bruteforce', 'EN', "You are trying to log in too often, please wait 10 minutes");
 ___('users_login_error_bruteforce', 'FR', "Trop de tentatives de connexion, merci d'attendre 10 minutes");
 ___('users_login_error_wrong_user', 'EN', "This nickname does not exist on the website");
@@ -64,9 +73,11 @@ ___('users_login_error_wrong_password', 'FR', "Mauvais mot de passe pour ce pseu
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Page title
-___('users_forgotten_page_title', 'EN', 'Recover password');
-___('users_forgotten_page_title', 'FR', 'Mot de passe oublié');
+// Page title and description
+___('users_forgotten_page_title', 'EN', "Recover password");
+___('users_forgotten_page_title', 'FR', "Mot de passe oublié");
+___('users_forgotten_page_description', 'EN', "Forgot your account's password? Well I've got bad news for you...");
+___('users_forgotten_page_description', 'FR', "Vous avez oublié le mot de passe de votre compte ? J'ai de mauvaises nouvelles...");
 
 
 // Body
@@ -79,5 +90,123 @@ EOT
 );
 ___('users_forgotten_body', 'FR', <<<EOT
 Pour des raisons de sécurité évidentes, NoBleme ne vous envoie pas votre mot de passe par e-mail lorsque vous créez votre compte. Malheureusement, il n'y a pour le moment pas de système de remise à zéro de mot de passe, ce qui rend le cas des mots de passe oubliés assez gênant. La solution temporaire à ce problème est de vous rendre sur le {{link|pages/irc/index|serveur de discussion IRC de NoBleme}}, d'y contacter un membre de {{link|pages/nobleme/admins|l'équipe administrative}}, et de lui demander de changer manuellement le mot de passe de votre compte.
+EOT
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     REGISTER                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Page title and description
+___('users_register_page_title', 'EN', "Register");
+___('users_register_page_title', 'FR', "S'inscrire");
+___('users_register_page_description', 'EN', "Register a new NoBleme account");
+___('users_register_page_description', 'FR', "Créer un nouveau compte sur NoBleme");
+
+
+// Header & Code of conduct
+___('users_register_title', 'EN', "Register an account");
+___('users_register_title', 'FR', "Créer un compte");
+___('users_register_subtitle', 'EN', "Code of conduct to follow when using NoBleme");
+___('users_register_subtitle', 'FR', "Code de conduite à respecter sur NoBleme");
+___('users_register_coc', 'EN', "We want to make sure that all users of the website understand that, even though there are few rules and little repression on NoBleme, there still exists a code of conduct that should be followed by all. In order to ensure that everyone reads it at least once, you will be asked some questions relating to NoBleme's code of conduct during the process of creating your account.");
+___('users_register_coc', 'FR', "Nous voulons nous assurer que tous les utilisateurs du site comprennent que, même s'il y a très peu de règles ou de répression sur NoBleme, il existe tout de même un code de conduite que tous doivent respecter. Afin de vérifier que tout le monde le lise au moins une fois, quelques questions vous serons posées sur ce code de conduite lors de la création de votre compte.");
+
+
+// Registration form
+___('users_register_form_nickname', 'EN', "Choose a nickname (3 to 15 characters long)");
+___('users_register_form_nickname', 'FR', "Choisissez un pseudonyme (3 à 15 caractères)");
+___('users_register_form_password_1', 'EN', "Your password (at least 8 characters long)");
+___('users_register_form_password_1', 'FR', "Mot de passe (8 caractères minimum)");
+___('users_register_form_password_2', 'EN', "Confirm your password by typing it again");
+___('users_register_form_password_2', 'FR', "Entrez à nouveau votre mot de passe");
+___('users_register_form_email', 'EN', "E-mail address (useful if you forget your password)");
+___('users_register_form_email', 'FR', "Adresse e-mail (utile si vous oubliez votre mot de passe)");
+
+___('users_register_form_question_1', 'EN', "Is pornography allowed?");
+___('users_register_form_question_1', 'FR', "La pornographie est-elle autorisée ?");
+___('users_register_form_question_1_maybe', 'EN', "It depends");
+___('users_register_form_question_1_maybe', 'FR', "Ça dépend des cas");
+
+___('users_register_form_question_2', 'EN', "Can I share gore images?");
+___('users_register_form_question_2', 'FR', "Les images gores sont-elle tolérées ?");
+___('users_register_form_question_2_dummy', 'EN', "I didn't read the rules");
+___('users_register_form_question_2_dummy', 'FR', "Je n'ai pas lu les règles");
+
+___('users_register_form_question_3', 'EN', "I'm having a tense argument with someone, what should I do?");
+___('users_register_form_question_3', 'FR', "Mes échanges avec quelqu'un d'autre dégénèrent, je fais quoi ?");
+___('users_register_form_question_3_silly', 'EN', "Spread it publicly");
+___('users_register_form_question_3_silly', 'FR', "J'étale ça en public");
+___('users_register_form_question_3_good', 'EN', "Try my best to solve it privately");
+___('users_register_form_question_3_good', 'FR', "Je tente de résoudre ça en privé");
+
+___('users_register_form_question_4', 'EN', "I'm being aggressive towards others, what will happen to me?");
+___('users_register_form_question_4', 'FR', "Je suis aggressif avec les autres, qu'est-ce qui va m'arriver ?");
+___('users_register_form_question_4_banned', 'EN', "I will get banned");
+___('users_register_form_question_4_banned', 'FR', "Je me fais bannir");
+___('users_register_form_question_4_freedom', 'EN', "Nothing, free speech protects me!");
+___('users_register_form_question_4_freedom', 'FR', "La liberté d'expression me protège !");
+
+___('users_register_form_captcha', 'EN', "Prove that you are a human by copying this number");
+___('users_register_form_captcha', 'FR', "Prouvez que vous êtes humain en recopiant ce nombre");
+___('users_register_form_captcha_alt', 'EN', "You must turn off your image blocker to see this captcha !");
+___('users_register_form_captcha_alt', 'FR', "Vous devez désactiver votre bloqueur d'image pour voir ce captcha !");
+
+___('users_register_form_submit', 'EN', "Create my account");
+___('users_register_form_submit', 'FR', "Créer mon compte");
+
+
+// Error messages
+___('users_register_error_no_email', 'EN', "You must specify an email");
+___('users_register_error_no_email', 'FR', "Vous devez saisir une adresse e-mail");
+___('users_register_error_passwords', 'EN', "You must enter the same password twice");
+___('users_register_error_passwords', 'FR', "Vous devez saisir deux fois le même mot de passe");
+___('users_register_error_captchas', 'EN', "The number you entered in the last field did not match the number on the image");
+___('users_register_error_captchas', 'FR', "Le nombre que vous avez saisi dans le dernier champ ne correspond pas à celui sur l'image");
+
+___('users_register_error_nickname_short', 'EN', "The chosen nickname is too short");
+___('users_register_error_nickname_short', 'FR', "Le pseudonyme choisi est trop court");
+___('users_register_error_nickname_long', 'EN', "The chosen nickname is too long");
+___('users_register_error_nickname_long', 'FR', "Le pseudonyme choisi est trop long");
+___('users_register_error_password_short', 'EN', "The chosen password is too short");
+___('users_register_error_password_short', 'FR', "Le mot de passe choisi est trop court");
+___('users_register_error_nickname_taken', 'EN', "The chosen nickname is already taken by another user");
+___('users_register_error_nickname_taken', 'FR', "Le pseudonyme choisi est déjà utilisé par un autre membre");
+
+
+// Welcome private message
+___('users_register_private_message_title', 'EN', "Welcome to NoBleme!");
+___('users_register_private_message_title', 'FR', "Bienvenue sur NoBleme !");
+___('users_register_private_message', 'EN', <<<EOT
+[size=1.3][b]Welcome to NoBleme![/b][/size]
+
+Now that you have registered, why not join the community where it is most active: on [url={{1}}pages/irc/index]the IRC chat server[/url].
+
+If you are curious what is being active on the website recently, why not check out the [url={{1}}pages/nobleme/activity]recent activity page[/url] - that's what it's here for!
+
+Enjoy your stay on NoBleme!
+If you have any questions, feel free to reply to this message.
+
+Your admin,
+[url={{1}}pages/users/user?id=1]Bad[/url]
+EOT
+);
+___('users_register_private_message', 'FR', <<<EOT
+[size=1.3][b]Bienvenue sur NoBleme ![/b][/size]
+
+Maintenant que vous avez rejoint le site, pourquoi ne pas rejoindre la communauté là où elle est active : sur [url={{1}}pages/irc/index]le serveur de discussion IRC[/url].
+
+Si vous êtes curieux de ce qui se passe sur le site en ce moment, la page [url={{1}}pages/nobleme/activity]d'activité récente[/url] est là exprès pour ça.
+
+Bon séjour sur NoBleme !
+Si vous avez la moindre question, n'hésitez pas à répondre à ce message.
+
+Votre administrateur,
+[url={{1}}pages/users/user?id=1]Bad[/url]
 EOT
 );

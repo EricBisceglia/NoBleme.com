@@ -8,9 +8,9 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 // Permissions
 adminonly($lang);
 
-// Interdiction de faire tourner le bot si on est sur localhost
-if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1")
-  erreur('Le bot ne devrait pas tourner en localhost plz');
+// Interdiction de faire tourner le bot si on est en dev mode
+if($GLOBALS['dev_mode'])
+  erreur('Le bot ne devrait pas tourner en dev mode plz');
 
 
 

@@ -55,7 +55,7 @@ $js   = array('toggle', 'clipboard', 'highlight');
         </thead>
       </table>
 
-      <div class="margin_auto snippets_section bigpadding dev_snippets_width" id="snippets_full">
+      <div class="margin_auto snippets_section bigpadding_top dev_snippets_width" id="snippets_full">
 
         <pre onclick="to_clipboard(1, 'dev_snippets_pre_full'); select_element('dev_snippets_pre_full');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_full">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
@@ -124,7 +124,7 @@ $js   = array('tabs');
 
 
 
-      <div class="margin_auto snippets_section bigpadding dev_snippets_width hidden" id="snippets_blocks">
+      <div class="margin_auto snippets_section bigpadding_top dev_snippets_width hidden" id="snippets_blocks">
 
         <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_separator'); select_element('dev_snippets_pre_blocks_separator');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_separator">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // </pre>
@@ -164,7 +164,7 @@ include './../../inc/footer.inc.php'; /*****************************************
 
 
 
-      <div class="margin_auto snippets_section bigpadding dev_snippets_width hidden" id="snippets_header">
+      <div class="margin_auto snippets_section bigpadding_top dev_snippets_width hidden" id="snippets_header">
 
         <pre onclick="to_clipboard(1, 'dev_snippets_pre_header'); select_element('dev_snippets_pre_header');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_header">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */

@@ -10,12 +10,13 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // The following global variables are your local settings - set them accordingly, otherwise NoBleme will not work
 // Duplicate this file, then remove the .DEFAULT (rename it to "configuration.inc.php") and fill up these variables:
 
+$GLOBALS['dev_mode']      = 1;                            // Change this to 1 if you want to enable dangerous features
 $GLOBALS['website_url']   = 'http://127.0.0.1/nobleme/';  // URL of the website root
 $GLOBALS['domain_name']   = 'nobleme.com';                // Domain name on which the website is being used
 $GLOBALS['mysql_host']    = 'localhost';                  // MySQL server address
 $GLOBALS['mysql_user']    = 'root';                       // MySQL user login
 $GLOBALS['mysql_pass']    = '';                           // MySQL user password
-$GLOBALS['salt_key']      = '$6$bnk$';                    // String used by crypt() to hash passwords
+$GLOBALS['salt_key']      = '$6$somestring$';             // String used by crypt() to hash passwords
 $GLOBALS['irc_bot_pass']  = '';                           // Password of the IRC bot
 $GLOBALS['extra_folders'] = 1;                            /* If NoBleme URL is not at server root, this is the number
                                                           /  of folders between the root and NoBleme. example:

@@ -10,6 +10,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // The following global variables are your local settings - set them accordingly, otherwise NoBleme will not work
 // Duplicate this file, then remove the .DEFAULT (rename it to "configuration.inc.php") and fill up these variables:
 
+$GLOBALS['dev_mode']      = 0;                      // Change this to 1 if you want to enable dangerous features
 $GLOBALS['website_url']   = 'http://nobleme.com/';  // URL of the website root
 $GLOBALS['domain_name']   = 'nobleme.com';          // Domain name on which the website is being used
 $GLOBALS['mysql_host']    = 'localhost';            // MySQL server address

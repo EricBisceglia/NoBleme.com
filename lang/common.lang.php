@@ -213,6 +213,11 @@ ___(':', 'FR', " :");
 
 
 // Common words
+___('yes', 'EN', "yes");
+___('yes', 'FR', "oui");
+___('no', 'EN', "no");
+___('no', 'FR', "non");
+
 ___('error', 'EN', "error");
 ___('error', 'FR', "erreur");
 
@@ -406,8 +411,8 @@ ___('header_status_message_short', 'FR', "{{1}} : Nouveau message privé !");
 ___('header_status_message_short+', 'EN', "{{1}}: {{2}} new private messages!");
 ___('header_status_message_short+', 'FR', "{{1}} : {{2}} nouveaux messages privés !");
 
-___('header_status_logged_in', 'EN', "Vous êtes connecté en tant que {{1}}. Cliquez ici pour gérer votre compte ou modifier votre profil.");
-___('header_status_logged_in', 'FR', "You are logged in as {{1}}. Click here to manage your account or edit your profile.");
+___('header_status_logged_in', 'EN', "You are logged in as {{1}}. Click here to manage your account or edit your profile.");
+___('header_status_logged_in', 'FR', "Vous êtes connecté en tant que {{1}}. Cliquez ici pour gérer votre compte ou modifier votre profil.");
 ___('header_status_logged_in_short', 'EN', "{{1}}: Manage my account.");
 ___('header_status_logged_in_short', 'FR', "{{1}} : Gérer mon compte");
 
@@ -698,3 +703,72 @@ ___('footer_legal', 'FR', "Mentions légales &amp; confidentialité");
 
 ___('footer_copyright', 'EN', "&copy; NoBleme.com : 2005 - {{1}}");
 ___('footer_copyright', 'FR', "&copy; NoBleme.com : 2005 - {{1}}");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  CODE OF CONDUCT                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+___('coc', 'EN', <<<EOT
+<p class="padding_bot">
+  NoBleme is a small community with a laid back mood. There is no age restriction, and very few restrictions on content. However, in order to ensure all can coexist peacefully, there is a minimalistic code of conduct that everyone should respect, which you will find below:
+</p>
+<ul>
+  <li>
+    Obviously, <span class="bold">illegal content</span> will immediately be <span class="bold">sent to the police</span>. Don't play with fire.
+  </li>
+  <li>
+    Since NoBleme has no age restriction <span class="bold">pornography or highly suggestive content is forbidden</span>.
+  </li>
+  <li>
+    All <span class="bold">gore images</span> and other disgusting things are <span class="bold">also forbidden</span>. NoBleme is not the right place for that.
+  </li>
+  <li>
+    Any form of <span class="bold">hate speech, discrimination, or incitation to violence</span> will be met with an <span class="bold">immediate ban</span>.
+  </li>
+  <li>
+    If you have to argue with someone about a tense situation, do it privately or risk both being banned.
+  </li>
+  <li>
+    Trolls and purposeful agitators will be banned without a warning if they try to test boundaries.
+  </li>
+</ul>
+<p>
+We know tensions always tend to appear in shared spaces containing varied personalities and opinions. However, if your behavior or your vocabulary prevent other people from having a good time, then we will have to exclude you. Let's all be respectful of others, we'll collectively benefit from it.
+</p>
+EOT
+);
+
+___('coc', 'FR', <<<EOT
+<p class="padding_bot">
+  NoBleme est une petite communauté à l'ambiance décontractée. Il n'y a pas de restriction d'âge, et peu de restrictions de contenu. Il y a juste un code de conduite minimaliste à respecter afin de tous cohabiter paisiblement, que vous trouverez ci-dessous :
+</p>
+<ul>
+  <li>
+    Tout <span class="bold">contenu illégal</span> sera immédiatement <span class="bold">envoyé à la police</span>. Ne jouez pas avec le feu.
+  </li>
+  <li>
+    Comme NoBleme n'a pas de restriction d'âge, <span class="bold">la pornographie et la nudité gratuite sont interdits</span>.
+  </li>
+  <li>
+    Les <span class="bold">images gores</span> ou dégueulasses sont <span class="bold">également interdites</span>. NoBleme n'est pas le lieu pour ça.
+  </li>
+  <li>
+  <span class="bold">L'incitation à la haine</span> et les <span class="bold">propos discriminatoires</span> auront pour réponse un <span class="bold">bannissement immédiat</span>.
+  </li>
+  <li>
+    Les situations tendues doivent se régler en privé avant de trop escalader, au risque de se faire bannir.
+  </li>
+  <li>
+  Les trolls et autres provocateurs gratuits pourront être bannis sans sommation s'ils abusent trop.
+  </li>
+</ul>
+<p>
+Il est normal que des tensions apparaissent dans des lieux où des personnalités et opinions variées coexistent. Toutefois, si votre comportement ou votre vocabulaire empêchent d'autres personnes de passer un bon moment, nous devrons vous exclure. Soyons bienveillants, et nous en bénéficierons tous.
+</p>
+EOT
+);

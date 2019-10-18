@@ -21,10 +21,6 @@ $domain_name        = explode('.',$GLOBALS['domain_name']);
 $domain_name_start  = $domain_name[0];
 $domain_name_end    = $domain_name[1];
 
-// This website should really only be used on localhost, 127.0.0.1, ::1, and whatever the website's domain name is
-if($_SERVER["SERVER_NAME"] != "localhost" && $_SERVER["SERVER_NAME"] != "127.0.0.1"  && $_SERVER["SERVER_NAME"] != "::1" && $_SERVER["SERVER_NAME"] != "[::1]" && $subdomain_check[0] != $domain_name_start && $domain_name_end != 'com')
-  header("Location: "."http://".$subdomain_check[1].".".$subdomain_check[2].$_SERVER['REQUEST_URI']);
-
 // If the user permission variables don't exist, stop here
 if(!isset($is_admin) || !isset($is_global_moderator) || !isset($is_moderator))
   exit(__('error_forbidden'));
@@ -252,8 +248,8 @@ else if (!$page_title)
 else
   $page_title = 'NoBleme - '.$page_title;
 
-// If we are working on localhost, add an @ before the page's title
-if($_SERVER["SERVER_NAME"] == "localhost" || $_SERVER["SERVER_NAME"] == "127.0.0.1" || $_SERVER["SERVER_NAME"] == "::1" || $_SERVER["SERVER_NAME"] == "[::1]")
+// If we are working on dev mode, add an @ before the page's title
+if($GLOBALS['dev_mode'])
   $page_title = "@ ".$page_title;
 
 

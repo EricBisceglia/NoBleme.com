@@ -40,11 +40,11 @@ $this_page_is_a_404 = '';
 /*                                                                                                                   */
 /**********************************************************************************/ include './inc/header.inc.php'; ?>
 
-    <div class="indiv align_center hugepadding bigpadding_bot">
+    <div class="indiv align_center hugepadding_top bigpadding_bot">
       <img src="<?=$path?>img/404/404_title_<?=string_change_case($lang, 'lowercase')?>.png" alt="<?=__('nobleme_404_description')?>">
     </div>
 
-    <div class="margin_auto bigpadding hugepadding_bot" style="width:1000px">
+    <div class="margin_auto bigpadding_top hugepadding_bot" style="width:1000px">
       <table class="indiv">
         <tbody>
           <tr>

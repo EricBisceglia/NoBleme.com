@@ -6,7 +6,6 @@
 include './../../inc/includes.inc.php'; // Inclusions communes
 include './../../inc/activity.inc.php'; // Traitement de l'activité recente
 include './../../inc/functions_time.inc.php';
-include './../../inc/functions_nobleme.inc.php';
 include './../../inc/bbcodes.inc.php';
 
 // Permissions
