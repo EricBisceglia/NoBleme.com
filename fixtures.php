@@ -47,12 +47,7 @@ if(isset($_POST['fixtures_reset']))
   }
 
   // Import and run fixtures aswell to fill up the database
-  $database_fixtures = explode(';', file_get_contents('./inc/sqldump_fixtures.sql'));
-  foreach($database_fixtures as $fixtures_query_id => $fixtures_query)
-  {
-    if($fixtures_query_id && $fixtures_query)
-      query($fixtures_query);
-  }
+  include_once './inc/sqldump_fixtures.php';
 
   // Finished!
   exit("Job's done! Check your database for confirmation.<br><br><a href=\"index\">Click here</a> to return to the website's index.");

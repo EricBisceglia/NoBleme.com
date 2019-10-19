@@ -1,11 +1,11 @@
 Options +FollowSymlinks -MultiViews
 RewriteEngine On
 
-# Redirect subdomains to the main domain name
+# Redirect subdomains to the main domain name (but not for dev environment)
 RewriteCond %{HTTP_HOST} ^(.+)\.nobleme.com [nc]
 RewriteRule ^(.*)$ http://nobleme.com/$1 [R=301,L]
 
-# Enforce https
+# Enforce https (but not for dev environment)
 RewriteCond %{HTTPS} off
 RewriteCond %{HTTP_HOST} nobleme.com
 RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
@@ -18,13 +18,12 @@ RewriteRule ^([^\.]+)$ $1.php [NC]
 # Custom 404 page
 ErrorDocument 404 http://nobleme.com/404
 
-# Don't allow ircbot.txt access except when debugging in localhost
+# Don't allow direct access to ircbot.txt
 <Files "ircbot.txt">
   Deny from all
-  Allow from 127.0.0.1
 </Files>
 
 # Don't allow direct access to sqldump.sql
-<Files "sqldump.sql">
+<Files "sqldump_schema.sql">
   Deny from all
 </Files>
