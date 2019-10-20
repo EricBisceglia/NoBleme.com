@@ -591,6 +591,7 @@ $last_query = sql_check_query_id();
 
 
 
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                 VERSION 3 BUILD 5                                                 */
@@ -1146,7 +1147,7 @@ if($last_query < 24)
   sql_rename_field('writings_texts', 'niveau_feedback', 'desired_feedback_level', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_texts', 'titre', 'title', 'TEXT NOT NULL');
   sql_rename_field('writings_texts', 'note_moyenne', 'average_rating', 'DECIMAL(2,1) NOT NULL DEFAULT 0');
-  sql_rename_field('writings_texts', 'longueur_text', 'character_count', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('writings_texts', 'longueur_texte', 'character_count', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_move_field('writings_texts', 'title', 'TEXT NOT NULL', 'character_count');
   sql_rename_field('writings_texts', 'contenu', 'body', 'LONGTEXT NOT NULL');
   sql_delete_index('writings_texts', 'index_auteur');
@@ -1579,8 +1580,8 @@ if($last_query < 30)
   sql_rename_field('nbdb_web_admin_notes', 'brouillon_en', 'draft_en', 'LONGTEXT NOT NULL');
   sql_move_field('nbdb_web_admin_notes', 'draft_fr', 'LONGTEXT NOT NULL', 'draft_en');
   sql_rename_field('nbdb_web_admin_notes', 'template_global', 'snippets', 'LONGTEXT NOT NULL');
-  sql_rename_field('nbdb_web_admin_notes', 'template_fr', 'template_fr', 'LONGTEXT NOT NULL');
-  sql_rename_field('nbdb_web_admin_notes', 'template_en', 'template_en', 'LONGTEXT NOT NULL');
+  sql_change_field_type('nbdb_web_admin_notes', 'template_fr', 'LONGTEXT NOT NULL');
+  sql_change_field_type('nbdb_web_admin_notes', 'template_en', 'LONGTEXT NOT NULL');
   sql_move_field('nbdb_web_admin_notes', 'template_fr', 'LONGTEXT NOT NULL', 'template_en');
 
   sql_change_field_type('nbdb_web_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
@@ -1601,8 +1602,8 @@ if($last_query < 30)
   sql_rename_field('nbdb_web_definitions', 'titre_fr', 'title_fr', 'VARCHAR(510) NOT NULL');
   sql_rename_field('nbdb_web_definitions', 'titre_en', 'title_en', 'VARCHAR(510) NOT NULL');
   sql_move_field('nbdb_web_definitions', 'title_fr', 'VARCHAR(510) NOT NULL', 'title_en');
-  sql_rename_field('nbdb_web_definitions', 'redirection_fr', 'redirection_fr', 'VARCHAR(510) NOT NULL');
-  sql_rename_field('nbdb_web_definitions', 'redirection_en', 'redirection_en', 'VARCHAR(510) NOT NULL');
+  sql_change_field_type('nbdb_web_definitions', 'redirection_fr', 'VARCHAR(510) NOT NULL');
+  sql_change_field_type('nbdb_web_definitions', 'redirection_en', 'VARCHAR(510) NOT NULL');
   sql_move_field('nbdb_web_definitions', 'redirection_fr', 'VARCHAR(510) NOT NULL', 'redirection_en');
   sql_rename_field('nbdb_web_definitions', 'definition_fr', 'definition_fr', 'LONGTEXT NOT NULL');
   sql_rename_field('nbdb_web_definitions', 'definition_en', 'definition_en', 'LONGTEXT NOT NULL');
@@ -1650,8 +1651,8 @@ if($last_query < 30)
   sql_rename_field('nbdb_web_pages', 'titre_fr', 'title_fr', 'VARCHAR(510) NOT NULL');
   sql_rename_field('nbdb_web_pages', 'titre_en', 'title_en', 'VARCHAR(510) NOT NULL');
   sql_move_field('nbdb_web_pages', 'title_fr', 'VARCHAR(510) NOT NULL', 'title_en');
-  sql_rename_field('nbdb_web_pages', 'redirection_fr', 'redirection_fr', 'VARCHAR(510) NOT NULL');
-  sql_rename_field('nbdb_web_pages', 'redirection_en', 'redirection_en', 'VARCHAR(510) NOT NULL');
+  sql_change_field_type('nbdb_web_pages', 'redirection_fr', 'VARCHAR(510) NOT NULL');
+  sql_change_field_type('nbdb_web_pages', 'redirection_en', 'VARCHAR(510) NOT NULL');
   sql_move_field('nbdb_web_pages', 'redirection_fr', 'VARCHAR(510) NOT NULL', 'redirection_en');
   sql_rename_field('nbdb_web_pages', 'contenu_fr', 'definition_fr', 'LONGTEXT NOT NULL');
   sql_rename_field('nbdb_web_pages', 'contenu_en', 'definition_en', 'LONGTEXT NOT NULL');
@@ -1804,9 +1805,3 @@ if($last_query < 31)
 
   sql_update_query_id(31);
 }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                   //
-//           !!!!! REMEMBER TO UPDATE SQLDUMP.SQL AT THE PROJECT ROOT AFTER EVERY STRUCTURAL CHANGE !!!!!            //
-//                                                                                                                   //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -50,7 +50,7 @@ if(isset($_POST['fixtures_reset']))
   include_once './inc/sqldump_fixtures.php';
 
   // Finished!
-  exit("Job's done! Check your database for confirmation.<br><br><a href=\"index\">Click here</a> to return to the website's index.");
+  exit("Job's done! Check your database for confirmation.<br><br><a href=\"index\">Click here to return to the website's index.</a><br><br>".$GLOBALS['query']." queries ran in ".(round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3).'s'));
 }
 
 // Ask for user confirmation before resetting the database ?>

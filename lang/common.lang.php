@@ -693,7 +693,7 @@ ___('footer_loadtime', 'EN', "Page loaded in ");
 ___('footer_loadtime', 'FR', "Page chargée en ");
 
 ___('footer_version', 'EN', 'Version {{1}}, build {{2}} - {{3}}');
-___('footer_version', 'FR', 'Version {{1}}, build {{2}} du {{3}}');
+___('footer_version', 'FR', 'Version {{1}}, build {{2}} - {{3}}');
 
 ___('footer_shorturl', 'EN', "Shorter link alternative");
 ___('footer_shorturl', 'FR', "Lien court vers cette page");

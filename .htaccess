@@ -23,7 +23,7 @@ ErrorDocument 404 http://nobleme.com/404
   Deny from all
 </Files>
 
-# Don't allow direct access to sqldump.sql
+# Don't allow direct access to sqldump
 <Files "sqldump_schema.sql">
   Deny from all
 </Files>

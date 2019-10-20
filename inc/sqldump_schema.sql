@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_admin_notes` (
   `draft_en` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `draft_fr` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `snippets` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `template_en` longtext COLLATE utf8mb4_unicode_ci,
+  `template_en` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `template_fr` longtext COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -227,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_definitions` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `redirection_en` mediumtext COLLATE utf8mb4_unicode_ci,
+  `redirection_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `redirection_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_nsfw` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `is_gross` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
@@ -269,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_pages` (
   `fk_nbdb_web_eras` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `title_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `redirection_en` mediumtext COLLATE utf8mb4_unicode_ci,
+  `redirection_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `redirection_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `appeared_in_year` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
   `appeared_in_month` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
@@ -345,7 +345,7 @@ CREATE TABLE IF NOT EXISTS `system_scheduler` (
 
 DROP TABLE IF EXISTS `system_variables`;
 CREATE TABLE IF NOT EXISTS `system_variables` (
-  `update_in_progress` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `update_in_progress` int(10) UNSIGNED NOT NULL,
   `latest_query_id` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
   `last_scheduler_execution` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `last_pageview_check` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -519,7 +519,7 @@ CREATE TABLE IF NOT EXISTS `writings_texts` (
   `desired_feedback_level` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `average_rating` decimal(2,1) NOT NULL DEFAULT '0.0',
-  `longueur_texte` int(11) UNSIGNED NOT NULL,
+  `character_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_author` (`fk_users`,`is_anonymous`),

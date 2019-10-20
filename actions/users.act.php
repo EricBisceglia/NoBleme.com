@@ -33,7 +33,6 @@ function users_authenticate($ip, $nickname, $password, $remember_me=0)
 {
   // Sanitize the data
   $ip           = sanitize($ip, 'string');
-  $nickname_raw = $nickname;
   $nickname     = sanitize($nickname, 'string');
   $password_raw = $password;
   $password     = sanitize($password, 'string');
@@ -65,12 +64,16 @@ function users_authenticate($ip, $nickname, $password, $remember_me=0)
 
   // Fetch the ID of the requested user
   $dfetch_user = mysqli_fetch_array(query(" SELECT  users.id        AS 'u_id'   ,
+                                                    users.nickname  AS 'u_nick' ,
                                                     users.password  AS 'u_pass'
                                             FROM    users
                                             WHERE   users.nickname LIKE '$nickname' "));
 
+  // Grab the user's nickname to fix any case inconsistency
+  $nickname_raw = $dfetch_user['u_nick'];
+
   // If the user does not exist, log the bruteforce attempt and end the process here
-  if(!$dfetch_user)
+  if(!$dfetch_user['u_id'])
   {
     query(" INSERT INTO users_login_attempts
             SET         users_login_attempts.fk_users     = 0             ,
