@@ -7,7 +7,7 @@ include_once './../../inc/queries.inc.php';  // Run all queries awaiting executi
 include_once './../../inc/includes.inc.php'; // Common inclusions
 
 // Limit page access rights
-user_restrict_to_administrators();
+user_restrict_to_administrators($lang);
 
 // Translations and available languages
 include_once './../../lang/dev.lang.php';

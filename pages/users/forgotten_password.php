@@ -6,7 +6,7 @@
 include_once './../../inc/includes.inc.php'; // Common inclusions
 
 // Limit page access rights
-user_restrict_to_guests();
+user_restrict_to_guests($lang);
 
 // Translations and available languages
 include_once './../../lang/users.lang.php';

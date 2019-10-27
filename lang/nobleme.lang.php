@@ -12,7 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Page settings
+// Page title
 ___('nobleme_home_page_title', 'EN', "Homepage");
 ___('nobleme_home_page_title', 'FR', "Accueil");
 
@@ -61,8 +61,72 @@ EOT
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Page settings
+// Page title and description
 ___('nobleme_404_page_title', 'EN', "Lost in space");
 ___('nobleme_404_page_title', 'FR', "Perdus dans l'espace");
 ___('nobleme_404_description', 'EN', "Error 404: Page not found…");
 ___('nobleme_404_description', 'FR', "Erreur 404 : Page non trouvée…");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  RECENT ACTIVITY                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Page title and description
+___('activity_page_title', 'EN', "Recent activity");
+___('activity_page_title', 'FR', "Activité récente");
+___('activity_page_title_modlogs', 'EN', "Moderation logs");
+___('activity_page_title_modlogs', 'FR', "Logs de modération");
+___('activity_page_description', 'EN', "Chronology of recent events that happened on NoBleme");
+___('activity_page_description', 'FR', "Chronologie des évènements récents qui ont eu lieu sur NoBleme");
+
+
+// Header
+___('activity_mod_info', 'EN', <<<EOT
+Some of the moderation logs below have an icon to their right: <img class="valign_middle" src="{{1}}img/icons/help.svg" alt="?" height="16"><br>
+Clicking one of these icons will load some extra information about the logged action.
+EOT
+);
+___('activity_mod_info', 'FR', <<<EOT
+Certains des logs de modération ci-dessous ont des icônes à droite : <img class="valign_middle" src="{{1}}img/icons/help.svg" alt="?" height="16"><br>
+Cliquer sur une de ces icônes affiche plus de détails sur l'action qui a été effectée.
+EOT
+);
+
+___('activity_latest_actions', 'EN', "LATEST ACTIONS");
+___('activity_latest_actions', 'FR', "DERNIÈRES ACTIONS");
+
+___('activity_type_all', 'EN', "All activity types");
+___('activity_type_all', 'FR', "Tous types d'activité");
+___('activity_type_users', 'EN', "Users");
+___('activity_type_users', 'FR', "Membres");
+___('activity_type_meetups', 'EN', "Meetups");
+___('activity_type_meetups', 'FR', "Rencontres IRL");
+___('activity_type_nbdb', 'EN', "NBDB");
+___('activity_type_nbdb', 'FR', "NBDB");
+___('activity_type_quotes', 'EN', "Quotes");
+___('activity_type_quotes', 'FR', "Miscellanées");
+___('activity_type_forum', 'EN', "Forum");
+___('activity_type_forum', 'FR', "Forum");
+___('activity_type_writers', 'EN', "Writer's corner");
+___('activity_type_writers', 'FR', "Coin des écrivains");
+___('activity_type_dev', 'EN', "Website internals");
+___('activity_type_dev', 'FR', "Développement");
+
+
+// Activity log details
+___('activity_details_reason', 'EN', "Reason for this action:");
+___('activity_details_reason', 'FR', "Justification de l'action :");
+___('activity_details_diff', 'EN', "Différence(s) before/after this action:");
+___('activity_details_diff', 'FR', "Différence(s) avant/après l'action :");
+
+
+// Actions
+___('activity_delete', 'EN', "Are you sure you want to delete this activity log?");
+___('activity_delete', 'FR', "Êtes-vous sûr de vouloir supprimer ce log d'activité ?");
+___('activity_deleted', 'EN', "THIS ACTIVITY LOG HAS BEEN DELETED");
+___('activity_deleted', 'FR', "CE LOG D'ACTIVITÉ A ÉTÉ SUPPRIMÉ");

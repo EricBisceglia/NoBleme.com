@@ -223,7 +223,7 @@ function users_create_account($nickname, $password, $email, $password_check=null
 
   // IRC message
   ircbot("A new member registered on the website: $nickname_raw - ".$GLOBALS['website_url']."pages/users/user?id=".$account_id, "#english");
-  ircbot("Nouveau membre enregistré sur le site : $$nickname_raw - ".$GLOBALS['website_url']."pages/users/user?id=".$account_id, "#NoBleme");
+  ircbot("Nouveau membre enregistré sur le site : $nickname_raw - ".$GLOBALS['website_url']."pages/users/user?id=".$account_id, "#NoBleme");
 
   // Welcome private message
   private_message_send(__('users_register_private_message_title'), __('users_register_private_message', null, 0, 0, array($path)), $account_id, 1);

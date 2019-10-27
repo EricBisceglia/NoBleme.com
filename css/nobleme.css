@@ -46,6 +46,7 @@
 .width_25        { margin: auto; max-width: 25em;             }
 .width_30        { margin: auto; max-width: 30em;             }
 .width_35        { margin: auto; max-width: 35em;             }
+.width_40        { margin: auto; max-width: 40em;             }
 .width_50        { margin: auto; max-width: 50em;             }
 .width_60        { margin: auto; max-width: 60em;             }
 .width_70        { margin: auto; max-width: 70em;             }
@@ -66,6 +67,8 @@
 .pointer         { cursor: pointer;                           }
 
 .spaced          { padding-left: 6px; padding-right: 6px;     }
+.spaced_left     { padding-left: 6px;                         }
+.spaced_right    { padding-right: 6px;                        }
 .vspaced         { padding-bottom: 6px; padding-top: 6px;     }
 .padding_top     { padding-top: 2.5rem;                       }
 .bigpadding_top  { padding-top: 5.0rem;                       }

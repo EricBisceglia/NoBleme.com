@@ -17,24 +17,40 @@ table                                                   { border-collapse: colla
 /*************************************************** CUSTOM FONTS ****************************************************/
 @font-face { font-family: 'NoBleme'                                         ;
   src:  url('./fonts/Roboto.eot?#iefix') format('embedded-opentype')        ,
+        url('./fonts/Roboto.woff2') format('woff2')                         ,
         url('./fonts/Roboto.woff') format('woff')                           ,
         url('./fonts/Roboto.ttf')  format('truetype')                       ,
         url('./fonts/Roboto.svg#svgFontName') format('svg');                }
 @font-face { font-family: 'NoBleme-bold'                                    ;
   src:  url('./fonts/Roboto-bold.eot?#iefix') format('embedded-opentype')   ,
+        url('./fonts/Roboto-bold.woff2') format('woff2')                    ,
         url('./fonts/Roboto-bold.woff') format('woff')                      ,
         url('./fonts/Roboto-bold.ttf')  format('truetype')                  ,
         url('./fonts/Roboto-bold.svg#svgFontName') format('svg');           }
 @font-face { font-family: 'NoBleme-header'                                  ;
   src:  url('./fonts/Open-sans-bold.eot?#iefix') format('embedded-opentype'),
+        url('./fonts/Open-sans-bold.woff2') format('woff2')                 ,
         url('./fonts/Open-sans-bold.woff') format('woff')                   ,
         url('./fonts/Open-sans-bold.ttf')  format('truetype')               ,
         url('./fonts/Open-sans-bold.svg#svgFontName') format('svg');        }
 @font-face { font-family: 'NoBleme-sidebar'                                 ;
   src:  url('./fonts/Open-sans.eot?#iefix') format('embedded-opentype')     ,
+        url('./fonts/Open-sans.woff2') format('woff2')                      ,
         url('./fonts/Open-sans.woff') format('woff')                        ,
         url('./fonts/Open-sans.ttf')  format('truetype')                    ,
         url('./fonts/Open-sans.svg#svgFontName') format('svg');             }
+@font-face { font-family: 'NoBleme-hack'                                    ;
+  src:  url('./fonts/hack.eot?#iefix') format('embedded-opentype')          ,
+        url('./fonts/hack.woff2') format('woff2')                           ,
+        url('./fonts/hack.woff') format('woff')                             ,
+        url('./fonts/hack.ttf')  format('truetype')                         ,
+        url('./fonts/hack.svg#svgFontName') format('svg');                  }
+@font-face { font-family: 'NoBleme-hack-bold'                               ;
+  src:  url('./fonts/hack-bold.eot?#iefix') format('embedded-opentype')     ,
+        url('./fonts/hack-bold.woff2') format('woff2')                      ,
+        url('./fonts/hack-bold.woff') format('woff')                        ,
+        url('./fonts/hack-bold.ttf')  format('truetype')                    ,
+        url('./fonts/hack-bold.svg#svgFontName') format('svg');             }
 /******************************* DEFAULT STYLES OF GENERIC TAGS FOR THE WHOLE WEBSITE ********************************/
 *, *:after, *:before    { box-sizing: inherit;                                                                        }
 html                    { box-sizing: border-box; font-size: 62.5%;                                                   }

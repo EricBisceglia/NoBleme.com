@@ -399,7 +399,7 @@ $javascripts .= '
         </a>
 
         <?php if($is_global_moderator) { ?>
-        <a class="header_topmenu_link" href="<?=$path?>pages/nobleme/activite?mod">
+        <a class="header_topmenu_link" href="<?=$path?>pages/nobleme/activity?mod">
           <div class="<?=header_menu_css('Admin',$header_menu,'top')?>">
             <?=__('menu_top_admin')?>
           </div>
@@ -419,9 +419,9 @@ $javascripts .= '
 
         <a href="<?=$url_lang?>">
           <?php if($lang == 'FR') { ?>
-          <img class="header_topmenu_flagimg" src="<?=$path?>img/icones/lang_en.png" alt="EN">
+          <img class="header_topmenu_flagimg" src="<?=$path?>img/icons/lang_en.png" alt="EN">
           <?php } else { ?>
-          <img class="header_topmenu_flagimg" src="<?=$path?>img/icones/lang_fr.png" alt="FR">
+          <img class="header_topmenu_flagimg" src="<?=$path?>img/icons/lang_fr.png" alt="FR">
           <?php } ?>
         </a>
 
@@ -538,7 +538,7 @@ $javascripts .= '
               </div>
             </a>
 
-            <a href="<?=$path?>pages/nobleme/activite">
+            <a href="<?=$path?>pages/nobleme/activity">
               <div class="<?=header_menu_css('Activity',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_activity')?>
               </div>
@@ -976,7 +976,7 @@ $javascripts .= '
               <?=__('menu_side_admin_activity')?>
             </div>
 
-            <a href="<?=$path?>pages/nobleme/activite?mod">
+            <a href="<?=$path?>pages/nobleme/activity?mod">
               <div class="<?=header_menu_css('Modlogs',$header_sidemenu,'side')?>">
                 <?=__('menu_side_admin_modlogs')?>
               </div>

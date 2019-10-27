@@ -31,7 +31,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NULL, $id=0, $title=NULL, $parent=NULL)
 {
-
   //*****************************************************************************************************************//
   //                                             DEVELOPMENT / INTERNALS                                             //
   //*****************************************************************************************************************//
@@ -39,7 +38,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   if($type === 'dev_version')
   {
-    $return['css']  = 'gras texte_blanc positif';
+    $return['css']  = 'bold text_white positive';
     $return['href'] = $path.'pages/todo/roadmap';
     $return['EN']   = "New version of NoBleme.com: ".sanitize_output($title);
     $return['FR']   = "Nouvelle version de NoBleme.com : ".sanitize_output($title);
@@ -50,7 +49,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   else if($type === 'dev_blog')
   {
-    $return['css']  = 'texte_noir vert_background';
+    $return['css']  = 'text_black green_background';
     $return['href'] = $path.'pages/devblog/devblog?id='.$id;
     $return['FR']   = "Nouveau devblog publié : ".sanitize_output(string_truncate($title, 50, '...'));
   }
@@ -61,9 +60,9 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   else if($type === 'dev_task_new')
   {
     $return['href'] = $path.'pages/todo/index?id='.$id;
-    if($title)
-      $return['EN'] = sanitize_output($nickname)." has opened a new task: ".sanitize_output(string_truncate($parent, 50, '...'));
     if($parent)
+      $return['EN'] = sanitize_output($nickname)." has opened a new task: ".sanitize_output(string_truncate($parent, 50, '...'));
+    if($title)
       $return['FR'] = sanitize_output($nickname)." a ouvert une tâche : ".sanitize_output(string_truncate($title, 50, '...'));
 
   }
@@ -73,11 +72,11 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   else if($type === 'dev_task_finished')
   {
-    $return['css']  = 'texte_noir vert_background_clair';
+    $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'pages/todo/index?id='.$id;
-    if($title)
-      $return['EN']   = "Task solved: ".sanitize_output(string_truncate($parent, 75, '...'));
     if($parent)
+      $return['EN']   = "Task solved: ".sanitize_output(string_truncate($parent, 75, '...'));
+    if($title)
       $return['FR']   = "Tache résolue : ".sanitize_output(string_truncate($title, 70, '...'));
   }
 
@@ -87,9 +86,9 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*****************************************************************************************************************//
   // New user registered
 
-  else if($type === 'user_register')
+  else if($type === 'users_register')
   {
-    $return['css']  = 'texte_blanc nobleme_clair';
+    $return['css']  = 'text_white nobleme_light';
     $return['href'] = $path.'pages/users/user?id='.$userid;
     $return['EN']   = sanitize_output($nickname)." registered on NoBleme!";
     $return['FR']   = sanitize_output($nickname)." s'est inscrit(e) sur NoBleme !";
@@ -98,7 +97,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A user edited his public profile
 
-  else if($type === 'user_profile_edit')
+  else if($type === 'users_profile_edit')
   {
     $return['href'] = $path.'pages/users/user?id='.$userid;
     $return['EN']   = sanitize_output($nickname).' edited his public profile';
@@ -108,9 +107,9 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A user profile has been edited by an administrator
 
-  else if($type === 'user_admin_edit_profile')
+  else if($type === 'users_admin_edit_profile')
   {
-    $return['css']  = 'neutre texte_blanc';
+    $return['css']  = 'neutral text_white';
     $return['href'] = $path.'pages/users/user?id='.$userid;
     $return['EN']   = sanitize_output($parent).' edited '.sanitize_output($nickname)."'s public profile";
     $return['FR']   = sanitize_output($parent).' a modifié le profil public de '.sanitize_output($nickname);
@@ -119,9 +118,9 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A user's password has been changed by an administrator
 
-  else if($type === 'user_admin_edit_password')
+  else if($type === 'users_admin_edit_password')
   {
-    $return['css']  = 'neutre texte_blanc';
+    $return['css']  = 'neutral text_white';
     $return['href'] = $path.'pages/users/user?id='.$userid;
     $return['EN']   = sanitize_output($parent).' changed '.sanitize_output($nickname)."'s password";
     $return['FR']   = sanitize_output($parent).' a modifié le mot de passe de '.sanitize_output($nickname);
@@ -130,17 +129,17 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A user has been banned from the website
 
-  else if($type === 'user_banned' && !$admins_only)
+  else if($type === 'users_banned' && !$admins_only)
   {
-    $return['css']  = 'negatif texte_blanc gras';
+    $return['css']  = 'negative text_white bold';
     $return['href'] = $path.'pages/users/user?id='.$userid;
     $temp           = ($id > 1) ? 's' : '';
     $return['EN']   = sanitize_output($nickname).' has been banned for '.$id.' day'.$temp;
     $return['FR']   = sanitize_output($nickname).' a été banni(e) pendant '.$id.' jour'.$temp;
   }
-  else if($type == 'user_banned')
+  else if($type == 'users_banned')
   {
-    $return['css']  = 'negatif texte_blanc gras';
+    $return['css']  = 'negative text_white bold';
     $return['href'] = $path.'pages/sysop/pilori';
     $temp           = ($id > 1) ? 's' : '';
     $return['EN']   = sanitize_output($parent).' banned '.sanitize_output($nickname).' for '.$id.' day'.$temp;
@@ -150,16 +149,16 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A banned user has been reinstated on the website
 
-  else if($type === 'user_unbanned' && !$admins_only)
+  else if($type === 'users_unbanned' && !$admins_only)
   {
-    $return['css']  = 'positif texte_blanc gras';
+    $return['css']  = 'positive text_white bold';
     $return['href'] = $path.'pages/users/user?id='.$userid;
     $return['EN']   = sanitize_output($nickname).' has been unbanned';
     $return['FR']   = sanitize_output($nickname).' a été débanni(e)';
   }
-  else if($type == 'user_unbanned')
+  else if($type == 'users_unbanned')
   {
-    $return['css']  = 'positif texte_blanc gras';
+    $return['css']  = 'positive text_white bold';
     $return['href'] = $path.'pages/sysop/pilori';
     $return['EN']   = sanitize_output($parent).' has unbanned '.sanitize_output($nickname);
     $return['FR']   = sanitize_output($parent).' a débanni '.sanitize_output($nickname);
@@ -168,9 +167,9 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A user has been stripped from all his special access rights
 
-  else if($type === 'user_rights_delete')
+  else if($type === 'users_rights_delete')
   {
-    $return['css']  = 'negatif texte_blanc gras';
+    $return['css']  = 'negative text_white bold';
     $return['href'] = $path.'pages/nobleme/admins';
     $return['EN']   = sanitize_output($nickname)." is not part of the administrative team anymore";
     $return['FR']   = sanitize_output($nickname)." ne fait plus partie de l'équipe administrative";
@@ -179,9 +178,9 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A user has become a moderator
 
-  else if($type === 'user_rights_moderator')
+  else if($type === 'users_rights_moderator')
   {
-    $return['css']  = 'vert_background texte_noir';
+    $return['css']  = 'green_background text_black';
     $return['href'] = $path.'pages/nobleme/admins';
     $return['EN']   = sanitize_output($nickname)." has joined the administrative team as a moderator";
     $return['FR']   = sanitize_output($nickname)." a rejoint l'équipe administrative en tant que modérateur";
@@ -190,9 +189,9 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A user has become a global moderator
 
-  else if($type === 'user_rights_global_moderator')
+  else if($type === 'users_rights_global_moderator')
   {
-    $return['css']  = 'neutre texte_blanc gras';
+    $return['css']  = 'neutral text_white bold';
     $return['href'] = $path.'pages/nobleme/admins';
     $return['EN']   = sanitize_output($nickname)." has joined the administrative team as a global moderator";
     $return['FR']   = sanitize_output($nickname)." a rejoint l'équipe administrative en tant que modérateur global";
@@ -206,16 +205,16 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*****************************************************************************************************************//
   // New meetup
 
-  else if($type === 'meetup_new' && !$admins_only)
+  else if($type === 'meetups_new' && !$admins_only)
   {
-    $return['css']  = 'texte_noir vert_background_clair';
+    $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'pages/irl/irl?id='.$id;
     $return['EN']   = 'New real life meetup planned';
     $return['FR']   = 'Nouvelle rencontre IRL planifiée le '.sanitize_output($title);
   }
-  else if($type === 'meetup_new')
+  else if($type === 'meetups_new')
   {
-    $return['css']  = 'texte_noir vert_background_clair';
+    $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'pages/irl/irl?id='.$id;
     $return['FR']   = sanitize_output($nickname).' a crée une nouvelle IRL le '.sanitize_output($title);
   }
@@ -223,7 +222,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A meetup has been modified
 
-  else if($type === 'meetup_edit')
+  else if($type === 'meetups_edit')
   {
     $return['href'] = $path.'pages/irl/irl?id='.$id;
     $return['FR']   = sanitize_output($nickname).' a modifié l\'IRL du '.sanitize_output($title);
@@ -232,22 +231,22 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A meetup has been deleted
 
-  else if($type === 'meetup_delete')
+  else if($type === 'meetups_delete')
   {
-    $return['css']  = 'mise_a_jour texte_blanc';
+    $return['css']  = 'website_update text_white';
     $return['FR']   = sanitize_output($nickname)." a supprimé l'IRL du ".sanitize_output($title);
   }
 
   //*******************************************************************************************************************
   // A new person joined a meetup
 
-  else if($type === 'meetup_people_new' && !$admins_only)
+  else if($type === 'meetups_people_new' && !$admins_only)
   {
     $return['href'] = $path.'pages/irl/irl?id='.$id;
     $return['EN']   = sanitize_output($nickname).' joined a real life meetup';
     $return['FR']   = sanitize_output($nickname).' a rejoint l\'IRL du '.sanitize_output($title);
   }
-  else if($type === 'meetup_people_new')
+  else if($type === 'meetups_people_new')
   {
     $return['href'] = $path.'pages/irl/irl?id='.$id;
     $return['FR']   = sanitize_output($parent).' a ajouté '.sanitize_output($nickname).' à l\'IRL du '.sanitize_output($title);
@@ -256,7 +255,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A person's info has been edited in a meetup
 
-  else if($type === 'meetup_people_edit')
+  else if($type === 'meetups_people_edit')
   {
     $return['href'] = $path.'pages/irl/irl?id='.$id;
     $return['FR']   = sanitize_output($parent).' a modifié les infos de '.sanitize_output($nickname).' dans l\'IRL du '.sanitize_output($title);
@@ -265,13 +264,13 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A person has been removed from a meetup
 
-  else if($type === 'meetup_people_delete' && !$admins_only)
+  else if($type === 'meetups_people_delete' && !$admins_only)
   {
     $return['href'] = $path.'pages/irl/irl?id='.$id;
     $return['EN']   = sanitize_output($nickname).' left a real life meetup';
     $return['FR']   = sanitize_output($nickname).' a quitté l\'IRL du '.sanitize_output($title);
   }
-  else if($type === 'meetup_people_delete')
+  else if($type === 'meetups_people_delete')
   {
     $return['href'] = $path.'pages/irl/irl?id='.$id;
     $return['FR']   = sanitize_output($parent).' a supprimé '.sanitize_output($nickname).' de l\'IRL du '.sanitize_output($title);
@@ -287,7 +286,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   else if($type === 'nbdb_web_page_new')
   {
-    $return['css']  = 'texte_noir vert_background_clair';
+    $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'pages/nbdb/web?id='.$id;
     $return['EN']   = ($parent) ? 'New page in the internet encyclopedia : '.sanitize_output(string_truncate($parent, 50, '...')) : '';
     $return['FR']   = ($title) ? 'Nouvelle page dans l\'encyclopédie du web : '.sanitize_output(string_truncate($title, 45, '...')) : '';
@@ -320,7 +319,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   else if($type === 'nbdb_web_definition_new')
   {
-    $return['css']  = 'texte_noir vert_background_clair';
+    $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'pages/nbdb/web_dictionnaire?id='.$id;
     $return['EN']   = ($parent) ? 'New entry in the internet dictionary : '.sanitize_output(string_truncate($parent, 55, '...')) : '';
     $return['FR']   = ($title) ? 'Nouvelle entrée dans le dictionnaire du web : '.sanitize_output(string_truncate($title, 45, '...')) : '';
@@ -356,15 +355,15 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*****************************************************************************************************************//
   // New quote
 
-  else if($type === 'quote_new_fr')
+  else if($type === 'quotes_new_fr')
   {
-    $return['css']  = 'texte_noir vert_background_clair';
+    $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'pages/quotes/quote?id='.$id;
     $return['FR']   = 'Miscellanée #'.$id.' ajoutée à la collection';
   }
-  else if($type === 'quote_new_en')
+  else if($type === 'quotes_new_en')
   {
-    $return['css']  = 'texte_noir vert_background_clair';
+    $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'pages/quotes/quote?id='.$id;
     $return['EN']   = 'Miscellanea #'.$id.' added to the collection';
     $return['FR']   = 'Miscellanée anglophone #'.$id.' ajoutée à la collection';
@@ -380,14 +379,14 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   else if($type === 'forum_thread_new' && !$admins_only)
   {
-    $return['css']  = 'texte_noir vert_background_clair';
+    $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'pages/forum/sujet?id='.$id;
     $return['EN']   = sanitize_output($nickname).' opened a forum topic: '.sanitize_output(string_truncate($title, 50, '...'));
     $return['FR']   = sanitize_output($nickname).' a ouvert un sujet sur le forum : '.sanitize_output(string_truncate($title, 50, '...'));
   }
   else if($type === 'forum_thread_new')
   {
-    $return['css']  = 'texte_noir vert_background_clair';
+    $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'pages/forum/sujet?id='.$id;
     $return['EN']   = sanitize_output($nickname).' opened a private forum topic: '.sanitize_output(string_truncate($title, 45, '...'));
     $return['FR']   = sanitize_output($nickname).' a ouvert un sujet privé sur le forum : '.sanitize_output(string_truncate($title, 45, '...'));
@@ -407,7 +406,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   else if($type === 'forum_thread_delete')
   {
-    $return['css']  = 'mise_a_jour texte_blanc';
+    $return['css']  = 'website_update text_white';
     $return['FR']   = sanitize_output($nickname).' a supprimé le sujet du forum '.sanitize_output(string_truncate($title, 45, '...'));
   }
 
@@ -442,7 +441,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   else if($type === 'forum_message_delete')
   {
-    $return['css']  = 'mise_a_jour_background';
+    $return['css']  = 'website_update_background';
     $return['href'] = $path.'pages/forum/sujet?id='.$id;
     if($nickname == $title)
     {
@@ -464,9 +463,9 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*****************************************************************************************************************//
   // New writing published
 
-  else if($type === 'ecrivains_new')
+  else if($type === 'writings_text_new')
   {
-    $return['css']  = 'texte_noir vert_background_clair';
+    $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'pages/ecrivains/texte?id='.$id;
     $return['FR']   = ($nickname != 'Anonyme') ? sanitize_output($nickname).' a publié un texte : '.sanitize_output(string_truncate($title, 70, '...')) : 'Nouveau texte publié : '.sanitize_output(string_truncate($title, 70, '...'));
   }
@@ -474,7 +473,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A writing has been edited
 
-  else if($type === 'ecrivains_edit')
+  else if($type === 'writings_text_edit')
   {
     $return['href'] = $path.'pages/ecrivains/texte?id='.$id;
     $return['FR']   = sanitize_output($nickname).' a modifié le contenu d\'un texte : '.sanitize_output(string_truncate($title, 50, '...'));
@@ -483,9 +482,9 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
   //*******************************************************************************************************************
   // A writing has been deleted
 
-  else if($type === 'ecrivains_delete')
+  else if($type === 'writings_text_delete')
   {
-    $return['css']  = 'mise_a_jour texte_blanc';
+    $return['css']  = 'website_update text_white';
     $return['FR']   = sanitize_output($nickname).' a supprimé un texte du coin des écrivains : '.sanitize_output(string_truncate($title, 40, '...'));
   }
 
@@ -508,7 +507,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   else if($type === 'writings_comment_delete')
   {
-    $return['css']  = 'mise_a_jour_background';
+    $return['css']  = 'website_update_background';
     $return['href'] = $path.'pages/ecrivains/texte?id='.$id;
     $return['FR']   = sanitize_output($nickname).' a supprimé une réaction de '.$title.' dans le coin des écrivains';
   }
@@ -518,7 +517,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   else if($type === 'writings_contest_new')
   {
-    $return['css']  = 'texte_noir vert_background';
+    $return['css']  = 'text_black green_background';
     $return['href'] = $path.'pages/ecrivains/concours?id='.$id;
     $return['FR']   = 'Nouveau concours du coin des écrivains : '.sanitize_output(string_truncate($title, 50, '...'));
   }
@@ -528,7 +527,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   else if($type === 'writings_contest_winner')
   {
-    $return['css']  = 'texte_noir vert_background_clair';
+    $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'pages/ecrivains/concours?id='.$id;
     $return['FR']   = 'Concours du coin des écrivains ouvert aux votes : '.sanitize_output(string_truncate($title, 40, '...'));
   }
@@ -538,7 +537,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
   else if($type === 'writings_contest_vote')
   {
-    $return['css']  = 'texte_noir vert_background';
+    $return['css']  = 'text_black green_background';
     $return['href'] = $path.'pages/ecrivains/concours?id='.$id;
     $return['FR']   = $nickname.' a gagné le concours du coin des écrivains : '.sanitize_output(string_truncate($title, 30, '...'));
   }

@@ -134,7 +134,7 @@ function xhr_sanitize(data)
 function xhr_sanitize_id(element)
 {
   // Let encodeURIComponent do the work
-  return encodeURIComponent(document.getElementById(data).value);
+  return encodeURIComponent(document.getElementById(element).value);
 }
 
 

@@ -52,7 +52,7 @@ function database_row_exists($table, $id)
 function page_is_xhr()
 {
   // Return whether the XHR header is set
-  return (isset($_SERVER['HTTP_XHR'])) ? 1 : 0;
+  return isset($_SERVER['HTTP_XHR']);
 }
 
 
@@ -70,7 +70,53 @@ function allow_only_xhr($path='./../../')
 {
   // If the XHR header is not set, throw a 404
   if(!page_is_xhr())
-    exit(header("Location: ".$path."404")); die();
+    exit(header("Location: ".$path."404"));
+}
+
+
+
+
+/**
+ * Checks whether a specific file has been included.
+ *
+ * @param   string  $file_name  The name of the file that should have been included.
+ *
+ * @return  bool                Whether the file has currently been included or not.
+ */
+
+function has_file_been_included($file_name)
+{
+  // Fetch all included files
+  $included_files = get_included_files();
+
+  // Check if the requested file has been included
+  foreach($included_files as $included_file)
+  {
+    // If the file has been included, return 1
+    if(basename($included_file) == $file_name)
+      return 1;
+  }
+
+  // If the file has not been included, return 0
+  return 0;
+}
+
+
+
+
+/**
+ * Requires a file to be included or exits the script.
+ *
+ * @param   string  $file_name  The name of the file that must be included.
+ *
+ * @return  void
+ */
+
+function require_included_file($file_name)
+{
+  // If the file has not been included, exit the script
+  if(!has_file_been_included($file_name))
+    exit($file_name.' is required for this page to work as intended');
 }
 
 

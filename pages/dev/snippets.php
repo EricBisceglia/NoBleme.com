@@ -3,14 +3,11 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php'; // Common inclusions
+include_once './../../inc/includes.inc.php'; # Core
+include_once './../../lang/dev.lang.php';    # Translations
 
 // Limit page access rights
-user_restrict_to_administrators();
-
-// Translations and available languages
-include_once './../../lang/dev.lang.php';
-$page_lang = array('FR', 'EN');
+user_restrict_to_administrators($lang);
 
 // Menus
 $header_menu      = 'Dev';
@@ -19,7 +16,8 @@ $header_sidemenu  = 'Snippets';
 // User activity
 $page_name = "admin";
 
-// Title and description
+// Page summary
+$page_lang  = array('FR', 'EN');
 $page_title = __('dev_snippets_page_title');
 
 // Extra CSS & JS
@@ -62,14 +60,12 @@ $js   = array('toggle', 'clipboard', 'highlight');
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php'; // Common inclusions
+include_once './../../inc/includes.inc.php';    # Core
+include_once './../../actions/nobleme.act.php'; # Actions
+include_once './../../lang/nobleme.lang.php';   # Translations
 
 // Limit page access rights
-user_restrict_to_guests();
-
-// Translations and available languages
-include_once './../../lang/mytranslation.lang.php';
-$page_lang = array('FR', 'EN');
+user_restrict_to_guests($lang);
 
 // Menus
 $header_menu      = 'NoBleme';
@@ -79,9 +75,13 @@ $header_sidemenu  = 'Homepage';
 $page_name  = "some_page";
 $page_url   = "pages/nobleme/index";
 
-// Title and description
+// Page summary
+$page_lang        = array('EN', 'FR');
 $page_title       = __('use_a_translation');
 $page_description = __('use_a_translation');
+
+// Short url
+$shorturl = "x";
 
 // Extra CSS &amp; JS
 $css  = array('tabs');
@@ -118,6 +118,39 @@ $js   = array('tabs');
 /*                                                    END OF PAGE                                                    */
 /*                                                                                                                   */
 /*******************************************************************************/ include './../../inc/footer.inc.php';</pre>
+
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_full_xhr'); select_element('dev_snippets_pre_full_xhr');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_full_xhr">&lt;?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED THROUGH XHR                               */
+/*                                                                                                                   */
+// File inclusions /**************************************************************************************************/
+include_once './../../inc/includes.inc.php';    # Core
+include_once './../../actions/nobleme.act.php'; # Actions
+include_once './../../lang/nobleme.lang.php';   # Translations
+
+// Throw a 404 if the page is being accessed directly
+allow_only_xhr();
+
+// Limit page access rights
+user_restrict_to_global_moderators($lang);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     BACK END                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FRONT END                                                     */
+/*                                                                                                                   */
+/******************************************************************************************************************/ ?></pre>
 
       </div>
 
@@ -171,14 +204,12 @@ include './../../inc/footer.inc.php'; /*****************************************
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php'; // Common inclusions
+include_once './../../inc/includes.inc.php';    # Core
+include_once './../../actions/nobleme.act.php'; # Actions
+include_once './../../lang/nobleme.lang.php';   # Translations
 
 // Limit page access rights
-user_restrict_to_guests();
-
-// Translations and available languages
-include_once './../../lang/mytranslation.lang.php';
-$page_lang = array('FR', 'EN');
+user_restrict_to_guests($lang);
 
 // Menus
 $header_menu      = 'NoBleme';
@@ -188,9 +219,13 @@ $header_sidemenu  = 'Homepage';
 $page_name  = "some_page";
 $page_url   = "pages/nobleme/index";
 
-// Title and description
+// Page summary
+$page_lang        = array('EN', 'FR');
 $page_title       = __('use_a_translation');
 $page_description = __('use_a_translation');
+
+// Short url
+$shorturl = "x";
 
 // Extra CSS & JS
 $css  = array('tabs');
@@ -198,19 +233,18 @@ $js   = array('tabs');</pre>
 
         <pre onclick="to_clipboard(1, 'dev_snippets_pre_headers_xhr'); select_element('dev_snippets_pre_headers_xhr');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_headers_xhr">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                       SETUP                                                       */
+/*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED THROUGH XHR                               */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php'; // Common inclusions
+include_once './../../inc/includes.inc.php';    # Core
+include_once './../../actions/nobleme.act.php'; # Actions
+include_once './../../lang/nobleme.lang.php';   # Translations
 
-// Allow this page to be called only through XHR
-allew_only_xhr();
+// Throw a 404 if the page is being accessed directly
+allow_only_xhr();
 
 // Limit page access rights
-user_restrict_to_guests();
-
-// Translations
-include_once './../../lang/mytranslation.lang.php';</pre>
+user_restrict_to_global_moderators($lang);</pre>
 
         <pre onclick="to_clipboard(1, 'dev_snippets_pre_headers_included'); select_element('dev_snippets_pre_headers_included');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_headers_included">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
