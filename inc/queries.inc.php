@@ -19,10 +19,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 // Include pages that are required to make MySQL queries
-include_once 'settings.inc.php';      // General settings
-include_once 'error.inc.php';         // Error management
-include_once 'sql.inc.php';           // MySQL connection
-include_once 'sanitization.inc.php';  // Data sanitization
+include_once 'settings.inc.php';     # General settings
+include_once 'error.inc.php';        # Error management
+include_once 'sql.inc.php';          # MySQL connection
+include_once 'sanitization.inc.php'; # Data sanitization
 
 // If the database still uses the old data structure, then skip the other includes
 $old_structure = 0;
@@ -33,8 +33,8 @@ while($dtablelist = mysqli_fetch_array($qtablelist))
 // If the database uses the current data structure, proceed with the checks
 if(!$old_structure)
 {
-  // Include pages that are required to check user rights
-  include_once 'users.inc.php';         // User rights management
+  // Include user rights management
+  include_once 'users.inc.php';
 
   // Only allow admins to use this page
   if(!user_is_administrator())
@@ -1806,4 +1806,39 @@ if($last_query < 31)
           SET     nbdb_web_definitions.definition_fr = REPLACE(nbdb_web_definitions.definition_fr, '/galerie]]', '/gallery]]') ");
 
   sql_update_query_id(31);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #544 - Add soft deletion capacity to most website elements
+
+if($last_query < 32)
+{
+  sql_create_field('dev_blogs', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('dev_tasks', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+
+  sql_delete_field('forum_messages', 'deleted_message');
+  sql_create_field('forum_messages', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('forum_threads', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+
+  sql_create_field('logs_activity', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+
+  sql_create_field('meetups', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+
+  sql_create_field('nbdb_web_definitions', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('nbdb_web_images', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('nbdb_web_pages', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+
+  sql_create_field('quotes', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+
+  sql_create_field('users', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('users_private_messages', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+
+  sql_create_field('writings_comments', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('writings_contests', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('writings_texts', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+
+  sql_update_query_id(32);
 }

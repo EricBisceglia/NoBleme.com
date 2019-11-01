@@ -3,15 +3,12 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/queries.inc.php';  // Run all queries awaiting execution
-include_once './../../inc/includes.inc.php'; // Common inclusions
+include_once './../../inc/queries.inc.php';  # Run all queries awaiting execution
+include_once './../../inc/includes.inc.php'; # Core
+include_once './../../lang/dev.lang.php';    # Translations
 
 // Limit page access rights
 user_restrict_to_administrators($lang);
-
-// Translations and available languages
-include_once './../../lang/dev.lang.php';
-$page_lang = array('FR', 'EN');
 
 // Menus
 $header_menu      = 'Dev';
@@ -20,7 +17,8 @@ $header_sidemenu  = 'SQL';
 // User activity
 $page_name = "admin";
 
-// Title and description
+// Page summary
+$page_lang  = array('EN', 'FR');
 $page_title = __('dev_queries_page_title');
 
 // Extra CSS

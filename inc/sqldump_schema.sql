@@ -24,6 +24,7 @@ USE `nobleme`;
 DROP TABLE IF EXISTS `dev_blogs`;
 CREATE TABLE IF NOT EXISTS `dev_blogs` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `posted_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -33,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `dev_blogs` (
 DROP TABLE IF EXISTS `dev_tasks`;
 CREATE TABLE IF NOT EXISTS `dev_tasks` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `fk_users` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `created_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `finished_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -97,12 +99,12 @@ CREATE TABLE IF NOT EXISTS `forum_categories_filters` (
 DROP TABLE IF EXISTS `forum_messages`;
 CREATE TABLE IF NOT EXISTS `forum_messages` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `fk_forum_threads` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `fk_forum_messages_parent` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `fk_author` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `posted_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `edited_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `deleted_message` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_author` (`fk_author`),
@@ -113,6 +115,7 @@ CREATE TABLE IF NOT EXISTS `forum_messages` (
 DROP TABLE IF EXISTS `forum_threads`;
 CREATE TABLE IF NOT EXISTS `forum_threads` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `fk_users_author` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `fk_users_last_message` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `fk_forum_categories` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -148,6 +151,7 @@ CREATE TABLE IF NOT EXISTS `irc_channels` (
 DROP TABLE IF EXISTS `logs_activity`;
 CREATE TABLE IF NOT EXISTS `logs_activity` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `fk_users` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `happened_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `is_administrators_only` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
@@ -177,6 +181,7 @@ CREATE TABLE IF NOT EXISTS `logs_activity_details` (
 DROP TABLE IF EXISTS `meetups`;
 CREATE TABLE IF NOT EXISTS `meetups` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `event_date` date NOT NULL DEFAULT '0000-00-00',
   `location` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `event_reason_en` varchar(105) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -225,6 +230,7 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_categories` (
 DROP TABLE IF EXISTS `nbdb_web_definitions`;
 CREATE TABLE IF NOT EXISTS `nbdb_web_definitions` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `title_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `redirection_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -254,6 +260,7 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_eras` (
 DROP TABLE IF EXISTS `nbdb_web_images`;
 CREATE TABLE IF NOT EXISTS `nbdb_web_images` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `uploaded_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `file_name` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tags` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -266,6 +273,7 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_images` (
 DROP TABLE IF EXISTS `nbdb_web_pages`;
 CREATE TABLE IF NOT EXISTS `nbdb_web_pages` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `fk_nbdb_web_eras` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `title_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -301,6 +309,7 @@ CREATE TABLE IF NOT EXISTS `nbdb_web_pages_categories` (
 DROP TABLE IF EXISTS `quotes`;
 CREATE TABLE IF NOT EXISTS `quotes` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `fk_users_submitter` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `admin_validation` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `submitted_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -345,7 +354,7 @@ CREATE TABLE IF NOT EXISTS `system_scheduler` (
 
 DROP TABLE IF EXISTS `system_variables`;
 CREATE TABLE IF NOT EXISTS `system_variables` (
-  `update_in_progress` int(10) UNSIGNED NOT NULL,
+  `update_in_progress` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `latest_query_id` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
   `last_scheduler_execution` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `last_pageview_check` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -365,6 +374,7 @@ CREATE TABLE IF NOT EXISTS `system_versions` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `nickname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_administrator` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
@@ -414,6 +424,7 @@ CREATE TABLE IF NOT EXISTS `users_login_attempts` (
 DROP TABLE IF EXISTS `users_private_messages`;
 CREATE TABLE IF NOT EXISTS `users_private_messages` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `fk_users_recipient` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `fk_users_sender` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `sent_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -467,6 +478,7 @@ CREATE TABLE IF NOT EXISTS `users_stats` (
 DROP TABLE IF EXISTS `writings_comments`;
 CREATE TABLE IF NOT EXISTS `writings_comments` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `fk_writings_texts` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `fk_users` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `posted_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -482,6 +494,7 @@ CREATE TABLE IF NOT EXISTS `writings_comments` (
 DROP TABLE IF EXISTS `writings_contests`;
 CREATE TABLE IF NOT EXISTS `writings_contests` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `fk_users_winner` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `fk_writings_texts_winner` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `started_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -511,15 +524,16 @@ CREATE TABLE IF NOT EXISTS `writings_contests_votes` (
 DROP TABLE IF EXISTS `writings_texts`;
 CREATE TABLE IF NOT EXISTS `writings_texts` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `fk_users` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `fk_writings_contests` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `is_anonymous` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `created_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `edited_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `desired_feedback_level` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `average_rating` decimal(2,1) NOT NULL DEFAULT '0.0',
   `character_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_author` (`fk_users`,`is_anonymous`),

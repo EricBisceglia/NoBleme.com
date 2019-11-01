@@ -130,3 +130,5 @@ ___('activity_delete', 'EN', "Are you sure you want to delete this activity log?
 ___('activity_delete', 'FR', "Êtes-vous sûr de vouloir supprimer ce log d'activité ?");
 ___('activity_deleted', 'EN', "THIS ACTIVITY LOG HAS BEEN DELETED");
 ___('activity_deleted', 'FR', "CE LOG D'ACTIVITÉ A ÉTÉ SUPPRIMÉ");
+___('activity_restored', 'EN', "THIS ACTIVITY LOG HAS BEEN RESTORED");
+___('activity_restored', 'FR', "CE LOG D'ACTIVITÉ A ÉTÉ RÉTABLI");

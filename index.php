@@ -3,11 +3,8 @@
 /*                                                   PAGE SETTINGS                                                   */
 /*                                                                                                                   */
 // Inclusions /*******************************************************************************************************/
-include_once './inc/includes.inc.php'; // Common inclusions
-
-// Translations and available languages
-include_once './lang/nobleme.lang.php';
-$page_lang = array('FR', 'EN');
+include_once './inc/includes.inc.php';  # Core
+include_once './lang/nobleme.lang.php'; # Translations
 
 // Menus
 $header_menu      = 'NoBleme';
@@ -17,7 +14,8 @@ $header_sidemenu  = 'Homepage';
 $page_name    = "index";
 $page_url     = "index";
 
-// Title and description
+// Page summary
+$page_lang        = array('EN', 'FR');
 $page_title       = __('nobleme_home_page_title');
 $page_description = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
 

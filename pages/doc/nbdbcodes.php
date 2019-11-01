@@ -8,7 +8,7 @@ include './../../inc/functions_nbdb.inc.php';     // Inclusions liées à la NBD
 include './../../inc/bbcodes.inc.php';
 
 // Permissions
-user_restrict_to_administrators();
+user_restrict_to_administrators($lang);
 
 // Menus du header
 $header_menu      = 'NoBleme';

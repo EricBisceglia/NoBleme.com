@@ -23,11 +23,10 @@ user_restrict_to_administrators($lang);
 /*********************************************************************************************************************/
 
 // Sanitize postdata
-$log_id         = sanitize_input('POST', 'log_id', 'int', 0, 0);
-$deletion_type  = sanitize_input('POST', 'deletion_type', 'int', 0, 0, 1);
+$log_id = sanitize_input('POST', 'log_id', 'int', 0, 0);
 
-// Delete the activity log
-activity_delete_log($log_id, $deletion_type);
+// Restore the activity log
+activity_restore_log($log_id);
 
 
 
@@ -38,6 +37,6 @@ activity_delete_log($log_id, $deletion_type);
 /*                                                                                                                   */
 /******************************************************************************************************************/ ?>
 
-<td colspan="3" class="negative text_white bold">
-  <?=__('activity_deleted')?>
+<td colspan="3" class="positive text_white bold">
+  <?=__('activity_restored')?>
 </td>

@@ -71,10 +71,19 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $path='./../../
   else if($type == 'dev')
     $qlogs .= " AND       logs_activity.activity_type LIKE 'dev_%' ";
 
-  // Group, sort, and limit the results
+  // Show deleted logs on request
+  if($type == 'deleted')
+    $qlogs .= " AND       logs_activity.deleted = 1 ";
+  else
+    $qlogs .= " AND       logs_activity.deleted = 0 ";
+
+  // Group and sort the results
   $qlogs .= "   GROUP BY  logs_activity.id
-                ORDER BY  logs_activity.happened_at DESC
-                LIMIT     $amount ";
+                ORDER BY  logs_activity.happened_at DESC ";
+
+  // Limit the amount of results if needed
+  if($type != 'deleted')
+    $qlogs .= " LIMIT     $amount ";
 
   // Run the query
   $qlogs = query($qlogs);
@@ -88,7 +97,7 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $path='./../../
     // Prepare the data
     $data[$i]['id']       = $row['l_id'];
     $data[$i]['date']     = time_since($row['l_date']);
-    $data[$i]['css']      = $parsed_row['css'];
+    $data[$i]['css']      = ($type != 'deleted') ? $parsed_row['css'] : 'website_update_background text_negative';
     $data[$i]['href']     = $parsed_row['href'];
     $data[$i]['text']     = $parsed_row[$lang];
     $data[$i]['details']  = ($row['l_reason'] || $row['l_details']) ? 1 : 0;
@@ -166,24 +175,54 @@ function activity_get_details($log_id)
 /**
  * Deletes an activity log.
  *
- * @param   int   $log_id   The id of the log which will be deleted.
+ * @param   int       $log_id         The id of the log which will be deleted.
+ * @param   bool|null $deletion_type  Performs a soft (0) or hard (1) delete.
  *
  * @return  void
  */
 
-function activity_delete_log($log_id)
+function activity_delete_log($log_id, $deletion_type=0)
 {
   // Sanitize the data
   $log_id = sanitize($log_id, 'int', 0);
 
-  // Delete the activity log
-  query(" DELETE FROM logs_activity
-          WHERE       logs_activity.id = '$log_id'  ");
+  // If requested, soft delete the activity log
+  if(!$deletion_type)
+    query(" UPDATE  logs_activity
+            SET     logs_activity.deleted = 1
+            WHERE   logs_activity.id      = '$log_id' ");
 
-  // Delete any potential log details
-  query(" DELETE FROM logs_activity_details
-          WHERE       logs_activity_details.fk_logs_activity = '$log_id' ");
+  // Otherwise, hard delete the activity log and any potential log details
+  else
+  {
+    query(" DELETE FROM logs_activity
+            WHERE       logs_activity.id = '$log_id' ");
+    query(" DELETE FROM logs_activity_details
+            WHERE       logs_activity_details.fk_logs_activity = '$log_id' ");
+  }
 
-  // Run a purge of orphan logs, just in case
+  // Purge all existing orphan logs, just in case
   log_activity_purge_orphan_diffs();
+}
+
+
+
+
+/**
+ * Restores a soft deleted activity log.
+ *
+ * @param   int   $log_id   The id of the log which will be restored.
+ *
+ * @return  void
+ */
+
+function activity_restore_log($log_id)
+{
+  // Sanitize the data
+  $log_id = sanitize($log_id, 'int', 0);
+
+  // Restore the activity log
+  query(" UPDATE  logs_activity
+          SET     logs_activity.deleted = 0
+          WHERE   logs_activity.id      = '$log_id' ");
 }

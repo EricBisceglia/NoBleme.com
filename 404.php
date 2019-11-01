@@ -3,12 +3,8 @@
 /*                                                   PAGE SETTINGS                                                   */
 /*                                                                                                                   */
 // Inclusions /*******************************************************************************************************/
-include_once './inc/includes.inc.php'; // Common inclusions
-
-// Translations and available languages
-include_once './lang/nobleme.lang.php';
-$page_lang = array('FR', 'EN');
-
+include_once './../../inc/includes.inc.php';  # Core
+include_once './../../lang/nobleme.lang.php'; # Translations
 // Menus
 $header_menu      = 'NoBleme';
 $header_sidemenu  = 'Homepage';
@@ -17,7 +13,8 @@ $header_sidemenu  = 'Homepage';
 $page_name  = "404";
 $page_url   = "404";
 
-// Title and description
+// Page summary
+$page_lang        = array('EN', 'FR');
 $page_title       = __('nobleme_404_page_title');
 $page_description = __('nobleme_404_description');
 
@@ -25,10 +22,19 @@ $page_description = __('nobleme_404_description');
 $css = array('404');
 $js  = array('404');
 
-// In order to make it a hard 404
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     BACK END                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Make the page a hard 404
 header("HTTP/1.0 404 Not Found");
 
-// In order to trigger the 404 error
+// Inform the header that this is a 404
 $this_page_is_a_404 = '';
 
 

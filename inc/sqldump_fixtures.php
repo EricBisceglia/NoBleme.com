@@ -330,6 +330,7 @@ $random = mt_rand(500,1000);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $deleted      = (mt_rand(0,50) < 50) ? 0 : 1;
   $username     = ucfirst(fixtures_generate_data('string', 3, 15));
   $current_ip   = fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255);
   $email        = $username.'@localhost';
@@ -353,7 +354,8 @@ for($i = 0; $i < $random; $i++)
   {
     // Generate the users
     query(" INSERT INTO users
-            SET         users.nickname            = '$username'   ,
+            SET         users.deleted             = '$deleted'    ,
+                        users.nickname            = '$username'   ,
                         users.password            = ''            ,
                         users.last_visited_at     = '$last_visit' ,
                         users.current_ip_address  = '$current_ip' ");
@@ -392,6 +394,7 @@ $random = mt_rand(1500,3000);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $deleted    = (mt_rand(0,5) < 5) ? 0 : 1;
   $recipient  = fixtures_fetch_random_id('users');
   $sender     = (mt_rand(0,1)) ? fixtures_fetch_random_id('users') : 0;
   $sent_at    = mt_rand(1111239420, time());
@@ -401,7 +404,8 @@ for($i = 0; $i < $random; $i++)
 
   // Generate the private messages
   query(" INSERT INTO users_private_messages
-          SET         users_private_messages.fk_users_recipient = '$recipient'  ,
+          SET         users_private_messages.deleted            = '$deleted'    ,
+                      users_private_messages.fk_users_recipient = '$recipient'  ,
                       users_private_messages.fk_users_sender    = '$sender'     ,
                       users_private_messages.sent_at            = '$sent_at'    ,
                       users_private_messages.read_at            = '$read_at'    ,
@@ -426,13 +430,15 @@ $random = mt_rand(25, 75);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $deleted    = (mt_rand(0,15) < 15) ? 0 : 1;
   $posted_at  = mt_rand(1111239420, time());
   $title      = fixtures_generate_data('sentence', 4, 7);
   $body       = fixtures_generate_data('text', 1, 5);
 
   // Generate the devblogs
   query(" INSERT INTO dev_blogs
-          SET         dev_blogs.posted_at = '$posted_at'  ,
+          SET         dev_blogs.deleted   = '$deleted'    ,
+                      dev_blogs.posted_at = '$posted_at'  ,
                       dev_blogs.title     = '$title'      ,
                       dev_blogs.body      = '$body'       ");
 }
@@ -481,6 +487,7 @@ $random = mt_rand(250,500);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $deleted          = (mt_rand(0,25) < 25) ? 0 : 1;
   $fk_users         = (mt_rand(0,4) < 4) ? 1 : fixtures_fetch_random_id('users');
   $created_at       = mt_rand(1111239420, time());
   $finished_at      = (mt_rand(0,4) < 4) ? mt_rand($created_at, time()) : 0;
@@ -498,7 +505,8 @@ for($i = 0; $i < $random; $i++)
 
   // Generate the tasks
   query(" INSERT INTO dev_tasks
-          SET         dev_tasks.fk_users                = '$fk_users'         ,
+          SET         dev_tasks.deleted                 = '$deleted'          ,
+                      dev_tasks.fk_users                = '$fk_users'         ,
                       dev_tasks.created_at              = '$created_at'       ,
                       dev_tasks.finished_at             = '$finished_at'      ,
                       dev_tasks.admin_validation        = '$admin_validation' ,
@@ -527,6 +535,7 @@ $random = mt_rand(50,100);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $deleted    = (mt_rand(0,15) < 15) ? 0 : 1;
   $event_date = mt_rand(2005,date('Y')).'-'.mt_rand(1,12).'-'.mt_rand(1,28);
   $location   = fixtures_generate_data('string', 5, 15);
   $reason_en  = (mt_rand(0,3) < 3) ? '' : fixtures_generate_data('sentence', 1, 4);
@@ -536,7 +545,8 @@ for($i = 0; $i < $random; $i++)
 
   // Generate the meetups
   query(" INSERT INTO meetups
-          SET         meetups.event_date      = '$event_date' ,
+          SET         meetups.deleted         = '$deleted'    ,
+                      meetups.event_date      = '$event_date' ,
                       meetups.location        = '$location'   ,
                       meetups.event_reason_en = '$reason_en'  ,
                       meetups.event_reason_fr = '$reason_fr'  ,
@@ -587,6 +597,7 @@ $random = mt_rand(200,400);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $deleted    = (mt_rand(0,10) < 10) ? 0 : 1;
   $submitter  = fixtures_fetch_random_id('users');
   $validated  = (mt_rand(0,50) < 50) ? 1 : 0;
   $submitted  = mt_rand(1111239420, time());
@@ -596,7 +607,8 @@ for($i = 0; $i < $random; $i++)
 
   // Generate the quotes
   query(" INSERT INTO quotes
-          SET         quotes.fk_users_submitter = '$submitter'  ,
+          SET         quotes.deleted            = '$deleted'    ,
+                      quotes.fk_users_submitter = '$submitter'  ,
                       quotes.admin_validation   = '$validated'  ,
                       quotes.submitted_at       = '$submitted'  ,
                       quotes.is_nsfw            = '$nsfw'       ,
@@ -662,6 +674,7 @@ $random = mt_rand(200,400);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $deleted    = (mt_rand(0,25) < 25) ? 0 : 1;
   $author     = fixtures_fetch_random_id('users');
   $category   = fixtures_fetch_random_id('forum_categories');
   $created_at = mt_rand(1111239420, time());
@@ -675,7 +688,8 @@ for($i = 0; $i < $random; $i++)
 
   // Generate the threads
   query(" INSERT INTO forum_threads
-          SET         forum_threads.fk_users_author     = '$author'     ,
+          SET         forum_threads.deleted             = '$deleted'    ,
+                      forum_threads.fk_users_author     = '$author'     ,
                       forum_threads.fk_forum_categories = '$category'   ,
                       forum_threads.created_at          = '$created_at' ,
                       forum_threads.thread_format       = '$format'     ,
@@ -695,6 +709,7 @@ for($i = 0; $i < $random; $i++)
   for($j = 0; $j < $random2; $j++)
   {
     // Generate random data
+    $deleted    = ($j && mt_rand(0,5) < 5) ? 0 : 1;
     $author2    = (!$j) ? $author : fixtures_fetch_random_id('users');
     $posted_at  = mt_rand($posted_at, time());
     $edited_at  = (mt_rand(0,10) < 10) ? 0 : mt_rand($posted_at, time());
@@ -702,7 +717,8 @@ for($i = 0; $i < $random; $i++)
 
     // Generate the message
     query(" INSERT INTO forum_messages
-            SET         forum_messages.fk_forum_threads = '$thread'     ,
+            SET         forum_messages.deleted          = '$deleted'    ,
+                        forum_messages.fk_forum_threads = '$thread'     ,
                         forum_messages.fk_author        = '$author2'    ,
                         forum_messages.posted_at        = '$posted_at'  ,
                         forum_messages.edited_at        = '$edited_at'  ,
@@ -742,6 +758,7 @@ $random = mt_rand(50,100);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $deleted    = (mt_rand(0,10) < 10) ? 0 : 1;
   $user       = fixtures_fetch_random_id('users');
   $contest    = 0;
   $anonymous  = (mt_rand(0,5) < 5) ? 0 : 1;
@@ -754,7 +771,8 @@ for($i = 0; $i < $random; $i++)
 
   // Generate the writings
   query(" INSERT INTO writings_texts
-          SET         writings_texts.fk_users               = '$user'       ,
+          SET         writings_texts.deleted                = '$deleted'    ,
+                      writings_texts.fk_users               = '$user'       ,
                       writings_texts.is_anonymous           = '$anonymous'  ,
                       writings_texts.created_at             = '$created_at' ,
                       writings_texts.edited_at              = '$edited_at'  ,
@@ -776,6 +794,7 @@ for($i = 0; $i < $random; $i++)
     for($j = 0; $j < $random2; $j++)
     {
       // Generate random data
+      $deleted      = (mt_rand(0,5) < 5) ? 0 : 1;
       $user2        = fixtures_fetch_random_id('users');
       $posted_at    = mt_rand($created_at, time());
       $rating       = mt_rand(0,5);
@@ -788,7 +807,8 @@ for($i = 0; $i < $random; $i++)
       {
         array_push($user_list, $user2);
         query(" INSERT INTO writings_comments
-                SET         writings_comments.fk_writings_texts = '$text'       ,
+                SET         writings_comments.deleted           = '$deleted'    ,
+                            writings_comments.fk_writings_texts = '$text'       ,
                             writings_comments.fk_users          = '$user2'      ,
                             writings_comments.posted_at         = '$posted_at'  ,
                             writings_comments.rating            = '$rating'     ,
@@ -825,6 +845,7 @@ for($i = 1; $i < $random; $i++)
           LIMIT     $random2 ");
 
   // Generate random data
+  $deleted  = (mt_rand(0,5) < 5) ? 0 : 1;
   $started  = mt_rand(1111239420, time());
   $ended    = mt_rand($started, time());
   $entries  = $random2;
@@ -833,7 +854,8 @@ for($i = 1; $i < $random; $i++)
 
   // Generate the contest
   query(" INSERT INTO writings_contests
-          SET         writings_contests.id            = '$i'        ,
+          SET         writings_contests.deleted       = '$deleted'  ,
+                      writings_contests.id            = '$i'        ,
                       writings_contests.started_at    = '$started'  ,
                       writings_contests.ended_at      = '$ended'    ,
                       writings_contests.nb_entries    = '$entries'  ,
@@ -914,6 +936,7 @@ $random         = mt_rand(100,200);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $deleted      = (mt_rand(0,20) < 20) ? 0 : 1;
   $title_en     = ucfirst(fixtures_generate_data('sentence', 1, 6));
   $title_fr     = ucfirst(fixtures_generate_data('sentence', 1, 6));
   $is_nsfw      = (mt_rand(0,5) < 5) ? 0 : 1;
@@ -930,7 +953,8 @@ for($i = 0; $i < $random; $i++)
     array_push($definitions_en, $title_en);
     array_push($definitions_fr, $title_fr);
     query(" INSERT INTO nbdb_web_definitions
-            SET         nbdb_web_definitions.title_en                 = '$title_en'     ,
+            SET         nbdb_web_definitions.deleted                  = '$deleted'      ,
+                        nbdb_web_definitions.title_en                 = '$title_en'     ,
                         nbdb_web_definitions.title_fr                 = '$title_fr'     ,
                         nbdb_web_definitions.is_nsfw                  = '$is_nsfw'      ,
                         nbdb_web_definitions.is_gross                 = '$is_gross'     ,
@@ -956,6 +980,7 @@ while($ddefinitions = mysqli_fetch_array($qdefinitions))
                                                       nbdb_web_definitions.title_fr AS 'd_title_fr'
                                             FROM      nbdb_web_definitions
                                             WHERE     nbdb_web_definitions.id            != '$definition'
+                                            AND       nbdb_web_definitions.deleted        = 0
                                             AND       nbdb_web_definitions.redirection_en = ''
                                             ORDER BY  RAND()
                                             LIMIT     1 "));
@@ -1024,6 +1049,7 @@ $random         = mt_rand(100,200);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $deleted      = (mt_rand(0,20) < 20) ? 0 : 1;
   $era          = fixtures_fetch_random_id('nbdb_web_eras');
   $title_en     = ucfirst(fixtures_generate_data('sentence', 1, 6));
   $title_fr     = ucfirst(fixtures_generate_data('sentence', 1, 6));
@@ -1045,7 +1071,8 @@ for($i = 0; $i < $random; $i++)
     array_push($page_titles_en, $title_en);
     array_push($page_titles_fr, $title_fr);
     query(" INSERT INTO nbdb_web_pages
-            SET         nbdb_web_pages.fk_nbdb_web_eras         = '$era'          ,
+            SET         nbdb_web_pages.deleted                  = '$deleted'      ,
+                        nbdb_web_pages.fk_nbdb_web_eras         = '$era'          ,
                         nbdb_web_pages.title_en                 = '$title_en'     ,
                         nbdb_web_pages.title_fr                 = '$title_fr'     ,
                         nbdb_web_pages.appeared_in_year         = '$appeared_y'   ,
@@ -1095,6 +1122,7 @@ while($dpages = mysqli_fetch_array($qpages))
                                                     nbdb_web_pages.title_fr AS 'p_title_fr'
                                           FROM      nbdb_web_pages
                                           WHERE     nbdb_web_pages.id            != '$page'
+                                          AND       nbdb_web_pages.deleted        = 0
                                           AND       nbdb_web_pages.redirection_en = ''
                                           ORDER BY  RAND()
                                           LIMIT     1 "));
@@ -1119,6 +1147,7 @@ $random = mt_rand(50,100);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $deleted      = (mt_rand(0,15) < 15) ? 0 : 1;
   $uploaded_at  = mt_rand(1111239420, time());
   $file_name    = str_replace(' ', '', fixtures_generate_data('string', 5, 15)).'.png';
   $tags         = (mt_rand(0,2) < 2) ? fixtures_generate_data('string', 5, 15) : '';
@@ -1128,7 +1157,8 @@ for($i = 0; $i < $random; $i++)
 
   // Generate the image placeholders
   query(" INSERT INTO nbdb_web_images
-          SET         nbdb_web_images.uploaded_at = '$uploaded_at'  ,
+          SET         nbdb_web_images.deleted     = '$deleted'      ,
+                      nbdb_web_images.uploaded_at = '$uploaded_at'  ,
                       nbdb_web_images.file_name   = '$file_name'    ,
                       nbdb_web_images.tags        = '$tags'         ,
                       nbdb_web_images.is_nsfw     = '$nsfw'         ");

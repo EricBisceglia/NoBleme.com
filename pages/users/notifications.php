@@ -7,7 +7,7 @@ include './../../inc/includes.inc.php'; // Inclusions communes
 include './../../inc/functions_time.inc.php';
 
 // Permissions
-user_restrict_to_users();
+user_restrict_to_users($lang);
 
 // Menus du header
 $header_menu      = 'User';

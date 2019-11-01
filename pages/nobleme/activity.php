@@ -57,8 +57,22 @@ $activity_modlogs = isset($_GET['mod']);
 $activity_amount  = sanitize_input('POST', 'activity_amount', 'int', 100, 100, 1000);
 $activity_type    = sanitize_input('POST', 'activity_type', 'string', 'all');
 
+// Only allow admins to see deleted activity
+if($activity_type == 'deleted' && !$is_admin)
+  $activity_type = 'all';
+
 // Fetch the activity logs
 $activity_logs = activity_get_logs($activity_modlogs, $activity_amount, $activity_type, $path, $lang);
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Set deletion type to soft or hard depending on the view
+
+$deletion_type = ($activity_type == 'deleted' && $is_admin) ? 1 : 0;
+
+
 
 
 
@@ -75,12 +89,22 @@ if(!page_is_xhr()) { /*******************************************************/ i
 
         <h1 class="align_center bigpadding_bot">
           <?=__('activity_page_title')?>
+
+          <?php if($is_admin) { ?>
+          <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$path?>', '<?=$xhr_logs_url?>', 1);">
+          <?php } ?>
+
         </h1>
 
         <?php } else { ?>
 
         <h1 class="align_center padding_bot">
           <?=__('activity_page_title_modlogs')?>
+
+          <?php if($is_admin) { ?>
+          <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$path?>', '<?=$xhr_logs_url?>', 1);">
+          <?php } ?>
+
         </h1>
 
         <p class="bigpadding_bot">
@@ -144,11 +168,17 @@ if(!page_is_xhr()) { /*******************************************************/ i
 
               <?php if($is_admin || $activity_modlogs) { ?>
               <td class="<?=$activity_logs[$i]['css']?>">
+
                 <?php if($activity_logs[$i]['details']) { ?>
                 <img class="valign_center spaced pointer" src="<?=$path?>img/icons/help.svg" height="16" alt="?" onclick="activity_show_details('<?=$path?>', '<?=$activity_logs[$i]['id']?>');">
                 <?php } if($is_admin) { ?>
-                <img class="valign_center pointer spaced_right" src="<?=$path?>img/icons/delete.svg" height="16" alt="X" onclick="activity_delete_log('<?=$path?>', '<?=$activity_logs[$i]['id']?>', '<?=addslashes(__('activity_delete'))?>');">
+
+                <?php if($deletion_type) { ?>
+                <img class="valign_center pointer spaced_right" src="<?=$path?>img/icons/reload.svg" height="16" alt="R" onclick="activity_restore_log('<?=$path?>', '<?=$activity_logs[$i]['id']?>');">
                 <?php } ?>
+                <img class="valign_center pointer spaced_right" src="<?=$path?>img/icons/delete.svg" height="16" alt="X" onclick="activity_delete_log('<?=$path?>', '<?=$activity_logs[$i]['id']?>', '<?=addslashes(__('activity_delete'))?>', '<?=$deletion_type?>');">
+                <?php } ?>
+
               </td>
               <?php } ?>
 
@@ -178,53 +208,3 @@ if(!page_is_xhr()) { /*******************************************************/ i
 /*                                                    END OF PAGE                                                    */
 /*                                                                                                                   */
 include './../../inc/footer.inc.php'; /*****************************************************************************/ }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-if(false) {
-
-
-
-
-// Suppression d'une entrée dans la liste
-if(isset($_POST['activite_delete']) && $est_admin)
-{
-  $activite_delete = postdata($_POST['activite_delete']);
-  query(" DELETE FROM activite      WHERE activite.id               = '$activite_delete' ");
-  query(" DELETE FROM activite_diff WHERE activite_diff.FKactivite  = '$activite_delete' ");
-}
-
-
-
-
-if(!page_is_xhr()) { /*********************************************************************************/ include './../../inc/header.inc.php';?>
-
-
-
-
-                <img class="valign_center" src="<?=$path?>img/icones/supprimer.svg" alt="X"
-                      onclick="var ok = confirm('Confirmation'); if(ok == true) {
-                      dynamique('<?=$path?>', '<?=$activite_dynamique_url?>', 'activite_table',
-                      'activite_num='+dynamique_prepare('activite_num')+
-                      '&activite_type='+dynamique_prepare('activite_type')+
-                      '&activite_delete='+<?=$activite_id[$i]?>, 1); }">
-<?php } } ?>
