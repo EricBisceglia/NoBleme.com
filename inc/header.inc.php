@@ -380,19 +380,19 @@ $javascripts .= '
           </div>
         </a>
 
-        <a class="header_topmenu_link" href="<?=$path?>pages/irc/index">
+        <a class="header_topmenu_link" href="<?=$path?>index_temp_talk">
           <div class="<?=header_menu_css('Talk',$header_menu,'top')?>">
             <?=__('menu_top_talk')?>
           </div>
         </a>
 
-        <a class="header_topmenu_link" href="<?=$path?>pages/nbdb/index">
+        <a class="header_topmenu_link" href="<?=$path?>index_temp_read">
           <div class="<?=header_menu_css('Read',$header_menu,'top')?>">
             <?=__('menu_top_read')?>
           </div>
         </a>
 
-        <a class="header_topmenu_link" href="<?=$path?>pages/nbrpg/index">
+        <a class="header_topmenu_link" href="<?=$path?>index_temp_play">
           <div class="<?=header_menu_css('Play',$header_menu,'top')?>">
           <?=__('menu_top_play')?>
           </div>
@@ -406,7 +406,7 @@ $javascripts .= '
         </a>
 
         <?php } if($is_admin) { ?>
-        <a class="header_topmenu_link" href="<?=$path?>pages/dev/ircbot">
+        <a class="header_topmenu_link" href="<?=$path?>index_temp_dev">
           <div class="<?=header_menu_css('Dev',$header_menu,'top')?>">
             <?=__('menu_top_dev')?>
           </div>
@@ -436,7 +436,7 @@ $javascripts .= '
             if($nb_private_messages) { ?>
 
       <div class="header_topmenu_zone">
-        <a id="header_infobar_notification" class="header_infobar_link header_infobar_notification" href="<?=$path?>pages/users/notifications">
+        <a id="header_infobar_notification" class="header_infobar_link header_infobar_notification" href="<?=$path?>index_temp_users">
           <?=__('header_status_message', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
         </a>
       </div>
@@ -444,7 +444,7 @@ $javascripts .= '
       <?php } else { ?>
 
       <div class="header_topmenu_zone">
-        <a id="header_infobar_notification"  class="header_infobar_link" href="<?=$path?>pages/users/notifications">
+        <a id="header_infobar_notification"  class="header_infobar_link" href="<?=$path?>index_temp_users">
           <?=__('header_status_logged_in', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
         </a>
       </div>
@@ -550,39 +550,33 @@ $javascripts .= '
               <?=__('menu_side_nobleme_community')?>
             </div>
 
-            <a href="<?=$path?>pages/nobleme/online?noguest">
-              <div class="<?=header_menu_css('Online',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Online',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_online')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/nobleme/admins">
-              <div class="<?=header_menu_css('Staff',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Staff',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_staff')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/nobleme/membres">
-              <div class="<?=header_menu_css('Userlist',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Userlist',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_userlist')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/nobleme/anniversaires">
-              <div class="<?=header_menu_css('Birthdays',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Birthdays',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_birthdays')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/irl/index">
-              <div class="<?=header_menu_css('Meetups',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Meetups',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_meetups')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>pages/irl/stats">
-              <div class="<?=header_menu_css('Meetupsstats',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_meetup_stats')?>
               </div>
             </a>
 
@@ -592,32 +586,32 @@ $javascripts .= '
               <?=__('menu_side_nobleme_help')?>
             </div>
 
-            <a href="<?=$path?>pages/doc/index">
-              <div class="<?=header_menu_css('Documentation',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Documentation',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_documentation')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/doc/nobleme">
-              <div class="<?=header_menu_css('Whatsnobleme',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Whatsnobleme',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_what_is')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/doc/coc">
-              <div class="<?=header_menu_css('COC',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('COC',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_coc')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/doc/api">
-              <div class="<?=header_menu_css('API',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('API',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_api')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/doc/rss">
-              <div class="<?=header_menu_css('RSS',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('RSS',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_rss')?>
               </div>
             </a>
@@ -628,38 +622,38 @@ $javascripts .= '
               <?=__('menu_side_nobleme_dev')?>
             </div>
 
-            <a href="<?=$path?>pages/nobleme/coulisses">
-              <div class="<?=header_menu_css('Behindscenes',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Behindscenes',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_behind_scenes')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/devblog/index">
-              <div class="<?=header_menu_css('Devblog',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Devblog',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_devblog')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/todo/index">
-              <div class="<?=header_menu_css('Todolist',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Todolist',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_todolist')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/todo/roadmap">
-              <div class="<?=header_menu_css('Roadmap',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Roadmap',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_roadmap')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/todo/request?bug">
-              <div class="<?=header_menu_css('Bugreport',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Bugreport',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_report_bug')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/todo/request">
-              <div class="<?=header_menu_css('Featurerequest',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Featurerequest',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_feature')?>
               </div>
             </a>
@@ -670,20 +664,20 @@ $javascripts .= '
               <?=__('menu_side_nobleme_legal')?>
             </div>
 
-            <a href="<?=$path?>pages/doc/mentions_legales">
-              <div class="<?=header_menu_css('Privacy',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Privacy',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_privacy')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/doc/donnees_personnelles">
-              <div class="<?=header_menu_css('Personaldata',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Personaldata',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_personal_data')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/doc/droit_oubli">
-              <div class="<?=header_menu_css('Forgetme',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Forgetme',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_forget_me')?>
               </div>
             </a>
@@ -694,26 +688,26 @@ $javascripts .= '
               <?=__('menu_side_talk_irc')?>
             </div>
 
-            <a href="<?=$path?>pages/irc/index">
-              <div class="<?=header_menu_css('IRC',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_talk">
+              <div class="strikethrough <?=header_menu_css('IRC',$header_sidemenu,'side')?>">
                 <?=__('menu_side_talk_irc_intro')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/irc/client">
-              <div class="<?=header_menu_css('IRCjoin',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_talk">
+              <div class="strikethrough <?=header_menu_css('IRCjoin',$header_sidemenu,'side')?>">
                 <?=__('menu_side_talk_irc_join')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/irc/services">
-              <div class="<?=header_menu_css('IRCservices',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_talk">
+              <div class="strikethrough <?=header_menu_css('IRCservices',$header_sidemenu,'side')?>">
                 <?=__('menu_side_talk_irc_services')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/irc/canaux">
-              <div class="<?=header_menu_css('IRCchannels',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_talk">
+              <div class="strikethrough <?=header_menu_css('IRCchannels',$header_sidemenu,'side')?>">
                 <?=__('menu_side_talk_irc_channels')?>
               </div>
             </a>
@@ -724,26 +718,26 @@ $javascripts .= '
               <?=__('menu_side_talk_forum')?>
             </div>
 
-            <a href="<?=$path?>pages/forum/index">
-              <div class="<?=header_menu_css('Forum',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_talk">
+              <div class="strikethrough <?=header_menu_css('Forum',$header_sidemenu,'side')?>">
                 <?=__('menu_side_talk_forum_topics')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/forum/new">
-              <div class="<?=header_menu_css('Forumnew',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_talk">
+              <div class="strikethrough <?=header_menu_css('Forumnew',$header_sidemenu,'side')?>">
                 <?=__('menu_side_talk_forum_new')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/forum/recherche">
-              <div class="<?=header_menu_css('Forumsearch',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_talk">
+              <div class="strikethrough <?=header_menu_css('Forumsearch',$header_sidemenu,'side')?>">
                 <?=__('menu_side_talk_forum_search')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/forum/filtres">
-              <div class="<?=header_menu_css('Forumsettings',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_talk">
+              <div class="strikethrough <?=header_menu_css('Forumsettings',$header_sidemenu,'side')?>">
                 <?=__('menu_side_talk_forum_preferences')?>
               </div>
             </a>
@@ -754,32 +748,32 @@ $javascripts .= '
               <?=__('menu_side_read_nbdb')?>
             </div>
 
-            <a href="<?=$path?>pages/nbdb/index">
-              <div class="<?=header_menu_css('NBDB',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_read">
+              <div class="strikethrough <?=header_menu_css('NBDB',$header_sidemenu,'side')?>">
                 <?=__('menu_side_read_nbdb_index')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/nbdb/web">
-              <div class="<?=header_menu_css('NBDBweb',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_read">
+              <div class="strikethrough <?=header_menu_css('NBDBweb',$header_sidemenu,'side')?>">
                 <?=__('menu_side_read_nbdb_web')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/nbdb/web_pages">
-              <div class="<?=header_menu_css('NBDBwebpages',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_read">
+              <div class="strikethrough <?=header_menu_css('NBDBwebpages',$header_sidemenu,'side')?>">
                 <?=__('menu_side_read_nbdb_web_pages')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/nbdb/web?random">
-              <div class="<?=header_menu_css('NBDBwebrandom',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_read">
+              <div class="strikethrough <?=header_menu_css('NBDBwebrandom',$header_sidemenu,'side')?>">
                 <?=__('menu_side_read_nbdb_web_random')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/nbdb/web_dictionnaire">
-              <div class="<?=header_menu_css('NBDBwebdict',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_read">
+              <div class="strikethrough <?=header_menu_css('NBDBwebdict',$header_sidemenu,'side')?>">
                 <?=__('menu_side_read_nbdb_web_dictionary')?>
               </div>
             </a>
@@ -790,26 +784,20 @@ $javascripts .= '
               <?=__('menu_side_read_quotes')?>
             </div>
 
-            <a href="<?=$path?>pages/quotes/index">
-              <div class="<?=header_menu_css('Quotes',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_read">
+              <div class="strikethrough <?=header_menu_css('Quotes',$header_sidemenu,'side')?>">
                 <?=__('menu_side_read_quotes_list')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/quotes/quote?random">
-              <div class="<?=header_menu_css('Quotesrandom',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_read">
+              <div class="strikethrough <?=header_menu_css('Quotesrandom',$header_sidemenu,'side')?>">
                 <?=__('menu_side_read_quotes_random')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/quotes/stats">
-              <div class="<?=header_menu_css('Quotesstats',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_quotes_stats')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>pages/quotes/add">
-              <div class="<?=header_menu_css('Quotessubmit',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_read">
+              <div class="strikethrough <?=header_menu_css('Quotessubmit',$header_sidemenu,'side')?>">
                 <?=__('menu_side_read_quotes_submit')?>
               </div>
             </a>
@@ -820,21 +808,21 @@ $javascripts .= '
               <?=__('menu_side_read_writers')?>
             </div>
 
-            <a href="<?=$path?>pages/ecrivains/index">
-              <div class="<?=header_menu_css('Writers',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_read">
+              <div class="strikethrough <?=header_menu_css('Writers',$header_sidemenu,'side')?>">
                 <?=__('menu_side_read_writers_writings')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/ecrivains/concours_liste">
-              <div class="<?=header_menu_css('Writerscontests',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_writers_contests')?>
+            <a href="<?=$path?>index_temp_read">
+              <div class="strikethrough <?=header_menu_css('Writerspublish',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_writers_publish')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/ecrivains/publier">
-              <div class="<?=header_menu_css('Writerspublish',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_writers_publish')?>
+            <a href="<?=$path?>index_temp_read">
+              <div class="strikethrough <?=header_menu_css('Writerscontests',$header_sidemenu,'side')?>">
+                <?=__('menu_side_read_writers_contests')?>
               </div>
             </a>
 
@@ -844,14 +832,14 @@ $javascripts .= '
               <?=__('menu_side_play_nbrpg')?>
             </div>
 
-            <a href="<?=$path?>pages/nbrpg/index">
-              <div class="<?=header_menu_css('NBRPG',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_play">
+              <div class="strikethrough <?=header_menu_css('NBRPG',$header_sidemenu,'side')?>">
                 <?=__('menu_side_play_nbrpg_intro')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/nbrpg/archives">
-              <div class="<?=header_menu_css('NBRPGarchives',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_play">
+              <div class="strikethrough <?=header_menu_css('NBRPGarchives',$header_sidemenu,'side')?>">
                 <?=__('menu_side_play_nbrpg_archives')?>
               </div>
             </a>
@@ -862,14 +850,14 @@ $javascripts .= '
               <?=__('menu_side_play_nrm')?>
             </div>
 
-            <a href="<?=$path?>pages/nrm/index">
-              <div class="<?=header_menu_css('NRM',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_play">
+              <div class="strikethrough <?=header_menu_css('NRM',$header_sidemenu,'side')?>">
                 <?=__('menu_side_play_nrm_memory')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/nrm/podium">
-              <div class="<?=header_menu_css('NRMpodium',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_play">
+              <div class="strikethrough <?=header_menu_css('NRMpodium',$header_sidemenu,'side')?>">
                 <?=__('menu_side_play_nrm_podium')?>
               </div>
             </a>
@@ -880,8 +868,8 @@ $javascripts .= '
               <?=__('menu_side_play_radikal')?>
             </div>
 
-            <a href="<?=$path?>pages/radikal/hype">
-              <div class="<?=header_menu_css('Radikal',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_play">
+              <div class="strikethrough <?=header_menu_css('Radikal',$header_sidemenu,'side')?>">
                 <?=__('menu_side_play_radikal_next')?>
               </div>
             </a>
@@ -892,20 +880,20 @@ $javascripts .= '
               <?=__('menu_side_user_pms')?>
             </div>
 
-            <a href="<?=$path?>pages/users/notifications">
-              <div class="<?=header_menu_css('PMinbox',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_users">
+              <div class="strikethrough <?=header_menu_css('PMinbox',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_pms_inbox')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/users/notifications?envoyes">
-              <div class="<?=header_menu_css('PMoutbox',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_users">
+              <div class="strikethrough <?=header_menu_css('PMoutbox',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_pms_outbox')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/users/pm">
-              <div class="<?=header_menu_css('PMwrite',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_users">
+              <div class="strikethrough <?=header_menu_css('PMwrite',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_pms_write')?>
               </div>
             </a>
@@ -916,14 +904,14 @@ $javascripts .= '
               <?=__('menu_side_user_profile')?>
             </div>
 
-            <a href="<?=$path?>pages/users/user">
-              <div class="<?=header_menu_css('Profile',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_users">
+              <div class="strikethrough <?=header_menu_css('Profile',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_profile_self')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/users/profil">
-              <div class="<?=header_menu_css('Profileedit',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_users">
+              <div class="strikethrough <?=header_menu_css('Profileedit',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_profile_edit')?>
               </div>
             </a>
@@ -934,38 +922,38 @@ $javascripts .= '
               <?=__('menu_side_user_settings')?>
             </div>
 
-            <a href="<?=$path?>pages/users/privacy">
-              <div class="<?=header_menu_css('Settingsprivacy',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_users">
+              <div class="strikethrough <?=header_menu_css('Settingsprivacy',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_settings_privacy')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/users/nsfw">
-              <div class="<?=header_menu_css('Settingsnsfw',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_users">
+              <div class="strikethrough <?=header_menu_css('Settingsnsfw',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_settings_nsfw')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/users/email">
-              <div class="<?=header_menu_css('Settingsemail',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_users">
+              <div class="strikethrough <?=header_menu_css('Settingsemail',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_settings_email')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/users/pass">
-              <div class="<?=header_menu_css('Settingspassword',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_users">
+              <div class="strikethrough <?=header_menu_css('Settingspassword',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_settings_password')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/users/pseudo">
-              <div class="<?=header_menu_css('Settingsnickname',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_users">
+              <div class="strikethrough <?=header_menu_css('Settingsnickname',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_settings_nickname')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/users/delete">
-              <div class="<?=header_menu_css('Settingsdelete',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_users">
+              <div class="strikethrough <?=header_menu_css('Settingsdelete',$header_sidemenu,'side')?>">
                 <?=__('menu_side_user_settings_delete')?>
               </div>
             </a>
@@ -988,27 +976,21 @@ $javascripts .= '
               <?=__('menu_side_admin_users')?>
             </div>
 
-            <a href="<?=$path?>pages/sysop/pilori">
-              <div class="<?=header_menu_css('Banned',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_banned')?>
+            <a href="<?=$path?>index_temp_admin">
+              <div class="strikethrough <?=header_menu_css('Nickname',$header_sidemenu,'side')?>">
+                <?=__('menu_side_admin_nickname')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/sysop/ban">
-              <div class="<?=header_menu_css('Ban',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_ban')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>pages/sysop/profil">
-              <div class="<?=header_menu_css('Profile',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_profile')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>pages/sysop/pass">
-              <div class="<?=header_menu_css('Password',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_admin">
+              <div class="strikethrough <?=header_menu_css('Password',$header_sidemenu,'side')?>">
                 <?=__('menu_side_admin_password')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>index_temp_admin">
+              <div class="strikethrough <?=header_menu_css('Banned',$header_sidemenu,'side')?>">
+                <?=__('menu_side_admin_banned')?>
               </div>
             </a>
 
@@ -1020,8 +1002,8 @@ $javascripts .= '
               <?=__('menu_side_admin_tools')?>
             </div>
 
-            <a href="<?=$path?>pages/admin/permissions">
-              <div class="<?=header_menu_css('Rights',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_admin">
+              <div class="strikethrough <?=header_menu_css('Rights',$header_sidemenu,'side')?>">
                 <?=__('menu_side_admin_rights')?>
               </div>
             </a>
@@ -1032,14 +1014,14 @@ $javascripts .= '
               <?=__('menu_side_admin_stats')?>
             </div>
 
-            <a href="<?=$path?>pages/admin/pageviews">
-              <div class="<?=header_menu_css('Pageviews',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_admin">
+              <div class="strikethrough <?=header_menu_css('Pageviews',$header_sidemenu,'side')?>">
                 <?=__('menu_side_admin_pageviews')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/admin/doppelganger">
-              <div class="<?=header_menu_css('Doppelganger',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_admin">
+              <div class="strikethrough <?=header_menu_css('Doppelganger',$header_sidemenu,'side')?>">
                 <?=__('menu_side_admin_doppelganger')?>
               </div>
             </a>
@@ -1054,8 +1036,8 @@ $javascripts .= '
               <?=__('menu_side_dev_ircbot')?>
             </div>
 
-            <a href="<?=$path?>pages/dev/ircbot">
-              <div class="<?=header_menu_css('IRCbot',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_dev">
+              <div class="strikethrough <?=header_menu_css('IRCbot',$header_sidemenu,'side')?>">
                 <?=__('menu_side_dev_ircbot_management')?>
               </div>
             </a>
@@ -1066,26 +1048,20 @@ $javascripts .= '
               <?=__('menu_side_dev_website')?>
             </div>
 
-            <a href="<?=$path?>pages/dev/maj">
-              <div class="<?=header_menu_css('Checklist',$header_sidemenu,'side')?>">
-                <?=__('menu_side_dev_checklist')?>
-              </div>
-            </a>
-
             <a href="<?=$path?>pages/dev/queries">
               <div class="<?=header_menu_css('SQL',$header_sidemenu,'side')?>">
                 <?=__('menu_side_dev_sql')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/dev/fermeture">
-              <div class="<?=header_menu_css('Close',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_dev">
+              <div class="strikethrough <?=header_menu_css('Close',$header_sidemenu,'side')?>">
                 <?=__('menu_side_dev_close')?>
               </div>
             </a>
 
-            <a href="<?=$path?>pages/dev/version">
-              <div class="<?=header_menu_css('Release',$header_sidemenu,'side')?>">
+            <a href="<?=$path?>index_temp_dev">
+              <div class="strikethrough <?=header_menu_css('Release',$header_sidemenu,'side')?>">
                 <?=__('menu_side_dev_release')?>
               </div>
             </a>
@@ -1102,15 +1078,9 @@ $javascripts .= '
               </div>
             </a>
 
-            <a href="<?=$path?>pages/dev/reference">
-              <div class="<?=header_menu_css('HTML',$header_sidemenu,'side')?>">
-                <?=__('menu_side_dev_doc_html')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>pages/dev/fonctions">
-              <div class="<?=header_menu_css('Functions',$header_sidemenu,'side')?>">
-                <?=__('menu_side_dev_doc_functions')?>
+            <a href="<?=$path?>index_temp_dev">
+              <div class="strikethrough <?=header_menu_css('CSS',$header_sidemenu,'side')?>">
+                <?=__('menu_side_dev_doc_css')?>
               </div>
             </a>
 

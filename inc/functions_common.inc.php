@@ -374,40 +374,6 @@ function date_to_mysql($date)
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                   LINK BUILDING                                                   */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-/**
- * Builds a link.
- *
- * @param   string      $href         The destination of the link.
- * @param   string      $text         The text to be displayed on the link.
- * @param   string|null $style        The CSS style(s) to apply to the link.
- * @param   bool|null   $is_internal  Whether the link is internel (on the website) or external (outside the website).
- * @param   string|null $path         The path to the root of the website (defaults to 2 folders away from root).
- *
- * @return  string                    The link, ready for use.
- */
-
-function __link($href, $text, $style="bold", $is_internal=true, $path="./../../")
-{
-  // Prepare the style
-  $class = ($style) ? " class=\"$style\"" : "";
-
-  // Prepare the URL
-  $url = ($is_internal) ? $path.$href : $href;
-  $url = ($url) ? "href=\"".$url."\"" : "";
-
-  // Return the built link
-  return "<a $class $url>$text</a>";
-}
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
 /*                                         SEARCHING AND DIFFERENCE CHECKING                                         */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

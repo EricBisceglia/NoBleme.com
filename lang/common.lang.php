@@ -109,6 +109,34 @@ function ___($name, $lang, $translation)
 
 
  /**
+ * Builds a link.
+ *
+ * @param   string      $href         The destination of the link.
+ * @param   string      $text         The text to be displayed on the link.
+ * @param   string|null $style        The CSS style(s) to apply to the link.
+ * @param   bool|null   $is_internal  Whether the link is internel (on the website) or external (outside the website).
+ * @param   string|null $path         The path to the root of the website (defaults to 2 folders away from root).
+ *
+ * @return  string                    The link, ready for use.
+ */
+
+function __link($href, $text, $style="bold", $is_internal=true, $path="./../../")
+{
+  // Prepare the style
+  $class = ($style) ? " class=\"$style\"" : "";
+
+  // Prepare the URL
+  $url = ($is_internal) ? $path.$href : $href;
+  $url = ($url) ? "href=\"".$url."\"" : "";
+
+  // Return the built link
+  return "<a $class $url>$text</a>";
+}
+
+
+
+
+/**
  * Looks for similar translations in the global translation array.
  *
  * This is a debugging function and should only be used locally during development.
@@ -470,8 +498,6 @@ ___('menu_side_nobleme_birthdays', 'EN', "User birthdays");
 ___('menu_side_nobleme_birthdays', 'FR', "Anniversaires");
 ___('menu_side_nobleme_meetups', 'EN', "Real life meetups");
 ___('menu_side_nobleme_meetups', 'FR', "Rencontres IRL");
-___('menu_side_nobleme_meetup_stats', 'EN', "RL meetup stats");
-___('menu_side_nobleme_meetup_stats', 'FR', "Statistiques des IRL");
 
 ___('menu_side_nobleme_help', 'EN', "Help / Documentation");
 ___('menu_side_nobleme_help', 'FR', "Aide & Informations");
@@ -481,8 +507,8 @@ ___('menu_side_nobleme_what_is', 'EN', "What is NoBleme");
 ___('menu_side_nobleme_what_is', 'FR', "Qu'est-ce que NoBleme");
 ___('menu_side_nobleme_coc', 'EN', "Code of conduct");
 ___('menu_side_nobleme_coc', 'FR', "Code de conduite");
-___('menu_side_nobleme_api', 'EN', "API publique");
-___('menu_side_nobleme_api', 'FR', "Public API");
+___('menu_side_nobleme_api', 'EN', "Public API");
+___('menu_side_nobleme_api', 'FR', "API publique");
 ___('menu_side_nobleme_rss', 'EN', "RSS feeds");
 ___('menu_side_nobleme_rss', 'FR', "Flux RSS");
 
@@ -555,8 +581,6 @@ ___('menu_side_read_quotes_list', 'EN', "Quote database");
 ___('menu_side_read_quotes_list', 'FR', "Paroles de NoBlemeux");
 ___('menu_side_read_quotes_random', 'EN', "Random quote");
 ___('menu_side_read_quotes_random', 'FR', "Citation au hasard");
-___('menu_side_read_quotes_stats', 'EN', "Quote statistics");
-___('menu_side_read_quotes_stats', 'FR', "Stats des citations");
 ___('menu_side_read_quotes_submit', 'EN', "Submit a new quote");
 ___('menu_side_read_quotes_submit', 'FR', "Proposer une citation");
 
@@ -564,10 +588,10 @@ ___('menu_side_read_writers', 'EN', "Writer's corner");
 ___('menu_side_read_writers', 'FR', "Coin des écrivains");
 ___('menu_side_read_writers_writings', 'EN', "NoBleme's writings");
 ___('menu_side_read_writers_writings', 'FR', "Écrits de NoBlemeux");
-___('menu_side_read_writers_contests', 'EN', "Writing contests");
-___('menu_side_read_writers_contests', 'FR', "Concours d'écriture");
 ___('menu_side_read_writers_publish', 'EN', "Publish a writing");
 ___('menu_side_read_writers_publish', 'FR', "Publier un écrit");
+___('menu_side_read_writers_contests', 'EN', "Writing contests");
+___('menu_side_read_writers_contests', 'FR', "Concours d'écriture");
 
 
 // Side menu: Play
@@ -632,14 +656,12 @@ ___('menu_side_admin_modlogs', 'FR', "Logs de modération");
 
 ___('menu_side_admin_users', 'EN', "User management");
 ___('menu_side_admin_users', 'FR', "Gestion des membres");
+___('menu_side_admin_nickname', 'EN', "Change a nickname");
+___('menu_side_admin_nickname', 'FR', "Modifier un pseudonyme");
+___('menu_side_admin_password', 'EN', "Change a password");
+___('menu_side_admin_password', 'FR', "Modifier un mot de passe");
 ___('menu_side_admin_banned', 'EN', "Banned users");
 ___('menu_side_admin_banned', 'FR', "Pilori des bannis");
-___('menu_side_admin_ban', 'EN', "Ban a user");
-___('menu_side_admin_ban', 'FR', "Bannir un utilisateur");
-___('menu_side_admin_profile', 'EN', "Edit a profile");
-___('menu_side_admin_profile', 'FR', "Modifier un profil");
-___('menu_side_admin_password', 'EN', "Reset a password");
-___('menu_side_admin_password', 'FR', "Modifier un mot de passe");
 
 ___('menu_side_admin_tools', 'EN', "Administrative tools");
 ___('menu_side_admin_tools', 'FR', "Outils administratifs");
@@ -662,10 +684,8 @@ ___('menu_side_dev_ircbot_management', 'FR', "Gestion du bot IRC");
 
 ___('menu_side_dev_website', 'EN', "Website management");
 ___('menu_side_dev_website', 'FR', "Gestion du site");
-___('menu_side_dev_checklist', 'EN', "Update checklist");
-___('menu_side_dev_checklist', 'FR', "Checklist de mise à jour");
-___('menu_side_dev_sql', 'EN', "SQL queries");
-___('menu_side_dev_sql', 'FR', "Requêtes SQL");
+___('menu_side_dev_sql', 'EN', "Run SQL queries");
+___('menu_side_dev_sql', 'FR', "Jouer les requêtes SQL");
 ___('menu_side_dev_close', 'EN', "Close the website");
 ___('menu_side_dev_close', 'FR', "Fermer le site");
 ___('menu_side_dev_release', 'EN', "Version numbers");
@@ -675,10 +695,8 @@ ___('menu_side_dev_doc', 'EN', "Developer documentation");
 ___('menu_side_dev_doc', 'FR', "Documentation de dev");
 ___('menu_side_dev_doc_snippets', 'EN', "Code snippets");
 ___('menu_side_dev_doc_snippets', 'FR', "Modèles de code");
-___('menu_side_dev_doc_html', 'EN', "HTML / CSS");
-___('menu_side_dev_doc_html', 'FR', "HTML / CSS");
-___('menu_side_dev_doc_functions', 'EN', "Functions");
-___('menu_side_dev_doc_functions', 'FR', "Fonctions");
+___('menu_side_dev_doc_css', 'EN', "CSS palette");
+___('menu_side_dev_doc_css', 'FR', "Palette CSS");
 
 
 
