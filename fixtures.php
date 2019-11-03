@@ -42,7 +42,7 @@ if(isset($_POST['fixtures_reset']))
   // Run each query in the schema except the first one
   foreach($database_schema as $schema_query_id => $schema_query)
   {
-    if($schema_query_id && $schema_query)
+    if($schema_query_id && $schema_query && strlen($schema_query) > 2)
       query($schema_query);
   }
 

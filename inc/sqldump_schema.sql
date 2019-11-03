@@ -26,8 +26,10 @@ CREATE TABLE IF NOT EXISTS `dev_blogs` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `posted_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title_en` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title_fr` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body_en` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body_fr` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -155,6 +157,7 @@ CREATE TABLE IF NOT EXISTS `logs_activity` (
   `fk_users` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `happened_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `is_administrators_only` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `language` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nickname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `activity_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `activity_type` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -163,6 +166,7 @@ CREATE TABLE IF NOT EXISTS `logs_activity` (
   `moderation_reason` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_related_users` (`fk_users`),
+  KEY `index_language` (`language`),
   KEY `index_related_foreign_keys` (`activity_id`),
   KEY `index_activity_type` (`activity_type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -171,7 +175,8 @@ DROP TABLE IF EXISTS `logs_activity_details`;
 CREATE TABLE IF NOT EXISTS `logs_activity_details` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_logs_activity` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `content_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content_description_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content_description_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `content_before` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `content_after` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
@@ -354,7 +359,7 @@ CREATE TABLE IF NOT EXISTS `system_scheduler` (
 
 DROP TABLE IF EXISTS `system_variables`;
 CREATE TABLE IF NOT EXISTS `system_variables` (
-  `update_in_progress` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `update_in_progress` int(10) UNSIGNED NOT NULL,
   `latest_query_id` smallint(5) UNSIGNED NOT NULL DEFAULT '0',
   `last_scheduler_execution` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `last_pageview_check` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -497,6 +502,7 @@ CREATE TABLE IF NOT EXISTS `writings_contests` (
   `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `fk_users_winner` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `fk_writings_texts_winner` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `language` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   `started_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `ended_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `nb_entries` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -504,7 +510,8 @@ CREATE TABLE IF NOT EXISTS `writings_contests` (
   `contest_topic` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_winner` (`fk_users_winner`),
-  KEY `index_winning_text` (`fk_writings_texts_winner`)
+  KEY `index_winning_text` (`fk_writings_texts_winner`),
+  KEY `index_language` (`language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `writings_contests_votes`;
@@ -527,6 +534,7 @@ CREATE TABLE IF NOT EXISTS `writings_texts` (
   `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `fk_users` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `fk_writings_contests` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `language` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_anonymous` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `created_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `edited_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -537,7 +545,8 @@ CREATE TABLE IF NOT EXISTS `writings_texts` (
   `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_author` (`fk_users`,`is_anonymous`),
-  KEY `index_contest` (`fk_writings_contests`)
+  KEY `index_contest` (`fk_writings_contests`),
+  KEY `index_language` (`language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

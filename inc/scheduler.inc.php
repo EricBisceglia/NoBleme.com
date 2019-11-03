@@ -114,7 +114,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
       {
         // Create an entry in the recent activity
         $contest_title = sanitize($dcheck_contest['c_name'], 'string');
-        log_activity('writers_contest_vote', 0, 0, 0, $scheduler_action_id, $contest_title);
+        log_activity('writers_contest_vote', 0, 'FR', 0, 0, $scheduler_action_id, $contest_title);
 
         // Announce on IRC that voting is open
         $contest_title_raw = $dcheck_contest['c_name'];
@@ -194,7 +194,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
         // Create an entry in recent activity
         $contest_title  = sanitize($dcheck_contest['c_name'], 'string');
         $contest_winner = ($dwinner['w_anon']) ? 'Un auteur anonyme' : sanitize($dwinner['u_nick'], 'string');
-        log_activity('writers_contest_winner', 0, 0, $contest_winner, $scheduler_action_id, $contest_title);
+        log_activity('writers_contest_winner', 0, 'FR', 0, $contest_winner, $scheduler_action_id, $contest_title);
 
         // Announce the winner on IRC
         $contest_title_raw  = $dcheck_contest['c_name'];

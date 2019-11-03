@@ -36,6 +36,7 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $path='./../../
   $modlogs  = ($modlogs) ? 1 : 0;
   $amount   = sanitize($amount, 'int', 0);
   $type     = sanitize($type, 'string');
+  $lang     = sanitize($lang, 'string');
 
   // Initialize the returned array
   $data = array();
@@ -53,7 +54,8 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $path='./../../
                           logs_activity_details.id        AS 'l_details'
                 FROM      logs_activity
                 LEFT JOIN logs_activity_details ON logs_activity.id = logs_activity_details.fk_logs_activity
-                WHERE     logs_activity.is_administrators_only = '$modlogs' ";
+                WHERE     logs_activity.is_administrators_only  = '$modlogs'
+                AND       logs_activity.language             LIKE '%$lang%' ";
 
   // Filter by log type
   if($type == 'users')
@@ -116,18 +118,20 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $path='./../../
 /**
  * Fetches details on an activity log.
  *
- * @param   int   $log_id   The id of the log on which details are desired
+ * @param   int         $log_id   The id of the log on which details are desired.
+ * @param   string|null $lang     The language currently being used.
  *
- * @return  array           An array of activity log details, prepared for displaying.
+ * @return  array                 An array of activity log details, prepared for displaying.
  */
 
-function activity_get_details($log_id)
+function activity_get_details($log_id, $lang='EN')
 {
   // Check if the required files have been included
   require_included_file('bbcodes.inc.php');
 
   // Sanitize the data
   $log_id = sanitize($log_id, 'int', 0);
+  $lang   = sanitize($lang, 'string');
 
   // Initialize the returned array
   $data         = array();
@@ -140,9 +144,9 @@ function activity_get_details($log_id)
   $data['reason'] = sanitize_output($dlog['l_reason']);
 
   // Fetch any diffs linked to the log
-  $qdiff = query("  SELECT    logs_activity_details.content_description AS 'd_desc'   ,
-                              logs_activity_details.content_before      AS 'd_before' ,
-                              logs_activity_details.content_after       AS 'd_after'
+  $qdiff = query("  SELECT    logs_activity_details.content_description_$lang AS 'd_desc'   ,
+                              logs_activity_details.content_before            AS 'd_before' ,
+                              logs_activity_details.content_after             AS 'd_after'
                     FROM      logs_activity_details
                     WHERE     logs_activity_details.fk_logs_activity = '$log_id'
                     ORDER BY  logs_activity_details.id ASC ");

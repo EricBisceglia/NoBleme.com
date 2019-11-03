@@ -984,10 +984,7 @@ if($last_query < 20)
   sql_delete_index('system_scheduler', 'index_action');
   sql_create_index('system_scheduler', 'index_task_id', 'task_id');
 
-  sql_rename_field('system_variables', 'mise_a_jour', 'update_in_progress', 'INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY');
-  query(" UPDATE system_variables SET system_variables.update_in_progress = 2 WHERE system_variables.update_in_progress = 1 ");
-  query(" UPDATE system_variables SET system_variables.update_in_progress = 1 WHERE system_variables.update_in_progress = 0 ");
-  query(" UPDATE system_variables SET system_variables.update_in_progress = 0 WHERE system_variables.update_in_progress = 2 ");
+  sql_rename_field('system_variables', 'mise_a_jour', 'update_in_progress', 'INT UNSIGNED NOT NULL PRIMARY KEY');
   sql_rename_field('system_variables', 'derniere_requete_sql', 'latest_query_id', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
   sql_create_field('system_variables', 'last_scheduler_execution', 'INT UNSIGNED NOT NULL DEFAULT 0', 'latest_query_id');
   sql_change_field_type('system_variables', 'last_pageview_check', 'INT UNSIGNED NOT NULL DEFAULT 0');
@@ -1013,6 +1010,7 @@ if($last_query < 21)
   sql_change_field_type('logs_activity', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('logs_activity', 'timestamp', 'happened_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('logs_activity', 'log_moderation', 'is_administrators_only', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_create_field('logs_activity', 'language', 'VARCHAR(12) NOT NULL', 'is_administrators_only');
   sql_rename_field('logs_activity', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_move_field('logs_activity', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_rename_field('logs_activity', 'pseudonyme', 'nickname', 'VARCHAR(45) NOT NULL');
@@ -1026,12 +1024,14 @@ if($last_query < 21)
   sql_delete_index('logs_activity', 'index_action');
   sql_delete_index('logs_activity', 'index_type');
   sql_create_index('logs_activity', 'index_related_users', 'fk_users');
+  sql_create_index('logs_activity', 'index_language', 'language');
   sql_create_index('logs_activity', 'index_related_foreign_keys', 'activity_id');
   sql_create_index('logs_activity', 'index_activity_type', 'activity_type(40)');
 
   sql_change_field_type('logs_activity_details', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('logs_activity_details', 'FKactivite', 'fk_logs_activity', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('logs_activity_details', 'titre_diff', 'content_description', 'TEXT NOT NULL');
+  sql_rename_field('logs_activity_details', 'titre_diff', 'content_description_fr', 'TEXT NOT NULL');
+  sql_create_field('logs_activity_details', 'content_description_en', 'TEXT NOT NULL', 'fk_logs_activity');
   sql_rename_field('logs_activity_details', 'diff_avant', 'content_before', 'MEDIUMTEXT NOT NULL');
   sql_rename_field('logs_activity_details', 'diff_apres', 'content_after', 'MEDIUMTEXT NOT NULL');
   sql_delete_index('logs_activity_details', 'index_activite');
@@ -1073,8 +1073,10 @@ if($last_query < 23)
 
   sql_change_field_type('dev_blogs', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('dev_blogs', 'timestamp', 'posted_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('dev_blogs', 'titre', 'title', 'VARCHAR(255)');
-  sql_rename_field('dev_blogs', 'contenu', 'body', 'LONGTEXT NOT NULL');
+  sql_rename_field('dev_blogs', 'titre', 'title_en', 'VARCHAR(255) NOT NULL');
+  sql_create_field('dev_blogs', 'title_fr', 'VARCHAR(255) NOT NULL', 'title_en');
+  sql_rename_field('dev_blogs', 'contenu', 'body_en', 'LONGTEXT NOT NULL');
+  sql_create_field('dev_blogs', 'body_fr', 'LONGTEXT NOT NULL', 'body_en');
 
   sql_change_field_type('dev_tasks', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('dev_tasks', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
@@ -1141,6 +1143,7 @@ if($last_query < 24)
   sql_change_field_type('writings_texts', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('writings_texts', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_texts', 'FKecrivains_concours', 'fk_writings_contests', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_create_field('writings_texts', 'language', 'VARCHAR(6) NOT NULL', 'fk_writings_contests');
   sql_rename_field('writings_texts', 'anonyme', 'is_anonymous', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_texts', 'timestamp_creation', 'created_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_texts', 'timestamp_modification', 'edited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
@@ -1154,6 +1157,7 @@ if($last_query < 24)
   sql_delete_index('writings_texts', 'index_concours');
   sql_create_index('writings_texts', 'index_author', 'fk_users, is_anonymous');
   sql_create_index('writings_texts', 'index_contest', 'fk_writings_contests');
+  sql_create_index('writings_texts', 'index_language', 'language');
 
   sql_change_field_type('writings_comments', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('writings_comments', 'FKecrivains_texte', 'fk_writings_texts', 'INT UNSIGNED NOT NULL DEFAULT 0');
@@ -1172,6 +1176,7 @@ if($last_query < 24)
   sql_change_field_type('writings_contests', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('writings_contests', 'FKmembres_gagnant', 'fk_users_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_contests', 'FKecrivains_texte_gagnant', 'fk_writings_texts_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_create_field('writings_contests', 'language', 'VARCHAR(6) NOT NULL', 'fk_writings_texts_winner');
   sql_rename_field('writings_contests', 'timestamp_debut', 'started_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_contests', 'timestamp_fin', 'ended_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_contests', 'num_participants', 'nb_entries', 'INT UNSIGNED NOT NULL DEFAULT 0');
@@ -1180,6 +1185,7 @@ if($last_query < 24)
   sql_delete_index('writings_contests', 'index_gagnant');
   sql_create_index('writings_contests', 'index_winner', 'fk_users_winner');
   sql_create_index('writings_contests', 'index_winning_text', 'fk_writings_texts_winner');
+  sql_create_index('writings_contests', 'index_language', 'language');
 
   sql_change_field_type('writings_contests_votes', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('writings_contests_votes', 'FKecrivains_concours', 'fk_writings_contests', 'INT UNSIGNED NOT NULL DEFAULT 0');
@@ -1726,42 +1732,94 @@ if($last_query < 31)
           SET     forum_threads.thread_type    = 'game'
           WHERE   forum_threads.thread_type LIKE 'Jeu' ");
 
-  $logs_activity_translation = array( 'version'                         => 'dev_version'                    ,
-                                      'devblog'                         => 'dev_blog'                       ,
-                                      'todo_new'                        => 'dev_task_new'                   ,
-                                      'todo_fini'                       => 'dev_task_finished'              ,
-                                      'register'                        => 'users_register'                 ,
-                                      'profil'                          => 'users_profile_edit'             ,
-                                      'profil_edit'                     => 'users_admin_edit_profile'       ,
-                                      'editpass'                        => 'users_admin_edit_password'      ,
-                                      'ban'                             => 'users_banned'                   ,
-                                      'deban'                           => 'users_unbanned'                 ,
-                                      'droits_delete'                   => 'users_rights_delete'            ,
-                                      'droits_mod'                      => 'users_rights_moderator'         ,
-                                      'droits_sysop'                    => 'users_rights_global_moderator'  ,
-                                      'forum_new'                       => 'forum_thread_new'               ,
-                                      'forum_edit'                      => 'forum_thread_edit'              ,
-                                      'forum_delete'                    => 'forum_thread_delete'            ,
-                                      'forum_new_message'               => 'forum_message_new'              ,
-                                      'forum_edit_message'              => 'forum_message_edit'             ,
-                                      'forum_delete_message'            => 'forum_message_delete'           ,
-                                      'irl_new'                         => 'meetups_new'                    ,
-                                      'irl_edit'                        => 'meetups_edit'                   ,
-                                      'irl_delete'                      => 'meetups_delete'                 ,
-                                      'irl_add_participant'             => 'meetups_people_new'             ,
-                                      'irl_edit_participant'            => 'meetups_people_edit'            ,
-                                      'irl_del_participant'             => 'meetups_people_delete'          ,
-                                      'ecrivains_new'                   => 'writings_text_new'              ,
-                                      'ecrivains_edit'                  => 'writings_text_edit'             ,
-                                      'ecrivains_delete'                => 'writings_text_delete'           ,
-                                      'ecrivains_reaction_new'          => 'writings_comment_new'           ,
-                                      'ecrivains_reaction_new_anonyme'  => 'writings_comment_new_anonymous' ,
-                                      'ecrivains_reaction_delete'       => 'writings_comment_delete'        ,
-                                      'ecrivains_concours_new'          => 'writings_contest_new'           ,
-                                      'ecrivains_concours_gagnant'      => 'writings_contest_winner'        ,
-                                      'ecrivains_concours_vote'         => 'writings_contest_vote'          ,
-                                      'quote_new_en'                    => 'quotes_new_en'                  ,
-                                      'quote_new_fr'                    => 'quotes_new_fr'                  );
+  $logs_activity_language = array(    'version'                         => 'ENFR' ,
+                                      'devblog'                         => 'ENFR' ,
+                                      'todo_new'                        => 'ENFR' ,
+                                      'todo_fini'                       => 'ENFR' ,
+                                      'register'                        => 'ENFR' ,
+                                      'profil'                          => 'ENFR' ,
+                                      'profil_edit'                     => 'ENFR' ,
+                                      'editpass'                        => 'ENFR' ,
+                                      'ban'                             => 'ENFR' ,
+                                      'deban'                           => 'ENFR' ,
+                                      'droits_delete'                   => 'ENFR' ,
+                                      'droits_mod'                      => 'ENFR' ,
+                                      'droits_sysop'                    => 'ENFR' ,
+                                      'forum_new'                       => 'ENFR' ,
+                                      'forum_edit'                      => 'ENFR' ,
+                                      'forum_delete'                    => 'ENFR' ,
+                                      'forum_new_message'               => 'ENFR' ,
+                                      'forum_edit_message'              => 'ENFR' ,
+                                      'forum_delete_message'            => 'ENFR' ,
+                                      'irl_new'                         => 'ENFR' ,
+                                      'irl_edit'                        => 'ENFR' ,
+                                      'irl_delete'                      => 'ENFR' ,
+                                      'irl_add_participant'             => 'ENFR' ,
+                                      'irl_edit_participant'            => 'ENFR' ,
+                                      'irl_del_participant'             => 'ENFR' ,
+                                      'ecrivains_new'                   => 'FR'   ,
+                                      'ecrivains_edit'                  => 'FR'   ,
+                                      'ecrivains_delete'                => 'FR'   ,
+                                      'ecrivains_reaction_new'          => 'FR'   ,
+                                      'ecrivains_reaction_new_anonyme'  => 'FR'   ,
+                                      'ecrivains_reaction_delete'       => 'FR'   ,
+                                      'ecrivains_concours_new'          => 'FR'   ,
+                                      'ecrivains_concours_gagnant'      => 'FR'   ,
+                                      'ecrivains_concours_vote'         => 'FR'   ,
+                                      'quote_new_en'                    => 'ENFR' ,
+                                      'quote_new_fr'                    => 'FR'   ,
+                                      'nbdb_web_definition_new'         => 'ENFR' ,
+                                      'nbdb_web_definition_edit'        => 'ENFR' ,
+                                      'nbdb_web_definition_delete'      => 'ENFR' ,
+                                      'nbdb_web_page_new'               => 'ENFR' ,
+                                      'nbdb_web_page_edit'              => 'ENFR' ,
+                                      'nbdb_web_page_delete'            => 'ENFR' );
+
+  foreach($logs_activity_language as $original_log => $log_language)
+  {
+    $original_log   = sanitize($original_log, 'string');
+    $log_language   = sanitize($log_language, 'string');
+    query(" UPDATE  logs_activity
+            SET     logs_activity.language         = '$log_language'
+            WHERE   logs_activity.activity_type LIKE '$original_log' ");
+  }
+
+  $logs_activity_translation = array( 'version'                         => 'dev_version'                        ,
+                                      'devblog'                         => 'dev_blog'                           ,
+                                      'todo_new'                        => 'dev_task_new'                       ,
+                                      'todo_fini'                       => 'dev_task_finished'                  ,
+                                      'register'                        => 'users_register'                     ,
+                                      'profil'                          => 'users_profile_edit'                 ,
+                                      'profil_edit'                     => 'users_admin_edit_profile'           ,
+                                      'editpass'                        => 'users_admin_edit_password'          ,
+                                      'ban'                             => 'users_banned'                       ,
+                                      'deban'                           => 'users_unbanned'                     ,
+                                      'droits_delete'                   => 'users_rights_delete'                ,
+                                      'droits_mod'                      => 'users_rights_moderator'             ,
+                                      'droits_sysop'                    => 'users_rights_global_moderator'      ,
+                                      'forum_new'                       => 'forum_thread_new'                   ,
+                                      'forum_edit'                      => 'forum_thread_edit'                  ,
+                                      'forum_delete'                    => 'forum_thread_delete'                ,
+                                      'forum_new_message'               => 'forum_message_new'                  ,
+                                      'forum_edit_message'              => 'forum_message_edit'                 ,
+                                      'forum_delete_message'            => 'forum_message_delete'               ,
+                                      'irl_new'                         => 'meetups_new'                        ,
+                                      'irl_edit'                        => 'meetups_edit'                       ,
+                                      'irl_delete'                      => 'meetups_delete'                     ,
+                                      'irl_add_participant'             => 'meetups_people_new'                 ,
+                                      'irl_edit_participant'            => 'meetups_people_edit'                ,
+                                      'irl_del_participant'             => 'meetups_people_delete'              ,
+                                      'ecrivains_new'                   => 'writings_text_new_fr'               ,
+                                      'ecrivains_edit'                  => 'writings_text_edit_fr'              ,
+                                      'ecrivains_delete'                => 'writings_text_delete'               ,
+                                      'ecrivains_reaction_new'          => 'writings_comment_new_fr'            ,
+                                      'ecrivains_reaction_new_anonyme'  => 'writings_comment_new_anonymous_fr'  ,
+                                      'ecrivains_reaction_delete'       => 'writings_comment_delete'            ,
+                                      'ecrivains_concours_new'          => 'writings_contest_new_fr'            ,
+                                      'ecrivains_concours_gagnant'      => 'writings_contest_winner_fr'         ,
+                                      'ecrivains_concours_vote'         => 'writings_contest_vote_fr'           ,
+                                      'quote_new_en'                    => 'quotes_new_en'                      ,
+                                      'quote_new_fr'                    => 'quotes_new_fr'                      );
 
   foreach($logs_activity_translation as $original_log => $translated_log)
   {

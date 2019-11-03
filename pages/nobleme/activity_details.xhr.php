@@ -27,7 +27,7 @@ user_restrict_to_global_moderators($lang);
 $log_id = sanitize_input('POST', 'log_id', 'int', 0, 0);
 
 // Fetch log details
-$log_details = activity_get_details($log_id);
+$log_details = activity_get_details($log_id, $lang);
 
 
 

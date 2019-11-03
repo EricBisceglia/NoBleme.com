@@ -660,6 +660,7 @@ function flood_check($menu_main='NoBleme', $menu_side='Homepage', $path='./../..
  *
  * @param   string          $activity_type                      The identifier of the activity log's type.
  * @param   bool|null       $is_administrators_only (OPTIONAL)  Is it a public activity log or a moderation log.
+ * @param   string|null     $language               (OPTIONAL)  The languages in which the log should appear.
  * @param   int|null        $fk_users               (OPTIONAL)  ID of the user implicated in the activity log.
  * @param   string|null     $nickname               (OPTIONAL)  Nickname of the user implicated in the activity log.
  * @param   int|null        $activity_id            (OPTIONAL)  ID of the item linked to the activity log.
@@ -671,12 +672,13 @@ function flood_check($menu_main='NoBleme', $menu_side='Homepage', $path='./../..
  * @return  int                                                 The ID of the newly inserted activity log.
  */
 
-function log_activity($activity_type, $is_administrators_only=0, $fk_users=0, $nickname=NULL, $activity_id=0, $activity_summary=NULL, $activity_parent=NULL, $moderation_reason=NULL, $do_not_sanitize=0)
+function log_activity($activity_type, $is_administrators_only=0, $language='ENFR', $fk_users=0, $nickname=NULL, $activity_id=0, $activity_summary=NULL, $activity_parent=NULL, $moderation_reason=NULL, $do_not_sanitize=0)
 {
   // Sanitize and prepare the data
   $timestamp              = sanitize(time(), 'int', 0);
   $activity_type          = sanitize($activity_type, 'string');
   $is_administrators_only = sanitize($is_administrators_only, 'int', 0, 1);
+  $language               = ($do_not_sanitize) ? $language : sanitize($language, 'string');
   $fk_users               = sanitize($fk_users, 'int', 0);
   $nickname               = ($do_not_sanitize) ? $nickname : sanitize($nickname, 'string');
   $activity_id            = sanitize($activity_id, 'int', 0);
@@ -688,6 +690,7 @@ function log_activity($activity_type, $is_administrators_only=0, $fk_users=0, $n
   query(" INSERT INTO logs_activity
           SET         logs_activity.happened_at             = '$timestamp'              ,
                       logs_activity.is_administrators_only  = '$is_administrators_only' ,
+                      logs_activity.language                = '$language'               ,
                       logs_activity.fk_users                = '$fk_users'               ,
                       logs_activity.nickname                = '$nickname'               ,
                       logs_activity.activity_type           = '$activity_type'          ,
@@ -707,7 +710,8 @@ function log_activity($activity_type, $is_administrators_only=0, $fk_users=0, $n
  * Adds an entry to the recent activity detailed logs.
  *
  * @param   int         $linked_activity_log              ID of the recent activity log to which this is linked.
- * @param   string      $description                      Description of the detailed activity log.
+ * @param   string      $description_en                   Description of the detailed activity log, in english.
+ * @param   string      $description_fr                   Description of the detailed activity log, in french.
  * @param   string      $before                           Previous value of the content.
  * @param   string|null $after                (OPTIONAL)  Current value of the content.
  * @param   bool|null   $optional             (OPTIONAL)  The log will only be created if before / after are different.
@@ -716,7 +720,7 @@ function log_activity($activity_type, $is_administrators_only=0, $fk_users=0, $n
  * @return  void
  */
 
-function log_activity_details($linked_activity_log, $description, $before, $after=NULL, $optional=0, $do_not_sanitize = 0)
+function log_activity_details($linked_activity_log, $description_en, $description_fr, $before, $after=NULL, $optional=0, $do_not_sanitize = 0)
 {
   // If there are no differences, do not create a detailed activity log
   if($optional && ($before == $after))
@@ -727,16 +731,18 @@ function log_activity_details($linked_activity_log, $description, $before, $afte
 
   // Sanitize the data if required
   $linked_activity_log  = sanitize($linked_activity_log, 'int', 0);
-  $description          = ($do_not_sanitize) ? $description : sanitize($description, 'string');
+  $description_en       = ($do_not_sanitize) ? $description_en : sanitize($description_en, 'string');
+  $description_fr       = ($do_not_sanitize) ? $description_fr : sanitize($description_fr, 'string');
   $before               = ($do_not_sanitize) ? $before : sanitize($before, 'string');
   $after                = ($do_not_sanitize) ? $after : sanitize($after, 'string');
 
   // Create the detailed log
   query(" INSERT INTO logs_activity_details
-          SET         logs_activity_details.fk_logs_activity    = '$linked_activity_log'  ,
-                      logs_activity_details.content_description = '$description'          ,
-                      logs_activity_details.content_before      = '$before'               ,
-                      logs_activity_details.content_after       = '$after'                ");
+          SET         logs_activity_details.fk_logs_activity        = '$linked_activity_log'  ,
+                      logs_activity_details.content_description_en  = '$description_en'       ,
+                      logs_activity_details.content_description_fr  = '$description_fr'       ,
+                      logs_activity_details.content_before          = '$before'               ,
+                      logs_activity_details.content_after           = '$after'                ");
 }
 
 

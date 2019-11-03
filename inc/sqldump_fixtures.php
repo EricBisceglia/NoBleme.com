@@ -432,15 +432,19 @@ for($i = 0; $i < $random; $i++)
   // Generate random data
   $deleted    = (mt_rand(0,15) < 15) ? 0 : 1;
   $posted_at  = mt_rand(1111239420, time());
-  $title      = fixtures_generate_data('sentence', 4, 7);
-  $body       = fixtures_generate_data('text', 1, 5);
+  $title_en   = (mt_rand(0,1)) ? fixtures_generate_data('sentence', 4, 7) : '';
+  $title_fr   = (!$title_en || mt_rand(0,1)) ? fixtures_generate_data('sentence', 4, 7) : '';
+  $body_en    = ($title_en) ? fixtures_generate_data('text', 1, 5) : '';
+  $body_fr    = ($title_fr) ? fixtures_generate_data('text', 1, 5) : '';
 
   // Generate the devblogs
   query(" INSERT INTO dev_blogs
           SET         dev_blogs.deleted   = '$deleted'    ,
                       dev_blogs.posted_at = '$posted_at'  ,
-                      dev_blogs.title     = '$title'      ,
-                      dev_blogs.body      = '$body'       ");
+                      dev_blogs.title_en  = '$title_en'   ,
+                      dev_blogs.title_fr  = '$title_fr'   ,
+                      dev_blogs.body_en   = '$body_en'    ,
+                      dev_blogs.body_fr   = '$body_fr'    ");
 }
 
 
@@ -754,13 +758,13 @@ for($i = 0; $i < $random; $i++)
 // Texts
 
 // Generate some random texts
-$random = mt_rand(50,100);
+$random = mt_rand(100,200);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
   $deleted    = (mt_rand(0,10) < 10) ? 0 : 1;
   $user       = fixtures_fetch_random_id('users');
-  $contest    = 0;
+  $language   = (mt_rand(0,1)) ? 'EN' : 'FR';
   $anonymous  = (mt_rand(0,5) < 5) ? 0 : 1;
   $created_at = mt_rand(1111239420, time());
   $edited_at  = (mt_rand(0,5) < 5) ? 0 : mt_rand($created_at, time());
@@ -773,6 +777,7 @@ for($i = 0; $i < $random; $i++)
   query(" INSERT INTO writings_texts
           SET         writings_texts.deleted                = '$deleted'    ,
                       writings_texts.fk_users               = '$user'       ,
+                      writings_texts.language               = '$language'   ,
                       writings_texts.is_anonymous           = '$anonymous'  ,
                       writings_texts.created_at             = '$created_at' ,
                       writings_texts.edited_at              = '$edited_at'  ,
@@ -834,13 +839,15 @@ for($i = 0; $i < $random; $i++)
 // Contests
 
 // Generate some random contests
-$random = mt_rand(4,7);
+$random = mt_rand(8,14);
 for($i = 1; $i < $random; $i++)
 {
   // Add a bunch of texts to the contest
   $random2  = mt_rand(4,8);
+  $language = (mt_rand(0,1)) ? 'EN' : 'FR';
   query(" UPDATE    writings_texts
           SET       writings_texts.fk_writings_contests = '$i'
+          WHERE     writings_texts.language             = '$language'
           ORDER BY  RAND()
           LIMIT     $random2 ");
 
@@ -854,8 +861,9 @@ for($i = 1; $i < $random; $i++)
 
   // Generate the contest
   query(" INSERT INTO writings_contests
-          SET         writings_contests.deleted       = '$deleted'  ,
-                      writings_contests.id            = '$i'        ,
+          SET         writings_contests.id            = '$i'        ,
+                      writings_contests.deleted       = '$deleted'  ,
+                      writings_contests.language      = '$language' ,
                       writings_contests.started_at    = '$started'  ,
                       writings_contests.ended_at      = '$ended'    ,
                       writings_contests.nb_entries    = '$entries'  ,
