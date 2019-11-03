@@ -6,7 +6,7 @@
 include_once './inc/includes.inc.php';  # Core
 
 // Menus
-$header_menu = 'Read';
+$header_menu = 'Community';
 
 // Page summary
 $page_title = "Temporary index";

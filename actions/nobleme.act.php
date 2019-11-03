@@ -66,8 +66,6 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $path='./../../
     $qlogs .= " AND       logs_activity.activity_type LIKE 'nbdb_%' ";
   else if($type == 'quotes')
     $qlogs .= " AND       logs_activity.activity_type LIKE 'quotes_%' ";
-  else if($type == 'forum')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'forum_%' ";
   else if($type == 'writers')
     $qlogs .= " AND       logs_activity.activity_type LIKE 'writings_%' ";
   else if($type == 'dev')

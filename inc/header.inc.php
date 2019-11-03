@@ -37,7 +37,7 @@ if(!isset($lang))
 
 // If there are no header menu / header sidemenu variables, reset them to their default value
 $header_menu      = (!isset($header_menu) || $header_menu == '') ? 'NoBleme' : $header_menu;
-$header_sidemenu  = (!isset($header_sidemenu)) ? 'Homepage' : $header_sidemenu;
+$header_sidemenu  = (!isset($header_sidemenu)) ? '' : $header_sidemenu;
 
 // Check whether the page exist in the user's current language - if not, throw an error message
 $lang_error = (isset($page_lang) && !in_array($lang, $page_lang)) ? 1 : 0;
@@ -380,21 +380,15 @@ $javascripts .= '
           </div>
         </a>
 
-        <a class="header_topmenu_link" href="<?=$path?>index_temp_talk">
-          <div class="<?=header_menu_css('Talk',$header_menu,'top')?>">
-            <?=__('menu_top_talk')?>
+        <a class="header_topmenu_link" href="<?=$path?>index_temp_community">
+          <div class="<?=header_menu_css('Community',$header_menu,'top')?>">
+            <?=__('menu_top_community')?>
           </div>
         </a>
 
-        <a class="header_topmenu_link" href="<?=$path?>index_temp_read">
-          <div class="<?=header_menu_css('Read',$header_menu,'top')?>">
-            <?=__('menu_top_read')?>
-          </div>
-        </a>
-
-        <a class="header_topmenu_link" href="<?=$path?>index_temp_play">
-          <div class="<?=header_menu_css('Play',$header_menu,'top')?>">
-          <?=__('menu_top_play')?>
+        <a class="header_topmenu_link" href="<?=$path?>index_temp_pages">
+          <div class="<?=header_menu_css('Pages',$header_menu,'top')?>">
+            <?=__('menu_top_pages')?>
           </div>
         </a>
 
@@ -402,13 +396,6 @@ $javascripts .= '
         <a class="header_topmenu_link" href="<?=$path?>pages/nobleme/activity?mod">
           <div class="<?=header_menu_css('Admin',$header_menu,'top')?>">
             <?=__('menu_top_admin')?>
-          </div>
-        </a>
-
-        <?php } if($is_admin) { ?>
-        <a class="header_topmenu_link" href="<?=$path?>index_temp_dev">
-          <div class="<?=header_menu_css('Dev',$header_menu,'top')?>">
-            <?=__('menu_top_dev')?>
           </div>
         </a>
         <?php } ?>
@@ -547,50 +534,8 @@ $javascripts .= '
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_title">
-              <?=__('menu_side_nobleme_community')?>
+              <?=__('menu_side_nobleme_documentation')?>
             </div>
-
-            <a href="<?=$path?>index_temp_nobleme">
-              <div class="strikethrough <?=header_menu_css('Online',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_online')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_nobleme">
-              <div class="strikethrough <?=header_menu_css('Staff',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_staff')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_nobleme">
-              <div class="strikethrough <?=header_menu_css('Userlist',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_userlist')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_nobleme">
-              <div class="strikethrough <?=header_menu_css('Birthdays',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_birthdays')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_nobleme">
-              <div class="strikethrough <?=header_menu_css('Meetups',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_meetups')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_nobleme_help')?>
-            </div>
-
-            <a href="<?=$path?>index_temp_nobleme">
-              <div class="strikethrough <?=header_menu_css('Documentation',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_documentation')?>
-              </div>
-            </a>
 
             <a href="<?=$path?>index_temp_nobleme">
               <div class="strikethrough <?=header_menu_css('Whatsnobleme',$header_sidemenu,'side')?>">
@@ -665,6 +610,12 @@ $javascripts .= '
             </div>
 
             <a href="<?=$path?>index_temp_nobleme">
+              <div class="strikethrough <?=header_menu_css('Forgetme',$header_sidemenu,'side')?>">
+                <?=__('menu_side_nobleme_contact_admin')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>index_temp_nobleme">
               <div class="strikethrough <?=header_menu_css('Privacy',$header_sidemenu,'side')?>">
                 <?=__('menu_side_nobleme_privacy')?>
               </div>
@@ -682,195 +633,186 @@ $javascripts .= '
               </div>
             </a>
 
-<?php } /* ######################################## SIDE MENU: TALK ########## */ else if ($header_menu == 'Talk') { ?>
+<?php } /* ################################### SIDE MENU: COMMUNITY ##### */ else if ($header_menu == 'Community') { ?>
 
             <div class="header_sidemenu_title">
-              <?=__('menu_side_talk_irc')?>
+              <?=__('menu_side_community_irc')?>
             </div>
 
-            <a href="<?=$path?>index_temp_talk">
+            <a href="<?=$path?>index_temp_community">
               <div class="strikethrough <?=header_menu_css('IRC',$header_sidemenu,'side')?>">
-                <?=__('menu_side_talk_irc_intro')?>
+                <?=__('menu_side_community_irc_intro')?>
               </div>
             </a>
 
-            <a href="<?=$path?>index_temp_talk">
+            <a href="<?=$path?>index_temp_community">
               <div class="strikethrough <?=header_menu_css('IRCjoin',$header_sidemenu,'side')?>">
-                <?=__('menu_side_talk_irc_join')?>
+                <?=__('menu_side_community_irc_join')?>
               </div>
             </a>
 
-            <a href="<?=$path?>index_temp_talk">
-              <div class="strikethrough <?=header_menu_css('IRCservices',$header_sidemenu,'side')?>">
-                <?=__('menu_side_talk_irc_services')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_talk">
+            <a href="<?=$path?>index_temp_community">
               <div class="strikethrough <?=header_menu_css('IRCchannels',$header_sidemenu,'side')?>">
-                <?=__('menu_side_talk_irc_channels')?>
+                <?=__('menu_side_community_irc_channels')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_title">
-              <?=__('menu_side_talk_forum')?>
+              <?=__('menu_side_community_users')?>
             </div>
 
-            <a href="<?=$path?>index_temp_talk">
-              <div class="strikethrough <?=header_menu_css('Forum',$header_sidemenu,'side')?>">
-                <?=__('menu_side_talk_forum_topics')?>
+            <a href="<?=$path?>index_temp_community">
+              <div class="strikethrough <?=header_menu_css('Userlist',$header_sidemenu,'side')?>">
+                <?=__('menu_side_community_userlist')?>
               </div>
             </a>
 
-            <a href="<?=$path?>index_temp_talk">
-              <div class="strikethrough <?=header_menu_css('Forumnew',$header_sidemenu,'side')?>">
-                <?=__('menu_side_talk_forum_new')?>
+            <a href="<?=$path?>index_temp_community">
+              <div class="strikethrough <?=header_menu_css('Staff',$header_sidemenu,'side')?>">
+                <?=__('menu_side_community_staff')?>
               </div>
             </a>
 
-            <a href="<?=$path?>index_temp_talk">
-              <div class="strikethrough <?=header_menu_css('Forumsearch',$header_sidemenu,'side')?>">
-                <?=__('menu_side_talk_forum_search')?>
+            <a href="<?=$path?>index_temp_community">
+              <div class="strikethrough <?=header_menu_css('Online',$header_sidemenu,'side')?>">
+                <?=__('menu_side_community_online')?>
               </div>
             </a>
 
-            <a href="<?=$path?>index_temp_talk">
-              <div class="strikethrough <?=header_menu_css('Forumsettings',$header_sidemenu,'side')?>">
-                <?=__('menu_side_talk_forum_preferences')?>
-              </div>
-            </a>
-
-<?php } /* ########################################## SIDE MENU: READ ######## */ else if ($header_menu == 'Read') { ?>
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_read_nbdb')?>
-            </div>
-
-            <a href="<?=$path?>index_temp_read">
-              <div class="strikethrough <?=header_menu_css('NBDB',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_nbdb_index')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_read">
-              <div class="strikethrough <?=header_menu_css('NBDBweb',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_nbdb_web')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_read">
-              <div class="strikethrough <?=header_menu_css('NBDBwebpages',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_nbdb_web_pages')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_read">
-              <div class="strikethrough <?=header_menu_css('NBDBwebrandom',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_nbdb_web_random')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_read">
-              <div class="strikethrough <?=header_menu_css('NBDBwebdict',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_nbdb_web_dictionary')?>
+            <a href="<?=$path?>index_temp_community">
+              <div class="strikethrough <?=header_menu_css('Birthdays',$header_sidemenu,'side')?>">
+                <?=__('menu_side_community_birthdays')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_title">
-              <?=__('menu_side_read_quotes')?>
+              <?=__('menu_side_community_meetups')?>
             </div>
 
-            <a href="<?=$path?>index_temp_read">
+            <a href="<?=$path?>index_temp_community">
+              <div class="strikethrough <?=header_menu_css('Meetups',$header_sidemenu,'side')?>">
+                <?=__('menu_side_community_meetups_list')?>
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_title">
+              <?=__('menu_side_community_quotes')?>
+            </div>
+
+            <a href="<?=$path?>index_temp_community">
               <div class="strikethrough <?=header_menu_css('Quotes',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_quotes_list')?>
+                <?=__('menu_side_community_quotes_list')?>
               </div>
             </a>
 
-            <a href="<?=$path?>index_temp_read">
+            <a href="<?=$path?>index_temp_community">
               <div class="strikethrough <?=header_menu_css('Quotesrandom',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_quotes_random')?>
+                <?=__('menu_side_community_quotes_random')?>
               </div>
             </a>
 
-            <a href="<?=$path?>index_temp_read">
+            <a href="<?=$path?>index_temp_community">
               <div class="strikethrough <?=header_menu_css('Quotessubmit',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_quotes_submit')?>
+                <?=__('menu_side_community_quotes_submit')?>
               </div>
             </a>
 
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_title">
-              <?=__('menu_side_read_writers')?>
+              <?=__('menu_side_community_writers')?>
             </div>
 
-            <a href="<?=$path?>index_temp_read">
+            <a href="<?=$path?>index_temp_community">
               <div class="strikethrough <?=header_menu_css('Writers',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_writers_writings')?>
+                <?=__('menu_side_community_writers_writings')?>
               </div>
             </a>
 
-            <a href="<?=$path?>index_temp_read">
+            <a href="<?=$path?>index_temp_community">
               <div class="strikethrough <?=header_menu_css('Writerspublish',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_writers_publish')?>
+                <?=__('menu_side_community_writers_publish')?>
               </div>
             </a>
 
-            <a href="<?=$path?>index_temp_read">
+            <a href="<?=$path?>index_temp_community">
               <div class="strikethrough <?=header_menu_css('Writerscontests',$header_sidemenu,'side')?>">
-                <?=__('menu_side_read_writers_contests')?>
+                <?=__('menu_side_community_writers_contests')?>
               </div>
             </a>
 
-<?php } /* ########################################## SIDE MENU: PLAY ######## */ else if ($header_menu == 'Play') { ?>
+<?php } /* ######################################### SIDE MENU: PAGES ####### */ else if ($header_menu == 'Pages') { ?>
 
             <div class="header_sidemenu_title">
-              <?=__('menu_side_play_nbrpg')?>
+              <?php if(!$is_admin) { ?>
+              <?=__('menu_side_pages_web')?>
+              <?php } else { ?>
+              <a class="blank nohover text_black" href="<?=$path?>index_temp_pages">
+                <?=__('menu_side_pages_web')?>
+                <img class="spaced_left valign_middle" src="<?=$path?>img/icons/settings.svg" alt="X" height="16">
+              </a>
+              <?php } ?>
             </div>
 
-            <a href="<?=$path?>index_temp_play">
+            <a href="<?=$path?>index_temp_pages">
+              <div class="strikethrough <?=header_menu_css('Web',$header_sidemenu,'side')?>">
+                <?=__('menu_side_pages_web_index')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>index_temp_pages">
+              <div class="strikethrough <?=header_menu_css('Webpages',$header_sidemenu,'side')?>">
+                <?=__('menu_side_pages_web_pages')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>index_temp_pages">
+              <div class="strikethrough <?=header_menu_css('Webrandom',$header_sidemenu,'side')?>">
+                <?=__('menu_side_pages_web_random')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>index_temp_pages">
+              <div class="strikethrough <?=header_menu_css('Webdict',$header_sidemenu,'side')?>">
+                <?=__('menu_side_pages_web_dictionary')?>
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_title">
+              <?=__('menu_side_pages_archives')?>
+            </div>
+
+            <a href="<?=$path?>index_temp_pages">
               <div class="strikethrough <?=header_menu_css('NBRPG',$header_sidemenu,'side')?>">
-                <?=__('menu_side_play_nbrpg_intro')?>
+                <?=__('menu_side_pages_nbrpg')?>
               </div>
             </a>
 
-            <a href="<?=$path?>index_temp_play">
-              <div class="strikethrough <?=header_menu_css('NBRPGarchives',$header_sidemenu,'side')?>">
-                <?=__('menu_side_play_nbrpg_archives')?>
+            <?php if($lang == 'FR') { ?>
+            <a href="<?=$path?>index_temp_pages">
+              <div class="strikethrough <?=header_menu_css('NBRPGsessions',$header_sidemenu,'side')?>">
+                <?=__('menu_side_pages_nbrpg_sessions')?>
               </div>
             </a>
+            <?php } ?>
 
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_play_nrm')?>
-            </div>
-
-            <a href="<?=$path?>index_temp_play">
+            <a href="<?=$path?>index_temp_pages">
               <div class="strikethrough <?=header_menu_css('NRM',$header_sidemenu,'side')?>">
-                <?=__('menu_side_play_nrm_memory')?>
+                <?=__('menu_side_pages_nrm')?>
               </div>
             </a>
 
-            <a href="<?=$path?>index_temp_play">
-              <div class="strikethrough <?=header_menu_css('NRMpodium',$header_sidemenu,'side')?>">
-                <?=__('menu_side_play_nrm_podium')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_play_radikal')?>
-            </div>
-
-            <a href="<?=$path?>index_temp_play">
-              <div class="strikethrough <?=header_menu_css('Radikal',$header_sidemenu,'side')?>">
-                <?=__('menu_side_play_radikal_next')?>
+            <a href="<?=$path?>index_temp_pages">
+              <div class="strikethrough <?=header_menu_css('NRMchampions',$header_sidemenu,'side')?>">
+                <?=__('menu_side_pages_nrm_champions')?>
               </div>
             </a>
 
@@ -996,15 +938,45 @@ $javascripts .= '
 
             <?php if($is_admin) { ?>
 
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_admin_tools')?>
-            </div>
-
             <a href="<?=$path?>index_temp_admin">
               <div class="strikethrough <?=header_menu_css('Rights',$header_sidemenu,'side')?>">
                 <?=__('menu_side_admin_rights')?>
+              </div>
+            </a>
+
+            <hr class="header_sidemenu_hr">
+
+            <div class="header_sidemenu_title">
+              <?=__('menu_side_admin_website')?>
+            </div>
+
+            <a href="<?=$path?>index_temp_admin">
+              <div class="strikethrough <?=header_menu_css('IRCbot',$header_sidemenu,'side')?>">
+                <?=__('menu_side_admin_ircbot')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>index_temp_admin">
+              <div class="strikethrough <?=header_menu_css('Close',$header_sidemenu,'side')?>">
+                <?=__('menu_side_admin_close')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>pages/dev/queries">
+              <div class="<?=header_menu_css('SQL',$header_sidemenu,'side')?>">
+                <?=__('menu_side_admin_sql')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>index_temp_admin">
+              <div class="strikethrough <?=header_menu_css('Release',$header_sidemenu,'side')?>">
+                <?=__('menu_side_admin_release')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>index_temp_admin">
+              <div class="strikethrough <?=header_menu_css('Scheduler',$header_sidemenu,'side')?>">
+                <?=__('menu_side_admin_scheduler')?>
               </div>
             </a>
 
@@ -1026,61 +998,21 @@ $javascripts .= '
               </div>
             </a>
 
-            <?php } ?>
-
-<?php } /* ########################################## SIDE MENU: ADMIN ######## */ else if ($header_menu == 'Dev') { ?>
-
-            <?php if($is_admin) { ?>
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_dev_ircbot')?>
-            </div>
-
-            <a href="<?=$path?>index_temp_dev">
-              <div class="strikethrough <?=header_menu_css('IRCbot',$header_sidemenu,'side')?>">
-                <?=__('menu_side_dev_ircbot_management')?>
-              </div>
-            </a>
-
             <hr class="header_sidemenu_hr">
 
             <div class="header_sidemenu_title">
-              <?=__('menu_side_dev_website')?>
-            </div>
-
-            <a href="<?=$path?>pages/dev/queries">
-              <div class="<?=header_menu_css('SQL',$header_sidemenu,'side')?>">
-                <?=__('menu_side_dev_sql')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_dev">
-              <div class="strikethrough <?=header_menu_css('Close',$header_sidemenu,'side')?>">
-                <?=__('menu_side_dev_close')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_dev">
-              <div class="strikethrough <?=header_menu_css('Release',$header_sidemenu,'side')?>">
-                <?=__('menu_side_dev_release')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_dev_doc')?>
+              <?=__('menu_side_admin_doc')?>
             </div>
 
             <a href="<?=$path?>pages/dev/snippets">
               <div class="<?=header_menu_css('Snippets',$header_sidemenu,'side')?>">
-                <?=__('menu_side_dev_doc_snippets')?>
+                <?=__('menu_side_admin_doc_snippets')?>
               </div>
             </a>
 
-            <a href="<?=$path?>index_temp_dev">
+            <a href="<?=$path?>index_temp_admin">
               <div class="strikethrough <?=header_menu_css('CSS',$header_sidemenu,'side')?>">
-                <?=__('menu_side_dev_doc_css')?>
+                <?=__('menu_side_admin_doc_css')?>
               </div>
             </a>
 

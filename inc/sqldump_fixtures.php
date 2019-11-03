@@ -242,9 +242,9 @@ query(" INSERT INTO users
                     users.nickname            = 'Moderator'   ,
                     users.password            = ''            ,
                     users.is_moderator        = 1             ,
-                    users.moderator_rights    = 'forum'       ,
-                    users.moderator_title_en  = 'Forum'       ,
-                    users.moderator_title_fr  = 'Forum'        ");
+                    users.moderator_rights    = 'meetups'     ,
+                    users.moderator_title_en  = 'Meetups'     ,
+                    users.moderator_title_fr  = 'IRL'         ");
 query(" INSERT INTO users
         SET         users.id                  = 4             ,
                     users.nickname            = 'User'        ,
@@ -639,110 +639,6 @@ for($i = 0; $i < $random; $i++)
                           quotes_users.fk_users   = '$user'   ");
     }
   }
-}
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                       FORUM                                                       */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Generate some random categories
-$random = mt_rand(5,10);
-for($i = 0; $i < $random; $i++)
-{
-  // Generate random data
-  $default    = (!$i) ? 1 : 0;
-  $display    = (!$i) ? 100 : $i;
-  $title_en   = ucfirst(fixtures_generate_data('string', 5, 15));
-  $title_fr   = ucfirst(fixtures_generate_data('string', 5, 15));
-  $details_en = ucfirst(fixtures_generate_data('sentence', 10, 20));
-  $details_fr = ucfirst(fixtures_generate_data('sentence', 10, 20));
-
-  // Generate the categories
-  query(" INSERT INTO forum_categories
-          SET         forum_categories.is_default_category  = '$default'    ,
-                      forum_categories.display_order        = '$display'    ,
-                      forum_categories.title_en             = '$title_en'   ,
-                      forum_categories.title_fr             = '$title_fr'   ,
-                      forum_categories.explanation_en       = '$details_en' ,
-                      forum_categories.explanation_fr       = '$details_fr' ");
-}
-
-
-// Generate some threads
-$random = mt_rand(200,400);
-for($i = 0; $i < $random; $i++)
-{
-  // Generate random data
-  $deleted    = (mt_rand(0,25) < 25) ? 0 : 1;
-  $author     = fixtures_fetch_random_id('users');
-  $category   = fixtures_fetch_random_id('forum_categories');
-  $created_at = mt_rand(1111239420, time());
-  $format     = (mt_rand(0,10) < 10) ? 'thread' : 'thread_anonymous';
-  $type       = (mt_rand(0,10) < 10) ? 'standard' : 'game';
-  $private    = (mt_rand(0,25) < 25) ? 0 : 1;
-  $closed     = (mt_rand(0,25) < 25) ? 0 : 1;
-  $pinned     = (mt_rand(0,50) < 50) ? 0 : 1;
-  $language   = (mt_rand(0,1)) ? 'EN' : 'FR';
-  $title      = ucfirst(fixtures_generate_data('sentence', 2, 6));
-
-  // Generate the threads
-  query(" INSERT INTO forum_threads
-          SET         forum_threads.deleted             = '$deleted'    ,
-                      forum_threads.fk_users_author     = '$author'     ,
-                      forum_threads.fk_forum_categories = '$category'   ,
-                      forum_threads.created_at          = '$created_at' ,
-                      forum_threads.thread_format       = '$format'     ,
-                      forum_threads.thread_type         = '$type'       ,
-                      forum_threads.is_private          = '$private'    ,
-                      forum_threads.is_closed           = '$closed'     ,
-                      forum_threads.is_pinned           = '$pinned'     ,
-                      forum_threads.language            = '$language'   ,
-                      forum_threads.title               = '$title'      ");
-
-  // Fetch the ID of the generated thread
-  $thread = query_id();
-
-  // Add some messages to the thread
-  $random2    = mt_rand(5,10);
-  $posted_at  = $created_at;
-  for($j = 0; $j < $random2; $j++)
-  {
-    // Generate random data
-    $deleted    = ($j && mt_rand(0,5) < 5) ? 0 : 1;
-    $author2    = (!$j) ? $author : fixtures_fetch_random_id('users');
-    $posted_at  = mt_rand($posted_at, time());
-    $edited_at  = (mt_rand(0,10) < 10) ? 0 : mt_rand($posted_at, time());
-    $body       = fixtures_generate_data('text', 1, 4);
-
-    // Generate the message
-    query(" INSERT INTO forum_messages
-            SET         forum_messages.deleted          = '$deleted'    ,
-                        forum_messages.fk_forum_threads = '$thread'     ,
-                        forum_messages.fk_author        = '$author2'    ,
-                        forum_messages.posted_at        = '$posted_at'  ,
-                        forum_messages.edited_at        = '$edited_at'  ,
-                        forum_messages.body             = '$body'       ");
-
-    // Increment the user's message count
-    if($format != 'thread_anonymous' && $type != 'game')
-      query(" UPDATE  users_stats
-              SET     users_stats.forum_message_count = users_stats.forum_message_count + 1
-              WHERE   users_stats.fk_users            = '$author2' ");
-  }
-
-  // Update the thread with the data from the messages
-  $last_author  = ($format != 'thread_anonymous') ? $author2 : 0;
-  $nb_messages  = ($random2) ? $random2 - 1 : 0;
-  query(" UPDATE  forum_threads
-            SET   forum_threads.fk_users_last_message = '$last_author'  ,
-                  forum_threads.last_message_at       = '$posted_at'    ,
-                  forum_threads.nb_messages           = '$nb_messages'
-            WHERE forum_threads.id                    = '$thread'       ");
 }
 
 

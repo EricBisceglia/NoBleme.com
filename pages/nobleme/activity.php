@@ -26,9 +26,6 @@ $page_lang        = array('FR', 'EN');
 $page_title       = (!isset($_GET['mod'])) ? __('activity_page_title') : __('activity_page_title_modlogs');
 $page_description = __('activity_page_description');
 
-// Short url
-$shorturl = "a";
-
 // Extra JS
 $js = array('xhr', 'toggle', 'nobleme/activity');
 
@@ -135,7 +132,6 @@ if(!page_is_xhr()) { /*******************************************************/ i
             <option value="meetups"><?=__('activity_type_meetups')?></option>
             <option value="nbdb"><?=__('activity_type_nbdb')?></option>
             <option value="quotes"><?=__('activity_type_quotes')?></option>
-            <option value="forum"><?=__('activity_type_forum')?></option>
             <option value="writers"><?=__('activity_type_writers')?></option>
             <option value="dev"><?=__('activity_type_dev')?></option>
           </select>

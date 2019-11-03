@@ -11,7 +11,7 @@ include_once './../../lang/dev.lang.php';    # Translations
 user_restrict_to_administrators($lang);
 
 // Menus
-$header_menu      = 'Dev';
+$header_menu      = 'Admin';
 $header_sidemenu  = 'SQL';
 
 // User activity

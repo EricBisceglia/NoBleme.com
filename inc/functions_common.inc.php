@@ -620,7 +620,7 @@ function private_message_send($title, $body, $recipient=0, $sender=0, $is_silent
  * @return  bool                                Is the user allowed to post content to the website.
  */
 
-function flood_check($menu_main='NoBleme', $menu_side='Homepage', $path='./../../', $user_id=null, $lang=null)
+function flood_check($menu_main='NoBleme', $menu_side='', $path='./../../', $user_id=null, $lang=null)
 {
   // Fetch the user's language if required
   $lang = (!$lang) ? user_get_language() : $lang;

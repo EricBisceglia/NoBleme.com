@@ -76,68 +76,6 @@ CREATE TABLE IF NOT EXISTS `dev_tasks_milestones` (
   KEY `index_sorting_order` (`sorting_order`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `forum_categories`;
-CREATE TABLE IF NOT EXISTS `forum_categories` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `is_default_category` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `display_order` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `title_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `explanation_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `explanation_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_display_order` (`display_order`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `forum_categories_filters`;
-CREATE TABLE IF NOT EXISTS `forum_categories_filters` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `fk_users` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fk_forum_categories` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `index_user_filters` (`fk_users`,`fk_forum_categories`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `forum_messages`;
-CREATE TABLE IF NOT EXISTS `forum_messages` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `fk_forum_threads` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fk_forum_messages_parent` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fk_author` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `posted_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `edited_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_author` (`fk_author`),
-  KEY `index_thread` (`fk_forum_threads`),
-  KEY `index_hierarchy` (`fk_forum_messages_parent`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `forum_threads`;
-CREATE TABLE IF NOT EXISTS `forum_threads` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `deleted` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `fk_users_author` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fk_users_last_message` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `fk_forum_categories` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `created_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `last_message_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `thread_format` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `thread_type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_private` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `is_closed` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `is_pinned` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `nb_messages` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `language` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_author` (`fk_users_author`),
-  KEY `index_latest_contributor` (`fk_users_last_message`),
-  KEY `index_category` (`fk_forum_categories`),
-  KEY `index_chronology` (`last_message_at`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 DROP TABLE IF EXISTS `irc_channels`;
 CREATE TABLE IF NOT EXISTS `irc_channels` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -465,7 +403,6 @@ CREATE TABLE IF NOT EXISTS `users_settings` (
   `hide_tweets` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `hide_youtube` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `hide_google_trends` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
-  `forum_shown_languages` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_user` (`fk_users`),
   KEY `index_nsfw_filter` (`show_nsfw_content`)
@@ -475,7 +412,6 @@ DROP TABLE IF EXISTS `users_stats`;
 CREATE TABLE IF NOT EXISTS `users_stats` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_users` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `forum_message_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `index_user` (`fk_users`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -552,10 +488,6 @@ CREATE TABLE IF NOT EXISTS `writings_texts` (
 
 ALTER TABLE `dev_tasks` ADD FULLTEXT KEY `index_title_en` (`title_en`);
 ALTER TABLE `dev_tasks` ADD FULLTEXT KEY `index_title_fr` (`title_fr`);
-
-ALTER TABLE `forum_messages` ADD FULLTEXT KEY `index_contents` (`body`);
-
-ALTER TABLE `forum_threads` ADD FULLTEXT KEY `index_title` (`title`);
 
 ALTER TABLE `nbdb_web_definitions` ADD FULLTEXT KEY `index_title_en` (`title_en`,`redirection_en`);
 ALTER TABLE `nbdb_web_definitions` ADD FULLTEXT KEY `index_title_fr` (`title_fr`,`redirection_fr`);

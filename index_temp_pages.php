@@ -6,7 +6,7 @@
 include_once './inc/includes.inc.php';  # Core
 
 // Menus
-$header_menu = 'Play';
+$header_menu = 'Pages';
 
 // Page summary
 $page_title = "Temporary index";

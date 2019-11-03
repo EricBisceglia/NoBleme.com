@@ -12,19 +12,12 @@ a:hover > .header_topmenu_selected   { color: #000000;                          
 .header_topmenu_flagimg              { vertical-align: middle;                                                        }
 
 @media (min-width: 1025px) {
-.header_topmenu                             { padding: 6px 6px 6px 10px;          }
-.header_topmenu_title                       { padding: 0px 15px; font-size: 18px; }
-.header_topmenu_link + .header_topmenu_link { margin-left: 8px;                   }
-.header_topmenu_selected                    { border-radius: 4px;                 }
-.header_topmenu_title:hover                 { border-radius: 4px;               } }
-
+.header_topmenu            { padding: 0px 8px 0px 0px;                      }
+.header_topmenu_title      { padding: 4px 20px 4px 20px; font-size: 22px; } }
 @media (max-width: 1024px) {
-.header_topmenu_flagimg                     { height: 42px; margin: 0px 0px 8px 0px; }
-.header_topmenu                             { padding: 5px 10px 5px 10px;            }
-.header_topmenu_title                       { padding: 0px 10px; font-size: 32px;    }
-.header_topmenu_link + .header_topmenu_link { margin-left: 10px;                     }
-.header_topmenu_selected                    { border-radius: 2px;                    }
-.header_topmenu_title:hover                 { border-radius: 2px;                  } }
+.header_topmenu_flagimg    { height: 32px; margin: 0px 0px 8px 0px;         }
+.header_topmenu            { padding: 0px 8px 0px 0px;  line-height: 50px;  }
+.header_topmenu_title      { padding: 8px 15px 8px 15px; font-size: 30px; } }
 
 /************************************************* ACCOUNT INFO BAR **************************************************/
 .header_infobar                             { display: flex; justify-content: space-between; background-color: #78A1BC;
@@ -38,10 +31,12 @@ a:hover > .header_topmenu_selected   { color: #000000;                          
                                               animation-duration: 1337ms;                                             }
 @keyframes blink-annoy-hover                { from { color: #FF0000; } to { color: #37536B; }                         }
 
-@media(min-width: 1025px) { .header_infobar             { font-size: 14px;                            }
-                            .header_infobar_responsive  { display:none;                             } }
-@media(max-width: 1024px) { .header_infobar             { font-size: 30px; padding: 8px 8px 8px 16px; }
-                            .header_infobar_standard    { display:none;                             } }
+@media(min-width: 1025px)  {
+.header_infobar            { font-size: 14px;                                               }
+.header_infobar_responsive { display:none;                                                } }
+@media(max-width: 1024px)  {
+.header_infobar            { font-size: 30px; padding: 8px 8px 8px 16px; line-height: 34px; }
+.header_infobar_standard   { display:none;                                                } }
 
 /***************************************************** SIDE MENU *****************************************************/
 .header_sidemenu                { display: flex; flex-direction: column; justify-content: space-between    ;
@@ -54,21 +49,21 @@ a:hover > .header_topmenu_selected   { color: #000000;                          
 .header_sidemenu_hr             { width: 100%; padding: 0px; border: 0px; height: 1px; background:#78A1BC; }
 .header_sidemenu_input          { margin-left:5%;width:90%;                                                }
 
-@media (min-width: 1025px) { .header_sidemenu         { width: 200px; padding-top: 7px;                       }
-                             .header_sidemenu_desktop { display: none;                                        }
-                             .header_side_nomenu      { display: none; color: #FFFFFF                         }
-                             .header_sidemenu_item    { padding: 5px 8px; font-size: 13px;                    }
-                             .header_sidemenu_title   { padding: 5px 10px; margin-left: 5px; margin-right: 5px;
-                                                        font-size: 13px;                                    } }
+@media (min-width: 1025px) { .header_sidemenu         { width: 200px; padding-top: 7px;                        }
+                             .header_sidemenu_desktop { display: none;                                         }
+                             .header_side_nomenu      { display: none; color: #FFFFFF                          }
+                             .header_sidemenu_item    { padding: 5px 8px; font-size: 13px;                     }
+                             .header_sidemenu_title   { padding: 5px 10px; margin-left: 5px; margin-right: 5px ;
+                                                        font-size: 13px;                                     } }
 
-@media (max-width: 1024px) { .header_sidemenu        { width: 420px; padding-top: 4px;                              }
-                             .header_sidemenu_mobile { display: none;                                               }
-                             .header_side_nomenu     { position:fixed; top:128px; font-weight: bold; font-size: 32px;
-                                                       cursor:pointer; color: #78A1BC; padding: 5px 25px 5px 20px   ;
-                                                       background: #37536B; border-bottom-right-radius: 10px        }
-                             .header_sidemenu_item   { padding: 10px 3px; font-size: 30px;                          }
-                             .header_sidemenu_title  { padding: 5px 5px; margin-left: 5px; margin-right: 5px        ;
-                                                       font-size: 26px;                                           } }
+@media (max-width: 1024px) { .header_sidemenu        { width: 420px; padding-top: 4px;                               }
+                             .header_sidemenu_mobile { display: none;                                                }
+                             .header_side_nomenu     { position:fixed; top:116px; font-weight: bold; font-size: 32px ;
+                                                       cursor:pointer; color: #78A1BC; padding: 5px 25px 5px 20px    ;
+                                                       background: #37536B; border-bottom-right-radius: 10px         }
+                             .header_sidemenu_item   { padding: 10px 3px; font-size: 30px;                           }
+                             .header_sidemenu_title  { padding: 5px 5px; margin-left: 5px; margin-right: 5px         ;
+                                                       font-size: 26px;                                            } }
 
 /************************************************ PAGE / MENU LAYOUTS ************************************************/
 .header_side_menu_container                    { display: -webkit-flex; display: flex;                        }

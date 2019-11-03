@@ -1206,83 +1206,34 @@ if($last_query < 24)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #544 - Translation and optimization of all tables - Forum
+// #544 - Get rid of the forum
 
 if($last_query < 25)
 {
-  sql_rename_table('forum_sujet', 'forum_threads');
-  sql_rename_table('forum_message', 'forum_messages');
-  sql_rename_table('forum_categorie', 'forum_categories');
-  sql_rename_table('forum_filtrage', 'forum_categories_filters');
+  sql_delete_table('forum_sujet', 'forum_threads');
+  sql_delete_table('forum_message', 'forum_messages');
+  sql_delete_table('forum_categorie', 'forum_categories');
+  sql_delete_table('forum_filtrage', 'forum_categories_filters');
 
-  sql_change_field_type('forum_threads', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('forum_threads', 'FKmembres_createur', 'fk_users_author', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_threads', 'FKmembres_dernier_message', 'fk_users_last_message', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_threads', 'FKforum_categorie', 'fk_forum_categories', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_threads', 'timestamp_creation', 'created_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_threads', 'timestamp_dernier_message', 'last_message_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_threads', 'apparence', 'thread_format', 'VARCHAR(50) NOT NULL');
-  sql_rename_field('forum_threads', 'classification', 'thread_type', 'VARCHAR(50) NOT NULL');
-  sql_rename_field('forum_threads', 'public', 'is_private', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  query(" UPDATE forum_threads SET forum_threads.is_private = 2 WHERE forum_threads.is_private = 1 ");
-  query(" UPDATE forum_threads SET forum_threads.is_private = 1 WHERE forum_threads.is_private = 0 ");
-  query(" UPDATE forum_threads SET forum_threads.is_private = 0 WHERE forum_threads.is_private = 2 ");
-  sql_rename_field('forum_threads', 'ouvert', 'is_closed', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  query(" UPDATE forum_threads SET forum_threads.is_closed = 2 WHERE forum_threads.is_closed = 1 ");
-  query(" UPDATE forum_threads SET forum_threads.is_closed = 1 WHERE forum_threads.is_closed = 0 ");
-  query(" UPDATE forum_threads SET forum_threads.is_closed = 0 WHERE forum_threads.is_closed = 2 ");
-  sql_rename_field('forum_threads', 'epingle', 'is_pinned', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_threads', 'langue', 'language', 'VARCHAR(12) NOT NULL');
-  sql_rename_field('forum_threads', 'titre', 'title', 'TEXT NOT NULL');
-  sql_rename_field('forum_threads', 'nombre_reponses', 'nb_messages', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('forum_threads', 'nb_messages', 'INT UNSIGNED NOT NULL DEFAULT 0', 'is_pinned');
-  sql_delete_index('forum_threads', 'index_createur');
-  sql_delete_index('forum_threads', 'index_dernier');
-  sql_delete_index('forum_threads', 'index_categorie');
-  sql_delete_index('forum_threads', 'index_chronologie');
-  sql_delete_index('forum_threads', 'index_titre');
-  sql_create_index('forum_threads', 'index_author', 'fk_users_author');
-  sql_create_index('forum_threads', 'index_latest_contributor', 'fk_users_last_message');
-  sql_create_index('forum_threads', 'index_category', 'fk_forum_categories');
-  sql_create_index('forum_threads', 'index_chronology', 'last_message_at');
-  sql_create_index('forum_threads', 'index_title', 'title', 1);
+  query(" UPDATE  membres
+          SET     membres.moderateur                 = NULL ,
+                  membres.moderateur_description_en  = ''   ,
+                  membres.moderateur_description_fr  = ''
+          WHERE   membres.moderateur              LIKE 'forum' ");
 
-  sql_change_field_type('forum_messages', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('forum_messages', 'FKforum_sujet', 'fk_forum_threads', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_messages', 'FKforum_message_parent', 'fk_forum_messages_parent', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_messages', 'FKmembres', 'fk_author', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_messages', 'timestamp_creation', 'posted_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_messages', 'timestamp_modification', 'edited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_messages', 'message_supprime', 'deleted_message', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_messages', 'contenu', 'body', 'LONGTEXT NOT NULL');
-  sql_delete_index('forum_messages', 'index_sujet');
-  sql_delete_index('forum_messages', 'index_parent');
-  sql_delete_index('forum_messages', 'index_membres');
-  sql_delete_index('forum_messages', 'index_chronologie');
-  sql_delete_index('forum_messages', 'index_contenu');
-  sql_create_index('forum_messages', 'index_author', 'fk_author');
-  sql_create_index('forum_messages', 'index_thread', 'fk_forum_threads');
-  sql_create_index('forum_messages', 'index_hierarchy', 'fk_forum_messages_parent');
-  sql_create_index('forum_messages', 'index_contents', 'body', 1);
+  query(" DELETE FROM logs_activity
+          WHERE       logs_activity.activity_type LIKE 'forum_%' ");
 
-  sql_change_field_type('forum_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('forum_categories', 'par_defaut', 'is_default_category', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_categories', 'classement', 'display_order', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_categories', 'nom_fr', 'title_fr', 'TEXT NOT NULL');
-  sql_rename_field('forum_categories', 'nom_en', 'title_en', 'TEXT NOT NULL');
-  sql_move_field('forum_categories', 'title_fr', 'TEXT NOT NULL', 'title_en');
-  sql_rename_field('forum_categories', 'description_fr', 'explanation_fr', 'TEXT NOT NULL');
-  sql_rename_field('forum_categories', 'description_en', 'explanation_en', 'TEXT NOT NULL');
-  sql_move_field('forum_categories', 'explanation_fr', 'TEXT NOT NULL', 'explanation_en');
-  sql_delete_index('forum_categories', 'index_classement');
-  sql_create_index('forum_categories', 'index_display_order', 'display_order');
-
-  sql_change_field_type('forum_categories_filters', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('forum_categories_filters', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('forum_categories_filters', 'FKforum_categorie', 'fk_forum_categories', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_delete_index('forum_categories_filters', 'index_membres');
-  sql_delete_index('forum_categories_filters', 'index_categorie');
-  sql_create_index('forum_categories_filters', 'index_user_filters', 'fk_users, fk_forum_categories');
+  $qorphans = query(" SELECT    logs_activity_details.id AS 'd_id'
+                      FROM      logs_activity_details
+                      LEFT JOIN logs_activity ON logs_activity_details.fk_logs_activity = logs_activity.id
+                      WHERE     logs_activity.id IS NULL ");
+  while($dorphans = mysqli_fetch_array($qorphans))
+  {
+    $orphan_id = $dorphans['d_id'];
+    query(" DELETE FROM logs_activity_details
+            WHERE       logs_activity_details.id = '$orphan_id' ");
+  }
 
   sql_update_query_id(25);
 }
@@ -1368,34 +1319,20 @@ if($last_query < 26)
   sql_create_field('users_settings', 'hide_tweets', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'show_nsfw_content');
   sql_create_field('users_settings', 'hide_youtube', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_tweets');
   sql_create_field('users_settings', 'hide_google_trends', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_youtube');
-  sql_create_field('users_settings', 'forum_shown_languages', 'VARCHAR(12) NOT NULL', 'hide_google_trends');
-  $qusers = query(" SELECT  users.id                  AS 'u_id'       ,
-                            users.voir_nsfw           AS 'u_nsfw'     ,
-                            users.voir_tweets         AS 'u_tweets'   ,
-                            users.voir_youtube        AS 'u_youtube'  ,
-                            users.voir_google_trends  AS 'u_trends'   ,
-                            users.forum_lang          AS 'u_forumlang'
-                    FROM    users ");
   while($dusers = mysqli_fetch_array($qusers))
     query(" INSERT INTO users_settings
             SET         users_settings.fk_users               = '".sql_sanitize_data($dusers['u_id'])."'        ,
                         users_settings.show_nsfw_content      = '".sql_sanitize_data($dusers['u_nsfw'])."'      ,
                         users_settings.hide_tweets            = '".sql_sanitize_data($dusers['u_tweets'])."'    ,
                         users_settings.hide_youtube           = '".sql_sanitize_data($dusers['u_youtube'])."'   ,
-                        users_settings.hide_google_trends     = '".sql_sanitize_data($dusers['u_trends'])."'    ,
-                        users_settings.forum_shown_languages  = '".sql_sanitize_data($dusers['u_forumlang'])."' ");
+                        users_settings.hide_google_trends     = '".sql_sanitize_data($dusers['u_trends'])."'    ");
   sql_create_index('users_settings', 'index_user', 'fk_users');
   sql_create_index('users_settings', 'index_nsfw_filter', 'show_nsfw_content');
 
   sql_create_field('users_stats', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('users_stats', 'forum_message_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
-  $qusers = query(" SELECT  users.id              AS 'u_id' ,
-                            users.forum_messages  AS 'u_forum'
-                    FROM    users ");
   while($dusers = mysqli_fetch_array($qusers))
     query(" INSERT INTO users_stats
-            SET         users_stats.fk_users             = '".sql_sanitize_data($dusers['u_id'])."'    ,
-                        users_stats.forum_message_count  = '".sql_sanitize_data($dusers['u_forum'])."' ");
+            SET         users_stats.fk_users = '".sql_sanitize_data($dusers['u_id'])."' ");
   sql_create_index('users_stats', 'index_user', 'fk_users');
 
   sql_delete_field('users', 'email');
@@ -1713,25 +1650,6 @@ if($last_query < 31)
           SET     system_scheduler.task_type    = 'writers_contest_end'
           WHERE   system_scheduler.task_type LIKE 'ecrivains_concours_fin' ");
 
-  query(" UPDATE  forum_threads
-          SET     forum_threads.thread_format    = 'thread'
-          WHERE   forum_threads.thread_format LIKE 'Fil' ");
-  query(" UPDATE  forum_threads
-          SET     forum_threads.thread_format    = 'thread_anonymous'
-          WHERE   forum_threads.thread_format LIKE 'Anonyme' ");
-  query(" UPDATE  forum_threads
-          SET     forum_threads.thread_type    = 'standard'
-          WHERE   forum_threads.thread_type LIKE 'Standard' ");
-  query(" UPDATE  forum_threads
-          SET     forum_threads.thread_type    = 'serious'
-          WHERE   forum_threads.thread_type LIKE 'Sérieux' ");
-  query(" UPDATE  forum_threads
-          SET     forum_threads.thread_type    = 'debate'
-          WHERE   forum_threads.thread_type LIKE 'Débat' ");
-  query(" UPDATE  forum_threads
-          SET     forum_threads.thread_type    = 'game'
-          WHERE   forum_threads.thread_type LIKE 'Jeu' ");
-
   $logs_activity_language = array(    'version'                         => 'ENFR' ,
                                       'devblog'                         => 'ENFR' ,
                                       'todo_new'                        => 'ENFR' ,
@@ -1745,12 +1663,6 @@ if($last_query < 31)
                                       'droits_delete'                   => 'ENFR' ,
                                       'droits_mod'                      => 'ENFR' ,
                                       'droits_sysop'                    => 'ENFR' ,
-                                      'forum_new'                       => 'ENFR' ,
-                                      'forum_edit'                      => 'ENFR' ,
-                                      'forum_delete'                    => 'ENFR' ,
-                                      'forum_new_message'               => 'ENFR' ,
-                                      'forum_edit_message'              => 'ENFR' ,
-                                      'forum_delete_message'            => 'ENFR' ,
                                       'irl_new'                         => 'ENFR' ,
                                       'irl_edit'                        => 'ENFR' ,
                                       'irl_delete'                      => 'ENFR' ,
@@ -1797,12 +1709,6 @@ if($last_query < 31)
                                       'droits_delete'                   => 'users_rights_delete'                ,
                                       'droits_mod'                      => 'users_rights_moderator'             ,
                                       'droits_sysop'                    => 'users_rights_global_moderator'      ,
-                                      'forum_new'                       => 'forum_thread_new'                   ,
-                                      'forum_edit'                      => 'forum_thread_edit'                  ,
-                                      'forum_delete'                    => 'forum_thread_delete'                ,
-                                      'forum_new_message'               => 'forum_message_new'                  ,
-                                      'forum_edit_message'              => 'forum_message_edit'                 ,
-                                      'forum_delete_message'            => 'forum_message_delete'               ,
                                       'irl_new'                         => 'meetups_new'                        ,
                                       'irl_edit'                        => 'meetups_edit'                       ,
                                       'irl_delete'                      => 'meetups_delete'                     ,
@@ -1876,10 +1782,6 @@ if($last_query < 32)
 {
   sql_create_field('dev_blogs', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('dev_tasks', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
-
-  sql_delete_field('forum_messages', 'deleted_message');
-  sql_create_field('forum_messages', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('forum_threads', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
 
   sql_create_field('logs_activity', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
 

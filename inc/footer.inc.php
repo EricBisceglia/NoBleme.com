@@ -40,11 +40,7 @@ $copyright_date = date('Y');
 
         <footer>
 
-          <?php if(isset($shorturl)) {  ?>
-
-          <?=__link("s?".$shorturl, __('footer_shorturl'), "", 1, $path);?><br>
-
-          <?php } if($is_admin) { ?>
+          <?php if($is_admin) { ?>
 
           <?php if($pageviews) { ?>
 

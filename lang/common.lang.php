@@ -461,16 +461,12 @@ ___('header_status_logout', 'FR', "Déconnexion");
 // Top menu
 ___('menu_top_nobleme', 'EN', "NOBLEME");
 ___('menu_top_nobleme', 'FR', "NOBLEME");
-___('menu_top_talk', 'EN', "TALK");
-___('menu_top_talk', 'FR', "DISCUTER");
-___('menu_top_play', 'EN', "PLAY");
-___('menu_top_play', 'FR', "JOUER");
-___('menu_top_read', 'EN', "READ");
-___('menu_top_read', 'FR', "LIRE");
+___('menu_top_community', 'EN', "COMMUNITY");
+___('menu_top_community', 'FR', "COMMUNAUTÉ");
+___('menu_top_pages', 'EN', "PAGES");
+___('menu_top_pages', 'FR', "PAGES");
 ___('menu_top_admin', 'EN', "ADMIN");
 ___('menu_top_admin', 'FR', "ADMIN");
-___('menu_top_dev', 'EN', "DEV");
-___('menu_top_dev', 'FR', "DEV");
 
 
 // Side menu actions
@@ -486,23 +482,8 @@ ___('menu_side_nobleme_homepage', 'FR', "Page d'accueil");
 ___('menu_side_nobleme_activity', 'EN', "Recent activity");
 ___('menu_side_nobleme_activity', 'FR', "Activité récente");
 
-___('menu_side_nobleme_community', 'EN', "Community");
-___('menu_side_nobleme_community', 'FR', "Communauté");
-___('menu_side_nobleme_online', 'EN', "Who's online");
-___('menu_side_nobleme_online', 'FR', "Qui est en ligne");
-___('menu_side_nobleme_staff', 'EN', "Administrative team");
-___('menu_side_nobleme_staff', 'FR', "Équipe administrative");
-___('menu_side_nobleme_userlist', 'EN', "Registered user list");
-___('menu_side_nobleme_userlist', 'FR', "Liste des membres");
-___('menu_side_nobleme_birthdays', 'EN', "User birthdays");
-___('menu_side_nobleme_birthdays', 'FR', "Anniversaires");
-___('menu_side_nobleme_meetups', 'EN', "Real life meetups");
-___('menu_side_nobleme_meetups', 'FR', "Rencontres IRL");
-
-___('menu_side_nobleme_help', 'EN', "Help / Documentation");
-___('menu_side_nobleme_help', 'FR', "Aide & Informations");
-___('menu_side_nobleme_documentation', 'EN', "Website documentation");
-___('menu_side_nobleme_documentation', 'FR', "Documentation du site");
+___('menu_side_nobleme_documentation', 'EN', "Documentation");
+___('menu_side_nobleme_documentation', 'FR', "Documentation");
 ___('menu_side_nobleme_what_is', 'EN', "What is NoBleme");
 ___('menu_side_nobleme_what_is', 'FR', "Qu'est-ce que NoBleme");
 ___('menu_side_nobleme_coc', 'EN', "Code of conduct");
@@ -529,6 +510,8 @@ ___('menu_side_nobleme_feature', 'FR', "Quémander un feature");
 
 ___('menu_side_nobleme_legal', 'EN', "Legal notice");
 ___('menu_side_nobleme_legal', 'FR', "Mentions légales");
+___('menu_side_nobleme_contact_admin', 'EN', "Contact the admins");
+___('menu_side_nobleme_contact_admin', 'FR', "Contacter l'administration");
 ___('menu_side_nobleme_privacy', 'EN', "Privacy policy");
 ___('menu_side_nobleme_privacy', 'FR', "Politique de confidentialité");
 ___('menu_side_nobleme_personal_data', 'EN', "Your personal data");
@@ -537,82 +520,73 @@ ___('menu_side_nobleme_forget_me', 'EN', "Right to be forgotten");
 ___('menu_side_nobleme_forget_me', 'FR', "Droit à l'oubli");
 
 
-// Side menu: Talk
-___('menu_side_talk_irc', 'EN', "IRC chat server");
-___('menu_side_talk_irc', 'FR', "Serveur de chat IRC");
-___('menu_side_talk_irc_intro', 'EN', "What is IRC");
-___('menu_side_talk_irc_intro', 'FR', "Qu'est-ce que IRC");
-___('menu_side_talk_irc_join', 'EN', "Join the conversation");
-___('menu_side_talk_irc_join', 'FR', "Rejoindre la conversation");
-___('menu_side_talk_irc_services', 'EN', "Commands and services");
-___('menu_side_talk_irc_services', 'FR', "Commandes et services");
-___('menu_side_talk_irc_channels', 'EN', "Channel list");
-___('menu_side_talk_irc_channels', 'FR', "Liste des canaux");
+// Side menu: Community
+___('menu_side_community_irc', 'EN', "IRC chat server");
+___('menu_side_community_irc', 'FR', "Serveur de chat IRC");
+___('menu_side_community_irc_intro', 'EN', "What is IRC");
+___('menu_side_community_irc_intro', 'FR', "Qu'est-ce que IRC");
+___('menu_side_community_irc_join', 'EN', "Join the conversation");
+___('menu_side_community_irc_join', 'FR', "Rejoindre la conversation");
+___('menu_side_community_irc_channels', 'EN', "Channel list");
+___('menu_side_community_irc_channels', 'FR', "Liste des canaux");
 
-___('menu_side_talk_forum', 'EN', "Discussion forum");
-___('menu_side_talk_forum', 'FR', "Forum de discussion");
-___('menu_side_talk_forum_topics', 'EN', "Latest forum topics");
-___('menu_side_talk_forum_topics', 'FR', "Sujets de discussion");
-___('menu_side_talk_forum_new', 'EN', "Open a new topic");
-___('menu_side_talk_forum_new', 'FR', "Démarrer une discussion");
-___('menu_side_talk_forum_search', 'EN', "Search the forum");
-___('menu_side_talk_forum_search', 'FR', "Recherche sur le forum");
-___('menu_side_talk_forum_preferences', 'EN', "Filtering preferences");
-___('menu_side_talk_forum_preferences', 'FR', "Préférences de filtrage");
+___('menu_side_community_users', 'EN', "Users");
+___('menu_side_community_users', 'FR', "Membres");
+___('menu_side_community_userlist', 'EN', "Registered user list");
+___('menu_side_community_userlist', 'FR', "Liste des membres");
+___('menu_side_community_staff', 'EN', "Administrative team");
+___('menu_side_community_staff', 'FR', "Équipe administrative");
+___('menu_side_community_online', 'EN', "Who's online");
+___('menu_side_community_online', 'FR', "Qui est en ligne");
+___('menu_side_community_birthdays', 'EN', "User birthdays");
+___('menu_side_community_birthdays', 'FR', "Anniversaires");
 
+___('menu_side_community_meetups', 'EN', "Real life meetups");
+___('menu_side_community_meetups', 'FR', "Rencontres IRL");
+___('menu_side_community_meetups_list', 'EN', "List of meetups");
+___('menu_side_community_meetups_list', 'FR', "Liste des IRL");
 
-// Side menu: Read
-___('menu_side_read_nbdb', 'EN', "NBDB");
-___('menu_side_read_nbdb', 'FR', "NBDB");
-___('menu_side_read_nbdb_index', 'EN', "The NoBleme Database");
-___('menu_side_read_nbdb_index', 'FR', "Base d'informations");
-___('menu_side_read_nbdb_web', 'EN', "Internet encyclopedia");
-___('menu_side_read_nbdb_web', 'FR', "Encyclopédie du web");
-___('menu_side_read_nbdb_web_pages', 'EN', "List of all pages");
-___('menu_side_read_nbdb_web_pages', 'FR', "Liste des pages");
-___('menu_side_read_nbdb_web_random', 'EN', "Random page");
-___('menu_side_read_nbdb_web_random', 'FR', "Page au hasard");
-___('menu_side_read_nbdb_web_dictionary', 'EN', "Internet dictionnary");
-___('menu_side_read_nbdb_web_dictionary', 'FR', "Dictionnaire du web");
+___('menu_side_community_quotes', 'EN', "Quotes");
+___('menu_side_community_quotes', 'FR', "Citations");
+___('menu_side_community_quotes_list', 'EN', "Quote database");
+___('menu_side_community_quotes_list', 'FR', "Paroles de NoBlemeux");
+___('menu_side_community_quotes_random', 'EN', "Random quote");
+___('menu_side_community_quotes_random', 'FR', "Citation au hasard");
+___('menu_side_community_quotes_submit', 'EN', "Submit a new quote");
+___('menu_side_community_quotes_submit', 'FR', "Proposer une citation");
 
-___('menu_side_read_quotes', 'EN', "Miscellanea");
-___('menu_side_read_quotes', 'FR', "Miscellanées");
-___('menu_side_read_quotes_list', 'EN', "Quote database");
-___('menu_side_read_quotes_list', 'FR', "Paroles de NoBlemeux");
-___('menu_side_read_quotes_random', 'EN', "Random quote");
-___('menu_side_read_quotes_random', 'FR', "Citation au hasard");
-___('menu_side_read_quotes_submit', 'EN', "Submit a new quote");
-___('menu_side_read_quotes_submit', 'FR', "Proposer une citation");
-
-___('menu_side_read_writers', 'EN', "Writer's corner");
-___('menu_side_read_writers', 'FR', "Coin des écrivains");
-___('menu_side_read_writers_writings', 'EN', "NoBleme's writings");
-___('menu_side_read_writers_writings', 'FR', "Écrits de NoBlemeux");
-___('menu_side_read_writers_publish', 'EN', "Publish a writing");
-___('menu_side_read_writers_publish', 'FR', "Publier un écrit");
-___('menu_side_read_writers_contests', 'EN', "Writing contests");
-___('menu_side_read_writers_contests', 'FR', "Concours d'écriture");
+___('menu_side_community_writers', 'EN', "Writer's corner");
+___('menu_side_community_writers', 'FR', "Coin des écrivains");
+___('menu_side_community_writers_writings', 'EN', "NoBleme's writings");
+___('menu_side_community_writers_writings', 'FR', "Écrits de NoBlemeux");
+___('menu_side_community_writers_publish', 'EN', "Publish a writing");
+___('menu_side_community_writers_publish', 'FR', "Publier un écrit");
+___('menu_side_community_writers_contests', 'EN', "Writing contests");
+___('menu_side_community_writers_contests', 'FR', "Concours d'écriture");
 
 
-// Side menu: Play
-___('menu_side_play_nbrpg', 'EN', "NoBlemeRPG");
-___('menu_side_play_nbrpg', 'FR', "NoBlemeRPG");
-___('menu_side_play_nbrpg_intro', 'EN', "What is the NBRPG");
-___('menu_side_play_nbrpg_intro', 'FR', "Qu'est-ce que le NBRPG");
-___('menu_side_play_nbrpg_archives', 'EN', "Archived sessions");
-___('menu_side_play_nbrpg_archives', 'FR', "Sessions archivées");
+// Side menu: Pages
+___('menu_side_pages_web', 'EN', "Internet encyclopedia");
+___('menu_side_pages_web', 'FR', "Encyclopédie du web");
+___('menu_side_pages_web_index', 'EN', "Internet culture guide");
+___('menu_side_pages_web_index', 'FR', "Guide de la culture web");
+___('menu_side_pages_web_pages', 'EN', "List of all pages");
+___('menu_side_pages_web_pages', 'FR', "Liste des pages");
+___('menu_side_pages_web_random', 'EN', "Random page");
+___('menu_side_pages_web_random', 'FR', "Page au hasard");
+___('menu_side_pages_web_dictionary', 'EN', "Internet dictionnary");
+___('menu_side_pages_web_dictionary', 'FR', "Dictionnaire du web");
 
-___('menu_side_play_nrm', 'EN', "NRM Online");
-___('menu_side_play_nrm', 'FR', "NRM Online");
-___('menu_side_play_nrm_memory', 'EN', "Remembering the NRM");
-___('menu_side_play_nrm_memory', 'FR', "En souvenir du NRM");
-___('menu_side_play_nrm_podium', 'EN', "Champions of the past");
-___('menu_side_play_nrm_podium', 'FR', "Champions du passé");
-
-___('menu_side_play_radikal', 'EN', "Project: Radikal");
-___('menu_side_play_radikal', 'FR', "Projet : Radikal");
-___('menu_side_play_radikal_next', 'EN', "NoBleme's next game");
-___('menu_side_play_radikal_next', 'FR', "Le prochain jeu NoBleme");
+___('menu_side_pages_archives', 'EN', "Archives");
+___('menu_side_pages_archives', 'FR', "Archives");
+___('menu_side_pages_nbrpg', 'EN', "NoBlemeRPG");
+___('menu_side_pages_nbrpg', 'FR', "NoBlemeRPG");
+___('menu_side_pages_nbrpg_sessions', 'EN', "Archived sessions");
+___('menu_side_pages_nbrpg_sessions', 'FR', "Sessions archivées");
+___('menu_side_pages_nrm', 'EN', "NRM Online");
+___('menu_side_pages_nrm', 'FR', "NRM Online");
+___('menu_side_pages_nrm_champions', 'EN', "Champions of the past");
+___('menu_side_pages_nrm_champions', 'FR', "Champions du passé");
 
 
 // Side menu: User
@@ -662,9 +636,6 @@ ___('menu_side_admin_password', 'EN', "Change a password");
 ___('menu_side_admin_password', 'FR', "Modifier un mot de passe");
 ___('menu_side_admin_banned', 'EN', "Banned users");
 ___('menu_side_admin_banned', 'FR', "Pilori des bannis");
-
-___('menu_side_admin_tools', 'EN', "Administrative tools");
-___('menu_side_admin_tools', 'FR', "Outils administratifs");
 ___('menu_side_admin_rights', 'EN', "User access rights");
 ___('menu_side_admin_rights', 'FR', "Changer les permissions");
 
@@ -675,28 +646,25 @@ ___('menu_side_admin_pageviews', 'FR', "Popularité des pages");
 ___('menu_side_admin_doppelganger', 'EN', "Doppelgänger");
 ___('menu_side_admin_doppelganger', 'FR', "Doppelgänger");
 
+___('menu_side_admin_website', 'EN', "Website management");
+___('menu_side_admin_website', 'FR', "Gestion du site");
+___('menu_side_admin_ircbot', 'EN', "IRC bot management");
+___('menu_side_admin_ircbot', 'FR', "Gestion du bot IRC");
+___('menu_side_admin_close', 'EN', "Close the website");
+___('menu_side_admin_close', 'FR', "Fermer le site");
+___('menu_side_admin_sql', 'EN', "Run SQL queries");
+___('menu_side_admin_sql', 'FR', "Jouer les requêtes SQL");
+___('menu_side_admin_release', 'EN', "Version numbers");
+___('menu_side_admin_release', 'FR', "Numéros de version");
+___('menu_side_admin_scheduler', 'EN', "Scheduled tasks");
+___('menu_side_admin_scheduler', 'FR', "Tâches planifiées");
 
-// Side menu: Dev
-___('menu_side_dev_ircbot', 'EN', "NoBleme IRC bot");
-___('menu_side_dev_ircbot', 'FR', "Bot IRC NoBleme");
-___('menu_side_dev_ircbot_management', 'EN', "IRC bot management");
-___('menu_side_dev_ircbot_management', 'FR', "Gestion du bot IRC");
-
-___('menu_side_dev_website', 'EN', "Website management");
-___('menu_side_dev_website', 'FR', "Gestion du site");
-___('menu_side_dev_sql', 'EN', "Run SQL queries");
-___('menu_side_dev_sql', 'FR', "Jouer les requêtes SQL");
-___('menu_side_dev_close', 'EN', "Close the website");
-___('menu_side_dev_close', 'FR', "Fermer le site");
-___('menu_side_dev_release', 'EN', "Version numbers");
-___('menu_side_dev_release', 'FR', "Numéros de version");
-
-___('menu_side_dev_doc', 'EN', "Developer documentation");
-___('menu_side_dev_doc', 'FR', "Documentation de dev");
-___('menu_side_dev_doc_snippets', 'EN', "Code snippets");
-___('menu_side_dev_doc_snippets', 'FR', "Modèles de code");
-___('menu_side_dev_doc_css', 'EN', "CSS palette");
-___('menu_side_dev_doc_css', 'FR', "Palette CSS");
+___('menu_side_admin_doc', 'EN', "Dev documentation");
+___('menu_side_admin_doc', 'FR', "Documentation dev");
+___('menu_side_admin_doc_snippets', 'EN', "Code snippets");
+___('menu_side_admin_doc_snippets', 'FR', "Modèles de code");
+___('menu_side_admin_doc_css', 'EN', "CSS palette");
+___('menu_side_admin_doc_css', 'FR', "Palette CSS");
 
 
 
@@ -712,9 +680,6 @@ ___('footer_loadtime', 'FR', "Page chargée en ");
 
 ___('footer_version', 'EN', 'Version {{1}}, build {{2}} - {{3}}');
 ___('footer_version', 'FR', 'Version {{1}}, build {{2}} - {{3}}');
-
-___('footer_shorturl', 'EN', "Shorter link alternative");
-___('footer_shorturl', 'FR', "Lien court vers cette page");
 
 ___('footer_legal', 'EN', "Legal notices and privacy policy");
 ___('footer_legal', 'FR', "Mentions légales &amp; confidentialité");

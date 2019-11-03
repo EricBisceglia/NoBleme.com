@@ -3,11 +3,11 @@
 /*                                                   PAGE SETTINGS                                                   */
 /*                                                                                                                   */
 // Inclusions /*******************************************************************************************************/
-include_once './../../inc/includes.inc.php';  # Core
-include_once './../../lang/nobleme.lang.php'; # Translations
+include_once './inc/includes.inc.php';  # Core
+include_once './lang/nobleme.lang.php'; # Translations
+
 // Menus
 $header_menu      = 'NoBleme';
-$header_sidemenu  = 'Homepage';
 
 // User activity
 $page_name  = "404";

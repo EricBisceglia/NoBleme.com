@@ -10,7 +10,7 @@ include_once './../../lang/dev.lang.php';    # Translations
 user_restrict_to_administrators($lang);
 
 // Menus
-$header_menu      = 'Dev';
+$header_menu      = 'Admin';
 $header_sidemenu  = 'Snippets';
 
 // User activity
@@ -79,9 +79,6 @@ $page_url   = "pages/nobleme/index";
 $page_lang        = array('EN', 'FR');
 $page_title       = __('use_a_translation');
 $page_description = __('use_a_translation');
-
-// Short url
-$shorturl = "x";
 
 // Extra CSS &amp; JS
 $css  = array('tabs');
@@ -223,9 +220,6 @@ $page_url   = "pages/nobleme/index";
 $page_lang        = array('EN', 'FR');
 $page_title       = __('use_a_translation');
 $page_description = __('use_a_translation');
-
-// Short url
-$shorturl = "x";
 
 // Extra CSS & JS
 $css  = array('tabs');

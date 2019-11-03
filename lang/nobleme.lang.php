@@ -110,8 +110,6 @@ ___('activity_type_nbdb', 'EN', "NBDB");
 ___('activity_type_nbdb', 'FR', "NBDB");
 ___('activity_type_quotes', 'EN', "Quotes");
 ___('activity_type_quotes', 'FR', "Miscellanées");
-___('activity_type_forum', 'EN', "Forum");
-___('activity_type_forum', 'FR', "Forum");
 ___('activity_type_writers', 'EN', "Writer's corner");
 ___('activity_type_writers', 'FR', "Coin des écrivains");
 ___('activity_type_dev', 'EN', "Website internals");
