@@ -25,9 +25,19 @@ include_once "./inc/sql.inc.php";
 // Seek user confirmation before doing any harm
 if(isset($_POST['fixtures_reset']))
 {
+  // Output intro
+  echo "<br>Please wait patiently until the database is done being created...<br>";
+  ob_flush();
+  flush();
+
   // Delete and recreate the `nobleme` database
   query(" DROP DATABASE IF EXISTS nobleme ");
   query(" CREATE DATABASE IF NOT EXISTS nobleme DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ");
+
+  // Output progress
+  echo "Existing database has been wiped<br>";
+  ob_flush();
+  flush();
 
   // Specify that queries should be done on the `nobleme` database
   $GLOBALS['db'] = @mysqli_connect($GLOBALS['mysql_host'], $GLOBALS['mysql_user'], $GLOBALS['mysql_pass'], 'nobleme') or die ('MySQL error: Connexion failed 2.');
@@ -39,6 +49,11 @@ if(isset($_POST['fixtures_reset']))
   // Import the database schema
   $database_schema = explode(';', file_get_contents('./inc/sqldump_schema.sql'));
 
+  // Output progress
+  echo "Database schema is being parsed<br>";
+  ob_flush();
+  flush();
+
   // Run each query in the schema except the first one
   foreach($database_schema as $schema_query_id => $schema_query)
   {
@@ -46,11 +61,17 @@ if(isset($_POST['fixtures_reset']))
       query($schema_query);
   }
 
+  // Output progress
+  echo "Database schema has been imported<br><br><hr><br>Please wait patiently until all fixtures are done being generated...<br>";
+  ob_flush();
+  flush();
+
+
   // Import and run fixtures aswell to fill up the database
   include_once './inc/sqldump_fixtures.php';
 
   // Finished!
-  exit("Job's done! Check your database for confirmation.<br><br><a href=\"index\">Click here to return to the website's index.</a><br><br>".$GLOBALS['query']." queries ran in ".(round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3).'s'));
+  exit("<br><hr><br>Job's done! ".$GLOBALS['query']." queries ran in ".(round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3)."s<br><br><a href=\"index\">Click here to return to the website's index.</a><br><br>"));
 }
 
 // Ask for user confirmation before resetting the database ?>

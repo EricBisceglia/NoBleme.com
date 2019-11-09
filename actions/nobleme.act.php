@@ -152,19 +152,10 @@ function activity_get_details($log_id, $lang='EN')
   // Go through the diffs (if any)
   while($ddiff = mysqli_fetch_array($qdiff))
   {
-    // If there is no descrition, return the deleted content
     if(!$ddiff['d_desc'])
-      $data['diff'] .= bbcodes(sanitize_output($ddiff['d_before'], 1)).'<br><br>';
+      $data['diff'] .= bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
     else
-    {
-      // If there is a before/after, return a full diff
-      if($ddiff['d_after'])
-        $data['diff'] .= '<span class="bold">'.sanitize_output($ddiff['d_desc']).' :</span> '.bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
-
-      // If there is no content from after, return the deleted content
-      else
-        $data['diff'] .= '<span class="bold">'.sanitize_output($ddiff['d_desc']).' :</span> '.bbcodes(sanitize_output($ddiff['d_before'], 1)).'<br><br>';
-    }
+      $data['diff'] .= '<span class="bold">'.sanitize_output($ddiff['d_desc']).' :</span> '.bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
   }
 
   // Return the prepared data

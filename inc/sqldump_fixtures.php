@@ -156,6 +156,7 @@ function fixtures_fetch_random_id($table)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Global variables
 
+// Set global variables
 query(" INSERT INTO system_variables
         SET         system_variables.update_in_progress       = 0   ,
                     system_variables.latest_query_id          = 31  ,
@@ -164,27 +165,33 @@ query(" INSERT INTO system_variables
 
 
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Versions
 
-$date = date('Y-m-d');
+// Generate preset versions
 query(" INSERT INTO system_versions
         SET         system_versions.version = '1'           ,
                     system_versions.build   = '0'           ,
-                    system_versions.date    = '2019-03-19'  ");
+                    system_versions.date    = '2005-03-19'  ");
+$date = date('Y-m-d');
 query(" INSERT INTO system_versions
         SET         system_versions.version = '1'           ,
                     system_versions.build   = '1'           ,
                     system_versions.date    = '$date'       ");
 
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// NBDB admin notes
-
-query(" INSERT INTO nbdb_web_admin_notes
-        SET         nbdb_web_admin_notes.global_notes = '' ");
+$timestamp = strtotime('2005-03-19');
+query(" INSERT INTO logs_activity
+        SET         logs_activity.happened_at       = '$timestamp'  ,
+                    logs_activity.language          = 'ENFR'        ,
+                    logs_activity.activity_type     = 'dev_version' ,
+                    logs_activity.activity_summary  = '1 build 0'   ");
+$timestamp = time();
+query(" INSERT INTO logs_activity
+        SET         logs_activity.happened_at       = '$timestamp'  ,
+                    logs_activity.language          = 'ENFR'        ,
+                    logs_activity.activity_type     = 'dev_version' ,
+                    logs_activity.activity_summary  = '1 build 1'   ");
 
 
 
@@ -215,6 +222,11 @@ for($i = 0; $i < $random; $i++)
                       irc_channels.details_fr     = '$details_fr' ");
 }
 
+// Output progress
+echo "Generated $random IRC channels<br>";
+ob_flush();
+flush();
+
 
 
 
@@ -227,6 +239,7 @@ for($i = 0; $i < $random; $i++)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Create default users with no password and varied access rights for testing purposes
 
+// Generate preset users
 query(" INSERT INTO users
         SET         users.id                  = 1             ,
                     users.nickname            = 'Admin'       ,
@@ -260,6 +273,46 @@ query(" INSERT INTO users
                     users.is_banned_until     = 1918625619    ,
                     users.is_banned_because   = 'Fixture'     ");
 
+// Activity logs
+query(" INSERT INTO logs_activity
+        SET         logs_activity.happened_at   = '1111239420'      ,
+                    logs_activity.language      = 'ENFR'            ,
+                    logs_activity.activity_type = 'users_register'  ,
+                    logs_activity.fk_users      = '1'               ,
+                    logs_activity.nickname      = 'Admin'           ");
+query(" INSERT INTO logs_activity
+        SET         logs_activity.happened_at   = '1211239420'      ,
+                    logs_activity.language      = 'ENFR'            ,
+                    logs_activity.activity_type = 'users_register'  ,
+                    logs_activity.fk_users      = '2'               ,
+                    logs_activity.nickname      = 'Global_mod'      ");
+query(" INSERT INTO logs_activity
+        SET         logs_activity.happened_at   = '1311239420'      ,
+                    logs_activity.language      = 'ENFR'            ,
+                    logs_activity.activity_type = 'users_register'  ,
+                    logs_activity.fk_users      = '3'               ,
+                    logs_activity.nickname      = 'Moderator'       ");
+query(" INSERT INTO logs_activity
+        SET         logs_activity.happened_at   = '1411239420'      ,
+                    logs_activity.language      = 'ENFR'            ,
+                    logs_activity.activity_type = 'users_register'  ,
+                    logs_activity.fk_users      = '4'               ,
+                    logs_activity.nickname      = 'User'           ");
+query(" INSERT INTO logs_activity
+        SET         logs_activity.happened_at   = '1511239420'      ,
+                    logs_activity.language      = 'ENFR'            ,
+                    logs_activity.activity_type = 'users_register'  ,
+                    logs_activity.fk_users      = '5'               ,
+                    logs_activity.nickname      = 'Prude'           ");
+$timestamp = time();
+query(" INSERT INTO logs_activity
+        SET         logs_activity.happened_at   = '$timestamp'      ,
+                    logs_activity.language      = 'ENFR'            ,
+                    logs_activity.activity_type = 'users_register'  ,
+                    logs_activity.fk_users      = '6'               ,
+                    logs_activity.nickname      = 'Banned'          ");
+
+// Give these users profiles
 query(" INSERT INTO users_profile
         SET         users_profile.fk_users      = 1                     ,
                     users_profile.email_address = 'admin@localhost'     ,
@@ -267,24 +320,25 @@ query(" INSERT INTO users_profile
 query(" INSERT INTO users_profile
         SET         users_profile.fk_users      = 2                     ,
                     users_profile.email_address = 'globalmod@localhost' ,
-                    users_profile.created_at    = '1111239420 '         ");
+                    users_profile.created_at    = '1211239420 '         ");
 query(" INSERT INTO users_profile
         SET         users_profile.fk_users      = 3                     ,
                     users_profile.email_address = 'moderator@localhost' ,
-                    users_profile.created_at    = '1111239420 '         ");
+                    users_profile.created_at    = '1311239420 '         ");
 query(" INSERT INTO users_profile
         SET         users_profile.fk_users      = 4                     ,
                     users_profile.email_address = 'user@localhost'      ,
-                    users_profile.created_at    = '1111239420 '         ");
+                    users_profile.created_at    = '1411239420 '         ");
 query(" INSERT INTO users_profile
         SET         users_profile.fk_users      = 5                     ,
                     users_profile.email_address = 'prude@localhost'     ,
-                    users_profile.created_at    = '1111239420 '         ");
+                    users_profile.created_at    = '1511239420 '         ");
 query(" INSERT INTO users_profile
         SET         users_profile.fk_users      = 6                     ,
                     users_profile.email_address = 'banned@localhost'    ,
-                    users_profile.created_at    = '1111239420 '         ");
+                    users_profile.created_at    = '$timestamp '         ");
 
+// Give these users stats
 query(" INSERT INTO users_stats
         SET         users_stats.fk_users = 1 ");
 query(" INSERT INTO users_stats
@@ -298,6 +352,7 @@ query(" INSERT INTO users_stats
 query(" INSERT INTO users_stats
         SET         users_stats.fk_users = 6 ");
 
+// Give these users settings
 query(" INSERT INTO users_settings
         SET         users_settings.fk_users = 1           ,
                     users_settings.show_nsfw_content  = 1 ");
@@ -380,8 +435,161 @@ for($i = 0; $i < $random; $i++)
 
     query(" INSERT INTO users_stats
             SET         users_stats.fk_users = '$user_id' ");
+
+    // Add some logs
+    if(!$deleted)
+    {
+      $deleted_log = (mt_rand(0,50) < 50) ? 0 : 1;
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.deleted       = '$deleted_log'    ,
+                          logs_activity.happened_at   = '$created_at'     ,
+                          logs_activity.language      = 'ENFR'            ,
+                          logs_activity.activity_type = 'users_register'  ,
+                          logs_activity.fk_users      = '$user_id'        ,
+                          logs_activity.nickname      = '$username'       ");
+    }
+
+    if(!$deleted && $profile_text && mt_rand(0,3) >= 3)
+    {
+      $deleted_log  = (mt_rand(0,50) < 50) ? 0 : 1;
+      $edited_at    = mt_rand($created_at, time());
+      $text_before  = (mt_rand(0,1)) ? '' : ucfirst(fixtures_generate_data('text', 1, 10));
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.deleted                 = '$deleted_log'        ,
+                          logs_activity.happened_at             = '$edited_at'          ,
+                          logs_activity.is_administrators_only  = 1                     ,
+                          logs_activity.language                = 'ENFR'                ,
+                          logs_activity.activity_type           = 'users_profile_edit'  ,
+                          logs_activity.fk_users                = '$user_id'            ,
+                          logs_activity.nickname                = '$username'           ");
+      $log_id = query_id();
+      query(" INSERT INTO logs_activity_details
+              SET         logs_activity_details.fk_logs_activity        = '$log_id'       ,
+                          logs_activity_details.content_description_en  = 'Profile text'  ,
+                          logs_activity_details.content_description_fr  = 'Texte libre'   ,
+                          logs_activity_details.content_before          = '$text_before'  ,
+                          logs_activity_details.content_after           = '$profile_text' ");
+    }
+    else if(!$deleted && $profile_text && mt_rand(0,3) >= 3)
+    {
+      $deleted_log  = (mt_rand(0,15) < 15) ? 0 : 1;
+      $edited_at    = mt_rand($created_at, time());
+      $text_before  = (mt_rand(0,1)) ? '' : ucfirst(fixtures_generate_data('text', 1, 10));
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.deleted                 = '$deleted_log'              ,
+                          logs_activity.happened_at             = '$edited_at'                ,
+                          logs_activity.is_administrators_only  = 1                           ,
+                          logs_activity.language                = 'ENFR'                      ,
+                          logs_activity.activity_type           = 'users_admin_edit_profile'  ,
+                          logs_activity.fk_users                = '$user_id'                  ,
+                          logs_activity.nickname                = '$username'                 ,
+                          logs_activity.activity_parent         = 'Admin'                     ");
+      $log_id = query_id();
+      query(" INSERT INTO logs_activity_details
+              SET         logs_activity_details.fk_logs_activity        = '$log_id'       ,
+                          logs_activity_details.content_description_en  = 'Profile text'  ,
+                          logs_activity_details.content_description_fr  = 'Texte libre'   ,
+                          logs_activity_details.content_before          = '$text_before'  ,
+                          logs_activity_details.content_after           = '$profile_text' ");
+    }
+    else if(!$deleted && !$profile_text && mt_rand(0,50) >= 50)
+    {
+      $deleted_log  = (mt_rand(0,25) < 25) ? 0 : 1;
+      $edited_at    = mt_rand($created_at, time());
+      $text_before  = ucfirst(fixtures_generate_data('text', 1, 10));
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.deleted                 = '$deleted_log'        ,
+                          logs_activity.happened_at             = '$edited_at'          ,
+                          logs_activity.is_administrators_only  = 1                     ,
+                          logs_activity.language                = 'ENFR'                ,
+                          logs_activity.activity_type           = 'users_profile_edit'  ,
+                          logs_activity.fk_users                = '$user_id'            ,
+                          logs_activity.nickname                = '$username'           ");
+      $log_id = query_id();
+      query(" INSERT INTO logs_activity_details
+              SET         logs_activity_details.fk_logs_activity        = '$log_id'       ,
+                          logs_activity_details.content_description_en  = 'Profile text'  ,
+                          logs_activity_details.content_description_fr  = 'Texte libre'   ,
+                          logs_activity_details.content_before          = '$text_before'  ,
+                          logs_activity_details.content_after           = ''              ");
+    }
+    if(mt_rand(0,100) >= 100)
+    {
+      $edited_at = mt_rand($created_at, time());
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.happened_at             = '$edited_at'                ,
+                          logs_activity.is_administrators_only  = 1                           ,
+                          logs_activity.language                = 'ENFR'                      ,
+                          logs_activity.activity_type           = 'users_admin_edit_password' ,
+                          logs_activity.fk_users                = '$user_id'                  ,
+                          logs_activity.nickname                = '$username'                 ,
+                          logs_activity.activity_parent         = 'Admin'                     ");
+    }
+    if(mt_rand(0,150) >= 150)
+    {
+      $banned_at    = mt_rand($created_at, time());
+      $unbanned_at  = mt_rand($banned_at, time());
+      $ban_reason   = ucfirst(fixtures_generate_data('sentence', 4, 8));
+      $unban_reason = (mt_rand(0,1)) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
+      $ban_length   = (abs($banned_at - $unbanned_at) / 86400);
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.happened_at             = '$banned_at'    ,
+                          logs_activity.fk_users                = '$user_id'      ,
+                          logs_activity.language                = 'ENFR'          ,
+                          logs_activity.activity_type           = 'users_banned'  ,
+                          logs_activity.activity_id             = '$ban_length'   ,
+                          logs_activity.nickname                = '$username'     ");
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.happened_at             = '$banned_at'    ,
+                          logs_activity.is_administrators_only  = 1               ,
+                          logs_activity.language                = 'ENFR'          ,
+                          logs_activity.activity_type           = 'users_banned'  ,
+                          logs_activity.activity_id             = '$user_id'      ,
+                          logs_activity.nickname                = '$username'     ,
+                          logs_activity.activity_parent         = 'Admin'         ,
+                          logs_activity.moderation_reason       = '$ban_reason'   ");
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.happened_at             = '$unbanned_at'    ,
+                          logs_activity.fk_users                = '$user_id'        ,
+                          logs_activity.language                = 'ENFR'            ,
+                          logs_activity.activity_type           = 'users_unbanned'  ,
+                          logs_activity.activity_id             = '$ban_length'     ,
+                          logs_activity.nickname                = '$username'       ");
+      if($unban_reason)
+        query(" INSERT INTO logs_activity
+                SET         logs_activity.happened_at             = '$unbanned_at'    ,
+                            logs_activity.is_administrators_only  = 1                 ,
+                            logs_activity.language                = 'ENFR'            ,
+                            logs_activity.activity_type           = 'users_unbanned'  ,
+                            logs_activity.activity_id             = '$user_id'        ,
+                            logs_activity.nickname                = '$username'       ,
+                            logs_activity.activity_parent         = 'Admin'           ,
+                            logs_activity.moderation_reason       = '$unban_reason'   ");
+    }
+    if(mt_rand(0,250) >= 250)
+    {
+      $granted_at     = mt_rand($created_at, time());
+      $reverted_at    = mt_rand($granted_at, time());
+      $granted_rights = mt_rand(0,1) ? 'users_rights_moderator' : 'users_rights_global_moderator';
+      $granted_rights = (mt_rand(0,3) >= 3) ? 'users_rights_administrator' : $granted_rights;
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.happened_at             = '$granted_at'     ,
+                          logs_activity.language                = 'ENFR'            ,
+                          logs_activity.activity_type           = '$granted_rights' ,
+                          logs_activity.nickname                = '$username'       ");
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.happened_at             = '$reverted_at'        ,
+                          logs_activity.language                = 'ENFR'                ,
+                          logs_activity.activity_type           = 'users_rights_delete' ,
+                          logs_activity.nickname                = '$username'           ");
+    }
   }
 }
+
+// Output progress
+echo "Generated $random users<br>";
+ob_flush();
+flush();
 
 
 
@@ -412,6 +620,11 @@ for($i = 0; $i < $random; $i++)
                       users_private_messages.title              = '$title'      ,
                       users_private_messages.body               = '$body'       ");
 }
+
+// Output progress
+echo "Generated $random private messages<br>";
+ob_flush();
+flush();
 
 
 
@@ -445,7 +658,24 @@ for($i = 0; $i < $random; $i++)
                       dev_blogs.title_fr  = '$title_fr'   ,
                       dev_blogs.body_en   = '$body_en'    ,
                       dev_blogs.body_fr   = '$body_fr'    ");
+
+  // Activity logs
+  $deleted_log  = (mt_rand(0,15) < 15) ? 0 : 1;
+  $blog_id      = query_id();
+  query(" INSERT INTO logs_activity
+          SET         logs_activity.deleted           = '$deleted_log'  ,
+                      logs_activity.happened_at       = '$posted_at'    ,
+                      logs_activity.language          = 'ENFR'          ,
+                      logs_activity.activity_type     = 'dev_blog'      ,
+                      logs_activity.activity_id       = '$blog_id'      ,
+                      logs_activity.activity_summary  = '$title_fr'     ,
+                      logs_activity.activity_parent   = '$title_en'     ");
 }
+
+// Output progress
+echo "Generated $random devblogs<br>";
+ob_flush();
+flush();
 
 
 
@@ -467,6 +697,11 @@ for($i = 0; $i < $random; $i++)
                       dev_tasks_categories.title_fr = '$title_fr' ");
 }
 
+// Output progress
+echo "Generated $random task categories<br>";
+ob_flush();
+flush();
+
 // Generate some random milestones
 $random = mt_rand(25,50);
 for($i = 0; $i < $random; $i++)
@@ -485,6 +720,11 @@ for($i = 0; $i < $random; $i++)
                       dev_tasks_milestones.summary_en     = '$summary_en' ,
                       dev_tasks_milestones.summary_fr     = '$summary_fr' ");
 }
+
+// Output progress
+echo "Generated $random task milestones<br>";
+ob_flush();
+flush();
 
 // Generate some random tasks
 $random = mt_rand(250,500);
@@ -523,7 +763,41 @@ for($i = 0; $i < $random; $i++)
                       dev_tasks.fk_dev_tasks_categories = '$category'         ,
                       dev_tasks.fk_dev_tasks_milestones = '$milestone'        ,
                       dev_tasks.source_code_link        = '$source_code_link' ");
+
+  // Activity logs
+  $deleted_log  = (mt_rand(0,40) < 40) ? 0 : 1;
+  $task_id      = query_id();
+  $dnickname    = mysqli_fetch_array(query("  SELECT  users.nickname AS 'u_nick'
+                                              FROM    users
+                                              WHERE   users.id = '$fk_users' "));
+  $nickname   = $dnickname['u_nick'];
+  query(" INSERT INTO logs_activity
+          SET         logs_activity.deleted           = '$deleted_log'  ,
+                      logs_activity.happened_at       = '$created_at'   ,
+                      logs_activity.language          = 'ENFR'          ,
+                      logs_activity.activity_type     = 'dev_task_new'  ,
+                      logs_activity.nickname          = '$nickname'     ,
+                      logs_activity.activity_id       = '$task_id'      ,
+                      logs_activity.activity_summary  = '$title_fr'     ,
+                      logs_activity.activity_parent   = '$title_en'     ");
+  if($finished_at)
+  {
+    $deleted_log  = (mt_rand(0,20) < 20) ? 0 : 1;
+    query(" INSERT INTO logs_activity
+            SET         logs_activity.deleted           = '$deleted_log'      ,
+                        logs_activity.happened_at       = '$finished_at'      ,
+                        logs_activity.language          = 'ENFR'              ,
+                        logs_activity.activity_type     = 'dev_task_finished' ,
+                        logs_activity.activity_id       = '$task_id'          ,
+                        logs_activity.activity_summary  = '$title_fr'         ,
+                        logs_activity.activity_parent   = '$title_en'         ");
+  }
 }
+
+// Output progress
+echo "Generated $random tasks<br>";
+ob_flush();
+flush();
 
 
 
@@ -535,12 +809,12 @@ for($i = 0; $i < $random; $i++)
 /*********************************************************************************************************************/
 
 // Generate some meetups
-$random = mt_rand(50,100);
+$random = mt_rand(40,60);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
   $deleted    = (mt_rand(0,15) < 15) ? 0 : 1;
-  $event_date = mt_rand(2005,date('Y')).'-'.mt_rand(1,12).'-'.mt_rand(1,28);
+  $event_date = date('Y-m-d', mt_rand(1111339420, time()));
   $location   = fixtures_generate_data('string', 5, 15);
   $reason_en  = (mt_rand(0,3) < 3) ? '' : fixtures_generate_data('sentence', 1, 4);
   $reason_fr  = ($reason_en) ? fixtures_generate_data('sentence', 1, 4) : '';
@@ -560,8 +834,79 @@ for($i = 0; $i < $random; $i++)
   // Fetch the ID of the generated meetup
   $meetup = query_id();
 
+  // Activity logs
+  $deleted_log  = (mt_rand(0,25) < 25) ? 0 : 1;
+  $created_at   = strtotime($event_date) - (mt_rand(0,100) * 86400);
+  $created_at   = ($created_at < 1111239420) ? mt_rand(1111239420, strtotime($event_date)) : $created_at;
+  if(!$deleted)
+    query(" INSERT INTO logs_activity
+            SET         logs_activity.deleted           = '$deleted_log'  ,
+                        logs_activity.happened_at       = '$created_at'   ,
+                        logs_activity.language          = 'ENFR'          ,
+                        logs_activity.activity_type     = 'meetups_new'   ,
+                        logs_activity.activity_id       = '$meetup'       ,
+                        logs_activity.activity_summary  = '$event_date'   ");
+  query(" INSERT INTO logs_activity
+          SET         logs_activity.deleted                 = '$deleted_log'  ,
+                      logs_activity.happened_at             = '$created_at'   ,
+                      logs_activity.is_administrators_only  = 1               ,
+                      logs_activity.language                = 'ENFR'          ,
+                      logs_activity.nickname                = 'Admin'         ,
+                      logs_activity.activity_type           = 'meetups_new'   ,
+                      logs_activity.activity_id             = '$meetup'       ,
+                      logs_activity.activity_summary        = '$event_date'   ");
+
+  // Activity logs: edited
+  if(mt_rand(0,15) >= 15)
+  {
+    $deleted_log  = (mt_rand(0,5) < 5) ? 0 : 1;
+    $edited_at    = mt_rand($created_at, strtotime($event_date));
+    $old_location = fixtures_generate_data('string', 5, 15);
+    query(" INSERT INTO logs_activity
+            SET         logs_activity.deleted                 = '$deleted_log'  ,
+                        logs_activity.happened_at             = '$edited_at'    ,
+                        logs_activity.is_administrators_only  = 1               ,
+                        logs_activity.language                = 'ENFR'          ,
+                        logs_activity.nickname                = 'Admin'         ,
+                        logs_activity.activity_type           = 'meetups_edit'  ,
+                        logs_activity.activity_id             = '$meetup'       ,
+                        logs_activity.activity_summary        = '$event_date'   ");
+    $log_id = query_id();
+    query(" INSERT INTO logs_activity_details
+            SET         logs_activity_details.fk_logs_activity        = '$log_id'       ,
+                        logs_activity_details.content_description_en  = 'Location'      ,
+                        logs_activity_details.content_description_fr  = 'Lieu'          ,
+                        logs_activity_details.content_before          = '$old_location' ,
+                        logs_activity_details.content_after           = '$location'     ");
+  }
+
+  // Activity logs: deleted
+  if($deleted)
+  {
+    $deleted_at = mt_rand($created_at, strtotime($event_date));
+    query(" INSERT INTO logs_activity
+            SET         logs_activity.deleted                 = '$deleted_log'    ,
+                        logs_activity.happened_at             = '$deleted_at'     ,
+                        logs_activity.is_administrators_only  = 1                 ,
+                        logs_activity.language                = 'ENFR'            ,
+                        logs_activity.nickname                = 'Admin'           ,
+                        logs_activity.activity_type           = 'meetups_delete'  ,
+                        logs_activity.activity_summary        = '$event_date'     ");
+    $log_id   = query_id();
+    $random2  = mt_rand(1,10);
+    for($i = 0; $i < $random2; $i++)
+    {
+      $nickname = fixtures_generate_data('string', 3, 18);
+      query(" INSERT INTO logs_activity_details
+              SET         logs_activity_details.fk_logs_activity        = '$log_id'     ,
+                          logs_activity_details.content_description_en  = 'Attending'   ,
+                          logs_activity_details.content_description_fr  = 'Participant' ,
+                          logs_activity_details.content_before          = '$nickname'   ");
+    }
+  }
+
   // Add some people to the meetup
-  $random2    = mt_rand(5,15);
+  $random2    = mt_rand(5,10);
   $user_list  = array();
   for($j = 0; $j < $random2; $j++)
   {
@@ -583,9 +928,97 @@ for($i = 0; $i < $random; $i++)
                           meetups_people.attendance_confirmed = '$attendance' ,
                           meetups_people.extra_information_en = '$extra_en'   ,
                           meetups_people.extra_information_fr = '$extra_fr'   ");
+
+      // Activity logs
+      $deleted_log  = (mt_rand(0,25) < 25) ? 0 : 1;
+      $added_at     = mt_rand($created_at, strtotime($event_date));
+      if(!$deleted && $nickname)
+        query(" INSERT INTO logs_activity
+                SET         logs_activity.deleted           = '$deleted_log'        ,
+                            logs_activity.happened_at       = '$added_at'           ,
+                            logs_activity.language          = 'ENFR'                ,
+                            logs_activity.activity_type     = 'meetups_people_new'  ,
+                            logs_activity.nickname          = '$nickname'           ,
+                            logs_activity.activity_id       = '$meetup'             ,
+                            logs_activity.activity_summary  = '$event_date'         ");
+      if($nickname)
+        query(" INSERT INTO logs_activity
+                SET         logs_activity.deleted                 = '$deleted_log'        ,
+                            logs_activity.happened_at             = '$added_at'           ,
+                            logs_activity.is_administrators_only  = 1                     ,
+                            logs_activity.language                = 'ENFR'                ,
+                            logs_activity.nickname                = '$nickname'           ,
+                            logs_activity.activity_type           = 'meetups_people_new'  ,
+                            logs_activity.activity_id             = '$meetup'             ,
+                            logs_activity.activity_summary        = '$event_date'         ,
+                            logs_activity.activity_parent         = 'Admin'               ");
+
+      // Activity logs: edited
+      if($nickname && mt_rand(0,25) >= 25)
+      {
+        $deleted_log  = (mt_rand(0,5) < 5) ? 0 : 1;
+        $edited_at    = mt_rand($created_at, strtotime($event_date));
+        $old_extra    = fixtures_generate_data('sentence', 2, 5);
+        $new_extra    = ($extra_en) ? $extra_en : $extra_fr;
+        query(" INSERT INTO logs_activity
+                SET         logs_activity.deleted                 = '$deleted_log'        ,
+                            logs_activity.happened_at             = '$edited_at'          ,
+                            logs_activity.is_administrators_only  = 1                     ,
+                            logs_activity.language                = 'ENFR'                ,
+                            logs_activity.nickname                = '$nickname'           ,
+                            logs_activity.activity_type           = 'meetups_people_edit' ,
+                            logs_activity.activity_id             = '$meetup'             ,
+                            logs_activity.activity_summary        = '$event_date'         ,
+                            logs_activity.activity_parent         = 'Admin'               ");
+        $log_id = query_id();
+        query(" INSERT INTO logs_activity_details
+                SET         logs_activity_details.fk_logs_activity        = '$log_id'       ,
+                            logs_activity_details.content_description_en  = 'Extra info'    ,
+                            logs_activity_details.content_description_fr  = 'Détails'       ,
+                            logs_activity_details.content_before          = '$old_extra'    ,
+                            logs_activity_details.content_after           = '$new_extra'    ");
+      }
+
+      // Activity logs: deleted
+      if($nickname && mt_rand(0,25) >= 25)
+      {
+        $deleted_log  = (mt_rand(0,5) < 5) ? 0 : 1;
+        $deleted_at   = mt_rand($created_at, strtotime($event_date));
+        $deleted_nick = fixtures_generate_data('string', 3, 18);
+        $extra_info   = fixtures_generate_data('sentence', 2, 5);
+        query(" INSERT INTO logs_activity
+                SET         logs_activity.deleted                 = '$deleted_log'          ,
+                            logs_activity.happened_at             = '$deleted_at'           ,
+                            logs_activity.language                = 'ENFR'                  ,
+                            logs_activity.nickname                = '$deleted_nick'         ,
+                            logs_activity.activity_type           = 'meetups_people_delete' ,
+                            logs_activity.activity_id             = '$meetup'               ,
+                            logs_activity.activity_summary        = '$event_date'           ");
+        query(" INSERT INTO logs_activity
+                SET         logs_activity.deleted                 = '$deleted_log'          ,
+                            logs_activity.happened_at             = '$deleted_at'           ,
+                            logs_activity.is_administrators_only  = 1                       ,
+                            logs_activity.language                = 'ENFR'                  ,
+                            logs_activity.nickname                = '$deleted_nick'         ,
+                            logs_activity.activity_type           = 'meetups_people_delete' ,
+                            logs_activity.activity_id             = '$meetup'               ,
+                            logs_activity.activity_summary        = '$event_date'           ,
+                            logs_activity.activity_parent         = 'Admin'                 ");
+        $log_id = query_id();
+        query(" INSERT INTO logs_activity_details
+                SET         logs_activity_details.fk_logs_activity        = '$log_id'       ,
+                            logs_activity_details.content_description_en  = 'Extra info'    ,
+                            logs_activity_details.content_description_fr  = 'Détails'       ,
+                            logs_activity_details.content_before          = '$extra_info'   ");
+      }
     }
   }
 }
+
+// Output progress
+echo "Generated $random meetups<br>";
+ob_flush();
+flush();
 
 
 
@@ -619,8 +1052,20 @@ for($i = 0; $i < $random; $i++)
                       quotes.language           = '$language'   ,
                       quotes.body               = '$body'       ");
 
-  // Fetch the ID of the generated quote
+  // Activity logs
   $quote = query_id();
+  if(!$deleted && $language == 'EN')
+    query(" INSERT INTO logs_activity
+            SET         logs_activity.happened_at       = '$submitted'    ,
+                        logs_activity.language          = 'ENFR'          ,
+                        logs_activity.activity_type     = 'quotes_new_en' ,
+                        logs_activity.activity_id       = '$quote'        ");
+  else if(!$deleted && $language == 'FR')
+    query(" INSERT INTO logs_activity
+            SET         logs_activity.happened_at       = '$submitted'    ,
+                        logs_activity.language          = 'FR'            ,
+                        logs_activity.activity_type     = 'quotes_new_fr' ,
+                        logs_activity.activity_id       = '$quote'        ");
 
   // Link some users to the quote
   $random2    = mt_rand(1,4);
@@ -640,6 +1085,11 @@ for($i = 0; $i < $random; $i++)
     }
   }
 }
+
+// Output progress
+echo "Generated $random quotes<br>";
+ob_flush();
+flush();
 
 
 
@@ -685,9 +1135,6 @@ for($i = 0; $i < $random; $i++)
   // Randomly decide whether the text deserves comments and ratings
   if($feedback > 1 && mt_rand(0,1))
   {
-    // Fetch the ID of the generated text
-    $text = query_id();
-
     // Link some comments to the text
     $random2      = mt_rand(2,7);
     $user_list    = array($user);
@@ -727,6 +1174,11 @@ for($i = 0; $i < $random; $i++)
             WHERE   writings_texts.id             = '$text' ");
   }
 }
+
+// Output progress
+echo "Generated $random writings<br>";
+ob_flush();
+flush();
 
 
 
@@ -821,6 +1273,11 @@ for($i = 1; $i < $random; $i++)
           WHERE   writings_contests.id = '$i' ");
 }
 
+// Output progress
+echo "Generated $random writing contests<br>";
+ob_flush();
+flush();
+
 
 
 
@@ -829,6 +1286,16 @@ for($i = 1; $i < $random; $i++)
 /*                                                       NBDB                                                        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// NBDB admin notes
+
+// Generate admin notes
+query(" INSERT INTO nbdb_web_admin_notes
+        SET         nbdb_web_admin_notes.global_notes = '' ");
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Internet dictionary
@@ -867,8 +1334,47 @@ for($i = 0; $i < $random; $i++)
                         nbdb_web_definitions.definition_en            = '$body_en'      ,
                         nbdb_web_definitions.definition_fr            = '$body_fr'      ,
                         nbdb_web_definitions.private_admin_notes      = '$admin_notes'  ");
+
+    // Activity logs
+    $definition = query_id();
+    $created_at = mt_rand(1111239420, time());
+    query(" INSERT INTO logs_activity
+            SET         logs_activity.deleted           = '$deleted'                ,
+                        logs_activity.happened_at       = '$created_at'             ,
+                        logs_activity.language          = 'ENFR'                    ,
+                        logs_activity.activity_type     = 'nbdb_web_definition_new' ,
+                        logs_activity.activity_id       = '$definition'             ,
+                        logs_activity.activity_summary  = '$title_fr'               ,
+                        logs_activity.activity_parent   = '$title_en'               ");
+    if(mt_rand(0,30) >= 30)
+    {
+      $edited_at = mt_rand($created_at, time());
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.deleted           = '$deleted'                  ,
+                          logs_activity.happened_at       = '$edited_at'                ,
+                          logs_activity.language          = 'ENFR'                      ,
+                          logs_activity.activity_type     = 'nbdb_web_definition_edit'  ,
+                          logs_activity.activity_id       = '$definition'             ,
+                          logs_activity.activity_summary  = '$title_fr'                 ,
+                          logs_activity.activity_parent   = '$title_en'                 ");
+    }
+    if($deleted)
+    {
+      $deleted_at = mt_rand($created_at, time());
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.happened_at       = '$deleted_at'                 ,
+                          logs_activity.language          = 'ENFR'                        ,
+                          logs_activity.activity_type     = 'nbdb_web_definition_delete'  ,
+                          logs_activity.activity_summary  = '$title_fr'                   ,
+                          logs_activity.activity_parent   = '$title_en'                   ");
+    }
   }
 }
+
+// Output progress
+echo "Generated $random internet dictionary entries<br>";
+ob_flush();
+flush();
 
 // Make some definitions into redirections
 $random       = mt_rand(20,40);
@@ -924,6 +1430,11 @@ for($i = 0; $i < $random; $i++)
                       nbdb_web_categories.description_fr  = '$details_fr' ");
 }
 
+// Output progress
+echo "Generated $random internet encyclopedia categories<br>";
+ob_flush();
+flush();
+
 // Generate some random eras
 $random = mt_rand(5,10);
 for($i = 0; $i < $random; $i++)
@@ -945,6 +1456,11 @@ for($i = 0; $i < $random; $i++)
                       nbdb_web_eras.description_en  = '$details_en' ,
                       nbdb_web_eras.description_fr  = '$details_fr' ");
 }
+
+// Output progress
+echo "Generated $random internet encyclopedia eras<br>";
+ob_flush();
+flush();
 
 // Generate some random pages
 $page_titles_en = array();
@@ -990,27 +1506,65 @@ for($i = 0; $i < $random; $i++)
                         nbdb_web_pages.definition_en            = '$body_en'      ,
                         nbdb_web_pages.definition_fr            = '$body_fr'      ,
                         nbdb_web_pages.private_admin_notes      = '$admin_notes'  ");
-  }
 
-  // Add some categories to the page
-  $page = query_id();
-  if(mt_rand(0,3) < 3)
-  {
-    $random2    = mt_rand(1,4);
-    $categories = array();
-    for($j = 0; $j < $random2; $j++)
+    // Activity logs
+    $page       = query_id();
+    $created_at = mt_rand(1111239420, time());
+    query(" INSERT INTO logs_activity
+            SET         logs_activity.deleted           = '$deleted'            ,
+                        logs_activity.happened_at       = '$created_at'         ,
+                        logs_activity.language          = 'ENFR'                ,
+                        logs_activity.activity_type     = 'nbdb_web_page_new'   ,
+                        logs_activity.activity_id       = '$page'               ,
+                        logs_activity.activity_summary  = '$title_fr'           ,
+                        logs_activity.activity_parent   = '$title_en'           ");
+    if(mt_rand(0,30) >= 30)
     {
-      $category = fixtures_fetch_random_id('nbdb_web_categories');
-      if(!in_array($category, $categories))
+      $edited_at = mt_rand($created_at, time());
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.deleted           = '$deleted'            ,
+                          logs_activity.happened_at       = '$edited_at'          ,
+                          logs_activity.language          = 'ENFR'                ,
+                          logs_activity.activity_type     = 'nbdb_web_page_edit'  ,
+                          logs_activity.activity_id       = '$page'               ,
+                          logs_activity.activity_summary  = '$title_fr'           ,
+                          logs_activity.activity_parent   = '$title_en'           ");
+    }
+    if($deleted)
+    {
+      $deleted_at = mt_rand($created_at, time());
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.happened_at       = '$deleted_at'           ,
+                          logs_activity.language          = 'ENFR'                  ,
+                          logs_activity.activity_type     = 'nbdb_web_page_delete'  ,
+                          logs_activity.activity_summary  = '$title_fr'             ,
+                          logs_activity.activity_parent   = '$title_en'             ");
+    }
+
+    // Add some categories to the page
+    if(mt_rand(0,3) < 3)
+    {
+      $random2    = mt_rand(1,4);
+      $categories = array();
+      for($j = 0; $j < $random2; $j++)
       {
-        array_push($categories, $category);
-        query(" INSERT INTO nbdb_web_pages_categories
-                SET         nbdb_web_pages_categories.fk_nbdb_web_pages       = '$page'     ,
-                            nbdb_web_pages_categories.fk_nbdb_web_categories  = '$category' ");
+        $category = fixtures_fetch_random_id('nbdb_web_categories');
+        if(!in_array($category, $categories))
+        {
+          array_push($categories, $category);
+          query(" INSERT INTO nbdb_web_pages_categories
+                  SET         nbdb_web_pages_categories.fk_nbdb_web_pages       = '$page'     ,
+                              nbdb_web_pages_categories.fk_nbdb_web_categories  = '$category' ");
+        }
       }
     }
   }
 }
+
+// Output progress
+echo "Generated $random internet encyclopedia entries<br>";
+ob_flush();
+flush();
 
 // Make some pages into redirections
 $random = mt_rand(20,40);
@@ -1067,3 +1621,8 @@ for($i = 0; $i < $random; $i++)
                       nbdb_web_images.tags        = '$tags'         ,
                       nbdb_web_images.is_nsfw     = '$nsfw'         ");
 }
+
+// Output progress
+echo "Generated $random internet encyclopedia images<br>";
+ob_flush();
+flush();

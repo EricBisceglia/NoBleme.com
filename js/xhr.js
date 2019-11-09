@@ -65,8 +65,8 @@ function xhr_load(path, target_page, target_element , postdata, no_load_bar, app
         document.getElementById(target_element).innerHTML = "XHR error: target page returned a " + xhr.status;
     }
 
-    // Replace the target element with an error if the operation didn't fully complete
-    else
+    // Replace the target element with an error if the readyState is acting weird
+    else if(xhr.readyState > 4)
       document.getElementById(target_element).innerHTML = "XHR state error: " + xhr.readyState;
   }
 
@@ -93,8 +93,8 @@ function xhr_load(path, target_page, target_element , postdata, no_load_bar, app
       }
     }
 
-    // Append an error below the target element if the operation didn't fully complete
-    else
+    // Append an error below the target element if the readyState is acting weird
+    else if(xhr.readyState > 4)
     {
       var div       = document.createElement("div");
       div.innerHTML = "XHR state error: " + xhr.readyState;

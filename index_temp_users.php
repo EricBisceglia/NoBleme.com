@@ -16,6 +16,24 @@ $page_title = "Temporary index";
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                     BACK END                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Get rid of the flashing message
+$user_id    = sanitize($_SESSION['user_id'], 'int', 0);
+$timestamp  = time();
+query(" UPDATE  users_private_messages
+        SET     users_private_messages.read_at            = '$timestamp'
+        WHERE   users_private_messages.fk_users_recipient = '$user_id'
+        AND     users_private_messages.read_at            = 0 ");
+
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
 /**********************************************************************************/ include './inc/header.inc.php'; ?>
