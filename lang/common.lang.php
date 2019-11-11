@@ -250,6 +250,9 @@ ___('no', 'FR', "non");
 ___('error', 'EN', "error");
 ___('error', 'FR', "erreur");
 
+___('the', 'EN', "the");
+___('the', 'FR', "le");
+
 ___('with', 'EN', "with");
 ___('with', 'FR', "avec");
 
@@ -264,10 +267,16 @@ ___('password', 'EN', "password");
 ___('password', 'FR', "mot de passe");
 
 
-// Quantifiers / amounts
+// Quantifiers, amounts, and times
 ___('times',  'EN', "time");
 ___('times+', 'EN', "times");
 ___('times',  'FR', "fois");
+
+___('all', 'EN', "All");
+___('all', 'FR', "Tous");
+
+___('at_date', 'EN', "at");
+___('at_date', 'FR', "à");
 
 
 
@@ -526,8 +535,10 @@ ___('menu_side_community_irc', 'EN', "IRC chat server");
 ___('menu_side_community_irc', 'FR', "Serveur de chat IRC");
 ___('menu_side_community_irc_intro', 'EN', "What is IRC");
 ___('menu_side_community_irc_intro', 'FR', "Qu'est-ce que IRC");
-___('menu_side_community_irc_join', 'EN', "Join the conversation");
-___('menu_side_community_irc_join', 'FR', "Rejoindre la conversation");
+___('menu_side_community_irc_browser', 'EN', "Chat from your browser");
+___('menu_side_community_irc_browser', 'FR', "Chat depuis le navigateur");
+___('menu_side_community_irc_client', 'EN', "Using an IRC client");
+___('menu_side_community_irc_client', 'FR', "Utiliser un client IRC");
 ___('menu_side_community_irc_channels', 'EN', "Channel list");
 ___('menu_side_community_irc_channels', 'FR', "Liste des canaux");
 
@@ -567,16 +578,18 @@ ___('menu_side_community_writers_contests', 'FR', "Concours d'écriture");
 
 
 // Side menu: Pages
-___('menu_side_pages_web', 'EN', "Internet encyclopedia");
-___('menu_side_pages_web', 'FR', "Encyclopédie du web");
-___('menu_side_pages_web_index', 'EN', "Internet culture guide");
-___('menu_side_pages_web_index', 'FR', "Guide de la culture web");
-___('menu_side_pages_web_pages', 'EN', "List of all pages");
-___('menu_side_pages_web_pages', 'FR', "Liste des pages");
-___('menu_side_pages_web_random', 'EN', "Random page");
-___('menu_side_pages_web_random', 'FR', "Page au hasard");
-___('menu_side_pages_web_dictionary', 'EN', "Internet dictionnary");
-___('menu_side_pages_web_dictionary', 'FR', "Dictionnaire du web");
+___('menu_side_pages_internet', 'EN', "Internet encyclopedia");
+___('menu_side_pages_internet', 'FR', "Encyclopédie du web");
+___('menu_side_pages_internet_index', 'EN', "Internet culture guide");
+___('menu_side_pages_internet_index', 'FR', "Guide de la culture web");
+___('menu_side_pages_internet_pages', 'EN', "Meme encyclopedia");
+___('menu_side_pages_internet_pages', 'FR', "Enyclopédie des memes");
+___('menu_side_pages_internet_dictionary', 'EN', "Slang dictionnary");
+___('menu_side_pages_internet_dictionary', 'FR', "Dictionnaire d'argot");
+___('menu_side_pages_internet_culture', 'EN', "Society and culture");
+___('menu_side_pages_internet_culture', 'FR', "Société et culture");
+___('menu_side_pages_internet_random', 'EN', "Random page");
+___('menu_side_pages_internet_random', 'FR', "Page au hasard");
 
 ___('menu_side_pages_archives', 'EN', "Archives");
 ___('menu_side_pages_archives', 'FR', "Archives");

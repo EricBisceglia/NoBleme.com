@@ -51,15 +51,16 @@ $xhr_logs_url = (!isset($_GET['mod'])) ? "activity" : "activity?mod";
 
 // Sanitize postdata
 $activity_modlogs = isset($_GET['mod']);
-$activity_amount  = sanitize_input('POST', 'activity_amount', 'int', 100, 100, 1000);
+$activity_amount  = sanitize_input('POST', 'activity_amount', 'int', 100, 100);
 $activity_type    = sanitize_input('POST', 'activity_type', 'string', 'all');
+$activity_deleted = sanitize_input('POST', 'activity_deleted', 'int', 0);
 
-// Only allow admins to see deleted activity
-if($activity_type == 'deleted' && !$is_admin)
-  $activity_type = 'all';
+// Only allow admins to see full activity logs or deleted activity items
+$activity_amount  = (!$is_admin && $activity_amount > 1000) ? 1000 : $activity_amount;
+$activity_deleted = (!$is_admin) ? 0 : $activity_deleted;
 
 // Fetch the activity logs
-$activity_logs = activity_get_logs($activity_modlogs, $activity_amount, $activity_type, $path, $lang);
+$activity_logs = activity_get_logs($activity_modlogs, $activity_amount, $activity_type, $activity_deleted, $path, $lang);
 
 
 
@@ -67,8 +68,7 @@ $activity_logs = activity_get_logs($activity_modlogs, $activity_amount, $activit
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Set deletion type to soft or hard depending on the view
 
-$deletion_type = ($activity_type == 'deleted' && $is_admin) ? 1 : 0;
-
+$deletion_type = ($is_admin && $activity_deleted) ? 1 : 0;
 
 
 
@@ -115,11 +115,16 @@ if(!page_is_xhr()) { /*******************************************************/ i
 
         <div class="align_center bigpadding_bot">
 
+          <input type="hidden" class="hidden" id="activity_deleted" value="0">
+
           <select id="activity_amount" onchange="activity_submit_menus('<?=$path?>', '<?=$xhr_logs_url?>');">
             <option value="100">100</option>
             <option value="200">200</option>
             <option value="500">500</option>
             <option value="1000">1000</option>
+            <?php if($is_admin) { ?>
+            <option value="1001"><?=__('all')?></option>
+            <?php } ?>
           </select>
 
           <span class="spaced bold bigger valign_bottom">
@@ -130,10 +135,14 @@ if(!page_is_xhr()) { /*******************************************************/ i
             <option value="all"><?=__('activity_type_all')?></option>
             <option value="users"><?=__('activity_type_users')?></option>
             <option value="meetups"><?=__('activity_type_meetups')?></option>
+            <?php if(!$activity_modlogs) { ?>
             <option value="internet"><?=__('activity_type_internet')?></option>
             <option value="quotes"><?=__('activity_type_quotes')?></option>
+            <?php } ?>
             <option value="writers"><?=__('activity_type_writers')?></option>
+            <?php if(!$activity_modlogs) { ?>
             <option value="dev"><?=__('activity_type_dev')?></option>
+            <?php } ?>
           </select>
 
         </div>
@@ -151,7 +160,12 @@ if(!page_is_xhr()) { /*******************************************************/ i
               <?php } else { ?>
               <td class="<?=$activity_logs[$i]['css']?>">
               <?php } ?>
+                <span class="tooltip_container">
                 <?=$activity_logs[$i]['date']?>
+                  <span class="tooltip notbold">
+                    <?=$activity_logs[$i]['fulldate']?>
+                  </span>
+                </span>
               </td>
 
               <?php if($activity_logs[$i]['href']) { ?>
@@ -159,7 +173,18 @@ if(!page_is_xhr()) { /*******************************************************/ i
               <?php } else { ?>
               <td class="<?=$activity_logs[$i]['css']?>">
               <?php } ?>
+
+                <?php if(!$activity_logs[$i]['fulltext']) { ?>
                 <?=$activity_logs[$i]['text']?>
+                <?php } else { ?>
+                <span class="tooltip_container">
+                  <?=$activity_logs[$i]['text']?>
+                  <span class="tooltip notbold">
+                    <?=$activity_logs[$i]['fulltext']?>
+                  </span>
+                </span>
+                <?php } ?>
+
               </td>
 
               <?php if($is_admin || $activity_modlogs) { ?>

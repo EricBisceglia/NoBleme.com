@@ -30,7 +30,8 @@ CREATE TABLE IF NOT EXISTS `dev_blogs` (
   `title_fr` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `body_en` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `body_fr` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_deleted` (`is_deleted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `dev_tasks`;
@@ -51,9 +52,10 @@ CREATE TABLE IF NOT EXISTS `dev_tasks` (
   `fk_dev_tasks_milestones` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `source_code_link` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_authors` (`fk_users`),
-  KEY `index_categories` (`fk_dev_tasks_categories`),
-  KEY `index_milestones` (`fk_dev_tasks_milestones`)
+  KEY `index_author` (`fk_users`),
+  KEY `index_category` (`fk_dev_tasks_categories`),
+  KEY `index_milestone` (`fk_dev_tasks_milestones`),
+  KEY `index_deleted` (`is_deleted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `dev_tasks_categories`;
@@ -120,7 +122,8 @@ CREATE TABLE IF NOT EXISTS `internet_images` (
   `is_nsfw` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `used_in_pages_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `used_in_pages_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_deleted` (`is_deleted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `internet_pages`;
@@ -150,7 +153,8 @@ CREATE TABLE IF NOT EXISTS `internet_pages` (
   KEY `index_dictionary` (`is_dictionary_entry`),
   KEY `index_cultural` (`is_cultural_entry`),
   KEY `index_appeared` (`appeared_in_year`,`appeared_in_month`),
-  KEY `index_spread` (`spread_in_year`,`spread_in_month`)
+  KEY `index_spread` (`spread_in_year`,`spread_in_month`),
+  KEY `index_deleted` (`is_deleted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `internet_pages_categories`;
@@ -183,17 +187,20 @@ CREATE TABLE IF NOT EXISTS `logs_activity` (
   `happened_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `is_administrators_only` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `language` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nickname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `activity_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `activity_type` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activity_summary` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `activity_parent` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activity_amount` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `activity_summary_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activity_summary_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activity_nickname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activity_moderator_nickname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `moderation_reason` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_related_users` (`fk_users`),
+  KEY `index_related_user` (`fk_users`),
   KEY `index_language` (`language`),
-  KEY `index_related_foreign_keys` (`activity_id`),
-  KEY `index_activity_type` (`activity_type`)
+  KEY `index_related_foreign_key` (`activity_id`),
+  KEY `index_activity_type` (`activity_type`),
+  KEY `index_deleted` (`is_deleted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `logs_activity_details`;
@@ -218,7 +225,8 @@ CREATE TABLE IF NOT EXISTS `meetups` (
   `event_reason_fr` varchar(105) COLLATE utf8mb4_unicode_ci NOT NULL,
   `details_en` longtext COLLATE utf8mb4_unicode_ci,
   `details_fr` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_deleted` (`is_deleted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `meetups_people`;
@@ -246,7 +254,8 @@ CREATE TABLE IF NOT EXISTS `quotes` (
   `language` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
   `body` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_submitter` (`fk_users_submitter`)
+  KEY `index_submitter` (`fk_users_submitter`),
+  KEY `index_deleted` (`is_deleted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `quotes_users`;
@@ -267,7 +276,7 @@ CREATE TABLE IF NOT EXISTS `stats_pageviews` (
   `view_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `view_count_archive` int(10) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `index_view_count_stats` (`view_count`,`view_count_archive`)
+  KEY `index_view_count` (`view_count`,`view_count_archive`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `system_scheduler`;
@@ -322,8 +331,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `is_banned_because` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_access_rights` (`is_administrator`,`is_global_moderator`,`is_moderator`,`moderator_rights`(127)),
-  KEY `index_doppelgangers` (`current_ip_address`),
-  KEY `index_banned` (`is_banned_until`)
+  KEY `index_doppelganger` (`current_ip_address`),
+  KEY `index_banned` (`is_banned_until`),
+  KEY `index_deleted` (`is_deleted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_guests`;
@@ -346,8 +356,8 @@ CREATE TABLE IF NOT EXISTS `users_login_attempts` (
   `ip_address` varchar(135) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0',
   `attempted_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `index_users` (`fk_users`),
-  KEY `index_guests` (`ip_address`)
+  KEY `index_user` (`fk_users`),
+  KEY `index_guest` (`ip_address`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_private_messages`;
@@ -362,7 +372,8 @@ CREATE TABLE IF NOT EXISTS `users_private_messages` (
   `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_inbox` (`fk_users_recipient`),
-  KEY `index_outbox` (`fk_users_sender`)
+  KEY `index_outbox` (`fk_users_sender`),
+  KEY `index_deleted` (`is_deleted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_profile`;
@@ -417,7 +428,8 @@ CREATE TABLE IF NOT EXISTS `writings_contests` (
   PRIMARY KEY (`id`),
   KEY `index_winner` (`fk_users_winner`),
   KEY `index_winning_text` (`fk_writings_texts_winner`),
-  KEY `index_language` (`language`)
+  KEY `index_language` (`language`),
+  KEY `index_deleted` (`is_deleted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `writings_contests_votes`;
@@ -450,7 +462,8 @@ CREATE TABLE IF NOT EXISTS `writings_texts` (
   PRIMARY KEY (`id`),
   KEY `index_author` (`fk_users`,`is_anonymous`),
   KEY `index_contest` (`fk_writings_contests`),
-  KEY `index_language` (`language`)
+  KEY `index_language` (`language`),
+  KEY `index_deleted` (`is_deleted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

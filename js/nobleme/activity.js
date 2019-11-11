@@ -1,21 +1,27 @@
 /**
  * Submits the dropdwon menus that control which activity logs are shown.
  *
- * @param   {string}  path    The path to the root of the website.
- * @param   {string}  xhr_url The url that should be called by the xhr.
- * @param   {bool}    deleted If set, shows deleted logs.
+ * @param   {string}  path            The path to the root of the website.
+ * @param   {string}  xhr_url         The url that should be called by the xhr.
+ * @param   {bool}    toggle_deleted  If set, toggles between visible and deleted view.
  *
  * @returns {void}
  */
 
-function activity_submit_menus(path, xhr_url, deleted=null)
+function activity_submit_menus(path, xhr_url, toggle_deleted=null)
 {
-  // Decide whether to show deleted logs
-  show_deleted = (deleted) ? 'deleted' : xhr_sanitize_id('activity_type');
+  // Toggle between visible and deleted view if required
+  if(toggle_deleted)
+  {
+    deleted_status = document.getElementById('activity_deleted').value;
+    deleted_status = (deleted_status == 1) ? 0 : 1;
+    document.getElementById('activity_deleted').value = deleted_status;
+  }
 
   // Prepare the postdata
-  postdata  = 'activity_amount='  + xhr_sanitize_id('activity_amount');
-  postdata += '&activity_type='   + show_deleted;
+  postdata  = 'activity_amount='    + xhr_sanitize_id('activity_amount');
+  postdata += '&activity_type='     + xhr_sanitize_id('activity_type');
+  postdata += '&activity_deleted='  + xhr_sanitize_id('activity_deleted');
 
   // Send the xhr
   xhr_load(path, xhr_url, 'activity_body', postdata, 1);

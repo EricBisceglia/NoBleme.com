@@ -646,8 +646,14 @@ $javascripts .= '
             </a>
 
             <a href="<?=$path?>index_temp_community">
-              <div class="strikethrough <?=header_menu_css('IRCjoin',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_irc_join')?>
+              <div class="strikethrough <?=header_menu_css('IRCbrowser',$header_sidemenu,'side')?>">
+                <?=__('menu_side_community_irc_browser')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>index_temp_community">
+              <div class="strikethrough <?=header_menu_css('IRCclient',$header_sidemenu,'side')?>">
+                <?=__('menu_side_community_irc_client')?>
               </div>
             </a>
 
@@ -751,10 +757,10 @@ $javascripts .= '
 
             <div class="header_sidemenu_title">
               <?php if(!$is_admin) { ?>
-              <?=__('menu_side_pages_web')?>
+              <?=__('menu_side_pages_internet')?>
               <?php } else { ?>
               <a class="blank nohover text_black" href="<?=$path?>index_temp_pages">
-                <?=__('menu_side_pages_web')?>
+                <?=__('menu_side_pages_internet')?>
                 <img class="spaced_left valign_middle" src="<?=$path?>img/icons/settings.svg" alt="X" height="16">
               </a>
               <?php } ?>
@@ -762,25 +768,31 @@ $javascripts .= '
 
             <a href="<?=$path?>index_temp_pages">
               <div class="strikethrough <?=header_menu_css('Web',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_web_index')?>
+                <?=__('menu_side_pages_internet_index')?>
               </div>
             </a>
 
             <a href="<?=$path?>index_temp_pages">
               <div class="strikethrough <?=header_menu_css('Webpages',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_web_pages')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_pages">
-              <div class="strikethrough <?=header_menu_css('Webrandom',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_web_random')?>
+                <?=__('menu_side_pages_internet_pages')?>
               </div>
             </a>
 
             <a href="<?=$path?>index_temp_pages">
               <div class="strikethrough <?=header_menu_css('Webdict',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_web_dictionary')?>
+                <?=__('menu_side_pages_internet_dictionary')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>index_temp_pages">
+              <div class="strikethrough <?=header_menu_css('Webculture',$header_sidemenu,'side')?>">
+                <?=__('menu_side_pages_internet_culture')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>index_temp_pages">
+              <div class="strikethrough <?=header_menu_css('Webrandom',$header_sidemenu,'side')?>">
+                <?=__('menu_side_pages_internet_random')?>
               </div>
             </a>
 

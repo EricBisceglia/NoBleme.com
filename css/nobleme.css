@@ -54,6 +54,7 @@
 .width_90        { margin: auto; max-width: 90em;             }
 
 .bold            { font-weight: bold;                         }
+.notbold         { font-weight: normal;                       }
 .underlined      { text-decoration: underline;                }
 .strikethrough   { text-decoration: line-through;             }
 .blank           { text-decoration: none;                     }

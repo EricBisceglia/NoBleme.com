@@ -219,7 +219,7 @@ function users_create_account($nickname, $password, $email, $password_check=null
           SET         users_stats.fk_users        = '$account_id' ");
 
   // Log the activity
-  log_activity('users_register', 0, 'ENFR', $account_id, $nickname);
+  log_activity('users_register', 0, 'ENFR', 0, NULL, NULL, 0, $account_id, $nickname);
 
   // IRC message
   ircbot("A new member registered on the website: $nickname_raw - ".$GLOBALS['website_url']."pages/users/user?id=".$account_id, "#english");

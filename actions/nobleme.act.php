@@ -20,13 +20,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   bool|null   $modlogs  OPTIONAL  If set to 1, display moderation logs instead of global activity logs.
  * @param   int|null    $amount   OPTIONAL  The amount of logs to fetch.
  * @param   string|null $type     OPTIONAL  Filters the output by only showing logs of a specific type.
+ * @param   bool|null   $deleted  OPTIONAL  If set, shows deleted activity logs only.
  * @param   string|null $path     OPTIONAL  The path to the root of the website.
  * @param   string|null $lang     OPTIONAL  The language currently in use.
  *
  * @return  array                           An array of activity logs, prepared for displaying.
  */
 
-function activity_get_logs($modlogs=0, $amount=100, $type='all', $path='./../../', $lang='EN')
+function activity_get_logs($modlogs=0, $amount=100, $type='all', $deleted=0, $path='./../../', $lang='EN')
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -42,16 +43,18 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $path='./../../
   $data = array();
 
   // Fetch activity logs
-  $qlogs = "    SELECT    logs_activity.id                AS 'l_id'       ,
-                          logs_activity.fk_users          AS 'l_userid'   ,
-                          logs_activity.happened_at       AS 'l_date'     ,
-                          logs_activity.nickname          AS 'l_user'     ,
-                          logs_activity.activity_id       AS 'l_actid'    ,
-                          logs_activity.activity_type     AS 'l_type'     ,
-                          logs_activity.activity_summary  AS 'l_summary'  ,
-                          logs_activity.activity_parent   AS 'l_parent'   ,
-                          logs_activity.moderation_reason AS 'l_reason'   ,
-                          logs_activity_details.id        AS 'l_details'
+  $qlogs = "    SELECT    logs_activity.id                          AS 'l_id'         ,
+                          logs_activity.fk_users                    AS 'l_userid'     ,
+                          logs_activity.happened_at                 AS 'l_date'       ,
+                          logs_activity.activity_nickname           AS 'l_user'       ,
+                          logs_activity.activity_moderator_nickname AS 'l_mod_user'   ,
+                          logs_activity.activity_id                 AS 'l_actid'      ,
+                          logs_activity.activity_type               AS 'l_type'       ,
+                          logs_activity.activity_summary_en         AS 'l_summary_en' ,
+                          logs_activity.activity_summary_fr         AS 'l_summary_fr' ,
+                          logs_activity.activity_amount             AS 'l_amount'     ,
+                          logs_activity.moderation_reason           AS 'l_reason'     ,
+                          logs_activity_details.id                  AS 'l_details'
                 FROM      logs_activity
                 LEFT JOIN logs_activity_details ON logs_activity.id = logs_activity_details.fk_logs_activity
                 WHERE     logs_activity.is_administrators_only  = '$modlogs'
@@ -72,17 +75,17 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $path='./../../
     $qlogs .= " AND       logs_activity.activity_type LIKE 'dev_%' ";
 
   // Show deleted logs on request
-  if($type == 'deleted')
+  if($deleted)
     $qlogs .= " AND       logs_activity.is_deleted = 1 ";
   else
     $qlogs .= " AND       logs_activity.is_deleted = 0 ";
 
-  // Group and sort the results
+  // Group and sort limit the results
   $qlogs .= "   GROUP BY  logs_activity.id
                 ORDER BY  logs_activity.happened_at DESC ";
 
-  // Limit the amount of results if needed
-  if($type != 'deleted')
+  // Limit the results
+  if($amount <= 1000)
     $qlogs .= " LIMIT     $amount ";
 
   // Run the query
@@ -92,14 +95,16 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $path='./../../
   for($i = 0; $row = mysqli_fetch_array($qlogs); $i++)
   {
     // Parse the activity log
-    $parsed_row = log_activity_parse($path, $modlogs, $row['l_type'], $row['l_userid'], $row['l_user'], $row['l_actid'], $row['l_summary'], $row['l_parent']);
+    $parsed_row = log_activity_parse($path, $modlogs, $row['l_type'], $row['l_actid'], $row['l_summary_en'], $row['l_summary_fr'], $row['l_userid'], $row['l_user'], $row['l_mod_user'], $row['l_amount']);
 
     // Prepare the data
     $data[$i]['id']       = $row['l_id'];
     $data[$i]['date']     = time_since($row['l_date']);
-    $data[$i]['css']      = ($type != 'deleted') ? $parsed_row['css'] : 'website_update_background text_negative';
+    $data[$i]['fulldate'] = date_to_text($row['l_date']).__('at_date', 1, 1, 1).date('H:i:s', $row['l_date']);
+    $data[$i]['css']      = (!$deleted) ? $parsed_row['css'] : 'website_update_background text_negative';
     $data[$i]['href']     = $parsed_row['href'];
-    $data[$i]['text']     = $parsed_row[$lang];
+    $data[$i]['text']     = (mb_strlen($parsed_row[$lang]) < 80) ? sanitize_output($parsed_row[$lang]) : sanitize_output(string_truncate($parsed_row[$lang], 70, '...'));
+    $data[$i]['fulltext'] = (mb_strlen($parsed_row[$lang]) < 80) ? '' : sanitize_output($parsed_row[$lang]);
     $data[$i]['details']  = ($row['l_reason'] || $row['l_details']) ? 1 : 0;
   }
 
@@ -155,7 +160,7 @@ function activity_get_details($log_id, $lang='EN')
     if(!$ddiff['d_desc'])
       $data['diff'] .= bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
     else
-      $data['diff'] .= '<span class="bold">'.sanitize_output($ddiff['d_desc']).' :</span> '.bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
+      $data['diff'] .= '<span class="bold underlined">'.sanitize_output($ddiff['d_desc']).' :</span> '.bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
   }
 
   // Return the prepared data
