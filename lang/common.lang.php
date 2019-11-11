@@ -35,6 +35,7 @@ function __($string, $amount=null, $spaces_before=0, $spaces_after=0, $preset_va
   // If there are no global translations, return nothing
   if(!isset($GLOBALS['translations']))
     return '';
+
   // If required, use the plural version of the string if it exists (plural translation names ends in a '+')
   if(!is_null($amount) && $amount != 1 && isset($GLOBALS['translations'][$string.'+']))
     $returned_string = $GLOBALS['translations'][$string.'+'];
@@ -274,7 +275,7 @@ ___('times',  'FR', "fois");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                BBCODES / NBDBCODES                                                */
+/*                                                 BBCODES / NBCODES                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -292,14 +293,14 @@ ___('bbcodes_spoiler_show', 'EN', "SHOW SPOILER CONTENTS");
 ___('bbcodes_spoiler_show', 'FR', "VOIR LE CONTENU CACHÉ");
 
 
-// NBDBCodes
-___('nbdbcodes_video_hidden',       'EN', "This video is hidden (<a href=\"{{1}}pages/users/privacy\">privacy options</a>)");
-___('nbdbcodes_video_hidden',       'FR', "Cette vidéo est masquée (<a href=\"{{1}}pages/users/privacy\">options de vie privée</a>)");
-___('nbdbcodes_video_hidden_small', 'EN', "Video hidden (<a href=\"{{1}}pages/users/privacy\">privacy options</a>)");
-___('nbdbcodes_video_hidden_small', 'FR', "Vidéo masquée (<a href=\"{{1}}pages/users/privacy\">options de vie privée</a>)");
+// NBCodes
+___('nbcodes_video_hidden',       'EN', "This video is hidden (<a href=\"{{1}}pages/users/privacy\">privacy options</a>)");
+___('nbcodes_video_hidden',       'FR', "Cette vidéo est masquée (<a href=\"{{1}}pages/users/privacy\">options de vie privée</a>)");
+___('nbcodes_video_hidden_small', 'EN', "Video hidden (<a href=\"{{1}}pages/users/privacy\">privacy options</a>)");
+___('nbcodes_video_hidden_small', 'FR', "Vidéo masquée (<a href=\"{{1}}pages/users/privacy\">options de vie privée</a>)");
 
-___('nbdbcodes_trends_hidden', 'EN', "This Google trends graph is hidden (<a href=\"{{1}}pages/users/privacy\">privacy options</a>)");
-___('nbdbcodes_trends_hidden', 'FR', "Ce graphe Google trends est masqué (<a href=\"{{1}}pages/users/privacy\">options de vie privée</a>)");
+___('nbcodes_trends_hidden', 'EN', "This Google trends graph is hidden (<a href=\"{{1}}pages/users/privacy\">privacy options</a>)");
+___('nbcodes_trends_hidden', 'FR', "Ce graphe Google trends est masqué (<a href=\"{{1}}pages/users/privacy\">options de vie privée</a>)");
 
 
 

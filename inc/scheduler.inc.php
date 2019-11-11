@@ -60,26 +60,34 @@ function schedule_task($action_type, $action_id, $action_planned_at, $action_des
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Processing of all the tasks ready to be ran
 
-// This shouldn't run more than once every 15 seconds, to avoid a MySQL deadlock caused by the LOCK queue
+// This shouldn't run more than once every 15 seconds, to avoid conflict
 $timestamp = time();
+
+// Start a transaction to avoid deadlocks
+query(" START TRANSACTION ");
 
 // Fetch the timestamp of the most recent scheduler execution
 $dcheck_scheduler = mysqli_fetch_array(query("  SELECT  system_variables.last_scheduler_execution AS 'scheduler_last'
-                                                FROM    system_variables "));
+                                                FROM    system_variables"));
 
-// If this timestamp is more than 15 seconds old, run the scheduler
+// If the timestamp is less than 15 seconds old, end the transaction
+if($dcheck_scheduler['scheduler_last'] >= ($timestamp - 15))
+  query(" COMMIT ");
+
+// Otherwise, run the scheduler
 if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
 {
   // Update the timestamp of the latest scheduler execution
   query(" UPDATE  system_variables
           SET     system_variables.last_scheduler_execution = '$timestamp' ");
 
-  // Lock the table so that the action can not be ran twice
-  query(" LOCK TABLES system_scheduler WRITE ");
+  // End the transaction
+  query(" COMMIT ");
 
   // Go check if any scheduled task is waiting to be ran
   $timestamp  = time();
-  $qscheduler = query(" SELECT  system_scheduler.task_id          AS 't_id'   ,
+  $qscheduler = query(" SELECT  system_scheduler.id               AS 't_id'   ,
+                                system_scheduler.task_id          AS 't_task' ,
                                 system_scheduler.task_type        AS 't_type' ,
                                 system_scheduler.task_description AS 't_desc'
                         FROM    system_scheduler
@@ -89,7 +97,8 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
   while($dscheduler = mysqli_fetch_array($qscheduler))
   {
     // Prepare data related to the task about to be ran
-    $scheduler_action_id = $dscheduler['t_id'];
+    $scheduler_id        = sanitize($dscheduler['t_id'], 'int', 0);
+    $scheduler_action_id = sanitize($dscheduler['t_task'], 'int', 0);
     $scheduler_type      = $dscheduler['t_type'];
     $scheduler_desc      = sanitize($dscheduler['t_desc'], 'string');
     $scheduler_desc_raw  = $dscheduler['t_desc'];
@@ -118,8 +127,8 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
 
         // Announce on IRC that voting is open
         $contest_title_raw = $dcheck_contest['c_name'];
-        ircbot($path, 'Fin de la participation au concours du coin des écrivains : '.$contest_title_raw.' - Les votes sont ouverts pendant 10 jours : '.$GLOBALS['url_site'].'pages/ecrivains/concours?id='.$scheduler_action_id, '#NoBleme');
-        ircbot($path, 'Fin de la participation au concours du coin des écrivains : '.$contest_title_raw.' - Les votes sont ouverts pendant 10 jours : '.$GLOBALS['url_site'].'pages/ecrivains/concours?id='.$scheduler_action_id, '#write');
+        ircbot('Fin de la participation au concours du coin des écrivains : '.$contest_title_raw.' - Les votes sont ouverts pendant 10 jours : '.$GLOBALS['website_url'].'pages/ecrivains/concours?id='.$scheduler_action_id, '#NoBleme');
+        ircbot('Fin de la participation au concours du coin des écrivains : '.$contest_title_raw.' - Les votes sont ouverts pendant 10 jours : '.$GLOBALS['website_url'].'pages/ecrivains/concours?id='.$scheduler_action_id, '#write');
 
         // Schedule a task for the end of the contest (in 10 days at 22:00)
         $contest_end_date = strtotime(date('d-m-Y', strtotime("+10 days")).' 22:00:00');
@@ -199,8 +208,8 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
         // Announce the winner on IRC
         $contest_title_raw  = $dcheck_contest['c_name'];
         $contest_winner_raw = ($dwinner['w_anon']) ? 'Un auteur anonyme' : $dwinner['u_nick'];
-        ircbot($path, $contest_winner_raw.' a gagné le concours du coin des écrivains  : '.$contest_title_raw.' - '.$GLOBALS['url_site'].'pages/ecrivains/concours?id='.$scheduler_action_id, '#NoBleme');
-        ircbot($path, $contest_winner_raw.' a gagné le concours du coin des écrivains  : '.$contest_title_raw.' - '.$GLOBALS['url_site'].'pages/ecrivains/concours?id='.$scheduler_action_id, '#write');
+        ircbot($contest_winner_raw.' a gagné le concours du coin des écrivains  : '.$contest_title_raw.' - '.$GLOBALS['website_url'].'pages/ecrivains/concours?id='.$scheduler_action_id, '#NoBleme');
+        ircbot($contest_winner_raw.' a gagné le concours du coin des écrivains  : '.$contest_title_raw.' - '.$GLOBALS['website_url'].'pages/ecrivains/concours?id='.$scheduler_action_id, '#write');
       }
     }
 
@@ -213,9 +222,6 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
     // Delete the entry from the scheduler
 
     query(" DELETE FROM   system_scheduler
-            WHERE         system_scheduler.id = '$scheduler_action_id' ");
+            WHERE         system_scheduler.id = '$scheduler_id' ");
   }
-
-  // Now that every scheduled task has been treated, release the database lock so that normal activity can resume
-  query(" UNLOCK TABLES ");
 }

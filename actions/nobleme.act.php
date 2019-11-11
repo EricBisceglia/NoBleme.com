@@ -62,8 +62,8 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $path='./../../
     $qlogs .= " AND       logs_activity.activity_type LIKE 'users_%' ";
   else if($type == 'meetups')
     $qlogs .= " AND       logs_activity.activity_type LIKE 'meetups_%' ";
-  else if($type == 'nbdb')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'nbdb_%' ";
+  else if($type == 'internet')
+    $qlogs .= " AND       logs_activity.activity_type LIKE 'internet_%' ";
   else if($type == 'quotes')
     $qlogs .= " AND       logs_activity.activity_type LIKE 'quotes_%' ";
   else if($type == 'writers')
@@ -73,9 +73,9 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $path='./../../
 
   // Show deleted logs on request
   if($type == 'deleted')
-    $qlogs .= " AND       logs_activity.deleted = 1 ";
+    $qlogs .= " AND       logs_activity.is_deleted = 1 ";
   else
-    $qlogs .= " AND       logs_activity.deleted = 0 ";
+    $qlogs .= " AND       logs_activity.is_deleted = 0 ";
 
   // Group and sort the results
   $qlogs .= "   GROUP BY  logs_activity.id
@@ -182,7 +182,7 @@ function activity_delete_log($log_id, $deletion_type=0)
   // If requested, soft delete the activity log
   if(!$deletion_type)
     query(" UPDATE  logs_activity
-            SET     logs_activity.deleted = 1
+            SET     logs_activity.is_deleted = 1
             WHERE   logs_activity.id      = '$log_id' ");
 
   // Otherwise, hard delete the activity log and any potential log details
@@ -216,6 +216,6 @@ function activity_restore_log($log_id)
 
   // Restore the activity log
   query(" UPDATE  logs_activity
-          SET     logs_activity.deleted = 0
+          SET     logs_activity.is_deleted = 0
           WHERE   logs_activity.id      = '$log_id' ");
 }

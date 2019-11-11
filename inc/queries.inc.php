@@ -8,14 +8,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                This page contains all SQL queries that will be ran during an update of the website                */
-/*                   It can only be called by a website admin through the page /pages/dev/requetes                   */
-/*      Since this page is only called once during each update, performance optimization is not an issue at all      */
+/*       This page contains an archive of older SQL queries that might be ran during an update of the website.       */
+/*                   It can only be called by a website admin through the page /pages/dev/queries.                   */
+/*     Since this page is only called once during each update, performance optimization is not an issue at all.      */
 /*                                                                                                                   */
-/*        A bunch of functions for manipulating SQL are included in this page, making it a proto-ORM of sorts        */
-/*    Queries are done in such a way that they can only be ran once, avoiding a lot of potential silly situations    */
+/*       A bunch of functions for manipulating SQL are included in this page, making it a proto-ORM of sorts.        */
+/*   Queries are done in such a way that they can only be ran once, avoiding a lot of potential silly situations.    */
 /*                                                                                                                   */
-/*         If you want to modifiy the database structure, do it by adding content to the bottom of this page         */
+/*        If you want to modifiy the database structure, do it by adding content to the bottom of this page.         */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 // Include pages that are required to make MySQL queries
@@ -581,383 +581,19 @@ function sql_sanitize_data($data)
 /*                          Allows replaying of all past queries that haven't been run yet                           */
 /*              in order to ensure a version upgrade between any two versions of NoBleme goes smoothly               */
 /*                                                                                                                   */
-/*                 Before version 3, query history was not recorded, hence the lack of older content                 */
-/*                Before version 4, table and field names were in french, hence the non-english stuff                */
+/*                                 Older queries are archived in queries.archive.php                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-// Global requirement: fetch the id of the last query that was run
+// Those queries are treated like data migrations and will only be ran once, hence the storing of the last query id
 
+// Fetch the id of the last query that was run
 $last_query = sql_check_query_id();
 
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                 VERSION 3 BUILD 5                                                 */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-// Structural change of the writer's corner
-
-if($last_query < 1)
-{
-  sql_delete_field('ecrivains_concours', 'FKforum_sujet');
-  sql_rename_field('ecrivains_concours', 'date_debut', 'timestamp_debut', 'INT(11) UNSIGNED NOT NULL');
-  sql_rename_field('ecrivains_concours', 'date_fin', 'timestamp_fin', 'INT(11) UNSIGNED NOT NULL');
-
-  sql_create_field('ecrivains_concours', 'FKmembres_gagnant', 'INT(11) UNSIGNED NOT NULL', 'id');
-  sql_create_field('ecrivains_concours', 'FKecrivains_texte_gagnant', 'INT(11) UNSIGNED NOT NULL', 'FKmembres_gagnant');
-  sql_create_field('ecrivains_concours', 'num_participants', 'INT(11) UNSIGNED NOT NULL', 'timestamp_fin');
-  sql_create_field('ecrivains_concours_vote', 'poids_vote', 'INT(11) UNSIGNED NOT NULL', 'FKmembres');
-
-  sql_update_query_id(1);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Table used to simulate cronjobs
-
-if($last_query < 2)
-{
-  sql_create_table("automatisation", " id                 INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY  ,
-                                      action_id           INT(11) UNSIGNED NOT NULL                             ,
-                                      action_type         MEDIUMTEXT                                            ,
-                                      action_description  MEDIUMTEXT                                            ,
-                                      action_timestamp    INT(11) UNSIGNED NOT NULL                             ");
-
-  sql_update_query_id(2);
-}
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                 VERSION 3 BUILD 6                                                 */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-// Fulltext indexes for internet encyclopedia & dictionary search
-
-if($last_query < 3)
-{
-  sql_create_index('nbdb_web_page', 'index_contenu_en', 'contenu_en', 1);
-  sql_create_index('nbdb_web_page', 'index_contenu_fr', 'contenu_fr', 1);
-
-  sql_create_index('nbdb_web_definition', 'index_definition_en', 'definition_en', 1);
-  sql_create_index('nbdb_web_definition', 'index_definition_fr', 'definition_fr', 1);
-
-  sql_create_index('nbdb_web_categorie', 'index_description_fr', 'description_fr', 1);
-  sql_create_index('nbdb_web_categorie', 'index_description_en', 'description_en', 1);
-
-  sql_create_index('nbdb_web_definition', 'index_definition_fr', 'definition_fr', 1);
-  sql_create_index('nbdb_web_definition', 'index_definition_en', 'definition_en', 1);
-
-  sql_update_query_id(3);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Missing indexes
-
-if($last_query < 4)
-{
-  sql_create_index('automatisation', 'index_action', 'action_id');
-
-  sql_create_index('ecrivains_concours', 'index_gagnant', 'FKecrivains_texte_gagnant, FKmembres_gagnant');
-
-  sql_create_index('ecrivains_concours_vote', 'index_texte', 'FKecrivains_concours');
-  sql_create_index('ecrivains_concours_vote', 'index_concours', 'FKecrivains_texte');
-  sql_create_index('ecrivains_concours_vote', 'index_membre', 'FKmembres');
-  sql_create_index('ecrivains_concours_vote', 'index_poids', 'poids_vote, FKmembres, FKecrivains_texte, FKecrivains_concours');
-
-  sql_create_index('ecrivains_note', 'index_texte', 'FKecrivains_texte');
-  sql_create_index('ecrivains_note', 'index_membre', 'FKmembres');
-  sql_create_index('ecrivains_note', 'index_note', 'note');
-
-  sql_create_index('ecrivains_texte', 'index_auteur', 'anonyme, FKmembres');
-  sql_create_index('ecrivains_texte', 'index_concours', 'FKecrivains_concours');
-
-  sql_update_query_id(4);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// New table: NBDB - Encyclopedia of internet culture
-
-if($last_query < 5)
-{
-  sql_create_table('nbdb_web_page');
-
-  sql_create_field('nbdb_web_page', 'FKnbdb_web_periode', 'INT(11) UNSIGNED NOT NULL', 'id');
-  sql_create_field('nbdb_web_page', 'titre_fr', 'MEDIUMTEXT', 'FKnbdb_web_periode');
-  sql_create_field('nbdb_web_page', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
-  sql_create_field('nbdb_web_page', 'redirection_fr', 'MEDIUMTEXT', 'titre_en');
-  sql_create_field('nbdb_web_page', 'redirection_en', 'MEDIUMTEXT', 'redirection_fr');
-  sql_create_field('nbdb_web_page', 'contenu_fr', 'LONGTEXT', 'redirection_en');
-  sql_create_field('nbdb_web_page', 'contenu_en', 'LONGTEXT', 'contenu_fr');
-  sql_create_field('nbdb_web_page', 'annee_apparition', 'INT(4)', 'contenu_en');
-  sql_create_field('nbdb_web_page', 'mois_apparition', 'INT(2)', 'annee_apparition');
-  sql_create_field('nbdb_web_page', 'annee_popularisation', 'INT(4)', 'mois_apparition');
-  sql_create_field('nbdb_web_page', 'mois_popularisation', 'INT(2)', 'annee_popularisation');
-  sql_create_field('nbdb_web_page', 'est_vulgaire', 'TINYINT(1)', 'mois_popularisation');
-  sql_create_field('nbdb_web_page', 'est_politise', 'TINYINT(1)', 'est_vulgaire');
-  sql_create_field('nbdb_web_page', 'est_incorrect', 'TINYINT(1)', 'est_politise');
-
-  sql_create_index('nbdb_web_page', 'index_periode', 'FKnbdb_web_periode');
-  sql_create_index('nbdb_web_page', 'index_apparition', 'annee_apparition, mois_apparition');
-  sql_create_index('nbdb_web_page', 'index_popularisation', 'annee_popularisation, mois_popularisation');
-  sql_create_index('nbdb_web_page', 'index_titre_fr', 'titre_fr (25)');
-  sql_create_index('nbdb_web_page', 'index_titre_en', 'titre_en (25)');
-
-  sql_update_query_id(5);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// New table: NBDB - Dictionary of internet culture
-
-if($last_query < 6)
-{
-  sql_create_table('nbdb_web_definition');
-
-  sql_create_field('nbdb_web_definition', 'titre_fr', 'MEDIUMTEXT', 'id');
-  sql_create_field('nbdb_web_definition', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
-  sql_create_field('nbdb_web_definition', 'redirection_fr', 'MEDIUMTEXT', 'titre_en');
-  sql_create_field('nbdb_web_definition', 'redirection_en', 'MEDIUMTEXT', 'redirection_fr');
-  sql_create_field('nbdb_web_definition', 'definition_fr', 'LONGTEXT', 'redirection_en');
-  sql_create_field('nbdb_web_definition', 'definition_en', 'LONGTEXT', 'definition_fr');
-  sql_create_field('nbdb_web_definition', 'est_vulgaire', 'TINYINT(1)', 'definition_en');
-  sql_create_field('nbdb_web_definition', 'est_politise', 'TINYINT(1)', 'est_vulgaire');
-  sql_create_field('nbdb_web_definition', 'est_incorrect', 'TINYINT(1)', 'est_politise');
-
-  sql_create_index('nbdb_web_definition', 'index_titre_fr', 'titre_fr (25)');
-  sql_create_index('nbdb_web_definition', 'index_titre_en', 'titre_en (25)');
-
-  sql_update_query_id(6);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// New table: NBDB - Internet culture eras
-
-if($last_query < 7)
-{
-  sql_create_table('nbdb_web_periode');
-
-  sql_create_field('nbdb_web_periode', 'titre_fr', 'MEDIUMTEXT', 'id');
-  sql_create_field('nbdb_web_periode', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
-  sql_create_field('nbdb_web_periode', 'description_fr', 'MEDIUMTEXT', 'titre_en');
-  sql_create_field('nbdb_web_periode', 'description_en', 'MEDIUMTEXT', 'description_fr');
-  sql_create_field('nbdb_web_periode', 'annee_debut', 'INT(4)', 'description_en');
-  sql_create_field('nbdb_web_periode', 'annee_fin', 'INT(4)', 'annee_debut');
-
-  sql_update_query_id(7);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// New table: NBDB - Internet culture categories
-
-if($last_query < 8)
-{
-  sql_create_table('nbdb_web_categorie');
-
-  sql_create_field('nbdb_web_categorie', 'titre_fr', 'MEDIUMTEXT', 'id');
-  sql_create_field('nbdb_web_categorie', 'titre_en', 'MEDIUMTEXT', 'titre_fr');
-  sql_create_field('nbdb_web_categorie', 'ordre_affichage', 'INT(11) UNSIGNED NOT NULL', 'titre_en');
-  sql_create_field('nbdb_web_categorie', 'description_fr', 'MEDIUMTEXT', 'ordre_affichage');
-  sql_create_field('nbdb_web_categorie', 'description_en', 'MEDIUMTEXT', 'description_fr');
-
-  sql_create_index('nbdb_web_categorie', 'index_ordre_affichage', 'ordre_affichage');
-
-  sql_update_query_id(8);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// New table: NBDB - Internet culture page categories
-
-if($last_query < 9)
-{
-  sql_create_table('nbdb_web_page_categorie');
-
-  sql_create_field('nbdb_web_page_categorie', 'FKnbdb_web_page', 'INT(11) UNSIGNED NOT NULL', 'id');
-  sql_create_field('nbdb_web_page_categorie', 'FKnbdb_web_categorie', 'INT(11) UNSIGNED NOT NULL', 'FKnbdb_web_page');
-
-  sql_create_index('nbdb_web_page_categorie', 'index_pages', 'FKnbdb_web_page, FKnbdb_web_categorie');
-
-  sql_update_query_id(9);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// New table: NBDB - Internet culture images
-
-if($last_query < 10)
-{
-  sql_create_table('nbdb_web_image');
-
-  sql_create_field('nbdb_web_image', 'timestamp_upload', 'INT(11) UNSIGNED NOT NULL', 'id');
-  sql_create_field('nbdb_web_image', 'nom_fichier', 'MEDIUMTEXT', 'timestamp_upload');
-  sql_create_field('nbdb_web_image', 'tags', 'MEDIUMTEXT', 'nom_fichier');
-
-  sql_update_query_id(10);
-}
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                 VERSION 3 BUILD 7                                                 */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-// #505 - Make quotes bilingual
-
-if($last_query < 11)
-{
-  sql_create_field('quotes', 'langue', 'TINYTEXT', 'timestamp');
-
-  query(" UPDATE  quotes
-          SET     quotes.langue = 'FR'
-          WHERE   quotes.langue IS NULL ");
-
-  query(" UPDATE  activite
-          SET     activite.action_type  =     'quote_new_fr'
-          WHERE   activite.action_type  LIKE  'quote' ");
-
-  sql_update_query_id(11);
-}
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Store latest user activity
-
-if($last_query < 12)
-{
-  sql_create_field('membres', 'derniere_activite', 'INT(11) UNSIGNED NOT NULL', 'derniere_visite_ip');
-
-  sql_update_query_id(12);
-}
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                 VERSION 3 BUILD 8                                                 */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-// #496 - Option to turn off google trends
-
-if($last_query < 13)
-{
-  sql_create_field('membres', 'voir_tweets', 'TINYINT(1)', 'voir_nsfw');
-  sql_create_field('membres', 'voir_youtube', 'TINYINT(1)', 'voir_tweets');
-  sql_create_field('membres', 'voir_google_trends', 'TINYINT(1)', 'voir_youtube');
-
-  sql_update_query_id(13);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #477 - Allow tagging of internet culture encyclopedia/dictionary content as NSFW
-
-if($last_query < 14)
-{
-  sql_create_field('nbdb_web_page', 'contenu_floute', 'TINYINT(1)', 'mois_popularisation');
-  sql_create_field('nbdb_web_definition', 'contenu_floute', 'TINYINT(1)', 'definition_en');
-  sql_create_field('nbdb_web_image', 'nsfw', 'TINYINT(1)', 'tags');
-
-  sql_update_query_id(14);
-}
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                 VERSION 3 BUILD 9                                                 */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-// #533 - Private comments in the encyclopedia of interent culture
-
-if($last_query < 15)
-{
-  sql_create_field('nbdb_web_definition', 'notes_admin', 'LONGTEXT', 'est_incorrect');
-  sql_create_field('nbdb_web_page', 'notes_admin', 'LONGTEXT', 'est_incorrect');
-  sql_create_table('nbdb_web_notes_admin');
-  sql_create_field('nbdb_web_notes_admin', 'notes_admin', 'LONGTEXT', 'id');
-  sql_create_field('nbdb_web_notes_admin', 'brouillon_fr', 'LONGTEXT', 'notes_admin');
-  sql_create_field('nbdb_web_notes_admin', 'brouillon_en', 'LONGTEXT', 'brouillon_fr');
-
-  sql_update_query_id(15);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #543 - SQL query history (this page!)
-
-if($last_query < 16)
-{
-  sql_create_field("vars_globales", "derniere_requete_sql", "TINYINT(1) NOT NULL", "mise_a_jour");
-
-  sql_update_query_id(16);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #533 - Internet culture encyclopedia private comments do not need an id
-
-if($last_query < 17)
-{
-  sql_delete_field("nbdb_web_notes_admin", "id");
-
-  sql_update_query_id(17);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #547 - Private templates for the internet culture encyclopedia
-
-if($last_query < 18)
-{
-  sql_create_field("nbdb_web_notes_admin", "template_global", "LONGTEXT", "brouillon_en");
-  sql_create_field("nbdb_web_notes_admin", "template_fr", "LONGTEXT", "template_global");
-  sql_create_field("nbdb_web_notes_admin", "template_en", "LONGTEXT", "template_fr");
-
-  sql_update_query_id(18);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #542 - Make the to-do list bilingual
-
+// Call the query archive if necessary
 if($last_query < 19)
-{
-  sql_rename_field("todo", "titre", "titre_fr", "MEDIUMTEXT");
-  sql_create_field("todo", "titre_en", "MEDIUMTEXT", "titre_fr");
-  sql_rename_field("todo", "contenu", "contenu_fr", "MEDIUMTEXT");
-  sql_create_field("todo", "contenu_en", "MEDIUMTEXT", "contenu_fr");
+  include_once 'queries.archive.php';
 
-  sql_delete_index("todo", "index_titre");
-  sql_create_index("todo", "index_titre_fr", "titre_fr", 1);
-  sql_create_index("todo", "index_titre_en", "titre_en", 1);
 
-  sql_rename_field("todo_categorie", "categorie", "titre_fr", "TINYTEXT");
-  sql_create_field("todo_categorie", "titre_en", "TINYTEXT", "titre_fr");
-  query(" UPDATE todo_categorie SET todo_categorie.titre_en = todo_categorie.titre_fr ");
-
-  sql_rename_field("todo_roadmap", "version", "version_fr", "TINYTEXT");
-  sql_rename_field("todo_roadmap", "description", "description_fr", "MEDIUMTEXT");
-  sql_create_field("todo_roadmap", "version_en", "TINYTEXT", "version_fr");
-  sql_create_field("todo_roadmap", "description_en", "MEDIUMTEXT", "description_fr");
-  query(" UPDATE todo_roadmap SET todo_roadmap.version_en = todo_roadmap.version_fr ");
-  query(" UPDATE todo_roadmap SET todo_roadmap.description_en = todo_roadmap.description_fr ");
-
-  sql_update_query_id(19);
-}
 
 
 /*********************************************************************************************************************/
@@ -997,6 +633,8 @@ if($last_query < 20)
 
   sql_update_query_id(20);
 }
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1041,6 +679,8 @@ if($last_query < 21)
 }
 
 
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #544 - Translation and optimization of all tables - Stats tables
 
@@ -1059,6 +699,8 @@ if($last_query < 22)
 
   sql_update_query_id(22);
 }
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1130,13 +772,14 @@ if($last_query < 23)
 }
 
 
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #544 - Translation and optimization of all tables - Writer's corner
 
 if($last_query < 24)
 {
   sql_rename_table('ecrivains_texte', 'writings_texts');
-  sql_rename_table('ecrivains_note', 'writings_comments');
   sql_rename_table('ecrivains_concours', 'writings_contests');
   sql_rename_table('ecrivains_concours_vote', 'writings_contests_votes');
 
@@ -1147,9 +790,9 @@ if($last_query < 24)
   sql_rename_field('writings_texts', 'anonyme', 'is_anonymous', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_texts', 'timestamp_creation', 'created_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('writings_texts', 'timestamp_modification', 'edited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_texts', 'niveau_feedback', 'desired_feedback_level', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_delete_field('writings_texts', 'niveau_feedback');
   sql_rename_field('writings_texts', 'titre', 'title', 'TEXT NOT NULL');
-  sql_rename_field('writings_texts', 'note_moyenne', 'average_rating', 'DECIMAL(2,1) NOT NULL DEFAULT 0');
+  sql_delete_field('writings_texts', 'note_moyenne');
   sql_rename_field('writings_texts', 'longueur_texte', 'character_count', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_move_field('writings_texts', 'title', 'TEXT NOT NULL', 'character_count');
   sql_rename_field('writings_texts', 'contenu', 'body', 'LONGTEXT NOT NULL');
@@ -1158,20 +801,6 @@ if($last_query < 24)
   sql_create_index('writings_texts', 'index_author', 'fk_users, is_anonymous');
   sql_create_index('writings_texts', 'index_contest', 'fk_writings_contests');
   sql_create_index('writings_texts', 'index_language', 'language');
-
-  sql_change_field_type('writings_comments', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('writings_comments', 'FKecrivains_texte', 'fk_writings_texts', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_comments', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_comments', 'timestamp', 'posted_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_comments', 'note', 'rating', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_comments', 'anonyme', 'is_anonymous', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_comments', 'message', 'message_body', 'MEDIUMTEXT NOT NULL');
-  sql_delete_index('writings_comments', 'index_texte');
-  sql_delete_index('writings_comments', 'index_membre');
-  sql_delete_index('writings_comments', 'index_note');
-  sql_create_index('writings_comments', 'index_author', 'fk_users, is_anonymous');
-  sql_create_index('writings_comments', 'index_text', 'fk_writings_texts');
-  sql_create_index('writings_comments', 'index_ratings', 'rating');
 
   sql_change_field_type('writings_contests', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('writings_contests', 'FKmembres_gagnant', 'fk_users_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
@@ -1199,10 +828,14 @@ if($last_query < 24)
   sql_create_index('writings_contests_votes', 'index_author', 'fk_users');
   sql_create_index('writings_contests_votes', 'index_contest', 'fk_writings_contests');
   sql_create_index('writings_contests_votes', 'index_text', 'fk_writings_texts');
-  sql_create_index('writings_contests_votes', 'index_ratings', 'vote_weight, fk_writings_contests, fk_writings_texts');
+  sql_create_index('writings_contests_votes', 'index_votes', 'vote_weight, fk_writings_contests, fk_writings_texts');
+
+  sql_delete_table('ecrivains_note');
 
   sql_update_query_id(24);
 }
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1237,6 +870,8 @@ if($last_query < 25)
 
   sql_update_query_id(25);
 }
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1386,6 +1021,8 @@ if($last_query < 26)
 }
 
 
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // #544 - Translation and optimization of all tables - IRC
 
@@ -1404,6 +1041,8 @@ if($last_query < 27)
 
   sql_update_query_id(27);
 }
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1441,36 +1080,6 @@ if($last_query < 28)
 }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #544 - Translation and optimization of all tables - Quotes
-
-if($last_query < 29)
-{
-  sql_rename_table('quotes_membres', 'quotes_users');
-
-  sql_change_field_type('quotes', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('quotes', 'timestamp', 'submitted_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('quotes', 'langue', 'language', 'VARCHAR(6) NOT NULL');
-  sql_rename_field('quotes', 'contenu', 'body', 'MEDIUMTEXT NOT NULL');
-  sql_rename_field('quotes', 'FKauteur', 'fk_users_submitter', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('quotes', 'fk_users_submitter', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_rename_field('quotes', 'nsfw', 'is_nsfw', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('quotes', 'is_nsfw', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'submitted_at');
-  sql_rename_field('quotes', 'valide_admin', 'admin_validation', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('quotes', 'admin_validation', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users_submitter');
-  sql_delete_index('quotes', 'index_membres');
-  sql_create_index('quotes', 'index_submitter', 'fk_users_submitter');
-
-  sql_change_field_type('quotes_users', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('quotes_users', 'FKquotes', 'fk_quotes', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('quotes_users', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_delete_index('quotes_users', 'index_quotes');
-  sql_delete_index('quotes_users', 'index_membres');
-  sql_create_index('quotes_users', 'index_quote', 'fk_quotes');
-  sql_create_index('quotes_users', 'index_user', 'fk_users');
-
-  sql_update_query_id(29);
-}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1505,132 +1114,141 @@ if($last_query < 29)
 }
 
 
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #544 - Translation and optimization of all tables - NBDB (NoBleme DataBase): encyclopedia of internet culture
+// #544 - Translation and optimization of all tables - Encyclopedia of internet culture
 
 if($last_query < 30)
 {
-  sql_rename_table('nbdb_web_notes_admin', 'nbdb_web_admin_notes');
-  sql_rename_table('nbdb_web_categorie', 'nbdb_web_categories');
-  sql_rename_table('nbdb_web_definition', 'nbdb_web_definitions');
-  sql_rename_table('nbdb_web_periode', 'nbdb_web_eras');
-  sql_rename_table('nbdb_web_image', 'nbdb_web_images');
-  sql_rename_table('nbdb_web_page', 'nbdb_web_pages');
-  sql_rename_table('nbdb_web_page_categorie', 'nbdb_web_pages_categories');
+  sql_rename_table('nbdb_web_notes_admin', 'internet_admin_notes');
+  sql_rename_table('nbdb_web_categorie', 'internet_categories');
+  sql_rename_table('nbdb_web_periode', 'internet_eras');
+  sql_rename_table('nbdb_web_image', 'internet_images');
+  sql_rename_table('nbdb_web_page', 'internet_pages');
+  sql_rename_table('nbdb_web_page_categorie', 'internet_pages_categories');
 
-  sql_rename_field('nbdb_web_admin_notes', 'notes_admin', 'global_notes', 'LONGTEXT NOT NULL');
-  sql_rename_field('nbdb_web_admin_notes', 'brouillon_fr', 'draft_fr', 'LONGTEXT NOT NULL');
-  sql_rename_field('nbdb_web_admin_notes', 'brouillon_en', 'draft_en', 'LONGTEXT NOT NULL');
-  sql_move_field('nbdb_web_admin_notes', 'draft_fr', 'LONGTEXT NOT NULL', 'draft_en');
-  sql_rename_field('nbdb_web_admin_notes', 'template_global', 'snippets', 'LONGTEXT NOT NULL');
-  sql_change_field_type('nbdb_web_admin_notes', 'template_fr', 'LONGTEXT NOT NULL');
-  sql_change_field_type('nbdb_web_admin_notes', 'template_en', 'LONGTEXT NOT NULL');
-  sql_move_field('nbdb_web_admin_notes', 'template_fr', 'LONGTEXT NOT NULL', 'template_en');
+  sql_rename_field('internet_admin_notes', 'notes_admin', 'global_notes', 'LONGTEXT NOT NULL');
+  sql_rename_field('internet_admin_notes', 'brouillon_fr', 'draft_fr', 'LONGTEXT NOT NULL');
+  sql_rename_field('internet_admin_notes', 'brouillon_en', 'draft_en', 'LONGTEXT NOT NULL');
+  sql_move_field('internet_admin_notes', 'draft_fr', 'LONGTEXT NOT NULL', 'draft_en');
+  sql_rename_field('internet_admin_notes', 'template_global', 'snippets', 'LONGTEXT NOT NULL');
+  sql_change_field_type('internet_admin_notes', 'template_fr', 'LONGTEXT NOT NULL');
+  sql_change_field_type('internet_admin_notes', 'template_en', 'LONGTEXT NOT NULL');
+  sql_move_field('internet_admin_notes', 'template_fr', 'LONGTEXT NOT NULL', 'template_en');
 
-  sql_change_field_type('nbdb_web_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('nbdb_web_categories', 'titre_fr', 'name_fr', 'VARCHAR(510) NOT NULL');
-  sql_rename_field('nbdb_web_categories', 'titre_en', 'name_en', 'VARCHAR(510) NOT NULL');
-  sql_move_field('nbdb_web_categories', 'name_fr', 'VARCHAR(510) NOT NULL', 'name_en');
-  sql_rename_field('nbdb_web_categories', 'ordre_affichage', 'display_order', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('nbdb_web_categories', 'display_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_rename_field('nbdb_web_categories', 'description_fr', 'description_fr', 'TEXT NOT NULL');
-  sql_rename_field('nbdb_web_categories', 'description_en', 'description_en', 'TEXT NOT NULL');
-  sql_move_field('nbdb_web_categories', 'description_fr', 'TEXT NOT NULL', 'description_en');
-  sql_delete_index('nbdb_web_categories', 'index_ordre_affichage');
-  sql_delete_index('nbdb_web_categories', 'index_description_fr');
-  sql_delete_index('nbdb_web_categories', 'index_description_en');
-  sql_create_index('nbdb_web_categories', 'index_display_order', 'display_order');
+  sql_change_field_type('internet_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('internet_categories', 'titre_fr', 'name_fr', 'VARCHAR(510) NOT NULL');
+  sql_rename_field('internet_categories', 'titre_en', 'name_en', 'VARCHAR(510) NOT NULL');
+  sql_move_field('internet_categories', 'name_fr', 'VARCHAR(510) NOT NULL', 'name_en');
+  sql_rename_field('internet_categories', 'ordre_affichage', 'display_order', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('internet_categories', 'display_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_rename_field('internet_categories', 'description_fr', 'description_fr', 'TEXT NOT NULL');
+  sql_rename_field('internet_categories', 'description_en', 'description_en', 'TEXT NOT NULL');
+  sql_move_field('internet_categories', 'description_fr', 'TEXT NOT NULL', 'description_en');
+  sql_delete_index('internet_categories', 'index_ordre_affichage');
+  sql_delete_index('internet_categories', 'index_description_fr');
+  sql_delete_index('internet_categories', 'index_description_en');
+  sql_create_index('internet_categories', 'index_display_order', 'display_order');
 
-  sql_change_field_type('nbdb_web_definitions', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('nbdb_web_definitions', 'titre_fr', 'title_fr', 'VARCHAR(510) NOT NULL');
-  sql_rename_field('nbdb_web_definitions', 'titre_en', 'title_en', 'VARCHAR(510) NOT NULL');
-  sql_move_field('nbdb_web_definitions', 'title_fr', 'VARCHAR(510) NOT NULL', 'title_en');
-  sql_change_field_type('nbdb_web_definitions', 'redirection_fr', 'VARCHAR(510) NOT NULL');
-  sql_change_field_type('nbdb_web_definitions', 'redirection_en', 'VARCHAR(510) NOT NULL');
-  sql_move_field('nbdb_web_definitions', 'redirection_fr', 'VARCHAR(510) NOT NULL', 'redirection_en');
-  sql_rename_field('nbdb_web_definitions', 'definition_fr', 'definition_fr', 'LONGTEXT NOT NULL');
-  sql_rename_field('nbdb_web_definitions', 'definition_en', 'definition_en', 'LONGTEXT NOT NULL');
-  sql_rename_field('nbdb_web_definitions', 'contenu_floute', 'is_nsfw', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_definitions', 'est_vulgaire', 'is_gross', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_definitions', 'est_politise', 'is_political', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_definitions', 'est_incorrect', 'is_politically_incorrect', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('nbdb_web_definitions', 'definition_en', 'LONGTEXT NOT NULL', 'is_politically_incorrect');
-  sql_move_field('nbdb_web_definitions', 'definition_fr', 'LONGTEXT NOT NULL', 'definition_en');
-  sql_rename_field('nbdb_web_definitions', 'notes_admin', 'private_admin_notes', 'MEDIUMTEXT NOT NULL');
-  sql_delete_index('nbdb_web_definitions', 'index_titre_fr');
-  sql_delete_index('nbdb_web_definitions', 'index_titre_en');
-  sql_delete_index('nbdb_web_definitions', 'index_definition_fr');
-  sql_delete_index('nbdb_web_definitions', 'index_definition_en');
-  sql_create_index('nbdb_web_definitions', 'index_title_en', 'title_en(255), redirection_en(255)', 1);
-  sql_create_index('nbdb_web_definitions', 'index_title_fr', 'title_fr(255), redirection_fr(255)', 1);
-  sql_create_index('nbdb_web_definitions', 'index_contents_en', 'definition_en', 1);
-  sql_create_index('nbdb_web_definitions', 'index_contents_fr', 'definition_fr', 1);
+  sql_change_field_type('internet_eras', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('internet_eras', 'titre_fr', 'name_fr', 'VARCHAR(510) NOT NULL');
+  sql_rename_field('internet_eras', 'titre_en', 'name_en', 'VARCHAR(510) NOT NULL');
+  sql_move_field('internet_eras', 'name_fr', 'VARCHAR(510) NOT NULL', 'name_en');
+  sql_rename_field('internet_eras', 'description_fr', 'description_fr', 'TEXT NOT NULL');
+  sql_rename_field('internet_eras', 'description_en', 'description_en', 'TEXT NOT NULL');
+  sql_move_field('internet_eras', 'description_fr', 'TEXT NOT NULL', 'description_en');
+  sql_rename_field('internet_eras', 'annee_debut', 'began_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('internet_eras', 'annee_fin', 'ended_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('internet_eras', 'began_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_move_field('internet_eras', 'ended_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0', 'began_in_year');
 
-  sql_change_field_type('nbdb_web_eras', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('nbdb_web_eras', 'titre_fr', 'name_fr', 'VARCHAR(510) NOT NULL');
-  sql_rename_field('nbdb_web_eras', 'titre_en', 'name_en', 'VARCHAR(510) NOT NULL');
-  sql_move_field('nbdb_web_eras', 'name_fr', 'VARCHAR(510) NOT NULL', 'name_en');
-  sql_rename_field('nbdb_web_eras', 'description_fr', 'description_fr', 'TEXT NOT NULL');
-  sql_rename_field('nbdb_web_eras', 'description_en', 'description_en', 'TEXT NOT NULL');
-  sql_move_field('nbdb_web_eras', 'description_fr', 'TEXT NOT NULL', 'description_en');
-  sql_rename_field('nbdb_web_eras', 'annee_debut', 'began_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_eras', 'annee_fin', 'ended_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('nbdb_web_eras', 'began_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_move_field('nbdb_web_eras', 'ended_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0', 'began_in_year');
+  sql_change_field_type('internet_images', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('internet_images', 'timestamp_upload', 'uploaded_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('internet_images', 'nom_fichier', 'file_name', 'VARCHAR(510) NOT NULL');
+  sql_change_field_type('internet_images', 'tags', 'TEXT NOT NULL');
+  sql_rename_field('internet_images', 'nsfw', 'is_nsfw', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('internet_images', 'pages_utilisation_fr', 'used_in_pages_fr', 'TEXT NOT NULL');
+  sql_rename_field('internet_images', 'pages_utilisation_en', 'used_in_pages_en', 'TEXT NOT NULL');
+  sql_move_field('internet_images', 'pages_utilisation_fr', 'TEXT NOT NULL', 'pages_utilisation_en');
+  sql_create_index('internet_images', 'index_file_name', 'file_name', 1);
+  sql_create_index('internet_images', 'index_tags', 'tags', 1);
 
-  sql_change_field_type('nbdb_web_images', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('nbdb_web_images', 'timestamp_upload', 'uploaded_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_images', 'nom_fichier', 'file_name', 'VARCHAR(510) NOT NULL');
-  sql_change_field_type('nbdb_web_images', 'tags', 'TEXT NOT NULL');
-  sql_rename_field('nbdb_web_images', 'nsfw', 'is_nsfw', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_images', 'pages_utilisation_fr', 'used_in_pages_fr', 'TEXT NOT NULL');
-  sql_rename_field('nbdb_web_images', 'pages_utilisation_en', 'used_in_pages_en', 'TEXT NOT NULL');
-  sql_move_field('nbdb_web_images', 'pages_utilisation_fr', 'TEXT NOT NULL', 'pages_utilisation_en');
-  sql_create_index('nbdb_web_images', 'index_file_name', 'file_name', 1);
-  sql_create_index('nbdb_web_images', 'index_tags', 'tags', 1);
+  sql_change_field_type('internet_pages', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('internet_pages', 'FKnbdb_web_periode', 'fk_internet_eras', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_create_field('internet_pages', 'is_dictionary_entry', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_internet_eras');
+  sql_create_field('internet_pages', 'is_cultural_entry', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'is_dictionary_entry');
+  sql_rename_field('internet_pages', 'titre_fr', 'title_fr', 'VARCHAR(510) NOT NULL');
+  sql_rename_field('internet_pages', 'titre_en', 'title_en', 'VARCHAR(510) NOT NULL');
+  sql_move_field('internet_pages', 'title_fr', 'VARCHAR(510) NOT NULL', 'title_en');
+  sql_change_field_type('internet_pages', 'redirection_fr', 'VARCHAR(510) NOT NULL');
+  sql_change_field_type('internet_pages', 'redirection_en', 'VARCHAR(510) NOT NULL');
+  sql_move_field('internet_pages', 'redirection_fr', 'VARCHAR(510) NOT NULL', 'redirection_en');
+  sql_rename_field('internet_pages', 'contenu_fr', 'definition_fr', 'LONGTEXT NOT NULL');
+  sql_rename_field('internet_pages', 'contenu_en', 'definition_en', 'LONGTEXT NOT NULL');
+  sql_rename_field('internet_pages', 'annee_apparition', 'appeared_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('internet_pages', 'mois_apparition', 'appeared_in_month', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('internet_pages', 'annee_popularisation', 'spread_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('internet_pages', 'mois_popularisation', 'spread_in_month', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('internet_pages', 'contenu_floute', 'is_nsfw', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('internet_pages', 'est_vulgaire', 'is_gross', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('internet_pages', 'est_politise', 'is_political', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('internet_pages', 'est_incorrect', 'is_politically_incorrect', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('internet_pages', 'definition_en', 'LONGTEXT NOT NULL', 'is_politically_incorrect');
+  sql_move_field('internet_pages', 'definition_fr', 'LONGTEXT NOT NULL', 'definition_en');
+  sql_rename_field('internet_pages', 'notes_admin', 'private_admin_notes', 'MEDIUMTEXT NOT NULL');
+  sql_delete_index('internet_pages', 'index_periode');
+  sql_delete_index('internet_pages', 'index_apparition');
+  sql_delete_index('internet_pages', 'index_popularisation');
+  sql_delete_index('internet_pages', 'index_titre_fr');
+  sql_delete_index('internet_pages', 'index_titre_en');
+  sql_delete_index('internet_pages', 'index_contenu_en');
+  sql_delete_index('internet_pages', 'index_contenu_fr');
+  sql_create_index('internet_pages', 'index_era', 'fk_internet_eras');
+  sql_create_index('internet_pages', 'index_dictionary', 'is_dictionary_entry');
+  sql_create_index('internet_pages', 'index_cultural', 'is_cultural_entry');
+  sql_create_index('internet_pages', 'index_appeared', 'appeared_in_year, appeared_in_month');
+  sql_create_index('internet_pages', 'index_spread', 'spread_in_year, spread_in_month');
+  sql_create_index('internet_pages', 'index_title_en', 'title_en(255), redirection_en(255)', 1);
+  sql_create_index('internet_pages', 'index_title_fr', 'title_fr(255), redirection_fr(255)', 1);
+  sql_create_index('internet_pages', 'index_contents_en', 'definition_en', 1);
+  sql_create_index('internet_pages', 'index_contents_fr', 'definition_fr', 1);
 
-  sql_change_field_type('nbdb_web_pages', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('nbdb_web_pages', 'FKnbdb_web_periode', 'fk_nbdb_web_eras', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_pages', 'titre_fr', 'title_fr', 'VARCHAR(510) NOT NULL');
-  sql_rename_field('nbdb_web_pages', 'titre_en', 'title_en', 'VARCHAR(510) NOT NULL');
-  sql_move_field('nbdb_web_pages', 'title_fr', 'VARCHAR(510) NOT NULL', 'title_en');
-  sql_change_field_type('nbdb_web_pages', 'redirection_fr', 'VARCHAR(510) NOT NULL');
-  sql_change_field_type('nbdb_web_pages', 'redirection_en', 'VARCHAR(510) NOT NULL');
-  sql_move_field('nbdb_web_pages', 'redirection_fr', 'VARCHAR(510) NOT NULL', 'redirection_en');
-  sql_rename_field('nbdb_web_pages', 'contenu_fr', 'definition_fr', 'LONGTEXT NOT NULL');
-  sql_rename_field('nbdb_web_pages', 'contenu_en', 'definition_en', 'LONGTEXT NOT NULL');
-  sql_rename_field('nbdb_web_pages', 'annee_apparition', 'appeared_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_pages', 'mois_apparition', 'appeared_in_month', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_pages', 'annee_popularisation', 'spread_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_pages', 'mois_popularisation', 'spread_in_month', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_pages', 'contenu_floute', 'is_nsfw', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_pages', 'est_vulgaire', 'is_gross', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_pages', 'est_politise', 'is_political', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_pages', 'est_incorrect', 'is_politically_incorrect', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('nbdb_web_pages', 'definition_en', 'LONGTEXT NOT NULL', 'is_politically_incorrect');
-  sql_move_field('nbdb_web_pages', 'definition_fr', 'LONGTEXT NOT NULL', 'definition_en');
-  sql_rename_field('nbdb_web_pages', 'notes_admin', 'private_admin_notes', 'MEDIUMTEXT NOT NULL');
-  sql_delete_index('nbdb_web_pages', 'index_periode');
-  sql_delete_index('nbdb_web_pages', 'index_apparition');
-  sql_delete_index('nbdb_web_pages', 'index_popularisation');
-  sql_delete_index('nbdb_web_pages', 'index_titre_fr');
-  sql_delete_index('nbdb_web_pages', 'index_titre_en');
-  sql_delete_index('nbdb_web_pages', 'index_contenu_en');
-  sql_delete_index('nbdb_web_pages', 'index_contenu_fr');
-  sql_create_index('nbdb_web_pages', 'index_era', 'fk_nbdb_web_eras');
-  sql_create_index('nbdb_web_pages', 'index_appeared', 'appeared_in_year, appeared_in_month');
-  sql_create_index('nbdb_web_pages', 'index_spread', 'spread_in_year, spread_in_month');
-  sql_create_index('nbdb_web_pages', 'index_title_en', 'title_en(255), redirection_en(255)', 1);
-  sql_create_index('nbdb_web_pages', 'index_title_fr', 'title_fr(255), redirection_fr(255)', 1);
-  sql_create_index('nbdb_web_pages', 'index_contents_en', 'definition_en', 1);
-  sql_create_index('nbdb_web_pages', 'index_contents_fr', 'definition_fr', 1);
+  sql_change_field_type('internet_pages_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('internet_pages_categories', 'FKnbdb_web_page', 'fk_internet_pages', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('internet_pages_categories', 'FKnbdb_web_categorie', 'fk_internet_categories', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_delete_index('internet_pages_categories', 'index_pages');
+  sql_create_index('internet_pages_categories', 'index_page', 'fk_internet_pages');
+  sql_create_index('internet_pages_categories', 'index_category', 'fk_internet_categories');
 
-  sql_change_field_type('nbdb_web_pages_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('nbdb_web_pages_categories', 'FKnbdb_web_page', 'fk_nbdb_web_pages', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('nbdb_web_pages_categories', 'FKnbdb_web_categorie', 'fk_nbdb_web_categories', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_delete_index('nbdb_web_pages_categories', 'index_pages');
-  sql_create_index('nbdb_web_pages_categories', 'index_page', 'fk_nbdb_web_pages');
-  sql_create_index('nbdb_web_pages_categories', 'index_category', 'fk_nbdb_web_categories');
+  $qinternet = query("  SELECT  nbdb_web_definition.titre_fr        AS 'title_fr'     ,
+                                nbdb_web_definition.titre_en        AS 'title_en'     ,
+                                nbdb_web_definition.redirection_fr  AS 'redirect_fr'  ,
+                                nbdb_web_definition.redirection_en  AS 'redirect_en'  ,
+                                nbdb_web_definition.definition_fr   AS 'body_fr'      ,
+                                nbdb_web_definition.definition_en   AS 'body_en'      ,
+                                nbdb_web_definition.contenu_floute  AS 'is_nsfw'      ,
+                                nbdb_web_definition.est_vulgaire    AS 'is_gross'     ,
+                                nbdb_web_definition.est_politise    AS 'is_political' ,
+                                nbdb_web_definition.est_incorrect   AS 'is_incorrect' ,
+                                nbdb_web_definition.notes_admin     AS 'admin_notes'
+                        FROM    nbdb_web_definition ");
+  while($dinternet = mysqli_fetch_array($qinternet))
+    query(" INSERT INTO internet_pages
+            SET         internet_pages.is_dictionary_entry    = 1                                                   ,
+                        internet_pages.title_en               = '".sql_sanitize_data($dinternet['title_en'])."'     ,
+                        internet_pages.title_fr               = '".sql_sanitize_data($dinternet['title_fr'])."'     ,
+                        internet_pages.redirection_en         = '".sql_sanitize_data($dinternet['redirect_en'])."'  ,
+                        internet_pages.redirection_fr         = '".sql_sanitize_data($dinternet['redirect_fr'])."'  ,
+                        internet_pages.is_nsfw                = '".sql_sanitize_data($dinternet['is_nsfw'])."'      ,
+                        internet_pages.is_gross               = '".sql_sanitize_data($dinternet['is_gross'])."'     ,
+                        internet_pages.is_political           = '".sql_sanitize_data($dinternet['is_political'])."' ,
+                      internet_pages.is_politically_incorrect = '".sql_sanitize_data($dinternet['is_incorrect'])."' ,
+                        internet_pages.definition_en          = '".sql_sanitize_data($dinternet['body_en'])."'      ,
+                        internet_pages.definition_fr          = '".sql_sanitize_data($dinternet['body_fr'])."'      ,
+                        internet_pages.private_admin_notes    = '".sql_sanitize_data($dinternet['admin_notes'])."'  ");
+
+  sql_delete_table('nbdb_web_definition');
 
   sql_update_query_id(30);
 }
@@ -1725,7 +1343,13 @@ if($last_query < 31)
                                       'ecrivains_concours_gagnant'      => 'writings_contest_winner_fr'         ,
                                       'ecrivains_concours_vote'         => 'writings_contest_vote_fr'           ,
                                       'quote_new_en'                    => 'quotes_new_en'                      ,
-                                      'quote_new_fr'                    => 'quotes_new_fr'                      );
+                                      'quote_new_fr'                    => 'quotes_new_fr'                      ,
+                                      'nbdb_web_definition_new'         => 'internet_definition_new'            ,
+                                      'nbdb_web_definition_edit'        => 'internet_definition_edit'           ,
+                                      'nbdb_web_definition_delete'      => 'internet_definition_delete'         ,
+                                      'nbdb_web_page_new'               => 'internet_page_new'                  ,
+                                      'nbdb_web_page_edit'              => 'internet_page_edit'                 ,
+                                      'nbdb_web_page_delete'            => 'internet_page_delete'               );
 
   foreach($logs_activity_translation as $original_log => $translated_log)
   {
@@ -1736,38 +1360,26 @@ if($last_query < 31)
             WHERE   logs_activity.activity_type LIKE '$original_log' ");
   }
 
-  query(" UPDATE  nbdb_web_pages
-          SET     nbdb_web_pages.definition_en = REPLACE(nbdb_web_pages.definition_en, '[[dico:', '[[definition:') ");
-  query(" UPDATE  nbdb_web_pages
-          SET     nbdb_web_pages.definition_fr = REPLACE(nbdb_web_pages.definition_fr, '[[dico:', '[[definition:') ");
-  query(" UPDATE  nbdb_web_definitions
-          SET     nbdb_web_definitions.definition_en = REPLACE(nbdb_web_definitions.definition_en, '[[dico:', '[[definition:') ");
-  query(" UPDATE  nbdb_web_definitions
-          SET     nbdb_web_definitions.definition_fr = REPLACE(nbdb_web_definitions.definition_fr, '[[dico:', '[[definition:') ");
-  query(" UPDATE  nbdb_web_pages
-          SET     nbdb_web_pages.definition_en = REPLACE(nbdb_web_pages.definition_en, '[[lien:', '[[link:') ");
-  query(" UPDATE  nbdb_web_pages
-          SET     nbdb_web_pages.definition_fr = REPLACE(nbdb_web_pages.definition_fr, '[[lien:', '[[link:') ");
-  query(" UPDATE  nbdb_web_definitions
-          SET     nbdb_web_definitions.definition_en = REPLACE(nbdb_web_definitions.definition_en, '[[lien:', '[[link:') ");
-  query(" UPDATE  nbdb_web_definitions
-          SET     nbdb_web_definitions.definition_fr = REPLACE(nbdb_web_definitions.definition_fr, '[[lien:', '[[link:') ");
-  query(" UPDATE  nbdb_web_pages
-          SET     nbdb_web_pages.definition_en = REPLACE(nbdb_web_pages.definition_en, '[[galerie', '[[gallery') ");
-  query(" UPDATE  nbdb_web_pages
-          SET     nbdb_web_pages.definition_fr = REPLACE(nbdb_web_pages.definition_fr, '[[galerie', '[[gallery') ");
-  query(" UPDATE  nbdb_web_definitions
-          SET     nbdb_web_definitions.definition_en = REPLACE(nbdb_web_definitions.definition_en, '[[galerie', '[[gallery') ");
-  query(" UPDATE  nbdb_web_definitions
-          SET     nbdb_web_definitions.definition_fr = REPLACE(nbdb_web_definitions.definition_fr, '[[galerie', '[[gallery') ");
-  query(" UPDATE  nbdb_web_pages
-          SET     nbdb_web_pages.definition_en = REPLACE(nbdb_web_pages.definition_en, '/galerie]]', '/gallery]]') ");
-  query(" UPDATE  nbdb_web_pages
-          SET     nbdb_web_pages.definition_fr = REPLACE(nbdb_web_pages.definition_fr, '/galerie]]', '/gallery]]') ");
-  query(" UPDATE  nbdb_web_definitions
-          SET     nbdb_web_definitions.definition_en = REPLACE(nbdb_web_definitions.definition_en, '/galerie]]', '/gallery]]') ");
-  query(" UPDATE  nbdb_web_definitions
-          SET     nbdb_web_definitions.definition_fr = REPLACE(nbdb_web_definitions.definition_fr, '/galerie]]', '/gallery]]') ");
+  query(" UPDATE  internet_pages
+          SET     internet_pages.definition_en = REPLACE(internet_pages.definition_en, '[[web:', '[[internet:') ");
+  query(" UPDATE  internet_pages
+          SET     internet_pages.definition_fr = REPLACE(internet_pages.definition_fr, '[[web:', '[[internet:') ");
+  query(" UPDATE  internet_pages
+          SET     internet_pages.definition_en = REPLACE(internet_pages.definition_en, '[[dico:', '[[internet:') ");
+  query(" UPDATE  internet_pages
+          SET     internet_pages.definition_fr = REPLACE(internet_pages.definition_fr, '[[dico:', '[[internet:') ");
+  query(" UPDATE  internet_pages
+          SET     internet_pages.definition_en = REPLACE(internet_pages.definition_en, '[[lien:', '[[link:') ");
+  query(" UPDATE  internet_pages
+          SET     internet_pages.definition_fr = REPLACE(internet_pages.definition_fr, '[[lien:', '[[link:') ");
+  query(" UPDATE  internet_pages
+          SET     internet_pages.definition_en = REPLACE(internet_pages.definition_en, '[[galerie', '[[gallery') ");
+  query(" UPDATE  internet_pages
+          SET     internet_pages.definition_fr = REPLACE(internet_pages.definition_fr, '[[galerie', '[[gallery') ");
+  query(" UPDATE  internet_pages
+          SET     internet_pages.definition_en = REPLACE(internet_pages.definition_en, '/galerie]]', '/gallery]]') ");
+  query(" UPDATE  internet_pages
+          SET     internet_pages.definition_fr = REPLACE(internet_pages.definition_fr, '/galerie]]', '/gallery]]') ");
 
   sql_update_query_id(31);
 }
@@ -1780,25 +1392,23 @@ if($last_query < 31)
 
 if($last_query < 32)
 {
-  sql_create_field('dev_blogs', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('dev_tasks', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('dev_blogs', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('dev_tasks', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
 
-  sql_create_field('logs_activity', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('logs_activity', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
 
-  sql_create_field('meetups', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('meetups', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
 
-  sql_create_field('nbdb_web_definitions', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('nbdb_web_images', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('nbdb_web_pages', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('internet_images', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('internet_pages', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_internet_eras');
 
-  sql_create_field('quotes', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('quotes', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users_submitter');
 
-  sql_create_field('users', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('users_private_messages', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('users', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('users_private_messages', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users_sender');
 
-  sql_create_field('writings_comments', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('writings_contests', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('writings_texts', 'deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('writings_contests', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_writings_texts_winner');
+  sql_create_field('writings_texts', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_writings_contests');
 
   sql_update_query_id(32);
 }

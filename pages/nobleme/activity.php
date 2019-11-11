@@ -130,7 +130,7 @@ if(!page_is_xhr()) { /*******************************************************/ i
             <option value="all"><?=__('activity_type_all')?></option>
             <option value="users"><?=__('activity_type_users')?></option>
             <option value="meetups"><?=__('activity_type_meetups')?></option>
-            <option value="nbdb"><?=__('activity_type_nbdb')?></option>
+            <option value="internet"><?=__('activity_type_internet')?></option>
             <option value="quotes"><?=__('activity_type_quotes')?></option>
             <option value="writers"><?=__('activity_type_writers')?></option>
             <option value="dev"><?=__('activity_type_dev')?></option>

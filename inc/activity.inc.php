@@ -240,10 +240,10 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
 
 
   //*****************************************************************************************************************//
-  //                                     NBDB: ENCYCLOPEDIA OF INTERNET CULTURE                                      //
+  //                                        ENCYCLOPEDIA OF INTERNET CULTURE                                         //
   //*****************************************************************************************************************//
 
-  else if($type === 'nbdb_web_page_new')
+  else if($type === 'internet_page_new')
   {
     $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'index_temp_pages?id='.$id;
@@ -251,7 +251,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
     $return['FR']   = ($title) ? "Nouvelle page dans l'encyclopédie du web : ".sanitize_output(string_truncate($title, 45, '...')) : '';
   }
 
-  else if($type === 'nbdb_web_page_edit')
+  else if($type === 'internet_page_edit')
   {
     $return['css']  = '';
     $return['href'] = $path.'index_temp_pages?id='.$id;
@@ -259,14 +259,14 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
     $return['FR']   = ($title) ? "Page modifiée dans l'encyclopédie du web : ".sanitize_output(string_truncate($title, 45, '...')) : '';
   }
 
-  else if($type === 'nbdb_web_page_delete')
+  else if($type === 'internet_page_delete')
   {
     $return['css']  = '';
     $return['EN']   = ($parent) ? 'Page deleted in the internet encyclopedia : '.sanitize_output(string_truncate($parent, 50, '...')) : '';
     $return['FR']   = ($title) ? "Page supprimée dans l'encyclopédie du web : ".sanitize_output(string_truncate($title, 40, '...')) : '';
   }
 
-  else if($type === 'nbdb_web_definition_new')
+  else if($type === 'internet_definition_new')
   {
     $return['css']  = 'text_black green_background_light';
     $return['href'] = $path.'index_temp_pages?id='.$id;
@@ -274,7 +274,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
     $return['FR']   = ($title) ? 'Nouvelle entrée dans le dictionnaire du web : '.sanitize_output(string_truncate($title, 45, '...')) : '';
   }
 
-  else if($type === 'nbdb_web_definition_edit')
+  else if($type === 'internet_definition_edit')
   {
     $return['css']  = '';
     $return['href'] = $path.'index_temp_pages?id='.$id;
@@ -282,7 +282,7 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
     $return['FR']   = ($title) ? 'Entrée modifiée dans le dictionnaire du web : '.sanitize_output(string_truncate($title, 45, '...')) : '';
   }
 
-  else if($type === 'nbdb_web_definition_delete')
+  else if($type === 'internet_definition_delete')
   {
     $return['css']  = '';
     $return['EN']   = ($parent) ? 'Entry deleted in the internet dictionary : '.sanitize_output(string_truncate($parent, 55, '...')) : '';
@@ -335,25 +335,6 @@ function log_activity_parse($path, $admins_only, $type, $userid=0, $nickname=NUL
     $return['css']  = 'website_update text_white';
     $return['EN']   = sanitize_output($nickname)." deleted a writer's corner entry: ".sanitize_output(string_truncate($title, 40, '...'));
     $return['FR']   = sanitize_output($nickname).' a supprimé un texte du coin des écrivains : '.sanitize_output(string_truncate($title, 40, '...'));
-  }
-
-  else if($type === 'writings_comment_new_fr')
-  {
-    $return['href'] = $path.'index_temp_community?id='.$id;
-    $return['FR']   = sanitize_output($nickname).' a réagi au texte '.sanitize_output(string_truncate($title, 70, '...'));
-  }
-  else if($type === 'writings_comment_new_anonymous_fr')
-  {
-    $return['href'] = $path.'index_temp_community?id='.$id;
-    $return['FR']   = 'Nouvelle réaction anonyme au texte '.sanitize_output(string_truncate($title, 60, '...'));
-  }
-
-  else if($type === 'writings_comment_delete')
-  {
-    $return['css']  = 'website_update_background';
-    $return['href'] = $path.'index_temp_community?id='.$id;
-    $return['EN']   = sanitize_output($nickname).' deleted a comment by '.$title." in the writer's corner";
-    $return['FR']   = sanitize_output($nickname).' a supprimé une réaction de '.$title.' dans le coin des écrivains';
   }
 
   else if($type === 'writings_contest_new_fr')

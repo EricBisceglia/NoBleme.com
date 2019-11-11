@@ -45,7 +45,7 @@ EOT
 );
 ___('nobleme_home_tour', 'FR', <<<EOT
 <p>Si vous vous demandez d'où NoBleme vient et à quoi sert NoBleme, vous pouvez trouver la réponse à ces questions dans la page {{link+++|pages/doc/nobleme|qu'est-ce que NoBleme ?|bold|1|}} de la {{link+++|pages/doc/index|documentation du site|bold|1|}}.</p>
-<p>Notre attraction principale pour les visiteurs perdus est {{link+++|pages/nbdb/index|l'encyclopédie de la culture Internet|bold|1|}}, une documentation de l'histoire d'internet et des memes qu'on y trouve.</p>
+<p>Notre attraction principale pour les visiteurs perdus est {{link+++|pages/internet/index|l'encyclopédie de la culture Internet|bold|1|}}, une documentation de l'histoire d'internet et des memes qu'on y trouve.</p>
 <p>Maintenant que vous avez une vague idée de ce que NoBleme représente, peut-être êtes vous assez curieux pour avoir envie d'intéragir avec la communauté NoBlemeuse. Si c'est le cas, venez nous rejoindre là où nous sommes toujours actifs : sur notre {{link+++|pages/irc/index|serveur de discussion IRC|bold|1|}}.</p>
 <p>N'hésitez pas à vous balader sur le site pour découvrir son contenu, et bon séjour sur NoBleme !</p>
 {{link+++|pages/users/user?id=1|- Bad|indented bold|1|}}
@@ -106,10 +106,10 @@ ___('activity_type_users', 'EN', "Users");
 ___('activity_type_users', 'FR', "Membres");
 ___('activity_type_meetups', 'EN', "Meetups");
 ___('activity_type_meetups', 'FR', "Rencontres IRL");
-___('activity_type_nbdb', 'EN', "NBDB");
-___('activity_type_nbdb', 'FR', "NBDB");
+___('activity_type_internet', 'EN', "Internet encyclopedia");
+___('activity_type_internet', 'FR', "Encyclopédie du web");
 ___('activity_type_quotes', 'EN', "Quotes");
-___('activity_type_quotes', 'FR', "Miscellanées");
+___('activity_type_quotes', 'FR', "Citations");
 ___('activity_type_writers', 'EN', "Writer's corner");
 ___('activity_type_writers', 'FR', "Coin des écrivains");
 ___('activity_type_dev', 'EN', "Website internals");
