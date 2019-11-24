@@ -13,18 +13,20 @@ include_once './../../inc/activity.inc.php';       # Activity log parsing
 if(isset($_GET['mod']))
   user_restrict_to_global_moderators($lang);
 
+// Hide the page from who's online
+if(isset($_GET['mod']))
+  $hidden_activity = 1;
+
 // Menus
 $header_menu      = (!isset($_GET['mod'])) ? 'NoBleme' : 'Admin';
 $header_sidemenu  = (!isset($_GET['mod'])) ? 'Activity' : 'Modlogs';
 
-// User activity
-$page_name  = "activity";
-$page_url   = "pages/nobleme/activity";
-
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_title       = (!isset($_GET['mod'])) ? __('activity_page_title') : __('activity_page_title_modlogs');
-$page_description = __('activity_page_description');
+$page_url         = "pages/nobleme/activity";
+$page_title_en    = (!isset($_GET['mod'])) ? "Recent activity" : "Moderation logs";
+$page_title_fr    = (!isset($_GET['mod'])) ? "Activité récente" : "Logs de modération";
+$page_description = "Chronology of recent events that happened on NoBleme";
 
 // Extra JS
 $js = array('xhr', 'toggle', 'nobleme/activity');
@@ -73,7 +75,6 @@ $deletion_type = ($is_admin && $activity_deleted) ? 1 : 0;
 
 
 
-
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
@@ -85,7 +86,7 @@ if(!page_is_xhr()) { /*******************************************************/ i
         <?php if(!isset($_GET['mod'])) { ?>
 
         <h1 class="align_center bigpadding_bot">
-          <?=__('activity_page_title')?>
+          <?=__('activity_title')?>
 
           <?php if($is_admin) { ?>
           <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$path?>', '<?=$xhr_logs_url?>', 1);">
@@ -96,7 +97,7 @@ if(!page_is_xhr()) { /*******************************************************/ i
         <?php } else { ?>
 
         <h1 class="align_center padding_bot">
-          <?=__('activity_page_title_modlogs')?>
+          <?=__('activity_title_modlogs')?>
 
           <?php if($is_admin) { ?>
           <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$path?>', '<?=$xhr_logs_url?>', 1);">

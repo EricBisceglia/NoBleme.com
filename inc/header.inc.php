@@ -43,9 +43,9 @@ $header_sidemenu  = (!isset($header_sidemenu)) ? '' : $header_sidemenu;
 $lang_error = (isset($page_lang) && !in_array($lang, $page_lang)) ? 1 : 0;
 
 // If page names and URLs for user activity are not set, give them a default value
-$activity_url     = (isset($page_url)) ? $page_url : '';
-$activity_page_en = (isset($page_name) && isset($page_names[$page_name.'_en'])) ? $page_names[$page_name.'_en'] : 'Unlisted page';
-$activity_page_fr = (isset($page_name) && isset($page_names[$page_name.'_fr']))  ? $page_names[$page_name.'_fr']   : 'Page non listée';
+$activity_url     = (isset($page_url) && !isset($hidden_activity)) ? $page_url : '';
+$activity_page_en = (isset($page_title_en) && !isset($hidden_activity)) ? $page_title_en : 'Unlisted page';
+$activity_page_fr = (isset($page_title_fr) && !isset($hidden_activity)) ? $page_title_fr : 'Page non listée';
 
 
 
@@ -110,11 +110,13 @@ if(isset($_GET['logout']))
 // View count of the current page
 
 // We only go through this if the page name and url are set before the header
-if(isset($page_name_en) && isset($page_url) && !isset($error_mode))
+if(isset($page_url) && !isset($error_mode))
 {
-  // Sanitize data before using it in queries
-  $page_name_sanitized  = sanitize($page_name_en, 'string');
-  $page_url_sanitized   = sanitize($page_url, 'string');
+  // Sanitize the data
+  $page_url_sanitized = sanitize($page_url, 'string');
+  $page_en_sanitized  = sanitize($page_title_en, 'string');
+  $page_fr_sanitized  = sanitize($page_title_fr, 'string');
+  $page_timestamp     = time();
 
   // Fetch current page's view count
   $qpageviews = query(" SELECT  stats_pageviews.view_count AS 'p_views'
@@ -128,16 +130,20 @@ if(isset($page_name_en) && isset($page_url) && !isset($error_mode))
   // If the page exists, increment its view count (unless user is an admin)
   if(!$is_admin && mysqli_num_rows($qpageviews) != 0)
     query(" UPDATE  stats_pageviews
-            SET     stats_pageviews.view_count  = stats_pageviews.view_count + 1 ,
-                    stats_pageviews.page_name   = '$page_name_sanitized'
-            WHERE   stats_pageviews.page_url    = '$page_url_sanitized' ");
+            SET     stats_pageviews.view_count      = stats_pageviews.view_count + 1  ,
+                    stats_pageviews.page_name_en    = '$page_en_sanitized'            ,
+                    stats_pageviews.page_name_fr    = '$page_fr_sanitized'            ,
+                    stats_pageviews.last_viewed_at  = '$page_timestamp'
+            WHERE   stats_pageviews.page_url        = '$page_url_sanitized' ");
 
   // If it doesn't, create the page and give it its first pageview
   else if(!$dpageviews["p_views"])
     query(" INSERT INTO stats_pageviews
-            SET         stats_pageviews.page_name   = '$page_name_sanitized'  ,
-                        stats_pageviews.page_url    = '$page_url_sanitized'   ,
-                        stats_pageviews.view_count  = 1                       ");
+            SET         stats_pageviews.page_url        = '$page_url_sanitized' ,
+                        stats_pageviews.page_name_en    = '$page_en_sanitized'  ,
+                        stats_pageviews.page_name_fr    = '$page_fr_sanitized'  ,
+                        stats_pageviews.last_viewed_at  = '$page_timestamp'     ,
+                        stats_pageviews.view_count      = 1                     ");
 }
 
 
@@ -236,17 +242,12 @@ if (user_is_logged_in())
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Page title
 
-// If the current page is the admin's CV, leave the title as is
-if(isset($page_url) && $page_url == "cv")
-  $page_title = $page_title;
+// Set the current page title based on the user's language
+$page_title = ($lang == 'EN' && isset($page_title_en)) ? $page_title_en : '';
+$page_title = ($lang == 'FR' && isset($page_title_fr)) ? $page_title_fr : $page_title;
 
-// If the current page is unnamed, simply call it NoBleme
-else if (!$page_title)
-  $page_title = 'NoBleme';
-
-// If the current page has a name, call it by its name preceded by NoBleme
-else
-  $page_title = 'NoBleme - '.$page_title;
+// If the current page is unnamed, simply call it NoBleme, else prepend NoBleme to it
+$page_title = ($page_title) ? 'NoBleme - '.$page_title : 'NoBleme';
 
 // If we are working on dev mode, add an @ before the page's title
 if($GLOBALS['dev_mode'])
@@ -670,6 +671,12 @@ $javascripts .= '
             </div>
 
             <a href="<?=$path?>index_temp_community">
+              <div class="strikethrough <?=header_menu_css('Online',$header_sidemenu,'side')?>">
+                <?=__('menu_side_community_online')?>
+              </div>
+            </a>
+
+            <a href="<?=$path?>index_temp_community">
               <div class="strikethrough <?=header_menu_css('Userlist',$header_sidemenu,'side')?>">
                 <?=__('menu_side_community_userlist')?>
               </div>
@@ -678,12 +685,6 @@ $javascripts .= '
             <a href="<?=$path?>index_temp_community">
               <div class="strikethrough <?=header_menu_css('Staff',$header_sidemenu,'side')?>">
                 <?=__('menu_side_community_staff')?>
-              </div>
-            </a>
-
-            <a href="<?=$path?>index_temp_community">
-              <div class="strikethrough <?=header_menu_css('Online',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_online')?>
               </div>
             </a>
 

@@ -3,20 +3,17 @@
 /*                                                   PAGE SETTINGS                                                   */
 /*                                                                                                                   */
 // Inclusions /*******************************************************************************************************/
-include_once './inc/includes.inc.php';  # Core
-include_once './lang/nobleme.lang.php'; # Translations
+include_once './inc/includes.inc.php'; # Core
 
 // Menus
 $header_menu      = 'NoBleme';
 
-// User activity
-$page_name  = "404";
-$page_url   = "404";
-
 // Page summary
-$page_lang        = array('EN', 'FR');
-$page_title       = __('nobleme_404_page_title');
-$page_description = __('nobleme_404_description');
+$page_lang        = array('FR', 'EN');
+$page_url         = "404";
+$page_title_en    = "Lost in space";
+$page_title_fr    = "Perdus dans l'espace";
+$page_description = "Error 404: Page not found…";
 
 // Extra CSS & JS
 $css = array('404');

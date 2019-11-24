@@ -12,10 +12,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Page title
-___('dev_queries_page_title', 'EN', 'Dev - SQL queries');
-___('dev_queries_page_title', 'FR', 'Dev - Requêtes SQL');
-
 // All's OK
 ___('dev_queries_ok', 'EN', 'ALL QUERIES HAVE SUCCESSFULLY BEEN RAN');
 ___('dev_queries_ok', 'FR', 'LES REQUÊTES ONT ÉTÉ EFFECTUÉES AVEC SUCCÈS');
@@ -28,10 +24,6 @@ ___('dev_queries_ok', 'FR', 'LES REQUÊTES ONT ÉTÉ EFFECTUÉES AVEC SUCCÈS');
 /*                                                     SNIPPETS                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-
-// Page title
-___('dev_snippets_page_title', 'EN', 'Dev - Code snippets');
-___('dev_snippets_page_title', 'FR', 'Dev - Modèles de code');
 
 // Section titles
 ___('dev_snippets_title_blocks', 'EN', 'COMMENT BLOCKS');

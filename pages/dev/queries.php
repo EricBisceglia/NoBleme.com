@@ -10,16 +10,18 @@ include_once './../../lang/dev.lang.php';    # Translations
 // Limit page access rights
 user_restrict_to_administrators($lang);
 
+// Hide the page from who's online
+$hidden_activity = 1;
+
 // Menus
 $header_menu      = 'Admin';
 $header_sidemenu  = 'SQL';
 
-// User activity
-$page_name = "admin";
-
 // Page summary
-$page_lang  = array('EN', 'FR');
-$page_title = __('dev_queries_page_title');
+$page_lang        = array('FR', 'EN');
+$page_url         = "pages/dev/queries";
+$page_title_en    = "Dev - SQL queries";
+$page_title_fr    = "Dev - Requêtes SQL";
 
 // Extra CSS
 $css = array('dev');

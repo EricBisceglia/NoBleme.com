@@ -10,13 +10,11 @@ include_once './lang/nobleme.lang.php'; # Translations
 $header_menu      = 'NoBleme';
 $header_sidemenu  = 'Homepage';
 
-// User activity
-$page_name    = "index";
-$page_url     = "index";
-
 // Page summary
-$page_lang        = array('EN', 'FR');
-$page_title       = __('nobleme_home_page_title');
+$page_lang        = array('FR', 'EN');
+$page_url         = "index";
+$page_title_en    = "Homepage";
+$page_title_fr    = "Accueil";
 $page_description = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
 
 

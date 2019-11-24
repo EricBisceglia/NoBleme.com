@@ -9,16 +9,18 @@ include_once './../../lang/dev.lang.php';    # Translations
 // Limit page access rights
 user_restrict_to_administrators($lang);
 
+// Hide the page from who's online
+$hidden_activity = 1;
+
 // Menus
 $header_menu      = 'Admin';
 $header_sidemenu  = 'Snippets';
 
-// User activity
-$page_name = "admin";
-
 // Page summary
-$page_lang  = array('FR', 'EN');
-$page_title = __('dev_snippets_page_title');
+$page_lang      = array('FR', 'EN');
+$page_url       = "pages/dev/snippets";
+$page_title_en  = "Dev - Code snippets";
+$page_title_fr  = "Dev - Modèles de code";
 
 // Extra CSS & JS
 $css  = array('dev');
@@ -67,18 +69,19 @@ include_once './../../lang/nobleme.lang.php';   # Translations
 // Limit page access rights
 user_restrict_to_guests($lang);
 
+// Hide the page from who's online
+$hidden_activity = 1;
+
 // Menus
 $header_menu      = 'NoBleme';
 $header_sidemenu  = 'Homepage';
 
-// User activity
-$page_name  = "some_page";
-$page_url   = "pages/nobleme/index";
-
 // Page summary
-$page_lang        = array('EN', 'FR');
-$page_title       = __('use_a_translation');
-$page_description = __('use_a_translation');
+$page_lang        = array('FR', 'EN');
+$page_url         = "pages/nobleme/index";
+$page_title_en    = "Title";
+$page_title_fr    = "Titre";
+$page_description = "Metadescription";
 
 // Extra CSS &amp; JS
 $css  = array('tabs');
@@ -208,18 +211,19 @@ include_once './../../lang/nobleme.lang.php';   # Translations
 // Limit page access rights
 user_restrict_to_guests($lang);
 
+// Hide the page from who's online
+$hidden_activity = 1;
+
 // Menus
 $header_menu      = 'NoBleme';
 $header_sidemenu  = 'Homepage';
 
-// User activity
-$page_name  = "some_page";
-$page_url   = "pages/nobleme/index";
-
 // Page summary
-$page_lang        = array('EN', 'FR');
-$page_title       = __('use_a_translation');
-$page_description = __('use_a_translation');
+$page_lang        = array('FR', 'EN');
+$page_url         = "pages/nobleme/index";
+$page_title_en    = "Title";
+$page_title_fr    = "Titre";
+$page_description = "Metadescription";
 
 // Extra CSS & JS
 $css  = array('tabs');

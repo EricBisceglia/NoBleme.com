@@ -271,10 +271,12 @@ CREATE TABLE IF NOT EXISTS `quotes_users` (
 DROP TABLE IF EXISTS `stats_pageviews`;
 CREATE TABLE IF NOT EXISTS `stats_pageviews` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `page_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `page_name_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `page_name_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `page_url` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `view_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `view_count_archive` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `last_viewed_at` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_view_count` (`view_count`,`view_count_archive`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

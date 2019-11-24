@@ -29,11 +29,9 @@ $page_names['users_register_fr']  = "Is creating a new account";
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Page title and description
-___('users_login_page_title', 'EN', "Login");
-___('users_login_page_title', 'FR', "Connexion");
-___('users_login_page_description', 'EN', 'Log into your NoBleme account');
-___('users_login_page_description', 'FR', 'Se connecter à votre compte NoBleme');
+// Page title
+___('users_login_title', 'EN', "Login");
+___('users_login_title', 'FR', "Connexion");
 
 
 // Welcome message
@@ -73,13 +71,6 @@ ___('users_login_error_wrong_password', 'FR', "Mauvais mot de passe pour ce pseu
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Page title and description
-___('users_forgotten_page_title', 'EN', "Recover password");
-___('users_forgotten_page_title', 'FR', "Mot de passe oublié");
-___('users_forgotten_page_description', 'EN', "Forgot your account's password? Well I've got bad news for you...");
-___('users_forgotten_page_description', 'FR', "Vous avez oublié le mot de passe de votre compte ? J'ai de mauvaises nouvelles...");
-
-
 // Body
 ___('users_forgotten_title', 'EN', 'Forgotten password');
 ___('users_forgotten_title', 'FR', 'Mot de passe oublié');
@@ -101,13 +92,6 @@ EOT
 /*                                                     REGISTER                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-
-// Page title and description
-___('users_register_page_title', 'EN', "Register");
-___('users_register_page_title', 'FR', "S'inscrire");
-___('users_register_page_description', 'EN', "Register a new NoBleme account");
-___('users_register_page_description', 'FR', "Créer un nouveau compte sur NoBleme");
-
 
 // Header & Code of conduct
 ___('users_register_title', 'EN', "Register an account");

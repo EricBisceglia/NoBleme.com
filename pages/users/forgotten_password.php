@@ -13,15 +13,12 @@ user_restrict_to_guests($lang);
 $header_menu      = 'NoBleme';
 $header_sidemenu  = 'Homepage';
 
-// User activity
-$page_name  = "users_forgotten";
-$page_url   = "pages/users/forgotten_password";
-
 // Page summary
-$page_lang        = array('EN', 'FR');
-$page_title       = __('users_forgotten_page_title');
-$page_description = __('users_forgotten_page_description');
-
+$page_lang        = array('FR', 'EN');
+$page_url         = "pages/users/forgotten_password";
+$page_title_en    = "Recover password";
+$page_title_fr    = "Mot de passe oublié";
+$page_description = "Forgot your account's password? Well I've got bad news for you...";
 
 
 

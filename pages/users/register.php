@@ -14,14 +14,12 @@ user_restrict_to_guests($lang);
 $header_menu      = 'NoBleme';
 $header_sidemenu  = ' ';
 
-// User activity
-$page_name  = "users_login";
-$page_url   = "pages/users/login";
-
 // Page summary
-$page_lang        = array('EN', 'FR');
-$page_title       = __('users_register_page_title');
-$page_description = __('users_register_page_description');
+$page_lang        = array('FR', 'EN');
+$page_url         = "pages/users/login";
+$page_title_en    = "Register";
+$page_title_fr    = "S'inscrire";
+$page_description = "Register a new NoBleme account";
 
 // Extra JS
 $js = array('xhr', 'users/register');

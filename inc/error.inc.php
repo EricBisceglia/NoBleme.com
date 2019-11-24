@@ -61,13 +61,14 @@ function error_page($message, $path="./../../", $lang=NULL, $menu_main="NoBleme"
   // Inform the header that an error is being thrown
   $error_mode = 1;
 
-  // Available languages, title, description, and internal page name are required by the header too
-  $page_lang  = array('EN', 'FR');
-  $page_title = ($lang == 'EN') ? "Error" : "Error";
-  $page_desc  = ($lang == 'EN') ? "This is an error page. You will forget about this page's mere existence. Don't panic, the red flashing light is part of the process": "Ceci est une page d'erreur. Vous allez oublier l'existence de cette page. Ne paniquez pas, le flash rouge est normal.";
-  $page_name  = ($lang == 'EN') ? "Faces an error page" : "Se prend une erreur";
+  // Page summary is required by the header too
+  $page_lang        = array('FR', 'EN');
+  $page_url         = "";
+  $page_title_en    = "Error page";
+  $page_title_fr    = "Page d'erreur";
+  $page_description = "This is an error page. You will forget about this page's mere existence. Don't panic, the red flashing light is part of the process";
 
-  // Oopen the HTML part by including the header
+  // Open the HTML part by including the header
   include_once $path."inc/header.inc.php";
   ?>
 

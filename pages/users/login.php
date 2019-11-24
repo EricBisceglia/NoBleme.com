@@ -12,16 +12,13 @@ user_restrict_to_guests($lang);
 
 // Menus
 $header_menu      = 'NoBleme';
-$header_sidemenu  = ' ';
-
-// User activity
-$page_name  = "users_login";
-$page_url   = "pages/users/login";
 
 // Page summary
-$page_lang        = array('EN', 'FR');
-$page_title       = __('users_login_page_title');
-$page_description = __('users_login_page_description');
+$page_lang        = array('FR', 'EN');
+$page_url         = "pages/users/login";
+$page_title_en    = "Login";
+$page_title_fr    = "Connexion";
+$page_description = "Log into your NoBleme account";
 
 // CSS
 $css = array('users');
@@ -76,7 +73,7 @@ $user_login_remember_me = (isset($_POST['login_remember']) || !isset($_POST['log
       <div class="width_50">
 
         <h1 class="align_center bigpadding_bot">
-          <?=__('users_login_page_title')?>
+          <?=__('users_login_title')?>
         </h1>
 
         <?php if(isset($_GET['welcome'])) { ?>
@@ -125,7 +122,7 @@ $user_login_remember_me = (isset($_POST['login_remember']) || !isset($_POST['log
               <input id="login_remember" name="login_remember" type="checkbox"<?=$user_login_remember_me?>>
               <label class="label_inline" for="login_remember"><?=__('users_login_form_remember')?></label>
             </div>
-            <input value="<?=__('users_login_page_title')?>" type="submit" name="login_submit">
+            <input value="<?=__('users_login_title')?>" type="submit" name="login_submit">
             &nbsp;&nbsp;
             <a href="<?=$path?>pages/users/register">
               <button type="button" class="button_outline"><?=__('users_login_form_register')?></button>

@@ -204,25 +204,6 @@ function debug_duplicate_page_names($page_names, $print_all=null)
 
 
 
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                  RECENT ACTIVITY                                                  */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Assemble an array of all page names for usage in user activity
-$page_names = array(
-  'admin_en'  => "Administrating the website"     ,
-  'admin_fr'  => "Administre secrètement le site" ,
-  'index_en'  => "Hangs out on the homepage"      ,
-  'index_fr'  => "Traine sur l'index du site"     ,
-  '404_en'    => "Error 404: Page not found"      ,
-  '404_fr'    => "Erreur 404 : Page non trouvée"  ,
-);
-
-
-
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                SHARED TRANSLATIONS                                                */
@@ -544,12 +525,12 @@ ___('menu_side_community_irc_channels', 'FR', "Liste des canaux");
 
 ___('menu_side_community_users', 'EN', "Users");
 ___('menu_side_community_users', 'FR', "Membres");
+___('menu_side_community_online', 'EN', "Who's online");
+___('menu_side_community_online', 'FR', "Qui est en ligne");
 ___('menu_side_community_userlist', 'EN', "Registered user list");
 ___('menu_side_community_userlist', 'FR', "Liste des membres");
 ___('menu_side_community_staff', 'EN', "Administrative team");
 ___('menu_side_community_staff', 'FR', "Équipe administrative");
-___('menu_side_community_online', 'EN', "Who's online");
-___('menu_side_community_online', 'FR', "Qui est en ligne");
 ___('menu_side_community_birthdays', 'EN', "User birthdays");
 ___('menu_side_community_birthdays', 'FR', "Anniversaires");
 

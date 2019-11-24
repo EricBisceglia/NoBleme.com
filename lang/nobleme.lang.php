@@ -12,10 +12,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Page title
-___('nobleme_home_page_title', 'EN', "Homepage");
-___('nobleme_home_page_title', 'FR', "Accueil");
-
 // Welcome paragraph
 ___('nobleme_home_welcome_title', 'EN', "Welcome to NoBleme. What's this place all about?");
 ___('nobleme_home_welcome_title', 'FR', "Bienvenue sur NoBleme. Qu'est-ce que ce lieu ?");
@@ -57,35 +53,15 @@ EOT
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                     404 ERROR                                                     */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Page title and description
-___('nobleme_404_page_title', 'EN', "Lost in space");
-___('nobleme_404_page_title', 'FR', "Perdus dans l'espace");
-___('nobleme_404_description', 'EN', "Error 404: Page not found…");
-___('nobleme_404_description', 'FR', "Erreur 404 : Page non trouvée…");
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
 /*                                                  RECENT ACTIVITY                                                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Page title and description
-___('activity_page_title', 'EN', "Recent activity");
-___('activity_page_title', 'FR', "Activité récente");
-___('activity_page_title_modlogs', 'EN', "Moderation logs");
-___('activity_page_title_modlogs', 'FR', "Logs de modération");
-___('activity_page_description', 'EN', "Chronology of recent events that happened on NoBleme");
-___('activity_page_description', 'FR', "Chronologie des évènements récents qui ont eu lieu sur NoBleme");
-
-
 // Header
+___('activity_title', 'EN', "Recent activity");
+___('activity_title', 'FR', "Activité récente");
+___('activity_title_modlogs', 'EN', "Moderation logs");
+___('activity_title_modlogs', 'FR', "Logs de modération");
 ___('activity_mod_info', 'EN', <<<EOT
 Some of the moderation logs below have an icon to their right: <img class="valign_middle" src="{{1}}img/icons/help.svg" alt="?" height="16"><br>
 Clicking one of these icons will load some extra information about the logged action.
