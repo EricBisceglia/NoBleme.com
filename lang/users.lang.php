@@ -194,3 +194,45 @@ Votre administrateur,
 [url={{1}}pages/users/user?id=1]Bad[/url]
 EOT
 );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   WHO'S ONLINE                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('users_online_title', 'EN', "Who's online?");
+___('users_online_title', 'FR', "Qui est en ligne ?");
+
+___('users_online_header_intro', 'EN', "This page lists the most recently visited page of all users that were active on NoBleme in the last month. In the case of guests (users without an account), only the 1000 most recent ones are displayed, and randomly generated silly nicknames are assigned to each of them. If you fear that it might enable stalking in ways you're not comfortable with and want to be hidden from this page, you can do that in your account's {{link|pages/users/privacy|privacy options}}.");
+___('users_online_header_intro', 'FR', "Cette page recense l'activité la plus récente des visiteurs qui ont fréquenté NoBleme ce mois-ci. Dans le cas des invités (visiteurs non connectés), seuls les 1000 plus récents sont affichés, et de petits surnoms stupides leur sont aléatoirement assignés. Si vous craignez que cette page permette à des gens de vous traquer ou n'êtes juste pas confortable avec le fait d'avoir votre activité listée publiquement, vous pouvez retirer votre compte de la liste via vos {{link|pages/users/privacy|options de vie privée}}.");
+
+___('users_online_header_colors', 'EN', <<<EOD
+In order to tell them apart from each other, users are color coded:<br>
+- Guests will not have any specific color.<br>
+- {{link+|pages/users/list|Registered users|normal}} have a <span class="grey_light text_black bold spaced">light grey</span> background.<br>
+- {{link+|pages/users/admins|Moderators|normal}} have a <span class="positive text_white bold spaced">green</span> background.<br>
+- {{link+|pages/users/admins|Global moderators|normal}} have a <span class="neutral text_white bold spaced">orange</span> background.<br>
+- {{link+|pages/users/admins|Administrators|normal}} have a <span class="negative text_white bold spaced">red</span> background.
+EOD
+);
+___('users_online_header_colors', 'FR', <<<EOD
+Afin de les distinguer, les visiteurs suivent un code couleur :<br>
+- Les invités n'ont pas de couleur spécifique.<br>
+- {{link+|pages/users/list|Les membres du site|normal}} ont un arrière-plan <span class="grey_light text_black bold spaced">gris clair</span><br>
+- {{link+|pages/users/admins|Les modérateurs|normal}} ont un arrière-plan <span class="positive text_white bold spaced">vert</span><br>
+- {{link+|pages/users/admins|Les modérateurs globaux|normal}} ont un arrière-plan <span class="neutral text_white bold spaced">orange</span><br>
+- {{link+|pages/users/admins|Les administrateurs|normal}} ont un arrière-plan <span class="negative text_white bold spaced">rouge</span>
+EOD
+);
+
+
+// Table
+___('users_online_activity', 'EN', "LATEST ACTIVITY");
+___('users_online_activity', 'FR', "DERNIÈRE ACTIVITÉ");
+___('users_online_page', 'EN', "LAST VISITED PAGE");
+___('users_online_page', 'FR', "DERNIÈRE PAGE VISITÉE");

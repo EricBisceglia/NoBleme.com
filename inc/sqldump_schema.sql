@@ -215,6 +215,20 @@ CREATE TABLE IF NOT EXISTS `logs_activity_details` (
   KEY `index_logs_activity` (`fk_logs_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS `logs_scheduler`;
+CREATE TABLE IF NOT EXISTS `logs_scheduler` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `happened_at` int(10) UNSIGNED NOT NULL,
+  `task_id` int(10) UNSIGNED NOT NULL,
+  `task_type` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `task_description_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `task_description_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_happened_at` (`happened_at`),
+  KEY `index_related_foreign_key` (`task_id`),
+  KEY `index_task_type` (`task_type`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 DROP TABLE IF EXISTS `meetups`;
 CREATE TABLE IF NOT EXISTS `meetups` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,

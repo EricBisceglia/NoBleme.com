@@ -85,11 +85,11 @@ function fixtures_generate_data($type, $min, $max)
   // Random string of digits
   if($type == 'digits')
   {
-    $temp_number  = '';
+    $digits  = '';
     $max_length   = mt_rand($min, $max);
     for ($i = 0; $i < $max_length; $i++)
-      $temp_number .= mt_rand(0,9);
-    return $temp_number;
+      $digits .= mt_rand(0,9);
+    return $digits;
   }
 
   // Random string
@@ -97,10 +97,10 @@ function fixtures_generate_data($type, $min, $max)
   {
     $characters   = "aaaaaabcdeeeeeeefghiiiiiijkllmmnnoooooopqrrsssttuuvwxyz      ";
     $max_length   = mt_rand($min, $max);
-    $temp_string  = '';
+    $string  = '';
     for ($i = 0; $i < $max_length; $i++)
-      $temp_string .= $characters[mt_rand(0, (strlen($characters) - 1))];
-    return $temp_string;
+      $string .= $characters[mt_rand(0, (strlen($characters) - 1))];
+    return $string;
   }
 
   // Random paragraph
@@ -110,14 +110,14 @@ function fixtures_generate_data($type, $min, $max)
   // Random text
   if($type == 'text')
   {
-    $temp_text  = '';
+    $text = '';
     $max_length = mt_rand($min, $max);
     for ($i = 0; $i < $max_length; $i++)
     {
-      $temp_text .= ($i) ? '\r\n\r\n' : '';
-      $temp_text .= ucfirst(fixtures_lorem_ipsum(mt_rand(100, 400), 1)).'.';
+      $text .= ($i) ? '\r\n\r\n' : '';
+      $text .= ucfirst(fixtures_lorem_ipsum(mt_rand(100, 400), 1)).'.';
     }
-    return $temp_text;
+    return $text;
   }
 }
 

@@ -247,6 +247,9 @@ ___('nickname', 'FR', "pseudonyme");
 ___('password', 'EN', "password");
 ___('password', 'FR', "mot de passe");
 
+___('user', 'EN', "user");
+___('user', 'FR', "utilisateur");
+
 
 // Quantifiers, amounts, and times
 ___('times',  'EN', "time");

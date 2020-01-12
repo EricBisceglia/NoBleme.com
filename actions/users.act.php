@@ -10,6 +10,130 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                       USERS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Fetches a list of users.
+ *
+ * @param   string|null $sort_by          OPTIONAL  The way the user list should be sorted.
+ * @param   int|null    $max_count        OPTIONAL  The number of users to return (0 for unlimited).
+ * @param   bool|null   $deleted          OPTIONAL  If set, shows deleted users only.
+ * @param   int|null    $activity_cutoff  OPTIONAL  If set, will only return users active since this many seconds.
+ * @param   bool|null   $include_guests   OPTIONAL  If set, guests will be included in the user list.
+ * @param   int|null    $max_guest_count  OPTIONAL  The number of guests to return (if guests are included, 0 for all).
+ * @param   string|null $lang             OPTIONAL  The language currently in use.
+ *
+ * @return  array                                   A list of users, prepared for displaying.
+ */
+
+function users_get_list($sort_by='', $max_count=0, $deleted=0, $activity_cutoff=0, $include_guests=0, $max_guest_count=0, $lang='EN')
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+
+  // Sanitize the data
+  $sort_by          = sanitize($sort_by, 'string');
+  $max_count        = sanitize($max_count, 'int', 0);
+  $deleted          = sanitize($deleted, 'int', 0, 1);
+  $activity_cutoff  = sanitize($activity_cutoff, 'int', 0);
+  $include_guests   = sanitize($include_guests, 'int', 0, 1);
+  $max_guest_count  = sanitize($max_guest_count, 'int', 0);
+
+  // Prepare data
+  $minimum_activity = sanitize((time() - $activity_cutoff), 'int', 0);
+
+  // Initialize the returned array
+  $data = array();
+
+  // Fetch the user list
+  $qusers = "       SELECT    'user'                      AS 'data_type'        ,
+                              users.id                    AS 'u_id'             ,
+                              users.nickname              AS 'u_nick'           ,
+                              ''                          AS 'u_guest_name_en'  ,
+                              ''                          AS 'u_guest_name_fr'  ,
+                              users.is_administrator      AS 'u_admin'          ,
+                              users.is_global_moderator   AS 'u_global_mod'     ,
+                              users.is_moderator          AS 'u_mod'            ,
+                              users.last_visited_at       AS 'u_activity'       ,
+                              users.last_visited_page_en  AS 'u_last_page_en'   ,
+                              users.last_visited_page_fr  AS 'u_last_page_fr'   ,
+                              users.last_visited_url      AS 'u_last_url'
+                    FROM      users
+                    WHERE     users.is_deleted = '$deleted' ";
+
+  // Activity cutoff
+  if($activity_cutoff)
+    $qusers .= "    AND       users.last_visited_at >= '$minimum_activity' ";
+
+  // Sort the users
+  if(!$include_guests)
+  {
+    if($sort_by == 'activity')
+      $qusers .= "  ORDER BY  users.last_visited_at DESC ";
+    else
+      $qusers .= "  ORDER BY  users.id ASC ";
+  }
+
+  // Limit the amount of users returned
+  if($max_count)
+    $qusers .= "    LIMIT $max_count ";
+
+  // Include guests if necessary
+  if($include_guests)
+    $qusers = "     ( SELECT    'guest'                                 AS 'data_type'        ,
+                                0                                       AS 'u_id'             ,
+                                ''                                      AS 'u_nick'           ,
+                                users_guests.randomly_assigned_name_en  AS 'u_guest_name_en'  ,
+                                users_guests.randomly_assigned_name_fr  AS 'u_guest_name_fr'  ,
+                                0                                       AS 'u_admin'          ,
+                                0                                       AS 'u_global_mod'     ,
+                                0                                       AS 'u_mod'            ,
+                                users_guests.last_visited_at            AS 'u_activity'       ,
+                                users_guests.last_visited_page_en       AS 'u_last_page_en'   ,
+                                users_guests.last_visited_page_fr       AS 'u_last_page_fr'   ,
+                                users_guests.last_visited_url           AS 'u_last_url'
+                      FROM      users_guests
+                      WHERE     users_guests.last_visited_at >= '$minimum_activity'
+                      LIMIT     $max_guest_count )
+                    UNION
+                      ( ".$qusers." )
+                    ORDER BY u_activity DESC ";
+
+  // Run the query
+  $qusers = query($qusers);
+
+  // Go through the rows returned by query
+  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  {
+    // Prepare the data
+    $data[$i]['type']       = $row['data_type'];
+    $data[$i]['id']         = $row['u_id'];
+    $temp                   = ($lang == 'EN') ? $row['u_guest_name_en'] : $row['u_guest_name_fr'];
+    $data[$i]['nickname']   = ($row['data_type'] == 'user') ? sanitize_output($row['u_nick']) : $temp;
+    $data[$i]['activity']   = time_since($row['u_activity']);
+    $data[$i]['last_page']  = ($lang == 'EN') ? sanitize_output($row['u_last_page_en']) : sanitize_output($row['u_last_page_fr']);
+    $data[$i]['last_url']   = sanitize_output($row['u_last_url']);
+    $temp                   = ($row['data_type'] == 'user') ? ' grey_light text_black bold spaced' : '';
+    $temp                   = ($row['u_mod']) ? ' positive text_white bold spaced' : $temp;
+    $temp                   = ($row['u_global_mod']) ? ' neutral text_white bold spaced' : $temp;
+    $temp                   = ($row['u_admin']) ? ' negative text_white bold spaced' : $temp;
+    $data[$i]['css']        = $temp;
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                       LOGIN                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

@@ -488,9 +488,9 @@ function sql_create_index($table_name, $index_name, $field_names, $fulltext=NULL
   // If it does not exist yet, then can create it and run a check to populate the table's indexes
   if(!mysqli_num_rows($qindex))
   {
-    $temp_fulltext = ($fulltext) ? ' FULLTEXT ' : '';
+    $temp = ($fulltext) ? ' FULLTEXT ' : '';
     query(" ALTER TABLE ".$table_name."
-            ADD ".$temp_fulltext." INDEX ".$index_name." (".$field_names."); ");
+            ADD ".$temp." INDEX ".$index_name." (".$field_names."); ");
     query(" CHECK TABLE ".$table_name." ");
   }
 }
@@ -847,6 +847,16 @@ if($last_query < 21)
   }
 
   sql_delete_field('logs_activity', 'activity_parent');
+
+  sql_create_table('logs_scheduler');
+  sql_create_field('logs_scheduler', 'happened_at', 'INT UNSIGNED NOT NULL', 'id');
+  sql_create_field('logs_scheduler', 'task_id', 'INT UNSIGNED NOT NULL', 'happened_at');
+  sql_create_field('logs_scheduler', 'task_type', 'VARCHAR(40) NOT NULL', 'task_id');
+  sql_create_field('logs_scheduler', 'task_description_en', 'TEXT NOT NULL', 'task_type');
+  sql_create_field('logs_scheduler', 'task_description_fr', 'TEXT NOT NULL', 'task_description_en');
+  sql_create_index('logs_scheduler', 'index_happened_at', 'happened_at');
+  sql_create_index('logs_scheduler', 'index_related_foreign_key', 'task_id');
+  sql_create_index('logs_scheduler', 'index_task_type', 'task_type(40)');
 
   sql_update_query_id(21);
 }

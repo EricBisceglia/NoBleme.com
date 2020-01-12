@@ -336,10 +336,10 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
   foreach($results[0] as $pattern)
   {
     // Prepare to a different style depending on whether the page exists or not in the encyclopedia
-    $temp_style = (in_array(string_change_case(html_entity_decode($results[1][$i], ENT_QUOTES), 'lowercase'), $page_list)) ? 'bold' : 'text_negative';
+    $temp = (in_array(string_change_case(html_entity_decode($results[1][$i], ENT_QUOTES), 'lowercase'), $page_list)) ? 'bold' : 'text_negative';
 
     // Replace the NBcode with its HTML counterpart
-    $message = str_replace($pattern, '<a class="'.$temp_style.'" href="'.$path.'pages/internet/web?page='.rawurlencode($results[1][$i]).'">'.$results[2][$i].'</a>', $message);
+    $message = str_replace($pattern, '<a class="'.$temp.'" href="'.$path.'pages/internet/web?page='.rawurlencode($results[1][$i]).'">'.$results[2][$i].'</a>', $message);
 
     // Don't forget to increment the result being treated between each iteration of the loop
     $i++;

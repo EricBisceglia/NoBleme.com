@@ -55,8 +55,8 @@ function error_page($message, $path="./../../", $lang=NULL, $menu_main="NoBleme"
   }
 
   // Figure out the user's language if required, from the session if it is there (required by the header)
-  $temp_lang  = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
-  $lang       = ($lang) ? $lang : $temp_lang;
+  $temp = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
+  $lang = ($lang) ? $lang : $temp;
 
   // Inform the header that an error is being thrown
   $error_mode = 1;

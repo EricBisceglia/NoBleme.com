@@ -22,7 +22,7 @@ $dversion = mysqli_fetch_array(query("  SELECT    system_versions.version AS 'v_
                                                   system_versions.date    AS 'v_date'
                                         FROM      system_versions
                                         ORDER BY  system_versions.id DESC LIMIT 1 "));
-$version = sanitize_output(__('footer_version', 1, 0, 1, array($dversion['v_version'], $dversion['v_build'], date_to_text($dversion['v_date'], $lang, 1))));
+$version = sanitize_output(__('footer_version', 1, 0, 1, array($dversion['v_version'], $dversion['v_build'], date_to_text($dversion['v_date'], 1, $lang))));
 
 // Copyright ending date
 $copyright_date = date('Y');
