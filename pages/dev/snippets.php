@@ -106,7 +106,7 @@ $js   = array('tabs');
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-if(!page_is_xhr()) { /*******************************************************/ include './../../inc/header.inc.php'; ?>
+if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
       &lt;div class="width_50">
 
@@ -130,9 +130,9 @@ if(!page_is_xhr()) { /*******************************************************/ i
 /*                                                                                                                   */
 include './../../inc/footer.inc.php'; /*****************************************************************************/ }</pre>
 
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_full_xhr'); select_element('dev_snippets_pre_full_xhr');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_full_xhr">&lt;?php /***************************************************************************************************************/
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_full_dynamic'); select_element('dev_snippets_pre_full_dynamic');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_full_dynamic">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
-/*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED THROUGH XHR                               */
+/*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED DYNAMICALLY                               */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';    # Core
@@ -140,7 +140,7 @@ include_once './../../actions/nobleme.act.php'; # Actions
 include_once './../../lang/nobleme.lang.php';   # Translations
 
 // Throw a 404 if the page is being accessed directly
-allow_only_xhr();
+page_must_be_fetched_dynamically();
 
 // Limit page access rights
 user_restrict_to_global_moderators($lang);
@@ -190,11 +190,11 @@ user_restrict_to_global_moderators($lang);
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?></pre>
 
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_front_xhr_open'); select_element('dev_snippets_pre_blocks_front_xhr_open');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_front_xhr_open">/*********************************************************************************************************************/
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_front_dynamic_open'); select_element('dev_snippets_pre_blocks_front_dynamic_open');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_front_dynamic_open">/*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-if(!page_is_xhr()) { /*******************************************************/ include './../../inc/header.inc.php'; ?></pre>
+if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?></pre>
 
         <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_front_close'); select_element('dev_snippets_pre_blocks_front_close');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_front_close">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
@@ -202,7 +202,7 @@ if(!page_is_xhr()) { /*******************************************************/ i
 /*                                                                                                                   */
 /*******************************************************************************/ include './../../inc/footer.inc.php';</pre>
 
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_front_xhr_close'); select_element('dev_snippets_pre_blocks_front_xhr_close');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_front_xhr_close">&lt;?php /***************************************************************************************************************/
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_back_dynamic_close'); select_element('dev_snippets_pre_blocks_back_dynamic_close');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_back_dynamic_close">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */
 /*                                                                                                                   */
@@ -245,9 +245,9 @@ $page_description = "Metadescription";
 $css  = array('tabs');
 $js   = array('tabs');</pre>
 
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_headers_xhr'); select_element('dev_snippets_pre_headers_xhr');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_headers_xhr">&lt;?php /***************************************************************************************************************/
+        <pre onclick="to_clipboard(1, 'dev_snippets_pre_headers_dynamic'); select_element('dev_snippets_pre_headers_dynamic');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_headers_dynamic">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
-/*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED THROUGH XHR                               */
+/*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED DYNAMICALLY                               */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';    # Core
@@ -255,7 +255,7 @@ include_once './../../actions/nobleme.act.php'; # Actions
 include_once './../../lang/nobleme.lang.php';   # Translations
 
 // Throw a 404 if the page is being accessed directly
-allow_only_xhr();
+page_must_be_fetched_dynamically();
 
 // Limit page access rights
 user_restrict_to_global_moderators($lang);</pre>

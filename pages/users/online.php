@@ -41,7 +41,7 @@ $userlist = users_get_list('activity', 0, 0, 2629746, 1, 1000, $lang);
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-if(!page_is_xhr()) { /*******************************************************/ include './../../inc/header.inc.php'; ?>
+if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
       <div class="width_50">
 
@@ -73,14 +73,20 @@ if(!page_is_xhr()) { /*******************************************************/ i
 
           <tbody>
             <?php for($i=0;$i<$userlist['rows'];$i++) { ?>
-
               <tr>
+
                 <td class="align_center<?=$userlist[$i]['css']?>">
+                  <?php if($userlist[$i]['type'] == 'user') { ?>
+                  <?=__link('pages/users/user?id='.$userlist[$i]['id'], $userlist[$i]['nickname'], $userlist[$i]['css'])?>
+                  <?php } else { ?>
                   <?=$userlist[$i]['nickname']?>
+                  <?php } ?>
                 </td>
+
                 <td class="align_center<?=$userlist[$i]['css']?>">
                   <?=$userlist[$i]['activity']?>
                 </td>
+
                 <td class="align_center<?=$userlist[$i]['css']?>">
                   <?php if($userlist[$i]['last_url']) { ?>
                   <?=__link($userlist[$i]['last_url'], $userlist[$i]['last_page'], $userlist[$i]['css'])?>
@@ -88,8 +94,8 @@ if(!page_is_xhr()) { /*******************************************************/ i
                   <?=$userlist[$i]['last_page']?>
                   <?php } ?>
                 </td>
-              </tr>
 
+              </tr>
             <?php } ?>
           </tbody>
 

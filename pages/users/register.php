@@ -22,7 +22,7 @@ $page_title_fr    = "S'inscrire";
 $page_description = "Register a new NoBleme account";
 
 // Extra JS
-$js = array('xhr', 'users/register');
+$js = array('fetch', 'users/register');
 
 
 

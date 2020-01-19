@@ -2,13 +2,13 @@
  * Submits the dropdwon menus that control which activity logs are shown.
  *
  * @param   {string}  path            The path to the root of the website.
- * @param   {string}  xhr_url         The url that should be called by the xhr.
+ * @param   {string}  fetch_url       The url that should be called dynamically.
  * @param   {bool}    toggle_deleted  If set, toggles between visible and deleted view.
  *
  * @returns {void}
  */
 
-function activity_submit_menus(path, xhr_url, toggle_deleted=null)
+function activity_submit_menus(fetch_url, toggle_deleted=null)
 {
   // Toggle between visible and deleted view if required
   if(toggle_deleted)
@@ -19,12 +19,12 @@ function activity_submit_menus(path, xhr_url, toggle_deleted=null)
   }
 
   // Prepare the postdata
-  postdata  = 'activity_amount='    + xhr_sanitize_id('activity_amount');
-  postdata += '&activity_type='     + xhr_sanitize_id('activity_type');
-  postdata += '&activity_deleted='  + xhr_sanitize_id('activity_deleted');
+  postdata  = 'activity_amount='    + fetch_sanitize_id('activity_amount');
+  postdata += '&activity_type='     + fetch_sanitize_id('activity_type');
+  postdata += '&activity_deleted='  + fetch_sanitize_id('activity_deleted');
 
-  // Send the xhr
-  xhr_load(path, xhr_url, 'activity_body', postdata, 1);
+  // Fetch the data
+  fetch_page(fetch_url, 'activity_body', postdata);
 }
 
 
@@ -33,13 +33,12 @@ function activity_submit_menus(path, xhr_url, toggle_deleted=null)
 /**
  * Displays the details of an activity log.
  *
- * @param   {string}  path    The path to the root of the website.
  * @param   {int}     log_id  The id of the activity log.
  *
  * @returns {void}
  */
 
-function activity_show_details(path, log_id)
+function activity_show_details(log_id)
 {
   // Toggle the visiblity of the details
   toggle_element('activity_details_' + log_id, 1);
@@ -47,8 +46,8 @@ function activity_show_details(path, log_id)
   // Prepare the postdata
   postdata = 'log_id=' + log_id;
 
-  // Send the xhr
-  xhr_load(path, 'activity_details.xhr.php', 'activity_details_' + log_id, postdata, 1);
+  // Fetch the data
+  fetch_page('activity_details.php', 'activity_details_' + log_id, postdata);
 }
 
 
@@ -65,7 +64,7 @@ function activity_show_details(path, log_id)
  * @returns {void}
  */
 
-function activity_delete_log(path, log_id, message, deletion_type=0)
+function activity_delete_log(log_id, message, deletion_type=0)
 {
   // Make sure the user knows what they're doing
   if(confirm(message))
@@ -78,8 +77,8 @@ function activity_delete_log(path, log_id, message, deletion_type=0)
     postdata  = 'log_id='         + log_id;
     postdata += '&deletion_type=' + deletion_type;
 
-    // Send the xhr
-    xhr_load(path, 'activity_delete.xhr.php', 'activity_row_' + log_id, postdata, 1);
+    // Fetch the data
+    fetch_page('activity_delete.php', 'activity_row_' + log_id, postdata);
   }
 }
 
@@ -95,7 +94,7 @@ function activity_delete_log(path, log_id, message, deletion_type=0)
  * @returns {void}
  */
 
-function activity_restore_log(path, log_id)
+function activity_restore_log(log_id)
 {
   // Hide the details if they exist and are currently visible
   if(document.getElementById('activity_details_' + log_id))
@@ -104,6 +103,6 @@ function activity_restore_log(path, log_id)
   // Prepare the postdata
   postdata = 'log_id=' + log_id;
 
-  // Send the xhr
-  xhr_load(path, 'activity_restore.xhr.php', 'activity_row_' + log_id, postdata, 1);
+  // Fetch the data
+  fetch_page('activity_restore.php', 'activity_row_' + log_id, postdata);
 }

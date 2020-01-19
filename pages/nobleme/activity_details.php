@@ -1,17 +1,18 @@
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
-/*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED THROUGH XHR                               */
+/*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED DYNAMICALLY                               */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';    # Core
 include_once './../../actions/nobleme.act.php'; # Actions
 include_once './../../lang/nobleme.lang.php';   # Translations
+include_once './../../inc/bbcodes.inc.php';     # BBCodes
 
 // Throw a 404 if the page is being accessed directly
-allow_only_xhr();
+page_must_be_fetched_dynamically();
 
 // Limit page access rights
-user_restrict_to_administrators($lang);
+user_restrict_to_global_moderators($lang);
 
 
 
@@ -23,11 +24,10 @@ user_restrict_to_administrators($lang);
 /*********************************************************************************************************************/
 
 // Sanitize postdata
-$log_id         = sanitize_input('POST', 'log_id', 'int', 0, 0);
-$deletion_type  = sanitize_input('POST', 'deletion_type', 'int', 0, 0, 1);
+$log_id = sanitize_input('POST', 'log_id', 'int', 0, 0);
 
-// Delete the activity log
-activity_delete_log($log_id, $deletion_type);
+// Fetch log details
+$log_details = activity_get_details($log_id, $lang);
 
 
 
@@ -38,6 +38,18 @@ activity_delete_log($log_id, $deletion_type);
 /*                                                                                                                   */
 /******************************************************************************************************************/ ?>
 
-<td colspan="3" class="negative text_white bold">
-  <?=__('activity_deleted')?>
+<td colspan="3" class="align_left spaced padding_top">
+
+  <?php if($log_details['reason']) { ?>
+
+  <span class="indented bold underlined"><?=__('activity_details_reason')?></span> <?=$log_details['reason']?><br>
+  <br>
+
+  <?php } if($log_details['diff']) { ?>
+
+  <span class="indented bold underlined"><?=__('activity_details_diff')?></span><br>
+  <br>
+  <?=$log_details['diff']?>
+  <?php } ?>
+
 </td>

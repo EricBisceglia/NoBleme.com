@@ -44,32 +44,32 @@ function database_row_exists($table, $id)
 
 
 /**
- * Is the page being called through XHR.
+ * Is the page being fetched dynamically.
  *
- * @return  bool  Whether the page is being called through XHR or not.
+ * @return  bool  Whether the page is being called through fetch or not.
  */
 
-function page_is_xhr()
+function page_is_fetched_dynamically()
 {
-  // Return whether the XHR header is set
-  return isset($_SERVER['HTTP_XHR']);
+  // Return whether the fetched header is set
+  return isset($_SERVER['HTTP_FETCHED']);
 }
 
 
 
 
 /**
- * Throws a 404 if the page is not being called through XHR.
+ * Throws a 404 if the page is not being fetched dynamically.
  *
  * @param   string|null $path The path to the root of the website (defaults to 2 folders away from root).
  *
  * @return  void
  */
 
-function allow_only_xhr($path='./../../')
+function page_must_be_fetched_dynamically($path='./../../')
 {
-  // If the XHR header is not set, throw a 404
-  if(!page_is_xhr())
+  // If the fetched header is not set, throw a 404
+  if(!page_is_fetched_dynamically())
     exit(header("Location: ".$path."404"));
 }
 

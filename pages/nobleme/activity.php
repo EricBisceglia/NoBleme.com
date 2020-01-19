@@ -29,7 +29,7 @@ $page_title_fr    = (!isset($_GET['mod'])) ? "Activité récente" : "Logs de mod
 $page_description = "Chronology of recent events that happened on NoBleme";
 
 // Extra JS
-$js = array('xhr', 'toggle', 'nobleme/activity');
+$js = array('fetch', 'toggle', 'nobleme/activity');
 
 
 
@@ -41,9 +41,9 @@ $js = array('xhr', 'toggle', 'nobleme/activity');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Prepare an url for xhr calls, depending on whether we're on recent activity or moderation logs
+// Prepare an url for dynamic calls, depending on whether we're on recent activity or moderation logs
 
-$xhr_logs_url = (!isset($_GET['mod'])) ? "activity" : "activity?mod";
+$logs_url = (!isset($_GET['mod'])) ? "activity" : "activity?mod";
 
 
 
@@ -79,7 +79,7 @@ $deletion_type = ($is_admin && $activity_deleted) ? 1 : 0;
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-if(!page_is_xhr()) { /*******************************************************/ include './../../inc/header.inc.php'; ?>
+if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
       <div class="width_40">
 
@@ -89,7 +89,7 @@ if(!page_is_xhr()) { /*******************************************************/ i
           <?=__('activity_title')?>
 
           <?php if($is_admin) { ?>
-          <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$path?>', '<?=$xhr_logs_url?>', 1);">
+          <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
           <?php } ?>
 
         </h1>
@@ -100,7 +100,7 @@ if(!page_is_xhr()) { /*******************************************************/ i
           <?=__('activity_title_modlogs')?>
 
           <?php if($is_admin) { ?>
-          <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$path?>', '<?=$xhr_logs_url?>', 1);">
+          <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
           <?php } ?>
 
         </h1>
@@ -118,7 +118,7 @@ if(!page_is_xhr()) { /*******************************************************/ i
 
           <input type="hidden" class="hidden" id="activity_deleted" value="0">
 
-          <select id="activity_amount" onchange="activity_submit_menus('<?=$path?>', '<?=$xhr_logs_url?>');">
+          <select id="activity_amount" onchange="activity_submit_menus('<?=$logs_url?>');">
             <option value="100">100</option>
             <option value="200">200</option>
             <option value="500">500</option>
@@ -132,7 +132,7 @@ if(!page_is_xhr()) { /*******************************************************/ i
             <?=__('activity_latest_actions')?>
           </span>
 
-          <select id="activity_type" onchange="activity_submit_menus('<?=$path?>', '<?=$xhr_logs_url?>');">
+          <select id="activity_type" onchange="activity_submit_menus('<?=$logs_url?>');">
             <option value="all"><?=__('activity_type_all')?></option>
             <option value="users"><?=__('activity_type_users')?></option>
             <option value="meetups"><?=__('activity_type_meetups')?></option>
@@ -192,13 +192,13 @@ if(!page_is_xhr()) { /*******************************************************/ i
               <td class="<?=$activity_logs[$i]['css']?>">
 
                 <?php if($activity_logs[$i]['details']) { ?>
-                <img class="valign_center spaced pointer" src="<?=$path?>img/icons/help.svg" height="16" alt="?" onclick="activity_show_details('<?=$path?>', '<?=$activity_logs[$i]['id']?>');">
+                <img class="valign_center spaced pointer" src="<?=$path?>img/icons/help.svg" height="16" alt="?" onclick="activity_show_details('<?=$activity_logs[$i]['id']?>');">
                 <?php } if($is_admin) { ?>
 
                 <?php if($deletion_type) { ?>
-                <img class="valign_center pointer spaced_right" src="<?=$path?>img/icons/reload.svg" height="16" alt="R" onclick="activity_restore_log('<?=$path?>', '<?=$activity_logs[$i]['id']?>');">
+                <img class="valign_center pointer spaced_right" src="<?=$path?>img/icons/reload.svg" height="16" alt="R" onclick="activity_restore_log('<?=$activity_logs[$i]['id']?>');">
                 <?php } ?>
-                <img class="valign_center pointer spaced_right" src="<?=$path?>img/icons/delete.svg" height="16" alt="X" onclick="activity_delete_log('<?=$path?>', '<?=$activity_logs[$i]['id']?>', '<?=addslashes(__('activity_delete'))?>', '<?=$deletion_type?>');">
+                <img class="valign_center pointer spaced_right" src="<?=$path?>img/icons/delete.svg" height="16" alt="X" onclick="activity_delete_log('<?=$activity_logs[$i]['id']?>', '<?=addslashes(__('activity_delete'))?>', '<?=$deletion_type?>');">
                 <?php } ?>
 
               </td>
@@ -220,7 +220,7 @@ if(!page_is_xhr()) { /*******************************************************/ i
           <?php } ?>
 
           </tbody>
-          <?php if(!page_is_xhr()) { ?>
+          <?php if(!page_is_fetched_dynamically()) { ?>
         </table>
 
       </div>
