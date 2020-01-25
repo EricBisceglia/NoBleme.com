@@ -19,6 +19,9 @@ $page_title_en    = "Who's online";
 $page_title_fr    = "Qui est en ligne";
 $page_description = "List of recent visitors of NoBleme and their latest activity.";
 
+// JS
+$js = array('fetch', 'users/online');
+
 
 
 
@@ -31,8 +34,11 @@ $page_description = "List of recent visitors of NoBleme and their latest activit
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch user list
 
+// Sanitize postdata
+$include_guests = (sanitize_input('POST', 'online_hide_guests', 'int', 0, 0, 1)) ? 0 : 1;
+
 // Fetch the user list
-$userlist = users_get_list('activity', 0, 0, 2629746, 1, 1000, $lang);
+$userlist = users_get_list('activity', 0, 0, 2629746, $include_guests, 1000, $lang);
 
 
 
@@ -53,9 +59,23 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('users_online_header_intro')?>
         </p>
 
-        <p class="padding_bot">
+        <p>
           <?=__('users_online_header_colors')?>
         </p>
+
+        <p class="bold tinypadding_bot">
+          <?=string_change_case(__('option', 2), 'initials').__(':');?>
+        </p>
+
+        <fieldset class="padding_bot">
+
+          <input id="online_hide_guests" name="online_hide_guests" type="checkbox" onclick="users_online_table_settings();">
+          <label class="label_inline" for="online_hide_guests"><?=__('users_online_hide_gests')?></label><br>
+
+          <input id="online_refresh" name="online_refresh" type="checkbox" onclick="users_online_table_settings();">
+          <label class="label_inline" for="online_refresh"><?=__('users_online_refresh')?></label><br>
+
+        </fieldset>
 
         <table class="blacktitles">
 
@@ -71,7 +91,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             </th>
           </thead>
 
-          <tbody>
+          <tbody id="users_online_table">
+            <?php } ?>
             <?php for($i=0;$i<$userlist['rows'];$i++) { ?>
               <tr>
 
@@ -97,6 +118,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
               </tr>
             <?php } ?>
+            <?php if(!page_is_fetched_dynamically()) { ?>
           </tbody>
 
         </table>

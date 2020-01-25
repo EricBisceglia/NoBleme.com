@@ -250,6 +250,11 @@ ___('password', 'FR', "mot de passe");
 ___('user', 'EN', "user");
 ___('user', 'FR', "utilisateur");
 
+___('option', 'EN', "option");
+___('option+', 'EN', "options");
+___('option', 'FR', "option");
+___('option+', 'FR', "options");
+
 
 // Quantifiers, amounts, and times
 ___('times',  'EN', "time");

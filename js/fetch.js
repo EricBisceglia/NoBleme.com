@@ -15,12 +15,12 @@
  * @param   {string}  [callback]        Script element to call once the content has been fetched.
  * @param   {int}     [append_content]  Should the content be appended to the target element instead of replacing it.
  * @param   {string}  [path]            The path to the root of the website.
- * @param   {int}     [show_load_bar]   If set, there be a "loading" bar until the fetched content is loaded.
+ * @param   {int}     [show_load_bar]   If set, there will be a "loading" bar until the fetched content is loaded.
  *
  * @returns {void}
  */
 
- function fetch_page(target_page, target_element, postdata, callback, append_content, path, show_load_bar)
+function fetch_page(target_page, target_element, postdata, callback, append_content, path, show_load_bar)
 {
   // Check if the browser supports fetch
   if (window.fetch)

@@ -1,7 +1,6 @@
 /**
  * Submits the dropdwon menus that control which activity logs are shown.
  *
- * @param   {string}  path            The path to the root of the website.
  * @param   {string}  fetch_url       The url that should be called dynamically.
  * @param   {bool}    toggle_deleted  If set, toggles between visible and deleted view.
  *
@@ -56,7 +55,6 @@ function activity_show_details(log_id)
 /**
  * Triggers the deletion of an activity log.
  *
- * @param   {string}  path          The path to the root of the website.
  * @param   {int}     log_id        The id of the activity log.
  * @param   {string}  message       The confirmation message which will be displayed.
  * @param   {bool}    deletion_type Whether this call should trigger a soft (0) or hard (1) delete.
@@ -88,7 +86,6 @@ function activity_delete_log(log_id, message, deletion_type=0)
 /**
  * Restores a soft deleted activity log.
  *
- * @param   {string}  path          The path to the root of the website.
  * @param   {int}     log_id        The id of the activity log.
  *
  * @returns {void}

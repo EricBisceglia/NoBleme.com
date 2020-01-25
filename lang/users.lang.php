@@ -231,6 +231,13 @@ EOD
 );
 
 
+// Options
+___('users_online_hide_gests', 'EN', "Do not show guests in the list");
+___('users_online_hide_gests', 'FR', "Ne pas afficher les invités dans la liste");
+___('users_online_refresh', 'EN', "Automatically reload the table every 10 seconds");
+___('users_online_refresh', 'FR', "Recharger automatiquement la liste toutes les 10 secondes");
+
+
 // Table
 ___('users_online_activity', 'EN', "LATEST ACTIVITY");
 ___('users_online_activity', 'FR', "DERNIÈRE ACTIVITÉ");

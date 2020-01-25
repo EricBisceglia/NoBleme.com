@@ -71,9 +71,13 @@
 .spaced_left     { padding-left: 6px;                         }
 .spaced_right    { padding-right: 6px;                        }
 .vspaced         { padding-bottom: 6px; padding-top: 6px;     }
+.tinypadding_top { padding-top: 1.0rem;                       }
+.smallpadding_top{ padding-top: 1.5rem;                       }
 .padding_top     { padding-top: 2.5rem;                       }
 .bigpadding_top  { padding-top: 5.0rem;                       }
 .hugepadding_top { padding-top: 10.0rem;                      }
+.tinypadding_bot { padding-bottom: 1.0rem;                    }
+.smallpadding_bot{ padding-bottom: 1.5rem;                    }
 .padding_bot     { padding-bottom: 2.5rem;                    }
 .bigpadding_bot  { padding-bottom: 5.0rem;                    }
 .hugepadding_bot { padding-bottom: 10.0rem;                   }
