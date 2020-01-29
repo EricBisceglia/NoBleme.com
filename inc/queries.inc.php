@@ -1106,12 +1106,17 @@ if($last_query < 26)
   sql_rename_field('users', 'derniere_visite', 'last_visited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users', 'derniere_visite_page', 'last_visited_page_en', "VARCHAR(510) NOT NULL");
   sql_create_field('users', 'last_visited_page_fr', "VARCHAR(510) NOT NULL", 'last_visited_page_en');
+  query(" UPDATE  users
+          SET     users.last_visited_page_fr = users.last_visited_page_en ,
+                  users.last_visited_page_en = '-'                        ");
   sql_rename_field('users', 'derniere_visite_url', 'last_visited_url', "VARCHAR(510) NOT NULL");
   sql_rename_field('users', 'derniere_visite_ip', 'current_ip_address', "VARCHAR(135) NOT NULL DEFAULT '0.0.0.0'");
   sql_rename_field('users', 'derniere_activite', 'last_action_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_move_field('users', 'last_action_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'last_visited_at');
   sql_rename_field('users', 'banni_date', 'is_banned_until', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users', 'banni_raison', 'is_banned_because', 'TEXT NOT NULL');
+  sql_delete_field('users', 'forum_messages');
+  sql_delete_field('users', 'forum_lang');
   sql_delete_index('users', 'index_login');
   sql_delete_index('users', 'index_droits');
   sql_create_index('users', 'index_access_rights', 'is_administrator, is_global_moderator, is_moderator, moderator_rights(127)');
@@ -1149,12 +1154,27 @@ if($last_query < 26)
                         users_profile.occupation        = '".sql_sanitize_data($dusers['u_occupation'])."' ,
                         users_profile.profile_text      = '".sql_sanitize_data($dusers['u_profile'])."'    ");
   sql_create_index('users_profile', 'index_user', 'fk_users');
+  sql_delete_field('users', 'email');
+  sql_delete_field('users', 'date_creation');
+  sql_delete_field('users', 'langue');
+  sql_delete_field('users', 'genre');
+  sql_delete_field('users', 'anniversaire');
+  sql_delete_field('users', 'habite');
+  sql_delete_field('users', 'metier');
+  sql_delete_field('users', 'profil');
 
   sql_create_field('users_settings', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('users_settings', 'show_nsfw_content', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
   sql_create_field('users_settings', 'hide_tweets', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'show_nsfw_content');
   sql_create_field('users_settings', 'hide_youtube', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_tweets');
   sql_create_field('users_settings', 'hide_google_trends', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_youtube');
+  sql_create_field('users_settings', 'hide_from_activity', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_google_trends');
+  $qusers = query(" SELECT  users.id                  AS 'u_id'       ,
+                            users.voir_nsfw           AS 'u_nsfw'     ,
+                            users.voir_tweets         AS 'u_tweets'   ,
+                            users.voir_youtube        AS 'u_youtube'  ,
+                            users.voir_google_trends  AS 'u_trends'
+                    FROM    users ");
   while($dusers = mysqli_fetch_array($qusers))
     query(" INSERT INTO users_settings
             SET         users_settings.fk_users               = '".sql_sanitize_data($dusers['u_id'])."'        ,
@@ -1166,25 +1186,16 @@ if($last_query < 26)
   sql_create_index('users_settings', 'index_nsfw_filter', 'show_nsfw_content');
 
   sql_create_field('users_stats', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  $qusers = query(" SELECT  users.id AS 'u_id'
+                    FROM    users ");
   while($dusers = mysqli_fetch_array($qusers))
     query(" INSERT INTO users_stats
             SET         users_stats.fk_users = '".sql_sanitize_data($dusers['u_id'])."' ");
   sql_create_index('users_stats', 'index_user', 'fk_users');
-
-  sql_delete_field('users', 'email');
-  sql_delete_field('users', 'date_creation');
-  sql_delete_field('users', 'langue');
-  sql_delete_field('users', 'genre');
-  sql_delete_field('users', 'anniversaire');
-  sql_delete_field('users', 'habite');
-  sql_delete_field('users', 'metier');
-  sql_delete_field('users', 'profil');
   sql_delete_field('users', 'voir_nsfw');
   sql_delete_field('users', 'voir_tweets');
   sql_delete_field('users', 'voir_youtube');
   sql_delete_field('users', 'voir_google_trends');
-  sql_delete_field('users', 'forum_messages');
-  sql_delete_field('users', 'forum_lang');
 
   sql_change_field_type('users_guests', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('users_guests', 'ip', 'ip_address', "VARCHAR(135) NOT NULL DEFAULT '0.0.0.0'");
@@ -1193,6 +1204,11 @@ if($last_query < 26)
   sql_rename_field('users_guests', 'derniere_visite', 'last_visited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users_guests', 'derniere_visite_page', 'last_visited_page_en', "VARCHAR(510) NOT NULL");
   sql_create_field('users_guests', 'last_visited_page_fr', "VARCHAR(510) NOT NULL", 'last_visited_page_en');
+  query(" UPDATE  users_guests
+          SET     users_guests.randomly_assigned_name_fr  = users_guests.randomly_assigned_name_en  ,
+                  users_guests.last_visited_page_fr       = users_guests.last_visited_page_en       ,
+                  users_guests.randomly_assigned_name_en  = '-'                                     ,
+                  users_guests.last_visited_page_en       = '-'                                     ");
   sql_rename_field('users_guests', 'derniere_visite_url', 'last_visited_url', "VARCHAR(510) NOT NULL");
   sql_delete_index('users_guests', 'ip');
 

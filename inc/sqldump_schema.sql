@@ -416,6 +416,7 @@ CREATE TABLE IF NOT EXISTS `users_settings` (
   `hide_tweets` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `hide_youtube` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `hide_google_trends` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `hide_from_activity` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `index_user` (`fk_users`),
   KEY `index_nsfw_filter` (`show_nsfw_content`)

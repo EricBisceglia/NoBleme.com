@@ -174,7 +174,7 @@ if(user_is_logged_in())
 else
 {
   // Clean up older guest activity
-  $guest_limit = time() - 86400;
+  $guest_limit = time() - 2500000;
   query(" DELETE FROM users_guests
           WHERE       users_guests.last_visited_at < '$guest_limit' ");
 

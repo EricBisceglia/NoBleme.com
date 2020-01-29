@@ -23,12 +23,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   int|null    $activity_cutoff  OPTIONAL  If set, will only return users active since this many seconds.
  * @param   bool|null   $include_guests   OPTIONAL  If set, guests will be included in the user list.
  * @param   int|null    $max_guest_count  OPTIONAL  The number of guests to return (if guests are included, 0 for all).
+ * @param   int|null    $is_admin         OPTIONAL  Whether the current user is an administrator.
+ * @param   int|null    $is_activity      OPTIONAL  Whether the list will be used to display user activity.
  * @param   string|null $lang             OPTIONAL  The language currently in use.
  *
  * @return  array                                   A list of users, prepared for displaying.
  */
 
-function users_get_list($sort_by='', $max_count=0, $deleted=0, $activity_cutoff=0, $include_guests=0, $max_guest_count=0, $lang='EN')
+function users_get_list($sort_by='', $max_count=0, $deleted=0, $activity_cutoff=0, $include_guests=0, $max_guest_count=0, $is_admin=0, $is_activity=0, $lang='EN')
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -48,24 +50,29 @@ function users_get_list($sort_by='', $max_count=0, $deleted=0, $activity_cutoff=
   $data = array();
 
   // Fetch the user list
-  $qusers = "       SELECT    'user'                      AS 'data_type'        ,
-                              users.id                    AS 'u_id'             ,
-                              users.nickname              AS 'u_nick'           ,
-                              ''                          AS 'u_guest_name_en'  ,
-                              ''                          AS 'u_guest_name_fr'  ,
-                              users.is_administrator      AS 'u_admin'          ,
-                              users.is_global_moderator   AS 'u_global_mod'     ,
-                              users.is_moderator          AS 'u_mod'            ,
-                              users.last_visited_at       AS 'u_activity'       ,
-                              users.last_visited_page_en  AS 'u_last_page_en'   ,
-                              users.last_visited_page_fr  AS 'u_last_page_fr'   ,
-                              users.last_visited_url      AS 'u_last_url'
+  $qusers = "       SELECT    'user'                            AS 'data_type'        ,
+                              users.id                          AS 'u_id'             ,
+                              users.nickname                    AS 'u_nick'           ,
+                              ''                                AS 'u_guest_name_en'  ,
+                              ''                                AS 'u_guest_name_fr'  ,
+                              users.is_administrator            AS 'u_admin'          ,
+                              users.is_global_moderator         AS 'u_global_mod'     ,
+                              users.is_moderator                AS 'u_mod'            ,
+                              users.last_visited_at             AS 'u_activity'       ,
+                              users.last_visited_page_en        AS 'u_last_page_en'   ,
+                              users.last_visited_page_fr        AS 'u_last_page_fr'   ,
+                              users.last_visited_url            AS 'u_last_url'
                     FROM      users
-                    WHERE     users.is_deleted = '$deleted' ";
+                    LEFT JOIN users_settings ON users.id = users_settings.fk_users
+                    WHERE     users.is_deleted                  = '$deleted' ";
+
+  // Hide user activity based on their settings
+  if($is_activity && !$is_admin)
+    $qusers .= "    AND       users_settings.hide_from_activity = 0 ";
 
   // Activity cutoff
   if($activity_cutoff)
-    $qusers .= "    AND       users.last_visited_at >= '$minimum_activity' ";
+    $qusers .= "    AND       users.last_visited_at             >= '$minimum_activity' ";
 
   // Sort the users
   if(!$include_guests)
@@ -113,7 +120,8 @@ function users_get_list($sort_by='', $max_count=0, $deleted=0, $activity_cutoff=
     $temp                   = ($lang == 'EN') ? $row['u_guest_name_en'] : $row['u_guest_name_fr'];
     $data[$i]['nickname']   = ($row['data_type'] == 'user') ? sanitize_output($row['u_nick']) : $temp;
     $data[$i]['activity']   = time_since($row['u_activity']);
-    $data[$i]['last_page']  = ($lang == 'EN') ? sanitize_output($row['u_last_page_en']) : sanitize_output($row['u_last_page_fr']);
+    $temp                   = ($lang == 'EN') ? $row['u_last_page_en'] : $row['u_last_page_fr'];
+    $data[$i]['last_page']  = sanitize_output(string_truncate($temp, 50, '...'));
     $data[$i]['last_url']   = sanitize_output($row['u_last_url']);
     $temp                   = ($row['data_type'] == 'user') ? ' grey_light text_black bold spaced' : '';
     $temp                   = ($row['u_mod']) ? ' positive text_white bold spaced' : $temp;

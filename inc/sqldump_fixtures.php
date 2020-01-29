@@ -39,10 +39,10 @@ if(!$GLOBALS['dev_mode'])
  *
  * @param   int     $word_count The number of words the paragraph should contain.
  *
- * @return  string              The randomly generated paragraph.
+ * @return  string  The randomly generated paragraph.
  */
 
-function fixtures_lorem_ipsum($word_count, $punctuation=null)
+function fixtures_lorem_ipsum($word_count)
 {
   // Random words to use in the lorem genertion
   $words = array('lorem', 'lorem', 'lorem', 'ipsum', 'ipsum', 'ipsum', 'dolor', 'dolor', 'sit', 'sit', 'amet', 'consectetur', 'adipisicing', 'elit', 'sed', 'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'et', 'et', 'dolore', 'magna', 'aliqua', 'exercitationem', 'perferendis', 'perspiciatis', 'laborum', 'eveniet', 'sunt', 'iure', 'nam', 'nam', 'nobis', 'eum', 'cum', 'officiis', 'excepturi', 'odio', 'consectetur', 'quasi', 'aut', 'quisquam', 'vel', 'eligendi', 'itaque', 'non', 'odit', 'tempore', 'quaerat', 'dignissimos', 'facilis', 'neque', 'nihil', 'expedita', 'vitae', 'vero', 'ipsum', 'nisi', 'animi', 'cumque', 'pariatur', 'velit', 'modi', 'natus', 'iusto', 'eaque', 'sequi', 'illo', 'sed', 'ex', 'et', 'voluptatibus', 'tempora', 'veritatis', 'ratione', 'assumenda', 'incidunt', 'nostrum', 'placeat', 'aliquid', 'fuga', 'fuga', 'provident', 'praesentium', 'rem', 'necessitatibus', 'suscipit', 'adipisci', 'quidem', 'possimus', 'voluptas', 'debitis', 'sint', 'accusantium', 'unde', 'sapiente', 'voluptate', 'qui', 'aspernatur', 'laudantium', 'soluta', 'amet', 'quo', 'aliquam', 'saepe', 'culpa', 'libero', 'ipsa', 'dicta', 'reiciendis', 'nesciunt', 'doloribus', 'autem', 'impedit', 'minima', 'maiores', 'repudiandae', 'ipsam', 'obcaecati', 'ullam', 'enim', 'totam', 'totam', 'delectus', 'ducimus', 'quis', 'voluptates', 'dolores', 'molestiae', 'harum', 'dolorem', 'quia', 'voluptatem', 'molestias', 'magni', 'distinctio', 'omnis', 'illum', 'dolorum', 'voluptatum', 'ea', 'quas', 'quam', 'corporis', 'quae', 'blanditiis', 'atque', 'deserunt', 'laboriosam', 'earum', 'consequuntur', 'hic', 'cupiditate', 'quibusdam', 'accusamus', 'ut', 'rerum', 'error', 'minus', 'eius', 'ab', 'ad', 'nemo', 'fugit', 'officia', 'at', 'in', 'id', 'quos', 'reprehenderit', 'numquam', 'iste', 'fugiat', 'sit', 'inventore', 'beatae', 'repellendus', 'magnam', 'recusandae', 'quod', 'explicabo', 'doloremque', 'aperiam', 'consequatur', 'asperiores', 'commodi', 'optio', 'dolor', 'labore', 'temporibus', 'repellat', 'veniam', 'architecto', 'est', 'est', 'est', 'esse', 'mollitia', 'nulla', 'a', 'similique', 'eos', 'alias', 'dolore', 'tenetur', 'deleniti', 'porro', 'facere', 'maxime', 'corrupti');
@@ -65,14 +65,15 @@ function fixtures_lorem_ipsum($word_count, $punctuation=null)
 /**
  * Generates SQL safe random data.
  *
- * @param   string  $type   Type of data to be generated ('int', 'digits', 'string', 'sentence', 'text').
- * @param   int     $min    The minimum length or amount of data to be generated.
- * @param   int     $max    The maximum length or amount of data to be generated.
+ * @param   string              $type       Type of data to generate ('int', 'digits', 'string', 'sentence', 'text').
+ * @param   int                 $min        The minimum length or amount of data to be generated.
+ * @param   int                 $max        The maximum length or amount of data to be generated.
+ * @param   int|null  OPTIONAL  $no_periods Disables periods at the end of sentences.
  *
- * @return  string          The randomly generated content.
+ * @return  string                          The randomly generated content.
  */
 
-function fixtures_generate_data($type, $min, $max)
+function fixtures_generate_data($type, $min, $max, $no_periods=0)
 {
   // Don't do aything if the min/max values are incorrect
   if($max < 1 || $min > $max)
@@ -105,7 +106,10 @@ function fixtures_generate_data($type, $min, $max)
 
   // Random paragraph
   if($type == 'sentence')
-    return ucfirst(fixtures_lorem_ipsum(mt_rand($min, $max), 1)).'.';
+  {
+    $sentence = ucfirst(fixtures_lorem_ipsum(mt_rand($min, $max), 1));
+    return ($no_periods) ? $sentence : $sentence.'.';
+  }
 
   // Random text
   if($type == 'text')
@@ -198,40 +202,6 @@ query(" INSERT INTO logs_activity
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// IRC channels
-
-// Generate some random channels
-$random = mt_rand(15,25);
-for($i = 0; $i < $random; $i++)
-{
-  // Generate random data
-  $name         = fixtures_generate_data('string', 5, 15);
-  $languages    = (mt_rand(0,1)) ? '' : 'FR';
-  $languages   .= (mt_rand(0,1)) ? '' : 'EN';
-  $languages    = (!$languages) ? 'FR' : $languages;
-  $display      = (mt_rand(0,1)) ? $i : (mt_rand(10,20) * $i);
-  $display      = (mt_rand(0,1)) ? 0 : $display;
-  $details_en   = ucfirst(fixtures_generate_data('sentence', 2, 8));
-  $details_fr   = ucfirst(fixtures_generate_data('sentence', 2, 8));
-
-  // Generate the channels
-  query(" INSERT INTO irc_channels
-          SET         irc_channels.name           = '$name'       ,
-                      irc_channels.languages      = '$languages'  ,
-                      irc_channels.display_order  = '$display'    ,
-                      irc_channels.details_en     = '$details_en' ,
-                      irc_channels.details_fr     = '$details_fr' ");
-}
-
-// Output progress
-echo "Generated $random IRC channels<br>";
-ob_flush();
-flush();
-
-
-
-
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                       USERS                                                       */
@@ -242,38 +212,68 @@ flush();
 // Create default users with no password and varied access rights for testing purposes
 
 // Generate preset users
+$last_visit = mt_rand((time() - 2629746), time());
 query(" INSERT INTO users
-        SET         users.id                  = 1             ,
-                    users.nickname            = 'Admin'       ,
-                    users.password            = ''            ,
-                    users.is_administrator    = 1             ");
+        SET         users.id                    = 1                 ,
+                    users.nickname              = 'Admin'           ,
+                    users.password              = ''                ,
+                    users.is_administrator      = 1                 ,
+                    users.last_visited_at       = '$last_visit'     ,
+                    users.last_visited_page_en  = 'Unlisted page'   ,
+                    users.last_visited_page_fr  = 'Page non listée' ,
+                    users.last_visited_url      = ''                ");
+$last_visit = mt_rand((time() - 2629746), time());
 query(" INSERT INTO users
-        SET         users.id                  = 2             ,
-                    users.nickname            = 'Global_mod'  ,
-                    users.password            = ''            ,
-                    users.is_global_moderator = 1             ");
+        SET         users.id                    = 2                 ,
+                    users.nickname              = 'Global_mod'      ,
+                    users.password              = ''                ,
+                    users.is_global_moderator   = 1                 ,
+                    users.last_visited_at       = '$last_visit'     ,
+                    users.last_visited_page_en  = 'Unlisted page'   ,
+                    users.last_visited_page_fr  = 'Page non listée' ,
+                    users.last_visited_url      = ''                ");
+$last_visit = mt_rand((time() - 2629746), time());
 query(" INSERT INTO users
-        SET         users.id                  = 3             ,
-                    users.nickname            = 'Moderator'   ,
-                    users.password            = ''            ,
-                    users.is_moderator        = 1             ,
-                    users.moderator_rights    = 'meetups'     ,
-                    users.moderator_title_en  = 'Meetups'     ,
-                    users.moderator_title_fr  = 'IRL'         ");
+        SET         users.id                    = 3             ,
+                    users.nickname              = 'Moderator'   ,
+                    users.password              = ''            ,
+                    users.is_moderator          = 1             ,
+                    users.moderator_rights      = 'meetups'     ,
+                    users.moderator_title_en    = 'Meetups'     ,
+                    users.moderator_title_fr    = 'IRL'         ,
+                    users.last_visited_at       = '$last_visit' ,
+                    users.last_visited_page_en  = 'Index'       ,
+                    users.last_visited_page_fr  = 'Index'       ,
+                    users.last_visited_url      = 'index'       ");
+$last_visit = mt_rand((time() - 2629746), time());
 query(" INSERT INTO users
-        SET         users.id                  = 4             ,
-                    users.nickname            = 'User'        ,
-                    users.password            = ''            ");
+        SET         users.id                    = 4             ,
+                    users.nickname              = 'User'        ,
+                    users.password              = ''            ,
+                    users.last_visited_at       = '$last_visit' ,
+                    users.last_visited_page_en  = 'Index'       ,
+                    users.last_visited_page_fr  = 'Index'       ,
+                    users.last_visited_url      = 'index'       ");
+$last_visit = mt_rand((time() - 2629746), time());
 query(" INSERT INTO users
-        SET         users.id                  = 5             ,
-                    users.nickname            = 'Prude'       ,
-                    users.password            = ''            ");
+        SET         users.id                    = 5             ,
+                    users.nickname              = 'Prude'       ,
+                    users.password              = ''            ,
+                    users.last_visited_at       = '$last_visit' ,
+                    users.last_visited_page_en  = 'Index'       ,
+                    users.last_visited_page_fr  = 'Index'       ,
+                    users.last_visited_url      = 'index'       ");
+$last_visit = mt_rand((time() - 2629746), time());
 query(" INSERT INTO users
-        SET         users.id                  = 6             ,
-                    users.nickname            = 'Banned'      ,
-                    users.password            = ''            ,
-                    users.is_banned_until     = 1918625619    ,
-                    users.is_banned_because   = 'Fixture'     ");
+        SET         users.id                    = 6             ,
+                    users.nickname              = 'Banned'      ,
+                    users.password              = ''            ,
+                    users.is_banned_until       = 1918625619    ,
+                    users.is_banned_because     = 'Fixture'     ,
+                    users.last_visited_at       = '$last_visit' ,
+                    users.last_visited_page_en  = 'Index'       ,
+                    users.last_visited_page_fr  = 'Index'       ,
+                    users.last_visited_url      = 'index'       ");
 
 // Activity logs
 query(" INSERT INTO logs_activity
@@ -380,6 +380,41 @@ query(" INSERT INTO users_settings
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Mass create randomly generated guests
+
+// Determine the number of guests to generate
+$random = mt_rand(50,100);
+for($i = 0; $i < $random; $i++)
+{
+  // Generate random data
+  $name_en      = ucfirst(fixtures_generate_data('sentence', 1, 3, 1));
+  $name_fr      = ucfirst(fixtures_generate_data('sentence', 1, 3, 1));
+  $current_ip   = fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255);
+  $last_visit   = mt_rand((time() - 2629746), time());
+  $last_page_fr = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
+  $last_page_en = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
+  $last_url     = (mt_rand(0,2) < 2) ? 'index' : '';
+
+  // Generate the guests
+  query(" INSERT INTO users_guests
+          SET         users_guests.randomly_assigned_name_en  = '$name_en'      ,
+                      users_guests.randomly_assigned_name_fr  = '$name_fr'      ,
+                      users_guests.ip_address                 = '$current_ip'   ,
+                      users_guests.last_visited_at            = '$last_visit'   ,
+                      users_guests.last_visited_page_en       = '$last_page_en' ,
+                      users_guests.last_visited_page_fr       = '$last_page_fr' ,
+                      users_guests.last_visited_url           = '$last_url'     ");
+}
+
+// Output progress
+echo "Generated $random guests<br>";
+ob_flush();
+flush();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Mass create randomly generated users
 
 // Determine the number of users to generate
@@ -393,6 +428,9 @@ for($i = 0; $i < $random; $i++)
   $email        = $username.'@localhost';
   $created_at   = mt_rand(1111239420, time());
   $last_visit   = mt_rand($created_at, time());
+  $last_page_fr = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
+  $last_page_en = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
+  $last_url     = (mt_rand(0,2) < 2) ? 'index' : '';
   $birthday     = (mt_rand(0,4) < 4) ? '0000-00-00' : mt_rand(1980, 2010).'-'.mt_rand(1,12).'-'.mt_rand(1,28);
   $languages    = (mt_rand(0,5) < 5) ? '' : 'EN';
   $languages   .= (mt_rand(0,5) < 5) ? '' : 'FR';
@@ -411,11 +449,14 @@ for($i = 0; $i < $random; $i++)
   {
     // Generate the users
     query(" INSERT INTO users
-            SET         users.is_deleted          = '$deleted'    ,
-                        users.nickname            = '$username'   ,
-                        users.password            = ''            ,
-                        users.last_visited_at     = '$last_visit' ,
-                        users.current_ip_address  = '$current_ip' ");
+            SET         users.is_deleted            = '$deleted'      ,
+                        users.nickname              = '$username'     ,
+                        users.password              = ''              ,
+                        users.last_visited_at       = '$last_visit'   ,
+                        users.last_visited_page_en  = '$last_page_en' ,
+                        users.last_visited_page_fr  = '$last_page_fr' ,
+                        users.last_visited_url      = '$last_url'     ,
+                        users.current_ip_address    = '$current_ip'   ");
 
     // Fetch the id of the generated users
     $user_id = query_id();
@@ -740,8 +781,8 @@ for($i = 0; $i < $random; $i++)
   $admin_validation = (mt_rand(0,50) < 50) ? 1 : 0;
   $is_public        = (mt_rand(0,20) < 20) ? 1 : 0;
   $priority_level   = mt_rand(0,5);
-  $title_en         = ucfirst(fixtures_generate_data('sentence', 2, 10));
-  $title_fr         = ucfirst(fixtures_generate_data('sentence', 2, 10));
+  $title_en         = ucfirst(fixtures_generate_data('sentence', 2, 10, 1));
+  $title_fr         = ucfirst(fixtures_generate_data('sentence', 2, 10, 1));
   $body_en          = fixtures_generate_data('text', 1, 5);
   $body_fr          = fixtures_generate_data('text', 1, 5);
   $category         = fixtures_fetch_random_id('dev_tasks_categories');
@@ -818,8 +859,8 @@ for($i = 0; $i < $random; $i++)
   $deleted    = (mt_rand(0,15) < 15) ? 0 : 1;
   $event_date = date('Y-m-d', mt_rand(1111339420, time()));
   $location   = fixtures_generate_data('string', 5, 15);
-  $reason_en  = (mt_rand(0,3) < 3) ? '' : fixtures_generate_data('sentence', 1, 4);
-  $reason_fr  = ($reason_en) ? fixtures_generate_data('sentence', 1, 4) : '';
+  $reason_en  = (mt_rand(0,3) < 3) ? '' : fixtures_generate_data('sentence', 1, 4, 1);
+  $reason_fr  = ($reason_en) ? fixtures_generate_data('sentence', 1, 4, 1) : '';
   $details_en = fixtures_generate_data('text', 1, 5);
   $details_fr = fixtures_generate_data('text', 1, 5);
 
@@ -921,8 +962,8 @@ for($i = 0; $i < $random; $i++)
     $user       = (mt_rand(0,3) < 3) ? fixtures_fetch_random_id('users') : 0;
     $nickname   = ($user) ? '' : fixtures_generate_data('string', 3, 18);
     $attendance = (strtotime($event_date) > time() && mt_rand(0,1)) ? 0 : 1;
-    $extra_en   = (mt_rand(0,3) < 3) ? '' : fixtures_generate_data('sentence', 2, 5);
-    $extra_fr   = (mt_rand(0,3) < 3) ? '' : fixtures_generate_data('sentence', 2, 5);
+    $extra_en   = (mt_rand(0,3) < 3) ? '' : fixtures_generate_data('sentence', 2, 5, 1);
+    $extra_fr   = (mt_rand(0,3) < 3) ? '' : fixtures_generate_data('sentence', 2, 5, 1);
 
     // If the user isn't in the meetup yet, add them
     if(!$user || !in_array($user, $user_list))
@@ -967,7 +1008,7 @@ for($i = 0; $i < $random; $i++)
       {
         $deleted_log  = (mt_rand(0,5) < 5) ? 0 : 1;
         $edited_at    = mt_rand($created_at, strtotime($event_date));
-        $old_extra    = fixtures_generate_data('sentence', 2, 5);
+        $old_extra    = fixtures_generate_data('sentence', 2, 5, 1);
         $new_extra    = ($extra_en) ? $extra_en : $extra_fr;
         query(" INSERT INTO logs_activity
                 SET         logs_activity.is_deleted                  = '$deleted_log'        ,
@@ -995,7 +1036,7 @@ for($i = 0; $i < $random; $i++)
         $deleted_log  = (mt_rand(0,5) < 5) ? 0 : 1;
         $deleted_at   = mt_rand($created_at, strtotime($event_date));
         $deleted_nick = fixtures_generate_data('string', 3, 18);
-        $extra_info   = fixtures_generate_data('sentence', 2, 5);
+        $extra_info   = fixtures_generate_data('sentence', 2, 5, 1);
         query(" INSERT INTO logs_activity
                 SET         logs_activity.is_deleted              = '$deleted_log'          ,
                             logs_activity.happened_at             = '$deleted_at'           ,
@@ -1126,7 +1167,7 @@ for($i = 0; $i < $random; $i++)
   $anonymous  = (mt_rand(0,5) < 5) ? 0 : 1;
   $created_at = mt_rand(1111239420, time());
   $edited_at  = (mt_rand(0,5) < 5) ? 0 : mt_rand($created_at, time());
-  $title      = fixtures_generate_data('sentence', 2, 6);
+  $title      = fixtures_generate_data('sentence', 2, 6, 1);
   $body       = fixtures_generate_data('text', 2, 5);
   $length     = strlen($body);
 
@@ -1172,7 +1213,7 @@ for($i = 1; $i < $random; $i++)
   $started  = mt_rand(1111239420, time());
   $ended    = mt_rand($started, time());
   $entries  = $random2;
-  $name     = fixtures_generate_data('sentence', 2, 4);
+  $name     = fixtures_generate_data('sentence', 2, 4, 1);
   $topic    = fixtures_generate_data('sentence', 4, 7);
 
   // Generate the contest
@@ -1330,8 +1371,8 @@ for($i = 0; $i < $random; $i++)
   $deleted      = (mt_rand(0,20) < 20) ? 0 : 1;
   $era          = fixtures_fetch_random_id('internet_eras');
   $dictionary   = mt_rand(0,1);
-  $title_en     = ucfirst(fixtures_generate_data('sentence', 1, 6));
-  $title_fr     = ucfirst(fixtures_generate_data('sentence', 1, 6));
+  $title_en     = ucfirst(fixtures_generate_data('sentence', 1, 6, 1));
+  $title_fr     = ucfirst(fixtures_generate_data('sentence', 1, 6, 1));
   $appeared_y   = (mt_rand(0,4) < 4) ? mt_rand(1999, date('Y')) : 0;
   $appeared_m   = ($appeared_y && mt_rand(0,4) < 4) ? mt_rand(1,12) : 0;
   $spread_y     = ($appeared_y && mt_rand(0,3) < 3) ? mt_rand($appeared_y, date('Y')) : 0;
@@ -1487,5 +1528,45 @@ for($i = 0; $i < $random; $i++)
 
 // Output progress
 echo "Generated $random internet encyclopedia images<br>";
+ob_flush();
+flush();
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                        IRC                                                        */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IRC channels
+
+// Generate some random channels
+$random = mt_rand(15,25);
+for($i = 0; $i < $random; $i++)
+{
+  // Generate random data
+  $name         = fixtures_generate_data('string', 5, 15);
+  $languages    = (mt_rand(0,1)) ? '' : 'FR';
+  $languages   .= (mt_rand(0,1)) ? '' : 'EN';
+  $languages    = (!$languages) ? 'FR' : $languages;
+  $display      = (mt_rand(0,1)) ? $i : (mt_rand(10,20) * $i);
+  $display      = (mt_rand(0,1)) ? 0 : $display;
+  $details_en   = ucfirst(fixtures_generate_data('sentence', 2, 8));
+  $details_fr   = ucfirst(fixtures_generate_data('sentence', 2, 8));
+
+  // Generate the channels
+  query(" INSERT INTO irc_channels
+          SET         irc_channels.name           = '$name'       ,
+                      irc_channels.languages      = '$languages'  ,
+                      irc_channels.display_order  = '$display'    ,
+                      irc_channels.details_en     = '$details_en' ,
+                      irc_channels.details_fr     = '$details_fr' ");
+}
+
+// Output progress
+echo "Generated $random IRC channels<br>";
 ob_flush();
 flush();

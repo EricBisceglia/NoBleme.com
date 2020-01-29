@@ -31,14 +31,13 @@ $js = array('fetch', 'users/online');
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch user list
-
 // Sanitize postdata
 $include_guests = (sanitize_input('POST', 'online_hide_guests', 'int', 0, 0, 1)) ? 0 : 1;
+$admin_view     = (sanitize_input('POST', 'online_admin_view', 'int', $is_admin, 0, 1)) ? 0 : 1;;
+$admin_view     = ($admin_view && $is_admin) ? 1 : 0;
 
 // Fetch the user list
-$userlist = users_get_list('activity', 0, 0, 2629746, $include_guests, 1000, $lang);
+$userlist = users_get_list('activity', 0, 0, 2629746, $include_guests, 1000, $admin_view, 1, $lang);
 
 
 
@@ -69,10 +68,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <fieldset class="padding_bot">
 
-          <input id="online_hide_guests" name="online_hide_guests" type="checkbox" onclick="users_online_table_settings();">
+          <input id="online_hide_guests" name="online_hide_guests" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
           <label class="label_inline" for="online_hide_guests"><?=__('users_online_hide_gests')?></label><br>
 
-          <input id="online_refresh" name="online_refresh" type="checkbox" onclick="users_online_table_settings();">
+          <?php if($is_admin) { ?>
+          <input id="online_admin_view" name="online_admin_view" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
+          <label class="label_inline" for="online_admin_view"><?=__('users_online_admin_view')?></label><br>
+          <?php } ?>
+
+          <input id="online_refresh" name="online_refresh" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
           <label class="label_inline" for="online_refresh"><?=__('users_online_refresh')?></label><br>
 
         </fieldset>
