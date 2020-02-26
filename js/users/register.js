@@ -4,7 +4,7 @@
  * This function will check that the form values are properly filled in before sending the form through.
  * There is obviously also back end data validation, so this function is only front end sugar for the user experience.
  *
- * @param   {string}  path  The path to the root of the website
+ * @param   {string}  path  The path to the root of the website.
  *
  * @returns {void}
  */
@@ -94,4 +94,82 @@ function users_register_submit(path)
   // If there's no error in the form, submit it
   if(!form_failed)
     document.getElementById('register_form').submit();
+}
+
+
+
+
+/**
+ * Validates that a username is correct during the account registration process.
+ *
+ * @returns {void}
+ */
+
+
+function users_register_validate_username()
+{
+  // Define the nickname validation regular expression
+  regex_username = new RegExp("^[a-zA-Z0-9]{3,15}$");
+
+  // Fetch the nickname
+  register_username = document.getElementById('register_nickname').value;
+
+  // If the nickname is invalid, show it
+  if (regex_username.test(register_username))
+  {
+    document.getElementById("label_register_nickname").classList.remove('negative');
+    document.getElementById("label_register_nickname").classList.remove('text_white');
+  }
+
+  // If the nickname is valid, reset the field to normal
+  else
+  {
+    document.getElementById("label_register_nickname").classList.add('negative');
+    document.getElementById("label_register_nickname").classList.add('text_white');
+  }
+}
+
+
+
+
+/**
+ * Validates that a password is correct during the account registration process.
+ *
+ * @returns {void}
+ */
+
+
+function users_register_validate_password()
+{
+  // Fetch the passwords
+  register_password_1 = document.getElementById('register_password_1').value;
+  register_password_2 = document.getElementById('register_password_2').value;
+
+  // If the first password is invalid, show it
+  if (register_password_1.length < 8)
+  {
+    document.getElementById("label_register_password_1").classList.add('negative');
+    document.getElementById("label_register_password_1").classList.add('text_white');
+  }
+
+  // If the password is valid, reset the field to normal
+  else
+  {
+    document.getElementById("label_register_password_1").classList.remove('negative');
+    document.getElementById("label_register_password_1").classList.remove('text_white');
+  }
+
+  // If the second password is invalid or passwords are different, show it
+  if (register_password_2 && (register_password_2.length < 8 || (register_password_2 != register_password_1)))
+  {
+    document.getElementById("label_register_password_2").classList.add('negative');
+    document.getElementById("label_register_password_2").classList.add('text_white');
+  }
+
+  // If the passwords are valid, reset the field to normal
+  else
+  {
+    document.getElementById("label_register_password_2").classList.remove('negative');
+    document.getElementById("label_register_password_2").classList.remove('text_white');
+  }
 }

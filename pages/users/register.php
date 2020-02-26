@@ -106,15 +106,15 @@ $register_check_q4[2] = (isset($_POST['register_question_4']) && $_POST['registe
           <fieldset>
 
             <label for="register_nickname" id="label_register_nickname"><?=__('users_register_form_nickname')?></label>
-            <input id="register_nickname" name="register_nickname" class="indiv" type="text" value="<?=$register_nickname?>" maxlength="15"><br>
+            <input id="register_nickname" name="register_nickname" class="indiv" type="text" value="<?=$register_nickname?>" maxlength="15" onkeyup="users_register_validate_username();"><br>
             <br>
 
             <label for="register_password_1" id="label_register_password_1"><?=__('users_register_form_password_1')?></label>
-            <input id="register_password_1" name="register_password_1" class="indiv" type="password" value="<?=$register_password_1?>" maxlength="15"><br>
+            <input id="register_password_1" name="register_password_1" class="indiv" type="password" value="<?=$register_password_1?>" onkeyup="users_register_validate_password();"><br>
             <br>
 
             <label for="register_password_2" id="label_register_password_2"><?=__('users_register_form_password_2')?></label>
-            <input id="register_password_2" name="register_password_2" class="indiv" type="password" value="<?=$register_password_2?>" maxlength="15"><br>
+            <input id="register_password_2" name="register_password_2" class="indiv" type="password" value="<?=$register_password_2?>" onkeyup="users_register_validate_password();"><br>
             <br>
 
             <label for="register_email" id="label_register_email"><?=__('users_register_form_email')?></label>

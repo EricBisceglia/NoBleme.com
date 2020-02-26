@@ -103,14 +103,14 @@ ___('users_register_coc', 'FR', "Nous voulons nous assurer que tous les utilisat
 
 
 // Registration form
-___('users_register_form_nickname', 'EN', "Choose a nickname (3 to 15 characters long)");
-___('users_register_form_nickname', 'FR', "Choisissez un pseudonyme (3 à 15 caractères)");
-___('users_register_form_password_1', 'EN', "Your password (at least 8 characters long)");
+___('users_register_form_nickname', 'EN', "Your nickname (3 to 15 characters, letters & numbers only)");
+___('users_register_form_nickname', 'FR', "Pseudonyme (3 à 15 caractères, chiffres & lettres uniquement)");
+___('users_register_form_password_1', 'EN', "Password (at least 8 characters long)");
 ___('users_register_form_password_1', 'FR', "Mot de passe (8 caractères minimum)");
 ___('users_register_form_password_2', 'EN', "Confirm your password by typing it again");
-___('users_register_form_password_2', 'FR', "Entrez à nouveau votre mot de passe");
-___('users_register_form_email', 'EN', "E-mail address (useful if you forget your password)");
-___('users_register_form_email', 'FR', "Adresse e-mail (utile si vous oubliez votre mot de passe)");
+___('users_register_form_password_2', 'FR', "Entrez à nouveau votre mot de passe pour le confirmer");
+___('users_register_form_email', 'EN', "E-mail address (optional, useful if you forget your password)");
+___('users_register_form_email', 'FR', "Adresse e-mail (optionnel, utile en cas de mot de passe oublié)");
 
 ___('users_register_form_question_1', 'EN', "Is pornography allowed?");
 ___('users_register_form_question_1', 'FR', "La pornographie est-elle autorisée ?");
