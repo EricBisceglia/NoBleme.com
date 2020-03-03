@@ -2,19 +2,19 @@
 .remember_me { margin-top: 6px; }
 
 /************************************************** PUBLIC PROFILE ***************************************************/
-.profile_frame  { border: 1px solid #CACACA; height: 500px; padding: 10px; overflow-y: auto; word-break: normal; }
-.profile_hr     { height: 1px; background: #CACACA; border: 0px; margin-left: -10px; margin-right: -10px;        }
+.profile_frame  { border: 1px solid #FFFFFF; height: 500px; padding: 10px; overflow-y: auto; word-break: normal; }
+.profile_hr     { height: 1px; background: #FFFFFF; border: 0px; margin-left: -10px; margin-right: -10px;        }
 .profile_button { margin-top: 5px; margin-bottom: 5px;                                                           }
 
 .profile_textarea         { height: 250px; }
-.profile_preview { border: 1px solid #CACACA; padding: 10px; height: 500px; width:533px; padding-top: 10px; }
+.profile_preview { border: 1px solid #FFFFFF; padding: 10px; height: 500px; width:533px; padding-top: 10px; }
 
 /************************************************* PRIVATE MESSAGES **************************************************/
-div.pm_frame            { border: 1px solid #CACACA; padding: 10px;                         }
+div.pm_frame            { border: 1px solid #FFFFFF; padding: 10px;                         }
 div.pm_frame_big        { margin-bottom: 5px;                                               }
 div.pm_frame_left       { margin-right: 3px;                                                }
 div.pm_frame_middle     { margin-left: 3px; margin-right: 3px;                              }
 div.pm_frame_right      { margin-left: 3px;                                                 }
 button.pm_frame_button  { margin-top: 10px; margin-bottom: 10px;                            }
 textarea.pm_body        { height: 250px;                                                    }
-div.pm_preview          { max-height: 250px; border: 1px solid #CACACA; padding-top: 10px;  }
+div.pm_preview          { max-height: 250px; border: 1px solid #FFFFFF; padding-top: 10px;  }

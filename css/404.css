@@ -1,5 +1,6 @@
 /***************************************************** 404 ERROR *****************************************************/
-html { background:#000000; }
+html { background: #000000; }
+body { background: #000000; }
 
 textarea.text404 { background: #000000; border: 0px solid #000000; color: #CACACA  ;
                    text-align: center; overflow: auto; resize: none; height:167px  }
@@ -8,18 +9,15 @@ td.img404       { width: 300px;       }
 img.img404left  { margin-right: 10px; }
 img.img404right { margin-left: 10px;  }
 
-.header_topmenu                                         { background: #000000; border-bottom: 1px solid #CACACA; }
-.header_topmenu_title                                   { background: #000000; color: #CACACA;                   }
-.header_topmenu_title > a                               { color: #CACACA;                                        }
-.header_topmenu_title:hover                             { background: #000000; color: #78A1BC;                   }
-.header_topmenu_title:hover > a                         { color: #78A1BC;                                        }
+.header_topmenu                                         { background: #B00B1E;                                   }
+.header_topmenu_title                                   { background: #B00B1E; color: #000000;                   }
+.header_topmenu_title > a                               { color: #000000;                                        }
+.header_topmenu_title:hover                             { background: #000000; color: #B00B1E;                   }
+.header_topmenu_title:hover > a                         { color: #FFB6C1;                                        }
 .header_topmenu_title.header_topmenu_selected           { background: #000000;                                   }
-.header_topmenu_title.header_topmenu_selected > a       { color: #CACACA;                                        }
-.header_topmenu_title.header_topmenu_selected:hover     { background: #000000; color: #78A1BC;                   }
-.header_topmenu_title.header_topmenu_selected:hover > a { color: #78A1BC;                                        }
-.header_topmenu_flag                                    { display: none;                                         }
-.header_infobar                                         { display: none;                                         }
+.header_topmenu_title.header_topmenu_selected > a       { color: #000000;                                        }
+.header_topmenu_title.header_topmenu_selected:hover     { background: #000000; color: #CACACA;                   }
+.header_topmenu_title.header_topmenu_selected:hover > a { color: #FFB6C1;                                        }
+.header_infobar                                         { background: #000000;                                   }
 .header_sidemenu                                        { display: none;                                         }
 .header_side_nomenu                                     { display: none;                                         }
-footer > a                                              { color: #333333; font-weight: thin; font-size: 0.9em;   }
-footer > a:hover                                        { color: #78A1BC;                                        }

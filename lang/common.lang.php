@@ -468,13 +468,6 @@ ___('menu_top_admin', 'EN', "ADMIN");
 ___('menu_top_admin', 'FR', "ADMIN");
 
 
-// Side menu actions
-___('menu_side_display', 'EN', 'Show the side menu');
-___('menu_side_display', 'FR', 'Afficher le menu latéral');
-___('menu_side_hide', 'EN', 'Hide the side menu');
-___('menu_side_hide', 'FR', 'Masquer le menu latéral');
-
-
 // Side menu: NoBleme
 ___('menu_side_nobleme_homepage', 'EN', "Home page");
 ___('menu_side_nobleme_homepage', 'FR', "Page d'accueil");

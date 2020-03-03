@@ -1,19 +1,25 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// The scripts below will be included in every page, as they are required by every single page of the website
+/**
+ * Toggles the side menu when the hamburger menu is pressed.
+ *
+ * @returns {void}
+ */
 
-// Stop showing the side menu suggestion when the user starts scrolling
-window.addEventListener('scroll', function()
+ function toggle_sidemenu()
 {
-  // Only do this if the side menu is hidden
-  if(window.getComputedStyle(document.getElementById('header_sidemenu')).display == 'none')
-  {
-    // Detect where the scroll bar is at
-    var currentscroll = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
+  // Fetch the side menu
+  var sidemenu = document.getElementById("header_sidemenu");
 
-    // If on top of the page, show the menu again
-    if(!currentscroll)
-      document.getElementById('header_nomenu').style.display = 'inline';
-    else
-      document.getElementById('header_nomenu').style.display = 'none';
+  // If the sidemenu is visible, hide it slowly
+  if (document.getElementsByClassName("header_sidemenu_hide").length == 0)
+  {
+    sidemenu.className = "header_sidemenu header_sidemenu_hide";
+    setTimeout(function(){sidemenu.style.display = 'none';}, 500);
   }
-}, true);
+
+  // If the sidemenu is hidden, show it
+  else
+  {
+    sidemenu.className = "header_sidemenu header_sidemenu_show";
+    sidemenu.style.display = 'block';
+  }
+}

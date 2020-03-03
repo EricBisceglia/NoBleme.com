@@ -1,35 +1,48 @@
+/*********************************************************************************************************************/
+/*                   The standard style of all basic elements is determined in the reset.css file                    */
+/*                            This has all been handcrafted with love, the oldschool way                             */
+/*          I could minify this, but I feel there is beauty in well indented code and want it to be visible          */
+/*    I like to call NoBleme's theme "anarcho-material design", those versed in UI design will understand why :)     */
 /****************************************************** COLORS *******************************************************/
-.white                      { background: #FFFFFF;  }
-.grey_light                 { background: #EEEEEE;  }
-.grey                       { background: #AAAAAA;  }
-.grey_dark                  { background: #333333;  }
-.black                      { background: #000000;  }
-.nobleme_light              { background: #78A1BC;  }
-.nobleme_dark               { background: #37536B;  }
-.edited                     { background: #47D38D;  }
-.positive                   { background: #339966;  }
-.neutral                    { background: #EB8933;  }
-.negative, .error           { background: #FF0000;  }
-.green_background           { background: #B3E28E;  }
-.green_background_light     { background: #DAEEAA;  }
-.website_update_background  { background: #F9E5E5;  }
-.website_update             { background: #D13030;  }
 
-.text_white                   { color: #FFFFFF; }
-.text_grey_light              { color: #D0D0D0; }
-.text_grey                    { color: #AAAAAA; }
-.text_grey_dark               { color: #333333; }
-.text_black                   { color: #000000; }
-.text_nobleme_light           { color: #78A1BC; }
-.text_nobleme_dark            { color: #37536B; }
-.text_edited                  { color: #47D38D; }
-.text_positive                { color: #339966; }
-.text_neutral                 { color: #EB8933; }
-.text_negative, .texte_erreur { color: #FF0000; }
-.text_green_background        { color: #B3E28E; }
-.text_website_update          { color: #D13030; }
+.white       { background: #FFFFFF; }
+.light       { background: #CACACA; }
+.black       { background: #000000; }
+.dark        { background: #121212; }
+.red         { background: #B00B1E; }
+.error       { background: #CF6679; }
+.purple      { background: #6200EE; }
+.purple_dark { background: #3700B3; }
+.teal        { background: #03DAC6; }
+.teal_dark   { background: #018786; }
+
+.text_white       { color: #FFFFFF; }
+.text_light       { color: #CACACA; }
+.text_black       { color: #000000; }
+.text_dark        { color: #121212; }
+.text_red         { color: #B00B1E; }
+.text_error       { color: #CF6679; }
+.text_purple      { color: #6200EE; }
+.text_purple_dark { color: #3700B3; }
+.text_teal        { color: #03DAC6; }
+.text_teal_dark   { color: #018786; }
 
 /************************************************** GENERIC CLASSES **************************************************/
+
+@media (min-width: 1025px) { .mobile  { display: none; }      }
+@media (max-width: 1024px) { .desktop { display: none; }      }
+
+@media (min-width: 1025px) {
+.width_30        { margin: auto; max-width: 30em;             }
+.width_40        { margin: auto; max-width: 40em;             }
+.width_50        { margin: auto; max-width: 50em;             }
+.width_60        { margin: auto; max-width: 60em;           } }
+@media (max-width: 1024px) {
+.width_30        { margin: auto; max-width: 80em;             }
+.width_40        { margin: auto; max-width: 90em;             }
+.width_50        { margin: auto; max-width: 90em;             }
+.width_60        { margin: auto; max-width: 90em;           } }
+
 .align_justify   { text-align: justify;                       }
 .align_center    { text-align: center;                        }
 .align_left      { text-align: left;                          }
@@ -42,16 +55,6 @@
 .margin_auto     { margin: auto;                              }
 .indiv, .intable { width: 100%;                               }
 .indented        { padding-left: 20px;                        }
-.width_15        { margin: auto; max-width: 15em;             }
-.width_25        { margin: auto; max-width: 25em;             }
-.width_30        { margin: auto; max-width: 30em;             }
-.width_35        { margin: auto; max-width: 35em;             }
-.width_40        { margin: auto; max-width: 40em;             }
-.width_50        { margin: auto; max-width: 50em;             }
-.width_60        { margin: auto; max-width: 60em;             }
-.width_70        { margin: auto; max-width: 70em;             }
-.width_80        { margin: auto; max-width: 80em;             }
-.width_90        { margin: auto; max-width: 90em;             }
 
 .bold            { font-weight: bold;                         }
 .notbold         { font-weight: normal;                       }
@@ -64,6 +67,7 @@
 .bigger          { font-size: 1.5em;                          }
 .italics         { font-style: italic;                        }
 .monospace       { font-family: monospace;                    }
+.noglow          { filter: none;                              }
 
 .pointer         { cursor: pointer;                           }
 
@@ -96,34 +100,41 @@
 .float_right     { float: right;                              }
 
 /****************************************************** BBCODES ******************************************************/
+
 .bbcode_img           { max-width: 100%;                                                                              }
-.bbcode_blur          { text-shadow: 0 0 10px #000000; color: rgba(255,255,255,0); transition: 2s text-shadow linear; }
-.bbcode_blur:hover    { text-shadow: none; color: #000000;                                                            }
+.bbcode_blur          { text-shadow: 0 0 10px #FFFFFF; color: rgba(255,255,255,0); transition: 2s text-shadow linear; }
+.bbcode_blur:hover    { text-shadow: none; color: #FFFFFF;                                                            }
 .bbcode_quote_title   { border-bottom: 1px solid #CCCCCC; margin-bottom: 3px; font-weight: bold;                      }
-.bbcode_quote_body    { padding: 3px; background-color: #FFFFFF; border: 1px solid #D6D6D6;                           }
+.bbcode_quote_body    { padding: 3px; background-color: #121212; border: 1px solid #D6D6D6;                           }
 .bbcode_spoiler_title { text-transform: uppercase; border-bottom: 1px solid #CCCCCC                                   ;
                         margin-bottom: 3px; font-weight: bold;                                                        }
-.bbcode_spoiler_body  { padding: 3px; background-color: #FFFFFF; border: 1px solid #d8d8d8;                           }
+.bbcode_spoiler_body  { padding: 3px; background-color: #121212; border: 1px solid #d8d8d8;                           }
 
 /***************************************************** TOOLTIPS ******************************************************/
+
 .tooltip_container                { cursor: pointer;                                                          }
 .tooltip_container .tooltip       { display: none; padding: 5px 8px 7px 10px; z-index: 1337; margin-top:-20px ;
                                     margin-left:15px ; font-size: 13px; cursor: normal;                       }
-.tooltip_container:hover .tooltip { display: inline; position: absolute; color: #000000;  text-align: left    ;
-                                    background: #FFFFFF ; border-radius: 5px; border: 1px solid #37536B       ;
-                                    box-shadow: 3px 3px 3px #37536B;                                          }
+.tooltip_container:hover .tooltip { display: inline; position: absolute; color: #FFFFFF;  text-align: left    ;
+                                    background: #121212 ; border-radius: 5px; border: 1px solid #B00B1E       ;
+                                    box-shadow: 3px 3px 3px #B00B1E;                                          }
+
 
 /************************************************* SPECIFIC CLASSES **************************************************/
-hr.content_separator { height: 1px; background:#78A1BC; border: 0px; margin-left: -25px; margin-right: -25px; }
+
+.icon_white { filter: invert(89%) sepia(1%) saturate(28%) hue-rotate(36deg) brightness(93%) contrast(89%);     }
+.icon_red   { filter: invert(11%) sepia(86%) saturate(6039%) hue-rotate(348deg) brightness(77%) contrast(96%); }
+
+hr.content_separator { height: 1px; background:#FFB6C1; border: 0px; margin-left: -25px; margin-right: -25px; }
 
 p.nopadding { padding-top: 0px; }
 
 button.bigbutton { border-radius: .4rem; font-size: 2.0rem; height: 5.0rem; letter-spacing: .2rem; padding: 0 3.0rem; }
 
 del { background: #DB4141; text-decoration: none; font-weight: bold ;
-      color: #000000; padding-left: 5px; padding-right: 5px;        }
+      color: #FFFFFF; padding-left: 5px; padding-right: 5px;        }
 ins { background: #3CE052; text-decoration: none; font-weight: bold ;
-      color: #000000; padding-left: 5px; padding-right: 5px;        }
+      color: #FFFFFF; padding-left: 5px; padding-right: 5px;        }
 
 table.noresize                               { table-layout: fixed;                                                   }
 table.grid td, table.grid th                 { border-right: 0.1rem solid #E1E1E1; padding: 6px 8px 6px 8px;          }
@@ -136,18 +147,19 @@ table.hiddenaltc2 > tbody tr:nth-child(4n+4) { background-color: #EEEEEE;       
 table.altc > thead tr:nth-child(1), table.hiddenaltc > thead tr:nth-child(1), table.hiddenaltc2 > thead tr:nth-child(1),
 .rowaltc                                      { background-color: #E5E5E5;                                            }
 table.altc td , table.altc th, table.hiddenaltc td, table.hiddenaltc th,
-table.hiddenaltc2 td, table.hiddenaltc2 th    { border: 1px solid #CACACA;                                            }
-table.blacktitles th                    { font-weight: bold; color: #000000; text-align: center; white-space: nowrap; }
+table.hiddenaltc2 td, table.hiddenaltc2 th    { border: 1px solid #FFFFFF;                                            }
+table.blacktitles th                    { font-weight: bold; color: #FFFFFF; text-align: center; white-space: nowrap; }
 .blankrow                                     { height:14px; padding:0; margin:0; border-right: 0rem !important;      }
 .noborder                                     { border: 0px !important;                                               }
 table.noborder td                             { border: 0px !important;                                               }
 select.table_search                           { height: auto; padding:0px; font-weight: normal; border-radius: 0;     }
 td.black_bottom, th.black_bottom, tr.black_bottom > td, tr.black_bottom > th
-                                              { border-bottom: 1px solid #000000 !important;                          }
+                                              { border-bottom: 1px solid #FFFFFF !important;                          }
 td.thick_black_bottom, th.thick_black_bottom, tr.thick_black_bottom > td, tr.thick_black_bottom > th
-                                              { border-bottom: 2px solid #000000 !important;                          }
+                                              { border-bottom: 2px solid #FFFFFF !important;                          }
 
 /**************************************************** ERROR PAGE *****************************************************/
+
 div.error_container       { margin-top: 100px; margin-bottom: 100px;  }
 h3.small_error_gap        { margin-bottom: 50px;                      }
 h3.big_error_gap          { margin-bottom: 100px;                     }

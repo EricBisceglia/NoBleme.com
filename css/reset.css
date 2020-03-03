@@ -1,19 +1,20 @@
 /*********************************************************************************************************************/
-/************************ USES SECTIONS OF MILLIGRAM v1.2.0 BY CJ PATOILO (UNDER MIT LICENCE) ************************/
-/***************************** https://github.com/milligram/milligram/blob/master/license ****************************/
+/*              This file resets the style of all elements so that they look the same in every browser,              */
+/*                       and also decides the baseline theme of the standard/common elements.                        */
+/*                           More specific styles for elements are in the nobleme.css file                           */
+/*                            This has all been handcrafted with love, the oldschool way                             */
+/*          I could minify this, but I feel there is beauty in well indented code and want it to be visible          */
+/*    I like to call NoBleme's theme "anarcho-material design", those versed in UI design will understand why :)     */
 /*********************************************************************************************************************/
-/********************** RESET CSS SO THAT HOPEFULLY EVERYTHING LOOKS THE SAME ON EVERY BROWSER ***********************/
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address,
-big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul,
-li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details,
-embed, figure, figcaption, footer, header, hgroup, menu, nav, output, section, summary, time, mark, audio, video
-  { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; }
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
-body                                                    { line-height: 1; min-height:100vh;               }
-ol, ul                                                  { list-style: none;                               }
-blockquote, q                                           { quotes: none;                                   }
-blockquote:before, blockquote:after, q:before, q:after  { content: ''; content: none;                     }
-table                                                   { border-collapse: collapse; border-spacing: 0;   }
+a, audio, blockquote, body, canvas, caption, code, del, div, dd, dl, dt, em, embed, fieldset, footer, form, h1, h2,
+h3, h4, h5, h6, header, html, iframe, img, ins, label, li, menu, nav, object, ol, p, pre, s, section, span, table,
+tbody, td, tfoot, th, thead, time, tr, ul, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; }
+footer, header, menu, nav, section               { display: block;                                                   }
+body                                             { line-height: 1; min-height:100vh;                                 }
+ol, ul                                           { list-style: none;                                                 }
+blockquote                                       { quotes: none;                                                     }
+blockquote:before, blockquote:after              { content: ''; content: none;                                       }
+table                                            { border-collapse: collapse; border-spacing: 0;                     }
 /*************************************************** CUSTOM FONTS ****************************************************/
 @font-face { font-family: 'NoBleme'                                         ;
   src:  url('./fonts/Roboto.eot?#iefix') format('embedded-opentype')        ,
@@ -54,12 +55,15 @@ table                                                   { border-collapse: colla
 /******************************* DEFAULT STYLES OF GENERIC TAGS FOR THE WHOLE WEBSITE ********************************/
 *, *:after, *:before    { box-sizing: inherit;                                                                        }
 html                    { box-sizing: border-box; font-size: 62.5%;                                                   }
-body                    { color: #555555; font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif  ;
-                          font-size: 1.6em; font-weight: 300; letter-spacing: .01em; line-height: 1.45;               }
-a                       { color: #37536B; text-decoration: none;                                                      }
-a:focus, a:hover        { color: #78A1BC;                                                                             }
+body                    { color: #FFFFFF; background: #121212; background-color: transparent !important;              ;
+                          background-image: linear-gradient(to bottom, #121212 70%, #000000)                          ;
+                          background-position: top; background-repeat: no-repeat; background-size: auto               ;
+                          font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif                  ;
+                          font-size: 1.6rem; font-weight: 300; letter-spacing: .01rem; line-height: 1.45;             }
+a                       { color: #CACACA; text-decoration: none; filter: drop-shadow(0 0 3px #B00B1E);                }
+a:focus, a:hover        { color: #B00B1E;                                                                             }
 table                   { width: 100%;                                                                                }
-td, th                  { border-bottom: 0.1rem solid #E1E1E1; padding: 1.2rem 1.5rem;                                }
+td, th                  { padding: 1.2rem 1.5rem;                                                                     }
 td:first-child, th:first-child { padding-left: 0;                                                                     }
 td:last-child, th:last-child { padding-right: 0;                                                                      }
 img                     { max-width: 100%;                                                                            }
@@ -70,23 +74,23 @@ ul                      { list-style: circle inside;                            
 blockquote              { border-left: 0.3rem solid #D1D1D1; padding: 1rem 1.5rem;                                    }
 blockquote *:last-child { margin-bottom: 0;                                                                           }
 code               { background: #F4F5F6; font-size: 86%; margin: 0 .2rem; padding: .2rem .5rem; white-space: nowrap; }
-pre                     { background: #F4F5F6; border-left: 0.3rem solid #37536B;                                     }
+pre                     { background: #F4F5F6; border-left: 0.3rem solid #B00B1E;                                     }
 pre > code              { border-radius: 0; display: block; padding: 1rem 1.5rem; white-space: pre;                   }
-h1, h2, h3, h4, h5, h6  { font-weight: 300; letter-spacing: -.1rem; color:#333333                                     ;
+h1, h2, h3, h4, h5, h6  { font-weight: 300; letter-spacing: -.1rem; color:#FFFFFF                                     ;
                           font-family: 'NoBleme-header', 'Helvetica', 'Arial';                                        }
-h1                      { font-size: 5.0rem;                                                                          }
-h2                      { font-size: 4.2rem;                                                                          }
-h3                      { font-size: 3.6rem;                                                                          }
-h4                      { font-size: 3.0rem;                                                                          }
-h5                      { font-size: 2.4rem;                                                                          }
-h6                      { font-size: 1.5rem;                                                                          }
-@media (max-width: 1024px) { body { font-size: 4.0em;                                                                 }
-h1                      { font-size: 10.0rem;                                                                         }
-h2                      { font-size: 8.0rem;                                                                          }
-h3                      { font-size: 7.0rem;                                                                          }
-h4                      { font-size: 6.0rem;                                                                          }
-h5                      { font-size: 5.0rem;                                                                          }
-h6                      { font-size: 4.5rem;                                                                        } }
+h1                      { font-size: 5.0rem; color: #B00B1E;                                                          }
+h2                      { font-size: 4.2rem; color: #B00B1E;                                                          }
+h3                      { font-size: 3.6rem; color: #B00B1E;                                                          }
+h4                      { font-size: 3.0rem; color: #B00B1E;                                                          }
+h5                      { font-size: 2.4rem; color: #B00B1E;                                                          }
+h6                      { font-size: 1.5rem; color: #B00B1E;                                                          }
+@media (max-width: 1024px) { body { font-size: 2.6em;                                                                 }
+h1                      { font-size: 8.0rem; color: #B00B1E;                                                         }
+h2                      { font-size: 7.0rem;  color: #B00B1E;                                                         }
+h3                      { font-size: 6.0rem;  color: #B00B1E;                                                         }
+h4                      { font-size: 5.0rem;  color: #B00B1E;                                                         }
+h5                      { font-size: 4.0rem;  color: #B00B1E;                                                         }
+h6                      { font-size: 3.0rem;  color: #B00B1E;                                                       } }
 /******************************************************* FORMS *******************************************************/
 textarea
   { min-height: 6.5rem;                                                                                 }
@@ -95,7 +99,7 @@ label, legend
 .label_inline
   { display: inline-block; font-weight: normal; margin-left: .2rem;                                     }
 select
-  { color: #555555; font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif          ;
+  { color: #FFFFFF; font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif          ;
   font-size: 1.0em; font-weight: bold; letter-spacing: .01em; line-height: 1.6;                         }
 input[type='checkbox'], input[type='radio']
   { display: inline;                                                                                    }
@@ -103,41 +107,41 @@ input[type='password'], input[type='text'], textarea, select
   { background-color: transparent; border: 0.1rem solid #D1D1D1; border-radius: .4rem; box-shadow: none ;
     box-sizing: inherit ; height: 3.4rem; padding: .6rem 1.0rem;                                        }
 input[type='password']:focus, input[type='text']:focus, textarea:focus, select:focus
-  { border-color: #37536B; outline: 0;                                                                  }
+  { border-color: #B00B1E; outline: 0;                                                                  }
 input[type='text'][disabled] { background-color: #F0F0F0;                                               }
 .button, button, input[type='reset'], input[type='submit']
-  { background-color: #37536B; border: 0.1rem solid #37536B; border-radius: .4rem; color: #FFFFFF       ;
+  { background-color: #B00B1E; border: 0.1rem solid #B00B1E; border-radius: .4rem; color: #121212       ;
    cursor: pointer; display: inline-block; font-size: 1.1rem; font-weight: 700; height: 3.8rem          ;
    line-height: 3.8rem; letter-spacing: .1rem; padding: 0 3.0rem; text-align: center                    ;
    text-decoration: none;  text-transform: uppercase; white-space: nowrap;                              }
 .button:focus, .button:hover, button:focus, button:hover, input[type='reset']:focus, input[type='reset']:hover,
 input[type='submit']:focus, input[type='submit']:hover
-  { background-color: #555555; border-color: #555555; color: #FFFFFF; outline: 0;                       }
+  { background-color: #FFFFFF; border-color: #FFFFFF; color: #121212; outline: 0;                       }
 .button[disabled], button[disabled], input[type='reset'][disabled], input[type='submit'][disabled]
   { cursor: default; opacity: .5;                                                                       }
 .button[disabled]:focus, .button[disabled]:hover, button[disabled]:focus, button[disabled]:hover,
 input[type='reset'][disabled]:focus, input[type='reset'][disabled]:hover, input[type='submit'][disabled]:focus,
 input[type='submit'][disabled]:hover
-  { background-color: #37536B; border-color: #37536B;                                                   }
+  { background-color: #B00B1E; border-color: #B00B1E;                                                   }
 .button.button_outline, button.button_outline, input[type='reset'].button_outline, input[type='submit'].button_outline
-  { background-color: transparent; color: #37536B;                                                      }
+  { background-color: transparent; color: #B00B1E;                                                      }
 .button.button_outline:focus, .button.button_outline:hover, button.button_outline:focus, button.button_outline:hover,
 input[type='reset'].button_outline:focus, input[type='reset'].button_outline:hover,
 input[type='submit'].button_outline:focus, input[type='submit'].button_outline:hover
-  { background-color: transparent; border-color: #555555; color: #555555;                               }
+  { background-color: transparent; border-color: #FFFFFF; color: #FFFFFF;                               }
 .button.button_outline[disabled]:focus, .button.button_outline[disabled]:hover, button.button_outline[disabled]:focus,
 button.button_outline[disabled]:hover, input[type='reset'].button_outline[disabled]:focus,
 input[type='reset'].button_outline[disabled]:hover, input[type='submit'].button_outline[disabled]:focus,
 input[type='submit'].button_outline[disabled]:hover
-  { border-color: inherit; color: #37536B;                                                              }
+  { border-color: inherit; color: #B00B1E;                                                              }
 .button.button_clear, button.button_clear, input[type='reset'].button_clear, input[type='submit'].button_clear
-  { background-color: transparent; border-color: transparent; color: #37536B;                           }
+  { background-color: transparent; border-color: transparent; color: #B00B1E;                           }
 .button.button_clear:focus, .button.button_clear:hover, button.button_clear:focus, button.button_clear:hover,
 input[type='reset'].button_clear:focus, input[type='reset'].button_clear:hover, input[type='submit'].button_clear:focus,
 input[type='submit'].button_clear:hover
-  { background-color: transparent; border-color: transparent; color: #555555;                           }
+  { background-color: transparent; border-color: transparent; color: #FFFFFF;                           }
 .button.button_clear[disabled]:focus, .button.button_clear[disabled]:hover, button.button_clear[disabled]:focus,
 button.button_clear[disabled]:hover, input[type='reset'].button_clear[disabled]:focus,
 input[type='reset'].button_clear[disabled]:hover, input[type='submit'].button_clear[disabled]:focus,
 input[type='submit'].button_clear[disabled]:hover
-  { color: #37536B;                                                                                     }
+  { color: #B00B1E;                                                                                     }

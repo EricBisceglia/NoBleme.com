@@ -89,7 +89,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('activity_title')?>
 
           <?php if($is_admin) { ?>
-          <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
+          <img class="pointer icon_white" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
           <?php } ?>
 
         </h1>
@@ -100,7 +100,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('activity_title_modlogs')?>
 
           <?php if($is_admin) { ?>
-          <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
+          <img class="pointer icon_white" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
           <?php } ?>
 
         </h1>

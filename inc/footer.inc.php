@@ -44,19 +44,19 @@ $copyright_date = date('Y');
 
           <?php if($pageviews) { ?>
 
-          <?=__link("pages/admin/pageviews", $pageviews, "", 1, $path);?><br>
+          <?=__link("index", $pageviews, "", 1, $path);?><br>
 
           <?php } ?>
 
-          <?=__link("", $metrics, "pointer", 0, $path);?><br>
+          <?=__link("index", $metrics, "pointer", 0, $path);?><br>
 
           <?php } ?>
 
-          <?=__link("pages/todo/roadmap", $version, "", 1, $path);?><br>
+          <?=__link("index", $version, "", 1, $path);?><br>
 
-          <?=__link("pages/doc/mentions_legales", __('footer_legal'), "", 1, $path);?><br>
+          <?=__link("index", __('footer_legal'), "", 1, $path);?><br>
 
-          <?=__link("pages/doc/nobleme", __('footer_copyright', 0, 0, 0, array($copyright_date)), "", 1, $path);?><br>
+          <?=__link("index", __('footer_copyright', 0, 0, 0, array($copyright_date)), "", 1, $path);?><br>
 
         </footer>
 
