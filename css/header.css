@@ -6,6 +6,7 @@
 .header_hamburger_slice              { display: block; position: relative; background: #121212                        ;
                                       border-radius: 3px;                                                             }
 .header_topmenu_title                { font-weight: bold; color: #121212; cursor: pointer; background-color: #B00B1E; }
+.header_topmenu_logo                 { height: 30px; vertical-align: middle; background: #121212;  }
 .header_topmenu_link                 { text-decoration: none; color: #121212; width: 100%; display: inline-block      ;
                                        filter: none; background-image: none;                                          }
 .header_topmenu_link:hover           { color: #B00B1E;                                                                }

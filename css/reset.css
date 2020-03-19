@@ -55,9 +55,7 @@ table                                            { border-collapse: collapse; bo
 /******************************* DEFAULT STYLES OF GENERIC TAGS FOR THE WHOLE WEBSITE ********************************/
 *, *:after, *:before    { box-sizing: inherit;                                                                        }
 html                    { box-sizing: border-box; font-size: 62.5%;                                                   }
-body                    { color: #FFFFFF; background: #121212; background-color: transparent !important;              ;
-                          background-image: linear-gradient(to bottom, #121212 70%, #000000)                          ;
-                          background-position: top; background-repeat: no-repeat; background-size: auto               ;
+body                    { color: #FFFFFF; background: #121212                                                         ;
                           font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif                  ;
                           font-size: 1.6rem; font-weight: 300; letter-spacing: .01rem; line-height: 1.45;             }
 a                       { color: #CACACA; text-decoration: none; filter: drop-shadow(0 0 3px #B00B1E);                }
@@ -71,10 +69,10 @@ button                  { margin-bottom: 1.0rem;                                
 li, table               { margin-bottom: 0.4rem;                                                                      }
 p                       { padding-top: 2.5rem; text-align: justify;                                                   }
 ul                      { list-style: circle inside;                                                                  }
-blockquote              { border-left: 0.3rem solid #D1D1D1; padding: 1rem 1.5rem;                                    }
+blockquote              { border-left: 0.3rem solid #B00B1E; padding: 1rem 1.5rem                                     }
 blockquote *:last-child { margin-bottom: 0;                                                                           }
 code               { background: #F4F5F6; font-size: 86%; margin: 0 .2rem; padding: .2rem .5rem; white-space: nowrap; }
-pre                     { background: #F4F5F6; border-left: 0.3rem solid #B00B1E;                                     }
+pre                     { background: #454545; border-left: 0.3rem solid #B00B1E;                                     }
 pre > code              { border-radius: 0; display: block; padding: 1rem 1.5rem; white-space: pre;                   }
 h1, h2, h3, h4, h5, h6  { font-weight: 300; letter-spacing: -.1rem; color:#FFFFFF                                     ;
                           font-family: 'NoBleme-header', 'Helvetica', 'Arial';                                        }
@@ -85,7 +83,7 @@ h4                      { font-size: 3.0rem; color: #B00B1E;                    
 h5                      { font-size: 2.4rem; color: #B00B1E;                                                          }
 h6                      { font-size: 1.5rem; color: #B00B1E;                                                          }
 @media (max-width: 1024px) { body { font-size: 2.6em;                                                                 }
-h1                      { font-size: 8.0rem; color: #B00B1E;                                                         }
+h1                      { font-size: 8.0rem; color: #B00B1E;                                                          }
 h2                      { font-size: 7.0rem;  color: #B00B1E;                                                         }
 h3                      { font-size: 6.0rem;  color: #B00B1E;                                                         }
 h4                      { font-size: 5.0rem;  color: #B00B1E;                                                         }

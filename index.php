@@ -43,11 +43,11 @@ $website_age = (date('n') < 3 || (date('n') == 3 && date('j') < 19)) ? $website_
 
       <div class="width_50">
 
-        <h1>
-          <?=__('nobleme.com')?>
-        </h1>
+        <div class="align_center smallpadding_top smallpadding_bot">
+          <img src="<?=$path?>img/common/logo_full.png">
+        </div>
 
-        <h5>
+        <h5 class="bigpadding_top">
           <?=__('nobleme_home_welcome_title')?>
         </h5>
 
