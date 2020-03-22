@@ -24,4 +24,8 @@ function toggle_header_menu(menu_name)
   // If the menu is invisible, open it
   if(menu_visibility == 'none')
     selected_submenu.style.display = 'grid';
+
+  // If there's a glowing animation due to unread private messages, get rid of it if the user clicks it
+  if(menu_name == 'account')
+    document.getElementById('header_infobar_new_messages').classList.remove('header_infobar_notification');
 }

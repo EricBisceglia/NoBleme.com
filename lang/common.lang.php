@@ -333,6 +333,8 @@ ___('error_forbidden', 'FR', "Vous ne devriez pas accéder à cette page");
 // Website update
 ___('error_website_update', 'EN', 'An update is in progress, NoBleme is temporarily closed. Come back in a few minutes.');
 ___('error_website_update', 'FR', 'Une mise à jour est en cours, NoBleme est temporairement fermé. Revenez dans quelques minutes.');
+___('website_closed', 'EN', 'The website is currently closed for maintenance. Click here to reopen it to the public.');
+___('website_closed', 'FR', 'Le site est actuellement fermé pour maintenance. Cliquer ici pour le rouvrir au public.');
 
 
 // Flood check
@@ -433,15 +435,15 @@ ___('header_status_message', 'EN', "{{1}}, you have recieved a new private messa
 ___('header_status_message', 'FR', "{{1}}, vous avez reçu un nouveau message privé, cliquez ici pour le lire !");
 ___('header_status_message+', 'EN', "{{1}}, you have recieved {{2}} new private messages, click here to read them!");
 ___('header_status_message+', 'FR', "{{1}}, vous avez reçu {{2}} nouveaux messages privés, cliquez ici pour les lire !");
-___('header_status_message_short', 'EN', "{{1}}: New private message!");
-___('header_status_message_short', 'FR', "{{1}} : Nouveau message privé !");
-___('header_status_message_short+', 'EN', "{{1}}: {{2}} new private messages!");
-___('header_status_message_short+', 'FR', "{{1}} : {{2}} nouveaux messages privés !");
+___('header_status_message_short', 'EN', "{{1}}: You have a new private message!");
+___('header_status_message_short', 'FR', "{{1}} : Vous avez un nouveau message privé !");
+___('header_status_message_short+', 'EN', "{{1}}: You have {{2}} new private messages!");
+___('header_status_message_short+', 'FR', "{{1}} : Vous avez {{2}} nouveaux messages privés !");
 
 ___('header_status_logged_in', 'EN', "You are logged in as {{1}}. Click here to manage your account.");
 ___('header_status_logged_in', 'FR', "Vous êtes connecté en tant que {{1}}. Cliquez ici pour gérer votre compte.");
-___('header_status_logged_in_short', 'EN', "{{1}}: Manage my account.");
-___('header_status_logged_in_short', 'FR', "{{1}} : Gérer mon compte");
+___('header_status_logged_in_short', 'EN', "{{1}}: Click here to manage your account.");
+___('header_status_logged_in_short', 'FR', "{{1}} : Cliquez ici pour gérer votre comte");
 
 ___('header_status_login', 'EN', "You are not logged in: Click here to login or register.");
 ___('header_status_login', 'FR', "Vous n'êtes pas connecté: Cliquez ici pour vous identifier ou vous enregistrer.");
@@ -475,10 +477,10 @@ ___('submenu_nobleme_what_is', 'EN', "What is NoBleme");
 ___('submenu_nobleme_what_is', 'FR', "Qu'est-ce que NoBleme");
 ___('submenu_nobleme_activity', 'EN', "Recent activity");
 ___('submenu_nobleme_activity', 'FR', "Activité récente");
-___('submenu_nobleme_irc', 'EN', "IRC chat server");
-___('submenu_nobleme_irc', 'FR', "Serveur de chat IRC");
 ___('submenu_nobleme_internet', 'EN', "Internet encyclopedia");
 ___('submenu_nobleme_internet', 'FR', "Encyclopédie du web");
+___('submenu_nobleme_irc', 'EN', "IRC chat server");
+___('submenu_nobleme_irc', 'FR', "Serveur de chat IRC");
 ___('submenu_nobleme_manifesto', 'EN', "Political manifesto");
 ___('submenu_nobleme_manifesto', 'FR', "Manifeste politique");
 

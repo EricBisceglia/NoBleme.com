@@ -58,13 +58,12 @@ $qupdate  = query(" SELECT  system_variables.update_in_progress AS 'update'
                     LIMIT   1 ");
 $dupdate = mysqli_fetch_array($qupdate);
 
-// If yes, close the website to anyone who's not an admin
-if($dupdate['update'] && !$is_admin)
-  exit(__('error_website_update'));
+// Keep the update status in a variable
+$website_closed = $dupdate['update'];
 
-// During updates, change some of the CSS properties to remind admins that the website is closed
-$website_update_css   = ($dupdate['update']) ? " website_update" : "";
-$website_update_css2  = ($dupdate['update']) ? " website_update_background" : "";
+// If yes, close the website to anyone who's not an admin
+if($website_closed && !$is_admin)
+  exit(__('error_website_update'));
 
 
 
@@ -365,26 +364,36 @@ $javascripts .= '
 <body id="body">
   <?php } ?>
 
+<?php ############################################# WEBSITE UPDATE ################################################# ?>
+
+    <?php if($website_closed) { ?>
+
+    <div class="header_infobar error">
+      <?=__link('todo_link', __('website_closed'), 'noglow glowhover bold indiv align_center biggest', 1, $path);?>
+    </div>
+
+    <?php } ?>
+
 <?php /* ############################################## TOP MENU ################### */ if(!isset($_GET["popup"])) { ?>
 
-    <div class="header_topmenu<?=$website_update_css?>">
+    <div class="header_topmenu">
 
       <div id="header_titres" class="header_topmenu_zone">
 
-        <div class="header_topmenu_link header_topmenu_title" onclick="toggle_header_menu('nobleme');">
+        <div class="header_topmenu_title" onclick="toggle_header_menu('nobleme');">
           <?=__('menu_top_nobleme')?>
         </div>
 
-        <div class="header_topmenu_link header_topmenu_title" onclick="toggle_header_menu('community');">
+        <div class="header_topmenu_title" onclick="toggle_header_menu('community');">
           <?=__('menu_top_community')?>
         </div>
 
-        <div class="header_topmenu_link header_topmenu_title" onclick="toggle_header_menu('pages');">
+        <div class="header_topmenu_title" onclick="toggle_header_menu('pages');">
           <?=__('menu_top_pages')?>
         </div>
 
         <?php if($is_global_moderator) { ?>
-        <div class="header_topmenu_link header_topmenu_title" onclick="toggle_header_menu('admin');">
+        <div class="header_topmenu_title" onclick="toggle_header_menu('admin');">
           <?=__('menu_top_admin')?>
         </div>
         <?php } ?>
@@ -406,19 +415,29 @@ $javascripts .= '
 
 <?php ########################################### LOGIN / STATUS BAR ############################################### ?>
 
-    <div class="header_infobar<?=$website_update_css2?>">
+    <div class="header_infobar">
 
       <?php if(user_is_logged_in()) {
             if($nb_private_messages) { ?>
 
-      <div class="header_topmenu_zone header_infobar_link header_infobar_notification pointer" onclick="toggle_header_menu('account');">
-        <?=__('header_status_message', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
+      <div class="header_topmenu_zone header_infobar_link header_infobar_notification pointer" onclick="toggle_header_menu('account');" id="header_infobar_new_messages">
+        <span class="desktop">
+          <?=__('header_status_message', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
+        </span>
+        <span class="mobile">
+          <?=__('header_status_message_short', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
+        </span>
       </div>
 
       <?php } else { ?>
 
       <div class="header_topmenu_zone header_infobar_link pointer" onclick="toggle_header_menu('account');">
-        <?=__('header_status_logged_in', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
+        <span class="desktop">
+          <?=__('header_status_logged_in', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
+        </span>
+        <span class="mobile">
+          <?=__('header_status_logged_in_short', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
+        </span>
       </div>
 
       <?php } ?>
@@ -430,19 +449,23 @@ $javascripts .= '
       <?php } else { ?>
 
       <div class="header_topmenu_zone header_infobar_link">
-        <?=__link('pages/users/login', __('header_status_login'), "header_infobar_link", 1, $path);?>
+        <span class="desktop">
+          <?=__link('pages/users/login', __('header_status_login'), "header_infobar_link", 1, $path);?>
+        </span>
+        <span class="mobile">
+          <?=__link('pages/users/login', __('header_status_login_short'), "header_infobar_link", 1, $path);?>
+        </span>
       </div>
 
       <?php } ?>
 
     </div>
 
-
 <?php ############################################ SUBMENU: NOBLEME ################################################ ?>
 
     <div class="header_submenu" id="header_submenu_nobleme">
 
-      <div class="header_submenu_column header_submenu_first">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('nobleme.com')?>
         </div>
@@ -456,17 +479,17 @@ $javascripts .= '
           <?=__link('todo_link', __('submenu_nobleme_what_is'), 'text_error noglow glowhover bold', 1, $path);?>
         </div>
         <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_irc'), 'text_error noglow glowhover bold', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_internet'), 'text_error noglow glowhover bold', 1, $path);?>
         </div>
         <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_internet'), 'text_error noglow glowhover bold', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_irc'), 'text_error noglow glowhover bold', 1, $path);?>
         </div>
         <div class="header_submenu_link">
           <?=__link('todo_link', __('submenu_nobleme_manifesto'), 'text_error noglow glowhover bold', 1, $path);?>
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_second">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_nobleme_documentation')?>
         </div>
@@ -484,7 +507,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_third">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_nobleme_dev')?>
         </div>
@@ -515,7 +538,7 @@ $javascripts .= '
 
     <div class="header_submenu" id="header_submenu_community">
 
-      <div class="header_submenu_column header_submenu_first">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_community_users')?>
         </div>
@@ -533,7 +556,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_second">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_community_irc')?>
         </div>
@@ -551,7 +574,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_third">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_community_meetups')?>
         </div>
@@ -563,7 +586,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_fourth">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_community_quotes')?>
         </div>
@@ -587,7 +610,7 @@ $javascripts .= '
 
     <div class="header_submenu" id="header_submenu_pages">
 
-      <div class="header_submenu_column header_submenu_first">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_pages_internet')?>
         </div>
@@ -608,7 +631,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_second">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_pages_politics')?>
         </div>
@@ -617,7 +640,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_third">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_pages_archives')?>
         </div>
@@ -639,7 +662,7 @@ $javascripts .= '
     <?php if($is_global_moderator) { ?>
     <div class="header_submenu" id="header_submenu_admin">
 
-      <div class="header_submenu_column header_submenu_first">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_admin_activity')?>
         </div>
@@ -648,7 +671,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_second">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_admin_users')?>
         </div>
@@ -669,7 +692,7 @@ $javascripts .= '
       </div>
 
       <?php if($is_admin) { ?>
-      <div class="header_submenu_column header_submenu_third">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_admin_stats')?>
         </div>
@@ -681,7 +704,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_fourth">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_admin_website')?>
         </div>
@@ -702,7 +725,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_fifth">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_admin_doc')?>
         </div>
@@ -723,13 +746,19 @@ $javascripts .= '
     <?php if($is_logged_in) { ?>
     <div class="header_submenu" id="header_submenu_account">
 
-      <div class="header_submenu_column header_submenu_first">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_user_pms')?>
         </div>
+        <?php if($nb_private_messages) { ?>
+        <div class="header_submenu_link header_infobar_notification">
+          <?=__link('todo_link', __('submenu_user_pms_inbox'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <?php } else { ?>
         <div class="header_submenu_link">
           <?=__link('todo_link', __('submenu_user_pms_inbox'), 'text_error noglow glowhover bold', 1, $path);?>
         </div>
+        <?php } ?>
         <div class="header_submenu_link">
           <?=__link('todo_link', __('submenu_user_pms_outbox'), 'text_error noglow glowhover bold', 1, $path);?>
         </div>
@@ -738,7 +767,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_second">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_user_profile')?>
         </div>
@@ -750,7 +779,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_third">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_user_settings')?>
         </div>
@@ -762,7 +791,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <div class="header_submenu_column header_submenu_fourth">
+      <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_user_edit')?>
         </div>
