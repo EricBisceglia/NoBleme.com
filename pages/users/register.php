@@ -10,10 +10,6 @@ include_once './../../lang/users.lang.php';   # Translations
 // Limit page access rights
 user_restrict_to_guests($lang);
 
-// Menus
-$header_menu      = 'NoBleme';
-$header_sidemenu  = ' ';
-
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/users/login";

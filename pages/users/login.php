@@ -10,9 +10,6 @@ include_once './../../lang/users.lang.php';   # Translations
 // Limit page access rights
 user_restrict_to_guests($lang);
 
-// Menus
-$header_menu      = 'NoBleme';
-
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/users/login";
@@ -48,7 +45,7 @@ if(isset($_POST['login_submit']))
 
   // If the user has logged in, redirect them
   if($user_login_attempt === 1)
-    header("location: ".$path."pages/users/inbox");
+    header("location: ".$path."todo_link");
 }
 
 

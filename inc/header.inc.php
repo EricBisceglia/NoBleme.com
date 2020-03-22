@@ -35,10 +35,6 @@ if(!isset($lang))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Default variable values (those are required by the header but it's fine if they're not set)
 
-// If there are no header menu / header sidemenu variables, reset them to their default value
-$header_menu      = (!isset($header_menu) || $header_menu == '') ? 'NoBleme' : $header_menu;
-$header_sidemenu  = (!isset($header_sidemenu)) ? '' : $header_sidemenu;
-
 // Check whether the page exist in the user's current language - if not, throw an error message
 $lang_error = (isset($page_lang) && !in_array($lang, $page_lang)) ? 1 : 0;
 
@@ -375,38 +371,22 @@ $javascripts .= '
 
       <div id="header_titres" class="header_topmenu_zone">
 
-        <nav role="header_hamburger_nav" class="header_hamburger_nav" onclick="toggle_sidemenu();">
-          <div class="header_hamburger">
-            <span class="header_hamburger_slice"></span>
-            <span class="header_hamburger_slice"></span>
-            <span class="header_hamburger_slice"></span>
-          </div>
-        </nav>
+        <div class="header_topmenu_link header_topmenu_title" onclick="toggle_header_menu('nobleme');">
+          <?=__('menu_top_nobleme')?>
+        </div>
 
-        <a class="header_topmenu_link" href="<?=$path?>index">
-          <div class="<?=header_menu_css('NoBleme',$header_menu,'top')?>">
-            <?=__('menu_top_nobleme')?>
-          </div>
-        </a>
+        <div class="header_topmenu_link header_topmenu_title" onclick="toggle_header_menu('community');">
+          <?=__('menu_top_community')?>
+        </div>
 
-        <a class="header_topmenu_link" href="<?=$path?>index_temp_community">
-          <div class="<?=header_menu_css('Community',$header_menu,'top')?>">
-            <?=__('menu_top_community')?>
-          </div>
-        </a>
-
-        <a class="header_topmenu_link" href="<?=$path?>index_temp_pages">
-          <div class="<?=header_menu_css('Pages',$header_menu,'top')?>">
-            <?=__('menu_top_pages')?>
-          </div>
-        </a>
+        <div class="header_topmenu_link header_topmenu_title" onclick="toggle_header_menu('pages');">
+          <?=__('menu_top_pages')?>
+        </div>
 
         <?php if($is_global_moderator) { ?>
-        <a class="header_topmenu_link" href="<?=$path?>pages/nobleme/activity?mod">
-          <div class="<?=header_menu_css('Admin',$header_menu,'top')?>">
-            <?=__('menu_top_admin')?>
-          </div>
-        </a>
+        <div class="header_topmenu_link header_topmenu_title" onclick="toggle_header_menu('admin');">
+          <?=__('menu_top_admin')?>
+        </div>
         <?php } ?>
 
       </div>
@@ -426,614 +406,382 @@ $javascripts .= '
 
 <?php ########################################### LOGIN / STATUS BAR ############################################### ?>
 
-    <div id="statusbar_nomenu" class="header_infobar_standard header_infobar<?=$website_update_css2?>">
+    <div class="header_infobar<?=$website_update_css2?>">
 
       <?php if(user_is_logged_in()) {
             if($nb_private_messages) { ?>
 
-      <div class="header_topmenu_zone">
-        <a id="header_infobar_notification" class="header_infobar_link header_infobar_notification" href="<?=$path?>index_temp_users">
-          <?=__('header_status_message', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
-        </a>
+      <div class="header_topmenu_zone header_infobar_link header_infobar_notification pointer" onclick="toggle_header_menu('account');">
+        <?=__('header_status_message', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
       </div>
 
       <?php } else { ?>
 
-      <div class="header_topmenu_zone">
-        <a id="header_infobar_notification"  class="header_infobar_link" href="<?=$path?>index_temp_users">
-          <?=__('header_status_logged_in', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
-        </a>
+      <div class="header_topmenu_zone header_infobar_link pointer" onclick="toggle_header_menu('account');">
+        <?=__('header_status_logged_in', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
       </div>
 
       <?php } ?>
 
       <div class="header_topmenu_zone">
-        <a class="header_infobar_link" href="<?=$url_logout?>">
-          <?=__('header_status_logout')?>
-        </a>
+        <?=__link($url_logout, __('header_status_logout'), "header_infobar_link", 1, $path);?>
       </div>
 
       <?php } else { ?>
 
-      <div class="header_topmenu_zone">
-        <a class="header_infobar_link" href="<?=$path?>pages/users/login">
-          <?=__('header_status_login')?>
-        </a>
+      <div class="header_topmenu_zone header_infobar_link">
+        <?=__link('pages/users/login', __('header_status_login'), "header_infobar_link", 1, $path);?>
       </div>
 
       <?php } ?>
 
     </div>
 
-    <div id="statusbar_menu" class="header_infobar_responsive header_infobar<?=$website_update_css2?>">
 
-      <?php if(user_is_logged_in()) {
-            if($nb_private_messages) { ?>
+<?php ############################################ SUBMENU: NOBLEME ################################################ ?>
 
-      <div class="header_topmenu_zone">
-        <a id="header_infobar_notification" class="header_infobar_link header_infobar_notification" href="<?=$path?>pages/users/notifications">
-          <?=__('header_status_message_short', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
-        </a>
-      </div>
+    <div class="header_submenu" id="header_submenu_nobleme">
 
-      <?php } else { ?>
-
-      <div class="header_topmenu_zone">
-        <a id="header_infobar_notification"  class="header_infobar_link" href="<?=$path?>pages/users/notifications">
-          <?=__('header_status_logged_in_short', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
-        </a>
-      </div>
-
-      <?php } ?>
-
-      <div class="header_topmenu_zone">
-        <a class="header_infobar_link" href="<?=$url_logout?>">
-          <?=__('header_status_logout')?>
-        </a>
-      </div>
-
-      <?php } else { ?>
-
-      <div class="header_topmenu_zone">
-        <a class="header_infobar_link" href="<?=$path?>pages/users/login">
-          <?=__('header_status_login_short')?>
-        </a>
-      </div>
-
-      <?php } ?>
-
-    </div>
-
-<?php ################################################ SIDE MENU ################################################### ?>
-
-    <div class="header_side_menu_container">
-
-      <nav class="header_sidemenu_mobile<?=$website_update_css2?>">
-        <div id="header_sidemenu" class="header_sidemenu header_sidemenu_hide">
-          <div>
-
-<?php /* ######################################## SIDE MENU: NOBLEME ########### */ if ($header_menu == 'NoBleme') { ?>
-
-            <div class="header_sidemenu_title">
-              <?=__('nobleme.com')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index">
-              <div class="<?=header_menu_css('Homepage',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_homepage')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>pages/nobleme/activity">
-              <div class="<?=header_menu_css('Activity',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_activity')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_nobleme_documentation')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('Whatsnobleme',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_what_is')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('COC',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_coc')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('API',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_api')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('RSS',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_rss')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_nobleme_dev')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('Behindscenes',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_behind_scenes')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('Devblog',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_devblog')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('Todolist',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_todolist')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('Roadmap',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_roadmap')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('Bugreport',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_report_bug')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('Featurerequest',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_feature')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_nobleme_legal')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('Forgetme',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_contact_admin')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('Privacy',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_privacy')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('Personaldata',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_personal_data')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_nobleme">
-              <div class="text_grey_light <?=header_menu_css('Forgetme',$header_sidemenu,'side')?>">
-                <?=__('menu_side_nobleme_forget_me')?>
-              </div>
-            </a>
-
-<?php } /* ################################### SIDE MENU: COMMUNITY ##### */ else if ($header_menu == 'Community') { ?>
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_community_irc')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('IRC',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_irc_intro')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('IRCbrowser',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_irc_browser')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('IRCclient',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_irc_client')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('IRCchannels',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_irc_channels')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_community_users')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>pages/users/online">
-              <div class="<?=header_menu_css('Online',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_online')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('Userlist',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_userlist')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('Staff',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_staff')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('Birthdays',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_birthdays')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_community_meetups')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('Meetups',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_meetups_list')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_community_quotes')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('Quotes',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_quotes_list')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('Quotesrandom',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_quotes_random')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('Quotessubmit',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_quotes_submit')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_community_writers')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('Writers',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_writers_writings')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('Writerspublish',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_writers_publish')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_community">
-              <div class="text_grey_light <?=header_menu_css('Writerscontests',$header_sidemenu,'side')?>">
-                <?=__('menu_side_community_writers_contests')?>
-              </div>
-            </a>
-
-<?php } /* ######################################### SIDE MENU: PAGES ####### */ else if ($header_menu == 'Pages') { ?>
-
-            <div class="header_sidemenu_title">
-              <?php if(!$is_admin) { ?>
-              <?=__('menu_side_pages_internet')?>
-              <?php } else { ?>
-              <a class="blank nohover text_black" href="<?=$path?>index_temp_pages">
-                <?=__('menu_side_pages_internet')?>
-                <img class="spaced_left valign_middle" src="<?=$path?>img/icons/settings.svg" alt="X" height="16">
-              </a>
-              <?php } ?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_pages">
-              <div class="text_grey_light <?=header_menu_css('Web',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_internet_index')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_pages">
-              <div class="text_grey_light <?=header_menu_css('Webpages',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_internet_pages')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_pages">
-              <div class="text_grey_light <?=header_menu_css('Webdict',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_internet_dictionary')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_pages">
-              <div class="text_grey_light <?=header_menu_css('Webculture',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_internet_culture')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_pages">
-              <div class="text_grey_light <?=header_menu_css('Webrandom',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_internet_random')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_pages_archives')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_pages">
-              <div class="text_grey_light <?=header_menu_css('NBRPG',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_nbrpg')?>
-              </div>
-            </a>
-
-            <?php if($lang == 'FR') { ?>
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_pages">
-              <div class="text_grey_light <?=header_menu_css('NBRPGsessions',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_nbrpg_sessions')?>
-              </div>
-            </a>
-            <?php } ?>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_pages">
-              <div class="text_grey_light <?=header_menu_css('NRM',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_nrm')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_pages">
-              <div class="text_grey_light <?=header_menu_css('NRMchampions',$header_sidemenu,'side')?>">
-                <?=__('menu_side_pages_nrm_champions')?>
-              </div>
-            </a>
-
-<?php } /* ########################################## SIDE MENU: USER ######## */ else if ($header_menu == 'User') { ?>
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_user_pms')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_users">
-              <div class="text_grey_light <?=header_menu_css('PMinbox',$header_sidemenu,'side')?>">
-                <?=__('menu_side_user_pms_inbox')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_users">
-              <div class="text_grey_light <?=header_menu_css('PMoutbox',$header_sidemenu,'side')?>">
-                <?=__('menu_side_user_pms_outbox')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_users">
-              <div class="text_grey_light <?=header_menu_css('PMwrite',$header_sidemenu,'side')?>">
-                <?=__('menu_side_user_pms_write')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_user_profile')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_users">
-              <div class="text_grey_light <?=header_menu_css('Profile',$header_sidemenu,'side')?>">
-                <?=__('menu_side_user_profile_self')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_users">
-              <div class="text_grey_light <?=header_menu_css('Profileedit',$header_sidemenu,'side')?>">
-                <?=__('menu_side_user_profile_edit')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_user_settings')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_users">
-              <div class="text_grey_light <?=header_menu_css('Settingsprivacy',$header_sidemenu,'side')?>">
-                <?=__('menu_side_user_settings_privacy')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_users">
-              <div class="text_grey_light <?=header_menu_css('Settingsnsfw',$header_sidemenu,'side')?>">
-                <?=__('menu_side_user_settings_nsfw')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_users">
-              <div class="text_grey_light <?=header_menu_css('Settingsemail',$header_sidemenu,'side')?>">
-                <?=__('menu_side_user_settings_email')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_users">
-              <div class="text_grey_light <?=header_menu_css('Settingspassword',$header_sidemenu,'side')?>">
-                <?=__('menu_side_user_settings_password')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_users">
-              <div class="text_grey_light <?=header_menu_css('Settingsnickname',$header_sidemenu,'side')?>">
-                <?=__('menu_side_user_settings_nickname')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_users">
-              <div class="text_grey_light <?=header_menu_css('Settingsdelete',$header_sidemenu,'side')?>">
-                <?=__('menu_side_user_settings_delete')?>
-              </div>
-            </a>
-
-<?php } /* ######################################### SIDE MENU: ADMIN ####### */ else if ($header_menu == 'Admin') { ?>
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_admin_activity')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>pages/nobleme/activity?mod">
-              <div class="<?=header_menu_css('Modlogs',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_modlogs')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_admin_users')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_admin">
-              <div class="text_grey_light <?=header_menu_css('Nickname',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_nickname')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_admin">
-              <div class="text_grey_light <?=header_menu_css('Password',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_password')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_admin">
-              <div class="text_grey_light <?=header_menu_css('Banned',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_banned')?>
-              </div>
-            </a>
-
-            <?php if($is_admin) { ?>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_admin">
-              <div class="text_grey_light <?=header_menu_css('Rights',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_rights')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_admin_website')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_admin">
-              <div class="text_grey_light <?=header_menu_css('IRCbot',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_ircbot')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_admin">
-              <div class="text_grey_light <?=header_menu_css('Close',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_close')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>pages/dev/queries">
-              <div class="<?=header_menu_css('SQL',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_sql')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_admin">
-              <div class="text_grey_light <?=header_menu_css('Release',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_release')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_admin">
-              <div class="text_grey_light <?=header_menu_css('Scheduler',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_scheduler')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_admin_stats')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_admin">
-              <div class="text_grey_light <?=header_menu_css('Pageviews',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_pageviews')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_admin">
-              <div class="text_grey_light <?=header_menu_css('Doppelganger',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_doppelganger')?>
-              </div>
-            </a>
-
-            <hr class="header_sidemenu_hr">
-
-            <div class="header_sidemenu_title">
-              <?=__('menu_side_admin_doc')?>
-            </div>
-
-            <a class="header_sidemenu_link" href="<?=$path?>pages/dev/snippets">
-              <div class="<?=header_menu_css('Snippets',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_doc_snippets')?>
-              </div>
-            </a>
-
-            <a class="header_sidemenu_link" href="<?=$path?>index_temp_admin">
-              <div class="text_grey_light <?=header_menu_css('CSS',$header_sidemenu,'side')?>">
-                <?=__('menu_side_admin_doc_css')?>
-              </div>
-            </a>
-
-            <?php } ?>
-
-            <?php } ?>
-
-          </div>
+      <div class="header_submenu_column header_submenu_first">
+        <div class="header_submenu_title">
+          <?=__('nobleme.com')?>
         </div>
-      </nav>
+        <div class="header_submenu_link">
+          <?=__link('index', __('submenu_nobleme_homepage'), 'text_red noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('pages/nobleme/activity', __('submenu_nobleme_activity'), 'text_red noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_what_is'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_irc'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_internet'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_manifesto'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_second">
+        <div class="header_submenu_title">
+          <?=__('submenu_nobleme_documentation')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_coc'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_privacy'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_personal_data'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_contact_admin'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_third">
+        <div class="header_submenu_title">
+          <?=__('submenu_nobleme_dev')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_behind_scenes'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_devblog'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_todolist'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_roadmap'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_report_bug'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_nobleme_feature'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+    </div>
+
+
+<?php ########################################### SUBMENU: COMMUNITY ############################################### ?>
+
+    <div class="header_submenu" id="header_submenu_community">
+
+      <div class="header_submenu_column header_submenu_first">
+        <div class="header_submenu_title">
+          <?=__('submenu_community_users')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_online'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_userlist'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_staff'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_birthdays'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_second">
+        <div class="header_submenu_title">
+          <?=__('submenu_community_irc')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_irc_intro'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_irc_browser'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_irc_client'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_irc_channels'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_third">
+        <div class="header_submenu_title">
+          <?=__('submenu_community_meetups')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_meetups_list'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_meetups_stats'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_fourth">
+        <div class="header_submenu_title">
+          <?=__('submenu_community_quotes')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_quotes_list'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_quotes_random'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_quotes_stats'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_community_quotes_submit'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+    </div>
+
+<?php ############################################# SUBMENU: PAGES ################################################# ?>
+
+    <div class="header_submenu" id="header_submenu_pages">
+
+      <div class="header_submenu_column header_submenu_first">
+        <div class="header_submenu_title">
+          <?=__('submenu_pages_internet')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_pages_internet_index'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_pages_internet_pages'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_pages_internet_dictionary'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_pages_internet_culture'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_pages_internet_random'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_second">
+        <div class="header_submenu_title">
+          <?=__('submenu_pages_politics')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('pages/politics/manifesto', __('submenu_pages_politics_manifesto'), 'text_red noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_third">
+        <div class="header_submenu_title">
+          <?=__('submenu_pages_archives')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_pages_nbrpg'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_pages_nrm'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_pages_nrm_champions'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+    </div>
+
+<?php ############################################# SUBMENU: ADMIN ################################################# ?>
+
+    <?php if($is_global_moderator) { ?>
+    <div class="header_submenu" id="header_submenu_admin">
+
+      <div class="header_submenu_column header_submenu_first">
+        <div class="header_submenu_title">
+          <?=__('submenu_admin_activity')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('pages/nobleme/activity?mod', __('submenu_admin_modlogs'), 'text_red noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_second">
+        <div class="header_submenu_title">
+          <?=__('submenu_admin_users')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_admin_banned'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_admin_nickname'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_admin_password'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <?php if($is_admin) { ?>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_admin_rights'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <?php } ?>
+      </div>
+
+      <?php if($is_admin) { ?>
+      <div class="header_submenu_column header_submenu_third">
+        <div class="header_submenu_title">
+          <?=__('submenu_admin_stats')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_admin_pageviews'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_admin_doppelganger'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_fourth">
+        <div class="header_submenu_title">
+          <?=__('submenu_admin_website')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_admin_ircbot'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_admin_close'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('pages/dev/queries', __('submenu_admin_sql'), 'text_red noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_admin_release'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_admin_scheduler'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_fifth">
+        <div class="header_submenu_title">
+          <?=__('submenu_admin_doc')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('pages/dev/snippets', __('submenu_admin_doc_snippets'), 'text_red noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_admin_doc_css'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+      <?php } ?>
+
+    </div>
+    <?php } ?>
+
+<?php ############################################ SUBMENU: ACCOUNT ################################################ ?>
+
+    <?php if($is_logged_in) { ?>
+    <div class="header_submenu" id="header_submenu_account">
+
+      <div class="header_submenu_column header_submenu_first">
+        <div class="header_submenu_title">
+          <?=__('submenu_user_pms')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_user_pms_inbox'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_user_pms_outbox'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_user_pms_write'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_second">
+        <div class="header_submenu_title">
+          <?=__('submenu_user_profile')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_user_profile_self'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_user_profile_edit'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_third">
+        <div class="header_submenu_title">
+          <?=__('submenu_user_settings')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_user_settings_privacy'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_user_settings_nsfw'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column header_submenu_fourth">
+        <div class="header_submenu_title">
+          <?=__('submenu_user_edit')?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_user_edit_email'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_user_edit_password'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_user_edit_nickname'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+        <div class="header_submenu_link">
+          <?=__link('todo_link', __('submenu_user_edit_delete'), 'text_error noglow glowhover bold', 1, $path);?>
+        </div>
+      </div>
+
+    </div>
+    <?php } ?>
 
 <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                   //
@@ -1041,7 +789,7 @@ $javascripts .= '
 //                                                                                                                   //
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
 
-    <div class="header_main_page_container header_main_page">
+    <div class="header_main_page">
 
       <?php } if($meta_alert != "") { ?>
 

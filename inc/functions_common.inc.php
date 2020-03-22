@@ -611,8 +611,6 @@ function private_message_send($title, $body, $recipient=0, $sender=0, $is_silent
  *
  * Keep in mind, since an error is being thrown, this interrupts the rest of the process of the page.
  *
- * @param   string|null $menu_main  (OPTIONAL)  The main menu element to highlight in the menu bar in case of error.
- * @param   string|null $menu_side  (OPTIONAL)  The side menu element to highlight in the sidebar in case of error.
  * @param   string|null $path       (OPTIONAL)  The path to the root of the website (defaults to 2 folders from root).
  * @param   int|null    $user_id    (OPTIONAL)  Specifies the ID of the user to check - if null, current user.
  * @param   string|null $lang       (OPTIONAL)  The language to use for the error - if null, current user's language.
@@ -620,14 +618,14 @@ function private_message_send($title, $body, $recipient=0, $sender=0, $is_silent
  * @return  bool                                Is the user allowed to post content to the website.
  */
 
-function flood_check($menu_main='NoBleme', $menu_side='', $path='./../../', $user_id=null, $lang=null)
+function flood_check($path='./../../', $user_id=null, $lang=null)
 {
   // Fetch the user's language if required
   $lang = (!$lang) ? user_get_language() : $lang;
 
   // If the user is logged out, then he shouldn't be able to do any actions: throw an error
   if(is_null($user_id) && !user_is_logged_in())
-    error_page(__('error_flood_login'), $path, $lang, $menu_main, $menu_side);
+    error_page(__('error_flood_login'), $path, $lang);
 
   // Fetch and sanitize the user's ID
   $user_id = (!is_null($user_id)) ? $user_id : user_get_id();
@@ -641,7 +639,7 @@ function flood_check($menu_main='NoBleme', $menu_side='', $path='./../../', $use
   // If the last activity for the user happened less than 10 seconds ago, throw an error
   $timestamp = time();
   if(($timestamp - $dactivity['u_last']) <= 10 )
-    error_page(__('error_flood_wait'), $path, $lang, $menu_main, $menu_side);
+    error_page(__('error_flood_wait'), $path, $lang);
 
   // Update the last activity of the user
   query(" UPDATE  users
@@ -946,34 +944,4 @@ function html_fix_meta_tags($string)
 
   // Return the modified string
   return $string;
-}
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                   PAGE STYLING                                                    */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-/**
- * Returns the CSS classes to use for header menus.
- *
- * This gives different results based on whether an element is currently selected or not.
- *
- * @param string  $menu_element         The element of the menu for which we want CSS classes.
- * @param string  $current_menu_element The currently selected menu element (for the page in use).
- * @param string  $menu_type            The type of menu for which we want a styling (top or side menu).
- */
-
-function header_menu_css($menu_element, $current_menu_element, $menu_type)
-{
-  // Main (top) menu
-  if($menu_type == 'top')
-    return (strtolower($menu_element) == strtolower($current_menu_element)) ? 'header_topmenu_title header_topmenu_selected' : 'header_topmenu_title';
-
-  // Side menu
-  else if($menu_type == 'side')
-    return (strtolower($menu_element) == strtolower($current_menu_element)) ? 'header_sidemenu_item header_sidemenu_selected' : 'header_sidemenu_item';
 }

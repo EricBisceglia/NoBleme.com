@@ -6,10 +6,6 @@
 include_once './inc/includes.inc.php';  # Core
 include_once './lang/nobleme.lang.php'; # Translations
 
-// Menus
-$header_menu      = 'NoBleme';
-$header_sidemenu  = 'Homepage';
-
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "index";
@@ -43,8 +39,8 @@ $website_age = (date('n') < 3 || (date('n') == 3 && date('j') < 19)) ? $website_
 
       <div class="width_50">
 
-        <div class="align_center smallpadding_top smallpadding_bot">
-          <img src="<?=$path?>img/common/logo_full.png">
+        <div class="align_center padding_top bigpadding_bot bigglow">
+          <img src="<?=$path?>img/common/logo_full.png" alt="NoBleme.com">
         </div>
 
         <h5 class="bigpadding_top">

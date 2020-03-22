@@ -9,15 +9,11 @@ td.img404       { width: 300px;       }
 img.img404left  { margin-right: 10px; }
 img.img404right { margin-left: 10px;  }
 
-.header_topmenu                                         { background: #B00B1E;                                   }
-.header_topmenu_title                                   { background: #B00B1E; color: #000000;                   }
-.header_topmenu_title > a                               { color: #000000;                                        }
-.header_topmenu_title:hover                             { background: #000000; color: #B00B1E;                   }
-.header_topmenu_title:hover > a                         { color: #FFB6C1;                                        }
-.header_topmenu_title.header_topmenu_selected           { background: #000000;                                   }
-.header_topmenu_title.header_topmenu_selected > a       { color: #000000;                                        }
-.header_topmenu_title.header_topmenu_selected:hover     { background: #000000; color: #CACACA;                   }
-.header_topmenu_title.header_topmenu_selected:hover > a { color: #FFB6C1;                                        }
-.header_infobar                                         { background: #000000;                                   }
-.header_sidemenu                                        { display: none;                                         }
-.header_side_nomenu                                     { display: none;                                         }
+.header_topmenu                 { background: #B00B1E;                 }
+.header_topmenu_title           { background: #B00B1E; color: #000000; }
+.header_topmenu_title > a       { color: #000000;                      }
+.header_topmenu_title:hover     { background: #000000; color: #B00B1E; }
+.header_topmenu_title:hover > a { color: #FFB6C1;                      }
+.header_infobar                 { background: #000000;                 }
+.header_infobar:hover           { background: #000000;                 }
+.header_submenu                 { background: #000000;                 }

@@ -16,11 +16,6 @@ if(isset($_GET['mod']))
 // Hide the page from who's online
 if(isset($_GET['mod']))
   $hidden_activity = 1;
-
-// Menus
-$header_menu      = (!isset($_GET['mod'])) ? 'NoBleme' : 'Admin';
-$header_sidemenu  = (!isset($_GET['mod'])) ? 'Activity' : 'Modlogs';
-
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/nobleme/activity";

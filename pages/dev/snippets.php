@@ -12,10 +12,6 @@ user_restrict_to_administrators($lang);
 // Hide the page from who's online
 $hidden_activity = 1;
 
-// Menus
-$header_menu      = 'Admin';
-$header_sidemenu  = 'Snippets';
-
 // Page summary
 $page_lang      = array('FR', 'EN');
 $page_url       = "pages/dev/snippets";
@@ -71,10 +67,6 @@ user_restrict_to_guests($lang);
 
 // Hide the page from who's online
 $hidden_activity = 1;
-
-// Menus
-$header_menu      = 'NoBleme';
-$header_sidemenu  = 'Homepage';
 
 // Page summary
 $page_lang        = array('FR', 'EN');
@@ -229,10 +221,6 @@ user_restrict_to_guests($lang);
 
 // Hide the page from who's online
 $hidden_activity = 1;
-
-// Menus
-$header_menu      = 'NoBleme';
-$header_sidemenu  = 'Homepage';
 
 // Page summary
 $page_lang        = array('FR', 'EN');

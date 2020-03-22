@@ -17,13 +17,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   string  $message                The error message that will be displayed (can include HTML).
  * @param   string  $path       (OPTIONAL)  The relative path to the root of the website (defaults to 2 folders away).
  * @param   string  $lang       (OPTIONAL)  The current language (defaults to session stored value, or to english).
- * @param   string  $menu_main  (OPTIONAL)  The main header menu to be highlighted (defaults to 'NoBleme').
- * @param   string  $menu_side  (OPTIONAL)  The side header menu to be highlighted (defaults to 'Homepage').
  *
  * @return  void
  */
 
-function error_page($message, $path="./../../", $lang=NULL, $menu_main="NoBleme", $menu_side="Homepage")
+function error_page($message, $path="./../../", $lang=NULL)
 {
   // Is the user logged in? - check from the session (required by the header)
   $is_logged_in = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : 0;

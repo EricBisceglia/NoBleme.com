@@ -12,7 +12,7 @@ function toggle_element(element_id, is_a_table_row)
   // Fetch the selected element
   var selected_element = document.getElementById(element_id);
 
-  // Check the current visibility state of the line
+  // Check the current visibility state of the element
   var element_visibility = selected_element.currentStyle ? selected_element.currentStyle.display : getComputedStyle(selected_element,null).display;
 
   // Toggle it to the opposite visibility state

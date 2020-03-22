@@ -70,6 +70,7 @@
 
 .smallglow       { filter: drop-shadow(0 0 3px #B00B1E);      }
 .glow            { filter: drop-shadow(0 0 5px #B00B1E);      }
+.glowhover:hover { filter: drop-shadow(0 0 5px #B00B1E);      }
 .bigglow         { filter: drop-shadow(0 0 10px #B00B1E);     }
 .noglow          { filter: none;                              }
 

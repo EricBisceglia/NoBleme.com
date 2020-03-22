@@ -2,11 +2,7 @@
 .header_topmenu_zone                 { display: flex; align-items: center;                                            }
 .header_topmenu                      { background-color: #B00B1E; justify-content: space-between                      ;
                                        display: flex; font-family: 'NoBleme-header';                                  }
-.header_hamburger                    { position: relative;  cursor: pointer; top: 5px;                                }
-.header_hamburger_slice              { display: block; position: relative; background: #121212                        ;
-                                      border-radius: 3px;                                                             }
 .header_topmenu_title                { font-weight: bold; color: #121212; cursor: pointer; background-color: #B00B1E; }
-.header_topmenu_logo                 { height: 30px; vertical-align: middle; background: #121212;  }
 .header_topmenu_link                 { text-decoration: none; color: #121212; width: 100%; display: inline-block      ;
                                        filter: none; background-image: none;                                          }
 .header_topmenu_link:hover           { color: #B00B1E;                                                                }
@@ -17,21 +13,19 @@ a:hover > .header_topmenu_selected   { color: #CACACA;                          
 .header_topmenu_flagimg              { vertical-align: middle;                                                        }
 
 @media (min-width: 1025px) {
-.header_topmenu            { padding: 0px 8px 0px 0px;                      }
-.header_topmenu_title      { padding: 4px 20px 4px 20px; font-size: 22px;   }
-.header_hamburger          { left: 5px; width: 42px;                        }
-.header_hamburger_slice    { width: 30px; height: 4px; margin-bottom: 5px } }
+.header_topmenu            { padding: 0px 8px 0px 0px;                    }
+.header_topmenu_title      { padding: 6px 20px 6px 20px; font-size: 26px; }
+.header_topmenu_flagimg    { height: 26px; margin: 0px 5px 0px 0px;     } }
 @media (max-width: 1024px) {
-.header_topmenu            { padding: 0px 8px 0px 0px;  line-height: 50px;  }
-.header_topmenu_title      { padding: 8px 15px 8px 15px; font-size: 30px;   }
-.header_topmenu_flagimg    { height: 32px; margin: 0px 8px 8px 0px;         }
-.header_hamburger          { left: 15px; width: 70px;                       }
-.header_hamburger_slice    { width: 40px; height: 6px; margin-bottom: 7px } }
+.header_topmenu            { padding: 0px 8px 0px 0px;                    }
+.header_topmenu_title      { padding: 6px 20px 6px 20px; font-size: 30px; }
+.header_topmenu_flagimg    { height: 32px; margin: 0px 8px 8px 0px;     } }
 
 /************************************************* ACCOUNT INFO BAR **************************************************/
 .header_infobar                             { display: flex; justify-content: space-between; background-color: #121212;
                                               white-space: nowrap; border-bottom: 2px solid #B00B1E; color:#B00B1E    ;
-                                              padding: 3px 8px 2px 8px; font-weight: bold;                            }
+                                               font-weight: bold; font-size: 24px;                                    }
+.header_infobar:hover                       { background-color: #121212; color: #CACACA;                              }
 .header_infobar_link                        { filter: none; background-image: none; color: #B00B1E;                   }
 .header_infobar_link:hover                  { color: #CACACA;                                                         }
 .header_infobar_notification                { animation-name: blink-annoy; animation-iteration-count: infinite        ;
@@ -42,42 +36,50 @@ a:hover > .header_topmenu_selected   { color: #CACACA;                          
 @keyframes blink-annoy-hover                { from { color: #B00B1E; } to { color: #B00B1E; }                         }
 
 @media(min-width: 1025px)  {
-.header_infobar            { font-size: 14px;                                               }
-.header_infobar_responsive { display:none;                                                } }
+.header_infobar            { font-size: 16px; padding: 3px 8px 2px 8px; }
+.header_infobar_responsive { display:none;                            } }
 @media(max-width: 1024px)  {
-.header_infobar            { font-size: 30px; padding: 8px 8px 8px 16px; line-height: 34px; }
-.header_infobar_standard   { display:none;                                                } }
+.header_infobar            { font-size: 18px; padding: 4px 8px 4px 16px; }
+.header_infobar_standard   { display:none;                             } }
 
-/***************************************************** SIDE MENU *****************************************************/
-.header_sidemenu                { display: flex; flex-direction: column; justify-content: space-between    ;
-                                  height: 100%; font-weight: bold; border-right: 2px solid #B00B1E         ;
-                                  min-height: 93vh; font-family: 'NoBleme-sidebar'; width: 200px           ;
-                                  display: none; transition: left 0.5s; position: relative;                }
-.header_sidemenu_show           { left: 0px;                                                               }
-.header_sidemenu_link           { filter:none;                                                             }
-.header_sidemenu_selected:hover { background-color: #B00B1E; color: #121212;                               }
-.header_sidemenu_item           { cursor: pointer; color: #CACACA;                                         }
-.header_sidemenu_selected ,.header_sidemenu_item:hover { background-color: #B00B1E; color: #CACACA         ;
-                                  filter: drop-shadow(0 0 5px #B00B1E);                                    }
-.header_sidemenu_title          { margin-bottom: 2px; color:#B00B1E;                                       }
-.header_sidemenu_hr             { width: 100%; padding: 0px; border: 0px; height: 2px; background:#B00B1E  }
-.header_sidemenu_input          { margin-left:5%;width:90%;                                                }
+/****************************************************** SUBMENU ******************************************************/
+.header_submenu        { display: none; white-space: nowrap; background: #121212                 ;
+                         color: #B00B1E;  grid-auto-flow: column; font-family: 'NoBleme-submenu' }
+.header_submenu_column { padding: 15px;                                                          }
+.header_submenu_title  { margin-bottom: 2px; color: #CACACA; font-weight: bold;                  ;
+                         padding-bottom: 12px; padding-top: 5px; font-family: 'NoBleme-header' }
+.header_submenu_link   { padding-bottom: 6px;                                                    }
 
-@media (min-width: 1025px) { .header_sidemenu         { width: 200px; padding-top: 7px;                        }
-                             .header_sidemenu_hide    { left: -200px;                                          }
-                             .header_sidemenu_item    { padding: 5px 8px; font-size: 13px;                     }
-                             .header_sidemenu_title   { padding: 5px 10px; margin-left: 5px; margin-right: 5px ;
-                                                        font-size: 13px;                                     } }
-
-@media (max-width: 1024px) { .header_sidemenu        { width: 430px; padding-top: 4px;                               }
-                             .header_sidemenu_hide   { left: -430px;                                                 }
-                             .header_sidemenu_item   { padding: 10px 10px; font-size: 30px;                          }
-                             .header_sidemenu_title  { padding: 5px 5px; margin-left: 5px; margin-right: 5px         ;
-                                                       font-size: 26px;                                            } }
+@media(min-width: 1025px) {
+.header_submenu           { border-bottom: 2px solid #B00B1E       ;
+                            grid-template-columns: repeat(5, 20%); ;
+                            font-size: 20px;                       }
+.header_submenu_first     { grid-column: 1; grid-row: 1;           }
+.header_submenu_second    { grid-column: 2; grid-row: 1;           }
+.header_submenu_third     { grid-column: 3; grid-row: 1;           }
+.header_submenu_fourth    { grid-column: 4; grid-row: 1;           }
+.header_submenu_fifth     { grid-column: 5; grid-row: 1;         } }
+@media(max-width: 1600px) {
+.header_submenu           { font-size: 18px;                       }
+.header_submenu_title     { font-size: 20px;                     } }
+@media(max-width: 1400px) {
+.header_submenu           { font-size: 16px;                       }
+.header_submenu_title     { font-size: 18px;                     } }
+@media(max-width: 1200px) {
+.header_submenu           { font-size: 14px;                       }
+.header_submenu_title     { font-size: 16px;                     } }
+@media(max-width: 1024px) {
+.header_submenu           { grid-template-columns: repeat(1)       ;
+                            font-size: 20px;                       }
+.header_submenu_title     { font-size: 22px;                       }
+.header_submenu_column    { border-bottom: 2px solid #B00B1E;      }
+.header_submenu_first     { grid-column: 1; grid-row: 1;           }
+.header_submenu_second    { grid-column: 1; grid-row: 2;           }
+.header_submenu_third     { grid-column: 1; grid-row: 3;           }
+.header_submenu_fourth    { grid-column: 1; grid-row: 4;           }
+.header_submenu_fifth     { grid-column: 1; grid-row: 5;         } }
 
 /************************************************ PAGE / MENU LAYOUTS ************************************************/
-.header_side_menu_container                    { display: -webkit-flex; display: flex;                        }
-.header_main_page_container                    { -webkit-flex: 1; flex: 1;                                    }
 @media (min-width: 1025px) { .header_main_page { margin-top: 60px; padding-left: 25px; padding-right: 25px; } }
 @media (max-width: 1024px) { .header_main_page { margin-top: 50px; padding-left: 40px; padding-right: 40px; } }
 

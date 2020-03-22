@@ -36,31 +36,30 @@ $copyright_date = date('Y');
 /*                                                                                                                   */
 /******************************************************************************************************************/ ?>
 
-        <?php if(!isset($_GET["popup"]) && !isset($nofooter)) { ?>
+      <?php if(!isset($_GET["popup"]) && !isset($nofooter)) { ?>
 
-        <footer>
+      <footer>
 
-          <?php if($is_admin) { ?>
+        <?php if($is_admin) { ?>
 
-          <?php if($pageviews) { ?>
+        <?php if($pageviews) { ?>
 
-          <?=__link("index", $pageviews, "", 1, $path);?><br>
+        <?=__link("todo_link", $pageviews, "", 1, $path);?><br>
 
-          <?php } ?>
+        <?php } ?>
 
-          <?=__link("index", $metrics, "pointer", 0, $path);?><br>
+        <?=__link("todo_link", $metrics, "pointer", 1, $path);?><br>
 
-          <?php } ?>
+        <?php } ?>
 
-          <?=__link("index", $version, "", 1, $path);?><br>
+        <?=__link("todo_link", $version, "", 1, $path);?><br>
 
-          <?=__link("index", __('footer_legal'), "", 1, $path);?><br>
+        <?=__link("todo_link", __('footer_legal'), "", 1, $path);?><br>
 
-          <?=__link("index", __('footer_copyright', 0, 0, 0, array($copyright_date)), "", 1, $path);?><br>
+        <?=__link("todo_link", __('footer_copyright', 0, 0, 0, array($copyright_date)), "", 1, $path);?><br>
 
-        </footer>
+      </footer>
 
-      </div>
     </div>
 
     <?php } ?>

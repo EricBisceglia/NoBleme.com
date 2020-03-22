@@ -6,10 +6,6 @@
 include_once './../../inc/includes.inc.php';   # Core
 include_once './../../lang/politics.lang.php'; # Translations
 
-// Menus
-$header_menu      = 'NoBleme';
-$header_sidemenu  = 'Manifesto';
-
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/politics/manifesto";

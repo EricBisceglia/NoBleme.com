@@ -8,10 +8,6 @@ include_once './../../inc/functions_time.inc.php'; # Time management
 include_once './../../actions/users.act.php';      # Actions
 include_once './../../lang/users.lang.php';        # Translations
 
-// Menus
-$header_menu      = 'Community';
-$header_sidemenu  = 'Online';
-
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/users/online";

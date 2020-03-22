@@ -1,25 +1,27 @@
 /**
- * Toggles the side menu when the hamburger menu is pressed.
+ * Toggles the visibility of a top menu
+ *
+ * @param   {string}  menu_name The name of the menu to show or hide.
  *
  * @returns {void}
  */
 
- function toggle_sidemenu()
+function toggle_header_menu(menu_name)
 {
-  // Fetch the side menu
-  var sidemenu = document.getElementById("header_sidemenu");
+  // Fetch the selected menu
+  var selected_submenu = document.getElementById('header_submenu_' + menu_name);
 
-  // If the sidemenu is visible, hide it slowly
-  if (document.getElementsByClassName("header_sidemenu_hide").length == 0)
-  {
-    sidemenu.className = "header_sidemenu header_sidemenu_hide";
-    setTimeout(function(){sidemenu.style.display = 'none';}, 500);
-  }
+  // Check the current visibility state of the menu
+  var menu_visibility = selected_submenu.currentStyle ? selected_submenu.currentStyle.display : getComputedStyle(selected_submenu,null).display;
 
-  // If the sidemenu is hidden, show it
-  else
-  {
-    sidemenu.className = "header_sidemenu header_sidemenu_show";
-    sidemenu.style.display = 'block';
-  }
+  // Fetch all submenus
+  var all_submenus = document.getElementsByClassName('header_submenu');
+
+  // Close all open submenus
+  for(var i = 0; i < all_submenus.length; i++)
+    all_submenus[i].style.display = 'none';
+
+  // If the menu is invisible, open it
+  if(menu_visibility == 'none')
+    selected_submenu.style.display = 'grid';
 }

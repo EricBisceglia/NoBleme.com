@@ -34,7 +34,7 @@ table                                            { border-collapse: collapse; bo
         url('./fonts/Open-sans-bold.woff') format('woff')                   ,
         url('./fonts/Open-sans-bold.ttf')  format('truetype')               ,
         url('./fonts/Open-sans-bold.svg#svgFontName') format('svg');        }
-@font-face { font-family: 'NoBleme-sidebar'                                 ;
+@font-face { font-family: 'NoBleme-submenu'                                 ;
   src:  url('./fonts/Open-sans.eot?#iefix') format('embedded-opentype')     ,
         url('./fonts/Open-sans.woff2') format('woff2')                      ,
         url('./fonts/Open-sans.woff') format('woff')                        ,

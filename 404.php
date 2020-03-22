@@ -5,9 +5,6 @@
 // Inclusions /*******************************************************************************************************/
 include_once './inc/includes.inc.php'; # Core
 
-// Menus
-$header_menu      = 'NoBleme';
-
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "404";

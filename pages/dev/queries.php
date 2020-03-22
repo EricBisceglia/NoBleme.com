@@ -13,10 +13,6 @@ user_restrict_to_administrators($lang);
 // Hide the page from who's online
 $hidden_activity = 1;
 
-// Menus
-$header_menu      = 'Admin';
-$header_sidemenu  = 'SQL';
-
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/dev/queries";
