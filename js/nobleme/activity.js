@@ -40,7 +40,7 @@ function activity_submit_menus(fetch_url, toggle_deleted=null)
 function activity_show_details(log_id)
 {
   // Toggle the visiblity of the details
-  toggle_element('activity_details_' + log_id, 1);
+  toggle_element('activity_details_' + log_id, 'table-row');
 
   // Prepare the postdata
   postdata = 'log_id=' + log_id;
@@ -69,7 +69,7 @@ function activity_delete_log(log_id, message, deletion_type=0)
   {
     // Hide the details if they exist and are currently visible
     if(document.getElementById('activity_details_' + log_id))
-      toggle_element_oneway('activity_details_' + log_id, 0, 1);
+      toggle_element_oneway('activity_details_' + log_id, 0, 'table-row');
 
     // Prepare the postdata
     postdata  = 'log_id='         + log_id;
@@ -95,7 +95,7 @@ function activity_restore_log(log_id)
 {
   // Hide the details if they exist and are currently visible
   if(document.getElementById('activity_details_' + log_id))
-    toggle_element_oneway('activity_details_' + log_id, 0, 1);
+    toggle_element_oneway('activity_details_' + log_id, 0, 'table-row');
 
   // Prepare the postdata
   postdata = 'log_id=' + log_id;

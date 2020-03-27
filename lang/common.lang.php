@@ -56,7 +56,13 @@ function __($string, $amount=null, $spaces_before=0, $spaces_after=0, $preset_va
       $returned_string = str_replace("{{".($key + 1)."}}", $value, $returned_string);
   }
 
-  // Replace URLs if needed, using a regex that looks for {{link|href|text|style|internal|path}} (last 3 are optional)
+  /*
+  / Replace URLs if needed, using a regex that can work in either of the following ways:
+  / {{link+++|href|text|style|is_internal|path}}
+  / {{link++|href|text|style|is_internal}}
+  / {{link+|href|text|style}}
+  / {{link|href|text}}
+  */
   $returned_string = preg_replace('/\{\{link\+\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", "$4", "$5"), $returned_string);
   $returned_string = preg_replace('/\{\{link\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", "$4"), $returned_string);
   $returned_string = preg_replace('/\{\{link\+\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3"), $returned_string);
@@ -292,13 +298,13 @@ ___('bbcodes_spoiler_show', 'FR', "VOIR LE CONTENU CACHÉ");
 
 
 // NBCodes
-___('nbcodes_video_hidden',       'EN', "This video is hidden (<a href=\"{{1}}pages/users/privacy\">privacy options</a>)");
-___('nbcodes_video_hidden',       'FR', "Cette vidéo est masquée (<a href=\"{{1}}pages/users/privacy\">options de vie privée</a>)");
-___('nbcodes_video_hidden_small', 'EN', "Video hidden (<a href=\"{{1}}pages/users/privacy\">privacy options</a>)");
-___('nbcodes_video_hidden_small', 'FR', "Vidéo masquée (<a href=\"{{1}}pages/users/privacy\">options de vie privée</a>)");
+___('nbcodes_video_hidden',       'EN', "This video is hidden ({{link|{{1}}todo_link|privacy options}})");
+___('nbcodes_video_hidden',       'FR', "Cette vidéo est masquée ({{link|{{1}}todo_link|options de vie privée}}");
+___('nbcodes_video_hidden_small', 'EN', "Video hidden ({{link|{{1}}todo_link|privacy options}})");
+___('nbcodes_video_hidden_small', 'FR', "Vidéo masquée ({{link|{{1}}todo_link|options de vie privée}})");
 
-___('nbcodes_trends_hidden', 'EN', "This Google trends graph is hidden (<a href=\"{{1}}pages/users/privacy\">privacy options</a>)");
-___('nbcodes_trends_hidden', 'FR', "Ce graphe Google trends est masqué (<a href=\"{{1}}pages/users/privacy\">options de vie privée</a>)");
+___('nbcodes_trends_hidden', 'EN', "This Google trends graph is hidden ({{link|{{1}}todo_link|privacy options}})");
+___('nbcodes_trends_hidden', 'FR', "Ce graphe Google trends est masqué ({{link|{{1}}todo_link|options de vie privée}})");
 
 
 

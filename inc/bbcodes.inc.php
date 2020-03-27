@@ -389,20 +389,20 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
   if(!$privacy_level['youtube'])
     $message = preg_replace('/\[\[youtube:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><iframe style="width:100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $message);
   else
-    $message = preg_replace('/\[\[youtube:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a class="bold" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="thin">'.__('nbcodes_video_hidden', 1, 0, 0, array($path)).'</span><br><br>$3</div>', $message);
+    $message = preg_replace('/\[\[youtube:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a class="bold" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden', 1, 0, 0, array($path)).'</span><br><br>$3</div>', $message);
 
 
   // Same thing if the video has no description
   if(!$privacy_level['youtube'])
     $message = preg_replace('/\[\[youtube:(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><iframe style="width:100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $message);
   else
-    $message = preg_replace('/\[\[youtube:(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a class="bold" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="thin">'.__('nbcodes_video_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
+    $message = preg_replace('/\[\[youtube:(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a class="bold" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
 
   // Same thing if the video has no description or alignment
   if(!$privacy_level['youtube'])
     $message = preg_replace('/\[\[youtube:(.*?)\]\]/i','<div class="align_center"><iframe width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $message);
   else
-    $message = preg_replace('/\[\[youtube:(.*?)\]\]/i','<div class="align_center"><a class="bold" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="thin">'.__('nbcodes_video_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
+    $message = preg_replace('/\[\[youtube:(.*?)\]\]/i','<div class="align_center"><a class="bold" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
 
 
   /*******************************************************************************************************************/
@@ -412,19 +412,19 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
   if(!$privacy_level['youtube'])
     $message = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><iframe '.$blurring2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe>$3</div>', $message);
   else
-    $message = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="thin">'.__('nbcodes_video_hidden', 1, 0, 0, array($path)).'</span><br><br>$3</div>', $message);
+    $message = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden', 1, 0, 0, array($path)).'</span><br><br>$3</div>', $message);
 
   // Same thing if the video has no description
   if(!$privacy_level['youtube'])
     $message = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><iframe '.$blurring2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $message);
   else
-    $message = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="thin">'.__('nbcodes_video_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
+    $message = preg_replace('/\[\[youtube-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
 
   // Same thing if the video has no description or alignment
   if(!$privacy_level['youtube'])
     $message = preg_replace('/\[\[youtube-nsfw:(.*?)\]\]/i','<div class="align_center"><iframe '.$blurring2.' width="560" height="315" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>', $message);
   else
-    $message = preg_replace('/\[\[youtube-nsfw:(.*?)\]\]/i','<div class="align_center"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="thin">'.__('nbcodes_video_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
+    $message = preg_replace('/\[\[youtube-nsfw:(.*?)\]\]/i','<div class="align_center"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
 
 
   /*******************************************************************************************************************/
@@ -461,13 +461,13 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
   if(!$privacy_level['youtube'])
     $message = preg_replace('/\[\[gallery:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_gallery_image"><iframe style="width:100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_galerie_hr">$2</div>', $message);
   else
-    $message = preg_replace('/\[\[gallery:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_gallery_image"><a class="bold" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="thin">'.__('nbcodes_video_hidden_small', 1, 0, 0, array($path)).'</span><br><br>$2</div>', $message);
+    $message = preg_replace('/\[\[gallery:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_gallery_image"><a class="bold" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden_small', 1, 0, 0, array($path)).'</span><br><br>$2</div>', $message);
 
   // Same thing if the video has no description
   if(!$privacy_level['youtube'])
     $message = preg_replace('/\[\[gallery:(.*?)\|youtube\]\]/i','<div class="web_gallery_image"><iframe style="width:100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_gallery_hr"></div>', $message);
   else
-    $message = preg_replace('/\[\[gallery:(.*?)\|youtube\]\]/i','<div class="web_gallery_image"><a class="bold" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="thin">'.__('nbcodes_video_hidden_small', 1, 0, 0, array($path)).'</span></div>', $message);
+    $message = preg_replace('/\[\[gallery:(.*?)\|youtube\]\]/i','<div class="web_gallery_image"><a class="bold" href="https://www.youtube.com/watch?v=$1">YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden_small', 1, 0, 0, array($path)).'</span></div>', $message);
 
 
   /*******************************************************************************************************************/
@@ -477,13 +477,13 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
   if(!$privacy_level['youtube'])
     $message = preg_replace('/\[\[gallery-nsfw:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_gallery_image"><iframe '.$blurring2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_gallery_hr">$2</div>', $message);
   else
-    $message = preg_replace('/\[\[gallery-nsfw:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_gallery_image"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="thin">'.__('nbcodes_video_hidden_small', 1, 0, 0, array($path)).'</span><br><br>$2</div>', $message);
+    $message = preg_replace('/\[\[gallery-nsfw:(.*?)\|youtube\|(.*?)\]\]/i','<div class="web_gallery_image"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden_small', 1, 0, 0, array($path)).'</span><br><br>$2</div>', $message);
 
   // Same thing if the video has no description
   if(!$privacy_level['youtube'])
     $message = preg_replace('/\[\[gallery-nsfw:(.*?)\|youtube\]\]/i','<div class="web_gallery_image"><iframe '.$blurring2.' width="100%" src="https://www.youtube.com/embed/$1?rel=0&amp;showinfo=0&amp;iv_load_policy=3" allow="autoplay; encrypted-media" allowfullscreen></iframe><hr class="web_gallery_hr"></div>', $message);
   else
-    $message = preg_replace('/\[\[gallery-nsfw:(.*?)\|youtube\]\]/i','<div class="web_gallery_image"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="thin">'.__('nbcodes_video_hidden_small', 1, 0, 0, array($path)).'</span></div>', $message);
+    $message = preg_replace('/\[\[gallery-nsfw:(.*?)\|youtube\]\]/i','<div class="web_gallery_image"><a class="bold" href="https://www.youtube.com/watch?v=$1">NSFW! - YouTube: $1</a><br><span class="small">'.__('nbcodes_video_hidden_small', 1, 0, 0, array($path)).'</span></div>', $message);
 
 
   /*******************************************************************************************************************/
@@ -496,7 +496,7 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
     trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"$1","geo":"","time":"2004-01-01 '.date('Y-m-d').'"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=$1","guestPath":"https://trends.google.com:443/trends/embed/"});
   </script>', $message);
   else
-    $message = preg_replace('/\[\[trends:(.*?)\]\]/i','<div class="align_center"><a class="big bold" href="https://trends.google.com/trends/explore?q=$1">Google trends: $1</a><br><span class="thin">'.__('nbcodes_trends_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
+    $message = preg_replace('/\[\[trends:(.*?)\]\]/i','<div class="align_center"><a class="big bold" href="https://trends.google.com/trends/explore?q=$1">Google trends: $1</a><br><span class="small">'.__('nbcodes_trends_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
 
 
   /*******************************************************************************************************************/
@@ -509,7 +509,7 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
     trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"$1","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$2","geo":"","time":"2004-01-01 '.date('Y-m-d').'"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=$1,$2","guestPath":"https://trends.google.com:443/trends/embed/"});
   </script>', $message);
   else
-    $message = preg_replace('/\[\[trends2:(.*?)\|(.*?)\]\]/i','<div class="align_center"><a class="big bold" href="https://trends.google.com/trends/explore?q=$1,$2">Google trends: $1, $2</a><br><span class="thin">'.__('nbcodes_trends_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
+    $message = preg_replace('/\[\[trends2:(.*?)\|(.*?)\]\]/i','<div class="align_center"><a class="big bold" href="https://trends.google.com/trends/explore?q=$1,$2">Google trends: $1, $2</a><br><span class="small">'.__('nbcodes_trends_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
 
 
   /*******************************************************************************************************************/
@@ -522,7 +522,7 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
     trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"$1","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$2","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$3","geo":"","time":"2004-01-01 '.date('Y-m-d').'"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=$1,$2,$3","guestPath":"https://trends.google.com:443/trends/embed/"});
   </script>', $message);
   else
-    $message = preg_replace('/\[\[trends3:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="align_center"><a class="big bold" href="https://trends.google.com/trends/explore?q=$1,$2,$3">Google trends: $1, $2, $3</a><br><span class="thin">'.__('nbcodes_trends_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
+    $message = preg_replace('/\[\[trends3:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="align_center"><a class="big bold" href="https://trends.google.com/trends/explore?q=$1,$2,$3">Google trends: $1, $2, $3</a><br><span class="small">'.__('nbcodes_trends_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
 
 
   /*******************************************************************************************************************/
@@ -535,7 +535,7 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
     trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"$1","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$2","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$3","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$4","geo":"","time":"2004-01-01 '.date('Y-m-d').'"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=$1,$2,$3,$4","guestPath":"https://trends.google.com:443/trends/embed/"});
   </script>', $message);
   else
-    $message = preg_replace('/\[\[trends4:(.*?)\|(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="align_center"><a class="big bold" href="https://trends.google.com/trends/explore?q=$1,$2,$3,$4">Google trends: $1, $2, $3, $4</a><br><span class="thin">'.__('nbcodes_trends_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
+    $message = preg_replace('/\[\[trends4:(.*?)\|(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="align_center"><a class="big bold" href="https://trends.google.com/trends/explore?q=$1,$2,$3,$4">Google trends: $1, $2, $3, $4</a><br><span class="small">'.__('nbcodes_trends_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
 
 
   /*******************************************************************************************************************/
@@ -548,7 +548,7 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
     trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"$1","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$2","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$3","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$4","geo":"","time":"2004-01-01 '.date('Y-m-d').'"},{"keyword":"$5","geo":"","time":"2004-01-01 '.date('Y-m-d').'"}],"category":0,"property":""}, {"exploreQuery":"date=all&q=$1,$2,$3,$4,$5","guestPath":"https://trends.google.com:443/trends/embed/"});
   </script>', $message);
   else
-    $message = preg_replace('/\[\[trends5:(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="align_center"><a class="big bold" href="https://trends.google.com/trends/explore?q=$1,$2,$3,$4,$5">Google trends: $1, $2, $3, $4, $5</a><br><span class="thin">'.__('nbcodes_trends_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
+    $message = preg_replace('/\[\[trends5:(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="align_center"><a class="big bold" href="https://trends.google.com/trends/explore?q=$1,$2,$3,$4,$5">Google trends: $1, $2, $3, $4, $5</a><br><span class="small">'.__('nbcodes_trends_hidden', 1, 0, 0, array($path)).'</span></div>', $message);
 
 
   /*******************************************************************************************************************/

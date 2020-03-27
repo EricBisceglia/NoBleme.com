@@ -56,8 +56,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_preamble_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_preamble_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -133,8 +135,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_intro_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_intro_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -145,8 +149,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_contract_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_contract_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -157,8 +163,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_capitalism_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_capitalism_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -169,8 +177,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_violence_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_violence_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -181,8 +191,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_work_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_work_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -193,8 +205,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_creativity_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_creativity_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -205,8 +219,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_nature_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_nature_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -217,8 +233,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_inspirations_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_inspirations_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -229,8 +247,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_philosophy_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_philosophy_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -241,8 +261,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_listening_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_listening_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -253,8 +275,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_solutions_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_solutions_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -265,8 +289,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_praxis_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_praxis_quote')?>
+            </span>
           </blockquote>
         </div>
 
@@ -277,8 +303,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </h4>
 
         <div class="padding_top">
-          <blockquote class="glow text_light bold">
-            <?=__('pol_manifesto_postface_quote')?>
+          <blockquote class="nobackground text_light bold">
+            <span class="glow">
+              <?=__('pol_manifesto_postface_quote')?>
+            </span>
           </blockquote>
         </div>
 

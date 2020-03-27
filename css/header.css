@@ -37,7 +37,7 @@
 .header_infobar_standard   { display:none;                             } }
 
 /****************************************************** SUBMENU ******************************************************/
-.header_submenu        { display: none; white-space: nowrap; background: #121212               ;
+.header_submenu        { display: none; white-space: nowrap; background-color: #121212         ;
                          color: #B00B1E;   font-family: 'NoBleme-submenu'                      }
 .header_submenu_column { padding: 15px;                                                        }
 .header_submenu_title  { margin-bottom: 2px; color: #CACACA; font-weight: bold;                ;
@@ -63,9 +63,11 @@
 .header_submenu_title     { font-size: 22px;                         }
 .header_submenu_column    { border-bottom: 2px solid #B00B1E;      } }
 
-/************************************************ PAGE / MENU LAYOUTS ************************************************/
-@media (min-width: 1025px) { .header_main_page { margin-top: 80px; padding-left: 25px; padding-right: 25px; } }
-@media (max-width: 1024px) { .header_main_page { margin-top: 50px; padding-left: 40px; padding-right: 40px; } }
+/************************************************** MAIN PAGE BODY ***************************************************/
+@media (min-width: 1025px) { .header_main_page { margin-top: 80px; padding-left: 25px; padding-right: 25px; }
+                             hr                { margin-left: -25px; margin-right: -25px;                 } }
+@media (max-width: 1024px) { .header_main_page { margin-top: 50px; padding-left: 40px; padding-right: 40px; }
+                             hr                { margin-left: -40px; margin-right: -40px;                 } }
 
 /****************************************************** FOOTER *******************************************************/
 footer { width: 100%; text-align: center; color: #999999; font-size: 14px              ;

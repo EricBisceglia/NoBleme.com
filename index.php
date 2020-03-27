@@ -13,6 +13,9 @@ $page_title_en    = "Homepage";
 $page_title_fr    = "Accueil";
 $page_description = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
 
+// CSS
+$css = array('index');
+
 
 
 
@@ -39,7 +42,7 @@ $website_age = (date('n') < 3 || (date('n') == 3 && date('j') < 19)) ? $website_
 
       <div class="width_50">
 
-        <div class="align_center padding_top bigpadding_bot bigglow">
+        <div class="align_center padding_top bigpadding_bot bigglow nobleme_logo">
           <img src="<?=$path?>img/common/logo_full.png" alt="NoBleme.com">
         </div>
 

@@ -3,7 +3,7 @@
 
 /************************************************** PUBLIC PROFILE ***************************************************/
 .profile_frame  { border: 1px solid #FFFFFF; height: 500px; padding: 10px; overflow-y: auto; word-break: normal; }
-.profile_hr     { height: 1px; background: #FFFFFF; border: 0px; margin-left: -10px; margin-right: -10px;        }
+.profile_hr     { height: 1px; background-color: #FFFFFF; border: 0px; margin-left: -10px; margin-right: -10px;  }
 .profile_button { margin-top: 5px; margin-bottom: 5px;                                                           }
 
 .profile_textarea         { height: 250px; }

@@ -98,7 +98,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
                 <td class="align_center<?=$userlist[$i]['css']?>">
                   <?php if($userlist[$i]['type'] == 'user') { ?>
-                  <?=__link('pages/users/user?id='.$userlist[$i]['id'], $userlist[$i]['nickname'], $userlist[$i]['css'])?>
+                  <?=__link('todo_link/user?id='.$userlist[$i]['id'], $userlist[$i]['nickname'], $userlist[$i]['css'])?>
                   <?php } else { ?>
                   <?=$userlist[$i]['nickname']?>
                   <?php } ?>

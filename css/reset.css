@@ -4,17 +4,11 @@
 /*                           More specific styles for elements are in the nobleme.css file                           */
 /*                            This has all been handcrafted with love, the oldschool way                             */
 /*          I could minify this, but I feel there is beauty in well indented code and want it to be visible          */
-/*    I like to call NoBleme's theme "anarcho-material design", those versed in UI design will understand why :)     */
+/*        I like to call NoBleme's theme "retrofutirist anarcho-immaterial design". Purposefully pretentious.        */
 /*********************************************************************************************************************/
-a, audio, blockquote, body, canvas, caption, code, del, div, dd, dl, dt, em, embed, fieldset, footer, form, h1, h2,
-h3, h4, h5, h6, header, html, iframe, img, ins, label, li, menu, nav, object, ol, p, pre, s, section, span, table,
-tbody, td, tfoot, th, thead, time, tr, ul, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; }
-footer, header, menu, nav, section               { display: block;                                                   }
-body                                             { line-height: 1; min-height:100vh;                                 }
-ol, ul                                           { list-style: none;                                                 }
-blockquote                                       { quotes: none;                                                     }
-blockquote:before, blockquote:after              { content: ''; content: none;                                       }
-table                                            { border-collapse: collapse; border-spacing: 0;                     }
+a, audio, blockquote, body, canvas, code, del, div, dd, dl, dt, em, embed, fieldset, footer, form, h1, h2, h3, h4, h5,
+h6, header, html, iframe, img, ins, input, label, li, menu, nav, object, ol, p, pre, s, select, span, table, tbody,
+td, tfoot, th, thead, time, tr, ul, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; }
 /*************************************************** CUSTOM FONTS ****************************************************/
 @font-face { font-family: 'NoBleme'                                         ;
   src:  url('./fonts/Roboto.eot?#iefix') format('embedded-opentype')        ,
@@ -55,91 +49,63 @@ table                                            { border-collapse: collapse; bo
 /******************************* DEFAULT STYLES OF GENERIC TAGS FOR THE WHOLE WEBSITE ********************************/
 *, *:after, *:before    { box-sizing: inherit;                                                                        }
 html                    { box-sizing: border-box; font-size: 62.5%;                                                   }
-body                    { color: #FFFFFF; background: #121212                                                         ;
+body                    { color: #FFFFFF; background-color: #121212; min-height: 100vh;                               ;
                           font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif                  ;
-                          font-size: 1.6rem; font-weight: 300; letter-spacing: .01rem; line-height: 1.45;             }
+                          font-size: 1.6rem; font-weight: 300; letter-spacing: 0.01rem; line-height: 1.45;            }
+p                       { padding-top: 2.5rem; text-align: justify;                                                   }
+h1, h2, h3, h4, h5, h6  { font-weight: 300; letter-spacing: -0.1rem; color: #B00B1E                                   ;
+                          font-family: 'NoBleme-header', 'Helvetica', 'Arial';                                        }
+h1                      { font-size: 5.0rem;                                                                          }
+h2                      { font-size: 4.2rem;                                                                          }
+h3                      { font-size: 3.6rem;                                                                          }
+h4                      { font-size: 3.0rem;                                                                          }
+h5                      { font-size: 2.4rem;                                                                          }
+h6                      { font-size: 1.5rem;                                                                          }
+@media (max-width: 1024px) { body { font-size: 2.6em;                                                                 }
+h1                      { font-size: 8.0rem;                                                                          }
+h2                      { font-size: 7.0rem;                                                                          }
+h3                      { font-size: 6.0rem;                                                                          }
+h4                      { font-size: 5.0rem;                                                                          }
+h5                      { font-size: 4.0rem;                                                                          }
+h6                      { font-size: 3.0rem;                                                                        } }
 a                       { color: #CACACA; text-decoration: none; filter: drop-shadow(0 0 3px #B00B1E);                }
 a:focus, a:hover        { color: #B00B1E;                                                                             }
-table                   { width: 100%;                                                                                }
-td, th                  { padding: 1.2rem 1.5rem;                                                                     }
-td:first-child, th:first-child { padding-left: 0;                                                                     }
-td:last-child, th:last-child { padding-right: 0;                                                                      }
+label, legend           { display: block; font-weight: bold; margin-bottom: 0.5rem; margin-left: 2.0px                ;
+                          letter-spacing: 0.05rem;                                                                    }
 img                     { max-width: 100%;                                                                            }
-button                  { margin-bottom: 1.0rem;                                                                      }
-li, table               { margin-bottom: 0.4rem;                                                                      }
-p                       { padding-top: 2.5rem; text-align: justify;                                                   }
+table                   { border-collapse: collapse; border-spacing: 0; border-style: hidden;                         ;
+                          width: 100%; border-radius: 0.7rem; background-color: #212121;                              }
+tbody > tr              { border-top: 1px solid #121212;                                                              }
+tbody > tr:hover        { background-color: #121212;                                                                  }
+td, th                  { padding: 6px 8px 6px 8px;                                                                   }
+hr                      { height: 1px; background-color: #B00B1E; border: 0px;                                        }
+th                      { text-align: center; font-weight: bold; white-space: nowrap;                                 }
 ul                      { list-style: circle inside;                                                                  }
-blockquote              { border-left: 0.3rem solid #B00B1E; padding: 1rem 1.5rem                                     }
-blockquote *:last-child { margin-bottom: 0;                                                                           }
-code               { background: #F4F5F6; font-size: 86%; margin: 0 .2rem; padding: .2rem .5rem; white-space: nowrap; }
-pre                     { background: #454545; border-left: 0.3rem solid #B00B1E;                                     }
-pre > code              { border-radius: 0; display: block; padding: 1rem 1.5rem; white-space: pre;                   }
-h1, h2, h3, h4, h5, h6  { font-weight: 300; letter-spacing: -.1rem; color:#FFFFFF                                     ;
-                          font-family: 'NoBleme-header', 'Helvetica', 'Arial';                                        }
-h1                      { font-size: 5.0rem; color: #B00B1E;                                                          }
-h2                      { font-size: 4.2rem; color: #B00B1E;                                                          }
-h3                      { font-size: 3.6rem; color: #B00B1E;                                                          }
-h4                      { font-size: 3.0rem; color: #B00B1E;                                                          }
-h5                      { font-size: 2.4rem; color: #B00B1E;                                                          }
-h6                      { font-size: 1.5rem; color: #B00B1E;                                                          }
-@media (max-width: 1024px) { body { font-size: 2.6em;                                                                 }
-h1                      { font-size: 8.0rem; color: #B00B1E;                                                          }
-h2                      { font-size: 7.0rem;  color: #B00B1E;                                                         }
-h3                      { font-size: 6.0rem;  color: #B00B1E;                                                         }
-h4                      { font-size: 5.0rem;  color: #B00B1E;                                                         }
-h5                      { font-size: 4.0rem;  color: #B00B1E;                                                         }
-h6                      { font-size: 3.0rem;  color: #B00B1E;                                                       } }
-/******************************************************* FORMS *******************************************************/
-textarea
-  { min-height: 6.5rem;                                                                                 }
-label, legend
-  { display: block; font-size: 1.6rem; font-weight: 700; margin-bottom: .5rem;                          }
-.label_inline
-  { display: inline-block; font-weight: normal; margin-left: .2rem;                                     }
-select
-  { color: #FFFFFF; font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif          ;
-  font-size: 1.0em; font-weight: bold; letter-spacing: .01em; line-height: 1.6;                         }
-input[type='checkbox'], input[type='radio']
-  { display: inline;                                                                                    }
-input[type='password'], input[type='text'], textarea, select
-  { background-color: transparent; border: 0.1rem solid #D1D1D1; border-radius: .4rem; box-shadow: none ;
-    box-sizing: inherit ; height: 3.4rem; padding: .6rem 1.0rem;                                        }
-input[type='password']:focus, input[type='text']:focus, textarea:focus, select:focus
-  { border-color: #B00B1E; outline: 0;                                                                  }
-input[type='text'][disabled] { background-color: #F0F0F0;                                               }
-.button, button, input[type='reset'], input[type='submit']
-  { background-color: #B00B1E; border: 0.1rem solid #B00B1E; border-radius: .4rem; color: #121212       ;
-   cursor: pointer; display: inline-block; font-size: 1.1rem; font-weight: 700; height: 3.8rem          ;
-   line-height: 3.8rem; letter-spacing: .1rem; padding: 0 3.0rem; text-align: center                    ;
-   text-decoration: none;  text-transform: uppercase; white-space: nowrap;                              }
-.button:focus, .button:hover, button:focus, button:hover, input[type='reset']:focus, input[type='reset']:hover,
-input[type='submit']:focus, input[type='submit']:hover
-  { background-color: #FFFFFF; border-color: #FFFFFF; color: #121212; outline: 0;                       }
-.button[disabled], button[disabled], input[type='reset'][disabled], input[type='submit'][disabled]
-  { cursor: default; opacity: .5;                                                                       }
-.button[disabled]:focus, .button[disabled]:hover, button[disabled]:focus, button[disabled]:hover,
-input[type='reset'][disabled]:focus, input[type='reset'][disabled]:hover, input[type='submit'][disabled]:focus,
-input[type='submit'][disabled]:hover
-  { background-color: #B00B1E; border-color: #B00B1E;                                                   }
-.button.button_outline, button.button_outline, input[type='reset'].button_outline, input[type='submit'].button_outline
-  { background-color: transparent; color: #B00B1E;                                                      }
-.button.button_outline:focus, .button.button_outline:hover, button.button_outline:focus, button.button_outline:hover,
-input[type='reset'].button_outline:focus, input[type='reset'].button_outline:hover,
-input[type='submit'].button_outline:focus, input[type='submit'].button_outline:hover
-  { background-color: transparent; border-color: #FFFFFF; color: #FFFFFF;                               }
-.button.button_outline[disabled]:focus, .button.button_outline[disabled]:hover, button.button_outline[disabled]:focus,
-button.button_outline[disabled]:hover, input[type='reset'].button_outline[disabled]:focus,
-input[type='reset'].button_outline[disabled]:hover, input[type='submit'].button_outline[disabled]:focus,
-input[type='submit'].button_outline[disabled]:hover
-  { border-color: inherit; color: #B00B1E;                                                              }
-.button.button_clear, button.button_clear, input[type='reset'].button_clear, input[type='submit'].button_clear
-  { background-color: transparent; border-color: transparent; color: #B00B1E;                           }
-.button.button_clear:focus, .button.button_clear:hover, button.button_clear:focus, button.button_clear:hover,
-input[type='reset'].button_clear:focus, input[type='reset'].button_clear:hover, input[type='submit'].button_clear:focus,
-input[type='submit'].button_clear:hover
-  { background-color: transparent; border-color: transparent; color: #FFFFFF;                           }
-.button.button_clear[disabled]:focus, .button.button_clear[disabled]:hover, button.button_clear[disabled]:focus,
-button.button_clear[disabled]:hover, input[type='reset'].button_clear[disabled]:focus,
-input[type='reset'].button_clear[disabled]:hover, input[type='submit'].button_clear[disabled]:focus,
-input[type='submit'].button_clear[disabled]:hover
-  { color: #B00B1E;                                                                                     }
+li                      { margin-bottom: 0.1rem;                                                                      }
+del                     { background-color: #D32F2F; text-decoration: none; font-weight: bold; color: #121212         ;
+                          padding: 0em 0.25em;                                                                        }
+ins                     { background-color: #388E3C; text-decoration: none; font-weight: bold; color: #121212         ;
+                          padding: 0em 0.25em;                                                                        }
+blockquote              { quotes: none; background-color: #232323; border-left: 0.3rem solid #B00B1E                  ;
+                          padding: 1rem 1.5rem;                                                                       }
+pre                     { background-color: #232323; border-left: 0.3rem solid #B00B1E; overflow-x: auto              ;
+                          padding: 1rem 1.5rem; font-family: 'NoBleme-hack', monospace;                               }
+textarea                { min-height: 12.0rem; width: 100%; background-color: #232323; color: #CACACA                 ;
+                          border-radius: 5px; padding: 0.6rem 1.0rem; box-sizing: inherit; box-shadow: none;          }
+input, select, button   { font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif                  ;
+                          color: #CACACA; background-color: #212121; box-sizing: inherit; box-shadow: none            ;
+                          border: 1px solid #212121; border-radius: 0.4rem; padding: 0.3rem 0.7rem;                   }
+select                  { text-align: center;                                                                         }
+button, input[type='reset'], input[type='submit'] { font-size: 2.0rem; font-weight: bold; letter-spacing: 0.12rem     ;
+                          padding: 0.5rem 1.6rem; text-align: center; text-decoration: none                           ;
+                          text-transform: uppercase; white-space: nowrap;                                             }
+button:not([disabled]), input[type='reset']:not([disabled]), input[type='submit']:not([disabled])
+                        { cursor: pointer;                                                                            }
+input[type='checkbox'], input[type='radio'] { display: inline;                                                        }
+input[disabled], button[disabled] { background-color: #181818; opacity: 0.4;                                          }
+select:hover, input[type='text']:hover:not([disabled]):not(:focus),
+input[type='password']:hover:not([disabled]):not(:focus), input[type='reset']:hover:not([disabled]):not(:focus),
+input[type='submit']:hover:not([disabled]):not(:focus), button:hover:not([disabled]):not(:focus)
+                        { border-color: #CACACA; background-color: #323232;                                           }
+input[type='text']:focus, input[type='password']:focus, input[type='reset']:focus, input[type='submit']:focus, button:focus, select:focus { border-color: #888888; background-color: #323232;                                      }
+input:not([type])       { background-color: #121212;                                                                  }

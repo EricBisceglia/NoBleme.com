@@ -191,7 +191,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
                 <?php } if($is_admin) { ?>
 
                 <?php if($deletion_type) { ?>
-                <img class="valign_center pointer spaced_right" src="<?=$path?>img/icons/reload.svg" height="16" alt="R" onclick="activity_restore_log('<?=$activity_logs[$i]['id']?>');">
+                <img class="valign_center pointer spaced_right" src="<?=$path?>img/icons/refresh.svg" height="16" alt="R" onclick="activity_restore_log('<?=$activity_logs[$i]['id']?>');">
                 <?php } ?>
                 <img class="valign_center pointer spaced_right" src="<?=$path?>img/icons/delete.svg" height="16" alt="X" onclick="activity_delete_log('<?=$activity_logs[$i]['id']?>', '<?=addslashes(__('activity_delete'))?>', '<?=$deletion_type?>');">
                 <?php } ?>

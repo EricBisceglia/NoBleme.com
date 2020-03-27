@@ -66,6 +66,9 @@ function error_page($message, $path="./../../", $lang=NULL)
   $page_title_fr    = "Page d'erreur";
   $page_description = "This is an error page. You will forget about this page's mere existence. Don't panic, the red flashing light is part of the process";
 
+  // Include the required CSS
+  $css = array('index');
+
   // Open the HTML part by including the header
   include_once $path."inc/header.inc.php";
   ?>
