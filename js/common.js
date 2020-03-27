@@ -25,7 +25,7 @@ function toggle_header_menu(menu_name)
   if(menu_visibility == 'none')
     selected_submenu.style.display = 'grid';
 
-  // If there's a glowing animation due to unread private messages, get rid of it if the user clicks it
-  if(menu_name == 'account')
-    document.getElementById('header_infobar_new_messages').classList.remove('header_infobar_notification');
+  // If the annoying new notification animation is there, replace it with the standard user icon upon clicking
+  var account_icon = document.getElementById('header_topmenu_account_icon');
+   account_icon.setAttribute('src', account_icon.getAttribute('src').replace("login_mail.svg", "login.svg"));
 }

@@ -220,8 +220,9 @@ if (user_is_logged_in())
                   AND     users_private_messages.fk_users_recipient = '$activity_user' ");
 
   // Fetch the result for display
-  $dpms                 = mysqli_fetch_array($qpms);
-  $nb_private_messages  = $dpms['pm_nb'];
+  $dpms                     = mysqli_fetch_array($qpms);
+  $nb_private_messages      = $dpms['pm_nb'];
+  $nb_private_messages_css  = ($nb_private_messages) ? ' header_submenu_blink' : '';
 }
 
 
@@ -400,65 +401,23 @@ $javascripts .= '
 
       </div>
 
-      <div class="header_topmenu_zone header_topmenu_flag">
+      <div class="header_topmenu_zone">
+
+        <?php if(user_is_logged_in() && $nb_private_messages) { ?>
+        <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="Account" onclick="toggle_header_menu('account');">
+        <?php } else { ?>
+        <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_account" src="<?=$path?>img/icons/login.svg" alt="Account" onclick="toggle_header_menu('account');">
+        <?php } ?>
 
         <a href="<?=$url_lang?>">
           <?php if($lang == 'FR') { ?>
-          <img class="header_topmenu_flagimg" src="<?=$path?>img/icons/lang_en.png" alt="EN">
+          <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_en.png" alt="EN">
           <?php } else { ?>
-          <img class="header_topmenu_flagimg" src="<?=$path?>img/icons/lang_fr.png" alt="FR">
+          <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_fr.png" alt="FR">
           <?php } ?>
         </a>
 
       </div>
-    </div>
-
-<?php ########################################### LOGIN / STATUS BAR ############################################### ?>
-
-    <div class="header_infobar">
-
-      <?php if(user_is_logged_in()) {
-            if($nb_private_messages) { ?>
-
-      <div class="header_topmenu_zone header_infobar_link header_infobar_notification pointer" onclick="toggle_header_menu('account');" id="header_infobar_new_messages">
-        <span class="desktop">
-          <?=__('header_status_message', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
-        </span>
-        <span class="mobile">
-          <?=__('header_status_message_short', $nb_private_messages, 0, 0, array(sanitize_output(user_get_nickname()), $nb_private_messages))?>
-        </span>
-      </div>
-
-      <?php } else { ?>
-
-      <div class="header_topmenu_zone header_infobar_link pointer" onclick="toggle_header_menu('account');">
-        <span class="desktop">
-          <?=__('header_status_logged_in', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
-        </span>
-        <span class="mobile">
-          <?=__('header_status_logged_in_short', 0, 0, 0, array(sanitize_output(user_get_nickname())))?>
-        </span>
-      </div>
-
-      <?php } ?>
-
-      <div class="header_topmenu_zone">
-        <?=__link($url_logout, __('header_status_logout'), "header_infobar_link", 1, $path);?>
-      </div>
-
-      <?php } else { ?>
-
-      <div class="header_topmenu_zone header_infobar_link">
-        <span class="desktop">
-          <?=__link('pages/users/login', __('header_status_login'), "header_infobar_link", 1, $path);?>
-        </span>
-        <span class="mobile">
-          <?=__link('pages/users/login', __('header_status_login_short'), "header_infobar_link", 1, $path);?>
-        </span>
-      </div>
-
-      <?php } ?>
-
     </div>
 
 <?php ############################################ SUBMENU: NOBLEME ################################################ ?>
@@ -469,23 +428,23 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('nobleme.com')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('index', __('submenu_nobleme_homepage'), 'text_red noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('index', __('submenu_nobleme_homepage'), 'header_submenu_link', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('pages/nobleme/activity', __('submenu_nobleme_activity'), 'text_red noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('pages/nobleme/activity', __('submenu_nobleme_activity'), 'header_submenu_link', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_what_is'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_what_is'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_internet'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_internet'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_irc'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_irc'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_manifesto'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_manifesto'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -493,17 +452,17 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_nobleme_documentation')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_coc'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_coc'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_privacy'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_privacy'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_personal_data'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_personal_data'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_contact_admin'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_contact_admin'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -511,23 +470,23 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_nobleme_dev')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_behind_scenes'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_behind_scenes'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_devblog'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_devblog'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_todolist'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_todolist'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_roadmap'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_roadmap'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_report_bug'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_report_bug'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_nobleme_feature'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_feature'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -542,17 +501,17 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_community_users')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_online'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_online'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_userlist'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_userlist'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_staff'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_staff'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_birthdays'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_birthdays'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -560,17 +519,17 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_community_irc')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_irc_intro'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_irc_intro'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_irc_browser'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_irc_browser'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_irc_client'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_irc_client'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_irc_channels'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_irc_channels'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -578,11 +537,11 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_community_meetups')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_meetups_list'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_meetups_list'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_meetups_stats'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_meetups_stats'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -590,17 +549,17 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_community_quotes')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_quotes_list'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_quotes_list'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_quotes_random'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_quotes_random'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_quotes_stats'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_quotes_stats'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_community_quotes_submit'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_community_quotes_submit'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -614,20 +573,20 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_pages_internet')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_pages_internet_index'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_internet_index'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_pages_internet_pages'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_internet_pages'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_pages_internet_dictionary'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_internet_dictionary'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_pages_internet_culture'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_internet_culture'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_pages_internet_random'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_internet_random'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -635,8 +594,8 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_pages_politics')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('pages/politics/manifesto', __('submenu_pages_politics_manifesto'), 'text_red noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('pages/politics/manifesto', __('submenu_pages_politics_manifesto'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
@@ -644,14 +603,14 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_pages_archives')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_pages_nbrpg'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_nbrpg'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_pages_nrm'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_nrm'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_pages_nrm_champions'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_nrm_champions'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -666,8 +625,8 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_admin_activity')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('pages/nobleme/activity?mod', __('submenu_admin_modlogs'), 'text_red noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('pages/nobleme/activity?mod', __('submenu_admin_modlogs'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
@@ -675,18 +634,18 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_admin_users')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_admin_banned'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_admin_banned'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_admin_nickname'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_admin_nickname'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_admin_password'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_admin_password'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <?php if($is_admin) { ?>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_admin_rights'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_admin_rights'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <?php } ?>
       </div>
@@ -696,11 +655,11 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_admin_stats')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_admin_pageviews'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_admin_pageviews'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_admin_doppelganger'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_admin_doppelganger'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -708,20 +667,20 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_admin_website')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_admin_ircbot'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_admin_ircbot'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_admin_close'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_admin_close'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('pages/dev/queries', __('submenu_admin_sql'), 'text_red noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('pages/dev/queries', __('submenu_admin_sql'), 'header_submenu_link', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_admin_release'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_admin_release'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_admin_scheduler'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_admin_scheduler'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -729,11 +688,11 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_admin_doc')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('pages/dev/snippets', __('submenu_admin_doc_snippets'), 'text_red noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('pages/dev/snippets', __('submenu_admin_doc_snippets'), 'header_submenu_link', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_admin_doc_css'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_admin_doc_css'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
       <?php } ?>
@@ -743,27 +702,21 @@ $javascripts .= '
 
 <?php ############################################ SUBMENU: ACCOUNT ################################################ ?>
 
-    <?php if($is_logged_in) { ?>
     <div class="header_submenu" id="header_submenu_account">
+    <?php if($is_logged_in) { ?>
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_user_pms')?>
         </div>
-        <?php if($nb_private_messages) { ?>
-        <div class="header_submenu_link header_infobar_notification">
-          <?=__link('todo_link', __('submenu_user_pms_inbox'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item<?=$nb_private_messages_css?>">
+          <?=__link('todo_link', __('submenu_user_pms_inbox'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <?php } else { ?>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_user_pms_inbox'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_pms_outbox'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <?php } ?>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_user_pms_outbox'), 'text_brown noglow glowhover bold', 1, $path);?>
-        </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_user_pms_write'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_pms_write'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -771,11 +724,11 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_user_profile')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_user_profile_self'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_profile_self'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_user_profile_edit'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_profile_edit'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -783,11 +736,11 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_user_settings')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_user_settings_privacy'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_settings_privacy'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_user_settings_nsfw'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_settings_nsfw'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -795,22 +748,41 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_user_edit')?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_user_edit_email'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_edit_email'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_user_edit_password'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_edit_password'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_user_edit_nickname'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_edit_nickname'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_link">
-          <?=__link('todo_link', __('submenu_user_edit_delete'), 'text_brown noglow glowhover bold', 1, $path);?>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_edit_delete'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=sanitize_output(user_get_nickname())?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link($url_logout, __('submenu_user_logout_logout'), 'header_submenu_link', 1, $path);?>
+        </div>
+      </div>
+
+      <?php } else { ?>
+
+      <div class="header_submenu_fullwidth align_center">
+        <h2 class="bigpadding_top bigpadding_bot">
+          <?=__('submenu_user_logged_out')?>
+        </h2>
+        <?=__link('pages/users/login', '<button class="bigbutton header_submenu_button">'.__('login').'</button>', '', 1, $path);?>
+        <?=__link('pages/users/register', '<button class="bigbutton header_submenu_button">'.__('register').'</button>', '', 1, $path);?>
+      </div>
+
+      <?php } ?>
     </div>
-    <?php } ?>
 
 <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                   //

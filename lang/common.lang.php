@@ -255,6 +255,10 @@ ___('password', 'FR', "mot de passe");
 
 ___('user', 'EN', "user");
 ___('user', 'FR', "utilisateur");
+___('login', 'EN', "login");
+___('login', 'FR', "connexion");
+___('register', 'EN', "register");
+___('register', 'FR', "inscription");
 
 ___('option', 'EN', "option");
 ___('option+', 'EN', "options");
@@ -436,30 +440,6 @@ ___('header_meta_error_long', 'EN', "The meta description tag is too long ({{1}}
 ___('header_meta_error_long', 'FR', "Le tag meta de description est trop long ({{1}} => 155)");
 
 
-// Status bar
-___('header_status_message', 'EN', "{{1}}, you have recieved a new private message, click here to read it!");
-___('header_status_message', 'FR', "{{1}}, vous avez reçu un nouveau message privé, cliquez ici pour le lire !");
-___('header_status_message+', 'EN', "{{1}}, you have recieved {{2}} new private messages, click here to read them!");
-___('header_status_message+', 'FR', "{{1}}, vous avez reçu {{2}} nouveaux messages privés, cliquez ici pour les lire !");
-___('header_status_message_short', 'EN', "{{1}}: You have a new private message!");
-___('header_status_message_short', 'FR', "{{1}} : Vous avez un nouveau message privé !");
-___('header_status_message_short+', 'EN', "{{1}}: You have {{2}} new private messages!");
-___('header_status_message_short+', 'FR', "{{1}} : Vous avez {{2}} nouveaux messages privés !");
-
-___('header_status_logged_in', 'EN', "You are logged in as {{1}}. Click here to manage your account.");
-___('header_status_logged_in', 'FR', "Vous êtes connecté en tant que {{1}}. Cliquez ici pour gérer votre compte.");
-___('header_status_logged_in_short', 'EN', "{{1}}: Click here to manage your account.");
-___('header_status_logged_in_short', 'FR', "{{1}} : Cliquez ici pour gérer votre comte");
-
-___('header_status_login', 'EN', "You are not logged in: Click here to login or register.");
-___('header_status_login', 'FR', "Vous n'êtes pas connecté: Cliquez ici pour vous identifier ou vous enregistrer.");
-___('header_status_login_short', 'EN', "Logged out: Click here to login or register.");
-___('header_status_login_short', 'FR', "Cliquez ici pour vous identifier ou vous enregistrer.");
-
-___('header_status_logout', 'EN', "Log out");
-___('header_status_logout', 'FR', "Déconnexion");
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -591,7 +571,7 @@ ___('submenu_pages_nrm_champions', 'FR', "Champions du passé");
 
 
 // Submenu: Admin
-___('submenu_admin_activity', 'EN', "Moderation tools");
+___('submenu_admin_activity', 'EN', "Mod tools");
 ___('submenu_admin_activity', 'FR', "Outils de modération");
 ___('submenu_admin_modlogs', 'EN', "Moderation logs");
 ___('submenu_admin_modlogs', 'FR', "Logs de modération");
@@ -614,8 +594,8 @@ ___('submenu_admin_pageviews', 'FR', "Popularité des pages");
 ___('submenu_admin_doppelganger', 'EN', "Doppelgänger");
 ___('submenu_admin_doppelganger', 'FR', "Doppelgänger");
 
-___('submenu_admin_website', 'EN', "Website management");
-___('submenu_admin_website', 'FR', "Gestion du site");
+___('submenu_admin_website', 'EN', "Admin tools");
+___('submenu_admin_website', 'FR', "Outils admin");
 ___('submenu_admin_ircbot', 'EN', "IRC bot management");
 ___('submenu_admin_ircbot', 'FR', "Gestion du bot IRC");
 ___('submenu_admin_close', 'EN', "Close the website");
@@ -627,8 +607,8 @@ ___('submenu_admin_release', 'FR', "Numéros de version");
 ___('submenu_admin_scheduler', 'EN', "Scheduled tasks");
 ___('submenu_admin_scheduler', 'FR', "Tâches planifiées");
 
-___('submenu_admin_doc', 'EN', "Dev documentation");
-___('submenu_admin_doc', 'FR', "Documentation dev");
+___('submenu_admin_doc', 'EN', "Dev docs");
+___('submenu_admin_doc', 'FR', "Docs dev");
 ___('submenu_admin_doc_snippets', 'EN', "Code snippets");
 ___('submenu_admin_doc_snippets', 'FR', "Modèles de code");
 ___('submenu_admin_doc_css', 'EN', "CSS palette");
@@ -669,6 +649,12 @@ ___('submenu_user_edit_nickname', 'EN', "Change my nickname");
 ___('submenu_user_edit_nickname', 'FR', "Changer de pseudonyme");
 ___('submenu_user_edit_delete', 'EN', "Delete my account");
 ___('submenu_user_edit_delete', 'FR', "Supprimer mon compte");
+
+___('submenu_user_logout_logout', 'EN', "Log out of this account");
+___('submenu_user_logout_logout', 'FR', "Se déconnecter du compte");
+
+___('submenu_user_logged_out', 'EN', "You are not logged in");
+___('submenu_user_logged_out', 'FR', "Vous n'êtes pas connecté");
 
 
 

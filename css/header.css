@@ -1,48 +1,43 @@
 /***************************************************** TOP MENU ******************************************************/
-.header_topmenu_zone                 { display: flex; align-items: center;                                            }
-.header_topmenu                      { background-color: #B00B1E; justify-content: space-between                      ;
-                                       display: flex; font-family: 'NoBleme-header';                                  }
-.header_topmenu_title                { font-weight: bold; color: #121212; cursor: pointer; background-color: #B00B1E; }
-.header_topmenu_title:hover          { color: #B00B1E; background-color: #121212;                                     }
-.header_topmenu_flagimg              { vertical-align: middle;                                                        }
+.header_topmenu_zone        { display: flex; align-items: center;                                            }
+.header_topmenu             { background-color: #B00B1E; justify-content: space-between                      ;
+                              display: flex; font-family: 'NoBleme-header';                                  }
+.header_topmenu_title       { font-weight: bold; color: #121212; cursor: pointer; background-color: #B00B1E; }
+.header_topmenu_title:hover { color: #B00B1E; background-color: #121212;                                     }
+.header_topmenu_icon        { cursor: pointer; vertical-align: middle;                                       }
 
 @media (min-width: 1025px) {
-.header_topmenu_title      { padding: 6px 20px 6px 20px; font-size: 26px; }
-.header_topmenu_flagimg    { height: 26px; margin: 0px 12px 0px 0px;    } }
+.header_topmenu_title   { padding: 6px 20px 6px 20px; font-size: 26px; }
+.header_topmenu_account { height: 32px; margin: 0.3em 0.8em 0 0;       }
+.header_topmenu_mail    { height: 36px; margin: 0.2em 0.8em 0 0;       }
+.header_topmenu_flag    { height: 26px; margin: 0 0.8em 0 0;         } }
 @media (max-width: 1024px) {
-.header_topmenu_title      { padding: 6px 20px 6px 20px; font-size: 32px; }
-.header_topmenu_flagimg    { height: 32px; margin: 0px 16px 4px 0px;    } }
-
-/************************************************* ACCOUNT INFO BAR **************************************************/
-.header_infobar                             { display: flex; justify-content: space-between; background-color: #121212;
-                                              white-space: nowrap; border-bottom: 2px solid #B00B1E; color:#B00B1E    ;
-                                               font-weight: bold; font-size: 24px;                                    }
-.header_infobar_link                        { filter: none; color: #B00B1E;                                           }
-.header_infobar_link:hover                  { color: #CACACA;                                                         }
-.header_infobar_notification                { animation-name: blink-annoy; animation-iteration-count: infinite        ;
-                                              animation-duration: 1337ms;                                             }
-@keyframes blink-annoy                      { 0% { filter: none; } 50% { filter: drop-shadow(0 0 5px #B00B1E);        }
-                                              100%  { filter: none; }                                                 }
-.header_infobar_notification:hover          { animation-name: blink-annoy-hover; animation-iteration-count: infinite  ;
-                                              animation-duration: 1337ms;                                             }
-@keyframes blink-annoy-hover                { 0% { color: #B00B1E; filter: drop-shadow(0 0 5px #B00B1E);              }
-                                              50% { color: #CACACA; filter: none;                                     }
-                                              100% { color: #B00B1E; filter: drop-shadow(0 0 5px #B00B1E);          } }
-
-@media(min-width: 1025px)  {
-.header_infobar            { font-size: 16px; padding: 3px 8px 2px 8px; }
-.header_infobar_responsive { display:none;                            } }
-@media(max-width: 1024px)  {
-.header_infobar            { font-size: 22px; padding: 4px 8px 4px 16px; }
-.header_infobar_standard   { display:none;                             } }
+.header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 30px; }
+.header_topmenu_account { height: 36px; margin: 0.2em 0.5em 0 0;       }
+.header_topmenu_mail    { height: 44px; margin: 0.1em 0.6em 0 0;       }
+.header_topmenu_flag    { height: 32px; margin: 0 0.8em 0.15em 0;    } }
 
 /****************************************************** SUBMENU ******************************************************/
-.header_submenu        { display: none; white-space: nowrap; background-color: #121212         ;
-                         color: #B00B1E;   font-family: 'NoBleme-submenu'                      }
-.header_submenu_column { padding: 15px;                                                        }
-.header_submenu_title  { margin-bottom: 2px; color: #CACACA; font-weight: bold;                ;
-                         padding-bottom: 12px; padding-top: 5px; font-family: 'NoBleme-header' }
-.header_submenu_link   { padding-bottom: 6px;                                                  }
+.header_submenu              { display: none; white-space: nowrap; background-color: #121212           ;
+                               color: #B00B1E;   font-family: 'NoBleme-submenu'                        }
+.header_submenu_column       { padding: 0.8em;                                                         }
+.header_submenu_fullwidth    { grid-column: 1 / span 5;                                                }
+.header_submenu_title        { margin-bottom: 0.5em; padding-bottom: 0.5em; padding-top: 0.5em         ;
+                               color: #CACACA; font-weight: bold; font-family: 'NoBleme-header'        ;
+                               text-transform: uppercase;                                              }
+.header_submenu_item         { padding-bottom: 0.5em;                                                  }
+.header_submenu_link         { color: #B00B1E; filter: none; font-weight: bold;                        }
+.header_submenu_link:hover   { filter: drop-shadow(0 0 5px #B00B1E);                                   }
+.header_submenu_button       { margin: 0 1.2em 3.0em 1.2em; background-color: #B00B1E                  ;
+                               filter: drop-shadow(0 0 10px #B00B1E); border-color: #B00B1E;           }
+.header_submenu_button:hover:not([disabled]):not(:focus) { background-color: #B00B1E                   ;
+                               filter: drop-shadow(0 0 15px #B00B1E); border-color: #B00B1E;           }
+.header_submenu_button:focus { background-color: #B00B1E                                               ;
+                               filter: drop-shadow(0 0 5px #B00B1E); border-color: #B00B1E;            }
+.header_submenu_blink        { animation-name: blink-glow; animation-iteration-count: infinite         ;
+                               animation-duration: 1337ms;                                             }
+@keyframes blink-glow        { 0% { filter: none; } 50% { filter: drop-shadow(0 0 5px #B00B1E);        }
+                               100%  { filter: none; }                                                 }
 
 @media(min-width: 1025px) {
 .header_submenu           { border-bottom: 2px solid #B00B1E         ;
@@ -61,7 +56,8 @@
 .header_submenu           { font-size: 20px; grid-auto-flow: row     ;
                             grid-template-columns: repeat(1)         }
 .header_submenu_title     { font-size: 22px;                         }
-.header_submenu_column    { border-bottom: 2px solid #B00B1E;      } }
+.header_submenu_column    { border-bottom: 2px solid #B00B1E;        }
+.header_submenu_fullwidth { border-bottom: 2px solid #B00B1E;      } }
 
 /************************************************** MAIN PAGE BODY ***************************************************/
 @media (min-width: 1025px) { .header_main_page { margin-top: 80px; padding-left: 25px; padding-right: 25px; }
