@@ -4,17 +4,17 @@
 /*          I could minify this, but I feel there is beauty in well indented code and want it to be visible          */
 /*        I like to call NoBleme's theme "retrofutirist anarcho-immaterial design". Purposefully pretentious.        */
 /****************************************************** COLORS *******************************************************/
+.dark   { background-color: #121212; } .text_dark   { color: #121212; }
+.black  { background-color: #000000; } .text_black  { color: #000000; }
 .white  { background-color: #FFFFFF; } .text_white  { color: #FFFFFF; }
 .light  { background-color: #CACACA; } .text_light  { color: #CACACA; }
-.black  { background-color: #000000; } .text_black  { color: #000000; }
-.dark   { background-color: #121212; } .text_dark   { color: #121212; }
-.red    { background-color: #B00B1E; } .text_red    { color: #B00B1E; }
+.yellow { background-color: #C8B900; } .text_yellow { color: #C8B900; }
 .orange { background-color: #C66900; } .text_orange { color: #C66900; }
+.red    { background-color: #B00B1E; } .text_red    { color: #B00B1E; }
 .purple { background-color: #673AB7; } .text_purple { color: #673AB7; }
 .blue   { background-color: #0069C0; } .text_blue   { color: #0069C0; }
-.green  { background-color: #087F23; } .text_green  { color: #087F23; }
-.yellow { background-color: #C8B900; } .text_yellow { color: #C8B900; }
 .brown  { background-color: #795548; } .text_brown  { color: #795548; }
+.green  { background-color: #087F23; } .text_green  { color: #087F23; }
 
 /************************************************** GENERIC CLASSES **************************************************/
 .hidden  { display: none;   }
@@ -23,17 +23,21 @@
 @media (max-width: 1024px) {
 .desktop { display: none; } }
 
-.margin_auto     { margin: auto;                    }
+.margin_auto     { margin: auto;                     }
 @media (min-width: 1025px) {
-.width_30        { margin: auto; max-width: 30em;   }
-.width_40        { margin: auto; max-width: 40em;   }
-.width_50        { margin: auto; max-width: 50em;   }
-.width_60        { margin: auto; max-width: 60em; } }
+.width_30        { margin: auto; max-width: 30em;    }
+.width_40        { margin: auto; max-width: 40em;    }
+.width_50        { margin: auto; max-width: 50em;    }
+.width_60        { margin: auto; max-width: 60em;    }
+.width_70        { margin: auto; max-width: 70em;    }
+.width_80        { margin: auto; max-width: 80em;  } }
 @media (max-width: 1024px) {
-.width_30        { margin: auto; max-width: 15em;   }
-.width_40        { margin: auto; max-width: 20em;   }
-.width_50        { margin: auto; max-width: 25em;   }
-.width_60        { margin: auto; max-width: 30em; } }
+.width_30        { margin: auto; max-width: 15em;    }
+.width_40        { margin: auto; max-width: 20em;    }
+.width_50        { margin: auto; max-width: 25em;    }
+.width_60        { margin: auto; max-width: 30em;    }
+.width_70        { margin: auto; max-width: 35em;    }
+.width_80        { margin: auto; max-width: 40em;  } }
 
 .align_justify   { text-align: justify;            }
 .align_center    { text-align: center;             }
@@ -46,14 +50,13 @@
 
 .bold            { font-weight: bold;                      }
 .notbold         { font-weight: normal;                    }
+.italics         { font-style: italic;                     }
 .underlined      { text-decoration: underline;             }
 .strikethrough   { text-decoration: line-through;          }
-.blank           { text-decoration: none;                  }
 .small           { font-size: 0.75em;                      }
 .big             { font-size: 1.25em;                      }
 .bigger          { font-size: 1.5em;                       }
 .biggest         { font-size: 2.0em;                       }
-.italics         { font-style: italic;                     }
 .monospace       { font-family: 'NoBleme-hack', monospace; }
 .blur            { text-shadow: 0 0 10px #CACACA           ;
                    color: rgba(255,255,255,0)              ;
@@ -68,10 +71,10 @@
 .pointer         { cursor: pointer;                        }
 
 .indiv, .intable { width: 100%;                                 }
-.indented        { padding-left: 20px;                          }
-.spaced          { padding-left: 0.2rem; padding-right: 0.2rem; }
-.spaced_left     { padding-left: 0.2rem;                        }
-.spaced_right    { padding-right: 0.2rem;                       }
+.indented        { padding-left: 2.0rem;                          }
+.spaced          { padding-left: 0.5rem; padding-right: 0.5rem; }
+.spaced_left     { padding-left: 0.5rem;                        }
+.spaced_right    { padding-right: 0.5rem;                       }
 .nospaced        { padding-left: 0; padding-right: 0;           }
 .tinypadding_top { padding-top: 1.0rem;                         }
 .smallpadding_top{ padding-top: 1.5rem;                         }
@@ -90,9 +93,10 @@
 .nopadding       { padding-top: 0; padding-bottom: 0;           }
 
 .flexcontainer   { display: -webkit-flex; display: flex;      }
+.flex            { flex: 1;                                   }
 .clearfix:after  { clear: both; content: ' '; display: table; }
-.float_left      { float: left;                               }
-.float_right     { float: right;                              }
+.float_left      { float: left; margin-right: 0.5em;          }
+.float_right     { float: right; margin-left: 0.5em;          }
 .nowrap          { white-space: nowrap;                       }
 .dowrap          { white-space: normal;                       }
 .scrollbar       { overflow-x: scroll;                        }
@@ -108,6 +112,7 @@ label.label_inline { display: inline-block; font-weight: normal; margin-left: .2
 
 select.table_search, input.table_search { height: auto; padding: 0.2rem; font-weight: normal; width: 100%          ;
                                           text-align: center; background-color: #343434;                           }
+input.table_search[type='submit']       { font-size: 1.6rem; letter-spacing: 0.1rem ;                              }
 select.table_search:hover, input.table_search:hover, input.table_search[type='text']:hover:not([disabled]):not(:focus)
                                         { background-color: #454545;                                               }
 select.intext, input.intext             { background-color: #121212; border: 2px solid #232323                     ;
@@ -118,7 +123,7 @@ input.intext:focus, select.intext:focus { border-color: #CACACA; background-colo
 select.inh, input.inh                   { background-color: #121212; border: 2px solid #232323                     ;
                                           color: #B00B1E; font-weight: bold; padding: 0.2rem; width: 250px;        }
 select.inh:hover, input.inh:hover, input.inh[type='text']:hover:not([disabled]):not(:focus),
-input.inh:focus, select.inh:focus       { border-color: #CACACA; background-color: #232323; border-color: #555555; }
+input.inh:focus, select.inh:focus       { border-color: #CACACA; background-color: #121212; border-color: #555555; }
 
 blockquote.nobackground { background-color: #121212; }
 
@@ -136,9 +141,9 @@ pre.xdebug-var-dump { background-color: #000000; color: #CACACA; border-left: 0;
 .bbcode_spoiler_body  { padding: 0.25em; background-color: #121212; border: 1px solid #343434;   }
 
 /***************************************************** TOOLTIPS ******************************************************/
-.tooltip_container                { cursor: pointer;                                                          }
-.tooltip_container .tooltip       { display: none; padding: 0.5em; z-index: 1337; margin-top: -20px           ;
-                                    margin-left: 15px ; cursor: normal;                                       }
-.tooltip_container:hover .tooltip { display: inline; position: absolute; color: #FFFFFF; text-align: left     ;
-                                    background-color: #232323 ; border-radius: 5px; border: 1px solid #888888 ;
-                                    box-shadow: 2px 2px 2px #888888; max-width: 500px;                        }
+.tooltip_container                { cursor: pointer;                                                                 }
+.tooltip_container .tooltip       { display: none; padding: 0.5em; z-index: 1337; margin-top: -20px; cursor: normal; }
+.tooltip_container:hover .tooltip { display: inline; position: absolute; color: #FFFFFF; text-align: left            ;
+                                    background-color: #232323 ; border-radius: 5px; border: 1px solid #888888        ;
+                                    box-shadow: 2px 2px 2px #888888; max-width: 500px; max-height: 250px             ;
+                                    overflow-y: auto;                                                                }

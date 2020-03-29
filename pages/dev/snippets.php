@@ -120,7 +120,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */
 /*                                                                                                                   */
-include './../../inc/footer.inc.php'; /*****************************************************************************/ }</pre>
+/*****************************************************************************/ include './../../inc/footer.inc.php'; }</pre>
 
         <pre onclick="to_clipboard(1, 'dev_snippets_pre_full_dynamic'); select_element('dev_snippets_pre_full_dynamic');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_full_dynamic">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
@@ -198,7 +198,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */
 /*                                                                                                                   */
-include './../../inc/footer.inc.php'; /*****************************************************************************/ }</pre>
+/*****************************************************************************/ include './../../inc/footer.inc.php'; }</pre>
 
       </div>
 

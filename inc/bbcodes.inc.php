@@ -114,7 +114,7 @@ function bbcodes($message, $path="./../../", $privacy_level=array('twitter' => 0
   }
 
   /*******************************************************************************************************************/
-  // [url=http://www.url.com]Link[/url]
+  // [url=http://www.example.com]Link[/url]
 
   // Solved with a regex
   $message = preg_replace('/\[url\](.*?)\[\/url\]/is','<a class="bold" href="$1">$1</a>', $message);
@@ -124,10 +124,10 @@ function bbcodes($message, $path="./../../", $privacy_level=array('twitter' => 0
 
 
   /*******************************************************************************************************************/
-  // [img]http://www.image.com/image.jpg[/img]
+  // [img]http://www.example.com/image.jpg[/img]
 
   // Solved with a regex
-  $message = preg_replace('/\[img\](.*?)\[\/img\]/is','<img class="bbcode_img" src="$1" alt="">', $message);
+  $message = preg_replace('/\[img\](.*?)\[\/img\]/is','<img src="$1" alt="">', $message);
 
 
   /*******************************************************************************************************************/
@@ -155,7 +155,7 @@ function bbcodes($message, $path="./../../", $privacy_level=array('twitter' => 0
   // [code]Code block[/code]
 
   // Solved with a regex
-  $message = preg_replace('/\[code\](.*?)\[\/code\]/is','<pre class="monospace indented dowrap">$1</pre>', $message);
+  $message = preg_replace('/\[code\](.*?)\[\/code\]/is','<pre>$1</pre>', $message);
 
 
   /*******************************************************************************************************************/
@@ -195,18 +195,18 @@ function bbcodes($message, $path="./../../", $privacy_level=array('twitter' => 0
 
   // Solved with a regex in a while loop - seems complicated, but it's just because we're applying a lot of js here
   while(preg_match('/\[spoiler\](.*?)\[\/spoiler\]/is',$message))
-    $message = preg_replace("/\[spoiler\](.*?)\[\/spoiler\]/is", "<div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '".__('bbcodes_spoiler')." : <a class=\'blank bold\' href=\'#\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '".__('bbcodes_spoiler')." : <a href=\'#\' class=\'blank bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">SPOILER : <a href=\"#\" class=\"blank bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\">$1</div></div></div>", $message);
+    $message = preg_replace("/\[spoiler\](.*?)\[\/spoiler\]/is", "<div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '".__('bbcodes_spoiler')." : <a class=\'bold\' href=\'#\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '".__('bbcodes_spoiler')." : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">SPOILER : <a href=\"#\" class=\"bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\">$1</div></div></div>", $message);
 
   // Same thing but with a parameter describing the spoiler's contents
   while(preg_match('/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is',$message))
-    $message = preg_replace("/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is", "<div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '$1 : <a href=\'#\' class=\'blank bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '$1 : <a href=\'#\' class=\'blank bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">$1 : <a href=\"#\" class=\"blank bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\">$2</div></div></div>", $message);
+    $message = preg_replace("/\[spoiler=(.*?)\](.*?)\[\/spoiler\]/is", "<div class=\"bbcode_spoiler_body\"><div class=\"bbcode_spoiler_title\"><span onclick=\"if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = ''; this.innerHTML = '$1 : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_hide')."</a>'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerHTML = '$1 : <a href=\'#\' class=\'bold\' onclick=\'return false;\'>".__('bbcodes_spoiler_show')."</a>'; }\">$1 : <a href=\"#\" class=\"bold\" onclick=\"return false;\">".__('bbcodes_spoiler_show')."</a></span></div><div><div style=\"display: none;\">$2</div></div></div>", $message);
 
 
   /*******************************************************************************************************************/
   // [blur]Blurry content[/blur]
 
   // Solved with a regex
-  $message = preg_replace('/\[blur\](.*?)\[\/blur\]/is','<span class="blurry">$1</span>', $message);
+  $message = preg_replace('/\[blur\](.*?)\[\/blur\]/is','<span class="blur">$1</span>', $message);
 
 
   /*******************************************************************************************************************/
@@ -221,41 +221,6 @@ function bbcodes($message, $path="./../../", $privacy_level=array('twitter' => 0
 
   // Solved with a regex
   $message = preg_replace('/\[line\]/is','<hr>', $message);
-
-
-  /*******************************************************************************************************************/
-  // Emojis
-
-  // Replace text with emotes - sometimes it causes problems, so keep an eye out for them
-  $message = str_replace(":&quot;)", '<img src="'.$path.'./img/emotes/shame.png" alt=":-#">', $message);
-  $message = str_replace(':")', '<img src="'.$path.'./img/emotes/shame.png" alt=":-#">', $message);
-  $message = str_replace(":-#", '<img src="'.$path.'./img/emotes/shame.png" alt=":-#">', $message);
-  $message = str_replace("):C", '<img src="'.$path.'./img/emotes/unhappiness.png" alt="):C">', $message);
-  $message = str_replace("):(", '<img src="'.$path.'./img/emotes/anger.png" alt="):(">', $message);
-  $message = str_replace(":&quot;(", '<img src="'.$path.'./img/emotes/crying.png" alt=":\'(">', $message);
-  $message = str_replace(':"(', '<img src="'.$path.'./img/emotes/crying.png" alt=":\'(">', $message);
-  $message = str_replace(":'(", '<img src="'.$path.'./img/emotes/crying.png" alt=":\'(">', $message);
-  $message = str_replace(":-(", '<img src="'.$path.'./img/emotes/sadness.png" alt=":(">', $message);
-  $message = str_replace("XD", '<img src="'.$path.'./img/emotes/laughter.png" alt="XD">', $message);
-  $message = str_replace("xD", '<img src="'.$path.'./img/emotes/laughter.png" alt="XD">', $message);
-  $message = str_replace(":-O", '<img src="'.$path.'./img/emotes/surprise.png" alt=":o">', $message);
-  $message = str_replace(":-o", '<img src="'.$path.'./img/emotes/surprise.png" alt=":o">', $message);
-  $message = str_replace(":-s", '<img src="'.$path.'./img/emotes/confusion.png" alt=":s">', $message);
-  $message = str_replace(":-S", '<img src="'.$path.'./img/emotes/confusion.png" alt=":s">', $message);
-  $message = str_replace(":-p", '<img src="'.$path.'./img/emotes/tongue.png" alt=":p">', $message);
-  $message = str_replace(":-P", '<img src="'.$path.'./img/emotes/tongue.png" alt=":p">', $message);
-  $message = str_replace(":-DD", '<img src="'.$path.'./img/emotes/ecstasy.png" alt=":DD">', $message);
-  $message = str_replace(";-)", '<img src="'.$path.'./img/emotes/wink.png" alt=";)">', $message);
-  $message = str_replace(":-)", '<img src="'.$path.'./img/emotes/smiling.png" alt=":)">', $message);
-  $message = str_replace("9_9", '<img src="'.$path.'./img/emotes/implying.png" alt="9_9">', $message);
-  $message = str_replace(":-|", '<img src="'.$path.'./img/emotes/meh.png" alt=":|">', $message);
-  $message = str_replace(":-D", '<img src="'.$path.'./img/emotes/happiness.png" alt=":D">', $message);
-  $message = str_replace("o_O", '<img src="'.$path.'./img/emotes/shock_right.png" alt="o_O">', $message);
-  $message = str_replace("B-)", '<img src="'.$path.'./img/emotes/cool.png" alt="B)">', $message);
-  $message = str_replace("8-)", '<img src="'.$path.'./img/emotes/cool.png" alt="B)">', $message);
-  $message = str_replace("o_o", '<img src="'.$path.'./img/emotes/shock.png" alt="o_o">', $message);
-  $message = str_replace("O_O", '<img src="'.$path.'./img/emotes/shock.png" alt="o_o">', $message);
-  $message = str_replace("O_o", '<img src="'.$path.'./img/emotes/shock_left.png" alt="O_o">', $message);
 
 
   /*******************************************************************************************************************/
@@ -299,8 +264,8 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
   // === Subtitle ===
 
   // Replace tags with HTML
-  $message = str_replace("=== ", "<span class=\"big bold text_grey_dark\">", $message, $open);
-  $message = str_replace(" ===", "</span>", $message, $close);
+  $message = str_replace("=== ", "<h5>", $message, $open);
+  $message = str_replace(" ===", "</h5>", $message, $close);
 
   // Close leftover open tags
   if($open > $close)
@@ -314,8 +279,8 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
   // == Title == (must parse after subtitles or it won't work)
 
   // Replace tags with HTML
-  $message = str_replace("== ", "<span class=\"big bold text_black underlined\">", $message, $open);
-  $message = str_replace(" ==", "</span>", $message, $close);
+  $message = str_replace("== ", "<h4>", $message, $open);
+  $message = str_replace(" ==", "</h4>", $message, $close);
 
   // Close leftover open tags
   if($open > $close)

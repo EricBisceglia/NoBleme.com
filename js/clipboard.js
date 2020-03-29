@@ -1,13 +1,14 @@
 /**
  * Places some data in the user's clipboard.
  *
- * @param   {string}  contents      The contents that should be placed in the user's clipboard.
- * @param   {string}  [element_id]  If set, will fetch the contents of the element instead of the first argument.
+ * @param   {string}  contents            The contents that should be placed in the user's clipboard.
+ * @param   {string}  [element_id]        If set, fetches the element's contents instead of the first argument.
+ * @param   {bool}    [highlight_element] If set, highlights the element's contents after copying it to clipboard.
  *
  * @returns {void}
  */
 
-function to_clipboard(contents, element_id)
+function to_clipboard(contents, element_id, highlight_element)
 {
   // If needed, fetch the element's contents
   if(typeof(element_id) !== 'undefined')
@@ -32,4 +33,17 @@ function to_clipboard(contents, element_id)
 
   // Delete the temporary textarea
   document.body.removeChild(temparea);
+
+  // Highlight the element's contents if required
+  if(typeof(highlight_element) !== 'undefined')
+  {
+    // Fetch the element
+    contents = document.getElementById(element_id)
+
+    // Wrap the browser's selection range around it
+    var selection = document.createRange();
+    selection.setStartBefore(contents);
+    selection.setEndAfter(contents);
+    window.getSelection().addRange(selection);
+  }
 }

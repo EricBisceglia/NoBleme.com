@@ -78,8 +78,8 @@ table                   { border-collapse: collapse; border-spacing: 0; border-s
 tbody > tr              { border-top: 1px solid #121212;                                                              }
 tbody > tr:hover        { background-color: #121212;                                                                  }
 td, th                  { padding: 6px 8px 6px 8px;                                                                   }
-hr                      { height: 1px; background-color: #B00B1E; border: 0px;                                        }
 th                      { text-align: center; font-weight: bold; white-space: nowrap;                                 }
+hr                      { height: 1px; background-color: #B00B1E; border: 0px;                                        }
 ul                      { list-style: circle inside;                                                                  }
 li                      { margin-bottom: 0.1rem;                                                                      }
 del                     { background-color: #D32F2F; text-decoration: none; font-weight: bold; color: #121212         ;
@@ -99,13 +99,13 @@ select                  { text-align: center;                                   
 button, input[type='reset'], input[type='submit'] { font-size: 2.0rem; font-weight: bold; letter-spacing: 0.12rem     ;
                           padding: 0.5rem 1.6rem; text-align: center; text-decoration: none                           ;
                           text-transform: uppercase; white-space: nowrap;                                             }
-button:not([disabled]), input[type='reset']:not([disabled]), input[type='submit']:not([disabled])
-                        { cursor: pointer;                                                                            }
+button:not([disabled]), input[type='reset']:not([disabled]), input[type='submit']:not([disabled]) { cursor: pointer;  }
 input[type='checkbox'], input[type='radio'] { display: inline;                                                        }
 input[disabled], button[disabled] { background-color: #181818; opacity: 0.4;                                          }
-select:hover, input[type='text']:hover:not([disabled]):not(:focus),
-input[type='password']:hover:not([disabled]):not(:focus), input[type='reset']:hover:not([disabled]):not(:focus),
-input[type='submit']:hover:not([disabled]):not(:focus), button:hover:not([disabled]):not(:focus)
-                        { border-color: #CACACA; background-color: #323232;                                           }
-input[type='text']:focus, input[type='password']:focus, input[type='reset']:focus, input[type='submit']:focus, button:focus, select:focus { border-color: #888888; background-color: #323232;                                      }
+select:hover, input[type='text']:hover:not([disabled]):not(:focus)                                                    ,
+input[type='password']:hover:not([disabled]):not(:focus), input[type='reset']:hover:not([disabled]):not(:focus)       ,
+input[type='submit']:hover:not([disabled]):not(:focus), button:hover:not([disabled]):not(:focus)                      {
+                          border-color: #CACACA; background-color: #323232;                                           }
+input[type='text']:focus, input[type='password']:focus, input[type='reset']:focus, input[type='submit']:focus         ,
+button:focus, select:focus { border-color: #888888; background-color: #323232;                                        }
 input:not([type])       { background-color: #121212;                                                                  }
