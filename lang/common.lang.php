@@ -448,12 +448,10 @@ ___('header_meta_error_long', 'FR', "Le tag meta de description est trop long ({
 // Top menu
 ___('menu_top_nobleme', 'EN', "NOBLEME");
 ___('menu_top_nobleme', 'FR', "NOBLEME");
-___('menu_top_community', 'EN', "COMMUNITY");
-___('menu_top_community', 'FR', "COMMUNAUTÉ");
 ___('menu_top_pages', 'EN', "PAGES");
 ___('menu_top_pages', 'FR', "PAGES");
-___('menu_top_admin', 'EN', "ADMIN");
-___('menu_top_admin', 'FR', "ADMIN");
+___('menu_top_social', 'EN', "SOCIAL");
+___('menu_top_social', 'FR', "SOCIAL");
 
 
 // Submenu: NoBleme
@@ -469,6 +467,17 @@ ___('submenu_nobleme_irc', 'EN', "IRC chat server");
 ___('submenu_nobleme_irc', 'FR', "Serveur de chat IRC");
 ___('submenu_nobleme_manifesto', 'EN', "Political manifesto");
 ___('submenu_nobleme_manifesto', 'FR', "Manifeste politique");
+
+___('submenu_nobleme_users', 'EN', "Users");
+___('submenu_nobleme_users', 'FR', "Membres");
+___('submenu_nobleme_online', 'EN', "Who's online");
+___('submenu_nobleme_online', 'FR', "Qui est en ligne");
+___('submenu_nobleme_userlist', 'EN', "Registered user list");
+___('submenu_nobleme_userlist', 'FR', "Liste des membres");
+___('submenu_nobleme_staff', 'EN', "Administrative team");
+___('submenu_nobleme_staff', 'FR', "Équipe administrative");
+___('submenu_nobleme_birthdays', 'EN', "User birthdays");
+___('submenu_nobleme_birthdays', 'FR', "Anniversaires");
 
 ___('submenu_nobleme_documentation', 'EN', "Documentation");
 ___('submenu_nobleme_documentation', 'FR', "Documentation");
@@ -499,59 +508,17 @@ ___('submenu_nobleme_feature', 'EN', "Request a feature");
 ___('submenu_nobleme_feature', 'FR', "Quémander un feature");
 
 
-// Submenu: Community
-___('submenu_community_users', 'EN', "Users");
-___('submenu_community_users', 'FR', "Membres");
-___('submenu_community_online', 'EN', "Who's online");
-___('submenu_community_online', 'FR', "Qui est en ligne");
-___('submenu_community_userlist', 'EN', "Registered user list");
-___('submenu_community_userlist', 'FR', "Liste des membres");
-___('submenu_community_staff', 'EN', "Administrative team");
-___('submenu_community_staff', 'FR', "Équipe administrative");
-___('submenu_community_birthdays', 'EN', "User birthdays");
-___('submenu_community_birthdays', 'FR', "Anniversaires");
-
-___('submenu_community_irc', 'EN', "IRC chat server");
-___('submenu_community_irc', 'FR', "Serveur de chat IRC");
-___('submenu_community_irc_intro', 'EN', "What is IRC");
-___('submenu_community_irc_intro', 'FR', "Qu'est-ce que IRC");
-___('submenu_community_irc_browser', 'EN', "Chat from your browser");
-___('submenu_community_irc_browser', 'FR', "Chat depuis le navigateur");
-___('submenu_community_irc_client', 'EN', "Using an IRC client");
-___('submenu_community_irc_client', 'FR', "Utiliser un client IRC");
-___('submenu_community_irc_channels', 'EN', "Channel list");
-___('submenu_community_irc_channels', 'FR', "Liste des canaux");
-
-___('submenu_community_meetups', 'EN', "Real life meetups");
-___('submenu_community_meetups', 'FR', "Rencontres IRL");
-___('submenu_community_meetups_list', 'EN', "List of meetups");
-___('submenu_community_meetups_list', 'FR', "Liste des IRL");
-___('submenu_community_meetups_stats', 'EN', "Meetup statistics");
-___('submenu_community_meetups_stats', 'FR', "Statistiques des IRL");
-
-___('submenu_community_quotes', 'EN', "Quotes");
-___('submenu_community_quotes', 'FR', "Citations");
-___('submenu_community_quotes_list', 'EN', "Quote database");
-___('submenu_community_quotes_list', 'FR', "Paroles de NoBlemeux");
-___('submenu_community_quotes_random', 'EN', "Random quote");
-___('submenu_community_quotes_random', 'FR', "Citation au hasard");
-___('submenu_community_quotes_stats', 'EN', "Quote statistics");
-___('submenu_community_quotes_stats', 'FR', "Statistiques des citations");
-___('submenu_community_quotes_submit', 'EN', "Submit a new quote");
-___('submenu_community_quotes_submit', 'FR', "Proposer une citation");
-
-
 // Submenu: Pages
-___('submenu_pages_internet', 'EN', "Internet encyclopedia");
-___('submenu_pages_internet', 'FR', "Encyclopédie du web");
-___('submenu_pages_internet_index', 'EN', "Internet culture guide");
-___('submenu_pages_internet_index', 'FR', "Guide de la culture web");
+___('submenu_pages_internet', 'EN', "Internet culture");
+___('submenu_pages_internet', 'FR', "Culture internet");
+___('submenu_pages_internet_index', 'EN', "21st century compendium");
+___('submenu_pages_internet_index', 'FR', "Étude du 21ème siècle");
 ___('submenu_pages_internet_pages', 'EN', "Meme encyclopedia");
 ___('submenu_pages_internet_pages', 'FR', "Enyclopédie des memes");
 ___('submenu_pages_internet_dictionary', 'EN', "Slang dictionnary");
 ___('submenu_pages_internet_dictionary', 'FR', "Dictionnaire d'argot");
-___('submenu_pages_internet_culture', 'EN', "Society and culture");
-___('submenu_pages_internet_culture', 'FR', "Société et culture");
+___('submenu_pages_internet_culture', 'EN', "Sociocultural guide");
+___('submenu_pages_internet_culture', 'FR', "Guide socioculturel");
 ___('submenu_pages_internet_random', 'EN', "Random page");
 ___('submenu_pages_internet_random', 'FR', "Page au hasard");
 
@@ -559,6 +526,10 @@ ___('submenu_pages_politics', 'EN', "Politics");
 ___('submenu_pages_politics', 'FR', "Politique");
 ___('submenu_pages_politics_manifesto', 'EN', "Contrapositionist manifesto");
 ___('submenu_pages_politics_manifesto', 'FR', "Manifeste contrapositioniste");
+___('submenu_pages_politics_documentation', 'EN', "Systemic violence");
+___('submenu_pages_politics_documentation', 'FR', "Violence systémique");
+___('submenu_pages_politics_join', 'EN', "Join the movement");
+___('submenu_pages_politics_join', 'FR', "Rejoindre le mouvement");
 
 ___('submenu_pages_archives', 'EN', "Archives");
 ___('submenu_pages_archives', 'FR', "Archives");
@@ -568,6 +539,79 @@ ___('submenu_pages_nrm', 'EN', "NRM Online");
 ___('submenu_pages_nrm', 'FR', "NRM Online");
 ___('submenu_pages_nrm_champions', 'EN', "Champions of the past");
 ___('submenu_pages_nrm_champions', 'FR', "Champions du passé");
+
+
+// Submenu: Social
+___('submenu_social_irc', 'EN', "IRC chat server");
+___('submenu_social_irc', 'FR', "Serveur de chat IRC");
+___('submenu_social_irc_intro', 'EN', "What is IRC");
+___('submenu_social_irc_intro', 'FR', "Qu'est-ce que IRC");
+___('submenu_social_irc_browser', 'EN', "Chat from your browser");
+___('submenu_social_irc_browser', 'FR', "Chat depuis le navigateur");
+___('submenu_social_irc_client', 'EN', "Using an IRC client");
+___('submenu_social_irc_client', 'FR', "Utiliser un client IRC");
+___('submenu_social_irc_channels', 'EN', "Channel list");
+___('submenu_social_irc_channels', 'FR', "Liste des canaux");
+
+___('submenu_social_meetups', 'EN', "Real life meetups");
+___('submenu_social_meetups', 'FR', "Rencontres IRL");
+___('submenu_social_meetups_list', 'EN', "List of meetups");
+___('submenu_social_meetups_list', 'FR', "Liste des IRL");
+___('submenu_social_meetups_stats', 'EN', "Meetup statistics");
+___('submenu_social_meetups_stats', 'FR', "Statistiques des IRL");
+
+___('submenu_social_quotes', 'EN', "Quotes");
+___('submenu_social_quotes', 'FR', "Citations");
+___('submenu_social_quotes_list', 'EN', "Quote database");
+___('submenu_social_quotes_list', 'FR', "Paroles de NoBlemeux");
+___('submenu_social_quotes_random', 'EN', "Random quote");
+___('submenu_social_quotes_random', 'FR', "Citation au hasard");
+___('submenu_social_quotes_stats', 'EN', "Quote statistics");
+___('submenu_social_quotes_stats', 'FR', "Statistiques des citations");
+___('submenu_social_quotes_submit', 'EN', "Submit a new quote");
+___('submenu_social_quotes_submit', 'FR', "Proposer une citation");
+
+
+// Submenu: Account
+___('submenu_user_pms', 'EN', "Private messages");
+___('submenu_user_pms', 'FR', "Messages privés");
+___('submenu_user_pms_inbox', 'EN', "Message inbox");
+___('submenu_user_pms_inbox', 'FR', "Boîte de réception");
+___('submenu_user_pms_outbox', 'EN', "Sent messages");
+___('submenu_user_pms_outbox', 'FR', "Messages envoyés");
+___('submenu_user_pms_write', 'EN', "Write a message");
+___('submenu_user_pms_write', 'FR', "Écrire un message");
+
+___('submenu_user_profile', 'EN', "Public profile");
+___('submenu_user_profile', 'FR', "Profil public");
+___('submenu_user_profile_self', 'EN', "My public profile");
+___('submenu_user_profile_self', 'FR', "Voir mon profil public");
+___('submenu_user_profile_edit', 'EN', "Edit my profile");
+___('submenu_user_profile_edit', 'FR', "Modifier mon profil");
+
+___('submenu_user_settings', 'EN', "Website settings");
+___('submenu_user_settings', 'FR', "Réglages du site");
+___('submenu_user_settings_privacy', 'EN', "Privacy options");
+___('submenu_user_settings_privacy', 'FR', "Options de vie privée");
+___('submenu_user_settings_nsfw', 'EN', "Adult content options");
+___('submenu_user_settings_nsfw', 'FR', "Options de vulgarité");
+
+___('submenu_user_edit', 'EN', "Account settings");
+___('submenu_user_edit', 'FR', "Réglages du compte");
+___('submenu_user_edit_email', 'EN', "Change my e-mail");
+___('submenu_user_edit_email', 'FR', "Changer d'e-mail");
+___('submenu_user_edit_password', 'EN', "Change my password");
+___('submenu_user_edit_password', 'FR', "Changer de mot de passe");
+___('submenu_user_edit_nickname', 'EN', "Change my nickname");
+___('submenu_user_edit_nickname', 'FR', "Changer de pseudonyme");
+___('submenu_user_edit_delete', 'EN', "Delete my account");
+___('submenu_user_edit_delete', 'FR', "Supprimer mon compte");
+
+___('submenu_user_logout_logout', 'EN', "Log out of this account");
+___('submenu_user_logout_logout', 'FR', "Se déconnecter du compte");
+
+___('submenu_user_logged_out', 'EN', "You are not logged in");
+___('submenu_user_logged_out', 'FR', "Vous n'êtes pas connecté");
 
 
 // Submenu: Admin
@@ -613,48 +657,6 @@ ___('submenu_admin_doc_snippets', 'EN', "Code snippets");
 ___('submenu_admin_doc_snippets', 'FR', "Modèles de code");
 ___('submenu_admin_doc_css', 'EN', "CSS palette");
 ___('submenu_admin_doc_css', 'FR', "Palette CSS");
-
-
-// Submenu: Account
-___('submenu_user_pms', 'EN', "Private messages");
-___('submenu_user_pms', 'FR', "Messages privés");
-___('submenu_user_pms_inbox', 'EN', "Message inbox");
-___('submenu_user_pms_inbox', 'FR', "Boîte de réception");
-___('submenu_user_pms_outbox', 'EN', "Sent messages");
-___('submenu_user_pms_outbox', 'FR', "Messages envoyés");
-___('submenu_user_pms_write', 'EN', "Write a message");
-___('submenu_user_pms_write', 'FR', "Écrire un message");
-
-___('submenu_user_profile', 'EN', "Public profile");
-___('submenu_user_profile', 'FR', "Profil public");
-___('submenu_user_profile_self', 'EN', "My public profile");
-___('submenu_user_profile_self', 'FR', "Voir mon profil public");
-___('submenu_user_profile_edit', 'EN', "Edit my profile");
-___('submenu_user_profile_edit', 'FR', "Modifier mon profil");
-
-___('submenu_user_settings', 'EN', "Website settings");
-___('submenu_user_settings', 'FR', "Réglages du site");
-___('submenu_user_settings_privacy', 'EN', "Privacy options");
-___('submenu_user_settings_privacy', 'FR', "Options de vie privée");
-___('submenu_user_settings_nsfw', 'EN', "Adult content options");
-___('submenu_user_settings_nsfw', 'FR', "Options de vulgarité");
-
-___('submenu_user_edit', 'EN', "Account settings");
-___('submenu_user_edit', 'FR', "Réglages du compte");
-___('submenu_user_edit_email', 'EN', "Change my e-mail");
-___('submenu_user_edit_email', 'FR', "Changer d'e-mail");
-___('submenu_user_edit_password', 'EN', "Change my password");
-___('submenu_user_edit_password', 'FR', "Changer de mot de passe");
-___('submenu_user_edit_nickname', 'EN', "Change my nickname");
-___('submenu_user_edit_nickname', 'FR', "Changer de pseudonyme");
-___('submenu_user_edit_delete', 'EN', "Delete my account");
-___('submenu_user_edit_delete', 'FR', "Supprimer mon compte");
-
-___('submenu_user_logout_logout', 'EN', "Log out of this account");
-___('submenu_user_logout_logout', 'FR', "Se déconnecter du compte");
-
-___('submenu_user_logged_out', 'EN', "You are not logged in");
-___('submenu_user_logged_out', 'FR', "Vous n'êtes pas connecté");
 
 
 

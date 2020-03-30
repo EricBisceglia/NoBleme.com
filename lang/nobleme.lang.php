@@ -13,38 +13,112 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 // Welcome paragraph
-___('nobleme_home_welcome_title', 'EN', "Welcome to NoBleme. What's this place all about?");
-___('nobleme_home_welcome_title', 'FR', "Bienvenue sur NoBleme. Qu'est-ce que ce lieu ?");
+___('nobleme_home_welcome_title', 'EN', "Welcome to NoBleme");
+___('nobleme_home_welcome_title', 'FR', "Bienvenue sur NoBleme");
+___('nobleme_home_welcome_subtitle', 'EN', "Preserving the spirit of old Internet communities");
+___('nobleme_home_welcome_subtitle', 'FR', "L'esprit perdu des communautés Internet d'antan");
 ___('nobleme_home_welcome', 'EN', <<<EOT
-<p>A relic of the internet's past, NoBleme is a french community which has been online for over {{1}} years.</p>
-<p>Before the days of social networks, the internet was decentralized: split into a lot of small communities, most of them without a specific theme or purpose. NoBleme is an attempt to preserve the almost familial spirit of those small communities of the past.</p>
-<p>However, NoBleme is not meant to be a museum. It is a living place, the website is still being developed, and the community is continuously accepting new members with open arms whilst making sure to get rid of any source of drama in order to preserve its friendly atmosphere.</p>
+<p>
+  A product of the Internet's landscape in 2005, before the era of massive social networks and centralized websites, NoBleme is a small independent website trying to keep the spirit of Internet communities from the first decade of the 21st century alive.
+</p>
+<p>
+  For those who did not experience these communities, they were small websites with no specific main theme, usually centered around a forum and a chatroom. NoBleme used to be such a place for a small french community, which then grew in various ways over the years. The website's history gets covered in more detail on the {{link+++|todo_link|"what is NoBleme?"|bold|1|}} page.
+</p>
+<p>
+  However, NoBleme is not meant to be an archeological museum or a tribute to the past. It is a living place, evolving with the times, maintaining an active community, always welcoming to those who would want to join.
+</p>
 EOT
 );
 ___('nobleme_home_welcome', 'FR', <<<EOT
-<p>Existant dans son coin depuis plus de {{1}} ans, NoBleme est un vestige du passé d'internet.</p>
-<p>Avant l'ère des réseaux sociaux, le web était décentralisé : composé de plein de petites communautés qui n'avaient pas spécialement de thème ou de raison d'être. Aujourd'hui, NoBleme continue à préserver l'esprit quasi-familial de ces petites communautés d'antan.</p>
-<p>Toutefois, NoBleme n'est pas fait pour être un musée. C'est une communauté vivante, activement développée, qui continue à accueillir les nouveaux à bras ouverts et à éjecter les causeurs de drames afin de préserver l'ambiance amicale qui fait son charme.</p>
+<p>
+  Produit de la culture Internet de 2005, avant l'ère des réseaux sociaux massifs et des plateformes centralisées, NoBleme est un petit site Internet indépendant qui tente de préserver l'esprit des commaunautés Internet de la première décennie du 21ème siècle.
+</p>
+<p>
+  Pour ceux qui n'ont pas connu ces communautés, il s'agissait de petits sites Internet sans sujet ou thème particulier, généralement composés d'un forum et d'un salon de discussion. NoBleme a été une de ces communautés, puis a grandi et changé. L'histoire du site est racontée de façon plus détaillée sur la page {{link+++|todo_link|« qu'est-ce que NoBleme »|bold|1|}}.
+</p>
+<p>
+  Toutefois, NoBleme n'est pas un musée archéologique ou un monument au passé. C'est un site Internet vivant, en évolution constante, dont la communauté est toujours accueillante envers ceux qui voudraient la rejoindre.
+</p>
+EOT
+);
+
+
+// Mission statement
+___('nobleme_home_statement_title', 'EN', "Mission statement");
+___('nobleme_home_statement_title', 'FR', "Qu'est-ce que NoBleme ?");
+___('nobleme_home_statement', 'EN', <<<EOT
+<p>
+  NoBleme has has no central theme or topic. It has no goal other than being a place where you can hang out with friendly people. However, there is a {{link+++|todo_link|code of conduct|bold|1|}} which must be respected by all. It can be summarized as such: be mindful and respectful of others, and they shall be mindful and respectful of you.
+</p>
+<p>
+  There is a deliberate political stance on NoBleme: conservatives, reactionaries, and fascists are not welcome. There are a great number of websites and communities that already cater to their needs, NoBleme is not one of them. Instead, we try to have a vision which is not compatible with theirs: be a place where people who might feel oppressed in daily life feel comfortable expressing themselves without fear of being oppressed online. NoBleme is not a safe space though, everyone from every background is welcome, but we show low tolerance for aggressive or oppressive behaviors.
+</p>
+<p>
+  In the spirit of the early Internet days, NoBleme is entirely free to use, does not need donations to live, does not have any ads or third party content, does not track or use {{link+++|todo_link|your personal data|bold|1|}}, and {{link+++|todo_link|respects your privacy|bold|1|}}.
+</p>
+EOT
+);
+___('nobleme_home_statement', 'FR', <<<EOT
+<p>
+  NoBleme n'a pas de thème ou de sujet spécifique, ni d'objectif autre que de continuer à maintenir sa communauté. Toutefois, il y a un {{link+++|todo_link|code de conduite|bold|1|}} que tou·te·s doivent respecter. Il peut se résumer ainsi : soyez attentif et respectueux envers les autres, et les autres seront attentifs et respecteux envers vous.
+</p>
+<p>
+  NoBleme a une unique limitation : les conservateurs, traditionnalistes, nationalistes, fascistes, et autres réactionnaires ne sont pas les bienvenus. Il y a un grand nombre de sites Internet et communautés faits pour eux, NoBleme n'en fait pas partie. En effet, leur vision est incompatible avec celle de NoBleme : nous voulons être une communauté inclusive, où ceux et celles qui souffrent de l'oppression de la société au quotidien puissent venir s'exprimer librement sans se sentir oppressés. Cela ne fait pas de NoBleme un « safe space », tout le monde y est bienvenu, mais nous faisons preuve de peu de patience pour ceux qui viennent y partager des ponints de vue aggressifs ou opressifs.
+</p>
+<p>
+  Dans l'esprit des anciennes communautés Internet, NoBleme est entièrement gratuit à utiliser, n'a pas besoin de donations pour vivre, ne contient pas de publicités ni de contenus extérieurs, ne traque pas et ne conserve pas {{link+++|todo_link|vos données personnelles|bold|1|}} contre votre volonté, et {{link+++|todo_link|respecte votre vie privée|bold|1|}}.
+</p>
 EOT
 );
 
 
 // Website tour
-___('nobleme_home_tour_title', 'EN', "Guided tour of the website");
+___('nobleme_home_tour_title', 'EN', "Website features");
 ___('nobleme_home_tour_title', 'FR', "Visite guidée du site");
 ___('nobleme_home_tour', 'EN', <<<EOT
-<p>NoBleme was originally created as a french community. This means that some of the website's features have no english translation and are only available in french. It does not mean that english speakers are not desired, as absolutely everyone is welcome on NoBleme, and many if not most of our users speak english.</p>
-<p>When switching from french to english, you will probably have noticed that you have access to fewer elements on the left side navigation menu. This is because the non translated (french only) pages are removed from the navigation menu when browsing the website in english, for your convenience. Keep in mind that most of these removed pages are about things that do not translate to english, such as quotes from conversations in french, games that are played solely in french, etc.</p>
-<p>Don't hesitate to look around the website, and enjoy your stay on NoBleme!</p>
-{{link+++|pages/users/user?id=1|- Bad|indented bold|1|}}
+<p>
+  The 15th birthday overhaul of the website in spring 2020 cut many unused features from the website. Some of this content is still in the process of being reimagined and rebuilt right now, therefore NoBleme is currently cut down to its core features - don't expect too much content. You can use the menus on top of the page to browse around the website, or let yourself get guided by this quick list of our main features:
+</p>
+<p>
+  <ul>
+    <li>
+      {{link+++|todo_link|The IRC chat server|bold|1|}} is where the community hangs out and communicates. Come join!
+    </li>
+    <li class="smallpadding_top">
+      {{link+++|todo_link|The 21st century compendium|bold|1|}} is a deep dive into modern culture, society, slang, and memes.
+    </li>
+    <li class="smallpadding_top">
+      {{link+++|pages/politics/manifesto|The contrapositionist manifesto|bold|1|}} will give you some insight on where NoBleme stands politically.
+    </li>
+  </ul>
+</p>
+<p>
+  Enjoy your stay on NoBleme!<br>
+  {{link+++|todo_link|- Bad|indented bold|1|}}
+</p>
 EOT
 );
 ___('nobleme_home_tour', 'FR', <<<EOT
-<p>Si vous vous demandez d'où NoBleme vient et à quoi sert NoBleme, vous pouvez trouver la réponse à ces questions dans la page {{link+++|pages/doc/nobleme|qu'est-ce que NoBleme ?|bold|1|}} de la {{link+++|pages/doc/index|documentation du site|bold|1|}}.</p>
-<p>Notre attraction principale pour les visiteurs perdus est {{link+++|pages/internet/index|l'encyclopédie de la culture Internet|bold|1|}}, une documentation de l'histoire d'internet et des memes qu'on y trouve.</p>
-<p>Maintenant que vous avez une vague idée de ce que NoBleme représente, peut-être êtes vous assez curieux pour avoir envie d'intéragir avec la communauté NoBlemeuse. Si c'est le cas, venez nous rejoindre là où nous sommes toujours actifs : sur notre {{link+++|pages/irc/index|serveur de discussion IRC|bold|1|}}.</p>
-<p>N'hésitez pas à vous balader sur le site pour découvrir son contenu, et bon séjour sur NoBleme !</p>
-{{link+++|pages/users/user?id=1|- Bad|indented bold|1|}}
+<p>
+  Depuis le 15ème anniversaire de NoBleme, au printemps 2020, beaucoup d'éléments non utilisés ont été retirés du site. Une partie de ces contenus sont toujours en cours de réimagination ou de reconstruction, ce qui fait que NoBleme ne contient actuellement que ses contenus principaux - ne vous attendez pas à y trouver énormément de choses. Vous pouvez utiliser les menus en haut de la page pour vous balader sur NoBleme, ou vous laisser guider par cette liste de nos contenus les plus intéressants :
+</p>
+<p>
+  <ul>
+    <li>
+      {{link+++|todo_link|Le serveur de chat IRC|bold|1|}}, où vous pourrez trouver et interagir avec la communauté de NoBleme.
+    </li>
+    <li class="smallpadding_top">
+      {{link+++|todo_link|Une étude du 21ème siècle|bold|1|}}, où sont analysés la culture, la société, le langage, et les memes.
+    </li>
+    <li class="smallpadding_top">
+      {{link+++|pages/politics/manifesto|Le manifeste contrapositioniste|bold|1|}}, qui devrait clarifier les positions politiques de NoBleme.
+    </li>
+  </ul>
+</p>
+<p>
+  Bon séjour sur NoBleme !<br>
+  {{link+++|todo_link|- Bad|indented bold|1|}}
+</p>
 EOT
 );
 

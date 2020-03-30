@@ -365,6 +365,7 @@ $javascripts .= '
 <body id="body">
   <?php } ?>
 
+
 <?php ############################################# WEBSITE UPDATE ################################################# ?>
 
     <?php if($website_closed) { ?>
@@ -375,29 +376,24 @@ $javascripts .= '
 
     <?php } ?>
 
+
 <?php /* ############################################## TOP MENU ################### */ if(!isset($_GET["popup"])) { ?>
 
     <div class="header_topmenu">
 
       <div id="header_titres" class="header_topmenu_zone">
 
-        <div class="header_topmenu_title" onclick="toggle_header_menu('nobleme');">
+        <div class="header_topmenu_title" id="header_menu_title_nobleme" onclick="toggle_header_menu('nobleme', 1);">
           <?=__('menu_top_nobleme')?>
         </div>
 
-        <div class="header_topmenu_title" onclick="toggle_header_menu('community');">
-          <?=__('menu_top_community')?>
-        </div>
-
-        <div class="header_topmenu_title" onclick="toggle_header_menu('pages');">
+        <div class="header_topmenu_title" id="header_menu_title_pages" onclick="toggle_header_menu('pages', 1);">
           <?=__('menu_top_pages')?>
         </div>
 
-        <?php if($is_global_moderator) { ?>
-        <div class="header_topmenu_title" onclick="toggle_header_menu('admin');">
-          <?=__('menu_top_admin')?>
+        <div class="header_topmenu_title" id="header_menu_title_social" onclick="toggle_header_menu('social', 1);">
+          <?=__('menu_top_social')?>
         </div>
-        <?php } ?>
 
       </div>
 
@@ -407,6 +403,10 @@ $javascripts .= '
         <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="Account" onclick="toggle_header_menu('account');">
         <?php } else { ?>
         <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_account" src="<?=$path?>img/icons/login.svg" alt="Account" onclick="toggle_header_menu('account');">
+        <?php } ?>
+
+        <?php if($is_global_moderator) { ?>
+        <img class="header_topmenu_icon header_topmenu_panel" src="<?=$path?>img/icons/admin_panel.svg" alt="Account" onclick="toggle_header_menu('admin');">
         <?php } ?>
 
         <a href="<?=$url_lang?>">
@@ -419,6 +419,7 @@ $javascripts .= '
 
       </div>
     </div>
+
 
 <?php ############################################ SUBMENU: NOBLEME ################################################ ?>
 
@@ -444,25 +445,25 @@ $javascripts .= '
           <?=__link('todo_link', __('submenu_nobleme_irc'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_manifesto'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/politics/manifesto', __('submenu_nobleme_manifesto'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_nobleme_documentation')?>
+          <?=__('submenu_nobleme_users')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_coc'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_online'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_privacy'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_userlist'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_personal_data'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_staff'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_contact_admin'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_birthdays'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -490,131 +491,224 @@ $javascripts .= '
         </div>
       </div>
 
-    </div>
-
-
-<?php ########################################### SUBMENU: COMMUNITY ############################################### ?>
-
-    <div class="header_submenu" id="header_submenu_community">
-
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_community_users')?>
+          <?=__('submenu_nobleme_documentation')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_online'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_coc'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_userlist'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_privacy'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_staff'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_personal_data'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_birthdays'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-      </div>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
-          <?=__('submenu_community_irc')?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_irc_intro'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_irc_browser'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_irc_client'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_irc_channels'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-      </div>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
-          <?=__('submenu_community_meetups')?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_meetups_list'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_meetups_stats'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-      </div>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
-          <?=__('submenu_community_quotes')?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_quotes_list'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_quotes_random'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_quotes_stats'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_community_quotes_submit'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_contact_admin'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
     </div>
+
 
 <?php ############################################# SUBMENU: PAGES ################################################# ?>
 
-    <div class="header_submenu" id="header_submenu_pages">
+<div class="header_submenu" id="header_submenu_pages">
+
+  <div class="header_submenu_column">
+    <div class="header_submenu_title">
+      <?=__('submenu_pages_internet')?>
+    </div>
+    <div class="header_submenu_item">
+      <?=__link('todo_link', __('submenu_pages_internet_index'), 'header_submenu_link text_blue', 1, $path);?>
+    </div>
+    <div class="header_submenu_item">
+      <?=__link('todo_link', __('submenu_pages_internet_pages'), 'header_submenu_link text_blue', 1, $path);?>
+    </div>
+    <div class="header_submenu_item">
+      <?=__link('todo_link', __('submenu_pages_internet_dictionary'), 'header_submenu_link text_blue', 1, $path);?>
+    </div>
+    <div class="header_submenu_item">
+      <?=__link('todo_link', __('submenu_pages_internet_culture'), 'header_submenu_link text_blue', 1, $path);?>
+    </div>
+    <div class="header_submenu_item">
+      <?=__link('todo_link', __('submenu_pages_internet_random'), 'header_submenu_link text_blue', 1, $path);?>
+    </div>
+  </div>
+
+  <div class="header_submenu_column">
+    <div class="header_submenu_title">
+      <?=__('submenu_pages_politics')?>
+    </div>
+    <div class="header_submenu_item">
+      <?=__link('pages/politics/manifesto', __('submenu_pages_politics_manifesto'), 'header_submenu_link', 1, $path);?>
+    </div>
+    <div class="header_submenu_item">
+      <?=__link('todo_link', __('submenu_pages_politics_documentation'), 'header_submenu_link text_blue', 1, $path);?>
+    </div>
+    <div class="header_submenu_item">
+      <?=__link('todo_link', __('submenu_pages_politics_join'), 'header_submenu_link text_blue', 1, $path);?>
+    </div>
+  </div>
+
+  <div class="header_submenu_column">
+    <div class="header_submenu_title">
+      <?=__('submenu_pages_archives')?>
+    </div>
+    <div class="header_submenu_item">
+      <?=__link('todo_link', __('submenu_pages_nbrpg'), 'header_submenu_link text_blue', 1, $path);?>
+    </div>
+    <div class="header_submenu_item">
+      <?=__link('todo_link', __('submenu_pages_nrm'), 'header_submenu_link text_blue', 1, $path);?>
+    </div>
+    <div class="header_submenu_item">
+      <?=__link('todo_link', __('submenu_pages_nrm_champions'), 'header_submenu_link text_blue', 1, $path);?>
+    </div>
+  </div>
+
+</div>
+
+
+<?php ############################################## SUBMENU: SOCIAL ############################################## ?>
+
+    <div class="header_submenu" id="header_submenu_social">
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_pages_internet')?>
+          <?=__('submenu_social_irc')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_internet_index'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_social_irc_intro'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_internet_pages'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_social_irc_browser'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_internet_dictionary'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_social_irc_client'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_internet_culture'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_internet_random'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_social_irc_channels'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_pages_politics')?>
+          <?=__('submenu_social_meetups')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/politics/manifesto', __('submenu_pages_politics_manifesto'), 'header_submenu_link', 1, $path);?>
+          <?=__link('todo_link', __('submenu_social_meetups_list'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_social_meetups_stats'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_pages_archives')?>
+          <?=__('submenu_social_quotes')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_nbrpg'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_social_quotes_list'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_nrm'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_social_quotes_random'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_nrm_champions'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_social_quotes_stats'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_social_quotes_submit'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
     </div>
+
+
+<?php ############################################ SUBMENU: ACCOUNT ################################################ ?>
+
+    <div class="header_submenu" id="header_submenu_account">
+    <?php if($is_logged_in) { ?>
+
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=__('submenu_user_pms')?>
+        </div>
+        <div class="header_submenu_item<?=$nb_private_messages_css?>">
+          <?=__link('todo_link', __('submenu_user_pms_inbox'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_pms_outbox'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_pms_write'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=__('submenu_user_profile')?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_profile_self'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_profile_edit'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=__('submenu_user_settings')?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_settings_privacy'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_settings_nsfw'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=__('submenu_user_edit')?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_edit_email'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_edit_password'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_edit_nickname'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_edit_delete'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=sanitize_output(user_get_nickname())?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link($url_logout, __('submenu_user_logout_logout'), 'header_submenu_link', 1, $path);?>
+        </div>
+      </div>
+
+      <?php } else { ?>
+
+      <div class="header_submenu_fullwidth align_center">
+        <h2 class="bigpadding_top bigpadding_bot">
+          <?=__('submenu_user_logged_out')?>
+        </h2>
+        <?=__link('pages/users/login', '<button class="bigbutton header_submenu_button">'.__('login').'</button>', '', 1, $path);?>
+        <?=__link('pages/users/register', '<button class="bigbutton header_submenu_button">'.__('register').'</button>', '', 1, $path);?>
+      </div>
+
+      <?php } ?>
+    </div>
+
 
 <?php ############################################# SUBMENU: ADMIN ################################################# ?>
 
@@ -700,89 +794,6 @@ $javascripts .= '
     </div>
     <?php } ?>
 
-<?php ############################################ SUBMENU: ACCOUNT ################################################ ?>
-
-    <div class="header_submenu" id="header_submenu_account">
-    <?php if($is_logged_in) { ?>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
-          <?=__('submenu_user_pms')?>
-        </div>
-        <div class="header_submenu_item<?=$nb_private_messages_css?>">
-          <?=__link('todo_link', __('submenu_user_pms_inbox'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_pms_outbox'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_pms_write'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-      </div>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
-          <?=__('submenu_user_profile')?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_profile_self'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_profile_edit'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-      </div>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
-          <?=__('submenu_user_settings')?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_settings_privacy'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_settings_nsfw'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-      </div>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
-          <?=__('submenu_user_edit')?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_edit_email'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_edit_password'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_edit_nickname'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_edit_delete'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-      </div>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
-          <?=sanitize_output(user_get_nickname())?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link($url_logout, __('submenu_user_logout_logout'), 'header_submenu_link', 1, $path);?>
-        </div>
-      </div>
-
-      <?php } else { ?>
-
-      <div class="header_submenu_fullwidth align_center">
-        <h2 class="bigpadding_top bigpadding_bot">
-          <?=__('submenu_user_logged_out')?>
-        </h2>
-        <?=__link('pages/users/login', '<button class="bigbutton header_submenu_button">'.__('login').'</button>', '', 1, $path);?>
-        <?=__link('pages/users/register', '<button class="bigbutton header_submenu_button">'.__('register').'</button>', '', 1, $path);?>
-      </div>
-
-      <?php } ?>
-    </div>
 
 <?php /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                   //

@@ -21,21 +21,6 @@ $css = array('index');
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                     BACK END                                                      */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// All that's needed is the website's age, so let's calculate the difference between the current year and 2005
-$website_age = date('Y') - 2005;
-
-// If the current date is earlier than march 19th, then the website is not that old yet - substract a year
-$website_age = (date('n') < 3 || (date('n') == 3 && date('j') < 19)) ? $website_age - 1 : $website_age;
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
 /**********************************************************************************/ include './inc/header.inc.php'; ?>
@@ -46,11 +31,21 @@ $website_age = (date('n') < 3 || (date('n') == 3 && date('j') < 19)) ? $website_
           <img src="<?=$path?>img/common/logo_full.png" alt="NoBleme.com">
         </div>
 
-        <h5 class="bigpadding_top">
+        <h1 class="bigpadding_top">
           <?=__('nobleme_home_welcome_title')?>
+        </h1>
+
+        <h5>
+          <?=__('nobleme_home_welcome_subtitle')?>
         </h5>
 
-        <?=__('nobleme_home_welcome', 0, 0 , 0, array($website_age))?>
+        <?=__('nobleme_home_welcome')?>
+
+        <h5 class="bigpadding_top">
+          <?=__('nobleme_home_statement_title')?>
+        </h5>
+
+        <?=__('nobleme_home_statement')?>
 
         <h5 class="bigpadding_top">
           <?=__('nobleme_home_tour_title')?>
