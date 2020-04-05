@@ -74,23 +74,52 @@ if($website_closed && !$is_admin)
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Login attempt
+
+if(isset($_POST['login_form_submit']))
+{
+  // Check whether "remember me" is checked
+  $login_form_remember_me = isset($_POST['login_form_remember']) ? 1 : null;
+
+  // Attempt to login
+  $login_form_attempt = user_authenticate(  $_SERVER["REMOTE_ADDR"]       ,
+                                            $_POST['login_form_nickname'] ,
+                                            $_POST['login_form_password'] ,
+                                            $login_form_remember_me       );
+
+  // If the user has logged in, redirect them
+  if($login_form_attempt === 1)
+    header("location: ".$path."todo_link");
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Form values
+
+$login_form_nickname    = isset($_POST['login_form_nickname']) ? sanitize_output($_POST['login_form_nickname']) : '';
+$login_form_password    = isset($_POST['login_form_password']) ? sanitize_output($_POST['login_form_password']) : '';
+$login_form_remember_me = (isset($_POST['login_form_remember']) || !isset($_POST['login_form_submit'])) ? " checked" : '';
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Creation of URLs to use for logging out and changing language
+
 $url_logout = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
 $url_lang   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
 
-// Logout
-if(isset($_GET['logout']))
-{
-  // Log the user out
-  user_log_out();
 
-  // Redirect to the page without the 'logout' query param
-  unset($_GET['logout']);
-  $url_self     = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
-  $url_rebuild  = urldecode(http_build_query($_GET));
-  $url_rebuild  = ($url_rebuild) ? $url_self.'?'.$url_rebuild : $url_self;
-  exit(header("Location: ".$url_rebuild));
-}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Logout
+
+if(isset($_GET['logout']))
+  user_log_out();
 
 
 
@@ -454,7 +483,7 @@ $javascripts .= '
           <?=__('submenu_nobleme_users')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_online'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/users/online', __('submenu_nobleme_online'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_nobleme_userlist'), 'header_submenu_link text_blue', 1, $path);?>
@@ -494,6 +523,9 @@ $javascripts .= '
       <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_nobleme_documentation')?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_what_is'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_nobleme_coc'), 'header_submenu_link text_blue', 1, $path);?>
@@ -552,21 +584,6 @@ $javascripts .= '
     </div>
   </div>
 
-  <div class="header_submenu_column">
-    <div class="header_submenu_title">
-      <?=__('submenu_pages_archives')?>
-    </div>
-    <div class="header_submenu_item">
-      <?=__link('todo_link', __('submenu_pages_nbrpg'), 'header_submenu_link text_blue', 1, $path);?>
-    </div>
-    <div class="header_submenu_item">
-      <?=__link('todo_link', __('submenu_pages_nrm'), 'header_submenu_link text_blue', 1, $path);?>
-    </div>
-    <div class="header_submenu_item">
-      <?=__link('todo_link', __('submenu_pages_nrm_champions'), 'header_submenu_link text_blue', 1, $path);?>
-    </div>
-  </div>
-
 </div>
 
 
@@ -601,6 +618,21 @@ $javascripts .= '
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_social_meetups_stats'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=__('submenu_social_games')?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_social_games_minecraft'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_social_games_nbrpg'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_social_games_nrm'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -692,18 +724,56 @@ $javascripts .= '
           <?=sanitize_output(user_get_nickname())?>
         </div>
         <div class="header_submenu_item">
-          <?=__link($url_logout, __('submenu_user_logout_logout'), 'header_submenu_link', 1, $path);?>
+          <a class="header_submenu_link" href="<?=$url_logout?>"><?=__('submenu_user_logout_logout')?></a>
         </div>
       </div>
 
       <?php } else { ?>
 
-      <div class="header_submenu_fullwidth align_center">
-        <h2 class="bigpadding_top bigpadding_bot">
-          <?=__('submenu_user_logged_out')?>
-        </h2>
-        <?=__link('pages/users/login', '<button class="bigbutton header_submenu_button">'.__('login').'</button>', '', 1, $path);?>
-        <?=__link('pages/users/register', '<button class="bigbutton header_submenu_button">'.__('register').'</button>', '', 1, $path);?>
+      <div class="header_submenu_fullwidth">
+
+        <div class="width_30 bigpadding_top hugepadding_bot">
+
+        <h1 class="align_center padding_bot">
+          <?=__('login_form_title')?>
+        </h1>
+
+        <?php if(isset($login_form_attempt)) { ?>
+
+        <h5 class="align_center bigpadding_bot padding_top underlined dowrap">
+          <?=string_change_case(__('error'), 'uppercase').__(':').' '.$login_form_attempt?>
+        </h5>
+
+        <?php } ?>
+
+        <form method="POST" action="">
+          <fieldset>
+
+            <div class="smallpadding_bot">
+              <label class="text_light" for="login_form_nickname"><?=string_change_case(__('nickname'), 'initials')?></label>
+              <input id="login_form_nickname" name="login_form_nickname" class="indiv" type="text" value="<?=$login_form_nickname?>">
+            </div>
+
+            <div class="padding_bot">
+              <label class="text_light" for="login_form_password"><?=string_change_case(__('password'), 'initials')?> <?=__link('pages/users/forgotten_password', __('login_form_form_forgotten'), 'bold', 1, $path)?></label>
+              <input id="login_form_password" name="login_form_password" class="indiv" type="password" value="<?=$login_form_password?>">
+            </div>
+
+            <div class="float_right">
+              <input id="login_form_remember" name="login_form_remember" type="checkbox"<?=$login_form_remember_me?>>
+              <label class="label_inline" for="login_form_remember"><?=__('login_form_form_remember')?></label>
+            </div>
+            <input value="<?=__('login_form_title')?>" type="submit" name="login_form_submit">
+            &nbsp;&nbsp;
+            <a class="noglow" href="<?=$path?>pages/users/register">
+              <button type="button"><?=__('login_form_form_register')?></button>
+            </a>
+
+          </fieldset>
+        </form>
+
+      </div>
+
       </div>
 
       <?php } ?>
@@ -803,25 +873,16 @@ $javascripts .= '
 
     <div class="header_main_page">
 
-      <?php } if($meta_alert != "") { ?>
+      <?php } if($meta_alert) { ?>
 
-      <br>
-      <br>
-
-      <div class="gros gras texte_erreur align_center monospace">
+      <h5 class="align_center monospace padding_top">
         <?=$meta_alert?>
-      </div>
+      </h5>
 
       <?php } if($lang_error) { ?>
 
-      <div class="gros gras texte_erreur align_center monospace">
+      <div class="align_center monospace bigpadding_bot">
         <?=__('header_language_error');?>
       </div>
-
-      <br>
-
-      <hr class="separateur_contenu">
-
-      <br>
 
       <?php } ?>

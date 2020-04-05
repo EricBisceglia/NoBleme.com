@@ -16,6 +16,7 @@ if(isset($_GET['mod']))
 // Hide the page from who's online
 if(isset($_GET['mod']))
   $hidden_activity = 1;
+
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/nobleme/activity";
@@ -23,8 +24,9 @@ $page_title_en    = (!isset($_GET['mod'])) ? "Recent activity" : "Moderation log
 $page_title_fr    = (!isset($_GET['mod'])) ? "Activité récente" : "Logs de modération";
 $page_description = "Chronology of recent events that happened on NoBleme";
 
-// Extra JS
-$js = array('fetch', 'toggle', 'nobleme/activity');
+// Extra CSS & JS
+$css  = array('pages');
+$js   = array('fetch', 'toggle', 'nobleme/activity');
 
 
 
@@ -84,7 +86,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('activity_title')?>
 
           <?php if($is_admin) { ?>
-          <img class="pointer icon_white" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
+          <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
           <?php } ?>
 
         </h1>
@@ -95,7 +97,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('activity_title_modlogs')?>
 
           <?php if($is_admin) { ?>
-          <img class="pointer icon_white" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
+          <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
           <?php } ?>
 
         </h1>
@@ -109,11 +111,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
       <div class="width_60">
 
-        <div class="align_center bigpadding_bot">
+        <h5 class="align_center bigpadding_bot">
 
           <input type="hidden" class="hidden" id="activity_deleted" value="0">
 
-          <select id="activity_amount" onchange="activity_submit_menus('<?=$logs_url?>');">
+          <select class="inh small activity_amount" id="activity_amount" onchange="activity_submit_menus('<?=$logs_url?>');">
             <option value="100">100</option>
             <option value="200">200</option>
             <option value="500">500</option>
@@ -123,11 +125,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?php } ?>
           </select>
 
-          <span class="spaced bold bigger valign_bottom">
-            <?=__('activity_latest_actions')?>
-          </span>
+          <?=__('activity_latest_actions')?>
 
-          <select id="activity_type" onchange="activity_submit_menus('<?=$logs_url?>');">
+          <select class="inh small activity_type" id="activity_type" onchange="activity_submit_menus('<?=$logs_url?>');">
             <option value="all"><?=__('activity_type_all')?></option>
             <option value="users"><?=__('activity_type_users')?></option>
             <option value="meetups"><?=__('activity_type_meetups')?></option>
@@ -141,7 +141,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?php } ?>
           </select>
 
-        </div>
+        </h5>
 
         <table id="activity_body">
           <?php } ?>
@@ -152,9 +152,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <tr id="activity_row_<?=$activity_logs[$i]['id']?>">
 
               <?php if($activity_logs[$i]['href']) { ?>
-              <td class="pointer <?=$activity_logs[$i]['css']?>" onclick="window.open('<?=$activity_logs[$i]['href']?>','_blank');">
+              <td class="pointer nowrap <?=$activity_logs[$i]['css']?>" onclick="window.open('<?=$activity_logs[$i]['href']?>','_blank');">
               <?php } else { ?>
-              <td class="<?=$activity_logs[$i]['css']?>">
+              <td class="nowrap <?=$activity_logs[$i]['css']?>">
               <?php } ?>
                 <span class="tooltip_container">
                 <?=$activity_logs[$i]['date']?>

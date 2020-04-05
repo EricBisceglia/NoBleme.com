@@ -15,12 +15,25 @@ $hidden_activity = 1;
 // Page summary
 $page_lang      = array('FR', 'EN');
 $page_url       = "pages/dev/snippets";
-$page_title_en  = "Dev - Code snippets";
-$page_title_fr  = "Dev - Modèles de code";
+$page_title_en  = "Code snippets";
+$page_title_fr  = "Modèles de code";
 
-// Extra CSS & JS
-$css  = array('dev');
-$js   = array('toggle', 'clipboard', 'highlight');
+// Extra JS
+$js  = array('fetch', 'dev/snippets', 'clipboard');
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     BACK END                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Dropdown selector
+
+$selected_snippet = sanitize_input('POST', 'snippet', 'string', 'full');
 
 
 
@@ -29,31 +42,33 @@ $js   = array('toggle', 'clipboard', 'highlight');
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-/****************************************************************************/ include './../../inc/header.inc.php'; ?>
+if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
+
+      <div class="width_50">
+
+        <h4 class="align_center">
+          <?=__('dev_snippets_title')?>
+          <select class="inh" id="select_css_snippet" onchange="dev_snippet_selector();">
+            <option value="full" selected><?=__('dev_snippets_selector_full')?></option>
+            <option value="fetched"><?=__('dev_snippets_selector_fetched')?></option>
+            <option value="header"><?=__('dev_snippets_selector_header')?></option>
+            <option value="blocks"><?=__('dev_snippets_selector_blocks')?></option>
+          </select>
+        </h4>
+
+      </div>
+
+      <div class="bigpadding_top" id="dev_snippets_body">
+        <?php } ?>
 
 
-      <table class="fullgrid blacktitles margin_auto noresize dev_snippets_width">
-        <thead>
-          <tr>
-          <th class="rowaltc pointer dev_border_right_blank"
-                onClick="toggle_class_oneway('snippets_section', 0); toggle_element('snippets_full');">
-              <?=__('dev_snippets_title_full')?>
-            </th>
-            <th class="rowaltc pointer dev_border_right_blank"
-                onClick="toggle_class_oneway('snippets_section', 0); toggle_element('snippets_blocks');">
-              <?=__('dev_snippets_title_blocks')?>
-            </th>
-            <th class="rowaltc pointer dev_border_right_blank"
-                onClick="toggle_class_oneway('snippets_section', 0); toggle_element('snippets_header');">
-              <?=__('dev_snippets_title_header')?>
-            </th>
-          </tr>
-        </thead>
-      </table>
 
-      <div class="margin_auto snippets_section bigpadding_top dev_snippets_width" id="snippets_full">
 
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_full'); select_element('dev_snippets_pre_full');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_full">&lt;?php /***************************************************************************************************************/
+<?php if($selected_snippet === 'full') { ########################################################################### ?>
+
+      <div class="width_60">
+
+        <pre class="small" id="dev_snippets_full_standard" onclick="to_clipboard('', 'dev_snippets_full_standard', 1);">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
@@ -76,8 +91,8 @@ $page_title_fr    = "Titre";
 $page_description = "Metadescription";
 
 // Extra CSS &amp; JS
-$css  = array('tabs');
-$js   = array('tabs');
+$css  = array('404');
+$js   = array('fetch');
 
 
 
@@ -122,7 +137,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 /*                                                                                                                   */
 /*****************************************************************************/ include './../../inc/footer.inc.php'; }</pre>
 
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_full_dynamic'); select_element('dev_snippets_pre_full_dynamic');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_full_dynamic">&lt;?php /***************************************************************************************************************/
+      </div>
+
+
+
+
+<?php } else if ($selected_snippet === 'fetched') { ################################################################ ?>
+
+      <div class="width_60">
+
+        <pre class="small" id="dev_snippets_fetched_standard" onclick="to_clipboard('', 'dev_snippets_fetched_standard', 1);">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED DYNAMICALLY                               */
 /*                                                                                                                   */
@@ -135,7 +159,7 @@ include_once './../../lang/nobleme.lang.php';   # Translations
 page_must_be_fetched_dynamically();
 
 // Limit page access rights
-user_restrict_to_global_moderators($lang);
+user_restrict_to_guests($lang);
 
 
 
@@ -165,49 +189,12 @@ user_restrict_to_global_moderators($lang);
 
 
 
-      <div class="margin_auto snippets_section bigpadding_top dev_snippets_width hidden" id="snippets_blocks">
+<?php } else if ($selected_snippet === 'header') { ################################################################# ?>
 
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_separator'); select_element('dev_snippets_pre_blocks_separator');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_separator">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// </pre>
+      <div class="width_60">
 
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_back'); select_element('dev_snippets_pre_blocks_back');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_back">/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                     BACK END                                                      */
-/*                                                                                                                   */
-/*********************************************************************************************************************/</pre>
-
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_front_open'); select_element('dev_snippets_pre_blocks_front_open');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_front_open">/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                     FRONT END                                                     */
-/*                                                                                                                   */
-/****************************************************************************/ include './../../inc/header.inc.php'; ?></pre>
-
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_front_dynamic_open'); select_element('dev_snippets_pre_blocks_front_dynamic_open');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_front_dynamic_open">/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                     FRONT END                                                     */
-/*                                                                                                                   */
-if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?></pre>
-
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_front_close'); select_element('dev_snippets_pre_blocks_front_close');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_front_close">&lt;?php /***************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                    END OF PAGE                                                    */
-/*                                                                                                                   */
-/*******************************************************************************/ include './../../inc/footer.inc.php';</pre>
-
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_blocks_back_dynamic_close'); select_element('dev_snippets_pre_blocks_back_dynamic_close');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_blocks_back_dynamic_close">&lt;?php /***************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                    END OF PAGE                                                    */
-/*                                                                                                                   */
-/*****************************************************************************/ include './../../inc/footer.inc.php'; }</pre>
-
-      </div>
-
-
-
-
-      <div class="margin_auto snippets_section bigpadding_top dev_snippets_width hidden" id="snippets_header">
-
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_header'); select_element('dev_snippets_pre_header');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_header">&lt;?php /***************************************************************************************************************/
+        <div class="padding_bot">
+          <pre class="small" id="dev_snippets_header_standard" onclick="to_clipboard('', 'dev_snippets_header_standard', 1);">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
@@ -229,11 +216,13 @@ $page_title_en    = "Title";
 $page_title_fr    = "Titre";
 $page_description = "Metadescription";
 
-// Extra CSS & JS
-$css  = array('tabs');
-$js   = array('tabs');</pre>
+// Extra CSS &amp; JS
+$css  = array('404');
+$js   = array('fetch');</pre>
+        </div>
 
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_headers_dynamic'); select_element('dev_snippets_pre_headers_dynamic');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_headers_dynamic">&lt;?php /***************************************************************************************************************/
+        <div class="padding_bot">
+          <pre class="small" id="dev_snippets_header_fetched" onclick="to_clipboard('', 'dev_snippets_header_fetched', 1);">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED DYNAMICALLY                               */
 /*                                                                                                                   */
@@ -246,19 +235,85 @@ include_once './../../lang/nobleme.lang.php';   # Translations
 page_must_be_fetched_dynamically();
 
 // Limit page access rights
-user_restrict_to_global_moderators($lang);</pre>
+user_restrict_to_guests($lang);</pre>
+        </div>
 
-        <pre onclick="to_clipboard(1, 'dev_snippets_pre_headers_included'); select_element('dev_snippets_pre_headers_included');" class="monospace spaced dev_snippets_container" id="dev_snippets_pre_headers_included">&lt;?php /***************************************************************************************************************/
+        <div class="padding_bot">
+          <pre class="small" id="dev_snippets_header_included" onclick="to_clipboard('', 'dev_snippets_header_included', 1);">&lt;?php /***************************************************************************************************************/
 /*                                                                                                                   */
-/*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
+/*                            THIS PAGE CAN BE RAN ONLY IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }</pre>
+        </div>
 
       </div>
+
+
+
+
+<?php } else if ($selected_snippet === 'blocks') { ################################################################# ?>
+
+      <div class="width_60">
+
+        <div class="padding_bot">
+          <pre class="small" id="dev_snippets_blocks_comments" onclick="to_clipboard('', 'dev_snippets_blocks_comments', 1);">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//</pre>
+        </div>
+
+        <div class="padding_bot">
+          <pre class="small" id="dev_snippets_blocks_back" onclick="to_clipboard('', 'dev_snippets_blocks_back', 1);">/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     BACK END                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/</pre>
+        </div>
+
+        <div class="padding_bot">
+          <pre class="small" id="dev_snippets_blocks_front" onclick="to_clipboard('', 'dev_snippets_blocks_front', 1);">/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FRONT END                                                     */
+/*                                                                                                                   */
+/****************************************************************************/ include './../../inc/header.inc.php'; ?></pre>
+        </div>
+
+        <div class="padding_bot">
+          <pre class="small" id="dev_snippets_blocks_front_fetch" onclick="to_clipboard('', 'dev_snippets_blocks_front_fetch', 1);">/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FRONT END                                                     */
+/*                                                                                                                   */
+if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?></pre>
+        </div>
+
+        <div class="padding_bot">
+          <pre class="small" id="dev_snippets_blocks_footer" onclick="to_clipboard('', 'dev_snippets_blocks_footer', 1);">&lt;?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    END OF PAGE                                                    */
+/*                                                                                                                   */
+/*******************************************************************************/ include './../../inc/footer.inc.php';</pre>
+        </div>
+
+        <div class="padding_bot">
+          <pre class="small" id="dev_snippets_blocks_footer_fetch" onclick="to_clipboard('', 'dev_snippets_blocks_footer_fetch', 1);">&lt;?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    END OF PAGE                                                    */
+/*                                                                                                                   */
+/*****************************************************************************/ include './../../inc/footer.inc.php'; }</pre>
+        </div>
+
+      </div>
+
+
+
+
+<?php } ############################################################################################################ ?>
+
+  <?php if(!page_is_fetched_dynamically()) { ?>
+
+  </div>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */
 /*                                                                                                                   */
-/*******************************************************************************/ include './../../inc/footer.inc.php';
+/*****************************************************************************/ include './../../inc/footer.inc.php'; }

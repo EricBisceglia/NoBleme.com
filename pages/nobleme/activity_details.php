@@ -38,7 +38,7 @@ $log_details = activity_get_details($log_id, $lang);
 /*                                                                                                                   */
 /******************************************************************************************************************/ ?>
 
-<td colspan="3" class="align_left spaced padding_top">
+<td colspan="3" class="align_left indented padding_top">
 
   <?php if($log_details['reason']) { ?>
 

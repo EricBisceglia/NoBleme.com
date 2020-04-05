@@ -3,11 +3,3 @@ pre.dev_pre_code    { font-size: 0.8em ; max-height: 200px; overflow: auto; whit
 div.dev_div_border  { border: 1px dashed #B00B1E;                                                  }
 div.dev_div_spacing { border: 1px dashed #B00B1E; display: inline-block; font-weight: bold;        }
 td.dev_td_valign    { height: 50px; font-weight: bold;                                             }
-
-.dev_border_all_blank   { border: 0px !important;                                            }
-.dev_border_right_blank { border: 0px !important; border-right:5px solid #121212 !important; }
-.dev_snippets_width     { margin: auto; max-width: 62em;                                     }
-.dev_snippets_container { margin-bottom: 3.0rem;                                             }
-
-/****************************************************** QUERIES ******************************************************/
-.dev_queries_block { margin-top: 15em; margin-bottom: 15em; }

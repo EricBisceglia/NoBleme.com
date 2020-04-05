@@ -1,0 +1,3 @@
+/************************************************** RECENT ACTIVITY **************************************************/
+select.activity_amount { width: 4em;  }
+select.activity_type   { width: 12em; }

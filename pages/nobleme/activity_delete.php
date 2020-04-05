@@ -38,6 +38,6 @@ activity_delete_log($log_id, $deletion_type);
 /*                                                                                                                   */
 /******************************************************************************************************************/ ?>
 
-<td colspan="3" class="negative text_white bold">
+<td colspan="3" class="red bold">
   <?=__('activity_deleted')?>
 </td>

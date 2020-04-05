@@ -101,7 +101,7 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $deleted=0, $pa
     $data[$i]['id']       = $row['l_id'];
     $data[$i]['date']     = time_since($row['l_date']);
     $data[$i]['fulldate'] = date_to_text($row['l_date']).__('at_date', 1, 1, 1).date('H:i:s', $row['l_date']);
-    $data[$i]['css']      = (!$deleted) ? $parsed_row['css'] : 'website_update_background text_negative';
+    $data[$i]['css']      = (!$deleted) ? $parsed_row['css'] : 'red text_light';
     $data[$i]['href']     = $parsed_row['href'];
     $data[$i]['text']     = (mb_strlen($parsed_row[$lang]) < 80) ? sanitize_output($parsed_row[$lang]) : sanitize_output(string_truncate($parsed_row[$lang], 70, '...'));
     $data[$i]['fulltext'] = (mb_strlen($parsed_row[$lang]) < 80) ? '' : sanitize_output($parsed_row[$lang]);

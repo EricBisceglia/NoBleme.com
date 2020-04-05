@@ -31,13 +31,10 @@ $css = array('dev');
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-      <div class="width_50 dev_queries_block">
-
-        <h1 class="positive text_white align_center">
+        <h1 class="align_center gigapadding_top gigapadding_bot">
           <?=__('dev_queries_ok')?>
         </h1>
 
-      </div>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */

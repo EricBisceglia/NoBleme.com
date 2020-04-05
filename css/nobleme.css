@@ -48,30 +48,30 @@
 .valign_bottom   { vertical-align: bottom;         }
 .valign_table    { display: block; margin: 0 auto; }
 
-.bold            { font-weight: bold;                      }
-.notbold         { font-weight: normal;                    }
-.italics         { font-style: italic;                     }
-.underlined      { text-decoration: underline;             }
-.strikethrough   { text-decoration: line-through;          }
-.small           { font-size: 0.75em;                      }
-.big             { font-size: 1.25em;                      }
-.bigger          { font-size: 1.5em;                       }
-.biggest         { font-size: 2.0em;                       }
-.monospace       { font-family: 'NoBleme-hack', monospace; }
-.blur            { text-shadow: 0 0 10px #CACACA           ;
-                   color: rgba(255,255,255,0)              ;
-                   transition: 2s text-shadow linear;      }
-.blur:hover      { text-shadow: none; color: #CACACA       ;
-                   transition: 2s text-shadow linear;      }
-.smallglow       { filter: drop-shadow(0 0 3px #B00B1E);   }
-.glow            { filter: drop-shadow(0 0 5px #B00B1E);   }
-.glowhover:hover { filter: drop-shadow(0 0 5px #B00B1E);   }
-.bigglow         { filter: drop-shadow(0 0 10px #B00B1E);  }
-.noglow          { filter: none;                           }
-.pointer         { cursor: pointer;                        }
+.bold            { font-weight: bold; letter-spacing: 0.05rem; }
+.notbold         { font-weight: normal;                        }
+.italics         { font-style: italic;                         }
+.underlined      { text-decoration: underline;                 }
+.strikethrough   { text-decoration: line-through;              }
+.small           { font-size: 0.75em;                          }
+.big             { font-size: 1.25em;                          }
+.bigger          { font-size: 1.5em;                           }
+.biggest         { font-size: 2.0em;                           }
+.monospace       { font-family: monospace;                     }
+.blur            { text-shadow: 0 0 10px #CACACA               ;
+                   color: rgba(255,255,255,0)                  ;
+                   transition: 2s text-shadow linear;          }
+.blur:hover      { text-shadow: none; color: #CACACA           ;
+                   transition: 2s text-shadow linear;          }
+.smallglow       { filter: drop-shadow(0 0 3px #B00B1E);       }
+.glow            { filter: drop-shadow(0 0 5px #B00B1E);       }
+.glowhover:hover { filter: drop-shadow(0 0 5px #B00B1E);       }
+.bigglow         { filter: drop-shadow(0 0 10px #B00B1E);      }
+.noglow          { filter: none;                               }
+.pointer         { cursor: pointer;                            }
 
 .indiv, .intable { width: 100%;                                 }
-.indented        { padding-left: 2.0rem;                          }
+.indented        { padding-left: 2.0rem;                        }
 .spaced          { padding-left: 0.5rem; padding-right: 0.5rem; }
 .spaced_left     { padding-left: 0.5rem;                        }
 .spaced_right    { padding-right: 0.5rem;                       }

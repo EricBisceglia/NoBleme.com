@@ -13,8 +13,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 // Title
-___('pol_manifesto_title', 'EN', 'JUST SAY NO');
-___('pol_manifesto_title', 'FR', 'SAVOIR DIRE NON');
+___('pol_manifesto_title', 'EN', 'DISSENT');
+___('pol_manifesto_title', 'FR', 'DISSIDENCE');
 ___('pol_manifesto_subtitle', 'EN', 'THE CONTRAPOSITIONIST MANIFESTO');
 ___('pol_manifesto_subtitle', 'FR', 'LE MANIFESTE CONTRAPOSITIONNISTE');
 

@@ -21,23 +21,6 @@ ___('dev_queries_ok', 'FR', 'LES REQUÊTES ONT ÉTÉ EFFECTUÉES AVEC SUCCÈS');
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                     SNIPPETS                                                      */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Section titles
-___('dev_snippets_title_blocks', 'EN', 'COMMENT BLOCKS');
-___('dev_snippets_title_blocks', 'FR', 'BLOCS DE COMMENTAIRES');
-___('dev_snippets_title_header', 'EN', 'HEADERS');
-___('dev_snippets_title_header', 'FR', 'EN-TÊTES');
-___('dev_snippets_title_full', 'EN', 'FULL PAGE');
-___('dev_snippets_title_full', 'FR', 'PAGE COMPLÈTE');
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
 /*                                                    CSS PALETTE                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -65,3 +48,24 @@ ___('dev_palette_selector_text', 'EN', 'Text');
 ___('dev_palette_selector_text', 'FR', 'Texte');
 ___('dev_palette_selector_tooltips', 'EN', 'Tooltips');
 ___('dev_palette_selector_tooltips', 'FR', 'Infobulles');
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     SNIPPETS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Section titles
+___('dev_snippets_title', 'EN', 'Snippets');
+___('dev_snippets_title', 'FR', 'Modèles');
+___('dev_snippets_selector_full', 'EN', 'Full page');
+___('dev_snippets_selector_full', 'FR', 'Page complète');
+___('dev_snippets_selector_fetched', 'EN', 'Fetched page');
+___('dev_snippets_selector_fetched', 'FR', 'Page fetchée');
+___('dev_snippets_selector_header', 'EN', 'Headers');
+___('dev_snippets_selector_header', 'FR', 'En-têtes');
+___('dev_snippets_selector_blocks', 'EN', 'Comment blocks');
+___('dev_snippets_selector_blocks', 'FR', 'Blocs de commentaires');

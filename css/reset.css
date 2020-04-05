@@ -6,7 +6,7 @@
 /*          I could minify this, but I feel there is beauty in well indented code and want it to be visible          */
 /*        I like to call NoBleme's theme "retrofutirist anarcho-immaterial design". Purposefully pretentious.        */
 /*********************************************************************************************************************/
-a, audio, blockquote, body, canvas, code, del, div, dd, dl, dt, em, embed, fieldset, footer, form, h1, h2, h3, h4, h5,
+a, blockquote, body, button, canvas, code, del, div, dd, dl, dt, em, embed, fieldset, footer, form, h1, h2, h3, h4, h5,
 h6, header, html, iframe, img, ins, input, label, li, menu, nav, object, ol, p, pre, s, select, span, table, tbody,
 td, tfoot, th, thead, time, tr, ul, video { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; }
 /*************************************************** CUSTOM FONTS ****************************************************/
@@ -34,18 +34,6 @@ td, tfoot, th, thead, time, tr, ul, video { margin: 0; padding: 0; border: 0; fo
         url('./fonts/Open-sans.woff') format('woff')                        ,
         url('./fonts/Open-sans.ttf')  format('truetype')                    ,
         url('./fonts/Open-sans.svg#svgFontName') format('svg');             }
-@font-face { font-family: 'NoBleme-hack'                                    ;
-  src:  url('./fonts/hack.eot?#iefix') format('embedded-opentype')          ,
-        url('./fonts/hack.woff2') format('woff2')                           ,
-        url('./fonts/hack.woff') format('woff')                             ,
-        url('./fonts/hack.ttf')  format('truetype')                         ,
-        url('./fonts/hack.svg#svgFontName') format('svg');                  }
-@font-face { font-family: 'NoBleme-hack-bold'                               ;
-  src:  url('./fonts/hack-bold.eot?#iefix') format('embedded-opentype')     ,
-        url('./fonts/hack-bold.woff2') format('woff2')                      ,
-        url('./fonts/hack-bold.woff') format('woff')                        ,
-        url('./fonts/hack-bold.ttf')  format('truetype')                    ,
-        url('./fonts/hack-bold.svg#svgFontName') format('svg');             }
 /******************************* DEFAULT STYLES OF GENERIC TAGS FOR THE WHOLE WEBSITE ********************************/
 *, *:after, *:before    { box-sizing: inherit;                                                                        }
 html                    { box-sizing: border-box; font-size: 62.5%;                                                   }
@@ -61,12 +49,12 @@ h3                      { font-size: 3.6rem;                                    
 h4                      { font-size: 3.0rem;                                                                          }
 h5                      { font-size: 2.4rem;                                                                          }
 h6                      { font-size: 1.5rem;                                                                          }
-@media (max-width: 1024px) { body { font-size: 2.6em;                                                                 }
-h1                      { font-size: 8.0rem;                                                                          }
-h2                      { font-size: 7.0rem;                                                                          }
-h3                      { font-size: 6.0rem;                                                                          }
-h4                      { font-size: 5.0rem;                                                                          }
-h5                      { font-size: 4.0rem;                                                                          }
+@media (max-width: 1024px) { body { font-size: 2.5em;                                                                 }
+h1                      { font-size: 7.0rem;                                                                          }
+h2                      { font-size: 6.0rem;                                                                          }
+h3                      { font-size: 5.0rem;                                                                          }
+h4                      { font-size: 4.0rem;                                                                          }
+h5                      { font-size: 3.5rem;                                                                          }
 h6                      { font-size: 3.0rem;                                                                        } }
 a                       { color: #CACACA; text-decoration: none; filter: drop-shadow(0 0 3px #B00B1E);                }
 a:focus, a:hover        { color: #B00B1E;                                                                             }
@@ -89,7 +77,7 @@ ins                     { background-color: #388E3C; text-decoration: none; font
 blockquote              { quotes: none; background-color: #232323; border-left: 0.3rem solid #B00B1E                  ;
                           padding: 1rem 1.5rem;                                                                       }
 pre                     { background-color: #232323; border-left: 0.3rem solid #B00B1E; overflow-x: auto              ;
-                          padding: 1rem 1.5rem; font-family: 'NoBleme-hack', monospace;                               }
+                          padding: 1rem 1.5rem; font-family: monospace;                                               }
 textarea                { min-height: 12.0rem; width: 100%; background-color: #232323; color: #CACACA                 ;
                           border-radius: 5px; padding: 0.6rem 1.0rem; box-sizing: inherit; box-shadow: none;          }
 input, select, button   { font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif                  ;

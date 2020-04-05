@@ -54,15 +54,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('users_online_header_intro')?>
         </p>
 
-        <p>
+        <div class="padding_top padding_bot">
           <?=__('users_online_header_colors')?>
-        </p>
-
-        <p class="bold tinypadding_bot">
-          <?=string_change_case(__('option', 2), 'initials').__(':');?>
-        </p>
+        </div>
 
         <fieldset class="padding_bot">
+
+          <label><?=string_change_case(__('option', 2), 'initials').__(':');?></label>
 
           <input id="online_hide_guests" name="online_hide_guests" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
           <label class="label_inline" for="online_hide_guests"><?=__('users_online_hide_gests')?></label><br>
@@ -77,7 +75,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         </fieldset>
 
-        <table class="blacktitles">
+        <table>
 
           <thead>
             <th>

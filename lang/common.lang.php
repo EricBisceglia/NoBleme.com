@@ -531,15 +531,6 @@ ___('submenu_pages_politics_documentation', 'FR', "Violence systémique");
 ___('submenu_pages_politics_join', 'EN', "Join the movement");
 ___('submenu_pages_politics_join', 'FR', "Rejoindre le mouvement");
 
-___('submenu_pages_archives', 'EN', "Archives");
-___('submenu_pages_archives', 'FR', "Archives");
-___('submenu_pages_nbrpg', 'EN', "NoBlemeRPG");
-___('submenu_pages_nbrpg', 'FR', "NoBlemeRPG");
-___('submenu_pages_nrm', 'EN', "NRM Online");
-___('submenu_pages_nrm', 'FR', "NRM Online");
-___('submenu_pages_nrm_champions', 'EN', "Champions of the past");
-___('submenu_pages_nrm_champions', 'FR', "Champions du passé");
-
 
 // Submenu: Social
 ___('submenu_social_irc', 'EN', "IRC chat server");
@@ -570,6 +561,15 @@ ___('submenu_social_quotes_stats', 'EN', "Quote statistics");
 ___('submenu_social_quotes_stats', 'FR', "Statistiques des citations");
 ___('submenu_social_quotes_submit', 'EN', "Submit a new quote");
 ___('submenu_social_quotes_submit', 'FR', "Proposer une citation");
+
+___('submenu_social_games', 'EN', "Video games");
+___('submenu_social_games', 'FR', "Jeux vidéo");
+___('submenu_social_games_minecraft', 'EN', "Serveur Minecraft");
+___('submenu_social_games_minecraft', 'FR', "Minecraft server");
+___('submenu_social_games_nbrpg', 'EN', "Archive: NoBlemeRPG");
+___('submenu_social_games_nbrpg', 'FR', "Archive : NoBlemeRPG");
+___('submenu_social_games_nrm', 'EN', "Archive: NRM Online");
+___('submenu_social_games_nrm', 'FR', "Archive : NRM Online");
 
 
 // Submenu: Account
@@ -684,6 +684,41 @@ ___('footer_copyright', 'FR', "&copy; NoBleme.com : 2005 - {{1}}");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                       LOGIN                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Page title
+___('login_form_title', 'EN', "Login");
+___('login_form_title', 'FR', "Connexion");
+
+
+// Login form
+___('login_form_form_forgotten', 'EN', "(forgotten?)");
+___('login_form_form_forgotten', 'FR', "(oublié ?)");
+___('login_form_form_remember', 'EN', "Stay logged in");
+___('login_form_form_remember', 'FR', "Rester connecté");
+___('login_form_form_register', 'EN', 'REGISTER');
+___('login_form_form_register', 'FR', 'INSCRIPTION');
+
+
+// Error messages
+___('login_form_error_no_nickname', 'EN', "You must specify a nickname");
+___('login_form_error_no_nickname', 'FR', "Vous devez saisir un pseudonyme");
+___('login_form_error_no_password', 'EN', "You must specify a password");
+___('login_form_error_no_password', 'FR', "Vous devez saisir un mot de passe");
+___('login_form_error_bruteforce', 'EN', "You are trying to log in too often, please wait 10 minutes");
+___('login_form_error_bruteforce', 'FR', "Trop de tentatives de connexion, merci d'attendre 10 minutes");
+___('login_form_error_wrong_user', 'EN', "This nickname does not exist on the website");
+___('login_form_error_wrong_user', 'FR', "Ce pseudonyme n'existe pas sur le site");
+___('login_form_error_wrong_password', 'EN', "Incorrect password for this nickname");
+___('login_form_error_wrong_password', 'FR', "Mauvais mot de passe pour ce pseudonyme");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                  CODE OF CONDUCT                                                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -694,16 +729,16 @@ ___('coc', 'EN', <<<EOT
 </p>
 <ul>
   <li>
-    Obviously, <span class="bold">illegal content</span> will immediately be <span class="bold">sent to the police</span>. Don't play with fire.
+    Obviously, illegal content will immediately be sent to the police. Don't play with fire.
   </li>
   <li>
-    Since NoBleme has no age restriction <span class="bold">pornography or highly suggestive content is forbidden</span>.
+    Since NoBleme has no age restriction pornography or highly suggestive content is forbidden.
   </li>
   <li>
-    All <span class="bold">gore images</span> and other disgusting things are <span class="bold">also forbidden</span>. NoBleme is not the right place for that.
+    All gore images and other disgusting things are also forbidden. NoBleme is not the right place for that.
   </li>
   <li>
-    Any form of <span class="bold">hate speech, discrimination, or incitation to violence</span> will be met with an <span class="bold">immediate ban</span>.
+    Any form of hate speech, discrimination, or incitation to violence will be met with an immediate ban.
   </li>
   <li>
     If you have to argue with someone about a tense situation, do it privately or risk both being banned.
@@ -724,16 +759,16 @@ ___('coc', 'FR', <<<EOT
 </p>
 <ul>
   <li>
-    Tout <span class="bold">contenu illégal</span> sera immédiatement <span class="bold">envoyé à la police</span>. Ne jouez pas avec le feu.
+    Tout contenu illégal sera immédiatement envoyé à la police. Ne jouez pas avec le feu.
   </li>
   <li>
-    Comme NoBleme n'a pas de restriction d'âge, <span class="bold">la pornographie et la nudité gratuite sont interdits</span>.
+    Comme NoBleme n'a pas de restriction d'âge, la pornographie et la nudité gratuite sont interdits.
   </li>
   <li>
-    Les <span class="bold">images gores</span> ou dégueulasses sont <span class="bold">également interdites</span>. NoBleme n'est pas le lieu pour ça.
+    Les images gores ou dégueulasses sont également interdites. NoBleme n'est pas le lieu pour ça.
   </li>
   <li>
-  <span class="bold">L'incitation à la haine</span> et les <span class="bold">propos discriminatoires</span> auront pour réponse un <span class="bold">bannissement immédiat</span>.
+    L'incitation à la haine et les propos discriminatoires auront pour réponse un bannissement immédiat.
   </li>
   <li>
     Les situations tendues doivent se régler en privé avant de trop escalader, au risque de se faire bannir.

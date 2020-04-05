@@ -8,65 +8,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                  RECENT ACTIVITY                                                  */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Push page names into the existing user activity array
-$page_names['users_login_en']     = "Is logging into his account";
-$page_names['users_login_fr']     = "Se connecte à son compte";
-$page_names['users_forgotten_en'] = "Forgot his password";
-$page_names['users_forgotten_fr'] = "A oublié son mot de passe";
-$page_names['users_register_en']  = "Se crée un nouveau compte";
-$page_names['users_register_fr']  = "Is creating a new account";
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                       LOGIN                                                       */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Page title
-___('users_login_title', 'EN', "Login");
-___('users_login_title', 'FR', "Connexion");
-
-
-// Welcome message
-___('users_login_welcome', 'EN', "Welcome to NoBleme!<br>Your account has succesfully been created, you can now log in.");
-___('users_login_welcome', 'FR', "Bienvenue sur NoBleme !<br>Votre compte a été crée, vous pouvez maintenant vous y connecter.");
-
-
-// Login form
-___('users_login_form_create', 'EN', "Don't have an account? Click here to register one!");
-___('users_login_form_create', 'FR', "Vous n'avez pas de compte ? Cliquez ici pour en créer un !");
-___('users_login_form_remember', 'EN', "Stay logged in");
-___('users_login_form_remember', 'FR', "Rester connecté");
-___('users_login_form_forgotten_password', 'EN', "Forgot your account's password? Click here.");
-___('users_login_form_forgotten_password', 'FR', "Vous avez oublié votre mot de passe ? Cliquez ici.");
-___('users_login_form_register', 'EN', 'REGISTER');
-___('users_login_form_register', 'FR', 'INSCRIPTION');
-
-
-// Error messages
-___('users_login_error_no_nickname', 'EN', "You must specify a nickname");
-___('users_login_error_no_nickname', 'FR', "Vous devez saisir un pseudonyme");
-___('users_login_error_no_password', 'EN', "You must specify a password");
-___('users_login_error_no_password', 'FR', "Vous devez saisir un mot de passe");
-___('users_login_error_bruteforce', 'EN', "You are trying to log in too often, please wait 10 minutes");
-___('users_login_error_bruteforce', 'FR', "Trop de tentatives de connexion, merci d'attendre 10 minutes");
-___('users_login_error_wrong_user', 'EN', "This nickname does not exist on the website");
-___('users_login_error_wrong_user', 'FR', "Ce pseudonyme n'existe pas sur le site");
-___('users_login_error_wrong_password', 'EN', "Incorrect password for this nickname");
-___('users_login_error_wrong_password', 'FR', "Mauvais mot de passe pour ce pseudonyme");
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
 /*                                                FORGOTTEN PASSWORD                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -212,21 +153,23 @@ ___('users_online_header_intro', 'EN', "This page lists the most recently visite
 ___('users_online_header_intro', 'FR', "Cette page recense l'activité la plus récente des visiteurs qui ont fréquenté NoBleme ce mois-ci. Dans le cas des invités (visiteurs non connectés), seuls les 1000 plus récents sont affichés, et de petits surnoms stupides leur sont aléatoirement assignés. Si vous craignez que cette page permette à des gens de vous traquer ou n'êtes juste pas confortable avec le fait d'avoir votre activité listée publiquement, vous pouvez retirer votre compte de la liste via vos {{link|pages/users/privacy|options de vie privée}}.");
 
 ___('users_online_header_colors', 'EN', <<<EOD
-In order to tell them apart from each other, users are color coded:<br>
-- Guests will not have any specific color.<br>
-- {{link+|pages/users/list|Registered users|normal}} have a <span class="grey_light text_black bold spaced">light grey</span> background.<br>
-- {{link+|pages/users/admins|Moderators|normal}} have a <span class="positive text_white bold spaced">green</span> background.<br>
-- {{link+|pages/users/admins|Global moderators|normal}} have a <span class="neutral text_white bold spaced">orange</span> background.<br>
-- {{link+|pages/users/admins|Administrators|normal}} have a <span class="negative text_white bold spaced">red</span> background.
+In order to tell them apart from each other, users are color coded:
+<ul class="nopadding">
+  <li>Guests will not have any specific formatting.</li>
+  <li>{{link|todo_link|Registered users}} will appear in <span class="bold">bold</span>.</li>
+  <li>{{link|todo_link|Moderators}} have an <span class="text_orange bold">orange</span> background.</li>
+  <li>{{link|todo_link|Administrators}} have a <span class="text_red glow bold">red</span> background.</li>
+</ul>
 EOD
 );
 ___('users_online_header_colors', 'FR', <<<EOD
-Afin de les distinguer, les visiteurs suivent un code couleur :<br>
-- Les invités n'ont pas de couleur spécifique.<br>
-- {{link+|pages/users/list|Les membres du site|normal}} ont un arrière-plan <span class="grey_light text_black bold spaced">gris clair</span><br>
-- {{link+|pages/users/admins|Les modérateurs|normal}} ont un arrière-plan <span class="positive text_white bold spaced">vert</span><br>
-- {{link+|pages/users/admins|Les modérateurs globaux|normal}} ont un arrière-plan <span class="neutral text_white bold spaced">orange</span><br>
-- {{link+|pages/users/admins|Les administrateurs|normal}} ont un arrière-plan <span class="negative text_white bold spaced">rouge</span>
+Afin de les distinguer, les visiteurs suivent un code couleur :
+<ul class="nopadding">
+  <li>Les invités n'ont pas de formattage spécifique.</li>
+  <li>{{link|todo_link|Les membres du site}} apparaissent en <span class="bold">gras</span>.</li>
+  <li>{{link|todo_link|Les modérateurs}} ont un arrière-plan <span class="text_orange bold">orange.</span></li>
+  <li>{{link|todo_link|Les administrateurs}} ont un arrière-plan <span class="text_red glow bold">rouge.</span></li>
+</ul>
 EOD
 );
 

@@ -41,6 +41,7 @@
                                animation-duration: 1337ms;                                             }
 @keyframes blink-glow        { 0% { filter: none; } 50% { filter: drop-shadow(0 0 5px #B00B1E);        }
                                100%  { filter: none; }                                                 }
+.header_submenu_remember_me  { margin-top: 6px;                                                        }
 
 @media(min-width: 1025px) {
 .header_submenu           { border-bottom: 2px solid #B00B1E         ;

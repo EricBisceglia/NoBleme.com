@@ -37,6 +37,6 @@ activity_restore_log($log_id);
 /*                                                                                                                   */
 /******************************************************************************************************************/ ?>
 
-<td colspan="3" class="positive text_white bold">
+<td colspan="3" class="green bold">
   <?=__('activity_restored')?>
 </td>

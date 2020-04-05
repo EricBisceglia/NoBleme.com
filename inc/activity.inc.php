@@ -39,7 +39,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   if($type === 'dev_version')
   {
-    $return['css']  = 'bold text_white positive';
+    $return['css']  = 'bold green';
     $return['href'] = $path.'index_temp_nobleme';
     $return['EN']   = "New version of the website: ".$title_en;
     $return['FR']   = "Nouvelle version du site : ".$title_fr;
@@ -47,7 +47,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'dev_blog')
   {
-    $return['css']  = 'text_black green_background';
+    $return['css']  = 'brown bold';
     $return['href'] = $path.'index_temp_nobleme?id='.$id;
     $return['EN']   = ($title_en) ? "New devblog published: ".$title_en : '';
     $return['FR']   = ($title_fr) ? "Nouveau devblog publié : ".$title_fr : '';
@@ -63,7 +63,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'dev_task_finished')
   {
-    $return['css']  = 'text_black green_background_light';
+    $return['css']  = 'text_green bold';
     $return['href'] = $path.'index_temp_nobleme?id='.$id;
     $return['EN']   = ($title_en) ? "Task solved: ".$title_en : '';
     $return['FR']   = ($title_fr) ? "Tache résolue : ".$title_fr : '';
@@ -76,7 +76,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'users_register')
   {
-    $return['css']  = 'text_white nobleme_light';
+    $return['css']  = 'text_green bold';
     $return['href'] = $path.'index_temp_community?id='.$userid;
     $return['EN']   = $nickname." registered on NoBleme!";
     $return['FR']   = $nickname." s'est inscrit·e sur NoBleme !";
@@ -91,7 +91,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'users_admin_edit_profile')
   {
-    $return['css']  = 'neutral text_white';
+    $return['css']  = 'orange bold';
     $return['href'] = $path.'index_temp_community?id='.$userid;
     $return['EN']   = $mod_nickname.' edited '.$nickname."'s public profile";
     $return['FR']   = $mod_nickname.' a modifié le profil public de '.$nickname;
@@ -99,7 +99,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'users_admin_edit_password')
   {
-    $return['css']  = 'website_update text_white';
+    $return['css']  = 'red bold';
     $return['href'] = $path.'index_temp_community?id='.$userid;
     $return['EN']   = $mod_nickname.' changed '.$nickname."'s password";
     $return['FR']   = $mod_nickname.' a modifié le mot de passe de '.$nickname;
@@ -107,7 +107,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'users_banned' && !$admins_only)
   {
-    $return['css']  = 'negative text_white bold';
+    $return['css']  = 'red bold';
     $return['href'] = $path.'index_temp_community?id='.$userid;
     $temp           = ($amount != 1) ? 's' : '';
     $return['EN']   = $nickname.' has been banned for '.$amount.' day'.$temp;
@@ -115,7 +115,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
   }
   else if($type == 'users_banned')
   {
-    $return['css']  = 'negative text_white bold';
+    $return['css']  = 'red bold';
     $return['href'] = $path.'index_temp_admin';
     $temp           = ($amount != 1) ? 's' : '';
     $return['EN']   = $mod_nickname.' banned '.$nickname.' for '.$amount.' day'.$temp;
@@ -124,14 +124,14 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'users_unbanned' && !$admins_only)
   {
-    $return['css']  = 'positive text_white bold';
+    $return['css']  = 'text_red bold';
     $return['href'] = $path.'index_temp_community?id='.$userid;
     $return['EN']   = $nickname.' has been unbanned';
     $return['FR']   = $nickname.' a été débanni·e';
   }
   else if($type == 'users_unbanned')
   {
-    $return['css']  = 'positive text_white bold';
+    $return['css']  = 'red bold';
     $return['href'] = $path.'index_temp_admin';
     $return['EN']   = $mod_nickname.' has unbanned '.$nickname;
     $return['FR']   = $mod_nickname.' a débanni '.$nickname;
@@ -139,7 +139,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'users_rights_delete')
   {
-    $return['css']  = 'website_update text_white';
+    $return['css']  = 'text_red bold';
     $return['href'] = $path.'index_temp_community';
     $return['EN']   = $nickname." is not part of the administrative team anymore";
     $return['FR']   = $nickname." ne fait plus partie de l'équipe administrative";
@@ -147,7 +147,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'users_rights_moderator')
   {
-    $return['css']  = 'green_background text_black';
+    $return['css']  = 'orange bold';
     $return['href'] = $path.'index_temp_community';
     $return['EN']   = $nickname." has joined the administrative team as a moderator";
     $return['FR']   = $nickname." a rejoint l'équipe administrative en tant que modérateur";
@@ -155,15 +155,15 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'users_rights_global_moderator')
   {
-    $return['css']  = 'neutral text_white bold';
+    $return['css']  = 'orange bold';
     $return['href'] = $path.'index_temp_community';
-    $return['EN']   = $nickname." has joined the admin. team as a global moderator";
+    $return['EN']   = $nickname." has joined the administrative team as a global moderator";
     $return['FR']   = $nickname." a rejoint l'équipe admin. en tant que modérateur global";
   }
 
   else if($type === 'users_rights_administrator')
   {
-    $return['css']  = 'positive text_white bold';
+    $return['css']  = 'red bold';
     $return['href'] = $path.'index_temp_community';
     $return['EN']   = $nickname." is now a website administrator";
     $return['FR']   = $nickname." est maintenant un administrateur du site";
@@ -178,16 +178,16 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'meetups_new' && !$admins_only)
   {
-    $return['css']  = 'text_black green_background_light';
+    $return['css']  = 'green bold';
     $return['href'] = $path.'index_temp_community?id='.$id;
-    $return['EN']   = 'New real life meetup planned the '.date_to_text($title_en, 1);
+    $return['EN']   = 'New real life meetup planned on '.date_to_text($title_en, 1);
     $return['FR']   = 'Nouvelle rencontre IRL planifiée le '.date_to_text($title_fr, 1);
   }
   else if($type === 'meetups_new')
   {
-    $return['css']  = 'text_black green_background_light';
+    $return['css']  = 'green bold';
     $return['href'] = $path.'index_temp_community?id='.$id;
-    $return['EN']   = $mod_nickname.' created a new meetup the '.date_to_text($title_en, 1);
+    $return['EN']   = $mod_nickname.' created a new meetup on '.date_to_text($title_en, 1);
     $return['FR']   = $mod_nickname.' a crée une nouvelle IRL le '.date_to_text($title_fr, 1);
   }
 
@@ -200,7 +200,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'meetups_delete')
   {
-    $return['css']  = 'website_update text_white';
+    $return['css']  = 'red bold';
     $return['EN']   = $mod_nickname." deleted the ".date_to_text($title_en, 1)." meetup";
     $return['FR']   = $mod_nickname." a supprimé l'IRL du ".date_to_text($title_fr, 1);
   }
@@ -247,7 +247,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'internet_page_new')
   {
-    $return['css']  = 'text_black green_background_light';
+    $return['css']  = 'brown bold';
     $return['href'] = $path.'index_temp_pages?id='.$id;
     $return['EN']   = ($title_en) ? 'New page in the internet encyclopedia : '.$title_en : '';
     $return['FR']   = ($title_fr) ? "Nouvelle page dans l'encyclopédie du web : ".$title_fr : '';
@@ -255,7 +255,6 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'internet_page_edit')
   {
-    $return['css']  = '';
     $return['href'] = $path.'index_temp_pages?id='.$id;
     $return['EN']   = ($title_en) ? "Page modified in the internet encyclopedia : ".$title_en : '';
     $return['FR']   = ($title_fr) ? "Page modifiée dans l'encyclopédie du web : ".$title_fr : '';
@@ -263,14 +262,13 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'internet_page_delete')
   {
-    $return['css']  = '';
     $return['EN']   = ($title_en) ? 'Page deleted in the internet encyclopedia : '.$title_en : '';
     $return['FR']   = ($title_fr) ? "Page supprimée dans l'encyclopédie du web : ".$title_fr : '';
   }
 
   else if($type === 'internet_definition_new')
   {
-    $return['css']  = 'text_black green_background_light';
+    $return['css']  = 'brown bold';
     $return['href'] = $path.'index_temp_pages?id='.$id;
     $return['EN']   = ($title_en) ? 'New entry in the internet dictionary : '.$title_en : '';
     $return['FR']   = ($title_fr) ? 'Nouvelle entrée dans le dictionnaire du web : '.$title_fr : '';
@@ -278,7 +276,6 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'internet_definition_edit')
   {
-    $return['css']  = '';
     $return['href'] = $path.'index_temp_pages?id='.$id;
     $return['EN']   = ($title_en) ? 'Entry modified in the internet dictionary : '.$title_en : '';
     $return['FR']   = ($title_fr) ? 'Entrée modifiée dans le dictionnaire du web : '.$title_fr : '';
@@ -286,7 +283,6 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'internet_definition_delete')
   {
-    $return['css']  = '';
     $return['EN']   = ($title_en) ? 'Entry deleted in the internet dictionary : '.$title_en : '';
     $return['FR']   = ($title_fr) ? 'Entrée supprimée dans le dictionnaire du web : '.$title_fr : '';
   }
@@ -300,13 +296,13 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'quotes_new_fr')
   {
-    $return['css']  = 'text_black green_background_light';
+    $return['css']  = 'brown bold';
     $return['href'] = $path.'index_temp_community?id='.$id;
     $return['FR']   = 'Citation #'.$id.' ajoutée à la collection';
   }
   else if($type === 'quotes_new_en')
   {
-    $return['css']  = 'text_black green_background_light';
+    $return['css']  = 'brown bold';
     $return['href'] = $path.'index_temp_community?id='.$id;
     $return['EN']   = 'Quote #'.$id.' added to the collection';
     $return['FR']   = 'Citation anglophone #'.$id.' ajoutée à la collection';
@@ -321,7 +317,7 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'writings_text_new_fr')
   {
-    $return['css']  = 'text_black green_background_light';
+    $return['css']  = 'brown bold';
     $return['href'] = $path.'index_temp_community?id='.$id;
     $return['FR']   = ($nickname != 'Anonyme') ? $nickname.' a publié un texte : '.$title_fr : 'Nouveau texte publié : '.$title_fr;
   }
@@ -334,28 +330,28 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
 
   else if($type === 'writings_text_delete')
   {
-    $return['css']  = 'website_update text_white';
+    $return['css']  = 'red bold';
     $return['EN']   = $mod_nickname." deleted a french writer's corner entry: ".$title_en;
     $return['FR']   = $mod_nickname.' a supprimé un texte du coin des écrivains : '.$title_fr;
   }
 
   else if($type === 'writings_contest_new_fr')
   {
-    $return['css']  = 'text_black green_background';
+    $return['css']  = 'green bold';
     $return['href'] = $path.'index_temp_community?id='.$id;
     $return['FR']   = 'Nouveau concours du coin des écrivains : '.$title_fr;
   }
 
   else if($type === 'writings_contest_winner_fr')
   {
-    $return['css']  = 'text_black green_background_light';
+    $return['css']  = 'brown bold';
     $return['href'] = $path.'index_temp_community?id='.$id;
     $return['FR']   = 'Concours du coin des écrivains ouvert aux votes : '.$title_fr;
   }
 
   else if($type === 'writings_contest_vote_fr')
   {
-    $return['css']  = 'text_black green_background';
+    $return['css']  = 'green bold';
     $return['href'] = $path.'index_temp_community?id='.$id;
     $return['FR']   = $nickname.' a gagné le concours du coin des écrivains : '.$title_fr;
   }
