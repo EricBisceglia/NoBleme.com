@@ -79,19 +79,17 @@ ___('nobleme_home_tour', 'EN', <<<EOT
 <p>
   The 15th birthday overhaul of the website in spring 2020 cut many unused features from the website. Some of this content is still in the process of being reimagined and rebuilt right now, therefore NoBleme is currently cut down to its core features - don't expect too much content. You can use the menus on top of the page to browse around the website, or let yourself get guided by this quick list of our main features:
 </p>
-<p>
-  <ul>
-    <li>
-      {{link+++|todo_link|The IRC chat server|bold|1|}} is where the community hangs out and communicates. Come join!
-    </li>
-    <li class="smallpadding_top">
-      {{link+++|todo_link|The 21st century compendium|bold|1|}} is a deep dive into modern culture, society, slang, and memes.
-    </li>
-    <li class="smallpadding_top">
-      {{link+++|pages/politics/manifesto|The contrapositionist manifesto|bold|1|}} will give you some insight on where NoBleme stands politically.
-    </li>
-  </ul>
-</p>
+<ul class="padding_top padding_bot">
+  <li>
+    {{link+++|todo_link|The IRC chat server|bold|1|}} is where the community hangs out and communicates. Come join!
+  </li>
+  <li class="smallpadding_top">
+    {{link+++|todo_link|The 21st century compendium|bold|1|}} is a deep dive into modern culture, society, slang, and memes.
+  </li>
+  <li class="smallpadding_top">
+    {{link+++|pages/politics/manifesto|The contrapositionist manifesto|bold|1|}} will give you some insight on where NoBleme stands politically.
+  </li>
+</ul>
 <p>
   Enjoy your stay on NoBleme!<br>
   {{link+++|todo_link|- Bad|indented bold|1|}}
@@ -102,19 +100,17 @@ ___('nobleme_home_tour', 'FR', <<<EOT
 <p>
   Depuis le 15ème anniversaire de NoBleme, au printemps 2020, beaucoup d'éléments non utilisés ont été retirés du site. Une partie de ces contenus sont toujours en cours de réimagination ou de reconstruction, ce qui fait que NoBleme ne contient actuellement que ses contenus principaux - ne vous attendez pas à y trouver énormément de choses. Vous pouvez utiliser les menus en haut de la page pour vous balader sur NoBleme, ou vous laisser guider par cette liste de nos contenus les plus intéressants :
 </p>
-<p>
-  <ul>
-    <li>
-      {{link+++|todo_link|Le serveur de chat IRC|bold|1|}}, où vous pourrez trouver et interagir avec la communauté de NoBleme.
-    </li>
-    <li class="smallpadding_top">
-      {{link+++|todo_link|Une étude du 21ème siècle|bold|1|}}, où sont analysés la culture, la société, le langage, et les memes.
-    </li>
-    <li class="smallpadding_top">
-      {{link+++|pages/politics/manifesto|Le manifeste contrapositioniste|bold|1|}}, qui devrait clarifier les positions politiques de NoBleme.
-    </li>
-  </ul>
-</p>
+<ul class="padding_top padding_bot">
+  <li>
+    {{link+++|todo_link|Le serveur de chat IRC|bold|1|}}, où vous pourrez trouver et interagir avec la communauté de NoBleme.
+  </li>
+  <li class="smallpadding_top">
+    {{link+++|todo_link|Une étude du 21ème siècle|bold|1|}}, où sont analysés la culture, la société, le langage, et les memes.
+  </li>
+  <li class="smallpadding_top">
+    {{link+++|pages/politics/manifesto|Le manifeste contrapositioniste|bold|1|}}, qui devrait clarifier les positions politiques de NoBleme.
+  </li>
+</ul>
 <p>
   Bon séjour sur NoBleme !<br>
   {{link+++|todo_link|- Bad|indented bold|1|}}

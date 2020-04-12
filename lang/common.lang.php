@@ -694,8 +694,6 @@ ___('login_form_title', 'FR', "Connexion");
 
 
 // Login form
-___('login_form_form_forgotten', 'EN', "(forgotten?)");
-___('login_form_form_forgotten', 'FR', "(oublié ?)");
 ___('login_form_form_remember', 'EN', "Stay logged in");
 ___('login_form_form_remember', 'FR', "Rester connecté");
 ___('login_form_form_register', 'EN', 'REGISTER');
@@ -707,12 +705,16 @@ ___('login_form_error_no_nickname', 'EN', "You must specify a nickname");
 ___('login_form_error_no_nickname', 'FR', "Vous devez saisir un pseudonyme");
 ___('login_form_error_no_password', 'EN', "You must specify a password");
 ___('login_form_error_no_password', 'FR', "Vous devez saisir un mot de passe");
-___('login_form_error_bruteforce', 'EN', "You are trying to log in too often, please wait 10 minutes");
-___('login_form_error_bruteforce', 'FR', "Trop de tentatives de connexion, merci d'attendre 10 minutes");
+___('login_form_error_bruteforce', 'EN', "You are trying to log in too often, please wait 10 minutes before your next attempt");
+___('login_form_error_bruteforce', 'FR', "Trop de tentatives de connexion, merci d'attendre 10 minutes avant d'essayer de nouveau");
 ___('login_form_error_wrong_user', 'EN', "This nickname does not exist on the website");
 ___('login_form_error_wrong_user', 'FR', "Ce pseudonyme n'existe pas sur le site");
+___('login_form_error_forgotten_user', 'EN', "Forgot your nickname?");
+___('login_form_error_forgotten_user', 'FR', "Vous avez oublié votre pseudonyme ?");
 ___('login_form_error_wrong_password', 'EN', "Incorrect password for this nickname");
 ___('login_form_error_wrong_password', 'FR', "Mauvais mot de passe pour ce pseudonyme");
+___('login_form_error_forgotten_password', 'EN', "Forgot your password?");
+___('login_form_error_forgotten_password', 'FR', "Mot de passe oublié ?");
 
 
 

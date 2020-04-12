@@ -21,7 +21,7 @@ $page_title_fr    = "Palette CSS";
 
 // Extra CSS & JS
 $css = array('dev');
-$js  = array('fetch', 'dev/palette', 'clipboard');
+$js  = array('dev/palette', 'clipboard');
 
 
 
@@ -301,6 +301,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <div class="padding_top">
             <button>&lt;button></button>
             <button disabled>Disabled</button>
+          </div>
+
+          <div class="padding_top">
+            <button class="button_chain">&lt;button class="button_chain"></button>
+            <button class="button_chain">space</button>
+            <button class="button_chain" disabled>Disabled</button>
           </div>
 
           <div class="padding_top">

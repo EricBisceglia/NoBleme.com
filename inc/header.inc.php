@@ -70,41 +70,9 @@ if($website_closed && !$is_admin)
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                  LOGIN / LOGOUT                                                   */
+/*                                                      LOGOUT                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Login attempt
-
-if(isset($_POST['login_form_submit']))
-{
-  // Check whether "remember me" is checked
-  $login_form_remember_me = isset($_POST['login_form_remember']) ? 1 : null;
-
-  // Attempt to login
-  $login_form_attempt = user_authenticate(  $_SERVER["REMOTE_ADDR"]       ,
-                                            $_POST['login_form_nickname'] ,
-                                            $_POST['login_form_password'] ,
-                                            $login_form_remember_me       );
-
-  // If the user has logged in, redirect them
-  if($login_form_attempt === 1)
-    header("location: ".$path."todo_link");
-}
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Form values
-
-$login_form_nickname    = isset($_POST['login_form_nickname']) ? sanitize_output($_POST['login_form_nickname']) : '';
-$login_form_password    = isset($_POST['login_form_password']) ? sanitize_output($_POST['login_form_password']) : '';
-$login_form_remember_me = (isset($_POST['login_form_remember']) || !isset($_POST['login_form_submit'])) ? " checked" : '';
-
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Creation of URLs to use for logging out and changing language
@@ -344,7 +312,8 @@ if (isset($css))
 
 // Include the default javascript files (weird line breaks are for indentation)
 $javascripts = '
-    <script src="'.$path.'js/common.js"> </script>';
+    <script src="'.$path.'js/header.js"> </script>
+    <script src="'.$path.'js/fetch.js"> </script>';
 
 // If extra JS files are set, add them to the list
 if (isset($js))
@@ -393,6 +362,8 @@ $javascripts .= '
   <?php } else { ?>
 <body id="body">
   <?php } ?>
+
+  <input id="root_path" type="hidden" class="hidden" value="<?=$path?>">
 
 
 <?php ############################################# WEBSITE UPDATE ################################################# ?>
@@ -738,36 +709,31 @@ $javascripts .= '
           <?=__('login_form_title')?>
         </h1>
 
-        <?php if(isset($login_form_attempt)) { ?>
-
-        <h5 class="align_center bigpadding_bot padding_top underlined dowrap">
-          <?=string_change_case(__('error'), 'uppercase').__(':').' '.$login_form_attempt?>
+        <h5 id="login_form_error" class="align_center bigpadding_bot padding_top underlined dowrap hidden">
+          &nbsp;
         </h5>
 
-        <?php } ?>
-
-        <form method="POST" action="">
+        <form method="POST" name="login_form" onsubmit="users_login_attempt('<?=$path?>pages/users/login_attempt', <?=$GLOBALS['dev_mode']?>); return false;">
           <fieldset>
 
             <div class="smallpadding_bot">
-              <label class="text_light" for="login_form_nickname"><?=string_change_case(__('nickname'), 'initials')?></label>
-              <input id="login_form_nickname" name="login_form_nickname" class="indiv" type="text" value="<?=$login_form_nickname?>">
+              <label class="text_light" id="label_login_form_nickname" for="login_form_nickname"><?=string_change_case(__('nickname'), 'initials')?></label>
+              <input id="login_form_nickname" name="login_form_nickname" class="indiv" type="text" value="" onkeypress="users_login_form_keypress();">
             </div>
 
             <div class="padding_bot">
-              <label class="text_light" for="login_form_password"><?=string_change_case(__('password'), 'initials')?> <?=__link('pages/users/forgotten_password', __('login_form_form_forgotten'), 'bold', 1, $path)?></label>
-              <input id="login_form_password" name="login_form_password" class="indiv" type="password" value="<?=$login_form_password?>">
+              <label class="text_light" id="label_login_form_password" for="login_form_password"><?=string_change_case(__('password'), 'initials')?> </label>
+              <input id="login_form_password" name="login_form_password" class="indiv" type="password" value="" onkeypress="users_login_form_keypress();">
             </div>
 
             <div class="float_right">
-              <input id="login_form_remember" name="login_form_remember" type="checkbox"<?=$login_form_remember_me?>>
+              <input id="login_form_remember" name="login_form_remember" type="checkbox" checked>
               <label class="label_inline" for="login_form_remember"><?=__('login_form_form_remember')?></label>
             </div>
-            <input value="<?=__('login_form_title')?>" type="submit" name="login_form_submit">
-            &nbsp;&nbsp;
-            <a class="noglow" href="<?=$path?>pages/users/register">
-              <button type="button"><?=__('login_form_form_register')?></button>
-            </a>
+
+            <input type="submit" class="button_chain" value="<?=__('login_form_title')?>">
+
+            <button type="button" onclick="window.location = '<?=$path?>pages/users/register';"><?=__('login_form_form_register')?></button>
 
           </fieldset>
         </form>

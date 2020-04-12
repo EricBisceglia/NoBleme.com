@@ -8,20 +8,28 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                FORGOTTEN PASSWORD                                                 */
+/*                                                LOST ACCOUNT ACCESS                                                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
 // Body
-___('users_forgotten_title', 'EN', 'Forgotten password');
-___('users_forgotten_title', 'FR', 'Mot de passe oublié');
+___('users_lost_access_title', 'EN', 'Lost account access');
+___('users_lost_access_title', 'FR', 'Accès perdu à votre compte');
 
-___('users_forgotten_body', 'EN', <<<EOT
-For obvious safety reasons, NoBleme account passwords are not sent through e-mail upon registering. Sadly, there is no working automated password resetting form right now (yet), which means that password recovery can be a touchy process. If you want to get back into your lost account, what you should do is go on {{link|pages/irc/index|NoBleme's IRC chat server}}, message a member of NoBleme's {{link|pages/nobleme/admins|administrative team}}, and ask them to manually reset your account's password.
+___('users_lost_access_body', 'EN', <<<EOT
+As a part of its {{link|todo_link|privacy policy}}, NoBleme will protect your anonymity as much as possible. This means that you will never be sent any emails that could be used to link you to your identity on the website, or asking you to provide your password. On top of that, automated password recovery systems can be used in a few nefarious ways that we would rather not have to deal with. With this context in mind, NoBleme decided to not implement an automated account recovery process.
 EOT
 );
-___('users_forgotten_body', 'FR', <<<EOT
-Pour des raisons de sécurité évidentes, NoBleme ne vous envoie pas votre mot de passe par e-mail lorsque vous créez votre compte. Malheureusement, il n'y a pour le moment pas de système de remise à zéro de mot de passe, ce qui rend le cas des mots de passe oubliés assez gênant. La solution temporaire à ce problème est de vous rendre sur le {{link|pages/irc/index|serveur de discussion IRC de NoBleme}}, d'y contacter un membre de {{link|pages/nobleme/admins|l'équipe administrative}}, et de lui demander de changer manuellement le mot de passe de votre compte.
+___('users_lost_access_body', 'FR', <<<EOT
+Par respect pour la {{link|todo_link|politique de confidentialité}} de NoBleme, votre anonymité doit être protégée le plus possible. Cela signifie que vous ne recevrez jamais d'e-mail permettant de vous relier à votre identité sur NoBleme, ou vous demandant votre mot de passe. Par ailleurs, les systèmes de récupération automatique de mots de passe perdus peuvent être exploités de plusieurs façons que nous n'avons pas envie de devoir gérer. Ce contexte devrait vous aider à comprendre pourquoi NoBleme a fait le choix de ne pas avoir de système de récupération de compte automatisé.
+EOT
+);
+___('users_lost_access_solution', 'EN', <<<EOT
+If you have lost access to your account (forgotten nickname, forgotten password, or otherwise), the only way to recover that access is to go on NoBleme's {{link|todo_link|NoBleme's IRC chat server}} and ask for a {{link|todo_link|website administrator}} to manually reset your account's password. No need to worry about identity usurpation, there is a strict process in place that will allow the administrator to verify your identity before doing the resetting.
+EOT
+);
+___('users_lost_access_solution', 'FR', <<<EOT
+Si vous avez perdu l'accès à votre compte (pseudonyme oublié, mot de passe oublié, ou autre), la seule façon de récupérer cet accès est d'aller sur le {{link|todo_link|chat IRC NoBleme}} et d'y demander à un {{link|todo_link|administrateur}} de manuellement remettre à zéro le mot de passe de votre compte. Pas d'inquiétude pour ce qui est de l'usurpation d'identité, un processus strict de vérification est en place et devra être respecté avant que l'administrateur puisse remettre à zéro votre mot de passe et vous rendre l'accès à votre compte perdu.
 EOT
 );
 

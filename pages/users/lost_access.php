@@ -11,10 +11,10 @@ user_restrict_to_guests($lang);
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/users/forgotten_password";
-$page_title_en    = "Recover password";
-$page_title_fr    = "Mot de passe oublié";
-$page_description = "Forgot your account's password? Well I've got bad news for you...";
+$page_url         = "pages/users/lost_access";
+$page_title_en    = "Lost account access";
+$page_title_fr    = "Accès perdu à votre compte";
+$page_description = "Lost access to your account? Well I've got bad news for you...";
 
 
 
@@ -28,11 +28,15 @@ $page_description = "Forgot your account's password? Well I've got bad news for 
       <div class="width_50">
 
         <h1>
-          <?=__('users_forgotten_title')?>
+          <?=__('users_lost_access_title')?>
         </h1>
 
         <p>
-          <?=__('users_forgotten_body')?>
+          <?=__('users_lost_access_body')?>
+        </p>
+
+        <p>
+          <?=__('users_lost_access_solution')?>
         </p>
 
       </div>

@@ -130,8 +130,10 @@ blockquote.nobackground { background-color: #121212; }
 button.bigbutton, input[type='reset'].bigbutton, input[type='submit'].bigbutton
 { border-radius: 0.6rem; font-size: 2.5rem; letter-spacing: 0.15rem; padding: 0.8rem 1.6rem; }
 
-pre.xdebug-var-dump { background-color: #000000; color: #CACACA; border-left: 0; font-size: 0.8em ;
-                       max-height: 400px; overflow: scroll; white-space: pre-wrap;                }
+button.button_chain, input[type='reset'].button_chain, input[type='submit'].button_chain { margin-right: 1.65rem; }
+
+pre.xdebug-var-dump { background-color: #000000; color: #CACACA; border-left: 0; font-size: 0.8em    ;
+                       max-height: 400px; overflow: scroll; white-space: pre-wrap; text-align: left; }
 
 /****************************************************** BBCODES ******************************************************/
 .bbcode_quote_title   { border-bottom: 1px solid #343434; margin-bottom: 3px; font-weight: bold; }

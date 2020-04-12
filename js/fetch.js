@@ -77,14 +77,18 @@ function fetch_page(target_page, target_element, postdata, callback, append_cont
         document.getElementById(target_element).appendChild(append_div);
       }
 
-      // Run extra instructions if required
-      if(typeof(callback) !== 'undefined' && callback)
-        callback;
-
       // If no data was returned, point it out in the console for debugging purposes
       if(!returned_data)
         return console.log('INFO: No data returned.');
-    } );
+    } )
+
+    // Wait for the data to entirely finish being fetched
+    .then(response =>
+    {
+      // If a callback was requested, do it
+      if(typeof(callback) !== 'undefined' && callback)
+        callback()
+    });
   }
 
   // If the browser doesn't support fetch, throw a really annoying error popup and be hated for life
@@ -142,20 +146,14 @@ function form_require_field(element_id, label_id)
 {
   // In case the field has already been rejected by this function before, reset the label to its default value
   if(typeof(label_id) !== 'undefined')
-  {
-    document.getElementById(label_id).classList.remove('negative');
-    document.getElementById(label_id).classList.remove('text_white');
-  }
+    document.getElementById(label_id).classList.remove('red');
 
   // Check whether the field is empty
   if(document.getElementById(element_id).value == "")
   {
     // If it is empty, change the styling of its associated label
     if(typeof(label_id) !== 'undefined')
-    {
-      document.getElementById(label_id).classList.add('negative');
-      document.getElementById(label_id).classList.add('text_white');
-    }
+      document.getElementById(label_id).classList.add('red');
 
     // Return 0 to show that it is not OK
     return 0;

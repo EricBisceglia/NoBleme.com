@@ -19,7 +19,7 @@ $page_description = "Register a new NoBleme account";
 
 // Extra CSS & JS
 $css  = array('users');
-$js   = array('fetch', 'users/register');
+$js   = array('users/register');
 
 
 

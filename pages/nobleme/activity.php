@@ -26,7 +26,7 @@ $page_description = "Chronology of recent events that happened on NoBleme";
 
 // Extra CSS & JS
 $css  = array('pages');
-$js   = array('fetch', 'toggle', 'nobleme/activity');
+$js   = array('toggle', 'nobleme/activity');
 
 
 
