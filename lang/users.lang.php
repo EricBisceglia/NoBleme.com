@@ -25,7 +25,7 @@ Par respect pour la {{link|todo_link|politique de confidentialité}} de NoBleme,
 EOT
 );
 ___('users_lost_access_solution', 'EN', <<<EOT
-If you have lost access to your account (forgotten nickname, forgotten password, or otherwise), the only way to recover that access is to go on NoBleme's {{link|todo_link|NoBleme's IRC chat server}} and ask for a {{link|todo_link|website administrator}} to manually reset your account's password. No need to worry about identity usurpation, there is a strict process in place that will allow the administrator to verify your identity before doing the resetting.
+If you have lost access to your account (forgotten username, forgotten password, or otherwise), the only way to recover that access is to go on NoBleme's {{link|todo_link|NoBleme's IRC chat server}} and ask for a {{link|todo_link|website administrator}} to manually reset your account's password. No need to worry about identity usurpation, there is a strict process in place that will allow the administrator to verify your identity before doing the resetting.
 EOT
 );
 ___('users_lost_access_solution', 'FR', <<<EOT
@@ -52,8 +52,12 @@ ___('users_register_coc', 'FR', "Nous voulons nous assurer que tous les utilisat
 
 
 // Registration form
-___('users_register_form_nickname', 'EN', "Your nickname (3 to 15 characters, letters & numbers only)");
-___('users_register_form_nickname', 'FR', "Pseudonyme (3 à 15 caractères, chiffres & lettres uniquement)");
+___('users_register_form_nickname', 'EN', "Your username (3 to 15 characters, letters & numbers only)");
+___('users_register_form_nickname', 'FR', "Pseudonyme (3 à 15 caractères, chiffres & lettres sans accents)");
+___('users_register_form_nickname_is_illegal', 'EN', "This username is not allowed, please choose another one");
+___('users_register_form_nickname_is_illegal', 'FR', "Ce pseudonyme n'est pas autorisé, merci d'en choisir un autre");
+___('users_register_form_nickname_exists', 'EN', "This username is already in use, please choose another one");
+___('users_register_form_nickname_exists', 'FR', "Ce pseudonyme est déjà utilisé, merci d'en choisir un autre");
 ___('users_register_form_password_1', 'EN', "Password (at least 8 characters long)");
 ___('users_register_form_password_1', 'FR', "Mot de passe (8 caractères minimum)");
 ___('users_register_form_password_2', 'EN', "Confirm your password by typing it again");
@@ -102,14 +106,16 @@ ___('users_register_error_passwords', 'FR', "Vous devez saisir deux fois le mêm
 ___('users_register_error_captchas', 'EN', "The number you entered in the last field did not match the number on the image");
 ___('users_register_error_captchas', 'FR', "Le nombre que vous avez saisi dans le dernier champ ne correspond pas à celui sur l'image");
 
-___('users_register_error_nickname_short', 'EN', "The chosen nickname is too short");
+___('users_register_error_nickname_short', 'EN', "The chosen username is too short");
 ___('users_register_error_nickname_short', 'FR', "Le pseudonyme choisi est trop court");
-___('users_register_error_nickname_long', 'EN', "The chosen nickname is too long");
+___('users_register_error_nickname_long', 'EN', "The chosen username is too long");
 ___('users_register_error_nickname_long', 'FR', "Le pseudonyme choisi est trop long");
 ___('users_register_error_password_short', 'EN', "The chosen password is too short");
 ___('users_register_error_password_short', 'FR', "Le mot de passe choisi est trop court");
-___('users_register_error_nickname_taken', 'EN', "The chosen nickname is already taken by another user");
+___('users_register_error_nickname_taken', 'EN', "The chosen username is already taken by another user");
 ___('users_register_error_nickname_taken', 'FR', "Le pseudonyme choisi est déjà utilisé par un autre membre");
+___('users_register_error_nickname_illegal', 'EN', "The chosen username contains a forbidden word");
+___('users_register_error_nickname_illegal', 'FR', "Le pseudonyme choisi contient un mot interdit");
 
 
 // Welcome private message

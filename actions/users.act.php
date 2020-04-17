@@ -14,7 +14,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-/**
+ /**
  * Fetches a list of users.
  *
  * @param   string|null $sort_by          OPTIONAL  The way the user list should be sorted.
@@ -135,6 +135,56 @@ function users_get_list($sort_by='', $max_count=0, $deleted=0, $activity_cutoff=
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Checks if a username currently exists in the database.
+ *
+ * @param   string  $username The username to check.
+ *
+ * @return  bool              Whether the username exists.
+ */
+
+function users_check_username($username)
+{
+  // Sanitize the data
+  $username = sanitize($username, 'string');
+
+  // Look for the username
+  $dusername = mysqli_fetch_array(query(" SELECT  users.id  AS 'u_id'
+                                          FROM    users
+                                          WHERE   users.nickname LIKE '$username' "));
+
+  // Return the result
+  return ($dusername['u_id']) ? 1 : 0;
+}
+
+
+
+
+/**
+ * Checks if a username is illegal.
+ *
+ * @param   string  $username The username to check.
+ *
+ * @return  bool              Whether the username is illegal on the website.
+ */
+
+function users_check_username_illegality($username)
+{
+  // Define a list of badwords
+  $bad_words = array('admin', 'biatch', 'bitch', 'coon', 'fagg', 'kike', 'moderat', 'nigg', 'offici', 'trann', 'whore');
+
+  // Check if the username matches any of the bad words
+  $is_illegal = 0;
+  foreach($bad_words as $bad_word)
+    $is_illegal = (mb_strpos($username, $bad_word) !== false) ? 1 : $is_illegal;
+
+  // Return the result
+  return $is_illegal;
 }
 
 
@@ -282,6 +332,9 @@ function user_authenticate($ip, $nickname, $password, $remember_me=0, $path='./.
 
 function users_create_account($nickname, $password, $email, $password_check=null, $captcha=null, $captcha_session=null, $path='./../../')
 {
+  // Check if the required files have been included
+  require_included_file('users.lang.php');
+
   // Sanitize the data
   $nickname_raw       = $nickname;
   $nickname           = sanitize($nickname, 'string');
@@ -323,16 +376,13 @@ function users_create_account($nickname, $password, $email, $password_check=null
   if(mb_strlen($password) < 8)
     return __('users_register_error_password_short');
 
-  // Fetch all currently existing nicknames
-  $qnicknames = query(" SELECT  nickname  AS 'u_nick'
-                        FROM    users ");
+  // Check if the desired nickname is illegal
+  if(users_check_username_illegality($nickname))
+    return __('users_register_error_nickname_illegal');
 
-  // Check if the desired nickname already exists - in a case insensitive way
-  while($dnicknames = mysqli_fetch_array($qnicknames))
-  {
-    if(string_change_case($dnicknames['u_nick'], 'lowercase') == string_change_case($nickname, 'lowercase'))
-      return __('users_register_error_nickname_taken');
-  }
+  // Check if the desired nickname already exists
+  if(users_check_username($nickname))
+    return __('users_register_error_nickname_taken');
 
   // Create the account
   query(" INSERT INTO users

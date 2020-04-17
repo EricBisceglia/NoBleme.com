@@ -18,7 +18,7 @@ $_SESSION['captcha'] = $captcha_rand;
 
 // Prepare the properties of the image
 $captcha_image      = imagecreate(70, 30);
-$captcha_background = imagecolorallocate($captcha_image, 233, 233, 233);
+$captcha_background = imagecolorallocate($captcha_image, 18, 18, 18);
 $captcha_text_color = imagecolorallocate($captcha_image, 127, 157, 177);
 
 // Assemble the image

@@ -248,7 +248,7 @@ ___('query+', 'EN', "queries");
 ___('query',  'FR', "requête");
 ___('query+', 'FR', "requêtes");
 
-___('nickname', 'EN', "nickname");
+___('nickname', 'EN', "username");
 ___('nickname', 'FR', "pseudonyme");
 ___('password', 'EN', "password");
 ___('password', 'FR', "mot de passe");
@@ -602,7 +602,7 @@ ___('submenu_user_edit_email', 'EN', "Change my e-mail");
 ___('submenu_user_edit_email', 'FR', "Changer d'e-mail");
 ___('submenu_user_edit_password', 'EN', "Change my password");
 ___('submenu_user_edit_password', 'FR', "Changer de mot de passe");
-___('submenu_user_edit_nickname', 'EN', "Change my nickname");
+___('submenu_user_edit_nickname', 'EN', "Change my username");
 ___('submenu_user_edit_nickname', 'FR', "Changer de pseudonyme");
 ___('submenu_user_edit_delete', 'EN', "Delete my account");
 ___('submenu_user_edit_delete', 'FR', "Supprimer mon compte");
@@ -624,7 +624,7 @@ ___('submenu_admin_users', 'EN', "User management");
 ___('submenu_admin_users', 'FR', "Gestion des membres");
 ___('submenu_admin_banned', 'EN', "Banned users list");
 ___('submenu_admin_banned', 'FR', "Pilori des bannis");
-___('submenu_admin_nickname', 'EN', "Change a nickname");
+___('submenu_admin_nickname', 'EN', "Change a username");
 ___('submenu_admin_nickname', 'FR', "Modifier un pseudonyme");
 ___('submenu_admin_password', 'EN', "Change a password");
 ___('submenu_admin_password', 'FR', "Modifier un mot de passe");
@@ -701,17 +701,17 @@ ___('login_form_form_register', 'FR', 'INSCRIPTION');
 
 
 // Error messages
-___('login_form_error_no_nickname', 'EN', "You must specify a nickname");
+___('login_form_error_no_nickname', 'EN', "You must specify a username");
 ___('login_form_error_no_nickname', 'FR', "Vous devez saisir un pseudonyme");
 ___('login_form_error_no_password', 'EN', "You must specify a password");
 ___('login_form_error_no_password', 'FR', "Vous devez saisir un mot de passe");
 ___('login_form_error_bruteforce', 'EN', "You are trying to log in too often, please wait 10 minutes before your next attempt");
 ___('login_form_error_bruteforce', 'FR', "Trop de tentatives de connexion, merci d'attendre 10 minutes avant d'essayer de nouveau");
-___('login_form_error_wrong_user', 'EN', "This nickname does not exist on the website");
+___('login_form_error_wrong_user', 'EN', "This username does not exist on the website");
 ___('login_form_error_wrong_user', 'FR', "Ce pseudonyme n'existe pas sur le site");
-___('login_form_error_forgotten_user', 'EN', "Forgot your nickname?");
+___('login_form_error_forgotten_user', 'EN', "Forgot your username?");
 ___('login_form_error_forgotten_user', 'FR', "Vous avez oublié votre pseudonyme ?");
-___('login_form_error_wrong_password', 'EN', "Incorrect password for this nickname");
+___('login_form_error_wrong_password', 'EN', "Incorrect password for this username");
 ___('login_form_error_wrong_password', 'FR', "Mauvais mot de passe pour ce pseudonyme");
 ___('login_form_error_forgotten_password', 'EN', "Forgot your password?");
 ___('login_form_error_forgotten_password', 'FR', "Mot de passe oublié ?");

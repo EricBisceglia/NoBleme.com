@@ -622,9 +622,9 @@ function user_restrict_to_users($lang='EN', $path="./../../")
   if(!user_is_logged_in())
   {
     if($lang == 'EN')
-      error_page("This page is restricted to logged in users.", $path);
+      error_page("This page is restricted to logged in users.<br><br>Log in by clicking the <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" height=\"40\" class=\"valign_middle red\"> icon on the top right of the page", $path);
     else
-      error_page("Cette page est réservée aux utilisateurs connectés.", $path);
+      error_page("Cette page est réservée aux utilisateurs connectés.<br><br>Connectez vous en cliquant sur l'icône <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" height=\"40\" class=\"valign_middle red\"> en haut à droite de la page", $path);
   }
 }
 

@@ -43,6 +43,7 @@ function database_row_exists($table, $id)
 
 
 
+
 /**
  * Is the page being fetched dynamically.
  *

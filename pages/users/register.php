@@ -46,7 +46,7 @@ if(isset($_POST['register_nickname']))
 
   // If the user has succesfully registered, redirect them
   if($user_register_attempt === 1)
-    header("location: ".$path."pages/users/inbox");
+    header("location: ".$path."todo_link");
 }
 
 
@@ -104,6 +104,9 @@ $register_check_q4[2] = (isset($_POST['register_question_4']) && $_POST['registe
 
             <div class="padding_bot">
               <label for="register_nickname" id="label_register_nickname"><?=__('users_register_form_nickname')?></label>
+              <div id="register_nickname_error" class="hidden">
+                <label class="hidden">&nbsp;</label>
+              </div>
               <input id="register_nickname" name="register_nickname" class="indiv" type="text" value="<?=$register_nickname?>" maxlength="15" onkeyup="users_register_validate_username();">
             </div>
 
@@ -193,9 +196,9 @@ $register_check_q4[2] = (isset($_POST['register_question_4']) && $_POST['registe
 
         <?php if(isset($user_register_attempt)) { ?>
 
-        <h6 class="align_center padding_bot text_negative underlined">
+        <h5 class="align_center bigpadding_bot text_negative underlined">
           <?=string_change_case(__('error'), 'uppercase').__(':').' '.$user_register_attempt?>
-        </h6>
+        </h5>
 
         <?php } ?>
 
