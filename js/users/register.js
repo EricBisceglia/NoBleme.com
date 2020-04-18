@@ -18,7 +18,6 @@ function users_register_submit(path)
   form_failed = (!form_require_field("register_nickname", "label_register_nickname")) ? 1 : form_failed;
   form_failed = (!form_require_field("register_password_1", "label_register_password_1")) ? 1 : form_failed;
   form_failed = (!form_require_field("register_password_2", "label_register_password_2")) ? 1 : form_failed;
-  form_failed = (!form_require_field("register_email", "label_register_email")) ? 1 : form_failed;
   form_failed = (!form_require_field("register_captcha", "label_register_captcha")) ? 1 : form_failed;
 
   // Ensure minimum/maximum string length are respected

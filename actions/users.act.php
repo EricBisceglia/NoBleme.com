@@ -352,13 +352,17 @@ function users_create_account($nickname, $password, $email, $password_check=null
   if(!$password)
     return __('users_login_error_no_password');
 
-  // Error: No email specified
-  if(!$password)
-    return __('users_register_error_no_email');
+  // Incorrect email (no error)
+  if(!filter_var($email, FILTER_VALIDATE_EMAIL))
+    $email = '';
 
   // Error: Different passwords
   if($password_check && ($password_raw != $password_check))
     return __('users_register_error_passwords');
+
+  // Error: Password too short
+  if(mb_strlen($password_raw) < 8)
+    return __('users_register_error_password_length');
 
   // Error: Different captchas
   if($captcha && ($captcha != $captcha_session))
@@ -375,6 +379,10 @@ function users_create_account($nickname, $password, $email, $password_check=null
   // Error: Password too short
   if(mb_strlen($password) < 8)
     return __('users_register_error_password_short');
+
+  // Check if the username fits the rules
+  if(!preg_match("/^[a-zA-Z0-9]+$/", $nickname))
+    return __('users_register_error_nickname_characters');
 
   // Check if the desired nickname is illegal
   if(users_check_username_illegality($nickname))

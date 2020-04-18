@@ -103,6 +103,8 @@ ___('users_register_error_no_email', 'EN', "You must specify an email");
 ___('users_register_error_no_email', 'FR', "Vous devez saisir une adresse e-mail");
 ___('users_register_error_passwords', 'EN', "You must enter the same password twice");
 ___('users_register_error_passwords', 'FR', "Vous devez saisir deux fois le même mot de passe");
+___('users_register_error_password_length', 'EN', "Your password is too short (8 characters minimum)");
+___('users_register_error_password_length', 'FR', "Votre mot de passe est trop court (8 caractères minimum)");
 ___('users_register_error_captchas', 'EN', "The number you entered in the last field did not match the number on the image");
 ___('users_register_error_captchas', 'FR', "Le nombre que vous avez saisi dans le dernier champ ne correspond pas à celui sur l'image");
 
@@ -112,10 +114,12 @@ ___('users_register_error_nickname_long', 'EN', "The chosen username is too long
 ___('users_register_error_nickname_long', 'FR', "Le pseudonyme choisi est trop long");
 ___('users_register_error_password_short', 'EN', "The chosen password is too short");
 ___('users_register_error_password_short', 'FR', "Le mot de passe choisi est trop court");
-___('users_register_error_nickname_taken', 'EN', "The chosen username is already taken by another user");
-___('users_register_error_nickname_taken', 'FR', "Le pseudonyme choisi est déjà utilisé par un autre membre");
 ___('users_register_error_nickname_illegal', 'EN', "The chosen username contains a forbidden word");
 ___('users_register_error_nickname_illegal', 'FR', "Le pseudonyme choisi contient un mot interdit");
+___('users_register_error_nickname_characters', 'EN', "Your username can only be made from non accentuated latin letters and numbers");
+___('users_register_error_nickname_characters', 'FR', "Votre pseudonyme ne peut être composé que de lettres non accentuées et de chiffres");
+___('users_register_error_nickname_taken', 'EN', "The chosen username is already taken by another user");
+___('users_register_error_nickname_taken', 'FR', "Le pseudonyme choisi est déjà utilisé par un autre utilisateur");
 
 
 // Welcome private message
@@ -147,6 +151,27 @@ Si vous avez la moindre question, n'hésitez pas à répondre à ce message.
 
 Votre administrateur,
 [url={{1}}pages/users/user?id=1]Bad[/url]
+EOT
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      WELCOME                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Body
+___('users_welcome_title', 'EN', "Your account has been created");
+___('users_welcome_title', 'FR', "Votre compte a été crée");
+___('users_welcome_body', 'EN', <<<EOT
+You have successfully registered an account on NoBleme. You can now use the login form above to log into your newly created account and begin using the website as a registered user!
+EOT
+);
+___('users_welcome_body', 'FR', <<<EOT
+Votre compte a bien été crée. Vous pouvez maintenant utiliser le formulaire de connexion ci-dessus afin de vous connecter sur votre nouveau compte. Bienvenue parmi les membres de NoBleme !
 EOT
 );
 

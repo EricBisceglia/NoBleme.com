@@ -24,7 +24,6 @@ $js   = array('users/register');
 
 
 
-
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     BACK END                                                      */
@@ -46,7 +45,7 @@ if(isset($_POST['register_nickname']))
 
   // If the user has succesfully registered, redirect them
   if($user_register_attempt === 1)
-    header("location: ".$path."todo_link");
+    header("location: ".$path."pages/users/register_welcome");
 }
 
 

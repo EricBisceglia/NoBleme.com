@@ -1123,6 +1123,35 @@ if($last_query < 26)
   sql_create_index('users', 'index_doppelganger', 'current_ip_address');
   sql_create_index('users', 'index_banned', 'is_banned_until');
 
+  $qusers = query(" SELECT  users.id        AS 'u_id' ,
+                            users.nickname  AS 'u_nick'
+                    FROM    users ");
+  while($dusers = mysqli_fetch_array($qusers))
+  {
+    $newnick = $dusers['u_nick'];
+    if(!preg_match("/^[a-zA-Z0-9]+$/", $newnick))
+      $newnick = preg_replace("/[^a-zA-Z0-9]/", "", $dusers['u_nick']);
+    if(mb_strlen($newnick) < 3)
+    {
+      $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      $newnick = str_pad($newnick, 1, $characters[rand(0, mb_strlen($characters) - 1)], STR_PAD_RIGHT);
+      $newnick = str_pad($newnick, 2, $characters[rand(0, mb_strlen($characters) - 1)], STR_PAD_RIGHT);
+      $newnick = str_pad($newnick, 3, $characters[rand(0, mb_strlen($characters) - 1)], STR_PAD_RIGHT);
+    }
+    if(mb_strlen($newnick) > 15)
+      $newnick = mb_substr($newnick, 0, 15);
+    if($newnick == 'Nemo')
+    {
+      $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      $newnick = str_pad($newnick, 5, $characters[rand(0, mb_strlen($characters) - 1)], STR_PAD_RIGHT);
+      $newnick = str_pad($newnick, 6, $characters[rand(0, mb_strlen($characters) - 1)], STR_PAD_RIGHT);
+    }
+    if($newnick != $dusers['u_nick'])
+      query(" UPDATE  users
+              SET     users.nickname  = '".sql_sanitize_data($newnick)."'
+              WHERE   users.id        = '".sql_sanitize_data($dusers['u_id'])."'");
+  }
+
   sql_create_field('users_profile', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('users_profile', 'email_address', 'VARCHAR(510) NOT NULL', 'fk_users');
   sql_create_field('users_profile', 'created_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'email_address');
@@ -1162,6 +1191,17 @@ if($last_query < 26)
   sql_delete_field('users', 'habite');
   sql_delete_field('users', 'metier');
   sql_delete_field('users', 'profil');
+
+  $qusers = query(" SELECT  users_profile.id            AS 'up_id' ,
+                            users_profile.email_address AS 'up_mail'
+                    FROM    users_profile ");
+  while($dusers = mysqli_fetch_array($qusers))
+  {
+    if(!filter_var($dusers['up_mail'], FILTER_VALIDATE_EMAIL))
+      query(" UPDATE  users_profile
+              SET     users_profile.email_address = ''
+              WHERE   users_profile.id            = '".sql_sanitize_data($dusers['up_id'])."'");
+  }
 
   sql_create_field('users_settings', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('users_settings', 'show_nsfw_content', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
