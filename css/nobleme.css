@@ -90,6 +90,7 @@
 .hugepadding_bot { padding-bottom: 10.0rem;                     }
 .megapadding_bot { padding-bottom: 15.0rem;                     }
 .gigapadding_bot { padding-bottom: 20.0rem;                     }
+.nopadding_top   { padding-top: 0;                              }
 .nopadding       { padding-top: 0; padding-bottom: 0;           }
 
 .flexcontainer   { display: -webkit-flex; display: flex;      }
@@ -149,3 +150,21 @@ pre.xdebug-var-dump { background-color: #000000; color: #CACACA; border-left: 0;
                                     background-color: #232323 ; border-radius: 5px; border: 1px solid #888888        ;
                                     box-shadow: 2px 2px 2px #888888; max-width: 500px; max-height: 250px             ;
                                     overflow-y: auto;                                                                }
+
+/****************************************************** POPINS *******************************************************/
+div.popin_background        { position: fixed; top: 0; bottom: 0; left: 0; right: 0                 ;
+                              background: rgba(0, 0, 0, 0.8); transition: opacity 1000ms            ;
+                              visibility: hidden; opacity: 0; z-index: 9999;                        }
+div.popin_background:target { visibility: visible; opacity: 1; transition: opacity 1000ms;          }
+div.popin_body              { margin: auto; margin-top: 10em; background: #121212                   ;
+                              border-radius: 0.6em; width: 55em; max-width: 80%; max-height: 60%    ;
+                              overflow-x: auto; position: relative; transition: all 1s ease-in-out; }
+a.popin_close               { position: absolute; transition: all 0.5s; font-size: 2.5em            ;
+                              filter: none; color: #B00B1E; z-index: 10000;                         }
+a.popin_close:hover         { filter: drop-shadow(0 0 10px #B00B1E);                                }
+@media (min-width: 1025px)  {
+div.popin_body              { padding: 2.25em;                                                      }
+a.popin_close               { top: -0.2em; right: 0.2em;                                          } }
+@media (max-width: 1024px)  {
+div.popin_body              { padding: 1.5em;                                                       }
+a.popin_close               { top: 0; right: 0.3em;                                               } }

@@ -356,14 +356,29 @@ $javascripts .= '
   </head>
 
   <?php if(isset($this_page_is_a_404)) { ?>
-<body id="body" onload="this_page_is_a_404();">
+  <body id="body" onload="this_page_is_a_404();">
   <?php } else if(isset($onload)) { ?>
-<body id="body" onload="<?=$onload?>">
+  <body id="body" onload="<?=$onload?>">
   <?php } else { ?>
-<body id="body">
+  <body id="body">
   <?php } ?>
 
   <input id="root_path" type="hidden" class="hidden" value="<?=$path?>">
+
+    <div id="popin_lost_access" class="popin_background">
+      <div class="popin_body">
+        <a class="popin_close" href="#">×</a>
+        <h4>
+          <?=__('users_lost_access_title')?>
+        </h4>
+        <p>
+          <?=__('users_lost_access_body', 0, 0, 0, array($path))?>
+        </p>
+        <p>
+          <?=__('users_lost_access_solution', 0, 0, 0, array($path))?>
+        </p>
+      </div>
+    </div>
 
 
 <?php ############################################# WEBSITE UPDATE ################################################# ?>
@@ -517,45 +532,45 @@ $javascripts .= '
 
 <?php ############################################# SUBMENU: PAGES ################################################# ?>
 
-<div class="header_submenu" id="header_submenu_pages">
+    <div class="header_submenu" id="header_submenu_pages">
 
-  <div class="header_submenu_column">
-    <div class="header_submenu_title">
-      <?=__('submenu_pages_internet')?>
-    </div>
-    <div class="header_submenu_item">
-      <?=__link('todo_link', __('submenu_pages_internet_index'), 'header_submenu_link text_blue', 1, $path);?>
-    </div>
-    <div class="header_submenu_item">
-      <?=__link('todo_link', __('submenu_pages_internet_pages'), 'header_submenu_link text_blue', 1, $path);?>
-    </div>
-    <div class="header_submenu_item">
-      <?=__link('todo_link', __('submenu_pages_internet_dictionary'), 'header_submenu_link text_blue', 1, $path);?>
-    </div>
-    <div class="header_submenu_item">
-      <?=__link('todo_link', __('submenu_pages_internet_culture'), 'header_submenu_link text_blue', 1, $path);?>
-    </div>
-    <div class="header_submenu_item">
-      <?=__link('todo_link', __('submenu_pages_internet_random'), 'header_submenu_link text_blue', 1, $path);?>
-    </div>
-  </div>
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=__('submenu_pages_internet')?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_internet_index'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_internet_pages'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_internet_dictionary'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_internet_culture'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_internet_random'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+      </div>
 
-  <div class="header_submenu_column">
-    <div class="header_submenu_title">
-      <?=__('submenu_pages_politics')?>
-    </div>
-    <div class="header_submenu_item">
-      <?=__link('pages/politics/manifesto', __('submenu_pages_politics_manifesto'), 'header_submenu_link', 1, $path);?>
-    </div>
-    <div class="header_submenu_item">
-      <?=__link('todo_link', __('submenu_pages_politics_documentation'), 'header_submenu_link text_blue', 1, $path);?>
-    </div>
-    <div class="header_submenu_item">
-      <?=__link('todo_link', __('submenu_pages_politics_join'), 'header_submenu_link text_blue', 1, $path);?>
-    </div>
-  </div>
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=__('submenu_pages_politics')?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/politics/manifesto', __('submenu_pages_politics_manifesto'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_politics_documentation'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_politics_join'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+      </div>
 
-</div>
+    </div>
 
 
 <?php ############################################## SUBMENU: SOCIAL ############################################## ?>

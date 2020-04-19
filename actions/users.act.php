@@ -207,19 +207,17 @@ function users_check_username_illegality($username)
  * @param   string      $nickname               The nickname the user is attempting to login with.
  * @param   string      $password               The password the user is attempting to login with.
  * @param   int|null    $remember_me  OPTIONAL  Whether the website's front should create a cookie to keep the user in.
- * @param   string|null $path         OPTIONAL  The path to the root of the website (defaults to 2 folders away).
  *
  * @return  string                              Returns 'OK' if successfully logged in, or an error if it went wrong.
  */
 
-function user_authenticate($ip, $nickname, $password, $remember_me=0, $path='./../../')
+function user_authenticate($ip, $nickname, $password, $remember_me=0)
 {
   // Sanitize the data
   $ip           = sanitize($ip, 'string');
   $nickname     = sanitize($nickname, 'string');
   $password_raw = $password;
   $password     = sanitize($password, 'string');
-  $path         = sanitize($path, 'string');
   $timestamp    = sanitize(time(), 'int', 0);
 
   // Error: No nickname specified
@@ -263,7 +261,7 @@ function user_authenticate($ip, $nickname, $password, $remember_me=0, $path='./.
             SET         users_login_attempts.fk_users     = 0             ,
                         users_login_attempts.ip_address   = '$ip'         ,
                         users_login_attempts.attempted_at = '$timestamp'  ");
-    return __('login_form_error_wrong_user').'<br><br>'.__link('pages/users/lost_access', __('login_form_error_forgotten_user'), 'text_red', 1, $path);;
+    return __('login_form_error_wrong_user').'<br><br>'.__link('#popin_lost_access', __('login_form_error_forgotten_user'), 'text_red', 0);
   }
 
   // Check if the specific user is under bruteforce attempt
@@ -293,7 +291,7 @@ function user_authenticate($ip, $nickname, $password, $remember_me=0, $path='./.
             SET         users_login_attempts.fk_users     = '$user_id'    ,
                         users_login_attempts.ip_address   = '$ip'         ,
                         users_login_attempts.attempted_at = '$timestamp'  ");
-    return __('login_form_error_wrong_password').'<br><br>'.__link('pages/users/lost_access', __('login_form_error_forgotten_password'), 'text_red', 1, $path);
+    return __('login_form_error_wrong_password').'<br><br>'.__link('#popin_lost_access', __('login_form_error_forgotten_password'), 'text_red', 0);
   }
 
   // Log in the user by setting the session variable

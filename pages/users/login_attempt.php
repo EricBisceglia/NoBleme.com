@@ -34,8 +34,7 @@ if(isset($_POST['login_form_nickname']) && isset($_POST['login_form_password']) 
   $login_form_attempt = user_authenticate(  $_SERVER["REMOTE_ADDR"]       ,
                                             $_POST['login_form_nickname'] ,
                                             $_POST['login_form_password'] ,
-                                            $login_form_remember_me       ,
-                                            $_POST['login_form_path']     );
+                                            $login_form_remember_me       );
 }
 else
   $login_form_attempt = 0;

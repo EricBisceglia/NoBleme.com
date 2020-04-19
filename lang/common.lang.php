@@ -68,6 +68,14 @@ function __($string, $amount=null, $spaces_before=0, $spaces_after=0, $preset_va
   $returned_string = preg_replace('/\{\{link\+\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3"), $returned_string);
   $returned_string = preg_replace('/\{\{link\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2"), $returned_string);
 
+  /*
+  / Replace tooltips if needed, using a regex that can work in either of the following ways:
+  / {{tooltip+|title|tooltip|title_style|tooltip_style}}
+  / {{tooltip|title|tooltip}}
+  */
+  $returned_string = preg_replace('/\{\{tooltip\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__tooltip("$1", "$2", "$3", "$4"), $returned_string);
+  $returned_string = preg_replace('/\{\{tooltip\|(.*?)\|(.*?)\}\}/is',__tooltip("$1", "$2"), $returned_string);
+
   // Prepare the spaces to prepend to the string
   if(is_int($spaces_before) && $spaces_before > 0)
     $spaces_before = ($spaces_before == 1) ? " " : str_repeat(" ", $spaces_before);
@@ -138,6 +146,30 @@ function __link($href, $text, $style="bold", $is_internal=1, $path="./../../")
 
   // Return the built link
   return "<a $class $url>$text</a>";
+}
+
+
+
+
+ /**
+ * Builds an inline tooltip.
+ *
+ * @param   string      $title                    The element that triggers the tooltip.
+ * @param   string      $tooltip_body             The tooltip's body.
+ * @param   string|null $title_style    OPTIONAL  The CSS style(s) to apply to the tooltip's triggering element.
+ * @param   string|null $tooltip_style  OPTIONAL  CSS style(s) to apply to the tooltip's body.
+ * @param   bool|null   $use_link       OPTIONAL  If unset, does not use a link for the triggering element.
+ *
+ * @return  string                      The tooltip, ready for use.
+ */
+
+function __tooltip($title, $tooltip_body, $title_style="bold", $tooltip_style="notbold", $use_link=1)
+{
+  // Decide whether to use a link or text for the triggering element
+  $title = ($use_link) ? "<a>".$title."</a>" : $title;
+
+  // Return the assembled tooltip
+  return "<span class=\"tooltip_container ".$title_style."\">".$title."<span class=\"tooltip ".$tooltip_style."\">".$tooltip_body."</span></span>";
 }
 
 
@@ -715,6 +747,27 @@ ___('login_form_error_wrong_password', 'EN', "Incorrect password for this userna
 ___('login_form_error_wrong_password', 'FR', "Mauvais mot de passe pour ce pseudonyme");
 ___('login_form_error_forgotten_password', 'EN', "Forgot your password?");
 ___('login_form_error_forgotten_password', 'FR', "Mot de passe oublié ?");
+
+
+// Lost account access
+___('users_lost_access_title', 'EN', 'Lost account access');
+___('users_lost_access_title', 'FR', 'Accès perdu à votre compte');
+___('users_lost_access_body', 'EN', <<<EOT
+As a part of its {{link+++|todo_link|privacy policy|bold|1|{{1}}}}, NoBleme will protect your anonymity as much as possible. This means that you will never be sent any emails that could be used to link you to your identity on the website, or asking you to provide your password. On top of that, automated password recovery systems can be used in a few nefarious ways that we would rather not have to deal with. With this context in mind, NoBleme decided to not implement an automated account recovery process.
+EOT
+);
+___('users_lost_access_body', 'FR', <<<EOT
+Par respect pour la {{link+++|todo_link|politique de confidentialité|bold|1|{{1}}}} de NoBleme, votre anonymité doit être protégée le plus possible. Cela signifie que vous ne recevrez jamais d'e-mail permettant de vous relier à votre identité sur NoBleme, ou vous demandant votre mot de passe. Par ailleurs, les systèmes de récupération automatique de mots de passe perdus peuvent être exploités de plusieurs façons que nous n'avons pas envie de devoir gérer. Ce contexte devrait vous aider à comprendre pourquoi NoBleme a fait le choix de ne pas avoir de système de récupération de compte automatisé.
+EOT
+);
+___('users_lost_access_solution', 'EN', <<<EOT
+If you have lost access to your account (forgotten username, forgotten password, or otherwise), the only way to recover that access is to go on NoBleme's {{link+++|todo_link|NoBleme's IRC chat server|bold|1|{{1}}}} and ask for a {{link+++|todo_link|website administrator|bold|1|{{1}}}} to manually reset your account's password. No need to worry about identity usurpation, there is a strict process in place that will allow the administrator to verify your identity before doing the resetting.
+EOT
+);
+___('users_lost_access_solution', 'FR', <<<EOT
+Si vous avez perdu l'accès à votre compte (pseudonyme oublié, mot de passe oublié, ou autre), la seule façon de récupérer cet accès est d'aller sur le {{link+++|todo_link|chat IRC NoBleme|bold|1|{{1}}}} et d'y demander à un {{link+++|todo_link|administrateur|bold|1|{{1}}}} de manuellement remettre à zéro le mot de passe de votre compte. Pas d'inquiétude pour ce qui est de l'usurpation d'identité, un processus strict de vérification est en place et devra être respecté avant que l'administrateur puisse remettre à zéro votre mot de passe et vous rendre l'accès à votre compte perdu.
+EOT
+);
 
 
 

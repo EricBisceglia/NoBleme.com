@@ -57,6 +57,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <option value="divs"><?=__('dev_palette_selector_divs')?></option>
             <option value="forms"><?=__('dev_palette_selector_forms')?></option>
             <option value="icons"><?=__('dev_palette_selector_icons')?></option>
+            <option value="popins"><?=__('dev_palette_selector_popins')?></option>
             <option value="spacing"><?=__('dev_palette_selector_spacing')?></option>
             <option value="tables"><?=__('dev_palette_selector_tables')?></option>
             <option value="text"><?=__('dev_palette_selector_text')?></option>
@@ -989,6 +990,35 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
             </tbody>
           </table>
         </div>
+
+
+<?php } else if($css_palette === 'popins') { ####################################################################### ?>
+
+        <div class="width_30">
+
+          <div class="padding_bot">
+            <a href="#popin_demo">Click me</a>
+          </div>
+
+          <div id="popin_demo" class="popin_background">
+            <div class="popin_body">
+              <a class="popin_close" href="#">&times;</a>
+              <p class="nopadding_top">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod.</p>
+            </div>
+          </div>
+
+          <pre class="dev_pre_code" id="dev_palette_popin" onclick="to_clipboard('', 'dev_palette_popin', 1);">&lt;a href="#popin_demo">Popin&lt;/a>
+
+&lt;div id="popin_demo" class="popin_background">
+  &lt;div class="popin_body">
+    &lt;a class="popin_close" href="#">&amp;times;&lt;/a>
+    &lt;p class="nopadding_top">Body&lt;/p>
+  &lt;/div>
+&lt;/div></pre>
+
+        </div>
+
+
 
 
 <?php } else if($css_palette === 'spacing') { ###################################################################### ?>

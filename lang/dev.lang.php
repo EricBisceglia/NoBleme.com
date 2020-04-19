@@ -40,6 +40,8 @@ ___('dev_palette_selector_forms', 'EN', 'Forms');
 ___('dev_palette_selector_forms', 'FR', 'Formulaires');
 ___('dev_palette_selector_icons', 'EN', 'Icons');
 ___('dev_palette_selector_icons', 'FR', 'Icônes');
+___('dev_palette_selector_popins', 'EN', 'Popins');
+___('dev_palette_selector_popins', 'FR', 'Popins');
 ___('dev_palette_selector_spacing', 'EN', 'Spacing');
 ___('dev_palette_selector_spacing', 'FR', 'Spacing');
 ___('dev_palette_selector_tables', 'EN', 'Tables');

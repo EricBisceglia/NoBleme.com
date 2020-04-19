@@ -77,7 +77,6 @@ function users_login_attempt(login_path, is_dev_mode)
     postdata  = 'login_form_nickname='  + fetch_sanitize_id('login_form_nickname');
     postdata += '&login_form_password=' + fetch_sanitize_id('login_form_password');
     postdata += '&login_form_remember=' + fetch_sanitize_id('login_form_remember');
-    postdata += '&login_form_path='     + fetch_sanitize_id('root_path');
 
     // Send the login attempt to the backend (it will handle the rest)
     fetch_page(login_path, 'login_form_error', postdata, users_login_attempt_process);
