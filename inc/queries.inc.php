@@ -220,7 +220,7 @@ function sql_rename_table($table_name, $new_name)
 
 
 /**
- * Gets rid of all the data in an existing table
+ * Gets rid of all the data in an existing table.
  *
  * @param   string  $table_name The table's name.
  *

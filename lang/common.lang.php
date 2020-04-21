@@ -689,6 +689,8 @@ ___('submenu_admin_doc_snippets', 'EN', "Code snippets");
 ___('submenu_admin_doc_snippets', 'FR', "Modèles de code");
 ___('submenu_admin_doc_css', 'EN', "CSS palette");
 ___('submenu_admin_doc_css', 'FR', "Palette CSS");
+___('submenu_admin_doc_functions', 'EN', "Functions list");
+___('submenu_admin_doc_functions', 'FR', "Liste de fonctions");
 
 
 

@@ -574,7 +574,7 @@ function user_restrict_to_global_moderators($lang='EN')
 
 
 /**
- * Allows access only to administartors.
+ * Allows access only to administrators.
  *
  * Any user who does not have the required rights will get rejected and see an error page.
  * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.

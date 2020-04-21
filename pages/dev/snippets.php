@@ -90,7 +90,7 @@ $page_title_en    = "Title";
 $page_title_fr    = "Titre";
 $page_description = "Metadescription";
 
-// Extra CSS &amp; JS
+// Extra CSS & JS
 $css  = array('404');
 $js   = array('404');
 
@@ -216,7 +216,7 @@ $page_title_en    = "Title";
 $page_title_fr    = "Titre";
 $page_description = "Metadescription";
 
-// Extra CSS &amp; JS
+// Extra CSS & JS
 $css  = array('404');
 $js   = array('404');</pre>
         </div>

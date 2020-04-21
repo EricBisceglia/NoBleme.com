@@ -378,15 +378,15 @@ function users_create_account($nickname, $password, $email, $password_check=null
   if(mb_strlen($password) < 8)
     return __('users_register_error_password_short');
 
-  // Check if the username fits the rules
+  // Error: Special characters in nickname
   if(!preg_match("/^[a-zA-Z0-9]+$/", $nickname))
     return __('users_register_error_nickname_characters');
 
-  // Check if the desired nickname is illegal
+  // Error: Illegal string in username
   if(users_check_username_illegality($nickname))
     return __('users_register_error_nickname_illegal');
 
-  // Check if the desired nickname already exists
+  // Error: Nickname already taken
   if(users_check_username($nickname))
     return __('users_register_error_nickname_taken');
 

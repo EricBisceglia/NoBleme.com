@@ -234,7 +234,7 @@ function bbcodes($message, $path="./../../", $privacy_level=array('twitter' => 0
 
 
 /**
- * Turns more BBCodes into HTML for the NoBleme database.
+ * Turns more BBCodes into HTML, for administrator usage only.
  *
  * I chose to use BBCodes for the encyclopedia of internet culture instead of some other wiki-like syntax.
  * To this end, I needed acces sto more BBCodes, which users will not be allowed to use on the rest of the website.

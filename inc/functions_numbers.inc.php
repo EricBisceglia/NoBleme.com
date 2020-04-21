@@ -29,43 +29,7 @@ function number_prepend_sign($number)
 
 
 /**
- * Returns a styling depending on whether the number is positive, zero, or negative.
- *
- * @param   int|double  $number                       The value from which the style will be determined.
- * @param   bool|null   $return_color_hex (OPTIONAL)  If set, then return a hexadecimal color value instead of a style.
- *
- * @return  string                                    The css styling or hexadecimal code corresponding to the value.
- */
-
-function number_styling($number, $return_color_hex=0)
-{
-  // Hex codes
-  if($return_color_hex)
-  {
-    if($number > 0)
-      return '339966';
-    else if($number < 0)
-      return 'FF0000';
-    else
-      return 'EB8933';
-  }
-
-  // CSS stylings
-  if($number > 0)
-    return 'positive';
-  else if($number < 0)
-    return 'negative';
-  else
-    return 'neutral';
-}
-
-
-
-
-/**
  * Changes the formatting of a number.
- *
- * I initially wanted to use number_format, but it was already taken by PHP's stdlib. Oh well.
  *
  * @param   int|double  $number                   The number to format.
  * @param   string|null $format       (OPTIONAL)  The format of the returned number.
@@ -100,4 +64,38 @@ function number_display_format($number, $format="number", $decimals=0, $prepend_
 
   // Return the number, with an extra sign if necessary
   return ($prepend_sign && $number > 0) ? '+'.$number : $number;
+}
+
+
+
+
+/**
+ * Returns a styling depending on whether the number is positive, zero, or negative.
+ *
+ * @param   int|double  $number                       The value from which the style will be determined.
+ * @param   bool|null   $return_color_hex (OPTIONAL)  If set, then return a hexadecimal color value instead of a style.
+ *
+ * @return  string                                    The css styling or hexadecimal code corresponding to the value.
+ */
+
+function number_styling($number, $return_color_hex=0)
+{
+  // Hex codes
+  if($return_color_hex)
+  {
+    if($number > 0)
+      return '339966';
+    else if($number < 0)
+      return 'FF0000';
+    else
+      return 'EB8933';
+  }
+
+  // CSS stylings
+  if($number > 0)
+    return 'positive';
+  else if($number < 0)
+    return 'negative';
+  else
+    return 'neutral';
 }

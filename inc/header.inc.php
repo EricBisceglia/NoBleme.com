@@ -839,6 +839,9 @@ $javascripts .= '
         <div class="header_submenu_item">
           <?=__link('pages/dev/palette', __('submenu_admin_doc_css'), 'header_submenu_link', 1, $path);?>
         </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/dev/functions_list', __('submenu_admin_doc_functions'), 'header_submenu_link', 1, $path);?>
+        </div>
       </div>
       <?php } ?>
 

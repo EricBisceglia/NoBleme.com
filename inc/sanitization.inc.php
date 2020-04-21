@@ -104,7 +104,7 @@ function sanitize_input($input_type, $input_name, $data_type, $default_value=NUL
 
 
 /**
- * Sanitizes data before outputting it in as HTML.
+ * Sanitizes data for HTML usage.
  *
  * @param string  $data                             The data to be sanitized.
  * @param int     $prevent_line_breaks  (OPTIONAL)  If value is 0 or unset, will remove the line breaks from your data.

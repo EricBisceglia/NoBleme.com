@@ -18,7 +18,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 /**
- * Checks whether a row already exist in a table.
+ * Checks whether a row exists in a table.
  *
  * @param   string  $table  Name of the table.
  * @param   int     $id     ID of the row.
@@ -130,7 +130,7 @@ function require_included_file($file_name)
 /*********************************************************************************************************************/
 
 /**
- * Truncates a string if it is longer than a specified value.
+ * Truncates a string if it is longer than a specified length.
  *
  * @param   string                  $string The string that will be truncated.
  * @param   int                     $length The length above which the string will be truncated.
@@ -531,7 +531,7 @@ function search_string_context($search, $text, $nb_words_around=1)
  * @return  string              The result of the operation.
  */
 
-function search_string_wrap_html($search, $text, $open_tag, $close_tag)
+function string_wrap_in_html_tags($search, $text, $open_tag, $close_tag)
 {
   // Escape special characters
   $search = preg_quote($search, '/');
@@ -646,9 +646,6 @@ function flood_check($path='./../../', $user_id=null, $lang=null)
   query(" UPDATE  users
           SET     users.last_action_at  = '$timestamp'
           WHERE   users.id              = '$user_id' ");
-
-  // Just in case, return 1
-  return 1;
 }
 
 
@@ -782,7 +779,7 @@ function log_activity_purge_orphan_diffs()
 
 
 /**
- * Sofnt deletes an entry in the activity logs.
+ * Soft deletes an entry in the activity logs.
  *
  * @param   string          $activity_type                      The identifier of the activity log's type.
  * @param   bool|null       $is_administrators_only (OPTIONAL)  Is it a public activity log or a moderation log.

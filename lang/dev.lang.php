@@ -21,6 +21,27 @@ ___('dev_queries_ok', 'FR', 'LES REQUÊTES ONT ÉTÉ EFFECTUÉES AVEC SUCCÈS');
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                     SNIPPETS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Section titles
+___('dev_snippets_title', 'EN', 'Snippets');
+___('dev_snippets_title', 'FR', 'Modèles');
+___('dev_snippets_selector_full', 'EN', 'Full page');
+___('dev_snippets_selector_full', 'FR', 'Page complète');
+___('dev_snippets_selector_fetched', 'EN', 'Fetched page');
+___('dev_snippets_selector_fetched', 'FR', 'Page fetchée');
+___('dev_snippets_selector_header', 'EN', 'Headers');
+___('dev_snippets_selector_header', 'FR', 'En-têtes');
+___('dev_snippets_selector_blocks', 'EN', 'Comment blocks');
+___('dev_snippets_selector_blocks', 'FR', 'Blocs de commentaires');
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                    CSS PALETTE                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -56,18 +77,26 @@ ___('dev_palette_selector_tooltips', 'FR', 'Infobulles');
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                     SNIPPETS                                                      */
+/*                                                  FUNCTIONS LIST                                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Section titles
-___('dev_snippets_title', 'EN', 'Snippets');
-___('dev_snippets_title', 'FR', 'Modèles');
-___('dev_snippets_selector_full', 'EN', 'Full page');
-___('dev_snippets_selector_full', 'FR', 'Page complète');
-___('dev_snippets_selector_fetched', 'EN', 'Fetched page');
-___('dev_snippets_selector_fetched', 'FR', 'Page fetchée');
-___('dev_snippets_selector_header', 'EN', 'Headers');
-___('dev_snippets_selector_header', 'FR', 'En-têtes');
-___('dev_snippets_selector_blocks', 'EN', 'Comment blocks');
-___('dev_snippets_selector_blocks', 'FR', 'Blocs de commentaires');
+// Selector
+___('dev_functions_list_title', 'EN', 'Functions for');
+___('dev_functions_list_title', 'FR', 'Fonctions pour');
+___('dev_functions_selector_database', 'EN', 'Database');
+___('dev_functions_selector_database', 'FR', 'Base de données');
+___('dev_functions_selector_dates', 'EN', 'Dates & Time');
+___('dev_functions_selector_dates', 'FR', 'Dates & Temps');
+___('dev_functions_selector_numbers', 'EN', 'Numbers & Math');
+___('dev_functions_selector_numbers', 'FR', 'Nombres & Mathématiques');
+___('dev_functions_selector_sanitization', 'EN', 'Sanitization');
+___('dev_functions_selector_sanitization', 'FR', 'Assainissement');
+___('dev_functions_selector_strings', 'EN', 'Strings');
+___('dev_functions_selector_strings', 'FR', 'Chaînes de caractères');
+___('dev_functions_selector_unsorted', 'EN', 'Unsorted');
+___('dev_functions_selector_unsorted', 'FR', 'Divers');
+___('dev_functions_selector_users', 'EN', 'Users');
+___('dev_functions_selector_users', 'FR', 'Utilisateurs');
+___('dev_functions_selector_website', 'EN', 'Website internals');
+___('dev_functions_selector_website', 'FR', 'Éléments internes');

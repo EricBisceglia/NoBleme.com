@@ -14,9 +14,11 @@ function to_clipboard(contents, element_id, highlight_element)
   if(typeof(element_id) !== 'undefined')
     contents = document.getElementById(element_id).innerHTML;
 
-  // Replace any &lt; or &gt; in the contents by < and >
+  // Replace any special characters with their real value
   contents = contents.replace(/&lt;/gi, "<");
   contents = contents.replace(/&gt;/gi, ">");
+  contents = contents.replace(/&amp;/gi, "&");
+  contents = contents.replace(/&times;/gi, "×");
 
   // Prepare a temporary textarea and place the contents in it
   var temparea    = document.createElement('textarea');
