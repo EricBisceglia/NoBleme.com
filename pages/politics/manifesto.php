@@ -13,24 +13,8 @@ $page_title_en    = "Contrapositionist manifesto";
 $page_title_fr    = "Manifeste contrapositioniste";
 $page_description = "The contrapositionist manifesto. The system has failed, the world is on a timer, but it is not too late for change to come from within.";
 
-// Extra CSS &amp; JS
-$css  = array('tabs');
-$js   = array('tabs');
-
 // No footer
 $nofooter = 1;
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                     BACK END                                                      */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
 
 
 

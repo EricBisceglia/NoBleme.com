@@ -15,13 +15,13 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/dev/palette";
+$page_url         = "pages/dev/doc_css_palette";
 $page_title_en    = "CSS Palette";
 $page_title_fr    = "Palette CSS";
 
 // Extra CSS & JS
 $css = array('dev');
-$js  = array('dev/palette', 'clipboard');
+$js  = array('dev/doc', 'clipboard');
 
 
 

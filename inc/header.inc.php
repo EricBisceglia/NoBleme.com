@@ -761,6 +761,7 @@ $javascripts .= '
     </div>
 
 
+
 <?php ############################################# SUBMENU: ADMIN ################################################# ?>
 
     <?php if($is_global_moderator) { ?>
@@ -834,13 +835,16 @@ $javascripts .= '
           <?=__('submenu_admin_doc')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/dev/snippets', __('submenu_admin_doc_snippets'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/dev/doc_snippets', __('submenu_admin_doc_snippets'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/dev/palette', __('submenu_admin_doc_css'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/dev/doc_css_palette', __('submenu_admin_doc_css'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/dev/functions_list', __('submenu_admin_doc_functions'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/dev/doc_js_toolbox', __('submenu_admin_doc_js'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/dev/doc_functions', __('submenu_admin_doc_functions'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
       <?php } ?>

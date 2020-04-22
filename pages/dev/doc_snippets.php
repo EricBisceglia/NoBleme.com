@@ -14,12 +14,12 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang      = array('FR', 'EN');
-$page_url       = "pages/dev/snippets";
+$page_url       = "pages/dev/doc_snippets";
 $page_title_en  = "Code snippets";
 $page_title_fr  = "Modèles de code";
 
 // Extra JS
-$js  = array('dev/snippets', 'clipboard');
+$js  = array('dev/doc', 'clipboard');
 
 
 
@@ -48,7 +48,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h4 class="align_center">
     <?=__('dev_snippets_title')?>
-    <select class="inh" id="select_css_snippet" onchange="dev_snippet_selector();">
+    <select class="inh" id="select_snippet" onchange="dev_snippet_selector();">
       <option value="full" selected><?=__('dev_snippets_selector_full')?></option>
       <option value="fetched"><?=__('dev_snippets_selector_fetched')?></option>
       <option value="header"><?=__('dev_snippets_selector_header')?></option>

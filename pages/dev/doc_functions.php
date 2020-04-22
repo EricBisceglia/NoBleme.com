@@ -14,12 +14,12 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/dev/functions_list";
+$page_url         = "pages/dev/doc_functions";
 $page_title_en    = "Functions list";
 $page_title_fr    = "Liste des fonctions";
 
 // Extra JS
-$js   = array('dev/functions_list', 'clipboard');
+$js   = array('dev/doc');
 
 
 
