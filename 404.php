@@ -40,33 +40,33 @@ $this_page_is_a_404 = '';
 /*                                                                                                                   */
 /**********************************************************************************/ include './inc/header.inc.php'; ?>
 
-    <div class="indiv align_center hugepadding_top bigpadding_bot">
-      <a class="noglow" href="<?=$path?>index">
-        <img src="<?=$path?>img/404/404_title_<?=string_change_case($lang, 'lowercase')?>.png" alt="<?=__('nobleme_404_description')?>">
-      </a>
-    </div>
+<div class="indiv align_center hugepadding_top bigpadding_bot">
+  <a class="noglow" href="<?=$path?>index">
+    <img src="<?=$path?>img/404/404_title_<?=string_change_case($lang, 'lowercase')?>.png" alt="<?=__('nobleme_404_description')?>">
+  </a>
+</div>
 
-    <div class="margin_auto bigpadding_top hugepadding_bot" style="width:1000px">
-      <table class="indiv">
-        <tbody>
-          <tr>
-            <td class="img404 noborder">
-              <a class="noglow" href="<?=$path?>index">
-                <img class="img404left" src="<?=$path?>img/404/404_left.png" alt=" ">
-              </a>
-            </td>
-            <td class="noborder">
-              <textarea class="indiv text404" rows="10" id="text404" readonly></textarea>
-            </td>
-            <td class="img404 noborder">
-              <a class="noglow" href="<?=$path?>index">
-                <img class="img404right" src="<?=$path?>img/404/404_right.gif" alt=" ">
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="margin_auto bigpadding_top hugepadding_bot" style="width:1000px">
+  <table class="indiv">
+    <tbody>
+      <tr>
+        <td class="img404 noborder">
+          <a class="noglow" href="<?=$path?>index">
+            <img class="img404left" src="<?=$path?>img/404/404_left.png" alt=" ">
+          </a>
+        </td>
+        <td class="noborder">
+          <textarea class="indiv text404" rows="10" id="text404" readonly></textarea>
+        </td>
+        <td class="img404 noborder">
+          <a class="noglow" href="<?=$path?>index">
+            <img class="img404right" src="<?=$path?>img/404/404_right.gif" alt=" ">
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */

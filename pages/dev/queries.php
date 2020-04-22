@@ -31,9 +31,9 @@ $css = array('dev');
 /*                                                                                                                   */
 /****************************************************************************/ include './../../inc/header.inc.php'; ?>
 
-        <h1 class="align_center gigapadding_top gigapadding_bot">
-          <?=__('dev_queries_ok')?>
-        </h1>
+<h1 class="align_center gigapadding_top gigapadding_bot">
+  <?=__('dev_queries_ok')?>
+</h1>
 
 
 <?php /***************************************************************************************************************/

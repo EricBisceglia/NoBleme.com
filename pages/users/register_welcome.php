@@ -39,17 +39,17 @@ $onload = "toggle_header_menu('account', 1);";
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-      <div class="width_50">
+<div class="width_50">
 
-        <h3>
-          <?=__('users_welcome_title')?>
-        </h3>
+  <h3>
+    <?=__('users_welcome_title')?>
+  </h3>
 
-        <p>
-          <?=__('users_welcome_body')?>
-        </p>
+  <p>
+    <?=__('users_welcome_body')?>
+  </p>
 
-      </div>
+</div>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */

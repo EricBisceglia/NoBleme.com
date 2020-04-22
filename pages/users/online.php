@@ -44,84 +44,84 @@ $userlist = users_get_list('activity', 0, 0, 2629746, $include_guests, 1000, $ad
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-      <div class="width_50">
+<div class="width_50">
 
-        <h1>
-          <?=__('users_online_title')?>
-        </h1>
+  <h1>
+    <?=__('users_online_title')?>
+  </h1>
 
-        <p>
-          <?=__('users_online_header_intro')?>
-        </p>
+  <p>
+    <?=__('users_online_header_intro')?>
+  </p>
 
-        <div class="padding_top padding_bot">
-          <?=__('users_online_header_colors')?>
-        </div>
+  <div class="padding_top padding_bot">
+    <?=__('users_online_header_colors')?>
+  </div>
 
-        <fieldset class="padding_bot">
+  <fieldset class="padding_bot">
 
-          <label><?=string_change_case(__('option', 2), 'initials').__(':');?></label>
+    <label><?=string_change_case(__('option', 2), 'initials').__(':');?></label>
 
-          <input id="online_hide_guests" name="online_hide_guests" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
-          <label class="label_inline" for="online_hide_guests"><?=__('users_online_hide_gests')?></label><br>
+    <input id="online_hide_guests" name="online_hide_guests" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
+    <label class="label_inline" for="online_hide_guests"><?=__('users_online_hide_gests')?></label><br>
 
-          <?php if($is_admin) { ?>
-          <input id="online_admin_view" name="online_admin_view" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
-          <label class="label_inline" for="online_admin_view"><?=__('users_online_admin_view')?></label><br>
-          <?php } ?>
+    <?php if($is_admin) { ?>
+    <input id="online_admin_view" name="online_admin_view" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
+    <label class="label_inline" for="online_admin_view"><?=__('users_online_admin_view')?></label><br>
+    <?php } ?>
 
-          <input id="online_refresh" name="online_refresh" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
-          <label class="label_inline" for="online_refresh"><?=__('users_online_refresh')?></label><br>
+    <input id="online_refresh" name="online_refresh" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
+    <label class="label_inline" for="online_refresh"><?=__('users_online_refresh')?></label><br>
 
-        </fieldset>
+  </fieldset>
 
-        <table>
+  <table>
 
-          <thead>
-            <th>
-              <?=string_change_case(__('user'), 'uppercase')?>
-            </th>
-            <th>
-              <?=__('users_online_activity')?>
-            </th>
-            <th>
-              <?=__('users_online_page')?>
-            </th>
-          </thead>
+    <thead>
+      <th>
+        <?=string_change_case(__('user'), 'uppercase')?>
+      </th>
+      <th>
+        <?=__('users_online_activity')?>
+      </th>
+      <th>
+        <?=__('users_online_page')?>
+      </th>
+    </thead>
 
-          <tbody id="users_online_table">
+    <tbody id="users_online_table">
+      <?php } ?>
+      <?php for($i=0;$i<$userlist['rows'];$i++) { ?>
+        <tr>
+
+          <td class="align_center<?=$userlist[$i]['css']?>">
+            <?php if($userlist[$i]['type'] == 'user') { ?>
+            <?=__link('todo_link/user?id='.$userlist[$i]['id'], $userlist[$i]['nickname'], $userlist[$i]['css'])?>
+            <?php } else { ?>
+            <?=$userlist[$i]['nickname']?>
             <?php } ?>
-            <?php for($i=0;$i<$userlist['rows'];$i++) { ?>
-              <tr>
+          </td>
 
-                <td class="align_center<?=$userlist[$i]['css']?>">
-                  <?php if($userlist[$i]['type'] == 'user') { ?>
-                  <?=__link('todo_link/user?id='.$userlist[$i]['id'], $userlist[$i]['nickname'], $userlist[$i]['css'])?>
-                  <?php } else { ?>
-                  <?=$userlist[$i]['nickname']?>
-                  <?php } ?>
-                </td>
+          <td class="align_center<?=$userlist[$i]['css']?>">
+            <?=$userlist[$i]['activity']?>
+          </td>
 
-                <td class="align_center<?=$userlist[$i]['css']?>">
-                  <?=$userlist[$i]['activity']?>
-                </td>
-
-                <td class="align_center<?=$userlist[$i]['css']?>">
-                  <?php if($userlist[$i]['last_url']) { ?>
-                  <?=__link($userlist[$i]['last_url'], $userlist[$i]['last_page'], $userlist[$i]['css'])?>
-                  <?php } else { ?>
-                  <?=$userlist[$i]['last_page']?>
-                  <?php } ?>
-                </td>
-
-              </tr>
+          <td class="align_center<?=$userlist[$i]['css']?>">
+            <?php if($userlist[$i]['last_url']) { ?>
+            <?=__link($userlist[$i]['last_url'], $userlist[$i]['last_page'], $userlist[$i]['css'])?>
+            <?php } else { ?>
+            <?=$userlist[$i]['last_page']?>
             <?php } ?>
-            <?php if(!page_is_fetched_dynamically()) { ?>
-          </tbody>
+          </td>
 
-        </table>
+        </tr>
+      <?php } ?>
+      <?php if(!page_is_fetched_dynamically()) { ?>
+    </tbody>
 
-      </div>
+  </table>
+
+</div>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
