@@ -52,17 +52,11 @@ $activity_page_fr = (isset($page_title_fr) && !isset($hidden_activity)) ? $page_
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Check if a website update is in progress
-$qupdate  = query(" SELECT  system_variables.update_in_progress AS 'update'
-                    FROM    system_variables
-                    LIMIT   1 ");
-$dupdate = mysqli_fetch_array($qupdate);
-
-// Keep the update status in a variable
-$website_closed = $dupdate['update'];
+// Check whether a website update is in progress
+$website_closed = system_variable_fetch('update_in_progress');
 
 // If yes, close the website to anyone who's not an admin
-if($website_closed && !$is_admin)
+if($website_closed  && !$is_admin)
   exit(__('error_website_update'));
 
 
@@ -385,8 +379,8 @@ $javascripts .= '
 
     <?php if($website_closed) { ?>
 
-    <div class="header_infobar red">
-      <?=__link('todo_link', __('website_closed'), 'noglow glowhover bold indiv align_center biggest', 1, $path);?>
+    <div class="header_infobar">
+      <?=__link('pages/dev/close_website', __('website_closed'), 'header_infobar_link', 1, $path);?>
     </div>
 
     <?php } ?>
@@ -817,7 +811,7 @@ $javascripts .= '
           <?=__link('todo_link', __('submenu_admin_ircbot'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_admin_close'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/dev/close_website', __('submenu_admin_close'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('pages/dev/queries', __('submenu_admin_sql'), 'header_submenu_link', 1, $path);?>

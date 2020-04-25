@@ -6,6 +6,9 @@
 .header_topmenu_title:hover    { color: #B00B1E; background-color: #121212;                                     }
 .header_topmenu_title_selected { color: #B00B1E; background-color: #121212;                                     }
 .header_topmenu_icon           { cursor: pointer; vertical-align: middle;                                       }
+.header_infobar                { background-color: #B00B1E; border-bottom: 3px solid #121212;                   }
+.header_infobar_link           { color: #CACACA; font-size: 2.0em; font-weight: bold; padding-left: 0.2em;      }
+.header_infobar_link:hover     { color: #121212;                                                                }
 
 @media (min-width: 1025px) {
 .header_topmenu_title   { padding: 6px 20px 6px 20px; font-size: 28px; }

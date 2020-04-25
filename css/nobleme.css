@@ -133,8 +133,14 @@ button.bigbutton, input[type='reset'].bigbutton, input[type='submit'].bigbutton
 
 button.button_chain, input[type='reset'].button_chain, input[type='submit'].button_chain { margin-right: 1.65rem; }
 
-pre.xdebug-var-dump { background-color: #000000; color: #CACACA; border-left: 0; font-size: 0.8em    ;
-                       max-height: 400px; overflow: scroll; white-space: pre-wrap; text-align: left; }
+pre.xdebug-var-dump     { background-color: #000000; color: #CACACA; border-left: 0; font-size: 0.8em    ;
+                          max-height: 400px; overflow: scroll; white-space: pre-wrap; text-align: left;  }
+table.xdebug-error      { color: #000000; font-size: 1.5em; margin-top: -1.45em;                         }
+table.xdebug-error span { background-color: #232323 !important; color: #232323 !important                ;
+                          font-size: 1.0em !important;                                                   }
+table.xdebug-error th, table.xdebug-error td { color: #CACACA; background-color: #232323;                }
+table.xdebug-error tr:first-child th:first-child { filter: drop-shadow(0 0 4px #B00B1E)                  ;
+                          padding-top: 0.8em; padding-bottom: 0.8em;                                     }
 
 /****************************************************** BBCODES ******************************************************/
 .bbcode_quote_title   { border-bottom: 1px solid #343434; margin-bottom: 3px; font-weight: bold; }

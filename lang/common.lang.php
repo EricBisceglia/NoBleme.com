@@ -373,10 +373,44 @@ ___('error_forbidden', 'FR', "Vous ne devriez pas accéder à cette page");
 
 
 // Website update
-___('error_website_update', 'EN', 'An update is in progress, NoBleme is temporarily closed. Come back in a few minutes.');
-___('error_website_update', 'FR', 'Une mise à jour est en cours, NoBleme est temporairement fermé. Revenez dans quelques minutes.');
 ___('website_closed', 'EN', 'The website is currently closed for maintenance. Click here to reopen it to the public.');
 ___('website_closed', 'FR', 'Le site est actuellement fermé pour maintenance. Cliquer ici pour le rouvrir au public.');
+___('error_website_update', 'EN', <<<EOT
+<html>
+  <head>
+    <title>NoBleme - Maintenance</title>
+  </head>
+  <body style="background: #121212; color: #B00B1E; font-size: 2.5em; font-weight: bold;">
+    <div style="text-align: center; width: 60%; margin: auto; padding-top: 3.0em;">
+      <img style="width: 100%; max-width: 750px; filter: drop-shadow(0 0 10px #B00B1E);" src="./../../img/common/logo_full.png" alt="NoBleme.com">
+    </div>
+    <div style="font-family: sans-serif; text-align: center; padding-top: 5.0em;">
+      A maintenance operation is in progress.<br>
+      <br>
+      Come back in a few minutes.
+    </div>
+  </body>
+</html>
+EOT
+);
+___('error_website_update', 'FR', <<<EOT
+<html>
+  <head>
+    <title>NoBleme - Maintenance</title>
+  </head>
+  <body style="background: #121212; color: #B00B1E; font-size: 2.5em; font-weight: bold;">
+    <div style="text-align: center; width: 60%; margin: auto; padding-top: 3.0em;">
+      <img style="width: 100%; max-width: 750px; filter: drop-shadow(0 0 10px #B00B1E);" src="./../../img/common/logo_full.png" alt="NoBleme.com">
+    </div>
+    <div style="font-family: sans-serif; text-align: center; padding-top: 5.0em;">
+      Une opération de maintenance est en cours.<br>
+      <br>
+      Revenez dans quelques minutes.
+    </div>
+  </body>
+</html>
+EOT
+);
 
 
 // Flood check

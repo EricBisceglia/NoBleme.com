@@ -71,7 +71,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50">
 
-  <h2 class="align_center padding_bot">
+<h2 class="align_center padding_bot">
     Queries
   </h2>
 
@@ -1169,6 +1169,45 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_60">
 
   <h2 class="align_center padding_bot">
+    System variables
+  </h2>
+
+  <table>
+    <thead>
+
+      <tr>
+        <th class="align_right">
+          FUNCTION
+        </th>
+        <th class="align_left">
+          DESCRIPTION
+        </th>
+      </tr>
+
+    </thead>
+    <tbody class="altc">
+
+      <tr>
+        <td class="align_right smallglow">
+          system_variable_fetch()
+        </td>
+        <td class="align_left">
+          Fetches a system variable's value.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right smallglow">
+          system_variable_update()
+        </td>
+        <td class="align_left">
+          Updates a system variable's value.
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <h2 class="align_center bigpadding_top padding_bot">
     Private messages
   </h2>
 

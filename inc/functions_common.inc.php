@@ -45,6 +45,84 @@ function database_row_exists($table, $id)
 
 
 /**
+ * Fetches a system variable's value.
+ *
+ * @param   string  $var_name Name of the system variable.
+ *
+ * @return  string|int|null   The value of the variable, or null if it doesn't exist.
+ */
+
+function system_variable_fetch($var_name)
+{
+  // Sanitize the data before running the query
+  $var_name = sanitize($var_name, 'string');
+
+  // Fetch the list of global variables
+  $qdescribe = query(" DESCRIBE system_variables");
+
+  // Run through the list of global variables
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+  {
+    // If the variable exists, fetch its value and return it
+    if($ddescribe['Field'] == $var_name)
+    {
+      $dvar = mysqli_fetch_array(query("  SELECT  system_variables.".$var_name." AS 'v_value'
+                                          FROM    system_variables "));
+      return ($dvar['v_value']);
+    }
+  }
+
+  // If the variable does not exist, return null
+  return null;
+}
+
+
+
+
+/**
+ * Updates a system variable's value.
+ *
+ * @param   string  $var_name Name of the system variable.
+ * @param   string  $value    The value to give the system variable.
+ * @param   string  $type     The variable type (int, float, double or string)
+ *
+ * @return  bool              1 if it went well, 0 if something went wrong.
+ */
+
+function system_variable_update($var_name, $value, $type)
+{
+  // Check that the variable type is allowed
+  $type = sanitize($type, 'string');
+  if(!in_array($type, array('int', 'float', 'double', 'string')))
+    return 0;
+
+  // Sanitize the data before running the query
+  $var_name = sanitize($var_name, 'string');
+  $value    = sanitize($value, $type);
+
+  // Fetch the list of global variables
+  $qdescribe = query(" DESCRIBE system_variables");
+
+  // Run through the list of global variables
+  while($ddescribe = mysqli_fetch_array($qdescribe))
+  {
+    // If the variable exists, update its value and return 1
+    if($ddescribe['Field'] == $var_name)
+    {
+      query(" UPDATE  system_variables
+              SET     system_variables.".$var_name." = '$value' ");
+      return 1;
+    }
+  }
+
+  // If the variable does not exist, return null
+  return 0;
+}
+
+
+
+
+/**
  * Is the page being fetched dynamically.
  *
  * @return  bool  Whether the page is being called through fetch or not.

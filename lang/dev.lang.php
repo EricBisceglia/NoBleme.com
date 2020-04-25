@@ -21,11 +21,26 @@ ___('dev_queries_ok', 'FR', 'LES REQUÊTES ONT ÉTÉ EFFECTUÉES AVEC SUCCÈS');
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                     SNIPPETS                                                      */
+/*                                                WEBSITE MANAGEMENT                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Section titles
+// Close the website
+___('dev_close_website_title', 'EN', 'Open / Close the website');
+___('dev_close_website_title', 'FR', 'Ouvrir / Fermer le site');
+___('dev_close_website_button', 'EN', 'Toggle');
+___('dev_close_website_button', 'FR', 'Changer');
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   DOCUMENTATION                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Code snippets selector
 ___('dev_snippets_title', 'EN', 'Snippets');
 ___('dev_snippets_title', 'FR', 'Modèles');
 ___('dev_snippets_selector_full', 'EN', 'Full page');
@@ -38,15 +53,7 @@ ___('dev_snippets_selector_blocks', 'EN', 'Comment blocks');
 ___('dev_snippets_selector_blocks', 'FR', 'Blocs de commentaires');
 
 
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                    CSS PALETTE                                                    */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Selector
+// CSS palette selector
 ___('dev_palette_title', 'EN', 'CSS palette');
 ___('dev_palette_title', 'FR', 'Palette CSS');
 ___('dev_palette_selector_bbcodes', 'EN', 'BBCodes');
@@ -73,28 +80,12 @@ ___('dev_palette_selector_tooltips', 'EN', 'Tooltips');
 ___('dev_palette_selector_tooltips', 'FR', 'Infobulles');
 
 
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                    JS TOOLBOX                                                     */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Selector
+// JS toolbox selector
 ___('dev_js_toolbox_title', 'EN', 'JavaScript toolbox');
 ___('dev_js_toolbox_title', 'FR', 'Boîte à outils JavaScript');
 
 
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                  FUNCTIONS LIST                                                   */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-// Selector
+// Functions list selector
 ___('dev_functions_list_title', 'EN', 'Functions for');
 ___('dev_functions_list_title', 'FR', 'Fonctions pour');
 ___('dev_functions_selector_database', 'EN', 'Database');
