@@ -22,12 +22,9 @@ user_restrict_to_administrators($lang);
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Sanitize postdata
-$log_id         = sanitize_input('POST', 'log_id', 'int', 0, 0);
-$deletion_type  = sanitize_input('POST', 'deletion_type', 'int', 0, 0, 1);
-
 // Delete the activity log
-activity_delete_log($log_id, $deletion_type);
+activity_delete_log(  form_fetch_element('log_id', 0)         ,
+                      form_fetch_element('deletion_type', 0)  );
 
 
 

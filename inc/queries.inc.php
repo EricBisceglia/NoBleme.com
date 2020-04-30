@@ -633,10 +633,24 @@ if($last_query < 20)
   sql_change_field_type('system_variables', 'last_pageview_check', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_delete_index('system_variables', 'mise_a_jour');
 
+  query(" UPDATE  system_versions
+          SET     system_versions.version = 0
+          WHERE   system_versions.version LIKE 'beta' ");
+
   sql_change_field_type('system_versions', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_change_field_type('system_versions', 'version', 'VARCHAR(20) NOT NULL');
-  sql_change_field_type('system_versions', 'build', 'VARCHAR(10) NOT NULL');
-  sql_create_index('system_versions', 'index_full_version', 'version, build');
+  sql_rename_field('system_versions', 'version', 'major', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('system_versions', 'build', 'minor', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_create_field('system_versions', 'patch', 'INT UNSIGNED NOT NULL DEFAULT 0', 'minor');
+  sql_create_field('system_versions', 'extension', 'VARCHAR(40) NOT NULL', 'patch');
+  sql_rename_field('system_versions', 'date', 'release_date', 'DATE');
+  sql_create_index('system_versions', 'index_date', 'release_date');
+
+  query(" UPDATE  system_versions
+          SET     system_versions.major     = 1                     ,
+                  system_versions.patch     = system_versions.minor ,
+                  system_versions.minor     = 0                     ,
+                  system_versions.extension = 'beta'
+          WHERE   system_versions.major     = 0                     ");
 
   sql_update_query_id(20);
 }

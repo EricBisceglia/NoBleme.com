@@ -348,6 +348,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </tbody>
   </table>
 
+</div>
+
+<div class="width_60">
+
   <h2 class="align_center bigpadding_top padding_bot">
     Time differentials
   </h2>
@@ -390,6 +394,17 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <td class="align_left">
           Returns in plain text in how long a timestamp will happen.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right smallglow">
+          time_days_elapsed()
+        </td>
+        <td class="align_center smallglow">
+          functions_time.inc.php
+        </td>
+        <td class="align_left">
+          Calculates the number of days elapsed between two MySQL dates.
         </td>
       </tr>
 
@@ -667,6 +682,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           Wraps HTML tags around every occurence of a string in a text.
         </td>
       </tr>
+      <tr>
+        <td class="align_right smallglow">
+          string_increment()
+        </td>
+        <td class="align_left">
+          Increments the last character of a string.
+        </td>
+      </tr>
 
     </tbody>
   </table>
@@ -815,6 +838,37 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <td class="align_left">
           Throw an error page.
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <h2 class="align_center bigpadding_top padding_bot">
+    Form data manipulation
+  </h2>
+
+  <table>
+    <thead>
+
+      <tr>
+        <th class="align_right">
+          FUNCTION
+        </th>
+        <th class="align_left">
+          DESCRIPTION
+        </th>
+      </tr>
+
+    </thead>
+    <tbody class="altc">
+
+      <tr>
+        <td class="align_right smallglow">
+          form_fetch_element()
+        </td>
+        <td class="align_left">
+          Fetches the unsanitized value or returns the existence of submitted user data.
         </td>
       </tr>
 
@@ -1326,6 +1380,45 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <td class="align_left">
           Soft deletes an entry in the activity logs.
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <h2 class="align_center bigpadding_top padding_bot">
+    Versioning
+  </h2>
+
+  <table>
+    <thead>
+
+      <tr>
+        <th class="align_right">
+          FUNCTION
+        </th>
+        <th class="align_left">
+          DESCRIPTION
+        </th>
+      </tr>
+
+    </thead>
+    <tbody class="altc">
+
+      <tr>
+        <td class="align_right smallglow">
+          system_get_current_version_number()
+        </td>
+        <td class="align_left">
+          Returns information about the current version number.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right smallglow">
+          system_assemble_version_number()
+        </td>
+        <td class="align_left">
+          Assembles a version number in accordance with SemVer 2.0.0 specification.
         </td>
       </tr>
 

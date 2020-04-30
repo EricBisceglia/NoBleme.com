@@ -36,12 +36,12 @@ $js   = array('users/register');
 if(isset($_POST['register_nickname']))
 {
   // Attempt to create the account
-  $user_register_attempt = users_create_account(  $_POST['register_nickname']     ,
-                                                  $_POST['register_password_1']   ,
-                                                  $_POST['register_email']        ,
-                                                  $_POST['register_password_2']   ,
-                                                  $_POST['register_captcha']      ,
-                                                  $_SESSION['captcha']            );
+  $user_register_attempt = users_create_account(  form_fetch_element('register_nickname')   ,
+                                                  form_fetch_element('register_password_1') ,
+                                                  form_fetch_element('register_email')      ,
+                                                  form_fetch_element('register_password_2') ,
+                                                  form_fetch_element('register_captcha')    ,
+                                                  $_SESSION['captcha']                      );
 
   // If the user has succesfully registered, redirect them
   if($user_register_attempt === 1)

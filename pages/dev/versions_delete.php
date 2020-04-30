@@ -1,20 +1,17 @@
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                       SETUP                                                       */
+/*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED DYNAMICALLY                               */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php'; # Core
-include_once './../../lang/users.lang.php';  # Translations
+include_once './../../actions/dev.act.php';  # Actions
+include_once './../../lang/dev.lang.php';    # Translations
+
+// Throw a 404 if the page is being accessed directly
+page_must_be_fetched_dynamically();
 
 // Limit page access rights
-user_restrict_to_guests($lang);
-
-// Page summary
-$page_lang        = array('FR', 'EN');
-$page_url         = "pages/users/register_welcome";
-$page_title_en    = "Welcome to NoBleme";
-$page_title_fr    = "Bienvenue sur NoBleme";
-$page_description = "Welcome to NoBleme - thank you for creating a new account";
+user_restrict_to_administrators($lang);
 
 
 
@@ -25,9 +22,8 @@ $page_description = "Welcome to NoBleme - thank you for creating a new account";
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Unhide the login menu
-
-$onload = "toggle_header_menu('account', 1);";
+// Delete the version
+$version_number = dev_versions_delete(form_fetch_element('version_id', 0));
 
 
 
@@ -36,22 +32,18 @@ $onload = "toggle_header_menu('account', 1);";
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
+/*********************************************************************************************************************/
 
-<div class="width_50">
+if($version_number) { ?>
 
-  <h3>
-    <?=__('users_welcome_title')?>
-  </h3>
+<td class="red text_white bold" colspan="4">
+  <?=__('dev_versions_table_deleted', 0, 0, 0, array($version_number))?>
+</td>
 
-  <p>
-    <?=__('users_welcome_body')?>
-  </p>
+<?php } else { ?>
 
-</div>
+<td class="orange text_white bold" colspan="4">
+  <?=__('dev_versions_table_not_existing')?>
+</td>
 
-<?php /***************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                    END OF PAGE                                                    */
-/*                                                                                                                   */
-/*****************************************************************************/ include './../../inc/footer.inc.php'; }
+<?php } ?>

@@ -318,11 +318,13 @@ CREATE TABLE IF NOT EXISTS `system_variables` (
 DROP TABLE IF EXISTS `system_versions`;
 CREATE TABLE IF NOT EXISTS `system_versions` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `version` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `build` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `date` date NOT NULL,
+  `major` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `minor` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `patch` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `extension` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `release_date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_full_version` (`version`,`build`)
+  KEY `index_date` (`release_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users`;

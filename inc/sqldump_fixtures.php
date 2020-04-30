@@ -175,14 +175,17 @@ query(" INSERT INTO system_variables
 
 // Generate preset versions
 query(" INSERT INTO system_versions
-        SET         system_versions.version = '1'           ,
-                    system_versions.build   = '0'           ,
-                    system_versions.date    = '2005-03-19'  ");
+        SET         system_versions.major         = '1'           ,
+                    system_versions.minor         = '1'           ,
+                    system_versions.patch         = '1'           ,
+                    system_versions.extension     = 'rc0'         ,
+                    system_versions.release_date  = '2005-03-19'  ");
 $date = date('Y-m-d');
 query(" INSERT INTO system_versions
-        SET         system_versions.version = '1'           ,
-                    system_versions.build   = '1'           ,
-                    system_versions.date    = '$date'       ");
+        SET         system_versions.major         = '1'           ,
+                    system_versions.minor         = '1'           ,
+                    system_versions.patch         = '2'           ,
+                    system_versions.release_date  = '$date'       ");
 
 $timestamp = strtotime('2005-03-19');
 query(" INSERT INTO logs_activity

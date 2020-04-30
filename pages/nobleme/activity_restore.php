@@ -26,7 +26,7 @@ user_restrict_to_administrators($lang);
 $log_id = sanitize_input('POST', 'log_id', 'int', 0, 0);
 
 // Restore the activity log
-activity_restore_log($log_id);
+activity_restore_log(form_fetch_element('log_id', 0));
 
 
 

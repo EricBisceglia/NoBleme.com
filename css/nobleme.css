@@ -50,6 +50,7 @@
 
 .bold            { font-weight: bold; letter-spacing: 0.05rem; }
 .notbold         { font-weight: normal;                        }
+.uppercase       { text-transform: uppercase;                  }
 .italics         { font-style: italic;                         }
 .underlined      { text-decoration: underline;                 }
 .strikethrough   { text-decoration: line-through;              }
@@ -95,6 +96,8 @@
 
 .flexcontainer   { display: -webkit-flex; display: flex;      }
 .flex            { flex: 1;                                   }
+.gridcontainer   { display: grid;                             }
+.gridcenter      { display: grid; align-items: center;        }
 .clearfix:after  { clear: both; content: ' '; display: table; }
 .float_left      { float: left; margin-right: 0.5em;          }
 .float_right     { float: right; margin-left: 0.5em;          }

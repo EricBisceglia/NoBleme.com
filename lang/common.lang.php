@@ -297,11 +297,22 @@ ___('option+', 'EN', "options");
 ___('option', 'FR', "option");
 ___('option+', 'FR', "options");
 
+___('date', 'EN', "date");
+___('date', 'FR', "date");
+
+___('version', 'EN', "version");
+___('version', 'FR', "version");
+
 
 // Quantifiers, amounts, and times
 ___('times',  'EN', "time");
 ___('times+', 'EN', "times");
 ___('times',  'FR', "fois");
+
+___('day', 'EN', "day");
+___('day+', 'EN', "days");
+___('day', 'FR', "jour");
+___('day+', 'FR', "jours");
 
 ___('all', 'EN', "All");
 ___('all', 'FR', "Tous");
@@ -712,8 +723,8 @@ ___('submenu_admin_close', 'EN', "Close the website");
 ___('submenu_admin_close', 'FR', "Fermer le site");
 ___('submenu_admin_sql', 'EN', "Run SQL queries");
 ___('submenu_admin_sql', 'FR', "Jouer les requêtes SQL");
-___('submenu_admin_release', 'EN', "Version numbers");
-___('submenu_admin_release', 'FR', "Numéros de version");
+___('submenu_admin_versions', 'EN', "Version numbers");
+___('submenu_admin_versions', 'FR', "Numéros de version");
 ___('submenu_admin_scheduler', 'EN', "Scheduled tasks");
 ___('submenu_admin_scheduler', 'FR', "Tâches planifiées");
 
@@ -739,9 +750,6 @@ ___('footer_pageviews', 'FR', "Cette page a été consultée ");
 
 ___('footer_loadtime', 'EN', "Page loaded in ");
 ___('footer_loadtime', 'FR', "Page chargée en ");
-
-___('footer_version', 'EN', 'Version {{1}}, build {{2}} - {{3}}');
-___('footer_version', 'FR', 'Version {{1}}, build {{2}} - {{3}}');
 
 ___('footer_legal', 'EN', "Legal notices and privacy policy");
 ___('footer_legal', 'FR', "Mentions légales &amp; confidentialité");

@@ -123,6 +123,80 @@ function system_variable_update($var_name, $value, $type)
 
 
 /**
+ * Assembles a version number in accordance with SemVer 2.0.0 specification.
+ *
+ * @param   string                  $major      The major element of the version number.
+ * @param   string                  $minor      The minor element of the version number.
+ * @param   string                  $patch      The patch element of the version number.
+ * @param   string|null (OPTIONAL)  $extension  The extension (beta, rc-0, etc.).
+ *
+ * @return  string                              The assembled version number.
+ */
+
+function system_assemble_version_number($major, $minor, $patch, $extension=NULL)
+{
+  // Assemble the semver string
+  $version  = $major.'.'.$minor.'.'.$patch;
+
+  // Add the extension if provided
+  $version  = ($extension) ? $version.'-'.$extension : $version;
+
+  // Return the assembled string
+  return $version;
+}
+
+
+
+
+/**
+ * Returns information about the current version number.
+ *
+ * @param   string|null (OPTIONAL)  $format The format of the returned data ('semver', 'full', 'array', 'next').
+ * @param   string|null (OPTIONAL)  $lang   The language to use for the result, defaults to current lang.
+ *
+ * @return  string|array                    The current version number, in the chosen format.
+ */
+
+function system_get_current_version_number($format='semver', $lang=null)
+{
+  // Set the language
+  $lang = (!$lang) ? user_get_language() : $lang;
+
+  // Fetch the latest version
+  $dversion = mysqli_fetch_array(query("  SELECT    system_versions.major         AS 'v_major'      ,
+                                                    system_versions.minor         AS 'v_minor'      ,
+                                                    system_versions.patch         AS 'v_patch'      ,
+                                                    system_versions.extension     AS 'v_extension'  ,
+                                                    system_versions.release_date  AS 'v_date'
+                                          FROM      system_versions
+                                          ORDER BY  system_versions.release_date  DESC ,
+                                                    system_versions.id            DESC
+                                          LIMIT     1 "));
+
+  // Full format: version + date
+  if($format == 'full')
+    return system_assemble_version_number($dversion['v_major'], $dversion['v_minor'], $dversion['v_patch'], $dversion['v_extension']).' - '.date_to_text($dversion['v_date'], 1, $lang);
+
+  // Array or next: all elements in an array (in case of next, prepare for the next version)
+  if($format == 'array' || $format == 'next')
+  {
+    $patch      = ($format == 'next' && !$dversion['v_extension']) ? ($dversion['v_patch'] + 1) : $dversion['v_patch'];
+    $extension  = ($format == 'next' && $dversion['v_extension']) ? string_increment($dversion['v_extension']) : $dversion['v_extension'];
+    return array( 'major'     => $dversion['v_major']     ,
+                  'minor'     => $dversion['v_minor']     ,
+                  'patch'     => $patch                   ,
+                  'extension' => $extension );
+  }
+
+  // Default format: standard semver
+  else
+    return system_assemble_version_number($dversion['v_major'], $dversion['v_minor'], $dversion['v_patch'], $dversion['v_extension']);
+}
+
+
+
+
+/**
  * Is the page being fetched dynamically.
  *
  * @return  bool  Whether the page is being called through fetch or not.
@@ -201,6 +275,42 @@ function require_included_file($file_name)
 
 
 
+/**
+ * Fetches the unsanitized value or returns the existence of submitted user data.
+ *
+ * @param   string                  $element_name               The name of the element.
+ * @param   string|int|double|null  $default_value  (OPTIONAL)  Value to return if the element does not exist.
+ * @param   bool|null               $element_exists (OPTIONAL)  Only returns whether the element exists (eg. checkbox).
+ * @param   string|null             $request_type   (OPTIONAL)  The type of request ('POST', 'GET').
+ *
+ * @return  string|int|double                                   The unsanitized value of the element (or default).
+ */
+
+function form_fetch_element($element_name, $default_value=NULL, $element_exists=0, $request_type='POST')
+{
+  // If the goal is only to check existence, just return whether the element exists or not
+  if($element_exists)
+  {
+    if($request_type == 'GET')
+      return (isset($_GET[$element_name])) ? 1 : 0;
+    else
+      return (isset($_POST[$element_name])) ? 1 : 0;
+
+  }
+
+  // Otherwise return the unsanitized value of the element if it exists
+  else
+  {
+    if($request_type == 'GET')
+      return (isset($_GET[$element_name])) ? $_GET[$element_name] : $default_value;
+    else
+      return (isset($_POST[$element_name])) ? $_POST[$element_name] : $default_value;
+  }
+}
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                STRING MANIPULATION                                                */
@@ -269,6 +379,37 @@ function string_remove_accents($string)
 
   // Replace any occurence of the first set of characters by its equivalent in the second
   return str_replace($accents, $no_accents, $string);
+}
+
+
+
+
+/**
+ * Increments the last character of a string.
+ *
+ * This is mainly meant to increment versioning strings (eg. rc1, beta3, etc.).
+ * If the string does not end in a number, then the number 1 will be appended to the end of the string.
+ *
+ * @param   string $string  The string to increment.
+ *
+ * @return  string          The incremented string.
+ */
+
+function string_increment($string)
+{
+  // If the string is empty, return one
+  if(!$string)
+    return 1;
+
+  // Get the last character of the string
+  $last_character =  substr($string, -1);
+
+  // If that character is a number, increment it
+  if(is_numeric($last_character))
+    return substr($string, 0, -1).($last_character + 1);
+
+  // Otherwise, append an 1 to the end of the string
+  return $string.'1';
 }
 
 

@@ -56,6 +56,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <option value="default" selected><?=__('dev_palette_selector_default')?></option>
       <option value="divs"><?=__('dev_palette_selector_divs')?></option>
       <option value="forms"><?=__('dev_palette_selector_forms')?></option>
+      <option value="grids"><?=__('dev_palette_selector_grids')?></option>
       <option value="icons"><?=__('dev_palette_selector_icons')?></option>
       <option value="popins"><?=__('dev_palette_selector_popins')?></option>
       <option value="spacing"><?=__('dev_palette_selector_spacing')?></option>
@@ -423,40 +424,6 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 
 <hr>
 
-<div class="width_50 padding_top padding_bot">
-  <div class="align_center dev_div_border bold">
-    .flexcontainer
-  </div>
-  <div class="flexcontainer align_center dev_div_border bold">
-    <div class="flex dev_div_border">
-      .flex
-    </div>
-    <div class="flex dev_div_border">
-      .flex
-    </div>
-    <div class="dev_div_border" style="flex:2">
-      flex = 2
-    </div>
-    <div class="dev_div_border" style="flex:3">
-      flex = 3
-    </div>
-  </div>
-
-  <div class="padding_top">
-    <pre class="dev_pre_code" id="dev_palette_flex" onclick="to_clipboard('', 'dev_palette_flex', 1);">&lt;div class="flexcontainer">
-  &lt;div class="flex">
-    Flex_1
-  &lt;/div>
-  &lt;div style="flex:2">
-    Flex_2
-  &lt;/div>
-&lt;/div></pre>
-  </div>
-
-</div>
-
-<hr>
-
 <div class="width_30 padding_top">
   <div class="scrollbar align_center smallpadding_bot">
     .scrollbar
@@ -547,8 +514,13 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
     <label class="label_inline" for="dev_palette_input_checkbox_4">&lt;label .label_inline> for &lt;input type="checkbox"></label>
   </div>
 
-  <div class="padding_top bigpadding_bot">
-    <pre class="dev_pre_code" id="dev_palette_form_input_checkbox" onclick="to_clipboard('', 'dev_palette_form_input_checkbox', 1);">&lt;input type="checkbox" id="dev_palette_checkbox_1" name="dev_palette_checkbox[]" value="1">
+  <div class="padding_top padding_bot">
+    <pre class="dev_pre_code" id="dev_palette_form_input_checkbox" onclick="to_clipboard('', 'dev_palette_form_input_checkbox', 1);">&lt;input type="checkbox" id="dev_palette_checkbox" name="dev_palette_checkbox">
+&lt;label class="label_inline" for="dev_palette_checkbox">Label&lt;/label></pre>
+  </div>
+
+  <div class="bigpadding_bot">
+    <pre class="dev_pre_code" id="dev_palette_form_input_multi_checkbox" onclick="to_clipboard('', 'dev_palette_form_input_multi_checkbox', 1);">&lt;input type="checkbox" id="dev_palette_checkbox_1" name="dev_palette_checkbox[]" value="1">
 &lt;label class="label_inline" for="dev_palette_checkbox_1">Label&lt;/label>
 &lt;input type="checkbox" id="dev_palette_checkbox_2" name="dev_palette_checkbox[]" value="2">
 &lt;label class="label_inline" for="dev_palette_checkbox_2">Label&lt;/label></pre>
@@ -631,6 +603,95 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
   <p>
     Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. <select class="intext" name="dev_palette_select_intext"><option selected>&lt;select class="intext"></option><option>Option</option></select> Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. <input type="text" class="intext" name="dev_palette_input_intext" value='&lt;input class="intext" type="text"&gt;'> Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum.
   </p>
+
+</div>
+
+
+
+
+<?php } else if($css_palette === 'grids') { ######################################################################## ?>
+
+  <div class="width_50 bigpadding_bot">
+  <div class="align_center dev_div_border bold">
+    .flexcontainer
+  </div>
+  <div class="flexcontainer align_center dev_div_border bold">
+    <div class="flex dev_div_border">
+      .flex
+    </div>
+    <div class="flex dev_div_border">
+      .flex
+    </div>
+    <div class="dev_div_border" style="flex:2">
+      flex = 2
+    </div>
+    <div class="dev_div_border" style="flex:3">
+      flex = 3
+    </div>
+  </div>
+
+  <div class="padding_top">
+    <pre class="dev_pre_code" id="dev_palette_flex" onclick="to_clipboard('', 'dev_palette_flex', 1);">&lt;div class="flexcontainer">
+  &lt;div class="flex">
+    Flex_1
+  &lt;/div>
+  &lt;div style="flex:2">
+    Flex_2
+  &lt;/div>
+&lt;/div></pre>
+  </div>
+
+</div>
+
+<hr>
+
+<div class="width_50 bigpadding_top">
+
+  <div class="padding_bot">
+    <div style="grid-template-columns: repeat(3, 1fr);" class="gridcontainer align_center dev_div_border">
+      <div style="grid-column: 1 / 1" class="dev_div_border">
+        grid-column: 1 / 1
+      </div>
+      <div style="grid-column: 2 / 4" class="dev_div_border">
+        grid-column: 2 / 4
+      </div>
+      <div style="grid-row: 2 / 5" class="dev_div_border gridcontainer gridcenter">
+        grid-row: 2 / 5<br>
+        gridcenter
+      </div>
+      <div class="dev_div_border">
+        Normal div
+      </div>
+      <div class="dev_div_border">
+        Normal div
+      </div>
+      <div style="grid-column: 2 / 4; grid-row: 3 / 5" class="dev_div_border">
+        grid-column: 2 / 4<br>
+        grid-row: 3 / 5
+      </div>
+    </div>
+  </div>
+
+  <pre class="dev_pre_code" id="dev_palette_grid" onclick="to_clipboard('', 'dev_palette_grid', 1);">&lt;div style="grid-template-columns: repeat(3, 1fr);" class="gridcontainer">
+  &lt;div style="grid-column: 1 / 1" class="red">
+    &nbsp;
+  &lt;/div>
+  &lt;div style="grid-column: 2 / 4" class="white">
+    &nbsp;
+  &lt;/div>
+  &lt;div style="grid-row: 2 / 5" class="blue gridcontainer gridcenter">
+    &nbsp;
+  &lt;/div>
+  &lt;div class="purple">
+    &nbsp;
+  &lt;/div>
+  &lt;div class="orange">
+    &nbsp;
+  &lt;/div>
+  &lt;div style="grid-column: 2 / 4; grid-row: 3 / 5" class="brown">
+    &nbsp;
+  &lt;/div>
+&lt;/div></pre>
 
 </div>
 
@@ -1667,6 +1728,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
   </p>
 
   <p class="align_center">
+    <span class="uppercase">.uppercase text</span><br>
     <span class="bold">.bold text</span><br>
     <span class="notbold">.notbold text</span><br>
     <span class="italics">.italics text</span><br>

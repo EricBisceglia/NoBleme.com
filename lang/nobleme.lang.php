@@ -156,8 +156,6 @@ ___('activity_type_internet', 'EN', "Internet encyclopedia");
 ___('activity_type_internet', 'FR', "Encyclopédie du web");
 ___('activity_type_quotes', 'EN', "Quotes");
 ___('activity_type_quotes', 'FR', "Citations");
-___('activity_type_writers', 'EN', "Writer's corner");
-___('activity_type_writers', 'FR', "Coin des écrivains");
 ___('activity_type_dev', 'EN', "Website internals");
 ___('activity_type_dev', 'FR', "Développement");
 

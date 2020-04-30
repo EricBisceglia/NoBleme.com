@@ -45,8 +45,11 @@ function toggle_header_menu(menu_name, invert_title)
     document.getElementById('header_menu_title_' + menu_name).classList.add('header_topmenu_title_selected');
 
   // If the annoying new notification animation is there, replace it with the standard user icon upon clicking
-  var account_icon = document.getElementById('header_topmenu_account_icon');
-   account_icon.setAttribute('src', account_icon.getAttribute('src').replace("login_mail.svg", "login.svg"));
+  if(menu_name == 'account')
+  {
+    var account_icon = document.getElementById('header_topmenu_account_icon');
+    account_icon.setAttribute('src', account_icon.getAttribute('src').replace("login_mail.svg", "login.svg"));
+  }
 }
 
 

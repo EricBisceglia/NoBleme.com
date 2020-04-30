@@ -17,12 +17,7 @@ $load_time  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3).'s';
 $metrics    = __('footer_loadtime').$load_time.__('with', 1, 1, 1).$GLOBALS['query'].__('query', $GLOBALS['query'], 1);
 
 // Current version
-$dversion = mysqli_fetch_array(query("  SELECT    system_versions.version AS 'v_version'  ,
-                                                  system_versions.build   AS 'v_build'    ,
-                                                  system_versions.date    AS 'v_date'
-                                        FROM      system_versions
-                                        ORDER BY  system_versions.id DESC LIMIT 1 "));
-$version = sanitize_output(__('footer_version', 1, 0, 1, array($dversion['v_version'], $dversion['v_build'], date_to_text($dversion['v_date'], 1, $lang))));
+$version = system_get_current_version_number('full');
 
 // Copyright ending date
 $copyright_date = date('Y');
@@ -40,6 +35,8 @@ $copyright_date = date('Y');
 
       <footer>
 
+        <?=__link("todo_link", string_change_case(__('version'), 'initials').' '.$version, "", 1, $path);?><br>
+
         <?php if($is_admin) { ?>
 
         <?php if($pageviews) { ?>
@@ -51,8 +48,6 @@ $copyright_date = date('Y');
         <?=__link("todo_link", $metrics, "pointer", 1, $path);?><br>
 
         <?php } ?>
-
-        <?=__link("todo_link", $version, "", 1, $path);?><br>
 
         <?=__link("todo_link", __('footer_legal'), "", 1, $path);?><br>
 

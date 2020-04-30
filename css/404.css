@@ -8,8 +8,10 @@ body { background-color: #000000; }
 .header_infobar:hover           { background-color: #000000;                 }
 .header_submenu                 { background-color: #000000;                 }
 
-.img404      { width: 300px;                                                        }
-.img404left  { margin-right: 10px;                                                  }
-.img404right { margin-left: 10px;                                                   }
-.text404     { background-color: #000000; border: 0px solid #000000; color: #CACACA ;
-               text-align: center; overflow: auto; resize: none; height:167px       }
+.container404 { width: 1000px;                                                       }
+.table404     { background-color: #000000;                                           }
+.img404       { width: 300px;                                                        }
+.img404left   { margin-right: 10px;                                                  }
+.img404right  { margin-left: 10px;                                                   }
+.text404      { background-color: #000000; border: 0px solid #000000; color: #CACACA ;
+                text-align: center; overflow: auto; resize: none; height:167px       }

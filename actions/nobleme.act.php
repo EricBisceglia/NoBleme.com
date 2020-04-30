@@ -21,13 +21,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   int|null    $amount   OPTIONAL  The amount of logs to fetch.
  * @param   string|null $type     OPTIONAL  Filters the output by only showing logs of a specific type.
  * @param   bool|null   $deleted  OPTIONAL  If set, shows deleted activity logs only.
+ * @param   bool|null   $is_admin OPTIONAL  Is the user seeing the logs an administrator.
  * @param   string|null $path     OPTIONAL  The path to the root of the website.
  * @param   string|null $lang     OPTIONAL  The language currently in use.
  *
  * @return  array                           An array of activity logs, prepared for displaying.
  */
 
-function activity_get_logs($modlogs=0, $amount=100, $type='all', $deleted=0, $path='./../../', $lang='EN')
+function activity_get_logs($modlogs=0, $amount=100, $type='all', $deleted=0, $is_admin=0, $path='./../../', $lang='EN')
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -35,9 +36,14 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $deleted=0, $pa
 
   // Sanitize the data
   $modlogs  = ($modlogs) ? 1 : 0;
-  $amount   = sanitize($amount, 'int', 0);
+  $amount   = sanitize($amount, 'int', 100);
   $type     = sanitize($type, 'string');
   $lang     = sanitize($lang, 'string');
+  $deleted  = sanitize($deleted, 'int', 0, 1);
+
+  // Only allow admins to see full activity logs or deleted activity items
+  $amount  = (!$is_admin && $amount > 1000) ? 1000 : $amount;
+  $deleted = (!$is_admin) ? 0 : $deleted;
 
   // Initialize the returned array
   $data = array();
@@ -221,6 +227,6 @@ function activity_restore_log($log_id)
 
   // Restore the activity log
   query(" UPDATE  logs_activity
-          SET     logs_activity.is_deleted = 0
-          WHERE   logs_activity.id      = '$log_id' ");
+          SET     logs_activity.is_deleted  = 0
+          WHERE   logs_activity.id          = '$log_id' ");
 }

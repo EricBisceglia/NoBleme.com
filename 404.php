@@ -46,8 +46,8 @@ $this_page_is_a_404 = '';
   </a>
 </div>
 
-<div class="margin_auto bigpadding_top hugepadding_bot" style="width:1000px">
-  <table class="indiv">
+<div class="margin_auto bigpadding_top hugepadding_bot container404">
+  <table class="indiv table404">
     <tbody>
       <tr>
         <td class="img404 noborder">

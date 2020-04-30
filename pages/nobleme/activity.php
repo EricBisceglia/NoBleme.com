@@ -40,7 +40,8 @@ $js   = array('toggle', 'nobleme/activity');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Prepare an url for dynamic calls, depending on whether we're on recent activity or moderation logs
 
-$logs_url = (!isset($_GET['mod'])) ? "activity" : "activity?mod";
+$activity_modlogs = form_fetch_element('mod', 0, 1, 'GET');
+$logs_url         = (!$activity_modlogs) ? "activity" : "activity?mod";
 
 
 
@@ -48,18 +49,14 @@ $logs_url = (!isset($_GET['mod'])) ? "activity" : "activity?mod";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch recent activity
 
-// Sanitize postdata
-$activity_modlogs = isset($_GET['mod']);
-$activity_amount  = sanitize_input('POST', 'activity_amount', 'int', 100, 100);
-$activity_type    = sanitize_input('POST', 'activity_type', 'string', 'all');
-$activity_deleted = sanitize_input('POST', 'activity_deleted', 'int', 0);
-
-// Only allow admins to see full activity logs or deleted activity items
-$activity_amount  = (!$is_admin && $activity_amount > 1000) ? 1000 : $activity_amount;
-$activity_deleted = (!$is_admin) ? 0 : $activity_deleted;
-
-// Fetch the activity logs
-$activity_logs = activity_get_logs($activity_modlogs, $activity_amount, $activity_type, $activity_deleted, $path, $lang);
+$activity_deleted = form_fetch_element('activity_deleted', 0);
+$activity_logs    = activity_get_logs(  $activity_modlogs                           ,
+                                        form_fetch_element('activity_amount', 100)  ,
+                                        form_fetch_element('activity_type', 'all')  ,
+                                        $activity_deleted                           ,
+                                        $is_admin                                   ,
+                                        $path                                       ,
+                                        $lang                                       );
 
 
 
@@ -135,7 +132,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <option value="internet"><?=__('activity_type_internet')?></option>
       <option value="quotes"><?=__('activity_type_quotes')?></option>
       <?php } ?>
-      <option value="writers"><?=__('activity_type_writers')?></option>
       <?php if(!$activity_modlogs) { ?>
       <option value="dev"><?=__('activity_type_dev')?></option>
       <?php } ?>

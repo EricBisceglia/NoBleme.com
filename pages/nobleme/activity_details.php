@@ -23,11 +23,9 @@ user_restrict_to_global_moderators($lang);
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Sanitize postdata
-$log_id = sanitize_input('POST', 'log_id', 'int', 0, 0);
-
 // Fetch log details
-$log_details = activity_get_details($log_id, $lang);
+$log_details = activity_get_details(  form_fetch_element('log_id', 0) ,
+                                      $lang                           );
 
 
 
