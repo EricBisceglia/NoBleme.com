@@ -99,12 +99,23 @@ ___('dev_versions_table_title', 'EN', "Version history");
 ___('dev_versions_table_title', 'FR', "Historique des versions");
 ___('dev_versions_table_delay', 'EN', "Delay");
 ___('dev_versions_table_delay', 'FR', "Délai");
+___('dev_versions_table_not_existing', 'EN', "This version number does not exist");
+___('dev_versions_table_not_existing', 'FR', "Ce numéro de version n'existe pas");
 ___('dev_versions_table_confirm_deletion', 'EN', "Confirm the irreversible deletion of version {{1}}");
 ___('dev_versions_table_confirm_deletion', 'FR', "Confirmer la suppression irréversible de la version {{1}}");
 ___('dev_versions_table_deleted', 'EN', "Version {{1}} has been deleted");
 ___('dev_versions_table_deleted', 'FR', "Version {{1}} supprimée");
-___('dev_versions_table_not_existing', 'EN', "This version number does not exist");
-___('dev_versions_table_not_existing', 'FR', "Ce numéro de version n'existe pas");
+
+
+// Version numbers: Edition
+___('dev_versions_edit_button', 'EN', "Edit release");
+___('dev_versions_edit_button', 'FR', "Modifier la version");
+___('dev_versions_edit_error_postdata', 'EN', "Error: No version id was provided.");
+___('dev_versions_edit_error_postdata', 'FR', "Erreur : Aucun numéro de version n'a été envoyé.");
+___('dev_versions_edit_error_id', 'EN', "Error: The requested version does not exist.");
+___('dev_versions_edit_error_id', 'FR', "Erreur : La version demandée n'existe pas.");
+___('dev_versions_edit_error_duplicate', 'EN', "Error: This version number already exists.");
+___('dev_versions_edit_error_duplicate', 'FR', "Erreur : Ce numéro de version existe déjà.");
 
 
 

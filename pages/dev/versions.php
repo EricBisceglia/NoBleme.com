@@ -36,14 +36,38 @@ $js = array('dev/versions');
 // Add a new version
 
 if(isset($_POST['dev_versions_create']))
-{
   dev_versions_create(  form_fetch_element('dev_new_version_major')       ,
                         form_fetch_element('dev_new_version_minor')       ,
                         form_fetch_element('dev_new_version_patch')       ,
                         form_fetch_element('dev_new_version_extension')   ,
                         form_fetch_element('dev_versions_activity', 0, 1) ,
                         form_fetch_element('dev_versions_irc', 0, 1)      );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit an existing version
+
+if(isset($_POST['dev_versions_edit']))
+{
+  // Edit the version
+  $version_edit_id    = form_fetch_element('dev_versions_edit', 0);
+  $version_edit_error = dev_versions_edit(  $version_edit_id                                            ,
+                                            form_fetch_element('dev_versions_edit_major', 0)            ,
+                                            form_fetch_element('dev_versions_edit_minor', 0)            ,
+                                            form_fetch_element('dev_versions_edit_patch', 0)            ,
+                                            form_fetch_element('dev_versions_edit_extension', '')       ,
+                                            form_fetch_element('dev_versions_edit_date', date('d/m/y')) );
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Close the edition popin if it is open
+
+$onload = "popin_close('dev_versions_popin')";
 
 
 
@@ -68,7 +92,7 @@ $version_history = dev_versions_list();
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-/****************************************************************************/ include './../../inc/header.inc.php'; ?>
+if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
 <div class="width_50 padding_bot">
 
@@ -85,7 +109,6 @@ $version_history = dev_versions_list();
   </p>
 
   <?=__('dev_versions_nbsemver_list')?>
-
 
 </div>
 
@@ -141,11 +164,11 @@ $version_history = dev_versions_list();
 
 <hr>
 
-<div class="width_30 padding_top">
+<div class="width_40 padding_top">
 
-  <h5 class="padding_bot">
+  <h4 class="align_center padding_bot">
     <?=__('dev_versions_table_title')?>
-  </h5>
+  </h4>
 
   <table>
     <thead>
@@ -161,12 +184,14 @@ $version_history = dev_versions_list();
           <?=__('dev_versions_table_delay')?>
         </th>
         <th>
-          X
+          <?=__('action')?>
         </th>
       </tr>
 
     </thead>
-    <tbody class="altc align_center">
+    <tbody id="versions_list_table" class="altc align_center">
+
+      <?php } ?>
 
       <?php for($i = 0; $i < $version_history['rows']; $i++) { ?>
 
@@ -177,23 +202,45 @@ $version_history = dev_versions_list();
         <td>
           <?=$version_history[$i]['date']?>
         </td>
-        <td>
+        <td<?=$version_history[$i]['css']?>>
           <?=$version_history[$i]['date_diff']?>
         </td>
         <td class="align_center">
+          <img class="valign_middle pointer spaced" src="<?=$path?>img/icons/edit_small.svg" alt="X" title="Edit" onclick="dev_versions_edit_popin(<?=$version_history[$i]['id']?>);">
           <img class="valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete" onclick="dev_versions_delete(<?=$version_history[$i]['id']?>, '<?=__('dev_versions_table_confirm_deletion', 0, 0, 0, array($version_history[$i]['version']))?>');">
         </td>
       </tr>
 
+      <?php if(isset($version_edit_error) && $version_edit_error && $version_edit_id == $version_history[$i]['id']) { ?>
+
+      <tr>
+        <td colspan="4" class="red text_white bold">
+          <?=$version_edit_error?>
+        </td>
+      </tr>
+
       <?php } ?>
+
+      <?php } ?>
+
+      <?php if(!page_is_fetched_dynamically()) { ?>
 
     </tbody>
   </table>
 
 </div>
 
+<div id="dev_versions_popin" class="popin_background">
+  <div class="popin_body">
+    <a class="popin_close" href="#_">&times;</a>
+    <div id="dev_versions_popin_body">
+      &nbsp;
+    </div>
+  </div>
+</div>
+
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */
 /*                                                                                                                   */
-/*******************************************************************************/ include './../../inc/footer.inc.php';
+/*****************************************************************************/ include './../../inc/footer.inc.php'; }

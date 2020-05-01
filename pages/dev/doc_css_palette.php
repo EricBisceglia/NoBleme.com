@@ -1062,7 +1062,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
   <div id="popin_demo" class="popin_background">
     <div class="popin_body">
-      <a class="popin_close" href="#">&times;</a>
+      <a class="popin_close" href="#close">&times;</a>
       <p class="nopadding_top">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod.</p>
     </div>
   </div>
@@ -1071,7 +1071,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 &lt;div id="popin_demo" class="popin_background">
   &lt;div class="popin_body">
-    &lt;a class="popin_close" href="#">&amp;times;&lt;/a>
+    &lt;a class="popin_close" href="#close">&amp;times;&lt;/a>
     &lt;p class="nopadding_top">Body&lt;/p>
   &lt;/div>
 &lt;/div></pre>

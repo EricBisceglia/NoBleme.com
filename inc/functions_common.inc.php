@@ -562,12 +562,13 @@ function date_to_ddmmyy($date)
  * This function's goal is to directly transform user input into a ready to use MySQL formatted date string.
  * If the person entering the date is american and inputs MM/DD/YY, well, too bad. Can't do anything about it.
  *
- * @param   string  $date The date that will be converted - can be DD/MM/YY or DD/MM/YYYY.
+ * @param   string  $date     The date that will be converted - can be DD/MM/YY or DD/MM/YYYY.
+ * @param   string  $default  The default date to use if the format is incorrect.
  *
- * @return  string        The converted date in MySQL date format.
+ * @return  string            The converted date in MySQL date format.
  */
 
-function date_to_mysql($date)
+function date_to_mysql($date, $default='0000-00-00')
 {
   // If the date is DD/MM/YYYY, convert it to the correct format
   if(strlen($date) == 10)
@@ -579,11 +580,11 @@ function date_to_mysql($date)
 
   // Otherwise, return the absence of a MySQL date
   else
-    return '0000-00-00';
+    return $default;
 
   // If the converted date is incorrect, also return the absence of a MySQL date
   if($date == '1970-01-01')
-    return '0000-00-00';
+    return $default;
 
   // Return the converted date
   return $date;

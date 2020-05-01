@@ -111,3 +111,24 @@ function users_login_attempt_process()
   else
     document.getElementById('login_form_error').style.display = 'block';
 }
+
+
+
+
+/**
+ * Closes an open popin.
+ *
+ * @param   {string}  popin_id  The id of the popin.
+ *
+ * @returns {void}
+ */
+
+function popin_close(popin_id)
+{
+  // Close the popin
+  if(location.hash == popin_id || location.hash == '#'+popin_id)
+    location.hash = '#_';
+}
+
+// Close the lost account access popin if it is open
+popin_close('popin_lost_access');

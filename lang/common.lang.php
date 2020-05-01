@@ -260,6 +260,17 @@ ___(':', 'EN', ":");
 ___(':', 'FR', " :");
 
 
+// Buttons
+___('submit', 'EN', "Submit");
+___('submit', 'FR', "Envoyer");
+___('add', 'EN', "Add");
+___('add', 'FR', "Créer");
+___('edit', 'EN', "Edit");
+___('edit', 'FR', "Modifier");
+___('delete', 'EN', "Delete");
+___('delete', 'FR', "Supprimer");
+
+
 // Common words
 ___('yes', 'EN', "yes");
 ___('yes', 'FR', "oui");
@@ -299,9 +310,16 @@ ___('option+', 'FR', "options");
 
 ___('date', 'EN', "date");
 ___('date', 'FR', "date");
+___('ddmmyy', 'EN', "DD/MM/YY");
+___('ddmmyy', 'FR', "JJ/MM/AA");
+___('yyyyddmm', 'EN', "YYYY-DD-MM");
+___('yyyyddmm', 'FR', "AAAA-MM-JJ");
 
 ___('version', 'EN', "version");
 ___('version', 'FR', "version");
+
+___('action', 'EN', "action");
+___('action', 'FR', "action");
 
 
 // Quantifiers, amounts, and times
