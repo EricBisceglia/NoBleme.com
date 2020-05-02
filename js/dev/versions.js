@@ -27,7 +27,7 @@ function dev_versions_edit_popin(version_id)
 function dev_versions_edit()
 {
   // Close the popin
-  location.hash = "#_";
+  popin_close('dev_versions_popin');
 
   // Prepare the postdata
   postdata  = 'dev_versions_edit='            + fetch_sanitize_id('dev_versions_edit_id');

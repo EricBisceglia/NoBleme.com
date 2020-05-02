@@ -158,7 +158,7 @@ function dev_versions_list()
  * @param   bool|null $publish_activity Whether to publish an entry in recent activity.
  * @param   bool|null $notify_irc       Whether to send a notification on IRC.
  *
- * @return  void
+ * @return  string|null                 NULL if all went according to plan, or an error string
  */
 
 function dev_versions_create($major, $minor, $patch, $extension, $publish_activity=1, $notify_irc=0)
@@ -182,7 +182,7 @@ function dev_versions_create($major, $minor, $patch, $extension, $publish_activi
 
   // If it already exists, stop the process
   if(mysqli_num_rows($qversion))
-    return;
+    return __('dev_versions_edit_error_duplicate');
 
   // Create the new version
   query(" INSERT INTO   system_versions
@@ -205,6 +205,9 @@ function dev_versions_create($major, $minor, $patch, $extension, $publish_activi
   // Send a message on IRC
   if($notify_irc)
     ircbot("A new version of NoBleme has been released: $version_number - ".$GLOBALS['website_url']."todo_link", "#dev");
+
+  // Return that all went well
+  return;
 }
 
 

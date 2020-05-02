@@ -70,8 +70,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <label class="label_inline" for="online_admin_view"><?=__('users_online_admin_view')?></label><br>
     <?php } ?>
 
-    <input id="online_refresh" name="online_refresh" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
-    <label class="label_inline" for="online_refresh"><?=__('users_online_refresh')?></label><br>
+    <div class="desktop">
+      <input id="online_refresh" name="online_refresh" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
+      <label class="label_inline" for="online_refresh"><?=__('users_online_refresh')?></label><br>
+    </div>
+    <div class="mobile">
+      <input id="online_refresh" name="online_refresh" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
+      <label class="label_inline" for="online_refresh"><?=__('users_online_refresh_mobile')?></label><br>
+    </div>
 
   </fieldset>
 

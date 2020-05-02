@@ -23,21 +23,21 @@
 @media (max-width: 1024px) {
 .desktop { display: none; } }
 
-.margin_auto     { margin: auto;                     }
+.margin_auto     { margin: auto;                    }
 @media (min-width: 1025px) {
-.width_30        { margin: auto; max-width: 30em;    }
-.width_40        { margin: auto; max-width: 40em;    }
-.width_50        { margin: auto; max-width: 50em;    }
-.width_60        { margin: auto; max-width: 60em;    }
-.width_70        { margin: auto; max-width: 70em;    }
-.width_80        { margin: auto; max-width: 80em;  } }
+.width_30        { margin: auto; max-width: 30em;   }
+.width_40        { margin: auto; max-width: 40em;   }
+.width_50        { margin: auto; max-width: 50em;   }
+.width_60        { margin: auto; max-width: 60em;   }
+.width_70        { margin: auto; max-width: 70em;   }
+.width_80        { margin: auto; max-width: 80em; } }
 @media (max-width: 1024px) {
-.width_30        { margin: auto; max-width: 30em;    }
-.width_40        { margin: auto; max-width: 35em;    }
-.width_50        { margin: auto; max-width: 40em;    }
-.width_60        { margin: auto; max-width: 45em;    }
-.width_70        { margin: auto; max-width: 50em;    }
-.width_80        { margin: auto; max-width: 55em;  } }
+.width_30        { margin: auto; max-width: 35em;   }
+.width_40        { margin: auto; max-width: 40em;   }
+.width_50        { margin: auto; max-width: 45em;   }
+.width_60        { margin: auto; max-width: 50em;   }
+.width_70        { margin: auto; max-width: 55em;   }
+.width_80        { margin: auto; max-width: 60em; } }
 
 .align_justify   { text-align: justify;            }
 .align_center    { text-align: center;             }
@@ -106,6 +106,13 @@
 .scrollbar       { overflow-x: scroll;                        }
 .vscrollbar      { overflow-y: scroll;                        }
 
+@media (min-width: 1025px)     {
+.icon      { height: 3.0rem;   }
+.smallicon { height: 1.6rem; } }
+@media (max-width: 1024px)     {
+.icon      { height: 2.0rem;   }
+.smallicon { height: 1.3rem; } }
+
 /************************************************* SPECIFIC CLASSES **************************************************/
 table.noresize                       { table-layout: fixed;                                        }
 tbody.altc tr:nth-child(odd)         { background-color: #282828;                                  }
@@ -169,7 +176,7 @@ div.popin_body              { margin: auto; margin-top: 10em; background: #12121
                               border-radius: 0.6em; width: 55em; max-width: 80%; max-height: 60%    ;
                               overflow-x: auto; position: relative; transition: all 1s ease-in-out; }
 a.popin_close               { position: absolute; transition: all 0.5s; font-size: 2.5em            ;
-                              filter: none; color: #B00B1E; z-index: 10000;                         }
+                              filter: none; color: #B00B1E; z-index: 10000; cursor: pointer;        }
 a.popin_close:hover         { filter: drop-shadow(0 0 10px #B00B1E);                                }
 @media (min-width: 1025px)  {
 div.popin_body              { padding: 2.25em;                                                      }

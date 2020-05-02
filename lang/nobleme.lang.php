@@ -15,8 +15,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Welcome paragraph
 ___('nobleme_home_welcome_title', 'EN', "Welcome to NoBleme");
 ___('nobleme_home_welcome_title', 'FR', "Bienvenue sur NoBleme");
-___('nobleme_home_welcome_subtitle', 'EN', "Preserving the spirit of old Internet communities");
-___('nobleme_home_welcome_subtitle', 'FR', "L'esprit perdu des communautés Internet d'antan");
+___('nobleme_home_welcome_subtitle', 'EN', "Preserving the spirit of Internet communities");
+___('nobleme_home_welcome_subtitle', 'FR', "L'esprit perdu des communautés Internet");
 ___('nobleme_home_welcome', 'EN', <<<EOT
 <p>
   A product of the Internet's landscape in 2005, before the era of massive social networks and centralized websites, NoBleme is a small independent website trying to keep the spirit of Internet communities from the first decade of the 21st century alive.
@@ -133,12 +133,12 @@ ___('activity_title', 'FR', "Activité récente");
 ___('activity_title_modlogs', 'EN', "Moderation logs");
 ___('activity_title_modlogs', 'FR', "Logs de modération");
 ___('activity_mod_info', 'EN', <<<EOT
-Some of the moderation logs below have an icon to their right: <img class="valign_middle" src="{{1}}img/icons/help.svg" alt="?" height="16"><br>
+Some of the moderation logs below have an icon to their right: <img class="smallicon valign_middle" src="{{1}}img/icons/help.svg" alt="?"><br>
 Clicking one of these icons will load some extra information about the logged action.
 EOT
 );
 ___('activity_mod_info', 'FR', <<<EOT
-Certains des logs de modération ci-dessous ont des icônes à droite : <img class="valign_middle" src="{{1}}img/icons/help.svg" alt="?" height="16"><br>
+Certains des logs de modération ci-dessous ont des icônes à droite : <img class="smallicon valign_middle" src="{{1}}img/icons/help.svg" alt="?"><br>
 Cliquer sur une de ces icônes affiche plus de détails sur l'action qui a été effectée.
 EOT
 );

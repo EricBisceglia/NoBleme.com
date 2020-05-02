@@ -560,8 +560,8 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
   </div>
 
   <div>
-    <button name="dev_palette_input_button"><img class="pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete"></button>
-    <button name="dev_palette_input_button_disabled" disabled><img class="pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete"></button>
+    <button name="dev_palette_input_button"><img class="icon valign_middle pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete"></button>
+    <button name="dev_palette_input_button_disabled" disabled><img class="icon valign_middle pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete"></button>
   </div>
 
   <div class="padding_top">
@@ -704,16 +704,16 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
   <h1 class="smallpadding_bot">
     &lt;h1> with icons
-    <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" title="Delete">
-    <img class="pointer" src="<?=$path?>img/icons/settings.svg" alt="S" title="Settings">
-    <img class="pointer" src="<?=$path?>img/icons/rss.svg" alt="R" title="RSS feed">
+    <img class="icon pointer" src="<?=$path?>img/icons/delete.svg" alt="X" title="Delete">
+    <img class="icon pointer" src="<?=$path?>img/icons/settings.svg" alt="S" title="Settings">
+    <img class="icon pointer" src="<?=$path?>img/icons/rss.svg" alt="R" title="RSS feed">
   </h1>
 
   <pre class="dev_pre_code" id="dev_palette_h1_icons" onclick="to_clipboard('', 'dev_palette_h1_icons', 1);">&lt;h1>
   Title with icons
-  &lt;img class="pointer" src="&lt;?=$path?>img/icons/delete.svg" alt="X" title="Delete">
-  &lt;img class="pointer" src="&lt;?=$path?>img/icons/settings.svg" alt="S" title="Settings">
-  &lt;img class="pointer" src="&lt;?=$path?>img/icons/rss.svg" alt="R" title="RSS feed">
+  &lt;img class="icon pointer" src="&lt;?=$path?>img/icons/delete.svg" alt="X" title="Delete">
+  &lt;img class="icon pointer" src="&lt;?=$path?>img/icons/settings.svg" alt="S" title="Settings">
+  &lt;img class="icon pointer" src="&lt;?=$path?>img/icons/rss.svg" alt="R" title="RSS feed">
 &lt;/h1></pre>
 
 </div>
@@ -743,7 +743,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           add
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/add.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/add.svg" alt="X">
         </td>
         <td>
           &nbsp;
@@ -754,10 +754,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           copy
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/copy.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/copy.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/copy_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/copy_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -765,10 +765,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           delete
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/delete.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/delete.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/delete_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/delete_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -776,10 +776,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           duplicate
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/duplicate.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/duplicate.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/duplicate_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/duplicate_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -787,10 +787,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           edit
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/edit.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/edit.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/edit_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/edit_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -798,10 +798,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           help
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/help.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/help.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/help_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/help_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -809,10 +809,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           image
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/image.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/image.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/image_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/image_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -820,10 +820,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           info
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/info.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/info.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/info_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/info_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -831,10 +831,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           link
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/link.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/link.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/link_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/link_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -842,10 +842,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           link_external
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/link_external.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/link_external.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/link_external_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/link_external_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -853,7 +853,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           maximize
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/maximize.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/maximize.svg" alt="X">
         </td>
         <td>
           &nbsp;
@@ -864,7 +864,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           minimize
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/minimize.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/minimize.svg" alt="X">
         </td>
         <td>
           &nbsp;
@@ -875,7 +875,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           message
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/message.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/message.svg" alt="X">
         </td>
         <td>
           &nbsp;
@@ -886,10 +886,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           more
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/more.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/more.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/more_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/more_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -897,10 +897,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           refresh
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/refresh.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/refresh.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/refresh_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/refresh_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -908,7 +908,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           rss
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/rss.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/rss.svg" alt="X">
         </td>
         <td>
           &nbsp;
@@ -919,10 +919,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           settings
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/settings.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/settings.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/settings_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/settings_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -930,7 +930,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           settings_gear
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/settings_gear.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/settings_gear.svg" alt="X">
         </td>
         <td>
           &nbsp;
@@ -941,10 +941,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           sort_down
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/sort_down.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/sort_down.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -952,10 +952,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           sort_up
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/sort_up.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/sort_up.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/sort_up_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/sort_up_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -963,10 +963,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           stats
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/stats.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/stats.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/stats_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/stats_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -974,7 +974,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           upload
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/upload.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/upload.svg" alt="X">
         </td>
         <td>
           &nbsp;
@@ -985,10 +985,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           user
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/user.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/user.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/user_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/user_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -996,10 +996,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           user_add
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/user_add.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/user_add.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/user_add_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/user_add_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -1007,10 +1007,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           user_confirm
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/user_confirm.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/user_confirm.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/user_confirm_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/user_confirm_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -1018,10 +1018,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           user_delete
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/user_delete.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/user_delete.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/user_delete_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/user_delete_small.svg" alt="X">
         </td>
       </tr>
       <tr>
@@ -1029,7 +1029,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           warning
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/warning.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/warning.svg" alt="X">
         </td>
         <td>
           &nbsp;
@@ -1040,10 +1040,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           x
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/x.svg" alt="X">
+          <img class="icon valign_middle" src="<?=$path?>img/icons/x.svg" alt="X">
         </td>
         <td>
-          <img class="valign_middle" src="<?=$path?>img/icons/x_small.svg" alt="X">
+          <img class="smallicon valign_middle" src="<?=$path?>img/icons/x_small.svg" alt="X">
         </td>
       </tr>
 
@@ -1062,7 +1062,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
   <div id="popin_demo" class="popin_background">
     <div class="popin_body">
-      <a class="popin_close" href="#close">&times;</a>
+      <a class="popin_close" onclick="popin_close('popin_demo');">&times;</a>
       <p class="nopadding_top">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod.</p>
     </div>
   </div>
@@ -1071,7 +1071,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 &lt;div id="popin_demo" class="popin_background">
   &lt;div class="popin_body">
-    &lt;a class="popin_close" href="#close">&amp;times;&lt;/a>
+    &lt;a class="popin_close" onclick="popin_close('popin_demo');">&amp;times;&lt;/a>
     &lt;p class="nopadding_top">Body&lt;/p>
   &lt;/div>
 &lt;/div></pre>
@@ -1348,11 +1348,11 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           <tr>
             <th>
               HEADER
-              <img class="pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="Sort data">
+              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="Sort data">
             </th>
             <th>
               HEADER
-              <img class="pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="Sort data">
+              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="Sort data">
             </th>
             <th>
               ICONS
@@ -1383,9 +1383,9 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
               body text
             </td>
             <td class="align_center">
-              <img class="valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="Details">
-              <img class="valign_middle pointer spaced" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="Refresh">
-              <img class="valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="Details">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="Refresh">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete">
             </td>
           </tr>
           <tr>
@@ -1396,7 +1396,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
               body text
             </td>
             <td class="align_center">
-              <img class="valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="Details">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="Details">
             </td>
           </tr>
           <tr>
@@ -1417,8 +1417,8 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
               body text
             </td>
             <td class="align_center">
-              <img class="valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="Details">
-              <img class="valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="Details">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete">
             </td>
           </tr>
         </tbody>
@@ -1435,11 +1435,11 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
         &lt;tr>
           &lt;th>
             HEADER
-            &lt;img class="pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="Sort data">
+            &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="Sort data">
           &lt;/th>
           &lt;th>
             HEADER
-            &lt;img class="pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="Sort data">
+            &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="Sort data">
           &lt;/th>
           &lt;th>
             ICONS
@@ -1475,8 +1475,8 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
             body
           &lt;/td>
           &lt;td class="align_center">
-            &lt;img class="valign_middle pointer spaced" src="&lt;?=$path?>img/icons/help_small.svg" alt="?" title="Details">
-            &lt;img class="valign_middle pointer spaced" src="&lt;?=$path?>img/icons/delete_small.svg" alt="X" title="Delete">
+            &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/help_small.svg" alt="?" title="Details">
+            &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/delete_small.svg" alt="X" title="Delete">
           &lt;/td>
         &lt;/tr>
 

@@ -75,7 +75,7 @@ $deletion_type = ($is_admin && $activity_deleted) ? 1 : 0;
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_40">
+<div class="width_60">
 
   <?php if(!isset($_GET['mod'])) { ?>
 
@@ -83,7 +83,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('activity_title')?>
 
     <?php if($is_admin) { ?>
-    <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
+    <img class="pointer icon" src="<?=$path?>img/icons/delete.svg" alt="X" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
     <?php } ?>
 
   </h1>
@@ -94,19 +94,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('activity_title_modlogs')?>
 
     <?php if($is_admin) { ?>
-    <img class="pointer" src="<?=$path?>img/icons/delete.svg" alt="X" height="30" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
+    <img class="pointer icon" src="<?=$path?>img/icons/delete.svg" alt="X" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
     <?php } ?>
 
   </h1>
 
-  <p class="bigpadding_bot">
+  <p class="bigpadding_bot align_center">
     <?=__('activity_mod_info', null, 0, 0, array($path))?>
   </p>
 
   <?php } ?>
-
-</div>
-<div class="width_60">
 
   <h5 class="align_center bigpadding_bot">
 
@@ -180,16 +177,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <?php if($is_admin || $activity_modlogs) { ?>
-        <td class="<?=$activity_logs[$i]['css']?>">
+        <td class="nowrap <?=$activity_logs[$i]['css']?>">
 
           <?php if($activity_logs[$i]['details']) { ?>
-          <img class="valign_center spaced pointer" src="<?=$path?>img/icons/help.svg" height="16" alt="?" onclick="activity_show_details('<?=$activity_logs[$i]['id']?>');">
+          <img class="smallicon valign_center spaced pointer" src="<?=$path?>img/icons/help.svg" alt="?" onclick="activity_show_details('<?=$activity_logs[$i]['id']?>');">
           <?php } if($is_admin) { ?>
 
           <?php if($deletion_type) { ?>
-          <img class="valign_center pointer spaced_right" src="<?=$path?>img/icons/refresh.svg" height="16" alt="R" onclick="activity_restore_log('<?=$activity_logs[$i]['id']?>');">
+          <img class="smallicon valign_center pointer spaced_right" src="<?=$path?>img/icons/refresh.svg" alt="R" onclick="activity_restore_log('<?=$activity_logs[$i]['id']?>');">
           <?php } ?>
-          <img class="valign_center pointer spaced_right" src="<?=$path?>img/icons/delete.svg" height="16" alt="X" onclick="activity_delete_log('<?=$activity_logs[$i]['id']?>', '<?=addslashes(__('activity_delete'))?>', '<?=$deletion_type?>');">
+          <img class="smallicon valign_center pointer spaced_right" src="<?=$path?>img/icons/delete.svg" alt="X" onclick="activity_delete_log('<?=$activity_logs[$i]['id']?>', '<?=addslashes(__('activity_delete'))?>', '<?=$deletion_type?>');">
           <?php } ?>
 
         </td>

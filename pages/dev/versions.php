@@ -36,12 +36,12 @@ $js = array('dev/versions');
 // Add a new version
 
 if(isset($_POST['dev_versions_create']))
-  dev_versions_create(  form_fetch_element('dev_new_version_major')       ,
-                        form_fetch_element('dev_new_version_minor')       ,
-                        form_fetch_element('dev_new_version_patch')       ,
-                        form_fetch_element('dev_new_version_extension')   ,
-                        form_fetch_element('dev_versions_activity', 0, 1) ,
-                        form_fetch_element('dev_versions_irc', 0, 1)      );
+  $version_add_error = dev_versions_create( form_fetch_element('dev_new_version_major')       ,
+                                            form_fetch_element('dev_new_version_minor')       ,
+                                            form_fetch_element('dev_new_version_patch')       ,
+                                            form_fetch_element('dev_new_version_extension')   ,
+                                            form_fetch_element('dev_versions_activity', 0, 1) ,
+                                            form_fetch_element('dev_versions_irc', 0, 1)      );
 
 
 
@@ -153,6 +153,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <input type="checkbox" id="dev_versions_irc" name="dev_versions_irc">
       <label class="label_inline" for="dev_versions_irc"><?=__('dev_versions_form_irc')?></label>
 
+      <?php if(isset($version_add_error) && $version_add_error) { ?>
+
+      <div class="text_red bold big">
+        <?=$version_add_error?>
+      </div>
+
+      <?php } ?>
+
       <div class="tinypadding_top">
         <input type="submit" name="dev_versions_create" value="<?=__('dev_versions_form_submit')?>">
       </div>
@@ -166,9 +174,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_40 padding_top">
 
-  <h4 class="align_center padding_bot">
+  <h2 class="align_center padding_bot">
     <?=__('dev_versions_table_title')?>
-  </h4>
+  </h2>
 
   <table>
     <thead>
@@ -206,8 +214,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$version_history[$i]['date_diff']?>
         </td>
         <td class="align_center">
-          <img class="valign_middle pointer spaced" src="<?=$path?>img/icons/edit_small.svg" alt="X" title="Edit" onclick="dev_versions_edit_popin(<?=$version_history[$i]['id']?>);">
-          <img class="valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete" onclick="dev_versions_delete(<?=$version_history[$i]['id']?>, '<?=__('dev_versions_table_confirm_deletion', 0, 0, 0, array($version_history[$i]['version']))?>');">
+          <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/edit_small.svg" alt="X" title="Edit" onclick="dev_versions_edit_popin(<?=$version_history[$i]['id']?>);">
+          <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete" onclick="dev_versions_delete(<?=$version_history[$i]['id']?>, '<?=__('dev_versions_table_confirm_deletion', 0, 0, 0, array($version_history[$i]['version']))?>');">
         </td>
       </tr>
 
@@ -232,7 +240,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div id="dev_versions_popin" class="popin_background">
   <div class="popin_body">
-    <a class="popin_close" href="#_">&times;</a>
+    <a class="popin_close" onclick="popin_close('dev_versions_popin');">&times;</a>
     <div id="dev_versions_popin_body">
       &nbsp;
     </div>

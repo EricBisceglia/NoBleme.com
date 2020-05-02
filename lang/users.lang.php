@@ -190,6 +190,8 @@ ___('users_online_admin_view', 'EN', "See the table like a regular user would");
 ___('users_online_admin_view', 'FR', "Voir la page comme un utilisateur normal");
 ___('users_online_refresh', 'EN', "Automatically reload the table every 10 seconds");
 ___('users_online_refresh', 'FR', "Recharger automatiquement la liste toutes les 10 secondes");
+___('users_online_refresh_mobile', 'EN', "Refresh the table every 10 seconds");
+___('users_online_refresh_mobile', 'FR', "Actualiser la liste toutes les 10 secondes");
 
 
 // Table

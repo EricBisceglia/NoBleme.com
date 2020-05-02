@@ -125,9 +125,12 @@ function users_login_attempt_process()
 
 function popin_close(popin_id)
 {
-  // Close the popin
+  // If the requested popin has been opened, close it and get rid of the hash in the url
   if(location.hash == popin_id || location.hash == '#'+popin_id)
+  {
     location.hash = '#_';
+    history.replaceState({}, document.title, window.location.href.split('#')[0]);
+  }
 }
 
 // Close the lost account access popin if it is open

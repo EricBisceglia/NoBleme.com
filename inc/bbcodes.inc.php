@@ -315,10 +315,10 @@ function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=
   // [[link:http://www.lienexterne.com|description of the link]]
 
   // Handle this with a regex
-  $message = preg_replace('/\[\[link:(.*?)\|(.*?)\]\]/i','<a href="$1">$2<img src="'.$path.'img/icons/link_external.svg" alt=" " height="14" style="padding: 0px 2px;"></a>', $message);
+  $message = preg_replace('/\[\[link:(.*?)\|(.*?)\]\]/i','<a href="$1">$2<img src="'.$path.'img/icons/link_external.svg" alt=" " class="smallicon" style="padding: 0px 2px;"></a>', $message);
 
   // Same thing if the link has no description
-  $message = preg_replace('/\[\[link:(.*?)\]\]/i','<a href="$1">$1<img src="'.$path.'img/icons/link_external.svg" alt=" " height="14" style="padding: 0px 2px;"></a>', $message);
+  $message = preg_replace('/\[\[link:(.*?)\]\]/i','<a href="$1">$1<img src="'.$path.'img/icons/link_external.svg" alt=" " class="smallicon" style="padding: 0px 2px;"></a>', $message);
 
 
   /*******************************************************************************************************************/

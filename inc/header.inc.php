@@ -361,7 +361,7 @@ $javascripts .= '
 
     <div id="popin_lost_access" class="popin_background">
       <div class="popin_body">
-        <a class="popin_close" href="#">×</a>
+        <a class="popin_close" onclick="popin_close('popin_lost_access');">×</a>
         <h4>
           <?=__('users_lost_access_title')?>
         </h4>
@@ -735,7 +735,12 @@ $javascripts .= '
               <input id="login_form_password" name="login_form_password" class="indiv" type="password" value="" onkeypress="users_login_form_keypress();">
             </div>
 
-            <div class="float_right">
+            <div class="desktop float_right">
+              <input id="login_form_remember" name="login_form_remember" type="checkbox" checked>
+              <label class="label_inline" for="login_form_remember"><?=__('login_form_form_remember')?></label>
+            </div>
+
+            <div class="mobile padding_bot">
               <input id="login_form_remember" name="login_form_remember" type="checkbox" checked>
               <label class="label_inline" for="login_form_remember"><?=__('login_form_form_remember')?></label>
             </div>
