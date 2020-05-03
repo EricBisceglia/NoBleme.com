@@ -9,7 +9,6 @@ Despite its age, the codebase has been designed from the start for readability: 
 
 The website is open sourced for educative and collaborative reasons. Furthermore, the license (MIT) allows you to reuse code from NoBleme if you so desire, as long as you keep the license in your own codebase.
 
-
  
 
 Local installation guide
@@ -35,15 +34,20 @@ This is it, you now have a working local copy of NoBleme. No, really, it's that 
 
 In case the `configuration.inc.php` part is overwhelming, here's what my local configuration looks like when working on my development environment, maybe it can help you understand anything confusing about it:
 
-```$GLOBALS['dev_mode']      = 1;
-$GLOBALS['website_url']   = 'http://127.0.0.1/nobleme/';
-$GLOBALS['domain_name']   = 'nobleme.com';
-$GLOBALS['mysql_host']    = 'localhost';
-$GLOBALS['mysql_user']    = 'root';
-$GLOBALS['mysql_pass']    = '';
-$GLOBALS['salt_key']      = '$6$somestring$';
-$GLOBALS['irc_bot_pass']  = '';
-$GLOBALS['extra_folders'] = 1;
+```
+$GLOBALS['website_url']     = 'http://127.0.0.1/nobleme/';
+$GLOBALS['domain_name']     = 'nobleme.com';
+$GLOBALS['mysql_host']      = 'localhost';
+$GLOBALS['mysql_user']      = 'root';
+$GLOBALS['mysql_pass']      = '';
+$GLOBALS['salt_key']        = '$6$somestring$';
+$GLOBALS['irc_bot_pass']    = '';
+$GLOBALS['extra_folders']   = 1;
+$GLOBALS['dev_mode']        = 0;
+$GLOBALS['env_debug_mode']  = 0;
+$GLOBALS['sql_debug_mode']  = 0;
+$GLOBALS['act_debug_mode']  = 0;
+$GLOBALS['full_debug_mode'] = 0;
 ```
 
  

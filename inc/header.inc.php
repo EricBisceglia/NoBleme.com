@@ -13,6 +13,25 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Debug mode
+
+// In ENV debug mode, print all environment variables in header
+if($GLOBALS['dev_mode'] && $GLOBALS['env_debug_mode'])
+{
+  var_dump(array('GET', $_GET));
+  var_dump(array('POST', $_POST));
+  var_dump(array('FILES', $_FILES));
+  var_dump(array('ENV', $_ENV));
+  var_dump(array('REQUEST', $_REQUEST));
+  var_dump(array('SESSION', $_SESSION));
+  var_dump(array('COOKIE', $_COOKIE));
+  var_dump(array('SERVER', $_SERVER));
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Restrictions and prerequisites
 
 // If we are on a subdomain, strip the subdomain from the url - prepare some data required for this action

@@ -51,6 +51,41 @@ function query($query, $ignore_errors=NULL)
   else
     $query_result = mysqli_query($GLOBALS['db'],$query) or die ("MySQL error:<br>".mysqli_error($GLOBALS['db']));
 
+  // SQL debug mode antics
+  if($GLOBALS['dev_mode'] && $GLOBALS['sql_debug_mode'])
+  {
+    // Print the query
+    echo '<div class="tinypadding_top"><pre>['.$GLOBALS['query'].'] '.$query.'</pre></div>';
+
+    // Check if the query is a SELECT
+    if(substr(str_replace(' ', '', $query), 0, 6) == 'SELECT' && mysqli_num_rows($query_result))
+    {
+      // Prepare an array for the query results
+      $full_query_results = array();
+
+      // Fetch the query results
+      for($i = 0 ; $dquery = mysqli_fetch_array($query_result); $i++)
+      {
+        foreach($dquery as $j => $result)
+        {
+          // Get rid of the duplicate numbered entry
+          if(is_numeric($j))
+            unset($dquery[$j]);
+
+          // Add the regular entries into the query results
+          else
+            $full_query_results[$i][$j] = $result;
+        }
+      }
+
+      // Display the query results
+      var_dump($full_query_results);
+
+      // Reset the query array so that it can be used again by the regular page
+      mysqli_data_seek($query_result, 0);
+    }
+  }
+
   // Return the result of the query
   return $query_result;
 }

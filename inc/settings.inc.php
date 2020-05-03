@@ -16,8 +16,27 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 if(!isset($GLOBALS['mysql_pass']))
   exit("NoBleme is incorrectly installed: The local configuration file is missing.");
 
+// Give other global variables a default value if they're unset
+$GLOBALS['website_url']     = isset($GLOBALS['website_url'])      ? $GLOBALS['website_url']    : 'http://nobleme.com/';
+$GLOBALS['domain_name']     = isset($GLOBALS['domain_name'])      ? $GLOBALS['domain_name']     : 'nobleme.com';
+$GLOBALS['mysql_host']      = isset($GLOBALS['mysql_host'])       ? $GLOBALS['mysql_host']      : 'localhost';
+$GLOBALS['mysql_user']      = isset($GLOBALS['mysql_user'])       ? $GLOBALS['mysql_user']      : 'nobleme';
+$GLOBALS['salt_key']        = isset($GLOBALS['salt_key'])         ? $GLOBALS['salt_key']        : '$6$somestring$';
+$GLOBALS['irc_bot_pass']    = isset($GLOBALS['irc_bot_pass'])     ? $GLOBALS['irc_bot_pass']    : 'password';
+$GLOBALS['extra_folders']   = isset($GLOBALS['extra_folders'])    ? $GLOBALS['extra_folders']   : 0;
+$GLOBALS['dev_mode']        = isset($GLOBALS['dev_mode'])         ? $GLOBALS['dev_mode']        : 0;
+$GLOBALS['env_debug_mode']  = isset($GLOBALS['env_debug_mode'])   ? $GLOBALS['env_debug_mode']  : 0;
+$GLOBALS['sql_debug_mode']  = isset($GLOBALS['sql_debug_mode'])   ? $GLOBALS['sql_debug_mode']  : 0;
+$GLOBALS['act_debug_mode']  = isset($GLOBALS['act_debug_mode'])   ? $GLOBALS['act_debug_mode']  : 0;
+$GLOBALS['full_debug_mode'] = isset($GLOBALS['full_debug_mode'])  ? $GLOBALS['full_debug_mode'] : 0;
+
 // Enforce a global timezone on the server side
 date_default_timezone_set('Europe/Paris');
+
+// Make var_dumps unlimited in size
+ini_set('xdebug.var_display_max_depth', '-1');
+ini_set('xdebug.var_display_max_children', '-1');
+ini_set('xdebug.var_display_max_data', '-1');
 
 
 

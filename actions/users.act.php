@@ -133,6 +133,10 @@ function users_get_list($sort_by='', $max_count=0, $deleted=0, $activity_cutoff=
   // Add the number of rows to the data
   $data['rows'] = $i;
 
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('users.act.php', 'users_get_list', $data));
+
   // Return the prepared data
   return $data;
 }

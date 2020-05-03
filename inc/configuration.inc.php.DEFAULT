@@ -5,21 +5,28 @@
 // Include only /*****************************************************************************************************/
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The following global variables are your local settings - set them accordingly, otherwise NoBleme will not work
 // Duplicate this file, then remove the .DEFAULT (rename it to "configuration.inc.php") and fill up these variables:
 
-$GLOBALS['dev_mode']      = 0;                      // Change this to 1 if you want to enable dangerous features
-$GLOBALS['website_url']   = 'http://nobleme.com/';  // URL of the website root
-$GLOBALS['domain_name']   = 'nobleme.com';          // Domain name on which the website is being used
-$GLOBALS['mysql_host']    = 'localhost';            // MySQL server address
-$GLOBALS['mysql_user']    = 'nobleme';              // MySQL user login
-$GLOBALS['mysql_pass']    = 'password';             // MySQL user password
-$GLOBALS['salt_key']      = '$6$somestring$';       // String used by crypt() to hash passwords
-$GLOBALS['irc_bot_pass']  = 'password';             // Password of the IRC bot
-$GLOBALS['extra_folders'] = 0;                      /* If NoBleme URL is not at server root, this is the number
-                                                    /  of folders between the root and NoBleme. example:
-                                                    /  if NoBleme is at http://website.com/ leave this as 0
-                                                    /  if NoBleme is at http://website.com/nobleme/, this is 1
-                                                    /  at http://website.com/stuff/nobleme/, this at 2, etc. */
+$GLOBALS['website_url']     = 'http://nobleme.com/';  // URL of the website root
+$GLOBALS['domain_name']     = 'nobleme.com';          // Domain name on which the website is being used
+$GLOBALS['mysql_host']      = 'localhost';            // MySQL server address
+$GLOBALS['mysql_user']      = 'nobleme';              // MySQL user login
+$GLOBALS['mysql_pass']      = 'password';             // MySQL user password
+$GLOBALS['salt_key']        = '$6$somestring$';       // String used by crypt() to hash passwords
+$GLOBALS['irc_bot_pass']    = 'password';             // Password of the IRC bot
+$GLOBALS['extra_folders']   = 0;                      /* If NoBleme URL is not at server root, this is the number
+                                                      /  of folders between the root and NoBleme. example:
+                                                      /  if NoBleme is at http://website.com/ leave this as 0
+                                                      /  if NoBleme is at http://website.com/nobleme/, this is 1
+                                                      /  at http://website.com/stuff/nobleme/, this at 2, etc. */
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// These variables should never be toggled on in a production environment, only use them for toying around locally
+
+$GLOBALS['dev_mode']        = 0;                      // Change this to 1 if you want to enable dangerous features
+$GLOBALS['env_debug_mode']  = 0;                      // Change this and dev mode to 1 to print environment variables
+$GLOBALS['sql_debug_mode']  = 0;                      // Change this and dev mode to 1 to print all queries and results
+$GLOBALS['act_debug_mode']  = 0;                      // Change this and dev mode to 1 to print action functions logic
+$GLOBALS['full_debug_mode'] = 0;                      // Change this and dev mode to 1 to print all variables in footer

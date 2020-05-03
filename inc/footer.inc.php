@@ -25,6 +25,16 @@ $copyright_date = date('Y');
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Debug mode
+
+// In full debug mode, print all variables in footer
+if($GLOBALS['dev_mode'] && $GLOBALS['full_debug_mode'])
+  var_dump(get_defined_vars());
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                DISPLAY THE FOOTER                                                 */

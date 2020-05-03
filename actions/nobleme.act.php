@@ -117,6 +117,10 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $deleted=0, $is
   // Add the number of rows to the data
   $data['rows'] = $i;
 
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('nobleme.act.php', 'activity_get_logs', $data));
+
   // Return the prepared data
   return $data;
 }
@@ -168,6 +172,10 @@ function activity_get_details($log_id, $lang='EN')
     else
       $data['diff'] .= '<span class="bold underlined">'.sanitize_output($ddiff['d_desc']).' :</span> '.bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
   }
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('nobleme.act.php', 'activity_get_details', $data));
 
   // Return the prepared data
   return $data;
