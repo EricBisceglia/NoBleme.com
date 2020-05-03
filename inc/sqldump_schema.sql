@@ -282,17 +282,21 @@ CREATE TABLE IF NOT EXISTS `quotes_users` (
   KEY `index_user` (`fk_users`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `stats_pageviews`;
-CREATE TABLE IF NOT EXISTS `stats_pageviews` (
+DROP TABLE IF EXISTS `stats_pages`;
+CREATE TABLE IF NOT EXISTS `stats_pages` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `page_name_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `page_name_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `page_url` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_viewed_at` int(10) UNSIGNED NOT NULL,
   `view_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `view_count_archive` int(10) UNSIGNED NOT NULL DEFAULT '0',
-  `last_viewed_at` int(10) UNSIGNED NOT NULL,
+  `query_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `load_time` int(10) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `index_view_count` (`view_count`,`view_count_archive`)
+  KEY `index_view_count` (`view_count`,`view_count_archive`),
+  KEY `index_queries` (`query_count`),
+  KEY `index_load_time` (`load_time`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `system_scheduler`;

@@ -12,15 +12,35 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Current pageview count
 $pageviews = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $pageviews, 1) : '';
 
+// Current version
+$version = system_get_current_version_number('full');
+
 // Load time and query count
 $load_time  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3).'s';
 $metrics    = __('footer_loadtime').$load_time.__('with', 1, 1, 1).$GLOBALS['query'].__('query', $GLOBALS['query'], 1);
 
-// Current version
-$version = system_get_current_version_number('full');
-
 // Copyright ending date
 $copyright_date = date('Y');
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Update the page's metrics
+
+if(isset($page_url) && !isset($error_mode))
+{
+  // Sanitize the data
+  $page_url_sanitized   = sanitize($page_url, 'string');
+  $queries_sanitized    = sanitize($GLOBALS['query'], 'int');
+  $load_time_sanitized  = sanitize(($load_time * 1000), 'int');
+
+  // Update the page stats
+  query(" UPDATE  stats_pages
+          SET     stats_pages.query_count =     '$queries_sanitized'        ,
+                  stats_pages.load_time   =     '$load_time_sanitized'
+          WHERE   stats_pages.page_url    LIKE  '$page_url_sanitized' ");
+}
 
 
 

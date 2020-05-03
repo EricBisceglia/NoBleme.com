@@ -883,18 +883,22 @@ if($last_query < 21)
 
 if($last_query < 22)
 {
-  sql_rename_table('pageviews', 'stats_pageviews');
+  sql_rename_table('pageviews', 'stats_pages');
 
-  sql_change_field_type('stats_pageviews', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('stats_pageviews', 'nom_page', 'page_name_fr', 'TEXT NOT NULL');
-  sql_create_field('stats_pageviews', 'page_name_en', 'TEXT NOT NULL', 'id');
-  sql_rename_field('stats_pageviews', 'url_page', 'page_url', 'TEXT NOT NULL');
-  sql_rename_field('stats_pageviews', 'vues', 'view_count', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('stats_pageviews', 'vues_lastvisit', 'view_count_archive', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_create_field('stats_pageviews', 'last_viewed_at', 'INT UNSIGNED NOT NULL', 'view_count_archive');
-  sql_delete_index('stats_pageviews', 'index_tri');
-  sql_delete_index('stats_pageviews', 'index_recherche');
-  sql_create_index('stats_pageviews', 'index_view_count', 'view_count, view_count_archive');
+  sql_change_field_type('stats_pages', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('stats_pages', 'nom_page', 'page_name_fr', 'TEXT NOT NULL');
+  sql_create_field('stats_pages', 'page_name_en', 'TEXT NOT NULL', 'id');
+  sql_rename_field('stats_pages', 'url_page', 'page_url', 'TEXT NOT NULL');
+  sql_create_field('stats_pages', 'last_viewed_at', 'INT UNSIGNED NOT NULL', 'page_url');
+  sql_rename_field('stats_pages', 'vues', 'view_count', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('stats_pages', 'vues_lastvisit', 'view_count_archive', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_create_field('stats_pages', 'query_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'view_count_archive');
+  sql_create_field('stats_pages', 'load_time', 'INT UNSIGNED NOT NULL DEFAULT 0', 'query_count');
+  sql_delete_index('stats_pages', 'index_tri');
+  sql_delete_index('stats_pages', 'index_recherche');
+  sql_create_index('stats_pages', 'index_view_count', 'view_count, view_count_archive');
+  sql_create_index('stats_pages', 'index_queries', 'query_count');
+  sql_create_index('stats_pages', 'index_load_time', 'load_time');
 
   $pageviews_page_urls = array( 'pages/nobleme/activite'  => 'pages/nobleme/activity' ,
                                 'pages/nobleme/404'       => '404'                    ,
@@ -904,9 +908,9 @@ if($last_query < 22)
   {
     $old_url  = sanitize($old_url, 'string');
     $new_url  = sanitize($new_url, 'string');
-    query(" UPDATE  stats_pageviews
-            SET     stats_pageviews.page_url    = '$new_url'
-            WHERE   stats_pageviews.page_url LIKE '$old_url' ");
+    query(" UPDATE  stats_pages
+            SET     stats_pages.page_url    = '$new_url'
+            WHERE   stats_pages.page_url LIKE '$old_url' ");
   }
 
   sql_update_query_id(22);

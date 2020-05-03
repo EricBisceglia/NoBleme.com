@@ -15,10 +15,10 @@ if(isset($GLOBALS['sql_database_agnostic']))
 else
   $GLOBALS['db'] = @mysqli_connect($GLOBALS['mysql_host'], $GLOBALS['mysql_user'], $GLOBALS['mysql_pass'], 'nobleme') or die ('MySQL error: Connexion failed.');
 
-// Initialize a session specific global query counter, used by admins for metrics (number of queries in a page)
-$GLOBALS['query'] = -1;
+// Initialize a session specific global query counter, used by admins for metrics (number of extra queries in a page)
+$GLOBALS['query'] = 0;
 
-// Use this opportunity to set the global charset - it uses one mandatory query, hence why counter starts at -1
+// Set the global charset in order to avoid encoding mishaps
 mysqli_set_charset($GLOBALS['db'], "utf8mb4");
 query(' SET NAMES utf8mb4 ');
 

@@ -124,9 +124,9 @@ if(isset($page_url) && !isset($error_mode))
   $page_timestamp     = time();
 
   // Fetch current page's view count
-  $qpageviews = query(" SELECT  stats_pageviews.view_count AS 'p_views'
-                        FROM    stats_pageviews
-                        WHERE   stats_pageviews.page_url = '$page_url_sanitized' ");
+  $qpageviews = query(" SELECT  stats_pages.view_count AS 'p_views'
+                        FROM    stats_pages
+                        WHERE   stats_pages.page_url = '$page_url_sanitized' ");
 
   // Define the current view count (used in the footer for metrics)
   $dpageviews = mysqli_fetch_array($qpageviews);
@@ -134,21 +134,21 @@ if(isset($page_url) && !isset($error_mode))
 
   // If the page exists, increment its view count (unless user is an admin)
   if(!$is_admin && mysqli_num_rows($qpageviews) != 0)
-    query(" UPDATE  stats_pageviews
-            SET     stats_pageviews.view_count      = stats_pageviews.view_count + 1  ,
-                    stats_pageviews.page_name_en    = '$page_en_sanitized'            ,
-                    stats_pageviews.page_name_fr    = '$page_fr_sanitized'            ,
-                    stats_pageviews.last_viewed_at  = '$page_timestamp'
-            WHERE   stats_pageviews.page_url        = '$page_url_sanitized' ");
+    query(" UPDATE  stats_pages
+            SET     stats_pages.view_count      =     stats_pages.view_count + 1  ,
+                    stats_pages.page_name_en    =     '$page_en_sanitized'        ,
+                    stats_pages.page_name_fr    =     '$page_fr_sanitized'        ,
+                    stats_pages.last_viewed_at  =     '$page_timestamp'
+            WHERE   stats_pages.page_url        LIKE  '$page_url_sanitized' ");
 
   // If it doesn't, create the page and give it its first pageview
   else if(!$dpageviews["p_views"])
-    query(" INSERT INTO stats_pageviews
-            SET         stats_pageviews.page_url        = '$page_url_sanitized' ,
-                        stats_pageviews.page_name_en    = '$page_en_sanitized'  ,
-                        stats_pageviews.page_name_fr    = '$page_fr_sanitized'  ,
-                        stats_pageviews.last_viewed_at  = '$page_timestamp'     ,
-                        stats_pageviews.view_count      = 1                     ");
+    query(" INSERT INTO stats_pages
+            SET         stats_pages.page_url        = '$page_url_sanitized' ,
+                        stats_pages.page_name_en    = '$page_en_sanitized'  ,
+                        stats_pages.page_name_fr    = '$page_fr_sanitized'  ,
+                        stats_pages.last_viewed_at  = '$page_timestamp'     ,
+                        stats_pages.view_count      = 1                     ");
 }
 
 
