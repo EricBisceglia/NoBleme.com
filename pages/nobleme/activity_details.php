@@ -12,7 +12,7 @@ include_once './../../inc/bbcodes.inc.php';     # BBCodes
 page_must_be_fetched_dynamically();
 
 // Limit page access rights
-user_restrict_to_global_moderators($lang);
+user_restrict_to_moderators($lang);
 
 
 

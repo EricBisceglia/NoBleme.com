@@ -63,7 +63,7 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $deleted=0, $is
                           logs_activity_details.id                  AS 'l_details'
                 FROM      logs_activity
                 LEFT JOIN logs_activity_details ON logs_activity.id = logs_activity_details.fk_logs_activity
-                WHERE     logs_activity.is_administrators_only  = '$modlogs'
+                WHERE     logs_activity.is_moderators_only      = '$modlogs'
                 AND       logs_activity.language             LIKE '%$lang%' ";
 
   // Filter by log type

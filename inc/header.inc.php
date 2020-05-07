@@ -41,7 +41,7 @@ $domain_name_start  = $domain_name[0];
 $domain_name_end    = $domain_name[1];
 
 // If the user permission variables don't exist, stop here
-if(!isset($is_admin) || !isset($is_global_moderator) || !isset($is_moderator))
+if(!isset($is_admin) || !isset($is_moderator))
   exit(__('error_forbidden'));
 
 // If the user doesn't have a set language, stop here
@@ -433,7 +433,7 @@ $javascripts .= '
         <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_account" src="<?=$path?>img/icons/login.svg" alt="Account" onclick="toggle_header_menu('account');">
         <?php } ?>
 
-        <?php if($is_global_moderator) { ?>
+        <?php if($is_moderator) { ?>
         <img class="header_topmenu_icon header_topmenu_panel" src="<?=$path?>img/icons/admin_panel.svg" alt="Account" onclick="toggle_header_menu('admin');">
         <?php } ?>
 
@@ -489,9 +489,6 @@ $javascripts .= '
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_nobleme_staff'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_birthdays'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -576,9 +573,6 @@ $javascripts .= '
           <?=__link('pages/politics/manifesto', __('submenu_pages_politics_manifesto'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_politics_documentation'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_pages_politics_join'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
@@ -616,22 +610,7 @@ $javascripts .= '
           <?=__link('todo_link', __('submenu_social_meetups_list'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_social_meetups_stats'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-      </div>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
-          <?=__('submenu_social_games')?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_social_games_minecraft'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_social_games_nbrpg'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_social_games_nrm'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_social_meetups_host'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -644,9 +623,6 @@ $javascripts .= '
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_social_quotes_random'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_social_quotes_stats'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_social_quotes_submit'), 'header_submenu_link text_blue', 1, $path);?>
@@ -782,7 +758,7 @@ $javascripts .= '
 
 <?php ############################################# SUBMENU: ADMIN ################################################# ?>
 
-    <?php if($is_global_moderator) { ?>
+    <?php if($is_moderator) { ?>
     <div class="header_submenu" id="header_submenu_admin">
 
       <div class="header_submenu_column">

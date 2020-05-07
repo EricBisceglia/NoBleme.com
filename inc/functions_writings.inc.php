@@ -28,14 +28,13 @@ function writings_contest_can_vote($user_id=NULL)
   $user_id = sanitize($user_id, 'int', 0);
 
   // Fetch some info about the user
-  $duser = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'u_admin'      ,
-                                              users.is_global_moderator AS 'u_global_mod' ,
-                                              users.is_moderator        AS 'u_mod'
+  $duser = mysqli_fetch_array(query(" SELECT  users.is_administrator  AS 'u_admin' ,
+                                              users.is_moderator      AS 'u_mod'
                                       FROM    users
                                       WHERE   users.id = '$user_id' "));
 
   // If the user is part of the administrative team, then he can vote
-  $can_vote = ($duser['u_admin'] || $duser['u_global_mod'] || $duser['u_mod']) ? 1 : 0;
+  $can_vote = ($duser['u_admin'] || $duser['u_mod']) ? 1 : 0;
 
   // Otherwise, check if the user has contributed a writing to a past contest in the writer's corner
   if(!$can_vote)

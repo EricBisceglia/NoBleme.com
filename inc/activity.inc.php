@@ -153,14 +153,6 @@ function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $
     $return['FR']   = $nickname." a rejoint l'équipe administrative en tant que modérateur";
   }
 
-  else if($type === 'users_rights_global_moderator')
-  {
-    $return['css']  = 'orange bold';
-    $return['href'] = $path.'todo_link';
-    $return['EN']   = $nickname." has joined the administrative team as a global moderator";
-    $return['FR']   = $nickname." a rejoint l'équipe admin. en tant que modérateur global";
-  }
-
   else if($type === 'users_rights_administrator')
   {
     $return['css']  = 'red bold';

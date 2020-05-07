@@ -571,8 +571,6 @@ ___('submenu_nobleme_userlist', 'EN', "Registered user list");
 ___('submenu_nobleme_userlist', 'FR', "Liste des membres");
 ___('submenu_nobleme_staff', 'EN', "Administrative team");
 ___('submenu_nobleme_staff', 'FR', "Équipe administrative");
-___('submenu_nobleme_birthdays', 'EN', "User birthdays");
-___('submenu_nobleme_birthdays', 'FR', "Anniversaires");
 
 ___('submenu_nobleme_documentation', 'EN', "Documentation");
 ___('submenu_nobleme_documentation', 'FR', "Documentation");
@@ -621,8 +619,6 @@ ___('submenu_pages_politics', 'EN', "Politics");
 ___('submenu_pages_politics', 'FR', "Politique");
 ___('submenu_pages_politics_manifesto', 'EN', "Contrapositionist manifesto");
 ___('submenu_pages_politics_manifesto', 'FR', "Manifeste contrapositioniste");
-___('submenu_pages_politics_documentation', 'EN', "Systemic violence");
-___('submenu_pages_politics_documentation', 'FR', "Violence systémique");
 ___('submenu_pages_politics_join', 'EN', "Join the movement");
 ___('submenu_pages_politics_join', 'FR', "Rejoindre le mouvement");
 
@@ -643,8 +639,8 @@ ___('submenu_social_meetups', 'EN', "Real life meetups");
 ___('submenu_social_meetups', 'FR', "Rencontres IRL");
 ___('submenu_social_meetups_list', 'EN', "List of meetups");
 ___('submenu_social_meetups_list', 'FR', "Liste des IRL");
-___('submenu_social_meetups_stats', 'EN', "Meetup statistics");
-___('submenu_social_meetups_stats', 'FR', "Statistiques des IRL");
+___('submenu_social_meetups_host', 'EN', "Plan a new meetup");
+___('submenu_social_meetups_host', 'FR', "Organiser une IRL");
 
 ___('submenu_social_quotes', 'EN', "Quotes");
 ___('submenu_social_quotes', 'FR', "Citations");
@@ -652,19 +648,8 @@ ___('submenu_social_quotes_list', 'EN', "Quote database");
 ___('submenu_social_quotes_list', 'FR', "Paroles de NoBlemeux");
 ___('submenu_social_quotes_random', 'EN', "Random quote");
 ___('submenu_social_quotes_random', 'FR', "Citation au hasard");
-___('submenu_social_quotes_stats', 'EN', "Quote statistics");
-___('submenu_social_quotes_stats', 'FR', "Statistiques des citations");
 ___('submenu_social_quotes_submit', 'EN', "Submit a new quote");
 ___('submenu_social_quotes_submit', 'FR', "Proposer une citation");
-
-___('submenu_social_games', 'EN', "Video games");
-___('submenu_social_games', 'FR', "Jeux vidéo");
-___('submenu_social_games_minecraft', 'EN', "Serveur Minecraft");
-___('submenu_social_games_minecraft', 'FR', "Minecraft server");
-___('submenu_social_games_nbrpg', 'EN', "Archive: NoBlemeRPG");
-___('submenu_social_games_nbrpg', 'FR', "Archive : NoBlemeRPG");
-___('submenu_social_games_nrm', 'EN', "Archive: NRM Online");
-___('submenu_social_games_nrm', 'FR', "Archive : NRM Online");
 
 
 // Submenu: Account

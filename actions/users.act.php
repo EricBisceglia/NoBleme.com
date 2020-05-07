@@ -50,18 +50,17 @@ function users_get_list($sort_by='', $max_count=0, $deleted=0, $activity_cutoff=
   $data = array();
 
   // Fetch the user list
-  $qusers = "       SELECT    'user'                            AS 'data_type'        ,
-                              users.id                          AS 'u_id'             ,
-                              users.nickname                    AS 'u_nick'           ,
-                              ''                                AS 'u_guest_name_en'  ,
-                              ''                                AS 'u_guest_name_fr'  ,
-                              users.is_administrator            AS 'u_admin'          ,
-                              users.is_global_moderator         AS 'u_global_mod'     ,
-                              users.is_moderator                AS 'u_mod'            ,
-                              users.last_visited_at             AS 'u_activity'       ,
-                              users.last_visited_page_en        AS 'u_last_page_en'   ,
-                              users.last_visited_page_fr        AS 'u_last_page_fr'   ,
-                              users.last_visited_url            AS 'u_last_url'
+  $qusers = "       SELECT    'user'                      AS 'data_type'        ,
+                              users.id                    AS 'u_id'             ,
+                              users.nickname              AS 'u_nick'           ,
+                              ''                          AS 'u_guest_name_en'  ,
+                              ''                          AS 'u_guest_name_fr'  ,
+                              users.is_administrator      AS 'u_admin'          ,
+                              users.is_moderator          AS 'u_mod'            ,
+                              users.last_visited_at       AS 'u_activity'       ,
+                              users.last_visited_page_en  AS 'u_last_page_en'   ,
+                              users.last_visited_page_fr  AS 'u_last_page_fr'   ,
+                              users.last_visited_url      AS 'u_last_url'
                     FROM      users
                     LEFT JOIN users_settings ON users.id = users_settings.fk_users
                     WHERE     users.is_deleted                  = '$deleted' ";
@@ -95,7 +94,6 @@ function users_get_list($sort_by='', $max_count=0, $deleted=0, $activity_cutoff=
                                 users_guests.randomly_assigned_name_en  AS 'u_guest_name_en'  ,
                                 users_guests.randomly_assigned_name_fr  AS 'u_guest_name_fr'  ,
                                 0                                       AS 'u_admin'          ,
-                                0                                       AS 'u_global_mod'     ,
                                 0                                       AS 'u_mod'            ,
                                 users_guests.last_visited_at            AS 'u_activity'       ,
                                 users_guests.last_visited_page_en       AS 'u_last_page_en'   ,
@@ -125,7 +123,6 @@ function users_get_list($sort_by='', $max_count=0, $deleted=0, $activity_cutoff=
     $data[$i]['last_url']   = sanitize_output($row['u_last_url']);
     $temp                   = ($row['data_type'] == 'user') ? ' bold noglow' : ' noglow';
     $temp                   = ($row['u_mod']) ? ' bold text_orange noglow' : $temp;
-    $temp                   = ($row['u_global_mod']) ? ' bold text_orange noglow' : $temp;
     $temp                   = ($row['u_admin']) ? ' bold text_red' : $temp;
     $data[$i]['css']        = $temp;
   }

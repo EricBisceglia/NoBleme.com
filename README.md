@@ -30,7 +30,7 @@ Installing a pre-assembled LAMP/MAMP/WAMP stack (depending on your OS) will let 
 
 6. Run in your browser the file called `fixtures.php` at the root of the project and let it initialize the database
 
-This is it, you now have a working local copy of NoBleme. No, really, it's that simple, everything's here, including randomly generated data for most features of the website. The fixtures that have been inserted in your local database includes a bunch of users that you can use without passwords (as long as you have enabled `dev_mode` in the configuration file), so feel free to log in as either one of those when testing features that rely on user permissions: `Admin`, `Global_mod`, `Moderator`, `User`, `Prude`, and `Banned`.
+This is it, you now have a working local copy of NoBleme. No, really, it's that simple, everything's here, including randomly generated data for most features of the website. The fixtures that have been inserted in your local database includes a bunch of users that you can use without passwords (as long as you have enabled `dev_mode` in the configuration file), so feel free to log in as either one of those when testing features that rely on user permissions: `Admin`, `Mod`, `User`, `Prude`, and `Banned`.
 
 In case the `configuration.inc.php` part is overwhelming, here's what my local configuration looks like when working on my development environment, maybe it can help you understand anything confusing about it:
 

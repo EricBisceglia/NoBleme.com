@@ -30,9 +30,8 @@ function error_page($message, $path="./../../", $lang=NULL)
   if(!$is_logged_in)
   {
     // By default, assume he does not
-    $is_admin             = 0;
-    $is_global_moderator  = 0;
-    $is_moderator         = 0;
+    $is_admin     = 0;
+    $is_moderator = 0;
   }
   else
   {
@@ -40,16 +39,14 @@ function error_page($message, $path="./../../", $lang=NULL)
     $id_user = sanitize($is_logged_in, 'int', 0);
 
     // Fetch the user's access rights
-    $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'm_admin'      ,
-                                                  users.is_global_moderator AS 'm_globalmod'  ,
-                                                  users.is_moderator        AS 'm_mod'
+    $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator  AS 'm_admin' ,
+                                                  users.is_moderator      AS 'm_mod'
                                           FROM    users
                                           WHERE   users.id = '$id_user' "));
 
     // Set them as variables, the header needs them
-    $is_admin             = $drights['m_admin'];
-    $is_global_moderator  = ($is_admin || $drights['m_globalmod']) ? 1 : 0;
-    $is_moderator         = $drights['m_mod'];
+    $is_admin     = $drights['m_admin'];
+    $is_moderator = ($is_admin || $drights['m_mod']) ? 1 : 0;
   }
 
   // Figure out the user's language if required, from the session if it is there (required by the header)

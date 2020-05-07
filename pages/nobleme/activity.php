@@ -11,7 +11,7 @@ include_once './../../inc/activity.inc.php';       # Activity log parsing
 
 // Limit page access rights
 if(isset($_GET['mod']))
-  user_restrict_to_global_moderators($lang);
+  user_restrict_to_moderators($lang);
 
 // Hide the page from who's online
 if(isset($_GET['mod']))

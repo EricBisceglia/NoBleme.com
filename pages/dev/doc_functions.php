@@ -1080,15 +1080,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           user_is_moderator()
         </td>
         <td class="align_left">
-          Checks if an user has moderator rights (or above).
-        </td>
-      </tr>
-      <tr>
-        <td class="align_right smallglow">
-          user_is_global_moderator()
-        </td>
-        <td class="align_left">
-          Checks if an user is a global moderator (or above).
+          Checks if an user is a moderator (or above).
         </td>
       </tr>
       <tr>
@@ -1120,15 +1112,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           user_restrict_to_moderators()
         </td>
         <td class="align_left">
-          Allows access only to global or local moderators (or above).
-        </td>
-      </tr>
-      <tr>
-        <td class="align_right smallglow">
-          user_restrict_to_global_moderators()
-        </td>
-        <td class="align_left">
-          Allows access only to global moderators (or above).
+          Allows access only to moderators (or above).
         </td>
       </tr>
       <tr>

@@ -66,9 +66,8 @@ $is_logged_in = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : 0;
 if(!$is_logged_in)
 {
   // By default, assume he does not
-  $is_admin             = 0;
-  $is_global_moderator  = 0;
-  $is_moderator         = 0;
+  $is_admin     = 0;
+  $is_moderator = 0;
 }
 else
 {
@@ -76,24 +75,21 @@ else
   $id_user = sanitize($is_logged_in, 'int', 0);
 
   // Go look for his access rights
-  $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator    AS 'm_admin'      ,
-                                                users.is_global_moderator AS 'm_globalmod'  ,
-                                                users.is_moderator        AS 'm_mod'
+  $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator  AS 'm_admin' ,
+                                                users.is_moderator      AS 'm_mod'
                                         FROM    users
                                         WHERE   users.id = '$id_user' "));
 
   // Set them as variables, which the header will use
-  $is_admin             = $drights['m_admin'];
-  $is_global_moderator  = ($is_admin || $drights['m_globalmod']) ? 1 : 0;
-  $is_moderator         = $drights['m_mod'];
+  $is_admin     = $drights['m_admin'];
+  $is_moderator = ($is_admin || $drights['m_mod']) ? 1 : 0;
 
   // If the user's account doesn't exist, log him out and set all permissions to 0
   if($drights['m_admin'] === null)
   {
     user_log_out();
-    $is_admin             = 0;
-    $is_global_moderator  = 0;
-    $is_moderator         = 0;
+    $is_admin     = 0;
+    $is_moderator = 0;
   }
 }
 
@@ -376,67 +372,16 @@ function user_get_nickname($user_id=NULL)
 
 
 /**
- * Checks if an user has moderator rights (or above).
+ * Checks if an user is a moderator (or above).
  *
  * Defaults to checking whether current user is a moderator unless the $user_id optional parameter is specified.
  *
- * @param   string|null  $website_section  (OPTIONAL)  Checks if the user has moderator rights over a specific area.
- * @param   int|null     $user_id          (OPTIONAL)  Checks if user with a specific id is a moderator.
+ * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is a moderator.
  *
- * @return  bool                                  Returns 1 if the user has moderator rights, 0 if he doesn't.
+ * @return  bool                            Returns 1 if the user has moderator rights, 0 if he doesn't.
  */
 
-function user_is_moderator($website_section=NULL, $user_id=NULL)
-{
-  // If no user id is specified, use the current active session instead
-  if(!$user_id && isset($_SESSION['user_id']))
-    $user_id = $_SESSION['user_id'];
-
-  // If no user is specified, this means the user is a guest, return 0
-  if(!$user_id)
-    return 0;
-
-  // Sanitize user id
-  $user_id = sanitize($user_id, 'int', 0);
-
-  // Fetch user rights
-  $drights = mysqli_fetch_array(query(" SELECT  users.moderator_rights    AS 'u_mod_area' ,
-                                                users.is_moderator        AS 'u_mod'      ,
-                                                users.is_global_moderator AS 'u_global'   ,
-                                                users.is_administrator    AS 'u_admin'
-                                        FROM    users
-                                        WHERE   users.id = '$user_id' "));
-
-  // If user is an admin or a global mod, return 1
-  if($drights['u_global'] || $drights['u_admin'])
-    return 1;
-
-  // If user is a moderator and there's no specified section, return 1
-  if($drights['u_mod'] && !$website_section)
-    return 1;
-
-  // If user is a moderator and a website section is specified, then check whether the user is allowed to moderate it
-  if($drights['u_mod'] && $website_section && strpos($drights['u_mod_area'], $website_section))
-    return 1;
-
-  // If none of the above were matches, then the user shouldn't have access: return 0
-  return 0;
-}
-
-
-
-
-/**
- * Checks if an user is a global moderator (or above).
- *
- * Defaults to checking whether current user is a global moderator unless the $user_id optional parameter is specified.
- *
- * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is a global moderator.
- *
- * @return  bool                            Returns 1 if the user has global moderator rights, 0 if he doesn't.
- */
-
-function user_is_global_moderator($user_id=NULL)
+function user_is_moderator($user_id=NULL)
 {
   // If no user id is specified, use the current active session instead
   if(!$user_id && isset($_SESSION['user_id']))
@@ -450,13 +395,13 @@ function user_is_global_moderator($user_id=NULL)
   $user_id = sanitize($user_id, 'int', 0);
 
   // Fetch user rights
-  $drights = mysqli_fetch_array(query(" SELECT  users.is_global_moderator AS 'u_global' ,
-                                                users.is_administrator    AS 'u_admin'
+  $drights = mysqli_fetch_array(query(" SELECT  users.is_moderator      AS 'u_mod' ,
+                                                users.is_administrator  AS 'u_admin'
                                         FROM    users
                                         WHERE   users.id = '$user_id' "));
 
-  // If user is an admin or a global mod, return 1
-  if($drights['u_global'] || $drights['u_admin'])
+  // If user is an admin or a mod, return 1
+  if($drights['u_mod'] || $drights['u_admin'])
     return 1;
 
   // If none of the above were matches, then the user shouldn't have access: return 0
@@ -502,67 +447,26 @@ function user_is_administrator($user_id=NULL)
 
 
 /**
- * Allows access only to global or local moderators (or above).
+ * Allows access only to moderators (or above).
  *
  * Any user who does not have the required rights will get rejected and see an error page.
  * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
  *
- * @param   string|null $lang             (OPTIONAL)  The language used in the error message.
- * @param   string|null $website_section  (OPTIONAL)  The section of the website on which moderators must have rights.
+ * @param   string|null $lang (OPTIONAL)  The language used in the error message.
  *
  * @return  void
  */
 
-function user_restrict_to_moderators($lang='EN', $website_section=NULL)
+function user_restrict_to_moderators($lang='EN')
 {
   // Prepare the error message that will be displayed
-  $error_message = ($lang == 'EN') ? "This page is restricted to website staff only." : "Cette page est réservée aux équipes de modération du site.";
-
-  // Check if the user is logged in
-  if(user_is_logged_in())
-  {
-    // If no website section is specified, check if the user has global moderator rights, else throw the error
-    if(!$website_section)
-    {
-      if(!user_is_global_moderator($_SESSION['user_id']))
-        error_page($error_message);
-    }
-    // If a section is specified, check if the user has global or local moderator rights, else throw the error
-    else
-    {
-      if(!user_is_global_moderator($_SESSION['user_id']) && !user_is_moderator($website_section, $_SESSION['user_id']))
-        error_page($error_message);
-    }
-  }
-  // If the user is logged out, throw the error
-  else
-    error_page($error_message);
-}
-
-
-
-
-/**
- * Allows access only to global moderators (or above).
- *
- * Any user who does not have the required rights will get rejected and see an error page.
- * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
- *
- * @param   string|null $lang             (OPTIONAL)  The language used in the error message.
- *
- * @return  void
- */
-
-function user_restrict_to_global_moderators($lang='EN')
-{
-  // Prepare the error message that will be displayed
-  $error_message = ($lang == 'EN') ? "This page is restricted to website staff only." : "Cette page est réservée aux équipes de modération du site.";
+  $error_message = ($lang == 'EN') ? "This page is restricted to website staff only." : "Cette page est réservée aux équipes d'administration du site.";
 
   // Check if the user is logged in
   if(user_is_logged_in())
   {
     // Check if the user has global moderator rights
-    if(!user_is_global_moderator($_SESSION['user_id']))
+    if(!user_is_moderator($_SESSION['user_id']))
       error_page($error_message);
   }
   // If the user is logged out, throw the error
