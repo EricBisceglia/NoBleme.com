@@ -122,6 +122,59 @@ ___('dev_versions_edit_error_duplicate', 'FR', "Erreur : Ce numéro de version 
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                      IRC BOT                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Bot action selector
+___('irc_bot_action_title', 'EN', 'IRC bot management');
+___('irc_bot_action_title', 'FR', 'Gestion du bot IRC');
+___('irc_bot_action_start', 'EN', 'Start the bot');
+___('irc_bot_action_start', 'FR', 'Démarrer le bot');
+___('irc_bot_action_stop', 'EN', 'Stop the bot');
+___('irc_bot_action_stop', 'FR', 'Arrêter le bot');
+___('irc_bot_action_silence', 'EN', 'Silence the bot');
+___('irc_bot_action_silence', 'FR', 'Faire taire le bot');
+___('irc_bot_action_upcoming', 'EN', 'Message queue');
+___('irc_bot_action_upcoming', 'FR', 'Messages en attente');
+___('irc_bot_action_message_log', 'EN', 'Message history');
+___('irc_bot_action_message_log', 'FR', 'Historique des messages');
+___('irc_bot_action_send_message', 'EN', 'Send a message');
+___('irc_bot_action_send_message', 'FR', 'Envoyer un message');
+___('irc_bot_action_specialchars', 'EN', 'Special bytes');
+___('irc_bot_action_specialchars', 'FR', 'Bytes spéciaux');
+
+
+// Start the bot
+___('irc_bot_start_warning', 'EN', "Warning: Only do this if the bot is not already currently running.");
+___('irc_bot_start_warning', 'FR', "Avertissement : Il ne faut pas démarrer le bot s'il est déjà présent sur IRC.");
+___('irc_bot_start_starting', 'EN', "The IRC bot is starting…");
+___('irc_bot_start_starting', 'FR', "Le bot IRC est en train de démarrer");
+
+___('irc_bot_start_dev_mode', 'EN', "Error: The IRC bot should not be ran in dev mode");
+___('irc_bot_start_dev_mode', 'FR', "Erreur : Le bot IRC ne doit pas être démarré en dev mode");
+___('irc_bot_start_no_file', 'EN', "Error: The IRC bot file must exist.");
+___('irc_bot_start_no_file', 'FR', "Erreur : Le fichier du bot IRC doit exister.");
+___('irc_bot_start_failed', 'EN', "Error: Connexion to IRC server failed.");
+___('irc_bot_start_failed', 'FR', "Erreur : La connexion au serveur IRC a échoué.");
+
+
+// Stop the bot
+___('irc_bot_stopped', 'EN', "The IRC bot has been stopped.");
+___('irc_bot_stopped', 'FR', "Le bot IRC a été arrêté.");
+
+
+// Silence the bot
+___('irc_bot_mute', 'EN', "Silence the bot");
+___('irc_bot_mute', 'FR', "Silence the bot");
+___('irc_bot_unmute', 'EN', "Unmute the bot");
+___('irc_bot_unmute', 'FR', "Unmute the bot");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                   DOCUMENTATION                                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

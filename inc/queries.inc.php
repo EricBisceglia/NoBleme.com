@@ -904,8 +904,7 @@ if($last_query < 22)
   sql_create_index('stats_pages', 'index_load_time', 'load_time');
 
   $pageviews_page_urls = array( 'pages/nobleme/activite'  => 'pages/nobleme/activity' ,
-                                'pages/nobleme/404'       => '404'                    ,
-                                'pages/user/login'        => 'pages/users/login'      );
+                                'pages/nobleme/404'       => '404'                    );
 
   foreach($pageviews_page_urls as $old_url => $new_url)
   {
@@ -915,6 +914,9 @@ if($last_query < 22)
             SET     stats_pages.page_url    = '$new_url'
             WHERE   stats_pages.page_url LIKE '$old_url' ");
   }
+
+  query(" DELETE FROM stats_pages
+          WHERE       stats_pages.page_url LIKE 'pages/user/login' ");
 
   sql_update_query_id(22);
 }

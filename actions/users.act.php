@@ -413,8 +413,8 @@ function users_create_account($nickname, $password, $email, $password_check=null
   log_activity('users_register', 0, 'ENFR', 0, NULL, NULL, 0, $account_id, $nickname);
 
   // IRC message
-  ircbot("A new member registered on the website: $nickname_raw - ".$GLOBALS['website_url']."pages/users/user?id=".$account_id, "#english");
-  ircbot("Nouveau membre enregistré sur le site : $nickname_raw - ".$GLOBALS['website_url']."pages/users/user?id=".$account_id, "#NoBleme");
+  ircbot_send_message("A new member registered on the website: $nickname_raw - ".$GLOBALS['website_url']."todo_link", "english");
+  ircbot_send_message("Nouveau membre enregistré sur le site : $nickname_raw - ".$GLOBALS['website_url']."todo_link", "french");
 
   // Welcome private message
   private_message_send(__('users_register_private_message_title'), __('users_register_private_message', null, 0, 0, array($path)), $account_id, 1);

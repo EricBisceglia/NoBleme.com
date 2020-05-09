@@ -98,7 +98,7 @@ ___('users_register_private_message_title', 'FR', "Bienvenue sur NoBleme !");
 ___('users_register_private_message', 'EN', <<<EOT
 [size=1.3][b]Welcome to NoBleme![/b][/size]
 
-Now that you have registered, why not join the community where it is most active: on [url={{1}}pages/irc/index]the IRC chat server[/url].
+Now that you have registered, why not join the community where it is most active: on [url={{1}}todo_link]the IRC chat server[/url].
 
 If you are curious what is being active on the website recently, why not check out the [url={{1}}pages/nobleme/activity]recent activity page[/url] - that's what it's here for!
 
@@ -106,13 +106,13 @@ Enjoy your stay on NoBleme!
 If you have any questions, feel free to reply to this message.
 
 Your admin,
-[url={{1}}pages/users/user?id=1]Bad[/url]
+[url={{1}}todo_link]Bad[/url]
 EOT
 );
 ___('users_register_private_message', 'FR', <<<EOT
 [size=1.3][b]Bienvenue sur NoBleme ![/b][/size]
 
-Maintenant que vous avez rejoint le site, pourquoi ne pas rejoindre la communauté là où elle est active : sur [url={{1}}pages/irc/index]le serveur de discussion IRC[/url].
+Maintenant que vous avez rejoint le site, pourquoi ne pas rejoindre la communauté là où elle est active : sur [url={{1}}todo_link]le serveur de discussion IRC[/url].
 
 Si vous êtes curieux de ce qui se passe sur le site en ce moment, la page [url={{1}}pages/nobleme/activity]d'activité récente[/url] est là exprès pour ça.
 
@@ -120,7 +120,7 @@ Bon séjour sur NoBleme !
 Si vous avez la moindre question, n'hésitez pas à répondre à ce message.
 
 Votre administrateur,
-[url={{1}}pages/users/user?id=1]Bad[/url]
+[url={{1}}todo_link]Bad[/url]
 EOT
 );
 
@@ -158,8 +158,8 @@ EOT
 ___('users_online_title', 'EN', "Who's online?");
 ___('users_online_title', 'FR', "Qui est en ligne ?");
 
-___('users_online_header_intro', 'EN', "This page lists the most recently visited page of all users that were active on NoBleme in the last month. In the case of guests (users without an account), only the 1000 most recent ones are displayed, and randomly generated silly nicknames are assigned to each of them. If you fear that it might enable stalking in ways you're not comfortable with and want to be hidden from this page, you can do that in your account's {{link|pages/users/privacy|privacy options}}.");
-___('users_online_header_intro', 'FR', "Cette page recense l'activité la plus récente des visiteurs qui ont fréquenté NoBleme ce mois-ci. Dans le cas des invités (visiteurs non connectés), seuls les 1000 plus récents sont affichés, et de petits surnoms stupides leur sont aléatoirement assignés. Si vous craignez que cette page permette à des gens de vous traquer ou n'êtes juste pas confortable avec le fait d'avoir votre activité listée publiquement, vous pouvez retirer votre compte de la liste via vos {{link|pages/users/privacy|options de vie privée}}.");
+___('users_online_header_intro', 'EN', "This page lists the most recently visited page of all users that were active on NoBleme in the last month. In the case of guests (users without an account), only the 1000 most recent ones are displayed, and randomly generated silly nicknames are assigned to each of them. If you fear that it might enable stalking in ways you're not comfortable with and want to be hidden from this page, you can do that in your account's {{link|todo_link|privacy options}}.");
+___('users_online_header_intro', 'FR', "Cette page recense l'activité la plus récente des visiteurs qui ont fréquenté NoBleme ce mois-ci. Dans le cas des invités (visiteurs non connectés), seuls les 1000 plus récents sont affichés, et de petits surnoms stupides leur sont aléatoirement assignés. Si vous craignez que cette page permette à des gens de vous traquer ou n'êtes juste pas confortable avec le fait d'avoir votre activité listée publiquement, vous pouvez retirer votre compte de la liste via vos {{link|todo_link|options de vie privée}}.");
 
 ___('users_online_header_colors', 'EN', <<<EOD
 In order to tell them apart from each other, users are color coded:

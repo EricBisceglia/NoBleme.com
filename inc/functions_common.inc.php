@@ -1062,16 +1062,39 @@ function log_activity_delete($activity_type, $is_moderators_only=0, $fk_users=0,
 /**
  * Uses the IRC bot to broadcast a message.
  *
- * @param   string      $message                              The message to send.
- * @param   string|null $channel                  (OPTIONAL)  The IRC channel on which the message should be sent.
- * @param   string|null $path                     (OPTIONAL)  Path to the website root (defaults to 2 folders away).
- * @param   bool|null   $allow_special_formatting (OPTIONAL)  Allow IRC formatting characters in the message.
+ * @param   string      $message                          The message to send.
+ * @param   string|null $channel              (OPTIONAL)  The channel to use ('english' 'french' 'dev' 'mod' 'admin')
+ * @param   string|null $path                 (OPTIONAL)  Path to the website root (defaults to 2 folders away).
+ * @param   bool|null   $allow_special_chars  (OPTIONAL)  Allow IRC formatting characters in the message.
  *
- * @return  bool                                              Whether the message has been queued in the bot's file.
+ * @return  bool                                          Whether the message has been queued in the bot's file.
  */
 
-function ircbot($message, $channel=NULL, $path='./../../', $allow_special_formatting=0)
+function ircbot_send_message($message, $channel=NULL, $path='./../../', $allow_special_formatting=0)
 {
+  // Only use a limited amount of preset channel names
+  if($channel)
+  {
+    switch($channel)
+    {
+      case 'french':
+        $channel = '#nobleme';
+        break;
+      case 'dev':
+        $channel = '#dev';
+        break;
+      case 'mod':
+        $channel = '#sysop';
+        break;
+      case 'admin':
+        $channel = '#admin';
+        break;
+      default:
+        $channel = '#english';
+        break;
+    }
+  }
+
   // Sanitize the message for IRC usage
   $message = str_replace("\\n", '', $message);
   $message = str_replace("\\r", '', $message);
@@ -1102,7 +1125,7 @@ function ircbot($message, $channel=NULL, $path='./../../', $allow_special_format
     $message = str_replace('%C14',chr(0x03).'14',$message); // Color: Grey
 
     // Custom made bytes
-    $message = str_replace('%NB',chr(0x02).chr(0x03).'00,01',$message);              // Bold white on black
+    $message = str_replace('%BW',chr(0x02).chr(0x03).'00,01',$message);              // Bold white on black
     $message = str_replace('%TROLL',chr(0x1f).chr(0x02).chr(0x03).'08,13',$message); // Bold underlined yellow on green
   }
 
