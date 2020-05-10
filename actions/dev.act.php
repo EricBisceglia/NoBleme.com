@@ -171,6 +171,9 @@ function dev_versions_list()
 
 function dev_versions_create($major, $minor, $patch, $extension, $publish_activity=1, $notify_irc=0)
 {
+  // Check if the required files have been included
+  require_included_file('dev.lang.php');
+
   // Sanitize the data
   $major            = sanitize($major, 'int', 0);
   $minor            = sanitize($minor, 'int', 0);
@@ -236,6 +239,9 @@ function dev_versions_create($major, $minor, $patch, $extension, $publish_activi
 
 function dev_versions_edit($id, $major, $minor, $patch, $extension, $release_date)
 {
+  // Check if the required files have been included
+  require_included_file('dev.lang.php');
+
   // Sanitize the data
   $id            = sanitize($id, 'int', 0);
   $major         = sanitize($major, 'int', 0);
@@ -439,6 +445,21 @@ function irc_bot_start($path='./../../')
 
 
 /**
+ * Stops the IRC bot.
+ *
+ * @return  void
+ */
+
+function irc_bot_stop()
+{
+  // Execute order 66
+  irc_bot_send_message('quit');
+}
+
+
+
+
+/**
  * Toggles the silent IRC bot mode on and off.
  *
  * @param   bool  $silenced The current status of silent mode.
@@ -497,13 +518,100 @@ function irc_bot_admin_send_message($body, $channel='', $user='', $path='./../..
 
 
 /**
- * Stops the IRC bot.
+ * Fetches the queue of messages that have not been sent yet by the IRC bot.
+ *
+ * @param   string|null $path (OPTIONAL)  The path to the root of the website.
+ *
+ * @return  array                         An array containing the log of queued messages.
+ */
+
+function irc_bot_get_message_queue($path='./../../')
+{
+  // Check if the required files have been included
+  require_included_file('dev.lang.php');
+
+  // Assemble the path to the bot's txt file
+  $irc_bot_file = $path.$GLOBALS['irc_bot_file_name'];
+
+  // Check if the file used by the bot exists
+  if(!file_exists($irc_bot_file))
+    return __('irc_bot_start_no_file');
+
+  // Fetch the contents of the bot's txt file
+  $file_contents = fopen($irc_bot_file, "r");
+
+  // Read the file line by line
+  for($i = 0; !feof($file_contents); $i++)
+    $data[$i]['line'] = sanitize_output(substr(fgets($file_contents),11)).'<br>';
+
+  // Close the file
+  fclose($file_contents);
+
+  // Add the number of lines to the data (minus one for the empty line at end of file)
+  $data['line_count'] = $i - 1;
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('dev.act.php', 'irc_bot_get_message_queue', $data));
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Purges a message from the IRC bot's upcoming message queue.
+ *
+ * @param   int         $line_id          The line number that must be purged - or the whole file if this is set to -1.
+ * @param   string|null $path (OPTIONAL)  The path to the root of the website.
  *
  * @return  void
  */
 
-function irc_bot_stop()
+function irc_bot_purge_queued_message($line_id, $path)
 {
-  // Execute order 66
-  irc_bot_send_message('quit');
+  // Check if the required files have been included
+  require_included_file('dev.lang.php');
+
+  // Ensure the line id is an int
+  $line_id = sanitize($line_id, 'int', -1);
+
+  // Assemble the path to the bot's txt file
+  $irc_bot_file = $path.$GLOBALS['irc_bot_file_name'];
+
+  // Check if the file used by the bot exists
+  if(!file_exists($irc_bot_file))
+    return __('irc_bot_start_no_file');
+
+  // Purge the whole file if requested
+  if($line_id < 0)
+  {
+    // Open the file
+    $file_contents = fopen($irc_bot_file, "r+");
+
+    // Purge the file
+    ftruncate($file_contents, 0);
+
+    // Close the file
+    fclose($file_contents);
+  }
+
+  // Otherwise purge a single line from the file
+  else
+  {
+    // Place the file's contents into an array
+    $file_contents = file($irc_bot_file);
+
+    // Check if the requested line exists
+    if(isset($file_contents[$line_id]))
+    {
+      // Delete the line
+      unset($file_contents[$line_id]);
+
+      // Save the file with the deleted line
+      file_put_contents($irc_bot_file, implode("", $file_contents));
+    }
+  }
 }

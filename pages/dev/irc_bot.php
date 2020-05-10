@@ -86,6 +86,27 @@ if(isset($_POST['dev_irc_bot_message_send']))
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Purge a queued message
+
+if(isset($_POST['purge_line_number']))
+{
+  irc_bot_purge_queued_message( form_fetch_element('purge_line_number', 0)  ,
+                                $path                                       );
+  $bot_action_selector = 'upcoming';
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// List of queued messages
+
+$irc_bot_message_queue = irc_bot_get_message_queue();
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
@@ -174,6 +195,45 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 
 <?php } else if($bot_action_selector === 'upcoming') { ############################################################# ?>
+
+<div id="bot_actions_purge" class="width_100">
+
+  <?php if(!$irc_bot_message_queue['line_count'] && !isset($_POST['purge_line_number'])) { ?>
+
+  <h3 class="padding_top padding_bot align_center text_green"><?=__('irc_bot_upcoming_empty')?></h3>
+
+  <?php } else if(!$irc_bot_message_queue['line_count'] && isset($_POST['purge_line_number'])) { ?>
+
+  <h3 class="padding_top padding_bot align_center"><?=__('irc_bot_upcoming_purged')?></h3>
+
+  <?php } else { ?>
+
+  <div class="padding_top bigpadding_bot align_center">
+    <button class="bigbutton red" onclick="irc_bot_purge_message_queue(-1, '<?=__('irc_bot_upcoming_confirm_purge')?>');"><?=__('irc_bot_upcoming_purge')?></button>
+  </div>
+
+  <table>
+    <tbody>
+
+      <?php for($i = 0; $i < $irc_bot_message_queue['line_count']; $i++) { ?>
+
+      <tr>
+        <td class="align_center">
+          <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete" onclick="irc_bot_purge_message_queue(<?=$i?>)">
+        </td>
+        <td>
+          <?=$irc_bot_message_queue[$i]['line']?>
+        </td>
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+  </table>
+
+  <?php } ?>
+
+</div>
 
 
 

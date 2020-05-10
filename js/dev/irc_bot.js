@@ -37,6 +37,21 @@ function dev_bot_start(starting_message)
 
 
 /**
+ * Stops the IRC bot.
+ *
+ * @returns {void}
+ */
+
+function dev_bot_stop()
+{
+  // Trigger the death of the IRC bot
+  fetch_page('irc_bot', 'bot_actions_stop', 'irc_bot_stop=1');
+}
+
+
+
+
+/**
  * Toggles the silent status of the IRC bot.
  *
  * @returns {void}
@@ -52,13 +67,27 @@ function irc_bot_toggle_silence_mode()
 
 
 /**
- * Stops the IRC bot.
+ * Purges the IRC bot's upcoming message queue.
+ *
+ * @param   {int}     purge_line_number       The line number to purge, 0 to purge all lines
+ * @param   {string}  [confirmation_message]  The message that will be displayed if a complete purge is ordered
  *
  * @returns {void}
  */
 
-function dev_bot_stop()
+function irc_bot_purge_message_queue(purge_line_number, confirmation_message)
 {
-  // Trigger the death of the IRC bot
-  fetch_page('irc_bot', 'bot_actions_stop', 'irc_bot_stop=1');
+  // Make sure the user knows what they're doing
+  if(typeof(confirmation_message) !== 'undefined')
+  {
+    if(!confirm(confirmation_message))
+      return;
+  }
+
+  // Assemble the postdata
+  postdata = 'purge_line_number=' + fetch_sanitize(purge_line_number);
+
+  // Trigger the purge of the messages
+  fetch_page('irc_bot', 'bot_actions_purge', postdata);
+
 }

@@ -171,6 +171,17 @@ ___('irc_bot_unmute', 'EN', "Reactivate the IRC bot");
 ___('irc_bot_unmute', 'FR', "Réactiver le bot IRC");
 
 
+// Upcoming messages
+___('irc_bot_upcoming_empty', 'EN', "There are no upcoming messages, the IRC bot is probably currently running.");
+___('irc_bot_upcoming_empty', 'FR', "Il n'y a aucun message en attente, le bot IRC est probablement actif.");
+___('irc_bot_upcoming_purge', 'EN', "PURGE THE WHOLE QUEUE");
+___('irc_bot_upcoming_purge', 'FR', "PURGER TOUTE LA QUEUE");
+___('irc_bot_upcoming_confirm_purge', 'EN', "Confirm that you want to purge the full IRC bot message queue.");
+___('irc_bot_upcoming_confirm_purge', 'FR', "Confirmez que vous voulez purger l\'intégralité de la queue de messages du bot IRC.");
+___('irc_bot_upcoming_purged', 'EN', "The IRC bot's message queue has successfully been purged.");
+___('irc_bot_upcoming_purged', 'FR', "La queue de messages du bot IRC a bien été purgée.");
+
+
 // Send a message
 ___('irc_bot_message_body', 'EN', "Send a message on IRC through the bot");
 ___('irc_bot_message_body', 'FR', "Envoyer un message sur IRC via le bot");
