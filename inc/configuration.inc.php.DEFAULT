@@ -25,19 +25,20 @@ $GLOBALS['extra_folders']   = 0;                      /* If NoBleme URL is not a
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // IRC bot configuration, you don't need to change these if you're not going to use the bot
 
-$GLOBALS['irc_bot_file_name'] = 'ircbot.txt';           // Name of the file used by the bot
-$GLOBALS['irc_bot_server']    = 'irc.example.com';      // IRC server name
-$GLOBALS['irc_bot_port']      = 6667;                   // IRC server port
-$GLOBALS['irc_bot_channels']  = array('bots', 'help');  // Array of channels to join upon connecting
-$GLOBALS['irc_bot_nickname']  = 'NoBleme';              // Nickname of the IRC bot
-$GLOBALS['irc_bot_password']  = 'password';             // Password of the IRC bot (must be registered on CHANSERV)
+$GLOBALS['enable_irc_bot']    = 0;                                                    // Toggle this to enable the bot
+$GLOBALS['irc_bot_file_name'] = 'ircbot.txt';                                         // Name of the bot's txt file
+$GLOBALS['irc_bot_server']    = 'irc.example.com';                                    // IRC server name
+$GLOBALS['irc_bot_port']      = 6667;                                                 // IRC server port
+$GLOBALS['irc_bot_channels']  = array('nobleme', 'english', 'dev', 'sysop', 'admin'); // Array of channels to join
+$GLOBALS['irc_bot_nickname']  = 'NoBleme';                                            // Nickname of the IRC bot
+$GLOBALS['irc_bot_password']  = 'password';                                           // Password of the IRC bot
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // These variables should never be toggled on in a production environment, only use them for toying around locally
 
-$GLOBALS['dev_mode']        = 0;                      // Change this to 1 if you want to enable dangerous features
-$GLOBALS['env_debug_mode']  = 0;                      // Change this and dev mode to 1 to print environment variables
-$GLOBALS['sql_debug_mode']  = 0;                      // Change this and dev mode to 1 to print all queries and results
-$GLOBALS['act_debug_mode']  = 0;                      // Change this and dev mode to 1 to print action functions logic
-$GLOBALS['full_debug_mode'] = 0;                      // Change this and dev mode to 1 to print all variables in footer
+$GLOBALS['dev_mode']        = 0;  // Change this to 1 if you are running NoBleme locally and don't mind debug features
+$GLOBALS['env_debug_mode']  = 0;  // Change this and dev mode to 1 to dump all environment variables
+$GLOBALS['sql_debug_mode']  = 0;  // Change this and dev mode to 1 to dump all queries and their results
+$GLOBALS['act_debug_mode']  = 0;  // Change this and dev mode to 1 to dump the logic of some action functions
+$GLOBALS['full_debug_mode'] = 0;  // Change this and dev mode to 1 to dump all variables in footer

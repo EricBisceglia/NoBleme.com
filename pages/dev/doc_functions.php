@@ -1297,7 +1297,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td class="align_right smallglow">
-          ircbot_send_message()
+          irc_bot_send_message()
         </td>
         <td class="align_left">
           Uses the IRC bot to broadcast a message.

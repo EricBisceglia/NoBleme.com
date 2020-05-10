@@ -34,7 +34,7 @@ $js   = array('dev/irc_bot');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dropdown selector
 
-$bot_action_selector = sanitize_input('POST', 'bot_action', 'string', 'upcoming');
+$bot_action_selector = sanitize_input('POST', 'bot_action', 'string', 'send_message');
 
 
 
@@ -58,6 +58,34 @@ if($irc_bot_stop)
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Silence the IRC bot
+
+// Check if the bot is currently silenced
+$irc_bot_silenced = system_variable_fetch('irc_bot_is_silenced');
+
+// Toggle the silenced status if requested
+if(isset($_POST['irc_bot_toggle_silence_mode']))
+{
+  $irc_bot_silenced = irc_bot_toggle_silence_mode($irc_bot_silenced);
+  $bot_action_selector = 'silence';
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Send a message through the IRC bot
+
+if(isset($_POST['dev_irc_bot_message_send']))
+  irc_bot_admin_send_message( form_fetch_element('dev_irc_bot_message_body', '')    ,
+                              form_fetch_element('dev_irc_bot_message_channel', '') ,
+                              form_fetch_element('dev_irc_bot_message_user', '')    ,
+                              $path                                                 );
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
@@ -72,9 +100,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <option value="start"><?=__('irc_bot_action_start')?></option>
       <option value="stop"><?=__('irc_bot_action_stop')?></option>
       <option value="silence"><?=__('irc_bot_action_silence')?></option>
-      <option value="upcoming" selected><?=__('irc_bot_action_upcoming')?></option>
+      <option value="upcoming"><?=__('irc_bot_action_upcoming')?></option>
       <option value="message_log"><?=__('irc_bot_action_message_log')?></option>
-      <option value="send_message"><?=__('irc_bot_action_send_message')?></option>
+      <option value="send_message" selected><?=__('irc_bot_action_send_message')?></option>
       <option value="specialchars"><?=__('irc_bot_action_specialchars')?></option>
     </select>
   </h4>
@@ -101,17 +129,21 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php } else if($bot_action_selector === 'stop') { ################################################################# ?>
 
-<div id="bot_actions_stop" class="width_50 align_center hugepadding_top bigpadding_bot">
+<div id="bot_actions_stop" class="width_50 align_center">
 
-  <?php if(!$irc_bot_stop) { ?>
+  <div class="hugepadding_top bigpadding_bot">
 
-  <button class="bigbutton" onclick="dev_bot_stop();"><?=__('irc_bot_action_stop')?></button>
+    <?php if(!$irc_bot_stop) { ?>
 
-  <?php } else { ?>
+    <button class="bigbutton" onclick="dev_bot_stop();"><?=__('irc_bot_action_stop')?></button>
 
-  <h2 class="align_center"><?=__('irc_bot_stopped')?></h2>
+    <?php } else { ?>
 
-  <?php } ?>
+    <h2 class="align_center"><?=__('irc_bot_stopped')?></h2>
+
+    <?php } ?>
+
+  </div>
 
 </div>
 
@@ -120,17 +152,21 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php } else if($bot_action_selector === 'silence') { ############################################################## ?>
 
-<div id="bot_actions_silence" class="width_50 align_center hugepadding_top bigpadding_bot">
+<div id="bot_actions_silence" class="width_50 align_center">
 
-  <?php if(!$irc_bot_stop) { ?>
+  <div class="hugepadding_top bigpadding_bot">
 
-  <button class="bigbutton" onclick="dev_bot_stop();"><?=__('irc_bot_action_stop')?></button>
+    <?php if(!$irc_bot_silenced) { ?>
 
-  <?php } else { ?>
+    <button class="bigbutton red red_hover" onclick="irc_bot_toggle_silence_mode();"><?=__('irc_bot_mute')?></button>
 
-  <h2 class="align_center"><?=__('irc_bot_stopped')?></h2>
+    <?php } else { ?>
 
-  <?php } ?>
+    <button class="bigbutton green green_hover" onclick="irc_bot_toggle_silence_mode();"><?=__('irc_bot_unmute')?></button>
+
+    <?php } ?>
+
+  </div>
 
 </div>
 
@@ -149,10 +185,305 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php } else if($bot_action_selector === 'send_message') { ######################################################### ?>
 
+<div id="bot_actions_message" class="width_30">
+  <form method="POST">
+    <fieldset>
+
+      <label for="dev_irc_bot_message_body"><?=__('irc_bot_message_body')?></label>
+      <input class="indiv" type="text" id="dev_irc_bot_message_body" name="dev_irc_bot_message_body" value="">
+
+      <label class="padding_top" for="dev_irc_bot_message_channel"><?=__('irc_bot_message_channel')?></label>
+      <input class="indiv" type="text" id="dev_irc_bot_message_channel" name="dev_irc_bot_message_channel" value="">
+
+      <label class="padding_top" for="dev_irc_bot_message_user"><?=__('irc_bot_message_user')?></label>
+      <input class="indiv" type="text" id="dev_irc_bot_message_user" name="dev_irc_bot_message_user" value="">
+
+      <div class="padding_top">
+        <input type="submit" name="dev_irc_bot_message_send" value="<?=__('irc_bot_message_send')?>">
+      </div>
+
+    </fieldset>
+  </form>
+</div>
 
 
 
 <?php } else if($bot_action_selector === 'specialchars') { ######################################################### ?>
+
+<div class="width_40">
+  <table>
+    <thead>
+
+      <tr>
+        <th>
+          <?=__('irc_bot_bytes_effect')?>
+        </th>
+        <th>
+          <?=__('irc_bot_bytes_character')?>
+        </th>
+        <th>
+          <?=__('irc_bot_bytes_bytes')?>
+        </th>
+      </tr>
+
+    </thead>
+    <tbody class="altc">
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_reset')?>
+        </td>
+        <td class="bold align_center">
+          %O
+        </td>
+        <td class="bold align_center">
+          chr(0x0f)
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_bold')?>
+        </td>
+        <td class="bold align_center">
+          %B
+        </td>
+        <td class="bold align_center">
+          chr(0x02)
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_italics')?>
+        </td>
+        <td class="bold align_center">
+          %I
+        </td>
+        <td class="bold align_center">
+          chr(0x1d)
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_underlined')?>
+        </td>
+        <td class="bold align_center">
+          %U
+        </td>
+        <td class="bold align_center">
+          chr(0x1f)
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_white')?>
+        </td>
+        <td class="bold align_center">
+          %C00
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'00'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_black')?>
+        </td>
+        <td class="bold align_center">
+          %C01
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'01'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_blue')?>
+        </td>
+        <td class="bold align_center">
+          %C02
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'02'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_green')?>
+        </td>
+        <td class="bold align_center">
+          %C03
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'03'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_red')?>
+        </td>
+        <td class="bold align_center">
+          %C04
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'04'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_brown')?>
+        </td>
+        <td class="bold align_center">
+          %C05
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'05'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_purple')?>
+        </td>
+        <td class="bold align_center">
+          %C06
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'06'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_orange')?>
+        </td>
+        <td class="bold align_center">
+          %C07
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'07'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_yellow')?>
+        </td>
+        <td class="bold align_center">
+          %C08
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'08'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_light_green')?>
+        </td>
+        <td class="bold align_center">
+          %C09
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'09'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_teal')?>
+        </td>
+        <td class="bold align_center">
+          %C10
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'10'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_light_cyan')?>
+        </td>
+        <td class="bold align_center">
+          %C11
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'11'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_light_blue')?>
+        </td>
+        <td class="bold align_center">
+          %C12
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'12'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_pink')?>
+        </td>
+        <td class="bold align_center">
+          %C13
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'13'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_text_grey')?>
+        </td>
+        <td class="bold align_center">
+          %C14
+        </td>
+        <td class="bold align_center">
+          chr(0x03).'14'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_black_white')?>
+        </td>
+        <td class="bold align_center">
+          %BW
+        </td>
+        <td class="bold align_center">
+          chr(0x02).chr(0x03).'00,01'
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <?=__('irc_bot_bytes_troll')?>
+        </td>
+        <td class="bold align_center">
+          %TROLL
+        </td>
+        <td class="bold align_center">
+          chr(0x1f).chr(0x02).chr(0x03).'08,13'
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
 
 
 

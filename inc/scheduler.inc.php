@@ -127,7 +127,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
 
         // Announce on IRC that voting is open
         $contest_title_raw = $dcheck_contest['c_name'];
-        ircbot_send_message('Fin de la participation au concours du coin des écrivains : '.$contest_title_raw.' - Les votes sont ouverts pendant 10 jours : '.$GLOBALS['website_url'].'todo_link', 'french');
+        irc_bot_send_message('Fin de la participation au concours du coin des écrivains : '.$contest_title_raw.' - Les votes sont ouverts pendant 10 jours : '.$GLOBALS['website_url'].'todo_link', 'french');
 
         // Schedule a task for the end of the contest (in 10 days at 22:00)
         $contest_end_date = strtotime(date('d-m-Y', strtotime("+10 days")).' 22:00:00');
@@ -207,7 +207,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
         // Announce the winner on IRC
         $contest_title_raw  = $dcheck_contest['c_name'];
         $contest_winner_raw = ($dwinner['w_anon']) ? 'Un auteur anonyme' : $dwinner['u_nick'];
-        ircbot_send_message($contest_winner_raw.' a gagné le concours du coin des écrivains  : '.$contest_title_raw.' - '.$GLOBALS['website_url'].'todo_link', 'french');
+        irc_bot_send_message($contest_winner_raw.' a gagné le concours du coin des écrivains  : '.$contest_title_raw.' - '.$GLOBALS['website_url'].'todo_link', 'french');
       }
     }
 

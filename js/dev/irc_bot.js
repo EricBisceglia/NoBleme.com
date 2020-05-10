@@ -1,5 +1,5 @@
 /**
- * Displays the selected bot action
+ * Displays the selected bot action.
  *
  * @returns {void}
  */
@@ -17,7 +17,7 @@ function dev_bot_action_selector()
 
 
 /**
- * Starts the IRC bot
+ * Starts the IRC bot.
  *
  * @param   {string}  starting_message  The message that will be displayed once the bot starts.
  *
@@ -37,12 +37,27 @@ function dev_bot_start(starting_message)
 
 
 /**
- * Stops the IRC bot
+ * Toggles the silent status of the IRC bot.
  *
  * @returns {void}
  */
 
-function dev_bot_stop(stopping_message)
+function irc_bot_toggle_silence_mode()
+{
+  // Trigger the death of the IRC bot
+  fetch_page('irc_bot', 'bot_actions_silence', 'irc_bot_toggle_silence_mode=1');
+}
+
+
+
+
+/**
+ * Stops the IRC bot.
+ *
+ * @returns {void}
+ */
+
+function dev_bot_stop()
 {
   // Trigger the death of the IRC bot
   fetch_page('irc_bot', 'bot_actions_stop', 'irc_bot_stop=1');

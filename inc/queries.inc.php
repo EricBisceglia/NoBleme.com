@@ -632,6 +632,7 @@ if($last_query < 20)
   sql_create_field('system_variables', 'last_scheduler_execution', 'INT UNSIGNED NOT NULL DEFAULT 0', 'latest_query_id');
   sql_change_field_type('system_variables', 'last_pageview_check', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_delete_index('system_variables', 'mise_a_jour');
+  sql_create_field('system_variables', 'irc_bot_is_silenced', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0', 'last_pageview_check');
 
   query(" UPDATE  system_versions
           SET     system_versions.version = 0

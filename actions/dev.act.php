@@ -212,7 +212,7 @@ function dev_versions_create($major, $minor, $patch, $extension, $publish_activi
 
   // Send a message on IRC
   if($notify_irc)
-  ircbot_send_message("A new version of NoBleme has been released: $version_number - ".$GLOBALS['website_url']."todo_link", "dev");
+  irc_bot_send_message(chr(0x02).chr(0x03).'03'."A new version of NoBleme has been released: $version_number - ".$GLOBALS['website_url']."todo_link", "dev");
 
   // Return that all went well
   return;
@@ -345,9 +345,9 @@ function irc_bot_start($path='./../../')
   $irc_bot_nickname = $GLOBALS['irc_bot_nickname'];
   $irc_bot_password = $GLOBALS['irc_bot_password'];
 
-  // Don't run the bot in dev mode
-  if($GLOBALS['dev_mode'])
-    return __('irc_bot_start_dev_mode');
+  // Don't run the bot if it is disabled
+  if(!$GLOBALS['enable_irc_bot'])
+    return __('irc_bot_start_disabled');
 
   // Check if the file used by the bot exists
   if(!file_exists($irc_bot_file))
@@ -439,6 +439,64 @@ function irc_bot_start($path='./../../')
 
 
 /**
+ * Toggles the silent IRC bot mode on and off.
+ *
+ * @param   bool  $silenced The current status of silent mode.
+ *
+ * @return  bool            The new status of silent mode.
+ */
+
+function irc_bot_toggle_silence_mode($silenced)
+{
+  // Decide which mode to toggle to
+  $silenced = ($silenced) ? 0 : 1;
+
+  // Update the system variable
+  system_variable_update('irc_bot_is_silenced', $silenced, 'int');
+
+  // Return the new value of silent mode
+  return $silenced;
+}
+
+
+
+
+/**
+ * Sends a message through the IRC bot from the admin interface.
+ *
+ * @param   string      $body                 The message to send on IRC.
+ * @param   string|null $channel  (OPTIONAL)  If the string isn't empty, send the message to a channel instead.
+ * @param   string|null $user     (OPTIONAL)  If the string isn't empty, send the message to a user instead.
+ * @param   string|null $path     (OPTIONAL)  The path to the root of the website.
+ *
+ * @return  void
+ */
+
+function irc_bot_admin_send_message($body, $channel='', $user='', $path='./../../')
+{
+  // Stop here if there is no message to send
+  if(!$body)
+    return;
+
+  // If an user is specified, prepend a PRIVMSG to the body
+  if($user)
+    $body = 'PRIVMSG '.$user.' :'.$body;
+
+  // If a channel is specified, ensure it begins with a hash then prepend a PRIVMSG to the body
+  else if($channel)
+  {
+    if($channel && (substr($channel, 0, 1) != '#'))
+      $channel = '#'.$channel;
+    $body = 'PRIVMSG '.$channel.' :'.$body;
+  }
+
+  irc_bot_send_message($body, '', $path, 1, 1);
+}
+
+
+
+
+/**
  * Stops the IRC bot.
  *
  * @return  void
@@ -447,5 +505,5 @@ function irc_bot_start($path='./../../')
 function irc_bot_stop()
 {
   // Execute order 66
-  ircbot_send_message('quit');
+  irc_bot_send_message('quit');
 }

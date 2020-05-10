@@ -1063,14 +1063,15 @@ function log_activity_delete($activity_type, $is_moderators_only=0, $fk_users=0,
  * Uses the IRC bot to broadcast a message.
  *
  * @param   string      $message                          The message to send.
- * @param   string|null $channel              (OPTIONAL)  The channel to use ('english' 'french' 'dev' 'mod' 'admin')
+ * @param   string|null $channel              (OPTIONAL)  The channel to use ('english' 'french' 'dev' 'mod' 'admin').
  * @param   string|null $path                 (OPTIONAL)  Path to the website root (defaults to 2 folders away).
  * @param   bool|null   $allow_special_chars  (OPTIONAL)  Allow IRC formatting characters in the message.
+ * @param   bool|null   $ignore_silenced_mode (OPTIONAL)  Sends the message even if the IRC bot is in silenced mode.
  *
  * @return  bool                                          Whether the message has been queued in the bot's file.
  */
 
-function ircbot_send_message($message, $channel=NULL, $path='./../../', $allow_special_formatting=0)
+function irc_bot_send_message($message, $channel=NULL, $path='./../../', $allow_special_formatting=0, $ignore_silenced_mode=0)
 {
   // Only use a limited amount of preset channel names
   if($channel)
@@ -1129,6 +1130,10 @@ function ircbot_send_message($message, $channel=NULL, $path='./../../', $allow_s
     $message = str_replace('%TROLL',chr(0x1f).chr(0x02).chr(0x03).'08,13',$message); // Bold underlined yellow on green
   }
 
+  // Stop the process if the bot is in silenced mode, but return 1 since the job was done as intended
+  if(!$ignore_silenced_mode && system_variable_fetch('irc_bot_is_silenced'))
+    return 1;
+
   // If the file can be written in, then queue a message in it
   if($fichier_ircbot = fopen($path.'ircbot.txt', "a"))
   {
@@ -1141,7 +1146,7 @@ function ircbot_send_message($message, $channel=NULL, $path='./../../', $allow_s
     // Close the IRCbot file
     fclose($fichier_ircbot);
 
-    // Return 1 now that the work is done
+    // Return 1 now that the job is done
     return 1;
   }
   // If the file can't be written in, return 0
