@@ -866,9 +866,19 @@ if($last_query < 21)
 
   sql_delete_field('logs_activity', 'activity_parent');
 
+  sql_create_table('logs_irc_bot');
+  sql_create_field('logs_irc_bot', 'sent_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('logs_irc_bot', 'channel', 'TEXT NOT NULL', 'sent_at');
+  sql_create_field('logs_irc_bot', 'body', 'TEXT NOT NULL', 'channel');
+  sql_create_field('logs_irc_bot', 'is_silenced', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'body');
+  sql_create_field('logs_irc_bot', 'is_failed', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'is_silenced');
+  sql_create_field('logs_irc_bot', 'is_manual', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'is_failed');
+  sql_create_field('logs_irc_bot', 'is_action', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'is_manual');
+  sql_create_index('logs_irc_bot', 'index_sent_at', 'sent_at');
+
   sql_create_table('logs_scheduler');
-  sql_create_field('logs_scheduler', 'happened_at', 'INT UNSIGNED NOT NULL', 'id');
-  sql_create_field('logs_scheduler', 'task_id', 'INT UNSIGNED NOT NULL', 'happened_at');
+  sql_create_field('logs_scheduler', 'happened_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('logs_scheduler', 'task_id', 'INT UNSIGNED NOT NULL DEFAULT 0', 'happened_at');
   sql_create_field('logs_scheduler', 'task_type', 'VARCHAR(40) NOT NULL', 'task_id');
   sql_create_field('logs_scheduler', 'task_description_en', 'TEXT NOT NULL', 'task_type');
   sql_create_field('logs_scheduler', 'task_description_fr', 'TEXT NOT NULL', 'task_description_en');
@@ -893,7 +903,7 @@ if($last_query < 22)
   sql_rename_field('stats_pages', 'nom_page', 'page_name_fr', 'TEXT NOT NULL');
   sql_create_field('stats_pages', 'page_name_en', 'TEXT NOT NULL', 'id');
   sql_rename_field('stats_pages', 'url_page', 'page_url', 'TEXT NOT NULL');
-  sql_create_field('stats_pages', 'last_viewed_at', 'INT UNSIGNED NOT NULL', 'page_url');
+  sql_create_field('stats_pages', 'last_viewed_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'page_url');
   sql_rename_field('stats_pages', 'vues', 'view_count', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('stats_pages', 'vues_lastvisit', 'view_count_archive', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_create_field('stats_pages', 'query_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'view_count_archive');

@@ -215,11 +215,25 @@ CREATE TABLE IF NOT EXISTS `logs_activity_details` (
   KEY `index_logs_activity` (`fk_logs_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS `logs_irc_bot`;
+CREATE TABLE IF NOT EXISTS `logs_irc_bot` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `sent_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `channel` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_silenced` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `is_failed` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `is_manual` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `is_action` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `index_sent_at` (`sent_at`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 DROP TABLE IF EXISTS `logs_scheduler`;
 CREATE TABLE IF NOT EXISTS `logs_scheduler` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `happened_at` int(10) UNSIGNED NOT NULL,
-  `task_id` int(10) UNSIGNED NOT NULL,
+  `happened_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `task_id` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `task_type` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
   `task_description_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `task_description_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -288,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `stats_pages` (
   `page_name_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `page_name_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `page_url` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_viewed_at` int(10) UNSIGNED NOT NULL,
+  `last_viewed_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `view_count` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `view_count_archive` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `query_count` int(10) UNSIGNED NOT NULL DEFAULT '0',

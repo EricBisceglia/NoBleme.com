@@ -89,5 +89,4 @@ function irc_bot_purge_message_queue(purge_line_number, confirmation_message)
 
   // Trigger the purge of the messages
   fetch_page('irc_bot', 'bot_actions_purge', postdata);
-
 }

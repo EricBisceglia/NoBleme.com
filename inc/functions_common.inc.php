@@ -1130,8 +1130,23 @@ function irc_bot_send_message($message, $channel=NULL, $path='./../../', $allow_
     $message = str_replace('%TROLL',chr(0x1f).chr(0x02).chr(0x03).'08,13',$message); // Bold underlined yellow on green
   }
 
+  // Sanitize the data
+  $timestamp          = sanitize(time(), 'int', 0);
+  $channel_sanitized  = sanitize($channel, 'string');
+  $body_sanitized     = sanitize($message, 'string');
+  $silenced_mode      = sanitize(system_variable_fetch('irc_bot_is_silenced'), 'int', 0, 1);
+  $manual_mode        = ($channel) ? 0 : 1;
+
+  // Write a log in the database
+  query(" INSERT INTO logs_irc_bot
+          SET         logs_irc_bot.sent_at      = '$timestamp'          ,
+                      logs_irc_bot.channel      = '$channel_sanitized'  ,
+                      logs_irc_bot.body         = '$body_sanitized'     ,
+                      logs_irc_bot.is_silenced  = '$silenced_mode'      ,
+                      logs_irc_bot.is_manual    = '$manual_mode'        ");
+
   // Stop the process if the bot is in silenced mode, but return 1 since the job was done as intended
-  if(!$ignore_silenced_mode && system_variable_fetch('irc_bot_is_silenced'))
+  if($silenced_mode && !$ignore_silenced_mode)
     return 1;
 
   // If the file can be written in, then queue a message in it
@@ -1149,9 +1164,19 @@ function irc_bot_send_message($message, $channel=NULL, $path='./../../', $allow_
     // Return 1 now that the job is done
     return 1;
   }
-  // If the file can't be written in, return 0
+
+  // Otherwise we need to clarify that the file couldn't be written into
   else
+  {
+    // Update the log
+    $log_id = sanitize(query_id(), 'int', 0);
+    query(" UPDATE  logs_irc_bot
+            SET     logs_irc_bot.is_failed  = 1
+            WHERE   logs_irc_bot.id         = '$log_id' ");
+
+    // Job failed, return 0
     return 0;
+  }
 }
 
 

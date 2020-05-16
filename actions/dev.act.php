@@ -343,6 +343,14 @@ function irc_bot_start($path='./../../')
   // Check if the required files have been included
   require_included_file('dev.lang.php');
 
+  // Write a log in the database
+  $timestamp = sanitize(time(), 'int', 0);
+  query(" INSERT INTO logs_irc_bot
+          SET         logs_irc_bot.sent_at    = '$timestamp'              ,
+                      logs_irc_bot.body       = '** Starting IRC bot **'  ,
+                      logs_irc_bot.is_manual  = 1                         ,
+                      logs_irc_bot.is_action  = 1                         ");
+
   // Bot settings
   $irc_bot_file     = $path.$GLOBALS['irc_bot_file_name'];
   $irc_bot_server   = $GLOBALS['irc_bot_server'];
@@ -454,6 +462,14 @@ function irc_bot_stop()
 {
   // Execute order 66
   irc_bot_send_message('quit');
+
+  // Write a log in the database
+  $timestamp = sanitize(time(), 'int', 0);
+  query(" INSERT INTO logs_irc_bot
+          SET         logs_irc_bot.sent_at    = '$timestamp'              ,
+                      logs_irc_bot.body       = '** Stopping IRC bot **'  ,
+                      logs_irc_bot.is_manual  = 1                         ,
+                      logs_irc_bot.is_action  = 1                         ");
 }
 
 
@@ -474,6 +490,15 @@ function irc_bot_toggle_silence_mode($silenced)
 
   // Update the system variable
   system_variable_update('irc_bot_is_silenced', $silenced, 'int');
+
+  // Write a log in the database
+  $timestamp    = sanitize(time(), 'int', 0);
+  $silenced_log = ($silenced) ? '** Silencing IRC bot **' : '** Unsilencing IRC bot **';
+  query(" INSERT INTO logs_irc_bot
+          SET         logs_irc_bot.sent_at    = '$timestamp'    ,
+                      logs_irc_bot.body       = '$silenced_log' ,
+                      logs_irc_bot.is_manual  = 1               ,
+                      logs_irc_bot.is_action  = 1               ");
 
   // Return the new value of silent mode
   return $silenced;
