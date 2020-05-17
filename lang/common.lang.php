@@ -279,6 +279,8 @@ ___('no', 'FR', "non");
 
 ___('error', 'EN', "error");
 ___('error', 'FR', "erreur");
+___('error+', 'EN', "errors");
+___('error+', 'FR', "erreurs");
 
 ___('the', 'EN', "the");
 ___('the', 'FR', "le");
@@ -320,6 +322,17 @@ ___('version', 'FR', "version");
 
 ___('action', 'EN', "action");
 ___('action', 'FR', "action");
+___('action+', 'EN', "actions");
+___('action+', 'FR', "actions");
+
+___('search', 'EN', "search");
+___('search', 'FR', "chercher");
+
+___('reset', 'EN', "reset");
+___('reset', 'FR', "ràz");
+
+___('message', 'EN', "message");
+___('message', 'FR', "message");
 
 
 // Quantifiers, amounts, and times

@@ -90,3 +90,81 @@ function irc_bot_purge_message_queue(purge_line_number, confirmation_message)
   // Trigger the purge of the messages
   fetch_page('irc_bot', 'bot_actions_purge', postdata);
 }
+
+
+
+
+/**
+ * Resets the search form of the IRC bot's message history table.
+ *
+ * @returns {void}
+ */
+
+function irc_bot_reset_history_form()
+{
+  // Reset the fields
+  document.getElementById('dev_irc_bot_history_channel').value  = '';
+  document.getElementById('dev_irc_bot_history_message').value  = '';
+  document.getElementById('dev_irc_bot_history_sent').value     = '-1';
+
+  // Submit the form with the reset values
+  document.getElementById('dev_irc_bot_history_submit').click();
+}
+
+
+
+
+/**
+ * Triggers the replaying of an entry from the IRC bot's message history.
+ *
+ * @param   {int}     log_id                The ID of the log to replay.
+ * @param   {string}  confirmation_message  The message that will be displayed before the log is replayed.
+ *
+ * @returns {void}
+ */
+
+function irc_bot_replay_history_entry(log_id, confirmation_message)
+{
+  // Make sure the user knows what they're doing
+  if(!confirm(confirmation_message))
+    return;
+
+  // Assemble the postdata (need to submit the search data or the search would be lost)
+  postdata  = 'dev_irc_bot_history_submit=1';
+  postdata += '&dev_irc_bot_history_channel=' + fetch_sanitize_id('dev_irc_bot_history_channel');
+  postdata += '&dev_irc_bot_history_message=' + fetch_sanitize_id('dev_irc_bot_history_message');
+  postdata += '&dev_irc_bot_history_sent='    + fetch_sanitize_id('dev_irc_bot_history_sent');
+  postdata += '&irc_bot_replay_log_id='       + fetch_sanitize(log_id);
+
+  // Trigger the replaying of the log
+  fetch_page('irc_bot', 'bot_actions_history', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry from the IRC bot's message history.
+ *
+ * @param   {int}     log_id                The ID of the log to delete.
+ * @param   {string}  confirmation_message  The message that will be displayed before the log is deleted.
+ *
+ * @returns {void}
+ */
+
+function irc_bot_delete_history_entry(log_id, confirmation_message)
+{
+  // Make sure the user knows what they're doing
+  if(!confirm(confirmation_message))
+    return;
+
+  // Assemble the postdata (need to submit the search data or the search would be lost)
+  postdata  = 'dev_irc_bot_history_submit=1';
+  postdata += '&dev_irc_bot_history_channel=' + fetch_sanitize_id('dev_irc_bot_history_channel');
+  postdata += '&dev_irc_bot_history_message=' + fetch_sanitize_id('dev_irc_bot_history_message');
+  postdata += '&dev_irc_bot_history_sent='    + fetch_sanitize_id('dev_irc_bot_history_sent');
+  postdata += '&irc_bot_delete_log_id='       + fetch_sanitize(log_id);
+
+  // Trigger the deletion of the log
+  fetch_page('irc_bot', 'bot_actions_history', postdata);
+}

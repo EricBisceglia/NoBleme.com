@@ -3,9 +3,10 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php'; # Core
-include_once './../../actions/dev.act.php';  # Actions
-include_once './../../lang/dev.lang.php';    # Translations
+include_once './../../inc/includes.inc.php';       # Core
+include_once './../../inc/functions_time.inc.php'; # Time management
+include_once './../../actions/dev.act.php';        # Actions
+include_once './../../lang/dev.lang.php';          # Translations
 
 // Limit page access rights
 user_restrict_to_administrators($lang);
@@ -34,6 +35,7 @@ $js   = array('dev/irc_bot');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Dropdown selector
 
+// Grab the value
 $bot_action_selector = sanitize_input('POST', 'bot_action', 'string', 'send_message');
 
 
@@ -102,7 +104,75 @@ if(isset($_POST['purge_line_number']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List of queued messages
 
-$irc_bot_message_queue = irc_bot_get_message_queue();
+if($bot_action_selector == 'upcoming')
+  $irc_bot_message_queue = irc_bot_get_message_queue();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Replay a message from the logs
+
+if(isset($_POST['irc_bot_replay_log_id']))
+{
+  irc_bot_replay_message_history_entry( form_fetch_element('irc_bot_replay_log_id', 0)  ,
+                                        $path                                           );
+  $bot_action_selector = 'message_log';
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete a message from the logs
+
+if(isset($_POST['irc_bot_delete_log_id']))
+{
+  irc_bot_delete_message_history_entry( form_fetch_element('irc_bot_delete_log_id', 0));
+  $bot_action_selector = 'message_log';
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Message history
+
+// Treat search requests first
+if(isset($_POST['dev_irc_bot_history_submit']))
+{
+  // Prepare the search values
+  $irc_bot_history_search_channel = form_fetch_element('dev_irc_bot_history_channel');
+  $irc_bot_history_search_message = form_fetch_element('dev_irc_bot_history_message');
+  $irc_bot_history_search_sent    = form_fetch_element('dev_irc_bot_history_sent');
+  $irc_bot_history_search_sent_0  = ($irc_bot_history_search_sent == 0) ? ' selected' : '';
+  $irc_bot_history_search_sent_1  = ($irc_bot_history_search_sent == 1) ? ' selected' : '';
+
+  // Submit the search and fetch the data for the history table
+  $irc_bot_message_history = irc_bot_get_message_history( $irc_bot_history_search_channel ,
+                                                          $irc_bot_history_search_message ,
+                                                          $irc_bot_history_search_sent    );
+
+  // Display the history table
+  $bot_action_selector = 'message_log';
+}
+
+// Then treat display request with no search
+else if($bot_action_selector == 'message_log')
+{
+  // Set the default search values
+  $irc_bot_history_search_channel = '';
+  $irc_bot_history_search_message = '';
+  $irc_bot_history_search_sent_0  = '';
+  $irc_bot_history_search_sent_1  = '';
+
+  // Fetch the data for the history table
+  $irc_bot_message_history = irc_bot_get_message_history();
+}
+
+// Prepare the selector's value for when the history page is selected (avoids incorrect selector value when submitted)
+$bot_action_selector_history = ($bot_action_selector == 'message_log') ? ' selected' : '';
+$bot_action_selector_message = ($bot_action_selector != 'message_log') ? ' selected' : '';
 
 
 
@@ -122,8 +192,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <option value="stop"><?=__('irc_bot_action_stop')?></option>
       <option value="silence"><?=__('irc_bot_action_silence')?></option>
       <option value="upcoming"><?=__('irc_bot_action_upcoming')?></option>
-      <option value="message_log"><?=__('irc_bot_action_message_log')?></option>
-      <option value="send_message" selected><?=__('irc_bot_action_send_message')?></option>
+      <option value="message_log"<?=$bot_action_selector_history?>><?=__('irc_bot_action_message_log')?></option>
+      <option value="send_message"<?=$bot_action_selector_message?>><?=__('irc_bot_action_send_message')?></option>
       <option value="specialchars"><?=__('irc_bot_action_specialchars')?></option>
     </select>
   </h4>
@@ -196,7 +266,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php } else if($bot_action_selector === 'upcoming') { ############################################################# ?>
 
-<div id="bot_actions_purge" class="width_100">
+<div id="bot_actions_purge" class="width_80">
 
   <?php if(!$irc_bot_message_queue['line_count'] && !isset($_POST['purge_line_number'])) { ?>
 
@@ -239,6 +309,117 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 
 <?php } else if($bot_action_selector === 'message_log') { ########################################################## ?>
+
+<div id="bot_actions_history" class="width_80">
+
+  <form method="POST">
+    <fieldset>
+
+      <table>
+
+        <thead>
+
+          <tr class="uppercase">
+            <th>
+              <?=__('date')?>
+            </th>
+            <th>
+              <?=__('irc_bot_history_channel')?>
+            </th>
+            <th>
+              <?=__('message')?>
+            </th>
+            <th>
+              <?=__('error')?>
+            </th>
+            <th>
+              <?=__('action', 2)?>
+            </th>
+          </tr>
+
+          <tr>
+
+            <th>
+              <input type="reset" class="table_search" name="dev_irc_bot_history_submit" value="<?=__('reset')?>" onclick="irc_bot_reset_history_form();">
+            </th>
+
+            <th>
+              <input type="text" class="table_search" id="dev_irc_bot_history_channel" name="dev_irc_bot_history_channel" value="<?=$irc_bot_history_search_channel?>">
+            </th>
+
+            <th>
+              <input type="text" class="table_search" id="dev_irc_bot_history_message" name="dev_irc_bot_history_message" value="<?=$irc_bot_history_search_message?>">
+            </th>
+
+            <th>
+              <select class="table_search" id="dev_irc_bot_history_sent" name="dev_irc_bot_history_sent">
+                <option value="-1"><?=__('all')?></option>
+                <option value="0"<?=$irc_bot_history_search_sent_0?>><?=__('irc_bot_history_sent')?></option>
+                <option value="1"<?=$irc_bot_history_search_sent_1?>><?=string_change_case(__('error+'), 'initials')?></option>
+              </select>
+            </th>
+
+            <th>
+              <input type="submit" class="table_search" id="dev_irc_bot_history_submit" name="dev_irc_bot_history_submit" value="<?=__('search')?>">
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <?php for($i = 0; $i < $irc_bot_message_history['line_count']; $i++) { ?>
+
+          <?php if(!$irc_bot_message_history[$i]['action']) { ?>
+
+          <tr>
+            <td class="align_center nowrap">
+              <?=$irc_bot_message_history[$i]['date']?>
+            </td>
+            <td class="align_center nowrap">
+              <?=$irc_bot_message_history[$i]['channel']?>
+            </td>
+            <td>
+              <?=$irc_bot_message_history[$i]['body']?>
+            </td>
+            <td class="align_center nowrap<?=$irc_bot_message_history[$i]['failed_css']?>">
+              <?=$irc_bot_message_history[$i]['failed']?>
+            </td>
+            <td class="align_center nowrap">
+              <?php if($irc_bot_message_history[$i]['failed']) { ?>
+              <img class="smallicon valign_middle spaced_right pointer" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="resend" onclick="irc_bot_replay_history_entry('<?=$irc_bot_message_history[$i]['id']?>', '<?=__('irc_bot_history_confirm_replay')?>');">
+              <?php } ?>
+              <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="delete" onclick="irc_bot_delete_history_entry('<?=$irc_bot_message_history[$i]['id']?>', '<?=__('irc_bot_history_confirm_delete')?>');">
+            </td>
+          </tr>
+
+          <?php } else { ?>
+
+          <tr>
+            <td class="align_center nowrap dark">
+              <?=$irc_bot_message_history[$i]['date']?>
+            </td>
+            <td colspan="3" class="align_center uppercase bold dark smallpadding_top smallpadding_bot">
+              <?=$irc_bot_message_history[$i]['body']?>
+            </td>
+            <td class="align_center nowrap dark">
+              <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="delete" onclick="irc_bot_delete_history_entry('<?=$irc_bot_message_history[$i]['id']?>', '<?=__('irc_bot_history_confirm_delete')?>');">
+            </td>
+          </tr>
+
+          <?php } ?>
+
+          <?php } ?>
+
+        </tbody>
+
+      </table>
+
+    </fieldset>
+  </form>
+
+</div>
 
 
 

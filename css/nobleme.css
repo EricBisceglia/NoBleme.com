@@ -123,7 +123,7 @@ label.label_inline { display: inline-block; font-weight: normal; margin-left: .2
 
 select.table_search, input.table_search { height: auto; padding: 0.2rem; font-weight: normal; width: 100%          ;
                                           text-align: center; background-color: #343434;                           }
-input.table_search[type='submit']       { font-size: 1.6rem; letter-spacing: 0.1rem ;                              }
+input.table_search[type='submit'], input.table_search[type='reset'] { font-size: 1.6rem; letter-spacing: 0.1rem;   }
 select.table_search:hover, input.table_search:hover, input.table_search[type='text']:hover:not([disabled]):not(:focus)
                                         { background-color: #454545;                                               }
 select.intext, input.intext             { background-color: #121212; border: 2px solid #232323                     ;

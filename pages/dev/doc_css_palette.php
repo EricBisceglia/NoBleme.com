@@ -1066,11 +1066,11 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
     </div>
   </div>
 
-  <pre class="dev_pre_code" id="dev_palette_popin" onclick="to_clipboard('', 'dev_palette_popin', 1);">&lt;a href="#popin_demo">Popin&lt;/a>
+  <pre class="dev_pre_code" id="dev_palette_popin" onclick="to_clipboard('', 'dev_palette_popin', 1);">&lt;a href="#example_popin">Popin&lt;/a>
 
-&lt;div id="popin_demo" class="popin_background">
+&lt;div id="example_popin" class="popin_background">
   &lt;div class="popin_body">
-    &lt;a class="popin_close" onclick="popin_close('popin_demo');">&amp;times;&lt;/a>
+    &lt;a class="popin_close" onclick="popin_close('example_popin');">&amp;times;&lt;/a>
     &lt;p class="nopadding_top">Body&lt;/p>
   &lt;/div>
 &lt;/div></pre>
@@ -1448,17 +1448,17 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
         &lt;tr>
 
           &lt;th>
-            &lt;select class="table_search" name="dev_palette_table_select">
+            &lt;select class="table_search" name="example_select">
               &lt;option value="0">Option&lt;/option>
             &lt;/select>
           &lt;/th>
 
           &lt;th>
-            &lt;input type="text" class="table_search" name="dev_palette_table_input" value="">
+            &lt;input type="text" class="table_search" name="example_input" value="">
           &lt;/th>
 
           &lt;th>
-            &lt;input type="submit" class="table_search" name="dev_palette_table_submit" value="Search">
+            &lt;input type="submit" class="table_search" name="example_submit" value="Search">
           &lt;/th>
 
         &lt;/tr>

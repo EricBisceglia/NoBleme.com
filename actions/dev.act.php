@@ -640,3 +640,143 @@ function irc_bot_purge_queued_message($line_id, $path)
     }
   }
 }
+
+
+
+
+/**
+ * Fetches the history of past messages sent by the IRC bot.
+ *
+ * @param   string|null   $search_channel (OPTIONAL)  Search messages sent on a specific channel.
+ * @param   string|null   $search_body    (OPTIONAL)  Search messages containing a specific body.
+ * @param   bool|null     $search_errors  (OPTIONAL)  Search for sent (0) or failed (1) messages only.
+ *
+ * @return  array An array containing the message history.
+ */
+
+function irc_bot_get_message_history($search_channel=NULL, $search_body=NULL, $search_errors=-1)
+{
+  // Check if the required files have been included
+  require_included_file('dev.lang.php');
+  require_included_file('functions_time.inc.php');
+
+  // Sanitize the search queries
+  $search_channel = sanitize($search_channel, 'string');
+  $search_body    = sanitize($search_body, 'string');
+  $search_errors  = sanitize($search_errors, 'int', -1, 1);
+
+  // Prepare the search string
+  $search = " WHERE 1=1 ";
+  if(strpos($search_channel, '-') !== false)
+    $search .= "  AND logs_irc_bot.is_manual    =     1 ";
+  else if($search_channel)
+    $search .= "  AND logs_irc_bot.channel      LIKE  '%$search_channel%' ";
+  if($search_body)
+    $search .= "  AND logs_irc_bot.is_action    =     0
+                  AND logs_irc_bot.body         LIKE  '%$search_body%' ";
+  if($search_errors == 0)
+    $search .= "  AND logs_irc_bot.is_action    =     0
+                  AND logs_irc_bot.is_silenced  =     0
+                  AND logs_irc_bot.is_failed    =     0 ";
+  else if($search_errors == 1)
+    $search .= "  AND ( logs_irc_bot.is_action  =     1
+                  OR  logs_irc_bot.is_silenced  =     1
+                  OR  logs_irc_bot.is_failed    =     1 ) ";
+
+  // Fetch the message logs
+  $qhistory = query(" SELECT    logs_irc_bot.id           AS 'li_id'        ,
+                                logs_irc_bot.sent_at      AS 'li_date'      ,
+                                logs_irc_bot.channel      AS 'li_channel'   ,
+                                logs_irc_bot.body         AS 'li_body'      ,
+                                logs_irc_bot.is_silenced  AS 'li_silenced'  ,
+                                logs_irc_bot.is_failed    AS 'li_failed'    ,
+                                logs_irc_bot.is_manual    AS 'li_manual'    ,
+                                logs_irc_bot.is_action    AS 'li_action'
+                      FROM      logs_irc_bot
+                                $search
+                      ORDER BY  logs_irc_bot.sent_at  DESC  ,
+                                logs_irc_bot.id       DESC  ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qhistory); $i++)
+  {
+    $data[$i]['id']         = $row['li_id'];
+    $data[$i]['date']       = sanitize_output(time_since($row['li_date']));
+    $data[$i]['channel']    = ($row['li_manual']) ? __('irc_bot_history_nochan') : sanitize_output($row['li_channel']);
+    $data[$i]['body']       = sanitize_output($row['li_body']);
+    $temp                   = ($row['li_silenced']) ? __('irc_bot_history_silenced') : '';
+    $temp                   = ($row['li_failed']) ? __('irc_bot_history_failed') : $temp;
+    $data[$i]['failed']     = ($row['li_silenced'] || $row['li_failed']) ? $temp : '';
+    $data[$i]['failed_css'] = ($data[$i]['failed']) ? ' text_red bold' : '';
+    $data[$i]['action']     = $row['li_action'];
+  }
+
+  // Add the number of lines to the data
+  $data['line_count'] = $i;
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('dev.act.php', 'irc_bot_get_message_history', $data));
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Replays an entry from the IRC bot's message history.
+ *
+ * @param   int         $log_id   The ID of the history log to replay.
+ * @param   string|null $path     The path to the root of the website.
+ *
+ * @return  void
+ */
+
+function irc_bot_replay_message_history_entry($log_id, $path='./../../')
+{
+  // Sanitize the log id
+  $log_id = sanitize($log_id, 'int', 0);
+
+  // Fetch the data we need to replay the log
+  $dlog = mysqli_fetch_array(query("  SELECT  logs_irc_bot.channel  AS 'il_channel' ,
+                                              logs_irc_bot.body     AS 'il_body'
+                                      FROM    logs_irc_bot
+                                      WHERE   logs_irc_bot.id = '$log_id' "));
+
+  // Strip the hash from the start of the  channel name
+  $channel = $dlog['il_channel'];
+  if($channel && (substr($channel, 0, 1) == '#'))
+    $channel = substr($channel, 1);
+
+  // Replay the message and bypass silenced mode
+  irc_bot_send_message($dlog['il_body'], $channel, $path, 1, 1);
+
+  // Update the log now that it has been sent (if there's still an error, it will appear in the replayed log instead)
+  query(" UPDATE  logs_irc_bot
+          SET     logs_irc_bot.is_silenced  = 0 ,
+                  logs_irc_bot.is_failed    = 0
+          WHERE   logs_irc_bot.id           = '$log_id' ");
+}
+
+
+
+
+/**
+ * Deletes an entry from the IRC bot's message history.
+ *
+ * @param   int   $log_id   The ID of the history log to delete.
+ *
+ * @return  void
+ */
+
+function irc_bot_delete_message_history_entry($log_id)
+{
+  // Sanitize the log id
+  $log_id = sanitize($log_id, 'int', 0);
+
+  // Delete the log
+  query(" DELETE FROM logs_irc_bot
+          WHERE       logs_irc_bot.id = '$log_id' ");
+}

@@ -1134,7 +1134,9 @@ function irc_bot_send_message($message, $channel=NULL, $path='./../../', $allow_
   $timestamp          = sanitize(time(), 'int', 0);
   $channel_sanitized  = sanitize($channel, 'string');
   $body_sanitized     = sanitize($message, 'string');
-  $silenced_mode      = sanitize(system_variable_fetch('irc_bot_is_silenced'), 'int', 0, 1);
+  $temp               = (system_variable_fetch('irc_bot_is_silenced')) ? 1 : 0;
+  $temp               = $ignore_silenced_mode ? 0 : $temp;
+  $silenced_mode      = sanitize($temp, 'int', 0, 1);
   $manual_mode        = ($channel) ? 0 : 1;
 
   // Write a log in the database

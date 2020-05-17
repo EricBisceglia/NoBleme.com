@@ -182,6 +182,24 @@ ___('irc_bot_upcoming_purged', 'EN', "The IRC bot's message queue has successful
 ___('irc_bot_upcoming_purged', 'FR', "La queue de messages du bot IRC a bien été purgée.");
 
 
+// Message history
+___('irc_bot_history_channel', 'EN', "Channel");
+___('irc_bot_history_channel', 'FR', "Canal");
+___('irc_bot_history_nochan', 'EN', "----");
+___('irc_bot_history_nochan', 'FR', "----");
+___('irc_bot_history_silenced', 'EN', "Silenced");
+___('irc_bot_history_silenced', 'FR', "Silencieux");
+___('irc_bot_history_sent', 'EN', "Sent");
+___('irc_bot_history_sent', 'FR', "Envoyés");
+___('irc_bot_history_failed', 'EN', "Failed");
+___('irc_bot_history_failed', 'FR', "Échec");
+
+___('irc_bot_history_confirm_delete', 'EN', "Confirm permanent deletion of this log");
+___('irc_bot_history_confirm_delete', 'FR', "Confirmer la suppression définitive de ce message");
+___('irc_bot_history_confirm_replay', 'EN', "Confirm that you want to replay this message");
+___('irc_bot_history_confirm_replay', 'FR', "Confirmer vouloir rejouer ce message");
+
+
 // Send a message
 ___('irc_bot_message_body', 'EN', "Send a message on IRC through the bot");
 ___('irc_bot_message_body', 'FR', "Envoyer un message sur IRC via le bot");

@@ -86,10 +86,10 @@ input, select, button   { font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica',
                           color: #CACACA; background-color: #212121; box-sizing: inherit; box-shadow: none            ;
                           border: 1px solid #212121; border-radius: 0.4rem; padding: 0.3rem 0.7rem;                   }
 select                  { text-align: center;                                                                         }
-button, input[type='reset'], input[type='submit'] { font-size: 2.0rem; font-weight: bold; letter-spacing: 0.12rem     ;
-                          padding: 0.5rem 1.6rem; text-align: center; text-decoration: none                           ;
+button, input[type='reset'], input[type='submit'] , input[type='reset'] { font-size: 2.0rem; letter-spacing: 0.12rem  ;
+                          padding: 0.5rem 1.6rem; text-align: center; text-decoration: none; font-weight: bold        ;
                           text-transform: uppercase; white-space: nowrap;                                             }
-button:not([disabled]), input[type='reset']:not([disabled]), input[type='submit']:not([disabled]) { cursor: pointer;  }
+button:not([disabled]), input[type='reset']:not([disabled]), input[type='submit']:not([disabled]) , input[type='reset']:not([disabled])      { cursor: pointer;                                                                            }
 input[type='checkbox'], input[type='radio'] { display: inline;                                                        }
 input[disabled], button[disabled] { background-color: #181818; opacity: 0.4;                                          }
 select:hover, input[type='text']:hover:not([disabled]):not(:focus)                                                    ,
