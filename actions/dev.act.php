@@ -704,6 +704,7 @@ function irc_bot_get_message_history($search_channel=NULL, $search_body=NULL, $s
     $data[$i]['date']       = sanitize_output(time_since($row['li_date']));
     $data[$i]['channel']    = ($row['li_manual']) ? __('irc_bot_history_nochan') : sanitize_output($row['li_channel']);
     $data[$i]['body']       = sanitize_output($row['li_body']);
+    $data[$i]['body_js']    = sanitize_output_javascript($row['li_body']);
     $temp                   = ($row['li_silenced']) ? __('irc_bot_history_silenced') : '';
     $temp                   = ($row['li_failed']) ? __('irc_bot_history_failed') : $temp;
     $data[$i]['failed']     = ($row['li_silenced'] || $row['li_failed']) ? $temp : '';

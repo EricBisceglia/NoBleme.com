@@ -119,14 +119,15 @@ function irc_bot_reset_history_form()
  *
  * @param   {int}     log_id                The ID of the log to replay.
  * @param   {string}  confirmation_message  The message that will be displayed before the log is replayed.
+ * @param   {string}  log_body              The body of the log to replay.
  *
  * @returns {void}
  */
 
-function irc_bot_replay_history_entry(log_id, confirmation_message)
+function irc_bot_replay_history_entry(log_id, confirmation_message, log_body)
 {
   // Make sure the user knows what they're doing
-  if(!confirm(confirmation_message))
+  if(!confirm(confirmation_message + log_body))
     return;
 
   // Assemble the postdata (need to submit the search data or the search would be lost)
@@ -148,14 +149,15 @@ function irc_bot_replay_history_entry(log_id, confirmation_message)
  *
  * @param   {int}     log_id                The ID of the log to delete.
  * @param   {string}  confirmation_message  The message that will be displayed before the log is deleted.
+ * @param   {string}  log_body              The body of the log to delete.
  *
  * @returns {void}
  */
 
-function irc_bot_delete_history_entry(log_id, confirmation_message)
+function irc_bot_delete_history_entry(log_id, confirmation_message, log_body)
 {
   // Make sure the user knows what they're doing
-  if(!confirm(confirmation_message))
+  if(!confirm(confirmation_message + log_body))
     return;
 
   // Assemble the postdata (need to submit the search data or the search would be lost)

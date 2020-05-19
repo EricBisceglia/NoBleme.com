@@ -612,6 +612,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
       <tr>
         <td class="align_right smallglow">
+          sanitize_output_javascript()
+        </td>
+        <td class="align_left">
+          Sanitizes data for passing to inline javascript.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right smallglow">
           html_fix_meta_tags()
         </td>
         <td class="align_left">

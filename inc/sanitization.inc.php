@@ -258,3 +258,29 @@ function sanitize_output_full($data, $preserve_line_breaks=0, $preserve_backslas
   // Return the sanitized data, optionally with line breaks
   return ($preserve_line_breaks) ? nl2br($data) : $data;
 }
+
+
+
+
+/**
+ * Sanitizes data for passing to inline javascript.
+ *
+ * @param string  $data The data to be sanitized.
+ *
+ * @return string       The sanitized data, ready to be printed in your HTML.
+ */
+
+function sanitize_output_javascript($data)
+{
+  // Determine the length of the data
+  $length = strlen($data);
+
+  // Replace every single character by its ASCII value, avoids any attempted cheekiness
+  $sanitized_data = '';
+  for($i = 0; $i < $length; $i++) {
+    $sanitized_data .= '\\x' . sprintf('%02x', ord(substr($data, $i, 1)));
+  }
+
+  // Return the sanitized data
+  return $sanitized_data;
+}
