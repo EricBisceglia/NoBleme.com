@@ -30,7 +30,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   string|null $action_description A description of the task.
  * @param   int|null    $sanitize_data      If this has a value, then the data will be sanitized before insertion.
  */
-function schedule_task($action_type, $action_id, $action_planned_at, $action_description=NULL, $sanitize_data=0)
+function schedule_task( $action_type                ,
+                        $action_id                  ,
+                        $action_planned_at          ,
+                        $action_description = NULL  ,
+                        $sanitize_data      = 0     )
 {
   // If sanitization is required, then do it
   if($sanitize_data)

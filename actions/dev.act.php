@@ -169,7 +169,12 @@ function dev_versions_list()
  * @return  string|null                 NULL if all went according to plan, or an error string
  */
 
-function dev_versions_create($major, $minor, $patch, $extension, $publish_activity=1, $notify_irc=0)
+function dev_versions_create( $major                ,
+                              $minor                ,
+                              $patch                ,
+                              $extension            ,
+                              $publish_activity = 1 ,
+                              $notify_irc       = 0 )
 {
   // Check if the required files have been included
   require_included_file('dev.lang.php');
@@ -237,7 +242,12 @@ function dev_versions_create($major, $minor, $patch, $extension, $publish_activi
  * @return  string|null               NULL if all went according to plan, or an error string
  */
 
-function dev_versions_edit($id, $major, $minor, $patch, $extension, $release_date)
+function dev_versions_edit( $id           ,
+                            $major        ,
+                            $minor        ,
+                            $patch        ,
+                            $extension    ,
+                            $release_date )
 {
   // Check if the required files have been included
   require_included_file('dev.lang.php');
@@ -338,7 +348,7 @@ function dev_versions_delete($version_id)
  * @return  string|null                   A string if an error happened, nothing if the loop is running as intended.
  */
 
-function irc_bot_start($path='./../../')
+function irc_bot_start($path = './../../')
 {
   // Check if the required files have been included
   require_included_file('dev.lang.php');
@@ -518,7 +528,10 @@ function irc_bot_toggle_silence_mode($silenced)
  * @return  void
  */
 
-function irc_bot_admin_send_message($body, $channel='', $user='', $path='./../../')
+function irc_bot_admin_send_message(  $body                   ,
+                                      $channel  = ''          ,
+                                      $user     = ''          ,
+                                      $path     = './../../'  )
 {
   // Stop here if there is no message to send
   if(!$body)
@@ -550,7 +563,7 @@ function irc_bot_admin_send_message($body, $channel='', $user='', $path='./../..
  * @return  array                         An array containing the log of queued messages.
  */
 
-function irc_bot_get_message_queue($path='./../../')
+function irc_bot_get_message_queue($path = './../../')
 {
   // Check if the required files have been included
   require_included_file('dev.lang.php');
@@ -595,7 +608,8 @@ function irc_bot_get_message_queue($path='./../../')
  * @return  void
  */
 
-function irc_bot_purge_queued_message($line_id, $path)
+function irc_bot_purge_queued_message(  $line_id  ,
+                                        $path     )
 {
   // Check if the required files have been included
   require_included_file('dev.lang.php');
@@ -654,7 +668,9 @@ function irc_bot_purge_queued_message($line_id, $path)
  * @return  array An array containing the message history.
  */
 
-function irc_bot_get_message_history($search_channel=NULL, $search_body=NULL, $search_errors=-1)
+function irc_bot_get_message_history( $search_channel = NULL  ,
+                                      $search_body    = NULL  ,
+                                      $search_errors  = -1    )
 {
   // Check if the required files have been included
   require_included_file('dev.lang.php');
@@ -735,7 +751,8 @@ function irc_bot_get_message_history($search_channel=NULL, $search_body=NULL, $s
  * @return  void
  */
 
-function irc_bot_replay_message_history_entry($log_id, $path='./../../')
+function irc_bot_replay_message_history_entry(  $log_id               ,
+                                                $path   = './../../'  )
 {
   // Sanitize the log id
   $log_id = sanitize($log_id, 'int', 0);

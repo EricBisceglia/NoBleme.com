@@ -198,7 +198,8 @@ function sql_create_table($table_name)
  * @return void
  */
 
-function sql_rename_table($table_name, $new_name)
+function sql_rename_table(  $table_name ,
+                            $new_name   )
 {
   // Proceed only if the table exists and the new table name is not taken
   $query_old_ok = 0;
@@ -272,7 +273,10 @@ function sql_delete_table($table_name)
  * @return void
  */
 
-function sql_create_field($table_name, $field_name, $field_type, $after_field_name)
+function sql_create_field(  $table_name       ,
+                            $field_name       ,
+                            $field_type       ,
+                            $after_field_name )
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -320,7 +324,10 @@ function sql_create_field($table_name, $field_name, $field_type, $after_field_na
  * @return  void
  */
 
-function sql_rename_field($table_name, $old_field_name, $new_field_name, $field_type)
+function sql_rename_field(  $table_name     ,
+                            $old_field_name ,
+                            $new_field_name ,
+                            $field_type     )
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -364,7 +371,9 @@ function sql_rename_field($table_name, $old_field_name, $new_field_name, $field_
  * @return  void
  */
 
-function sql_change_field_type($table_name, $field_name, $field_type)
+function sql_change_field_type( $table_name ,
+                                $field_name ,
+                                $field_type )
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -397,7 +406,10 @@ function sql_change_field_type($table_name, $field_name, $field_type)
  * @param   string  $after_field_name Where to place this field - name of the existing field after which it should be.
  */
 
-function sql_move_field($table_name, $field_name, $field_type, $after_field_name)
+function sql_move_field(  $table_name       ,
+                          $field_name       ,
+                          $field_type       ,
+                          $after_field_name )
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -437,7 +449,8 @@ function sql_move_field($table_name, $field_name, $field_type, $after_field_name
  * @return  void
  */
 
-function sql_delete_field($table_name, $field_name)
+function sql_delete_field(  $table_name ,
+                            $field_name )
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -472,7 +485,10 @@ function sql_delete_field($table_name, $field_name)
  * @return  void
  */
 
-function sql_create_index($table_name, $index_name, $field_names, $fulltext=NULL)
+function sql_create_index(  $table_name           ,
+                            $index_name           ,
+                            $field_names          ,
+                            $fulltext     = NULL  )
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -507,7 +523,8 @@ function sql_create_index($table_name, $index_name, $field_names, $fulltext=NULL
  * @return  void
  */
 
-function sql_delete_index($table_name, $index_name)
+function sql_delete_index(  $table_name ,
+                            $index_name )
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -545,7 +562,8 @@ function sql_delete_index($table_name, $index_name)
  * @return  void
  */
 
-function sql_insert_value($condition, $query)
+function sql_insert_value(  $condition  ,
+                            $query      )
 {
   // If the condition is met, run the query
   if(!mysqli_num_rows(query($condition)))

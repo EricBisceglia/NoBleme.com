@@ -15,7 +15,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  string                                  A plaintext description of the priority level.
  */
 
-function task_priority($priority_level, $styled=0)
+function task_priority( $priority_level     ,
+                        $styled         = 0 )
 {
   // No trickery here, simply parse priority levels one by one using a switch
   switch($priority_level)

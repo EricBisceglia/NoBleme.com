@@ -12,7 +12,7 @@ users_online_loop = false;
  * @returns {void}
  */
 
-function users_online_table_settings(user_is_administrator=0)
+function users_online_table_settings(user_is_administrator = 0)
 {
   // Prepare the postdata
   postdata  = 'online_hide_guests=' + Number(document.getElementById('online_hide_guests').checked);

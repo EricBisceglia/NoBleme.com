@@ -7,7 +7,8 @@
  * @returns {void}
  */
 
-function activity_submit_menus(fetch_url, toggle_deleted=null)
+function activity_submit_menus( fetch_url               ,
+                                toggle_deleted  = null  )
 {
   // Toggle between visible and deleted view if required
   if(toggle_deleted)
@@ -62,7 +63,9 @@ function activity_show_details(log_id)
  * @returns {void}
  */
 
-function activity_delete_log(log_id, message, deletion_type=0)
+function activity_delete_log( log_id            ,
+                              message           ,
+                              deletion_type = 0 )
 {
   // Make sure the user knows what they're doing
   if(confirm(message))

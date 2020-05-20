@@ -30,7 +30,15 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  array                                   A list of users, prepared for displaying.
  */
 
-function users_get_list($sort_by='', $max_count=0, $deleted=0, $activity_cutoff=0, $include_guests=0, $max_guest_count=0, $is_admin=0, $is_activity=0, $lang='EN')
+function users_get_list(  $sort_by          = ''    ,
+                          $max_count        = 0     ,
+                          $deleted          = 0     ,
+                          $activity_cutoff  = 0     ,
+                          $include_guests   = 0     ,
+                          $max_guest_count  = 0     ,
+                          $is_admin         = 0     ,
+                          $is_activity      = 0     ,
+                          $lang             = 'EN'  )
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -212,7 +220,10 @@ function users_check_username_illegality($username)
  * @return  string                              Returns 'OK' if successfully logged in, or an error if it went wrong.
  */
 
-function user_authenticate($ip, $nickname, $password, $remember_me=0)
+function user_authenticate( $ip               ,
+                            $nickname         ,
+                            $password         ,
+                            $remember_me = 0  )
 {
   // Sanitize the data
   $ip           = sanitize($ip, 'string');
@@ -329,7 +340,13 @@ function user_authenticate($ip, $nickname, $password, $remember_me=0)
  * @return  string|int                              Returns 1 if successfully registered, or a string in case of error.
  */
 
-function users_create_account($nickname, $password, $email, $password_check=null, $captcha=null, $captcha_session=null, $path='./../../')
+function users_create_account(  $nickname                       ,
+                                $password                       ,
+                                $email                          ,
+                                $password_check   = NULL        ,
+                                $captcha          = NULL        ,
+                                $captcha_session  = NULL        ,
+                                $path             = './../../'  )
 {
   // Check if the required files have been included
   require_included_file('users.lang.php');

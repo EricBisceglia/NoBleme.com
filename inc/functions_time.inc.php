@@ -59,12 +59,11 @@ function time_since($timestamp)
  * Returns in plain text in how long a timestamp will happen.
  *
  * @param   string      $timestamp              The timestamp at which the event will happen.
- * @param   string|null $lang       (OPTIONAL)  The language in which the text should be.
  *
  * @return  string                              A plain text description of how long remains until the event.
  */
 
-function time_until($timestamp, $lang="EN")
+function time_until($timestamp)
 {
   // Base the result on the difference between the event and the current timestamp
   $time_until = $timestamp - time();
@@ -114,7 +113,8 @@ function time_until($timestamp, $lang="EN")
  * @return  int                 The amount of days elapsed.
  */
 
-function time_days_elapsed($date_start, $date_end)
+function time_days_elapsed( $date_start ,
+                            $date_end   )
 {
   // Return the time elapsed between the two dates: convert them to timestamps and divide by the total seconds in a day
   return round(floor(abs(strtotime($date_start)) - abs(strtotime($date_end))) / (86400));

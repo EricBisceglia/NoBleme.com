@@ -75,7 +75,8 @@ function irc_bot_toggle_silence_mode()
  * @returns {void}
  */
 
-function irc_bot_purge_message_queue(purge_line_number, confirmation_message)
+function irc_bot_purge_message_queue( purge_line_number     ,
+                                      confirmation_message  )
 {
   // Make sure the user knows what they're doing
   if(typeof(confirmation_message) !== 'undefined')
@@ -124,10 +125,12 @@ function irc_bot_reset_history_form()
  * @returns {void}
  */
 
-function irc_bot_replay_history_entry(log_id, confirmation_message, log_body)
+function irc_bot_replay_history_entry(  log_id                ,
+                                        confirmation_message  ,
+                                        log_body              )
 {
   // Make sure the user knows what they're doing
-  if(!confirm(confirmation_message + log_body))
+  if(!confirm(confirmation_message + '\n\n' + log_body + '\n\n'))
     return;
 
   // Assemble the postdata (need to submit the search data or the search would be lost)
@@ -154,10 +157,12 @@ function irc_bot_replay_history_entry(log_id, confirmation_message, log_body)
  * @returns {void}
  */
 
-function irc_bot_delete_history_entry(log_id, confirmation_message, log_body)
+function irc_bot_delete_history_entry(  log_id                ,
+                                        confirmation_message  ,
+                                        log_body              )
 {
   // Make sure the user knows what they're doing
-  if(!confirm(confirmation_message + log_body))
+  if(!confirm(confirmation_message + '\n\n' + log_body + '\n\n'))
     return;
 
   // Assemble the postdata (need to submit the search data or the search would be lost)

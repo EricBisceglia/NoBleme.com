@@ -14,7 +14,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  array                         All of the page titles in the requested language.
  */
 
-function internet_list_pages($lang=null)
+function internet_list_pages($lang = NULL)
 {
   // Fetch the user's language if required
   $lang = (!$lang) ? user_get_language() : $lang;

@@ -13,7 +13,8 @@
  * @returns {void}
  */
 
-function toggle_header_menu(menu_name, invert_title)
+function toggle_header_menu(  menu_name     ,
+                              invert_title  )
 {
   // Fetch the selected menu
   var selected_submenu = document.getElementById('header_submenu_' + menu_name);
@@ -67,7 +68,8 @@ function toggle_header_menu(menu_name, invert_title)
  * @returns {void}
  */
 
-function users_login_attempt(login_path, is_dev_mode)
+function users_login_attempt( login_path  ,
+                              is_dev_mode )
 {
   // Ensure both nickname and password are filled in
   form_failed = (!form_require_field("login_form_nickname", "label_login_form_nickname")) ? 1 : 0;

@@ -7,7 +7,8 @@
  * @returns {void}
  */
 
-function toggle_element(element_id, element_type='block')
+function toggle_element(  element_id              ,
+                          element_type  = 'block' )
 {
   // Fetch the selected element
   var selected_element = document.getElementById(element_id);
@@ -34,7 +35,8 @@ function toggle_element(element_id, element_type='block')
  * @returns {void}
  */
 
-function toggle_class(element_class, element_type='block')
+function toggle_class(  element_class           ,
+                        element_type  = 'block' )
 {
   // Fetch all elements with the selected class
   var selected_class = document.getElementsByClassName(element_class);
@@ -63,7 +65,9 @@ function toggle_class(element_class, element_type='block')
  * @returns {void}
  */
 
-function toggle_element_oneway(element_id, will_be_made_visible, element_type='block')
+function toggle_element_oneway( element_id                      ,
+                                will_be_made_visible            ,
+                                element_type          = 'block' )
 {
   // Hide the requested element
   if(!will_be_made_visible)
@@ -87,7 +91,9 @@ function toggle_element_oneway(element_id, will_be_made_visible, element_type='b
  * @returns {void}
  */
 
-function toggle_class_oneway(element_class, will_be_made_visible, element_type='block')
+function toggle_class_oneway( element_class                   ,
+                              will_be_made_visible            ,
+                              element_type          = 'block' )
 {
   // Fetch all elements with the selected class
   var selected_class = document.getElementsByClassName(element_class);

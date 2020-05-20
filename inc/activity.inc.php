@@ -31,7 +31,16 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  *                                                return['FR']    is the activity in french (if empty, english only).
  */
 
-function log_activity_parse($path, $admins_only, $type, $id=0, $title_en=NULL, $title_fr=NULL, $userid=0, $nickname=NULL, $mod_nickname=NULL, $amount=0)
+function log_activity_parse(  $path                 ,
+                              $admins_only          ,
+                              $type                 ,
+                              $id           = 0     ,
+                              $title_en     = NULL  ,
+                              $title_fr     = NULL  ,
+                              $userid       = 0     ,
+                              $nickname     = NULL  ,
+                              $mod_nickname = NULL  ,
+                              $amount       = 0     )
 {
   //*****************************************************************************************************************//
   //                                             DEVELOPMENT / INTERNALS                                             //

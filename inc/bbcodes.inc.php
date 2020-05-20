@@ -22,7 +22,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  string                            The message, with BBCodes converted to HTML, ready for display.
  */
 
-function bbcodes($message, $path="./../../", $privacy_level=array('twitter' => 0, 'youtube' => 0, 'trends' => 0))
+function bbcodes( $message                                                                ,
+                  $path           = "./../../"                                            ,
+                  $privacy_level  = array('twitter' => 0, 'youtube' => 0, 'trends' => 0)  )
 {
   /*******************************************************************************************************************/
   // [b]Bold[/b]
@@ -250,7 +252,11 @@ function bbcodes($message, $path="./../../", $privacy_level=array('twitter' => 0
  * @return  string                            The message, with NBCodes converted to HTML, ready for display.
  */
 
-function nbcodes($message, $path="./../../", $page_list=array(), $privacy_level=array('twitter' => 0, 'youtube' => 0, 'trends' => 0), $nsfw_settings=0)
+function nbcodes( $message                                                                ,
+                  $path           = "./../../"                                            ,
+                  $page_list      = array()                                               ,
+                  $privacy_level  = array('twitter' => 0, 'youtube' => 0, 'trends' => 0)  ,
+                  $nsfw_settings  = 0                                                     )
 {
   /*******************************************************************************************************************/
   // Prepare blurring based on NSFW filter settings

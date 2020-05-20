@@ -73,7 +73,10 @@ function fixtures_lorem_ipsum($word_count)
  * @return  string                          The randomly generated content.
  */
 
-function fixtures_generate_data($type, $min, $max, $no_periods=0)
+function fixtures_generate_data(  $type           ,
+                                  $min            ,
+                                  $max            ,
+                                  $no_periods = 0 )
 {
   // Don't do aything if the min/max values are incorrect
   if($max < 1 || $min > $max)

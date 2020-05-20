@@ -8,7 +8,9 @@
  * @returns {void}
  */
 
-function to_clipboard(contents, element_id, highlight_element)
+function to_clipboard(  contents          ,
+                        element_id        ,
+                        highlight_element )
 {
   // If needed, fetch the element's contents
   if(typeof(element_id) !== 'undefined')

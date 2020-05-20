@@ -15,7 +15,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  double          This function returns $number as a percentage of $total.
  */
 
-function maths_percentage_of($number, $total)
+function maths_percentage_of( $number ,
+                              $total  )
 {
   // Simple enough: do the calculation and return its result (and avoid division by zero)
   return ($total) ? (($number/$total)*100) : 0;
@@ -33,7 +34,8 @@ function maths_percentage_of($number, $total)
  * @return  double          Growth in % between the two values.
  */
 
-function math_percentage_growth($before, $after)
+function math_percentage_growth(  $before ,
+                                  $after  )
 {
   // Simple enough: do the calculation and return its result (and avoid division by zero)
   return ($before) ? (($after/$before)*100)-100 : 0;

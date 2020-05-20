@@ -21,7 +21,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  void
  */
 
-function error_page($message, $path="./../../", $lang=NULL)
+function error_page(  $message                ,
+                      $path     = "./../../"  ,
+                      $lang     = NULL        )
 {
   // Is the user logged in? - check from the session (required by the header)
   $is_logged_in = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : 0;

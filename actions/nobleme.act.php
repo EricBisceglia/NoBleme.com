@@ -28,7 +28,13 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  array                           An array of activity logs, prepared for displaying.
  */
 
-function activity_get_logs($modlogs=0, $amount=100, $type='all', $deleted=0, $is_admin=0, $path='./../../', $lang='EN')
+function activity_get_logs( $modlogs  = 0           ,
+                            $amount   = 100         ,
+                            $type     = 'all'       ,
+                            $deleted  = 0           ,
+                            $is_admin = 0           ,
+                            $path     = './../../'  ,
+                            $lang     = 'EN'        )
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -137,7 +143,8 @@ function activity_get_logs($modlogs=0, $amount=100, $type='all', $deleted=0, $is
  * @return  array                 An array of activity log details, prepared for displaying.
  */
 
-function activity_get_details($log_id, $lang='EN')
+function activity_get_details(  $log_id         ,
+                                $lang   = 'EN'  )
 {
   // Check if the required files have been included
   require_included_file('bbcodes.inc.php');
@@ -193,7 +200,8 @@ function activity_get_details($log_id, $lang='EN')
  * @return  void
  */
 
-function activity_delete_log($log_id, $deletion_type=0)
+function activity_delete_log( $log_id             ,
+                              $deletion_type = 0  )
 {
   // Sanitize the data
   $log_id = sanitize($log_id, 'int', 0);

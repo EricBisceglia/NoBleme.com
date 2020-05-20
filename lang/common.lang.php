@@ -30,7 +30,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  string                          The translated string, or an empty string if no translation was found.
  */
 
-function __($string, $amount=null, $spaces_before=0, $spaces_after=0, $preset_values=array())
+function __(  $string                   ,
+              $amount         = NULL    ,
+              $spaces_before  = 0       ,
+              $spaces_after   = 0       ,
+              $preset_values  = array() )
 {
   // If there are no global translations, return nothing
   if(!isset($GLOBALS['translations']))
@@ -105,7 +109,9 @@ function __($string, $amount=null, $spaces_before=0, $spaces_after=0, $preset_va
  * @return  void
  */
 
-function ___($name, $lang, $translation)
+function ___( $name         ,
+              $lang         ,
+              $translation  )
 {
   // Only treat this if we are in the current language
   $current_lang = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
@@ -135,7 +141,11 @@ function ___($name, $lang, $translation)
  * @return  string                    The link, ready for use.
  */
 
-function __link($href, $text, $style="bold", $is_internal=1, $path="./../../")
+function __link(  $href                       ,
+                  $text                       ,
+                  $style        = "bold"      ,
+                  $is_internal  = 1           ,
+                  $path         = "./../../"  )
 {
   // Prepare the style
   $class = ($style) ? " class=\"$style\"" : "";
@@ -163,7 +173,11 @@ function __link($href, $text, $style="bold", $is_internal=1, $path="./../../")
  * @return  string                      The tooltip, ready for use.
  */
 
-function __tooltip($title, $tooltip_body, $title_style="bold", $tooltip_style="notbold", $use_link=1)
+function __tooltip( $title                      ,
+                    $tooltip_body               ,
+                    $title_style    = "bold"    ,
+                    $tooltip_style  = "notbold" ,
+                    $use_link       = 1         )
 {
   // Decide whether to use a link or text for the triggering element
   $title = ($use_link) ? "<a>".$title."</a>" : $title;
@@ -186,7 +200,7 @@ function __tooltip($title, $tooltip_body, $title_style="bold", $tooltip_style="n
  * @return  void
  */
 
-function debug_duplicate_translations($print_all=null)
+function debug_duplicate_translations($print_all = NULL)
 {
   // We do a diff between the array before and after filtering all unique values, and dump it
   $diff = var_dump(array_unique(array_diff_assoc($GLOBALS['translations'], array_unique($GLOBALS['translations']))));
@@ -198,43 +212,9 @@ function debug_duplicate_translations($print_all=null)
   // Else, print all the existing translations
   else
   {
-    echo $diff.'<pre style="max-width: 100%; white-space: pre-wrap;">';
+    echo $diff.'<pre>';
     ksort($GLOBALS['translations']);
     print_r($GLOBALS['translations']);
-    exit("</pre>");
-  }
-}
-
-
-
-
-/**
- * Looks for similar activity names in the page names array.
- *
- * This is a debugging function and should only be used locally during development.
- * To enforce this requirement, the function ends with an exit().
- *
- * @param   array     $page_names           The array containing all page names.
- * @param   int|null  $print_all  OPTIONAL  If set, prints all values in the array after the duplicates.
- *
- * @return  void
- */
-
-function debug_duplicate_page_names($page_names, $print_all=null)
-{
-  // We do a diff between the array before and after filtering all unique values, and dump it
-  $diff = var_dump(array_unique(array_diff_assoc($page_names, array_unique($page_names))));
-
-  // If no full printing is requested, exit with the differences
-  if(!$print_all)
-    exit($diff);
-
-  // Else, print all the existing user activities
-  else
-  {
-    echo $diff.'<pre style="max-width: 100%; white-space: pre-wrap;">';
-    ksort($page_names);
-    print_r($page_names);
     exit("</pre>");
   }
 }

@@ -38,7 +38,8 @@ query(' SET NAMES utf8mb4 ');
  * @return  object                                  The result of the query, in the form of a mysqli_object.
  */
 
-function query($query, $ignore_errors=NULL)
+function query( $query                  ,
+                $ignore_errors  = NULL  )
 {
   // First off let's increment the global query counter for this session
   $GLOBALS['query']++;

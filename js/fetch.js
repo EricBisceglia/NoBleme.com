@@ -20,7 +20,13 @@
  * @returns {void}
  */
 
-function fetch_page(target_page, target_element, postdata, callback, append_content, path, show_load_bar)
+function fetch_page(  target_page     ,
+                      target_element  ,
+                      postdata        ,
+                      callback        ,
+                      append_content  ,
+                      path            ,
+                      show_load_bar   )
 {
   // Check if the browser supports fetch
   if (window.fetch)
@@ -142,7 +148,8 @@ function fetch_sanitize_id(element)
  * @returns {int}                 0 if the field is empty, 1 if the field is filled.
  */
 
-function form_require_field(element_id, label_id)
+function form_require_field(  element_id  ,
+                              label_id    )
 {
   // In case the field has already been rejected by this function before, reset the label to its default value
   if(typeof(label_id) !== 'undefined')

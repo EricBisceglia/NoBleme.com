@@ -23,7 +23,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  string|int|float                      Sazitized version of your data.
  */
 
-function sanitize($data, $type=NULL, $min=NULL, $max=NULL, $padding="_")
+function sanitize(  $data             ,
+                    $type     = NULL  ,
+                    $min      = NULL  ,
+                    $max      = NULL  ,
+                    $padding  = "_"   )
 {
   // For floats, ensure that it is a float, else convert it, then ensure that it is between min and max values
   if($type == "float" || $type == "double")
@@ -86,7 +90,13 @@ function sanitize($data, $type=NULL, $min=NULL, $max=NULL, $padding="_")
  * @return  string|int|float                                  Sanitized version of your inputted data.
  */
 
-function sanitize_input($input_type, $input_name, $data_type, $default_value=NULL, $min=NULL, $max=NULL, $padding=NULL)
+function sanitize_input(  $input_type             ,
+                          $input_name             ,
+                          $data_type              ,
+                          $default_value  = NULL  ,
+                          $min            = NULL  ,
+                          $max            = NULL  ,
+                          $padding        = NULL  )
 {
   // When dealing with $_POST, fetch the value (if it exists)
   if($input_type == 'POST')
@@ -113,7 +123,9 @@ function sanitize_input($input_type, $input_name, $data_type, $default_value=NUL
  * @return string                                   The sanitized data, ready to be printed in your HTML.
  */
 
-function sanitize_output($data, $preserve_line_breaks=0, $preserve_backslashes=0)
+function sanitize_output( $data                     ,
+                          $preserve_line_breaks = 0 ,
+                          $preserve_backslashes = 0 )
 {
   // Prepare the data for use in HTML
   $data = ($preserve_backslashes) ? htmlentities($data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));
@@ -138,7 +150,9 @@ function sanitize_output($data, $preserve_line_breaks=0, $preserve_backslashes=0
  * @return string                                   The sanitized data, ready to be printed in your HTML.
  */
 
-function sanitize_output_full($data, $preserve_line_breaks=0, $preserve_backslashes=0)
+function sanitize_output_full(  $data                     ,
+                                $preserve_line_breaks = 0 ,
+                                $preserve_backslashes = 0 )
 {
   // First off, get rid of all the HTML tags in the data - and if necessary remove backslashes
   $data = ($preserve_backslashes) ? htmlentities($data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));

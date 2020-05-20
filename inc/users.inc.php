@@ -253,7 +253,8 @@ function secure_session_start()
  * @return string                       The encrypted data.
  */
 
-function encrypt_data($data, $old=NULL)
+function encrypt_data(  $data         ,
+                        $old  = NULL  )
 {
   // If the old method is still being used, call crypt with the salt key
   if($old)
@@ -346,7 +347,7 @@ function user_get_id()
  * @return  string                          The user's nickame.
  */
 
-function user_get_nickname($user_id=NULL)
+function user_get_nickname($user_id = NULL)
 {
   // If no id is specified, grab the one currently stored in the session
   if(!$user_id && isset($_SESSION['user_id']))
@@ -381,7 +382,7 @@ function user_get_nickname($user_id=NULL)
  * @return  bool                            Returns 1 if the user has moderator rights, 0 if he doesn't.
  */
 
-function user_is_moderator($user_id=NULL)
+function user_is_moderator($user_id = NULL)
 {
   // If no user id is specified, use the current active session instead
   if(!$user_id && isset($_SESSION['user_id']))
@@ -421,7 +422,7 @@ function user_is_moderator($user_id=NULL)
  * @return  bool                            Returns 1 if the user has administrator rights, 0 if he doesn't.
  */
 
-function user_is_administrator($user_id=NULL)
+function user_is_administrator($user_id = NULL)
 {
   // If no user id is specified, use the current active session instead
   if(!$user_id && isset($_SESSION['user_id']))
@@ -457,7 +458,7 @@ function user_is_administrator($user_id=NULL)
  * @return  void
  */
 
-function user_restrict_to_moderators($lang='EN')
+function user_restrict_to_moderators($lang = 'EN')
 {
   // Prepare the error message that will be displayed
   $error_message = ($lang == 'EN') ? "This page is restricted to website staff only." : "Cette page est réservée aux équipes d'administration du site.";
@@ -488,7 +489,7 @@ function user_restrict_to_moderators($lang='EN')
  * @return  void
  */
 
-function user_restrict_to_administrators($lang='EN')
+function user_restrict_to_administrators($lang = 'EN')
 {
   // Prepare the error message that will be displayed
   $error_message = ($lang == 'EN') ? "This page is restricted to website administrators only." : "Cette page est réservée aux équipes d'administration du site.";
@@ -520,7 +521,8 @@ function user_restrict_to_administrators($lang='EN')
  * @return  void
  */
 
-function user_restrict_to_users($lang='EN', $path="./../../")
+function user_restrict_to_users(  $lang = 'EN'        ,
+                                  $path = "./../../"  )
 {
   // If the user is logged out, throw an error page asking the user to log in or register
   if(!user_is_logged_in())
@@ -546,7 +548,7 @@ function user_restrict_to_users($lang='EN', $path="./../../")
  * @return  void
  */
 
-function user_restrict_to_guests($lang='EN')
+function user_restrict_to_guests($lang = 'EN')
 {
   // Prepare the error message that will be displayed
   $error_message = ($lang == 'EN') ? "This page cannot be used while logged into an account." : "Cette page n'est pas utilisable lorsque vous êtes connecté à un compte.";
@@ -645,7 +647,7 @@ function user_settings_privacy()
  * @return  string                          The randomly generated nickname.
  */
 
-function user_generate_random_nickname($lang='EN')
+function user_generate_random_nickname($lang = 'EN')
 {
   // English logic
   if($lang == 'EN')

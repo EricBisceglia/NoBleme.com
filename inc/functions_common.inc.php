@@ -26,7 +26,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  bool            Whether the row exists or not.
  */
 
-function database_row_exists($table, $id)
+function database_row_exists( $table  ,
+                              $id     )
 {
   // Sanitize the data before running the query
   $table  = sanitize($table, 'string');
@@ -89,7 +90,9 @@ function system_variable_fetch($var_name)
  * @return  bool              1 if it went well, 0 if something went wrong.
  */
 
-function system_variable_update($var_name, $value, $type)
+function system_variable_update(  $var_name ,
+                                  $value    ,
+                                  $type     )
 {
   // Check that the variable type is allowed
   $type = sanitize($type, 'string');
@@ -133,7 +136,10 @@ function system_variable_update($var_name, $value, $type)
  * @return  string                              The assembled version number.
  */
 
-function system_assemble_version_number($major, $minor, $patch, $extension=NULL)
+function system_assemble_version_number(  $major            ,
+                                          $minor            ,
+                                          $patch            ,
+                                          $extension = NULL )
 {
   // Assemble the semver string
   $version  = $major.'.'.$minor.'.'.$patch;
@@ -157,7 +163,8 @@ function system_assemble_version_number($major, $minor, $patch, $extension=NULL)
  * @return  string|array                    The current version number, in the chosen format.
  */
 
-function system_get_current_version_number($format='semver', $lang=null)
+function system_get_current_version_number( $format = 'semver'  ,
+                                            $lang   = NULL      )
 {
   // Set the language
   $lang = (!$lang) ? user_get_language() : $lang;
@@ -219,7 +226,7 @@ function page_is_fetched_dynamically()
  * @return  void
  */
 
-function page_must_be_fetched_dynamically($path='./../../')
+function page_must_be_fetched_dynamically($path = './../../')
 {
   // If the fetched header is not set, throw a 404
   if(!page_is_fetched_dynamically())
@@ -286,7 +293,10 @@ function require_included_file($file_name)
  * @return  string|int|double                                   The unsanitized value of the element (or default).
  */
 
-function form_fetch_element($element_name, $default_value=NULL, $element_exists=0, $request_type='POST')
+function form_fetch_element(  $element_name             ,
+                              $default_value  = NULL    ,
+                              $element_exists = 0       ,
+                              $request_type   = 'POST'  )
 {
   // If the goal is only to check existence, just return whether the element exists or not
   if($element_exists)
@@ -327,7 +337,9 @@ function form_fetch_element($element_name, $default_value=NULL, $element_exists=
  * @return  string                          The string, truncated if necessary.
  */
 
-function string_truncate($string, $length, $suffix='')
+function string_truncate( $string       ,
+                          $length       ,
+                          $suffix = ''  )
 {
   // If the string needs to be truncated, then do it and apply the suffix, else return the string as is
   return (mb_strlen($string, 'UTF-8') > $length) ? mb_substr($string, 0, $length, 'UTF-8').$suffix : $string;
@@ -345,7 +357,8 @@ function string_truncate($string, $length, $suffix='')
  * @return  string          The string, with its case changed.
  */
 
-function string_change_case($string, $case)
+function string_change_case(  $string ,
+                              $case   )
 {
   // Changes the string to all uppercase
   if($case == 'uppercase')
@@ -432,7 +445,8 @@ function string_increment($string)
  * @return  string              The formatted output.
  */
 
-function date_better_strftime($format, $timestamp)
+function date_better_strftime(  $format     ,
+                                $timestamp  )
 {
   // Add an extra parameter to strftime using the date standard function
   $format = str_replace('%O', date('S', $timestamp), $format);
@@ -484,7 +498,9 @@ function date_french_ordinal($timestamp)
  * @return  string                      The required date, in plaintext.
  */
 
-function date_to_text($date=NULL, $strip_day=0, $lang=null)
+function date_to_text(  $date       = NULL  ,
+                        $strip_day  = 0     ,
+                        $lang       = NULL  )
 {
   // If no date has been entered, use the current timestamp instead
   $date = (!$date) ? time() : $date;
@@ -568,7 +584,8 @@ function date_to_ddmmyy($date)
  * @return  string            The converted date in MySQL date format.
  */
 
-function date_to_mysql($date, $default='0000-00-00')
+function date_to_mysql( $date                   ,
+                        $default = '0000-00-00' )
 {
   // If the date is DD/MM/YYYY, convert it to the correct format
   if(strlen($date) == 10)
@@ -611,7 +628,8 @@ function date_to_mysql($date, $default='0000-00-00')
  * @return  array       An array of strings, showcasing the differences between the two arrays of strings.
  */
 
-function diff_raw_string_arrays($old, $new)
+function diff_raw_string_arrays(  $old  ,
+                                  $new  )
 {
   // Prepare the variables
   $matrix = array();
@@ -662,7 +680,8 @@ function diff_raw_string_arrays($old, $new)
  * @return  string       Human readable list of differences between the two arrays.
  */
 
-function diff_strings($old, $new)
+function diff_strings(  $old  ,
+                        $new  )
 {
   // Break both strings in arrays of words, then run diff_raw_string_arrays() on them
   $diff = diff_raw_string_arrays(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
@@ -698,7 +717,9 @@ function diff_strings($old, $new)
  * @return  string                                  The searched string and the words around it (or an empty string).
  */
 
-function search_string_context($search, $text, $nb_words_around=1)
+function search_string_context( $search               ,
+                                $text                 ,
+                                $nb_words_around = 1  )
 {
   // Escape special characters
   $search = preg_quote($search, '/');
@@ -751,7 +772,10 @@ function search_string_context($search, $text, $nb_words_around=1)
  * @return  string              The result of the operation.
  */
 
-function string_wrap_in_html_tags($search, $text, $open_tag, $close_tag)
+function string_wrap_in_html_tags(  $search     ,
+                                    $text       ,
+                                    $open_tag   ,
+                                    $close_tag  )
 {
   // Escape special characters
   $search = preg_quote($search, '/');
@@ -783,7 +807,12 @@ function string_wrap_in_html_tags($search, $text, $open_tag, $close_tag)
  * @return  bool                                    Whether the message was sent or not.
  */
 
-function private_message_send($title, $body, $recipient=0, $sender=0, $is_silent=0, $do_not_sanitize=0)
+function private_message_send(  $title                ,
+                                $body                 ,
+                                $recipient        = 0 ,
+                                $sender           = 0 ,
+                                $is_silent        = 0 ,
+                                $do_not_sanitize  = 0 )
 {
   // If there is no recipient and current user is not logged in, no message should be sent
   if(!$recipient && !user_is_logged_in())
@@ -839,7 +868,9 @@ function private_message_send($title, $body, $recipient=0, $sender=0, $is_silent
  * @return  bool                                Is the user allowed to post content to the website.
  */
 
-function flood_check($path='./../../', $user_id=null, $lang=null)
+function flood_check( $path     = './../../'  ,
+                      $user_id  = NULL        ,
+                      $lang     = NULL        )
 {
   // Fetch the user's language if required
   $lang = (!$lang) ? user_get_language() : $lang;
@@ -890,7 +921,18 @@ function flood_check($path='./../../', $user_id=null, $lang=null)
  * @return  int                                               The ID of the newly inserted activity log.
  */
 
-function log_activity($activity_type, $is_moderators_only=0, $language='ENFR', $activity_id=0, $activity_summary_en=NULL, $activity_summary_fr=NULL, $activity_amount=0, $fk_users=0, $nickname=NULL, $moderator_nickname=NULL, $moderation_reason=NULL, $do_not_sanitize=0)
+function log_activity(  $activity_type                  ,
+                        $is_moderators_only   = 0       ,
+                        $language             = 'ENFR'  ,
+                        $activity_id          = 0       ,
+                        $activity_summary_en  = NULL    ,
+                        $activity_summary_fr  = NULL    ,
+                        $activity_amount      = 0       ,
+                        $fk_users             = 0       ,
+                        $nickname             = NULL    ,
+                        $moderator_nickname   = NULL    ,
+                        $moderation_reason    = NULL    ,
+                        $do_not_sanitize      = 0       )
 {
   // Sanitize and prepare the data
   $timestamp            = sanitize(time(), 'int', 0);
@@ -942,7 +984,13 @@ function log_activity($activity_type, $is_moderators_only=0, $language='ENFR', $
  * @return  void
  */
 
-function log_activity_details($linked_activity_log, $description_en, $description_fr, $before, $after=NULL, $optional=0, $do_not_sanitize = 0)
+function log_activity_details(  $linked_activity_log          ,
+                                $description_en               ,
+                                $description_fr               ,
+                                $before                       ,
+                                $after                = NULL  ,
+                                $optional             = 0     ,
+                                $do_not_sanitize      = 0     )
 {
   // If there are no differences, do not create a detailed activity log
   if($optional && ($before == $after))
@@ -1011,7 +1059,12 @@ function log_activity_purge_orphan_diffs()
  * @return  void
  */
 
-function log_activity_delete($activity_type, $is_moderators_only=0, $fk_users=0, $nickname=NULL, $activity_id=0, $global_type_wipe=0)
+function log_activity_delete( $activity_type              ,
+                              $is_moderators_only = 0     ,
+                              $fk_users           = 0     ,
+                              $nickname           = NULL  ,
+                              $activity_id        = 0     ,
+                              $global_type_wipe   = 0     )
 {
   // Begin by sanitizing the data
   $activity_type      = sanitize($activity_type, 'string');
@@ -1071,7 +1124,11 @@ function log_activity_delete($activity_type, $is_moderators_only=0, $fk_users=0,
  * @return  bool                                          Whether the message has been queued in the bot's file.
  */
 
-function irc_bot_send_message($message, $channel=NULL, $path='./../../', $allow_special_formatting=0, $ignore_silenced_mode=0)
+function irc_bot_send_message(  $message                                ,
+                                $channel                  = NULL        ,
+                                $path                     = './../../'  ,
+                                $allow_special_formatting = 0           ,
+                                $ignore_silenced_mode     = 0           )
 {
   // Only use a limited amount of preset channel names
   if($channel)

@@ -40,7 +40,10 @@ function number_prepend_sign($number)
  * @return  int|double|string                     The formatted number.
  */
 
-function number_display_format($number, $format="number", $decimals=0, $prepend_sign=0)
+function number_display_format( $number                   ,
+                                $format       = "number"  ,
+                                $decimals     = 0         ,
+                                $prepend_sign = 0         )
 {
   // Standard format - 10,01
   if($format == "number")
@@ -78,7 +81,8 @@ function number_display_format($number, $format="number", $decimals=0, $prepend_
  * @return  string                                    The css styling or hexadecimal code corresponding to the value.
  */
 
-function number_styling($number, $return_color_hex=0)
+function number_styling(  $number               ,
+                          $return_color_hex = 0 )
 {
   // Hex codes
   if($return_color_hex)

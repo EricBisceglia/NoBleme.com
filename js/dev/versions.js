@@ -53,7 +53,8 @@ function dev_versions_edit()
  * @returns {void}
  */
 
-function dev_versions_delete(version_id, message)
+function dev_versions_delete( version_id  ,
+                              message     )
 {
   // Make sure the user knows what they're doing and fetch the data
   if(confirm(message))
