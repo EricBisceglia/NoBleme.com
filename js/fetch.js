@@ -20,19 +20,19 @@
  * @returns {void}
  */
 
-function fetch_page(  target_page     ,
-                      target_element  ,
-                      postdata        ,
-                      callback        ,
-                      append_content  ,
-                      path            ,
-                      show_load_bar   )
+function fetch_page(  target_page             ,
+                      target_element          ,
+                      postdata        = null  ,
+                      callback        = null  ,
+                      append_content  = null  ,
+                      path            = null  ,
+                      show_load_bar   = null  )
 {
   // Check if the browser supports fetch
   if (window.fetch)
   {
     // Replace the target element with a load bar if necessary
-    if(typeof show_load_bar !== 'undefined' && show_load_bar && !append_content)
+    if(show_load_bar && !append_content)
     document.getElementById(target_element).innerHTML = '<div class="align_center intable">Loading...<br><img src="'+path+'img/common/loading.gif" alt="Loading..."></div>';
 
     // Fetch the desired page, include headers to show it's postdata, and put the postdata in the body
@@ -72,7 +72,7 @@ function fetch_page(  target_page     ,
     .then(function(returned_data)
     {
       // Replace the target element with the returned data
-      if(typeof(append_content) === 'undefined' || !append_content)
+      if(!append_content)
         document.getElementById(target_element).innerHTML = returned_data;
 
       // Or append the returned data below the target element
@@ -92,7 +92,7 @@ function fetch_page(  target_page     ,
     .then(response =>
     {
       // If a callback was requested, do it
-      if(typeof(callback) !== 'undefined' && callback)
+      if(callback)
         callback()
     });
   }
@@ -152,14 +152,14 @@ function form_require_field(  element_id  ,
                               label_id    )
 {
   // In case the field has already been rejected by this function before, reset the label to its default value
-  if(typeof(label_id) !== 'undefined')
+  if(label_id)
     document.getElementById(label_id).classList.remove('red');
 
   // Check whether the field is empty
   if(document.getElementById(element_id).value == "")
   {
     // If it is empty, change the styling of its associated label
-    if(typeof(label_id) !== 'undefined')
+    if(label_id)
       document.getElementById(label_id).classList.add('red');
 
     // Return 0 to show that it is not OK

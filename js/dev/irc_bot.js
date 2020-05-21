@@ -75,11 +75,11 @@ function irc_bot_toggle_silence_mode()
  * @returns {void}
  */
 
-function irc_bot_purge_message_queue( purge_line_number     ,
-                                      confirmation_message  )
+function irc_bot_purge_message_queue( purge_line_number             ,
+                                      confirmation_message  = null  )
 {
   // Make sure the user knows what they're doing
-  if(typeof(confirmation_message) !== 'undefined')
+  if(confirmation_message)
   {
     if(!confirm(confirmation_message))
       return;

@@ -8,12 +8,12 @@
  * @returns {void}
  */
 
-function to_clipboard(  contents          ,
-                        element_id        ,
-                        highlight_element )
+function to_clipboard(  contents                  ,
+                        element_id        = null  ,
+                        highlight_element = null  )
 {
   // If needed, fetch the element's contents
-  if(typeof(element_id) !== 'undefined')
+  if(element_id)
     contents = document.getElementById(element_id).innerHTML;
 
   // Replace any special characters with their real value
@@ -39,7 +39,7 @@ function to_clipboard(  contents          ,
   document.body.removeChild(temparea);
 
   // Highlight the element's contents if required
-  if(typeof(highlight_element) !== 'undefined')
+  if(highlight_element)
   {
     // Fetch the element
     contents = document.getElementById(element_id)

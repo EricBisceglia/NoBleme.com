@@ -13,8 +13,8 @@
  * @returns {void}
  */
 
-function toggle_header_menu(  menu_name     ,
-                              invert_title  )
+function toggle_header_menu(  menu_name             ,
+                              invert_title  = null  )
 {
   // Fetch the selected menu
   var selected_submenu = document.getElementById('header_submenu_' + menu_name);
@@ -34,7 +34,7 @@ function toggle_header_menu(  menu_name     ,
     selected_submenu.style.display = 'grid';
 
   // Check whether this title's color scheme should be inverted
-  invert_color_scheme = (typeof invert_title !== 'undefined' && !document.getElementById('header_menu_title_' + menu_name).classList.contains('header_topmenu_title_selected'));
+  invert_color_scheme = (invert_title && !document.getElementById('header_menu_title_' + menu_name).classList.contains('header_topmenu_title_selected'));
 
   // Restore all inverted color schemes (if there are any)
   var inverted_schemes = document.getElementsByClassName('header_topmenu_title_selected');
