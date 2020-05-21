@@ -13,16 +13,16 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 // Title
-___('pol_manifesto_title', 'EN', 'DISSENT');
-___('pol_manifesto_title', 'FR', 'DISSIDENCE');
-___('pol_manifesto_subtitle', 'EN', 'THE CONTRAPOSITIONIST MANIFESTO');
-___('pol_manifesto_subtitle', 'FR', 'LE MANIFESTE CONTRAPOSITIONNISTE');
+___('pol_manifesto_title',          'EN', "DISSENT");
+___('pol_manifesto_title',          'FR', "DISSIDENCE");
+___('pol_manifesto_subtitle',       'EN', "THE CONTRAPOSITIONIST MANIFESTO");
+___('pol_manifesto_subtitle',       'FR', "LE MANIFESTE CONTRAPOSITIONNISTE");
 
 
 // Introduction
-___('pol_manifesto_preamble_title', 'EN', 'Preamble');
-___('pol_manifesto_preamble_quote', 'EN', 'We, as a society, are knowingly heading into a state of total collapse');
-___('pol_manifesto_preamble_body', 'EN', <<<EOT
+___('pol_manifesto_preamble_title', 'EN', "Preamble");
+___('pol_manifesto_preamble_quote', 'EN', "We, as a society, are knowingly heading into a state of total collapse");
+___('pol_manifesto_preamble_body',  'EN', <<<EOT
 <p>
   Despite multiple cultural and technological revolutions, society is refusing to change.
 </p>
@@ -65,9 +65,9 @@ ___('pol_manifesto_contents', 'EN', "Contents:");
 
 
 // Introduction
-___('pol_manifesto_intro_title', 'EN', 'Introduction');
-___('pol_manifesto_intro_quote', 'EN', 'Everyone deserves equal access to political theory');
-___('pol_manifesto_intro_body', 'EN', <<<EOT
+___('pol_manifesto_intro_title',  'EN', "Introduction");
+___('pol_manifesto_intro_quote',  'EN', "Everyone deserves equal access to political theory");
+___('pol_manifesto_intro_body',   'EN', <<<EOT
 <p>
   Before going further into the manifesto, the use of language itself must be questioned.
 </p>
@@ -94,9 +94,9 @@ EOT
 
 
 // The social contract
-___('pol_manifesto_contract_title', 'EN', '<span class="text_red">Anger I:</span> The social contract');
-___('pol_manifesto_contract_quote', 'EN', 'The exchange of money for work undermines consent, as people would never consent to be yelled at by an old man in a suit every single day, yet here we are');
-___('pol_manifesto_contract_body', 'EN', <<<EOT
+___('pol_manifesto_contract_title', 'EN', "<span class=\"text_red\">Anger I:</span> The social contract");
+___('pol_manifesto_contract_quote', 'EN', "The exchange of money for work undermines consent, as people would never consent to be yelled at by an old man in a suit every single day, yet here we are");
+___('pol_manifesto_contract_body',  'EN', <<<EOT
 <p>
   The system pretends that we are all born as equals, thanks to a so called "social contract": in exchange for performing certain duties, we will be rewarded with certain rights. Respect the law, and you will avoid jail. Vote, and you will be represented in the decision making process. Work, and you will earn money, which you can use to purchase goods. Breed, and your offspring will be given the same duties and rights as you were.
 </p>
@@ -123,9 +123,9 @@ EOT
 
 
 // Capitalism
-___('pol_manifesto_capitalism_title', 'EN', '<span class="text_red">Anger II:</span> Capitalism');
+___('pol_manifesto_capitalism_title', 'EN', "<span class=\"text_red\">Anger II:</span> Capitalism");
 ___('pol_manifesto_capitalism_quote', 'EN', "The ultra rich are well adapted parasites: their existence is mostly detrimental to their host organism, without which they would not be able to survive");
-___('pol_manifesto_capitalism_body', 'EN', <<<EOT
+___('pol_manifesto_capitalism_body',  'EN', <<<EOT
 <p>
   Capitalism is a political and economic system in which corporations own most of the property and take most of the political decisions. The corporations themselves are the property of one or more rich individuals, who get full decision making power, thus making them the driving forces of the system as a whole.
 </p>
@@ -158,9 +158,9 @@ EOT
 
 
 // Violence
-___('pol_manifesto_violence_title', 'EN', '<span class="text_red">Anger III:</span> Violence');
+___('pol_manifesto_violence_title', 'EN', "<span class=\"text_red\">Anger III:</span> Violence");
 ___('pol_manifesto_violence_quote', 'EN', "Capitalism must have prisons to protect itself from the criminals that it creates");
-___('pol_manifesto_violence_body', 'EN', <<<EOT
+___('pol_manifesto_violence_body',  'EN', <<<EOT
 <p>
   The system's status quo rests on violence. The upper classes keep themselves on top through their control of the judicial system. They make sure that the laws they pass are enforced through their control of the police and military, whose jobs include making use of physical violence.
 </p>
@@ -196,9 +196,9 @@ EOT
 
 
 // Work
-___('pol_manifesto_work_title', 'EN', '<span class="text_red">Anger IV:</span> Work');
+___('pol_manifesto_work_title', 'EN', "<span class=\"text_red\">Anger IV:</span> Work");
 ___('pol_manifesto_work_quote', 'EN', "Unchecked growth for the sake of growth is how cancer works");
-___('pol_manifesto_work_body', 'EN', <<<EOT
+___('pol_manifesto_work_body',  'EN', <<<EOT
 <p>
   Using the threat of state violence, capitalism pushes its underprivileged citizens to follow the one and only allowed way of life: work or live an even more miserable life. Any attempt at finding a lifestyle that isn't centered on work will not only lead to financial ruin, but it will also lead to being ridiculed and rejected by the masses for not being "productive" or "useful" enough.
 </p>
@@ -237,9 +237,9 @@ EOT
 
 
 // Creativity
-___('pol_manifesto_creativity_title', 'EN', '<span class="text_red">Anger V:</span> Creativity');
+___('pol_manifesto_creativity_title', 'EN', "<span class=\"text_red\">Anger V:</span> Creativity");
 ___('pol_manifesto_creativity_quote', 'EN', "Human nature is one of mutual aid");
-___('pol_manifesto_creativity_body', 'EN', <<<EOT
+___('pol_manifesto_creativity_body',  'EN', <<<EOT
 <p>
   The usual defense of capitalism includes the dubious statement that without capitalism, we would never have done the leaps and bounds in science and technology that led us to the industrial and digital revolutions. Proud of human advancement powered by child labor and wage slavery, capitalists will dare claim that the world becomes a better place thanks to the benevolence of the ultra rich, who are "forced" to always innovate and improve the products they sell if they are to stay alive on the financial markets. Surely, without huge corporations running gigantic laboratories and hiring armies of scientists and engineers, we could not have made all the big discoveries that we did?
 </p>
@@ -272,9 +272,9 @@ EOT
 
 
 // Nature
-___('pol_manifesto_nature_title', 'EN', '<span class="text_red">Anger VI:</span> Nature');
+___('pol_manifesto_nature_title', 'EN', "<span class=\"text_red\">Anger VI:</span> Nature");
 ___('pol_manifesto_nature_quote', 'EN', "The true enemies of the Earth are the shareholders who only care about dividends and infinitely increasing greed");
-___('pol_manifesto_nature_body', 'EN', <<<EOT
+___('pol_manifesto_nature_body',  'EN', <<<EOT
 <p>
   There is no denying that humanity's obsession with greed, growth, and war has ruined the planet. Biodiversity is at an all time low, climate change is threatening our future, many places have had their soil ruined by intensive agriculture. So much irreversible damage has already been done that the richest of the privileged are now dumping money into interstellar planetary travel and the terraforming of Mars "just in case". Cowards, they would rather flee the scene of the murder they are committing.
 </p>
@@ -307,9 +307,9 @@ EOT
 
 
 // Inspirations and rejections
-___('pol_manifesto_inspirations_title', 'EN', 'Inspirations and rejections');
+___('pol_manifesto_inspirations_title', 'EN', "Inspirations and rejections");
 ___('pol_manifesto_inspirations_quote', 'EN', "A \"third way\" is possible for those who struggle to find an ideology that they fully agree with");
-___('pol_manifesto_inspirations_body', 'EN', <<<EOT
+___('pol_manifesto_inspirations_body',  'EN', <<<EOT
 <p>
   Believing that centrists, conservatives, and fascists will disappear along with capitalism's inevitable collapse, contrapositionism considers itself a future "third way", placed somewhere in the middle of the marxist political spectrum. This is why what capitalists call "far left" politics have so much infighting: the modern political scale is heavily skewed by capitalism, as social-democrats, centrists, and conservatives would ally even with fascists in their greedy pursuit of money and power. The so called "far left" however, truly cares for their values, will stand for their beliefs and not seek any compromise with capitalists.
 </p>
@@ -351,9 +351,9 @@ EOT
 
 
 // Philosophy
-___('pol_manifesto_philosophy_title', 'EN', '<span class="text_red">Growth I:</span> Philosophy');
+___('pol_manifesto_philosophy_title', 'EN', "<span class=\"text_red\">Growth I:</span> Philosophy");
 ___('pol_manifesto_philosophy_quote', 'EN', "Change must come from within, and it begins within yourself");
-___('pol_manifesto_philosophy_body', 'EN', <<<EOT
+___('pol_manifesto_philosophy_body',  'EN', <<<EOT
 <p>
   Focusing on anger and rejection is an unhealthy worldview. Anger at the system, while important as an outlet for pain and suffering, causes angst and sadness in daily life. It is crucial that the negative energies that are created when being crushed by the gears of the system get absorbed and transformed into more positive thoughts - something which not everyone is able to do.
 </p>
@@ -380,9 +380,9 @@ EOT
 
 
 // Listening
-___('pol_manifesto_listening_title', 'EN', '<span class="text_red">Growth II:</span> Listening');
-___('pol_manifesto_listening_quote', 'EN', "We spend far too much time talking on behalf of others");
-___('pol_manifesto_listening_body', 'EN', <<<EOT
+___('pol_manifesto_listening_title',  'EN', "<span class=\"text_red\">Growth II:</span> Listening");
+___('pol_manifesto_listening_quote',  'EN', "We spend far too much time talking on behalf of others");
+___('pol_manifesto_listening_body',   'EN', <<<EOT
 <p>
   This manifesto was written by listening. Prior to writing the very first word, a lot of time had already been spent learning from disenfranchised people from many different backgrounds of oppression. As it turns out, listening is an underrated tool, you can learn a lot about yourself from the ways others perceive the world.
 </p>
@@ -415,9 +415,9 @@ EOT
 
 
 // Solutions
-___('pol_manifesto_solutions_title', 'EN', '<span class="text_red">Growth III:</span> Solutions');
-___('pol_manifesto_solutions_quote', 'EN', "40 points for a better future");
-___('pol_manifesto_solutions_body', 'EN', <<<EOT
+___('pol_manifesto_solutions_title',  'EN', "<span class=\"text_red\">Growth III:</span> Solutions");
+___('pol_manifesto_solutions_quote',  'EN', "40 points for a better future");
+___('pol_manifesto_solutions_body',   'EN', <<<EOT
 <p>
   Everything that was discussed above, both the negatives and the positives, can be summed up in 40 points for a better future. Those are not mandatory rules to follow, nor are they strict and immutable, but rather guidelines for building a future society that will be free of the violence of capitalism and of all its side effects, without replacing it with another systemically violent or unjust society.
 </p>
@@ -546,9 +546,9 @@ EOT
 
 
 // Praxis
-___('pol_manifesto_praxis_title', 'EN', '<span class="text_red">Growth IV:</span> Praxis');
+___('pol_manifesto_praxis_title', 'EN', "<span class=\"text_red\">Growth IV:</span> Praxis");
 ___('pol_manifesto_praxis_quote', 'EN', "The system must fall apart before the planet does");
-___('pol_manifesto_praxis_body', 'EN', <<<EOT
+___('pol_manifesto_praxis_body',  'EN', <<<EOT
 <p>
   Praxis is the act of taking any theory and turning it into reality. In the case of political theory, praxis encompasses any form of activism, including simply educating others or spreading a message.
 </p>
@@ -593,9 +593,9 @@ EOT
 
 
 // Postface
-___('pol_manifesto_postface_title', 'EN', 'Postface');
+___('pol_manifesto_postface_title', 'EN', "Postface");
 ___('pol_manifesto_postface_quote', 'EN', "Society has failed us. We, in turn, must fail society");
-___('pol_manifesto_postface_body', 'EN', <<<EOT
+___('pol_manifesto_postface_body',  'EN', <<<EOT
 <p>
   If this manifesto resonates with you, then the cause awaits you. Join a circle, become one of us, practice praxis, and share the manifesto with others.
 </p>

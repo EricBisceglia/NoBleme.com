@@ -13,11 +13,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 // Welcome paragraph
-___('nobleme_home_welcome_title', 'EN', "Welcome to NoBleme");
-___('nobleme_home_welcome_title', 'FR', "Bienvenue sur NoBleme");
-___('nobleme_home_welcome_subtitle', 'EN', "Preserving the spirit of Internet communities");
-___('nobleme_home_welcome_subtitle', 'FR', "L'esprit perdu des communautés Internet");
-___('nobleme_home_welcome', 'EN', <<<EOT
+___('nobleme_home_welcome_title',     'EN', "Welcome to NoBleme");
+___('nobleme_home_welcome_title',     'FR', "Bienvenue sur NoBleme");
+___('nobleme_home_welcome_subtitle',  'EN', "Preserving the spirit of Internet communities");
+___('nobleme_home_welcome_subtitle',  'FR', "L'esprit perdu des communautés Internet");
+___('nobleme_home_welcome',           'EN', <<<EOT
 <p>
   A product of the Internet's landscape in 2005, before the era of massive social networks and centralized websites, NoBleme is a small independent website trying to keep the spirit of Internet communities from the first decade of the 21st century alive.
 </p>
@@ -29,7 +29,7 @@ ___('nobleme_home_welcome', 'EN', <<<EOT
 </p>
 EOT
 );
-___('nobleme_home_welcome', 'FR', <<<EOT
+___('nobleme_home_welcome',           'FR', <<<EOT
 <p>
   Produit de la culture Internet de 2005, avant l'ère des réseaux sociaux massifs et des plateformes centralisées, NoBleme est un petit site Internet indépendant qui tente de préserver l'esprit des commaunautés Internet de la première décennie du 21ème siècle.
 </p>
@@ -46,7 +46,7 @@ EOT
 // Mission statement
 ___('nobleme_home_statement_title', 'EN', "Mission statement");
 ___('nobleme_home_statement_title', 'FR', "Qu'est-ce que NoBleme ?");
-___('nobleme_home_statement', 'EN', <<<EOT
+___('nobleme_home_statement',       'EN', <<<EOT
 <p>
   NoBleme has has no central theme or topic. It has no goal other than being a place where you can hang out with friendly people. However, there is a {{link+++|todo_link|code of conduct|bold|1|}} which must be respected by all. It can be summarized as such: be mindful and respectful of others, and they shall be mindful and respectful of you.
 </p>
@@ -58,7 +58,7 @@ ___('nobleme_home_statement', 'EN', <<<EOT
 </p>
 EOT
 );
-___('nobleme_home_statement', 'FR', <<<EOT
+___('nobleme_home_statement',       'FR', <<<EOT
 <p>
   NoBleme n'a pas de thème ou de sujet spécifique, ni d'objectif autre que de continuer à maintenir sa communauté. Toutefois, il y a un {{link+++|todo_link|code de conduite|bold|1|}} que tou·te·s doivent respecter. Il peut se résumer ainsi : soyez attentif et respectueux envers les autres, et les autres seront attentifs et respecteux envers vous.
 </p>
@@ -73,9 +73,9 @@ EOT
 
 
 // Website tour
-___('nobleme_home_tour_title', 'EN', "Website features");
-___('nobleme_home_tour_title', 'FR', "Visite guidée du site");
-___('nobleme_home_tour', 'EN', <<<EOT
+___('nobleme_home_tour_title',  'EN', "Website features");
+___('nobleme_home_tour_title',  'FR', "Visite guidée du site");
+___('nobleme_home_tour',        'EN', <<<EOT
 <p>
   The 15th birthday overhaul of the website in spring 2020 cut many unused features from the website. Some of this content is still in the process of being reimagined and rebuilt right now, therefore NoBleme is currently cut down to its core features - don't expect too much content. You can use the menus on top of the page to browse around the website, or let yourself get guided by this quick list of our main features:
 </p>
@@ -96,7 +96,7 @@ ___('nobleme_home_tour', 'EN', <<<EOT
 </p>
 EOT
 );
-___('nobleme_home_tour', 'FR', <<<EOT
+___('nobleme_home_tour',        'FR', <<<EOT
 <p>
   Depuis le 15ème anniversaire de NoBleme, au printemps 2020, beaucoup d'éléments non utilisés ont été retirés du site. Une partie de ces contenus sont toujours en cours de réimagination ou de reconstruction, ce qui fait que NoBleme ne contient actuellement que ses contenus principaux - ne vous attendez pas à y trouver énormément de choses. Vous pouvez utiliser les menus en haut de la page pour vous balader sur NoBleme, ou vous laisser guider par cette liste de nos contenus les plus intéressants :
 </p>
@@ -128,49 +128,49 @@ EOT
 /*********************************************************************************************************************/
 
 // Header
-___('activity_title', 'EN', "Recent activity");
-___('activity_title', 'FR', "Activité récente");
-___('activity_title_modlogs', 'EN', "Moderation logs");
-___('activity_title_modlogs', 'FR', "Logs de modération");
-___('activity_mod_info', 'EN', <<<EOT
+___('activity_title',           'EN', "Recent activity");
+___('activity_title',           'FR', "Activité récente");
+___('activity_title_modlogs',   'EN', "Moderation logs");
+___('activity_title_modlogs',   'FR', "Logs de modération");
+___('activity_mod_info',        'EN', <<<EOT
 Some of the moderation logs below have an icon to their right: <img class="smallicon valign_middle" src="{{1}}img/icons/help.svg" alt="?"><br>
 Clicking one of these icons will load some extra information about the logged action.
 EOT
 );
-___('activity_mod_info', 'FR', <<<EOT
+___('activity_mod_info',        'FR', <<<EOT
 Certains des logs de modération ci-dessous ont des icônes à droite : <img class="smallicon valign_middle" src="{{1}}img/icons/help.svg" alt="?"><br>
 Cliquer sur une de ces icônes affiche plus de détails sur l'action qui a été effectée.
 EOT
 );
 
-___('activity_latest_actions', 'EN', "LATEST ACTIONS");
-___('activity_latest_actions', 'FR', "DERNIÈRES ACTIONS");
+___('activity_latest_actions',  'EN', "LATEST ACTIONS");
+___('activity_latest_actions',  'FR', "DERNIÈRES ACTIONS");
 
-___('activity_type_all', 'EN', "All activity types");
-___('activity_type_all', 'FR', "Tous types d'activité");
-___('activity_type_users', 'EN', "Users");
-___('activity_type_users', 'FR', "Membres");
-___('activity_type_meetups', 'EN', "Meetups");
-___('activity_type_meetups', 'FR', "Rencontres IRL");
-___('activity_type_internet', 'EN', "Internet encyclopedia");
-___('activity_type_internet', 'FR', "Encyclopédie du web");
-___('activity_type_quotes', 'EN', "Quotes");
-___('activity_type_quotes', 'FR', "Citations");
-___('activity_type_dev', 'EN', "Website internals");
-___('activity_type_dev', 'FR', "Développement");
+___('activity_type_all',        'EN', "All activity types");
+___('activity_type_all',        'FR', "Tous types d'activité");
+___('activity_type_users',      'EN', "Users");
+___('activity_type_users',      'FR', "Membres");
+___('activity_type_meetups',    'EN', "Meetups");
+___('activity_type_meetups',    'FR', "Rencontres IRL");
+___('activity_type_internet',   'EN', "Internet encyclopedia");
+___('activity_type_internet',   'FR', "Encyclopédie du web");
+___('activity_type_quotes',     'EN', "Quotes");
+___('activity_type_quotes',     'FR', "Citations");
+___('activity_type_dev',        'EN', "Website internals");
+___('activity_type_dev',        'FR', "Développement");
 
 
 // Activity log details
-___('activity_details_reason', 'EN', "Reason for this action:");
-___('activity_details_reason', 'FR', "Justification de l'action :");
-___('activity_details_diff', 'EN', "Différence(s) before/after this action:");
-___('activity_details_diff', 'FR', "Différence(s) avant/après l'action :");
+___('activity_details_reason',  'EN', "Reason for this action:");
+___('activity_details_reason',  'FR', "Justification de l'action :");
+___('activity_details_diff',    'EN', "Différence(s) before/after this action:");
+___('activity_details_diff',    'FR', "Différence(s) avant/après l'action :");
 
 
 // Actions
-___('activity_delete', 'EN', "Are you sure you want to delete this activity log?");
-___('activity_delete', 'FR', "Êtes-vous sûr de vouloir supprimer ce log d'activité ?");
-___('activity_deleted', 'EN', "THIS ACTIVITY LOG HAS BEEN DELETED");
-___('activity_deleted', 'FR', "CE LOG D'ACTIVITÉ A ÉTÉ SUPPRIMÉ");
-___('activity_restored', 'EN', "THIS ACTIVITY LOG HAS BEEN RESTORED");
-___('activity_restored', 'FR', "CE LOG D'ACTIVITÉ A ÉTÉ RÉTABLI");
+___('activity_delete',    'EN', "Are you sure you want to delete this activity log?");
+___('activity_delete',    'FR', "Êtes-vous sûr de vouloir supprimer ce log d'activité ?");
+___('activity_deleted',   'EN', "THIS ACTIVITY LOG HAS BEEN DELETED");
+___('activity_deleted',   'FR', "CE LOG D'ACTIVITÉ A ÉTÉ SUPPRIMÉ");
+___('activity_restored',  'EN', "THIS ACTIVITY LOG HAS BEEN RESTORED");
+___('activity_restored',  'FR', "CE LOG D'ACTIVITÉ A ÉTÉ RÉTABLI");

@@ -26,7 +26,6 @@ $page_description = "Welcome to NoBleme - thank you for creating a new account";
 /*********************************************************************************************************************/
 
 // Unhide the login menu
-
 $onload = "toggle_header_menu('account', 1);";
 
 
