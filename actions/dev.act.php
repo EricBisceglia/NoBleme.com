@@ -798,3 +798,37 @@ function irc_bot_delete_message_history_entry($log_id)
   query(" DELETE FROM logs_irc_bot
           WHERE       logs_irc_bot.id = '$log_id' ");
 }
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   DOCUMENTATION                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Generates the source code of an icon, ready for pasting to the clipboard.
+ *
+ * @param   string      $name                 The name of the icon.
+ * @param   string      $alt_text (OPTIONAL)  The alt text for the icon.
+ * @param   string|null $size     (OPTIONAL)  The size of the icon ('normal', 'small').
+ *
+ * @return  string                            The source code ready to be sent to the clipboard.
+ */
+
+function dev_doc_icon_to_clipboard( $name                 ,
+                                    $alt_text = 'X'       ,
+                                    $size     = 'normal'  )
+{
+  // Prepare the data
+  $class  = ($size == 'small') ? 'smallicon' : 'icon';
+  $name   = ($size == 'small') ? $name.'_small' : $name;
+
+  // Assemble the string
+  $icon = sanitize_output_javascript('<img class="'.$class.' valign_middle" src="<?=$path?>img/icons/'.$name.'.svg" alt="'.$alt_text.'">');
+
+  // Return the assembled string
+  return $icon;
+}
