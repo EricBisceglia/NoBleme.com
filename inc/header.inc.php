@@ -72,7 +72,7 @@ $activity_page_fr = (isset($page_title_fr) && !isset($hidden_activity)) ? $page_
 /*********************************************************************************************************************/
 
 // Check whether a website update is in progress
-$website_closed = system_variable_fetch('update_in_progress');
+$website_closed = $system_variables['update_in_progress'];
 
 // If yes, close the website to anyone who's not an admin
 if($website_closed  && !$is_admin)

@@ -64,13 +64,14 @@ if($irc_bot_stop)
 // Silence the IRC bot
 
 // Check if the bot is currently silenced
-$irc_bot_silenced = system_variable_fetch('irc_bot_is_silenced');
+$irc_bot_silenced = $system_variables['irc_bot_is_silenced'];
 
 // Toggle the silenced status if requested
 if(isset($_POST['irc_bot_toggle_silence_mode']))
 {
-  $irc_bot_silenced = irc_bot_toggle_silence_mode($irc_bot_silenced);
-  $bot_action_selector = 'silence';
+  $irc_bot_silenced                         = irc_bot_toggle_silence_mode($irc_bot_silenced);
+  $bot_action_selector                      = 'silence';
+  $system_variables['irc_bot_is_silenced']  = system_variable_fetch('irc_bot_is_silenced');
 }
 
 

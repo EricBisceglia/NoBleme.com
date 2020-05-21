@@ -25,6 +25,20 @@ query(' SET NAMES utf8mb4 ');
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Place all system variables in an array
+
+$system_variables = mysqli_fetch_array(query("  SELECT  system_variables.update_in_progress       ,
+                                                        system_variables.latest_query_id          ,
+                                                        system_variables.last_scheduler_execution ,
+                                                        system_variables.last_pageview_check      ,
+                                                        system_variables.irc_bot_is_silenced
+                                                FROM    system_variables
+                                                LIMIT   1 "));
+
+
+
+
 /**
  * Execute a MySQL query.
  *

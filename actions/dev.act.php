@@ -17,13 +17,15 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Toggles the website's status between open and closed.
  *
+ * @param   int   $website_status Whether an update is currently in progress
+ *
  * @return  void
  */
 
-function dev_toggle_website_status()
+function dev_toggle_website_status($website_status)
 {
-  // Fetch the current update status
-  $website_status = system_variable_fetch('update_in_progress');
+  // Sanitize the data
+  $website_status = sanitize($website_status, 'int', 0, 1);
 
   // Determine the required new value
   $new_status = ($website_status) ? 0 : 1;
