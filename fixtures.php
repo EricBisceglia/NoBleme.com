@@ -19,6 +19,7 @@ if(!$GLOBALS['dev_mode'])
 include_once "./inc/settings.inc.php";
 
 // Include mysql functions - but specify this is a special mode
+$GLOBALS['sql_skip_system_variables'] = 1;
 $GLOBALS['sql_database_agnostic'] = 1;
 include_once "./inc/sql.inc.php";
 
@@ -62,7 +63,7 @@ if(isset($_POST['fixtures_reset']))
   }
 
   // Output progress
-  echo "Database schema has been imported<br><br><hr><br>Please wait patiently until all fixtures are done being generated...<br>";
+  echo "Database schema has been imported<br><br><hr><br>Please wait patiently until all fixtures are done being generated...<br><br><table><tbody>";
   ob_flush();
   flush();
 
@@ -71,7 +72,7 @@ if(isset($_POST['fixtures_reset']))
   include_once './inc/sqldump_fixtures.php';
 
   // Finished!
-  exit("<br><hr><br>Job's done! ".$GLOBALS['query']." queries ran in ".(round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3)."s<br><br><a href=\"index\">Click here to return to the website's index.</a><br><br>"));
+  exit("</tbody></table><br><hr><br>Job's done! ".$GLOBALS['query']." queries ran in ".(round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3)."s<br><br><a href=\"index\">Click here to return to the website's index.</a><br><br>"));
 }
 
 // Ask for user confirmation before resetting the database ?>

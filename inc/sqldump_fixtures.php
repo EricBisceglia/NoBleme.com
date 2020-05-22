@@ -68,7 +68,8 @@ function fixtures_lorem_ipsum($word_count)
  * @param   string              $type       Type of data to generate ('int', 'digits', 'string', 'sentence', 'text').
  * @param   int                 $min        The minimum length or amount of data to be generated.
  * @param   int                 $max        The maximum length or amount of data to be generated.
- * @param   int|null  OPTIONAL  $no_periods Disables periods at the end of sentences.
+ * @param   int|null  OPTIONAL  $no_periods If set, disables periods at the end of sentences.
+ * @param   int|null  OPTIONAL  $no_spaces  If set, strings will not contain spaces.
  *
  * @return  string                          The randomly generated content.
  */
@@ -76,7 +77,8 @@ function fixtures_lorem_ipsum($word_count)
 function fixtures_generate_data(  $type           ,
                                   $min            ,
                                   $max            ,
-                                  $no_periods = 0 )
+                                  $no_periods = 0 ,
+                                  $no_spaces  = 0 )
 {
   // Don't do aything if the min/max values are incorrect
   if($max < 1 || $min > $max)
@@ -99,7 +101,9 @@ function fixtures_generate_data(  $type           ,
   // Random string
   if($type == 'string')
   {
-    $characters   = "aaaaaabcdeeeeeeefghiiiiiijkllmmnnoooooopqrrsssttuuvwxyz      ";
+    $characters   = "aaaaaabcdeeeeeeefghiiiiiijkllmmnnoooooopqrrsssttuuvwxyz";
+    if(!$no_spaces)
+      $characters .= "      ";
     $max_length   = mt_rand($min, $max);
     $string  = '';
     for ($i = 0; $i < $max_length; $i++)
@@ -394,7 +398,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random guests<br>";
+echo "<tr><td>Generated&nbsp;</td><td style=\"text-align:right\">$random</td><td>guests</td></tr>";
 ob_flush();
 flush();
 
@@ -616,7 +620,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random users<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>users</td></tr>";
 ob_flush();
 flush();
 
@@ -637,7 +641,7 @@ for($i = 0; $i < $random; $i++)
   $sent_at    = mt_rand(1111239420, time());
   $read_at    = (mt_rand(0,5) < 3) ? mt_rand($sent_at, time()) : 0;
   $title      = fixtures_generate_data('sentence', 4, 7);
-  $body       = fixtures_generate_data('text', 1, 5);
+  $body       = fixtures_generate_data('text', 1, 3);
 
   // Generate the private messages
   query(" INSERT INTO users_private_messages
@@ -651,7 +655,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random private messages<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>private messages</td></tr>";
 ob_flush();
 flush();
 
@@ -702,7 +706,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random devblogs<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>devblogs</td></tr>";
 ob_flush();
 flush();
 
@@ -727,7 +731,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random task categories<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>task categories</td></tr>";
 ob_flush();
 flush();
 
@@ -751,7 +755,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random task milestones<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>task milestones</td></tr>";
 ob_flush();
 flush();
 
@@ -824,7 +828,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random tasks<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>tasks</td></tr>";
 ob_flush();
 flush();
 
@@ -838,7 +842,8 @@ flush();
 /*********************************************************************************************************************/
 
 // Generate some meetups
-$random = mt_rand(40,60);
+$random       = mt_rand(40,60);
+$meetup_users = 0;
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
@@ -940,8 +945,9 @@ for($i = 0; $i < $random; $i++)
   }
 
   // Add some people to the meetup
-  $random2    = mt_rand(5,10);
-  $user_list  = array();
+  $random2       = mt_rand(5,10);
+  $meetup_users += $random2;
+  $user_list     = array();
   for($j = 0; $j < $random2; $j++)
   {
     // Generate random data
@@ -1055,7 +1061,8 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random meetups<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>meetups</td></tr>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$meetup_users</td><td>meetup attending users</td></tr>";
 ob_flush();
 flush();
 
@@ -1069,7 +1076,8 @@ flush();
 /*********************************************************************************************************************/
 
 // Generate some quotes
-$random = mt_rand(200,400);
+$random       = mt_rand(200,400);
+$quote_users  = 0;
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
@@ -1107,8 +1115,9 @@ for($i = 0; $i < $random; $i++)
                         logs_activity.activity_id       = '$quote'        ");
 
   // Link some users to the quote
-  $random2    = mt_rand(1,4);
-  $user_list  = array();
+  $random2      = mt_rand(1,4);
+  $quote_users += $random2;
+  $user_list    = array();
   for($j = 0; $j < $random2; $j++)
   {
     // Generate random data
@@ -1126,7 +1135,8 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random quotes<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>quotes</td></tr>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$quote_users</td><td>quote-user links</td></tr>";
 ob_flush();
 flush();
 
@@ -1171,7 +1181,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random writings<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>writings</td></tr>";
 ob_flush();
 flush();
 
@@ -1182,7 +1192,8 @@ flush();
 // Contests
 
 // Generate some random contests
-$random = mt_rand(8,14);
+$random         = mt_rand(8,14);
+$contest_votes  = 0;
 for($i = 1; $i < $random; $i++)
 {
   // Add a bunch of texts to the contest
@@ -1217,11 +1228,12 @@ for($i = 1; $i < $random; $i++)
   $contest = query_id();
 
   // Link some votes to the contest
-  $random2  = mt_rand(5,10);
-  $qvoters  = query(" SELECT    users.id AS 'u_id'
-                      FROM      users
-                      ORDER BY  rand()
-                      LIMIT     $random2 ");
+  $random2        = mt_rand(5,10);
+  $contest_votes += $random2;
+  $qvoters        = query(" SELECT    users.id AS 'u_id'
+                            FROM      users
+                            ORDER BY  rand()
+                            LIMIT     $random2 ");
   while($dvoters = mysqli_fetch_array($qvoters))
   {
     // Fetch some texts
@@ -1269,7 +1281,8 @@ for($i = 1; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random writing contests<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>writing contests</td></tr>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$contest_votes</td><td>writing contest votes</td></tr>";
 ob_flush();
 flush();
 
@@ -1285,15 +1298,33 @@ flush();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Admin notes
 
+// Generate some random strings
+$global_notes = fixtures_generate_data('text', 1, 1);
+$draft_en     = fixtures_generate_data('text', 1, 1);
+$draft_fr     = fixtures_generate_data('text', 1, 1);
+$snippets     = fixtures_generate_data('text', 1, 1);
+$template_en  = fixtures_generate_data('text', 1, 1);
+$template_fr  = fixtures_generate_data('text', 1, 1);
+
 // Generate admin notes
 query(" INSERT INTO internet_admin_notes
-        SET         internet_admin_notes.global_notes = '' ");
+        SET         internet_admin_notes.global_notes = '$global_notes' ,
+                    internet_admin_notes.draft_en     = '$draft_en'     ,
+                    internet_admin_notes.draft_fr     = '$draft_fr'     ,
+                    internet_admin_notes.snippets     = '$snippets'     ,
+                    internet_admin_notes.template_en  = '$template_en'  ,
+                    internet_admin_notes.template_fr  = '$template_fr'  ");
+
+// Output progress
+echo "<tr><td>Generated</td><td style=\"text-align:right\">1</td><td>internet encyclopedia admin notes</td></tr>";
+ob_flush();
+flush();
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Internet encyclopedia
+// internet encyclopedia
 
 // Generate some random categories
 $random = mt_rand(8,16);
@@ -1316,7 +1347,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random internet encyclopedia categories<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>internet encyclopedia categories</td></tr>";
 ob_flush();
 flush();
 
@@ -1343,7 +1374,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random internet encyclopedia eras<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>internet encyclopedia eras</td></tr>";
 ob_flush();
 flush();
 
@@ -1452,7 +1483,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random internet encyclopedia entries<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>internet encyclopedia entries</td></tr>";
 ob_flush();
 flush();
 
@@ -1484,6 +1515,11 @@ while($dpages = mysqli_fetch_array($qpages))
           WHERE   internet_pages.id             = '$page' ");
 }
 
+// Output progress
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>internet encyclopedia redirections</td></tr>";
+ob_flush();
+flush();
+
 
 
 
@@ -1513,7 +1549,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random internet encyclopedia images<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>internet encyclopedia images</td></tr>";
 ob_flush();
 flush();
 
@@ -1553,6 +1589,85 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "Generated $random IRC channels<br>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>IRC channels</td></tr>";
+ob_flush();
+flush();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IRC bot logs
+
+// Generate some random logs
+$random   = mt_rand(500,1000);
+$channels = array('#nobleme', '#english', '#dev', '#admin');
+for($i = 0; $i < $random; $i++)
+{
+  // Generate random data
+  $sent_at      = mt_rand(1111239420, time());
+  $channel      = $channels[array_rand($channels)];
+  $body         = ucfirst(fixtures_generate_data('sentence', 2, 8));
+  $is_silenced  = (mt_rand(0,50) < 50) ? 0 : 1;
+  $is_failed    = (mt_rand(0,50) < 50) ? 0 : 1;
+  $is_manual    = (mt_rand(0,50) < 50) ? 0 : 1;
+  $is_action    = (mt_rand(0,50) < 50) ? 0 : 1;
+
+  // Generate the logs
+  query(" INSERT INTO logs_irc_bot
+          SET         logs_irc_bot.sent_at      = '$sent_at'      ,
+                      logs_irc_bot.channel      = '$channel'      ,
+                      logs_irc_bot.body         = '$body'         ,
+                      logs_irc_bot.is_silenced  = '$is_silenced'  ,
+                      logs_irc_bot.is_failed    = '$is_failed'    ,
+                      logs_irc_bot.is_manual    = '$is_manual'    ,
+                      logs_irc_bot.is_action    = '$is_action'    ");
+}
+
+// Output progress
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>IRC bot logs</td></tr>";
+ob_flush();
+flush();
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       STATS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pageviews
+
+// Generate some random pages
+$random   = mt_rand(500,1000);
+for($i = 0; $i < $random; $i++)
+{
+  // Generate random data
+  $page_name_en       = ucfirst(fixtures_generate_data('sentence', 2, 8));
+  $page_name_fr       = ucfirst(fixtures_generate_data('sentence', 2, 8));
+  $page_url           = 'pages/'.mb_strtolower(fixtures_generate_data('sentence', 1, 1, 1)).'/'.fixtures_generate_data('string', 10, 20, 0, 1);
+  $last_viewed_at     = mt_rand(1111239420, time());
+  $view_count         = (mt_rand(0, 25) < 25) ? mt_rand(0, 100) : mt_rand(100, 1000000);
+  $view_count_archive = (mt_rand(0, $view_count));
+  $query_count        = (mt_rand(0, 50) < 50) ? mt_rand(10, 25) : mt_rand(10, 100);
+  $load_time          = (mt_rand(0, 50) < 50) ? mt_rand(30, 90) : mt_rand(50, 2500);
+
+  // Generate the stats
+  query(" INSERT INTO stats_pages
+          SET         stats_pages.page_name_en        = '$page_name_en'       ,
+                      stats_pages.page_name_fr        = '$page_name_fr'       ,
+                      stats_pages.page_url            = '$page_url'           ,
+                      stats_pages.last_viewed_at      = '$last_viewed_at'     ,
+                      stats_pages.view_count          = '$view_count'         ,
+                      stats_pages.view_count_archive  = '$view_count_archive' ,
+                      stats_pages.query_count         = '$query_count'        ,
+                      stats_pages.load_time           = '$load_time'          ");
+}
+
+// Output progress
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>page stats</td></tr>";
 ob_flush();
 flush();

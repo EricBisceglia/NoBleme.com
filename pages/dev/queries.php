@@ -3,6 +3,7 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
+$GLOBALS['sql_skip_system_variables'] = 1;
 include_once './../../inc/queries.inc.php';  # Run all queries awaiting execution
 include_once './../../inc/includes.inc.php'; # Core
 include_once './../../lang/dev.lang.php';    # Translations

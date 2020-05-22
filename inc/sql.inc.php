@@ -28,13 +28,19 @@ query(' SET NAMES utf8mb4 ');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Place all system variables in an array
 
-$system_variables = mysqli_fetch_array(query("  SELECT  system_variables.update_in_progress       ,
-                                                        system_variables.latest_query_id          ,
-                                                        system_variables.last_scheduler_execution ,
-                                                        system_variables.last_pageview_check      ,
-                                                        system_variables.irc_bot_is_silenced
-                                                FROM    system_variables
-                                                LIMIT   1 "));
+// By default fetch the values in the database
+if(!isset($GLOBALS['sql_skip_system_variables']))
+  $system_variables = mysqli_fetch_array(query("  SELECT  system_variables.update_in_progress       ,
+                                                          system_variables.latest_query_id          ,
+                                                          system_variables.last_scheduler_execution ,
+                                                          system_variables.last_pageview_check      ,
+                                                          system_variables.irc_bot_is_silenced
+                                                  FROM    system_variables
+                                                  LIMIT   1 "));
+
+// Mock system variables that need to be there even in special circumstances
+else
+  $system_variables = array( 'update_in_progress' => 0 );
 
 
 
