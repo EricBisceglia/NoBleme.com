@@ -31,7 +31,7 @@ function error_page(  $message                ,
   // Does the user have special permissions? (required by the header)
   if(!$is_logged_in)
   {
-    // By default, assume he does not
+    // By default, assume they do not
     $is_admin     = 0;
     $is_moderator = 0;
   }
@@ -54,6 +54,9 @@ function error_page(  $message                ,
   // Figure out the user's language if required, from the session if it is there (required by the header)
   $temp = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
   $lang = ($lang) ? $lang : $temp;
+
+  // Mock system variables that need to be there even in special circumstances
+  $system_variables = array('update_in_progress' => system_variable_fetch('update_in_progress'));
 
   // Inform the header that an error is being thrown
   $error_mode = 1;

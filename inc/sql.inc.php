@@ -40,7 +40,7 @@ if(!isset($GLOBALS['sql_skip_system_variables']))
 
 // Mock system variables that need to be there even in special circumstances
 else
-  $system_variables = array( 'update_in_progress' => 0 );
+  $system_variables = array('update_in_progress' => 0);
 
 
 

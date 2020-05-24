@@ -189,7 +189,7 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && user_is_logged_in())
   {
     // If the ban is still active, then redirect the user to a dedicated page for banned users
     if($dbanned["ban_end"] > time())
-      exit(header("Location: ".$path."pages/users/banned"));
+      exit(header("Location: ".$path."banned"));
 
     // If the ban has ended, then remove it
     else
@@ -448,6 +448,41 @@ function user_is_administrator($user_id = NULL)
 
 
 /**
+ * Checks if an user is banned.
+ *
+ * Defaults to checking whether current user is banned unless the $user_id optional parameter is specified.
+ *
+ * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is banned.
+ *
+ * @return  bool                            Returns 1 if the user is banned, 0 if he isn't.
+ */
+
+function user_is_banned($user_id = NULL)
+{
+  // If no user id is specified, use the current active session instead
+  if(!$user_id && isset($_SESSION['user_id']))
+    $user_id = $_SESSION['user_id'];
+
+  // If no user is specified, this means the user is a guest, in this case return 0
+  if(!$user_id)
+    return 0;
+
+  // Sanitize user id
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // Fetch banned status
+  $dbanned = mysqli_fetch_array(query(" SELECT  users.is_banned_until AS 'u_banned'
+                                        FROM    users
+                                        WHERE   users.id = '$user_id' "));
+
+  // Return 1 if the user is an administrator, 0 if he isn't
+  return ($dbanned['u_banned']) ? 1 : 0;
+}
+
+
+
+
+/**
  * Allows access only to moderators (or above).
  *
  * Any user who does not have the required rights will get rejected and see an error page.
@@ -562,6 +597,28 @@ function user_restrict_to_guests($lang = 'EN')
 
 
 /**
+ * Allows access only to banned users.
+ *
+ * Any guest or non-banned user will get redirected to the homepage.
+ * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
+ *
+ * @param   string|null $lang (OPTIONAL)  The language used in the error message.
+ * @param   string|null $path (OPTIONAL)  The path to the root of the website.
+ *
+ * @return  void
+ */
+
+function user_restrict_to_banned( $path = './../../' )
+{
+  // Check if the user is logged out or logged in but not banned, then redirect them
+  if(!user_is_logged_in() || !user_is_banned())
+    exit(header("Location: ".$path."index"));
+}
+
+
+
+
+/**
  * NSFW filter settings of the current user.
  *
  * There are several levels of NSFW filters, all this function does is return the current level of the user.
@@ -614,16 +671,16 @@ function user_settings_privacy()
     $user_id = sanitize($_SESSION['user_id'], 'int', 0);
 
     // Fetch the settings
-    $dprivacy = mysqli_fetch_array(query("  SELECT  users_settings.hide_tweets         AS 'user_twitter'  ,
-                                                    users_settings.hide_youtube        AS 'user_youtube'  ,
-                                                    users_settings.hide_google_trends  AS 'user_trends'
+    $dprivacy = mysqli_fetch_array(query("  SELECT  users_settings.hide_tweets        AS 'user_twitter' ,
+                                                    users_settings.hide_youtube       AS 'user_youtube' ,
+                                                    users_settings.hide_google_trends AS 'user_trends'
                                             FROM    users_settings
                                             WHERE   users_settings.fk_users = '$user_id' "));
 
     // Set the privacy values to those wanted by the user
-    $privacy_twitter  = $dprivacy['user_twitter'];
-    $privacy_youtube  = $dprivacy['user_youtube'];
-    $privacy_trends   = $dprivacy['user_trends'];
+    $privacy_twitter = $dprivacy['user_twitter'];
+    $privacy_youtube = $dprivacy['user_youtube'];
+    $privacy_trends  = $dprivacy['user_trends'];
   }
 
   // Return those privacy settings, neatly folded in a cozy array
