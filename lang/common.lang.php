@@ -858,7 +858,7 @@ ___('coc', 'FR', <<<EOT
   </li>
 </ul>
 <p>
-Il est normal que des tensions apparaissent dans des lieux où des personnalités et opinions variées coexistent. Toutefois, si votre comportement ou votre vocabulaire empêchent d'autres personnes de passer un bon moment, nous devrons vous exclure. Soyons bienveillants, et nous en bénéficierons tous.
+Il est normal que des tensions apparaissent dans des lieux où des personnalités et opinions variées coexistent. Toutefois, si votre comportement ou votre vocabulaire empêchent d'autres personnes de passer un bon moment, nous devrons vous exclure. Soyons bienveillants, et nous en bénéficierons tou·te·s.
 </p>
 EOT
 );

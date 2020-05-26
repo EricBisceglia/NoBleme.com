@@ -439,3 +439,54 @@ function users_create_account(  $nickname                       ,
   // The registration process is complete
   return 1;
 }
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      BANNED                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Fetches information related to a user's ban.
+ *
+ * @param   string|null $lang     The language currently in use.
+ * @param   int|null    $user_id  The user's ID in the database. If null, fetches the current user's ID.
+ *
+ * @return  array                 An array of data regarding the ban.
+ */
+
+function user_ban_details(  $lang     = 'EN'  ,
+                            $user_id  = NULL  )
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+
+  // If no id is specified, grab the one currently stored in the session
+  if(!$user_id && isset($_SESSION['user_id']))
+    $user_id = $_SESSION['user_id'];
+
+  // If no id is stored in the session, then this is a guest and this shouldn't be happening, exit
+  else if(!$user_id)
+    exit();
+
+  // Sanitize the id
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // Fetch data regarding the ban
+  $dban = mysqli_fetch_array(query("  SELECT  users.is_banned_until       AS 'u_ban_end'  ,
+                                              users.is_banned_because_en  AS 'u_ban_en'   ,
+                                              users.is_banned_because_fr  AS 'u_ban_fr'
+                                      FROM    users
+                                      WHERE   users.id = '$user_id' "));
+
+  // Prepare the data
+  $data['ban_end']    = sanitize_output(date_to_text($dban['u_ban_end'], 0, $lang).__('at_date', 0, 1 ,1).date('H:i:s', $dban['u_ban_end']));
+  $data['time_left']  = sanitize_output(time_until($dban['u_ban_end']));
+  $data['ban_reason'] = ($lang == 'EN') ? sanitize_output($dban['u_ban_en']) : sanitize_output($dban['u_ban_fr']);
+
+  // Return the data
+  return $data;
+}

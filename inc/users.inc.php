@@ -194,9 +194,10 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && user_is_logged_in())
     // If the ban has ended, then remove it
     else
       query(" UPDATE  users
-              SET     users.is_banned_until   = '0' ,
-                      users.is_banned_because = ''
-              WHERE   users.id                = '$id_user' ");
+              SET     users.is_banned_until       = '0' ,
+                      users.is_banned_because_en  = ''  ,
+                      users.is_banned_because_fr  = ''
+              WHERE   users.id                    = '$id_user' ");
   }
 }
 

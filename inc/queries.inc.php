@@ -1153,7 +1153,8 @@ if($last_query < 26)
   sql_rename_field('users', 'derniere_activite', 'last_action_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_move_field('users', 'last_action_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'last_visited_at');
   sql_rename_field('users', 'banni_date', 'is_banned_until', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('users', 'banni_raison', 'is_banned_because', 'TEXT NOT NULL');
+  sql_create_field('users', 'is_banned_because_en', 'TEXT NOT NULL', 'is_banned_until');
+  sql_rename_field('users', 'banni_raison', 'is_banned_because_fr', 'TEXT NOT NULL');
   sql_delete_field('users', 'forum_messages');
   sql_delete_field('users', 'forum_lang');
   sql_delete_index('users', 'index_login');
