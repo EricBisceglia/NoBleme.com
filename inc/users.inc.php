@@ -173,32 +173,9 @@ $lang = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
 // First off, to avoid infinite loops, make sure that the user is loggsed in and isn't already on the banned.php page
 if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && user_is_logged_in())
 {
-  // Fetch user id from the session
-  $id_user = $_SESSION['user_id'];
-
-  // Sanitize the user id, just in case
-  $id_user = sanitize($id_user, 'int', 0);
-
-  // Check whether the user is banned
-  $dbanned = mysqli_fetch_array(query(" SELECT  users.is_banned_until AS 'ban_end'
-                                        FROM    users
-                                        WHERE   users.id = '$id_user' "));
-
-  // If the user is banned, proceed
-  if($dbanned["ban_end"])
-  {
-    // If the ban is still active, then redirect the user to a dedicated page for banned users
-    if($dbanned["ban_end"] > time())
-      exit(header("Location: ".$path."banned"));
-
-    // If the ban has ended, then remove it
-    else
-      query(" UPDATE  users
-              SET     users.is_banned_until       = '0' ,
-                      users.is_banned_because_en  = ''  ,
-                      users.is_banned_because_fr  = ''
-              WHERE   users.id                    = '$id_user' ");
-  }
+  // Check whether the user is banned - if yes, redirect them to the banned page
+  if(user_is_banned($_SESSION['user_id']))
+    exit(header("Location: ".$path."banned"));
 }
 
 
@@ -472,12 +449,25 @@ function user_is_banned($user_id = NULL)
   $user_id = sanitize($user_id, 'int', 0);
 
   // Fetch banned status
-  $dbanned = mysqli_fetch_array(query(" SELECT  users.is_banned_until AS 'u_banned'
+  $dbanned = mysqli_fetch_array(query(" SELECT  users.is_banned_until AS 'u_ban_end'
                                         FROM    users
                                         WHERE   users.id = '$user_id' "));
 
-  // Return 1 if the user is an administrator, 0 if he isn't
-  return ($dbanned['u_banned']) ? 1 : 0;
+  // If the user isn't banned, return 0
+  if(!$dbanned['u_ban_end'])
+    return 0;
+
+  // If the user is banned and hasn't purged their sentence, return 1
+  if($dbanned["u_ban_end"] > time())
+    return 1;
+
+  // If the ban has been purged, then unban the user and return 0
+  query(" UPDATE  users
+            SET     users.is_banned_until       = '0' ,
+                    users.is_banned_because_en  = ''  ,
+                    users.is_banned_because_fr  = ''
+            WHERE   users.id                    = '$user_id' ");
+  return 0;
 }
 
 

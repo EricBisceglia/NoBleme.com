@@ -114,6 +114,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           Checks whether a row exists in a table.
         </td>
       </tr>
+      <tr>
+        <td class="align_right smallglow">
+          database_entry_exists()
+        </td>
+        <td class="align_left">
+          Checks whether an entry exists in a table.
+        </td>
+      </tr>
 
     </tbody>
   </table>

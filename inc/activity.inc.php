@@ -118,17 +118,23 @@ function log_activity_parse(  $path                 ,
   {
     $return['css']  = 'red bold';
     $return['href'] = $path.'todo_link?id='.$userid;
-    $temp           = ($amount != 1) ? 's' : '';
-    $return['EN']   = $nickname.' has been banned for '.$amount.' day'.$temp;
-    $return['FR']   = $nickname.' a été banni·e pendant '.$amount.' jour'.$temp;
+    $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
+    $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
+    $return['EN']   = $nickname.' has been banned '.$temp[$amount].$temp2;
+    $temp           = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
+    $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
+    $return['FR']   = $nickname.' a été banni·e '.$temp[$amount].$temp2;
   }
   else if($type == 'users_banned')
   {
     $return['css']  = 'red bold';
     $return['href'] = $path.'todo_link';
-    $temp           = ($amount != 1) ? 's' : '';
-    $return['EN']   = $mod_nickname.' banned '.$nickname.' for '.$amount.' day'.$temp;
-    $return['FR']   = $mod_nickname.' a banni '.$nickname.' pendant '.$amount.' jour'.$temp;
+    $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
+    $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
+    $return['EN']   = $mod_nickname.' banned '.$nickname.' '.$temp[$amount].$temp2;
+    $temp           = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
+    $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
+    $return['FR']   = $mod_nickname.' a banni '.$nickname.' '.$temp[$amount].$temp2;
   }
 
   else if($type === 'users_unbanned' && !$admins_only)
@@ -159,7 +165,7 @@ function log_activity_parse(  $path                 ,
     $return['css']  = 'orange bold';
     $return['href'] = $path.'todo_link';
     $return['EN']   = $nickname." has joined the administrative team as a moderator";
-    $return['FR']   = $nickname." a rejoint l'équipe administrative en tant que modérateur";
+    $return['FR']   = $nickname." a rejoint l'équipe administrative en tant que modérateur·ice";
   }
 
   else if($type === 'users_rights_administrator')
@@ -167,7 +173,7 @@ function log_activity_parse(  $path                 ,
     $return['css']  = 'red bold';
     $return['href'] = $path.'todo_link';
     $return['EN']   = $nickname." is now a website administrator";
-    $return['FR']   = $nickname." est maintenant un administrateur du site";
+    $return['FR']   = $nickname." est maintenant un·e administrateur·ice du site";
   }
 
 

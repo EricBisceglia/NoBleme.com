@@ -684,8 +684,8 @@ ___('submenu_admin_modlogs',        'FR', "Logs de modération");
 
 ___('submenu_admin_users',          'EN', "User management");
 ___('submenu_admin_users',          'FR', "Gestion des membres");
-___('submenu_admin_banned',         'EN', "Banned users list");
-___('submenu_admin_banned',         'FR', "Pilori des bannis");
+___('submenu_admin_ban',            'EN', "User ban management");
+___('submenu_admin_ban',            'FR', "Gestion des bannissements");
 ___('submenu_admin_nickname',       'EN', "Change a username");
 ___('submenu_admin_nickname',       'FR', "Modifier un pseudonyme");
 ___('submenu_admin_password',       'EN', "Change a password");
@@ -790,7 +790,7 @@ If you have lost access to your account (forgotten username, forgotten password,
 EOT
 );
 ___('users_lost_access_solution', 'FR', <<<EOT
-Si vous avez perdu l'accès à votre compte (pseudonyme oublié, mot de passe oublié, ou autre), la seule façon de récupérer cet accès est d'aller sur le {{link+++|todo_link|chat IRC NoBleme|bold|1|{{1}}}} et d'y demander à un {{link+++|todo_link|administrateur|bold|1|{{1}}}} de manuellement remettre à zéro le mot de passe de votre compte. Pas d'inquiétude pour ce qui est de l'usurpation d'identité, un processus strict de vérification est en place et devra être respecté avant que l'administrateur puisse remettre à zéro votre mot de passe et vous rendre l'accès à votre compte perdu.
+Si vous avez perdu l'accès à votre compte (pseudonyme oublié, mot de passe oublié, ou autre), la seule façon de récupérer cet accès est d'aller sur le {{link+++|todo_link|chat IRC NoBleme|bold|1|{{1}}}} et d'y demander à un·e {{link+++|todo_link|administrateur·ice|bold|1|{{1}}}} de manuellement remettre à zéro le mot de passe de votre compte. Pas d'inquiétude pour ce qui est de l'usurpation d'identité, un processus strict de vérification est en place et devra être respecté avant que l'administrateur·ice puisse remettre à zéro votre mot de passe et vous rendre l'accès à votre compte perdu.
 EOT
 );
 

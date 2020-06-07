@@ -857,6 +857,11 @@ if($last_query < 21)
           WHERE   logs_activity.activity_type    LIKE 'internet_%'
           AND     logs_activity.activity_summary_en = '' ");
 
+  query(" UPDATE  logs_activity
+          SET     logs_activity.activity_amount   = 3650
+          WHERE   logs_activity.activity_amount   = 3652
+          AND     logs_activity.activity_type  LIKE 'users_banned' ");
+
   $logs_activity_details = array( 'Auteur'                => 'Author'                 ,
                                   'Contenu'               => 'Body'                   ,
                                   'Date de naissance'     => 'Date of birth'          ,

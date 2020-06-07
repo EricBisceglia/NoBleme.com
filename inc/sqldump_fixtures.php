@@ -560,46 +560,87 @@ for($i = 0; $i < $random; $i++)
                           logs_activity.activity_nickname           = '$username'                 ,
                           logs_activity.activity_moderator_nickname = 'Admin'                     ");
     }
-    if(mt_rand(0,150) >= 150)
+    if(mt_rand(0,100) >= 100)
     {
-      $banned_at    = mt_rand($created_at, time());
-      $unbanned_at  = mt_rand($banned_at, time());
-      $ban_reason   = ucfirst(fixtures_generate_data('sentence', 4, 8));
-      $unban_reason = (mt_rand(0,1)) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
-      $ban_length   = (abs($banned_at - $unbanned_at) / 86400);
+      $banned_at        = mt_rand($created_at, time());
+      $ban_durations    = array(1, 7, 30, 365, 3650);
+      $ban_duration     = $ban_durations[array_rand($ban_durations)];
+      $unbanned_at      = $banned_at + ($ban_duration * 86400);
+      $ban_reason_en    = (mt_rand(0,2) < 2) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
+      $ban_reason_fr    = (mt_rand(0,2) < 2) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
+      $unban_reason_en  = (mt_rand(0,3) < 3) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
+      $unban_reason_fr  = (mt_rand(0,3) < 3) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
       query(" INSERT INTO logs_activity
               SET         logs_activity.happened_at             = '$banned_at'    ,
                           logs_activity.fk_users                = '$user_id'      ,
                           logs_activity.language                = 'ENFR'          ,
                           logs_activity.activity_type           = 'users_banned'  ,
-                          logs_activity.activity_amount         = '$ban_length'   ,
+                          logs_activity.activity_amount         = '$ban_duration' ,
                           logs_activity.activity_nickname       = '$username'     ");
       query(" INSERT INTO logs_activity
-              SET         logs_activity.happened_at                 = '$banned_at'    ,
-                          logs_activity.is_moderators_only          = 1               ,
-                          logs_activity.language                    = 'ENFR'          ,
-                          logs_activity.activity_type               = 'users_banned'  ,
-                          logs_activity.activity_id                 = '$user_id'      ,
-                          logs_activity.activity_nickname           = '$username'     ,
-                          logs_activity.activity_moderator_nickname = 'Admin'         ,
-                          logs_activity.moderation_reason           = '$ban_reason'   ");
-      query(" INSERT INTO logs_activity
-              SET         logs_activity.happened_at             = '$unbanned_at'    ,
-                          logs_activity.fk_users                = '$user_id'        ,
-                          logs_activity.language                = 'ENFR'            ,
-                          logs_activity.activity_type           = 'users_unbanned'  ,
-                          logs_activity.activity_amount         = '$ban_length'     ,
-                          logs_activity.activity_nickname       = '$username'       ");
-      if($unban_reason)
+              SET         logs_activity.happened_at                 = '$banned_at'      ,
+                          logs_activity.is_moderators_only          = 1                 ,
+                          logs_activity.language                    = 'ENFR'            ,
+                          logs_activity.activity_type               = 'users_banned'    ,
+                          logs_activity.activity_amount             = '$ban_duration'   ,
+                          logs_activity.activity_summary_en         = '$ban_reason_en'  ,
+                          logs_activity.activity_summary_fr         = '$ban_reason_fr'  ,
+                          logs_activity.activity_id                 = '$user_id'        ,
+                          logs_activity.activity_nickname           = '$username'       ,
+                          logs_activity.activity_moderator_nickname = 'Admin'           ");
+      $log_id = query_id();
+      if($ban_reason_en)
+        query(" INSERT INTO logs_activity_details
+                SET         logs_activity_details.fk_logs_activity        = '$log_id'         ,
+                            logs_activity_details.content_description_en  = 'Reason (EN)'     ,
+                            logs_activity_details.content_description_fr  = 'Raison (EN)'     ,
+                            logs_activity_details.content_before          = '$ban_reason_en'  ,
+                            logs_activity_details.content_after           = '$ban_reason_en'  ");
+      if($ban_reason_fr)
+        query(" INSERT INTO logs_activity_details
+                SET         logs_activity_details.fk_logs_activity        = '$log_id'         ,
+                            logs_activity_details.content_description_en  = 'Reason (FR)'     ,
+                            logs_activity_details.content_description_fr  = 'Raison (FR)'     ,
+                            logs_activity_details.content_before          = '$ban_reason_fr'  ,
+                            logs_activity_details.content_after           = '$ban_reason_fr'  ");
+      if($unbanned_at < time())
+      {
         query(" INSERT INTO logs_activity
-                SET         logs_activity.happened_at                 = '$unbanned_at'    ,
-                            logs_activity.is_moderators_only          = 1                 ,
-                            logs_activity.language                    = 'ENFR'            ,
-                            logs_activity.activity_type               = 'users_unbanned'  ,
-                            logs_activity.activity_id                 = '$user_id'        ,
-                            logs_activity.activity_nickname           = '$username'       ,
-                            logs_activity.activity_moderator_nickname = 'Admin'           ,
-                            logs_activity.moderation_reason           = '$unban_reason'   ");
+                SET         logs_activity.happened_at             = '$unbanned_at'    ,
+                            logs_activity.fk_users                = '$user_id'        ,
+                            logs_activity.language                = 'ENFR'            ,
+                            logs_activity.activity_type           = 'users_unbanned'  ,
+                            logs_activity.activity_amount         = '$ban_duration'   ,
+                            logs_activity.activity_nickname       = '$username'       ");
+        if($unban_reason_en || $unban_reason_fr)
+        {
+          query(" INSERT INTO logs_activity
+                  SET         logs_activity.happened_at                 = '$unbanned_at'      ,
+                              logs_activity.is_moderators_only          = 1                   ,
+                              logs_activity.language                    = 'ENFR'              ,
+                              logs_activity.activity_type               = 'users_unbanned'    ,
+                              logs_activity.activity_summary_en         = '$unban_reason_en'  ,
+                              logs_activity.activity_summary_fr         = '$unban_reason_fr'  ,
+                              logs_activity.activity_id                 = '$user_id'          ,
+                              logs_activity.activity_nickname           = '$username'         ,
+                              logs_activity.activity_moderator_nickname = 'Admin'             ");
+          $log_id = query_id();
+          if($unban_reason_en)
+            query(" INSERT INTO logs_activity_details
+                    SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
+                                logs_activity_details.content_description_en  = 'Reason (EN)'       ,
+                                logs_activity_details.content_description_fr  = 'Raison (EN)'       ,
+                                logs_activity_details.content_before          = '$unban_reason_en'  ,
+                                logs_activity_details.content_after           = '$unban_reason_en'  ");
+          if($unban_reason_fr)
+            query(" INSERT INTO logs_activity_details
+                    SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
+                                logs_activity_details.content_description_en  = 'Reason (FR)'       ,
+                                logs_activity_details.content_description_fr  = 'Raison (FR)'       ,
+                                logs_activity_details.content_before          = '$unban_reason_fr'  ,
+                                logs_activity_details.content_after           = '$unban_reason_fr'  ");
+        }
+      }
     }
     if(mt_rand(0,250) >= 250)
     {

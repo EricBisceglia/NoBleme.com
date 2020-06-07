@@ -34,12 +34,43 @@ function database_row_exists( $table  ,
   $id     = sanitize($id, 'int', 0);
 
   // Check whether the row exists
-  $dcheck = mysqli_fetch_array(query("  SELECT  ".$table.".id AS 'r_id'
+  $dcheck = mysqli_fetch_array(query("  SELECT  $table.id AS 'r_id'
                                         FROM    $table
-                                        WHERE   ".$table.".id = '".$id."' "));
+                                        WHERE   $table.id = '$id' "));
 
   // Return the result
   return ($dcheck['r_id']) ? 1 : 0;
+}
+
+
+
+
+/**
+ * Checks whether an entry exists in a table.
+ *
+ * @param   string  $table  Name of the table.
+ * @param   string  $field  Name of the field.
+ * @param   int     $value  Data value to look for.
+ *
+ * @return  int             The id of the row containing the entry, or 0 if it does not exist.
+ */
+
+function database_entry_exists( $table  ,
+                                $field  ,
+                                $value  )
+{
+  // Sanitize the data before running the query
+  $table  = sanitize($table, 'string');
+  $field  = sanitize($field, 'string');
+  $value  = sanitize($value, 'string');
+
+  // Check whether the entry exists
+  $dcheck = mysqli_fetch_array(query("  SELECT  $table.id AS 'r_id'
+                                        FROM    $table
+                                        WHERE   $table.$field = '$value' "));
+
+  // Return the result
+  return ($dcheck['r_id']) ? $dcheck['r_id'] : 0;
 }
 
 
@@ -960,7 +991,7 @@ function log_activity(  $activity_type                  ,
                       logs_activity.activity_summary_en         = '$activity_summary_en'    ,
                       logs_activity.activity_summary_fr         = '$activity_summary_fr'    ,
                       logs_activity.activity_nickname           = '$nickname'               ,
-                      logs_activity.activity_moderator_nickname = '$nickname'               ,
+                      logs_activity.activity_moderator_nickname = '$moderator_nickname'     ,
                       logs_activity.moderation_reason           = '$moderation_reason'      ");
 
   // Return the ID of the newly created activity log

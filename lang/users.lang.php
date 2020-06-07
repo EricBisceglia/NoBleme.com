@@ -179,8 +179,8 @@ Afin de les distinguer, les visiteurs suivent un code couleur :
 <ul class="nopadding">
   <li>Les invités n'ont pas de formattage spécifique.</li>
   <li>{{link|todo_link|Les membres du site}} apparaissent en <span class="bold">gras</span>.</li>
-  <li>{{link|todo_link|Les modérateurs}} ont un arrière-plan <span class="text_orange bold">orange.</span></li>
-  <li>{{link|todo_link|Les administrateurs}} ont un arrière-plan <span class="text_red glow bold">rouge.</span></li>
+  <li>{{link|todo_link|Les modérateur·ices}} ont un arrière-plan <span class="text_orange bold">orange.</span></li>
+  <li>{{link|todo_link|Les administrateur·ices}} ont un arrière-plan <span class="text_red glow bold">rouge.</span></li>
 </ul>
 EOD
 );
