@@ -14,7 +14,7 @@ $page_description = "Error 404: Page not found…";
 
 // Extra CSS & JS
 $css = array('404');
-$js  = array('404');
+$js  = array('nobleme/404');
 
 
 

@@ -488,3 +488,59 @@ function user_ban_details(  $lang     = 'EN'  ,
   // Return the data
   return $data;
 }
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   AUTOCOMPLETE                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Autocompletes a nickname.
+ *
+ * @param   string      $input              The input that needs to be autocompleted.
+ * @param   string|null $type   (OPTIONAL)  The type of autocomplete query we're making (eg. 'normal', 'ban', 'unban')
+ *
+ * @return  array                           An array containing all the data required to autocomplete the nickname.
+ */
+
+function users_autocomplete_nickname( $input          ,
+                                      $type   = NULL  )
+{
+  // Sanitize the input
+  $input_raw  = $input;
+  $input      = sanitize($input, 'string');
+  $where      = '';
+
+  // Only work when more than 1 character has been input
+  if(mb_strlen($input) < 1)
+    return;
+
+  // Exclude banned users if required
+  if($type == 'ban')
+    $where .= ' AND users.is_banned_until = 0 ';
+  else if($type == 'unban')
+    $where .= ' AND users.is_banned_until > 0 ';
+
+  // Look for nicknames to add to autocompletion
+  $qnicknames = query(" SELECT    users.nickname AS 'u_nick'
+                        FROM      users
+                        WHERE     is_deleted      =     0
+                        AND       users.nickname  LIKE  '$input%'
+                                  $where
+                        ORDER BY  users.nickname  ASC
+                        LIMIT     10 ");
+
+  // Prepare the returned data
+  for($i = 0; $dnicknames = mysqli_fetch_array($qnicknames); $i++)
+    $data[$i]['nick'] = sanitize_output($dnicknames['u_nick']);
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}

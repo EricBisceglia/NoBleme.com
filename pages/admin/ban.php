@@ -21,6 +21,9 @@ $page_url         = "pages/admin/ban";
 $page_title_en    = "Bans";
 $page_title_fr    = "Bannissements";
 
+// Extra JS
+$js = array('users/autocomplete_nickname');
+
 
 
 
@@ -94,7 +97,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <div class="smallpadding_bot">
         <label for="admin_ban_add_nick"><?=__('admin_ban_add_nickname')?></label>
-        <input class="indiv" type="text" id="admin_ban_add_nick" name="admin_ban_add_nick" value="<?=$admin_ban_add_nick?>">
+        <input class="indiv" type="text" id="admin_ban_add_nick" name="admin_ban_add_nick" value="<?=$admin_ban_add_nick?>" autocomplete="off" list="admin_ban_add_nick_list" onkeyup="autocomplete_nickname('admin_ban_add_nick', 'admin_ban_add_nick_list_parent', './../users/autocomplete_nickname', 'admin_ban_add_nick_list', 'ban');">
+        <div id="admin_ban_add_nick_list_parent">
+          <datalist id="admin_ban_add_nick_list">
+            <option value=" ">
+          </datalist>
+        </div>
       </div>
 
       <div class="smallpadding_bot<?=$admin_ban_hide_french?>">

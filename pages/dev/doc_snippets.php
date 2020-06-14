@@ -19,7 +19,7 @@ $page_title_en  = "Code snippets";
 $page_title_fr  = "Modèles de code";
 
 // Extra JS
-$js  = array('dev/doc', 'clipboard');
+$js = array('dev/doc', 'common/clipboard');
 
 
 
@@ -90,8 +90,8 @@ $page_title_fr    = "Titre";
 $page_description = "Metadescription";
 
 // Extra CSS & JS
-$css  = array('404');
-$js   = array('404');
+$css  = array('');
+$js   = array('');
 
 
 
@@ -216,8 +216,8 @@ $page_title_fr    = "Titre";
 $page_description = "Metadescription";
 
 // Extra CSS & JS
-$css  = array('404');
-$js   = array('404');</pre>
+$css  = array('');
+$js   = array('');</pre>
   </div>
 
   <div class="padding_bot">
