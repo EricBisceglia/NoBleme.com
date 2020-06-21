@@ -265,6 +265,7 @@ query(" INSERT INTO users
         SET         users.id                    = 6             ,
                     users.nickname              = 'Banned'      ,
                     users.password              = ''            ,
+                    users.is_banned_since       = 1111239420    ,
                     users.is_banned_until       = 1918625619    ,
                     users.is_banned_because_en  = 'Fixture'     ,
                     users.is_banned_because_fr  = 'Fixture'     ,

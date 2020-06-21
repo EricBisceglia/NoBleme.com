@@ -39,7 +39,7 @@ function admin_ban_user(  $banner_id              ,
   require_included_file('admin.lang.php');
 
   // Prepare and sanitize the data
-  $nickname_raw         = $nickname;
+  $banned_nickname_raw  = $nickname;
   $ban_reason_en_raw    = $ban_reason_en;
   $ban_reason_fr_raw    = $ban_reason_fr;
   $banner_nickname_raw  = user_get_nickname();
@@ -82,9 +82,17 @@ function admin_ban_user(  $banner_id              ,
   else
     return __('admin_ban_add_error_length');
 
+  // Error: User is already banned
+  $duser = mysqli_fetch_array(query("   SELECT  users.is_banned_until AS 'u_ban'
+                                        FROM    users
+                                        WHERE   users.id = '$banned_user_id' "));
+  if($duser['u_ban'])
+    return __('admin_ban_add_error_already');
+
   // Ban the user
   query(" UPDATE  users
-          SET     users.is_banned_until       = '$ban_end'        ,
+          SET     users.is_banned_since       = '$ban_start'      ,
+                  users.is_banned_until       = '$ban_end'        ,
                   users.is_banned_because_en  = '$ban_reason_en'  ,
                   users.is_banned_because_fr  = '$ban_reason_fr'
           WHERE   users.id                    = '$banned_user_id' ");
@@ -106,7 +114,7 @@ function admin_ban_user(  $banner_id              ,
   $ban_extra_en     = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '';
   $ban_extra_fr     = ($ban_reason_fr_raw) ? '('.$ban_reason_fr_raw.')' : '';
   $ban_extra_mod    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
-  irc_bot_send_message("$banned_nickname has been banned from the website $ban_duration_en[$ban_length] $ban_extra_en", 'english');
-  irc_bot_send_message("$banned_nickname a été banni·e du site $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
-  irc_bot_send_message("$banner_nickname_raw has banned $banned_nickname $ban_duration_en[$ban_length] $ban_extra_mod", 'mod');
+  irc_bot_send_message("$banned_nickname_raw has been banned from the website $ban_duration_en[$ban_length] $ban_extra_en", 'english');
+  irc_bot_send_message("$banned_nickname_raw a été banni·e du site $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
+  irc_bot_send_message("$banner_nickname_raw has banned $banned_nickname_raw $ban_duration_en[$ban_length] $ban_extra_mod", 'mod');
 }

@@ -53,3 +53,5 @@ ___('admin_ban_add_error_moderator',    'EN', "Moderators are not allowed to ban
 ___('admin_ban_add_error_moderator',    'FR', "Les modérateur·ices ne peuvent pas bannir les administrateur·ices");
 ___('admin_ban_add_error_length',       'EN', "You must specify a ban length");
 ___('admin_ban_add_error_length',       'FR', "Il est nécessaire de spécifier la durée du bannissement");
+___('admin_ban_add_error_already',      'EN', "This user is already banned! Edit their ban in the table below instead");
+___('admin_ban_add_error_already',      'FR', "Membre déjà banni : vous pouvez modifier son bannissement dans la liste ci-dessous");

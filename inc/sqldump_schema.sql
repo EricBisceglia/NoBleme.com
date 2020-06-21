@@ -360,6 +360,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_visited_page_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_url` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `current_ip_address` varchar(135) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0',
+  `is_banned_since` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `is_banned_until` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `is_banned_because_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_banned_because_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,

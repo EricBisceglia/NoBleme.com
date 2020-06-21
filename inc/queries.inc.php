@@ -1157,6 +1157,7 @@ if($last_query < 26)
   sql_rename_field('users', 'derniere_visite_ip', 'current_ip_address', "VARCHAR(135) NOT NULL DEFAULT '0.0.0.0'");
   sql_rename_field('users', 'derniere_activite', 'last_action_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_move_field('users', 'last_action_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'last_visited_at');
+  sql_create_field('users', 'is_banned_since', 'INT UNSIGNED NOT NULL DEFAULT 0', 'current_ip_address');
   sql_rename_field('users', 'banni_date', 'is_banned_until', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_create_field('users', 'is_banned_because_en', 'TEXT NOT NULL', 'is_banned_until');
   sql_rename_field('users', 'banni_raison', 'is_banned_because_fr', 'TEXT NOT NULL');
@@ -1168,8 +1169,10 @@ if($last_query < 26)
   sql_create_index('users', 'index_doppelganger', 'current_ip_address');
   sql_create_index('users', 'index_banned', 'is_banned_until');
 
-  $qusers = query(" SELECT  users.id        AS 'u_id' ,
-                            users.nickname  AS 'u_nick'
+  $qusers = query(" SELECT  users.id              AS 'u_id'     ,
+                            users.nickname        AS 'u_nick'   ,
+                            users.last_visited_at AS 'u_visit'  ,
+                            users.is_banned_until AS 'u_ban'
                     FROM    users ");
   while($dusers = mysqli_fetch_array($qusers))
   {
@@ -1195,6 +1198,12 @@ if($last_query < 26)
       query(" UPDATE  users
               SET     users.nickname  = '".sql_sanitize_data($newnick)."'
               WHERE   users.id        = '".sql_sanitize_data($dusers['u_id'])."'");
+    if($dusers['u_ban'])
+    {
+      query(" UPDATE  users
+              SET     users.is_banned_since = '".sql_sanitize_data($dusers['u_visit'])."'
+              WHERE   users.id              = '".sql_sanitize_data($dusers['u_id'])."'");
+    }
   }
 
   sql_create_field('users_profile', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
