@@ -354,6 +354,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_administrator` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `is_moderator` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `current_language` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `last_action_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `last_visited_page_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -366,6 +367,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `is_banned_because_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_access_rights` (`is_administrator`,`is_moderator`),
+  KEY `index_language` (`current_language`),
   KEY `index_doppelganger` (`current_ip_address`),
   KEY `index_banned` (`is_banned_until`),
   KEY `index_deleted` (`is_deleted`)
