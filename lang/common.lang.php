@@ -118,7 +118,7 @@ function ___( $name         ,
   if($current_lang != $lang)
     return null;
 
-  // Check if a translation by this name already exists - if yes publicly humiliate the dev for his poor work :(
+  // Check if a translation by this name already exists - if yes publicly humiliate the coder for their poor work :(
   if(isset($GLOBALS['translations'][$name]))
     exit(__('error_duplicate_translation').$name);
 

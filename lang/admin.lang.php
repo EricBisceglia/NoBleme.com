@@ -55,3 +55,70 @@ ___('admin_ban_add_error_length',       'EN', "You must specify a ban length");
 ___('admin_ban_add_error_length',       'FR', "Il est nécessaire de spécifier la durée du bannissement");
 ___('admin_ban_add_error_already',      'EN', "This user is already banned! Edit their ban in the table below instead");
 ___('admin_ban_add_error_already',      'FR', "Membre déjà banni : vous pouvez modifier son bannissement dans la liste ci-dessous");
+
+// Banned private message
+___('admin_ban_add_private_message_no_reason_en', 'EN', "No reason was specified for the ban. If you don't understand what you did wrong, feel free to discuss it with the [url={{1}}todo_link]administrative team[/url].");
+___('admin_ban_add_private_message_no_reason_en', 'FR', "No reason was specified for the ban. If you don't understand what you did wrong, feel free to discuss it with the [url={{1}}todo_link]administrative team[/url].");
+___('admin_ban_add_private_message_no_reason_fr', 'EN', "Aucune raison n'a été spécifiée pour votre bannissement. Si vous ne comprenez pas ce que vous avez commis comme faute, vous pouvez en discuter avec [url={{1}}todo_link]l'équipe administrative[/url].");
+___('admin_ban_add_private_message_no_reason_fr', 'FR', "Aucune raison n'a été spécifiée pour votre bannissement. Si vous ne comprenez pas ce que vous avez commis comme faute, vous pouvez en discuter avec [url={{1}}todo_link]l'équipe administrative[/url].");
+___('admin_ban_add_private_message_reason_en',    'EN', <<<EOT
+You have been banned for the following reason: [b]{{2}}[/b].
+
+If you don't understand what you did wrong, feel free to discuss it with the [url={{1}}todo_link]administrative team[/url].
+EOT
+);
+___('admin_ban_add_private_message_reason_en',    'FR', <<<EOT
+You have been banned for the following reason: [b]{{2}}[/b].
+
+If you don't understand what you did wrong, feel free to discuss it with the [url={{1}}todo_link]administrative team[/url].
+EOT
+);
+___('admin_ban_add_private_message_reason_fr',    'EN', <<<EOT
+Votre compte a été banni pour la raison suivante : [b]{{2}}[/b].
+
+Si vous ne comprenez pas ce que vous avez commis comme faute, vous pouvez en discuter avec [url={{1}}todo_link]l'équipe administrative[/url].
+EOT
+);
+___('admin_ban_add_private_message_reason_fr',    'FR', <<<EOT
+Votre compte a été banni pour la raison suivante : [b]{{2}}[/b].
+
+Si vous ne comprenez pas ce que vous avez commis comme faute, vous pouvez en discuter avec [url={{1}}todo_link]l'équipe administrative[/url].
+EOT
+);
+
+___('admin_ban_add_private_message_title_en',   'EN', "Your account has been banned");
+___('admin_ban_add_private_message_title_en',   'FR', "Your account has been banned");
+___('admin_ban_add_private_message_title_fr',   'EN', "Votre compte a été banni");
+___('admin_ban_add_private_message_title_fr',   'FR', "Votre compte a été banni");
+___('admin_ban_add_private_message_en',         'EN', <<<EOT
+On {{2}}, your account has been banned {{3}}.
+
+{{4}}
+
+In the future, be mindful of NoBleme's short and clear [url={{1}}todo_link]Code of Conduct[/url].
+EOT
+);
+___('admin_ban_add_private_message_en',         'FR', <<<EOT
+On {{2}}, your account has been banned {{3}}.
+
+{{4}}
+
+In the future, be mindful of NoBleme's short and clear [url={{1}}todo_link]Code of Conduct[/url].
+EOT
+);
+___('admin_ban_add_private_message_fr',         'EN', <<<EOT
+Le {{2}}, votre compte a été banni {{3}}.
+
+{{4}}
+
+Dans le futur, veillez à respecter le [url={{1}}todo_link]Code de Conduite de NoBleme[/url], qui est clair et concis.
+EOT
+);
+___('admin_ban_add_private_message_fr',         'FR', <<<EOT
+Le {{2}}, votre compte a été banni {{3}}.
+
+{{4}}
+
+Dans le futur, veillez à respecter le [url={{1}}todo_link]Code de Conduite de NoBleme[/url], qui est clair et concis.
+EOT
+);

@@ -21,16 +21,18 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   string|null $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
  * @param   string|null $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
  * @param   string|null $lang           (OPTIONAL)  The language currently in use.
+ * @param   string|null $path           (OPTIONAL)  The path to the root of the website.
  *
  * @return  string|null                             Returns a string containing an error, or null if all went well.
  */
 
-function admin_ban_user(  $banner_id              ,
-                          $nickname               ,
-                          $ban_length             ,
-                          $ban_reason_en  = ''    ,
-                          $ban_reason_fr  = ''    ,
-                          $lang           = 'EN'  )
+function admin_ban_user(  $banner_id                    ,
+                          $nickname                     ,
+                          $ban_length                   ,
+                          $ban_reason_en  = ''          ,
+                          $ban_reason_fr  = ''          ,
+                          $lang           = 'EN'        ,
+                          $path           = './../../'  )
 {
   // Require moderator right to run this action
   user_restrict_to_moderators($lang);
@@ -108,9 +110,19 @@ function admin_ban_user(  $banner_id              ,
   if($ban_reason_fr_raw)
     log_activity_details($modlog, 'Ban reason (FR)', 'Raison du ban (FR)', $ban_reason_fr_raw, $ban_reason_fr_raw);
 
-  // IRC bot messages
+  // Put ban duration into words
   $ban_duration_en  = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
   $ban_duration_fr  = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
+
+  // Private message to the banned user
+  $ban_user_language  = user_get_language($banned_user_id);
+  $ban_duration_pm    = ($ban_user_language == 'EN') ? $ban_duration_en : $ban_duration_fr;
+  $ban_reason_pm_en   = ($ban_reason_en) ? __('admin_ban_add_private_message_reason_en', null, 0, 0, array($path, $ban_reason_en)) : __('admin_ban_add_private_message_no_reason_en', null, 0, 0, array($path));
+  $ban_reason_pm_fr   = ($ban_reason_fr) ? __('admin_ban_add_private_message_reason_fr', null, 0, 0, array($path, $ban_reason_fr)) : __('admin_ban_add_private_message_no_reason_fr', null, 0, 0, array($path));
+  $ban_reason_pm      = ($ban_user_language == 'EN') ? $ban_reason_pm_en : $ban_reason_pm_fr;
+  private_message_send(__('admin_ban_add_private_message_title_'.strtolower($ban_user_language)), __('admin_ban_add_private_message_'.strtolower($ban_user_language), null, 0, 0, array($path, date_to_text(time(), 1, $ban_user_language), $ban_duration_pm[$ban_length] , $ban_reason_pm)), $banned_user_id, 0);
+
+  // IRC bot messages
   $ban_extra_en     = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '';
   $ban_extra_fr     = ($ban_reason_fr_raw) ? '('.$ban_reason_fr_raw.')' : '';
   $ban_extra_mod    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';

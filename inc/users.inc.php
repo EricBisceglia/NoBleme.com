@@ -102,12 +102,15 @@ else
 // If there is no language in the session, assign one
 if(!isset($_SESSION['lang']))
 {
-  // If there is no language cookie, then the default language is set to english
+  // If there is no language cookie, then the default language is fetched from the browser's accept language headers
   if(!isset($_COOKIE['nobleme_language']))
   {
+    // Fetch the language settings (default to english if it isn't french)
+    $language_header = (substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == 'fr') ? 'FR' : 'EN';
+
     // Create the cookie and the session variable
-    setcookie("nobleme_language", 'EN' , 2147483647, "/");
-    $_SESSION['lang'] = 'EN';
+    setcookie("nobleme_language", $language_header , 2147483647, "/");
+    $_SESSION['lang'] = $language_header;
   }
 
   // If the language cookie exists, set the session language to the one in the cookie
@@ -249,14 +252,29 @@ function encrypt_data(  $data         ,
 /**
  * Detects the user's language.
  *
- * @return  string The user's language settings.
+ * @param   int|null  $user_id  (OPTIONAL)  Gets the language of a specified user instead of the current user.
+ *
+ * @return  string                          The user's language settings.
  */
 
-function user_get_language()
+function user_get_language($user_id = NULL)
 {
-  // Returns the language settings stored in the session - or english if none
-  return (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
+  // If no user is specified, returns the language settings stored in the session - or english if none
+  if(!$user_id)
+    return (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
+
+  // Sanitize the provided id
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // Fetch the user's language
+  $dlanguage = mysqli_fetch_array(query(" SELECT  users.current_language AS 'language'
+                                          FROM    users
+                                          WHERE   users.id = '$user_id' "));
+
+  // Return the user's language, or english if nothing was found
+  return ($dlanguage['language']) ? $dlanguage['language'] : 'EN';
 }
+
 
 
 
