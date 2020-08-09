@@ -101,117 +101,41 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
   while($dscheduler = mysqli_fetch_array($qscheduler))
   {
     // Prepare data related to the task about to be ran
-    $scheduler_id        = sanitize($dscheduler['t_id'], 'int', 0);
-    $scheduler_action_id = sanitize($dscheduler['t_task'], 'int', 0);
-    $scheduler_type      = $dscheduler['t_type'];
-    $scheduler_desc      = sanitize($dscheduler['t_desc'], 'string');
-    $scheduler_desc_raw  = $dscheduler['t_desc'];
+    $scheduler_id         = sanitize($dscheduler['t_id'], 'int', 0);
+    $scheduler_action_id  = sanitize($dscheduler['t_task'], 'int', 0);
+    $scheduler_type       = sanitize($dscheduler['t_type'], 'string');
+    $scheduler_desc       = sanitize($dscheduler['t_desc'], 'string');
+    $scheduler_desc_raw   = $dscheduler['t_desc'];
+    $scheduler_log        = "";
 
 
 
 
     //***************************************************************************************************************//
-    //                                            WRITER'S CORNER CONTEST                                            //
+    //                                                     USERS                                                     //
     //***************************************************************************************************************//
-    // Writing deadline, open voting
+    // End a ban after it has expired
 
-    if($scheduler_type == 'writers_contest_vote')
+    if($scheduler_type == 'users_unban')
     {
-      // Check whether the requested contest exists
-      $dcheck_contest = mysqli_fetch_array(query("  SELECT  writings_contests.contest_name AS 'c_name'
-                                                    FROM    writings_contests
-                                                    WHERE   writings_contests.id = '$scheduler_action_id' "));
+      // Fetch data on the user
+      $duser = mysqli_fetch_array(query(" SELECT  users.nickname        AS 'u_nick'   ,
+                                                  users.is_banned_until AS 'u_banned'
+                                          FROM    users
+                                          WHERE   users.id = '$scheduler_action_id' "));
 
-      // If it does exist, proceed
-      if($dcheck_contest['c_name'])
+      // Only proceed if the user actually exists and is banned
+      if($duser['u_banned'])
       {
-        // Create an entry in the recent activity
-        $contest_title = sanitize($dcheck_contest['c_name'], 'string');
-        log_activity('writings_contest_vote_fr', 0, 'FR', $scheduler_action_id, NULL, $contest_title);
+        // Unban the user
+        user_unban($scheduler_action_id);
 
-        // Announce on IRC that voting is open
-        $contest_title_raw = $dcheck_contest['c_name'];
-        irc_bot_send_message('Fin de la participation au concours du coin des écrivains : '.$contest_title_raw.' - Les votes sont ouverts pendant 10 jours : '.$GLOBALS['website_url'].'todo_link', 'french');
+        // Activity logs
+        $banned_nickname = sanitize($duser['u_nick'], 'string');
+        log_activity('users_unbanned', 0, 'ENFR', 0, NULL, NULL, 0, $scheduler_action_id, $banned_nickname);
 
-        // Schedule a task for the end of the contest (in 10 days at 22:00)
-        $contest_end_date = strtotime(date('d-m-Y', strtotime("+10 days")).' 22:00:00');
-        schedule_task('writers_contest_end', $scheduler_action_id, $contest_end_date);
-      }
-    }
-
-
-    //***************************************************************************************************************//
-    // Voting deadline, close the contest
-
-    else if($scheduler_type == 'writers_contest_end')
-    {
-      // Check whether the requested contest exists
-      $dcheck_contest = mysqli_fetch_array(query("  SELECT  writings_contests.contest_name AS 'c_name'
-                                                    FROM    writings_contests
-                                                    WHERE   writings_contests.id = '$scheduler_action_id' "));
-
-      // If it exists, figure out who won the contest
-      if($dcheck_contest['c_name'])
-      {
-        // Fetch all texts with the highest score, in a random order (in case of draw, a random winner will be picked)
-        $qwritings = query("  SELECT    writings_texts.id AS 'w_id'
-                              FROM      writings_texts
-                              WHERE     writings_texts.fk_writings_contests = '$scheduler_action_id'
-                              ORDER BY  RAND() ");
-
-        // Prepare the variabes which will be used to pick the winner
-        $writings_top_rating  = 0;
-        $contest_winner_id    = 0;
-
-        // Fetch the ratings of all writings in the contest
-        while($dwritings = mysqli_fetch_array($qwritings))
-        {
-          $writing_id = $dwritings['w_id'];
-          $dratings   = mysqli_fetch_array(query(" SELECT
-                                                SUM(writings_contests_votes.vote_weight)     AS 'c_rating'
-                                        FROM    writings_contests_votes
-                                        WHERE   writings_contests_votes.fk_writings_contests  = '$scheduler_action_id'
-                                        AND     writings_contests_votes.fk_writings_texts     = '$writing_id' "));
-
-          // Check whether the parsed text is now leading in points
-          if($dratings['c_rating'] > $writings_top_rating)
-          {
-            $writings_top_rating  = $dratings['c_rating'];
-            $contest_winner_id    = $writing_id;
-          }
-        }
-
-        // Now that a winner has been picked, update the contest
-        query(" UPDATE  writings_contests
-                SET     writings_contests.fk_writings_texts_winner  = '$contest_winner_id'
-                WHERE   writings_contests.id                        = '$scheduler_action_id' ");
-
-        // Fetch details about the winning writing
-        $dwinner = mysqli_fetch_array(query(" SELECT    writings_texts.is_anonymous AS 'w_anon' ,
-                                                        users.id                    AS 'u_id'   ,
-                                                        users.nickname              AS 'u_nick'
-                                              FROM      writings_texts
-                                              LEFT JOIN users ON writings_texts.fk_users = users.id
-                                              WHERE     writings_texts.id = '$contest_winner_id' "));
-
-        // If the text isn't anonymous, update the contest by linking it to the winner
-        if(!$dwinner['w_anon'])
-        {
-          $winner_id = $dwinner['u_id'];
-          query(" UPDATE  writings_contests
-                  SET     writings_contests.fk_users_winner = '$winner_id'
-                  WHERE   writings_contests.id              = '$scheduler_action_id' ");
-        }
-
-        // Create an entry in recent activity
-        $contest_title  = sanitize($dcheck_contest['c_name'], 'string');
-        $contest_winner = ($dwinner['w_anon']) ? 'Un auteur anonyme' : sanitize($dwinner['u_nick'], 'string');
-        log_activity('writings_contest_winner_fr', 0, 'FR', $scheduler_action_id, NULL, $contest_title, 0, 0, $contest_winner);
-
-        // Announce the winner on IRC
-        $contest_title_raw  = $dcheck_contest['c_name'];
-        $contest_winner_raw = ($dwinner['w_anon']) ? 'Un auteur anonyme' : $dwinner['u_nick'];
-        irc_bot_send_message($contest_winner_raw.' a gagné le concours du coin des écrivains  : '.$contest_title_raw.' - '.$GLOBALS['website_url'].'todo_link', 'french');
+        // Scheduler log
+        $scheduler_log = "The user has been unbanned";
       }
     }
 
@@ -221,9 +145,18 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
     //***************************************************************************************************************//
     //                                      THE SCHEDULED TASK HAS BEEN TREATED                                      //
     //***************************************************************************************************************//
-    // Delete the entry from the scheduler
+    // Archive the task
 
+    // Delete the entry from the scheduler
     query(" DELETE FROM   system_scheduler
             WHERE         system_scheduler.id = '$scheduler_id' ");
+
+    // Create a scheduler execution log
+    query(" INSERT INTO logs_scheduler
+            SET         logs_scheduler.happened_at      = '$timestamp'            ,
+                        logs_scheduler.task_id          = '$scheduler_action_id'  ,
+                        logs_scheduler.task_type        = '$scheduler_type'       ,
+                        logs_scheduler.task_description = '$scheduler_desc'       ,
+                        logs_scheduler.execution_report = '$scheduler_log'        ");
   }
 }

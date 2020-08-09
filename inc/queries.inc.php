@@ -903,8 +903,8 @@ if($last_query < 21)
   sql_create_field('logs_scheduler', 'happened_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('logs_scheduler', 'task_id', 'INT UNSIGNED NOT NULL DEFAULT 0', 'happened_at');
   sql_create_field('logs_scheduler', 'task_type', 'VARCHAR(40) NOT NULL', 'task_id');
-  sql_create_field('logs_scheduler', 'task_description_en', 'TEXT NOT NULL', 'task_type');
-  sql_create_field('logs_scheduler', 'task_description_fr', 'TEXT NOT NULL', 'task_description_en');
+  sql_create_field('logs_scheduler', 'task_description', 'TEXT NOT NULL', 'task_type');
+  sql_create_field('logs_scheduler', 'execution_report', 'TEXT NOT NULL', 'task_description');
   sql_create_index('logs_scheduler', 'index_happened_at', 'happened_at');
   sql_create_index('logs_scheduler', 'index_related_foreign_key', 'task_id');
   sql_create_index('logs_scheduler', 'index_task_type', 'task_type(40)');

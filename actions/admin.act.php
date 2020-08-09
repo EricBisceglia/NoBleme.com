@@ -99,6 +99,9 @@ function admin_ban_user(  $banner_id                    ,
                   users.is_banned_because_fr  = '$ban_reason_fr'
           WHERE   users.id                    = '$banned_user_id' ");
 
+  // Schedule the unbanning
+  schedule_task('users_unban', $banned_user_id, $ban_end, $nickname);
+
   // Activity logs
   $banned_nickname = user_get_nickname($banned_user_id);
   log_activity('users_banned', 0, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_user_id, $banned_nickname);

@@ -480,12 +480,33 @@ function user_is_banned($user_id = NULL)
     return 1;
 
   // If the ban has been purged, then unban the user and return 0
-  query(" UPDATE  users
-            SET     users.is_banned_until       = '0' ,
-                    users.is_banned_because_en  = ''  ,
-                    users.is_banned_because_fr  = ''
-            WHERE   users.id                    = '$user_id' ");
+  user_unban($user_id);
   return 0;
+}
+
+
+
+
+/**
+ * Unbans a banned user.
+ *
+ * @param   int   $user_id  The user's ID.
+ *
+ * @return  void
+ */
+
+function user_unban($user_id)
+{
+  // Sanitize the provided id
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // Unban the user
+  query(" UPDATE  users
+          SET     users.is_banned_since       = 0   ,
+                  users.is_banned_until       = 0   ,
+                  users.is_banned_because_en  = ''  ,
+                  users.is_banned_because_fr  = ''
+          WHERE   users.id                    = '$user_id' ");
 }
 
 
