@@ -474,16 +474,20 @@ function user_ban_details(  $lang     = 'EN'  ,
   $user_id = sanitize($user_id, 'int', 0);
 
   // Fetch data regarding the ban
-  $dban = mysqli_fetch_array(query("  SELECT  users.is_banned_until       AS 'u_ban_end'  ,
-                                              users.is_banned_because_en  AS 'u_ban_en'   ,
+  $dban = mysqli_fetch_array(query("  SELECT  users.is_banned_since       AS 'u_ban_start'  ,
+                                              users.is_banned_until       AS 'u_ban_end'    ,
+                                              users.is_banned_because_en  AS 'u_ban_en'     ,
                                               users.is_banned_because_fr  AS 'u_ban_fr'
                                       FROM    users
                                       WHERE   users.id = '$user_id' "));
 
   // Prepare the data
+  $data['ban_start']  = sanitize_output(date_to_text($dban['u_ban_start'], 0, $lang));
+  $data['ban_length'] = time_days_elapsed(date('Y-m-d', $dban['u_ban_start']), date('Y-m-d', $dban['u_ban_end']));
   $data['ban_end']    = sanitize_output(date_to_text($dban['u_ban_end'], 0, $lang).__('at_date', 0, 1 ,1).date('H:i:s', $dban['u_ban_end']));
   $data['time_left']  = sanitize_output(time_until($dban['u_ban_end']));
-  $data['ban_reason'] = ($lang == 'EN') ? sanitize_output($dban['u_ban_en']) : sanitize_output($dban['u_ban_fr']);
+  $temp               = ($dban['u_ban_fr']) ? sanitize_output($dban['u_ban_fr']) : sanitize_output($dban['u_ban_en']);
+  $data['ban_reason'] = ($lang == 'EN') ? sanitize_output($dban['u_ban_en']) : $temp;
 
   // Return the data
   return $data;

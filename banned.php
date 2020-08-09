@@ -64,7 +64,7 @@ if(!page_is_fetched_dynamically()) { /******************************************
   </h5>
 
   <p>
-    <?=__('users_banned_details_body', 0, 0, 0, array($ban_details['ban_end'], $ban_details['time_left']))?>
+    <?=__('users_banned_details_body', 0, 0, 0, array($ban_details['ban_start'], $ban_details['ban_length'], $ban_details['ban_end'], $ban_details['time_left']))?>
     <?php if($ban_details['ban_reason']) { ?>
     <?=__('users_banned_details_reason')?> <span class="bold text_red"><?=$ban_details['ban_reason']?></span>
     <?php } else { ?>

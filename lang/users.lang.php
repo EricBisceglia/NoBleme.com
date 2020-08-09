@@ -239,12 +239,14 @@ EOD
 ___('users_banned_details_title',     'EN', "Ban details");
 ___('users_banned_details_title',     'FR', "Détails du bannissement");
 ___('users_banned_details_body',      'EN', <<<EOD
-Your ban will last until <span class="text_red">{{1}}</span>, Europe/Paris time (<span class="text_red">{{2}}</span>)<br>
+You have been banned on <span class="text_red">{{1}}</span> for a total of <span class="text_red">{{2}}</span> days.<br>
+Your ban will last until <span class="text_red">{{3}}</span>, Europe/Paris time (<span class="text_red">{{4}}</span>)<br>
 You have been "soft" banned (not IP banned).<br>
 EOD
 );
 ___('users_banned_details_body',      'FR', <<<EOD
-Le bannissement prendra fin le <span class="text_red">{{1}}</span>, heure de Paris (<span class="text_red">{{2}}</span>)<br>
+Vous avez été banni le <span class="text_red">{{1}}</span> pour <span class="text_red">{{2}}</span> jours.<br>
+Le bannissement prendra fin le <span class="text_red">{{3}}</span>, heure de Paris (<span class="text_red">{{4}}</span>)<br>
 Il s'agit d'un bannissement "doux" (pas d'un bannissement par filtrage IP).<br>
 EOD
 );

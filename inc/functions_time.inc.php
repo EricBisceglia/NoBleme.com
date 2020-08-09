@@ -117,5 +117,5 @@ function time_days_elapsed( $date_start ,
                             $date_end   )
 {
   // Return the time elapsed between the two dates: convert them to timestamps and divide by the total seconds in a day
-  return round(floor(abs(strtotime($date_start)) - abs(strtotime($date_end))) / (86400));
+  return round(floor(abs(strtotime($date_end)) - abs(strtotime($date_start))) / (86400));
 }

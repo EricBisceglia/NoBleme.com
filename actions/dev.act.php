@@ -132,7 +132,7 @@ function dev_versions_list()
     // Otherwise, calculate the time differential
     else
     {
-      $temp_diff = time_days_elapsed($data[$i]['date_raw'], $data[$i + 1]['date_raw']);
+      $temp_diff = time_days_elapsed($data[$i + 1]['date_raw'], $data[$i]['date_raw']);
 
       // Assemble the formatted string
       $data[$i]['date_diff'] = ($temp_diff) ? sanitize_output($temp_diff.__('day', $temp_diff, 1)) : '-';
