@@ -86,7 +86,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
-<div class="width_30 bigpadding_top">
+<div class="width_30 bigpadding_top bigpadding_bot">
 
   <h5 class="smallpadding_bot">
     <?=__('admin_ban_add_title')?>
@@ -141,6 +141,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </form>
 
 </div>
+
+<hr>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */

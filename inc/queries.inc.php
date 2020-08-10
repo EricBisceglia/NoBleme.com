@@ -909,6 +909,40 @@ if($last_query < 21)
   sql_create_index('logs_scheduler', 'index_related_foreign_key', 'task_id');
   sql_create_index('logs_scheduler', 'index_task_type', 'task_type(40)');
 
+  sql_create_table('logs_bans');
+  sql_create_field('logs_bans', 'fk_banned_user', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('logs_bans', 'fk_banned_by_user', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_banned_user');
+  sql_create_field('logs_bans', 'fk_unbanned_by_user', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_banned_by_user');
+  sql_create_field('logs_bans', 'banned_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_unbanned_by_user');
+  sql_create_field('logs_bans', 'banned_until', 'INT UNSIGNED NOT NULL DEFAULT 0', 'banned_at');
+  sql_create_field('logs_bans', 'unbanned_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'banned_until');
+  sql_create_field('logs_bans', 'ban_reason_en', 'TEXT NOT NULL', 'unbanned_at');
+  sql_create_field('logs_bans', 'ban_reason_fr', 'TEXT NOT NULL', 'ban_reason_en');
+  sql_create_field('logs_bans', 'unban_reason_en', 'TEXT NOT NULL', 'ban_reason_fr');
+  sql_create_field('logs_bans', 'unban_reason_fr', 'TEXT NOT NULL', 'unban_reason_en');
+  sql_create_index('logs_bans', 'index_banned_user', 'fk_banned_user');
+  sql_create_index('logs_bans', 'index_banned_until', 'banned_until');
+  sql_create_index('logs_bans', 'index_unbanned_at', 'unbanned_at');
+
+  $qbans = query("  SELECT  membres.id            AS 'm_id'   ,
+                            membres.banni_date    AS 'm_date' ,
+                            membres.banni_raison  AS 'm_reason'
+                    FROM    membres
+                    WHERE   membres.banni_date > 0 ");
+  while($dbans = mysqli_fetch_array($qbans))
+  {
+    $id     = sanitize($dbans['m_id'], 'int');
+    $start  = sanitize(strtotime('-10 years', $dbans['m_date']), 'int');
+    $end    = sanitize($dbans['m_date'], 'int');
+    $reason = sanitize($dbans['m_reason'], 'string');
+    query(" INSERT INTO logs_bans
+            SET         logs_bans.fk_banned_user    = '$id'       ,
+                        logs_bans.fk_banned_by_user = 1           ,
+                        logs_bans.banned_at         = '$start'    ,
+                        logs_bans.banned_until      = '$end'      ,
+                        logs_bans.ban_reason_fr     = '$reason'   ");
+  }
+
   sql_update_query_id(21);
 }
 

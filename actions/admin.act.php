@@ -113,6 +113,15 @@ function admin_ban_user(  $banner_id                    ,
   if($ban_reason_fr_raw)
     log_activity_details($modlog, 'Ban reason (FR)', 'Raison du ban (FR)', $ban_reason_fr_raw, $ban_reason_fr_raw);
 
+  // Ban logs
+  query(" INSERT INTO logs_bans
+          SET         logs_bans.fk_banned_user    = '$banned_user_id' ,
+                      logs_bans.fk_banned_by_user = '$banner_user_id' ,
+                      logs_bans.banned_at         = '$ban_start'      ,
+                      logs_bans.banned_until      = '$ban_end'        ,
+                      logs_bans.ban_reason_en     = '$ban_reason_en'  ,
+                      logs_bans.ban_reason_fr     = '$ban_reason_fr'  ");
+
   // Put ban duration into words
   $ban_duration_en  = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
   $ban_duration_fr  = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');

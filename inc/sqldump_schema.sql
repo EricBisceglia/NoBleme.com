@@ -215,6 +215,25 @@ CREATE TABLE IF NOT EXISTS `logs_activity_details` (
   KEY `index_logs_activity` (`fk_logs_activity`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS `logs_bans`;
+CREATE TABLE IF NOT EXISTS `logs_bans` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fk_banned_user` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `fk_banned_by_user` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `fk_unbanned_by_user` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `banned_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `banned_until` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `unbanned_at` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `ban_reason_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ban_reason_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unban_reason_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unban_reason_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_banned_user` (`fk_banned_user`),
+  KEY `index_banned_until` (`banned_until`),
+  KEY `index_unbanned_at` (`unbanned_at`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 DROP TABLE IF EXISTS `logs_irc_bot`;
 CREATE TABLE IF NOT EXISTS `logs_irc_bot` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,

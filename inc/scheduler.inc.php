@@ -134,6 +134,15 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
         $banned_nickname = sanitize($duser['u_nick'], 'string');
         log_activity('users_unbanned', 0, 'ENFR', 0, NULL, NULL, 0, $scheduler_action_id, $banned_nickname);
 
+        // Ban logs
+        query(" UPDATE    logs_bans
+                SET       logs_bans.fk_unbanned_by_user = 0 ,
+                          logs_bans.unbanned_at         = '$timestamp'
+                WHERE     logs_bans.fk_banned_user      = '$scheduler_action_id'
+                AND       logs_bans.unbanned_at         = 0
+                ORDER BY  logs_bans.banned_until        DESC
+                LIMIT     1 ");
+
         // Scheduler log
         $scheduler_log = "The user has been unbanned";
       }

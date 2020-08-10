@@ -573,6 +573,16 @@ for($i = 0; $i < $random; $i++)
       $ban_reason_fr    = (mt_rand(0,2) < 2) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
       $unban_reason_en  = (mt_rand(0,3) < 3) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
       $unban_reason_fr  = (mt_rand(0,3) < 3) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
+      query(" INSERT INTO logs_bans
+              SET         logs_bans.fk_banned_user    = '$user_id'          ,
+                          logs_bans.fk_banned_by_user = 1                   ,
+                          logs_bans.banned_at         = '$banned_at'        ,
+                          logs_bans.banned_until      = '$unbanned_at'      ,
+                          logs_bans.unbanned_at       = '$unbanned_at'      ,
+                          logs_bans.ban_reason_en     = '$ban_reason_en'    ,
+                          logs_bans.ban_reason_fr     = '$ban_reason_fr'    ,
+                          logs_bans.unban_reason_en   = '$unban_reason_en'  ,
+                          logs_bans.unban_reason_fr   = '$unban_reason_fr'  ");
       query(" INSERT INTO logs_activity
               SET         logs_activity.happened_at             = '$banned_at'    ,
                           logs_activity.fk_users                = '$user_id'      ,

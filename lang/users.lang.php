@@ -253,7 +253,7 @@ EOD
 ___('users_banned_details_reason',    'EN', "You have been banned for the following reason:");
 ___('users_banned_details_reason',    'FR', "La cause du bannissement est la suivante :");
 ___('users_banned_details_no_reason', 'EN', "No reason has been specified for your ban.");
-___('users_banned_details_no_reason', 'FR', "Aucune cause n'a été spécifiée pour votre bannissement.");
+___('users_banned_details_no_reason', 'FR', "Aucune justification n'a été spécifiée pour votre bannissement.");
 
 
 // Code of conduct

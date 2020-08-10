@@ -490,15 +490,19 @@ function user_is_banned($user_id = NULL)
 /**
  * Unbans a banned user.
  *
- * @param   int   $user_id  The user's ID.
+ * @param   int   $user_id                  The user's ID.
+ * @param   int   $unbanner_id  (OPTIONAL)  The ID of the moderator doing the unbanning.
  *
  * @return  void
  */
 
-function user_unban($user_id)
+function user_unban(  $user_id          ,
+                      $unbanner_id  = 0 )
 {
-  // Sanitize the provided id
-  $user_id = sanitize($user_id, 'int', 0);
+  // Sanitize the data
+  $user_id      = sanitize($user_id, 'int', 0);
+  $unbanner_id  = sanitize($unbanner_id, 'int', 0);
+  $timestamp    = sanitize(time(), 'int', 0);
 
   // Unban the user
   query(" UPDATE  users
@@ -507,6 +511,15 @@ function user_unban($user_id)
                   users.is_banned_because_en  = ''  ,
                   users.is_banned_because_fr  = ''
           WHERE   users.id                    = '$user_id' ");
+
+  // Ban logs
+  query(" UPDATE    logs_bans
+          SET       logs_bans.fk_unbanned_by_user = '$unbanner_id' ,
+                    logs_bans.unbanned_at         = '$timestamp'
+          WHERE     logs_bans.fk_banned_user      = '$user_id'
+          AND       logs_bans.unbanned_at         = 0
+          ORDER BY  logs_bans.banned_until        DESC
+          LIMIT     1 ");
 }
 
 
