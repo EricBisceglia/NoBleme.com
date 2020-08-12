@@ -107,15 +107,24 @@ function time_until($timestamp)
 /**
  * Calculates the number of days elapsed between two MySQL dates.
  *
- * @param   string  $date_start The starting date.
- * @param   string  $date_end   The ending date.
+ * @param   string                $date_start     The starting date.
+ * @param   string                $date_end       The ending date.
+ * @param   int|null  (OPTIONAL)  $use_timestamps The function will expect timestamps instead of dates.
  *
  * @return  int                 The amount of days elapsed.
  */
 
-function time_days_elapsed( $date_start ,
-                            $date_end   )
+function time_days_elapsed( $date_start         ,
+                            $date_end           ,
+                            $use_timestamps = 0 )
 {
+  // Convert timestamps to dates if required
+  if($use_timestamps)
+  {
+    $date_start = date('Y-m-d', $date_start);
+    $date_end   = date('Y-m-d', $date_end);
+  }
+
   // Return the time elapsed between the two dates: convert them to timestamps and divide by the total seconds in a day
   return round(floor(abs(strtotime($date_end)) - abs(strtotime($date_start))) / (86400));
 }

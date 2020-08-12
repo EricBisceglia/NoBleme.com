@@ -56,6 +56,22 @@ ___('admin_ban_add_error_length',       'FR', "Il est nécessaire de spécifier 
 ___('admin_ban_add_error_already',      'EN', "This user is already banned! Edit their ban in the table below instead");
 ___('admin_ban_add_error_already',      'FR', "Membre déjà banni : vous pouvez modifier son bannissement dans la liste ci-dessous");
 
+
+// Current bans list
+___('admin_ban_list_title',     'EN', "Currently banned users");
+___('admin_ban_list_title',     'FR', "Bannissements actifs");
+___('admin_ban_list_subtitle',  'EN', "Sorted by upcoming unban date");
+___('admin_ban_list_subtitle',  'FR', "Triés par date de fin du bannissement");
+___('admin_ban_list_end',       'EN', "Ban end");
+___('admin_ban_list_end',       'FR', "Fin du ban");
+___('admin_ban_list_start',     'EN', "Ban start");
+___('admin_ban_list_start',     'FR', "Banni depuis");
+___('admin_ban_list_length',    'EN', "Ban length");
+___('admin_ban_list_length',    'FR', "Durée du ban");
+___('admin_ban_list_purged',    'EN', "Purged");
+___('admin_ban_list_purged',    'FR', "Peine purgée");
+
+
 // Banned private message
 $admin_ban_add_private_message_title_en     = "Your account has been banned";
 $admin_ban_add_private_message_title_fr     = "Votre compte a été banni";

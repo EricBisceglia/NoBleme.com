@@ -240,7 +240,7 @@ ___(':', 'EN', ":");
 ___(':', 'FR', " :");
 
 
-// Buttons
+// Buttons and labels
 ___('submit', 'EN', "submit");
 ___('submit', 'FR', "envoyer");
 ___('add',    'EN', "add");
@@ -249,8 +249,12 @@ ___('edit',   'EN', "edit");
 ___('edit',   'FR', "modifier");
 ___('delete', 'EN', "delete");
 ___('delete', 'FR', "supprimer");
+___('modify', 'EN', "modify");
+___('modify', 'FR', "modifier");
 ___('reset',  'EN', "reset");
 ___('reset',  'FR', "ràz");
+___('reason', 'EN', "reason");
+___('reason', 'FR', "raison");
 
 
 // Common words
@@ -293,23 +297,25 @@ ___('version',  'FR', "version");
 
 
 // Common time and quantity related terms
-___('date',     'EN', "date");
-___('date',     'FR', "date");
-___('at_date',  'EN', "at");
-___('at_date',  'FR', "à");
-___('ddmmyy',   'EN', "DD/MM/YY");
-___('ddmmyy',   'FR', "JJ/MM/AA");
-___('yyyyddmm', 'EN', "YYYY-DD-MM");
-___('yyyyddmm', 'FR', "AAAA-MM-JJ");
-___('day',      'EN', "day");
-___('day+',     'EN', "days");
-___('day',      'FR', "jour");
-___('day+',     'FR', "jours");
-___('times',    'EN', "time");
-___('times+',   'EN', "times");
-___('times',    'FR', "fois");
-___('all',      'EN', "All");
-___('all',      'FR', "Tous");
+___('date',       'EN', "date");
+___('date',       'FR', "date");
+___('at_date',    'EN', "at");
+___('at_date',    'FR', "à");
+___('ddmmyy',     'EN', "DD/MM/YY");
+___('ddmmyy',     'FR', "JJ/MM/AA");
+___('yyyyddmm',   'EN', "YYYY-DD-MM");
+___('yyyyddmm',   'FR', "AAAA-MM-JJ");
+___('day',        'EN', "day");
+___('day+',       'EN', "days");
+___('day',        'FR', "jour");
+___('day+',       'FR', "jours");
+___('day_short',  'EN', "d");
+___('day_short',  'FR', "j");
+___('times',      'EN', "time");
+___('times+',     'EN', "times");
+___('times',      'FR', "fois");
+___('all',        'EN', "All");
+___('all',        'FR', "Tous");
 
 
 // Generic user related terms
@@ -318,7 +324,7 @@ ___('nickname', 'FR', "pseudonyme");
 ___('password', 'EN', "password");
 ___('password', 'FR', "mot de passe");
 ___('user',     'EN', "user");
-___('user',     'FR', "utilisateur");
+___('user',     'FR', "membre");
 ___('login',    'EN', "login");
 ___('login',    'FR', "connexion");
 ___('register', 'EN', "register");

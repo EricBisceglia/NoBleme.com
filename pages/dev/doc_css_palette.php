@@ -22,7 +22,7 @@ $page_title_fr    = "Palette CSS";
 
 // Extra CSS & JS
 $css = array('dev');
-$js  = array('dev/doc', 'clipboard');
+$js  = array('dev/doc', 'common/clipboard');
 
 
 

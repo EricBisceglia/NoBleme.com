@@ -21,6 +21,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   int|null    $activity_cutoff  OPTIONAL  If set, will only return users active since this many seconds.
  * @param   bool|null   $include_guests   OPTIONAL  If set, guests will be included in the user list.
  * @param   int|null    $max_guest_count  OPTIONAL  The number of guests to return (if guests are included, 0 for all).
+ * @param   int|null    $banned_only      OPTIONAL  If set, returns only banned users.
  * @param   int|null    $is_admin         OPTIONAL  Whether the current user is an administrator.
  * @param   int|null    $is_activity      OPTIONAL  Whether the list will be used to display user activity.
  * @param   string|null $lang             OPTIONAL  The language currently in use.
@@ -34,6 +35,7 @@ function users_get_list(  $sort_by          = ''    ,
                           $activity_cutoff  = 0     ,
                           $include_guests   = 0     ,
                           $max_guest_count  = 0     ,
+                          $banned_only      = 0     ,
                           $is_admin         = 0     ,
                           $is_activity      = 0     ,
                           $lang             = 'EN'  )
@@ -66,7 +68,11 @@ function users_get_list(  $sort_by          = ''    ,
                               users.last_visited_at       AS 'u_activity'       ,
                               users.last_visited_page_en  AS 'u_last_page_en'   ,
                               users.last_visited_page_fr  AS 'u_last_page_fr'   ,
-                              users.last_visited_url      AS 'u_last_url'
+                              users.last_visited_url      AS 'u_last_url'       ,
+                              users.is_banned_since       AS 'u_ban_start'      ,
+                              users.is_banned_until       AS 'u_ban_end'        ,
+                              users.is_banned_because_en  AS 'u_ban_reason_en'  ,
+                              users.is_banned_because_fr  AS 'u_ban_reason_fr'
                     FROM      users
                     LEFT JOIN users_settings ON users.id = users_settings.fk_users
                     WHERE     users.is_deleted                  = '$deleted' ";
@@ -79,11 +85,17 @@ function users_get_list(  $sort_by          = ''    ,
   if($activity_cutoff)
     $qusers .= "    AND       users.last_visited_at             >= '$minimum_activity' ";
 
+  // Banned users view
+  if($banned_only)
+    $qusers .= "    AND       users.is_banned_until             > 0 ";
+
   // Sort the users
   if(!$include_guests)
   {
     if($sort_by == 'activity')
       $qusers .= "  ORDER BY  users.last_visited_at DESC ";
+    if($sort_by == 'banned')
+      $qusers .= "  ORDER BY  users.is_banned_until ASC ";
     else
       $qusers .= "  ORDER BY  users.id ASC ";
   }
@@ -104,7 +116,11 @@ function users_get_list(  $sort_by          = ''    ,
                                 users_guests.last_visited_at            AS 'u_activity'       ,
                                 users_guests.last_visited_page_en       AS 'u_last_page_en'   ,
                                 users_guests.last_visited_page_fr       AS 'u_last_page_fr'   ,
-                                users_guests.last_visited_url           AS 'u_last_url'
+                                users_guests.last_visited_url           AS 'u_last_url'       ,
+                                0                                       AS 'u_ban_start'      ,
+                                0                                       AS 'u_ban_end'        ,
+                                ''                                      AS 'u_ban_reason_en'  ,
+                                ''                                      AS 'u_ban_reason_fr'
                       FROM      users_guests
                       WHERE     users_guests.last_visited_at >= '$minimum_activity'
                       LIMIT     $max_guest_count )
@@ -127,10 +143,24 @@ function users_get_list(  $sort_by          = ''    ,
     $temp                   = ($lang == 'EN') ? $row['u_last_page_en'] : $row['u_last_page_fr'];
     $data[$i]['last_page']  = sanitize_output(string_truncate($temp, 50, '...'));
     $data[$i]['last_url']   = sanitize_output($row['u_last_url']);
+    $data[$i]['ban_end']    = ($row['u_ban_end']) ? time_until($row['u_ban_end']) : '';
+    $data[$i]['ban_endf']   = ($row['u_ban_end']) ? date_to_text($row['u_ban_end'], 0, 1) : '';
+    $data[$i]['ban_start']  = ($row['u_ban_start']) ? time_since($row['u_ban_start']) : '';
+    $data[$i]['ban_startf'] = ($row['u_ban_start']) ? date_to_text($row['u_ban_start'], 0, 1) : '';
+    $data[$i]['ban_length'] = ($row['u_ban_end']) ? time_days_elapsed($row['u_ban_start'], $row['u_ban_end'], 1) : '';
+    $data[$i]['ban_purged'] = ($row['u_ban_end']) ? time_days_elapsed($row['u_ban_start'], time(), 1) : '';
+    $temp                   = ($row['u_ban_reason_en']) ? $row['u_ban_reason_en'] : '';
+    $temp                   = ($lang == 'FR' && $row['u_ban_reason_fr']) ? $row['u_ban_reason_fr'] : $temp;
+    $data[$i]['ban_reason'] = sanitize_output(string_truncate($temp, 30, '...'));
+    $data[$i]['ban_full']   = (strlen($temp) > 30) ? sanitize_output($temp) : '';
     $temp                   = ($row['data_type'] == 'user') ? ' bold noglow' : ' noglow';
     $temp                   = ($row['u_mod']) ? ' bold text_orange noglow' : $temp;
     $temp                   = ($row['u_admin']) ? ' bold text_red' : $temp;
     $data[$i]['css']        = $temp;
+
+    // End any purged bans that slipped through the system
+    if($row['u_ban_end'] < time())
+      user_unban($row['u_id'], 0, 1);
   }
 
   // Add the number of rows to the data
@@ -482,9 +512,9 @@ function user_ban_details(  $lang     = 'EN'  ,
                                       WHERE   users.id = '$user_id' "));
 
   // Prepare the data
-  $data['ban_start']  = sanitize_output(date_to_text($dban['u_ban_start'], 0, $lang));
+  $data['ban_start']  = sanitize_output(date_to_text($dban['u_ban_start'], 0, 0, $lang));
   $data['ban_length'] = time_days_elapsed(date('Y-m-d', $dban['u_ban_start']), date('Y-m-d', $dban['u_ban_end']));
-  $data['ban_end']    = sanitize_output(date_to_text($dban['u_ban_end'], 0, $lang).__('at_date', 0, 1 ,1).date('H:i:s', $dban['u_ban_end']));
+  $data['ban_end']    = sanitize_output(date_to_text($dban['u_ban_end'], 0, 0, $lang).__('at_date', 0, 1 ,1).date('H:i:s', $dban['u_ban_end']));
   $data['time_left']  = sanitize_output(time_until($dban['u_ban_end']));
   $temp               = ($dban['u_ban_fr']) ? sanitize_output($dban['u_ban_fr']) : sanitize_output($dban['u_ban_en']);
   $data['ban_reason'] = ($lang == 'EN') ? sanitize_output($dban['u_ban_en']) : $temp;

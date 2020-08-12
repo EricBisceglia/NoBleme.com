@@ -213,7 +213,7 @@ function system_get_current_version_number( $format = 'semver'  ,
 
   // Full format: version + date
   if($format == 'full')
-    return system_assemble_version_number($dversion['v_major'], $dversion['v_minor'], $dversion['v_patch'], $dversion['v_extension']).' - '.date_to_text($dversion['v_date'], 1, $lang);
+    return system_assemble_version_number($dversion['v_major'], $dversion['v_minor'], $dversion['v_patch'], $dversion['v_extension']).' - '.date_to_text($dversion['v_date'], 1, 0, $lang);
 
   // Array or next: all elements in an array (in case of next, prepare for the next version)
   if($format == 'array' || $format == 'next')
@@ -522,16 +522,18 @@ function date_french_ordinal($timestamp)
  * We store a lot of our dates in timestamps aswell, this function can work with a timestamp as an input too.
  * If no date is specified, it returns the current date instead.
  *
- * @param   string|int|null $date       The MySQL date or timestamp that we want to transform.
- * @param   int|null        $strip_day  If 1, strips the day's name. If 2, strips the whole day.
- * @param   string|null     $lang       The language in which we want to display the result, defaults to current lang.
+ * @param   string|int|null $date         (OPTIONAL)  The MySQL date or timestamp that we want to transform.
+ * @param   int|null        $strip_day    (OPTIONAL)  If 1, strips the day's name. If 2, strips the whole day.
+ * @param   bool|null       $include_time (OPTIONAL)  If set, will add the time after the date.
+ * @param   string|null     $lang         (OPTIONAL)  The language used, defaults to current lang.
  *
  * @return  string                      The required date, in plaintext.
  */
 
-function date_to_text(  $date       = NULL  ,
-                        $strip_day  = 0     ,
-                        $lang       = NULL  )
+function date_to_text(  $date         = NULL  ,
+                        $strip_day    = 0     ,
+                        $include_time = 0     ,
+                        $lang         = NULL  )
 {
   // If no date has been entered, use the current timestamp instead
   $date = (!$date) ? time() : $date;
@@ -550,16 +552,16 @@ function date_to_text(  $date       = NULL  ,
   if(!$strip_day)
   {
     if($lang == 'EN')
-      return date_better_strftime('%A, %B %#d%O, %Y', $date);
+      $full_date = date_better_strftime('%A, %B %#d%O, %Y', $date);
     else
-      return string_change_case(utf8_encode(strftime('%A %#d'.date_french_ordinal($date).' %B %Y', $date)), "initials");
+      $full_date = string_change_case(utf8_encode(strftime('%A %#d'.date_french_ordinal($date).' %B %Y', $date)), "initials");
   }
 
   // Treat this situation differently if the day needs to be stripped
   else if($strip_day == 1)
   {
     if($lang == 'EN')
-      return date_better_strftime('%B %#d%O, %Y', $date);
+      $full_date = date_better_strftime('%B %#d%O, %Y', $date);
     else
       return utf8_encode(strftime('%#d'.date_french_ordinal($date), $date).' '.string_change_case(strftime('%B %Y', $date), "initials"));
   }
@@ -568,10 +570,16 @@ function date_to_text(  $date       = NULL  ,
   else
   {
     if($lang == 'EN')
-      return date_better_strftime('%B %Y', $date);
+      $full_date = date_better_strftime('%B %Y', $date);
     else
-      return string_change_case(utf8_encode(strftime('%B %Y', $date)), "initials");
+      $full_date = string_change_case(utf8_encode(strftime('%B %Y', $date)), "initials");
   }
+
+  // Append the time to the date if requested
+  if($include_time)
+    return $full_date.__('at_date', 0, 1, 1).date('H:i:s', $date);
+  else
+    return $full_date;
 }
 
 

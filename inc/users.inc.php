@@ -490,19 +490,22 @@ function user_is_banned($user_id = NULL)
 /**
  * Unbans a banned user.
  *
- * @param   int   $user_id                  The user's ID.
- * @param   int   $unbanner_id  (OPTIONAL)  The ID of the moderator doing the unbanning.
+ * @param   int       $user_id                      The user's ID.
+ * @param   int|null  $unbanner_id      (OPTIONAL)  The ID of the moderator doing the unbanning.
+ * @param   int|null  $recent_activity  (OPTIONAL)  If set, generates an entry in recent activity.
  *
  * @return  void
  */
 
-function user_unban(  $user_id          ,
-                      $unbanner_id  = 0 )
+function user_unban(  $user_id              ,
+                      $unbanner_id      = 0 ,
+                      $recent_activity  = 0 )
 {
   // Sanitize the data
-  $user_id      = sanitize($user_id, 'int', 0);
-  $unbanner_id  = sanitize($unbanner_id, 'int', 0);
-  $timestamp    = sanitize(time(), 'int', 0);
+  $user_id            = sanitize($user_id, 'int', 0);
+  $unbanner_id        = sanitize($unbanner_id, 'int', 0);
+  $unbanner_nickname  = sanitize(user_get_nickname($user_id));
+  $timestamp          = sanitize(time(), 'int', 0);
 
   // Unban the user
   query(" UPDATE  users
@@ -520,6 +523,10 @@ function user_unban(  $user_id          ,
           AND       logs_bans.unbanned_at         = 0
           ORDER BY  logs_bans.banned_until        DESC
           LIMIT     1 ");
+
+  // Recent activity
+  if($recent_activity)
+    log_activity('users_unbanned', 0, 'ENFR', 0, NULL, NULL, 0, $user_id, $unbanner_nickname);
 }
 
 

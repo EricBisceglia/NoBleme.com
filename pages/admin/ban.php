@@ -5,9 +5,11 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';  # Core
-include_once './../../actions/admin.act.php'; # Actions
-include_once './../../lang/admin.lang.php';   # Translations
+include_once './../../inc/includes.inc.php';       # Core
+include_once './../../inc/functions_time.inc.php'; # Time
+include_once './../../actions/admin.act.php';      # Actions
+include_once './../../actions/users.act.php';      # User list
+include_once './../../lang/admin.lang.php';        # Translations
 
 // Limit page access rights
 user_restrict_to_moderators($lang);
@@ -68,6 +70,14 @@ if(isset($_POST['admin_ban_add_submit']))
   if(!$admin_ban_add_error)
     $admin_ban_add_nick     = '';
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// List of banned users
+
+$banned_users = users_get_list('banned', 0, 0, 0, 0, 0, 1, 0, 0, $lang);
 
 
 
@@ -143,6 +153,106 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 </div>
 
 <hr>
+
+<div class="width_70 smallpadding_top">
+
+  <h2 class="align_center padding_top">
+    <?=__('admin_ban_list_title')?>
+  </h2>
+  <h5 class="align_center bigpadding_bot">
+    <?=__('admin_ban_list_subtitle')?>
+  </h5>
+
+  <table class="nowrap">
+    <thead>
+
+      <tr class="uppercase">
+        <th>
+          <?=__('nickname')?>
+        </th>
+        <th>
+          <?=__('admin_ban_list_end')?>
+        </th>
+        <th>
+          <?=__('admin_ban_list_start')?>
+        </th>
+        <th>
+          <?=__('admin_ban_list_length')?>
+        </th>
+        <th>
+          <?=__('admin_ban_list_purged')?>
+        </th>
+        <th>
+          <?=__('reason')?>
+        </th>
+        <th>
+          <?=__('action+')?>
+        </th>
+      </tr>
+
+    </thead>
+    <tbody class="align_center">
+
+      <?php for($i = 0; $i < $banned_users['rows']; $i++) { ?>
+
+      <tr>
+
+        <td>
+          <?=__link('todo_link?id='.$banned_users[$i]['id'], $banned_users[$i]['nickname'])?>
+        </td>
+
+        <td>
+          <div class="tooltip_container">
+            <?=$banned_users[$i]['ban_end']?>
+            <div class="tooltip">
+              <?=$banned_users[$i]['ban_endf']?>
+            </div>
+          </div>
+        </td>
+
+        <td>
+          <div class="tooltip_container">
+            <?=$banned_users[$i]['ban_start']?>
+            <div class="tooltip">
+              <?=$banned_users[$i]['ban_startf']?>
+            </div>
+          </div>
+        </td>
+
+        <td>
+          <?=$banned_users[$i]['ban_length'].__('day', $banned_users[$i]['ban_length'], 1)?>
+        </td>
+
+        <td>
+          <?=$banned_users[$i]['ban_purged'].__('day', $banned_users[$i]['ban_purged'], 1)?>
+        </td>
+
+        <td>
+          <?php if($banned_users[$i]['ban_full']) { ?>
+          <div class="tooltip_container">
+            <?=$banned_users[$i]['ban_reason']?>
+            <div class="tooltip dowrap">
+              <?=$banned_users[$i]['ban_full']?>
+            </div>
+          </div>
+          <?php } else { ?>
+          <?=$banned_users[$i]['ban_reason']?>
+          <?php } ?>
+        </td>
+
+        <td class="align_center">
+          <?=__link('todo_link?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/edit_small.svg" alt="M" title="'.string_change_case(__('modify'), 'initials').'">', 'noglow')?>
+          <?=__link('todo_link?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/delete_small.svg" alt="X" title="'.string_change_case(__('delete'), 'initials').'">', 'noglow')?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+  </table>
+
+</div>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
