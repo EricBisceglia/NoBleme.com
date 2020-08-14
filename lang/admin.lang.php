@@ -14,7 +14,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 // User bans: title
 ___('admin_ban_title', 'EN', "User bans");
-___('admin_ban_title', 'FR', "Bannissement d'utilisateurs");
+___('admin_ban_title', 'FR', "Bannissements d'utilisateurs");
 
 
 // User bans: ban form
@@ -70,6 +70,24 @@ ___('admin_ban_list_length',    'EN', "Ban length");
 ___('admin_ban_list_length',    'FR', "Durée du ban");
 ___('admin_ban_list_purged',    'EN', "Purged");
 ___('admin_ban_list_purged',    'FR', "Peine purgée");
+
+
+// Edit or delete a ban
+___('admin_ban_edit_title',     'EN', 'Modify an existing ban');
+___('admin_ban_edit_title',     'FR', 'Modifier un bannissement');
+___('admin_ban_edit_duration',  'EN', "Ban expiry date");
+___('admin_ban_edit_duration',  'FR', "Expiration du bannissement");
+___('admin_ban_edit_reban',     'EN', "Modify remaining ban duration (optional)");
+___('admin_ban_edit_reban',     'FR', "Modifier la durée restante du bannissement (optionnel)");
+___('admin_ban_edit_submit',    'EN', "Edit the ban");
+___('admin_ban_edit_submit',    'FR', "Modifier le bannissement");
+
+
+// Edit or delete a ban: Errors
+___('admin_ban_edit_error_id',      'EN', "This user ID does not exist or is not banned.");
+___('admin_ban_edit_error_id',      'FR', "Cet ID d'utilisateur n'existe pas ou n'est pas banni.");
+___('admin_ban_edit_error_rights',  'EN', "Only administrators can ban or unban website staff.");
+___('admin_ban_edit_error_rights',  'FR', "Seuls les administrateurs peuvent bannir ou débannir des membres de l'équipe administrative.");
 
 
 // Banned private message

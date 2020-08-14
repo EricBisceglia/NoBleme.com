@@ -136,6 +136,28 @@ function log_activity_parse(  $path                 ,
     $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
     $return['FR']   = $mod_nickname.' a banni '.$nickname.' '.$temp[$amount].$temp2;
   }
+  else if($type === 'users_banned_edit' && !$admins_only)
+  {
+    $return['css']  = 'red bold';
+    $return['href'] = $path.'todo_link?id='.$userid;
+    $temp           = array(0 => '', 1 => 'ending a day from now', 7 => 'ending a week from now', 30 => 'ending a month from now', '365' => 'ending a year from now', '3650' => 'a permanent ban');
+    $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
+    $return['EN']   = $nickname.' has had their ban updated to '.$temp[$amount].$temp2;
+    $temp           = array(0 => '', 1 => 'dans un jour', 7 => 'dans une semaine', 30 => 'dans un mois', '365' => 'dans un an', '3650' => 'ban permanent');
+    $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
+    $return['FR']   = $nickname.' a changé de date de fin pour son bannissement : '.$temp[$amount].$temp2;
+  }
+  else if($type == 'users_banned_edit')
+  {
+    $return['css']  = 'red bold';
+    $return['href'] = $path.'todo_link';
+    $temp           = array(0 => '', 1 => 'to ending a day from now', 7 => 'to ending a week from now', 30 => 'to ending a month from now', '365' => 'to ending a year from now', '3650' => 'to a permanent ban');
+    $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
+    $return['EN']   = $mod_nickname.' edited the ban of '.$nickname.' '.$temp[$amount].$temp2;
+    $temp           = array(0 => '', 1 => ': fini dans un jour', 7 => ': fini dans une semaine', 30 => ': fini dans un mois', '365' => ': fini dans un an', '3650' => 'en un ban permanent');
+    $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
+    $return['FR']   = $mod_nickname.' a modifié le bannissement de '.$nickname.' '.$temp[$amount].$temp2;
+  }
 
   else if($type === 'users_unbanned' && !$admins_only)
   {

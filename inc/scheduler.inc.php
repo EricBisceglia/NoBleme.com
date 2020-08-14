@@ -24,11 +24,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  *
  * All this function does is creating an entry in the `system_scheduler` table.
  *
- * @param   string      $action_type        A string identifying the task type, up to 40 characters long.
- * @param   int         $action_id          The id of the element which will be affected by the task.
- * @param   int         $action_planned_at  A timestamp of the time at which the task must be run.
- * @param   string|null $action_description A description of the task.
- * @param   int|null    $sanitize_data      If this has a value, then the data will be sanitized before insertion.
+ * @param   string      $action_type                    A string identifying the task type, up to 40 characters long.
+ * @param   int         $action_id                      The id of the element which will be affected by the task.
+ * @param   int         $action_planned_at              A timestamp of the time at which the task must be run.
+ * @param   string|null $action_description (OPTIONAL)  A description of the task.
+ * @param   bool|null   $sanitize_data      (OPTIONAL)  If set, the data will be sanitized before insertion.
  */
 function schedule_task( $action_type                ,
                         $action_id                  ,
@@ -41,7 +41,7 @@ function schedule_task( $action_type                ,
   {
     $action_type        = sanitize($action_type, 'string');
     $action_id          = sanitize($action_id, 'int', 0);
-    $action_timestamp   = sanitize($action_planned_at, 'int', time());
+    $action_planned_at  = sanitize($action_planned_at, 'int', time());
     $action_description = sanitize($action_description, 'string');
   }
 
@@ -56,6 +56,49 @@ function schedule_task( $action_type                ,
                       system_scheduler.task_type        = '$action_type'        ,
                       system_scheduler.task_description = '$action_description' ,
                       system_scheduler.planned_at       = '$action_planned_at'  ");
+}
+
+
+
+
+/**
+ * Update an existing scheduled task.
+ *
+ * @param   string      $action_type                    A string identifying the task type, up to 40 characters long.
+ * @param   int         $action_id                      The id of the element which will be affected by the task.
+ * @param   int|null    $action_planned_at  (OPTIONAL)  If set, the new time at which the action will be run.
+ * @param   string|null $action_description (OPTIONAL)  If set, the new task description.
+ * @param   bool|null   $sanitize_data      (OPTIONAL)  If set, data will be sanitized before insertion.
+ */
+function schedule_task_update(  $action_type                ,
+                                $action_id                  ,
+                                $action_planned_at  = 0     ,
+                                $action_description = NULL  ,
+                                $sanitize_data      = 0     )
+{
+  // If sanitization is required, then do it
+  if($sanitize_data)
+  {
+    $action_type        = sanitize($action_type, 'string');
+    $action_id          = sanitize($action_id, 'int', 0);
+    $action_planned_at  = sanitize($action_planned_at, 'int', time());
+    $action_description = sanitize($action_description, 'string');
+  }
+
+  // Prepare the required updates
+  $query = "";
+  if($action_description)
+    $query .= " system_scheduler.task_description = '$action_description' ";
+  if($action_description && $action_planned_at)
+    $query .= " , ";
+  if($action_planned_at)
+    $query .= " system_scheduler.planned_at = '$action_planned_at' ";
+
+  // Update the existing task
+  query(" UPDATE  system_scheduler
+          SET     $query
+          WHERE   system_scheduler.task_id    =     '$action_id'
+          AND     system_scheduler.task_type  LIKE  '$action_type' ");
 }
 
 

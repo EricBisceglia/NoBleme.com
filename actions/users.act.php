@@ -518,6 +518,8 @@ function user_ban_details(  $lang     = 'EN'  ,
   $data['time_left']  = sanitize_output(time_until($dban['u_ban_end']));
   $temp               = ($dban['u_ban_fr']) ? sanitize_output($dban['u_ban_fr']) : sanitize_output($dban['u_ban_en']);
   $data['ban_reason'] = ($lang == 'EN') ? sanitize_output($dban['u_ban_en']) : $temp;
+  $data['ban_r_en']   = sanitize_output($dban['u_ban_en']);
+  $data['ban_r_fr']   = sanitize_output($dban['u_ban_fr']);
 
   // Return the data
   return $data;

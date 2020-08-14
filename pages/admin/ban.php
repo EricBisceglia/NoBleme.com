@@ -152,9 +152,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
+<?php if($banned_users['rows']) { ?>
+
 <hr>
 
-<div class="width_70 smallpadding_top">
+<div class="width_70 smallpadding_top bigpadding_bot" id="active">
 
   <h2 class="align_center padding_top">
     <?=__('admin_ban_list_title')?>
@@ -198,7 +200,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <td>
-          <?=__link('todo_link?id='.$banned_users[$i]['id'], $banned_users[$i]['nickname'])?>
+          <?=__link('todo_link?id='.$banned_users[$i]['id'], $banned_users[$i]['nickname'], $banned_users[$i]['css'])?>
         </td>
 
         <td>
@@ -241,7 +243,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td class="align_center">
-          <?=__link('todo_link?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/edit_small.svg" alt="M" title="'.string_change_case(__('modify'), 'initials').'">', 'noglow')?>
+          <?=__link('pages/admin/ban_edit?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/edit_small.svg" alt="M" title="'.string_change_case(__('modify'), 'initials').'">', 'noglow')?>
           <?=__link('todo_link?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/delete_small.svg" alt="X" title="'.string_change_case(__('delete'), 'initials').'">', 'noglow')?>
         </td>
 
@@ -253,6 +255,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </table>
 
 </div>
+
+<?php } ?>
+
+<hr>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
