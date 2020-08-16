@@ -145,7 +145,7 @@ function log_activity_parse(  $path                 ,
     $return['EN']   = $nickname.' has had their ban updated to '.$temp[$amount].$temp2;
     $temp           = array(0 => '', 1 => 'dans un jour', 7 => 'dans une semaine', 30 => 'dans un mois', '365' => 'dans un an', '3650' => 'ban permanent');
     $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = $nickname.' a changé de date de fin pour son bannissement : '.$temp[$amount].$temp2;
+    $return['FR']   = 'La date de fin du bannissement de '.$nickname.' a changé : '.$temp[$amount].$temp2;
   }
   else if($type == 'users_banned_edit')
   {

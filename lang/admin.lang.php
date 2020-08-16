@@ -135,3 +135,26 @@ ___('admin_ban_add_private_message_en',           'EN', $admin_ban_add_private_m
 ___('admin_ban_add_private_message_en',           'FR', $admin_ban_add_private_message_en);
 ___('admin_ban_add_private_message_fr',           'EN', $admin_ban_add_private_message_fr);
 ___('admin_ban_add_private_message_fr',           'FR', $admin_ban_add_private_message_fr);
+
+
+// Ban extension private message
+$admin_ban_edit_private_message_title_en  = "Your account ban end date has been changed";
+$admin_ban_edit_private_message_title_fr  = "La date de fin de votre bannissement a été modifiée";
+$admin_ban_edit_private_message_en        = <<<EOT
+On {{2}}, your account's ban has been changed to {{3}}.
+
+In the future, be mindful of NoBleme's short and clear [url={{1}}todo_link]Code of Conduct[/url].
+EOT;
+$admin_ban_edit_private_message_fr        = <<<EOT
+Le {{2}}, la date de fin de votre bannissement a été modifiée : {{3}}.
+
+Dans le futur, veillez à respecter le [url={{1}}todo_link]Code de Conduite de NoBleme[/url], qui est clair et concis.
+EOT;
+___('admin_ban_edit_private_message_title_en',  'EN', $admin_ban_edit_private_message_title_en);
+___('admin_ban_edit_private_message_title_en',  'FR', $admin_ban_edit_private_message_title_en);
+___('admin_ban_edit_private_message_title_fr',  'EN', $admin_ban_edit_private_message_title_fr);
+___('admin_ban_edit_private_message_title_fr',  'FR', $admin_ban_edit_private_message_title_fr);
+___('admin_ban_edit_private_message_en',        'EN', $admin_ban_edit_private_message_en);
+___('admin_ban_edit_private_message_en',        'FR', $admin_ban_edit_private_message_en);
+___('admin_ban_edit_private_message_fr',        'EN', $admin_ban_edit_private_message_fr);
+___('admin_ban_edit_private_message_fr',        'FR', $admin_ban_edit_private_message_fr);
