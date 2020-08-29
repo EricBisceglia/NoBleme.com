@@ -17,9 +17,9 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/admin/ban_edit";
-$page_title_en    = "Edit a ban";
-$page_title_fr    = "Modifier un bannissement";
+$page_url         = "pages/admin/ban_delete";
+$page_title_en    = "Unban someone";
+$page_title_fr    = "Débannir quelqu'un";
 
 
 
@@ -48,7 +48,7 @@ if(!database_entry_exists('users', 'id', $user_id))
 if(!user_is_banned($user_id))
   error_page(__('admin_ban_edit_error_id'));
 
-// Exit if a non administrator is trying to edit a moderator
+// Exit if a non administrator is trying to unban a moderator
 if(user_is_moderator($user_id) && !user_is_administrator())
   error_page(__('admin_ban_edit_error_rights'));
 
@@ -56,17 +56,16 @@ if(user_is_moderator($user_id) && !user_is_administrator())
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Modify an existing ban
+// Delete an existing ban
 
-if(isset($_POST['admin_ban_edit_submit']))
+if(isset($_POST['admin_ban_delete_submit']))
 {
-  admin_ban_user_edit(  user_get_id()                                   ,
-                        $user_id                                        ,
-                        form_fetch_element('admin_ban_edit_length')     ,
-                        form_fetch_element('admin_ban_edit_reason_en')  ,
-                        form_fetch_element('admin_ban_edit_reason_fr')  ,
-                        $lang                                           ,
-                        $path                                           );
+  admin_ban_user_delete(  user_get_id()                                           ,
+                          $user_id                                                ,
+                          form_fetch_element('admin_ban_delete_unban_reason_en')  ,
+                          form_fetch_element('admin_ban_delete_unban_reason_fr')  ,
+                          $lang                                                   ,
+                          $path                                                   );
   exit(header("Location: ./ban#active"));
 }
 
@@ -80,7 +79,7 @@ if(isset($_POST['admin_ban_edit_submit']))
 $ban_username = user_get_nickname($user_id);
 $ban_details  = user_ban_details($lang, $user_id);
 
-// Hide the french ban justification in the english interface
+// Hide the french unban justification in the english interface
 $admin_ban_hide_french = ($lang == 'EN') ? ' hidden' : '';
 
 
@@ -95,7 +94,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1 class="align_center">
-    <?=__('admin_ban_edit_title')?>
+    <?=__('admin_ban_delete_title')?>
   </h1>
 
 </div>
@@ -106,38 +105,31 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <fieldset>
 
       <div class="smallpadding_bot">
-        <label for="admin_ban_edit_nick"><?=__('admin_ban_add_nickname')?></label>
-        <input class="indiv" type="text" id="admin_ban_edit_nick" name="admin_ban_edit_nick" value="<?=$ban_username?>" disabled>
-      </div>
-
-      <div class="padding_bot">
-        <label for="admin_ban_edit_length"><?=__('admin_ban_edit_duration')?></label>
-        <input class="indiv" type="text" id="admin_ban_edit_length" name="admin_ban_edit_length" value="<?=$ban_details['time_left']?>" disabled>
-      </div>
-
-      <div class="smallpadding_bot<?=$admin_ban_hide_french?>">
-        <label for="admin_ban_edit_reason_fr"><?=__('admin_ban_add_reason_fr')?></label>
-        <input class="indiv" type="text" id="admin_ban_edit_reason_fr" name="admin_ban_edit_reason_fr" value="<?=$ban_details['ban_r_fr']?>">
+        <label for="admin_ban_delete_nick"><?=__('admin_ban_add_nickname')?></label>
+        <input class="indiv" type="text" id="admin_ban_delete_nick" name="admin_ban_delete_nick" value="<?=$ban_username?>" disabled>
       </div>
 
       <div class="smallpadding_bot">
-        <label for="admin_ban_edit_reason_en"><?=__('admin_ban_add_reason_en')?></label>
-        <input class="indiv" type="text" id="admin_ban_edit_reason_en" name="admin_ban_edit_reason_en" value="<?=$ban_details['ban_r_en']?>">
+        <label for="admin_ban_delete_length"><?=__('admin_ban_edit_duration')?></label>
+        <input class="indiv" type="text" id="admin_ban_delete_length" name="admin_ban_delete_length" value="<?=$ban_details['time_left']?>" disabled>
       </div>
 
       <div class="padding_bot">
-        <label for="admin_ban_edit_length"><?=__('admin_ban_edit_reban')?></label>
-        <select class="indiv" id="admin_ban_edit_length" name="admin_ban_edit_length">
-          <option value="0">&nbsp;</option>
-          <option value="1"><?=__('admin_ban_add_duration_1d')?></option>
-          <option value="7"><?=__('admin_ban_add_duration_1w')?></option>
-          <option value="30"><?=__('admin_ban_add_duration_1m')?></option>
-          <option value="365"><?=__('admin_ban_add_duration_1y')?></option>
-          <option value="3650"><?=__('admin_ban_add_duration_10y')?></option>
-        </select>
+        <label for="admin_ban_delete_ban_reason_en"><?=__('admin_ban_delete_ban_reason')?></label>
+        <input class="indiv" type="text" id="admin_ban_delete_ban_reason_en" name="admin_ban_delete_ban_reason_en" value="<?=$ban_details['ban_r_'.string_change_case($lang, 'lowercase')]?>" disabled>
       </div>
 
-      <input type="submit" name="admin_ban_edit_submit" value="<?=__('admin_ban_edit_submit')?>">
+      <div class="smallpadding_bot<?=$admin_ban_hide_french?>">
+        <label for="admin_ban_delete_unban_reason_fr"><?=__('admin_ban_delete_unban_reason_fr')?></label>
+        <input class="indiv" type="text" id="admin_ban_delete_unban_reason_fr" name="admin_ban_delete_unban_reason_fr" value="">
+      </div>
+
+      <div class="padding_bot">
+        <label for="admin_ban_delete_unban_reason_en"><?=__('admin_ban_delete_unban_reason_en')?></label>
+        <input class="indiv" type="text" id="admin_ban_delete_unban_reason_en" name="admin_ban_delete_unban_reason_en" value="">
+      </div>
+
+      <input type="submit" name="admin_ban_delete_submit" value="<?=__('admin_ban_delete_submit')?>">
 
     </fieldset>
   </form>

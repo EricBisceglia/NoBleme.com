@@ -15,7 +15,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Bans a user.
  *
- * @param   int         $banner_id                  The id of the admin ordering the ban.
+ * @param   int         $banner_id                  The id of the moderator ordering the ban.
  * @param   string      $nickname                   The nickname of the user to ban.
  * @param   int         $ban_length                 The ban length.
  * @param   string|null $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
@@ -149,7 +149,7 @@ function admin_ban_user(  $banner_id                    ,
 /**
  * Modifies an existing ban.
  *
- * @param   int         $banner_id                  The id of the admin modifying the ban.
+ * @param   int         $banner_id                  The id of the moderator modifying the ban.
  * @param   string      $banned_id                  The id of the user whose ban is being modified.
  * @param   int|null    $ban_length     (OPTIONAL)  The length of the ban extension (or 0 if it should not change).
  * @param   string|null $ban_reason_en  (OPTIONAL)  The justification for the ban modification, in english.
@@ -280,4 +280,104 @@ function admin_ban_user_edit( $banner_id                    ,
     $ban_duration_pm    = ($ban_user_language == 'EN') ? $ban_duration_en : $ban_duration_fr;
     private_message_send(__('admin_ban_edit_private_message_title_'.strtolower($ban_user_language)), __('admin_ban_edit_private_message_'.strtolower($ban_user_language), null, 0, 0, array($path, date_to_text(time(), 1, $ban_user_language), $ban_duration_pm[$ban_length])), $banned_id, 0);
   }
+}
+
+
+
+
+/**
+ * Unbans a banned user.
+ *
+ * @param   int         $unbanner_id                  The id of the moderator unbanning the user.
+ * @param   string      $unbanned_id                  The id of the user getting unbanned.
+ * @param   string|null $unban_reason_en  (OPTIONAL)  The justification for the unban, in english.
+ * @param   string|null $unban_reason_fr  (OPTIONAL)  The justification for the unban, in french.
+ * @param   string|null $lang             (OPTIONAL)  The language currently in use.
+ * @param   string|null $path             (OPTIONAL)  The path to the root of the website.
+ *
+ * @return  void
+ */
+
+function admin_ban_user_delete( $unbanner_id                    ,
+                                $unbanned_id                    ,
+                                $unban_reason_en  = ''          ,
+                                $unban_reason_fr  = ''          ,
+                                $lang             = 'EN'        ,
+                                $path             = './../../'  )
+{
+  // Require moderator rights to run this action
+  user_restrict_to_moderators($lang);
+
+  // Check if the required files have been included
+  require_included_file('admin.lang.php');
+
+  // Prepare and sanitize the data
+  $unbanned_id            = sanitize($unbanned_id, 'int', 0);
+  $unbanned_nickname_raw  = user_get_nickname($unbanned_id);
+  $unban_reason_en_raw    = $unban_reason_en;
+  $unban_reason_fr_raw    = $unban_reason_fr;
+  $unban_reason_en        = sanitize($unban_reason_en, 'string');
+  $unban_reason_fr        = sanitize($unban_reason_fr, 'string');
+  $unbanner_id            = sanitize($unbanner_id, 'int', 0);
+  $unbanner_nickname_raw  = user_get_nickname($unbanner_id);
+
+  // Do nothing if user does not exist
+  if(!database_entry_exists('users', 'id', $unbanned_id))
+    return;
+
+  // Do nothing if user is not currently banned
+  if(!user_is_banned($unbanned_id))
+    return;
+
+  // Do nothing if it is an attempt to unban self
+  if($unbanned_id == $unbanner_id)
+    return;
+
+  // Do nothing if a moderator is trying to unban an administrator
+  if(user_is_administrator($unbanned_id) && user_is_moderator($unbanner_id))
+    return;
+
+  // Fetch the ban details
+  $dban = mysqli_fetch_array(query("  SELECT  users.is_banned_since       AS 'b_start'      ,
+                                              users.is_banned_until       AS 'b_end'        ,
+                                              users.is_banned_because_en  AS 'b_reason_en'  ,
+                                              users.is_banned_because_fr  AS 'b_reason_fr'
+                                      FROM    users
+                                      WHERE   users.id = '$unbanned_id' "));
+
+  // Unban the user and generate a recent activity entry
+  user_unban($unbanned_id, $unbanner_id, 1);
+
+  // Delete the unbanning scheduled task
+  schedule_task_delete('users_unban', $unbanned_id);
+
+  // Calculate the time purged and left before the unbanning
+  $days_purged  = time_days_elapsed($dban['b_start'], time(), 1);
+  $days_left    = time_days_elapsed(time(), $dban['b_end'], 1);
+
+  // Generate a mod log with some detailed activity logs
+  $modlog = log_activity('users_banned_delete', 1, 'ENFR', 0, $unban_reason_en_raw, $unban_reason_fr_raw, 0, $unbanned_id, $unbanned_nickname_raw, $unbanner_nickname_raw);
+  log_activity_details($modlog, 'Days left in the ban', 'Jours restants au bannissement', $days_left);
+  log_activity_details($modlog, 'Days purged before the unbanning', 'Jours purgés avant le débannissement', $days_purged);
+  if($unban_reason_en_raw)
+    log_activity_details($modlog, 'Reason for unbanning (EN)', 'Raison du débannissement (EN)', $unban_reason_en_raw);
+  if($unban_reason_fr_raw)
+    log_activity_details($modlog, 'Reason for unbanning (FR)', 'Raison du débannissement (FR)', $unban_reason_fr_raw);
+
+  // Update the ban log with the unban reasons if necessary
+  if($unban_reason_fr || $unban_reason_en)
+    query(" UPDATE    logs_bans
+            SET       logs_bans.unban_reason_en = '$unban_reason_en'  ,
+                      logs_bans.unban_reason_fr = '$unban_reason_fr'
+            WHERE     logs_bans.fk_banned_user  = '$unbanned_id'
+            ORDER BY  logs_bans.unbanned_at     DESC
+            LIMIT     1 ");
+
+  // IRC bot message
+  $unban_reason_irc = ($unban_reason_en_raw) ? '('.$unban_reason_en_raw.')' : '';
+  irc_bot_send_message("$unbanner_nickname_raw has unbanned $unbanned_nickname_raw $unban_reason_irc", 'mod');
+
+  // Private message to let the user know they have been manually unbanned
+  $unbanned_user_language = user_get_language($unbanned_id);
+  private_message_send(__('admin_ban_delete_private_message_title_'.strtolower($unbanned_user_language)), __('admin_ban_delete_private_message_'.strtolower($unbanned_user_language), 0, 0, 0, array($path, date_to_text(time(), 1, $unbanned_user_language), $days_purged, $days_left)), $unbanned_id, 0);
 }

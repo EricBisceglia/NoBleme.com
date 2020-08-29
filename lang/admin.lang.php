@@ -72,7 +72,7 @@ ___('admin_ban_list_purged',    'EN', "Purged");
 ___('admin_ban_list_purged',    'FR', "Peine purgée");
 
 
-// Edit or delete a ban
+// Edit a ban
 ___('admin_ban_edit_title',     'EN', 'Modify an existing ban');
 ___('admin_ban_edit_title',     'FR', 'Modifier un bannissement');
 ___('admin_ban_edit_duration',  'EN', "Ban expiry date");
@@ -81,6 +81,18 @@ ___('admin_ban_edit_reban',     'EN', "Modify remaining ban duration (optional)"
 ___('admin_ban_edit_reban',     'FR', "Modifier la durée restante du bannissement (optionnel)");
 ___('admin_ban_edit_submit',    'EN', "Edit the ban");
 ___('admin_ban_edit_submit',    'FR', "Modifier le bannissement");
+
+// Delete a ban
+___('admin_ban_delete_title',           'EN', 'Unban a user');
+___('admin_ban_delete_title',           'FR', 'Débannir un compte');
+___('admin_ban_delete_ban_reason',      'EN', 'Raison du bannissement');
+___('admin_ban_delete_ban_reason',      'FR', 'Ban reason');
+___('admin_ban_delete_unban_reason_fr', 'EN', 'Reason for unbanning the account, in french (optional)');
+___('admin_ban_delete_unban_reason_fr', 'FR', 'Raison du débannissement en français (optionnel)');
+___('admin_ban_delete_unban_reason_en', 'EN', 'Reason for unbanning the account (optional)');
+___('admin_ban_delete_unban_reason_en', 'FR', 'Raison du débannissement en anglais (optionnel)');
+___('admin_ban_delete_submit',          'EN', "Unban the account");
+___('admin_ban_delete_submit',          'FR', "Débannir le compte");
 
 
 // Edit or delete a ban: Errors
@@ -158,3 +170,30 @@ ___('admin_ban_edit_private_message_en',        'EN', $admin_ban_edit_private_me
 ___('admin_ban_edit_private_message_en',        'FR', $admin_ban_edit_private_message_en);
 ___('admin_ban_edit_private_message_fr',        'EN', $admin_ban_edit_private_message_fr);
 ___('admin_ban_edit_private_message_fr',        'FR', $admin_ban_edit_private_message_fr);
+
+
+// Manual unban private message
+$admin_ban_delete_private_message_title_en  = "Your account has been manually unbanned";
+$admin_ban_delete_private_message_title_fr  = "Votre compte a été débanni manuellement";
+$admin_ban_delete_private_message_en        = <<<EOT
+On {{2}}, your account has been unbanned earlier than planned.
+
+You had purged {{3}} days of your banishment, and had {{4}} days left to purge.
+
+In the future, be mindful of NoBleme's short and clear [url={{1}}todo_link]Code of Conduct[/url].
+EOT;
+$admin_ban_delete_private_message_fr        = <<<EOT
+Le {{2}}, votre compte a été débanni plus tôt que prévu.
+
+Vous aviez purgé {{3}} jours de votre bannissement, et il vous restait {{4}} jours à purger.
+
+Dans le futur, veillez à respecter le [url={{1}}todo_link]Code de Conduite de NoBleme[/url], qui est clair et concis.
+EOT;
+___('admin_ban_delete_private_message_title_en',      'EN', $admin_ban_delete_private_message_title_en);
+___('admin_ban_delete_private_message_title_en',      'FR', $admin_ban_delete_private_message_title_en);
+___('admin_ban_delete_private_message_title_fr',      'EN', $admin_ban_delete_private_message_title_fr);
+___('admin_ban_delete_private_message_title_fr',      'FR', $admin_ban_delete_private_message_title_fr);
+___('admin_ban_delete_private_message_en',            'EN', $admin_ban_delete_private_message_en);
+___('admin_ban_delete_private_message_en',            'FR', $admin_ban_delete_private_message_en);
+___('admin_ban_delete_private_message_fr',            'EN', $admin_ban_delete_private_message_fr);
+___('admin_ban_delete_private_message_fr',            'FR', $admin_ban_delete_private_message_fr);

@@ -29,6 +29,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   int         $action_planned_at              A timestamp of the time at which the task must be run.
  * @param   string|null $action_description (OPTIONAL)  A description of the task.
  * @param   bool|null   $sanitize_data      (OPTIONAL)  If set, the data will be sanitized before insertion.
+ *
+ * @return  void
  */
 function schedule_task( $action_type                ,
                         $action_id                  ,
@@ -69,6 +71,8 @@ function schedule_task( $action_type                ,
  * @param   int|null    $action_planned_at  (OPTIONAL)  If set, the new time at which the action will be run.
  * @param   string|null $action_description (OPTIONAL)  If set, the new task description.
  * @param   bool|null   $sanitize_data      (OPTIONAL)  If set, data will be sanitized before insertion.
+ *
+ * @return  void
  */
 function schedule_task_update(  $action_type                ,
                                 $action_id                  ,
@@ -99,6 +103,30 @@ function schedule_task_update(  $action_type                ,
           SET     $query
           WHERE   system_scheduler.task_id    =     '$action_id'
           AND     system_scheduler.task_type  LIKE  '$action_type' ");
+}
+
+
+
+
+/**
+ * Delete an existing scheduled task.
+ *
+ * @param   string  $action_type  A string identifying the task type, up to 40 characters long.
+ * @param   int     $action_id    The id of the element which would have been affected if not deleted.
+ *
+ * @return  void
+ */
+function schedule_task_delete(  $action_type  ,
+                                $action_id    )
+{
+  // Sanitize the data
+  $action_type  = sanitize($action_type, 'string');
+  $action_id    = sanitize($action_id, 'int', 0);
+
+  // Delete the task
+  query(" DELETE FROM system_scheduler
+          WHERE       system_scheduler.task_id    =     '$action_id'
+          AND         system_scheduler.task_type  LIKE  '$action_type' ");
 }
 
 

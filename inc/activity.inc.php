@@ -159,6 +159,16 @@ function log_activity_parse(  $path                 ,
     $return['FR']   = $mod_nickname.' a modifié le bannissement de '.$nickname.' '.$temp[$amount].$temp2;
   }
 
+  else if($type == 'users_banned_delete')
+  {
+    $return['css']  = 'red bold';
+    $return['href'] = $path.'todo_link';
+    $temp           = ($title_en) ? ' ('.$title_en.')' : '';
+    $return['EN']   = $mod_nickname.' unbanned '.$nickname.$temp;
+    $temp           = ($title_fr) ? ' ('.$title_fr.')' : '';
+    $return['FR']   = $mod_nickname.' a débanni '.$nickname.$temp;
+  }
+
   else if($type === 'users_unbanned' && !$admins_only)
   {
     $return['css']  = 'text_red bold';

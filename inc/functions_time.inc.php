@@ -105,11 +105,11 @@ function time_until($timestamp)
 
 
 /**
- * Calculates the number of days elapsed between two MySQL dates.
+ * Calculates the number of days elapsed between two MySQL dates or timestamps.
  *
  * @param   string                $date_start     The starting date.
  * @param   string                $date_end       The ending date.
- * @param   int|null  (OPTIONAL)  $use_timestamps The function will expect timestamps instead of dates.
+ * @param   int|null  (OPTIONAL)  $use_timestamps The function will expect timestamps instead of MySQL dates.
  *
  * @return  int                 The amount of days elapsed.
  */
