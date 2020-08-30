@@ -645,6 +645,23 @@ if($last_query < 20)
           SET     system_scheduler.task_type    = 'writings_contest_end'
           WHERE   system_scheduler.task_type LIKE 'ecrivains_concours_fin' ");
 
+  $qbans = query("  SELECT  membres.id            AS 'm_id'   ,
+                            membres.pseudonyme    AS 'm_nick' ,
+                            membres.banni_date    AS 'm_date'
+                    FROM    membres
+                    WHERE   membres.banni_date > 0 ");
+  while($dbans = mysqli_fetch_array($qbans))
+  {
+    $ban_id   = sanitize($dbans['m_id'], 'int');
+    $ban_nick = sanitize($dbans['m_nick'], 'string');
+    $ban_end  = sanitize($dbans['m_date'], 'int');
+    query(" INSERT INTO system_scheduler
+            SET         system_scheduler.planned_at       = '$ban_end'    ,
+                        system_scheduler.task_id          = '$ban_id'     ,
+                        system_scheduler.task_type        = 'users_unban' ,
+                        system_scheduler.task_description = '$ban_nick'   ");
+  }
+
   sql_rename_field('system_variables', 'mise_a_jour', 'update_in_progress', 'INT UNSIGNED NOT NULL PRIMARY KEY');
   sql_rename_field('system_variables', 'derniere_requete_sql', 'latest_query_id', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
   sql_create_field('system_variables', 'last_scheduler_execution', 'INT UNSIGNED NOT NULL DEFAULT 0', 'latest_query_id');
@@ -931,16 +948,16 @@ if($last_query < 21)
                     WHERE   membres.banni_date > 0 ");
   while($dbans = mysqli_fetch_array($qbans))
   {
-    $id     = sanitize($dbans['m_id'], 'int');
-    $start  = sanitize(strtotime('-10 years', $dbans['m_date']), 'int');
-    $end    = sanitize($dbans['m_date'], 'int');
-    $reason = sanitize($dbans['m_reason'], 'string');
+    $ban_id     = sanitize($dbans['m_id'], 'int');
+    $ban_start  = sanitize(strtotime('-10 years', $dbans['m_date']), 'int');
+    $ban_end    = sanitize($dbans['m_date'], 'int');
+    $ban_reason = sanitize($dbans['m_reason'], 'string');
     query(" INSERT INTO logs_bans
-            SET         logs_bans.fk_banned_user    = '$id'       ,
-                        logs_bans.fk_banned_by_user = 1           ,
-                        logs_bans.banned_at         = '$start'    ,
-                        logs_bans.banned_until      = '$end'      ,
-                        logs_bans.ban_reason_fr     = '$reason'   ");
+            SET         logs_bans.fk_banned_user    = '$ban_id'     ,
+                        logs_bans.fk_banned_by_user = 1             ,
+                        logs_bans.banned_at         = '$ban_start'  ,
+                        logs_bans.banned_until      = '$ban_end'    ,
+                        logs_bans.ban_reason_fr     = '$ban_reason' ");
   }
 
   sql_update_query_id(21);
