@@ -228,6 +228,7 @@ query(" INSERT INTO users
                     users.nickname              = 'Admin'           ,
                     users.password              = ''                ,
                     users.is_administrator      = 1                 ,
+                    users.current_language      = 'EN'              ,
                     users.last_visited_at       = '$last_visit'     ,
                     users.last_visited_page_en  = 'Unlisted page'   ,
                     users.last_visited_page_fr  = 'Page non listée' ,
@@ -238,6 +239,7 @@ query(" INSERT INTO users
                     users.nickname              = 'Mod'             ,
                     users.password              = ''                ,
                     users.is_moderator          = 1                 ,
+                    users.current_language      = 'EN'              ,
                     users.last_visited_at       = '$last_visit'     ,
                     users.last_visited_page_en  = 'Unlisted page'   ,
                     users.last_visited_page_fr  = 'Page non listée' ,
@@ -247,6 +249,7 @@ query(" INSERT INTO users
         SET         users.id                    = 4             ,
                     users.nickname              = 'User'        ,
                     users.password              = ''            ,
+                    users.current_language      = 'EN'          ,
                     users.last_visited_at       = '$last_visit' ,
                     users.last_visited_page_en  = 'Index'       ,
                     users.last_visited_page_fr  = 'Index'       ,
@@ -256,6 +259,7 @@ query(" INSERT INTO users
         SET         users.id                    = 5             ,
                     users.nickname              = 'Prude'       ,
                     users.password              = ''            ,
+                    users.current_language      = 'EN'          ,
                     users.last_visited_at       = '$last_visit' ,
                     users.last_visited_page_en  = 'Index'       ,
                     users.last_visited_page_fr  = 'Index'       ,
@@ -265,6 +269,7 @@ query(" INSERT INTO users
         SET         users.id                    = 6             ,
                     users.nickname              = 'Banned'      ,
                     users.password              = ''            ,
+                    users.current_language      = 'EN'          ,
                     users.is_banned_since       = 1111239420    ,
                     users.is_banned_until       = 1918625619    ,
                     users.is_banned_because_en  = 'Fixture'     ,
@@ -273,6 +278,18 @@ query(" INSERT INTO users
                     users.last_visited_page_en  = 'Index'       ,
                     users.last_visited_page_fr  = 'Index'       ,
                     users.last_visited_url      = 'index'       ");
+query(" INSERT INTO system_scheduler
+        SET         system_scheduler.planned_at       = 1918625619    ,
+                    system_scheduler.task_id          = 6             ,
+                    system_scheduler.task_type        = 'user_unban'  ,
+                    system_scheduler.task_description = 'Banned'      ");
+query(" INSERT INTO logs_bans
+        SET         logs_bans.fk_banned_user      = 6           ,
+                    logs_bans.fk_banned_by_user   = 1           ,
+                    logs_bans.banned_at           = 1111239420  ,
+                    logs_bans.banned_until        = 1918625619  ,
+                    logs_bans.ban_reason_en       = 'Fixture'   ,
+                    logs_bans.ban_reason_fr       = 'Fixture'   ");
 
 // Activity logs
 query(" INSERT INTO logs_activity
@@ -563,7 +580,7 @@ for($i = 0; $i < $random; $i++)
                           logs_activity.activity_nickname           = '$username'                 ,
                           logs_activity.activity_moderator_nickname = 'Admin'                     ");
     }
-    if(mt_rand(0,100) >= 100)
+    if(mt_rand(0,66) >= 66)
     {
       $banned_at        = mt_rand($created_at, time());
       $ban_durations    = array(1, 7, 30, 365, 3650);
@@ -573,16 +590,6 @@ for($i = 0; $i < $random; $i++)
       $ban_reason_fr    = (mt_rand(0,2) < 2) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
       $unban_reason_en  = (mt_rand(0,3) < 3) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
       $unban_reason_fr  = (mt_rand(0,3) < 3) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
-      query(" INSERT INTO logs_bans
-              SET         logs_bans.fk_banned_user    = '$user_id'          ,
-                          logs_bans.fk_banned_by_user = 1                   ,
-                          logs_bans.banned_at         = '$banned_at'        ,
-                          logs_bans.banned_until      = '$unbanned_at'      ,
-                          logs_bans.unbanned_at       = '$unbanned_at'      ,
-                          logs_bans.ban_reason_en     = '$ban_reason_en'    ,
-                          logs_bans.ban_reason_fr     = '$ban_reason_fr'    ,
-                          logs_bans.unban_reason_en   = '$unban_reason_en'  ,
-                          logs_bans.unban_reason_fr   = '$unban_reason_fr'  ");
       query(" INSERT INTO logs_activity
               SET         logs_activity.happened_at             = '$banned_at'    ,
                           logs_activity.fk_users                = '$user_id'      ,
@@ -627,6 +634,22 @@ for($i = 0; $i < $random; $i++)
                             logs_activity.activity_nickname       = '$username'       ");
         if($unban_reason_en || $unban_reason_fr)
         {
+          query(" INSERT INTO logs_scheduler
+                  SET         logs_scheduler.happened_at      = '$unbanned_at'                ,
+                              logs_scheduler.task_id          = '$user_id'                    ,
+                              logs_scheduler.task_type        = 'user_unban'                  ,
+                              logs_scheduler.task_description = '$username'                   ,
+                              logs_scheduler.execution_report = 'The user has been unbanned'  ");
+          query(" INSERT INTO logs_bans
+                  SET         logs_bans.fk_banned_user      = '$user_id'          ,
+                              logs_bans.fk_banned_by_user   = 1                   ,
+                              logs_bans.banned_at           = '$banned_at'        ,
+                              logs_bans.banned_until        = '$unbanned_at'      ,
+                              logs_bans.unbanned_at         = '$unbanned_at'      ,
+                              logs_bans.ban_reason_en       = '$ban_reason_en'    ,
+                              logs_bans.ban_reason_fr       = '$ban_reason_fr'    ,
+                              logs_bans.unban_reason_en     = '$unban_reason_en'  ,
+                              logs_bans.unban_reason_fr     = '$unban_reason_fr'  ");
           query(" INSERT INTO logs_activity
                   SET         logs_activity.happened_at                 = '$unbanned_at'      ,
                               logs_activity.is_moderators_only          = 1                   ,
@@ -653,6 +676,27 @@ for($i = 0; $i < $random; $i++)
                                 logs_activity_details.content_before          = '$unban_reason_fr'  ,
                                 logs_activity_details.content_after           = '$unban_reason_fr'  ");
         }
+      }
+      else
+      {
+        query(" UPDATE      users
+                SET         users.is_banned_since       = '$banned_at'      ,
+                            users.is_banned_until       = '$unbanned_at'    ,
+                            users.is_banned_because_en  = '$ban_reason_en'  ,
+                            users.is_banned_because_fr  = '$ban_reason_fr'
+                WHERE       users.id                    = '$user_id'        ");
+        query(" INSERT INTO system_scheduler
+                SET         system_scheduler.planned_at       = '$unbanned_at'  ,
+                            system_scheduler.task_id          = '$user_id'      ,
+                            system_scheduler.task_type        = 'user_unban'    ,
+                            system_scheduler.task_description = '$username'     ");
+        query(" INSERT INTO logs_bans
+                SET         logs_bans.fk_banned_user      = '$user_id'        ,
+                            logs_bans.fk_banned_by_user   = 1                 ,
+                            logs_bans.banned_at           = '$banned_at'      ,
+                            logs_bans.banned_until        = '$unbanned_at'    ,
+                            logs_bans.ban_reason_en       = '$ban_reason_en'  ,
+                            logs_bans.ban_reason_fr       = '$ban_reason_fr'  ");
       }
     }
     if(mt_rand(0,250) >= 250)
