@@ -381,3 +381,83 @@ function admin_ban_user_delete( $unbanner_id                    ,
   $unbanned_user_language = user_get_language($unbanned_id);
   private_message_send(__('admin_ban_delete_private_message_title_'.strtolower($unbanned_user_language)), __('admin_ban_delete_private_message_'.strtolower($unbanned_user_language), 0, 0, 0, array($path, date_to_text(time(), 1, $unbanned_user_language), $days_purged, $days_left)), $unbanned_id, 0);
 }
+
+
+
+
+/**
+ * Lists the ban log history.
+ *
+ * @param   string|null   $lang   (OPTIONAL)  The user's current language.
+ *
+ * @return  array                             The ban log history data, ready for displaying.
+*/
+
+function admin_ban_logs_get_list($lang = 'EN')
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+  require_included_file('functions_mathematics.inc.php');
+  require_included_file('functions_numbers.inc.php');
+
+  // Fetch the log list
+  $qlogs  = query(" SELECT    logs_bans.id              AS 'l_id'         ,
+                              logs_bans.banned_at       AS 'l_start'      ,
+                              logs_bans.banned_until    AS 'l_end'        ,
+                              logs_bans.unbanned_at     AS 'l_unban'      ,
+                              logs_bans.ban_reason_en   AS 'l_reason_en'  ,
+                              logs_bans.ban_reason_fr   AS 'l_reason_fr'  ,
+                              logs_bans.unban_reason_en AS 'l_ureason_en' ,
+                              logs_bans.unban_reason_fr AS 'l_ureason_fr' ,
+                              users_banned.id           AS 'banned_id'    ,
+                              users_banned.nickname     AS 'banned_nick'  ,
+                              users_banner.id           AS 'banner_id'    ,
+                              users_banner.nickname     AS 'banner_nick'  ,
+                              users_unbanner.id         AS 'unbanner_id'  ,
+                              users_unbanner.nickname   AS 'unbanner_nick'
+                    FROM      logs_bans
+                    LEFT JOIN users AS users_banned   ON logs_bans.fk_banned_user       = users_banned.id
+                    LEFT JOIN users AS users_banner   ON logs_bans.fk_banned_by_user    = users_banner.id
+                    LEFT JOIN users AS users_unbanner ON logs_bans.fk_unbanned_by_user  = users_unbanner.id
+                    ORDER BY  banned_at DESC ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qlogs); $i++)
+  {
+    $data[$i]['id']                 = $row['l_id'];
+    $data[$i]['nickname']           = sanitize_output($row['banned_nick']);
+    $data[$i]['user_id']            = $row['banned_id'];
+    $data[$i]['start']              = time_since($row['l_start']);
+    $data[$i]['start_full']         = date_to_text($row['l_start'], 0, 1, $lang);
+    $data[$i]['end']                = ($row['l_unban']) ? time_since($row['l_unban']) : '';
+    $data[$i]['end_full']           = date_to_text($row['l_end'], 0, 1, $lang);
+    $data[$i]['duration']           = time_days_elapsed($row['l_start'], $row['l_end'], 1);
+    $temp                           = ($row['l_unban']) ? $row['l_unban'] : time();
+    $data[$i]['purged']             = time_days_elapsed($row['l_start'], $temp, 1);
+    $temp                           = maths_percentage_of($data[$i]['purged'], $data[$i]['duration']);
+    $temp                           = ($temp > 100) ? 100 : $temp;
+    $data[$i]['purged_percent']     = number_display_format($temp, "percentage", 0);
+    $data[$i]['banned_by']          = sanitize_output($row['banner_nick']);
+    $data[$i]['banned_by_id']       = $row['banner_id'];
+    $data[$i]['unbanned_by']        = sanitize_output($row['unbanner_nick']);
+    $data[$i]['unbanned_by_id']     = $row['unbanner_id'];
+    $temp                           = ($row['l_reason_fr']) ? $row['l_reason_fr'] : $row['l_reason_en'];
+    $temp                           = ($lang == 'EN') ? $row['l_reason_en'] : $temp;
+    $data[$i]['ban_reason']         = sanitize_output(string_truncate($temp, 15, '...'));
+    $data[$i]['ban_reason_full']    = (strlen($temp) > 15 ) ? sanitize_output($temp) : '';
+    $temp                           = ($row['l_ureason_fr']) ? $row['l_ureason_fr'] : $row['l_ureason_en'];
+    $temp                           = ($lang == 'EN') ? $row['l_ureason_en'] : $temp;
+    $data[$i]['unban_reason']       = sanitize_output(string_truncate($temp, 15, '...'));
+    $data[$i]['unban_reason_full']  = (strlen($temp) > 15 ) ? sanitize_output($temp) : '';
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('admin.act.php', 'admin_ban_logs_get_list', $data));
+
+  // Return the prepared data
+  return $data;
+}

@@ -65,11 +65,34 @@ ___('admin_ban_list_subtitle',  'FR', "Triés par date de fin du bannissement");
 ___('admin_ban_list_end',       'EN', "Ban end");
 ___('admin_ban_list_end',       'FR', "Fin du ban");
 ___('admin_ban_list_start',     'EN', "Ban start");
-___('admin_ban_list_start',     'FR', "Banni depuis");
+___('admin_ban_list_start',     'FR', "Début du ban.");
 ___('admin_ban_list_length',    'EN', "Ban length");
 ___('admin_ban_list_length',    'FR', "Durée du ban");
 ___('admin_ban_list_purged',    'EN', "Purged");
 ___('admin_ban_list_purged',    'FR', "Peine purgée");
+
+
+// Ban logs
+___('admin_ban_logs_title',         'EN', "Ban history logs");
+___('admin_ban_logs_title',         'FR', "Historique des bannissements");
+___('admin_ban_logs_start',         'EN', "Banned");
+___('admin_ban_logs_start',         'FR', "Bannissement");
+___('admin_ban_logs_end',           'EN', "Unbanned");
+___('admin_ban_logs_end',           'FR', "Fin du<br>bannissement");
+___('admin_ban_logs_length',        'EN', "Days<br>banned");
+___('admin_ban_logs_length',        'FR', "Jours<br>ban.");
+___('admin_ban_logs_purged',        'EN', "Days<br>purged");
+___('admin_ban_logs_purged',        'FR', "Jours<br>purgés");
+___('admin_ban_logs_percent',       'EN', "Percent<br>purged");
+___('admin_ban_logs_percent',       'FR', "Pourcent.<br>purgés");
+___('admin_ban_logs_banned_by',     'EN', "Banned by");
+___('admin_ban_logs_banned_by',     'FR', "Bannissement<br>crée par");
+___('admin_ban_logs_unbanned_by',   'EN', "Unbanned by");
+___('admin_ban_logs_unbanned_by',   'FR', "Bannissement<br>annulé par");
+___('admin_ban_logs_ban_reason',    'EN', "Ban reason");
+___('admin_ban_logs_ban_reason',    'FR', "Raison du<br>bannissement");
+___('admin_ban_logs_unban_reason',  'EN', "Unban reason");
+___('admin_ban_logs_unban_reason',  'FR', "Raison de fin<br>du bannissement");
 
 
 // Edit a ban
@@ -81,6 +104,7 @@ ___('admin_ban_edit_reban',     'EN', "Modify remaining ban duration (optional)"
 ___('admin_ban_edit_reban',     'FR', "Modifier la durée restante du bannissement (optionnel)");
 ___('admin_ban_edit_submit',    'EN', "Edit the ban");
 ___('admin_ban_edit_submit',    'FR', "Modifier le bannissement");
+
 
 // Delete a ban
 ___('admin_ban_delete_title',           'EN', 'Unban a user');

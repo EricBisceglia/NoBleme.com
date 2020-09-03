@@ -5,11 +5,13 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';       # Core
-include_once './../../inc/functions_time.inc.php'; # Time
-include_once './../../actions/admin.act.php';      # Actions
-include_once './../../actions/users.act.php';      # User list
-include_once './../../lang/admin.lang.php';        # Translations
+include_once './../../inc/includes.inc.php';              # Core
+include_once './../../inc/functions_time.inc.php';        # Time
+include_once './../../inc/functions_mathematics.inc.php'; # Maths
+include_once './../../inc/functions_numbers.inc.php';     # Number formatting
+include_once './../../actions/admin.act.php';             # Actions
+include_once './../../actions/users.act.php';             # User list
+include_once './../../lang/admin.lang.php';               # Translations
 
 // Limit page access rights
 user_restrict_to_moderators($lang);
@@ -78,6 +80,14 @@ if(isset($_POST['admin_ban_add_submit']))
 // List of banned users
 
 $banned_users = users_get_list('banned', 0, 0, 0, 0, 0, 1, 0, 0, $lang);
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Ban history
+
+$ban_logs = admin_ban_logs_get_list($lang);
 
 
 
@@ -256,9 +266,145 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
-<?php } ?>
+
+<?php } if($ban_logs['rows']) { ?>
 
 <hr>
+
+<div class="width_80 smallpadding_top">
+
+  <h2 class="align_center padding_top padding_bot">
+    <?=__('admin_ban_logs_title')?>
+  </h2>
+
+  <table class="nowrap">
+    <thead>
+
+      <tr class="uppercase">
+        <th>
+          <?=__('nickname')?>
+        </th>
+        <th>
+          <?=__('admin_ban_logs_start')?>
+        </th>
+        <th>
+          <?=__('admin_ban_logs_end')?>
+        </th>
+        <th>
+          <?=__('admin_ban_logs_length')?>
+        </th>
+        <th>
+          <?=__('admin_ban_logs_purged')?>
+        </th>
+        <th>
+          <?=__('admin_ban_logs_percent')?>
+        </th>
+        <th>
+          <?=__('admin_ban_logs_banned_by')?>
+        </th>
+        <th>
+          <?=__('admin_ban_logs_unbanned_by')?>
+        </th>
+        <th>
+          <?=__('admin_ban_logs_ban_reason')?>
+        </th>
+        <th>
+          <?=__('admin_ban_logs_unban_reason')?>
+        </th>
+      </tr>
+
+    </thead>
+    <tbody class="align_center altc">
+
+    <?php for($i = 0; $i < $ban_logs['rows']; $i++) { ?>
+
+      <tr>
+
+        <td>
+          <?=__link('todo_link?id='.$ban_logs[$i]['user_id'], $ban_logs[$i]['nickname'], 'bold noglow')?>
+        </td>
+
+        <td>
+          <div class="tooltip_container">
+            <?=$ban_logs[$i]['start']?>
+            <div class="tooltip dowrap">
+              <?=$ban_logs[$i]['start_full']?>
+            </div>
+          </div>
+        </td>
+
+        <td>
+          <?php if($ban_logs[$i]['end']) { ?>
+          <div class="tooltip_container">
+            <?=$ban_logs[$i]['end']?>
+            <div class="tooltip dowrap">
+              <?=$ban_logs[$i]['end_full']?>
+            </div>
+          </div>
+          <?php } else { ?>
+          <?=$ban_logs[$i]['end']?>
+          <?php } ?>
+        </td>
+
+        <td>
+          <?=$ban_logs[$i]['duration']?>
+        </td>
+
+        <td>
+          <?=$ban_logs[$i]['purged']?>
+        </td>
+
+        <td>
+          <?=$ban_logs[$i]['purged_percent']?>
+        </td>
+
+        <td>
+          <?=__link('todo_link?id='.$ban_logs[$i]['banned_by_id'], $ban_logs[$i]['banned_by'], 'bold noglow')?>
+        </td>
+
+        <td>
+          <?php if($ban_logs[$i]['unbanned_by']) { ?>
+          <?=__link('todo_link?id='.$ban_logs[$i]['unbanned_by_id'], $ban_logs[$i]['unbanned_by'], 'bold noglow')?>
+          <?php } ?>
+        </td>
+
+        <td>
+          <?php if($ban_logs[$i]['ban_reason_full']) { ?>
+          <div class="tooltip_container">
+            <?=$ban_logs[$i]['ban_reason']?>
+            <div class="tooltip dowrap">
+              <?=$ban_logs[$i]['ban_reason_full']?>
+            </div>
+          </div>
+          <?php } else { ?>
+          <?=$ban_logs[$i]['ban_reason']?>
+          <?php } ?>
+        </td>
+
+        <td>
+          <?php if($ban_logs[$i]['unban_reason_full']) { ?>
+          <div class="tooltip_container">
+            <?=$ban_logs[$i]['unban_reason']?>
+            <div class="tooltip dowrap">
+              <?=$ban_logs[$i]['unban_reason_full']?>
+            </div>
+          </div>
+          <?php } else { ?>
+          <?=$ban_logs[$i]['unban_reason']?>
+          <?php } ?>
+        </td>
+
+      </tr>
+
+    <?php } ?>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+<?php } ?>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
