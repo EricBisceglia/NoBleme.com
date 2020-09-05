@@ -183,15 +183,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('nickname')?>
         </th>
         <th>
-          <?=__('admin_ban_list_end')?>
-        </th>
-        <th>
           <?=__('admin_ban_list_start')?>
         </th>
-        <th>
+        <th class="desktop">
           <?=__('admin_ban_list_length')?>
         </th>
         <th>
+          <?=__('admin_ban_list_end')?>
+        </th>
+        <th class="desktop">
           <?=__('admin_ban_list_purged')?>
         </th>
         <th>
@@ -215,15 +215,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <td>
           <div class="tooltip_container">
-            <?=$banned_users[$i]['ban_end']?>
-            <div class="tooltip">
-              <?=$banned_users[$i]['ban_endf']?>
-            </div>
-          </div>
-        </td>
-
-        <td>
-          <div class="tooltip_container">
             <?=$banned_users[$i]['ban_start']?>
             <div class="tooltip">
               <?=$banned_users[$i]['ban_startf']?>
@@ -231,11 +222,20 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </div>
         </td>
 
-        <td>
+        <td class="desktop">
           <?=$banned_users[$i]['ban_length'].__('day', $banned_users[$i]['ban_length'], 1)?>
         </td>
 
         <td>
+          <div class="tooltip_container">
+            <?=$banned_users[$i]['ban_end']?>
+            <div class="tooltip">
+              <?=$banned_users[$i]['ban_endf']?>
+            </div>
+          </div>
+        </td>
+
+        <td class="desktop">
           <?=$banned_users[$i]['ban_purged'].__('day', $banned_users[$i]['ban_purged'], 1)?>
         </td>
 
@@ -290,13 +290,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <th>
           <?=__('admin_ban_logs_end')?>
         </th>
-        <th>
+        <th class="desktop">
           <?=__('admin_ban_logs_length')?>
         </th>
-        <th>
+        <th  class="desktop">
           <?=__('admin_ban_logs_purged')?>
         </th>
-        <th>
+        <th class="desktop">
           <?=__('admin_ban_logs_percent')?>
         </th>
         <th>
@@ -305,10 +305,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <th>
           <?=__('admin_ban_logs_unbanned_by')?>
         </th>
-        <th>
+        <th class="desktop">
           <?=__('admin_ban_logs_ban_reason')?>
         </th>
-        <th>
+        <th class="desktop">
           <?=__('admin_ban_logs_unban_reason')?>
         </th>
       </tr>
@@ -346,15 +346,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
         </td>
 
-        <td>
+        <td class="desktop">
           <?=$ban_logs[$i]['duration']?>
         </td>
 
-        <td>
+        <td  class="desktop">
           <?=$ban_logs[$i]['purged']?>
         </td>
 
-        <td>
+        <td class="desktop">
           <?=$ban_logs[$i]['purged_percent']?>
         </td>
 
@@ -368,7 +368,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
         </td>
 
-        <td>
+        <td class="desktop">
           <?php if($ban_logs[$i]['ban_reason_full']) { ?>
           <div class="tooltip_container">
             <?=$ban_logs[$i]['ban_reason']?>
@@ -381,7 +381,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
         </td>
 
-        <td>
+        <td class="desktop">
           <?php if($ban_logs[$i]['unban_reason_full']) { ?>
           <div class="tooltip_container">
             <?=$ban_logs[$i]['unban_reason']?>
