@@ -132,11 +132,12 @@ function ___( $name         ,
  /**
  * Builds a link.
  *
- * @param   string      $href         The destination of the link.
- * @param   string      $text         The text to be displayed on the link.
- * @param   string|null $style        The CSS style(s) to apply to the link.
- * @param   bool|null   $is_internal  Whether the link is internel (on the website) or external (outside the website).
- * @param   string|null $path         The path to the root of the website (defaults to 2 folders away from root).
+ * @param   string      $href                     The destination of the link.
+ * @param   string      $text                     The text to be displayed on the link.
+ * @param   string|null $style        (OPTIONAL)  The CSS style(s) to apply to the link.
+ * @param   bool|null   $is_internal  (OPTIONAL)  Whether the link is internal (on the website) or external.
+ * @param   string|null $path         (OPTIONAL)  The path to the website's root (defaults to 2 folders from root).
+ * @param   string|null $onclick      (OPTIONAL)  A javascript option to trigger upon clicking the link.
  *
  * @return  string                    The link, ready for use.
  */
@@ -145,7 +146,8 @@ function __link(  $href                       ,
                   $text                       ,
                   $style        = "bold"      ,
                   $is_internal  = 1           ,
-                  $path         = "./../../"  )
+                  $path         = "./../../"  ,
+                  $onclick      = NULL        )
 {
   // Prepare the style
   $class = ($style) ? " class=\"$style\"" : "";
@@ -154,8 +156,11 @@ function __link(  $href                       ,
   $url = ($is_internal) ? $path.$href : $href;
   $url = ($url) ? "href=\"".$url."\"" : "";
 
+  // Prepare the onclick
+  $onclick = ($onclick) ? 'onclick="'.$onclick.'"' : '';
+
   // Return the built link
-  return "<a $class $url>$text</a>";
+  return "<a $class $url $onclick>$text</a>";
 }
 
 
@@ -241,20 +246,22 @@ ___(':', 'FR', " :");
 
 
 // Buttons and labels
-___('submit', 'EN', "submit");
-___('submit', 'FR', "envoyer");
-___('add',    'EN', "add");
-___('add',    'FR', "créer");
-___('edit',   'EN', "edit");
-___('edit',   'FR', "modifier");
-___('delete', 'EN', "delete");
-___('delete', 'FR', "supprimer");
-___('modify', 'EN', "modify");
-___('modify', 'FR', "modifier");
-___('reset',  'EN', "reset");
-___('reset',  'FR', "ràz");
-___('reason', 'EN', "reason");
-___('reason', 'FR', "raison");
+___('submit',   'EN', "submit");
+___('submit',   'FR', "envoyer");
+___('add',      'EN', "add");
+___('add',      'FR', "créer");
+___('edit',     'EN', "edit");
+___('edit',     'FR', "modifier");
+___('delete',   'EN', "delete");
+___('delete',   'FR', "supprimer");
+___('details',  'EN', "details");
+___('details',  'FR', "détails");
+___('modify',   'EN', "modify");
+___('modify',   'FR', "modifier");
+___('reset',    'EN', "reset");
+___('reset',    'FR', "ràz");
+___('reason',   'EN', "reason");
+___('reason',   'FR', "raison");
 
 
 // Common words
@@ -269,6 +276,8 @@ ___('with', 'FR', "avec");
 
 
 // Common actions
+___('act',      'EN', "act.");
+___('act',      'FR', "act.");
 ___('action',   'EN', "action");
 ___('action+',  'EN', "actions");
 ___('action',   'FR', "action");

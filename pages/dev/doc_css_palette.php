@@ -1559,7 +1559,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 <hr>
 
-<div class="width_50 padding_top">
+<div class="width_50 padding_top padding_bot">
 
   <table>
     <thead>
@@ -1709,6 +1709,54 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
   &lt;/tbody>
 &lt;/table></pre>
   </div>
+
+</div>
+
+<hr>
+
+<div class="width_30 padding_top">
+
+  <table>
+    <thead>
+      <tr class="row_separator_dark">
+        <th>
+          HEADER
+        </th>
+      </tr>
+    </thead>
+    <tbody class="align_center">
+      <tr class="row_separator_dark">
+        <td>
+          &lt;tr class="row_separator_dark"&gt;
+        </td>
+      </tr>
+      <tr>
+        <td>
+          &lt;tr class="row_separator_dark"&gt;
+        </td>
+      </tr>
+      <tr>
+        <td>
+          &lt;tr class="row_separator_dark"&gt;
+        </td>
+      </tr>
+      <tr class="row_separator_dark">
+        <td>
+          &lt;tr class="row_separator_dark"&gt;
+        </td>
+      </tr>
+      <tr>
+        <td>
+          &lt;tr class="row_separator_dark"&gt;
+        </td>
+      </tr>
+      <tr>
+        <td>
+          &lt;tr class="row_separator_dark"&gt;
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 </div>
 

@@ -111,8 +111,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
 
       <div class="padding_bot">
-        <label for="admin_ban_edit_length"><?=__('admin_ban_edit_duration')?></label>
-        <input class="indiv" type="text" id="admin_ban_edit_length" name="admin_ban_edit_length" value="<?=$ban_details['time_left']?>" disabled>
+        <label for="admin_ban_edit_length_old"><?=__('admin_ban_edit_duration')?></label>
+        <input class="indiv" type="text" id="admin_ban_edit_length_old" name="admin_ban_edit_length_old" value="<?=$ban_details['time_left']?>" disabled>
       </div>
 
       <div class="smallpadding_bot<?=$admin_ban_hide_french?>">

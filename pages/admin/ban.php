@@ -26,7 +26,7 @@ $page_title_en    = "Bans";
 $page_title_fr    = "Bannissements";
 
 // Extra JS
-$js = array('users/autocomplete_nickname');
+$js = array('admin/ban', 'users/autocomplete_nickname');
 
 
 
@@ -97,6 +97,15 @@ $ban_logs = admin_ban_logs_get_list($lang);
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
+
+<div id="ban_log_popin" class="popin_background">
+  <div class="popin_body">
+    <a class="popin_close" onclick="popin_close('ban_log_popin');">&times;</a>
+    <div id="admin_ban_popin_log">
+      &nbsp;
+    </div>
+  </div>
+</div>
 
 <div class="width_50 align_center">
 
@@ -192,7 +201,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('admin_ban_list_end')?>
         </th>
         <th class="desktop">
-          <?=__('admin_ban_list_purged')?>
+          <?=__('admin_ban_list_served')?>
         </th>
         <th>
           <?=__('reason')?>
@@ -236,7 +245,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td class="desktop">
-          <?=$banned_users[$i]['ban_purged'].__('day', $banned_users[$i]['ban_purged'], 1)?>
+          <?=$banned_users[$i]['ban_served'].__('day', $banned_users[$i]['ban_served'], 1)?>
         </td>
 
         <td>
@@ -252,7 +261,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
         </td>
 
-        <td class="align_center">
+        <td>
+          <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log(0, '.$banned_users[$i]['id'].');')?>
           <?=__link('pages/admin/ban_edit?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/edit_small.svg" alt="M" title="'.string_change_case(__('modify'), 'initials').'">', 'noglow')?>
           <?=__link('pages/admin/ban_delete?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/delete_small.svg" alt="X" title="'.string_change_case(__('delete'), 'initials').'">', 'noglow')?>
         </td>
@@ -294,7 +304,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('admin_ban_logs_length')?>
         </th>
         <th  class="desktop">
-          <?=__('admin_ban_logs_purged')?>
+          <?=__('admin_ban_logs_served')?>
         </th>
         <th class="desktop">
           <?=__('admin_ban_logs_percent')?>
@@ -310,6 +320,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </th>
         <th class="desktop">
           <?=__('admin_ban_logs_unban_reason')?>
+        </th>
+        <th>
+          <?=__('act')?>
         </th>
       </tr>
 
@@ -351,11 +364,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td  class="desktop">
-          <?=$ban_logs[$i]['purged']?>
+          <?=$ban_logs[$i]['served']?>
         </td>
 
         <td class="desktop">
-          <?=$ban_logs[$i]['purged_percent']?>
+          <?=$ban_logs[$i]['served_percent']?>
         </td>
 
         <td>
@@ -392,6 +405,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } else { ?>
           <?=$ban_logs[$i]['unban_reason']?>
           <?php } ?>
+        </td>
+
+        <td>
+          <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log('.$ban_logs[$i]['id'].');')?>
         </td>
 
       </tr>

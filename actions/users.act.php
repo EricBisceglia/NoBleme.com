@@ -148,7 +148,7 @@ function users_get_list(  $sort_by          = ''    ,
     $data[$i]['ban_start']  = ($row['u_ban_start']) ? time_since($row['u_ban_start']) : '';
     $data[$i]['ban_startf'] = ($row['u_ban_start']) ? date_to_text($row['u_ban_start'], 0, 1) : '';
     $data[$i]['ban_length'] = ($row['u_ban_end']) ? time_days_elapsed($row['u_ban_start'], $row['u_ban_end'], 1) : '';
-    $data[$i]['ban_purged'] = ($row['u_ban_end']) ? time_days_elapsed($row['u_ban_start'], time(), 1) : '';
+    $data[$i]['ban_served'] = ($row['u_ban_end']) ? time_days_elapsed($row['u_ban_start'], time(), 1) : '';
     $temp                   = ($row['u_ban_reason_en']) ? $row['u_ban_reason_en'] : '';
     $temp                   = ($lang == 'FR' && $row['u_ban_reason_fr']) ? $row['u_ban_reason_fr'] : $temp;
     $data[$i]['ban_reason'] = sanitize_output(string_truncate($temp, 30, '...'));
@@ -158,7 +158,7 @@ function users_get_list(  $sort_by          = ''    ,
     $temp                   = ($row['u_admin']) ? ' bold text_red' : $temp;
     $data[$i]['css']        = $temp;
 
-    // End any purged bans that slipped through the system
+    // End any served bans that slipped through the system
     if($row['u_ban_end'] < time())
       user_unban($row['u_id'], 0, 1);
   }

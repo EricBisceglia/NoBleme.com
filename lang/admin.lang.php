@@ -68,31 +68,64 @@ ___('admin_ban_list_start',     'EN', "Ban start");
 ___('admin_ban_list_start',     'FR', "Début du ban.");
 ___('admin_ban_list_length',    'EN', "Ban length");
 ___('admin_ban_list_length',    'FR', "Durée du ban");
-___('admin_ban_list_purged',    'EN', "Purged");
-___('admin_ban_list_purged',    'FR', "Peine purgée");
+___('admin_ban_list_served',    'EN', "Served");
+___('admin_ban_list_served',    'FR', "Peine purgée");
 
 
-// Ban logs
+// Ban log history
 ___('admin_ban_logs_title',         'EN', "Ban history logs");
 ___('admin_ban_logs_title',         'FR', "Historique des bannissements");
 ___('admin_ban_logs_start',         'EN', "Banned");
 ___('admin_ban_logs_start',         'FR', "Bannissement");
 ___('admin_ban_logs_end',           'EN', "Unbanned");
 ___('admin_ban_logs_end',           'FR', "Fin du<br>bannissement");
-___('admin_ban_logs_length',        'EN', "Days<br>banned");
+___('admin_ban_logs_length',        'EN', "Days<br>sentenced");
 ___('admin_ban_logs_length',        'FR', "Jours<br>ban.");
-___('admin_ban_logs_purged',        'EN', "Days<br>purged");
-___('admin_ban_logs_purged',        'FR', "Jours<br>purgés");
-___('admin_ban_logs_percent',       'EN', "Percent<br>purged");
+___('admin_ban_logs_served',        'EN', "Days<br>banned");
+___('admin_ban_logs_served',        'FR', "Jours<br>purgés");
+___('admin_ban_logs_percent',       'EN', "Percent<br>served");
 ___('admin_ban_logs_percent',       'FR', "Pourcent.<br>purgés");
 ___('admin_ban_logs_banned_by',     'EN', "Banned by");
-___('admin_ban_logs_banned_by',     'FR', "Bannissement<br>crée par");
+___('admin_ban_logs_banned_by',     'FR', "Bannissement<br>par");
 ___('admin_ban_logs_unbanned_by',   'EN', "Unbanned by");
 ___('admin_ban_logs_unbanned_by',   'FR', "Bannissement<br>annulé par");
 ___('admin_ban_logs_ban_reason',    'EN', "Ban reason");
 ___('admin_ban_logs_ban_reason',    'FR', "Raison du<br>bannissement");
 ___('admin_ban_logs_unban_reason',  'EN', "Unban reason");
 ___('admin_ban_logs_unban_reason',  'FR', "Raison de fin<br>du bannissement");
+
+
+// Ban log popin
+___('admin_ban_logs_error_missing',     'EN', "The requested ban log does not exist");
+___('admin_ban_logs_error_missing',     'FR', "L'historique du bannissement demandé n'existe pas");
+___('admin_ban_logs_popin_title',       'EN', "Ban log");
+___('admin_ban_logs_popin_title',       'FR', "Historique de bannissement");
+___('admin_ban_logs_full_user',         'EN', "Banned user:");
+___('admin_ban_logs_full_user',         'FR', "Compte banni :");
+___('admin_ban_logs_full_start',        'EN', "Ban date:");
+___('admin_ban_logs_full_start',        'FR', "Date du bannissement :");
+___('admin_ban_logs_full_end',          'EN', "Scheduled ban end:");
+___('admin_ban_logs_full_end',          'FR', "Bannissement jusqu'à :");
+___('admin_ban_logs_full_unban',        'EN', "Unban date:");
+___('admin_ban_logs_full_unban',        'FR', "Date du débannissement :");
+___('admin_ban_logs_full_days',         'EN', "Initial ban duration:");
+___('admin_ban_logs_full_days',         'FR', "Durée initiale du bannissement :");
+___('admin_ban_logs_full_served',       'EN', "Duration banned:");
+___('admin_ban_logs_full_served',       'FR', "Durée purgée :");
+___('admin_ban_logs_full_percent',      'EN', "Percent of the ban served:");
+___('admin_ban_logs_full_percent',      'FR', "Pourcentage du ban. purgé :");
+___('admin_ban_logs_full_banned_by',    'EN', "Banned by:");
+___('admin_ban_logs_full_banned_by',    'FR', "Bannissement par :");
+___('admin_ban_logs_full_reason_en',    'EN', "Ban reason (english):");
+___('admin_ban_logs_full_reason_en',    'FR', "Justification du ban. (anglais) :");
+___('admin_ban_logs_full_reason_fr',    'EN', "Ban reason (french):");
+___('admin_ban_logs_full_reason_fr',    'FR', "Justification du ban. (français) :");
+___('admin_ban_logs_full_unbanned_by',  'EN', "Unbanned by:");
+___('admin_ban_logs_full_unbanned_by',  'FR', "Débannissement par :");
+___('admin_ban_logs_full_unreason_en',  'EN', "Unan reason (english):");
+___('admin_ban_logs_full_unreason_en',  'FR', "Justification du déban. (anglais) :");
+___('admin_ban_logs_full_unreason_fr',  'EN', "Unban reason (french):");
+___('admin_ban_logs_full_unreason_fr',  'FR', "Justification du déban. (français) :");
 
 
 // Edit a ban

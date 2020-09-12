@@ -120,7 +120,7 @@ function users_login_attempt_process()
 /**
  * Closes an open popin.
  *
- * @param   {string}  popin_id  The id of the popin.
+ * @param   {string}  popin_id  The id of the popin, or * to close all open popins
  *
  * @returns {void}
  */
@@ -128,12 +128,20 @@ function users_login_attempt_process()
 function popin_close(popin_id)
 {
   // If the requested popin has been opened, close it and get rid of the hash in the url
-  if(location.hash == popin_id || location.hash == '#'+popin_id)
+  if(location.hash == popin_id || location.hash == '#'+popin_id || popin_id == '*')
   {
     location.hash = '#_';
     history.replaceState({}, document.title, window.location.href.split('#')[0]);
   }
 }
 
-// Close the lost account access popin if it is open
+
+// Close all open popins upon pressing the escape key
+document.addEventListener("keydown", ({key}) => {
+  if (key === "Escape")
+    popin_close('*');
+})
+
+
+// Close the lost account access popin if it is open upon loading the page
 popin_close('popin_lost_access');

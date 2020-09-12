@@ -351,14 +351,14 @@ function admin_ban_user_delete( $unbanner_id                    ,
   // Delete the unbanning scheduled task
   schedule_task_delete('users_unban', $unbanned_id);
 
-  // Calculate the time purged and left before the unbanning
-  $days_purged  = time_days_elapsed($dban['b_start'], time(), 1);
+  // Calculate the time served and left before the unbanning
+  $days_served  = time_days_elapsed($dban['b_start'], time(), 1);
   $days_left    = time_days_elapsed(time(), $dban['b_end'], 1);
 
   // Generate a mod log with some detailed activity logs
   $modlog = log_activity('users_banned_delete', 1, 'ENFR', 0, $unban_reason_en_raw, $unban_reason_fr_raw, 0, $unbanned_id, $unbanned_nickname_raw, $unbanner_nickname_raw);
   log_activity_details($modlog, 'Days left in the ban', 'Jours restants au bannissement', $days_left);
-  log_activity_details($modlog, 'Days purged before the unbanning', 'Jours purgés avant le débannissement', $days_purged);
+  log_activity_details($modlog, 'Days served before the unbanning', 'Jours purgés avant le débannissement', $days_served);
   if($unban_reason_en_raw)
     log_activity_details($modlog, 'Reason for unbanning (EN)', 'Raison du débannissement (EN)', $unban_reason_en_raw);
   if($unban_reason_fr_raw)
@@ -379,7 +379,7 @@ function admin_ban_user_delete( $unbanner_id                    ,
 
   // Private message to let the user know they have been manually unbanned
   $unbanned_user_language = user_get_language($unbanned_id);
-  private_message_send(__('admin_ban_delete_private_message_title_'.strtolower($unbanned_user_language)), __('admin_ban_delete_private_message_'.strtolower($unbanned_user_language), 0, 0, 0, array($path, date_to_text(time(), 1, $unbanned_user_language), $days_purged, $days_left)), $unbanned_id, 0);
+  private_message_send(__('admin_ban_delete_private_message_title_'.strtolower($unbanned_user_language)), __('admin_ban_delete_private_message_'.strtolower($unbanned_user_language), 0, 0, 0, array($path, date_to_text(time(), 1, $unbanned_user_language), $days_served, $days_left)), $unbanned_id, 0);
 }
 
 
@@ -433,10 +433,10 @@ function admin_ban_logs_get_list($lang = 'EN')
     $data[$i]['end_full']           = date_to_text($row['l_end'], 0, 1, $lang);
     $data[$i]['duration']           = time_days_elapsed($row['l_start'], $row['l_end'], 1);
     $temp                           = ($row['l_unban']) ? $row['l_unban'] : time();
-    $data[$i]['purged']             = time_days_elapsed($row['l_start'], $temp, 1);
-    $temp                           = maths_percentage_of($data[$i]['purged'], $data[$i]['duration']);
+    $data[$i]['served']             = time_days_elapsed($row['l_start'], $temp, 1);
+    $temp                           = maths_percentage_of($data[$i]['served'], $data[$i]['duration']);
     $temp                           = ($temp > 100) ? 100 : $temp;
-    $data[$i]['purged_percent']     = number_display_format($temp, "percentage", 0);
+    $data[$i]['served_percent']     = number_display_format($temp, "percentage", 0);
     $data[$i]['banned_by']          = sanitize_output($row['banner_nick']);
     $data[$i]['banned_by_id']       = $row['banner_id'];
     $data[$i]['unbanned_by']        = sanitize_output($row['unbanner_nick']);
@@ -457,6 +457,109 @@ function admin_ban_logs_get_list($lang = 'EN')
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
     var_dump(array('admin.act.php', 'admin_ban_logs_get_list', $data));
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Fetches information about a ban log.
+ *
+ * @param   int|null      $log_id   (OPTIONAL)  The id of the ban log.
+ * @param   int|null      $user_id  (OPTIONAL)  The id of the user that was banned.
+ * @param   string|null   $lang     (OPTIONAL)  The user's current language.
+ *
+ * @return  array|int                           The ban log history data, ready for displaying, or 0 if log not found.
+*/
+
+function admin_ban_logs_get_one($log_id   = NULL  ,
+                                $user_id  = NULL  ,
+                                $lang     = 'EN'  )
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+  require_included_file('functions_mathematics.inc.php');
+  require_included_file('functions_numbers.inc.php');
+
+  // Return nothing if both the log and user id are missing
+  if(!$log_id && !$user_id)
+    return 0;
+
+  // Sanitize the data
+  $log_id   = sanitize($log_id, 'int', 0);
+  $user_id  = sanitize($user_id, 'int', 0);
+
+  // Return nothing if only the ban log id has been provided and the user does not exist
+  if(!$log_id && !database_row_exists('users', $user_id))
+    return 0;
+
+  // If no log_id has been given, fetch it based on the provided user_id
+  if(!$log_id)
+  {
+    $dban = mysqli_fetch_array(query("  SELECT    logs_bans.id AS 'l_id'
+                                        FROM      logs_bans
+                                        WHERE     logs_bans.fk_banned_user  = '$user_id'
+                                        AND       logs_bans.unbanned_at     = 0
+                                        ORDER BY  logs_bans.banned_at       DESC
+                                        LIMIT     1 "));
+    $log_id = sanitize($dban['l_id'], 'int', 0);
+  }
+
+  // Return nothing if the ban log id does not exist
+  if(!database_row_exists('logs_bans', $log_id))
+    return 0;
+
+  // Fetch data regarding the ban
+  $qlog = query(" SELECT    logs_bans.banned_at       AS 'l_start'      ,
+                            logs_bans.banned_until    AS 'l_end'        ,
+                            logs_bans.unbanned_at     AS 'l_unban'      ,
+                            logs_bans.ban_reason_en   AS 'l_reason_en'  ,
+                            logs_bans.ban_reason_fr   AS 'l_reason_fr'  ,
+                            logs_bans.unban_reason_en AS 'l_ureason_en' ,
+                            logs_bans.unban_reason_fr AS 'l_ureason_fr' ,
+                            users_banned.id           AS 'banned_id'    ,
+                            users_banned.nickname     AS 'banned_nick'  ,
+                            users_banner.id           AS 'banner_id'    ,
+                            users_banner.nickname     AS 'banner_nick'  ,
+                            users_unbanner.id         AS 'unbanner_id'  ,
+                            users_unbanner.nickname   AS 'unbanner_nick'
+                  FROM      logs_bans
+                  LEFT JOIN users AS users_banned   ON logs_bans.fk_banned_user       = users_banned.id
+                  LEFT JOIN users AS users_banner   ON logs_bans.fk_banned_by_user    = users_banner.id
+                  LEFT JOIN users AS users_unbanner ON logs_bans.fk_unbanned_by_user  = users_unbanner.id
+                  WHERE     logs_bans.id = '$log_id'
+                  ORDER BY  banned_at DESC ");
+
+  // Grab the data from the query
+  $dlog = mysqli_fetch_array($qlog);
+
+  // Prepare the data
+  $data['is_banned']        = ($dlog['l_unban']) ? 0 : 1;
+  $data['user_id']          = sanitize_output($dlog['banned_id']);
+  $data['username']         = sanitize_output($dlog['banned_nick']);
+  $temp                     = date_to_text($dlog['l_start'], 0, 1, $lang);
+  $data['start']            = sanitize_output($temp.' ('.time_since($dlog['l_start']).')');
+  $temp                     = ($dlog['l_end'] > time()) ? time_until($dlog['l_end']) : time_since($dlog['l_end']);
+  $data['end']              = sanitize_output(date_to_text($dlog['l_end'], 0, 1, $lang).' ('.$temp.')');
+  $temp                     = date_to_text($dlog['l_unban'], 0, 1, $lang);
+  $data['unban']            = ($dlog['l_unban']) ? sanitize_output($temp.' ('.time_since($dlog['l_unban']).')') : '-';
+  $data['days']             = time_days_elapsed($dlog['l_start'], $dlog['l_end'], 1);
+  $temp                     = ($dlog['l_unban']) ? $dlog['l_unban'] : time();
+  $data['served']           = time_days_elapsed($dlog['l_start'], $temp, 1);
+  $temp                     = maths_percentage_of($data['served'], $data['days']);
+  $temp                     = ($temp > 100) ? 100 : $temp;
+  $data['percent']          = number_display_format($temp, "percentage", 0);
+  $data['banned_by']        = sanitize_output($dlog['banner_nick']);
+  $data['banned_by_id']     = sanitize_output($dlog['banner_id']);
+  $data['ban_reason_en']    = ($dlog['l_reason_en']) ? sanitize_output($dlog['l_reason_en']) : '-';
+  $data['ban_reason_fr']    = ($dlog['l_reason_fr']) ? sanitize_output($dlog['l_reason_fr']) : '-';
+  $data['unbanned_by']      = sanitize_output($dlog['unbanner_nick']);
+  $data['unbanned_by_id']   = sanitize_output($dlog['unbanner_id']);
+  $data['unban_reason_en']  = ($dlog['l_ureason_en']) ? sanitize_output($dlog['l_ureason_en']) : '-';
+  $data['unban_reason_fr']  = ($dlog['l_ureason_fr']) ? sanitize_output($dlog['l_ureason_fr']) : '-';
 
   // Return the prepared data
   return $data;

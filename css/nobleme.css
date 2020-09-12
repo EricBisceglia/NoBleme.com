@@ -119,6 +119,8 @@ tbody.altc tr:nth-child(odd)         { background-color: #282828;               
 tbody.altc tr:nth-child(odd):hover   { background-color: #121212;                                  }
 tbody.altc tr                        { border-top: 0px;                                            }
 
+tr.row_separator_dark { border-bottom: 10px solid #121212; }
+
 label.label_inline { display: inline-block; font-weight: normal; margin-left: .2rem; }
 
 select.table_search, input.table_search { height: auto; padding: 0.2rem; font-weight: normal; width: 100%          ;
