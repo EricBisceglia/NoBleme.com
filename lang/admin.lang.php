@@ -93,6 +93,14 @@ ___('admin_ban_logs_ban_reason',    'EN', "Ban reason");
 ___('admin_ban_logs_ban_reason',    'FR', "Raison du<br>bannissement");
 ___('admin_ban_logs_unban_reason',  'EN', "Unban reason");
 ___('admin_ban_logs_unban_reason',  'FR', "Raison de fin<br>du bannissement");
+___('admin_ban_logs_status_banned', 'EN', "Active bans");
+___('admin_ban_logs_status_banned', 'FR', "Bannissements actifs");
+___('admin_ban_logs_status_free',   'EN', "Expired bans");
+___('admin_ban_logs_status_free',   'FR', "Bannissements finis");
+___('admin_ban_logs_info_found',    'EN', "{{1}} logs found in the ban history");
+___('admin_ban_logs_info_found',    'FR', "{{1}} entrées trouvées dans l'historique des bannissements");
+___('admin_ban_logs_info_none',     'EN', "No logs have been found in the ban history");
+___('admin_ban_logs_info_none',     'FR', "Aucune entrée trouvée dans l'historique des bannissements");
 
 
 // Ban log popin

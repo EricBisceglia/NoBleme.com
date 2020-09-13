@@ -121,6 +121,8 @@ tbody.altc tr                        { border-top: 0px;                         
 
 tr.row_separator_dark { border-bottom: 10px solid #121212; }
 
+img.valign_twolines { vertical-align: middle; margin-top: -1.5em; }
+
 label.label_inline { display: inline-block; font-weight: normal; margin-left: .2rem; }
 
 select.table_search, input.table_search { height: auto; padding: 0.2rem; font-weight: normal; width: 100%          ;
@@ -128,6 +130,7 @@ select.table_search, input.table_search { height: auto; padding: 0.2rem; font-we
 input.table_search[type='submit'], input.table_search[type='reset'] { font-size: 1.6rem; letter-spacing: 0.1rem;   }
 select.table_search:hover, input.table_search:hover, input.table_search[type='text']:hover:not([disabled]):not(:focus)
                                         { background-color: #454545;                                               }
+@media (max-width: 1024px) { select.table_search, input.table_search { font-size: 1.0rem; }                        }
 select.intext, input.intext             { background-color: #121212; border: 2px solid #232323                     ;
                                           color: #CACACA; padding: 0.2rem;                                         }
 input.intext                            { width: 150px;                                                            }

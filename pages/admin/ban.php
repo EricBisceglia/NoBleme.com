@@ -87,7 +87,12 @@ $banned_users = users_get_list('banned', 0, 0, 0, 0, 0, 1, 0, 0, $lang);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ban history
 
-$ban_logs = admin_ban_logs_get_list($lang);
+$ban_logs = admin_ban_logs_get_list(  $lang                                                         ,
+                                      form_fetch_element('admin_ban_logs_sorting_order', 'banned')  ,
+                                      form_fetch_element('admin_ban_logs_search_status', -1)        ,
+                                      form_fetch_element('admin_ban_logs_search_username')          ,
+                                      form_fetch_element('admin_ban_logs_search_banner')            ,
+                                      form_fetch_element('admin_ban_logs_search_unbanner')          );
 
 
 
@@ -272,12 +277,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php } ?>
 
     </tbody>
+
   </table>
 
 </div>
 
 
-<?php } if($ban_logs['rows']) { ?>
+<?php } ?>
 
 <hr>
 
@@ -287,141 +293,202 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('admin_ban_logs_title')?>
   </h2>
 
-  <table class="nowrap">
-    <thead>
+  <fieldset class="bigpadding_bot align_center">
+    <table class="nowrap">
+      <thead>
 
-      <tr class="uppercase">
-        <th>
-          <?=__('nickname')?>
-        </th>
-        <th>
-          <?=__('admin_ban_logs_start')?>
-        </th>
-        <th>
-          <?=__('admin_ban_logs_end')?>
-        </th>
-        <th class="desktop">
-          <?=__('admin_ban_logs_length')?>
-        </th>
-        <th  class="desktop">
-          <?=__('admin_ban_logs_served')?>
-        </th>
-        <th class="desktop">
-          <?=__('admin_ban_logs_percent')?>
-        </th>
-        <th>
-          <?=__('admin_ban_logs_banned_by')?>
-        </th>
-        <th>
-          <?=__('admin_ban_logs_unbanned_by')?>
-        </th>
-        <th class="desktop">
-          <?=__('admin_ban_logs_ban_reason')?>
-        </th>
-        <th class="desktop">
-          <?=__('admin_ban_logs_unban_reason')?>
-        </th>
-        <th>
-          <?=__('act')?>
-        </th>
-      </tr>
+        <tr class="uppercase">
+          <th>
+            <?=__('nickname')?>
+            <img class="smallicon pointer valign_middle spaced_right" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_ban_search_logs('username');">
+          </th>
+          <th>
+            <?=__('admin_ban_logs_start')?>
+            <img class="smallicon pointer valign_middle spaced_right" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_ban_search_logs('banned');">
+          </th>
+          <th>
+            <?=__('admin_ban_logs_end')?>
+            <img class="smallicon pointer valign_middle spaced_right" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_ban_search_logs('unbanned');">
+          </th>
+          <th class="desktop">
+            <?=__('admin_ban_logs_length')?>
+            <img class="smallicon pointer valign_twolines spaced_right" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_ban_search_logs('sentence');">
+          </th>
+          <th  class="desktop">
+            <?=__('admin_ban_logs_served')?>
+            <img class="smallicon pointer valign_twolines spaced_right" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_ban_search_logs('served');">
+          </th>
+          <th class="desktop">
+            <?=__('admin_ban_logs_percent')?>
+          </th>
+          <th>
+            <?=__('admin_ban_logs_banned_by')?>
+          </th>
+          <th>
+            <?=__('admin_ban_logs_unbanned_by')?>
+          </th>
+          <th class="desktop">
+            <?=__('admin_ban_logs_ban_reason')?>
+          </th>
+          <th class="desktop">
+            <?=__('admin_ban_logs_unban_reason')?>
+          </th>
+          <th>
+            <?=__('act')?>
+          </th>
+        </tr>
 
-    </thead>
-    <tbody class="align_center altc">
+        <tr>
+          <th>
+            <input type="hidden" class="hidden" value="banned" name="admin_ban_logs_sorting_order" id="admin_ban_logs_sorting_order">
+            <input type="text" class="table_search" name="admin_ban_logs_search_username" id="admin_ban_logs_search_username" value="" onkeyup="admin_ban_search_logs()">
+          </th>
+          <th colspan="2">
+            <select class="table_search" name="admin_ban_logs_search_status" id="admin_ban_logs_search_status" onchange="admin_ban_search_logs()">
+              <option value="-1">&nbsp;</option>
+              <option value="1"><?=__('admin_ban_logs_status_banned')?></option>
+              <option value="0"><?=__('admin_ban_logs_status_free')?></option>
+            </select>
+          </th>
+          <th colspan="3" class="desktop">
+            &nbsp;
+          </th>
+          <th>
+            <input type="text" class="table_search" name="admin_ban_logs_search_banner" id="admin_ban_logs_search_banner" value="" onkeyup="admin_ban_search_logs()">
+          </th>
+          <th>
+            <input type="text" class="table_search" name="admin_ban_logs_search_unbanner" id="admin_ban_logs_search_unbanner" value="" onkeyup="admin_ban_search_logs()">
+          </th>
+          <th colspan="2" class="desktop">
+            &nbsp;
+          </th>
+          <th>
+            &nbsp;
+          </th>
+        </tr>
 
-    <?php for($i = 0; $i < $ban_logs['rows']; $i++) { ?>
+      </thead>
+
+      <?php } ?>
+
+      <tbody class="align_center altc" id="admin_ban_logs_tbody">
 
       <tr>
-
-        <td>
-          <?=__link('todo_link?id='.$ban_logs[$i]['user_id'], $ban_logs[$i]['nickname'], 'bold noglow')?>
+        <?php if($ban_logs['rows']) { ?>
+        <td colspan="11" class="uppercase text_light dark bold">
+          <?=__('admin_ban_logs_info_found', 0, 0, 0, array($ban_logs['rows']))?>
         </td>
-
-        <td>
-          <div class="tooltip_container">
-            <?=$ban_logs[$i]['start']?>
-            <div class="tooltip dowrap">
-              <?=$ban_logs[$i]['start_full']?>
-            </div>
-          </div>
+        <?php } else { ?>
+        <td colspan="11" class="uppercase text_light red bold">
+          <?=__('admin_ban_logs_info_none')?>
         </td>
-
-        <td>
-          <?php if($ban_logs[$i]['end']) { ?>
-          <div class="tooltip_container">
-            <?=$ban_logs[$i]['end']?>
-            <div class="tooltip dowrap">
-              <?=$ban_logs[$i]['end_full']?>
-            </div>
-          </div>
-          <?php } else { ?>
-          <?=$ban_logs[$i]['end']?>
-          <?php } ?>
-        </td>
-
-        <td class="desktop">
-          <?=$ban_logs[$i]['duration']?>
-        </td>
-
-        <td  class="desktop">
-          <?=$ban_logs[$i]['served']?>
-        </td>
-
-        <td class="desktop">
-          <?=$ban_logs[$i]['served_percent']?>
-        </td>
-
-        <td>
-          <?=__link('todo_link?id='.$ban_logs[$i]['banned_by_id'], $ban_logs[$i]['banned_by'], 'bold noglow')?>
-        </td>
-
-        <td>
-          <?php if($ban_logs[$i]['unbanned_by']) { ?>
-          <?=__link('todo_link?id='.$ban_logs[$i]['unbanned_by_id'], $ban_logs[$i]['unbanned_by'], 'bold noglow')?>
-          <?php } ?>
-        </td>
-
-        <td class="desktop">
-          <?php if($ban_logs[$i]['ban_reason_full']) { ?>
-          <div class="tooltip_container">
-            <?=$ban_logs[$i]['ban_reason']?>
-            <div class="tooltip dowrap">
-              <?=$ban_logs[$i]['ban_reason_full']?>
-            </div>
-          </div>
-          <?php } else { ?>
-          <?=$ban_logs[$i]['ban_reason']?>
-          <?php } ?>
-        </td>
-
-        <td class="desktop">
-          <?php if($ban_logs[$i]['unban_reason_full']) { ?>
-          <div class="tooltip_container">
-            <?=$ban_logs[$i]['unban_reason']?>
-            <div class="tooltip dowrap">
-              <?=$ban_logs[$i]['unban_reason_full']?>
-            </div>
-          </div>
-          <?php } else { ?>
-          <?=$ban_logs[$i]['unban_reason']?>
-          <?php } ?>
-        </td>
-
-        <td>
-          <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log('.$ban_logs[$i]['id'].');')?>
-        </td>
-
+        <?php } ?>
       </tr>
 
-    <?php } ?>
+      <tr class="hidden">
+        <td colspan="11">
+          &nbsp;
+        </td>
+      </tr>
 
-    </tbody>
+      <?php for($i = 0; $i < $ban_logs['rows']; $i++) { ?>
 
-  </table>
+        <tr>
+
+          <td>
+            <?=__link('todo_link?id='.$ban_logs[$i]['user_id'], $ban_logs[$i]['nickname'], 'bold noglow')?>
+          </td>
+
+          <td>
+            <div class="tooltip_container">
+              <?=$ban_logs[$i]['start']?>
+              <div class="tooltip dowrap">
+                <?=$ban_logs[$i]['start_full']?>
+              </div>
+            </div>
+          </td>
+
+          <td>
+            <?php if($ban_logs[$i]['end']) { ?>
+            <div class="tooltip_container">
+              <?=$ban_logs[$i]['end']?>
+              <div class="tooltip dowrap">
+                <?=$ban_logs[$i]['end_full']?>
+              </div>
+            </div>
+            <?php } else { ?>
+            <?=$ban_logs[$i]['end']?>
+            <?php } ?>
+          </td>
+
+          <td class="desktop">
+            <?=$ban_logs[$i]['duration']?>
+          </td>
+
+          <td  class="desktop">
+            <?=$ban_logs[$i]['served']?>
+          </td>
+
+          <td class="desktop">
+            <?=$ban_logs[$i]['served_percent']?>
+          </td>
+
+          <td>
+            <?=__link('todo_link?id='.$ban_logs[$i]['banned_by_id'], $ban_logs[$i]['banned_by'], 'bold noglow')?>
+          </td>
+
+          <td>
+            <?php if($ban_logs[$i]['unbanned_by']) { ?>
+            <?=__link('todo_link?id='.$ban_logs[$i]['unbanned_by_id'], $ban_logs[$i]['unbanned_by'], 'bold noglow')?>
+            <?php } ?>
+          </td>
+
+          <td class="desktop">
+            <?php if($ban_logs[$i]['ban_reason_full']) { ?>
+            <div class="tooltip_container">
+              <?=$ban_logs[$i]['ban_reason']?>
+              <div class="tooltip dowrap">
+                <?=$ban_logs[$i]['ban_reason_full']?>
+              </div>
+            </div>
+            <?php } else { ?>
+            <?=$ban_logs[$i]['ban_reason']?>
+            <?php } ?>
+          </td>
+
+          <td class="desktop">
+            <?php if($ban_logs[$i]['unban_reason_full']) { ?>
+            <div class="tooltip_container">
+              <?=$ban_logs[$i]['unban_reason']?>
+              <div class="tooltip dowrap">
+                <?=$ban_logs[$i]['unban_reason_full']?>
+              </div>
+            </div>
+            <?php } else { ?>
+            <?=$ban_logs[$i]['unban_reason']?>
+            <?php } ?>
+          </td>
+
+          <td>
+            <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log('.$ban_logs[$i]['id'].');')?>
+            <?php if($is_admin) { ?>
+            <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete">
+            <?php } ?>
+          </td>
+
+        </tr>
+
+      <?php } ?>
+
+      </tbody>
+
+    <?php if(!page_is_fetched_dynamically()) { ?>
+
+    </table>
+
+  </fieldset>
 
 </div>
-
-<?php } ?>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */

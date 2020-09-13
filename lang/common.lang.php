@@ -284,6 +284,8 @@ ___('action',   'FR', "action");
 ___('action+',  'FR', "actions");
 ___('search',   'EN', "search");
 ___('search',   'FR', "chercher");
+___('sort',     'EN', "sort");
+___('sort',     'FR', "trier");
 ___('message',  'EN', "message");
 ___('message',  'FR', "message");
 
