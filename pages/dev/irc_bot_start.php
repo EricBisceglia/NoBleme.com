@@ -23,7 +23,8 @@ user_restrict_to_administrators($lang);
 /*********************************************************************************************************************/
 
 // Start the bot
-$start_error = irc_bot_start($path);
+$start_error = irc_bot_start( $path ,
+                              $lang );
 
 
 

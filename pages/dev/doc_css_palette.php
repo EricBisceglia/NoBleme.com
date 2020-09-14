@@ -1374,7 +1374,12 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="altc2">
+          <tr>
+            <td colspan="3" class="uppercase text_light dark bold align_center">
+              XX results found
+            </td>
+          </tr>
           <tr>
             <td>
               body text
@@ -1406,6 +1411,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
             <td>
               body text
             </td>
+            <td>
               &nbsp;
             </td>
           </tr>
@@ -1449,23 +1455,29 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
         &lt;tr>
 
           &lt;th>
-            &lt;select class="table_search" name="example_select">
+            &lt;select class="table_search" name="example_select" id="example_select">
               &lt;option value="0">Option&lt;/option>
             &lt;/select>
           &lt;/th>
 
           &lt;th>
-            &lt;input type="text" class="table_search" name="example_input" value="">
+            &lt;input type="text" class="table_search" name="example_input" id="example_input" value="">
           &lt;/th>
 
           &lt;th>
-            &lt;input type="submit" class="table_search" name="example_submit" value="Search">
+            &lt;input type="submit" class="table_search" name="example_submit" id="example_submit" value="Search">
           &lt;/th>
 
         &lt;/tr>
 
       &lt;/thead>
-      &lt;tbody>
+      &lt;tbody class="altc2">
+
+        &lt;tr>
+          &lt;td colspan="3" class="uppercase text_light dark bold align_center">
+            XX results found
+          &lt;/td>
+        &lt;/tr>
 
         &lt;tr>
           &lt;td>

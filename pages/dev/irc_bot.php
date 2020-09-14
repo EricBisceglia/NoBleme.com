@@ -51,7 +51,7 @@ $irc_bot_stop = form_fetch_element('irc_bot_stop', 0, 1);
 if($irc_bot_stop)
 {
   // Send the kill message to the bot
-  irc_bot_stop();
+  irc_bot_stop($lang);
 
   // Set the action selector on the stop the bot page
   $bot_action_selector = 'stop';
@@ -69,7 +69,8 @@ $irc_bot_silenced = $system_variables['irc_bot_is_silenced'];
 // Toggle the silenced status if requested
 if(isset($_POST['irc_bot_toggle_silence_mode']))
 {
-  $irc_bot_silenced                         = irc_bot_toggle_silence_mode($irc_bot_silenced);
+  $irc_bot_silenced                         = irc_bot_toggle_silence_mode(  $irc_bot_silenced ,
+                                                                            $lang             );
   $bot_action_selector                      = 'silence';
   $system_variables['irc_bot_is_silenced']  = system_variable_fetch('irc_bot_is_silenced');
 }
@@ -84,7 +85,8 @@ if(isset($_POST['dev_irc_bot_message_send']))
   irc_bot_admin_send_message( form_fetch_element('dev_irc_bot_message_body', '')    ,
                               form_fetch_element('dev_irc_bot_message_channel', '') ,
                               form_fetch_element('dev_irc_bot_message_user', '')    ,
-                              $path                                                 );
+                              $path                                                 ,
+                              $lang                                                 );
 
 
 
@@ -95,7 +97,8 @@ if(isset($_POST['dev_irc_bot_message_send']))
 if(isset($_POST['purge_line_number']))
 {
   irc_bot_purge_queued_message( form_fetch_element('purge_line_number', 0)  ,
-                                $path                                       );
+                                $path                                       ,
+                                $lang                                       );
   $bot_action_selector = 'upcoming';
 }
 
@@ -117,7 +120,8 @@ if($bot_action_selector == 'upcoming')
 if(isset($_POST['irc_bot_replay_log_id']))
 {
   irc_bot_replay_message_history_entry( form_fetch_element('irc_bot_replay_log_id', 0)  ,
-                                        $path                                           );
+                                        $path                                           ,
+                                        $lang                                           );
   $bot_action_selector = 'message_log';
 }
 
@@ -129,7 +133,8 @@ if(isset($_POST['irc_bot_replay_log_id']))
 
 if(isset($_POST['irc_bot_delete_log_id']))
 {
-  irc_bot_delete_message_history_entry( form_fetch_element('irc_bot_delete_log_id', 0));
+  irc_bot_delete_message_history_entry( form_fetch_element('irc_bot_delete_log_id', 0)  ,
+                                        $lang                                           );
   $bot_action_selector = 'message_log';
 }
 

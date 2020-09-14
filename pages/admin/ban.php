@@ -85,6 +85,16 @@ $banned_users = users_get_list('banned', 0, 0, 0, 0, 0, 1, 0, 0, $lang);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete a ban history log
+
+if(isset($_POST['admin_ban_logs_delete']))
+  admin_ban_logs_delete(  form_fetch_element('admin_ban_logs_delete') ,
+                          $lang                                       );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ban history
 
 $ban_logs = admin_ban_logs_get_list(  $lang                                                         ,
@@ -371,27 +381,21 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?php } ?>
 
-      <tbody class="align_center altc" id="admin_ban_logs_tbody">
+      <tbody class="align_center altc2" id="admin_ban_logs_tbody">
 
-      <tr>
-        <?php if($ban_logs['rows']) { ?>
-        <td colspan="11" class="uppercase text_light dark bold">
-          <?=__('admin_ban_logs_info_found', 0, 0, 0, array($ban_logs['rows']))?>
-        </td>
-        <?php } else { ?>
-        <td colspan="11" class="uppercase text_light red bold">
-          <?=__('admin_ban_logs_info_none')?>
-        </td>
-        <?php } ?>
-      </tr>
+        <tr>
+          <?php if($ban_logs['rows']) { ?>
+          <td colspan="11" class="uppercase text_light dark bold">
+            <?=__('admin_ban_logs_info_found', 0, 0, 0, array($ban_logs['rows']))?>
+          </td>
+          <?php } else { ?>
+          <td colspan="11" class="uppercase text_light red bold">
+            <?=__('admin_ban_logs_info_none')?>
+          </td>
+          <?php } ?>
+        </tr>
 
-      <tr class="hidden">
-        <td colspan="11">
-          &nbsp;
-        </td>
-      </tr>
-
-      <?php for($i = 0; $i < $ban_logs['rows']; $i++) { ?>
+        <?php for($i = 0; $i < $ban_logs['rows']; $i++) { ?>
 
         <tr>
 
@@ -472,7 +476,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <td>
             <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log('.$ban_logs[$i]['id'].');')?>
             <?php if($is_admin) { ?>
-            <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete">
+            <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_ban_delete_log('<?=$ban_logs[$i]['id']?>', '<?=__('admin_ban_logs_info_delete')?>')">
             <?php } ?>
           </td>
 

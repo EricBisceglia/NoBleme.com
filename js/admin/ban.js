@@ -50,3 +50,23 @@ function admin_ban_search_logs( sort_data = null )
   // Submit the search
   fetch_page('ban', 'admin_ban_logs_tbody', postdata);
 }
+
+
+
+
+/**
+ * Triggers the deletion of a ban history log.
+ *
+ * @param   {int}     log_id    The id of the ban history log.
+ * @param   {string}  message   The confirmation message which will be displayed.
+ *
+ * @returns {void}
+ */
+
+function admin_ban_delete_log(  log_id  ,
+                                message )
+{
+  // Make sure the user knows what they're doing and fetch the data
+  if(confirm(message))
+    fetch_page('ban', 'admin_ban_logs_tbody', 'admin_ban_logs_delete=' + log_id);
+}

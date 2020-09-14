@@ -603,3 +603,29 @@ function admin_ban_logs_get_one($log_id   = NULL  ,
   // Return the prepared data
   return $data;
 }
+
+
+
+
+/**
+ * Permanently deletes an entry in the ban history logs.
+ *
+ * @param   int           $log_id             The id of the ban history log.
+ * @param   string|null   $lang   (OPTIONAL)  The user's current language.
+ *
+ * @return  void
+*/
+
+function admin_ban_logs_delete( $log_id         ,
+                                $lang   = 'EN'  )
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
+  // Sanitize the log id
+  $log_id = sanitize($log_id, 'int', 0);
+
+  // Delete the log
+  query(" DELETE FROM logs_bans
+          WHERE       logs_bans.id = '$log_id' ");
+}

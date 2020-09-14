@@ -114,10 +114,13 @@
 .smallicon { height: 1.3rem; } }
 
 /************************************************* SPECIFIC CLASSES **************************************************/
-table.noresize                       { table-layout: fixed;                                        }
-tbody.altc tr:nth-child(odd)         { background-color: #282828;                                  }
-tbody.altc tr:nth-child(odd):hover   { background-color: #121212;                                  }
-tbody.altc tr                        { border-top: 0px;                                            }
+table.noresize { table-layout: fixed; }
+
+tbody.altc tr:nth-child(odd)         { background-color: #282828; }
+tbody.altc tr:nth-child(odd):hover   { background-color: #121212; }
+tbody.altc2 tr:nth-child(even)       { background-color: #282828; }
+tbody.altc2 tr:nth-child(even):hover { background-color: #121212; }
+tbody.altc tr, tbody.altc2 tr        { border-top: 0px;           }
 
 tr.row_separator_dark { border-bottom: 10px solid #121212; }
 

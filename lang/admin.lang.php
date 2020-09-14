@@ -101,6 +101,8 @@ ___('admin_ban_logs_info_found',    'EN', "{{1}} logs found in the ban history")
 ___('admin_ban_logs_info_found',    'FR', "{{1}} entrées trouvées dans l'historique des bannissements");
 ___('admin_ban_logs_info_none',     'EN', "No logs have been found in the ban history");
 ___('admin_ban_logs_info_none',     'FR', "Aucune entrée trouvée dans l'historique des bannissements");
+___('admin_ban_logs_info_delete',   'EN', "Confirm the permanent and irreversible deletion of this entry in the ban history logs");
+___('admin_ban_logs_info_delete',   'FR', "Confirmer la suppression permanente et irréversible de cette entrée de l\'historique des bannissements");
 
 
 // Ban log popin

@@ -15,13 +15,18 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Toggles the website's status between open and closed.
  *
- * @param   int   $website_status Whether an update is currently in progress
+ * @param   int           $website_status             Whether an update is currently in progress
+ * @param   string|null   $lang           (OPTIONAL)  The user's current language.
  *
  * @return  void
  */
 
-function dev_toggle_website_status($website_status)
+function dev_toggle_website_status( $website_status         ,
+                                    $lang           = 'EN'  )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Sanitize the data
   $website_status = sanitize($website_status, 'int', 0, 1);
 
@@ -159,23 +164,28 @@ function dev_versions_list()
  *
  * The version number will respect the SemVer v2.0.0 standard.
  *
- * @param   int       $major            The major version number.
- * @param   int       $minor            The minor version number.
- * @param   int       $patch            The patch number.
- * @param   string    $extension        The extension string (eg. beta, rc-1, etc.).
- * @param   bool|null $publish_activity Whether to publish an entry in recent activity.
- * @param   bool|null $notify_irc       Whether to send a notification on IRC.
+ * @param   int           $major                        The major version number.
+ * @param   int           $minor                        The minor version number.
+ * @param   int           $patch                        The patch number.
+ * @param   string        $extension                    The extension string (eg. beta, rc-1, etc.).
+ * @param   bool|null     $publish_activity             Whether to publish an entry in recent activity.
+ * @param   bool|null     $notify_irc                   Whether to send a notification on IRC.
+ * @param   string|null   $lang             (OPTIONAL)  The user's current language.
  *
- * @return  string|null                 NULL if all went according to plan, or an error string
+ * @return  string|null                                 NULL if all went according to plan, or an error string
  */
 
-function dev_versions_create( $major                ,
-                              $minor                ,
-                              $patch                ,
-                              $extension            ,
-                              $publish_activity = 1 ,
-                              $notify_irc       = 0 )
+function dev_versions_create( $major                    ,
+                              $minor                    ,
+                              $patch                    ,
+                              $extension                ,
+                              $publish_activity = 1     ,
+                              $notify_irc       = 0     ,
+                              $lang             = 'EN'  )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Check if the required files have been included
   require_included_file('dev.lang.php');
 
@@ -232,23 +242,28 @@ function dev_versions_create( $major                ,
 /**
  * Edits an entry in the website's version numbering history.
  *
- * @param   int         $di           The version's id.
- * @param   int         $major        The major version number.
- * @param   int         $minor        The minor version number.
- * @param   int         $patch        The patch number.
- * @param   string      $extension    The extension string (eg. beta, rc-1, etc.).
- * @param   string      $release_date The version's release date.
+ * @param   int           $di                       The version's id.
+ * @param   int           $major                    The major version number.
+ * @param   int           $minor                    The minor version number.
+ * @param   int           $patch                    The patch number.
+ * @param   string        $extension                The extension string (eg. beta, rc-1, etc.).
+ * @param   string        $release_date             The version's release date.
+ * @param   string|null   $lang         (OPTIONAL)  The user's current language.
  *
- * @return  string|null               NULL if all went according to plan, or an error string
+ * @return  string|null                             NULL if all went according to plan, or an error string
  */
 
-function dev_versions_edit( $id           ,
-                            $major        ,
-                            $minor        ,
-                            $patch        ,
-                            $extension    ,
-                            $release_date )
+function dev_versions_edit( $id                   ,
+                            $major                ,
+                            $minor                ,
+                            $patch                ,
+                            $extension            ,
+                            $release_date         ,
+                            $lang         = 'EN'  )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Check if the required files have been included
   require_included_file('dev.lang.php');
 
@@ -295,13 +310,18 @@ function dev_versions_edit( $id           ,
 /**
  * Deletes an entry in the website's version numbering history.
  *
- * @param   int         $version_id   The version number's id.
+ * @param   int           $version_id             The version number's id.
+ * @param   string|null   $lang       (OPTIONAL)  The user's current language.
  *
- * @return  string|int                The version number, or 0 if the version does not exist.
+ * @return  string|int                            The version number, or 0 if the version does not exist.
  */
 
-function dev_versions_delete($version_id)
+function dev_versions_delete( $version_id         ,
+                              $lang       = 'EN'  )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Sanitize the data
   $version_id = sanitize($version_id, 'int', 0);
 
@@ -343,13 +363,18 @@ function dev_versions_delete($version_id)
 /**
  * Starts the IRC bot.
  *
- * @param   string|null $path (OPTIONAL)  The path to the root of the website.
+ * @param   string|null   $path (OPTIONAL)  The path to the root of the website.
+ * @param   string|null   $lang (OPTIONAL)  The user's current language.
  *
- * @return  string|null                   A string if an error happened, nothing if the loop is running as intended.
+ * @return  string|null                     A string if an error happened, nothing if the loop is running as intended.
  */
 
-function irc_bot_start($path = './../../')
+function irc_bot_start( $path = './../../'  ,
+                        $lang = 'EN'        )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Check if the required files have been included
   require_included_file('dev.lang.php');
 
@@ -465,11 +490,16 @@ function irc_bot_start($path = './../../')
 /**
  * Stops the IRC bot.
  *
+ * @param   string|null   $lang   (OPTIONAL)  The user's current language.
+ *
  * @return  void
  */
 
-function irc_bot_stop()
+function irc_bot_stop( $lang = 'EN' )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Execute order 66
   irc_bot_send_message('quit');
 
@@ -488,13 +518,18 @@ function irc_bot_stop()
 /**
  * Toggles the silent IRC bot mode on and off.
  *
- * @param   bool  $silenced The current status of silent mode.
+ * @param   bool          $silenced             The current status of silent mode.
+ * @param   string|null   $lang     (OPTIONAL)  The user's current language.
  *
- * @return  bool            The new status of silent mode.
+ * @return  bool                                The new status of silent mode.
  */
 
-function irc_bot_toggle_silence_mode($silenced)
+function irc_bot_toggle_silence_mode( $silenced         ,
+                                      $lang     = 'EN'  )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Decide which mode to toggle to
   $silenced = ($silenced) ? 0 : 1;
 
@@ -520,10 +555,11 @@ function irc_bot_toggle_silence_mode($silenced)
 /**
  * Sends a message through the IRC bot from the admin interface.
  *
- * @param   string      $body                 The message to send on IRC.
- * @param   string|null $channel  (OPTIONAL)  If the string isn't empty, send the message to a channel instead.
- * @param   string|null $user     (OPTIONAL)  If the string isn't empty, send the message to a user instead.
- * @param   string|null $path     (OPTIONAL)  The path to the root of the website.
+ * @param   string        $body                 The message to send on IRC.
+ * @param   string|null   $channel  (OPTIONAL)  If the string isn't empty, send the message to a channel instead.
+ * @param   string|null   $user     (OPTIONAL)  If the string isn't empty, send the message to a user instead.
+ * @param   string|null   $path     (OPTIONAL)  The path to the root of the website.
+ * @param   string|null   $lang     (OPTIONAL)  The user's current language.
  *
  * @return  void
  */
@@ -531,8 +567,12 @@ function irc_bot_toggle_silence_mode($silenced)
 function irc_bot_admin_send_message(  $body                   ,
                                       $channel  = ''          ,
                                       $user     = ''          ,
-                                      $path     = './../../'  )
+                                      $path     = './../../'  ,
+                                      $lang     = 'EN'        )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Stop here if there is no message to send
   if(!$body)
     return;
@@ -602,15 +642,20 @@ function irc_bot_get_message_queue($path = './../../')
 /**
  * Purges a message from the IRC bot's upcoming message queue.
  *
- * @param   int         $line_id          The line number that must be purged - or the whole file if this is set to -1.
- * @param   string|null $path (OPTIONAL)  The path to the root of the website.
+ * @param   int           $line_id              The line number that must be purged - whole file if this is set to -1.
+ * @param   string|null   $path     (OPTIONAL)  The path to the root of the website.
+ * @param   string|null   $lang     (OPTIONAL)  The user's current language.
  *
  * @return  void
  */
 
-function irc_bot_purge_queued_message(  $line_id  ,
-                                        $path     )
+function irc_bot_purge_queued_message(  $line_id                ,
+                                        $path     = './../../'  ,
+                                        $lang     = 'EN'        )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Check if the required files have been included
   require_included_file('dev.lang.php');
 
@@ -747,13 +792,18 @@ function irc_bot_get_message_history( $search_channel = NULL  ,
  *
  * @param   int         $log_id   The ID of the history log to replay.
  * @param   string|null $path     The path to the root of the website.
+ * @param   string|null   $lang   (OPTIONAL)  The user's current language.
  *
  * @return  void
  */
 
 function irc_bot_replay_message_history_entry(  $log_id               ,
-                                                $path   = './../../'  )
+                                                $path   = './../../'  ,
+                                                $lang   = 'EN'        )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Sanitize the log id
   $log_id = sanitize($log_id, 'int', 0);
 
@@ -784,13 +834,18 @@ function irc_bot_replay_message_history_entry(  $log_id               ,
 /**
  * Deletes an entry from the IRC bot's message history.
  *
- * @param   int   $log_id   The ID of the history log to delete.
+ * @param   int           $log_id             The ID of the history log to delete.
+ * @param   string|null   $lang   (OPTIONAL)  The user's current language.
  *
  * @return  void
  */
 
-function irc_bot_delete_message_history_entry($log_id)
+function irc_bot_delete_message_history_entry(  $log_id         ,
+                                                $lang   = 'EN'  )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Sanitize the log id
   $log_id = sanitize($log_id, 'int', 0);
 
