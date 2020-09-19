@@ -443,7 +443,7 @@ EOT
 
 // Flood check
 ___('error_flood_login',  'EN', "You can only do this action while logged into your account");
-___('error_flood_login',  'FR', "Vous devez être connecté pour effectuer cette action");
+___('error_flood_login',  'FR', "Vous devez vous connecter à votre compte pour effectuer cette action");
 ___('error_flood_wait',   'EN', "You must wait a bit between each action on the website<br><br>Try doing it again in 10 seconds");
 ___('error_flood_wait',   'FR', "Vous devez attendre quelques secondes entre chaque action<br><br>Réessayez dans 10 secondes");
 
@@ -689,9 +689,6 @@ ___('submenu_user_edit_delete',       'FR', "Supprimer mon compte");
 ___('submenu_user_logout_logout',     'EN', "Log out of this account");
 ___('submenu_user_logout_logout',     'FR', "Se déconnecter du compte");
 
-___('submenu_user_logged_out',        'EN', "You are not logged in");
-___('submenu_user_logged_out',        'FR', "Vous n'êtes pas connecté");
-
 
 // Submenu: Admin
 ___('submenu_admin_activity',       'EN', "Mod tools");
@@ -807,7 +804,7 @@ If you have lost access to your account (forgotten username, forgotten password,
 EOT
 );
 ___('users_lost_access_solution', 'FR', <<<EOT
-Si vous avez perdu l'accès à votre compte (pseudonyme oublié, mot de passe oublié, ou autre), la seule façon de récupérer cet accès est d'aller sur le {{link+++|todo_link|chat IRC NoBleme|bold|1|{{1}}}} et d'y demander à un·e {{link+++|todo_link|administrateur·ice|bold|1|{{1}}}} de manuellement remettre à zéro le mot de passe de votre compte. Pas d'inquiétude pour ce qui est de l'usurpation d'identité, un processus strict de vérification est en place et devra être respecté avant que l'administrateur·ice puisse remettre à zéro votre mot de passe et vous rendre l'accès à votre compte perdu.
+Si vous avez perdu l'accès à votre compte (pseudonyme oublié, mot de passe oublié, ou autre), la seule façon de récupérer cet accès est d'aller sur le {{link+++|todo_link|chat IRC NoBleme|bold|1|{{1}}}} afin d'y demander à {{link+++|todo_link|l'équipe administrative|bold|1|{{1}}}} de manuellement remettre à zéro le mot de passe de votre compte. Pas d'inquiétude pour ce qui est de l'usurpation d'identité, un processus strict de vérification est en place et devra être respecté avant que l'administration puisse remettre à zéro votre mot de passe et vous rendre l'accès à votre compte perdu.
 EOT
 );
 
@@ -871,11 +868,11 @@ ___('coc', 'FR', <<<EOT
     Les situations tendues doivent se régler en privé avant de trop escalader, au risque de se faire bannir.
   </li>
   <li>
-  Les trolls et autres provocateurs gratuits pourront être bannis sans sommation s'ils abusent trop.
+    Les trolls et autres provocateurs gratuits pourront être bannis sans sommation s'ils abusent trop.
   </li>
 </ul>
 <p>
-Il est normal que des tensions apparaissent dans des lieux où des personnalités et opinions variées coexistent. Toutefois, si votre comportement ou votre vocabulaire empêchent d'autres personnes de passer un bon moment, nous devrons vous exclure. Soyons bienveillants, et nous en bénéficierons tou·te·s.
+Il est normal que des tensions apparaissent dans des lieux où des personnalités et opinions variées coexistent. Toutefois, si votre comportement ou votre vocabulaire empêchent d'autres personnes de passer un bon moment, nous devrons vous exclure. La bonne ambiance de la communauté dépend de la bienveillance collective de ses membres.
 </p>
 EOT
 );

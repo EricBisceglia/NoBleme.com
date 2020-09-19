@@ -18,11 +18,11 @@ ___('users_register_title',     'FR', "Créer un compte");
 ___('users_register_subtitle',  'EN', "Code of conduct to follow when using NoBleme");
 ___('users_register_subtitle',  'FR', "Code de conduite à respecter sur NoBleme");
 ___('users_register_coc',       'EN', <<<EOD
-We want to make sure that all users of the website understand that, even though there are few rules and little repression on NoBleme, there still exists a code of conduct that should be followed by all. In order to ensure that everyone reads it at least once, you will be asked some questions relating to NoBleme's code of conduct during the process of creating your account.
+We want to make sure that all users of the website understand that, even though there are few rules and little moderation on NoBleme, there still exists a code of conduct that should be followed when interacting with other members of the community. In order to ensure that everyone reads it at least once, you will be asked a few simple questions relating to NoBleme's code of conduct during the account creation process.
 EOD
 );
 ___('users_register_coc',       'FR', <<<EOD
-Nous voulons nous assurer que tous les utilisat·eur·ice·s du site comprennent que, même s'il y a très peu de règles ou de répression sur NoBleme, il existe tout de même un code de conduite que tous doivent respecter. Afin de vérifier que tout le monde le lise au moins une fois, quelques questions vous serons posées sur ce code de conduite lors de la création de votre compte.
+Nous voulons nous assurer que toutes les persionnes qui comptent créer un compte comprennent que, même s'il y a très peu de règles ou de modération sur NoBleme, il existe tout de même un code de conduite qui doit être respecté lors de vos interactions avec la communauté du site. Afin de vérifier que tout le monde le lise au moins une fois, quelques questions simples vous serons posées sur ce code de conduite lors de la création de votre compte.
 EOD
 );
 
@@ -55,13 +55,13 @@ ___('users_register_form_question_3_silly',     'FR', "J'étale ça en public");
 ___('users_register_form_question_3_good',      'EN', "Try my best to solve it privately");
 ___('users_register_form_question_3_good',      'FR', "Je tente de résoudre ça en privé");
 ___('users_register_form_question_4',           'EN', "I'm being aggressive towards others, what will happen to me?");
-___('users_register_form_question_4',           'FR', "Je suis aggressif avec les autres, qu'est-ce qui va m'arriver ?");
+___('users_register_form_question_4',           'FR', "J'agresse quelqu'un d'autre, qu'est-ce qui va m'arriver ?");
 ___('users_register_form_question_4_banned',    'EN', "I will get banned");
 ___('users_register_form_question_4_banned',    'FR', "Je me fais bannir");
 ___('users_register_form_question_4_freedom',   'EN', "Nothing, free speech protects me!");
 ___('users_register_form_question_4_freedom',   'FR', "La liberté d'expression me protège !");
 ___('users_register_form_captcha',              'EN', "Prove that you are a human by copying this number");
-___('users_register_form_captcha',              'FR', "Prouvez que vous êtes humain en recopiant ce nombre");
+___('users_register_form_captcha',              'FR', "Prouvez que vous n'êtes pas un robot en recopiant ce nombre");
 ___('users_register_form_captcha_alt',          'EN', "You must turn off your image blocker to see this captcha !");
 ___('users_register_form_captcha_alt',          'FR', "Vous devez désactiver votre bloqueur d'image pour voir ce captcha !");
 ___('users_register_form_submit',               'EN', "Create my account");
@@ -69,8 +69,6 @@ ___('users_register_form_submit',               'FR', "Créer mon compte");
 
 
 // Error messages
-___('users_register_error_no_email',            'EN', "You must specify an email");
-___('users_register_error_no_email',            'FR', "Vous devez saisir une adresse e-mail");
 ___('users_register_error_passwords',           'EN', "You must enter the same password twice");
 ___('users_register_error_passwords',           'FR', "Vous devez saisir deux fois le même mot de passe");
 ___('users_register_error_password_length',     'EN', "Your password is too short (8 characters minimum)");
@@ -88,7 +86,7 @@ ___('users_register_error_nickname_illegal',    'FR', "Le pseudonyme choisi cont
 ___('users_register_error_nickname_characters', 'EN', "Your username can only be made from non accentuated latin letters and numbers");
 ___('users_register_error_nickname_characters', 'FR', "Votre pseudonyme ne peut être composé que de lettres non accentuées et de chiffres");
 ___('users_register_error_nickname_taken',      'EN', "The chosen username is already taken by another user");
-___('users_register_error_nickname_taken',      'FR', "Le pseudonyme choisi est déjà utilisé par un autre utilisateur");
+___('users_register_error_nickname_taken',      'FR', "Le pseudonyme choisi est déjà utilisé par quelqu'un d'autre");
 
 
 // Welcome private message
@@ -99,7 +97,7 @@ ___('users_register_private_message',       'EN', <<<EOT
 
 Now that you have registered, why not join the community where it is most active: on [url={{1}}todo_link]the IRC chat server[/url].
 
-If you are curious what is being active on the website recently, why not check out the [url={{1}}pages/nobleme/activity]recent activity page[/url] - that's what it's here for!
+If you are curious about what is happening on the website and within its community, why not check out the [url={{1}}pages/nobleme/activity]recent activity page[/url] - that's what it's here for!
 
 Enjoy your stay on NoBleme!
 If you have any questions, feel free to reply to this message.
@@ -113,7 +111,7 @@ ___('users_register_private_message',       'FR', <<<EOT
 
 Maintenant que vous avez rejoint le site, pourquoi ne pas rejoindre la communauté là où elle est active : sur [url={{1}}todo_link]le serveur de discussion IRC[/url].
 
-Si vous êtes curieux de ce qui se passe sur le site en ce moment, la page [url={{1}}pages/nobleme/activity]d'activité récente[/url] est là exprès pour ça.
+Si vous voulez suivre ce qui est publié sur le site et ce qui se passe au sein de sa communauté, vous pouvez le faire via [url={{1}}pages/nobleme/activity]l'activité récente[/url].
 
 Bon séjour sur NoBleme !
 Si vous avez la moindre question, n'hésitez pas à répondre à ce message.
@@ -140,7 +138,7 @@ You have successfully registered an account on NoBleme. You can now use the logi
 EOT
 );
 ___('users_welcome_body',   'FR', <<<EOT
-Votre compte a bien été crée. Vous pouvez maintenant utiliser le formulaire de connexion ci-dessus afin de vous connecter sur votre nouveau compte. Bienvenue parmi les membres de NoBleme !
+Votre compte a bien été crée. Vous pouvez maintenant utiliser le formulaire de connexion ci-dessus afin de vous connecter sur votre nouveau compte. Bienvenue dans la communauté NoBlemeuse !
 EOT
 );
 
@@ -161,7 +159,7 @@ This page lists the most recently visited page of all users that were active on 
 EOD
 );
 ___('users_online_header_intro',  'FR', <<<EOD
-Cette page recense l'activité la plus récente des visiteurs qui ont fréquenté NoBleme ce mois-ci. Dans le cas des invités (visiteurs non connectés), seuls les 1000 plus récents sont affichés, et de petits surnoms stupides leur sont aléatoirement assignés. Si vous craignez que cette page permette à des gens de vous traquer ou n'êtes juste pas confortable avec le fait d'avoir votre activité listée publiquement, vous pouvez retirer votre compte de la liste via vos {{link|todo_link|options de vie privée}}.
+Cette page recense la dernière activité des visiteurs de NoBleme ce mois-ci. Dans le cas des invités (visiteurs non connectés), seuls les 1000 entrées les plus récentes sont affichées, et de petits surnoms stupides leur sont aléatoirement assignés. Si vous craignez que cette page permette à des gens de vous traquer ou n'êtes juste pas confortable avec le fait d'avoir votre activité listée publiquement, vous pouvez retirer votre compte de la liste via vos {{link|todo_link|options de vie privée}}.
 EOD
 );
 ___('users_online_header_colors', 'EN', <<<EOD
@@ -179,8 +177,8 @@ Afin de les distinguer, les visiteurs suivent un code couleur :
 <ul class="nopadding">
   <li>Les invités n'ont pas de formattage spécifique.</li>
   <li>{{link|todo_link|Les membres du site}} apparaissent en <span class="bold">gras</span>.</li>
-  <li>{{link|todo_link|Les modérateur·ices}} ont un arrière-plan <span class="text_orange bold">orange.</span></li>
-  <li>{{link|todo_link|Les administrateur·ices}} ont un arrière-plan <span class="text_red glow bold">rouge.</span></li>
+  <li>{{link|todo_link|La modération}} apparait en <span class="text_orange bold">orange.</span></li>
+  <li>{{link|todo_link|L'administration}} apparait en <span class="text_red glow bold">rouge.</span></li>
 </ul>
 EOD
 );
@@ -222,7 +220,7 @@ Being banned from NoBleme means that you are unable to take part in any form of 
 EOD
 );
 ___('users_banned_header',        'FR', <<<EOD
-Être banni·e de NoBleme signifie que vous ne pouvez plus interagir sur le site depuis votre compte tant que vous n'avez pas purgé l'intégralité de votre peine. Si vous voulez vous servir du site avant la fin de votre bannissement, vous pouvez toujours vous déconnecter de votre compte et utiliser le site en tant qu'invité.
+Se faire bannir de NoBleme signifie que vous ne pouvez plus interagir sur le site depuis votre compte tant que vous n'avez pas purgé l'intégralité de votre peine. Si vous voulez vous servir du site avant la fin de votre bannissement, vous pouvez toujours vous déconnecter de votre compte et utiliser le site en tant qu'invité.
 EOD
 );
 ___('users_banned_header_evason', 'EN', <<<EOD
@@ -230,7 +228,7 @@ Take note that <span class="bold underlined">ban evasion will get you IP banned<
 EOD
 );
 ___('users_banned_header_evason', 'FR', <<<EOD
-Attention, <span class="bold underlined">tentez de contourner le bannissement et vous serez banni·e par adresse IP</span> : si vous essayez de défier ce bannissement en créant un nouveau compte, vous vous retrouverez privé·e de la possibilité même d'utiliser le site en tant qu'invité. Si vous n'êtes pas content·e de votre bannissement, la seule chose que vous pouvez faire est tenter de faire appel de la décision de vous bannir. Continuez à lire cette page si vous désirez savoir comment faire appel de votre bannissement.
+Attention, <span class="bold underlined">tentez de contourner le bannissement et vous vous ferez bannir par adresse IP</span> : si vous essayez de défier ce bannissement en créant un nouveau compte, vous vous perdrez la possibilité même d'utiliser le site en tant qu'invité. Si vous n'êtes pas d'accord avec votre bannissement, la seule chose que vous pouvez faire est tenter de faire appel de la décision de vous bannir. Continuez à lire cette page si vous désirez savoir comment faire appel de votre bannissement.
 EOD
 );
 
@@ -245,7 +243,7 @@ You have been "soft" banned (not IP banned).<br>
 EOD
 );
 ___('users_banned_details_body',      'FR', <<<EOD
-Vous avez été banni le <span class="text_red">{{1}}</span> pour <span class="text_red">{{2}}</span> jours.<br>
+Vous vous êtes fait bannir le <span class="text_red">{{1}}</span> pour <span class="text_red">{{2}}</span> jours.<br>
 Le bannissement prendra fin le <span class="text_red">{{3}}</span>, heure de Paris (<span class="text_red">{{4}}</span>)<br>
 Il s'agit d'un bannissement "doux" (pas d'un bannissement par filtrage IP).<br>
 EOD
@@ -269,7 +267,7 @@ If you believe that you have been unfairly banned, or that you have been fairly 
 EOD
 );
 ___('users_banned_appeal_explanation',  'FR', <<<EOD
-Si vous considéré que vous avez été banni·e pour une raison injuste, ou que votre bannissement est juste mais que vous en avez tiré des leçons, une procédure d'appel est possible. Cette procédure n'est pas automatisée : il s'agit d'une décision humaine prise par des l'équipe administrative, et se fait via le serveur de chat IRC de NoBleme. Si votre appel est accepté, alors votre peine pourra être réduite ou même totalement annulée. Voici les instructions à suivre pour faire appel de votre bannissement :
+Si vous considéré que votre bannissement est injuste, ou que votre bannissement est juste mais que vous en avez tiré des leçons, une procédure d'appel est possible. Cette procédure n'est pas automatisée : il s'agit d'une décision humaine prise par des l'équipe administrative, et se fait via le serveur de chat IRC de NoBleme. Si votre appel est accepté, alors votre peine pourra être réduite ou même totalement annulée. Voici les instructions à suivre pour faire appel de votre bannissement :
 EOD
 );
 ___('users_banned_appeal_instructions', 'EN', <<<EOD
@@ -285,12 +283,12 @@ EOD
 );
 ___('users_banned_appeal_instructions', 'FR', <<<EOD
 <ul>
-  <li>Déconnectez-vous de votre compte (sinon vous ne pourrez pas utiliser le site vu que vous êtes banni·e)</li>
+  <li>Déconnectez-vous de votre compte (sinon vous ne pourrez pas utiliser le site)</li>
   <li>Allez sur la section « Serveur de chat IRC » du site</li>
   <li>Suivez les instructions afin de rejoindre le chat IRC de NoBleme</li>
-  <li>Une fois sur le chat IRC, demandez à parler à un·e administrateur·ice (soyez patient·e si personne ne répond)</li>
-  <li>L'administrateur·ice discutera avec vous de votre bannissement</li>
-  <li>Vous serez immédiatement informé·e de la décision d'annuler ou non votre peine</li>
+  <li>Une fois sur le chat IRC, demandez à parler à l'administration (faites preuve de patience si personne ne répond immédiatement)</li>
+  <li>L'administration discutera avec vous de votre bannissement</li>
+  <li>Une décision non négociable sera rendue immédiatement sur votre peine</li>
 </ul>
 EOD
 );

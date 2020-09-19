@@ -139,7 +139,7 @@ function admin_ban_user(  $banner_id                    ,
   $ban_extra_fr     = ($ban_reason_fr_raw) ? '('.$ban_reason_fr_raw.')' : '';
   $ban_extra_mod    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
   irc_bot_send_message("$banned_nickname_raw has been banned from the website $ban_duration_en[$ban_length] $ban_extra_en", 'english');
-  irc_bot_send_message("$banned_nickname_raw a été banni·e du site $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
+  irc_bot_send_message("$banned_nickname_raw s'est fait bannir du site $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
   irc_bot_send_message("$banner_nickname_raw has banned $banned_nickname_raw $ban_duration_en[$ban_length] $ban_extra_mod", 'mod');
 }
 
@@ -269,7 +269,7 @@ function admin_ban_user_edit( $banner_id                    ,
     $ban_extra_fr     = ($ban_reason_fr_raw) ? '('.$ban_reason_fr_raw.')' : '';
     $ban_extra_mod    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
     irc_bot_send_message("$banned_nickname_raw has had their ban updated to $ban_duration_en[$ban_length] $ban_extra_en", 'english');
-    irc_bot_send_message("La date de fin du bannissement de $banned_nickname_raw a changé  : $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
+    irc_bot_send_message("La date de fin du bannissement de $banned_nickname_raw a changé : $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
     irc_bot_send_message("$banner_nickname_raw edited the ban of $banned_nickname_raw $ban_duration_mod[$ban_length] $ban_extra_mod", 'mod');
   }
 

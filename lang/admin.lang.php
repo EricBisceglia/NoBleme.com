@@ -21,7 +21,7 @@ ___('admin_ban_title', 'FR', "Bannissements d'utilisateurs");
 ___('admin_ban_add_title',        'EN', "Ban an user");
 ___('admin_ban_add_title',        'FR', "Bannir un utilisateur");
 ___('admin_ban_add_nickname',     'EN', "User's nickname");
-___('admin_ban_add_nickname',     'FR', "Pseudonyme de l'utilisateur");
+___('admin_ban_add_nickname',     'FR', "Pseudonyme du compte à bannir");
 ___('admin_ban_add_reason_fr',    'EN', "Ban justification in french (optional)");
 ___('admin_ban_add_reason_fr',    'FR', "Raison du bannissement en français (optionnel)");
 ___('admin_ban_add_reason_en',    'EN', "Ban justification (optional)");
@@ -46,15 +46,15 @@ ___('admin_ban_add_button',       'FR', "Bannir");
 ___('admin_ban_add_error_no_nickname',  'EN', "No nickname has been specified");
 ___('admin_ban_add_error_no_nickname',  'FR', "Il est nécessaire de préciser un pseudonyme");
 ___('admin_ban_add_error_wrong_user',   'EN', "The specified username does not exist");
-___('admin_ban_add_error_wrong_user',   'FR', "Ce pseudonyme n'est associé à aucun·e utilisat·eur·ice");
+___('admin_ban_add_error_wrong_user',   'FR', "Ce pseudonyme n'est associé à aucun compte");
 ___('admin_ban_add_error_self',         'EN', "You can not ban yourself");
 ___('admin_ban_add_error_self',         'FR', "Vous ne pouvez pas vous bannir vous-même");
 ___('admin_ban_add_error_moderator',    'EN', "Moderators are not allowed to ban administrators");
-___('admin_ban_add_error_moderator',    'FR', "Les modérateur·ices ne peuvent pas bannir les administrateur·ices");
+___('admin_ban_add_error_moderator',    'FR', "La modération ne peut pas bannir l'administration");
 ___('admin_ban_add_error_length',       'EN', "You must specify a ban length");
 ___('admin_ban_add_error_length',       'FR', "Il est nécessaire de spécifier la durée du bannissement");
 ___('admin_ban_add_error_already',      'EN', "This user is already banned! Edit their ban in the table below instead");
-___('admin_ban_add_error_already',      'FR', "Membre déjà banni : vous pouvez modifier son bannissement dans la liste ci-dessous");
+___('admin_ban_add_error_already',      'FR', "Compte déjà banni : vous pouvez modifier son bannissement dans la liste ci-dessous");
 
 
 // Current bans list
@@ -164,9 +164,9 @@ ___('admin_ban_delete_submit',          'FR', "Débannir le compte");
 
 // Edit or delete a ban: Errors
 ___('admin_ban_edit_error_id',      'EN', "This user ID does not exist or is not banned.");
-___('admin_ban_edit_error_id',      'FR', "Cet ID d'utilisateur n'existe pas ou n'est pas banni.");
+___('admin_ban_edit_error_id',      'FR', "Cet ID de compte n'existe pas ou n'est pas banni.");
 ___('admin_ban_edit_error_rights',  'EN', "Only administrators can ban or unban website staff.");
-___('admin_ban_edit_error_rights',  'FR', "Seuls les administrateurs peuvent bannir ou débannir des membres de l'équipe administrative.");
+___('admin_ban_edit_error_rights',  'FR', "Seule l'administration peut bannir ou débannir des membres de l'équipe administrative.");
 
 
 // Banned private message

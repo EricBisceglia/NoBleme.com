@@ -157,10 +157,6 @@ function users_get_list(  $sort_by          = ''    ,
     $temp                   = ($row['u_mod']) ? ' bold text_orange noglow' : $temp;
     $temp                   = ($row['u_admin']) ? ' bold text_red' : $temp;
     $data[$i]['css']        = $temp;
-
-    // End any served bans that slipped through the system
-    if($row['u_ban_end'] < time())
-      user_unban($row['u_id'], 0, 1);
   }
 
   // Add the number of rows to the data
@@ -459,7 +455,7 @@ function users_create_account(  $nickname                       ,
 
   // IRC message
   irc_bot_send_message("A new member registered on the website: $nickname_raw - ".$GLOBALS['website_url']."todo_link", "english");
-  irc_bot_send_message("Nouveau membre enregistré sur le site : $nickname_raw - ".$GLOBALS['website_url']."todo_link", "french");
+  irc_bot_send_message("Nouveau compte crée sur le site : $nickname_raw - ".$GLOBALS['website_url']."todo_link", "french");
 
   // Welcome private message
   private_message_send(__('users_register_private_message_title'), __('users_register_private_message', null, 0, 0, array($path)), $account_id, 1);

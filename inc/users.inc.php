@@ -57,7 +57,7 @@ if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Next up, check if the user is connected and what his access rights are
+// Next up, check if the user is connected and what their access rights are
 
 // Figure out if the user is connected or not according to session data
 $is_logged_in = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : 0;
@@ -74,7 +74,7 @@ else
   // Sanitize the user id, just in case
   $id_user = sanitize($is_logged_in, 'int', 0);
 
-  // Go look for his access rights
+  // Go look for their access rights
   $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator  AS 'm_admin' ,
                                                 users.is_moderator      AS 'm_mod'
                                         FROM    users
@@ -84,7 +84,7 @@ else
   $is_admin     = $drights['m_admin'];
   $is_moderator = ($is_admin || $drights['m_mod']) ? 1 : 0;
 
-  // If the user's account doesn't exist, log him out and set all permissions to 0
+  // If the user's account doesn't exist, log them out and set all permissions to 0
   if($drights['m_admin'] === null)
   {
     user_log_out();
@@ -294,7 +294,7 @@ function user_is_logged_in()
 
 
 /**
- * Logs the user out of his account.
+ * Logs the user out of their account.
  *
  * @return void
  */
@@ -336,7 +336,7 @@ function user_get_id()
 
 
 /**
- * Returns a user's nickname from his id.
+ * Returns a user's nickname from their id.
  *
  * @param   int|null   $user_id  (OPTIONAL) If no id is specified, it will try to return the nickname of current user.
  *
@@ -714,7 +714,7 @@ function user_settings_privacy()
   $privacy_youtube  = 0;
   $privacy_trends   = 0;
 
-  // If the user is logged in, fetch his third party privacy settings
+  // If the user is logged in, fetch their third party privacy settings
   if(user_is_logged_in())
   {
     // Sanitize the user id

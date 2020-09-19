@@ -88,7 +88,7 @@ function log_activity_parse(  $path                 ,
     $return['css']  = 'text_green bold';
     $return['href'] = $path.'todo_link?id='.$userid;
     $return['EN']   = $nickname." registered on NoBleme!";
-    $return['FR']   = $nickname." s'est inscrit·e sur NoBleme !";
+    $return['FR']   = $nickname." a crée son compte sur NoBleme !";
   }
 
   else if($type === 'users_profile_edit')
@@ -123,7 +123,7 @@ function log_activity_parse(  $path                 ,
     $return['EN']   = $nickname.' has been banned '.$temp[$amount].$temp2;
     $temp           = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
     $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = $nickname.' a été banni·e '.$temp[$amount].$temp2;
+    $return['FR']   = $nickname.' s\'est fait bannir '.$temp[$amount].$temp2;
   }
   else if($type == 'users_banned')
   {
@@ -174,7 +174,7 @@ function log_activity_parse(  $path                 ,
     $return['css']  = 'text_red bold';
     $return['href'] = $path.'todo_link?id='.$userid;
     $return['EN']   = $nickname.' has been unbanned';
-    $return['FR']   = $nickname.' a été débanni·e';
+    $return['FR']   = $nickname.' s\'est fait débannir';
   }
   else if($type == 'users_unbanned')
   {
@@ -197,7 +197,7 @@ function log_activity_parse(  $path                 ,
     $return['css']  = 'orange bold';
     $return['href'] = $path.'todo_link';
     $return['EN']   = $nickname." has joined the administrative team as a moderator";
-    $return['FR']   = $nickname." a rejoint l'équipe administrative en tant que modérateur·ice";
+    $return['FR']   = $nickname." a rejoint l'équipe de modération de NoBleme";
   }
 
   else if($type === 'users_rights_administrator')
@@ -205,7 +205,7 @@ function log_activity_parse(  $path                 ,
     $return['css']  = 'red bold';
     $return['href'] = $path.'todo_link';
     $return['EN']   = $nickname." is now a website administrator";
-    $return['FR']   = $nickname." est maintenant un·e administrateur·ice du site";
+    $return['FR']   = $nickname." a rejoint l'équipe d'administration de NoBleme";
   }
 
 

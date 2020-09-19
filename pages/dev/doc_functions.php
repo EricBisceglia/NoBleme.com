@@ -1041,7 +1041,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           user_get_nickname()
         </td>
         <td class="align_left">
-          Returns a user's nickname from his id.
+          Returns a user's nickname from their id.
         </td>
       </tr>
       <tr>
@@ -1175,7 +1175,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           user_log_out()
         </td>
         <td class="align_left">
-          Logs the user out of his account.
+          Logs the user out of their account.
         </td>
       </tr>
 
