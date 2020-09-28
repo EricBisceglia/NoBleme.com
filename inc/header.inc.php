@@ -822,7 +822,7 @@ $javascripts .= '
           <?=__link('pages/dev/versions', __('submenu_admin_versions'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_admin_scheduler'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/dev/scheduler', __('submenu_admin_scheduler'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 

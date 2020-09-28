@@ -295,6 +295,8 @@ ___('error',    'EN', "error");
 ___('error',    'FR', "erreur");
 ___('error+',   'EN', "errors");
 ___('error+',   'FR', "erreurs");
+___('id',       'EN', "ID");
+___('id',       'FR', "ID");
 ___('option',   'EN', "option");
 ___('option+',  'EN', "options");
 ___('option',   'FR', "option");
@@ -303,6 +305,8 @@ ___('query',    'EN', "query");
 ___('query+',   'EN', "queries");
 ___('query',    'FR', "requête");
 ___('query+',   'FR', "requêtes");
+___('type',     'EN', "type");
+___('type',     'FR', "type");
 ___('version',  'EN', "version");
 ___('version',  'FR', "version");
 

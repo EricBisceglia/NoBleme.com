@@ -267,6 +267,28 @@ ___('irc_bot_bytes_troll',            'FR', "Troll (contraste brutal)");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                  TASK  SCHEDULER                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('dev_scheduler_title',  'EN', "Scheduled tasks");
+___('dev_scheduler_title',  'FR', "Tâches planifiées");
+
+// Task list
+___('dev_scheduler_task_execution',   'EN', "Execution");
+___('dev_scheduler_task_execution',   'FR', "Exécution");
+___('dev_scheduler_task_description', 'EN', "Description");
+___('dev_scheduler_task_description', 'FR', "Description");
+___('dev_scheduler_task_report',      'EN', "Report");
+___('dev_scheduler_task_report',      'FR', "Résultat");
+___('dev_scheduler_task_results',     'EN', "{{1}} results found   //   {{2}} past logs   //   {{3}} future tasks");
+___('dev_scheduler_task_results',     'FR', "{{1}} résultats trouvés   //   {{2}} logs d'exécution   //   {{3}} tâches futures");
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                   DOCUMENTATION                                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

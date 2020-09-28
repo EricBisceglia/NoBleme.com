@@ -1,12 +1,10 @@
-
-
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';              # Core
-include_once './../../inc/functions_time.inc.php';        # Time
+include_once './../../inc/functions_time.inc.php';        # Time management
 include_once './../../inc/functions_mathematics.inc.php'; # Maths
 include_once './../../inc/functions_numbers.inc.php';     # Number formatting
 include_once './../../actions/admin.act.php';             # Actions

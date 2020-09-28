@@ -859,6 +859,78 @@ function irc_bot_delete_message_history_entry(  $log_id         ,
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                  TASK  SCHEDULER                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+/**
+ * Returns a list of all task scheduler executions, past and future.
+ *
+ * @return  array   An array containing the scheduler logs and upcoming tasks.
+ */
+
+function dev_scheduler_list()
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+
+  // Fetch all past and present scheduler executions
+  $qscheduler = query(" SELECT    'future'                          AS 's_exec' ,
+                                  system_scheduler.id               AS 's_id'   ,
+                                  system_scheduler.planned_at       AS 's_date' ,
+                                  system_scheduler.task_id          AS 's_tid'  ,
+                                  system_scheduler.task_type        AS 's_type' ,
+                                  system_scheduler.task_description AS 's_desc' ,
+                                  ''                                AS 's_report'
+                        FROM      system_scheduler
+                        UNION
+                        SELECT    'past'                            AS 's_exec' ,
+                                  logs_scheduler.id                 AS 's_id'   ,
+                                  logs_scheduler.happened_at        AS 's_date' ,
+                                  logs_scheduler.task_id            AS 's_tid'  ,
+                                  logs_scheduler.task_type          AS 's_type' ,
+                                  logs_scheduler.task_description   AS 's_desc' ,
+                                  logs_scheduler.execution_report   AS 's_report'
+                        FROM      logs_scheduler
+                        ORDER BY  s_date DESC ");
+
+  // Reset the counters
+  $data['rows_past']    = 0;
+  $data['rows_future']  = 0;
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qscheduler); $i++)
+  {
+    $data['rows_past']       += ($row['s_exec'] == 'past') ? 1 : 0;
+    $data['rows_future']     += ($row['s_exec'] == 'future') ? 1 : 0;
+    $data[$i]['type']         = $row['s_exec'];
+    $data[$i]['id']           = $row['s_id'];
+    $temp                     = ($row['s_exec'] == 'past') ? time_since($row['s_date']) : time_until($row['s_date']);
+    $data[$i]['date']         = sanitize_output($temp);
+    $data[$i]['task_id']      = $row['s_tid'];
+    $data[$i]['task_type']    = sanitize_output($row['s_type']);
+    $data[$i]['description']  = sanitize_output(string_truncate($row['s_desc'], 20, '...'));
+    $data[$i]['fdescription'] = (strlen($row['s_desc']) > 20) ? sanitize_output($row['s_desc']) : '';
+    $data[$i]['report']       = sanitize_output(string_truncate($row['s_report'], 35, '...'));
+    $data[$i]['freport']      = (strlen($row['s_report']) > 35) ? sanitize_output($row['s_report']) : '';
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('dev.act.php', 'dev_scheduler_list', $data));
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                   DOCUMENTATION                                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
