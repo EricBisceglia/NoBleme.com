@@ -212,6 +212,44 @@ query(" INSERT INTO logs_activity
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Task scheduler
+
+// Determine the number of scheduled tasks to generate
+$random = mt_rand(100,200);
+for($i = 0; $i < $random; $i++)
+{
+  // Generate random data
+  $finished     = (mt_rand(0, 3) > 0) ? 1 : 0;
+  $planned_at   = ($finished) ? mt_rand(1111239420, time()) : mt_rand(time(), time() + 100000000);
+  $task_id      = mt_rand(0, 10000);
+  $description  = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
+  $report       = ($finished && (mt_rand(0, 3) > 1)) ? ucfirst(fixtures_generate_data('sentence', 1, 4, 1)) : '';
+
+  // Generate the scheduled tasks
+  if($finished)
+    query(" INSERT INTO logs_scheduler
+            SET         logs_scheduler.happened_at      = '$planned_at'   ,
+                        logs_scheduler.task_id          = '$task_id'      ,
+                        logs_scheduler.task_type        = 'fixtures'      ,
+                        logs_scheduler.task_description = '$description'  ,
+                        logs_scheduler.execution_report = '$report'       ");
+  else
+    query(" INSERT INTO system_scheduler
+            SET         system_scheduler.planned_at       = '$planned_at'   ,
+                        system_scheduler.task_id          = '$task_id'      ,
+                        system_scheduler.task_type        = 'fixtures'      ,
+                        system_scheduler.task_description = '$description'  ");
+}
+
+// Output progress
+echo "<tr><td>Generated&nbsp;</td><td style=\"text-align:right\">$random</td><td>task scheduler entries</td></tr>";
+ob_flush();
+flush();
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                       USERS                                                       */
@@ -456,7 +494,7 @@ for($i = 0; $i < $random; $i++)
                                         WHERE   users.nickname LIKE '$username' "));
 
   // Ensure nicknames don't get generated twice
-  if(!$dcheck['id'])
+  if(!isset($dcheck['id']))
   {
     // Generate the users
     query(" INSERT INTO users

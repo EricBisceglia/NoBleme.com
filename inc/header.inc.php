@@ -130,7 +130,7 @@ if(isset($page_url) && !isset($error_mode))
 
   // Define the current view count (used in the footer for metrics)
   $dpageviews = mysqli_fetch_array($qpageviews);
-  $pageviews  = ($dpageviews["p_views"]) ? ($dpageviews["p_views"] + 1) : 1;
+  $pageviews  = (isset($dpageviews["p_views"])) ? ($dpageviews["p_views"] + 1) : 1;
 
   // If the page exists, increment its view count (unless user is an admin)
   if(!$is_admin && mysqli_num_rows($qpageviews) != 0)
@@ -142,7 +142,7 @@ if(isset($page_url) && !isset($error_mode))
             WHERE   stats_pages.page_url        LIKE  '$page_url_sanitized' ");
 
   // If it doesn't, create the page and give it its first pageview
-  else if(!$dpageviews["p_views"])
+  else if(!isset($dpageviews["p_views"]))
     query(" INSERT INTO stats_pages
             SET         stats_pages.page_url        = '$page_url_sanitized' ,
                         stats_pages.page_name_en    = '$page_en_sanitized'  ,
