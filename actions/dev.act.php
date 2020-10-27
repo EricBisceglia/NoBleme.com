@@ -938,23 +938,28 @@ function dev_scheduler_list()
 /**
  * Generates the source code of an icon, ready for pasting to the clipboard.
  *
- * @param   string      $name                 The name of the icon.
- * @param   string      $alt_text (OPTIONAL)  The alt text for the icon.
- * @param   string|null $size     (OPTIONAL)  The size of the icon ('normal', 'small').
+ * @param   string      $name                                 The name of the icon.
+ * @param   string|null $title                                The translation which will be used for the image's title.
+ * @param   bool|null   $title_is_a trasnslation  (OPTIONAL)  Whether the title is the entered string or a translation.
+ * @param   string      $alt_text                 (OPTIONAL)  The alt text for the icon.
+ * @param   string|null $size                     (OPTIONAL)  The size of the icon ('normal', 'small').
  *
- * @return  string                            The source code ready to be sent to the clipboard.
+ * @return  string                                            The source code ready to be sent to the clipboard.
  */
 
-function dev_doc_icon_to_clipboard( $name                 ,
-                                    $alt_text = 'X'       ,
-                                    $size     = 'normal'  )
+function dev_doc_icon_to_clipboard( $name                               ,
+                                    $title                  = ''        ,
+                                    $title_is_a_translation = 0         ,
+                                    $alt_text               = 'X'       ,
+                                    $size                   = 'normal'  )
 {
   // Prepare the data
+  $title  = ($title_is_a_translation) ? "&lt;?=__('$title')?>" : $title ;
   $class  = ($size == 'small') ? 'smallicon' : 'icon';
   $name   = ($size == 'small') ? $name.'_small' : $name;
 
   // Assemble the string
-  $icon = sanitize_output_javascript('<img class="'.$class.' valign_middle" src="<?=$path?>img/icons/'.$name.'.svg" alt="'.$alt_text.'">');
+  $icon = sanitize_output_javascript('<img class="'.$class.' valign_middle" src="<?=$path?>img/icons/'.$name.'.svg" alt="'.$alt_text.'" title="'.$title.'">');
 
   // Return the assembled string
   return $icon;

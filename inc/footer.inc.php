@@ -16,8 +16,8 @@ $pageviews = isset($pageviews) ? __('footer_pageviews').$pageviews.__('times', $
 $version = system_get_current_version_number('full');
 
 // Load time and query count
-$load_time  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3).'s';
-$metrics    = __('footer_loadtime').$load_time.__('with', 1, 1, 1).$GLOBALS['query'].__('query', $GLOBALS['query'], 1);
+$load_time  = round(microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 3);
+$metrics    = __('footer_loadtime').$load_time.'s'.__('with', 1, 1, 1).$GLOBALS['query'].__('query', $GLOBALS['query'], 1);
 
 // Copyright ending date
 $copyright_date = date('Y');

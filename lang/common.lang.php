@@ -246,22 +246,55 @@ ___(':', 'FR', " :");
 
 
 // Buttons and labels
-___('submit',   'EN', "submit");
-___('submit',   'FR', "envoyer");
-___('add',      'EN', "add");
-___('add',      'FR', "créer");
-___('edit',     'EN', "edit");
-___('edit',     'FR', "modifier");
-___('delete',   'EN', "delete");
-___('delete',   'FR', "supprimer");
-___('details',  'EN', "details");
-___('details',  'FR', "détails");
-___('modify',   'EN', "modify");
-___('modify',   'FR', "modifier");
-___('reset',    'EN', "reset");
-___('reset',    'FR', "ràz");
-___('reason',   'EN', "reason");
-___('reason',   'FR', "raison");
+___('add',        'EN', "add");
+___('add',        'FR', "créer");
+___('confirm',    'EN', "confirm");
+___('confirm',    'FR', "confirmer");
+___('copy',       'EN', "copy");
+___('copy',       'FR', "copier");
+___('delete',     'EN', "delete");
+___('delete',     'FR', "supprimer");
+___('duplicate',  'EN', "duplicate");
+___('duplicate',  'FR', "dupliquer");
+___('details',    'EN', "details");
+___('details',    'FR', "détails");
+___('edit',       'EN', "edit");
+___('edit',       'FR', "modifier");
+___('help',       'EN', "help");
+___('help',       'FR', "aide");
+___('image',      'EN', "image");
+___('image',      'FR', "image");
+___('info',       'EN', "info");
+___('info',       'FR', "info");
+___('link',       'EN', "link");
+___('link',       'FR', "lien");
+___('maximize',   'EN', "maximize");
+___('maximize',   'FR', "agrandir");
+___('minimize',   'EN', "minimize");
+___('minimize',   'FR', "réduire");
+___('modify',     'EN', "modify");
+___('modify',     'FR', "modifier");
+___('more',       'EN', "more");
+___('more',       'FR', "plus");
+___('refresh',    'EN', "refresh");
+___('refresh',    'FR', "recharger");
+___('rss',        'EN', "RSS feed");
+___('rss',        'FR', "flux RSS");
+___('reset',      'EN', "reset");
+___('reset',      'FR', "ràz");
+___('reason',     'EN', "reason");
+___('reason',     'FR', "raison");
+___('settings',   'EN', "settings");
+___('settings',   'FR', "réglages");
+___('stats',      'EN', "stats");
+___('stats',      'FR', "statistiques");
+___('submit',     'EN', "submit");
+___('submit',     'FR', "envoyer");
+___('upload',     'EN', "upload");
+___('upload',     'FR', "téléverser");
+___('warning',    'EN', "warning");
+___('warning',    'FR', "avertissement");
+
 
 
 // Common words

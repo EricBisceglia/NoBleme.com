@@ -560,8 +560,8 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
   </div>
 
   <div>
-    <button name="dev_palette_input_button"><img class="icon valign_middle pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete"></button>
-    <button name="dev_palette_input_button_disabled" disabled><img class="icon valign_middle pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete"></button>
+    <button name="dev_palette_input_button"><img class="icon valign_middle pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=__('delete')?>"></button>
+    <button name="dev_palette_input_button_disabled" disabled><img class="icon valign_middle pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=__('delete')?>"></button>
   </div>
 
   <div class="padding_top">
@@ -704,16 +704,16 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
   <h1 class="smallpadding_bot">
     &lt;h1> with icons
-    <img class="icon pointer" src="<?=$path?>img/icons/delete.svg" alt="X" title="Delete">
-    <img class="icon pointer" src="<?=$path?>img/icons/settings.svg" alt="S" title="Settings">
-    <img class="icon pointer" src="<?=$path?>img/icons/rss.svg" alt="R" title="RSS feed">
+    <img class="icon pointer" src="<?=$path?>img/icons/delete.svg" alt="X" title="<?=__('delete')?>">
+    <img class="icon pointer" src="<?=$path?>img/icons/settings.svg" alt="S" title="<?=__('settings')?>">
+    <img class="icon pointer" src="<?=$path?>img/icons/rss.svg" alt="R" title="<?=__('rss')?>">
   </h1>
 
   <pre class="dev_pre_code" id="dev_palette_h1_icons" onclick="to_clipboard('', 'dev_palette_h1_icons', 1);">&lt;h1>
   Title with icons
-  &lt;img class="icon pointer" src="&lt;?=$path?>img/icons/delete.svg" alt="X" title="Delete">
-  &lt;img class="icon pointer" src="&lt;?=$path?>img/icons/settings.svg" alt="S" title="Settings">
-  &lt;img class="icon pointer" src="&lt;?=$path?>img/icons/rss.svg" alt="R" title="RSS feed">
+  &lt;img class="icon pointer" src="&lt;?=$path?>img/icons/delete.svg" alt="X" title="&lt;?=__('delete')?>">
+  &lt;img class="icon pointer" src="&lt;?=$path?>img/icons/settings.svg" alt="S" title="&lt;?=__('settings')?>">
+  &lt;img class="icon pointer" src="&lt;?=$path?>img/icons/rss.svg" alt="R" title="&lt;?=__('rss')?>">
 &lt;/h1></pre>
 
 </div>
@@ -743,7 +743,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           add
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/add.svg" alt="+" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('add', '+')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/add.svg" alt="+" title="<?=__('add')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('add', 'add', 0, '+')?>');">
         </td>
         <td>
           &nbsp;
@@ -754,10 +754,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           copy
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/copy.svg" alt="C" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('copy', 'C')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/copy.svg" alt="C" title="<?=__('copy')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('copy', 'copy', 1, 'C')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/copy_small.svg" alt="C" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('copy', 'C', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/copy_small.svg" alt="C" title="<?=__('copy')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('copy', 'copy', 1, 'C', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -765,10 +765,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           delete
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/delete.svg" alt="X" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('delete', 'X')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/delete.svg" alt="X" title="<?=__('delete')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('delete', 'delete', 1, 'X')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('delete', 'X', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=__('delete')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('delete', 'delete', 1, 'X', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -776,10 +776,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           duplicate
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/duplicate.svg" alt="D" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('duplicate', 'D')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/duplicate.svg" alt="D" title="<?=__('duplicate')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('duplicate', 'duplicate', 1, 'D')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/duplicate_small.svg" alt="D" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('duplicate', 'D', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/duplicate_small.svg" alt="D" title="<?=__('duplicate')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('duplicate', 'duplicate', 1, 'D', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -787,10 +787,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           edit
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/edit.svg" alt="E" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('edit', 'E')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/edit.svg" alt="E" title="<?=__('edit')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('edit', 'edit', 1, 'E')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/edit_small.svg" alt="E" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('edit', 'E', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/edit_small.svg" alt="E" title="<?=__('edit')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('edit', 'edit', 1, 'E', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -798,10 +798,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           help
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/help.svg" alt="?" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('help', '?')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/help.svg" alt="?" title="<?=__('help')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('help', 'help', 1, '?')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/help_small.svg" alt="?" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('help', '?', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/help_small.svg" alt="?" title="<?=__('help')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('help', 'help', 1, '?', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -809,10 +809,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           image
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/image.svg" alt="P" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('image', 'P')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/image.svg" alt="P" title="<?=__('image')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('image', 'image', 1, 'P')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/image_small.svg" alt="P" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('image', 'P', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/image_small.svg" alt="P" title="<?=__('image')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('image', 'image', 1, 'P', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -820,10 +820,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           info
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/info.svg" alt="I" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('info', 'I')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/info.svg" alt="I" title="<?=__('info')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('info', 'info', 1, 'I')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/info_small.svg" alt="I" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('info', 'I', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/info_small.svg" alt="I" title="<?=__('info')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('info', 'info', 1, 'I', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -831,10 +831,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           link
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/link.svg" alt="L" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('link', 'L')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/link.svg" alt="L" title="<?=__('link')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('link', 'link', 1, 'L')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/link_small.svg" alt="L" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('link', 'L', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/link_small.svg" alt="L" title="<?=__('link')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('link', 'link', 1, 'L', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -842,10 +842,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           link_external
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/link_external.svg" alt="L" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('link_external', 'L')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/link_external.svg" alt="L" title="<?=__('link')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('link_external', 'link', 1, 'L')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/link_external_small.svg" alt="L" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('link_external', 'L', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/link_external_small.svg" alt="L" title="<?=__('link')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('link_external', 'link', 1, 'L', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -853,7 +853,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           maximize
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/maximize.svg" alt="M" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('maximize', 'M')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/maximize.svg" alt="M" title="<?=__('maximize')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('maximize', 'maximize', 1, 'M')?>');">
         </td>
         <td>
           &nbsp;
@@ -864,7 +864,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           minimize
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/minimize.svg" alt="M" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('minimize', 'M')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/minimize.svg" alt="M" title="<?=__('minimize')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('minimize', 'minimize', 1, 'M')?>');">
         </td>
         <td>
           &nbsp;
@@ -875,7 +875,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           message
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/message.svg" alt="M" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('message', 'M')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/message.svg" alt="M" title="<?=__('message')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('message', 'message', 1, 'M')?>');">
         </td>
         <td>
           &nbsp;
@@ -886,10 +886,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           more
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/more.svg" alt="+" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('more', '+')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/more.svg" alt="+" title="<?=__('more')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('more', 'more', 1, '+')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/more_small.svg" alt="+" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('more', '+', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/more_small.svg" alt="+" title="<?=__('more')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('more', 'more', 1, '+', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -897,10 +897,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           refresh
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/refresh.svg" alt="R" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('refresh', 'R')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/refresh.svg" alt="R" title="<?=__('refresh')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('refresh', 'refresh', 1, 'R')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/refresh_small.svg" alt="R" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('refresh', 'R', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="<?=__('refresh')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('refresh', 'refresh', 1, 'R', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -908,7 +908,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           rss
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/rss.svg" alt="R" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('rss', 'R')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/rss.svg" alt="R" title="<?=__('rss')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('rss', 'rss', 1, 'R')?>');">
         </td>
         <td>
           &nbsp;
@@ -919,10 +919,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           settings
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/settings.svg" alt="S" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('settings', 'S')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/settings.svg" alt="S" title="<?=__('settings')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('settings', 'settings', 1, 'S')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/settings_small.svg" alt="S" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('settings', 'S', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/settings_small.svg" alt="S" title="<?=__('settings')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('settings', 'settings', 1, 'S', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -930,7 +930,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           settings_gear
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/settings_gear.svg" alt="S" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('settings_gear', 'S')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/settings_gear.svg" alt="S" title="<?=__('settings')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('settings_gear', 'settings', 1, 'S')?>');">
         </td>
         <td>
           &nbsp;
@@ -941,10 +941,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           sort_down
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/sort_down.svg" alt="S" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('sort_down', 'S')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/sort_down.svg" alt="S" title="<?=__('sort')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('sort_down', 'sort', 1, 'S')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/sort_down_small.svg" alt="S" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('sort_down', 'S', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/sort_down_small.svg" alt="S" title="<?=__('sort')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('sort_down', 'sort', 1, 'S', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -952,10 +952,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           sort_up
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/sort_up.svg" alt="S" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('sort_up', 'S')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/sort_up.svg" alt="S" title="<?=__('sort')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('sort_up', 'sort', 1, 'S')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/sort_up_small.svg" alt="S" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('sort_up', 'S', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/sort_up_small.svg" alt="S" title="<?=__('sort')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('sort_up', 'sort', 1, 'S', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -963,10 +963,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           stats
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/stats.svg" alt="S" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('stats', 'S')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/stats.svg" alt="S" title="<?=__('stats')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('stats', 'stats', 1, 'S')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/stats_small.svg" alt="S" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('stats', 'S', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/stats_small.svg" alt="S" title="<?=__('stats')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('stats', 'stats', 1, 'S', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -974,7 +974,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           upload
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/upload.svg" alt="U" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('upload', 'U')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/upload.svg" alt="U" title="<?=__('upload')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('upload', 'upload', 1, 'U')?>');">
         </td>
         <td>
           &nbsp;
@@ -985,10 +985,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           user
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/user.svg" alt="U" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user', 'U')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/user.svg" alt="U" title="<?=__('user')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user', 'user', 1, 'U')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/user_small.svg" alt="U" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user', 'U', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/user_small.svg" alt="U" title="<?=__('user')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user', 'user', 1, 'U', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -996,10 +996,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           user_add
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/user_add.svg" alt="+" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user_add', '+')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/user_add.svg" alt="+" title="<?=__('add')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user_add', 'add', 1, '+')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/user_add_small.svg" alt="+" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user_add', '+', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/user_add_small.svg" alt="+" title="<?=__('add')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user_add', 'add', 1, '+', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -1007,10 +1007,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           user_confirm
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/user_confirm.svg" alt="O" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user_confirm', 'O')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/user_confirm.svg" alt="O" title="<?=__('confirm')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user_confirm', 'confirm', 1, 'O')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/user_confirm_small.svg" alt="O" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user_confirm', 'O', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/user_confirm_small.svg" alt="O" title="<?=__('confirm')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user_confirm', 'confirm', 1, 'O', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -1018,10 +1018,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           user_delete
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/user_delete.svg" alt="X" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user_delete', 'X')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/user_delete.svg" alt="X" title="<?=__('delete')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user_delete', 'delete', 1, 'X')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/user_delete_small.svg" alt="X" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user_delete', 'X', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/user_delete_small.svg" alt="X" title="<?=__('delete')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('user_delete', 'delete', 1, 'X', 'small')?>');">
         </td>
       </tr>
       <tr>
@@ -1029,7 +1029,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           warning
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/warning.svg" alt="!" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('warning', '!')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/warning.svg" alt="!" title="<?=__('warning')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('warning', 'warning', 1, '!')?>');">
         </td>
         <td>
           &nbsp;
@@ -1040,10 +1040,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           x
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/x.svg" alt="X" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('x', 'X')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/x.svg" alt="X" title="X" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('x', 'X', 0, 'X')?>');">
         </td>
         <td>
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/x_small.svg" alt="X" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('x', 'X', 'small')?>');">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/x_small.svg" alt="X" title="X" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('x', 'X', 0, 'X', 'small')?>');">
         </td>
       </tr>
 
@@ -1348,11 +1348,11 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           <tr>
             <th>
               HEADER
-              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>">
+              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>">
             </th>
             <th>
               HEADER
-              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>">
+              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>">
             </th>
             <th>
               ICONS
@@ -1388,9 +1388,9 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
               body text
             </td>
             <td class="align_center">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="Details">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="Refresh">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="<?=__('details')?>">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="<?=__('refresh')?>">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=__('delete')?>">
             </td>
           </tr>
           <tr>
@@ -1401,7 +1401,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
               body text
             </td>
             <td class="align_center">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="Details">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="<?=__('details')?>">
             </td>
           </tr>
           <tr>
@@ -1423,8 +1423,8 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
               body text
             </td>
             <td class="align_center">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="Details">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="<?=__('details')?>">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=__('delete')?>">
             </td>
           </tr>
         </tbody>
@@ -1441,11 +1441,11 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
         &lt;tr>
           &lt;th>
             HEADER
-            &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="&lt;?=string_change_case(__('sort'), 'initials')?>">
+            &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="&lt;?=__('sort')?>">
           &lt;/th>
           &lt;th>
             HEADER
-            &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="&lt;?=string_change_case(__('sort'), 'initials')?>">
+            &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="&lt;?=__('sort')?>">
           &lt;/th>
           &lt;th>
             ICONS
@@ -1487,8 +1487,8 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
             body
           &lt;/td>
           &lt;td class="align_center">
-            &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/help_small.svg" alt="?" title="Details">
-            &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/delete_small.svg" alt="X" title="Delete">
+            &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/help_small.svg" alt="?" title="&lt;?=__('details')?>">
+            &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/delete_small.svg" alt="X" title="&lt;?=__('delete')?>">
           &lt;/td>
         &lt;/tr>
 

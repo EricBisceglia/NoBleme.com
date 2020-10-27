@@ -9,7 +9,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // The following global variables are your local settings - set them accordingly, otherwise NoBleme will not work
 // Duplicate this file, then remove the .DEFAULT (rename it to "configuration.inc.php") and fill up these variables:
 
-$GLOBALS['website_url']     = 'http://example.com/';  // URL of the website root
+$GLOBALS['website_url']     = 'https://example.com/'; // URL of the website root
 $GLOBALS['domain_name']     = 'example.com';          // Domain name on which the website is being used
 $GLOBALS['mysql_host']      = '127.0.0.1';            // MySQL server address
 $GLOBALS['mysql_user']      = 'user';                 // MySQL user login
@@ -18,8 +18,8 @@ $GLOBALS['salt_key']        = '$6$somestring$';       // String used by crypt() 
 $GLOBALS['extra_folders']   = 0;                      /* If NoBleme URL is not at server root, this is the number
                                                       /  of folders between the root and NoBleme. example:
                                                       /  if NoBleme is at http://example.com/ leave this as 0
-                                                      /  if NoBleme is at http://example.com/nobleme/, set this to 1
-                                                      /  at http://example.com/domains/nobleme/, set this to 2, etc. */
+                                                      /  if NoBleme is at http://example.com/example/, set this to 1
+                                                      /  at http://example.com/domains/example/, set this to 2, etc. */
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -120,7 +120,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <tr>
             <td colspan="6" class="uppercase text_light dark bold align_center">
-              <?=__('dev_scheduler_task_results', 0, 0, 0, array($scheduler_tasks['rows'], $scheduler_tasks['rows_past'], $scheduler_tasks['rows_future']))?>
+              <?=__('dev_scheduler_task_results', 0, 0, 0, array($scheduler_tasks['rows'], $scheduler_tasks['rows_future'], $scheduler_tasks['rows_past']))?>
             </td>
           </tr>
 

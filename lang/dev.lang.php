@@ -282,8 +282,8 @@ ___('dev_scheduler_task_description', 'EN', "Description");
 ___('dev_scheduler_task_description', 'FR', "Description");
 ___('dev_scheduler_task_report',      'EN', "Report");
 ___('dev_scheduler_task_report',      'FR', "Résultat");
-___('dev_scheduler_task_results',     'EN', "{{1}} results found   //   {{2}} past logs   //   {{3}} future tasks");
-___('dev_scheduler_task_results',     'FR', "{{1}} résultats trouvés   //   {{2}} logs d'exécution   //   {{3}} tâches futures");
+___('dev_scheduler_task_results',     'EN', "{{1}} results found   //   {{2}} future tasks   //   {{3}} past logs");
+___('dev_scheduler_task_results',     'FR', "{{1}} résultats trouvés   //   {{2}} tâches futures   //   {{3}} logs d'exécution");
 
 
 
