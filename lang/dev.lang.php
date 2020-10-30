@@ -276,14 +276,18 @@ ___('dev_scheduler_title',  'EN', "Scheduled tasks");
 ___('dev_scheduler_title',  'FR', "Tâches planifiées");
 
 // Task list
-___('dev_scheduler_task_execution',   'EN', "Execution");
-___('dev_scheduler_task_execution',   'FR', "Exécution");
-___('dev_scheduler_task_description', 'EN', "Description");
-___('dev_scheduler_task_description', 'FR', "Description");
-___('dev_scheduler_task_report',      'EN', "Report");
-___('dev_scheduler_task_report',      'FR', "Résultat");
-___('dev_scheduler_task_results',     'EN', "{{1}} results found   //   {{2}} future tasks   //   {{3}} past logs");
-___('dev_scheduler_task_results',     'FR', "{{1}} résultats trouvés   //   {{2}} tâches futures   //   {{3}} logs d'exécution");
+___('dev_scheduler_task_execution',         'EN', "Execution");
+___('dev_scheduler_task_execution',         'FR', "Exécution");
+___('dev_scheduler_task_description',       'EN', "Description");
+___('dev_scheduler_task_description',       'FR', "Description");
+___('dev_scheduler_task_report',            'EN', "Report");
+___('dev_scheduler_task_report',            'FR', "Résultat");
+___('dev_scheduler_task_results',           'EN', "{{1}} results found   //   {{2}} future tasks   //   {{3}} past logs");
+___('dev_scheduler_task_results',           'FR', "{{1}} résultats trouvés   //   {{2}} tâches futures   //   {{3}} logs d'exécution");
+___('dev_scheduler_task_execution_future',  'EN', "Future tasks");
+___('dev_scheduler_task_execution_future',  'FR', "Tâches futures");
+___('dev_scheduler_task_execution_past',    'EN', "Finished tasks");
+___('dev_scheduler_task_execution_past',    'FR', "Tâches finies");
 
 
 

@@ -866,33 +866,95 @@ function irc_bot_delete_message_history_entry(  $log_id         ,
 /**
  * Returns a list of all task scheduler executions, past and future.
  *
- * @return  array   An array containing the scheduler logs and upcoming tasks.
+ * @param   string|null   $sort_order         (OPTIONAL)  How the returned data should be sorted.
+ * @param   string|null   $search_type        (OPTIONAL)  Search for specific task types.
+ * @param   int|null      $search_id          (OPTIONAL)  Search for specific task ids.
+ * @param   int|null      $search_execution   (OPTIONAL)  Search for future tasks only or logs only.
+ * @param   string|null   $search_description (OPTIONAL)  Search for tasks matching a certain description.
+ * @param   string|null   $search_report      (OPTIONAL)  Search for tasks with a certain execution report.
+ *
+ * @return  array                                         An array containing the scheduler logs and upcoming tasks.
  */
 
-function dev_scheduler_list()
+function dev_scheduler_list(  $sort_order         = 'date'  ,
+                              $search_type        = NULL    ,
+                              $search_id          = NULL    ,
+                              $search_execution   = NULL    ,
+                              $search_description = NULL    ,
+                              $search_report      = NULL    )
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
 
-  // Fetch all past and present scheduler executions
-  $qscheduler = query(" SELECT    'future'                          AS 's_exec' ,
-                                  system_scheduler.id               AS 's_id'   ,
-                                  system_scheduler.planned_at       AS 's_date' ,
-                                  system_scheduler.task_id          AS 's_tid'  ,
-                                  system_scheduler.task_type        AS 's_type' ,
-                                  system_scheduler.task_description AS 's_desc' ,
-                                  ''                                AS 's_report'
-                        FROM      system_scheduler
-                        UNION
-                        SELECT    'past'                            AS 's_exec' ,
-                                  logs_scheduler.id                 AS 's_id'   ,
-                                  logs_scheduler.happened_at        AS 's_date' ,
-                                  logs_scheduler.task_id            AS 's_tid'  ,
-                                  logs_scheduler.task_type          AS 's_type' ,
-                                  logs_scheduler.task_description   AS 's_desc' ,
-                                  logs_scheduler.execution_report   AS 's_report'
-                        FROM      logs_scheduler
-                        ORDER BY  s_date DESC ");
+  // Sanitize the data
+  $sort_order         = sanitize($sort_order, 'string');
+  $search_type        = sanitize($search_type, 'string');
+  $search_id          = sanitize($search_id, 'int', 0);
+  $search_execution   = sanitize($search_execution, 'int', 0, 2);
+  $search_description = sanitize($search_description, 'string');
+  $search_report      = sanitize($search_report, 'string');
+
+  // Fetch all future scheduler executions
+  $qscheduler = "     SELECT    'future'                          AS 's_exec' ,
+                                system_scheduler.id               AS 's_id'   ,
+                                system_scheduler.planned_at       AS 's_date' ,
+                                system_scheduler.task_id          AS 's_tid'  ,
+                                system_scheduler.task_type        AS 's_type' ,
+                                system_scheduler.task_description AS 's_desc' ,
+                                ''                                AS 's_report'
+                      FROM      system_scheduler
+                      WHERE     1 = 1 ";
+
+  // Search the data
+  if($search_type)
+    $qscheduler .= "  AND       system_scheduler.task_type        LIKE '%$search_type%' ";
+  if($search_id)
+    $qscheduler .= "  AND       system_scheduler.task_id          =     '$search_id' ";
+  if($search_execution == 2)
+    $qscheduler .= "  AND       1 = 0 ";
+  if($search_description)
+    $qscheduler .= "  AND       system_scheduler.task_description LIKE '%$search_description%' ";
+  if($search_report)
+    $qscheduler .= "  AND       1 = 0 ";
+
+  // Fetch all past scheduler execution
+  $qscheduler .= "    UNION
+                      SELECT    'past'                            AS 's_exec' ,
+                                logs_scheduler.id                 AS 's_id'   ,
+                                logs_scheduler.happened_at        AS 's_date' ,
+                                logs_scheduler.task_id            AS 's_tid'  ,
+                                logs_scheduler.task_type          AS 's_type' ,
+                                logs_scheduler.task_description   AS 's_desc' ,
+                                logs_scheduler.execution_report   AS 's_report'
+                      FROM      logs_scheduler
+                      WHERE     1 = 1 ";
+
+  // Search the data
+  if($search_type)
+    $qscheduler .= "  AND       logs_scheduler.task_type        LIKE '%$search_type%' ";
+  if($search_id)
+    $qscheduler .= "  AND       logs_scheduler.task_id          =     '$search_id' ";
+  if($search_execution == 1)
+    $qscheduler .= "  AND       1 = 0 ";
+  if($search_description)
+    $qscheduler .= "  AND       logs_scheduler.task_description LIKE '%$search_description%' ";
+  if($search_report)
+    $qscheduler .= "  AND       logs_scheduler.execution_report LIKE '%$search_report%' ";
+
+  // Sort the data
+  if($sort_order == 'type')
+    $qscheduler .= "  ORDER BY  s_type    ASC ";
+  else if($sort_order == 'description')
+    $qscheduler .= "  ORDER BY  s_desc    = '' ,
+                                s_desc    ASC ";
+  else if($sort_order == 'report')
+    $qscheduler .= "  ORDER BY  s_report  = '' ,
+                                s_report  ASC ";
+  else
+    $qscheduler .= "  ORDER BY  s_date    DESC ";
+
+  // Run the query
+  $qscheduler = query($qscheduler);
 
   // Reset the counters
   $data['rows_past']    = 0;
@@ -914,6 +976,44 @@ function dev_scheduler_list()
     $data[$i]['report']       = sanitize_output(string_truncate($row['s_report'], 35, '...'));
     $data[$i]['freport']      = (strlen($row['s_report']) > 35) ? sanitize_output($row['s_report']) : '';
   }
+
+  // Add the search order to the data
+  $data['sort'] = $sort_order;
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('dev.act.php', 'dev_scheduler_list', $data));
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Returns a list of all scheduler task types that are currently present in the system.
+ *
+ * @return  array   An array containing the task types.
+ */
+
+function dev_scheduler_types_list()
+{
+  // Fetch all scheduler types
+  $qtypes = query(" SELECT    system_scheduler.task_type  AS 's_type'
+                    FROM      system_scheduler
+                    UNION
+                    SELECT    logs_scheduler.task_type    AS 's_type'
+                    FROM      logs_scheduler
+                    GROUP BY  s_type
+                    ORDER BY  s_type ASC ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qtypes); $i++)
+    $data[$i]['type'] = sanitize_output($row['s_type']);
 
   // Add the number of rows to the data
   $data['rows'] = $i;
