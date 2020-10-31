@@ -275,6 +275,7 @@ ___('irc_bot_bytes_troll',            'FR', "Troll (contraste brutal)");
 ___('dev_scheduler_title',  'EN', "Scheduled tasks");
 ___('dev_scheduler_title',  'FR', "Tâches planifiées");
 
+
 // Task list
 ___('dev_scheduler_task_execution',         'EN', "Execution");
 ___('dev_scheduler_task_execution',         'FR', "Exécution");
@@ -288,6 +289,13 @@ ___('dev_scheduler_task_execution_future',  'EN', "Future tasks");
 ___('dev_scheduler_task_execution_future',  'FR', "Tâches futures");
 ___('dev_scheduler_task_execution_past',    'EN', "Finished tasks");
 ___('dev_scheduler_task_execution_past',    'FR', "Tâches finies");
+
+
+// Delete scheduler entries
+___('dev_scheduler_delete_task',  'EN', "Confirm the irreversible deletion of this scheduled task");
+___('dev_scheduler_delete_task',  'FR', "Confirmer la suppression irréversible de cette tâche planifiée");
+___('dev_scheduler_delete_log',   'EN', "Confirm the irreversible deletion of this scheduler log entry");
+___('dev_scheduler_delete_log',   'FR', "Confirmer la suppression irréversible de cette entrée de l\'historique des tâches planifiées");
 
 
 

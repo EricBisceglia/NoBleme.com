@@ -39,7 +39,7 @@ function database_row_exists( $table  ,
                                         WHERE   $table.id = '$id' "));
 
   // Return the result
-  return ($dcheck['r_id']) ? 1 : 0;
+  return (isset($dcheck['r_id'])) ? 1 : 0;
 }
 
 

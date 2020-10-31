@@ -907,7 +907,7 @@ function dev_scheduler_list(  $sort_order         = 'date'  ,
 
   // Search the data
   if($search_type)
-    $qscheduler .= "  AND       system_scheduler.task_type        LIKE '%$search_type%' ";
+    $qscheduler .= "  AND       system_scheduler.task_type        LIKE '$search_type' ";
   if($search_id)
     $qscheduler .= "  AND       system_scheduler.task_id          =     '$search_id' ";
   if($search_execution == 2)
@@ -931,7 +931,7 @@ function dev_scheduler_list(  $sort_order         = 'date'  ,
 
   // Search the data
   if($search_type)
-    $qscheduler .= "  AND       logs_scheduler.task_type        LIKE '%$search_type%' ";
+    $qscheduler .= "  AND       logs_scheduler.task_type        LIKE '$search_type' ";
   if($search_id)
     $qscheduler .= "  AND       logs_scheduler.task_id          =     '$search_id' ";
   if($search_execution == 1)
@@ -943,13 +943,16 @@ function dev_scheduler_list(  $sort_order         = 'date'  ,
 
   // Sort the data
   if($sort_order == 'type')
-    $qscheduler .= "  ORDER BY  s_type    ASC ";
+    $qscheduler .= "  ORDER BY  s_type    ASC   ,
+                                s_date    DESC  ";
   else if($sort_order == 'description')
-    $qscheduler .= "  ORDER BY  s_desc    = '' ,
-                                s_desc    ASC ";
+    $qscheduler .= "  ORDER BY  s_desc    = ''  ,
+                                s_desc    ASC   ,
+                                s_date    DESC  ";
   else if($sort_order == 'report')
-    $qscheduler .= "  ORDER BY  s_report  = '' ,
-                                s_report  ASC ";
+    $qscheduler .= "  ORDER BY  s_report  = ''  ,
+                                s_report  ASC   ,
+                                s_date    DESC  ";
   else
     $qscheduler .= "  ORDER BY  s_date    DESC ";
 
@@ -1024,6 +1027,72 @@ function dev_scheduler_types_list()
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Deletes an entry in the scheduled tasks.
+ *
+ * @param   int           $task_id              The tasks's id
+ * @param   string|null   $lang     (OPTIONAL)  The user's current language.
+ *
+ * @return  string|int                          The tasks's id, or 0 if the task does not exist.
+ */
+
+function dev_scheduler_delete_task( $task_id          ,
+                                    $lang     = 'EN'  )
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
+  // Sanitize the data
+  $task_id = sanitize($task_id, 'int', 0);
+
+  // Ensure the task id exists or return 0
+  if(!database_row_exists('system_scheduler', $task_id))
+    return 0;
+
+  // Delete the entry
+  query(" DELETE FROM system_scheduler
+          WHERE       system_scheduler.id = '$task_id' ");
+
+  // Return the deleted task id
+  return $task_id;
+}
+
+
+
+
+/**
+ * Deletes an entry in the scheduler execution logs.
+ *
+ * @param   int           $log_id               The log's id
+ * @param   string|null   $lang     (OPTIONAL)  The user's current language.
+ *
+ * @return  string|int                          The log's id, or 0 if the log does not exist.
+ */
+
+function dev_scheduler_delete_log(  $log_id         ,
+                                    $lang   = 'EN'  )
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
+  // Sanitize the data
+  $log_id = sanitize($log_id, 'int', 0);
+
+  // Ensure the log id exists or return 0
+  if(!database_row_exists('logs_scheduler', $log_id))
+    return 0;
+
+  // Delete the entry
+  query(" DELETE FROM logs_scheduler
+          WHERE       logs_scheduler.id = '$log_id' ");
+
+  // Return the deleted log id
+  return $log_id;
 }
 
 

@@ -33,6 +33,22 @@ $js = array('dev/scheduler');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete an entry
+
+// Delete a future task
+if(isset($_POST['scheduler_task_delete']))
+  dev_scheduler_delete_task(  form_fetch_element('scheduler_task_delete', 0) ,
+                              $lang                                         );
+
+// Delete a scheduler log
+if(isset($_POST['scheduler_log_delete']))
+  dev_scheduler_delete_log( form_fetch_element('scheduler_log_delete', 0) ,
+                            $lang                                         );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Get the past and future tasks
 
 $scheduler_tasks = dev_scheduler_list(  form_fetch_element('scheduler_search_order', 'date')  ,
@@ -209,7 +225,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
             <td class="align_center nowrap">
               <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/edit_small.svg" alt="?" title="Edit">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete">
+              <?php if($scheduler_tasks[$i]['type'] == 'future') { ?>
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete" onclick="dev_scheduler_delete_task('<?=$scheduler_tasks[$i]['id']?>', '<?=__('dev_scheduler_delete_task')?>');">
+              <?php } else { ?>
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete" onclick="dev_scheduler_delete_log('<?=$scheduler_tasks[$i]['id']?>', '<?=__('dev_scheduler_delete_log')?>');">
+              <?php } ?>
             </td>
 
           </tr>
