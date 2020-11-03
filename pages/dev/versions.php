@@ -67,7 +67,7 @@ if(isset($_POST['dev_versions_edit']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Close the edition popin if it is open
+// Close the edit popin if it is open
 
 $onload = "popin_close('dev_versions_popin')";
 

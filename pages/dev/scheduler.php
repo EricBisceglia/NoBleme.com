@@ -33,6 +33,26 @@ $js = array('dev/scheduler');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Close the edit popin if it is open
+
+$onload = "popin_close('dev_scheduler_popin')";
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit an entry
+
+if(isset($_POST['dev_scheduler_edit']))
+  dev_scheduler_edit( form_fetch_element('dev_scheduler_edit', 0)   ,
+                      form_fetch_element('dev_scheduler_edit_date') ,
+                      form_fetch_element('dev_scheduler_edit_time') ,
+                      $lang                                         );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Delete an entry
 
 // Delete a future task
@@ -56,7 +76,8 @@ $scheduler_tasks = dev_scheduler_list(  form_fetch_element('scheduler_search_ord
                                         form_fetch_element('scheduler_search_id')             ,
                                         form_fetch_element('scheduler_search_date')           ,
                                         form_fetch_element('scheduler_search_description')    ,
-                                        form_fetch_element('scheduler_search_report')         );
+                                        form_fetch_element('scheduler_search_report')         ,
+                                        $lang                                                 );
 
 
 
@@ -181,16 +202,21 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <tr>
 
-            <td>
+            <td class="nowrap">
               <?=$scheduler_tasks[$i]['task_type']?>
             </td>
 
-            <td>
+            <td class="nowrap">
               <?=$scheduler_tasks[$i]['task_id']?>
             </td>
 
             <td class="nowrap">
+              <span class="tooltip_container">
               <?=$scheduler_tasks[$i]['date']?>
+                <span class="tooltip notbold">
+                  <?=$scheduler_tasks[$i]['fdate']?>
+                </span>
+              </span>
             </td>
 
             <?php if($scheduler_tasks[$i]['fdescription']) { ?>
@@ -224,8 +250,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?php } ?>
 
             <td class="align_center nowrap">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/edit_small.svg" alt="?" title="Edit">
               <?php if($scheduler_tasks[$i]['type'] == 'future') { ?>
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/edit_small.svg" alt="?" title="Edit" onclick="dev_scheduler_edit_popin('<?=$scheduler_tasks[$i]['id']?>', '<?=$scheduler_tasks[$i]['type']?>');">
               <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete" onclick="dev_scheduler_delete_task('<?=$scheduler_tasks[$i]['id']?>', '<?=__('dev_scheduler_delete_task')?>');">
               <?php } else { ?>
               <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete" onclick="dev_scheduler_delete_log('<?=$scheduler_tasks[$i]['id']?>', '<?=__('dev_scheduler_delete_log')?>');">
@@ -245,6 +271,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </fieldset>
   </form>
 
+</div>
+
+<div id="dev_scheduler_popin" class="popin_background">
+  <div class="popin_body">
+    <a class="popin_close" onclick="popin_close('dev_scheduler_popin');">&times;</a>
+    <div id="dev_scheduler_popin_body">
+      &nbsp;
+    </div>
+  </div>
 </div>
 
 <?php /***************************************************************************************************************/

@@ -291,6 +291,17 @@ ___('dev_scheduler_task_execution_past',    'EN', "Finished tasks");
 ___('dev_scheduler_task_execution_past',    'FR', "Tâches finies");
 
 
+// Edit scheduler entries
+___('dev_scheduler_edit_error_postdata',  'EN', "Error: No scheduled task id was provided.");
+___('dev_scheduler_edit_error_postdata',  'FR', "Erreur : Aucun numéro de tâche planifiée n'a été envoyé.");
+___('dev_scheduler_edit_error_id',        'EN', "Error: The requested scheduled task does not exist.");
+___('dev_scheduler_edit_error_id',        'FR', "Erreur : La tâche planifiée demandée n'existe pas.");
+___('dev_scheduler_edit_error_time',      'EN', "Error: The submitted date and/or time are incorrect.");
+___('dev_scheduler_edit_error_time',      'FR', "Erreur : L'heure et/ou la date sont incorrects.");
+___('dev_scheduler_edit_button',          'EN', "Edit scheduled task");
+___('dev_scheduler_edit_button',          'FR', "Modifier la tâche planifiée");
+
+
 // Delete scheduler entries
 ___('dev_scheduler_delete_task',  'EN', "Confirm the irreversible deletion of this scheduled task");
 ___('dev_scheduler_delete_task',  'FR', "Confirmer la suppression irréversible de cette tâche planifiée");

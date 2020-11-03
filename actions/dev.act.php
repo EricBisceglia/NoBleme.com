@@ -81,7 +81,7 @@ function dev_versions_list_one($version_id)
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('dev.act.php', 'dev_versions_list', $data));
+    var_dump(array('dev.act.php', 'dev_versions_list_one', $data));
 
   // Return the array
   return $data;
@@ -242,7 +242,7 @@ function dev_versions_create( $major                    ,
 /**
  * Edits an entry in the website's version numbering history.
  *
- * @param   int           $di                       The version's id.
+ * @param   int           $id                       The version's id.
  * @param   int           $major                    The major version number.
  * @param   int           $minor                    The minor version number.
  * @param   int           $patch                    The patch number.
@@ -864,6 +864,46 @@ function irc_bot_delete_message_history_entry(  $log_id         ,
 /*********************************************************************************************************************/
 
 /**
+ * Returns data related to a scheduled task.
+ *
+ * @param   int         $task_id  The scheduled task's id.
+ *
+ * @return  array|null            An array containing elements related to the task, or NULL if it does not exist.
+ */
+
+function dev_scheduler_list_one( $task_id )
+{
+  // Sanitize the data
+  $task_id = sanitize($task_id, 'int', 0);
+
+  // Check if the scheduled task exists
+  if(!database_row_exists('system_scheduler', $task_id))
+    return NULL;
+
+  // Fetch the data
+  $dtask = mysqli_fetch_array(query(" SELECT  system_scheduler.planned_at       AS 't_date' ,
+                                              system_scheduler.task_id          AS 't_id'   ,
+                                              system_scheduler.task_type        AS 't_type' ,
+                                              system_scheduler.task_description AS 't_description'
+                                      FROM    system_scheduler
+                                      WHERE   system_scheduler.id = '$task_id' "));
+
+  // Assemble an array with the data
+  $data['date_days']  = sanitize_output(date('d/m/y', $dtask['t_date']));
+  $data['date_time']  = sanitize_output(date('h:i:s', $dtask['t_date']));
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('dev.act.php', 'dev_scheduler_list_one', $data));
+
+  // Return the array
+  return $data;
+}
+
+
+
+
+/**
  * Returns a list of all task scheduler executions, past and future.
  *
  * @param   string|null   $sort_order         (OPTIONAL)  How the returned data should be sorted.
@@ -872,6 +912,7 @@ function irc_bot_delete_message_history_entry(  $log_id         ,
  * @param   int|null      $search_execution   (OPTIONAL)  Search for future tasks only or logs only.
  * @param   string|null   $search_description (OPTIONAL)  Search for tasks matching a certain description.
  * @param   string|null   $search_report      (OPTIONAL)  Search for tasks with a certain execution report.
+ * @param   string|null   $lang               (OPTIONAL)  The user's current language.
  *
  * @return  array                                         An array containing the scheduler logs and upcoming tasks.
  */
@@ -881,7 +922,8 @@ function dev_scheduler_list(  $sort_order         = 'date'  ,
                               $search_id          = NULL    ,
                               $search_execution   = NULL    ,
                               $search_description = NULL    ,
-                              $search_report      = NULL    )
+                              $search_report      = NULL    ,
+                              $lang               = 'EN'    )
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -972,6 +1014,7 @@ function dev_scheduler_list(  $sort_order         = 'date'  ,
     $data[$i]['id']           = $row['s_id'];
     $temp                     = ($row['s_exec'] == 'past') ? time_since($row['s_date']) : time_until($row['s_date']);
     $data[$i]['date']         = sanitize_output($temp);
+    $data[$i]['fdate']        = date_to_text($row['s_date'], 0, 1, $lang);
     $data[$i]['task_id']      = $row['s_tid'];
     $data[$i]['task_type']    = sanitize_output($row['s_type']);
     $data[$i]['description']  = sanitize_output(string_truncate($row['s_desc'], 20, '...'));
@@ -1027,6 +1070,54 @@ function dev_scheduler_types_list()
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Edits an entry in the task scheduler.
+ *
+ * @param   int           $di                 The task's id.
+ * @param   string        $date               The task's execution date.
+ * @param   string        $time               The task's execution time.
+ * @param   string|null   $lang   (OPTIONAL)  The user's current language.
+ *
+ * @return  string|null                       NULL if all went according to plan, or an error string
+ */
+
+function dev_scheduler_edit(  $id           ,
+                              $date         ,
+                              $time         ,
+                              $lang = 'EN'  )
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
+  // Check if the required files have been included
+  require_included_file('dev.lang.php');
+
+  // Sanitize the data
+  $id         = sanitize($id, 'int', 0);
+  $date       = sanitize($date, 'string');
+  $time       = sanitize($time, 'string');
+  $timestamp  = sanitize(strtotime(date_to_mysql($date).' '.$time), 'int');
+
+  // Check if the scheduled task exists
+  if(!database_row_exists('system_scheduler', $id))
+    return __('dev_scheduler_edit_error_id');
+
+  // Check if the submitted time and date are correct
+  if($timestamp <= 0)
+    return __('dev_scheduler_edit_error_time');
+
+  // Edit the scheduled task
+  query(" UPDATE  system_scheduler
+          SET     system_scheduler.planned_at = '$timestamp'
+          WHERE   system_scheduler.id         = '$id' ");
+
+  // Return that all went well
+  return;
 }
 
 

@@ -345,25 +345,29 @@ ___('version',  'FR', "version");
 
 
 // Common time and quantity related terms
+___('all',        'EN', "All");
+___('all',        'FR', "Tous");
 ___('date',       'EN', "date");
 ___('date',       'FR', "date");
 ___('at_date',    'EN', "at");
 ___('at_date',    'FR', "à");
-___('ddmmyy',     'EN', "DD/MM/YY");
-___('ddmmyy',     'FR', "JJ/MM/AA");
-___('yyyyddmm',   'EN', "YYYY-DD-MM");
-___('yyyyddmm',   'FR', "AAAA-MM-JJ");
 ___('day',        'EN', "day");
 ___('day+',       'EN', "days");
 ___('day',        'FR', "jour");
 ___('day+',       'FR', "jours");
 ___('day_short',  'EN', "d");
 ___('day_short',  'FR', "j");
+___('ddmmyy',     'EN', "DD/MM/YY");
+___('ddmmyy',     'FR', "JJ/MM/AA");
+___('hhiiss',     'EN', "hours:minutes:seconds");
+___('hhiiss',     'FR', "heures:minutes:secondes");
+___('time',       'EN', "time");
+___('time',       'FR', "heure");
 ___('times',      'EN', "time");
 ___('times+',     'EN', "times");
 ___('times',      'FR', "fois");
-___('all',        'EN', "All");
-___('all',        'FR', "Tous");
+___('yyyyddmm',   'EN', "YYYY-DD-MM");
+___('yyyyddmm',   'FR', "AAAA-MM-JJ");
 
 
 // Generic user related terms
