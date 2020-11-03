@@ -180,34 +180,74 @@ query(" INSERT INTO system_variables
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Versions
 
-// Generate preset versions
-query(" INSERT INTO system_versions
-        SET         system_versions.major         = '1'           ,
-                    system_versions.minor         = '1'           ,
-                    system_versions.patch         = '1'           ,
-                    system_versions.extension     = 'rc0'         ,
-                    system_versions.release_date  = '2005-03-19'  ");
-$date = date('Y-m-d');
-query(" INSERT INTO system_versions
-        SET         system_versions.major         = '1'           ,
-                    system_versions.minor         = '1'           ,
-                    system_versions.patch         = '2'           ,
-                    system_versions.release_date  = '$date'       ");
+// Determine the number of versions to generate
+$random = mt_rand(30,50);
+for($i = 0; $i < $random; $i++)
+{
+  if($i == 0)
+  {
+    $time       = 1111239420;
+    $date       = date('Y-m-d', $time);
+    $major      = 1;
+    $minor      = 0;
+    $patch      = 0;
+    $extension  = '';
+  }
+  else
+  {
+    $time         = mt_rand($time, (((3 * $time) + time()) / 4));
+    $date         = date('Y-m-d', $time);
+    if(!$extension && mt_rand(0,10) > 9)
+      $extension = 'hotfix';
+    else
+    {
+      $reset_major  = (mt_rand(0,15) > 14) ? 1 : 0;
+      if($reset_major)
+      {
+        $major      = $major + 1;
+        $minor      = 0;
+        $patch      = 0;
+        $extension  = '';
+      }
+      else
+      {
+        $reset_minor = (mt_rand(0,4) > 3) ? 1 : 0;
+        if($reset_minor)
+        {
+          $minor      = $minor + 1;
+          $patch      = 0;
+          $extension  = '';
+        }
+        else
+        {
+          $patch      = $patch + 1;
+          $extension  = '';
+        }
+      }
+    }
+  }
+  $activity = $major.'.'.$minor.'.'.$patch;
+  $activity = ($extension) ? $activity.'-'.$extension : $activity;
 
-$timestamp = strtotime('2005-03-19');
-query(" INSERT INTO logs_activity
-        SET         logs_activity.happened_at         = '$timestamp'  ,
-                    logs_activity.language            = 'ENFR'        ,
-                    logs_activity.activity_type       = 'dev_version' ,
-                    logs_activity.activity_summary_en = '1 build 0'   ,
-                    logs_activity.activity_summary_fr = '1 build 0'   ");
-$timestamp = time();
-query(" INSERT INTO logs_activity
-        SET         logs_activity.happened_at         = '$timestamp'  ,
-                    logs_activity.language            = 'ENFR'        ,
-                    logs_activity.activity_type       = 'dev_version' ,
-                    logs_activity.activity_summary_en = '1 build 1'   ,
-                    logs_activity.activity_summary_fr = '1 build 1'   ");
+  // Generate the versions
+  query(" INSERT INTO system_versions
+          SET         system_versions.major         = '$major'      ,
+                      system_versions.minor         = '$minor'      ,
+                      system_versions.patch         = '$patch'      ,
+                      system_versions.extension     = '$extension'  ,
+                      system_versions.release_date  = '$date'       ");
+  query(" INSERT INTO logs_activity
+          SET         logs_activity.happened_at         = '$time'       ,
+                      logs_activity.language            = 'ENFR'        ,
+                      logs_activity.activity_type       = 'dev_version' ,
+                      logs_activity.activity_summary_en = '$activity'   ,
+                      logs_activity.activity_summary_fr = '$activity'   ");
+}
+
+// Output progress
+echo "<tr><td>Generated&nbsp;</td><td style=\"text-align:right\">$random</td><td>website versions</td></tr>";
+ob_flush();
+flush();
 
 
 
