@@ -9,11 +9,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  admin_ban_user              Bans a user.                                                                         */
-/*  admin_ban_user_edit         Modifies an existing ban.                                                            */
-/*  admin_ban_user_delete       Unbans a banned user.                                                                */
+/*  admin_ban_edit              Modifies an existing ban.                                                            */
+/*  admin_ban_delete            Unbans a banned user.                                                                */
 /*                                                                                                                   */
-/*  admin_ban_logs_get_one      Fetches information about a ban log.                                                 */
-/*  admin_ban_logs_get_list     Lists the ban log history.                                                           */
+/*  admin_ban_logs_get          Fetches information about a ban log.                                                 */
+/*  admin_ban_logs_list         Lists the ban log history.                                                           */
 /*  admin_ban_logs_delete       Permanently deletes an entry in the ban history logs.                                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -167,13 +167,13 @@ function admin_ban_user(  $banner_id                    ,
  * @return  void
  */
 
-function admin_ban_user_edit( $banner_id                    ,
-                              $banned_id                    ,
-                              $ban_length     = 0           ,
-                              $ban_reason_en  = ''          ,
-                              $ban_reason_fr  = ''          ,
-                              $lang           = 'EN'        ,
-                              $path           = './../../'  )
+function admin_ban_edit(  $banner_id                    ,
+                          $banned_id                    ,
+                          $ban_length     = 0           ,
+                          $ban_reason_en  = ''          ,
+                          $ban_reason_fr  = ''          ,
+                          $lang           = 'EN'        ,
+                          $path           = './../../'  )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators($lang);
@@ -305,12 +305,12 @@ function admin_ban_user_edit( $banner_id                    ,
  * @return  void
  */
 
-function admin_ban_user_delete( $unbanner_id                    ,
-                                $unbanned_id                    ,
-                                $unban_reason_en  = ''          ,
-                                $unban_reason_fr  = ''          ,
-                                $lang             = 'EN'        ,
-                                $path             = './../../'  )
+function admin_ban_delete(  $unbanner_id                    ,
+                            $unbanned_id                    ,
+                            $unban_reason_en  = ''          ,
+                            $unban_reason_fr  = ''          ,
+                            $lang             = 'EN'        ,
+                            $path             = './../../'  )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators($lang);
@@ -402,10 +402,13 @@ function admin_ban_user_delete( $unbanner_id                    ,
  * @return  array|int                           The ban log history data, ready for displaying, or 0 if log not found.
 */
 
-function admin_ban_logs_get_one($log_id   = NULL  ,
-                                $user_id  = NULL  ,
-                                $lang     = 'EN'  )
+function admin_ban_logs_get(  $log_id   = NULL  ,
+                              $user_id  = NULL  ,
+                              $lang     = 'EN'  )
 {
+  // Require moderator rights to run this action
+  user_restrict_to_moderators($lang);
+
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
   require_included_file('functions_mathematics.inc.php');
@@ -488,6 +491,10 @@ function admin_ban_logs_get_one($log_id   = NULL  ,
   $data['unban_reason_en']  = ($dlog['l_ureason_en']) ? sanitize_output($dlog['l_ureason_en']) : '-';
   $data['unban_reason_fr']  = ($dlog['l_ureason_fr']) ? sanitize_output($dlog['l_ureason_fr']) : '-';
 
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('file' => 'admin/ban.act.php', 'function' => 'admin_ban_logs_get', 'data' => $data));
+
   // Return the prepared data
   return $data;
 }
@@ -508,13 +515,16 @@ function admin_ban_logs_get_one($log_id   = NULL  ,
  * @return  array                                       The ban log history data, ready for displaying.
 */
 
-function admin_ban_logs_get_list( $lang             = 'EN'      ,
-                                  $sorting_order    = 'banned'  ,
-                                  $search_status    = -1        ,
-                                  $search_username  = NULL      ,
-                                  $search_banner    = NULL      ,
-                                  $search_unbanner  = NULL      )
+function admin_ban_logs_list( $lang             = 'EN'      ,
+                              $sorting_order    = 'banned'  ,
+                              $search_status    = -1        ,
+                              $search_username  = NULL      ,
+                              $search_banner    = NULL      ,
+                              $search_unbanner  = NULL      )
 {
+  // Require moderator rights to run this action
+  user_restrict_to_moderators($lang);
+
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
   require_included_file('functions_mathematics.inc.php');
@@ -605,7 +615,7 @@ function admin_ban_logs_get_list( $lang             = 'EN'      ,
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('admin.act.php', 'admin_ban_logs_get_list', $data));
+    var_dump(array('file' => 'admin/ban.act.php', 'function' => 'admin_ban_logs_list', 'data' => $data));
 
   // Return the prepared data
   return $data;

@@ -85,7 +85,7 @@ $scheduler_tasks = dev_scheduler_list(  form_fetch_element('scheduler_search_ord
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Get all existing task types
 
-$scheduler_task_types = dev_scheduler_types_list();
+$scheduler_task_types = dev_scheduler_types_list($lang);
 
 
 

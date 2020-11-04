@@ -50,13 +50,13 @@ $logs_url         = (!$activity_modlogs) ? "activity" : "activity?mod";
 // Fetch recent activity
 
 $activity_deleted = form_fetch_element('activity_deleted', 0);
-$activity_logs    = activity_get_logs(  $activity_modlogs                           ,
-                                        form_fetch_element('activity_amount', 100)  ,
-                                        form_fetch_element('activity_type', 'all')  ,
-                                        $activity_deleted                           ,
-                                        $is_admin                                   ,
-                                        $path                                       ,
-                                        $lang                                       );
+$activity_logs    = activity_list(  $activity_modlogs                           ,
+                                    form_fetch_element('activity_amount', 100)  ,
+                                    form_fetch_element('activity_type', 'all')  ,
+                                    $activity_deleted                           ,
+                                    $is_admin                                   ,
+                                    $path                                       ,
+                                    $lang                                       );
 
 
 

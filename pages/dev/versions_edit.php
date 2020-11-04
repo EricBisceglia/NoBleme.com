@@ -27,7 +27,7 @@ $version_id = form_fetch_element('version_id', 0);
 
 // Fetch elements related to the version
 if($version_id)
-  $version_data = dev_versions_list_one($version_id);
+  $version_data = dev_versions_get($version_id);
 
 // Prepare errors if anything went wrong
 if(!$version_id)

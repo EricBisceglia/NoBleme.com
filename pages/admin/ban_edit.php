@@ -60,13 +60,13 @@ if(user_is_moderator($user_id) && !user_is_administrator())
 
 if(isset($_POST['admin_ban_edit_submit']))
 {
-  admin_ban_user_edit(  user_get_id()                                   ,
-                        $user_id                                        ,
-                        form_fetch_element('admin_ban_edit_length')     ,
-                        form_fetch_element('admin_ban_edit_reason_en')  ,
-                        form_fetch_element('admin_ban_edit_reason_fr')  ,
-                        $lang                                           ,
-                        $path                                           );
+  admin_ban_edit( user_get_id()                                   ,
+                  $user_id                                        ,
+                  form_fetch_element('admin_ban_edit_length')     ,
+                  form_fetch_element('admin_ban_edit_reason_en')  ,
+                  form_fetch_element('admin_ban_edit_reason_fr')  ,
+                  $lang                                           ,
+                  $path                                           );
   exit(header("Location: ./ban#active"));
 }
 

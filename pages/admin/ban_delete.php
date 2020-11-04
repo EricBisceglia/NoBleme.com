@@ -60,12 +60,12 @@ if(user_is_moderator($user_id) && !user_is_administrator())
 
 if(isset($_POST['admin_ban_delete_submit']))
 {
-  admin_ban_user_delete(  user_get_id()                                           ,
-                          $user_id                                                ,
-                          form_fetch_element('admin_ban_delete_unban_reason_en')  ,
-                          form_fetch_element('admin_ban_delete_unban_reason_fr')  ,
-                          $lang                                                   ,
-                          $path                                                   );
+  admin_ban_delete( user_get_id()                                           ,
+                    $user_id                                                ,
+                    form_fetch_element('admin_ban_delete_unban_reason_en')  ,
+                    form_fetch_element('admin_ban_delete_unban_reason_fr')  ,
+                    $lang                                                   ,
+                    $path                                                   );
   exit(header("Location: ./ban#active"));
 }
 

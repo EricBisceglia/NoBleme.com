@@ -29,10 +29,10 @@ user_restrict_to_guests($lang);
 $check_username = form_fetch_element('register_username');
 
 // Check if the username is legal
-$username_is_illegal = users_check_username_illegality($check_username);
+$username_is_illegal = user_check_username_illegality($check_username);
 
 // Check if the username exists
-$username_exists = users_check_username($check_username);
+$username_exists = user_check_username($check_username);
 
 
 

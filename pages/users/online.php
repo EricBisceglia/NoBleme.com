@@ -33,7 +33,7 @@ $admin_view     = (sanitize_input('POST', 'online_admin_view', 'int', $is_admin,
 $admin_view     = ($admin_view && $is_admin) ? 1 : 0;
 
 // Fetch the user list
-$userlist = users_get_list('activity', 0, 0, 2629746, $include_guests, 1000, 0, $admin_view, 1, $lang);
+$userlist = user_list('activity', 0, 0, 2629746, $include_guests, 1000, 0, $admin_view, 1, $lang);
 
 
 

@@ -12,7 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  dev_toggle_website_status     Toggles the website's status between open and closed.                              */
 /*                                                                                                                   */
-/*  dev_versions_list_one         Returns elements related to a version number.                                      */
+/*  dev_versions_get              Returns elements related to a version number.                                      */
 /*  dev_versions_list             Returns the website's version numbering history.                                   */
 /*  dev_versions_create           Releases a new version of the website.                                             */
 /*  dev_versions_edit             Edits an entry in the website's version numbering history.                         */
@@ -90,7 +90,7 @@ function dev_toggle_website_status( $website_status         ,
  * @return  array|null              An array containing elements related to the version, or NULL if it does not exist.
  */
 
-function dev_versions_list_one($version_id)
+function dev_versions_get($version_id)
 {
   // Sanitize the id
   $version_id = sanitize($version_id, 'int', 0);
@@ -117,7 +117,7 @@ function dev_versions_list_one($version_id)
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('dev.act.php', 'dev_versions_list_one', $data));
+    var_dump(array('file' => 'dev/devtools.act.php', 'function' => 'dev_versions_get', 'data' => $data));
 
   // Return the array
   return $data;
@@ -186,7 +186,7 @@ function dev_versions_list()
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('dev.act.php', 'dev_versions_list', $data));
+    var_dump(array('file' => 'dev/devtools.act.php', 'function' => 'dev_versions_list', 'data' => $data));
 
   // Return the prepared data
   return $data;

@@ -8,19 +8,19 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  irc_bot_start                         Starts the IRC bot.                                                        */
-/*  irc_bot_stop                          Stops the IRC bot.                                                         */
+/*  irc_bot_start                       Starts the IRC bot.                                                          */
+/*  irc_bot_stop                        Stops the IRC bot.                                                           */
 /*                                                                                                                   */
-/*  irc_bot_toggle_silence_mode           Toggles the silent IRC bot mode on and off.                                */
+/*  irc_bot_toggle_silence_mode         Toggles the silent IRC bot mode on and off.                                  */
 /*                                                                                                                   */
-/*  irc_bot_admin_send_message            Sends a message through the IRC bot from the admin interface.              */
+/*  irc_bot_admin_send_message          Sends a message through the IRC bot from the admin interface.                */
 /*                                                                                                                   */
-/*  irc_bot_get_message_queue             Fetches the queue of messages that have not been sent yet by the IRC bot.  */
-/*  irc_bot_purge_queued_message          Purges a message from the IRC bot's upcoming message queue.                */
+/*  irc_bot_message_queue_list          Fetches the queue of messages that have not been sent yet by the IRC bot.    */
+/*  irc_bot_message_queue_delete        Purges a message from the IRC bot's upcoming message queue.                  */
 /*                                                                                                                   */
-/*  irc_bot_get_message_history           Fetches the history of past messages sent by the IRC bot.                  */
-/*  irc_bot_replay_message_history_entry  Replays an entry from the IRC bot's message history.                       */
-/*  irc_bot_delete_message_history_entry  Deletes an entry from the IRC bot's message history.                       */
+/*  irc_bot_message_history_list        Fetches the history of past messages sent by the IRC bot.                    */
+/*  irc_bot_message_history_replay      Replays an entry from the IRC bot's message history.                         */
+/*  irc_bot_message_history_delete      Deletes an entry from the IRC bot's message history.                         */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -264,12 +264,17 @@ function irc_bot_admin_send_message(  $body                   ,
  * Fetches the queue of messages that have not been sent yet by the IRC bot.
  *
  * @param   string|null $path (OPTIONAL)  The path to the root of the website.
+ * @param   string|null $lang (OPTIONAL)  The language currently in use.
  *
  * @return  array                         An array containing the log of queued messages.
  */
 
-function irc_bot_get_message_queue($path = './../../')
+function irc_bot_message_queue_list(  $path = './../../'  ,
+                                      $lang = 'EN'        )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Check if the required files have been included
   require_included_file('dev.lang.php');
 
@@ -295,7 +300,7 @@ function irc_bot_get_message_queue($path = './../../')
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('dev.act.php', 'irc_bot_get_message_queue', $data));
+    var_dump(array('file' => 'dev/ircbot.act.php', 'function' => 'irc_bot_message_queue_list', 'data' => $data));
 
   // Return the prepared data
   return $data;
@@ -314,7 +319,7 @@ function irc_bot_get_message_queue($path = './../../')
  * @return  void
  */
 
-function irc_bot_purge_queued_message(  $line_id                ,
+function irc_bot_message_queue_delete(  $line_id                ,
                                         $path     = './../../'  ,
                                         $lang     = 'EN'        )
 {
@@ -371,17 +376,22 @@ function irc_bot_purge_queued_message(  $line_id                ,
 /**
  * Fetches the history of past messages sent by the IRC bot.
  *
+ * @param   string|null   $lang           (OPTIONAL)  The language currently in use.
  * @param   string|null   $search_channel (OPTIONAL)  Search messages sent on a specific channel.
  * @param   string|null   $search_body    (OPTIONAL)  Search messages containing a specific body.
  * @param   bool|null     $search_errors  (OPTIONAL)  Search for sent (0) or failed (1) messages only.
  *
- * @return  array An array containing the message history.
+ * @return  array                                     An array containing the message history.
  */
 
-function irc_bot_get_message_history( $search_channel = NULL  ,
-                                      $search_body    = NULL  ,
-                                      $search_errors  = -1    )
+function irc_bot_message_history_list(  $lang           = 'EN'  ,
+                                        $search_channel = NULL  ,
+                                        $search_body    = NULL  ,
+                                        $search_errors  = -1    )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Check if the required files have been included
   require_included_file('dev.lang.php');
   require_included_file('functions_time.inc.php');
@@ -443,7 +453,7 @@ function irc_bot_get_message_history( $search_channel = NULL  ,
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('dev.act.php', 'irc_bot_get_message_history', $data));
+    var_dump(array('file' => 'dev/ircbot.act.php', 'function' => 'irc_bot_message_history_list', 'data' => $data));
 
   // Return the prepared data
   return $data;
@@ -462,9 +472,9 @@ function irc_bot_get_message_history( $search_channel = NULL  ,
  * @return  void
  */
 
-function irc_bot_replay_message_history_entry(  $log_id               ,
-                                                $path   = './../../'  ,
-                                                $lang   = 'EN'        )
+function irc_bot_message_history_replay(  $log_id               ,
+                                          $path   = './../../'  ,
+                                          $lang   = 'EN'        )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators($lang);
@@ -505,8 +515,8 @@ function irc_bot_replay_message_history_entry(  $log_id               ,
  * @return  void
  */
 
-function irc_bot_delete_message_history_entry(  $log_id         ,
-                                                $lang   = 'EN'  )
+function irc_bot_message_history_delete(  $log_id         ,
+                                          $lang   = 'EN'  )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators($lang);

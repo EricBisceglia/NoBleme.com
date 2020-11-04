@@ -28,7 +28,7 @@ $autocomplete_datalist  = form_fetch_element('autocomplete_datalist', '');
 $autocomplete_type      = form_fetch_element('autocomplete_type', '');
 
 // Autocomplete the nickname
-$autocomplete_data = users_autocomplete_nickname( $autocomplete_nickname  ,
+$autocomplete_data = user_autocomplete_nickname(  $autocomplete_nickname  ,
                                                   $autocomplete_type      );
 
 

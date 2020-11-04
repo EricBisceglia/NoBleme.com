@@ -8,12 +8,69 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  activity_get_logs         Fetches activity logs.                                                                 */
-/*  activity_get_details      Fetches details on an activity log.                                                    */
-/*  activity_delete_log       Deletes an activity log.                                                               */
-/*  activity_restore_log      Restores a soft deleted activity log.                                                  */
+/*  activity_get            Fetches details on an activity log.                                                      */
+/*  activity_list           Fetches activity logs.                                                                   */
+/*  activity_delete         Deletes an activity log.                                                                 */
+/*  activity_restore        Restores a soft deleted activity log.                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+
+/**
+ * Fetches details on an activity log.
+ *
+ * @param   int         $log_id   The id of the log on which details are desired.
+ * @param   string|null $lang     The language currently being used.
+ *
+ * @return  array                 An array of activity log details, prepared for displaying.
+ */
+
+function activity_get(  $log_id         ,
+                        $lang   = 'EN'  )
+{
+  // Check if the required files have been included
+  require_included_file('bbcodes.inc.php');
+
+  // Sanitize the data
+  $log_id = sanitize($log_id, 'int', 0);
+  $lang   = sanitize($lang, 'string');
+
+  // Initialize the returned array
+  $data         = array();
+  $data['diff'] = '';
+
+  // Fetch the justification reason
+  $dlog = mysqli_fetch_array(query("  SELECT  logs_activity.moderation_reason AS 'l_reason'
+                                      FROM    logs_activity
+                                      WHERE   logs_activity.id = '$log_id' "));
+  $data['reason'] = sanitize_output($dlog['l_reason']);
+
+  // Fetch any diffs linked to the log
+  $qdiff = query("  SELECT    logs_activity_details.content_description_$lang AS 'd_desc'   ,
+                              logs_activity_details.content_before            AS 'd_before' ,
+                              logs_activity_details.content_after             AS 'd_after'
+                    FROM      logs_activity_details
+                    WHERE     logs_activity_details.fk_logs_activity = '$log_id'
+                    ORDER BY  logs_activity_details.id ASC ");
+
+  // Go through the diffs (if any)
+  while($ddiff = mysqli_fetch_array($qdiff))
+  {
+    if(!$ddiff['d_desc'])
+      $data['diff'] .= bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
+    else
+      $data['diff'] .= '<span class="bold underlined">'.sanitize_output($ddiff['d_desc']).' :</span> '.bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
+  }
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('file' => 'nobleme/activity.act.php', 'function' => 'activity_get', 'data' => $data));
+
+  // Return the prepared data
+  return $data;
+}
+
+
 
 
 /**
@@ -30,14 +87,18 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  array                           An array of activity logs, prepared for displaying.
  */
 
-function activity_get_logs( $modlogs  = 0           ,
-                            $amount   = 100         ,
-                            $type     = 'all'       ,
-                            $deleted  = 0           ,
-                            $is_admin = 0           ,
-                            $path     = './../../'  ,
-                            $lang     = 'EN'        )
+function activity_list( $modlogs  = 0           ,
+                        $amount   = 100         ,
+                        $type     = 'all'       ,
+                        $deleted  = 0           ,
+                        $is_admin = 0           ,
+                        $path     = './../../'  ,
+                        $lang     = 'EN'        )
 {
+  // Require administrator rights to run this action in special cases
+  if($is_admin)
+    user_restrict_to_administrators($lang);
+
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
   require_included_file('activity.inc.php');
@@ -127,64 +188,7 @@ function activity_get_logs( $modlogs  = 0           ,
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('nobleme.act.php', 'activity_get_logs', $data));
-
-  // Return the prepared data
-  return $data;
-}
-
-
-
-
-/**
- * Fetches details on an activity log.
- *
- * @param   int         $log_id   The id of the log on which details are desired.
- * @param   string|null $lang     The language currently being used.
- *
- * @return  array                 An array of activity log details, prepared for displaying.
- */
-
-function activity_get_details(  $log_id         ,
-                                $lang   = 'EN'  )
-{
-  // Check if the required files have been included
-  require_included_file('bbcodes.inc.php');
-
-  // Sanitize the data
-  $log_id = sanitize($log_id, 'int', 0);
-  $lang   = sanitize($lang, 'string');
-
-  // Initialize the returned array
-  $data         = array();
-  $data['diff'] = '';
-
-  // Fetch the justification reason
-  $dlog = mysqli_fetch_array(query("  SELECT  logs_activity.moderation_reason AS 'l_reason'
-                                      FROM    logs_activity
-                                      WHERE   logs_activity.id = '$log_id' "));
-  $data['reason'] = sanitize_output($dlog['l_reason']);
-
-  // Fetch any diffs linked to the log
-  $qdiff = query("  SELECT    logs_activity_details.content_description_$lang AS 'd_desc'   ,
-                              logs_activity_details.content_before            AS 'd_before' ,
-                              logs_activity_details.content_after             AS 'd_after'
-                    FROM      logs_activity_details
-                    WHERE     logs_activity_details.fk_logs_activity = '$log_id'
-                    ORDER BY  logs_activity_details.id ASC ");
-
-  // Go through the diffs (if any)
-  while($ddiff = mysqli_fetch_array($qdiff))
-  {
-    if(!$ddiff['d_desc'])
-      $data['diff'] .= bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
-    else
-      $data['diff'] .= '<span class="bold underlined">'.sanitize_output($ddiff['d_desc']).' :</span> '.bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
-  }
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('nobleme.act.php', 'activity_get_details', $data));
+    var_dump(array('file' => 'nobleme/activity.act.php', 'function' => 'activity_list', 'data' => $data));
 
   // Return the prepared data
   return $data;
@@ -196,15 +200,20 @@ function activity_get_details(  $log_id         ,
 /**
  * Deletes an activity log.
  *
- * @param   int       $log_id         The id of the log which will be deleted.
- * @param   bool|null $deletion_type  Performs a soft (0) or hard (1) delete.
+ * @param   int           $log_id                     The id of the log which will be deleted.
+ * @param   bool|null     $deletion_type              Performs a soft (0) or hard (1) delete.
+ * @param   string|null   $lang           (OPTIONAL)  The language currently in use.
  *
  * @return  void
  */
 
-function activity_delete_log( $log_id             ,
-                              $deletion_type = 0  )
+function activity_delete( $log_id                 ,
+                          $deletion_type  = 0     ,
+                          $lang           = 'EN'  )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Sanitize the data
   $log_id = sanitize($log_id, 'int', 0);
 
@@ -233,13 +242,18 @@ function activity_delete_log( $log_id             ,
 /**
  * Restores a soft deleted activity log.
  *
- * @param   int   $log_id   The id of the log which will be restored.
+ * @param   int           $log_id             The id of the log which will be restored.
+ * @param   string|null   $lang   (OPTIONAL)  The language currently in use.
  *
  * @return  void
  */
 
-function activity_restore_log($log_id)
+function activity_restore(  $log_id         ,
+                            $lang   = 'EN'  )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Sanitize the data
   $log_id = sanitize($log_id, 'int', 0);
 

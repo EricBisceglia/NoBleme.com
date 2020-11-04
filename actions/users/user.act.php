@@ -8,14 +8,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  users_get_list                      Fetches a list of users.                                                     */
+/*  user_list                           Fetches a list of users.                                                     */
 /*                                                                                                                   */
 /*  user_ban_details                    Fetches information related to a user's ban.                                 */
 /*                                                                                                                   */
-/*  users_check_username                Checks if a username currently exists in the database.                       */
-/*  users_check_username_illegality     Checks if a username is illegal.                                             */
+/*  user_check_username                 Checks if a username currently exists in the database.                       */
+/*  user_check_username_illegality      Checks if a username is illegal.                                             */
 /*                                                                                                                   */
-/*  users_autocomplete_nickname         Autocompletes a nickname.                                                    */
+/*  user_autocomplete_nickname          Autocompletes a nickname.                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -36,17 +36,21 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  array                                   A list of users, prepared for displaying.
  */
 
-function users_get_list(  $sort_by          = ''    ,
-                          $max_count        = 0     ,
-                          $deleted          = 0     ,
-                          $activity_cutoff  = 0     ,
-                          $include_guests   = 0     ,
-                          $max_guest_count  = 0     ,
-                          $banned_only      = 0     ,
-                          $is_admin         = 0     ,
-                          $is_activity      = 0     ,
-                          $lang             = 'EN'  )
+function user_list( $sort_by          = ''    ,
+                    $max_count        = 0     ,
+                    $deleted          = 0     ,
+                    $activity_cutoff  = 0     ,
+                    $include_guests   = 0     ,
+                    $max_guest_count  = 0     ,
+                    $banned_only      = 0     ,
+                    $is_admin         = 0     ,
+                    $is_activity      = 0     ,
+                    $lang             = 'EN'  )
 {
+  // Require administrator rights to run this action in special cases
+  if($is_admin)
+    user_restrict_to_administrators($lang);
+
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
 
@@ -171,7 +175,7 @@ function users_get_list(  $sort_by          = ''    ,
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('users.act.php', 'users_get_list', $data));
+    var_dump(array('file' => 'users/user.act.php', 'function' => 'user_list', 'data' => $data));
 
   // Return the prepared data
   return $data;
@@ -224,6 +228,10 @@ function user_ban_details(  $lang     = 'EN'  ,
   $data['ban_r_en']   = sanitize_output($dban['u_ban_en']);
   $data['ban_r_fr']   = sanitize_output($dban['u_ban_fr']);
 
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('file' => 'users/users.act.php', 'function' => 'user_ban_details', 'data' => $data));
+
   // Return the data
   return $data;
 }
@@ -239,7 +247,7 @@ function user_ban_details(  $lang     = 'EN'  ,
  * @return  bool              Whether the username exists.
  */
 
-function users_check_username($username)
+function user_check_username($username)
 {
   // Sanitize the data
   $username = sanitize($username, 'string');
@@ -264,7 +272,7 @@ function users_check_username($username)
  * @return  bool              Whether the username is illegal on the website.
  */
 
-function users_check_username_illegality($username)
+function user_check_username_illegality($username)
 {
   // Define a list of badwords
   $bad_words = array('admin', 'biatch', 'bitch', 'coon', 'fagg', 'kike', 'moderat', 'nigg', 'offici', 'trann', 'whore');
@@ -290,7 +298,7 @@ function users_check_username_illegality($username)
  * @return  array                           An array containing all the data required to autocomplete the nickname.
  */
 
-function users_autocomplete_nickname( $input          ,
+function user_autocomplete_nickname(  $input          ,
                                       $type   = NULL  )
 {
   // Sanitize the input

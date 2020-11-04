@@ -10,7 +10,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  user_authenticate         Logs the user into their account (or refuses to).                                      */
 /*                                                                                                                   */
-/*  users_create_account      Accept or reject a user's registration attempt.                                        */
+/*  user_create_account       Accept or reject a user's registration attempt.                                        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -144,13 +144,13 @@ function user_authenticate( $ip               ,
  * @return  string|int                              Returns 1 if successfully registered, or a string in case of error.
  */
 
-function users_create_account(  $nickname                       ,
-                                $password                       ,
-                                $email                          ,
-                                $password_check   = NULL        ,
-                                $captcha          = NULL        ,
-                                $captcha_session  = NULL        ,
-                                $path             = './../../'  )
+function user_create_account( $nickname                       ,
+                              $password                       ,
+                              $email                          ,
+                              $password_check   = NULL        ,
+                              $captcha          = NULL        ,
+                              $captcha_session  = NULL        ,
+                              $path             = './../../'  )
 {
   // Check if the required files have been included
   require_included_file('users.lang.php');
@@ -205,11 +205,11 @@ function users_create_account(  $nickname                       ,
     return __('users_register_error_nickname_characters');
 
   // Error: Illegal string in username
-  if(users_check_username_illegality($nickname))
+  if(user_check_username_illegality($nickname))
     return __('users_register_error_nickname_illegal');
 
   // Error: Nickname already taken
-  if(users_check_username($nickname))
+  if(user_check_username($nickname))
     return __('users_register_error_nickname_taken');
 
   // Create the account

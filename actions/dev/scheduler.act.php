@@ -8,7 +8,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  dev_scheduler_list_one          Returns data related to a scheduled task.                                        */
+/*  dev_scheduler_get               Returns data related to a scheduled task.                                        */
 /*  dev_scheduler_list              Returns a list of all task scheduler executions, past and future.                */
 /*  dev_scheduler_edit              Edits an entry in the task scheduler.                                            */
 /*  dev_scheduler_delete_task       Deletes an entry in the scheduled tasks.                                         */
@@ -22,13 +22,18 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Returns data related to a scheduled task.
  *
- * @param   int         $task_id  The scheduled task's id.
+ * @param   int           $task_id              The scheduled task's id.
+ * @param   string|null   $lang     (OPTIONAL)  The language currently in use.
  *
- * @return  array|null            An array containing elements related to the task, or NULL if it does not exist.
+ * @return  array|null                          An array containing task related data, or NULL if it does not exist.
  */
 
-function dev_scheduler_list_one( $task_id )
+function dev_scheduler_get( $task_id          ,
+                            $lang     = 'EN'  )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Sanitize the data
   $task_id = sanitize($task_id, 'int', 0);
 
@@ -50,7 +55,7 @@ function dev_scheduler_list_one( $task_id )
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('dev.act.php', 'dev_scheduler_list_one', $data));
+    var_dump(array('file' => 'dev/scheduler.act.php', 'function' => 'dev_scheduler_get', 'data' => $data));
 
   // Return the array
   return $data;
@@ -81,6 +86,9 @@ function dev_scheduler_list(  $sort_order         = 'date'  ,
                               $search_report      = NULL    ,
                               $lang               = 'EN'    )
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
 
@@ -187,7 +195,7 @@ function dev_scheduler_list(  $sort_order         = 'date'  ,
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('dev.act.php', 'dev_scheduler_list', $data));
+    var_dump(array('file' => 'dev/scheduler.act.php', 'function' => 'dev_scheduler_list', 'data' => $data));
 
   // Return the prepared data
   return $data;
@@ -313,11 +321,16 @@ function dev_scheduler_delete_log(  $log_id         ,
 /**
  * Returns a list of all scheduler task types.
  *
+ * @param   string|null   $lang   (OPTIONAL)  The language currently in use.
+ *
  * @return  array   An array containing the task types.
  */
 
-function dev_scheduler_types_list()
+function dev_scheduler_types_list($lang = 'EN')
 {
+  // Require administrator rights to run this action
+  user_restrict_to_administrators($lang);
+
   // Fetch all scheduler types
   $qtypes = query(" SELECT    system_scheduler.task_type  AS 's_type'
                     FROM      system_scheduler
@@ -336,7 +349,7 @@ function dev_scheduler_types_list()
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('dev.act.php', 'dev_scheduler_list', $data));
+    var_dump(array('file' => 'dev/scheduler.act.php', 'function' => 'dev_scheduler_types_list', 'data' => $data));
 
   // Return the prepared data
   return $data;

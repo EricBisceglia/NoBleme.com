@@ -96,7 +96,7 @@ if(isset($_POST['dev_irc_bot_message_send']))
 
 if(isset($_POST['purge_line_number']))
 {
-  irc_bot_purge_queued_message( form_fetch_element('purge_line_number', 0)  ,
+  irc_bot_message_queue_delete( form_fetch_element('purge_line_number', 0)  ,
                                 $path                                       ,
                                 $lang                                       );
   $bot_action_selector = 'upcoming';
@@ -109,7 +109,7 @@ if(isset($_POST['purge_line_number']))
 // List of queued messages
 
 if($bot_action_selector == 'upcoming')
-  $irc_bot_message_queue = irc_bot_get_message_queue();
+  $irc_bot_message_queue = irc_bot_message_queue_list($path, $lang);
 
 
 
@@ -119,9 +119,9 @@ if($bot_action_selector == 'upcoming')
 
 if(isset($_POST['irc_bot_replay_log_id']))
 {
-  irc_bot_replay_message_history_entry( form_fetch_element('irc_bot_replay_log_id', 0)  ,
-                                        $path                                           ,
-                                        $lang                                           );
+  irc_bot_message_history_replay( form_fetch_element('irc_bot_replay_log_id', 0)  ,
+                                  $path                                           ,
+                                  $lang                                           );
   $bot_action_selector = 'message_log';
 }
 
@@ -133,8 +133,8 @@ if(isset($_POST['irc_bot_replay_log_id']))
 
 if(isset($_POST['irc_bot_delete_log_id']))
 {
-  irc_bot_delete_message_history_entry( form_fetch_element('irc_bot_delete_log_id', 0)  ,
-                                        $lang                                           );
+  irc_bot_message_history_delete( form_fetch_element('irc_bot_delete_log_id', 0)  ,
+                                  $lang                                           );
   $bot_action_selector = 'message_log';
 }
 
@@ -155,9 +155,10 @@ if(isset($_POST['dev_irc_bot_history_submit']))
   $irc_bot_history_search_sent_1  = ($irc_bot_history_search_sent == 1) ? ' selected' : '';
 
   // Submit the search and fetch the data for the history table
-  $irc_bot_message_history = irc_bot_get_message_history( $irc_bot_history_search_channel ,
-                                                          $irc_bot_history_search_message ,
-                                                          $irc_bot_history_search_sent    );
+  $irc_bot_message_history = irc_bot_message_history_list(  $lang                           ,
+                                                            $irc_bot_history_search_channel ,
+                                                            $irc_bot_history_search_message ,
+                                                            $irc_bot_history_search_sent    );
 
   // Display the history table
   $bot_action_selector = 'message_log';
@@ -173,7 +174,7 @@ else if($bot_action_selector == 'message_log')
   $irc_bot_history_search_sent_1  = '';
 
   // Fetch the data for the history table
-  $irc_bot_message_history = irc_bot_get_message_history();
+  $irc_bot_message_history = irc_bot_message_history_list($lang);
 }
 
 // Prepare the selector's value for when the history page is selected (avoids incorrect selector value when submitted)

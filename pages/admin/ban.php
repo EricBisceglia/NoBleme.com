@@ -77,7 +77,7 @@ if(isset($_POST['admin_ban_add_submit']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List of banned users
 
-$banned_users = users_get_list('banned', 0, 0, 0, 0, 0, 1, 0, 0, $lang);
+$banned_users = user_list('banned', 0, 0, 0, 0, 0, 1, 0, 0, $lang);
 
 
 
@@ -95,12 +95,12 @@ if(isset($_POST['admin_ban_logs_delete']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ban history
 
-$ban_logs = admin_ban_logs_get_list(  $lang                                                         ,
-                                      form_fetch_element('admin_ban_logs_sorting_order', 'banned')  ,
-                                      form_fetch_element('admin_ban_logs_search_status', -1)        ,
-                                      form_fetch_element('admin_ban_logs_search_username')          ,
-                                      form_fetch_element('admin_ban_logs_search_banner')            ,
-                                      form_fetch_element('admin_ban_logs_search_unbanner')          );
+$ban_logs = admin_ban_logs_list(  $lang                                                         ,
+                                  form_fetch_element('admin_ban_logs_sorting_order', 'banned')  ,
+                                  form_fetch_element('admin_ban_logs_search_status', -1)        ,
+                                  form_fetch_element('admin_ban_logs_search_username')          ,
+                                  form_fetch_element('admin_ban_logs_search_banner')            ,
+                                  form_fetch_element('admin_ban_logs_search_unbanner')          );
 
 
 
