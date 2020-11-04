@@ -1,3 +1,10 @@
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  admin_ban_fetch_log         Fetches a ban log.                                                                   */
+/*  admin_ban_search_logs       Performs a search through the ban history logs.                                      */
+/*  admin_ban_delete_log        Triggers the deletion of a ban history log.                                          */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 // Close the ban log popin if it is open upon loading the page
 popin_close('ban_log_popin');
 

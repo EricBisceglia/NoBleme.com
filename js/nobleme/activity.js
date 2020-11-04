@@ -1,3 +1,14 @@
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  activity_submit_menus       Submits the dropdwon menus that control which activity logs are shown.               */
+/*                                                                                                                   */
+/*  activity_show_details       Displays the details of an activity log.                                             */
+/*  activity_delete_log         Triggers the deletion of an activity log.                                            */
+/*  activity_restore_log        Restores a soft deleted activity log.                                                */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
  * Submits the dropdwon menus that control which activity logs are shown.
  *

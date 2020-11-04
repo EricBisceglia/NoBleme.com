@@ -1,3 +1,13 @@
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  dev_snippet_selector            Displays the selected code snippets                                              */
+/*  dev_palette_selector            Displays the selected CSS palette.                                               */
+/*  dev_js_toolbox_selector         Displays the selected JS toolbox.                                                */
+/*  dev_functions_type_selector     Displays functions of the selected type.                                         */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
  * Displays the selected code snippets
  *

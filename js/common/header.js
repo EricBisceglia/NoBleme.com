@@ -1,11 +1,17 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                            Functions required by the header menu on nearly every page                             */
+/*  toggle_header_menu              Toggles the visibility of a top menu.                                            */
+/*                                                                                                                   */
+/*  user_login_attempt              Attempts to log in a guest.                                                      */
+/*  user_login_attempt_process      Process a finished login attempt.                                                */
+/*                                                                                                                   */
+/*  popin_close                     Closes an open popin.                                                            */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+
 /**
- * Toggles the visibility of a top menu
+ * Toggles the visibility of a top menu.
  *
  * @param   {string}  menu_name       The name of the menu to show or hide.
  * @param   {string}  [invert_title]  If set, inverts the color scheme of the menu's title.
@@ -68,7 +74,7 @@ function toggle_header_menu(  menu_name             ,
  * @returns {void}
  */
 
-function users_login_attempt( login_path  ,
+function user_login_attempt(  login_path  ,
                               is_dev_mode )
 {
   // Ensure both nickname and password are filled in
@@ -84,7 +90,7 @@ function users_login_attempt( login_path  ,
     postdata += '&login_form_remember=' + fetch_sanitize_id('login_form_remember');
 
     // Send the login attempt to the backend (it will handle the rest)
-    fetch_page(login_path, 'login_form_error', postdata, users_login_attempt_process);
+    fetch_page(login_path, 'login_form_error', postdata, user_login_attempt_process);
   }
 }
 
@@ -97,7 +103,7 @@ function users_login_attempt( login_path  ,
  * @returns {void}
  */
 
-function users_login_attempt_process()
+function user_login_attempt_process()
 {
   // Fetch the current login status
   login_status = document.getElementById('login_form_error').innerHTML;

@@ -1,4 +1,13 @@
- /**
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  dev_versions_edit_popin       Shows the edit mode popin.                                                         */
+/*  dev_versions_edit             Triggers the modification of a website release in the version history.             */
+/*  dev_versions_delete           Triggers the deletion of a website release in the version history.                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
+/**
  * Shows the edit mode popin.
  *
  * @param   {int} version_id  The id of the version.

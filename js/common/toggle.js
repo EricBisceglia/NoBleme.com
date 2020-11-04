@@ -1,3 +1,13 @@
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  toggle_element            Toggles the visibility state of an element.                                            */
+/*  toggle_class              Toggles the visibility state of all elements of a specific class.                      */
+/*  toggle_element_oneway     Sets the visibility state of an element.                                               */
+/*  toggle_class_oneway       Sets the visibility state of all elements of a specific class.                         */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
  * Toggles the visibility state of an element.
  *
@@ -82,7 +92,7 @@ function toggle_element_oneway( element_id                      ,
 
 
 /**
- * Sets the visibility state of an element.
+ * Sets the visibility state of all elements of a specific class.
  *
  * @param   {string}  element_class         The class whose visibility will be toggled.
  * @param   {int}     will_be_made_visible  Whether the element will be hidden (0) or made visible (1).

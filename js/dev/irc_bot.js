@@ -1,10 +1,28 @@
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  irc_bot_action_selector           Displays the selected bot action.                                              */
+/*                                                                                                                   */
+/*  irc_bot_start                     Starts the IRC bot.                                                            */
+/*  irc_bot_stop                      Stops the IRC bot.                                                             */
+/*                                                                                                                   */
+/*  irc_bot_toggle_silence_mode       Toggles the silent status of the IRC bot.                                      */
+/*                                                                                                                   */
+/*  irc_bot_purge_message_queue       Purges the IRC bot's upcoming message queue.                                   */
+/*                                                                                                                   */
+/*  irc_bot_reset_history_form        Resets the search form of the IRC bot's message history table.                 */
+/*  irc_bot_replay_history_entry      Triggers the replaying of an entry from the IRC bot's message history.         */
+/*  irc_bot_delete_history_entry      Triggers the deletion of an entry from the IRC bot's message history.          */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
  * Displays the selected bot action.
  *
  * @returns {void}
  */
 
-function dev_bot_action_selector()
+function irc_bot_action_selector()
 {
   // Fetch the requested bot action
   fetch_bot_action = document.getElementById('select_bot_action').value;
@@ -24,7 +42,7 @@ function dev_bot_action_selector()
  * @returns {void}
  */
 
-function dev_bot_start(starting_message)
+function irc_bot_start(starting_message)
 {
   // Send the starting message
   document.getElementById('bot_actions_start').innerHTML = '<h2 class="align_center text_green">' + starting_message + '</h2>';
@@ -42,7 +60,7 @@ function dev_bot_start(starting_message)
  * @returns {void}
  */
 
-function dev_bot_stop()
+function irc_bot_stop()
 {
   // Trigger the death of the IRC bot
   fetch_page('irc_bot', 'bot_actions_stop', 'irc_bot_stop=1');

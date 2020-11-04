@@ -1,8 +1,14 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                  Functions used for dynamically fetching content                                  */
+/*  fetch_page              Fetches content dynamically.                                                             */
+/*                                                                                                                   */
+/*  fetch_sanitize          Sanitizes a string for use in postdata.                                                  */
+/*  fetch_sanitize_id       Sanitizes an element for use in postdata.                                                */
+/*                                                                                                                   */
+/*  form_require_field      Ensures that a form element is properly filled.                                          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
 
 /**
  * Fetches content dynamically.

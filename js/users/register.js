@@ -1,15 +1,22 @@
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  user_register_submit              Validates that a new user account can be registered.                           */
+/*  user_register_validate_username   Validates that a username is correct during the account registration process.  */
+/*  user_register_validate_password   Validates that a password is correct during the account registration process.  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
  * Validates that a new user account can be registered.
  *
  * This function will check that the form values are properly filled in before sending the form through.
  * There is obviously also back end data validation, so this function is only front end sugar for the user experience.
  *
- * @param   {string}  path  The path to the root of the website.
- *
  * @returns {void}
  */
 
-function users_register_submit(path)
+function user_register_submit()
 {
   // Begin by assuming that everything is ok
   form_failed = 0;
@@ -93,7 +100,7 @@ function users_register_submit(path)
  */
 
 
-function users_register_validate_username()
+function user_register_validate_username()
 {
   // Define the nickname validation regular expression
   regex_username = new RegExp("^[a-zA-Z0-9]{3,15}$");
@@ -132,7 +139,7 @@ function users_register_validate_username()
  */
 
 
-function users_register_validate_password()
+function user_register_validate_password()
 {
   // Fetch the passwords
   register_password_1 = document.getElementById('register_password_1').value;

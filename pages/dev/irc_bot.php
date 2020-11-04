@@ -194,7 +194,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h4 class="align_center">
     <?=__('irc_bot_action_title')?>
-    <select class="inh" id="select_bot_action" onchange="dev_bot_action_selector();">
+    <select class="inh" id="select_bot_action" onchange="irc_bot_action_selector();">
       <option value="start"><?=__('irc_bot_action_start')?></option>
       <option value="stop"><?=__('irc_bot_action_stop')?></option>
       <option value="silence"><?=__('irc_bot_action_silence')?></option>
@@ -218,7 +218,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h3 class="bigpadding_bot uppercase"><?=__('irc_bot_start_warning')?></h3>
 
-  <button class="bigbutton" onclick="dev_bot_start('<?=__('irc_bot_start_starting')?>');"><?=__('irc_bot_action_start')?></button>
+  <button class="bigbutton" onclick="irc_bot_start('<?=__('irc_bot_start_starting')?>');"><?=__('irc_bot_action_start')?></button>
 
 </div>
 
@@ -233,7 +233,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <?php if(!$irc_bot_stop) { ?>
 
-    <button class="bigbutton" onclick="dev_bot_stop();"><?=__('irc_bot_action_stop')?></button>
+    <button class="bigbutton" onclick="irc_bot_stop();"><?=__('irc_bot_action_stop')?></button>
 
     <?php } else { ?>
 

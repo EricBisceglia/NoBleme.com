@@ -1,3 +1,14 @@
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  dev_scheduler_list_search         Performs a search through the scheduler entries and logs.                      */
+/*  dev_scheduler_edit_popin          Shows the edit mode popin.                                                     */
+/*  dev_scheduler_edit                Triggers the modification of a scheduled task.                                 */
+/*  dev_scheduler_delete_task         Triggers the deletion of a scheduled task.                                     */
+/*  dev_scheduler_delete_log          Triggers the deletion of a scheduler history log.                              */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
  * Performs a search through the scheduler entries and logs.
  *
@@ -109,7 +120,7 @@ function dev_scheduler_delete_task( task_id ,
 
 
 /**
- * Triggers the deletion of a scheduler history log.
+ * $
  *
  * @param   {int}     log_id    The id of the scheduler log.
  * @param   {string}  message   The confirmation message which will be displayed.

@@ -719,7 +719,7 @@ $javascripts .= '
           &nbsp;
         </h5>
 
-        <form method="POST" name="login_form" onsubmit="users_login_attempt('<?=$path?>pages/users/login_attempt', <?=$GLOBALS['dev_mode']?>); return false;">
+        <form method="POST" name="login_form" onsubmit="user_login_attempt('<?=$path?>pages/users/login_attempt', <?=$GLOBALS['dev_mode']?>); return false;">
           <fieldset>
 
             <div class="smallpadding_bot">
