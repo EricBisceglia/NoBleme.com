@@ -6,7 +6,7 @@
 include_once './../../inc/includes.inc.php';        # Core
 include_once './../../inc/functions_time.inc.php';  # Time management
 include_once './../../actions/users/user.act.php';  # Actions
-include_once './../../lang/users.lang.php';         # Translations
+include_once './../../lang/users/online.lang.php';  # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');

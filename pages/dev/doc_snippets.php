@@ -3,8 +3,8 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php'; # Core
-include_once './../../lang/dev.lang.php';    # Translations
+include_once './../../inc/includes.inc.php';            # Core
+include_once './../../lang/dev/documentation.lang.php'; # Translations
 
 // Limit page access rights
 user_restrict_to_administrators($lang);
@@ -72,9 +72,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';          # Core
-include_once './../../actions/dev/devtools.act.php';  # Actions
-include_once './../../lang/nobleme.lang.php';         # Translations
+include_once './../../inc/includes.inc.php';            # Core
+include_once './../../actions/nobleme/actions.act.php'; # Actions
+include_once './../../lang/nobleme/lang.lang.php';      # Translations
 
 // Limit page access rights
 user_restrict_to_guests($lang);
@@ -150,9 +150,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 /*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED DYNAMICALLY                               */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';          # Core
-include_once './../../actions/dev/devtools.act.php';  # Actions
-include_once './../../lang/nobleme.lang.php';         # Translations
+include_once './../../inc/includes.inc.php';            # Core
+include_once './../../actions/nobleme/actions.act.php'; # Actions
+include_once './../../lang/nobleme/lang.lang.php';      # Translations
 
 // Throw a 404 if the page is being accessed directly
 page_must_be_fetched_dynamically();
@@ -198,9 +198,9 @@ user_restrict_to_guests($lang);
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';          # Core
-include_once './../../actions/dev/devtools.act.php';  # Actions
-include_once './../../lang/nobleme.lang.php';         # Translations
+include_once './../../inc/includes.inc.php';            # Core
+include_once './../../actions/nobleme/actions.act.php'; # Actions
+include_once './../../lang/nobleme/lang.lang.php';      # Translations
 
 // Limit page access rights
 user_restrict_to_guests($lang);
@@ -226,9 +226,9 @@ $js   = array('');</pre>
 /*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED DYNAMICALLY                               */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';          # Core
-include_once './../../actions/dev/devtools.act.php';  # Actions
-include_once './../../lang/nobleme.lang.php';         # Translations
+include_once './../../inc/includes.inc.php';            # Core
+include_once './../../actions/nobleme/actions.act.php'; # Actions
+include_once './../../lang/nobleme/lang.lang.php';      # Translations
 
 // Throw a 404 if the page is being accessed directly
 page_must_be_fetched_dynamically();

@@ -5,7 +5,6 @@
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';        # Core
 include_once './../../actions/users/user.act.php';  # Actions
-include_once './../../lang/users.lang.php';         # Translations
 
 // Throw a 404 if the page is being accessed directly
 page_must_be_fetched_dynamically();

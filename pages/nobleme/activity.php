@@ -7,7 +7,7 @@ include_once './../../inc/includes.inc.php';              # Core
 include_once './../../inc/functions_time.inc.php';        # Time management
 include_once './../../inc/activity.inc.php';              # Activity log parsing
 include_once './../../actions/nobleme/activity.act.php';  # Actions
-include_once './../../lang/nobleme.lang.php';             # Translations
+include_once './../../lang/nobleme/activity.lang.php';    # Translations
 
 // Limit page access rights
 if(isset($_GET['mod']))

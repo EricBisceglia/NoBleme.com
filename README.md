@@ -57,7 +57,7 @@ Understanding the codebase
 
 Hopefully, the code is well commented enough that you should have no issue understanding what each page does. As for being able to read the codebase, it all becomes clearer once you understand the role of each of the folders at the root of the project:
 
-* `actions` makes sense if you think of it as kind of a pre-MVC controller concept, all actions (fetch, view, create, update, etc.) are placed in this folder and called when necessary by the other pages
+* `actions` makes sense if you think of it as kind of a pre-MVC controller concept, all actions (get, list, create, edit, delete, etc.) are placed in this folder and called when necessary by the other pages
 
 * `api` contains the routes of the website's REST API (they use the logic from `actions`)
 

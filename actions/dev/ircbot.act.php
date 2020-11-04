@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -41,7 +41,7 @@ function irc_bot_start( $path = './../../'  ,
   user_restrict_to_administrators($lang);
 
   // Check if the required files have been included
-  require_included_file('dev.lang.php');
+  require_included_file('ircbot.lang.php');
 
   // Write a log in the database
   $timestamp = sanitize(time(), 'int', 0);
@@ -276,7 +276,7 @@ function irc_bot_message_queue_list(  $path = './../../'  ,
   user_restrict_to_administrators($lang);
 
   // Check if the required files have been included
-  require_included_file('dev.lang.php');
+  require_included_file('ircbot.lang.php');
 
   // Assemble the path to the bot's txt file
   $irc_bot_file = $path.$GLOBALS['irc_bot_file_name'];
@@ -327,7 +327,7 @@ function irc_bot_message_queue_delete(  $line_id                ,
   user_restrict_to_administrators($lang);
 
   // Check if the required files have been included
-  require_included_file('dev.lang.php');
+  require_included_file('ircbot.lang.php');
 
   // Ensure the line id is an int
   $line_id = sanitize($line_id, 'int', -1);
@@ -393,7 +393,7 @@ function irc_bot_message_history_list(  $lang           = 'EN'  ,
   user_restrict_to_administrators($lang);
 
   // Check if the required files have been included
-  require_included_file('dev.lang.php');
+  require_included_file('ircbot.lang.php');
   require_included_file('functions_time.inc.php');
 
   // Sanitize the search queries

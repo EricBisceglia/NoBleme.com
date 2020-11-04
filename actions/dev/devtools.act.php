@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -223,7 +223,7 @@ function dev_versions_create( $major                    ,
   user_restrict_to_administrators($lang);
 
   // Check if the required files have been included
-  require_included_file('dev.lang.php');
+  require_included_file('devtools.lang.php');
 
   // Sanitize the data
   $major            = sanitize($major, 'int', 0);
@@ -301,7 +301,7 @@ function dev_versions_edit( $id                   ,
   user_restrict_to_administrators($lang);
 
   // Check if the required files have been included
-  require_included_file('dev.lang.php');
+  require_included_file('devtools.lang.php');
 
   // Sanitize the data
   $id            = sanitize($id, 'int', 0);

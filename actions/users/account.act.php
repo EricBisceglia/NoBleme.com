@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -153,7 +153,7 @@ function user_create_account( $nickname                       ,
                               $path             = './../../'  )
 {
   // Check if the required files have been included
-  require_included_file('users.lang.php');
+  require_included_file('register.lang.php');
 
   // Sanitize the data
   $nickname_raw       = $nickname;
@@ -166,11 +166,11 @@ function user_create_account( $nickname                       ,
 
   // Error: No nickname specified
   if(!$nickname)
-    return __('users_login_error_no_nickname');
+    return __('users_register_error_no_nickname');
 
   // Error: No password specified
   if(!$password)
-    return __('users_login_error_no_password');
+    return __('users_register_error_no_password');
 
   // Incorrect email (no error)
   if(!filter_var($email, FILTER_VALIDATE_EMAIL))

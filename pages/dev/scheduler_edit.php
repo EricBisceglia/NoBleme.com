@@ -5,7 +5,7 @@
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';          # Core
 include_once './../../actions/dev/scheduler.act.php'; # Actions
-include_once './../../lang/dev.lang.php';             # Translations
+include_once './../../lang/dev/scheduler.lang.php';   # Translations
 
 // Throw a 404 if the page is being accessed directly
 page_must_be_fetched_dynamically();

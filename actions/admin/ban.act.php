@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -45,7 +45,7 @@ function admin_ban_user(  $banner_id                    ,
   user_restrict_to_moderators($lang);
 
   // Check if the required files have been included
-  require_included_file('admin.lang.php');
+  require_included_file('ban.lang.php');
 
   // Prepare and sanitize the data
   $banned_nickname_raw  = $nickname;
@@ -179,7 +179,7 @@ function admin_ban_edit(  $banner_id                    ,
   user_restrict_to_moderators($lang);
 
   // Check if the required files have been included
-  require_included_file('admin.lang.php');
+  require_included_file('ban.lang.php');
 
   // Prepare and sanitize the data
   $banned_id            = sanitize($banned_id, 'int', 0);
@@ -316,7 +316,7 @@ function admin_ban_delete(  $unbanner_id                    ,
   user_restrict_to_moderators($lang);
 
   // Check if the required files have been included
-  require_included_file('admin.lang.php');
+  require_included_file('ban.lang.php');
 
   // Prepare and sanitize the data
   $unbanned_id            = sanitize($unbanned_id, 'int', 0);

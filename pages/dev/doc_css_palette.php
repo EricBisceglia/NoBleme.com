@@ -3,10 +3,10 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';          # Core
-include_once './../../actions/dev/devtools.act.php';  # Actions
-include_once './../../lang/dev.lang.php';             # Translations
-include_once './../../inc/bbcodes.inc.php';           # BBCodes
+include_once './../../inc/includes.inc.php';            # Core
+include_once './../../actions/dev/devtools.act.php';    # Actions
+include_once './../../lang/dev/documentation.lang.php'; # Translations
+include_once './../../inc/bbcodes.inc.php';             # BBCodes
 
 // Limit page access rights
 user_restrict_to_administrators($lang);

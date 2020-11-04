@@ -3,7 +3,7 @@
 /*                            THIS PAGE CAN ONLY BE RAN IF IT IS INCLUDED BY ANOTHER PAGE                            */
 /*                                                                                                                   */
 // Include only /*****************************************************************************************************/
-if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
+if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../../404")); die(); }
 
 
 /*********************************************************************************************************************/
@@ -280,7 +280,7 @@ function user_check_username_illegality($username)
   // Check if the username matches any of the bad words
   $is_illegal = 0;
   foreach($bad_words as $bad_word)
-    $is_illegal = (mb_strpos($username, $bad_word) !== false) ? 1 : $is_illegal;
+    $is_illegal = (mb_strpos(string_change_case($username, 'lowercase'), $bad_word) !== false) ? 1 : $is_illegal;
 
   // Return the result
   return $is_illegal;
