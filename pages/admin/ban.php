@@ -7,8 +7,8 @@ include_once './../../inc/includes.inc.php';              # Core
 include_once './../../inc/functions_time.inc.php';        # Time management
 include_once './../../inc/functions_mathematics.inc.php'; # Maths
 include_once './../../inc/functions_numbers.inc.php';     # Number formatting
-include_once './../../actions/admin.act.php';             # Actions
-include_once './../../actions/users.act.php';             # User list
+include_once './../../actions/users/user.act.php';        # User management
+include_once './../../actions/admin/ban.act.php';         # Ban management
 include_once './../../lang/admin.lang.php';               # Translations
 
 // Limit page access rights

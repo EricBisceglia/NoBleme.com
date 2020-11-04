@@ -51,6 +51,29 @@ if(!$old_structure)
 /*********************************************************************************************************************/
 /*     These functions allow for "safe" manipulation of the database, and should only be used within this file.      */
 /*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  sql_check_query_id        Checks whether a query should be ran or not.                                           */
+/*  sql_update_query_id       Updates th ID of the last query that was ran.                                          */
+/*                                                                                                                   */
+/*  sql_create_table          Creates a new table.                                                                   */
+/*  sql_rename_table          Renames an existing table.                                                             */
+/*  sql_empty_table           Gets rid of all the data in an existing table.                                         */
+/*  sql_delete_table          Deletes an existing table.                                                             */
+/*                                                                                                                   */
+/*  sql_create_field          Creates a new field in an existing table.                                              */
+/*  sql_rename_field          Renames an existing field in an existing table.                                        */
+/*  sql_change_field_type     Changes the type of an existing field in an existing table.                            */
+/*  sql_move_field            Moves an existing field in an existing table.                                          */
+/*  sql_delete_field          Deletes an existing field in an existing table.                                        */
+/*                                                                                                                   */
+/*  sql_create_index          Creates an index in an existing table.                                                 */
+/*  sql_delete_index          Deletes an existing index in an existing table.                                        */
+/*                                                                                                                   */
+/*  sql_insert_value          Inserts a value in an existing table.                                                  */
+/*                                                                                                                   */
+/*  sql_sanitize_data         Sanitizes data for MySQL queries.                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
 /**
  * Checks whether a query should be ran or not.

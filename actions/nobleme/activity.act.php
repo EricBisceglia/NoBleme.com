@@ -8,9 +8,13 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                   ACTIVITY LOGS                                                   */
+/*  activity_get_logs         Fetches activity logs.                                                                 */
+/*  activity_get_details      Fetches details on an activity log.                                                    */
+/*  activity_delete_log       Deletes an activity log.                                                               */
+/*  activity_restore_log      Restores a soft deleted activity log.                                                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
 
 /**
  * Fetches activity logs.

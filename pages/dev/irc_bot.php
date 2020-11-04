@@ -3,10 +3,10 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';       # Core
-include_once './../../inc/functions_time.inc.php'; # Time management
-include_once './../../actions/dev.act.php';        # Actions
-include_once './../../lang/dev.lang.php';          # Translations
+include_once './../../inc/includes.inc.php';        # Core
+include_once './../../inc/functions_time.inc.php';  # Time management
+include_once './../../actions/dev/ircbot.act.php';  # Actions
+include_once './../../lang/dev.lang.php';           # Translations
 
 // Limit page access rights
 user_restrict_to_administrators($lang);
