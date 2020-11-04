@@ -6,6 +6,35 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  secure_session_start              Starts a session.                                                              */
+/*  encrypt_data                      Encrypts data.                                                                 */
+/*                                                                                                                   */
+/*  user_is_logged_in                 Checks whether the user is logged in.                                          */
+/*  user_log_out                      Logs the user out of their account.                                            */
+/*                                                                                                                   */
+/*  user_unban                        Unbans a banned user.                                                          */
+/*                                                                                                                   */
+/*  user_get_id                       Returns a user's id.                                                           */
+/*  user_get_nickname                 Returns a user's nickname from their id.                                       */
+/*  user_get_language                 Detects the user's language.                                                   */
+/*                                                                                                                   */
+/*  user_is_administrator             Checks if an user is an administrator.                                         */
+/*  user_is_moderator                 Checks if an user is a moderator (or above).                                   */
+/*  user_is_banned                    Checks if an user is banned.                                                   */
+/*                                                                                                                   */
+/*  user_restrict_to_administrators   Allows access only to administrators.                                          */
+/*  user_restrict_to_moderators       Allows access only to moderators (or above).                                   */
+/*  user_restrict_to_users            Allows access only to logged in users.                                         */
+/*  user_restrict_to_guests           Allows access only to guests (not logged into an account).                     */
+/*  user_restrict_to_banned           Allows access only to banned users.                                            */
+/*                                                                                                                   */
+/*  user_settings_nsfw                NSFW filter settings of the current user.                                      */
+/*  user_settings_privacy             Third party content privacy settings of the current user.                      */
+/*                                                                                                                   */
+/*  user_generate_random_nickname     Generates a random nickname for a guest.                                       */
+/*                                                                                                                   */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Begin by opening a session and checking the user's identity.
 //
@@ -250,35 +279,6 @@ function encrypt_data(  $data         ,
 
 
 /**
- * Detects the user's language.
- *
- * @param   int|null  $user_id  (OPTIONAL)  Gets the language of a specified user instead of the current user.
- *
- * @return  string                          The user's language settings.
- */
-
-function user_get_language($user_id = NULL)
-{
-  // If no user is specified, returns the language settings stored in the session - or english if none
-  if(!$user_id)
-    return (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
-
-  // Sanitize the provided id
-  $user_id = sanitize($user_id, 'int', 0);
-
-  // Fetch the user's language
-  $dlanguage = mysqli_fetch_array(query(" SELECT  users.current_language AS 'language'
-                                          FROM    users
-                                          WHERE   users.id = '$user_id' "));
-
-  // Return the user's language, or english if nothing was found
-  return ($dlanguage['language']) ? $dlanguage['language'] : 'EN';
-}
-
-
-
-
-/**
  * Checks whether the user is logged in.
  *
  * @return boolean  Simply enough returns true/1 if logged in, false/0 if logged out.
@@ -315,6 +315,51 @@ function user_log_out()
 
   // Reload the page
   exit(header("location: ".$url_logout));
+}
+
+
+
+
+/**
+ * Unbans a banned user.
+ *
+ * @param   int       $user_id                      The user's ID.
+ * @param   int|null  $unbanner_id      (OPTIONAL)  The ID of the moderator doing the unbanning.
+ * @param   int|null  $recent_activity  (OPTIONAL)  If set, generates an entry in recent activity.
+ *
+ * @return  void
+ */
+
+function user_unban(  $user_id              ,
+                      $unbanner_id      = 0 ,
+                      $recent_activity  = 0 )
+{
+  // Sanitize the data
+  $user_id            = sanitize($user_id, 'int', 0);
+  $unbanner_id        = sanitize($unbanner_id, 'int', 0);
+  $unbanner_nickname  = sanitize(user_get_nickname($user_id));
+  $timestamp          = sanitize(time(), 'int', 0);
+
+  // Unban the user
+  query(" UPDATE  users
+          SET     users.is_banned_since       = 0   ,
+                  users.is_banned_until       = 0   ,
+                  users.is_banned_because_en  = ''  ,
+                  users.is_banned_because_fr  = ''
+          WHERE   users.id                    = '$user_id' ");
+
+  // Ban logs
+  query(" UPDATE    logs_bans
+          SET       logs_bans.fk_unbanned_by_user = '$unbanner_id' ,
+                    logs_bans.unbanned_at         = '$timestamp'
+          WHERE     logs_bans.fk_banned_user      = '$user_id'
+          AND       logs_bans.unbanned_at         = 0
+          ORDER BY  logs_bans.banned_until        DESC
+          LIMIT     1 ");
+
+  // Recent activity
+  if($recent_activity)
+    log_activity('users_unbanned', 0, 'ENFR', 0, NULL, NULL, 0, $user_id, $unbanner_nickname);
 }
 
 
@@ -369,40 +414,29 @@ function user_get_nickname($user_id = NULL)
 
 
 /**
- * Checks if an user is a moderator (or above).
+ * Detects the user's language.
  *
- * Defaults to checking whether current user is a moderator unless the $user_id optional parameter is specified.
+ * @param   int|null  $user_id  (OPTIONAL)  Gets the language of a specified user instead of the current user.
  *
- * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is a moderator.
- *
- * @return  bool                            Returns 1 if the user has moderator rights, 0 if he doesn't.
+ * @return  string                          The user's language settings.
  */
 
-function user_is_moderator($user_id = NULL)
+function user_get_language($user_id = NULL)
 {
-  // If no user id is specified, use the current active session instead
-  if(!$user_id && isset($_SESSION['user_id']))
-    $user_id = $_SESSION['user_id'];
-
-  // If no user is specified, this means he is a guest, return 0
+  // If no user is specified, returns the language settings stored in the session - or english if none
   if(!$user_id)
-    return 0;
+    return (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
 
-  // Sanitize user id
+  // Sanitize the provided id
   $user_id = sanitize($user_id, 'int', 0);
 
-  // Fetch user rights
-  $drights = mysqli_fetch_array(query(" SELECT  users.is_moderator      AS 'u_mod' ,
-                                                users.is_administrator  AS 'u_admin'
-                                        FROM    users
-                                        WHERE   users.id = '$user_id' "));
+  // Fetch the user's language
+  $dlanguage = mysqli_fetch_array(query(" SELECT  users.current_language AS 'language'
+                                          FROM    users
+                                          WHERE   users.id = '$user_id' "));
 
-  // If user is an admin or a mod, return 1
-  if($drights['u_mod'] || $drights['u_admin'])
-    return 1;
-
-  // If none of the above were matches, then the user shouldn't have access: return 0
-  return 0;
+  // Return the user's language, or english if nothing was found
+  return ($dlanguage['language']) ? $dlanguage['language'] : 'EN';
 }
 
 
@@ -438,6 +472,46 @@ function user_is_administrator($user_id = NULL)
 
   // Return 1 if the user is an administrator, 0 if he isn't
   return $drights['u_admin'];
+}
+
+
+
+
+/**
+ * Checks if an user is a moderator (or above).
+ *
+ * Defaults to checking whether current user is a moderator unless the $user_id optional parameter is specified.
+ *
+ * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is a moderator.
+ *
+ * @return  bool                            Returns 1 if the user has moderator rights, 0 if he doesn't.
+ */
+
+function user_is_moderator($user_id = NULL)
+{
+  // If no user id is specified, use the current active session instead
+  if(!$user_id && isset($_SESSION['user_id']))
+    $user_id = $_SESSION['user_id'];
+
+  // If no user is specified, this means he is a guest, return 0
+  if(!$user_id)
+    return 0;
+
+  // Sanitize user id
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // Fetch user rights
+  $drights = mysqli_fetch_array(query(" SELECT  users.is_moderator      AS 'u_mod' ,
+                                                users.is_administrator  AS 'u_admin'
+                                        FROM    users
+                                        WHERE   users.id = '$user_id' "));
+
+  // If user is an admin or a mod, return 1
+  if($drights['u_mod'] || $drights['u_admin'])
+    return 1;
+
+  // If none of the above were matches, then the user shouldn't have access: return 0
+  return 0;
 }
 
 
@@ -488,45 +562,31 @@ function user_is_banned($user_id = NULL)
 
 
 /**
- * Unbans a banned user.
+ * Allows access only to administrators.
  *
- * @param   int       $user_id                      The user's ID.
- * @param   int|null  $unbanner_id      (OPTIONAL)  The ID of the moderator doing the unbanning.
- * @param   int|null  $recent_activity  (OPTIONAL)  If set, generates an entry in recent activity.
+ * Any user who does not have the required rights will get rejected and see an error page.
+ * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
+ *
+ * @param   string|null $lang (OPTIONAL)  The language used in the error message.
  *
  * @return  void
  */
 
-function user_unban(  $user_id              ,
-                      $unbanner_id      = 0 ,
-                      $recent_activity  = 0 )
+function user_restrict_to_administrators($lang = 'EN')
 {
-  // Sanitize the data
-  $user_id            = sanitize($user_id, 'int', 0);
-  $unbanner_id        = sanitize($unbanner_id, 'int', 0);
-  $unbanner_nickname  = sanitize(user_get_nickname($user_id));
-  $timestamp          = sanitize(time(), 'int', 0);
+  // Prepare the error message that will be displayed
+  $error_message = ($lang == 'EN') ? "This page is restricted to website administrators only." : "Cette page est réservée aux équipes d'administration du site.";
 
-  // Unban the user
-  query(" UPDATE  users
-          SET     users.is_banned_since       = 0   ,
-                  users.is_banned_until       = 0   ,
-                  users.is_banned_because_en  = ''  ,
-                  users.is_banned_because_fr  = ''
-          WHERE   users.id                    = '$user_id' ");
-
-  // Ban logs
-  query(" UPDATE    logs_bans
-          SET       logs_bans.fk_unbanned_by_user = '$unbanner_id' ,
-                    logs_bans.unbanned_at         = '$timestamp'
-          WHERE     logs_bans.fk_banned_user      = '$user_id'
-          AND       logs_bans.unbanned_at         = 0
-          ORDER BY  logs_bans.banned_until        DESC
-          LIMIT     1 ");
-
-  // Recent activity
-  if($recent_activity)
-    log_activity('users_unbanned', 0, 'ENFR', 0, NULL, NULL, 0, $user_id, $unbanner_nickname);
+  // Check if the user is logged in
+  if(user_is_logged_in())
+  {
+    // If the user isn't an administrator, throw the error
+    if(!user_is_administrator())
+      error_page($error_message);
+  }
+  // If the user is logged out, throw the error
+  else
+    error_page($error_message);
 }
 
 
@@ -553,37 +613,6 @@ function user_restrict_to_moderators($lang = 'EN')
   {
     // Check if the user has global moderator rights
     if(!user_is_moderator($_SESSION['user_id']))
-      error_page($error_message);
-  }
-  // If the user is logged out, throw the error
-  else
-    error_page($error_message);
-}
-
-
-
-
-/**
- * Allows access only to administrators.
- *
- * Any user who does not have the required rights will get rejected and see an error page.
- * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
- *
- * @param   string|null $lang (OPTIONAL)  The language used in the error message.
- *
- * @return  void
- */
-
-function user_restrict_to_administrators($lang = 'EN')
-{
-  // Prepare the error message that will be displayed
-  $error_message = ($lang == 'EN') ? "This page is restricted to website administrators only." : "Cette page est réservée aux équipes d'administration du site.";
-
-  // Check if the user is logged in
-  if(user_is_logged_in())
-  {
-    // If the user isn't an administrator, throw the error
-    if(!user_is_administrator())
       error_page($error_message);
   }
   // If the user is logged out, throw the error

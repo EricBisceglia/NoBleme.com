@@ -6,6 +6,17 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  sanitize                      Sanitizes data.                                                                    */
+/*  sanitize_input                Sanitizes user inputted data.                                                      */
+/*  sanitize_output               Sanitizes data for HTML usage.                                                     */
+/*  sanitize_output_full          Sanitizes data before outputting it as HTML, for untrusted user data.              */
+/*  sanitize_output_javascript    Sanitizes data for passing to inline javascript.                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
  * Sanitizes data.
  *

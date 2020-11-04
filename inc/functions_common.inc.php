@@ -6,11 +6,59 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                   //
-//                The functions in this file are global to the website and should always be included                 //
-//     Most of them are used in the header, the footer, or are generic useful functions that any page might need     //
-//                                                                                                                   //
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  database_row_exists                 Checks whether a row exists in a table.                                      */
+/*  database_entry_exists               Checks whether an entry exists in a table.                                   */
+/*                                                                                                                   */
+/*  system_variable_fetch               Fetches a system variable's value.                                           */
+/*  system_variable_update              Updates a system variable's value.                                           */
+/*                                                                                                                   */
+/*  system_assemble_version_number      Assembles a version number in accordance with SemVer 2.0.0 specification.    */
+/*  system_get_current_version_number   Returns information about the current version number.                        */
+/*                                                                                                                   */
+/*  page_is_fetched_dynamically         Is the page being fetched dynamically.                                       */
+/*  page_must_be_fetched_dynamically    Throws a 404 if the page is not being fetched dynamically.                   */
+/*                                                                                                                   */
+/*  has_file_been_included              Checks whether a specific file has been included.                            */
+/*  require_included_file               Requires a file to be included or exits the script.                          */
+/*                                                                                                                   */
+/*  form_fetch_element                  Fetches the unsanitized value or returns the existence of submitted user data*/
+/*                                                                                                                   */
+/*  string_truncate                     Truncates a string if it is longer than a specified length.                  */
+/*  string_change_case                  Changes the case of a string.                                                */
+/*  string_remove_accents               Removes accentuated latin characters from a string.                          */
+/*  string_increment                    Increments the last character of a string.                                   */
+/*                                                                                                                   */
+/*  date_better_strftime                Improves the strftime function.                                              */
+/*  date_french_ordinal                 Returns the french ordinal value of a number.                                */
+/*  date_to_text                        Transforms a MySQL date or a timestamp into a plaintext date.                */
+/*  date_to_ddmmyy                      Converts a mysql date to the DD/MM/YY format.                                */
+/*  date_to_mysql                       Converts a date to the mysql date format.                                    */
+/*                                                                                                                   */
+/*  diff_raw_string_arrays              Returns a raw diff between two string arrays.                                */
+/*  diff_strings                        Returns a human readable list of differences between two strings.            */
+/*                                                                                                                   */
+/*  search_string_context               Searches for a string in a text, along with the words surrounding said string*/
+/*  string_wrap_in_html_tags            Wraps HTML tags around every occurence of a string in a text.                */
+/*                                                                                                                   */
+/*  private_message_send                Sends a private message to an user.                                          */
+/*                                                                                                                   */
+/*  flood_check                         Throws an error if the user is currently flooding the website,               */
+/*                                      then updates the last activity date.                                         */
+/*                                                                                                                   */
+/*  log_activity                        Adds an entry to the recent activity logs.                                   */
+/*  log_activity_details                Adds an entry to the recent activity detailed logs.                          */
+/*  log_activity_purge_orphan_diffs     Deletes all orphan entries in the detailed activity logs.                    */
+/*  log_activity_delete                 Soft deletes an entry in the activity logs.                                  */
+/*                                                                                                                   */
+/*  irc_bot_send_message                Uses the IRC bot to broadcast a message.                                     */
+/*                                                                                                                   */
+/*  html_fix_meta_tags                  Makes the content of meta tags valid.                                        */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                   GENERIC TOOLS                                                   */

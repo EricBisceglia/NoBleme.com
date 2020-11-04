@@ -6,6 +6,14 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  bbcodes      Turns BBCodes into HTML.                                                                            */
+/*  nbcodes      Turns more BBCodes into HTML, for administrator usage only.                                         */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
  * Turns BBCodes into HTML.
  *
@@ -245,7 +253,7 @@ function bbcodes( $message                                                      
  *
  * @param   string      $message                      The message which contains BBCodes.
  * @param   string|null $path             (OPTIONAL)  Relative path to the website root (defaults to 2 folders away).
- * @param   array       $page_list        (OPTIONAL)  Output of internet_list_pages() (all titles in current language).
+ * @param   array       $page_list        (OPTIONAL)  Output of compendium_list_pages() (pages in current language).
  * @param   array|null  $privacy_level    (OPTIONAL)  The output of user_settings_privacy() (third party settings).
  * @param   int|null    $nsfw_settings    (OPTIONAL)  The optuput of user_settings_nsfw() (profanity/nudity filter).
  *

@@ -6,6 +6,16 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  time_since            Returns in plain text how long ago a timestamp happened.                                   */
+/*  time_until            Returns in plain text in how long a timestamp will happen.                                 */
+/*                                                                                                                   */
+/*  time_days_elapsed     Calculates the number of days elapsed between two MySQL dates or timestamps.               */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
  * Returns in plain text how long ago a timestamp happened.
  *

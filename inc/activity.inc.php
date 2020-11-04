@@ -6,12 +6,15 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  log_activity_parse      Transforms an entry of the `logs_activity` table into human readable content.            */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
  * Transforms an entry of the `logs_activity` table into human readable content.
- *
- * This whole function is pretty self explanatory.
- * Basically you grab a whole line of the `logs_activity` table and you drop it through this function.
- * The output will be an array of values ready to be used for the recent activity page or the administrative logs page.
  *
  * @param   string      $path                     Relative path to the root of the website (usually is "./../../").
  * @param   bool        $admins_only              Is the log public (0) or private (1).

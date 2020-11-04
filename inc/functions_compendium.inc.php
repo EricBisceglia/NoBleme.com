@@ -6,15 +6,22 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  compendium_list_pages     Fetches all page titles of the compendium in a specific language.                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
- * Fetches all page titles of the encyclopedia of internet culture in a specific language.
+ * Fetches all page titles of the compendium in a specific language.
  *
  * @param   string|null $lang (OPTIONAL)  The language of the page titles, default to current user's language.
  *
  * @return  array                         All of the page titles in the requested language.
  */
 
-function internet_list_pages($lang = NULL)
+function compendium_list_pages($lang = NULL)
 {
   // Fetch the user's language if required
   $lang = (!$lang) ? user_get_language() : $lang;

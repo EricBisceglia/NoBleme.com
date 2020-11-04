@@ -6,6 +6,16 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  number_prepend_sign         Ensures a number is preceded by its sign.                                            */
+/*                                                                                                                   */
+/*  number_display_format       Changes the formatting of a number.                                                  */
+/*  number_styling              Returns a styling depending on whether the number is positive, zero, or negative.    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
  * Ensures a number is preceded by its sign.
  *

@@ -18,6 +18,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 //         Recurring tasks (cron style) can be set up by creating a new task whenever a specific task is ran         //
 //                                                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*                                                                                                                   */
+/*  schedule_task             Schedules a task to be ran at a later date.                                            */
+/*  schedule_task_update      Update an existing scheduled task.                                                     */
+/*  schedule_task_delete      Delete an existing scheduled task.                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
 
 /**
  * Schedules a task to be ran at a later date.

@@ -6,6 +6,14 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  maths_percentage_of         The percentage of a number that another number represents.                           */
+/*  maths_percentage_growth     Growth in percent from one value to another.                                         */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 /**
  * The percentage of a number that another number represents.
  *
@@ -34,7 +42,7 @@ function maths_percentage_of( $number ,
  * @return  double          Growth in % between the two values.
  */
 
-function math_percentage_growth(  $before ,
+function maths_percentage_growth( $before ,
                                   $after  )
 {
   // Simple enough: do the calculation and return its result (and avoid division by zero)

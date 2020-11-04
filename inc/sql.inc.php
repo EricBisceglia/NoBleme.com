@@ -6,6 +6,14 @@
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
 
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*  query           Execute a MySQL query.                                                                           */
+/*  query_id        Returns the ID of the latest inserted row.                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Open a connexion to the MySQL database - include it any time you need to run a query
 

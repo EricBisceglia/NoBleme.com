@@ -522,7 +522,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
       <tr>
         <td class="align_right smallglow">
-          math_percentage_growth()
+          maths_percentage_growth()
         </td>
         <td class="align_center smallglow">
           functions_mathematics.inc.php
