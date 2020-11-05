@@ -66,8 +66,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <label class="label_inline" for="online_hide_guests"><?=__('users_online_hide_gests')?></label><br>
 
     <?php if($is_admin) { ?>
+
     <input id="online_admin_view" name="online_admin_view" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
     <label class="label_inline" for="online_admin_view"><?=__('users_online_admin_view')?></label><br>
+
     <?php } ?>
 
     <div class="desktop">
@@ -100,11 +102,20 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php for($i=0;$i<$userlist['rows'];$i++) { ?>
         <tr>
 
+          <?php if($is_admin && $userlist[$i]['type'] == 'guest') { ?>
+          <td class="tooltip_container align_center<?=$userlist[$i]['css']?>">
+          <?php } else { ?>
           <td class="align_center<?=$userlist[$i]['css']?>">
+          <?php } ?>
             <?php if($userlist[$i]['type'] == 'user') { ?>
             <?=__link('todo_link/user?id='.$userlist[$i]['id'], $userlist[$i]['nickname'], $userlist[$i]['css'])?>
             <?php } else { ?>
             <?=$userlist[$i]['nickname']?>
+            <?php } ?>
+            <?php if($is_admin && $userlist[$i]['type'] == 'guest') { ?>
+            <div class="tooltip">
+              <?=$userlist[$i]['ip']?>
+            </div>
             <?php } ?>
           </td>
 

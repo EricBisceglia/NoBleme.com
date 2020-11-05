@@ -80,6 +80,7 @@ function user_list( $sort_by          = ''    ,
                               users.last_visited_page_en  AS 'u_last_page_en'   ,
                               users.last_visited_page_fr  AS 'u_last_page_fr'   ,
                               users.last_visited_url      AS 'u_last_url'       ,
+                              users.current_ip_address    AS 'u_ip'             ,
                               users.is_banned_since       AS 'u_ban_start'      ,
                               users.is_banned_until       AS 'u_ban_end'        ,
                               users.is_banned_because_en  AS 'u_ban_reason_en'  ,
@@ -128,6 +129,7 @@ function user_list( $sort_by          = ''    ,
                                 users_guests.last_visited_page_en       AS 'u_last_page_en'   ,
                                 users_guests.last_visited_page_fr       AS 'u_last_page_fr'   ,
                                 users_guests.last_visited_url           AS 'u_last_url'       ,
+                                users_guests.ip_address                 AS 'u_ip'             ,
                                 0                                       AS 'u_ban_start'      ,
                                 0                                       AS 'u_ban_end'        ,
                                 ''                                      AS 'u_ban_reason_en'  ,
@@ -154,6 +156,7 @@ function user_list( $sort_by          = ''    ,
     $temp                   = ($lang == 'EN') ? $row['u_last_page_en'] : $row['u_last_page_fr'];
     $data[$i]['last_page']  = sanitize_output(string_truncate($temp, 50, '...'));
     $data[$i]['last_url']   = sanitize_output($row['u_last_url']);
+    $data[$i]['ip']         = sanitize_output($row['u_ip']);
     $data[$i]['ban_end']    = ($row['u_ban_end']) ? time_until($row['u_ban_end']) : '';
     $data[$i]['ban_endf']   = ($row['u_ban_end']) ? date_to_text($row['u_ban_end'], 0, 1) : '';
     $data[$i]['ban_start']  = ($row['u_ban_start']) ? time_since($row['u_ban_start']) : '';

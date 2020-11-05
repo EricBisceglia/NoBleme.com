@@ -36,17 +36,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_generate_random_nickname     Generates a random nickname for a guest.                                       */
 /*                                                                                                                   */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Begin by opening a session and checking the user's identity.
-//
-// TODO:  This whole process is really bad security wise, and inefficient too. It must be rewritten ASAP:
-//          - It exposes the encryption method used for passwords.
-//          - It forces me to make encrypt_data() insecure since it is called on every page load thus needs to be fast.
-//          - It compares the cookie to every single user for some reason.
-//          - It makes it possible to impersonate people.
-//          - It does not use tokens for auth but rather something built from the nickname.
-//          - The cookie name is stupid too tbh.
-//          - Yeah I just plain don't like this whole thing. Also the comments are minimum effort.
-
 // Let's begin by opening the session
 secure_session_start();
 
