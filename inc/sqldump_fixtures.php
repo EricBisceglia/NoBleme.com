@@ -468,6 +468,55 @@ query(" INSERT INTO users_settings
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Mass create randomly generated IP bans
+
+// Determine the number of bans to generate
+$random = mt_rand(5,10);
+for($i = 0; $i < $random; $i++)
+{
+  // Generate random data
+  $ip               = fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.';
+  $ip               = (mt_rand(0, 3) > 2) ? $ip.'*' : $ip.fixtures_generate_data('int', 0, 255);
+  $total_ban        = (mt_rand(0, 3) > 2) ? 1 : 0;
+  $banned_since     = mt_rand(1111239420, time());
+  $banned_until     = mt_rand($banned_since, (time() + (time() - $banned_since)));
+  $unbanned_at      = ($banned_until < time()) ? 0 : $banned_until;
+  $ban_reason_en    = (mt_rand(0,2) < 2) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
+  $ban_reason_fr    = (mt_rand(0,2) < 2) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
+  $unban_reason_en  = ((mt_rand(0,2) < 2) || ($banned_until < time())) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
+  $unban_reason_fr  = ((mt_rand(0,2) < 2) || ($banned_until < time())) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
+
+  // Generate the ip bans
+  if($banned_until < time())
+    query(" INSERT INTO system_ip_bans
+            SET         system_ip_bans.ip_address     = '$ip'             ,
+                        system_ip_bans.is_a_total_ban = '$total_ban'      ,
+                        system_ip_bans.banned_since   = '$banned_since'   ,
+                        system_ip_bans.banned_until   = '$banned_until'   ,
+                        system_ip_bans.ban_reason_en  = '$ban_reason_en'  ,
+                        system_ip_bans.ban_reason_fr  = '$ban_reason_fr'  ");
+  query(" INSERT INTO logs_bans
+          SET         logs_bans.banned_ip_address = '$ip'               ,
+                      logs_bans.is_a_total_ip_ban = '$total_ban'        ,
+                      logs_bans.fk_banned_by_user = 1                   ,
+                      logs_bans.banned_at         = '$banned_since'     ,
+                      logs_bans.banned_until      = '$banned_until'     ,
+                      logs_bans.unbanned_at       = '$unbanned_at'      ,
+                      logs_bans.ban_reason_en     = '$ban_reason_en'    ,
+                      logs_bans.ban_reason_fr     = '$ban_reason_fr'    ,
+                      logs_bans.unban_reason_en   = '$unban_reason_en'  ,
+                      logs_bans.unban_reason_fr   = '$unban_reason_fr'  ");
+}
+
+// Output progress
+echo "<tr><td>Generated&nbsp;</td><td style=\"text-align:right\">$random</td><td>banned IPs</td></tr>";
+ob_flush();
+flush();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Mass create randomly generated guests
 
 // Determine the number of guests to generate

@@ -951,7 +951,9 @@ if($last_query < 21)
 
   sql_create_table('logs_bans');
   sql_create_field('logs_bans', 'fk_banned_user', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_field('logs_bans', 'fk_banned_by_user', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_banned_user');
+  sql_create_field('logs_bans', 'banned_ip_address', 'VARCHAR(156) NOT NULL', 'fk_banned_user');
+  sql_create_field('logs_bans', 'is_a_total_ip_ban', 'TINYINT NOT NULL DEFAULT 0', 'banned_ip_address');
+  sql_create_field('logs_bans', 'fk_banned_by_user', 'INT UNSIGNED NOT NULL DEFAULT 0', 'is_a_total_ip_ban');
   sql_create_field('logs_bans', 'fk_unbanned_by_user', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_banned_by_user');
   sql_create_field('logs_bans', 'banned_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_unbanned_by_user');
   sql_create_field('logs_bans', 'banned_until', 'INT UNSIGNED NOT NULL DEFAULT 0', 'banned_at');
@@ -1717,4 +1719,23 @@ if($last_query < 31)
   sql_create_index('writings_texts', 'index_deleted', 'is_deleted');
 
   sql_update_query_id(31);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #544 - Add IP bans
+
+if($last_query < 32)
+{
+  sql_create_table('system_ip_bans');
+  sql_create_field('system_ip_bans', 'ip_address', 'VARCHAR(156) NOT NULL', 'id');
+  sql_create_field('system_ip_bans', 'is_a_total_ban', 'TINYINT NOT NULL DEFAULT 0', 'ip_address');
+  sql_create_field('system_ip_bans', 'banned_since', 'INT UNSIGNED NOT NULL DEFAULT 0', 'is_a_total_ban');
+  sql_create_field('system_ip_bans', 'banned_until', 'INT UNSIGNED NOT NULL DEFAULT 0', 'banned_since');
+  sql_create_field('system_ip_bans', 'ban_reason_en', 'TEXT NOT NULL', 'banned_until');
+  sql_create_field('system_ip_bans', 'ban_reason_fr', 'TEXT NOT NULL', 'ban_reason_en');
+
+  sql_update_query_id(32);
 }
