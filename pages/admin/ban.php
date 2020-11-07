@@ -231,13 +231,38 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
 
+        <?php if($banned_users[$i]['type'] == 'user') { ?>
         <td>
-          <?php if($banned_users[$i]['type'] == 'user') { ?>
           <?=__link('todo_link?id='.$banned_users[$i]['id'], $banned_users[$i]['nickname'], $banned_users[$i]['css'])?>
-          <?php } else { ?>
-          <span class="<?=$banned_users[$i]['css']?>"><?=$banned_users[$i]['ip']?></span>
-          <?php } ?>
         </td>
+        <?php } else { ?>
+        <td class="tooltip_container">
+          <span class="<?=$banned_users[$i]['css']?>"><?=$banned_users[$i]['ip']?></span>
+          <div class="tooltip dowrap">
+            <?php if($banned_users[$i]['total_ban']) { ?>
+            <div class="text_red bold glow padding_bot">
+              <?=__('admin_ban_list_tooltip_total')?>
+            </div>
+            <?php } ?>
+            <?php if($banned_users[$i]['ip_bans']['rows']) { ?>
+            <div class="smallpadding_bot">
+              <?=__('admin_ban_list_tooltip_users', $banned_users[$i]['ip_bans']['rows'], 0, 0, array($banned_users[$i]['ip_bans']['rows']))?>
+            </div>
+            <ul>
+              <?php for($j = 0; $j < $banned_users[$i]['ip_bans']['rows']; $j++) { ?>
+                <li>
+                  <?=__link('todo_link?id='.$banned_users[$i]['ip_bans'][$j]['id'], $banned_users[$i]['ip_bans'][$j]['nickname'])?>
+                </li>
+              <?php } ?>
+            </ul>
+            <?php } else { ?>
+            <div class="bold">
+              <?=__('admin_ban_list_tooltip_none')?>
+            </div>
+            <?php } ?>
+          </div>
+        </td>
+        <?php } ?>
 
         <td>
           <div class="tooltip_container">
@@ -279,8 +304,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td>
+          <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log(0, '.$banned_users[$i]['id'].', '.$banned_users[$i]['ip_ban_id'].');')?>
           <?php if($banned_users[$i]['type'] == 'user') { ?>
-          <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log(0, '.$banned_users[$i]['id'].');')?>
           <?=__link('pages/admin/ban_edit?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/edit_small.svg" alt="M" title="'.string_change_case(__('modify'), 'initials').'">', 'noglow')?>
           <?=__link('pages/admin/ban_delete?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/delete_small.svg" alt="X" title="'.string_change_case(__('delete'), 'initials').'">', 'noglow')?>
           <?php } ?>
@@ -482,8 +507,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
 
           <td>
-            <?php if($ban_logs[$i]['ban_type'] == 'user') { ?>
             <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log('.$ban_logs[$i]['id'].');')?>
+            <?php if($ban_logs[$i]['ban_type'] == 'user') { ?>
             <?php if($is_admin) { ?>
             <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_ban_delete_log('<?=$ban_logs[$i]['id']?>', '<?=__('admin_ban_logs_info_delete')?>')">
             <?php } ?>

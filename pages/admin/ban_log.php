@@ -26,9 +26,10 @@ user_restrict_to_moderators($lang);
 /*********************************************************************************************************************/
 
 // Ban log details
-$ban_log = admin_ban_logs_get(  form_fetch_element('log_id', 0) ,
-                                form_fetch_element('ban_id', 0) ,
-                                $lang                           );
+$ban_log = admin_ban_logs_get(  form_fetch_element('log_id', 0)     ,
+                                form_fetch_element('ban_id', 0)     ,
+                                form_fetch_element('ip_ban_id', 0)  ,
+                                $lang                               );
 
 // Exit in case of error
 if(!$ban_log)
@@ -50,6 +51,7 @@ if(!$ban_log)
 <table>
   <tbody>
 
+    <?php if($ban_log['username']) { ?>
     <tr class="row_separator_dark">
       <td class="align_right bold underlined nowrap">
         <?=__('admin_ban_logs_full_user')?>
@@ -58,6 +60,58 @@ if(!$ban_log)
         <?=__link('todo_link?id='.$ban_log['user_id'], $ban_log['username'])?>
       </td>
     </tr>
+    <?php } ?>
+
+    <?php if($ban_log['banned_ip']) { ?>
+
+    <?php if($ban_log['total_ip_ban']) { ?>
+    <tr>
+      <td colspan="2" class="align_center text_red bold">
+        <?=__('admin_ban_list_tooltip_total')?>
+      </td>
+    </tr>
+    <?php } ?>
+
+    <tr class="row_separator_dark">
+      <td class="align_right bold underlined nowrap">
+        <?=__('admin_ban_logs_full_ip')?>
+      </td>
+      <td>
+        <?=$ban_log['banned_ip']?>
+      </td>
+    </tr>
+
+    <?php if($ban_log['is_banned'] && $ban_log['ip_bans']['rows']) { ?>
+    <?php for($i = 0; $i < $ban_log['ip_bans']['rows']; $i++) { ?>
+    <?php if($i == ($ban_log['ip_bans']['rows'] - 1)) { ?>
+    <tr class="row_separator_dark">
+    <?php } else { ?>
+    <tr>
+    <?php } ?>
+      <?php if(!$i) { ?>
+      <td class="align_right bold underlined nowrap">
+        <?=__('admin_ban_logs_full_ip_bans', $ban_log['ip_bans']['rows'], 0, 0, array($ban_log['ip_bans']['rows']))?>
+      </td>
+      <?php } else { ?>
+      <td>
+        &nbsp;
+      </td>
+      <?php } ?>
+      <td>
+        <?=__link('todo_link?id='.$ban_log['ip_bans'][$i]['id'], $ban_log['ip_bans'][$i]['nickname'])?>
+      </td>
+    </tr>
+    <?php } ?>
+
+    <?php } else if($ban_log['is_banned']) { ?>
+    <tr class="row_separator_dark">
+      <td colspan="2" class="align_center bold">
+        <?=__('admin_ban_list_tooltip_none')?>
+      </td>
+    </tr>
+    <?php } ?>
+
+    <?php } ?>
 
     <tr>
       <td class="align_right bold underlined nowrap">

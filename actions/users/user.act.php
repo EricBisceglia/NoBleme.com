@@ -57,6 +57,8 @@ function user_list( $sort_by          = ''    ,
 
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
+  if($include_ip_bans)
+    require_included_file('ban.act.php');
 
   // Sanitize the data
   $sort_by          = sanitize($sort_by, 'string');
@@ -89,6 +91,7 @@ function user_list( $sort_by          = ''    ,
                               users.is_banned_until       AS 'u_ban_end'        ,
                               users.is_banned_because_en  AS 'u_ban_reason_en'  ,
                               users.is_banned_because_fr  AS 'u_ban_reason_fr'  ,
+                              0                           AS 'u_ip_ban_id'      ,
                               0                           AS 'u_total_ip_ban'
                     FROM      users
                     LEFT JOIN users_settings ON users.id = users_settings.fk_users
@@ -139,6 +142,7 @@ function user_list( $sort_by          = ''    ,
                                 0                                       AS 'u_ban_end'        ,
                                 ''                                      AS 'u_ban_reason_en'  ,
                                 ''                                      AS 'u_ban_reason_fr'  ,
+                                0                                       AS 'u_ip_ban_id'      ,
                                 0                                       AS 'u_total_ip_ban'
                       FROM      users_guests
                       WHERE     users_guests.last_visited_at >= '$minimum_activity'
@@ -165,6 +169,7 @@ function user_list( $sort_by          = ''    ,
                                 system_ip_bans.banned_until   AS 'u_ban_end'            ,
                                 system_ip_bans.ban_reason_en  AS 'u_ban_reason_en'      ,
                                 system_ip_bans.ban_reason_fr  AS 'u_ban_reason_fr'      ,
+                                system_ip_bans.id             AS 'u_ip_ban_id'          ,
                                 system_ip_bans.is_a_total_ban AS 'u_total_ip_ban'
                       FROM      system_ip_bans )
                     UNION
@@ -197,6 +202,9 @@ function user_list( $sort_by          = ''    ,
     $temp                   = ($lang == 'FR' && $row['u_ban_reason_fr']) ? $row['u_ban_reason_fr'] : $temp;
     $data[$i]['ban_reason'] = sanitize_output(string_truncate($temp, 30, '...'));
     $data[$i]['ban_full']   = (strlen($temp) > 30) ? sanitize_output($temp) : '';
+    $data[$i]['ip_ban_id']  = $row['u_ip_ban_id'];
+    $data[$i]['ip_bans']    = ($row['data_type'] == 'ip_ban') ? admin_ip_ban_list_users($row['u_ip'], $lang) : '';
+    $data[$i]['total_ban']  = ($row['u_total_ip_ban']) ? 1 : 0;
     $temp                   = ($row['data_type'] == 'user') ? ' bold noglow' : ' noglow';
     $temp                   = ($row['u_mod']) ? ' bold text_orange noglow' : $temp;
     $temp                   = ($row['u_admin']) ? ' bold text_red' : $temp;

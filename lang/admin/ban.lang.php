@@ -58,20 +58,28 @@ ___('admin_ban_add_error_already',      'FR', "Compte déjà banni : vous pouve
 
 
 // Current bans list
-___('admin_ban_list_title',     'EN', "Currently banned users");
-___('admin_ban_list_title',     'FR', "Bannissements actifs");
-___('admin_ban_list_subtitle',  'EN', "Sorted by upcoming unban date");
-___('admin_ban_list_subtitle',  'FR', "Triés par date de fin du bannissement");
-___('admin_ban_list_account',   'EN', "User or IP");
-___('admin_ban_list_account',   'FR', "Compte ou IP");
-___('admin_ban_list_end',       'EN', "Ban end");
-___('admin_ban_list_end',       'FR', "Fin du ban");
-___('admin_ban_list_start',     'EN', "Ban start");
-___('admin_ban_list_start',     'FR', "Début du ban.");
-___('admin_ban_list_length',    'EN', "Ban length");
-___('admin_ban_list_length',    'FR', "Durée du ban");
-___('admin_ban_list_served',    'EN', "Served");
-___('admin_ban_list_served',    'FR', "Peine purgée");
+___('admin_ban_list_title',           'EN', "Currently banned users");
+___('admin_ban_list_title',           'FR', "Bannissements actifs");
+___('admin_ban_list_subtitle',        'EN', "Sorted by upcoming unban date");
+___('admin_ban_list_subtitle',        'FR', "Triés par date de fin du bannissement");
+___('admin_ban_list_account',         'EN', "User or IP");
+___('admin_ban_list_account',         'FR', "Compte ou IP");
+___('admin_ban_list_end',             'EN', "Ban end");
+___('admin_ban_list_end',             'FR', "Fin du ban");
+___('admin_ban_list_start',           'EN', "Ban start");
+___('admin_ban_list_start',           'FR', "Début du ban.");
+___('admin_ban_list_length',          'EN', "Ban length");
+___('admin_ban_list_length',          'FR', "Durée du ban");
+___('admin_ban_list_served',          'EN', "Served");
+___('admin_ban_list_served',          'FR', "Peine purgée");
+___('admin_ban_list_tooltip_total',   'EN', "This is a total IP ban: the affected users can't even see any of the website's content at all.");
+___('admin_ban_list_tooltip_total',   'FR', "Il s'agit d'un ban IP total : les IP affectées ne peuvent même pas voir le contenu du site.");
+___('admin_ban_list_tooltip_users',   'EN', "{{1}} account is affected by this IP ban:");
+___('admin_ban_list_tooltip_users',   'FR', "{{1}} compte est affecté par ce ban d'IP :");
+___('admin_ban_list_tooltip_users+',  'EN', "{{1}} accounts are affected by this IP ban:");
+___('admin_ban_list_tooltip_users+',  'FR', "{{1}} comptes sont affectés par ce ban d'IP :");
+___('admin_ban_list_tooltip_none',    'EN', "No accounts are affected by this IP ban");
+___('admin_ban_list_tooltip_none',    'FR', "Aucun compte n'est affecté par ce ban IP");
 
 
 // Ban log history
@@ -114,6 +122,12 @@ ___('admin_ban_logs_popin_title',       'EN', "Ban log");
 ___('admin_ban_logs_popin_title',       'FR', "Historique de bannissement");
 ___('admin_ban_logs_full_user',         'EN', "Banned user:");
 ___('admin_ban_logs_full_user',         'FR', "Compte banni :");
+___('admin_ban_logs_full_ip',           'EN', "Banned IP address:");
+___('admin_ban_logs_full_ip',           'FR', "Adresse IP bannie :");
+___('admin_ban_logs_full_ip_bans',      'EN', "IP banned account:");
+___('admin_ban_logs_full_ip_bans',      'FR', "Compte banni par IP :");
+___('admin_ban_logs_full_ip_bans+',     'EN', "{{1}} IP banned accounts:");
+___('admin_ban_logs_full_ip_bans+',     'FR', "{{1}} comptes bannis par IP :");
 ___('admin_ban_logs_full_start',        'EN', "Ban date:");
 ___('admin_ban_logs_full_start',        'FR', "Date du bannissement :");
 ___('admin_ban_logs_full_end',          'EN', "Scheduled ban end:");

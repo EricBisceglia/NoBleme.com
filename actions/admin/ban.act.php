@@ -12,6 +12,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  admin_ban_edit              Modifies an existing ban.                                                            */
 /*  admin_ban_delete            Unbans a banned user.                                                                */
 /*                                                                                                                   */
+/*  admin_ip_ban_list_users     Fetches a list of users affected by an IP ban.                                       */
+/*                                                                                                                   */
 /*  admin_ban_logs_get          Fetches information about a ban log.                                                 */
 /*  admin_ban_logs_list         Lists the ban log history.                                                           */
 /*  admin_ban_logs_delete       Permanently deletes an entry in the ban history logs.                                */
@@ -391,20 +393,66 @@ function admin_ban_delete(  $unbanner_id                    ,
 
 
 
+/**
+ * Fetches a list of users affected by an IP ban.
+ *
+ * @param   string        $banned_ip              The banned IP.
+ * @param   string|null   $lang       (OPTIONAL)  The user's current language.
+ *
+ * @return  array                                 An array containing data related to users affected by the IP ban.
+ */
+
+function admin_ip_ban_list_users( $banned_ip          ,
+                                  $lang       = 'EN'  )
+{
+  // Require moderator rights to run this action
+  user_restrict_to_moderators($lang);
+
+  // Sanitize the ip
+  $banned_ip = sanitize(str_replace("*", "%", $banned_ip), 'string');
+
+  // Fetch affeted users
+  $qusers = query(" SELECT    users.id        AS 'u_id'   ,
+                              users.nickname  AS 'u_nick'
+                    FROM      users
+                    WHERE     users.current_ip_address LIKE '$banned_ip'
+                    ORDER BY  users.nickname ASC ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  {
+    $data[$i]['id']       = sanitize_output($row['u_id']);
+    $data[$i]['nickname'] = sanitize_output($row['u_nick']);
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('file' => 'dev/ban.act.php', 'function' => 'admin_ip_ban_list_users', 'data' => $data));
+
+  // Return the prepared data
+  return $data;
+}
+
+
 
 /**
  * Fetches information about a ban log.
  *
- * @param   int|null      $log_id   (OPTIONAL)  The id of the ban log.
- * @param   int|null      $user_id  (OPTIONAL)  The id of the user that was banned.
- * @param   string|null   $lang     (OPTIONAL)  The user's current language.
+ * @param   int|null      $log_id     (OPTIONAL)  The id of the ban log.
+ * @param   int|null      $user_id    (OPTIONAL)  The id of the user that was banned.
+ * @param   int|null      $ip_ban_id  (OPTIONAL)  The id of an IP ban.
+ * @param   string|null   $lang       (OPTIONAL)  The user's current language.
  *
  * @return  array|int                           The ban log history data, ready for displaying, or 0 if log not found.
 */
 
-function admin_ban_logs_get(  $log_id   = NULL  ,
-                              $user_id  = NULL  ,
-                              $lang     = 'EN'  )
+function admin_ban_logs_get(  $log_id     = NULL  ,
+                              $user_id    = NULL  ,
+                              $ip_ban_id  = NULL  ,
+                              $lang       = 'EN'  )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators($lang);
@@ -414,20 +462,21 @@ function admin_ban_logs_get(  $log_id   = NULL  ,
   require_included_file('functions_mathematics.inc.php');
   require_included_file('functions_numbers.inc.php');
 
-  // Return nothing if both the log and user id are missing
-  if(!$log_id && !$user_id)
+  // Return nothing if all ids are missing
+  if(!$log_id && !$user_id && !$ip_ban_id)
     return 0;
 
   // Sanitize the data
-  $log_id   = sanitize($log_id, 'int', 0);
-  $user_id  = sanitize($user_id, 'int', 0);
+  $log_id     = sanitize($log_id, 'int', 0);
+  $user_id    = sanitize($user_id, 'int', 0);
+  $ip_ban_id  = sanitize($ip_ban_id, 'int', 0);
 
-  // Return nothing if only the ban log id has been provided and the user does not exist
-  if(!$log_id && !database_row_exists('users', $user_id))
+  // Return nothing if only the ban log id, user id, and ip ban id all don't exist
+  if(!$log_id && !database_row_exists('users', $user_id) && !database_row_exists('system_ip_bans', $ip_ban_id))
     return 0;
 
-  // If no log_id has been given, fetch it based on the provided user_id
-  if(!$log_id)
+  // If a user_id has been provided, fetch the log_id
+  if($user_id)
   {
     $dban = mysqli_fetch_array(query("  SELECT    logs_bans.id AS 'l_id'
                                         FROM      logs_bans
@@ -438,24 +487,45 @@ function admin_ban_logs_get(  $log_id   = NULL  ,
     $log_id = sanitize($dban['l_id'], 'int', 0);
   }
 
+  // If an ip ban has been provided, fetch the log id
+  if($ip_ban_id)
+  {
+    // Fetch the banned IP address
+    $dip = mysqli_fetch_array(query(" SELECT  system_ip_bans.ip_address AS 'ib_ip'
+                                      FROM    system_ip_bans
+                                      WHERE   system_ip_bans.id = '$ip_ban_id' "));
+    $banned_ip = sanitize($dip['ib_ip'], 'string');
+
+    // Fetch the log id matching the fetched IP address
+    $dban = mysqli_fetch_array(query("  SELECT    logs_bans.id AS 'l_id'
+                                        FROM      logs_bans
+                                        WHERE     logs_bans.banned_ip_address LIKE  '$banned_ip'
+                                        AND       logs_bans.unbanned_at       =     0
+                                        ORDER BY  logs_bans.banned_at         DESC
+                                        LIMIT     1 "));
+    $log_id = sanitize($dban['l_id'], 'int', 0);
+  }
+
   // Return nothing if the ban log id does not exist
   if(!database_row_exists('logs_bans', $log_id))
     return 0;
 
   // Fetch data regarding the ban
-  $qlog = query(" SELECT    logs_bans.banned_at       AS 'l_start'      ,
-                            logs_bans.banned_until    AS 'l_end'        ,
-                            logs_bans.unbanned_at     AS 'l_unban'      ,
-                            logs_bans.ban_reason_en   AS 'l_reason_en'  ,
-                            logs_bans.ban_reason_fr   AS 'l_reason_fr'  ,
-                            logs_bans.unban_reason_en AS 'l_ureason_en' ,
-                            logs_bans.unban_reason_fr AS 'l_ureason_fr' ,
-                            users_banned.id           AS 'banned_id'    ,
-                            users_banned.nickname     AS 'banned_nick'  ,
-                            users_banner.id           AS 'banner_id'    ,
-                            users_banner.nickname     AS 'banner_nick'  ,
-                            users_unbanner.id         AS 'unbanner_id'  ,
-                            users_unbanner.nickname   AS 'unbanner_nick'
+  $qlog = query(" SELECT    logs_bans.banned_ip_address AS 'l_ip'           ,
+                            logs_bans.is_a_total_ip_ban AS 'l_total_ip_ban' ,
+                            logs_bans.banned_at         AS 'l_start'        ,
+                            logs_bans.banned_until      AS 'l_end'          ,
+                            logs_bans.unbanned_at       AS 'l_unban'        ,
+                            logs_bans.ban_reason_en     AS 'l_reason_en'    ,
+                            logs_bans.ban_reason_fr     AS 'l_reason_fr'    ,
+                            logs_bans.unban_reason_en   AS 'l_ureason_en'   ,
+                            logs_bans.unban_reason_fr   AS 'l_ureason_fr'   ,
+                            users_banned.id             AS 'banned_id'      ,
+                            users_banned.nickname       AS 'banned_nick'    ,
+                            users_banner.id             AS 'banner_id'      ,
+                            users_banner.nickname       AS 'banner_nick'    ,
+                            users_unbanner.id           AS 'unbanner_id'    ,
+                            users_unbanner.nickname     AS 'unbanner_nick'
                   FROM      logs_bans
                   LEFT JOIN users AS users_banned   ON logs_bans.fk_banned_user       = users_banned.id
                   LEFT JOIN users AS users_banner   ON logs_bans.fk_banned_by_user    = users_banner.id
@@ -470,6 +540,9 @@ function admin_ban_logs_get(  $log_id   = NULL  ,
   $data['is_banned']        = ($dlog['l_unban']) ? 0 : 1;
   $data['user_id']          = sanitize_output($dlog['banned_id']);
   $data['username']         = sanitize_output($dlog['banned_nick']);
+  $data['banned_ip']        = sanitize_output($dlog['l_ip']);
+  $data['total_ip_ban']     = sanitize_output($dlog['l_total_ip_ban']);
+  $data['ip_bans']          = ($dlog['l_ip']) ? admin_ip_ban_list_users($dlog['l_ip'], $lang) : '';
   $temp                     = date_to_text($dlog['l_start'], 0, 1, $lang);
   $data['start']            = sanitize_output($temp.' ('.time_since($dlog['l_start']).')');
   $temp                     = ($dlog['l_end'] > time()) ? time_until($dlog['l_end']) : time_since($dlog['l_end']);
