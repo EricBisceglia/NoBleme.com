@@ -480,14 +480,14 @@ for($i = 0; $i < $random; $i++)
   $total_ban        = (mt_rand(0, 3) > 2) ? 1 : 0;
   $banned_since     = mt_rand(1111239420, time());
   $banned_until     = mt_rand($banned_since, (time() + (time() - $banned_since)));
-  $unbanned_at      = ($banned_until < time()) ? 0 : $banned_until;
+  $unbanned_at      = ($banned_until > time()) ? 0 : $banned_until;
   $ban_reason_en    = (mt_rand(0,2) < 2) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
   $ban_reason_fr    = (mt_rand(0,2) < 2) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
-  $unban_reason_en  = ((mt_rand(0,2) < 2) || ($banned_until < time())) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
-  $unban_reason_fr  = ((mt_rand(0,2) < 2) || ($banned_until < time())) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
+  $unban_reason_en  = ((mt_rand(0,2) < 2) || ($banned_until > time())) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
+  $unban_reason_fr  = ((mt_rand(0,2) < 2) || ($banned_until > time())) ? '' : ucfirst(fixtures_generate_data('sentence', 4, 8));
 
   // Generate the ip bans
-  if($banned_until < time())
+  if($banned_until > time())
     query(" INSERT INTO system_ip_bans
             SET         system_ip_bans.ip_address     = '$ip'             ,
                         system_ip_bans.is_a_total_ban = '$total_ban'      ,

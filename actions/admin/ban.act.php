@@ -531,20 +531,22 @@ function admin_ban_logs_list( $lang             = 'EN'      ,
   require_included_file('functions_numbers.inc.php');
 
   // Prepare the query to fetch the log list
-  $qlogs  = "   SELECT    logs_bans.id              AS 'l_id'         ,
-                          logs_bans.banned_at       AS 'l_start'      ,
-                          logs_bans.banned_until    AS 'l_end'        ,
-                          logs_bans.unbanned_at     AS 'l_unban'      ,
-                          logs_bans.ban_reason_en   AS 'l_reason_en'  ,
-                          logs_bans.ban_reason_fr   AS 'l_reason_fr'  ,
-                          logs_bans.unban_reason_en AS 'l_ureason_en' ,
-                          logs_bans.unban_reason_fr AS 'l_ureason_fr' ,
-                          users_banned.id           AS 'banned_id'    ,
-                          users_banned.nickname     AS 'banned_nick'  ,
-                          users_banner.id           AS 'banner_id'    ,
-                          users_banner.nickname     AS 'banner_nick'  ,
-                          users_unbanner.id         AS 'unbanner_id'  ,
-                          users_unbanner.nickname   AS 'unbanner_nick'
+  $qlogs  = "   SELECT    logs_bans.id                AS 'l_id'         ,
+                          logs_bans.banned_ip_address AS 'l_ip'         ,
+                          logs_bans.banned_at         AS 'l_start'      ,
+                          logs_bans.banned_until      AS 'l_end'        ,
+                          logs_bans.unbanned_at       AS 'l_unban'      ,
+                          logs_bans.ban_reason_en     AS 'l_reason_en'  ,
+                          logs_bans.ban_reason_fr     AS 'l_reason_fr'  ,
+                          logs_bans.unban_reason_en   AS 'l_ureason_en' ,
+                          logs_bans.unban_reason_fr   AS 'l_ureason_fr' ,
+                          logs_bans.is_a_total_ip_ban AS 'l_total_ban'  ,
+                          users_banned.id             AS 'banned_id'    ,
+                          users_banned.nickname       AS 'banned_nick'  ,
+                          users_banner.id             AS 'banner_id'    ,
+                          users_banner.nickname       AS 'banner_nick'  ,
+                          users_unbanner.id           AS 'unbanner_id'  ,
+                          users_unbanner.nickname     AS 'unbanner_nick'
                 FROM      logs_bans
                 LEFT JOIN users AS users_banned   ON logs_bans.fk_banned_user       = users_banned.id
                 LEFT JOIN users AS users_banner   ON logs_bans.fk_banned_by_user    = users_banner.id
@@ -553,23 +555,26 @@ function admin_ban_logs_list( $lang             = 'EN'      ,
 
   // Search for data if requested
   if($search_status == 0)
-    $qlogs .= " AND       logs_bans.unbanned_at   >     0                     ";
+    $qlogs .= " AND       logs_bans.unbanned_at         >     0                       ";
   else if($search_status == 1)
-    $qlogs .= " AND       logs_bans.unbanned_at   =     0                     ";
+    $qlogs .= " AND       logs_bans.unbanned_at         =     0                       ";
   if($search_username)
-    $qlogs .= " AND       users_banned.nickname   LIKE  '%$search_username%'  ";
+    $qlogs .= " AND     ( users_banned.nickname         LIKE  '%$search_username%'
+                OR        logs_bans.banned_ip_address   LIKE  '%$search_username%' )  ";
   if($search_banner)
-    $qlogs .= " AND       users_banner.nickname   LIKE  '%$search_banner%'    ";
+    $qlogs .= " AND       users_banner.nickname         LIKE  '%$search_banner%'      ";
   if($search_unbanner)
-    $qlogs .= " AND       users_unbanner.nickname LIKE  '%$search_unbanner%'  ";
+    $qlogs .= " AND       users_unbanner.nickname       LIKE  '%$search_unbanner%'    ";
 
   // Sort the data as requested
   if($sorting_order == 'username')
-    $qlogs .= " ORDER BY users_banned.nickname  ASC   ";
+    $qlogs .= " ORDER BY  logs_bans.banned_ip_address != '' ,
+                          users_banned.nickname       ASC   ,
+                          logs_bans.banned_ip_address ASC   ";
   else if($sorting_order == 'unbanned')
-    $qlogs .= " ORDER BY logs_bans.unbanned_at  DESC  ";
+    $qlogs .= " ORDER BY  logs_bans.unbanned_at       DESC  ";
   else
-    $qlogs .= " ORDER BY  logs_bans.banned_at   DESC  ";
+    $qlogs .= " ORDER BY  logs_bans.banned_at         DESC  ";
 
   // Execute the query
   $qlogs = query($qlogs);
@@ -578,7 +583,9 @@ function admin_ban_logs_list( $lang             = 'EN'      ,
   for($i = 0; $row = mysqli_fetch_array($qlogs); $i++)
   {
     $data[$i]['id']                 = $row['l_id'];
+    $data[$i]['ban_type']           = ($row['banned_nick']) ? 'user' : 'ip_ban';
     $data[$i]['nickname']           = sanitize_output($row['banned_nick']);
+    $data[$i]['ip']                 = sanitize_output($row['l_ip']);
     $data[$i]['user_id']            = $row['banned_id'];
     $data[$i]['start']              = time_since($row['l_start']);
     $data[$i]['start_full']         = date_to_text($row['l_start'], 0, 1, $lang);

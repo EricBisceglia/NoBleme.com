@@ -13,13 +13,13 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 // User bans: title
-___('admin_ban_title', 'EN', "User bans");
-___('admin_ban_title', 'FR', "Bannissements d'utilisateurs");
+___('admin_ban_title', 'EN', "Ban management");
+___('admin_ban_title', 'FR', "Bannissements");
 
 
 // User bans: ban form
-___('admin_ban_add_title',        'EN', "Ban an user");
-___('admin_ban_add_title',        'FR', "Bannir un utilisateur");
+___('admin_ban_add_title',        'EN', "Ban an user or an IP address");
+___('admin_ban_add_title',        'FR', "Bannir un compte ou une IP");
 ___('admin_ban_add_nickname',     'EN', "User's nickname");
 ___('admin_ban_add_nickname',     'FR', "Pseudonyme du compte à bannir");
 ___('admin_ban_add_reason_fr',    'EN', "Ban justification in french (optional)");
@@ -39,7 +39,7 @@ ___('admin_ban_add_duration_1y',  'FR', "Menaces, harcèlement, fascisme : 1 an
 ___('admin_ban_add_duration_10y', 'EN', "Spammers, advertisers, illegal content: 10 year ban");
 ___('admin_ban_add_duration_10y', 'FR', "Spammeurs, publicitaires, contenu illégal : 10 ans d'exclusion");
 ___('admin_ban_add_button',       'EN', "Ban user");
-___('admin_ban_add_button',       'FR', "Bannir");
+___('admin_ban_add_button',       'FR', "Bannir le compte");
 
 
 // User bans: errors
@@ -62,6 +62,8 @@ ___('admin_ban_list_title',     'EN', "Currently banned users");
 ___('admin_ban_list_title',     'FR', "Bannissements actifs");
 ___('admin_ban_list_subtitle',  'EN', "Sorted by upcoming unban date");
 ___('admin_ban_list_subtitle',  'FR', "Triés par date de fin du bannissement");
+___('admin_ban_list_account',   'EN', "User or IP");
+___('admin_ban_list_account',   'FR', "Compte ou IP");
 ___('admin_ban_list_end',       'EN', "Ban end");
 ___('admin_ban_list_end',       'FR', "Fin du ban");
 ___('admin_ban_list_start',     'EN', "Ban start");

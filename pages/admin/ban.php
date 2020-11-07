@@ -77,7 +77,7 @@ if(isset($_POST['admin_ban_add_submit']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List of banned users
 
-$banned_users = user_list('banned', 0, 0, 0, 0, 0, 1, 0, 0, $lang);
+$banned_users = user_list('banned', 0, 0, 0, 0, 0, 1, 1, 0, 0, $lang);
 
 
 
@@ -202,7 +202,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr class="uppercase">
         <th>
-          <?=__('nickname')?>
+          <?=__('admin_ban_list_account')?>
         </th>
         <th>
           <?=__('admin_ban_list_start')?>
@@ -232,7 +232,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <td>
+          <?php if($banned_users[$i]['type'] == 'user') { ?>
           <?=__link('todo_link?id='.$banned_users[$i]['id'], $banned_users[$i]['nickname'], $banned_users[$i]['css'])?>
+          <?php } else { ?>
+          <span class="<?=$banned_users[$i]['css']?>"><?=$banned_users[$i]['ip']?></span>
+          <?php } ?>
         </td>
 
         <td>
@@ -275,9 +279,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td>
+          <?php if($banned_users[$i]['type'] == 'user') { ?>
           <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log(0, '.$banned_users[$i]['id'].');')?>
           <?=__link('pages/admin/ban_edit?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/edit_small.svg" alt="M" title="'.string_change_case(__('modify'), 'initials').'">', 'noglow')?>
           <?=__link('pages/admin/ban_delete?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/delete_small.svg" alt="X" title="'.string_change_case(__('delete'), 'initials').'">', 'noglow')?>
+          <?php } ?>
         </td>
 
       </tr>
@@ -297,7 +303,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_80 smallpadding_top">
 
-  <h2 class="align_center padding_top padding_bot">
+  <h2 class="align_center padding_top bigpadding_bot">
     <?=__('admin_ban_logs_title')?>
   </h2>
 
@@ -307,7 +313,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <tr class="uppercase">
           <th>
-            <?=__('nickname')?>
+            <?=__('admin_ban_list_account')?>
             <img class="smallicon pointer valign_middle spaced_right" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_ban_search_logs('username');">
           </th>
           <th>
@@ -398,7 +404,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <tr>
 
           <td>
+            <?php if($ban_logs[$i]['ban_type'] == 'user') { ?>
             <?=__link('todo_link?id='.$ban_logs[$i]['user_id'], $ban_logs[$i]['nickname'], 'bold noglow')?>
+            <?php } else { ?>
+            <?=$ban_logs[$i]['ip']?>
+            <?php } ?>
           </td>
 
           <td>
@@ -472,9 +482,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
 
           <td>
+            <?php if($ban_logs[$i]['ban_type'] == 'user') { ?>
             <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log('.$ban_logs[$i]['id'].');')?>
             <?php if($is_admin) { ?>
             <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_ban_delete_log('<?=$ban_logs[$i]['id']?>', '<?=__('admin_ban_logs_info_delete')?>')">
+            <?php } ?>
             <?php } ?>
           </td>
 

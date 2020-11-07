@@ -739,7 +739,7 @@ ___('submenu_admin_modlogs',        'FR', "Logs de modération");
 
 ___('submenu_admin_users',          'EN', "User management");
 ___('submenu_admin_users',          'FR', "Gestion des membres");
-___('submenu_admin_ban',            'EN', "User ban management");
+___('submenu_admin_ban',            'EN', "Banned users management");
 ___('submenu_admin_ban',            'FR', "Gestion des bannissements");
 ___('submenu_admin_nickname',       'EN', "Change a username");
 ___('submenu_admin_nickname',       'FR', "Modifier un pseudonyme");

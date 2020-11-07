@@ -29,6 +29,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   bool|null   $include_guests   OPTIONAL  If set, guests will be included in the user list.
  * @param   int|null    $max_guest_count  OPTIONAL  The number of guests to return (if guests are included, 0 for all).
  * @param   int|null    $banned_only      OPTIONAL  If set, returns only banned users.
+ * @param   int|null    $include_ip_bans  OPTIONAL  If set, IP bans will be included in the banned_only user list.
  * @param   int|null    $is_admin         OPTIONAL  Whether the current user is an administrator.
  * @param   int|null    $is_activity      OPTIONAL  Whether the list will be used to display user activity.
  * @param   string|null $lang             OPTIONAL  The language currently in use.
@@ -43,11 +44,14 @@ function user_list( $sort_by          = ''    ,
                     $include_guests   = 0     ,
                     $max_guest_count  = 0     ,
                     $banned_only      = 0     ,
+                    $include_ip_bans  = 0     ,
                     $is_admin         = 0     ,
                     $is_activity      = 0     ,
                     $lang             = 'EN'  )
 {
-  // Require administrator rights to run this action in special cases
+  // Require special rights to run this action in special cases
+  if($include_ip_bans)
+    user_restrict_to_moderators($lang);
   if($is_admin)
     user_restrict_to_administrators($lang);
 
@@ -84,7 +88,8 @@ function user_list( $sort_by          = ''    ,
                               users.is_banned_since       AS 'u_ban_start'      ,
                               users.is_banned_until       AS 'u_ban_end'        ,
                               users.is_banned_because_en  AS 'u_ban_reason_en'  ,
-                              users.is_banned_because_fr  AS 'u_ban_reason_fr'
+                              users.is_banned_because_fr  AS 'u_ban_reason_fr'  ,
+                              0                           AS 'u_total_ip_ban'
                     FROM      users
                     LEFT JOIN users_settings ON users.id = users_settings.fk_users
                     WHERE     users.is_deleted                  = '$deleted' ";
@@ -133,13 +138,38 @@ function user_list( $sort_by          = ''    ,
                                 0                                       AS 'u_ban_start'      ,
                                 0                                       AS 'u_ban_end'        ,
                                 ''                                      AS 'u_ban_reason_en'  ,
-                                ''                                      AS 'u_ban_reason_fr'
+                                ''                                      AS 'u_ban_reason_fr'  ,
+                                0                                       AS 'u_total_ip_ban'
                       FROM      users_guests
                       WHERE     users_guests.last_visited_at >= '$minimum_activity'
                       LIMIT     $max_guest_count )
                     UNION
                       ( ".$qusers." )
                     ORDER BY u_activity DESC ";
+
+  // Include IP bans if necessary
+  if($banned_only && $include_ip_bans)
+    $qusers = "     ( SELECT    'ip_ban'                      AS 'data_type'            ,
+                                0                             AS 'u_id'                 ,
+                                system_ip_bans.ip_address     AS 'u_nick'               ,
+                                ''                            AS 'u_guest_name_en'      ,
+                                ''                            AS 'u_guest_name_fr'      ,
+                                0                             AS 'u_admin'              ,
+                                0                             AS 'u_mod'                ,
+                                0                             AS 'u_activity'           ,
+                                ''                            AS 'u_last_page_en'       ,
+                                ''                            AS 'u_last_page_fr'       ,
+                                ''                            AS 'u_last_url'           ,
+                                system_ip_bans.ip_address     AS 'u_ip'                 ,
+                                system_ip_bans.banned_since   AS 'u_ban_start'          ,
+                                system_ip_bans.banned_until   AS 'u_ban_end'            ,
+                                system_ip_bans.ban_reason_en  AS 'u_ban_reason_en'      ,
+                                system_ip_bans.ban_reason_fr  AS 'u_ban_reason_fr'      ,
+                                system_ip_bans.is_a_total_ban AS 'u_total_ip_ban'
+                      FROM      system_ip_bans )
+                    UNION
+                      ( ".$qusers." )
+                    ORDER BY u_ban_end DESC ";
 
   // Run the query
   $qusers = query($qusers);
@@ -151,7 +181,7 @@ function user_list( $sort_by          = ''    ,
     $data[$i]['type']       = $row['data_type'];
     $data[$i]['id']         = $row['u_id'];
     $temp                   = ($lang == 'EN') ? $row['u_guest_name_en'] : $row['u_guest_name_fr'];
-    $data[$i]['nickname']   = ($row['data_type'] == 'user') ? sanitize_output($row['u_nick']) : $temp;
+    $data[$i]['nickname']   = ($row['data_type'] == 'guest') ? $temp : sanitize_output($row['u_nick']);
     $data[$i]['activity']   = time_since($row['u_activity']);
     $temp                   = ($lang == 'EN') ? $row['u_last_page_en'] : $row['u_last_page_fr'];
     $data[$i]['last_page']  = sanitize_output(string_truncate($temp, 50, '...'));
@@ -170,6 +200,7 @@ function user_list( $sort_by          = ''    ,
     $temp                   = ($row['data_type'] == 'user') ? ' bold noglow' : ' noglow';
     $temp                   = ($row['u_mod']) ? ' bold text_orange noglow' : $temp;
     $temp                   = ($row['u_admin']) ? ' bold text_red' : $temp;
+    $temp                   = ($row['u_total_ip_ban']) ? 'text_red' : $temp;
     $data[$i]['css']        = $temp;
   }
 
