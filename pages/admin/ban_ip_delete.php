@@ -17,9 +17,9 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/admin/ban_delete";
-$page_title_en    = "Unban someone";
-$page_title_fr    = "Débannir quelqu'un";
+$page_url         = "pages/admin/ban_ip_delete";
+$page_title_en    = "Unban an IP";
+$page_title_fr    = "Débannir une IP";
 
 
 
@@ -31,26 +31,14 @@ $page_title_fr    = "Débannir quelqu'un";
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Restrict the page to existing and currently banned users
+// Restrict the page to existing and currently banned IPs
 
-// Sanitize the user id
-$user_id = sanitize_input('GET', 'user', 'int', 0, 0);
+// Sanitize the ID
+$ip_ban_id = sanitize_input('GET', 'id', 'string', '');
 
-// Exit if the user id is malformed
-if(!$user_id)
-  error_page(__('admin_ban_edit_error_id'));
-
-// Exit if the user does not exist
-if(!database_entry_exists('users', 'id', $user_id))
-  error_page(__('admin_ban_edit_error_id'));
-
-// Exit if the user is not banned
-if(!user_is_banned($user_id))
-  error_page(__('admin_ban_edit_error_id'));
-
-// Exit if a non administrator is trying to unban a moderator
-if(user_is_moderator($user_id) && !user_is_administrator())
-  error_page(__('admin_ban_edit_error_rights'));
+// Exit if the ip ban does not exist
+if(!database_row_exists('system_ip_bans', $ip_ban_id))
+  error_page(__('admin_ban_edit_error_ip'));
 
 
 
@@ -58,14 +46,13 @@ if(user_is_moderator($user_id) && !user_is_administrator())
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Delete an existing ban
 
-if(isset($_POST['admin_ban_delete_submit']))
+if(isset($_POST['admin_ipban_delete_submit']))
 {
-  admin_ban_delete( user_get_id()                                           ,
-                    $user_id                                                ,
-                    form_fetch_element('admin_ban_delete_unban_reason_en')  ,
-                    form_fetch_element('admin_ban_delete_unban_reason_fr')  ,
-                    $lang                                                   ,
-                    $path                                                   );
+  admin_ip_ban_delete(  $ip_ban_id                                          ,
+                        user_get_id()                                       ,
+                        form_fetch_element('admin_ipban_delete_reason_en')  ,
+                        form_fetch_element('admin_ipban_delete_reason_fr')  ,
+                        $lang                                               );
   exit(header("Location: ./ban#active"));
 }
 
@@ -73,11 +60,10 @@ if(isset($_POST['admin_ban_delete_submit']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch data about the user's ban
+// Fetch data about the IP ban
 
 // Get the user's nickname and some details regarding the ban
-$ban_username = user_get_nickname($user_id);
-$ban_details  = user_ban_details($lang, $user_id);
+$ban_details = admin_ip_ban_get($ip_ban_id, $lang);
 
 // Hide the french unban justification in the english interface
 $admin_ban_hide_french = ($lang == 'EN') ? ' hidden' : '';
@@ -94,7 +80,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1 class="align_center">
-    <?=__('admin_ban_delete_title')?>
+    <?=__('admin_ban_delete_title_ip')?>
   </h1>
 
 </div>
@@ -105,33 +91,33 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <fieldset>
 
       <div class="smallpadding_bot">
-        <label for="admin_ban_delete_nick"><?=__('admin_ban_delete_nickname')?></label>
-        <input class="indiv" type="text" id="admin_ban_delete_nick" name="admin_ban_delete_nick" value="<?=$ban_username?>" disabled>
+        <label for="admin_ipban_delete_nick"><?=__('admin_ban_delete_ip')?></label>
+        <input class="indiv" type="text" id="admin_ipban_delete_nick" name="admin_ipban_delete_nick" value="<?=$ban_details['ip_address']?>" disabled>
       </div>
 
       <div class="smallpadding_bot">
-        <label for="admin_ban_delete_length"><?=__('admin_ban_edit_duration')?></label>
-        <input class="indiv" type="text" id="admin_ban_delete_length" name="admin_ban_delete_length" value="<?=$ban_details['time_left']?>" disabled>
+        <label for="admin_ipban_delete_length"><?=__('admin_ban_edit_duration')?></label>
+        <input class="indiv" type="text" id="admin_ipban_delete_length" name="admin_ipban_delete_length" value="<?=$ban_details['time_left']?>" disabled>
       </div>
 
-      <?php if($ban_details['ban_r_'.string_change_case($lang, 'lowercase')]) { ?>
+      <?php if($ban_details['ban_reason']) { ?>
       <div class="padding_bot">
-        <label for="admin_ban_delete_ban_reason"><?=__('admin_ban_delete_ban_reason')?></label>
-        <input class="indiv" type="text" id="admin_ban_delete_ban_reason" name="admin_ban_delete_ban_reason" value="<?=$ban_details['ban_r_'.string_change_case($lang, 'lowercase')]?>" disabled>
+        <label for="admin_ipban_delete_reason"><?=__('admin_ban_delete_ban_reason')?></label>
+        <input class="indiv" type="text" id="admin_ipban_delete_reason" name="admin_ipban_delete_reason" value="<?=$ban_details['ban_reason']?>" disabled>
       </div>
       <?php } ?>
 
       <div class="smallpadding_bot<?=$admin_ban_hide_french?>">
-        <label for="admin_ban_delete_unban_reason_fr"><?=__('admin_ban_delete_unban_reason_fr')?></label>
-        <input class="indiv" type="text" id="admin_ban_delete_unban_reason_fr" name="admin_ban_delete_unban_reason_fr" value="">
+        <label for="admin_ipban_delete_reason_fr"><?=__('admin_ban_delete_unban_reason_ip_fr')?></label>
+        <input class="indiv" type="text" id="admin_ipban_delete_reason_fr" name="admin_ipban_delete_reason_fr" value="">
       </div>
 
       <div class="padding_bot">
-        <label for="admin_ban_delete_unban_reason_en"><?=__('admin_ban_delete_unban_reason_en')?></label>
-        <input class="indiv" type="text" id="admin_ban_delete_unban_reason_en" name="admin_ban_delete_unban_reason_en" value="">
+        <label for="admin_ipban_delete_reason_en"><?=__('admin_ban_delete_unban_reason_ip_en')?></label>
+        <input class="indiv" type="text" id="admin_ipban_delete_reason_en" name="admin_ipban_delete_reason_en" value="">
       </div>
 
-      <input type="submit" name="admin_ban_delete_submit" value="<?=__('admin_ban_delete_submit')?>">
+      <input type="submit" name="admin_ipban_delete_submit" value="<?=__('admin_ban_delete_ip_submit')?>">
 
     </fieldset>
   </form>

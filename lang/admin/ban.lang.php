@@ -198,21 +198,35 @@ ___('admin_ban_edit_submit',    'FR', "Modifier le bannissement");
 
 
 // Delete a ban
-___('admin_ban_delete_title',           'EN', 'Unban a user');
-___('admin_ban_delete_title',           'FR', 'Débannir un compte');
-___('admin_ban_delete_ban_reason',      'EN', 'Raison du bannissement');
-___('admin_ban_delete_ban_reason',      'FR', 'Ban reason');
-___('admin_ban_delete_unban_reason_fr', 'EN', 'Reason for unbanning the account, in french (optional)');
-___('admin_ban_delete_unban_reason_fr', 'FR', 'Raison du débannissement en français (optionnel)');
-___('admin_ban_delete_unban_reason_en', 'EN', 'Reason for unbanning the account (optional)');
-___('admin_ban_delete_unban_reason_en', 'FR', 'Raison du débannissement en anglais (optionnel)');
-___('admin_ban_delete_submit',          'EN', "Unban the account");
-___('admin_ban_delete_submit',          'FR', "Débannir le compte");
+___('admin_ban_delete_title',               'EN', "Unban a user");
+___('admin_ban_delete_title',               'FR', "Débannir un compte");
+___('admin_ban_delete_title_ip',            'EN', "Unban an IP");
+___('admin_ban_delete_title_ip',            'FR', "Débannir une IP");
+___('admin_ban_delete_nickname',            'EN', "Nickname of the user you wish to unban");
+___('admin_ban_delete_nickname',            'FR', "Pseudonyme du compte à débannir");
+___('admin_ban_delete_ip',                  'EN', "IP address you wish to unban");
+___('admin_ban_delete_ip',                  'FR', "Adresse IP à débannir");
+___('admin_ban_delete_ban_reason',          'EN', "Ban reason");
+___('admin_ban_delete_ban_reason',          'FR', "Raison du bannissement");
+___('admin_ban_delete_unban_reason_fr',     'EN', "Reason for unbanning the account, in french (optional)");
+___('admin_ban_delete_unban_reason_fr',     'FR', "Raison du débannissement en français (optionnel)");
+___('admin_ban_delete_unban_reason_en',     'EN', "Reason for unbanning the account (optional)");
+___('admin_ban_delete_unban_reason_en',     'FR', "Raison du débannissement en anglais (optionnel)");
+___('admin_ban_delete_unban_reason_ip_fr',  'EN', "Reason for unbanning the IP, in french (optional)");
+___('admin_ban_delete_unban_reason_ip_fr',  'FR', "Raison du débannissement en français (optionnel)");
+___('admin_ban_delete_unban_reason_ip_en',  'EN', "Reason for unbanning the IP (optional)");
+___('admin_ban_delete_unban_reason_ip_en',  'FR', "Raison du débannissement en anglais (optionnel)");
+___('admin_ban_delete_submit',              'EN', "Unban the account");
+___('admin_ban_delete_submit',              'FR', "Débannir le compte");
+___('admin_ban_delete_ip_submit',           'EN', "Unban the IP");
+___('admin_ban_delete_ip_submit',           'FR', "Débannir l'IP");
 
 
 // Edit or delete a ban: Errors
 ___('admin_ban_edit_error_id',      'EN', "This user ID does not exist or is not banned.");
 ___('admin_ban_edit_error_id',      'FR', "Cet ID de compte n'existe pas ou n'est pas banni.");
+___('admin_ban_edit_error_ip',      'EN', "This IP address is not banned.");
+___('admin_ban_edit_error_ip',      'FR', "Cette adresse IP n'est pas bannie.");
 ___('admin_ban_edit_error_rights',  'EN', "Only administrators can ban or unban website staff.");
 ___('admin_ban_edit_error_rights',  'FR', "Seule l'administration peut bannir ou débannir des membres de l'équipe administrative.");
 

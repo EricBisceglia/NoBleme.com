@@ -359,6 +359,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php if($banned_users[$i]['type'] == 'user') { ?>
           <?=__link('pages/admin/ban_edit?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/edit_small.svg" alt="M" title="'.string_change_case(__('modify'), 'initials').'">', 'noglow')?>
           <?=__link('pages/admin/ban_delete?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/delete_small.svg" alt="X" title="'.string_change_case(__('delete'), 'initials').'">', 'noglow')?>
+          <?php } else { ?>
+          <?=__link('pages/admin/ban_ip_delete?id='.$banned_users[$i]['ip_ban_id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/delete_small.svg" alt="X" title="'.string_change_case(__('delete'), 'initials').'">', 'noglow')?>
           <?php } ?>
         </td>
 

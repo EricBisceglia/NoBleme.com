@@ -200,6 +200,14 @@ function log_activity_parse(  $path                 ,
     $return['FR']   = $mod_nickname.' a banni l\'adresse IP '.$nickname.' '.$temp[$amount].$temp2;
   }
 
+  else if($type == 'users_banned_ip_delete')
+  {
+    $return['css']  = 'red bold';
+    $return['href'] = $path.'pages/admin/ban';
+    $return['EN']   = $mod_nickname.' unbanned the IP address '.$nickname;
+    $return['FR']   = $mod_nickname.' a débanni l\'adresse IP '.$nickname;
+  }
+
   else if($type == 'users_unbanned_ip')
   {
     $return['css']  = 'text_red';

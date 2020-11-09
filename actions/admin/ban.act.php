@@ -14,6 +14,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  admin_ip_ban_create         Bans an IP.                                                                          */
 /*  admin_ip_ban_list_users     Fetches a list of users affected by an IP ban.                                       */
+/*  admin_ip_ban_get            Fetches information about an IP ban.                                                 */
+/*  admin_ip_ban_delete         Unbans a banned IP.                                                                  */
 /*                                                                                                                   */
 /*  admin_ban_logs_get          Fetches information about a ban log.                                                 */
 /*  admin_ban_logs_list         Lists the ban log history.                                                           */
@@ -566,8 +568,8 @@ function admin_ip_ban_create( $banner_id                    ,
   // IRC bot message
   $ban_duration = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
   $ban_extra    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
-  irc_bot_send_message("$banner_nickname has IP banned $ip_address_raw $ban_duration[$ban_length] $ban_extra", 'mod');
-  irc_bot_send_message("$banner_nickname has IP banned $ip_address_raw $ban_duration[$ban_length] $ban_extra", 'admin');
+  irc_bot_send_message("$banner_nickname has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra", 'mod');
+  irc_bot_send_message("$banner_nickname has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra", 'admin');
 }
 
 
@@ -615,6 +617,138 @@ function admin_ip_ban_list_users( $banned_ip          ,
   // Return the prepared data
   return $data;
 }
+
+
+
+
+/**
+ * Fetches information about an IP ban.
+ *
+ * @param   int         $ip_ban_id              The IP ban's ID.
+ * @param   string|null $lang       (OPTIONAL)  The language currently in use.
+ *
+ * @return  array|string                        An array of data regarding the ban, or a string containing an error.
+ */
+
+function admin_ip_ban_get(  $ip_ban_id          ,
+                            $lang       = 'EN'  )
+{
+  // Require moderator rights to run this action
+  user_restrict_to_moderators($lang);
+
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+
+  // Sanitize the ID
+  $ip_ban_id = sanitize($ip_ban_id, 'int', 0);
+
+  // Fetch data regarding the ban
+  $dban = mysqli_fetch_array(query("  SELECT  system_ip_bans.ip_address     AS 'b_ip'         ,
+                                              system_ip_bans.banned_until   AS 'b_end'        ,
+                                              system_ip_bans.ban_reason_en  AS 'b_reason_en'  ,
+                                              system_ip_bans.ban_reason_fr  AS 'b_reason_fr'
+                                      FROM    system_ip_bans
+                                      WHERE   system_ip_bans.id = '$ip_ban_id' "));
+
+  // Prepare the data
+  $data['ip_address'] = sanitize_output($dban['b_ip']);
+  $data['time_left']  = sanitize_output(time_until($dban['b_end']));
+  $temp               = ($dban['b_reason_fr']) ? $dban['b_reason_fr'] : $dban['b_reason_en'];
+  $data['ban_reason'] = ($lang == 'EN') ? sanitize_output($dban['b_reason_en']) : sanitize_output($temp);
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('file' => 'users/ban.act.php', 'function' => 'admin_ip_ban_get', 'data' => $data));
+
+  // Return the data
+  return $data;
+}
+
+
+
+
+/**
+ * Unbans a banned IP.
+ *
+ * @param   int         $ban_id                       The ID of the IP ban to remove.
+ * @param   int         $unbanner_id                  The id of the moderator unbanning the user.
+ * @param   string|null $unban_reason_en  (OPTIONAL)  The justification for the unban, in english.
+ * @param   string|null $unban_reason_fr  (OPTIONAL)  The justification for the unban, in french.
+ * @param   string|null $lang             (OPTIONAL)  The language currently in use.
+ *
+ * @return  void
+ */
+
+function admin_ip_ban_delete( $ban_id                   ,
+                              $unbanner_id              ,
+                              $unban_reason_en  = ''    ,
+                              $unban_reason_fr  = ''    ,
+                              $lang             = 'EN'  )
+{
+  // Require moderator rights to run this action
+  user_restrict_to_moderators($lang);
+
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+
+  // Sanitize the data
+  $ban_id               = sanitize($ban_id, 'int', 0);
+  $unbanner_id          = sanitize($unbanner_id, 'int', 0);
+  $unban_reason_en_raw  = $unban_reason_en;
+  $unban_reason_fr_raw  = $unban_reason_fr;
+  $unban_reason_en      = sanitize($unban_reason_en, 'string');
+  $unban_reason_fr      = sanitize($unban_reason_fr, 'string');
+
+  // Do nothing if the ban does not exist
+  if(!database_row_exists('system_ip_bans', $ban_id));
+
+  // Fetch the IP address that was banned
+  $dban = mysqli_fetch_array(query("  SELECT  system_ip_bans.ip_address     AS 'b_ip'     ,
+                                              system_ip_bans.banned_since   AS 'b_start'  ,
+                                              system_ip_bans.banned_until   AS 'b_end'
+                                      FROM    system_ip_bans
+                                      WHERE   system_ip_bans.id = '$ban_id' "));
+
+  // Prepare data regarding the ban
+  $banned_ip_raw  = $dban['b_ip'];
+  $banned_ip      = sanitize($dban['b_ip'], 'string');
+  $days_served    = time_days_elapsed($dban['b_start'], time(), 1);
+  $days_left      = time_days_elapsed(time(), $dban['b_end'], 1);
+
+  // Unban the IP
+  query(" DELETE FROM system_ip_bans
+          WHERE       system_ip_bans.id = '$ban_id' ");
+
+  // Delete the unbanning scheduled task
+  schedule_task_delete('users_unban_ip', $ban_id);
+
+  // Activity logs
+  $unbanner_nickname_raw = user_get_nickname($unbanner_id);
+  $modlog = log_activity('users_banned_ip_delete', 1, 'ENFR', $ban_id, $unban_reason_en_raw, $unban_reason_fr_raw, 0, 0, $banned_ip_raw, $unbanner_nickname_raw);
+
+  // Detailed activity logs
+  log_activity_details($modlog, 'Days left in the ban', 'Jours restants au bannissement', $days_left);
+  log_activity_details($modlog, 'Days served before the unbanning', 'Jours purgés avant le débannissement', $days_served);
+  if($unban_reason_en_raw)
+    log_activity_details($modlog, 'Unan reason (EN)', 'Raison du débannissement (EN)', $unban_reason_en_raw, $unban_reason_en_raw);
+  if($unban_reason_fr_raw)
+    log_activity_details($modlog, 'Unan reason (FR)', 'Raison du débannissement (FR)', $unban_reason_fr_raw, $unban_reason_fr_raw);
+
+  // Update the ban log with the unban reasons if necessary
+  if($unban_reason_fr || $unban_reason_en)
+    query(" UPDATE    logs_bans
+            SET       logs_bans.unban_reason_en   =     '$unban_reason_en'  ,
+                      logs_bans.unban_reason_fr   =     '$unban_reason_fr'
+            WHERE     logs_bans.banned_ip_address LIKE  '$banned_ip'
+            ORDER BY  logs_bans.unbanned_at       DESC
+            LIMIT     1 ");
+
+  // IRC bot message
+  $unban_reason_irc = ($unban_reason_en_raw) ? '('.$unban_reason_en_raw.')' : '';
+  irc_bot_send_message("$unbanner_nickname_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc", 'mod');
+  irc_bot_send_message("$unbanner_nickname_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc", 'admin');
+}
+
 
 
 
