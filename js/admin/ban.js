@@ -1,5 +1,7 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  admin_ban_add_swap_form     Changes the appearance of the ban form depending on whether it is a user or IP ban.  */
+/*                                                                                                                   */
 /*  admin_ban_fetch_log         Fetches a ban log.                                                                   */
 /*  admin_ban_search_logs       Performs a search through the ban history logs.                                      */
 /*  admin_ban_delete_log        Triggers the deletion of a ban history log.                                          */
@@ -7,6 +9,29 @@
 /*********************************************************************************************************************/
 // Close the ban log popin if it is open upon loading the page
 popin_close('ban_log_popin');
+
+
+/**
+ * Changes the appearance of the ban form depending on whether it is a user or IP ban.
+ *
+ * @returns {void}
+ */
+
+function admin_ban_add_swap_form()
+{
+  // Fetch the value of the ban type selector
+  ban_type = document.getElementById('admin_ban_add_type').value;
+
+  // Determine which elements should be hidden and which should be shown
+  hide_element = (ban_type == 'user') ? 'admin_ban_add_swap_ip'   : 'admin_ban_add_swap_user';
+  show_element = (ban_type == 'user') ? 'admin_ban_add_swap_user' : 'admin_ban_add_swap_ip';
+
+  // Swap the forms
+  toggle_class_oneway(hide_element, 0);
+  toggle_class_oneway(show_element, 1);
+}
+
+
 
 
 /**

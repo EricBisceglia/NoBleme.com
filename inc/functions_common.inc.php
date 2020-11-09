@@ -118,7 +118,7 @@ function database_entry_exists( $table  ,
                                         WHERE   $table.$field = '$value' "));
 
   // Return the result
-  return ($dcheck['r_id']) ? $dcheck['r_id'] : 0;
+  return (isset($dcheck['r_id'])) ? $dcheck['r_id'] : 0;
 }
 
 

@@ -20,8 +20,24 @@ ___('admin_ban_title', 'FR', "Bannissements");
 // User bans: ban form
 ___('admin_ban_add_title',        'EN', "Ban an user or an IP address");
 ___('admin_ban_add_title',        'FR', "Bannir un compte ou une IP");
+___('admin_ban_add_type',         'EN', "Ban type");
+___('admin_ban_add_type',         'FR', "Type de bannissement");
+___('admin_ban_add_type_user',    'EN', "Account");
+___('admin_ban_add_type_user',    'FR', "Compte");
+___('admin_ban_add_type_ip',      'EN', "IP address (extreme cases only)");
+___('admin_ban_add_type_ip',      'FR', "Adresse IP (cas extrêmes uniquement)");
+___('admin_ban_add_ip',           'EN', "IP address to ban (you can use wildcards, eg. 127.0.0.*)");
+___('admin_ban_add_ip',           'FR', "Adresse IP à bannir (jokers autorisés, par ex. 127.0.0.*)");
 ___('admin_ban_add_nickname',     'EN', "User's nickname");
 ___('admin_ban_add_nickname',     'FR', "Pseudonyme du compte à bannir");
+___('admin_ban_add_nickname_ip',  'EN', "OR nickname of a user - their IP address will be banned");
+___('admin_ban_add_nickname_ip',  'FR', "OU pseudonyme d'un compte - son adresse IP sera bannie");
+___('admin_ban_add_full_ip_ban',  'EN', "Severity of the IP ban (total bans are extreme cases only)");
+___('admin_ban_add_full_ip_ban',  'FR', "Sévérité du ban IP (réserver le ban total aux cas extrêmes)");
+___('admin_ban_add_full_ip_no',   'EN', "Standard: affected users will not be able to log into their accounts");
+___('admin_ban_add_full_ip_no',   'FR', "Standard : les utilisateurs affectés ne pourront pas se connecter à leurs comptes");
+___('admin_ban_add_full_ip_yes',  'EN', "Full: affected users will not be able to see the website at all");
+___('admin_ban_add_full_ip_yes',  'FR', "Total : les utilisateurs affectés ne pourront pas voir le contenu du site");
 ___('admin_ban_add_reason_fr',    'EN', "Ban justification in french (optional)");
 ___('admin_ban_add_reason_fr',    'FR', "Raison du bannissement en français (optionnel)");
 ___('admin_ban_add_reason_en',    'EN', "Ban justification (optional)");
@@ -40,11 +56,21 @@ ___('admin_ban_add_duration_10y', 'EN', "Spammers, advertisers, illegal content:
 ___('admin_ban_add_duration_10y', 'FR', "Spammeurs, publicitaires, contenu illégal : 10 ans d'exclusion");
 ___('admin_ban_add_button',       'EN', "Ban user");
 ___('admin_ban_add_button',       'FR', "Bannir le compte");
+___('admin_ban_add_ip_button',    'EN', "Ban IP address");
+___('admin_ban_add_ip_button',    'FR', "Bannir l'adresse IP");
 
 
 // User bans: errors
 ___('admin_ban_add_error_no_nickname',  'EN', "No nickname has been specified");
 ___('admin_ban_add_error_no_nickname',  'FR', "Il est nécessaire de préciser un pseudonyme");
+___('admin_ban_add_error_no_ip',        'EN', "No IP address or nickname have been specified");
+___('admin_ban_add_error_no_ip',        'FR', "Il est nécessaire de préciser une adresse IP ou un pseudonyme");
+___('admin_ban_add_error_wildcard',     'EN', "You are not allowed to IP ban the whole planet");
+___('admin_ban_add_error_wildcard',     'FR', "Vous n'avez pas le droit de bannir toute la planète");
+___('admin_ban_add_error_wildcards',    'EN', "Only one wildcard (*) is allowed at a time");
+___('admin_ban_add_error_wildcards',    'FR', "Un maximum d'un seul joker (*) est autorisé");
+___('admin_ban_add_error_ip_and_user',  'EN', "You must specify an IP address OR a nickname, not both");
+___('admin_ban_add_error_ip_and_user',  'FR', "Il est nécessaire de préciser SOIT une adresse IP SOIT un pseudonyme, non pas les deux");
 ___('admin_ban_add_error_wrong_user',   'EN', "The specified username does not exist");
 ___('admin_ban_add_error_wrong_user',   'FR', "Ce pseudonyme n'est associé à aucun compte");
 ___('admin_ban_add_error_self',         'EN', "You can not ban yourself");
@@ -53,8 +79,14 @@ ___('admin_ban_add_error_moderator',    'EN', "Moderators are not allowed to ban
 ___('admin_ban_add_error_moderator',    'FR', "La modération ne peut pas bannir l'administration");
 ___('admin_ban_add_error_length',       'EN', "You must specify a ban length");
 ___('admin_ban_add_error_length',       'FR', "Il est nécessaire de spécifier la durée du bannissement");
+___('admin_ban_add_error_no_user_ip',   'EN', "No IP address has been found for this user");
+___('admin_ban_add_error_no_user_ip',   'FR', "Aucune adresse IP n'est associée à ce compte");
 ___('admin_ban_add_error_already',      'EN', "This user is already banned! Edit their ban in the table below instead");
 ___('admin_ban_add_error_already',      'FR', "Compte déjà banni : vous pouvez modifier son bannissement dans la liste ci-dessous");
+___('admin_ban_add_error_ip_already',   'EN', "This IP address is already banned! Edit their ban in the table below instead");
+___('admin_ban_add_error_ip_already',   'FR', "Adresse IP déjà bannie : vous pouvez modifier son bannissement dans la liste ci-dessous");
+___('admin_ban_add_error_ip_admin',     'EN', "You can not IP ban an IP belonging to an administrator");
+___('admin_ban_add_error_ip_admin',     'FR', "Vous ne pouvez pas bannir une IP appartenant à l'administration du site");
 
 
 // Current bans list

@@ -506,6 +506,58 @@ for($i = 0; $i < $random; $i++)
                       logs_bans.ban_reason_fr     = '$ban_reason_fr'    ,
                       logs_bans.unban_reason_en   = '$unban_reason_en'  ,
                       logs_bans.unban_reason_fr   = '$unban_reason_fr'  ");
+  query(" INSERT INTO logs_activity
+          SET         logs_activity.happened_at                 = '$banned_since'   ,
+                      logs_activity.language                    = 'FREN'            ,
+                      logs_activity.is_moderators_only          = 1                 ,
+                      logs_activity.activity_type               = 'users_banned_ip' ,
+                      logs_activity.activity_amount             = '1'               ,
+                      logs_activity.activity_summary_en         = '$ban_reason_en'  ,
+                      logs_activity.activity_summary_fr         = '$ban_reason_fr'  ,
+                      logs_activity.activity_nickname           = '$ip'             ,
+                      logs_activity.activity_moderator_nickname = 'Admin'           ");
+  $log_id = query_id();
+  if($ban_reason_en)
+    query(" INSERT INTO logs_activity_details
+            SET         logs_activity_details.fk_logs_activity        = '$log_id'         ,
+                        logs_activity_details.content_description_en  = 'Reason (EN)'     ,
+                        logs_activity_details.content_description_fr  = 'Raison (EN)'     ,
+                        logs_activity_details.content_before          = '$ban_reason_en'  ,
+                        logs_activity_details.content_after           = '$ban_reason_en'  ");
+  if($ban_reason_fr)
+    query(" INSERT INTO logs_activity_details
+            SET         logs_activity_details.fk_logs_activity        = '$log_id'         ,
+                        logs_activity_details.content_description_en  = 'Reason (FR)'     ,
+                        logs_activity_details.content_description_fr  = 'Raison (FR)'     ,
+                        logs_activity_details.content_before          = '$ban_reason_fr'  ,
+                        logs_activity_details.content_after           = '$ban_reason_fr'  ");
+  if($banned_until < time())
+  {
+    query(" INSERT INTO logs_activity
+            SET         logs_activity.happened_at                 = '$banned_until'     ,
+                        logs_activity.language                    = 'FREN'              ,
+                        logs_activity.is_moderators_only          = 1                   ,
+                        logs_activity.activity_type               = 'users_unbanned_ip' ,
+                        logs_activity.activity_summary_en         = '$unban_reason_en'  ,
+                        logs_activity.activity_summary_fr         = '$unban_reason_fr'  ,
+                        logs_activity.activity_nickname           = '$ip'               ,
+                        logs_activity.activity_moderator_nickname = 'Admin'             ");
+    $log_id = query_id();
+    if($unban_reason_en)
+      query(" INSERT INTO logs_activity_details
+              SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
+                          logs_activity_details.content_description_en  = 'Reason (EN)'       ,
+                          logs_activity_details.content_description_fr  = 'Raison (EN)'       ,
+                          logs_activity_details.content_before          = '$unban_reason_en'  ,
+                          logs_activity_details.content_after           = '$unban_reason_en'  ");
+    if($unban_reason_fr)
+      query(" INSERT INTO logs_activity_details
+              SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
+                          logs_activity_details.content_description_en  = 'Reason (FR)'       ,
+                          logs_activity_details.content_description_fr  = 'Raison (FR)'       ,
+                          logs_activity_details.content_before          = '$unban_reason_fr'  ,
+                          logs_activity_details.content_after           = '$unban_reason_fr'  ");
+  }
 }
 
 // Output progress

@@ -174,7 +174,7 @@ function user_list( $sort_by          = ''    ,
                       FROM      system_ip_bans )
                     UNION
                       ( ".$qusers." )
-                    ORDER BY u_ban_end DESC ";
+                    ORDER BY u_ban_end ASC ";
 
   // Run the query
   $qusers = query($qusers);

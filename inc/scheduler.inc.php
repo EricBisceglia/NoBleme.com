@@ -229,6 +229,38 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
 
 
     //***************************************************************************************************************//
+    // End an IP ban after it has expired
+
+    if($scheduler_type == 'users_unban_ip')
+    {
+      // Only proceed if the IP ban actually exists
+      if(database_row_exists('system_ip_bans', $scheduler_action_id))
+      {
+        // Remove the IP ban
+        query(" DELETE FROM system_ip_bans
+                WHERE       system_ip_bans.id = '$scheduler_action_id' ");
+
+        // Activity logs
+        log_activity('users_unbanned_ip', 1, 'ENFR', $scheduler_action_id, NULL, NULL, 0, 0, $scheduler_desc_raw);
+
+        // Ban logs
+        query(" UPDATE    logs_bans
+                SET       logs_bans.fk_unbanned_by_user = 0 ,
+                          logs_bans.unbanned_at         = '$timestamp'
+                WHERE     logs_bans.banned_ip_address   = '$scheduler_desc'
+                AND       logs_bans.unbanned_at         = 0
+                ORDER BY  logs_bans.banned_until        DESC
+                LIMIT     1 ");
+
+        // Scheduler log
+        $scheduler_log = "The IP address has been unbanned";
+      }
+    }
+
+
+
+
+    //***************************************************************************************************************//
     //                                      THE SCHEDULED TASK HAS BEEN TREATED                                      //
     //***************************************************************************************************************//
     // Archive the task

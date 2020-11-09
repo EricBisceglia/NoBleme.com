@@ -24,7 +24,7 @@ $page_title_en    = "Bans";
 $page_title_fr    = "Bannissements";
 
 // Extra JS
-$js = array('admin/ban', 'users/autocomplete_nickname');
+$js = array('admin/ban', 'users/autocomplete_nickname', 'common/toggle');
 
 
 
@@ -42,33 +42,61 @@ $js = array('admin/ban', 'users/autocomplete_nickname');
 $admin_ban_hide_french = ($lang == 'EN') ? ' hidden' : '';
 
 // Fetch the ban form values, that way they can be kept as is after submitting
+$admin_ban_add_type       = form_fetch_element('admin_ban_add_type', 'user');
+$admin_ban_add_ip         = form_fetch_element('admin_ban_add_ip', '');
 $admin_ban_add_nick       = form_fetch_element('admin_ban_add_nick', '');
+$admin_ban_add_severity   = form_fetch_element('admin_ban_add_full_ip_ban', 0);
 $admin_ban_add_reason_en  = form_fetch_element('admin_ban_add_reason_en', '');
 $admin_ban_add_reason_fr  = form_fetch_element('admin_ban_add_reason_fr', '');
 $admin_ban_add_length     = form_fetch_element('admin_ban_add_length', 0);
+
+// Keep the ban type selector as is aswell by setting the correct element to selected
+$admin_ban_add_type_selector['user']  = ($admin_ban_add_type == 'user') ? ' selected' : '';
+$admin_ban_add_type_selector['ip']    = ($admin_ban_add_type == 'ip')   ? ' selected' : '';
+
+// Keep the IP ban sevirity selector as is aswell by setting the correct element to selected
+$admin_ban_severity_selector[0] = ($admin_ban_add_severity == 0)  ? ' selected' : '';
+$admin_ban_severity_selector[1] = ($admin_ban_add_severity == 1)  ? ' selected' : '';
 
 // Keep the ban length selector as is aswell by setting the correct element to selected
 $admin_ban_add_selector_values = array(0, 1, 7, 30, 365, 3650);
 foreach($admin_ban_add_selector_values as $value)
   $admin_ban_add_selector[$value] = ($admin_ban_add_length == $value) ? ' selected' : '';
 
-// If the ban length selector isn't in use, make the empty option the default one
-if(!isset($_POST['admin_ban_add_length']))
-  $admin_ban_add_selector[0] = ' selected';
+// Keep proper visiblity of form elements depending on the ban type
+$admin_ban_add_visiblity_user = ($admin_ban_add_type == 'user') ? ''        : ' hidden';
+$admin_ban_add_visiblity_ip   = ($admin_ban_add_type == 'user') ? ' hidden' : '';
 
 // Submit the ban request
 if(isset($_POST['admin_ban_add_submit']))
 {
-  $admin_ban_add_error = admin_ban_user(  user_get_id()             ,
-                                          $admin_ban_add_nick       ,
-                                          $admin_ban_add_length     ,
-                                          $admin_ban_add_reason_en  ,
-                                          $admin_ban_add_reason_fr  ,
-                                          $lang                     );
+  // User bans
+  if($admin_ban_add_type == 'user')
+    $admin_ban_add_error = admin_ban_create(  user_get_id()             ,
+                                              $admin_ban_add_nick       ,
+                                              $admin_ban_add_length     ,
+                                              $admin_ban_add_reason_en  ,
+                                              $admin_ban_add_reason_fr  ,
+                                              $lang                     ,
+                                              $path                     );
 
-  // Reset the nickname to allow chain bans, unless the ban request resulted in an error
+  // IP bans
+  else
+    $admin_ban_add_error  = admin_ip_ban_create(  user_get_id()             ,
+                                                  $admin_ban_add_ip         ,
+                                                  $admin_ban_add_length     ,
+                                                  $admin_ban_add_severity   ,
+                                                  $admin_ban_add_nick       ,
+                                                  $admin_ban_add_reason_en  ,
+                                                  $admin_ban_add_reason_fr  ,
+                                                  $lang                     );
+
+  // Reset some fields to allow chain bans, unless the ban request resulted in an error
   if(!$admin_ban_add_error)
-    $admin_ban_add_nick     = '';
+  {
+    $admin_ban_add_nick = '';
+    $admin_ban_add_ip   = '';
+  }
 }
 
 
@@ -138,13 +166,35 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <fieldset>
 
       <div class="smallpadding_bot">
-        <label for="admin_ban_add_nick"><?=__('admin_ban_add_nickname')?></label>
+        <label for="admin_ban_add_type"><?=__('admin_ban_add_type')?></label>
+        <select class="indiv align_left" id="admin_ban_add_type" name="admin_ban_add_type" onchange="admin_ban_add_swap_form()">
+          <option value="user"<?=$admin_ban_add_type_selector['user']?>><?=__('admin_ban_add_type_user')?></option>
+          <option value="ip"<?=$admin_ban_add_type_selector['ip']?>><?=__('admin_ban_add_type_ip')?></option>
+        </select>
+      </div>
+
+      <div class="smallpadding_bot admin_ban_add_swap_ip<?=$admin_ban_add_visiblity_ip?>">
+        <label for="admin_ban_add_ip"><?=__('admin_ban_add_ip')?></label>
+        <input class="indiv" type="text" id="admin_ban_add_ip" name="admin_ban_add_ip" value="<?=$admin_ban_add_ip?>">
+      </div>
+
+      <div class="smallpadding_bot">
+        <label for="admin_ban_add_nick" class="admin_ban_add_swap_user<?=$admin_ban_add_visiblity_user?>"><?=__('admin_ban_add_nickname')?></label>
+        <label for="admin_ban_add_nick" class="admin_ban_add_swap_ip<?=$admin_ban_add_visiblity_ip?>"><?=__('admin_ban_add_nickname_ip')?></label>
         <input class="indiv" type="text" id="admin_ban_add_nick" name="admin_ban_add_nick" value="<?=$admin_ban_add_nick?>" autocomplete="off" list="admin_ban_add_nick_list" onkeyup="autocomplete_nickname('admin_ban_add_nick', 'admin_ban_add_nick_list_parent', './../users/autocomplete_nickname', 'admin_ban_add_nick_list', 'ban');">
         <div id="admin_ban_add_nick_list_parent">
           <datalist id="admin_ban_add_nick_list">
             <option value=" ">
           </datalist>
         </div>
+      </div>
+
+      <div class="smallpadding_bot admin_ban_add_swap_ip<?=$admin_ban_add_visiblity_ip?>">
+        <label for="admin_ban_add_full_ip_ban"><?=__('admin_ban_add_full_ip_ban')?></label>
+        <select class="indiv align_left" id="admin_ban_add_full_ip_ban" name="admin_ban_add_full_ip_ban" onchange="admin_ban_add_swap_form()">
+          <option value="0"<?=$admin_ban_severity_selector[0]?>><?=__('admin_ban_add_full_ip_no')?></option>
+          <option value="1"<?=$admin_ban_severity_selector[1]?>><?=__('admin_ban_add_full_ip_yes')?></option>
+        </select>
       </div>
 
       <div class="smallpadding_bot<?=$admin_ban_hide_french?>">
@@ -177,7 +227,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
       <?php } ?>
 
-      <input type="submit" name="admin_ban_add_submit" value="<?=__('admin_ban_add_button')?>">
+      <input class="admin_ban_add_swap_user<?=$admin_ban_add_visiblity_user?>" type="submit" name="admin_ban_add_submit" value="<?=__('admin_ban_add_button')?>">
+      <input class="admin_ban_add_swap_ip<?=$admin_ban_add_visiblity_ip?>" type="submit" name="admin_ban_add_submit" value="<?=__('admin_ban_add_ip_button')?>">
 
     </fieldset>
   </form>

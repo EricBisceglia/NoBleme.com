@@ -8,10 +8,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  admin_ban_user              Bans a user.                                                                         */
+/*  admin_ban_create            Bans a user.                                                                         */
 /*  admin_ban_edit              Modifies an existing ban.                                                            */
 /*  admin_ban_delete            Unbans a banned user.                                                                */
 /*                                                                                                                   */
+/*  admin_ip_ban_create         Bans an IP.                                                                          */
 /*  admin_ip_ban_list_users     Fetches a list of users affected by an IP ban.                                       */
 /*                                                                                                                   */
 /*  admin_ban_logs_get          Fetches information about a ban log.                                                 */
@@ -35,13 +36,13 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  string|null                             Returns a string containing an error, or null if all went well.
  */
 
-function admin_ban_user(  $banner_id                    ,
-                          $nickname                     ,
-                          $ban_length                   ,
-                          $ban_reason_en  = ''          ,
-                          $ban_reason_fr  = ''          ,
-                          $lang           = 'EN'        ,
-                          $path           = './../../'  )
+function admin_ban_create(  $banner_id                    ,
+                            $nickname                     ,
+                            $ban_length                   ,
+                            $ban_reason_en  = ''          ,
+                            $ban_reason_fr  = ''          ,
+                            $lang           = 'EN'        ,
+                            $path           = './../../'  )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators($lang);
@@ -61,7 +62,6 @@ function admin_ban_user(  $banner_id                    ,
   $ban_reason_fr        = sanitize($ban_reason_fr, 'string');
   $ban_start            = sanitize(time(), 'int');
   $banned_user_id       = sanitize(database_entry_exists('users', 'nickname', $nickname), 'int');
-  $banner_user_id       = sanitize(user_get_id(), 'int');
 
   // Error: No nickname specified
   if(mb_strlen($nickname) < 3)
@@ -72,11 +72,11 @@ function admin_ban_user(  $banner_id                    ,
     return __('admin_ban_add_error_wrong_user');
 
   // Error: Can't ban self
-  if($banned_user_id == $banner_user_id)
+  if($banned_user_id == $banner_id)
     return __('admin_ban_add_error_self');
 
   // Error: Moderators can't ban admins
-  if(user_is_administrator($banned_user_id) && user_is_moderator($banner_user_id))
+  if(user_is_administrator($banned_user_id) && user_is_moderator($banner_id))
     return __('admin_ban_add_error_moderator');
 
   // Determine when the ban ends
@@ -125,7 +125,7 @@ function admin_ban_user(  $banner_id                    ,
   // Ban logs
   query(" INSERT INTO logs_bans
           SET         logs_bans.fk_banned_user    = '$banned_user_id' ,
-                      logs_bans.fk_banned_by_user = '$banner_user_id' ,
+                      logs_bans.fk_banned_by_user = '$banner_id'      ,
                       logs_bans.banned_at         = '$ban_start'      ,
                       logs_bans.banned_until      = '$ban_end'        ,
                       logs_bans.ban_reason_en     = '$ban_reason_en'  ,
@@ -390,6 +390,186 @@ function admin_ban_delete(  $unbanner_id                    ,
   $unbanned_user_language = user_get_language($unbanned_id);
   private_message_send(__('admin_ban_delete_private_message_title_'.strtolower($unbanned_user_language)), __('admin_ban_delete_private_message_'.strtolower($unbanned_user_language), 0, 0, 0, array($path, date_to_text(time(), 1, $unbanned_user_language), $days_served, $days_left)), $unbanned_id, 0);
 }
+
+
+
+/**
+ * Bans a user.
+ *
+ * @param   int         $banner_id                  The id of the moderator ordering the ban.
+ * @param   string      $ip_address                 The IP address to ban.
+ * @param   int         $ban_length                 The ban length.
+ * @param   int|null    $severity       (OPTIONAL)  Whether the IP ban will be standard or full.
+ * @param   string|null $nickname       (OPTIONAL)  An user whose IP should be banned if no IP is specified.
+ * @param   string|null $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
+ * @param   string|null $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
+ * @param   string|null $lang           (OPTIONAL)  The language currently in use.
+ *
+ * @return  string|null                             Returns a string containing an error, or null if all went well.
+ */
+
+function admin_ip_ban_create( $banner_id                    ,
+                              $ip_address                   ,
+                              $ban_length                   ,
+                              $severity       = 0           ,
+                              $nickname       = ''          ,
+                              $ban_reason_en  = ''          ,
+                              $ban_reason_fr  = ''          ,
+                              $lang           = 'EN'        )
+{
+  // Require moderator rights to run this action
+  user_restrict_to_moderators($lang);
+
+  // Check if the required files have been included
+  require_included_file('ban.lang.php');
+
+  // Sanitize the data
+  $banner_id          = sanitize($banner_id, 'int', 0);
+  $banner_ip          = sanitize($_SERVER['REMOTE_ADDR'], 'string');
+  $ip_address_raw     = $ip_address;
+  $ip_address         = sanitize($ip_address, 'string');
+  $ban_length         = sanitize($ban_length, 'int', 0, 3650);
+  $severity           = sanitize($severity, 'int', 0, 1);
+  $nickname           = sanitize($nickname, 'string');
+  $ban_reason_en_raw  = $ban_reason_en;
+  $ban_reason_fr_raw  = $ban_reason_fr;
+  $ban_reason_en      = sanitize($ban_reason_en, 'string');
+  $ban_reason_fr      = sanitize($ban_reason_fr, 'string');
+
+  // Error: No IP or nickname specified
+  if(mb_strlen($nickname) < 3 && !$ip_address)
+    return __('admin_ban_add_error_no_ip');
+
+  // Error: Both IP and nickname have been specified
+  if($nickname && $ip_address)
+    return __('admin_ban_add_error_ip_and_user');
+
+  // Error: Cannot ban wildcard
+  if(!$nickname && $ip_address == '*')
+    return __('admin_ban_add_error_wildcard');
+
+  // Error: One wildcard maximum
+  if(substr_count($ip_address, '*') > 1)
+    return __('admin_ban_add_error_wildcards');
+
+  // Determine when the ban ends
+  if($ban_length == 1)
+    $ban_end  = strtotime('+1 day', time());
+  else if($ban_length == 7)
+    $ban_end  = strtotime('+1 week', time());
+  else if($ban_length == 30)
+    $ban_end  = strtotime('+1 month', time());
+  else if($ban_length == 365)
+    $ban_end  = strtotime('+1 year', time());
+  else if($ban_length == 3650)
+    $ban_end  = strtotime('+10 years', time());
+  else
+    return __('admin_ban_add_error_length');
+
+  // Retrieve the IP address from nickname if none was specified
+  if($nickname)
+  {
+    // Get the user's ID from their nickname
+    $banned_user_id = sanitize(database_entry_exists('users', 'nickname', $nickname), 'int');
+
+    // Error: Nickname does not exist
+    if(!$banned_user_id)
+      return __('admin_ban_add_error_wrong_user');
+
+    // Error: Can't ban self
+    if($banned_user_id == $banner_id)
+      return __('admin_ban_add_error_self');
+
+    // Error: Moderators can't ban admins
+    if(user_is_administrator($banned_user_id) && user_is_moderator($banner_id))
+      return __('admin_ban_add_error_moderator');
+
+    // Fetch the user's latest IP address
+    $dip = mysqli_fetch_array(query(" SELECT  users.current_ip_address AS 'u_ip'
+                                      FROM    users
+                                      WHERE   users.id = '$banned_user_id' "));
+    $ip_address_raw = $dip['u_ip'];
+    $ip_address     = sanitize($dip['u_ip']);
+
+    // Error: The user does not have an IP address
+    if(!$ip_address)
+      return __('admin_ban_add_error_no_user_ip');
+  }
+
+  // Error: Cannot ban self
+  $check_ip = str_replace('*', '', $ip_address);
+  if(strpos($check_ip, $banner_ip) !== FALSE || strpos($banner_ip, $check_ip) !== FALSE)
+    return 'no';
+
+  // Fetch all currently banned IPs
+  $qip = query("  SELECT  system_ip_bans.ip_address AS 'i_ip'
+                  FROM    system_ip_bans ");
+
+  // Error: IP address is already banned
+  while($dip = mysqli_fetch_array($qip))
+  {
+    $check_ip = str_replace('*', '', $dip['i_ip']);
+    if(strpos($check_ip, $ip_address) !== FALSE || strpos($ip_address, $check_ip) !== FALSE)
+      return __('admin_ban_add_error_ip_already');
+  }
+
+  // Fetch all admin IPs
+  $qip = query("  SELECT  users.current_ip_address AS 'u_ip'
+                  FROM    users
+                  WHERE   users.is_administrator    = 1
+                  AND     users.current_ip_address != '' ");
+
+  // Error: Cannot IP ban administrators
+  while($dip = mysqli_fetch_array($qip))
+  {
+    $check_ip = str_replace('*', '', $dip['u_ip']);
+    $ip_no_wildcard = str_replace('*', '', $ip_address);
+    if(strpos($check_ip, $ip_no_wildcard) !== FALSE || strpos($ip_no_wildcard, $check_ip) !== FALSE)
+      return __('admin_ban_add_error_ip_admin');
+  }
+
+  // Ban the IP
+  $timestamp  = sanitize(time(), 'int', 0);
+  $ban_end    = sanitize($ban_end, 'int', 0);
+  query(" INSERT INTO system_ip_bans
+          SET         system_ip_bans.ip_address     = '$ip_address'     ,
+                      system_ip_bans.is_a_total_ban = '$severity'       ,
+                      system_ip_bans.banned_since   = '$timestamp'      ,
+                      system_ip_bans.banned_until   = '$ban_end'        ,
+                      system_ip_bans.ban_reason_en  = '$ban_reason_en'  ,
+                      system_ip_bans.ban_reason_fr  = '$ban_reason_fr'  ");
+
+  // Schedule the unbanning
+  $ip_ban_id = query_id();
+  schedule_task('users_unban_ip', $ip_ban_id, $ban_end, $ip_address);
+
+  // Activity logs
+  $banner_nickname = user_get_nickname($banner_id);
+  $modlog = log_activity('users_banned_ip', 1, 'ENFR', $ip_ban_id, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, 0, $ip_address_raw, $banner_nickname);
+
+  // Detailed activity logs
+  if($ban_reason_en_raw)
+    log_activity_details($modlog, 'Ban reason (EN)', 'Raison du ban (EN)', $ban_reason_en_raw, $ban_reason_en_raw);
+  if($ban_reason_fr_raw)
+    log_activity_details($modlog, 'Ban reason (FR)', 'Raison du ban (FR)', $ban_reason_fr_raw, $ban_reason_fr_raw);
+
+  // Ban logs
+  query(" INSERT INTO logs_bans
+          SET         logs_bans.banned_ip_address = '$ip_address'     ,
+                      logs_bans.is_a_total_ip_ban = '$severity'       ,
+                      logs_bans.fk_banned_by_user = '$banner_id'      ,
+                      logs_bans.banned_at         = '$timestamp'      ,
+                      logs_bans.banned_until      = '$ban_end'        ,
+                      logs_bans.ban_reason_en     = '$ban_reason_en'  ,
+                      logs_bans.ban_reason_fr     = '$ban_reason_fr'  ");
+
+  // IRC bot message
+  $ban_duration = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
+  $ban_extra    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
+  irc_bot_send_message("$banner_nickname has IP banned $ip_address_raw $ban_duration[$ban_length] $ban_extra", 'mod');
+  irc_bot_send_message("$banner_nickname has IP banned $ip_address_raw $ban_duration[$ban_length] $ban_extra", 'admin');
+}
+
 
 
 

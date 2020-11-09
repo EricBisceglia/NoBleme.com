@@ -139,6 +139,7 @@ function log_activity_parse(  $path                 ,
     $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
     $return['FR']   = $mod_nickname.' a banni '.$nickname.' '.$temp[$amount].$temp2;
   }
+
   else if($type === 'users_banned_edit' && !$admins_only)
   {
     $return['css']  = 'red bold';
@@ -185,6 +186,26 @@ function log_activity_parse(  $path                 ,
     $return['href'] = $path.'todo_link';
     $return['EN']   = $mod_nickname.' has unbanned '.$nickname;
     $return['FR']   = $mod_nickname.' a débanni '.$nickname;
+  }
+
+  else if($type == 'users_banned_ip')
+  {
+    $return['css']  = 'red bold';
+    $return['href'] = $path.'pages/admin/ban';
+    $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
+    $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
+    $return['EN']   = $mod_nickname.' banned the IP address '.$nickname.' '.$temp[$amount].$temp2;
+    $temp           = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
+    $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
+    $return['FR']   = $mod_nickname.' a banni l\'adresse IP '.$nickname.' '.$temp[$amount].$temp2;
+  }
+
+  else if($type == 'users_unbanned_ip')
+  {
+    $return['css']  = 'text_red';
+    $return['href'] = $path.'pages/admin/ban';
+    $return['EN']   = 'The ban of the IP address '.$nickname.' has ended';
+    $return['FR']   = 'Le bannissement de l\'adresse IP '.$nickname.' est fini';
   }
 
   else if($type === 'users_rights_delete')
