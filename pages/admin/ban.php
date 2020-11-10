@@ -379,7 +379,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <hr>
 
-<div class="width_80 smallpadding_top">
+<div class="width_80 smallpadding_top" id="logs">
 
   <h2 class="align_center padding_top bigpadding_bot">
     <?=__('admin_ban_logs_title')?>
@@ -561,10 +561,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <td>
             <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log('.$ban_logs[$i]['id'].');')?>
-            <?php if($ban_logs[$i]['ban_type'] == 'user') { ?>
-            <?php if($is_admin) { ?>
+            <?php if($is_admin && $ban_logs[$i]['end']) { ?>
             <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_ban_delete_log('<?=$ban_logs[$i]['id']?>', '<?=__('admin_ban_logs_info_delete')?>')">
-            <?php } ?>
             <?php } ?>
           </td>
 

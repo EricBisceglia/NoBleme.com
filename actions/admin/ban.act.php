@@ -151,7 +151,7 @@ function admin_ban_create(  $banner_id                    ,
   $ban_extra_mod    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
   irc_bot_send_message("$banned_nickname_raw has been banned from the website $ban_duration_en[$ban_length] $ban_extra_en", 'english');
   irc_bot_send_message("$banned_nickname_raw s'est fait bannir du site $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
-  irc_bot_send_message("$banner_nickname_raw has banned $banned_nickname_raw $ban_duration_en[$ban_length] $ban_extra_mod", 'mod');
+  irc_bot_send_message("$banner_nickname_raw has banned $banned_nickname_raw $ban_duration_en[$ban_length] $ban_extra_mod - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
 }
 
 
@@ -281,7 +281,7 @@ function admin_ban_edit(  $banner_id                    ,
     $ban_extra_mod    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
     irc_bot_send_message("$banned_nickname_raw has had their ban updated to $ban_duration_en[$ban_length] $ban_extra_en", 'english');
     irc_bot_send_message("La date de fin du bannissement de $banned_nickname_raw a changé : $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
-    irc_bot_send_message("$banner_nickname_raw edited the ban of $banned_nickname_raw $ban_duration_mod[$ban_length] $ban_extra_mod", 'mod');
+    irc_bot_send_message("$banner_nickname_raw edited the ban of $banned_nickname_raw $ban_duration_mod[$ban_length] $ban_extra_mod - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
   }
 
   // Private message to the user if the ban's duration has been changed
@@ -386,7 +386,7 @@ function admin_ban_delete(  $unbanner_id                    ,
 
   // IRC bot message
   $unban_reason_irc = ($unban_reason_en_raw) ? '('.$unban_reason_en_raw.')' : '';
-  irc_bot_send_message("$unbanner_nickname_raw has unbanned $unbanned_nickname_raw $unban_reason_irc", 'mod');
+  irc_bot_send_message("$unbanner_nickname_raw has unbanned $unbanned_nickname_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'mod');
 
   // Private message to let the user know they have been manually unbanned
   $unbanned_user_language = user_get_language($unbanned_id);
@@ -501,7 +501,7 @@ function admin_ip_ban_create( $banner_id                    ,
   // Error: Cannot ban self
   $check_ip = str_replace('*', '', $ip_address);
   if(strpos($check_ip, $banner_ip) !== FALSE || strpos($banner_ip, $check_ip) !== FALSE)
-    return 'no';
+    return __('admin_ban_add_error_self');
 
   // Fetch all currently banned IPs
   $qip = query("  SELECT  system_ip_bans.ip_address AS 'i_ip'
@@ -568,8 +568,8 @@ function admin_ip_ban_create( $banner_id                    ,
   // IRC bot message
   $ban_duration = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
   $ban_extra    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
-  irc_bot_send_message("$banner_nickname has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra", 'mod');
-  irc_bot_send_message("$banner_nickname has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra", 'admin');
+  irc_bot_send_message("$banner_nickname has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
+  irc_bot_send_message("$banner_nickname has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra - ".$GLOBALS['website_url']."pages/admin/ban#active", 'admin');
 }
 
 
@@ -734,19 +734,21 @@ function admin_ip_ban_delete( $ban_id                   ,
   if($unban_reason_fr_raw)
     log_activity_details($modlog, 'Unan reason (FR)', 'Raison du débannissement (FR)', $unban_reason_fr_raw, $unban_reason_fr_raw);
 
-  // Update the ban log with the unban reasons if necessary
-  if($unban_reason_fr || $unban_reason_en)
-    query(" UPDATE    logs_bans
-            SET       logs_bans.unban_reason_en   =     '$unban_reason_en'  ,
-                      logs_bans.unban_reason_fr   =     '$unban_reason_fr'
-            WHERE     logs_bans.banned_ip_address LIKE  '$banned_ip'
-            ORDER BY  logs_bans.unbanned_at       DESC
-            LIMIT     1 ");
+  // Update the ban log
+  $timestamp = sanitize(time(), 'int', 0);
+  query(" UPDATE    logs_bans
+          SET       logs_bans.fk_unbanned_by_user =     '$unbanner_id'      ,
+                    logs_bans.unbanned_at         =     '$timestamp'        ,
+                    logs_bans.unban_reason_en     =     '$unban_reason_en'  ,
+                    logs_bans.unban_reason_fr     =     '$unban_reason_fr'
+          WHERE     logs_bans.banned_ip_address   LIKE  '$banned_ip'
+          ORDER BY  logs_bans.unbanned_at         DESC
+          LIMIT     1 ");
 
   // IRC bot message
   $unban_reason_irc = ($unban_reason_en_raw) ? '('.$unban_reason_en_raw.')' : '';
-  irc_bot_send_message("$unbanner_nickname_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc", 'mod');
-  irc_bot_send_message("$unbanner_nickname_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc", 'admin');
+  irc_bot_send_message("$unbanner_nickname_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'mod');
+  irc_bot_send_message("$unbanner_nickname_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'admin');
 }
 
 

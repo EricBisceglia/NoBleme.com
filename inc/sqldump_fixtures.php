@@ -475,6 +475,7 @@ $random = mt_rand(5,10);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
+  $id               = $i + 1;
   $ip               = fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.';
   $ip               = (mt_rand(0, 3) > 2) ? $ip.'*' : $ip.fixtures_generate_data('int', 0, 255);
   $total_ban        = (mt_rand(0, 3) > 2) ? 1 : 0;
@@ -488,13 +489,21 @@ for($i = 0; $i < $random; $i++)
 
   // Generate the ip bans
   if($banned_until > time())
+  {
     query(" INSERT INTO system_ip_bans
-            SET         system_ip_bans.ip_address     = '$ip'             ,
+            SET         system_ip_bans.id             = '$id'             ,
+                        system_ip_bans.ip_address     = '$ip'             ,
                         system_ip_bans.is_a_total_ban = '$total_ban'      ,
                         system_ip_bans.banned_since   = '$banned_since'   ,
                         system_ip_bans.banned_until   = '$banned_until'   ,
                         system_ip_bans.ban_reason_en  = '$ban_reason_en'  ,
                         system_ip_bans.ban_reason_fr  = '$ban_reason_fr'  ");
+    query(" INSERT INTO system_scheduler
+            SET         system_scheduler.planned_at       = '$banned_until' ,
+                        system_scheduler.task_id          = '$id'           ,
+                        system_scheduler.task_type        = 'user_unban_ip' ,
+                        system_scheduler.task_description = '$ip'           ");
+  }
   query(" INSERT INTO logs_bans
           SET         logs_bans.banned_ip_address = '$ip'               ,
                       logs_bans.is_a_total_ip_ban = '$total_ban'        ,
@@ -533,6 +542,12 @@ for($i = 0; $i < $random; $i++)
                         logs_activity_details.content_after           = '$ban_reason_fr'  ");
   if($banned_until < time())
   {
+    query(" INSERT INTO logs_scheduler
+            SET         logs_scheduler.happened_at      = '$banned_until' ,
+                        logs_scheduler.task_id          = '$id'           ,
+                        logs_scheduler.task_type        = 'user_unban_ip' ,
+                        logs_scheduler.task_description = '$ip'           ,
+                        logs_scheduler.execution_report = 'Fixture'       ");
     query(" INSERT INTO logs_activity
             SET         logs_activity.happened_at                 = '$banned_until'     ,
                         logs_activity.language                    = 'FREN'              ,
@@ -804,6 +819,12 @@ for($i = 0; $i < $random; $i++)
                             logs_activity_details.content_after           = '$ban_reason_fr'  ");
       if($unbanned_at < time())
       {
+        query(" INSERT INTO logs_scheduler
+                SET         logs_scheduler.happened_at      = '$unbanned_at'  ,
+                            logs_scheduler.task_id          = '$user_id'      ,
+                            logs_scheduler.task_type        = 'user_unban'    ,
+                            logs_scheduler.task_description = '$username'     ,
+                            logs_scheduler.execution_report = 'Fixture'       ");
         query(" INSERT INTO logs_activity
                 SET         logs_activity.happened_at             = '$unbanned_at'    ,
                             logs_activity.fk_users                = '$user_id'        ,
@@ -813,12 +834,6 @@ for($i = 0; $i < $random; $i++)
                             logs_activity.activity_nickname       = '$username'       ");
         if($unban_reason_en || $unban_reason_fr)
         {
-          query(" INSERT INTO logs_scheduler
-                  SET         logs_scheduler.happened_at      = '$unbanned_at'                ,
-                              logs_scheduler.task_id          = '$user_id'                    ,
-                              logs_scheduler.task_type        = 'user_unban'                  ,
-                              logs_scheduler.task_description = '$username'                   ,
-                              logs_scheduler.execution_report = 'The user has been unbanned'  ");
           query(" INSERT INTO logs_bans
                   SET         logs_bans.fk_banned_user      = '$user_id'          ,
                               logs_bans.fk_banned_by_user   = 1                   ,
