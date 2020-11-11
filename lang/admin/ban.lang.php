@@ -18,7 +18,7 @@ ___('admin_ban_title', 'FR', "Bannissements");
 
 
 // User bans: ban form
-___('admin_ban_add_title',        'EN', "Ban an user or an IP address");
+___('admin_ban_add_title',        'EN', "Ban a user or an IP address");
 ___('admin_ban_add_title',        'FR', "Bannir un compte ou une IP");
 ___('admin_ban_add_type',         'EN', "Ban type");
 ___('admin_ban_add_type',         'FR', "Type de bannissement");

@@ -10,6 +10,7 @@ include_once './../../lang/users/register.lang.php';  # Translations
 
 // Limit page access rights
 user_restrict_to_guests($lang);
+user_restrict_to_non_ip_banned($path);
 
 // Page summary
 $page_lang        = array('FR', 'EN');

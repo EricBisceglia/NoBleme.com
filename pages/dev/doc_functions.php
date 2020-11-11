@@ -1096,7 +1096,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           user_is_moderator()
         </td>
         <td class="align_left">
-          Checks if an user is a moderator (or above).
+          Checks if a user is a moderator (or above).
         </td>
       </tr>
       <tr>
@@ -1104,7 +1104,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           user_is_administrator()
         </td>
         <td class="align_left">
-          Checks if an user is an administrator.
+          Checks if a user is an administrator.
         </td>
       </tr>
       <tr>
@@ -1285,7 +1285,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           private_message_send()
         </td>
         <td class="align_left">
-          Sends a private message to an user.
+          Sends a private message to a user.
         </td>
       </tr>
 

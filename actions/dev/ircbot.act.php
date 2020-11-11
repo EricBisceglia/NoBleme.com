@@ -242,7 +242,7 @@ function irc_bot_admin_send_message(  $body                   ,
   if(!$body)
     return;
 
-  // If an user is specified, prepend a PRIVMSG to the body
+  // If a user is specified, prepend a PRIVMSG to the body
   if($user)
     $body = 'PRIVMSG '.$user.' :'.$body;
 

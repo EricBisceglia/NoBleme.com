@@ -611,7 +611,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 <?php } else if($css_palette === 'grids') { ######################################################################## ?>
 
-  <div class="width_50 bigpadding_bot">
+<div class="width_50 bigpadding_bot">
   <div class="align_center dev_div_border bold">
     .flexcontainer
   </div>

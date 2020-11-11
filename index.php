@@ -13,7 +13,7 @@ $page_title_en    = "Homepage";
 $page_title_fr    = "Accueil";
 $page_description = "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
 
-// CSS
+// Extra CSS
 $css = array('index');
 
 

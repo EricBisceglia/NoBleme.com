@@ -402,7 +402,7 @@ function admin_ban_delete(  $unbanner_id                    ,
  * @param   string      $ip_address                 The IP address to ban.
  * @param   int         $ban_length                 The ban length.
  * @param   int|null    $severity       (OPTIONAL)  Whether the IP ban will be standard or full.
- * @param   string|null $nickname       (OPTIONAL)  An user whose IP should be banned if no IP is specified.
+ * @param   string|null $nickname       (OPTIONAL)  A user whose IP should be banned if no IP is specified.
  * @param   string|null $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
  * @param   string|null $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
  * @param   string|null $lang           (OPTIONAL)  The language currently in use.
@@ -453,6 +453,10 @@ function admin_ip_ban_create( $banner_id                    ,
   // Error: One wildcard maximum
   if(substr_count($ip_address, '*') > 1)
     return __('admin_ban_add_error_wildcards');
+
+  // Error: must have certain characters
+  if(!$nickname && substr_count($ip_address, '.') < 3 && substr_count($ip_address, ':') < 3)
+    return 'nahah';
 
   // Determine when the ban ends
   if($ban_length == 1)
@@ -819,7 +823,7 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
                                         AND       logs_bans.unbanned_at       =     0
                                         ORDER BY  logs_bans.banned_at         DESC
                                         LIMIT     1 "));
-    $log_id = sanitize($dban['l_id'], 'int', 0);
+    $log_id = isset($dban['l_id']) ? sanitize($dban['l_id'], 'int', 0) : 0;
   }
 
   // Return nothing if the ban log id does not exist

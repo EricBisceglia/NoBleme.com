@@ -378,6 +378,8 @@ $javascripts .= '
   <body id="body">
   <?php } ?>
 
+  <?php if(!isset($hide_header)) { ?>
+
   <input id="root_path" type="hidden" class="hidden" value="<?=$path?>">
 
     <div id="popin_lost_access" class="popin_background">
@@ -705,7 +707,7 @@ $javascripts .= '
         </div>
       </div>
 
-      <?php } else { ?>
+      <?php } else if(!$is_ip_banned) { ?>
 
       <div class="header_submenu_fullwidth">
 
@@ -753,7 +755,24 @@ $javascripts .= '
 
       </div>
 
+      <?php } else { ?>
+
+      <div class="header_submenu_fullwidth dowrap text_light">
+
+        <div class="width_30 bigpadding_top hugepadding_bot">
+
+          <h1 class="align_center padding_bot">
+            <?=__('users_ip_banned_title')?>
+          </h1>
+
+          <?=__('users_ip_banned_body')?>
+
+        </div>
+
+      </div>
+
       <?php } ?>
+
     </div>
 
 
@@ -846,6 +865,8 @@ $javascripts .= '
       <?php } ?>
 
     </div>
+    <?php } ?>
+
     <?php } ?>
 
 

@@ -138,7 +138,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <th>
               <input type="hidden" class="hidden" name="scheduler_sort_order" id="scheduler_search_order" value="date">
               <select class="table_search" name="scheduler_search_type" id="scheduler_search_type" onchange="dev_scheduler_list_search();">
-                <option value="0"></option>
+                <option value="0">&nbsp;</option>
                 <?php for($i = 0; $i < $scheduler_task_types['rows'] ; $i++) { ?>
                 <option value="<?=$scheduler_task_types[$i]['type']?>"><?=$scheduler_task_types[$i]['type']?></option>
                 <?php } ?>
@@ -151,7 +151,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
             <th>
               <select class="table_search" name="scheduler_search_date" id="scheduler_search_date" onchange="dev_scheduler_list_search();">
-                <option value="0"></option>
+                <option value="0">&nbsp;</option>
                 <option value="1"><?=__('dev_scheduler_task_execution_future')?></option>
                 <option value="2"><?=__('dev_scheduler_task_execution_past')?></option>
               </select>

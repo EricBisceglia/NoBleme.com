@@ -32,8 +32,9 @@ function error_page(  $message                ,
                       $path     = "./../../"  ,
                       $lang     = NULL        )
 {
-  // Is the user logged in? - check from the session (required by the header)
+  // Is the user logged in and/or IP banned? - check from the session (required by the header)
   $is_logged_in = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : 0;
+  $is_ip_banned = user_is_ip_banned();
 
   // Does the user have special permissions? (required by the header)
   if(!$is_logged_in)

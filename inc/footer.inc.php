@@ -61,7 +61,7 @@ if($GLOBALS['dev_mode'] && $GLOBALS['full_debug_mode'])
 /*                                                                                                                   */
 /******************************************************************************************************************/ ?>
 
-      <?php if(!isset($_GET["popup"]) && !isset($nofooter)) { ?>
+      <?php if(!isset($hide_footer)) { ?>
 
       <footer>
 

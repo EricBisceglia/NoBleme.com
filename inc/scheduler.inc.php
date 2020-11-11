@@ -245,10 +245,10 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
 
         // Ban logs
         query(" UPDATE    logs_bans
-                SET       logs_bans.fk_unbanned_by_user = 0 ,
-                          logs_bans.unbanned_at         = '$timestamp'
-                WHERE     logs_bans.banned_ip_address   = '$scheduler_desc'
-                AND       logs_bans.unbanned_at         = 0
+                SET       logs_bans.fk_unbanned_by_user =     0 ,
+                          logs_bans.unbanned_at         =     '$timestamp'
+                WHERE     logs_bans.banned_ip_address   LIKE  '$scheduler_desc'
+                AND       logs_bans.unbanned_at         =     0
                 ORDER BY  logs_bans.banned_until        DESC
                 LIMIT     1 ");
 

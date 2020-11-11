@@ -20,15 +20,18 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_get_nickname                 Returns a user's nickname from their id.                                       */
 /*  user_get_language                 Detects the user's language.                                                   */
 /*                                                                                                                   */
-/*  user_is_administrator             Checks if an user is an administrator.                                         */
-/*  user_is_moderator                 Checks if an user is a moderator (or above).                                   */
-/*  user_is_banned                    Checks if an user is banned.                                                   */
+/*  user_is_administrator             Checks if a user is an administrator.                                          */
+/*  user_is_moderator                 Checks if a user is a moderator (or above).                                    */
+/*  user_is_banned                    Checks if a user is banned.                                                    */
+/*  user_is_ip_banned                 Checks if a user is IP banned.                                                 */
 /*                                                                                                                   */
 /*  user_restrict_to_administrators   Allows access only to administrators.                                          */
 /*  user_restrict_to_moderators       Allows access only to moderators (or above).                                   */
 /*  user_restrict_to_users            Allows access only to logged in users.                                         */
 /*  user_restrict_to_guests           Allows access only to guests (not logged into an account).                     */
 /*  user_restrict_to_banned           Allows access only to banned users.                                            */
+/*  user_restrict_to_ip_banned        Allows access only to fully IP banned users.                                   */
+/*  user_restrict_to_non_ip_banned    Allows access only to users who are not IP banned.                             */
 /*                                                                                                                   */
 /*  user_settings_nsfw                NSFW filter settings of the current user.                                      */
 /*  user_settings_privacy             Third party content privacy settings of the current user.                      */
@@ -189,9 +192,25 @@ $lang = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// One final check: Is the user banned
+// Is the user IP banned
 
-// First off, to avoid infinite loops, make sure that the user is loggsed in and isn't already on the banned.php page
+// Check whether the user is IP banned
+$is_ip_banned = user_is_ip_banned();
+
+// Regular IP bans should get logged out of any account they're currently using
+if($is_ip_banned && user_is_logged_in())
+  user_log_out();
+
+// Full IP bans should be redirected to an error page
+if(substr($_SERVER["PHP_SELF"], -14) != "/banned_ip.php" && $is_ip_banned == 2)
+  exit(header("Location: ".$path."banned_ip"));
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Is the user banned
+
+// First off, to avoid infinite loops, make sure that the user is logged in and isn't already on the banned.php page
 if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && user_is_logged_in())
 {
   // Check whether the user is banned - if yes, redirect them to the banned page
@@ -348,7 +367,13 @@ function user_unban(  $user_id              ,
 
   // Recent activity
   if($recent_activity)
-    log_activity('users_unbanned', 0, 'ENFR', 0, NULL, NULL, 0, $user_id, $unbanner_nickname);
+    query(" INSERT INTO logs_activity
+            SET         logs_activity.happened_at         = '$timestamp'          ,
+                        logs_activity.is_moderators_only  = '0'                   ,
+                        logs_activity.language            = 'ENFR'                ,
+                        logs_activity.activity_type       = 'users_unbanned'      ,
+                        logs_activity.activity_id         = '$user_id'            ,
+                        llogs_activity.activity_nickname  = '$unbanner_nickname'  ");
 }
 
 
@@ -432,7 +457,7 @@ function user_get_language($user_id = NULL)
 
 
 /**
- * Checks if an user is an administrator.
+ * Checks if a user is an administrator.
  *
  * Defaults to checking whether current user is an administrator unless the $user_id optional parameter is specified.
  *
@@ -467,7 +492,7 @@ function user_is_administrator($user_id = NULL)
 
 
 /**
- * Checks if an user is a moderator (or above).
+ * Checks if a user is a moderator (or above).
  *
  * Defaults to checking whether current user is a moderator unless the $user_id optional parameter is specified.
  *
@@ -507,7 +532,7 @@ function user_is_moderator($user_id = NULL)
 
 
 /**
- * Checks if an user is banned.
+ * Checks if a user is banned.
  *
  * Defaults to checking whether current user is banned unless the $user_id optional parameter is specified.
  *
@@ -544,6 +569,71 @@ function user_is_banned($user_id = NULL)
 
   // If the ban has been purged, then unban the user and return 0
   user_unban($user_id);
+  return 0;
+}
+
+
+
+
+/**
+ * Checks if the current user is IP banned.
+ *
+ * @return  int   0 if the user is not IP banned, 1 if the user is IP banned, 2 if the user is total IP banned
+ */
+
+function user_is_ip_banned()
+{
+  // Get the current user's IP and sanitize it
+  $user_ip = sanitize($_SERVER['REMOTE_ADDR'], 'string');
+
+  // Check if it is banned
+  $dbanned = mysqli_fetch_array(query(" SELECT  system_ip_bans.id             AS 'b_id'     ,
+                                                system_ip_bans.ip_address     AS 'b_ip'     ,
+                                                system_ip_bans.is_a_total_ban AS 'b_total'  ,
+                                                system_ip_bans.banned_until   AS 'b_end'
+                                        FROM    system_ip_bans
+                                        WHERE   LOCATE(REPLACE(system_ip_bans.ip_address, '*', ''), '$user_ip') > 0 "));
+
+  // If the user isn't IP banned, return 0
+  if(!isset($dbanned['b_id']))
+    return 0;
+
+  // If the ban hasn't expired, return whether it is a standard (1) or total (2) IP ban
+  if($dbanned['b_end'] > time())
+    return ($dbanned['b_total'] + 1);
+
+  // If the ban has expired, remove it
+  $ip_ban_raw = $dbanned['b_ip'];
+  $ip_ban     = sanitize($dbanned['b_ip'], 'string');
+  $ip_ban_id  = sanitize($dbanned['b_id'], 'int', 0);
+  query(" DELETE FROM system_ip_bans
+          WHERE       system_ip_bans.id = '$ip_ban_id' ");
+
+  // Activity logs
+  $timestamp = sanitize(time(), 'int', 0);
+  query(" INSERT INTO logs_activity
+          SET         logs_activity.happened_at         = '$timestamp'        ,
+                      logs_activity.is_moderators_only  = '1'                 ,
+                      logs_activity.language            = 'ENFR'              ,
+                      logs_activity.activity_type       = 'users_unbanned_ip' ,
+                      logs_activity.activity_id         = '$ip_ban_id'        ,
+                      logs_activity.activity_nickname   = '$ip_ban'           ");
+
+  // Ban logs
+  query(" UPDATE    logs_bans
+          SET       logs_bans.fk_unbanned_by_user =     0 ,
+                    logs_bans.unbanned_at         =     '$timestamp'
+          WHERE     logs_bans.banned_ip_address   LIKE  '$ip_ban'
+          AND       logs_bans.unbanned_at         =     0
+          ORDER BY  logs_bans.banned_until        DESC
+          LIMIT     1 ");
+
+  // Update the related scheduler task
+  query(" DELETE FROM system_scheduler
+          WHERE       system_scheduler.task_id    =     '$ip_ban_id'
+          AND         system_scheduler.task_type  LIKE  'users_unban_ip' ");
+
+  // Return 0 since the IP is now unbanned
   return 0;
 }
 
@@ -670,7 +760,6 @@ function user_restrict_to_guests($lang = 'EN')
  * Any guest or non-banned user will get redirected to the homepage.
  * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
  *
- * @param   string|null $lang (OPTIONAL)  The language used in the error message.
  * @param   string|null $path (OPTIONAL)  The path to the root of the website.
  *
  * @return  void
@@ -680,6 +769,48 @@ function user_restrict_to_banned( $path = './../../' )
 {
   // Check if the user is logged out or logged in but not banned, then redirect them
   if(!user_is_logged_in() || !user_is_banned())
+    exit(header("Location: ".$path."index"));
+}
+
+
+
+
+/**
+ * Allows access only to fully IP banned users.
+ *
+ * Any guest or non-banned user will get redirected to the homepage.
+ * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
+ *
+ * @param   string|null $path (OPTIONAL)  The path to the root of the website.
+ *
+ * @return  void
+ */
+
+function user_restrict_to_ip_banned( $path = './../../' )
+{
+  // Check if the user isn't fully IP banned, then redirect them
+  if(user_is_ip_banned() < 2)
+    exit(header("Location: ".$path."index"));
+}
+
+
+
+
+/**
+ * Allows access only to users who aren't IP banned.
+ *
+ * Any guest or non-banned user will get redirected to the homepage.
+ * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
+ *
+ * @param   string|null $path (OPTIONAL)  The path to the root of the website.
+ *
+ * @return  void
+ */
+
+function user_restrict_to_non_ip_banned( $path = './../../' )
+{
+  // Check if the user isn't fully IP banned, then redirect them
+  if(user_is_ip_banned())
     exit(header("Location: ".$path."index"));
 }
 

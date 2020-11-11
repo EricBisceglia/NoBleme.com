@@ -62,13 +62,13 @@ function __(  $string                   ,
 
   /*
   / Replace URLs if needed, using a regex that can work in either of the following ways:
-  / {{link+++|href|text|style|is_internal|path}}
-  / {{link++|href|text|style|is_internal}}
+  / {{link+++|href|text|style|is_internal|path}}  # Will always be an internal link
+  / {{link++|href|text|style|is_internal}}        # Will always be an external link
   / {{link+|href|text|style}}
   / {{link|href|text}}
   */
-  $returned_string = preg_replace('/\{\{link\+\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", "$4", "$5"), $returned_string);
-  $returned_string = preg_replace('/\{\{link\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", "$4"), $returned_string);
+  $returned_string = preg_replace('/\{\{link\+\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", 1, "$5"), $returned_string);
+  $returned_string = preg_replace('/\{\{link\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", 0), $returned_string);
   $returned_string = preg_replace('/\{\{link\+\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3"), $returned_string);
   $returned_string = preg_replace('/\{\{link\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2"), $returned_string);
 
@@ -846,6 +846,35 @@ EOT
 );
 ___('users_lost_access_solution', 'FR', <<<EOT
 Si vous avez perdu l'accès à votre compte (pseudonyme oublié, mot de passe oublié, ou autre), la seule façon de récupérer cet accès est d'aller sur le {{link+++|todo_link|chat IRC NoBleme|bold|1|{{1}}}} afin d'y demander à {{link+++|todo_link|l'équipe administrative|bold|1|{{1}}}} de manuellement remettre à zéro le mot de passe de votre compte. Pas d'inquiétude pour ce qui est de l'usurpation d'identité, un processus strict de vérification est en place et devra être respecté avant que l'administration puisse remettre à zéro votre mot de passe et vous rendre l'accès à votre compte perdu.
+EOT
+);
+
+
+// IP banned
+___('users_ip_banned_title',  'EN', "Your IP is banned");
+___('users_ip_banned_title',  'FR', "Adresse IP bannie");
+___('users_ip_banned_body',   'EN', <<<EOT
+<p>
+  Your current IP address has been banned from logging into or registering an account on this website.
+</p>
+<p>
+  This type of extreme punishment is only given in special cases where we have no other choice left. If you are the author of the mischief that caused you to be IP banned, then you know exactly why you are reading this. If not, then we are deeply sorry that you have been banned as collateral damage, but we have no other choice than to restrict your access to the website as your {{link++|https://en.wikipedia.org/wiki/IP_address|IP address|bold|0}} is shared with someone else who has been using the website in abusive ways.
+</p>
+<p>
+  Once this IP ban expires, we hope to see you again under different circumstances. Until then, you are free to continue using the website as a guest.
+</p>
+EOT
+);
+___('users_ip_banned_body',   'FR', <<<EOT
+<p>
+  Votre adresse IP actuelle est bannie : vous ne pouvez pas vous connecter à un compte utilisateur.
+</p>
+<p>
+Ce type de punition extrême n'est utilisé que dans des cas spéciaux où nous n'avons pas d'autre option qu'une exclusion totale. Si vous êtes responsable du chaos qui a mené à ce bannissement, vous savez exactement pourquoi vous voyez ce message. Si ce n'est pas le cas, nous sommes désolés de vous annoncer que vous êtes victime de dommages collatéraux : quelqu'un d'autre partageant la même {{link++|https://fr.wikipedia.org/wiki/Adresse_IP|Adresse IP|bold|0}} que vous a causé tant de problèmes que nous n'avons pas eu d'autre option que de bannir cette adresse IP.
+</p>
+<p>
+Une fois ce bannissement fini, nous espérons vous revoir dans de meilleures circonstances. En attendant, vous êtes libre de continuer à utiliser le site, mais sans pouvoir utiliser de compte.
+</p>
 EOT
 );
 

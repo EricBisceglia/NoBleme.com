@@ -42,7 +42,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  search_string_context               Searches for a string in a text, along with the words surrounding said string*/
 /*  string_wrap_in_html_tags            Wraps HTML tags around every occurence of a string in a text.                */
 /*                                                                                                                   */
-/*  private_message_send                Sends a private message to an user.                                          */
+/*  private_message_send                Sends a private message to a user.                                           */
 /*                                                                                                                   */
 /*  flood_check                         Throws an error if the user is currently flooding the website,               */
 /*                                      then updates the last activity date.                                         */
@@ -882,7 +882,7 @@ function string_wrap_in_html_tags(  $search     ,
 /*********************************************************************************************************************/
 
 /**
- * Sends a private message to an user.
+ * Sends a private message to a user.
  *
  * @param   string    $title                        The message's title.
  * @param   string    $body                         The message's body.
