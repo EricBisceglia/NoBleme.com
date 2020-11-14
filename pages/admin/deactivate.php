@@ -22,7 +22,7 @@ $page_title_en    = "Delete an account";
 $page_title_fr    = "Supprimer un compte";
 
 // Extra JS
-$js = array('admin/user_management');
+$js = array('admin/user_management', 'users/autocomplete_nickname');
 
 
 
@@ -34,7 +34,16 @@ $js = array('admin/user_management');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// List of deleted users
+// Deactivate an account
+
+if(isset($_POST['admin_deactivate_submit']))
+  $deactivate_error = admin_account_deactivate(form_fetch_element('admin_deactivate_username'));
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// List of deactivated accounts
 
 // Prepare the sorting order
 $deleted_users_sort = form_fetch_element('admin_reactivate_sort', 'deleted');
@@ -55,7 +64,57 @@ $deleted_users      = user_list($deleted_users_sort, $search, 0, 1);
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
+<div class="width_50 padding_bot">
+
+  <h1 class="align_center">
+    <?=__('admin_deactivate_title')?>
+  </h1>
+
+</div>
+
+<div class="width_30 bigpadding_bot">
+
+  <p class="padding_bot">
+    <?=__('admin_deactivate_warning')?>
+  </p>
+
+  <form method="POST">
+    <fieldset>
+
+      <label for="admin_deactivate_username"><?=string_change_case(__('nickname'), 'initials')?></label>
+      <input class="indiv" type="text" id="admin_deactivate_username" name="admin_deactivate_username" value="" autocomplete="off" list="admin_deactivate_username_list" onkeyup="autocomplete_nickname('admin_deactivate_username', 'admin_deactivate_username_list_parent', './../users/autocomplete_nickname', 'admin_deactivate_username_list', 'normal');">
+      <div id="admin_deactivate_username_list_parent">
+        <datalist id="admin_deactivate_username_list">
+          <option value=" ">&nbsp;</option>
+        </datalist>
+      </div>
+
+      <div class="padding_top">
+        <input type="submit" name="admin_deactivate_submit" value="<?=__('admin_deactivate_submit')?>">
+      </div>
+
+      <?php if(isset($_POST['admin_deactivate_submit'])) { ?>
+      <div class="padding_top">
+        <?php if($deactivate_error) { ?>
+        <h5 class="spaced uppercase text_white red">
+          <?=__('error').__(':', 0, 0, 1).$deactivate_error?>
+        </h5>
+        <?php } else { ?>
+        <h5 class="align_center uppercase text_white green">
+          <?=__('admin_deactivate_success')?>
+        </h5>
+        <?php } ?>
+      </div>
+      <?php } ?>
+
+    </fieldset>
+  </form>
+
+</div>
+
 <?php if($is_admin && $deleted_users['rows']) { ?>
+
+<hr>
 
 <div class="width_40 padding_top">
 

@@ -240,6 +240,13 @@ function log_activity_parse(  $path                 ,
     $return['FR']   = $nickname." a rejoint l'équipe d'administration de NoBleme";
   }
 
+  else if($type === 'users_delete')
+  {
+    $return['css']  = 'red bold';
+    $return['EN']   = $nickname."'s account has been deleted by ".$mod_nickname;
+    $return['FR']   = "Le compte de ".$nickname." a été supprimé par ".$mod_nickname;
+  }
+
 
 
 

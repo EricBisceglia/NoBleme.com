@@ -24,6 +24,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_is_moderator                 Checks if a user is a moderator (or above).                                    */
 /*  user_is_banned                    Checks if a user is banned.                                                    */
 /*  user_is_ip_banned                 Checks if a user is IP banned.                                                 */
+/*  user_is_deleted                   Checks if a user's account is deleted.                                         */
 /*                                                                                                                   */
 /*  user_restrict_to_administrators   Allows access only to administrators.                                          */
 /*  user_restrict_to_moderators       Allows access only to moderators (or above).                                   */
@@ -86,7 +87,7 @@ $is_logged_in = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : 0;
 // Does the user have special permissions? (required by the header)
 if(!$is_logged_in)
 {
-  // By default, assume he does not
+  // By default, assume they don't
   $is_admin     = 0;
   $is_moderator = 0;
 }
@@ -463,7 +464,7 @@ function user_get_language($user_id = NULL)
  *
  * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is an administrator.
  *
- * @return  bool                            Returns 1 if the user has administrator rights, 0 if he doesn't.
+ * @return  bool                            Returns 1 if the user has administrator rights, 0 if they don't.
  */
 
 function user_is_administrator($user_id = NULL)
@@ -484,7 +485,7 @@ function user_is_administrator($user_id = NULL)
                                         FROM    users
                                         WHERE   users.id = '$user_id' "));
 
-  // Return 1 if the user is an administrator, 0 if he isn't
+  // Return 1 if the user is an administrator, 0 if they don't
   return $drights['u_admin'];
 }
 
@@ -498,7 +499,7 @@ function user_is_administrator($user_id = NULL)
  *
  * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is a moderator.
  *
- * @return  bool                            Returns 1 if the user has moderator rights, 0 if he doesn't.
+ * @return  bool                            Returns 1 if the user has moderator rights, 0 if they don't.
  */
 
 function user_is_moderator($user_id = NULL)
@@ -507,7 +508,7 @@ function user_is_moderator($user_id = NULL)
   if(!$user_id && isset($_SESSION['user_id']))
     $user_id = $_SESSION['user_id'];
 
-  // If no user is specified, this means he is a guest, return 0
+  // If no user is specified, this means they are a guest, return 0
   if(!$user_id)
     return 0;
 
@@ -538,7 +539,7 @@ function user_is_moderator($user_id = NULL)
  *
  * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is banned.
  *
- * @return  bool                            Returns 1 if the user is banned, 0 if he isn't.
+ * @return  bool                            Returns 1 if the user is banned, 0 if they don't.
  */
 
 function user_is_banned($user_id = NULL)
@@ -635,6 +636,41 @@ function user_is_ip_banned()
 
   // Return 0 since the IP is now unbanned
   return 0;
+}
+
+
+
+
+/**
+ * Checks if a user's account is deleted.
+ *
+ * Defaults to checking whether current account is deleted unless the $user_id optional parameter is specified.
+ *
+ * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is deleted.
+ *
+ * @return  bool                            Returns 1 if the account is deleted, 0 if it isn't.
+ */
+
+function user_is_deleted($user_id = NULL)
+{
+  // If no user id is specified, use the current active session instead
+  if(!$user_id && isset($_SESSION['user_id']))
+    $user_id = $_SESSION['user_id'];
+
+  // If no user is specified, this means the user is a guest, in this case return 0
+  if(!$user_id)
+    return 0;
+
+  // Sanitize user id
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // Fetch account status
+  $ddeleted = mysqli_fetch_array(query("  SELECT  users.is_deleted AS 'u_deleted'
+                                          FROM    users
+                                          WHERE   users.id = '$user_id' "));
+
+  // Return 1 if the user is an deleted, 0 if they aren't
+  return $ddeleted['u_deleted'];
 }
 
 

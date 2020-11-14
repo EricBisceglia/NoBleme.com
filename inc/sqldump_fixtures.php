@@ -917,7 +917,7 @@ for($i = 0; $i < $random; $i++)
     // Remove the nickname of deleted users
     if($deleted)
       query(" UPDATE  users
-              SET     users.nickname  = '[???]'
+              SET     users.nickname  = 'user $user_id'
               WHERE   users.id        = '$user_id'  ");
   }
 }

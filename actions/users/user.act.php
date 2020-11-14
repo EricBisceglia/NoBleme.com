@@ -70,6 +70,11 @@ function user_list( $sort_by          = ''    ,
   $include_guests   = sanitize($include_guests, 'int', 0, 1);
   $max_guest_count  = sanitize($max_guest_count, 'int', 0);
 
+  // Sanitize the search parameters
+  $search_id        = isset($search['id'])        ? sanitize($search['id'], 'int', 0)       : NULL;
+  $search_username  = isset($search['username'])  ? sanitize($search['username'], 'string') : NULL;
+  $search_del_user  = isset($search['del_user'])  ? sanitize($search['del_user'], 'string') : NULL;
+
   // Prepare data
   $minimum_activity = sanitize((time() - $activity_cutoff), 'int', 0);
 
@@ -113,11 +118,6 @@ function user_list( $sort_by          = ''    ,
   // Banned users view
   if($banned_only)
     $qusers .= "    AND       users.is_banned_until             > 0                     ";
-
-  // Sanitize the search parameters
-  $search_id        = isset($search['id'])        ? sanitize($search['id'], 'int', 0)       : NULL;
-  $search_username  = isset($search['username'])  ? sanitize($search['username'], 'string') : NULL;
-  $search_del_user  = isset($search['del_user'])  ? sanitize($search['del_user'], 'string') : NULL;
 
   // Run the searches
   if($search_id)
