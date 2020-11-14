@@ -23,6 +23,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * Fetches a list of users.
  *
  * @param   string|null $sort_by          OPTIONAL  The way the user list should be sorted.
+ * @param   array|null  $search           OPTIONAL  Search for specific field values.
  * @param   int|null    $max_count        OPTIONAL  The number of users to return (0 for unlimited).
  * @param   bool|null   $deleted          OPTIONAL  If set, shows deleted users only.
  * @param   int|null    $activity_cutoff  OPTIONAL  If set, will only return users active since this many seconds.
@@ -38,6 +39,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  */
 
 function user_list( $sort_by          = ''    ,
+                    $search           = NULL  ,
                     $max_count        = 0     ,
                     $deleted          = 0     ,
                     $activity_cutoff  = 0     ,
@@ -77,6 +79,9 @@ function user_list( $sort_by          = ''    ,
   // Fetch the user list
   $qusers = "       SELECT    'user'                      AS 'data_type'        ,
                               users.id                    AS 'u_id'             ,
+                              users.is_deleted            AS 'u_deleted'        ,
+                              users.deleted_at            AS 'u_deleted_at'     ,
+                              users.deleted_nickname      AS 'u_deleted_nick'   ,
                               users.nickname              AS 'u_nick'           ,
                               ''                          AS 'u_guest_name_en'  ,
                               ''                          AS 'u_guest_name_fr'  ,
@@ -95,29 +100,48 @@ function user_list( $sort_by          = ''    ,
                               0                           AS 'u_total_ip_ban'
                     FROM      users
                     LEFT JOIN users_settings ON users.id = users_settings.fk_users
-                    WHERE     users.is_deleted                  = '$deleted' ";
+                    WHERE     users.is_deleted                  = '$deleted'            ";
 
   // Hide user activity based on their settings
   if($is_activity && !$is_admin)
-    $qusers .= "    AND       users_settings.hide_from_activity = 0 ";
+    $qusers .= "    AND       users_settings.hide_from_activity = 0                     ";
 
   // Activity cutoff
   if($activity_cutoff)
-    $qusers .= "    AND       users.last_visited_at             >= '$minimum_activity' ";
+    $qusers .= "    AND       users.last_visited_at             >= '$minimum_activity'  ";
 
   // Banned users view
   if($banned_only)
-    $qusers .= "    AND       users.is_banned_until             > 0 ";
+    $qusers .= "    AND       users.is_banned_until             > 0                     ";
+
+  // Sanitize the search parameters
+  $search_id        = isset($search['id'])        ? sanitize($search['id'], 'int', 0)       : NULL;
+  $search_username  = isset($search['username'])  ? sanitize($search['username'], 'string') : NULL;
+  $search_del_user  = isset($search['del_user'])  ? sanitize($search['del_user'], 'string') : NULL;
+
+  // Run the searches
+  if($search_id)
+    $qusers .= "    AND       users.id                          = '$search_id'          ";
+  if($search_username)
+    $qusers .= "    AND       users.nickname                 LIKE '%$search_username%'  ";
+  if($search_del_user)
+    $qusers .= "    AND       users.deleted_nickname         LIKE '%$search_del_user%'  ";
 
   // Sort the users
   if(!$include_guests)
   {
     if($sort_by == 'activity')
-      $qusers .= "  ORDER BY  users.last_visited_at DESC ";
-    if($sort_by == 'banned')
-      $qusers .= "  ORDER BY  users.is_banned_until ASC ";
+      $qusers .= "  ORDER BY  users.last_visited_at   DESC  ";
+    else if($sort_by == 'banned')
+      $qusers .= "  ORDER BY  users.is_banned_until   ASC   ";
+    else if($sort_by == 'username')
+      $qusers .= "  ORDER BY  users.nickname          ASC   ";
+    else if($sort_by == 'deleted_username')
+      $qusers .= "  ORDER BY  users.deleted_nickname  ASC   ";
+    else if($sort_by == 'deleted')
+      $qusers .= "  ORDER BY  users.deleted_at        DESC  ";
     else
-      $qusers .= "  ORDER BY  users.id ASC ";
+      $qusers .= "  ORDER BY  users.id                ASC   ";
   }
 
   // Limit the amount of users returned
@@ -128,6 +152,9 @@ function user_list( $sort_by          = ''    ,
   if($include_guests)
     $qusers = "     ( SELECT    'guest'                                 AS 'data_type'        ,
                                 0                                       AS 'u_id'             ,
+                                0                                       AS 'u_deleted'        ,
+                                0                                       AS 'u_deleted_at'     ,
+                                ''                                      AS 'u_deleted_nick'   ,
                                 ''                                      AS 'u_nick'           ,
                                 users_guests.randomly_assigned_name_en  AS 'u_guest_name_en'  ,
                                 users_guests.randomly_assigned_name_fr  AS 'u_guest_name_fr'  ,
@@ -155,6 +182,9 @@ function user_list( $sort_by          = ''    ,
   if($banned_only && $include_ip_bans)
     $qusers = "     ( SELECT    'ip_ban'                      AS 'data_type'            ,
                                 0                             AS 'u_id'                 ,
+                                0                             AS 'u_deleted'            ,
+                                0                             AS 'u_deleted_at'         ,
+                                ''                            AS 'u_deleted_nick'       ,
                                 system_ip_bans.ip_address     AS 'u_nick'               ,
                                 ''                            AS 'u_guest_name_en'      ,
                                 ''                            AS 'u_guest_name_fr'      ,
@@ -183,10 +213,14 @@ function user_list( $sort_by          = ''    ,
   for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
   {
     // Prepare the data
-    $data[$i]['type']       = $row['data_type'];
-    $data[$i]['id']         = $row['u_id'];
+    $data[$i]['type']       = sanitize_output($row['data_type']);
+    $data[$i]['id']         = sanitize_output($row['u_id']);
+    $data[$i]['deleted']    = sanitize_output($row['u_deleted']);
+    $data[$i]['del_since']  = sanitize_output(time_since($row['u_deleted_at']));
+    $data[$i]['del_nick']   = sanitize_output($row['u_deleted_nick']);
     $temp                   = ($lang == 'EN') ? $row['u_guest_name_en'] : $row['u_guest_name_fr'];
-    $data[$i]['nickname']   = ($row['data_type'] == 'guest') ? $temp : sanitize_output($row['u_nick']);
+    $temp                   = ($row['data_type'] == 'guest') ? $temp : $row['u_nick'];
+    $data[$i]['nickname']   = sanitize_output($temp);
     $data[$i]['activity']   = time_since($row['u_activity']);
     $temp                   = ($lang == 'EN') ? $row['u_last_page_en'] : $row['u_last_page_fr'];
     $data[$i]['last_page']  = sanitize_output(string_truncate($temp, 50, '...'));

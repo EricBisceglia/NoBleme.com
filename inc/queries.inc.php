@@ -1709,6 +1709,8 @@ if($last_query < 31)
   sql_create_index('quotes', 'index_deleted', 'is_deleted');
 
   sql_create_field('users', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('users', 'deleted_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'is_deleted');
+  sql_create_field('users', 'deleted_nickname', 'VARCHAR(45) NOT NULL', 'deleted_at');
   sql_create_index('users', 'index_deleted', 'is_deleted');
   sql_create_field('users_private_messages', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users_sender');
   sql_create_index('users_private_messages', 'index_deleted', 'is_deleted');

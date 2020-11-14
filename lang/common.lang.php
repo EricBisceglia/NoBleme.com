@@ -747,6 +747,8 @@ ___('submenu_admin_password',       'EN', "Change a password");
 ___('submenu_admin_password',       'FR', "Modifier un mot de passe");
 ___('submenu_admin_rights',         'EN', "User access rights");
 ___('submenu_admin_rights',         'FR', "Changer les permissions");
+___('submenu_admin_deactivate',     'EN', "Delete an account");
+___('submenu_admin_deactivate',     'FR', "Supprimer un compte");
 
 ___('submenu_admin_stats',          'EN', "Stats");
 ___('submenu_admin_stats',          'FR', "Statistiques");

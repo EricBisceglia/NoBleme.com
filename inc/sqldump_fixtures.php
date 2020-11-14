@@ -628,10 +628,12 @@ for($i = 0; $i < $random; $i++)
   // Generate random data
   $deleted      = (mt_rand(0,50) < 50) ? 0 : 1;
   $username     = ucfirst(fixtures_generate_data('string', 3, 15));
+  $deleted_nick = ($deleted) ? $username : '';
   $current_ip   = fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255);
   $email        = $username.'@localhost';
   $cur_language = mt_rand(0,1) ? 'EN' : 'FR';
   $created_at   = mt_rand(1111239420, time());
+  $deleted_at   = ($deleted) ? mt_rand($created_at, time()) : '';
   $last_visit   = mt_rand($created_at, time());
   $last_page_fr = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
   $last_page_en = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
@@ -655,6 +657,8 @@ for($i = 0; $i < $random; $i++)
     // Generate the users
     query(" INSERT INTO users
             SET         users.is_deleted            = '$deleted'      ,
+                        users.deleted_at            = '$deleted_at'   ,
+                        users.deleted_nickname      = '$deleted_nick' ,
                         users.nickname              = '$username'     ,
                         users.password              = ''              ,
                         users.current_language      = '$cur_language' ,
@@ -909,6 +913,12 @@ for($i = 0; $i < $random; $i++)
                           logs_activity.activity_type           = 'users_rights_delete' ,
                           logs_activity.activity_nickname       = '$username'           ");
     }
+
+    // Remove the nickname of deleted users
+    if($deleted)
+      query(" UPDATE  users
+              SET     users.nickname  = '[???]'
+              WHERE   users.id        = '$user_id'  ");
   }
 }
 

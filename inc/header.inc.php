@@ -809,6 +809,9 @@ $javascripts .= '
           <?=__link('todo_link', __('submenu_admin_rights'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <?php } ?>
+        <div class="header_submenu_item">
+          <?=__link('pages/admin/deactivate', __('submenu_admin_deactivate'), 'header_submenu_link', 1, $path);?>
+        </div>
       </div>
 
       <?php if($is_admin) { ?>

@@ -105,7 +105,7 @@ if(isset($_POST['admin_ban_add_submit']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List of banned users
 
-$banned_users = user_list('banned', 0, 0, 0, 0, 0, 1, 1, 0, 0, $lang);
+$banned_users = user_list('banned', NULL, 0, 0, 0, 0, 0, 1, 1, 0, 0, $lang);
 
 
 

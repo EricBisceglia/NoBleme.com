@@ -1,9 +1,3 @@
-/*! ******************************************************************************************************************/
-/*!                                                                                                                  */
-/*!                                        DUMP OF THE DATABASE'S STRUCTURE                                          */
-/*!                                                                                                                  */
-/*! ******************************************************************************************************************/
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `nobleme` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -371,6 +365,8 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `is_deleted` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `deleted_at` int UNSIGNED NOT NULL DEFAULT '0',
+  `deleted_nickname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nickname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_administrator` tinyint UNSIGNED NOT NULL DEFAULT '0',
