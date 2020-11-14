@@ -247,6 +247,13 @@ function log_activity_parse(  $path                 ,
     $return['FR']   = "Le compte de ".$nickname." a été supprimé par ".$mod_nickname;
   }
 
+  else if($type === 'users_undelete')
+  {
+    $return['css']  = 'green bold';
+    $return['EN']   = $nickname."'s account has been reactivated by ".$mod_nickname;
+    $return['FR']   = "Le compte de ".$nickname." a été réactivé par ".$mod_nickname;
+  }
+
 
 
 

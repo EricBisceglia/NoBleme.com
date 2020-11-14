@@ -54,3 +54,14 @@ ___('admin_deactivate_list_count+',     'EN', "{{1}} DEACTIVATED ACCOUNTS");
 ___('admin_deactivate_list_count+',     'FR', "{{1}} COMPTES DÉSACTIVÉS");
 ___('admin_deactivate_list_reactivate', 'EN', "Reactivate user");
 ___('admin_deactivate_list_reactivate', 'FR', "Réactiver le compte");
+___('admin_deactivate_list_confirm',    'EN', "Confirm the reactivation of this account");
+___('admin_deactivate_list_confirm',    'FR', "Confirmez la réactivation de ce compte");
+
+
+// Reactivate an account
+___('admin_reactivate_no_id',   'EN', "No account ID has been provided");
+___('admin_reactivate_no_id',   'FR', "ID de compte manquant");
+___('admin_reactivate_no_user', 'EN', "No user found for the provided ID");
+___('admin_reactivate_no_user', 'FR', "Aucun compte trouvé pour cet ID");
+___('admin_reactivate_success', 'EN', "The account has been reactivated");
+___('admin_reactivate_success', 'FR', "Le compte a été réactivé");

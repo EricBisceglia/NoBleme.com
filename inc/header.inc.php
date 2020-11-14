@@ -810,7 +810,7 @@ $javascripts .= '
         </div>
         <?php } ?>
         <div class="header_submenu_item">
-          <?=__link('pages/admin/deactivate', __('submenu_admin_deactivate'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/admin/user_deactivate', __('submenu_admin_deactivate'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 

@@ -17,7 +17,7 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/admin/deactivate";
+$page_url         = "pages/admin/user_deactivate";
 $page_title_en    = "Delete an account";
 $page_title_fr    = "Supprimer un compte";
 
@@ -96,7 +96,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php if(isset($_POST['admin_deactivate_submit'])) { ?>
       <div class="padding_top">
         <?php if($deactivate_error) { ?>
-        <h5 class="spaced uppercase text_white red">
+        <h5 class="align_center uppercase text_white red">
           <?=__('error').__(':', 0, 0, 1).$deactivate_error?>
         </h5>
         <?php } else { ?>
@@ -128,15 +128,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
         <th>
           <?=__('id')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>" onclick="admin_ban_search_logs('id');">
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>" onclick="admin_reactivate_search('id');">
         </th>
         <th>
           <?=string_change_case(__('nickname'), 'uppercase')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>" onclick="admin_ban_search_logs('deleted_username');">
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>" onclick="admin_reactivate_search('deleted_username');">
         </th>
         <th>
           <?=__('admin_deactivate_list_deleted_at')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>" onclick="admin_ban_search_logs('deleted');">
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>" onclick="admin_reactivate_search('deleted');">
         </th>
         <th>
           <?=string_change_case(__('action+'), 'uppercase')?>
@@ -147,11 +147,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <th>
           <input type="hidden" name="admin_reactivate_sort" id="admin_reactivate_sort" value="username">
-          <input type="text" class="table_search" name="admin_reactivate_id" id="admin_reactivate_id" value="" size="3" onkeyup="admin_ban_search_logs();">
+          <input type="text" class="table_search" name="admin_reactivate_id" id="admin_reactivate_id" value="" size="3" onkeyup="admin_reactivate_search();">
         </th>
 
         <th>
-          <input type="text" class="table_search" name="admin_reactivate_username" id="admin_reactivate_username" value="" onkeyup="admin_ban_search_logs();">
+          <input type="text" class="table_search" name="admin_reactivate_username" id="admin_reactivate_username" value="" onkeyup="admin_reactivate_search();">
         </th>
 
         <th>
@@ -178,7 +178,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?php for($i = 0; $i < $deleted_users['rows'] ; $i++) { ?>
 
-      <tr>
+      <tr id="admin_reactivate_row_<?=$deleted_users[$i]['id']?>">
         <td>
           <?=$deleted_users[$i]['id']?>
         </td>
@@ -189,7 +189,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$deleted_users[$i]['del_since']?>
         </td>
         <td class="align_center">
-          <img class="smallicon valign_middle" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="<?=__('admin_deactivate_list_reactivate')?>">
+          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="<?=__('admin_deactivate_list_reactivate')?>" onclick="admin_reactivate_account('<?=$deleted_users[$i]['id']?>', '<?=__('admin_deactivate_list_confirm')?>')">
         </td>
       </tr>
 
