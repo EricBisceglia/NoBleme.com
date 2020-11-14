@@ -97,7 +97,8 @@ else
   $id_user = sanitize($is_logged_in, 'int', 0);
 
   // Go look for their access rights
-  $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator  AS 'm_admin' ,
+  $drights = mysqli_fetch_array(query(" SELECT  users.is_deleted        AS 'm_deleted'  ,
+                                                users.is_administrator  AS 'm_admin'    ,
                                                 users.is_moderator      AS 'm_mod'
                                         FROM    users
                                         WHERE   users.id = '$id_user' "));
@@ -106,8 +107,8 @@ else
   $is_admin     = $drights['m_admin'];
   $is_moderator = ($is_admin || $drights['m_mod']) ? 1 : 0;
 
-  // If the user's account doesn't exist, log them out and set all permissions to 0
-  if($drights['m_admin'] === null)
+  // If the user's account doesn't exist or is deleted, log them out and set all permissions to 0
+  if($drights['m_deleted'] || !isset($drights['m_admin']))
   {
     user_log_out();
     $is_admin     = 0;

@@ -67,9 +67,10 @@ function user_authenticate( $ip               ,
     return __('login_form_error_bruteforce');
 
   // Fetch the ID of the requested user
-  $dfetch_user = mysqli_fetch_array(query(" SELECT  users.id        AS 'u_id'   ,
-                                                    users.nickname  AS 'u_nick' ,
-                                                    users.password  AS 'u_pass'
+  $dfetch_user = mysqli_fetch_array(query(" SELECT  users.id          AS 'u_id'       ,
+                                                    users.is_deleted  AS 'u_deleted'  ,
+                                                    users.nickname    AS 'u_nick'     ,
+                                                    users.password    AS 'u_pass'
                                             FROM    users
                                             WHERE   users.nickname LIKE '$nickname' "));
 
@@ -82,6 +83,10 @@ function user_authenticate( $ip               ,
                         users_login_attempts.attempted_at = '$timestamp'  ");
     return __('login_form_error_wrong_user').'<br><br>'.__link('#popin_lost_access', __('login_form_error_forgotten_user'), 'text_red', 0);
   }
+
+  // Error: User is deleted
+  if($dfetch_user['u_deleted'])
+    return __('login_form_error_deleted');
 
   // Grab the user's nickname to fix any case inconsistency
   $nickname_raw = $dfetch_user['u_nick'];

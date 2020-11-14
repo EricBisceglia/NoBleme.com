@@ -821,6 +821,8 @@ ___('login_form_error_no_password',         'EN', "You must specify a password")
 ___('login_form_error_no_password',         'FR', "Vous devez saisir un mot de passe");
 ___('login_form_error_bruteforce',          'EN', "You are trying to log in too often, please wait 10 minutes before your next attempt");
 ___('login_form_error_bruteforce',          'FR', "Trop de tentatives de connexion, merci d'attendre 10 minutes avant d'essayer de nouveau");
+___('login_form_error_deleted',             'EN', "This account has been deleted");
+___('login_form_error_deleted',             'FR', "Ce compte a été supprimé");
 ___('login_form_error_wrong_user',          'EN', "This username does not exist on the website");
 ___('login_form_error_wrong_user',          'FR', "Ce pseudonyme n'existe pas sur le site");
 ___('login_form_error_forgotten_user',      'EN', "Forgot your username?");
