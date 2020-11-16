@@ -10,7 +10,7 @@ include_once './../../actions/users/account.act.php'; # Actions
 page_must_be_fetched_dynamically();
 
 // Limit page access rights
-user_restrict_to_guests($lang);
+user_restrict_to_guests();
 
 
 

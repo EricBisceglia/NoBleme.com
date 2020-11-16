@@ -9,7 +9,7 @@ include_once './actions/users/user.act.php';  # Actions
 include_once './lang/users/banned.lang.php';  # Translations
 
 // Limit page access rights
-user_restrict_to_banned($path);
+user_restrict_to_banned();
 
 // Page summary
 $page_lang        = array('FR', 'EN');

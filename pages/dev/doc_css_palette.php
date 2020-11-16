@@ -9,7 +9,7 @@ include_once './../../lang/dev/documentation.lang.php'; # Translations
 include_once './../../inc/bbcodes.inc.php';             # BBCodes
 
 // Limit page access rights
-user_restrict_to_administrators($lang);
+user_restrict_to_administrators();
 
 // Hide the page from who's online
 $hidden_activity = 1;

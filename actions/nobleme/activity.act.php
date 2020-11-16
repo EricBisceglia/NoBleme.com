@@ -97,7 +97,7 @@ function activity_list( $modlogs  = 0           ,
 {
   // Require administrator rights to run this action in special cases
   if($is_admin)
-    user_restrict_to_administrators($lang);
+    user_restrict_to_administrators();
 
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -212,7 +212,7 @@ function activity_delete( $log_id                 ,
                           $lang           = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Sanitize the data
   $log_id = sanitize($log_id, 'int', 0);
@@ -252,7 +252,7 @@ function activity_restore(  $log_id         ,
                             $lang   = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Sanitize the data
   $log_id = sanitize($log_id, 'int', 0);

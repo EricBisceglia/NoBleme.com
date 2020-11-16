@@ -16,15 +16,13 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Fetches all page titles of the compendium in a specific language.
  *
- * @param   string|null $lang (OPTIONAL)  The language of the page titles, default to current user's language.
- *
  * @return  array                         All of the page titles in the requested language.
  */
 
-function compendium_list_pages($lang = NULL)
+function compendium_list_pages()
 {
-  // Fetch the user's language if required
-  $lang = (!$lang) ? user_get_language() : $lang;
+  // Fetch the user's language
+  $lang = user_get_language();
 
   // Prepare the language for use in a query by turning it lowercase and sanitizing it
   $lang = sanitize(string_change_case($lang, 'lowercase'), 'string');

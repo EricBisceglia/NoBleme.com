@@ -11,7 +11,7 @@ include_once './../../lang/nobleme/activity.lang.php';    # Translations
 page_must_be_fetched_dynamically();
 
 // Limit page access rights
-user_restrict_to_administrators($lang);
+user_restrict_to_administrators();
 
 
 

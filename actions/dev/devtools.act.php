@@ -67,7 +67,7 @@ function dev_toggle_website_status( $website_status         ,
                                     $lang           = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Sanitize the data
   $website_status = sanitize($website_status, 'int', 0, 1);
@@ -220,7 +220,7 @@ function dev_versions_create( $major                    ,
                               $lang             = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Check if the required files have been included
   require_included_file('devtools.lang.php');
@@ -298,7 +298,7 @@ function dev_versions_edit( $id                   ,
                             $lang         = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Check if the required files have been included
   require_included_file('devtools.lang.php');
@@ -356,7 +356,7 @@ function dev_versions_delete( $version_id         ,
                               $lang       = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Sanitize the data
   $version_id = sanitize($version_id, 'int', 0);

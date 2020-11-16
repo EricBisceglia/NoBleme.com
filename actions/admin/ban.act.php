@@ -47,7 +47,7 @@ function admin_ban_create(  $banner_id                    ,
                             $path           = './../../'  )
 {
   // Require moderator rights to run this action
-  user_restrict_to_moderators($lang);
+  user_restrict_to_moderators();
 
   // Check if the required files have been included
   require_included_file('ban.lang.php');
@@ -165,7 +165,6 @@ function admin_ban_create(  $banner_id                    ,
  * @param   int|null    $ban_length     (OPTIONAL)  The length of the ban extension (or 0 if it should not change).
  * @param   string|null $ban_reason_en  (OPTIONAL)  The justification for the ban modification, in english.
  * @param   string|null $ban_reason_fr  (OPTIONAL)  The justification for the ban modification, in french.
- * @param   string|null $lang           (OPTIONAL)  The language currently in use.
  * @param   string|null $path           (OPTIONAL)  The path to the root of the website.
  *
  * @return  void
@@ -180,7 +179,7 @@ function admin_ban_edit(  $banner_id                    ,
                           $path           = './../../'  )
 {
   // Require moderator rights to run this action
-  user_restrict_to_moderators($lang);
+  user_restrict_to_moderators();
 
   // Check if the required files have been included
   require_included_file('ban.lang.php');
@@ -317,7 +316,7 @@ function admin_ban_delete(  $unbanner_id                    ,
                             $path             = './../../'  )
 {
   // Require moderator rights to run this action
-  user_restrict_to_moderators($lang);
+  user_restrict_to_moderators();
 
   // Check if the required files have been included
   require_included_file('ban.lang.php');
@@ -420,7 +419,7 @@ function admin_ip_ban_create( $banner_id                    ,
                               $lang           = 'EN'        )
 {
   // Require moderator rights to run this action
-  user_restrict_to_moderators($lang);
+  user_restrict_to_moderators();
 
   // Check if the required files have been included
   require_included_file('ban.lang.php');
@@ -592,7 +591,7 @@ function admin_ip_ban_list_users( $banned_ip          ,
                                   $lang       = 'EN'  )
 {
   // Require moderator rights to run this action
-  user_restrict_to_moderators($lang);
+  user_restrict_to_moderators();
 
   // Sanitize the ip
   $banned_ip = sanitize(str_replace("*", "%", $banned_ip), 'string');
@@ -638,7 +637,7 @@ function admin_ip_ban_get(  $ip_ban_id          ,
                             $lang       = 'EN'  )
 {
   // Require moderator rights to run this action
-  user_restrict_to_moderators($lang);
+  user_restrict_to_moderators();
 
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -690,7 +689,7 @@ function admin_ip_ban_delete( $ban_id                   ,
                               $lang             = 'EN'  )
 {
   // Require moderator rights to run this action
-  user_restrict_to_moderators($lang);
+  user_restrict_to_moderators();
 
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -775,7 +774,7 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
                               $lang       = 'EN'  )
 {
   // Require moderator rights to run this action
-  user_restrict_to_moderators($lang);
+  user_restrict_to_moderators();
 
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -916,7 +915,7 @@ function admin_ban_logs_list( $lang             = 'EN'      ,
                               $search_unbanner  = NULL      )
 {
   // Require moderator rights to run this action
-  user_restrict_to_moderators($lang);
+  user_restrict_to_moderators();
 
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -1037,7 +1036,7 @@ function admin_ban_logs_delete( $log_id         ,
                                 $lang   = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Sanitize the log id
   $log_id = sanitize($log_id, 'int', 0);

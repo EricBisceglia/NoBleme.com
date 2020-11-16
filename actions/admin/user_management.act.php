@@ -28,7 +28,7 @@ function admin_account_deactivate( $username )
   $lang = user_get_language();
 
   // Require moderator rights to run this action
-  user_restrict_to_moderators($lang);
+  user_restrict_to_moderators();
 
   // Check if the required files have been included
   require_included_file('user_management.lang.php');
@@ -97,7 +97,7 @@ function admin_account_reactivate( $user_id )
   $lang = user_get_language();
 
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Check if the required files have been included
   require_included_file('user_management.lang.php');

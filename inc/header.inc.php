@@ -34,12 +34,6 @@ if($GLOBALS['dev_mode'] && $GLOBALS['env_debug_mode'])
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Restrictions and prerequisites
 
-// If we are on a subdomain, strip the subdomain from the url - prepare some data required for this action
-$subdomain_check    = explode('.',$_SERVER['HTTP_HOST']);
-$domain_name        = explode('.',$GLOBALS['domain_name']);
-$domain_name_start  = $domain_name[0];
-$domain_name_end    = $domain_name[1];
-
 // If the user permission variables don't exist, stop here
 if(!isset($is_admin) || !isset($is_moderator))
   exit(__('error_forbidden'));
@@ -121,7 +115,7 @@ if(isset($page_url) && !isset($error_mode))
   $page_url_sanitized = sanitize($page_url, 'string');
   $page_en_sanitized  = sanitize($page_title_en, 'string');
   $page_fr_sanitized  = sanitize($page_title_fr, 'string');
-  $page_timestamp     = time();
+  $page_timestamp     = sanitize(time(), 'int', 0);
 
   // Fetch current page's view count
   $qpageviews = query(" SELECT  stats_pages.view_count AS 'p_views'
@@ -158,8 +152,8 @@ if(isset($page_url) && !isset($error_mode))
 // User and guest activity
 
 // Fetch and sanitize all the data required to track recent activity
-$activity_timestamp         = time();
-$activity_language          = sanitize(user_get_language());
+$activity_timestamp         = sanitize(time(), 'int', 0);
+$activity_language          = sanitize(user_get_language(), 'string');
 $activity_ip                = sanitize($_SERVER["REMOTE_ADDR"], 'string');
 $activity_page_en_sanitized = sanitize($activity_page_en, 'string');
 $activity_page_fr_sanitized = sanitize($activity_page_fr, 'string');
@@ -167,7 +161,7 @@ $activity_url_sanitized     = sanitize($activity_url, 'string');
 $activity_user              = (user_is_logged_in()) ? sanitize(user_get_id(), 'int', 0) : 0;
 
 // Logged in user activity
-if(user_is_logged_in())
+if($activity_user)
   query(" UPDATE  users
           SET     users.current_language      = '$activity_language'          ,
                   users.last_visited_at       = '$activity_timestamp'         ,
@@ -181,14 +175,14 @@ if(user_is_logged_in())
 else
 {
   // Clean up older guest activity
-  $guest_limit = time() - 2500000;
+  $guest_limit = sanitize(time() - 2500000, 'int', 0);
   query(" DELETE FROM users_guests
           WHERE       users_guests.last_visited_at < '$guest_limit' ");
 
   // Check whether the guest already exists in the database
   $qguest   = query(" SELECT  users_guests.ip_address AS 'g_ip'
                       FROM    users_guests
-                      WHERE   users_guests.ip_address = '$activity_ip' ");
+                      WHERE   users_guests.ip_address LIKE '$activity_ip' ");
 
   // Create the guest if it does not exist
   if(!mysqli_num_rows($qguest))
@@ -204,7 +198,7 @@ else
                         users_guests.randomly_assigned_name_fr  = '$guest_name_fr'  ");
   }
 
-  // Et on met à jour les données
+  // Update guest activity data
   query(" UPDATE  users_guests
           SET     users_guests.last_visited_at      = '$activity_timestamp'         ,
                   users_guests.last_visited_page_en = '$activity_page_en_sanitized' ,
@@ -223,16 +217,15 @@ else
 /*********************************************************************************************************************/
 
 // Check only if the user is logged in
-if (user_is_logged_in())
+if ($activity_user)
 {
-  // Fetch unreal private message count
-  $qpms = query(" SELECT  COUNT(*) AS 'pm_nb'
-                  FROM    users_private_messages
-                  WHERE   users_private_messages.read_at            = 0
-                  AND     users_private_messages.fk_users_recipient = '$activity_user' ");
+  // Fetch unread private message count
+  $dpms = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 'pm_nb'
+                                      FROM    users_private_messages
+                                      WHERE   users_private_messages.read_at            = 0
+                                      AND     users_private_messages.fk_users_recipient = '$activity_user' "));
 
   // Fetch the result for display
-  $dpms                     = mysqli_fetch_array($qpms);
   $nb_private_messages      = $dpms['pm_nb'];
   $nb_private_messages_css  = ($nb_private_messages) ? ' header_submenu_blink' : '';
 }
@@ -254,12 +247,9 @@ if (user_is_logged_in())
 $page_title = ($lang == 'EN' && isset($page_title_en)) ? $page_title_en : '';
 $page_title = ($lang == 'FR' && isset($page_title_fr)) ? $page_title_fr : $page_title;
 
-// If the current page is unnamed, simply call it NoBleme, else prepend NoBleme to it
-$page_title = ($page_title) ? 'NoBleme - '.$page_title : 'NoBleme';
-
-// If we are working on dev mode, add an @ before the page's title
-if($GLOBALS['dev_mode'])
-  $page_title = "@ ".$page_title;
+// If the current page is unnamed, simply call it NoBleme, else append NoBleme to it - or Devmode when in dev mode
+$temp       = ($GLOBALS['dev_mode']) ? ' | Devmode' : ' | NoBleme';
+$page_title = ($page_title) ? $page_title.$temp : 'NoBleme.com';
 
 
 
@@ -267,8 +257,8 @@ if($GLOBALS['dev_mode'])
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Page description
 
-// If there is no description, use the default generic french one
-$page_description = (isset($page_description)) ? $page_description : "NoBleme, la communauté web qui n'apporte rien mais a réponse à tout";
+// If there is no description, use a default generic one
+$page_description = (isset($page_description)) ? $page_description : "NoBleme.com - ".$page_title_en;
 
 // Make the page's description W3C meta tag compliant
 $page_description = html_fix_meta_tags($page_description);
@@ -364,7 +354,7 @@ $javascripts .= '
     <meta property="og:url" content="<?='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>">
     <meta property="og:site_name" content="NoBleme.com">
     <meta property="og:image" content="<?=$GLOBALS['website_url']?>img/divers/404_gauche.png">
-    <meta name="twitter:image:alt" content="NoBleme, la communauté qui n'apporte rien mais a réponse à tout">
+    <meta name="twitter:image:alt" content="NoBleme.com - <?=$page_description?>">
     <meta name="twitter:card" content="summary_large_image">
     <?=$stylesheets?>
     <?=$javascripts?>

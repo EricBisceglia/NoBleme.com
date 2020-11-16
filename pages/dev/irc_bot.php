@@ -9,7 +9,7 @@ include_once './../../actions/dev/ircbot.act.php';  # Actions
 include_once './../../lang/dev/ircbot.lang.php';    # Translations
 
 // Limit page access rights
-user_restrict_to_administrators($lang);
+user_restrict_to_administrators();
 
 // Hide the page from who's online
 $hidden_activity = 1;

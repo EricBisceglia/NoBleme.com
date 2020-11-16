@@ -38,7 +38,7 @@ function irc_bot_start( $path = './../../'  ,
                         $lang = 'EN'        )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Check if the required files have been included
   require_included_file('ircbot.lang.php');
@@ -163,7 +163,7 @@ function irc_bot_start( $path = './../../'  ,
 function irc_bot_stop( $lang = 'EN' )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Execute order 66
   irc_bot_send_message('quit');
@@ -193,7 +193,7 @@ function irc_bot_toggle_silence_mode( $silenced         ,
                                       $lang     = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Decide which mode to toggle to
   $silenced = ($silenced) ? 0 : 1;
@@ -236,7 +236,7 @@ function irc_bot_admin_send_message(  $body                   ,
                                       $lang     = 'EN'        )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Stop here if there is no message to send
   if(!$body)
@@ -273,7 +273,7 @@ function irc_bot_message_queue_list(  $path = './../../'  ,
                                       $lang = 'EN'        )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Check if the required files have been included
   require_included_file('ircbot.lang.php');
@@ -324,7 +324,7 @@ function irc_bot_message_queue_delete(  $line_id                ,
                                         $lang     = 'EN'        )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Check if the required files have been included
   require_included_file('ircbot.lang.php');
@@ -390,7 +390,7 @@ function irc_bot_message_history_list(  $lang           = 'EN'  ,
                                         $search_errors  = -1    )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Check if the required files have been included
   require_included_file('ircbot.lang.php');
@@ -477,7 +477,7 @@ function irc_bot_message_history_replay(  $log_id               ,
                                           $lang   = 'EN'        )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Sanitize the log id
   $log_id = sanitize($log_id, 'int', 0);
@@ -494,7 +494,7 @@ function irc_bot_message_history_replay(  $log_id               ,
     $channel = substr($channel, 1);
 
   // Replay the message and bypass silenced mode
-  irc_bot_send_message($dlog['il_body'], $channel, $path, 1, 1);
+  irc_bot_send_message($dlog['il_body'], $channel, 1, 1);
 
   // Update the log now that it has been sent (if there's still an error, it will appear in the replayed log instead)
   query(" UPDATE  logs_irc_bot
@@ -519,7 +519,7 @@ function irc_bot_message_history_delete(  $log_id         ,
                                           $lang   = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Sanitize the log id
   $log_id = sanitize($log_id, 'int', 0);

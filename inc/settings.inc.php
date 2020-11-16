@@ -58,6 +58,6 @@ if($uri_length <= $uri_base_slashes)
 else
 {
   $path = "./";
-  for ($i=0 ; $i<($uri_length-$uri_base_slashes) ; $i++)
+  for ($i = 0 ; $i < ($uri_length - $uri_base_slashes) ; $i++)
     $path .= "../";
 }

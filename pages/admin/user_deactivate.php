@@ -10,7 +10,7 @@ include_once './../../actions/admin/user_management.act.php'; # Actions
 include_once './../../lang/admin/user_management.lang.php';   # Translations
 
 // Limit page access rights
-user_restrict_to_moderators($lang);
+user_restrict_to_moderators();
 
 // Hide the page from who's online
 $hidden_activity = 1;

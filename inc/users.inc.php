@@ -11,14 +11,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  secure_session_start              Starts a session.                                                              */
 /*  encrypt_data                      Encrypts data.                                                                 */
 /*                                                                                                                   */
-/*  user_is_logged_in                 Checks whether the user is logged in.                                          */
+/*  user_is_logged_in                 Checks whether the current user is logged in.                                  */
 /*  user_log_out                      Logs the user out of their account.                                            */
 /*                                                                                                                   */
 /*  user_unban                        Unbans a banned user.                                                          */
 /*                                                                                                                   */
-/*  user_get_id                       Returns a user's id.                                                           */
+/*  user_get_id                       Returns the current user's id.                                                 */
 /*  user_get_nickname                 Returns a user's nickname from their id.                                       */
-/*  user_get_language                 Detects the user's language.                                                   */
+/*  user_get_language                 Returns a user's language.                                                     */
 /*                                                                                                                   */
 /*  user_is_administrator             Checks if a user is an administrator.                                          */
 /*  user_is_moderator                 Checks if a user is a moderator (or above).                                    */
@@ -289,9 +289,9 @@ function encrypt_data(  $data         ,
 
 
 /**
- * Checks whether the user is logged in.
+ * Checks whether the current user is logged in.
  *
- * @return boolean  Simply enough returns true/1 if logged in, false/0 if logged out.
+ * @return  boolean   Whether the current user is logged in.
  */
 
 function user_is_logged_in()
@@ -382,9 +382,9 @@ function user_unban(  $user_id              ,
 
 
 /**
- * Returns a user's id.
+ * Returns the current user's id.
  *
- * @return int The user's id / 0 if logged out.
+ * @return  int   The current user's id, or 0 if logged out.
  */
 
 function user_get_id()
@@ -430,7 +430,7 @@ function user_get_nickname($user_id = NULL)
 
 
 /**
- * Detects the user's language.
+ * Returns a user's language.
  *
  * @param   int|null  $user_id  (OPTIONAL)  Gets the language of a specified user instead of the current user.
  *
@@ -680,16 +680,17 @@ function user_is_deleted($user_id = NULL)
 /**
  * Allows access only to administrators.
  *
- * Any user who does not have the required rights will get rejected and see an error page.
+ * Any user lacking the required rights will get rejected and see an error page.
  * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
- *
- * @param   string|null $lang (OPTIONAL)  The language used in the error message.
  *
  * @return  void
  */
 
-function user_restrict_to_administrators($lang = 'EN')
+function user_restrict_to_administrators()
 {
+  // Fetch the user's language
+  $lang = user_get_language();
+
   // Prepare the error message that will be displayed
   $error_message = ($lang == 'EN') ? "This page is restricted to website administrators only." : "Cette page est réservée aux équipes d'administration du site.";
 
@@ -711,16 +712,17 @@ function user_restrict_to_administrators($lang = 'EN')
 /**
  * Allows access only to moderators (or above).
  *
- * Any user who does not have the required rights will get rejected and see an error page.
+ * Any user lacking the required rights will get rejected and see an error page.
  * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
- *
- * @param   string|null $lang (OPTIONAL)  The language used in the error message.
  *
  * @return  void
  */
 
-function user_restrict_to_moderators($lang = 'EN')
+function user_restrict_to_moderators()
 {
+  // Fetch the user's language
+  $lang = user_get_language();
+
   // Prepare the error message that will be displayed
   $error_message = ($lang == 'EN') ? "This page is restricted to website staff only." : "Cette page est réservée aux équipes d'administration du site.";
 
@@ -742,25 +744,27 @@ function user_restrict_to_moderators($lang = 'EN')
 /**
  * Allows access only to logged in users.
  *
- * Any user who does not have the required rights will get rejected and see an error page.
+ * Any user lacking the required rights will get rejected and see an error page.
  * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
- *
- * @param   string|null $lang (OPTIONAL)  The language used in the error message.
- * @param   string|null $path (OPTIONAL)  The relative path to the root of the website (defaults to 2 folders away).
  *
  * @return  void
  */
 
-function user_restrict_to_users(  $lang = 'EN'        ,
-                                  $path = "./../../"  )
+function user_restrict_to_users()
 {
+  // Fetch the path to the website's root
+  $path = root_path();
+
+  // Fetch the user's language
+  $lang = user_get_language();
+
   // If the user is logged out, throw an error page asking the user to log in or register
   if(!user_is_logged_in())
   {
     if($lang == 'EN')
-      error_page("This page is restricted to logged in users.<br><br>Log in by clicking the <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle red\"> icon on the top right of the page", $path);
+      error_page("This page is restricted to logged in users.<br><br>Log in by clicking the <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle red\"> icon on the top right of the page");
     else
-      error_page("Cette page est réservée aux utilisateurs connectés.<br><br>Connectez vous en cliquant sur l'icône <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle red\"> en haut à droite de la page", $path);
+      error_page("Cette page est réservée aux utilisateurs connectés.<br><br>Connectez vous en cliquant sur l'icône <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle red\"> en haut à droite de la page");
   }
 }
 
@@ -770,16 +774,17 @@ function user_restrict_to_users(  $lang = 'EN'        ,
 /**
  * Allows access only to guests (not logged into an account).
  *
- * Any user who does not have the required rights will get rejected and see an error page.
+ * Any user lacking the required rights will get rejected and see an error page.
  * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
- *
- * @param   string|null $lang (OPTIONAL)  The language used in the error message.
  *
  * @return  void
  */
 
-function user_restrict_to_guests($lang = 'EN')
+function user_restrict_to_guests()
 {
+  // Fetch the user's language
+  $lang = user_get_language();
+
   // Prepare the error message that will be displayed
   $error_message = ($lang == 'EN') ? "This page cannot be used while logged into an account." : "Cette page n'est pas utilisable lorsque vous êtes connecté à un compte.";
 
@@ -797,13 +802,14 @@ function user_restrict_to_guests($lang = 'EN')
  * Any guest or non-banned user will get redirected to the homepage.
  * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
  *
- * @param   string|null $path (OPTIONAL)  The path to the root of the website.
- *
  * @return  void
  */
 
-function user_restrict_to_banned( $path = './../../' )
+function user_restrict_to_banned()
 {
+  // Fetch the path to the website's root
+  $path = root_path();
+
   // Check if the user is logged out or logged in but not banned, then redirect them
   if(!user_is_logged_in() || !user_is_banned())
     exit(header("Location: ".$path."index"));
@@ -815,16 +821,17 @@ function user_restrict_to_banned( $path = './../../' )
 /**
  * Allows access only to fully IP banned users.
  *
- * Any guest or non-banned user will get redirected to the homepage.
+ * Any non IP banned user will get redirected to the homepage.
  * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
- *
- * @param   string|null $path (OPTIONAL)  The path to the root of the website.
  *
  * @return  void
  */
 
-function user_restrict_to_ip_banned( $path = './../../' )
+function user_restrict_to_ip_banned()
 {
+  // Fetch the path to the website's root
+  $path = root_path();
+
   // Check if the user isn't fully IP banned, then redirect them
   if(user_is_ip_banned() < 2)
     exit(header("Location: ".$path."index"));
@@ -836,16 +843,17 @@ function user_restrict_to_ip_banned( $path = './../../' )
 /**
  * Allows access only to users who aren't IP banned.
  *
- * Any guest or non-banned user will get redirected to the homepage.
+ * Any IP banned user will get redirected to the homepage.
  * Running this fuction interrupts the page with an exit() at the end if the user doesn't meet the correct permissions.
- *
- * @param   string|null $path (OPTIONAL)  The path to the root of the website.
  *
  * @return  void
  */
 
-function user_restrict_to_non_ip_banned( $path = './../../' )
+function user_restrict_to_non_ip_banned()
 {
+  // Fetch the path to the website's root
+  $path = root_path();
+
   // Check if the user isn't fully IP banned, then redirect them
   if(user_is_ip_banned())
     exit(header("Location: ".$path."index"));
@@ -860,7 +868,7 @@ function user_restrict_to_non_ip_banned( $path = './../../' )
  * There are several levels of NSFW filters, all this function does is return the current level of the user.
  * If the user is logged out, all NSFW content should be hidden by default.
  *
- * @return int The current NSFW filter level of the user.
+ * @return  int   The current NSFW filter level of the user.
  */
 
 function user_settings_nsfw()
@@ -890,7 +898,7 @@ function user_settings_nsfw()
  * This function returns whether the user wants to hide any Twitter, Youtube, etc. data when browsing the website.
  * If the user is logged out, all third party content should be allowed by default.
  *
- * @return array The current third party privacy settings of the user, in the form of an array.
+ * @return  array   The current third party privacy settings of the user, in the form of an array.
  */
 
 function user_settings_privacy()

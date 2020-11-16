@@ -11,7 +11,7 @@ include_once './../../lang/nobleme/activity.lang.php';    # Translations
 
 // Limit page access rights
 if(isset($_GET['mod']))
-  user_restrict_to_moderators($lang);
+  user_restrict_to_moderators();
 
 // Hide the page from who's online
 if(isset($_GET['mod']))

@@ -24,14 +24,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * Some CSS is involved, so make sure nobleme.css is included in your page when using BBCodes.
  *
  * @param   string      $message                    The message which contains BBCodes.
- * @param   string|null $path           (OPTIONAL)  Relative path to the root of the website (default 2 folders away).
  * @param   array|null  $privacy_level  (OPTIONAL)  The output of user_settings_privacy() (third party settings).
  *
  * @return  string                            The message, with BBCodes converted to HTML, ready for display.
  */
 
 function bbcodes( $message                                                                ,
-                  $path           = "./../../"                                            ,
                   $privacy_level  = array('twitter' => 0, 'youtube' => 0, 'trends' => 0)  )
 {
   /*******************************************************************************************************************/
@@ -249,10 +247,8 @@ function bbcodes( $message                                                      
  * I chose to use BBCodes for the encyclopedia of internet culture instead of some other wiki-like syntax.
  * To this end, I needed acces sto more BBCodes, which users will not be allowed to use on the rest of the website.
  * Basically these are only for administrators, so there's not too much worries to be had about user input.
- * Make sure to run bbcodes() after this function, eg. nbcodes(bbcodes($my_content));
  *
  * @param   string      $message                      The message which contains BBCodes.
- * @param   string|null $path             (OPTIONAL)  Relative path to the website root (defaults to 2 folders away).
  * @param   array       $page_list        (OPTIONAL)  Output of compendium_list_pages() (pages in current language).
  * @param   array|null  $privacy_level    (OPTIONAL)  The output of user_settings_privacy() (third party settings).
  * @param   int|null    $nsfw_settings    (OPTIONAL)  The optuput of user_settings_nsfw() (profanity/nudity filter).
@@ -261,11 +257,15 @@ function bbcodes( $message                                                      
  */
 
 function nbcodes( $message                                                                ,
-                  $path           = "./../../"                                            ,
                   $page_list      = array()                                               ,
                   $privacy_level  = array('twitter' => 0, 'youtube' => 0, 'trends' => 0)  ,
                   $nsfw_settings  = 0                                                     )
 {
+  /*******************************************************************************************************************/
+  // Fetch the path to the website's root
+  $path = root_path();
+
+
   /*******************************************************************************************************************/
   // Prepare blurring based on NSFW filter settings
 
@@ -546,6 +546,9 @@ function nbcodes( $message                                                      
 
   /*******************************************************************************************************************/
   // All NBCodes have been treated
+
+  // Run bbcodes on the data
+  $message = bbcodes($message, $privacy_level);
 
   // Return the data
   return $message;

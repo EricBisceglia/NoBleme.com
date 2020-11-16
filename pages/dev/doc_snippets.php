@@ -7,7 +7,7 @@ include_once './../../inc/includes.inc.php';            # Core
 include_once './../../lang/dev/documentation.lang.php'; # Translations
 
 // Limit page access rights
-user_restrict_to_administrators($lang);
+user_restrict_to_administrators();
 
 // Hide the page from who's online
 $hidden_activity = 1;
@@ -77,7 +77,7 @@ include_once './../../actions/nobleme/actions.act.php'; # Actions
 include_once './../../lang/nobleme/lang.lang.php';      # Translations
 
 // Limit page access rights
-user_restrict_to_guests($lang);
+user_restrict_to_guests();
 
 // Hide the page from who's online
 $hidden_activity = 1;
@@ -158,7 +158,7 @@ include_once './../../lang/nobleme/lang.lang.php';      # Translations
 page_must_be_fetched_dynamically();
 
 // Limit page access rights
-user_restrict_to_guests($lang);
+user_restrict_to_guests();
 
 
 
@@ -203,7 +203,7 @@ include_once './../../actions/nobleme/actions.act.php'; # Actions
 include_once './../../lang/nobleme/lang.lang.php';      # Translations
 
 // Limit page access rights
-user_restrict_to_guests($lang);
+user_restrict_to_guests();
 
 // Hide the page from who's online
 $hidden_activity = 1;
@@ -234,7 +234,7 @@ include_once './../../lang/nobleme/lang.lang.php';      # Translations
 page_must_be_fetched_dynamically();
 
 // Limit page access rights
-user_restrict_to_guests($lang);</pre>
+user_restrict_to_guests();</pre>
   </div>
 
   <div class="padding_bot">

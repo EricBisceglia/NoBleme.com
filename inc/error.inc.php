@@ -21,47 +21,26 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * Includes header.inc.php and footer.inc.php, so the contents of both will be ran - keep this in mind.
  * This obviously means that you should not run this function after the header has already been included.
  *
- * @param   string  $message                The error message that will be displayed (can include HTML).
- * @param   string  $path       (OPTIONAL)  The relative path to the root of the website (defaults to 2 folders away).
- * @param   string  $lang       (OPTIONAL)  The current language (defaults to session stored value, or to english).
+ * @param   string  $message  The error message that will be displayed (can include HTML).
  *
  * @return  void
  */
 
-function error_page(  $message                ,
-                      $path     = "./../../"  ,
-                      $lang     = NULL        )
+function error_page($message)
 {
+  // Fetch the path to the website's root
+  $path = root_path();
+
+  // Fetch the user's language
+  $lang = user_get_language();
+
   // Is the user logged in and/or IP banned? - check from the session (required by the header)
   $is_logged_in = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : 0;
   $is_ip_banned = user_is_ip_banned();
 
-  // Does the user have special permissions? (required by the header)
-  if(!$is_logged_in)
-  {
-    // By default, assume they do not
-    $is_admin     = 0;
-    $is_moderator = 0;
-  }
-  else
-  {
-    // Sanitize the user id, just in case
-    $id_user = sanitize($is_logged_in, 'int', 0);
-
-    // Fetch the user's access rights
-    $drights = mysqli_fetch_array(query(" SELECT  users.is_administrator  AS 'm_admin' ,
-                                                  users.is_moderator      AS 'm_mod'
-                                          FROM    users
-                                          WHERE   users.id = '$id_user' "));
-
-    // Set them as variables, the header needs them
-    $is_admin     = $drights['m_admin'];
-    $is_moderator = ($is_admin || $drights['m_mod']) ? 1 : 0;
-  }
-
-  // Figure out the user's language if required, from the session if it is there (required by the header)
-  $temp = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
-  $lang = ($lang) ? $lang : $temp;
+  // User permissions (required by the header)
+  $is_moderator = user_is_moderator();
+  $is_admin     = user_is_administrator();
 
   // Mock system variables that need to be there even in special circumstances
   $system_variables = array('update_in_progress' => system_variable_fetch('update_in_progress'));

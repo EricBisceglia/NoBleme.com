@@ -14,7 +14,7 @@ include_once './../../lang/admin/ban.lang.php';     # Translations
 page_must_be_fetched_dynamically();
 
 // Limit page access rights
-user_restrict_to_moderators($lang);
+user_restrict_to_moderators();
 
 
 

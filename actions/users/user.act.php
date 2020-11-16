@@ -53,9 +53,9 @@ function user_list( $sort_by          = ''    ,
 {
   // Require special rights to run this action in special cases
   if($include_ip_bans)
-    user_restrict_to_moderators($lang);
+    user_restrict_to_moderators();
   if($is_admin)
-    user_restrict_to_administrators($lang);
+    user_restrict_to_administrators();
 
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');

@@ -27,7 +27,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   string|null $mod_nickname (OPTIONAL)  Nickname of the staff member being implicated by the activity log.
  * @param   int|null    $amount       (OPTIONAL)  Amount linked to the activity log.
  *
- * @return  array                                 Returns an array of elements allowing you to format the activity log;
+ * @return  array                                 Array of elements used to output and format the activity log;
  *                                                return['css']   is the style of the table line (if empty, no style);
  *                                                return['href']  is the url of the activity (if empty, not clickable);
  *                                                return['EN']    is the activity in english (if empty, french only);

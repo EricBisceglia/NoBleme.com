@@ -32,7 +32,7 @@ function dev_scheduler_get( $task_id          ,
                             $lang     = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Sanitize the data
   $task_id = sanitize($task_id, 'int', 0);
@@ -87,7 +87,7 @@ function dev_scheduler_list(  $sort_order         = 'date'  ,
                               $lang               = 'EN'    )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -221,7 +221,7 @@ function dev_scheduler_edit(  $id           ,
                               $lang = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Check if the required files have been included
   require_included_file('scheduler.lang.php');
@@ -265,7 +265,7 @@ function dev_scheduler_delete_task( $task_id          ,
                                     $lang     = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Sanitize the data
   $task_id = sanitize($task_id, 'int', 0);
@@ -298,7 +298,7 @@ function dev_scheduler_delete_log(  $log_id         ,
                                     $lang   = 'EN'  )
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Sanitize the data
   $log_id = sanitize($log_id, 'int', 0);
@@ -329,7 +329,7 @@ function dev_scheduler_delete_log(  $log_id         ,
 function dev_scheduler_types_list($lang = 'EN')
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators($lang);
+  user_restrict_to_administrators();
 
   // Fetch all scheduler types
   $qtypes = query(" SELECT    system_scheduler.task_type  AS 's_type'

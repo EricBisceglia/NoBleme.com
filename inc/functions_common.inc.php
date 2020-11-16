@@ -8,6 +8,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  root_path                           Returns the path to the root of the website                                  */
+/*                                                                                                                   */
 /*  database_row_exists                 Checks whether a row exists in a table.                                      */
 /*  database_entry_exists               Checks whether an entry exists in a table.                                   */
 /*                                                                                                                   */
@@ -64,6 +66,39 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                   GENERIC TOOLS                                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+/**
+ * Returns the path to the root of the website.
+ *
+ * @return  string  The path to the root of the website.
+ */
+
+function root_path()
+{
+  // Define where to look for URLs: account for the two slashes in http://, then add extra folders from local settings
+  $uri_base_slashes = 2 + $GLOBALS['extra_folders'];
+
+  // Check how far removed from the project root the current path is
+  $uri_length = count(explode( '/', $_SERVER['REQUEST_URI']));
+
+  // If we are at the project root, then there is no $path
+  if($uri_length <= $uri_base_slashes)
+    $path = "";
+
+  // Otherwise, increment the $path for each folder that must be ../ until reaching the root at ./
+  else
+  {
+    $path = "./";
+    for ($i = 0 ; $i < ($uri_length - $uri_base_slashes) ; $i++)
+      $path .= "../";
+  }
+
+  // Return the current root path
+  return $path;
+}
+
+
+
 
 /**
  * Checks whether a row exists in a table.
@@ -237,16 +272,14 @@ function system_assemble_version_number(  $major            ,
  * Returns information about the current version number.
  *
  * @param   string|null (OPTIONAL)  $format The format of the returned data ('semver', 'full', 'array', 'next').
- * @param   string|null (OPTIONAL)  $lang   The language to use for the result, defaults to current lang.
  *
  * @return  string|array                    The current version number, in the chosen format.
  */
 
-function system_get_current_version_number( $format = 'semver'  ,
-                                            $lang   = NULL      )
+function system_get_current_version_number( $format = 'semver' )
 {
-  // Set the language
-  $lang = (!$lang) ? user_get_language() : $lang;
+  // Fetch the user's language
+  $lang = user_get_language();
 
   // Fetch the latest version
   $dversion = mysqli_fetch_array(query("  SELECT    system_versions.major         AS 'v_major'      ,
@@ -300,13 +333,14 @@ function page_is_fetched_dynamically()
 /**
  * Throws a 404 if the page is not being fetched dynamically.
  *
- * @param   string|null $path The path to the root of the website (defaults to 2 folders away from root).
- *
- * @return  void
+ * @return void
  */
 
-function page_must_be_fetched_dynamically($path = './../../')
+function page_must_be_fetched_dynamically()
 {
+  // Fetch the path to the website's root
+  $path = root_path();
+
   // If the fetched header is not set, throw a 404
   if(!page_is_fetched_dynamically())
     exit(header("Location: ".$path."404"));
@@ -458,9 +492,9 @@ function string_change_case(  $string ,
 /**
  * Removes accentuated latin characters from a string.
  *
- * @param   string $string  The string which is about to lose its latin accents.
+ * @param   string  $string   The string which is about to lose its latin accents.
  *
- * @return  string          The string, without its latin accents.
+ * @return  string            The string, without its latin accents.
  */
 
 function string_remove_accents($string)
@@ -482,9 +516,9 @@ function string_remove_accents($string)
  * This is mainly meant to increment versioning strings (eg. rc1, beta3, etc.).
  * If the string does not end in a number, then the number 1 will be appended to the end of the string.
  *
- * @param   string $string  The string to increment.
+ * @param   string  $string   The string to increment.
  *
- * @return  string          The incremented string.
+ * @return  string            The incremented string.
  */
 
 function string_increment($string)
@@ -640,9 +674,9 @@ function date_to_text(  $date         = NULL  ,
  * If any american reading this is unhappy with my use of DD/MM/YY over MM/DD/YY, sorry not sorry get used to it :)
  * If no date is specified or the mysql date is '0000-00-00', then we return nothing.
  *
- * @param   string  $date The MySQL date that will be converted.
+ * @param   string      $date   The MySQL date that will be converted.
  *
- * @return  string|null   The converted MySQL date.
+ * @return  string|null         The converted MySQL date.
  */
 
 function date_to_ddmmyy($date)
@@ -948,23 +982,19 @@ function private_message_send(  $title                ,
  *
  * Keep in mind, since an error is being thrown, this interrupts the rest of the process of the page.
  *
- * @param   string|null $path       (OPTIONAL)  The path to the root of the website (defaults to 2 folders from root).
- * @param   int|null    $user_id    (OPTIONAL)  Specifies the ID of the user to check - if null, current user.
- * @param   string|null $lang       (OPTIONAL)  The language to use for the error - if null, current user's language.
+ * @param   int|null  $user_id  (OPTIONAL)  Specifies the ID of the user to check - if null, current user.
  *
- * @return  bool                                Is the user allowed to post content to the website.
+ * @return  bool                            Is the user allowed to post content to the website.
  */
 
-function flood_check( $path     = './../../'  ,
-                      $user_id  = NULL        ,
-                      $lang     = NULL        )
+function flood_check( $user_id = NULL )
 {
-  // Fetch the user's language if required
-  $lang = (!$lang) ? user_get_language() : $lang;
+  // Fetch the user's language
+  $lang = user_get_language();
 
   // If the user is logged out, then he shouldn't be able to do any actions: throw an error
   if(is_null($user_id) && !user_is_logged_in())
-    error_page(__('error_flood_login'), $path, $lang);
+    error_page(__('error_flood_login'));
 
   // Fetch and sanitize the user's ID
   $user_id = (!is_null($user_id)) ? $user_id : user_get_id();
@@ -978,7 +1008,7 @@ function flood_check( $path     = './../../'  ,
   // If the last activity for the user happened less than 10 seconds ago, throw an error
   $timestamp = time();
   if(($timestamp - $dactivity['u_last']) <= 10 )
-    error_page(__('error_flood_wait'), $path, $lang);
+    error_page(__('error_flood_wait'));
 
   // Update the last activity of the user
   query(" UPDATE  users
@@ -1204,19 +1234,20 @@ function log_activity_delete( $activity_type              ,
  *
  * @param   string      $message                          The message to send.
  * @param   string|null $channel              (OPTIONAL)  The channel to use ('english' 'french' 'dev' 'mod' 'admin').
- * @param   string|null $path                 (OPTIONAL)  Path to the website root (defaults to 2 folders away).
  * @param   bool|null   $allow_special_chars  (OPTIONAL)  Allow IRC formatting characters in the message.
  * @param   bool|null   $ignore_silenced_mode (OPTIONAL)  Sends the message even if the IRC bot is in silenced mode.
  *
  * @return  bool                                          Whether the message has been queued in the bot's file.
  */
 
-function irc_bot_send_message(  $message                                ,
-                                $channel                  = NULL        ,
-                                $path                     = './../../'  ,
-                                $allow_special_formatting = 0           ,
-                                $ignore_silenced_mode     = 0           )
+function irc_bot_send_message(  $message                          ,
+                                $channel                  = NULL  ,
+                                $allow_special_formatting = 0     ,
+                                $ignore_silenced_mode     = 0     )
 {
+  // Fetch the path to the website's root
+  $path = root_path();
+
   // Only use a limited amount of preset channel names
   if($channel)
   {
@@ -1296,7 +1327,7 @@ function irc_bot_send_message(  $message                                ,
     return 1;
 
   // If the file can be written in, then queue a message in it
-  if($fichier_ircbot = fopen($path.'ircbot.txt', "a"))
+  if($ircbot_file = fopen($path.'ircbot.txt', "a"))
   {
     // Depending on whether a channel is specifiied, the message is sent to the server or to a channel
     if(!$channel)
@@ -1305,7 +1336,7 @@ function irc_bot_send_message(  $message                                ,
       file_put_contents($path.'ircbot.txt', time()." PRIVMSG ".$channel." :".substr($message,0,450).PHP_EOL, FILE_APPEND);
 
     // Close the IRCbot file
-    fclose($fichier_ircbot);
+    fclose($ircbot_file);
 
     // Return 1 now that the job is done
     return 1;
