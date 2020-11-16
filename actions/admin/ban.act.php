@@ -32,19 +32,15 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   int         $ban_length                 The ban length.
  * @param   string|null $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
  * @param   string|null $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
- * @param   string|null $lang           (OPTIONAL)  The language currently in use.
- * @param   string|null $path           (OPTIONAL)  The path to the root of the website.
  *
  * @return  string|null                             Returns a string containing an error, or null if all went well.
  */
 
-function admin_ban_create(  $banner_id                    ,
-                            $nickname                     ,
-                            $ban_length                   ,
-                            $ban_reason_en  = ''          ,
-                            $ban_reason_fr  = ''          ,
-                            $lang           = 'EN'        ,
-                            $path           = './../../'  )
+function admin_ban_create(  $banner_id            ,
+                            $nickname             ,
+                            $ban_length           ,
+                            $ban_reason_en  = ''  ,
+                            $ban_reason_fr  = ''  )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -53,6 +49,7 @@ function admin_ban_create(  $banner_id                    ,
   require_included_file('ban.lang.php');
 
   // Prepare and sanitize the data
+  $path                 = root_path();
   $banned_nickname_raw  = $nickname;
   $ban_reason_en_raw    = $ban_reason_en;
   $ban_reason_fr_raw    = $ban_reason_fr;
@@ -64,6 +61,8 @@ function admin_ban_create(  $banner_id                    ,
   $ban_reason_fr        = sanitize($ban_reason_fr, 'string');
   $ban_start            = sanitize(time(), 'int');
   $banned_user_id       = sanitize(database_entry_exists('users', 'nickname', $nickname), 'int');
+  $banned_nickname      = user_get_nickname($banned_user_id);
+  $banned_user_language = user_get_language($banned_user_id);
 
   // Error: No nickname specified
   if(mb_strlen($nickname) < 3)
@@ -114,7 +113,6 @@ function admin_ban_create(  $banner_id                    ,
   schedule_task('users_unban', $banned_user_id, $ban_end, $nickname);
 
   // Activity logs
-  $banned_nickname = user_get_nickname($banned_user_id);
   log_activity('users_banned', 0, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_user_id, $banned_nickname);
   $modlog = log_activity('users_banned', 1, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_user_id, $banned_nickname, $banner_nickname_raw);
 
@@ -138,12 +136,11 @@ function admin_ban_create(  $banner_id                    ,
   $ban_duration_fr  = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
 
   // Private message to the banned user
-  $ban_user_language  = user_get_language($banned_user_id);
-  $ban_duration_pm    = ($ban_user_language == 'EN') ? $ban_duration_en : $ban_duration_fr;
+  $ban_duration_pm    = ($banned_user_language == 'EN') ? $ban_duration_en : $ban_duration_fr;
   $ban_reason_pm_en   = ($ban_reason_en) ? __('admin_ban_add_private_message_reason_en', null, 0, 0, array($path, $ban_reason_en)) : __('admin_ban_add_private_message_no_reason_en', null, 0, 0, array($path));
   $ban_reason_pm_fr   = ($ban_reason_fr) ? __('admin_ban_add_private_message_reason_fr', null, 0, 0, array($path, $ban_reason_fr)) : __('admin_ban_add_private_message_no_reason_fr', null, 0, 0, array($path));
-  $ban_reason_pm      = ($ban_user_language == 'EN') ? $ban_reason_pm_en : $ban_reason_pm_fr;
-  private_message_send(__('admin_ban_add_private_message_title_'.strtolower($ban_user_language)), __('admin_ban_add_private_message_'.strtolower($ban_user_language), null, 0, 0, array($path, date_to_text(time(), 1, $ban_user_language), $ban_duration_pm[$ban_length] , $ban_reason_pm)), $banned_user_id, 0);
+  $ban_reason_pm      = ($banned_user_language == 'EN') ? $ban_reason_pm_en : $ban_reason_pm_fr;
+  private_message_send(__('admin_ban_add_private_message_title_'.strtolower($banned_user_language)), __('admin_ban_add_private_message_'.strtolower($banned_user_language), null, 0, 0, array($path, date_to_text(time(), 1, $banned_user_language), $ban_duration_pm[$ban_length] , $ban_reason_pm)), $banned_user_id, 0);
 
   // IRC bot messages
   $ban_extra_en     = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '';
@@ -165,18 +162,15 @@ function admin_ban_create(  $banner_id                    ,
  * @param   int|null    $ban_length     (OPTIONAL)  The length of the ban extension (or 0 if it should not change).
  * @param   string|null $ban_reason_en  (OPTIONAL)  The justification for the ban modification, in english.
  * @param   string|null $ban_reason_fr  (OPTIONAL)  The justification for the ban modification, in french.
- * @param   string|null $path           (OPTIONAL)  The path to the root of the website.
  *
  * @return  void
  */
 
-function admin_ban_edit(  $banner_id                    ,
-                          $banned_id                    ,
-                          $ban_length     = 0           ,
-                          $ban_reason_en  = ''          ,
-                          $ban_reason_fr  = ''          ,
-                          $lang           = 'EN'        ,
-                          $path           = './../../'  )
+function admin_ban_edit(  $banner_id            ,
+                          $banned_id            ,
+                          $ban_length     = 0   ,
+                          $ban_reason_en  = ''  ,
+                          $ban_reason_fr  = ''  )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -185,6 +179,7 @@ function admin_ban_edit(  $banner_id                    ,
   require_included_file('ban.lang.php');
 
   // Prepare and sanitize the data
+  $path                 = root_path();
   $banned_id            = sanitize($banned_id, 'int', 0);
   $banned_nickname_raw  = user_get_nickname($banned_id);
   $ban_reason_en_raw    = $ban_reason_en;
@@ -302,18 +297,14 @@ function admin_ban_edit(  $banner_id                    ,
  * @param   string      $unbanned_id                  The id of the user getting unbanned.
  * @param   string|null $unban_reason_en  (OPTIONAL)  The justification for the unban, in english.
  * @param   string|null $unban_reason_fr  (OPTIONAL)  The justification for the unban, in french.
- * @param   string|null $lang             (OPTIONAL)  The language currently in use.
- * @param   string|null $path             (OPTIONAL)  The path to the root of the website.
  *
  * @return  void
  */
 
-function admin_ban_delete(  $unbanner_id                    ,
-                            $unbanned_id                    ,
-                            $unban_reason_en  = ''          ,
-                            $unban_reason_fr  = ''          ,
-                            $lang             = 'EN'        ,
-                            $path             = './../../'  )
+function admin_ban_delete(  $unbanner_id            ,
+                            $unbanned_id            ,
+                            $unban_reason_en  = ''  ,
+                            $unban_reason_fr  = '' )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -322,6 +313,7 @@ function admin_ban_delete(  $unbanner_id                    ,
   require_included_file('ban.lang.php');
 
   // Prepare and sanitize the data
+  $path                   = root_path();
   $unbanned_id            = sanitize($unbanned_id, 'int', 0);
   $unbanned_nickname_raw  = user_get_nickname($unbanned_id);
   $unban_reason_en_raw    = $unban_reason_en;
@@ -394,29 +386,28 @@ function admin_ban_delete(  $unbanner_id                    ,
 
 
 
+
 /**
  * Bans a user.
  *
- * @param   int         $banner_id                  The id of the moderator ordering the ban.
- * @param   string      $ip_address                 The IP address to ban.
- * @param   int         $ban_length                 The ban length.
- * @param   int|null    $severity       (OPTIONAL)  Whether the IP ban will be standard or full.
- * @param   string|null $nickname       (OPTIONAL)  A user whose IP should be banned if no IP is specified.
- * @param   string|null $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
- * @param   string|null $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
- * @param   string|null $lang           (OPTIONAL)  The language currently in use.
+ * @param   int           $banner_id                  The id of the moderator ordering the ban.
+ * @param   string        $ip_address                 The IP address to ban.
+ * @param   int           $ban_length                 The ban length.
+ * @param   int|null      $severity       (OPTIONAL)  Whether the IP ban will be standard or full.
+ * @param   string|null   $nickname       (OPTIONAL)  A user whose IP should be banned if no IP is specified.
+ * @param   string|null   $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
+ * @param   string|null   $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
  *
- * @return  string|null                             Returns a string containing an error, or null if all went well.
+ * @return  string|null                               Returns a string containing an error, or null if all went well.
  */
 
-function admin_ip_ban_create( $banner_id                    ,
-                              $ip_address                   ,
-                              $ban_length                   ,
-                              $severity       = 0           ,
-                              $nickname       = ''          ,
-                              $ban_reason_en  = ''          ,
-                              $ban_reason_fr  = ''          ,
-                              $lang           = 'EN'        )
+function admin_ip_ban_create( $banner_id            ,
+                              $ip_address           ,
+                              $ban_length           ,
+                              $severity       = 0   ,
+                              $nickname       = ''  ,
+                              $ban_reason_en  = ''  ,
+                              $ban_reason_fr  = ''  )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -424,9 +415,11 @@ function admin_ip_ban_create( $banner_id                    ,
   // Check if the required files have been included
   require_included_file('ban.lang.php');
 
-  // Sanitize the data
+  // Sanitize and prepare the data
+  $timestamp          = sanitize(time(), 'int', 0);
   $banner_id          = sanitize($banner_id, 'int', 0);
   $banner_ip          = sanitize($_SERVER['REMOTE_ADDR'], 'string');
+  $banner_nickname    = user_get_nickname($banner_id);
   $ip_address_raw     = $ip_address;
   $ip_address         = sanitize($ip_address, 'string');
   $ban_length         = sanitize($ban_length, 'int', 0, 3650);
@@ -455,7 +448,7 @@ function admin_ip_ban_create( $banner_id                    ,
 
   // Error: must have certain characters
   if(!$nickname && substr_count($ip_address, '.') < 3 && substr_count($ip_address, ':') < 3)
-    return 'nahah';
+    return __('admin_ban_add_error_characters');
 
   // Determine when the ban ends
   if($ban_length == 1)
@@ -534,7 +527,6 @@ function admin_ip_ban_create( $banner_id                    ,
   }
 
   // Ban the IP
-  $timestamp  = sanitize(time(), 'int', 0);
   $ban_end    = sanitize($ban_end, 'int', 0);
   query(" INSERT INTO system_ip_bans
           SET         system_ip_bans.ip_address     = '$ip_address'     ,
@@ -549,7 +541,6 @@ function admin_ip_ban_create( $banner_id                    ,
   schedule_task('users_unban_ip', $ip_ban_id, $ban_end, $ip_address);
 
   // Activity logs
-  $banner_nickname = user_get_nickname($banner_id);
   $modlog = log_activity('users_banned_ip', 1, 'ENFR', $ip_ban_id, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, 0, $ip_address_raw, $banner_nickname);
 
   // Detailed activity logs
@@ -581,14 +572,12 @@ function admin_ip_ban_create( $banner_id                    ,
 /**
  * Fetches a list of users affected by an IP ban.
  *
- * @param   string        $banned_ip              The banned IP.
- * @param   string|null   $lang       (OPTIONAL)  The user's current language.
+ * @param   string  $banned_ip  The banned IP.
  *
- * @return  array                                 An array containing data related to users affected by the IP ban.
+ * @return  array               An array containing data related to users affected by the IP ban.
  */
 
-function admin_ip_ban_list_users( $banned_ip          ,
-                                  $lang       = 'EN'  )
+function admin_ip_ban_list_users( $banned_ip )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -627,14 +616,12 @@ function admin_ip_ban_list_users( $banned_ip          ,
 /**
  * Fetches information about an IP ban.
  *
- * @param   int         $ip_ban_id              The IP ban's ID.
- * @param   string|null $lang       (OPTIONAL)  The language currently in use.
+ * @param   int           $ip_ban_id  The IP ban's ID.
  *
- * @return  array|string                        An array of data regarding the ban, or a string containing an error.
+ * @return  array|string              An array of data regarding the ban, or a string containing an error.
  */
 
-function admin_ip_ban_get(  $ip_ban_id          ,
-                            $lang       = 'EN'  )
+function admin_ip_ban_get( $ip_ban_id )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -657,6 +644,7 @@ function admin_ip_ban_get(  $ip_ban_id          ,
   $data['ip_address'] = sanitize_output($dban['b_ip']);
   $data['time_left']  = sanitize_output(time_until($dban['b_end']));
   $temp               = ($dban['b_reason_fr']) ? $dban['b_reason_fr'] : $dban['b_reason_en'];
+  $lang               = user_get_language();
   $data['ban_reason'] = ($lang == 'EN') ? sanitize_output($dban['b_reason_en']) : sanitize_output($temp);
 
   // In ACT debug mode, print debug data
@@ -677,16 +665,14 @@ function admin_ip_ban_get(  $ip_ban_id          ,
  * @param   int         $unbanner_id                  The id of the moderator unbanning the user.
  * @param   string|null $unban_reason_en  (OPTIONAL)  The justification for the unban, in english.
  * @param   string|null $unban_reason_fr  (OPTIONAL)  The justification for the unban, in french.
- * @param   string|null $lang             (OPTIONAL)  The language currently in use.
  *
  * @return  void
  */
 
-function admin_ip_ban_delete( $ban_id                   ,
-                              $unbanner_id              ,
-                              $unban_reason_en  = ''    ,
-                              $unban_reason_fr  = ''    ,
-                              $lang             = 'EN'  )
+function admin_ip_ban_delete( $ban_id                 ,
+                              $unbanner_id            ,
+                              $unban_reason_en  = ''  ,
+                              $unban_reason_fr  = ''  )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -694,7 +680,8 @@ function admin_ip_ban_delete( $ban_id                   ,
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
 
-  // Sanitize the data
+  // Sanitize and prepare the data
+  $timestamp            = sanitize(time(), 'int', 0);
   $ban_id               = sanitize($ban_id, 'int', 0);
   $unbanner_id          = sanitize($unbanner_id, 'int', 0);
   $unban_reason_en_raw  = $unban_reason_en;
@@ -738,7 +725,6 @@ function admin_ip_ban_delete( $ban_id                   ,
     log_activity_details($modlog, 'Unan reason (FR)', 'Raison du débannissement (FR)', $unban_reason_fr_raw, $unban_reason_fr_raw);
 
   // Update the ban log
-  $timestamp = sanitize(time(), 'int', 0);
   query(" UPDATE    logs_bans
           SET       logs_bans.fk_unbanned_by_user =     '$unbanner_id'      ,
                     logs_bans.unbanned_at         =     '$timestamp'        ,
@@ -763,15 +749,13 @@ function admin_ip_ban_delete( $ban_id                   ,
  * @param   int|null      $log_id     (OPTIONAL)  The id of the ban log.
  * @param   int|null      $user_id    (OPTIONAL)  The id of the user that was banned.
  * @param   int|null      $ip_ban_id  (OPTIONAL)  The id of an IP ban.
- * @param   string|null   $lang       (OPTIONAL)  The user's current language.
  *
  * @return  array|int                           The ban log history data, ready for displaying, or 0 if log not found.
 */
 
 function admin_ban_logs_get(  $log_id     = NULL  ,
                               $user_id    = NULL  ,
-                              $ip_ban_id  = NULL  ,
-                              $lang       = 'EN'  )
+                              $ip_ban_id  = NULL  )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -785,7 +769,8 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
   if(!$log_id && !$user_id && !$ip_ban_id)
     return 0;
 
-  // Sanitize the data
+  // Sanitize and prepare the data
+  $lang       = user_get_language();
   $log_id     = sanitize($log_id, 'int', 0);
   $user_id    = sanitize($user_id, 'int', 0);
   $ip_ban_id  = sanitize($ip_ban_id, 'int', 0);
@@ -861,7 +846,7 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
   $data['username']         = sanitize_output($dlog['banned_nick']);
   $data['banned_ip']        = sanitize_output($dlog['l_ip']);
   $data['total_ip_ban']     = sanitize_output($dlog['l_total_ip_ban']);
-  $data['ip_bans']          = ($dlog['l_ip']) ? admin_ip_ban_list_users($dlog['l_ip'], $lang) : '';
+  $data['ip_bans']          = ($dlog['l_ip']) ? admin_ip_ban_list_users($dlog['l_ip']) : '';
   $temp                     = date_to_text($dlog['l_start'], 0, 1, $lang);
   $data['start']            = sanitize_output($temp.' ('.time_since($dlog['l_start']).')');
   $temp                     = ($dlog['l_end'] > time()) ? time_until($dlog['l_end']) : time_since($dlog['l_end']);
@@ -897,22 +882,14 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
 /**
  * Lists the ban log history.
  *
- * @param   string|null   $lang             (OPTIONAL)  The user's current language.
- * @param   string|null   $sorting_order    (OPTIONAL)  The order in which the returned data will be sorted.
- * @param   int|null      $search_status    (OPTIONAL)  Search for only banned (1) or unbanned (0) users.
- * @param   string|null   $search_username  (OPTIONAL)  Search for a specific username.
- * @param   string|null   $search_banner    (OPTIONAL)  Search for a specific banner username.
- * @param   string|null   $search_unbanner  (OPTIONAL)  Search for a specific unbanner username.
+ * @param   string|null   $sort_by  (OPTIONAL)  The order in which the returned data will be sorted.
+ * @param   array|null    $search   (OPTIONAL)  Search for specific field values.
  *
- * @return  array                                       The ban log history data, ready for displaying.
+ * @return  array                               The ban log history data, ready for displaying.
 */
 
-function admin_ban_logs_list( $lang             = 'EN'      ,
-                              $sorting_order    = 'banned'  ,
-                              $search_status    = -1        ,
-                              $search_username  = NULL      ,
-                              $search_banner    = NULL      ,
-                              $search_unbanner  = NULL      )
+function admin_ban_logs_list( $sort_by  = 'banned'  ,
+                              $search   = NULL      )
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -921,6 +898,12 @@ function admin_ban_logs_list( $lang             = 'EN'      ,
   require_included_file('functions_time.inc.php');
   require_included_file('functions_mathematics.inc.php');
   require_included_file('functions_numbers.inc.php');
+
+  // Sanitize the search parameters
+  $search_status    = isset($search['status'])    ? sanitize($search['status'], 'int', -1, 1) : -1;
+  $search_username  = isset($search['username'])  ? sanitize($search['username'], 'string')   : NULL;
+  $search_banner    = isset($search['banner'])    ? sanitize($search['banner'], 'string')     : NULL;
+  $search_unbanner  = isset($search['unbanner'])  ? sanitize($search['unbanner'], 'string')   : NULL;
 
   // Prepare the query to fetch the log list
   $qlogs  = "   SELECT    logs_bans.id                AS 'l_id'         ,
@@ -959,17 +942,20 @@ function admin_ban_logs_list( $lang             = 'EN'      ,
     $qlogs .= " AND       users_unbanner.nickname       LIKE  '%$search_unbanner%'    ";
 
   // Sort the data as requested
-  if($sorting_order == 'username')
+  if($sort_by == 'username')
     $qlogs .= " ORDER BY  logs_bans.banned_ip_address != '' ,
                           users_banned.nickname       ASC   ,
                           logs_bans.banned_ip_address ASC   ";
-  else if($sorting_order == 'unbanned')
+  else if($sort_by == 'unbanned')
     $qlogs .= " ORDER BY  logs_bans.unbanned_at       DESC  ";
   else
     $qlogs .= " ORDER BY  logs_bans.banned_at         DESC  ";
 
   // Execute the query
   $qlogs = query($qlogs);
+
+  // Fetch the user's language
+  $lang = user_get_language();
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qlogs); $i++)
@@ -1004,9 +990,9 @@ function admin_ban_logs_list( $lang             = 'EN'      ,
   }
 
   // If the sorting is by days sentenced or days banned, then it must still be sorted
-  if($sorting_order == 'sentence')
+  if($sort_by == 'sentence')
     array_multisort(array_column($data, "duration"), SORT_DESC, $data);
-  if($sorting_order == 'served')
+  if($sort_by == 'served')
     array_multisort(array_column($data, "served"), SORT_DESC, $data);
 
   // Add the number of rows to the data
@@ -1026,14 +1012,12 @@ function admin_ban_logs_list( $lang             = 'EN'      ,
 /**
  * Permanently deletes an entry in the ban history logs.
  *
- * @param   int           $log_id             The id of the ban history log.
- * @param   string|null   $lang   (OPTIONAL)  The user's current language.
+ * @param   int   $log_id   The id of the ban history log.
  *
  * @return  void
 */
 
-function admin_ban_logs_delete( $log_id         ,
-                                $lang   = 'EN'  )
+function admin_ban_logs_delete( $log_id )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();

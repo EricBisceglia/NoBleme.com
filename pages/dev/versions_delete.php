@@ -23,8 +23,7 @@ user_restrict_to_administrators();
 /*********************************************************************************************************************/
 
 // Delete the version
-$version_number = dev_versions_delete(  form_fetch_element('version_id', 0) ,
-                                        $lang                               );
+$version_number = dev_versions_delete(form_fetch_element('version_id', 0));
 
 
 

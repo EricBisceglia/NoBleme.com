@@ -30,8 +30,7 @@ $page_title_fr    = "Fermer le site";
 
 // Toggle the website's status between open and closed
 if(isset($_POST['dev_toggle_website_status']))
-  dev_toggle_website_status(  $system_variables['update_in_progress'] ,
-                              $lang                                   );
+  dev_toggle_website_status($system_variables['update_in_progress']);
 
 // Update the system variables array entry so that the header knows of the new status
 $system_variables['update_in_progress'] = system_variable_fetch('update_in_progress');

@@ -144,23 +144,22 @@ function user_authenticate( $ip               ,
  * @param   string|null $password_check   OPTIONAL  The second entry of the password of the account to be created.
  * @param   string|null $captcha          OPTIONAL  The captcha entered by the guest trying to register.
  * @param   string|null $captcha_session  OPTIONAL  The captcha value stored in the session.
- * @param   string|null $path             OPTIONAL  The path to the root of the website (defaults to 2 folders away).
  *
  * @return  string|int                              Returns 1 if successfully registered, or a string in case of error.
  */
 
-function user_create_account( $nickname                       ,
-                              $password                       ,
-                              $email                          ,
-                              $password_check   = NULL        ,
-                              $captcha          = NULL        ,
-                              $captcha_session  = NULL        ,
-                              $path             = './../../'  )
+function user_create_account( $nickname                 ,
+                              $password                 ,
+                              $email                    ,
+                              $password_check   = NULL  ,
+                              $captcha          = NULL  ,
+                              $captcha_session  = NULL  )
 {
   // Check if the required files have been included
   require_included_file('register.lang.php');
 
-  // Sanitize the data
+  // Sanitize and prepare the data
+  $path               = root_path();
   $nickname_raw       = $nickname;
   $nickname           = sanitize($nickname, 'string');
   $password_raw       = $password;

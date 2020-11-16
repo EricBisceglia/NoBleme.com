@@ -24,8 +24,7 @@ user_restrict_to_administrators();
 
 // Delete the activity log
 activity_delete(  form_fetch_element('log_id', 0)         ,
-                  form_fetch_element('deletion_type', 0)  ,
-                  $lang                                   );
+                  form_fetch_element('deletion_type', 0)  );
 
 
 

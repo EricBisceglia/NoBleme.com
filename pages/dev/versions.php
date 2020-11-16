@@ -41,8 +41,7 @@ if(isset($_POST['dev_versions_create']))
                                             form_fetch_element('dev_new_version_patch')       ,
                                             form_fetch_element('dev_new_version_extension')   ,
                                             form_fetch_element('dev_versions_activity', 0, 1) ,
-                                            form_fetch_element('dev_versions_irc', 0, 1)      ,
-                                            $lang                                             );
+                                            form_fetch_element('dev_versions_irc', 0, 1)      );
 
 
 
@@ -59,8 +58,7 @@ if(isset($_POST['dev_versions_edit']))
                                             form_fetch_element('dev_versions_edit_minor', 0)            ,
                                             form_fetch_element('dev_versions_edit_patch', 0)            ,
                                             form_fetch_element('dev_versions_edit_extension', '')       ,
-                                            form_fetch_element('dev_versions_edit_date', date('d/m/y')) ,
-                                            $lang                                                       );
+                                            form_fetch_element('dev_versions_edit_date', date('d/m/y')) );
 }
 
 

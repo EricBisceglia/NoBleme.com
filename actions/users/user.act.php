@@ -33,7 +33,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   int|null    $include_ip_bans  OPTIONAL  If set, IP bans will be included in the banned_only user list.
  * @param   int|null    $is_admin         OPTIONAL  Whether the current user is an administrator.
  * @param   int|null    $is_activity      OPTIONAL  Whether the list will be used to display user activity.
- * @param   string|null $lang             OPTIONAL  The language currently in use.
  *
  * @return  array                                   A list of users, prepared for displaying.
  */
@@ -48,8 +47,7 @@ function user_list( $sort_by          = ''    ,
                     $banned_only      = 0     ,
                     $include_ip_bans  = 0     ,
                     $is_admin         = 0     ,
-                    $is_activity      = 0     ,
-                    $lang             = 'EN'  )
+                    $is_activity      = 0     )
 {
   // Require special rights to run this action in special cases
   if($include_ip_bans)
@@ -62,7 +60,8 @@ function user_list( $sort_by          = ''    ,
   if($include_ip_bans)
     require_included_file('ban.act.php');
 
-  // Sanitize the data
+  // Sanitize and prepare the data
+  $lang             = user_get_language();
   $sort_by          = sanitize($sort_by, 'string');
   $max_count        = sanitize($max_count, 'int', 0);
   $deleted          = sanitize($deleted, 'int', 0, 1);
@@ -237,7 +236,7 @@ function user_list( $sort_by          = ''    ,
     $data[$i]['ban_reason'] = sanitize_output(string_truncate($temp, 30, '...'));
     $data[$i]['ban_full']   = (strlen($temp) > 30) ? sanitize_output($temp) : '';
     $data[$i]['ip_ban_id']  = $row['u_ip_ban_id'];
-    $data[$i]['ip_bans']    = ($row['data_type'] == 'ip_ban') ? admin_ip_ban_list_users($row['u_ip'], $lang) : '';
+    $data[$i]['ip_bans']    = ($row['data_type'] == 'ip_ban') ? admin_ip_ban_list_users($row['u_ip']) : '';
     $data[$i]['total_ban']  = ($row['u_total_ip_ban']) ? 1 : 0;
     $temp                   = ($row['data_type'] == 'user') ? ' bold noglow' : ' noglow';
     $temp                   = ($row['u_mod']) ? ' bold text_orange noglow' : $temp;
@@ -263,14 +262,12 @@ function user_list( $sort_by          = ''    ,
 /**
  * Fetches information related to a user's ban.
  *
- * @param   string|null $lang     The language currently in use.
  * @param   int|null    $user_id  The user's ID in the database. If null, fetches the current user's ID.
  *
  * @return  array                 An array of data regarding the ban.
  */
 
-function user_ban_details(  $lang     = 'EN'  ,
-                            $user_id  = NULL  )
+function user_ban_details( $user_id = NULL )
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -295,6 +292,7 @@ function user_ban_details(  $lang     = 'EN'  ,
                                       WHERE   users.id = '$user_id' "));
 
   // Prepare the data
+  $lang               = user_get_language();
   $data['ban_start']  = sanitize_output(date_to_text($dban['u_ban_start'], 0, 0, $lang));
   $data['ban_length'] = time_days_elapsed(date('Y-m-d', $dban['u_ban_start']), date('Y-m-d', $dban['u_ban_end']));
   $data['ban_end']    = sanitize_output(date_to_text($dban['u_ban_end'], 0, 0, $lang).__('at_date', 0, 1 ,1).date('H:i:s', $dban['u_ban_end']));

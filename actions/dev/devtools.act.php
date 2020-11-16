@@ -57,14 +57,12 @@ function dev_doc_icon_to_clipboard( $name                               ,
 /**
  * Toggles the website's status between open and closed.
  *
- * @param   int           $website_status             Whether an update is currently in progress
- * @param   string|null   $lang           (OPTIONAL)  The user's current language.
+ * @param   int   $website_status   Whether an update is currently in progress
  *
  * @return  void
  */
 
-function dev_toggle_website_status( $website_status         ,
-                                    $lang           = 'EN'  )
+function dev_toggle_website_status( $website_status )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -200,24 +198,22 @@ function dev_versions_list()
  *
  * The version number will respect the SemVer v2.0.0 standard.
  *
- * @param   int           $major                        The major version number.
- * @param   int           $minor                        The minor version number.
- * @param   int           $patch                        The patch number.
- * @param   string        $extension                    The extension string (eg. beta, rc-1, etc.).
- * @param   bool|null     $publish_activity             Whether to publish an entry in recent activity.
- * @param   bool|null     $notify_irc                   Whether to send a notification on IRC.
- * @param   string|null   $lang             (OPTIONAL)  The user's current language.
+ * @param   int           $major            The major version number.
+ * @param   int           $minor            The minor version number.
+ * @param   int           $patch            The patch number.
+ * @param   string        $extension        The extension string (eg. beta, rc-1, etc.).
+ * @param   bool|null     $publish_activity Whether to publish an entry in recent activity.
+ * @param   bool|null     $notify_irc       Whether to send a notification on IRC.
  *
- * @return  string|null                                 NULL if all went according to plan, or an error string
+ * @return  string|null                     NULL if all went according to plan, or an error string
  */
 
-function dev_versions_create( $major                    ,
-                              $minor                    ,
-                              $patch                    ,
-                              $extension                ,
-                              $publish_activity = 1     ,
-                              $notify_irc       = 0     ,
-                              $lang             = 'EN'  )
+function dev_versions_create( $major                ,
+                              $minor                ,
+                              $patch                ,
+                              $extension            ,
+                              $publish_activity = 1 ,
+                              $notify_irc       = 0 )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -278,24 +274,22 @@ function dev_versions_create( $major                    ,
 /**
  * Edits an entry in the website's version numbering history.
  *
- * @param   int           $id                       The version's id.
- * @param   int           $major                    The major version number.
- * @param   int           $minor                    The minor version number.
- * @param   int           $patch                    The patch number.
- * @param   string        $extension                The extension string (eg. beta, rc-1, etc.).
- * @param   string        $release_date             The version's release date.
- * @param   string|null   $lang         (OPTIONAL)  The user's current language.
+ * @param   int           $id           The version's id.
+ * @param   int           $major        The major version number.
+ * @param   int           $minor        The minor version number.
+ * @param   int           $patch        The patch number.
+ * @param   string        $extension    The extension string (eg. beta, rc-1, etc.).
+ * @param   string        $release_date The version's release date.
  *
- * @return  string|null                             NULL if all went according to plan, or an error string
+ * @return  string|null                 NULL if all went according to plan, or an error string
  */
 
-function dev_versions_edit( $id                   ,
-                            $major                ,
-                            $minor                ,
-                            $patch                ,
-                            $extension            ,
-                            $release_date         ,
-                            $lang         = 'EN'  )
+function dev_versions_edit( $id           ,
+                            $major        ,
+                            $minor        ,
+                            $patch        ,
+                            $extension    ,
+                            $release_date )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -346,14 +340,12 @@ function dev_versions_edit( $id                   ,
 /**
  * Deletes an entry in the website's version numbering history.
  *
- * @param   int           $version_id             The version number's id.
- * @param   string|null   $lang       (OPTIONAL)  The user's current language.
+ * @param   int           $version_id   The version number's id.
  *
- * @return  string|int                            The version number, or 0 if the version does not exist.
+ * @return  string|int                  The version number, or 0 if the version does not exist.
  */
 
-function dev_versions_delete( $version_id         ,
-                              $lang       = 'EN'  )
+function dev_versions_delete( $version_id )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();

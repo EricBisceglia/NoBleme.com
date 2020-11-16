@@ -16,7 +16,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Transforms an entry of the `logs_activity` table into human readable content.
  *
- * @param   string      $path                     Relative path to the root of the website (usually is "./../../").
  * @param   bool        $admins_only              Is the log public (0) or private (1).
  * @param   string      $type                     Identifies the type of activity being processed.
  * @param   int|null    $id           (OPTIONAL)  ID of the action/element of the activity in the log.
@@ -34,8 +33,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  *                                                return['FR']    is the activity in french (if empty, english only).
  */
 
-function log_activity_parse(  $path                 ,
-                              $admins_only          ,
+function log_activity_parse(  $admins_only          ,
                               $type                 ,
                               $id           = 0     ,
                               $title_en     = NULL  ,
@@ -45,6 +43,12 @@ function log_activity_parse(  $path                 ,
                               $mod_nickname = NULL  ,
                               $amount       = 0     )
 {
+  //*****************************************************************************************************************//
+  // Fetch the path to the website's root
+
+  $path = root_path();
+
+
   //*****************************************************************************************************************//
   //                                             DEVELOPMENT / INTERNALS                                             //
   //*****************************************************************************************************************//

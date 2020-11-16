@@ -989,9 +989,6 @@ function private_message_send(  $title                ,
 
 function flood_check( $user_id = NULL )
 {
-  // Fetch the user's language
-  $lang = user_get_language();
-
   // If the user is logged out, then he shouldn't be able to do any actions: throw an error
   if(is_null($user_id) && !user_is_logged_in())
     error_page(__('error_flood_login'));
@@ -1245,9 +1242,6 @@ function irc_bot_send_message(  $message                          ,
                                 $allow_special_formatting = 0     ,
                                 $ignore_silenced_mode     = 0     )
 {
-  // Fetch the path to the website's root
-  $path = root_path();
-
   // Only use a limited amount of preset channel names
   if($channel)
   {
@@ -1325,6 +1319,9 @@ function irc_bot_send_message(  $message                          ,
   // Stop the process if the bot is in silenced mode, but return 1 since the job was done as intended
   if($silenced_mode && !$ignore_silenced_mode)
     return 1;
+
+  // Fetch the path to the website's root
+  $path = root_path();
 
   // If the file can be written in, then queue a message in it
   if($ircbot_file = fopen($path.'ircbot.txt', "a"))

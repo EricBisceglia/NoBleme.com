@@ -24,9 +24,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 function admin_account_deactivate( $username )
 {
-  // Fetch the user's language
-  $lang = user_get_language();
-
   // Require moderator rights to run this action
   user_restrict_to_moderators();
 
@@ -93,9 +90,6 @@ function admin_account_deactivate( $username )
 
 function admin_account_reactivate( $user_id )
 {
-  // Fetch the user's language
-  $lang = user_get_language();
-
   // Require administrator rights to run this action
   user_restrict_to_administrators();
 

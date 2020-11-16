@@ -46,8 +46,7 @@ $onload = "popin_close('dev_scheduler_popin')";
 if(isset($_POST['dev_scheduler_edit']))
   dev_scheduler_edit( form_fetch_element('dev_scheduler_edit', 0)   ,
                       form_fetch_element('dev_scheduler_edit_date') ,
-                      form_fetch_element('dev_scheduler_edit_time') ,
-                      $lang                                         );
+                      form_fetch_element('dev_scheduler_edit_time') );
 
 
 
@@ -57,13 +56,11 @@ if(isset($_POST['dev_scheduler_edit']))
 
 // Delete a future task
 if(isset($_POST['scheduler_task_delete']))
-  dev_scheduler_delete_task(  form_fetch_element('scheduler_task_delete', 0) ,
-                              $lang                                         );
+  dev_scheduler_delete_task(form_fetch_element('scheduler_task_delete', 0));
 
 // Delete a scheduler log
 if(isset($_POST['scheduler_log_delete']))
-  dev_scheduler_delete_log( form_fetch_element('scheduler_log_delete', 0) ,
-                            $lang                                         );
+  dev_scheduler_delete_log(form_fetch_element('scheduler_log_delete', 0));
 
 
 
@@ -72,12 +69,11 @@ if(isset($_POST['scheduler_log_delete']))
 // Get the past and future tasks
 
 $scheduler_tasks = dev_scheduler_list(  form_fetch_element('scheduler_search_order', 'date')  ,
-                                        form_fetch_element('scheduler_search_type')           ,
-                                        form_fetch_element('scheduler_search_id')             ,
-                                        form_fetch_element('scheduler_search_date')           ,
-                                        form_fetch_element('scheduler_search_description')    ,
-                                        form_fetch_element('scheduler_search_report')         ,
-                                        $lang                                                 );
+              array(  'type'        =>  form_fetch_element('scheduler_search_type')           ,
+                      'id'          =>  form_fetch_element('scheduler_search_id')             ,
+                      'date'        =>  form_fetch_element('scheduler_search_date')           ,
+                      'description' =>  form_fetch_element('scheduler_search_description')    ,
+                      'report'      =>  form_fetch_element('scheduler_search_report')         ));
 
 
 
@@ -85,7 +81,7 @@ $scheduler_tasks = dev_scheduler_list(  form_fetch_element('scheduler_search_ord
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Get all existing task types
 
-$scheduler_task_types = dev_scheduler_types_list($lang);
+$scheduler_task_types = dev_scheduler_types_list();
 
 
 

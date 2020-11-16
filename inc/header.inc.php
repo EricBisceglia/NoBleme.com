@@ -258,7 +258,7 @@ $page_title = ($page_title) ? $page_title.$temp : 'NoBleme.com';
 // Page description
 
 // If there is no description, use a default generic one
-$page_description = (isset($page_description)) ? $page_description : "NoBleme.com - ".$page_title_en;
+$page_description = (isset($page_description)) ? $page_description : $page_title_en." - See more by visiting this page on NoBleme.com";
 
 // Make the page's description W3C meta tag compliant
 $page_description = html_fix_meta_tags($page_description);

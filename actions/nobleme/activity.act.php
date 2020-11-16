@@ -19,21 +19,20 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Fetches details on an activity log.
  *
- * @param   int         $log_id   The id of the log on which details are desired.
- * @param   string|null $lang     The language currently being used.
+ * @param   int     $log_id   The id of the log on which details are desired.
  *
- * @return  array                 An array of activity log details, prepared for displaying.
+ * @return  array             An array of activity log details, prepared for displaying.
  */
 
-function activity_get(  $log_id         ,
-                        $lang   = 'EN'  )
+function activity_get( $log_id )
 {
   // Check if the required files have been included
   require_included_file('bbcodes.inc.php');
 
-  // Sanitize the data
-  $log_id = sanitize($log_id, 'int', 0);
-  $lang   = sanitize($lang, 'string');
+  // Sanitize and prepare the data
+  $log_id   = sanitize($log_id, 'int', 0);
+  $lang_raw = user_get_language();
+  $lang     = sanitize(string_change_case($lang_raw, 'lowercase'), 'string');
 
   // Initialize the returned array
   $data         = array();
@@ -81,19 +80,15 @@ function activity_get(  $log_id         ,
  * @param   string|null $type     OPTIONAL  Filters the output by only showing logs of a specific type.
  * @param   bool|null   $deleted  OPTIONAL  If set, shows deleted activity logs only.
  * @param   bool|null   $is_admin OPTIONAL  Is the user seeing the logs an administrator.
- * @param   string|null $path     OPTIONAL  The path to the root of the website.
- * @param   string|null $lang     OPTIONAL  The language currently in use.
  *
  * @return  array                           An array of activity logs, prepared for displaying.
  */
 
-function activity_list( $modlogs  = 0           ,
-                        $amount   = 100         ,
-                        $type     = 'all'       ,
-                        $deleted  = 0           ,
-                        $is_admin = 0           ,
-                        $path     = './../../'  ,
-                        $lang     = 'EN'        )
+function activity_list( $modlogs  = 0     ,
+                        $amount   = 100   ,
+                        $type     = 'all' ,
+                        $deleted  = 0     ,
+                        $is_admin = 0     )
 {
   // Require administrator rights to run this action in special cases
   if($is_admin)
@@ -107,7 +102,8 @@ function activity_list( $modlogs  = 0           ,
   $modlogs  = ($modlogs) ? 1 : 0;
   $amount   = sanitize($amount, 'int', 100);
   $type     = sanitize($type, 'string');
-  $lang     = sanitize($lang, 'string');
+  $lang_raw = user_get_language();
+  $lang     = sanitize($lang_raw, 'string');
   $deleted  = sanitize($deleted, 'int', 0, 1);
 
   // Only allow admins to see full activity logs or deleted activity items
@@ -170,7 +166,7 @@ function activity_list( $modlogs  = 0           ,
   for($i = 0; $row = mysqli_fetch_array($qlogs); $i++)
   {
     // Parse the activity log
-    $parsed_row = log_activity_parse($path, $modlogs, $row['l_type'], $row['l_actid'], $row['l_summary_en'], $row['l_summary_fr'], $row['l_userid'], $row['l_user'], $row['l_mod_user'], $row['l_amount']);
+    $parsed_row = log_activity_parse($modlogs, $row['l_type'], $row['l_actid'], $row['l_summary_en'], $row['l_summary_fr'], $row['l_userid'], $row['l_user'], $row['l_mod_user'], $row['l_amount']);
 
     // Prepare the data
     $data[$i]['id']       = $row['l_id'];
@@ -200,16 +196,14 @@ function activity_list( $modlogs  = 0           ,
 /**
  * Deletes an activity log.
  *
- * @param   int           $log_id                     The id of the log which will be deleted.
- * @param   bool|null     $deletion_type              Performs a soft (0) or hard (1) delete.
- * @param   string|null   $lang           (OPTIONAL)  The language currently in use.
+ * @param   int         $log_id         The id of the log which will be deleted.
+ * @param   bool|null   $deletion_type  Performs a soft (0) or hard (1) delete.
  *
  * @return  void
  */
 
-function activity_delete( $log_id                 ,
-                          $deletion_type  = 0     ,
-                          $lang           = 'EN'  )
+function activity_delete( $log_id             ,
+                          $deletion_type  = 0 )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -242,14 +236,12 @@ function activity_delete( $log_id                 ,
 /**
  * Restores a soft deleted activity log.
  *
- * @param   int           $log_id             The id of the log which will be restored.
- * @param   string|null   $lang   (OPTIONAL)  The language currently in use.
+ * @param   int   $log_id   The id of the log which will be restored.
  *
  * @return  void
  */
 
-function activity_restore(  $log_id         ,
-                            $lang   = 'EN'  )
+function activity_restore( $log_id )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();

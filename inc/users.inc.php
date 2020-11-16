@@ -345,10 +345,11 @@ function user_unban(  $user_id              ,
                       $recent_activity  = 0 )
 {
   // Sanitize the data
+  $timestamp          = sanitize(time(), 'int', 0);
   $user_id            = sanitize($user_id, 'int', 0);
+  $user_nickname      = sanitize(user_get_nickname($user_id));
   $unbanner_id        = sanitize($unbanner_id, 'int', 0);
   $unbanner_nickname  = sanitize(user_get_nickname($user_id));
-  $timestamp          = sanitize(time(), 'int', 0);
 
   // Unban the user
   query(" UPDATE  users
@@ -375,7 +376,7 @@ function user_unban(  $user_id              ,
                         logs_activity.language            = 'ENFR'                ,
                         logs_activity.activity_type       = 'users_unbanned'      ,
                         logs_activity.activity_id         = '$user_id'            ,
-                        llogs_activity.activity_nickname  = '$unbanner_nickname'  ");
+                        logs_activity.activity_nickname   = '$user_nickname'      ");
 }
 
 

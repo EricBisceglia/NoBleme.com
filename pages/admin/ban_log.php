@@ -28,8 +28,7 @@ user_restrict_to_moderators();
 // Ban log details
 $ban_log = admin_ban_logs_get(  form_fetch_element('log_id', 0)     ,
                                 form_fetch_element('ban_id', 0)     ,
-                                form_fetch_element('ip_ban_id', 0)  ,
-                                $lang                               );
+                                form_fetch_element('ip_ban_id', 0)  );
 
 // Exit in case of error
 if(!$ban_log)

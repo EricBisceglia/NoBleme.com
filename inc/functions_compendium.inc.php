@@ -21,11 +21,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 function compendium_list_pages()
 {
-  // Fetch the user's language
-  $lang = user_get_language();
-
   // Prepare the language for use in a query by turning it lowercase and sanitizing it
-  $lang = sanitize(string_change_case($lang, 'lowercase'), 'string');
+  $lang_raw = user_get_language();
+  $lang     = sanitize(string_change_case($lang, 'lowercase'), 'string');
 
   // Fetch the list of all page titles in the requested language
   $qpages = query(" SELECT  internet_pages.title_$lang AS 'w_title'

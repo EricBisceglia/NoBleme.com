@@ -69,6 +69,8 @@ ___('admin_ban_add_error_wildcard',     'EN', "You are not allowed to IP ban the
 ___('admin_ban_add_error_wildcard',     'FR', "Vous n'avez pas le droit de bannir toute la planète");
 ___('admin_ban_add_error_wildcards',    'EN', "Only one wildcard (*) is allowed at a time");
 ___('admin_ban_add_error_wildcards',    'FR', "Un maximum d'un seul joker (*) est autorisé");
+___('admin_ban_add_error_characters',   'EN', "The IP address must contain at least three commas , or semicolons ;");
+___('admin_ban_add_error_characters',   'FR', "L'adresse IP doit contenir au moins trois virgules , ou points virgule ;");
 ___('admin_ban_add_error_ip_and_user',  'EN', "You must specify an IP address OR a nickname, not both");
 ___('admin_ban_add_error_ip_and_user',  'FR', "Il est nécessaire de préciser SOIT une adresse IP SOIT un pseudonyme, non pas les deux");
 ___('admin_ban_add_error_wrong_user',   'EN', "The specified username does not exist");

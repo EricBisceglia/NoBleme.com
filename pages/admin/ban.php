@@ -76,9 +76,7 @@ if(isset($_POST['admin_ban_add_submit']))
                                               $admin_ban_add_nick       ,
                                               $admin_ban_add_length     ,
                                               $admin_ban_add_reason_en  ,
-                                              $admin_ban_add_reason_fr  ,
-                                              $lang                     ,
-                                              $path                     );
+                                              $admin_ban_add_reason_fr  );
 
   // IP bans
   else
@@ -88,8 +86,7 @@ if(isset($_POST['admin_ban_add_submit']))
                                                   $admin_ban_add_severity   ,
                                                   $admin_ban_add_nick       ,
                                                   $admin_ban_add_reason_en  ,
-                                                  $admin_ban_add_reason_fr  ,
-                                                  $lang                     );
+                                                  $admin_ban_add_reason_fr  );
 
   // Reset some fields to allow chain bans, unless the ban request resulted in an error
   if(!$admin_ban_add_error)
@@ -105,7 +102,7 @@ if(isset($_POST['admin_ban_add_submit']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // List of banned users
 
-$banned_users = user_list('banned', NULL, 0, 0, 0, 0, 0, 1, 1, 0, 0, $lang);
+$banned_users = user_list('banned', NULL, 0, 0, 0, 0, 0, 1, 1, 0, 0);
 
 
 
@@ -114,8 +111,7 @@ $banned_users = user_list('banned', NULL, 0, 0, 0, 0, 0, 1, 1, 0, 0, $lang);
 // Delete a ban history log
 
 if(isset($_POST['admin_ban_logs_delete']))
-  admin_ban_logs_delete(  form_fetch_element('admin_ban_logs_delete') ,
-                          $lang                                       );
+  admin_ban_logs_delete(form_fetch_element('admin_ban_logs_delete'));
 
 
 
@@ -123,12 +119,11 @@ if(isset($_POST['admin_ban_logs_delete']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ban history
 
-$ban_logs = admin_ban_logs_list(  $lang                                                         ,
-                                  form_fetch_element('admin_ban_logs_sorting_order', 'banned')  ,
-                                  form_fetch_element('admin_ban_logs_search_status', -1)        ,
-                                  form_fetch_element('admin_ban_logs_search_username')          ,
-                                  form_fetch_element('admin_ban_logs_search_banner')            ,
-                                  form_fetch_element('admin_ban_logs_search_unbanner')          );
+$ban_logs = admin_ban_logs_list(  form_fetch_element('admin_ban_logs_sorting_order', 'banned')  ,
+          array(  'status'    =>  form_fetch_element('admin_ban_logs_search_status', -1)        ,
+                  'username'  =>  form_fetch_element('admin_ban_logs_search_username')          ,
+                  'banner'    =>  form_fetch_element('admin_ban_logs_search_banner')            ,
+                  'unbanner'  =>  form_fetch_element('admin_ban_logs_search_unbanner')          ));
 
 
 

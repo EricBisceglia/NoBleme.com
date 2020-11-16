@@ -51,8 +51,7 @@ if(isset($_POST['admin_ipban_delete_submit']))
   admin_ip_ban_delete(  $ip_ban_id                                          ,
                         user_get_id()                                       ,
                         form_fetch_element('admin_ipban_delete_reason_en')  ,
-                        form_fetch_element('admin_ipban_delete_reason_fr')  ,
-                        $lang                                               );
+                        form_fetch_element('admin_ipban_delete_reason_fr')  );
   exit(header("Location: ./ban#active"));
 }
 
@@ -63,7 +62,7 @@ if(isset($_POST['admin_ipban_delete_submit']))
 // Fetch data about the IP ban
 
 // Get the user's nickname and some details regarding the ban
-$ban_details = admin_ip_ban_get($ip_ban_id, $lang);
+$ban_details = admin_ip_ban_get($ip_ban_id);
 
 // Hide the french unban justification in the english interface
 $admin_ban_hide_french = ($lang == 'EN') ? ' hidden' : '';

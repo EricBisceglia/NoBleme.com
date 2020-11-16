@@ -28,14 +28,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Starts the IRC bot.
  *
- * @param   string|null   $path (OPTIONAL)  The path to the root of the website.
- * @param   string|null   $lang (OPTIONAL)  The user's current language.
- *
- * @return  string|null                     A string if an error happened, nothing if the loop is running as intended.
+ * @return  string|null   A string if an error happened, nothing if the loop is running as intended.
  */
 
-function irc_bot_start( $path = './../../'  ,
-                        $lang = 'EN'        )
+function irc_bot_start()
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -52,6 +48,7 @@ function irc_bot_start( $path = './../../'  ,
                       logs_irc_bot.is_action  = 1                         ");
 
   // Bot settings
+  $path             = root_path();
   $irc_bot_file     = $path.$GLOBALS['irc_bot_file_name'];
   $irc_bot_server   = $GLOBALS['irc_bot_server'];
   $irc_bot_port     = $GLOBALS['irc_bot_port'];
@@ -155,12 +152,10 @@ function irc_bot_start( $path = './../../'  ,
 /**
  * Stops the IRC bot.
  *
- * @param   string|null   $lang   (OPTIONAL)  The user's current language.
- *
  * @return  void
  */
 
-function irc_bot_stop( $lang = 'EN' )
+function irc_bot_stop()
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -183,14 +178,12 @@ function irc_bot_stop( $lang = 'EN' )
 /**
  * Toggles the silent IRC bot mode on and off.
  *
- * @param   bool          $silenced             The current status of silent mode.
- * @param   string|null   $lang     (OPTIONAL)  The user's current language.
+ * @param   bool  $silenced   The current status of silent mode.
  *
- * @return  bool                                The new status of silent mode.
+ * @return  bool              The new status of silent mode.
  */
 
-function irc_bot_toggle_silence_mode( $silenced         ,
-                                      $lang     = 'EN'  )
+function irc_bot_toggle_silence_mode( $silenced )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -223,17 +216,13 @@ function irc_bot_toggle_silence_mode( $silenced         ,
  * @param   string        $body                 The message to send on IRC.
  * @param   string|null   $channel  (OPTIONAL)  If the string isn't empty, send the message to a channel instead.
  * @param   string|null   $user     (OPTIONAL)  If the string isn't empty, send the message to a user instead.
- * @param   string|null   $path     (OPTIONAL)  The path to the root of the website.
- * @param   string|null   $lang     (OPTIONAL)  The user's current language.
  *
  * @return  void
  */
 
-function irc_bot_admin_send_message(  $body                   ,
-                                      $channel  = ''          ,
-                                      $user     = ''          ,
-                                      $path     = './../../'  ,
-                                      $lang     = 'EN'        )
+function irc_bot_admin_send_message(  $body           ,
+                                      $channel  = ''  ,
+                                      $user     = ''  )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -254,7 +243,8 @@ function irc_bot_admin_send_message(  $body                   ,
     $body = 'PRIVMSG '.$channel.' :'.$body;
   }
 
-  irc_bot_send_message($body, '', $path, 1, 1);
+  // Send the message
+  irc_bot_send_message($body, '', 1, 1);
 }
 
 
@@ -263,14 +253,10 @@ function irc_bot_admin_send_message(  $body                   ,
 /**
  * Fetches the queue of messages that have not been sent yet by the IRC bot.
  *
- * @param   string|null $path (OPTIONAL)  The path to the root of the website.
- * @param   string|null $lang (OPTIONAL)  The language currently in use.
- *
- * @return  array                         An array containing the log of queued messages.
+ * @return  array   An array containing the log of queued messages.
  */
 
-function irc_bot_message_queue_list(  $path = './../../'  ,
-                                      $lang = 'EN'        )
+function irc_bot_message_queue_list()
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -279,6 +265,7 @@ function irc_bot_message_queue_list(  $path = './../../'  ,
   require_included_file('ircbot.lang.php');
 
   // Assemble the path to the bot's txt file
+  $path         = root_path();
   $irc_bot_file = $path.$GLOBALS['irc_bot_file_name'];
 
   // Check if the file used by the bot exists
@@ -312,16 +299,12 @@ function irc_bot_message_queue_list(  $path = './../../'  ,
 /**
  * Purges a message from the IRC bot's upcoming message queue.
  *
- * @param   int           $line_id              The line number that must be purged - whole file if this is set to -1.
- * @param   string|null   $path     (OPTIONAL)  The path to the root of the website.
- * @param   string|null   $lang     (OPTIONAL)  The user's current language.
+ * @param   int   $line_id  The line number that must be purged - whole file if this is set to -1.
  *
  * @return  void
  */
 
-function irc_bot_message_queue_delete(  $line_id                ,
-                                        $path     = './../../'  ,
-                                        $lang     = 'EN'        )
+function irc_bot_message_queue_delete( $line_id )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -333,6 +316,7 @@ function irc_bot_message_queue_delete(  $line_id                ,
   $line_id = sanitize($line_id, 'int', -1);
 
   // Assemble the path to the bot's txt file
+  $path         = root_path();
   $irc_bot_file = $path.$GLOBALS['irc_bot_file_name'];
 
   // Check if the file used by the bot exists
@@ -376,18 +360,12 @@ function irc_bot_message_queue_delete(  $line_id                ,
 /**
  * Fetches the history of past messages sent by the IRC bot.
  *
- * @param   string|null   $lang           (OPTIONAL)  The language currently in use.
- * @param   string|null   $search_channel (OPTIONAL)  Search messages sent on a specific channel.
- * @param   string|null   $search_body    (OPTIONAL)  Search messages containing a specific body.
- * @param   bool|null     $search_errors  (OPTIONAL)  Search for sent (0) or failed (1) messages only.
+ * @param   array|null    $search   (OPTIONAL)  Search for specific field values.
  *
- * @return  array                                     An array containing the message history.
+ * @return  array                               An array containing the message history.
  */
 
-function irc_bot_message_history_list(  $lang           = 'EN'  ,
-                                        $search_channel = NULL  ,
-                                        $search_body    = NULL  ,
-                                        $search_errors  = -1    )
+function irc_bot_message_history_list( $search = NULL )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -396,10 +374,10 @@ function irc_bot_message_history_list(  $lang           = 'EN'  ,
   require_included_file('ircbot.lang.php');
   require_included_file('functions_time.inc.php');
 
-  // Sanitize the search queries
-  $search_channel = sanitize($search_channel, 'string');
-  $search_body    = sanitize($search_body, 'string');
-  $search_errors  = sanitize($search_errors, 'int', -1, 1);
+  // Sanitize the search parameters
+  $search_channel = isset($search['channel']) ? sanitize($search['channel'], 'string')  : NULL;
+  $search_body    = isset($search['message']) ? sanitize($search['message'], 'string')  : NULL;
+  $search_errors  = isset($search['sent'])    ? sanitize($search['sent'], 'int', -1, 1) : -1;
 
   // Prepare the search string
   $search = " WHERE 1=1 ";
@@ -465,16 +443,12 @@ function irc_bot_message_history_list(  $lang           = 'EN'  ,
 /**
  * Replays an entry from the IRC bot's message history.
  *
- * @param   int         $log_id   The ID of the history log to replay.
- * @param   string|null $path     The path to the root of the website.
- * @param   string|null   $lang   (OPTIONAL)  The user's current language.
+ * @param   int   $log_id   The ID of the history log to replay.
  *
  * @return  void
  */
 
-function irc_bot_message_history_replay(  $log_id               ,
-                                          $path   = './../../'  ,
-                                          $lang   = 'EN'        )
+function irc_bot_message_history_replay( $log_id )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -509,14 +483,12 @@ function irc_bot_message_history_replay(  $log_id               ,
 /**
  * Deletes an entry from the IRC bot's message history.
  *
- * @param   int           $log_id             The ID of the history log to delete.
- * @param   string|null   $lang   (OPTIONAL)  The user's current language.
+ * @param   int   $log_id   The ID of the history log to delete.
  *
  * @return  void
  */
 
-function irc_bot_message_history_delete(  $log_id         ,
-                                          $lang   = 'EN'  )
+function irc_bot_message_history_delete( $log_id )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();

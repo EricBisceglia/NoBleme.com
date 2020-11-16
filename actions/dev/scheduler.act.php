@@ -22,14 +22,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Returns data related to a scheduled task.
  *
- * @param   int           $task_id              The scheduled task's id.
- * @param   string|null   $lang     (OPTIONAL)  The language currently in use.
+ * @param   int         $task_id  The scheduled task's id.
  *
- * @return  array|null                          An array containing task related data, or NULL if it does not exist.
+ * @return  array|null            An array containing task related data, or NULL if it does not exist.
  */
 
-function dev_scheduler_get( $task_id          ,
-                            $lang     = 'EN'  )
+function dev_scheduler_get( $task_id )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -67,24 +65,14 @@ function dev_scheduler_get( $task_id          ,
 /**
  * Returns a list of all task scheduler executions, past and future.
  *
- * @param   string|null   $sort_order         (OPTIONAL)  How the returned data should be sorted.
- * @param   string|null   $search_type        (OPTIONAL)  Search for specific task types.
- * @param   int|null      $search_id          (OPTIONAL)  Search for specific task ids.
- * @param   int|null      $search_execution   (OPTIONAL)  Search for future tasks only or logs only.
- * @param   string|null   $search_description (OPTIONAL)  Search for tasks matching a certain description.
- * @param   string|null   $search_report      (OPTIONAL)  Search for tasks with a certain execution report.
- * @param   string|null   $lang               (OPTIONAL)  The user's current language.
+ * @param   string|null   $sort_by  (OPTIONAL)  How the returned data should be sorted.
+ * @param   array|null    $search   (OPTIONAL)  Search for specific field values.
  *
- * @return  array                                         An array containing the scheduler logs and upcoming tasks.
+ * @return  array                               An array containing the scheduler logs and upcoming tasks.
  */
 
-function dev_scheduler_list(  $sort_order         = 'date'  ,
-                              $search_type        = NULL    ,
-                              $search_id          = NULL    ,
-                              $search_execution   = NULL    ,
-                              $search_description = NULL    ,
-                              $search_report      = NULL    ,
-                              $lang               = 'EN'    )
+function dev_scheduler_list(  $sort_by  = 'date'  ,
+                              $search   = NULL    )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -92,13 +80,16 @@ function dev_scheduler_list(  $sort_order         = 'date'  ,
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
 
-  // Sanitize the data
-  $sort_order         = sanitize($sort_order, 'string');
-  $search_type        = sanitize($search_type, 'string');
-  $search_id          = sanitize($search_id, 'int', 0);
-  $search_execution   = sanitize($search_execution, 'int', 0, 2);
-  $search_description = sanitize($search_description, 'string');
-  $search_report      = sanitize($search_report, 'string');
+  // Sanitize and prepare the data
+  $lang     = user_get_language();
+  $sort_by  = sanitize($sort_by, 'string');
+
+  // Sanitize the search parameters
+  $search_type        = isset($search['type'])        ? sanitize($search['type'], 'string')         : NULL;
+  $search_id          = isset($search['id'])          ? sanitize($search['id'], 'int', 0)           : NULL;
+  $search_execution   = isset($search['date'])        ? sanitize($search['date'], 'int', 0, 2)      : 0;
+  $search_description = isset($search['description']) ? sanitize($search['description'], 'string')  : NULL;
+  $search_report      = isset($search['report'])      ? sanitize($search['report'], 'string')       : NULL;
 
   // Fetch all future scheduler executions
   $qscheduler = "     SELECT    'future'                          AS 's_exec' ,
@@ -148,14 +139,14 @@ function dev_scheduler_list(  $sort_order         = 'date'  ,
     $qscheduler .= "  AND       logs_scheduler.execution_report LIKE '%$search_report%' ";
 
   // Sort the data
-  if($sort_order == 'type')
+  if($sort_by == 'type')
     $qscheduler .= "  ORDER BY  s_type    ASC   ,
                                 s_date    DESC  ";
-  else if($sort_order == 'description')
+  else if($sort_by == 'description')
     $qscheduler .= "  ORDER BY  s_desc    = ''  ,
                                 s_desc    ASC   ,
                                 s_date    DESC  ";
-  else if($sort_order == 'report')
+  else if($sort_by == 'report')
     $qscheduler .= "  ORDER BY  s_report  = ''  ,
                                 s_report  ASC   ,
                                 s_date    DESC  ";
@@ -188,7 +179,7 @@ function dev_scheduler_list(  $sort_order         = 'date'  ,
   }
 
   // Add the search order to the data
-  $data['sort'] = $sort_order;
+  $data['sort'] = $sort_by;
 
   // Add the number of rows to the data
   $data['rows'] = $i;
@@ -207,18 +198,16 @@ function dev_scheduler_list(  $sort_order         = 'date'  ,
 /**
  * Edits an entry in the task scheduler.
  *
- * @param   int           $di                 The task's id.
- * @param   string        $date               The task's execution date.
- * @param   string        $time               The task's execution time.
- * @param   string|null   $lang   (OPTIONAL)  The user's current language.
+ * @param   int           $di     The task's id.
+ * @param   string        $date   The task's execution date.
+ * @param   string        $time   The task's execution time.
  *
- * @return  string|null                       NULL if all went according to plan, or an error string
+ * @return  string|null           NULL if all went according to plan, or an error string
  */
 
-function dev_scheduler_edit(  $id           ,
-                              $date         ,
-                              $time         ,
-                              $lang = 'EN'  )
+function dev_scheduler_edit(  $id   ,
+                              $date ,
+                              $time )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -255,14 +244,12 @@ function dev_scheduler_edit(  $id           ,
 /**
  * Deletes an entry in the scheduled tasks.
  *
- * @param   int           $task_id              The tasks's id
- * @param   string|null   $lang     (OPTIONAL)  The user's current language.
+ * @param   int           $task_id    The tasks's id
  *
- * @return  string|int                          The tasks's id, or 0 if the task does not exist.
+ * @return  string|int                The tasks's id, or 0 if the task does not exist.
  */
 
-function dev_scheduler_delete_task( $task_id          ,
-                                    $lang     = 'EN'  )
+function dev_scheduler_delete_task( $task_id )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -288,14 +275,12 @@ function dev_scheduler_delete_task( $task_id          ,
 /**
  * Deletes an entry in the scheduler execution logs.
  *
- * @param   int           $log_id               The log's id
- * @param   string|null   $lang     (OPTIONAL)  The user's current language.
+ * @param   int           $log_id   The log's id
  *
- * @return  string|int                          The log's id, or 0 if the log does not exist.
+ * @return  string|int              The log's id, or 0 if the log does not exist.
  */
 
-function dev_scheduler_delete_log(  $log_id         ,
-                                    $lang   = 'EN'  )
+function dev_scheduler_delete_log( $log_id )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -321,12 +306,10 @@ function dev_scheduler_delete_log(  $log_id         ,
 /**
  * Returns a list of all scheduler task types.
  *
- * @param   string|null   $lang   (OPTIONAL)  The language currently in use.
- *
  * @return  array   An array containing the task types.
  */
 
-function dev_scheduler_types_list($lang = 'EN')
+function dev_scheduler_types_list()
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();

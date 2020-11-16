@@ -26,7 +26,7 @@ user_restrict_to_administrators();
 $task_id = form_fetch_element('task_id', 0);
 
 // Fetch the task information
-$task_data = dev_scheduler_get($task_id, $lang);
+$task_data = dev_scheduler_get($task_id);
 
 // Prepare error messages if anything went wrong
 if(!$task_id)

@@ -24,8 +24,7 @@ user_restrict_to_moderators();
 /*********************************************************************************************************************/
 
 // Fetch log details
-$log_details = activity_get(  form_fetch_element('log_id', 0) ,
-                              $lang                           );
+$log_details = activity_get(form_fetch_element('log_id', 0));
 
 
 

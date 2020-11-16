@@ -64,9 +64,7 @@ if(isset($_POST['admin_ban_edit_submit']))
                   $user_id                                        ,
                   form_fetch_element('admin_ban_edit_length')     ,
                   form_fetch_element('admin_ban_edit_reason_en')  ,
-                  form_fetch_element('admin_ban_edit_reason_fr')  ,
-                  $lang                                           ,
-                  $path                                           );
+                  form_fetch_element('admin_ban_edit_reason_fr')  );
   exit(header("Location: ./ban#active"));
 }
 
@@ -78,7 +76,7 @@ if(isset($_POST['admin_ban_edit_submit']))
 
 // Get the user's nickname and some details regarding the ban
 $ban_username = user_get_nickname($user_id);
-$ban_details  = user_ban_details($lang, $user_id);
+$ban_details  = user_ban_details($user_id);
 
 // Hide the french ban justification in the english interface
 $admin_ban_hide_french = ($lang == 'EN') ? ' hidden' : '';

@@ -54,9 +54,7 @@ $activity_logs    = activity_list(  $activity_modlogs                           
                                     form_fetch_element('activity_amount', 100)  ,
                                     form_fetch_element('activity_type', 'all')  ,
                                     $activity_deleted                           ,
-                                    $is_admin                                   ,
-                                    $path                                       ,
-                                    $lang                                       );
+                                    $is_admin                                   );
 
 
 
