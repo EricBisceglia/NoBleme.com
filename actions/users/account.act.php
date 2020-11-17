@@ -35,6 +35,9 @@ function user_authenticate( $ip               ,
                             $password         ,
                             $remember_me = 0  )
 {
+  // Only logged out users may authenticate
+  user_restrict_to_guests();
+
   // Sanitize the data
   $ip           = sanitize($ip, 'string');
   $nickname     = sanitize($nickname, 'string');
@@ -131,17 +134,24 @@ function user_authenticate( $ip               ,
   if($remember_me)
   {
     // Generate the hash and its expiry date
-    $token_hash   = sanitize(bin2hex(random_bytes(20)), 'string');
-    $token_expiry = sanitize(time() + 600, 'int', 0);
+    $token_hash   = sanitize(bin2hex(random_bytes(64)), 'string');
+    $token_regen  = sanitize(time() + 60, 'int', 0);
+    $token_expiry = sanitize(time() + 31622400, 'int', 0);
 
     // Create the cookie
     setcookie("nobleme_memory", $token_hash, 2147483647, "/");
 
     // Update the database
-    query(" UPDATE  users
-            SET     users.session_token     = '$token_hash' ,
-                    users.token_expires_at  = '$token_expiry'
-            WHERE   users.id                = '$user_id'    ");
+    query(" INSERT INTO users_tokens
+            SET         users_tokens.fk_users       = '$user_id'      ,
+                        users_tokens.token          = '$token_hash'   ,
+                        users_tokens.token_type     = 'session'       ,
+                        users_tokens.regenerate_at  = '$token_regen'  ,
+                        users_tokens.delete_at      = '$token_expiry' ");
+
+    // Run housecleaning on expired tokens
+    query(" DELETE FROM users_tokens
+            WHERE       users_tokens.delete_at <= '$timestamp' ");
   }
 
   // The login process is complete

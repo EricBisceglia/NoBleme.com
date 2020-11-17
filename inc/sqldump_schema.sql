@@ -369,8 +369,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `deleted_nickname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nickname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `session_token` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token_expires_at` int UNSIGNED NOT NULL,
   `is_administrator` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `is_moderator` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `current_language` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -470,6 +468,18 @@ CREATE TABLE IF NOT EXISTS `users_stats` (
   KEY `index_user` (`fk_users`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS `users_tokens`;
+CREATE TABLE IF NOT EXISTS `users_tokens` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fk_users` int UNSIGNED NOT NULL DEFAULT '0',
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token_type` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `regenerate_at` int UNSIGNED NOT NULL DEFAULT '0',
+  `delete_at` int UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `index_user` (`fk_users`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 DROP TABLE IF EXISTS `writings_contests`;
 CREATE TABLE IF NOT EXISTS `writings_contests` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -534,3 +544,5 @@ ALTER TABLE `internet_pages` ADD FULLTEXT KEY `index_title_en` (`title_en`,`redi
 ALTER TABLE `internet_pages` ADD FULLTEXT KEY `index_title_fr` (`title_fr`,`redirection_fr`);
 ALTER TABLE `internet_pages` ADD FULLTEXT KEY `index_contents_en` (`definition_en`);
 ALTER TABLE `internet_pages` ADD FULLTEXT KEY `index_contents_fr` (`definition_fr`);
+
+ALTER TABLE `users_tokens` ADD FULLTEXT KEY `index_token` (`token`);

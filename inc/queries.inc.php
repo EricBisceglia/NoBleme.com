@@ -1218,8 +1218,6 @@ if($last_query < 26)
   sql_change_field_type('users', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('users', 'pseudonyme', 'nickname', 'VARCHAR(45) NOT NULL');
   sql_rename_field('users', 'pass', 'password', 'MEDIUMTEXT NOT NULL');
-  sql_create_field('users', 'session_token', 'VARCHAR(60) NOT NULL', 'password');
-  sql_create_field('users', 'token_expires_at', 'INT UNSIGNED NOT NULL', 'session_token');
   sql_rename_field('users', 'admin', 'is_administrator', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users', 'sysop', 'is_moderator', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_delete_field('users', 'moderateur');
@@ -1407,6 +1405,15 @@ if($last_query < 26)
   sql_delete_index('users_private_messages', 'index_chronologie');
   sql_create_index('users_private_messages', 'index_inbox', 'fk_users_recipient');
   sql_create_index('users_private_messages', 'index_outbox', 'fk_users_sender');
+
+  sql_create_table('users_tokens');
+  sql_create_field('users_tokens', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('users_tokens', 'token', 'VARCHAR(255) NOT NULL', 'fk_users');
+  sql_create_field('users_tokens', 'token_type', 'VARCHAR(40) NOT NULL', 'token');
+  sql_create_field('users_tokens', 'regenerate_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'token_type');
+  sql_create_field('users_tokens', 'delete_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'regenerate_at');
+  sql_create_index('users_tokens', 'index_user', 'fk_users');
+  sql_create_index('users_tokens', 'index_token', 'token', 1);
 
   sql_update_query_id(26);
 }

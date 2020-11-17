@@ -49,43 +49,46 @@ if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
   // Sanitize the cookie's value
   $login_cookie = sanitize($_COOKIE['nobleme_memory'], 'string');
 
-  // Check if a user matches the cookie's value
-  $dusers = mysqli_fetch_array(query("  SELECT  users.id                  AS 'u_id'     ,
-                                                users.session_token       AS 'u_token'  ,
-                                                users.token_expires_at    AS 'u_expiry' ,
-                                                users.current_ip_address  AS 'u_ip'
-                                        FROM    users
-                                        WHERE   users.session_token LIKE '$login_cookie' "));
+  // Check if the token exists in the database
+  $timestamp = sanitize(time(), 'int', 0);
+  $dusers = mysqli_fetch_array(query("  SELECT  users_tokens.id             AS 't_id'   ,
+                                                users_tokens.fk_users       AS 't_uid'  ,
+                                                users_tokens.regenerate_at  AS 't_regen'
+                                        FROM    users_tokens
+                                        WHERE   users_tokens.token_type LIKE 'session'
+                                        AND     users_tokens.token      LIKE '$login_cookie'
+                                        AND     users_tokens.delete_at     > '$timestamp' "));
 
   // If there's a match, the process can continue
-  if(isset($dusers['u_id']))
+  if(isset($dusers['t_uid']))
   {
-    // If the user's IP address has changed, log them out
-    if($_SERVER['REMOTE_ADDR'] != $dusers['u_ip'])
-      user_log_out();
-    else
+    // Regenerate the token if needed
+    if($dusers['t_regen'] <= time())
     {
-      // If the token has expired, generate a new one
-      if($dusers['u_expiry'] <= time())
-      {
-        // Generate the hash and its expiry date
-        $user_id      = sanitize($dusers['u_id'], 'int', 0);
-        $token_hash   = sanitize(bin2hex(random_bytes(20)), 'string');
-        $token_expiry = sanitize(time() + 600, 'int', 0);
+      // Generate the hash and its expiry date
+      $token_id     = sanitize($dusers['t_id'], 'int', 0);
+      $user_id      = sanitize($dusers['t_uid'], 'int', 0);
+      $token_hash   = sanitize(bin2hex(random_bytes(64)), 'string');
+      $token_regen  = sanitize(time() + 60, 'int', 0);
+      $token_expiry = sanitize(time() + 31622400, 'int', 0);
 
-        // Update the cookie
-        setcookie("nobleme_memory", $token_hash, 2147483647, "/");
+      // Update the cookie
+      setcookie("nobleme_memory", $token_hash, 2147483647, "/");
 
-        // Update the database
-        query(" UPDATE  users
-                SET     users.session_token     = '$token_hash' ,
-                        users.token_expires_at  = '$token_expiry'
-                WHERE   users.id                = '$user_id'    ");
-      }
+      // Update the database
+      query(" UPDATE  users_tokens
+              SET     users_tokens.token          = '$token_hash'   ,
+                      users_tokens.regenerate_at  = '$token_regen'  ,
+                      users_tokens.delete_at      = '$token_expiry'
+              WHERE   users_tokens.id             = '$token_id'   ");
 
-      // Assign the user id to the session to log them in
-      $_SESSION['user_id'] = $dusers['u_id'];
+      // Run housecleaning on expired tokens
+      query(" DELETE FROM users_tokens
+              WHERE       users_tokens.delete_at <= '$timestamp' ");
     }
+
+    // Assign the user id to the session to log them in
+    $_SESSION['user_id'] = $dusers['t_uid'];
   }
 
   // If there's no match, log the user out
@@ -329,8 +332,19 @@ function user_is_logged_in()
 
 function user_log_out()
 {
-  // Destroy the session cookie
-  setcookie('nobleme_memory', '', time()-630720000, "/");
+  // Delete the session cookie if it exists
+  if(isset($_COOKIE['nobleme_memory']))
+  {
+    // Grab the cookie's value
+    $session_token = sanitize($_COOKIE['nobleme_memory'], 'string');
+
+    // Delete the database entry
+    query(" DELETE FROM users_tokens
+            WHERE       users_tokens.token LIKE '$session_token' ");
+
+    // Destroy the session cookie
+    setcookie('nobleme_memory', '', (time() - 630720000), "/");
+  }
 
   // Destroy the session itself
   session_destroy();
