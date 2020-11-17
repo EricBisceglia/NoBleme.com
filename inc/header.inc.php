@@ -716,22 +716,22 @@ $javascripts .= '
 
             <div class="smallpadding_bot">
               <label class="text_light" id="label_login_form_nickname" for="login_form_nickname"><?=string_change_case(__('nickname'), 'initials')?></label>
-              <input id="login_form_nickname" name="login_form_nickname" class="indiv" type="text" value="" onkeypress="users_login_form_keypress();">
+              <input id="login_form_nickname" name="login_form_nickname" class="indiv" type="text" value="">
             </div>
 
             <div class="padding_bot">
               <label class="text_light" id="label_login_form_password" for="login_form_password"><?=string_change_case(__('password'), 'initials')?> </label>
-              <input id="login_form_password" name="login_form_password" class="indiv" type="password" value="" onkeypress="users_login_form_keypress();">
+              <input id="login_form_password" name="login_form_password" class="indiv" type="password" value="">
             </div>
 
             <div class="desktop float_right">
-              <input id="login_form_remember" name="login_form_remember" type="checkbox" checked>
-              <label class="label_inline" for="login_form_remember"><?=__('login_form_form_remember')?></label>
+              <input id="login_form_remember_desktop" name="login_form_remember_desktop" type="checkbox" checked>
+              <label class="label_inline" for="login_form_remember_desktop"><?=__('login_form_form_remember')?></label>
             </div>
 
             <div class="mobile padding_bot">
-              <input id="login_form_remember" name="login_form_remember" type="checkbox" checked>
-              <label class="label_inline" for="login_form_remember"><?=__('login_form_form_remember')?></label>
+              <input id="login_form_remember_mobile" name="login_form_remember_mobile" type="checkbox" checked>
+              <label class="label_inline" for="login_form_remember_mobile"><?=__('login_form_form_remember')?></label>
             </div>
 
             <input type="submit" class="button_chain" value="<?=__('login_form_title')?>">

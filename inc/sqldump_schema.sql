@@ -369,6 +369,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `deleted_nickname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nickname` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `session_token` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token_expires_at` int UNSIGNED NOT NULL,
   `is_administrator` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `is_moderator` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `current_language` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,

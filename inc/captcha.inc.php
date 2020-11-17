@@ -6,7 +6,7 @@
 //                                                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // First off, open the current session for this, since it's going to be included separately
-session_name('nobleme_session_secure');
+session_name('nobleme_session');
 session_start();
 session_regenerate_id();
 

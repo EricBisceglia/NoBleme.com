@@ -88,9 +88,6 @@ function user_authenticate( $ip               ,
   if($dfetch_user['u_deleted'])
     return __('login_form_error_deleted');
 
-  // Grab the user's nickname to fix any case inconsistency
-  $nickname_raw = $dfetch_user['u_nick'];
-
   // Check if the specific user is under bruteforce attempt
   $user_id            = sanitize($dfetch_user['u_id'], 'int', 0);
   $dbruteforce_check  = mysqli_fetch_array(query("  SELECT  COUNT(users_login_attempts.ip_address) AS 'nb_attempts'
@@ -122,11 +119,30 @@ function user_authenticate( $ip               ,
   }
 
   // Log in the user by setting the session variable
-  $_SESSION['user'] = $user_id;
+  $_SESSION['user_id'] = $user_id;
+
+  // Update the current user IP
+  $user_ip = sanitize($_SERVER['REMOTE_ADDR'], 'string');
+  query(" UPDATE  users
+          SET     users.current_ip_address  = '$user_ip'
+          WHERE   users.id                  = '$user_id' ");
 
   // If requested, also create the session cookie
   if($remember_me)
-    setcookie("nobleme_memory", encrypt_data($nickname_raw) , 2147483647, "/");
+  {
+    // Generate the hash and its expiry date
+    $token_hash   = sanitize(bin2hex(random_bytes(20)), 'string');
+    $token_expiry = sanitize(time() + 600, 'int', 0);
+
+    // Create the cookie
+    setcookie("nobleme_memory", $token_hash, 2147483647, "/");
+
+    // Update the database
+    query(" UPDATE  users
+            SET     users.session_token     = '$token_hash' ,
+                    users.token_expires_at  = '$token_expiry'
+            WHERE   users.id                = '$user_id'    ");
+  }
 
   // The login process is complete
   return 'OK';

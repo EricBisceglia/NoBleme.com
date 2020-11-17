@@ -43,36 +43,54 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 // Let's begin by opening the session
 secure_session_start();
 
-// To store and retrieve identify, go check if there is a valid cookie
+// If the user has an ID cookie set, attempt to identify them
 if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
 {
-  // Fetch a list of users
-  $qusers = query(" SELECT  users.id        AS 'u_id' ,
-                            users.nickname  AS 'u_nick'
-                    FROM    users ");
+  // Sanitize the cookie's value
+  $login_cookie = sanitize($_COOKIE['nobleme_memory'], 'string');
 
-  // Compare encrypted nicknames to the cookie's contents
-  $cookie_ok = 0;
-  while($dusers = mysqli_fetch_array($qusers))
+  // Check if a user matches the cookie's value
+  $dusers = mysqli_fetch_array(query("  SELECT  users.id                  AS 'u_id'     ,
+                                                users.session_token       AS 'u_token'  ,
+                                                users.token_expires_at    AS 'u_expiry' ,
+                                                users.current_ip_address  AS 'u_ip'
+                                        FROM    users
+                                        WHERE   users.session_token LIKE '$login_cookie' "));
+
+  // If there's a match, the process can continue
+  if(isset($dusers['u_id']))
   {
-    // Encrypt the nicknames
-    $user_test = encrypt_data($dusers['u_nick']);
-
-    // Compare them to the data stored in the session cookie
-    if ($user_test == $_COOKIE['nobleme_memory'])
+    // If the user's IP address has changed, log them out
+    if($_SERVER['REMOTE_ADDR'] != $dusers['u_ip'])
+      user_log_out();
+    else
     {
-      $cookie_ok = 1;
-      $cookie_id = $dusers['u_id'];
+      // If the token has expired, generate a new one
+      if($dusers['u_expiry'] <= time())
+      {
+        // Generate the hash and its expiry date
+        $user_id      = sanitize($dusers['u_id'], 'int', 0);
+        $token_hash   = sanitize(bin2hex(random_bytes(20)), 'string');
+        $token_expiry = sanitize(time() + 600, 'int', 0);
+
+        // Update the cookie
+        setcookie("nobleme_memory", $token_hash, 2147483647, "/");
+
+        // Update the database
+        query(" UPDATE  users
+                SET     users.session_token     = '$token_hash' ,
+                        users.token_expires_at  = '$token_expiry'
+                WHERE   users.id                = '$user_id'    ");
+      }
+
+      // Assign the user id to the session to log them in
+      $_SESSION['user_id'] = $dusers['u_id'];
     }
   }
 
-  // If there's a match, insert user id in a session variable
-  if ($cookie_ok)
-    $_SESSION['user_id'] = $cookie_id;
-
-  // If not, destroy the cookie
+  // If there's no match, log the user out
   else
-    setcookie("nobleme_memory", "", time()-630720000, "/");
+    user_log_out();
 }
 
 
@@ -236,7 +254,7 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && user_is_logged_in())
 function secure_session_start()
 {
   // This public token will be used to identify the session name
-  $session_name = 'nobleme_session_secure';
+  $session_name = 'nobleme_session';
 
   // This is where it gets tricky: force this session to only use cookies or block execution of the application
   if (ini_set('session.use_only_cookies', 1) === FALSE) {

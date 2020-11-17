@@ -1218,6 +1218,8 @@ if($last_query < 26)
   sql_change_field_type('users', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('users', 'pseudonyme', 'nickname', 'VARCHAR(45) NOT NULL');
   sql_rename_field('users', 'pass', 'password', 'MEDIUMTEXT NOT NULL');
+  sql_create_field('users', 'session_token', 'VARCHAR(60) NOT NULL', 'password');
+  sql_create_field('users', 'token_expires_at', 'INT UNSIGNED NOT NULL', 'session_token');
   sql_rename_field('users', 'admin', 'is_administrator', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users', 'sysop', 'is_moderator', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_delete_field('users', 'moderateur');
