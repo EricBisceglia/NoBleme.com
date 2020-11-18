@@ -3,6 +3,8 @@
 /*  admin_reactivate_account    Reactivates a deleted account.                                                       */
 /*  admin_reactivate_search     Performs a search through the deactivated accounts.                                  */
 /*                                                                                                                   */
+/*  admin_rename_check          Checks if a user can be renamed to the desired username.                             */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -47,4 +49,22 @@ function admin_reactivate_search( sort_data = null )
 
   // Submit the search
   fetch_page('user_deactivate', 'admin_reactivate_tbody', postdata);
+}
+
+
+
+
+/**
+ * Checks if a user can be renamed to the desired username.
+ *
+ * @returns {void}
+ */
+
+function admin_rename_check()
+{
+  // Grab the desired value
+  postdata = 'admin_rename=' + fetch_sanitize_id('admin_rename_new');
+
+  // Submit the request
+  fetch_page('user_rename_check', 'admin_rename_new_label', postdata);
 }

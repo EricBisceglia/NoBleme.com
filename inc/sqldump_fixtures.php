@@ -627,7 +627,7 @@ for($i = 0; $i < $random; $i++)
 {
   // Generate random data
   $deleted      = (mt_rand(0,50) < 50) ? 0 : 1;
-  $username     = ucfirst(fixtures_generate_data('string', 3, 15));
+  $username     = ucfirst(fixtures_generate_data('string', 3, 15, 1, 1));
   $deleted_nick = ($deleted) ? $username : '';
   $current_ip   = fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255);
   $email        = $username.'@localhost';

@@ -214,7 +214,7 @@ function log_activity_parse(  $admins_only          ,
 
   else if($type == 'users_unbanned_ip')
   {
-    $return['css']  = 'text_red';
+    $return['css']  = 'text_red bold';
     $return['href'] = $path.'pages/admin/ban';
     $return['EN']   = 'The ban of the IP address '.$nickname.' has ended';
     $return['FR']   = 'Le bannissement de l\'adresse IP '.$nickname.' est fini';
@@ -244,6 +244,14 @@ function log_activity_parse(  $admins_only          ,
     $return['FR']   = $nickname." a rejoint l'équipe d'administration de NoBleme";
   }
 
+  else if($type === 'users_rename')
+  {
+    $return['css']  = 'yellow text_black bold';
+    $return['href'] = $path.'todo_link?id='.$userid;
+    $return['EN']   = $title_en." has been renamed to ".$nickname." by ".$mod_nickname;
+    $return['FR']   = "Le compte de ".$title_en." a été renommé en ".$nickname." par ".$mod_nickname;
+  }
+
   else if($type === 'users_delete')
   {
     $return['css']  = 'red bold';
@@ -254,6 +262,7 @@ function log_activity_parse(  $admins_only          ,
   else if($type === 'users_undelete')
   {
     $return['css']  = 'green bold';
+    $return['href'] = $path.'todo_link?id='.$userid;
     $return['EN']   = $nickname."'s account has been reactivated by ".$mod_nickname;
     $return['FR']   = "Le compte de ".$nickname." a été réactivé par ".$mod_nickname;
   }
@@ -274,7 +283,7 @@ function log_activity_parse(  $admins_only          ,
   }
   else if($type === 'meetups_new')
   {
-    $return['css']  = 'green bold';
+    $return['css']  = 'text_green bold';
     $return['href'] = $path.'todo_link?id='.$id;
     $return['EN']   = $mod_nickname.' created a new meetup on '.date_to_text($title_en, 1);
     $return['FR']   = $mod_nickname.' a crée une nouvelle IRL le '.date_to_text($title_fr, 1);

@@ -789,7 +789,7 @@ $javascripts .= '
           <?=__link('pages/admin/ban', __('submenu_admin_ban'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_admin_nickname'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/admin/user_rename', __('submenu_admin_nickname'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_admin_password'), 'header_submenu_link text_blue', 1, $path);?>

@@ -65,3 +65,59 @@ ___('admin_reactivate_no_user', 'EN', "No user found for the provided ID");
 ___('admin_reactivate_no_user', 'FR', "Aucun compte trouvé pour cet ID");
 ___('admin_reactivate_success', 'EN', "The account has been reactivated");
 ___('admin_reactivate_success', 'FR', "Le compte a été réactivé");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 RENAME AN ACCOUNT                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Rename: Title
+___('admin_rename_title', 'EN', "Rename an account");
+___('admin_rename_title', 'FR', "Renommer un compte");
+
+
+// Rename: Description
+___('admin_rename_warning', 'EN', <<<EOT
+Renaming an account should only be done if there is a very good reason to do so (for example an offensive username or a properly justified request from a user). The system will not notify the user of the account's username change, therefore you should keep the user informed by yourself.
+EOT
+);
+___('admin_rename_warning', 'FR', <<<EOT
+Renommer un compte ne doit être fait que s'il y a une très bonne raison de le faire (par exemple un pseudonyme offensant ou une demande correctement justifiée de la part d'un utilisateur). Le système ne notifiera pas l'utilisateur de son changement de pseudonyme, par conséquent il faudra l'en informer vous-même.
+EOT
+);
+
+
+// Rename: Form
+___('admin_rename_success',   'EN', "The account has been renamed");
+___('admin_rename_success',   'FR', "Le compte a été renommé");
+___('admin_rename_current',   'EN', "Current account username");
+___('admin_rename_current',   'FR', "Pseudonyme actuel du compte");
+___('admin_rename_new',       'EN', "New account username");
+___('admin_rename_new',       'FR', "Nouveau pseudonyme du compte");
+___('admin_rename_valid',     'EN', "This nickname is available");
+___('admin_rename_valid',     'FR', "Ce pseudonyme est disponible");
+___('admin_rename_reason_fr', 'EN', "Reason for the name change (in french)");
+___('admin_rename_reason_fr', 'FR', "Justification du changement en français");
+___('admin_rename_reason_en', 'EN', "Reason for the name change");
+___('admin_rename_reason_en', 'FR', "Justification du changement en anglais");
+___('admin_rename_submit',    'EN', "Rename the account");
+___('admin_rename_submit',    'FR', "Renommer le compte");
+
+
+// Rename: Form errors
+___('admin_rename_error_short',       'EN', "This username is too short");
+___('admin_rename_error_short',       'FR', "Ce pseudonyme est trop court");
+___('admin_rename_error_long',        'EN', "This username is too long");
+___('admin_rename_error_long',        'FR', "Ce pseudonyme est trop long");
+___('admin_rename_error_characters',  'EN', "Forbidden character in usernames");
+___('admin_rename_error_characters',  'FR', "Caractère interdit dans le pseudonyme");
+___('admin_rename_error_illegal',     'EN', "Illegal word in username");
+___('admin_rename_error_illegal',     'FR', "Mot illégal dans le pseudonyme");
+___('admin_rename_error_taken',       'EN', "This username is already taken");
+___('admin_rename_error_taken',       'FR', "Ce pseudonyme est déjà utilisé");
+___('admin_rename_error_admin',       'EN', "Moderators can't rename administrators");
+___('admin_rename_error_admin',       'FR', "Les modérateurs ne peuvent pas renommer les administrateurs");

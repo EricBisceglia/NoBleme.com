@@ -70,7 +70,7 @@ if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
       $user_id      = sanitize($dusers['t_uid'], 'int', 0);
       $token_hash   = sanitize(bin2hex(random_bytes(64)), 'string');
       $token_regen  = sanitize(time() + 60, 'int', 0);
-      $token_expiry = sanitize(time() + 31622400, 'int', 0);
+      $token_expiry = sanitize(time() + 7890000, 'int', 0);
 
       // Update the cookie
       setcookie("nobleme_memory", $token_hash, 2147483647, "/");

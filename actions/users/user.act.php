@@ -349,7 +349,7 @@ function user_check_username($username)
 function user_check_username_illegality($username)
 {
   // Define a list of badwords
-  $bad_words = array('admin', 'biatch', 'bitch', 'coon', 'fagg', 'kike', 'moderat', 'nigg', 'offici', 'trann', 'whore');
+  $bad_words = array('admin', 'biatch', 'bitch', 'coon', 'fagg', 'kike', 'moderat', 'nigg', 'offici', 'putain', 'salope', 'trann', 'whore');
 
   // Check if the username matches any of the bad words
   $is_illegal = 0;

@@ -136,7 +136,7 @@ function user_authenticate( $ip               ,
     // Generate the hash and its expiry date
     $token_hash   = sanitize(bin2hex(random_bytes(64)), 'string');
     $token_regen  = sanitize(time() + 60, 'int', 0);
-    $token_expiry = sanitize(time() + 31622400, 'int', 0);
+    $token_expiry = sanitize(time() + 7890000, 'int', 0);
 
     // Create the cookie
     setcookie("nobleme_memory", $token_hash, 2147483647, "/");
