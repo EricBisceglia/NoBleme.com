@@ -24,7 +24,7 @@ $page_title_en    = "Bans";
 $page_title_fr    = "Bannissements";
 
 // Extra JS
-$js = array('admin/ban', 'users/autocomplete_nickname', 'common/toggle');
+$js = array('admin/ban', 'users/autocomplete_username', 'common/toggle');
 
 
 
@@ -174,9 +174,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
 
       <div class="smallpadding_bot">
-        <label for="admin_ban_add_nick" class="admin_ban_add_swap_user<?=$admin_ban_add_visiblity_user?>"><?=__('admin_ban_add_nickname')?></label>
-        <label for="admin_ban_add_nick" class="admin_ban_add_swap_ip<?=$admin_ban_add_visiblity_ip?>"><?=__('admin_ban_add_nickname_ip')?></label>
-        <input class="indiv" type="text" id="admin_ban_add_nick" name="admin_ban_add_nick" value="<?=$admin_ban_add_nick?>" autocomplete="off" list="admin_ban_add_nick_list" onkeyup="autocomplete_nickname('admin_ban_add_nick', 'admin_ban_add_nick_list_parent', './../users/autocomplete_nickname', 'admin_ban_add_nick_list', 'ban');">
+        <label for="admin_ban_add_nick" class="admin_ban_add_swap_user<?=$admin_ban_add_visiblity_user?>"><?=__('admin_ban_add_username')?></label>
+        <label for="admin_ban_add_nick" class="admin_ban_add_swap_ip<?=$admin_ban_add_visiblity_ip?>"><?=__('admin_ban_add_username_ip')?></label>
+        <input class="indiv" type="text" id="admin_ban_add_nick" name="admin_ban_add_nick" value="<?=$admin_ban_add_nick?>" autocomplete="off" list="admin_ban_add_nick_list" onkeyup="autocomplete_username('admin_ban_add_nick', 'admin_ban_add_nick_list_parent', './../users/autocomplete_username', 'admin_ban_add_nick_list', 'ban');">
         <div id="admin_ban_add_nick_list_parent">
           <datalist id="admin_ban_add_nick_list">
             <option value=" ">
@@ -279,7 +279,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <?php if($banned_users[$i]['type'] == 'user') { ?>
         <td>
-          <?=__link('todo_link?id='.$banned_users[$i]['id'], $banned_users[$i]['nickname'], $banned_users[$i]['css'])?>
+          <?=__link('todo_link?id='.$banned_users[$i]['id'], $banned_users[$i]['username'], $banned_users[$i]['css'])?>
         </td>
         <?php } else { ?>
         <td class="tooltip_container">
@@ -297,7 +297,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <ul>
               <?php for($j = 0; $j < $banned_users[$i]['ip_bans']['rows']; $j++) { ?>
                 <li>
-                  <?=__link('todo_link?id='.$banned_users[$i]['ip_bans'][$j]['id'], $banned_users[$i]['ip_bans'][$j]['nickname'])?>
+                  <?=__link('todo_link?id='.$banned_users[$i]['ip_bans'][$j]['id'], $banned_users[$i]['ip_bans'][$j]['username'])?>
                 </li>
               <?php } ?>
             </ul>
@@ -478,7 +478,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <td>
             <?php if($ban_logs[$i]['ban_type'] == 'user') { ?>
-            <?=__link('todo_link?id='.$ban_logs[$i]['user_id'], $ban_logs[$i]['nickname'], 'bold noglow')?>
+            <?=__link('todo_link?id='.$ban_logs[$i]['user_id'], $ban_logs[$i]['username'], 'bold noglow')?>
             <?php } else { ?>
             <?=$ban_logs[$i]['ip']?>
             <?php } ?>

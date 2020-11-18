@@ -77,15 +77,15 @@ function toggle_header_menu(  menu_name             ,
 function user_login_attempt(  login_path  ,
                               is_dev_mode )
 {
-  // Ensure both nickname and password are filled in
-  form_failed = (!form_require_field("login_form_nickname", "label_login_form_nickname")) ? 1 : 0;
+  // Ensure both username and password are filled in
+  form_failed = (!form_require_field("login_form_username", "label_login_form_username")) ? 1 : 0;
   form_failed = (!is_dev_mode && !form_require_field("login_form_password", "label_login_form_password")) ? 1 : form_failed;
 
   // If both are ok, then fetch whether the login is valid - if it is, submit the form
   if(!form_failed)
   {
     // Prepare the postdata
-    postdata  = 'login_form_nickname='          + fetch_sanitize_id('login_form_nickname');
+    postdata  = 'login_form_username='          + fetch_sanitize_id('login_form_username');
     postdata += '&login_form_password='         + fetch_sanitize_id('login_form_password');
     postdata += '&login_form_remember_desktop=' + fetch_sanitize(document.getElementById('login_form_remember_desktop').checked);
     postdata += '&login_form_remember_mobile='  + fetch_sanitize(document.getElementById('login_form_remember_mobile').checked);

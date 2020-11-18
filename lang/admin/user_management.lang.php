@@ -98,7 +98,7 @@ ___('admin_rename_current',   'EN', "Current account username");
 ___('admin_rename_current',   'FR', "Pseudonyme actuel du compte");
 ___('admin_rename_new',       'EN', "New account username");
 ___('admin_rename_new',       'FR', "Nouveau pseudonyme du compte");
-___('admin_rename_valid',     'EN', "This nickname is available");
+___('admin_rename_valid',     'EN', "This username is available");
 ___('admin_rename_valid',     'FR', "Ce pseudonyme est disponible");
 ___('admin_rename_reason_fr', 'EN', "Reason for the name change (in french)");
 ___('admin_rename_reason_fr', 'FR', "Justification du changement en français");

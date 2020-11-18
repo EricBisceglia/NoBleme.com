@@ -187,9 +187,9 @@ else
   // Create the guest if it does not exist
   if(!mysqli_num_rows($qguest))
   {
-    // Generate a random nickname
-    $guest_name_en = sanitize(user_generate_random_nickname('EN'), 'string');
-    $guest_name_fr = sanitize(user_generate_random_nickname('FR'), 'string');
+    // Generate a random username
+    $guest_name_en = sanitize(user_generate_random_username('EN'), 'string');
+    $guest_name_fr = sanitize(user_generate_random_username('FR'), 'string');
 
     // Create the guest
     query(" INSERT INTO users_guests
@@ -681,7 +681,7 @@ $javascripts .= '
           <?=__link('todo_link', __('submenu_user_edit_password'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_edit_nickname'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_user_edit_username'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_user_edit_delete'), 'header_submenu_link text_blue', 1, $path);?>
@@ -690,7 +690,7 @@ $javascripts .= '
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=sanitize_output(user_get_nickname())?>
+          <?=sanitize_output(user_get_username())?>
         </div>
         <div class="header_submenu_item">
           <a class="header_submenu_link" href="<?=$url_logout?>"><?=__('submenu_user_logout_logout')?></a>
@@ -715,8 +715,8 @@ $javascripts .= '
           <fieldset>
 
             <div class="smallpadding_bot">
-              <label class="text_light" id="label_login_form_nickname" for="login_form_nickname"><?=string_change_case(__('nickname'), 'initials')?></label>
-              <input id="login_form_nickname" name="login_form_nickname" class="indiv" type="text" value="">
+              <label class="text_light" id="label_login_form_username" for="login_form_username"><?=string_change_case(__('username'), 'initials')?></label>
+              <input id="login_form_username" name="login_form_username" class="indiv" type="text" value="">
             </div>
 
             <div class="padding_bot">
@@ -789,7 +789,7 @@ $javascripts .= '
           <?=__link('pages/admin/ban', __('submenu_admin_ban'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/admin/user_rename', __('submenu_admin_nickname'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/admin/user_rename', __('submenu_admin_username'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_admin_password'), 'header_submenu_link text_blue', 1, $path);?>

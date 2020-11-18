@@ -97,7 +97,7 @@ if(!$ban_log)
       </td>
       <?php } ?>
       <td>
-        <?=__link('todo_link?id='.$ban_log['ip_bans'][$i]['id'], $ban_log['ip_bans'][$i]['nickname'])?>
+        <?=__link('todo_link?id='.$ban_log['ip_bans'][$i]['id'], $ban_log['ip_bans'][$i]['username'])?>
       </td>
     </tr>
     <?php } ?>

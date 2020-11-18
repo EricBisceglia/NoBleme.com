@@ -1038,10 +1038,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
       <tr>
         <td class="align_right smallglow">
-          user_get_nickname()
+          user_get_username()
         </td>
         <td class="align_left">
-          Returns a user's nickname from their id.
+          Returns a user's username from their id.
         </td>
       </tr>
       <tr>
@@ -1203,10 +1203,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td class="align_right smallglow">
-          user_generate_random_nickname()
+          user_generate_random_username()
         </td>
         <td class="align_left">
-          Generates a random nickname for a guest.
+          Generates a random username for a guest.
         </td>
       </tr>
 

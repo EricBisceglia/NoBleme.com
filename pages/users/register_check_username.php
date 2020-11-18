@@ -45,11 +45,11 @@ $username_exists = user_check_username($check_username);
 
 <?php if($username_is_illegal) { ?>
 
-<label class="red"><?=__('users_register_form_nickname_is_illegal')?></label>
+<label class="red"><?=__('users_register_form_username_is_illegal')?></label>
 
 <?php } else if($username_exists) { ?>
 
-<label class="red"><?=__('users_register_form_nickname_exists')?></label>
+<label class="red"><?=__('users_register_form_username_exists')?></label>
 
 <?php } else { ?>
 

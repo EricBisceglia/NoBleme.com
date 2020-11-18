@@ -37,14 +37,14 @@ function admin_account_deactivate( $username )
   $username_raw = $username;
   $username     = sanitize($username, 'string');
   $timestamp    = sanitize(time(), 'int', 0);
-  $mod_nick_raw = user_get_nickname();
+  $mod_nick_raw = user_get_username();
 
   // Error: No username provided
   if(!$username)
     return __('admin_deactivate_error_username');
 
   // Look for the user id
-  $delete_id = sanitize(database_entry_exists('users', 'nickname', $username), 'int', 0);
+  $delete_id = sanitize(database_entry_exists('users', 'username', $username), 'int', 0);
 
   // Error: User not found
   if(!$delete_id)
@@ -65,8 +65,8 @@ function admin_account_deactivate( $username )
   query(" UPDATE  users
           SET     users.is_deleted        = 1             ,
                   users.deleted_at        = '$timestamp'  ,
-                  users.deleted_nickname  = '$username'   ,
-                  users.nickname          = '$new_username'
+                  users.deleted_username  = '$username'   ,
+                  users.username          = '$new_username'
           WHERE   users.id                = '$delete_id'  ");
 
   // Activity log
@@ -101,7 +101,7 @@ function admin_account_reactivate( $user_id )
 
   // Sanitize and prepare the data
   $user_id        = sanitize($user_id, 'int', 0);
-  $admin_nick_raw = user_get_nickname();
+  $admin_nick_raw = user_get_username();
 
   // Error: No ID provided
   if(!$user_id)
@@ -111,8 +111,8 @@ function admin_account_reactivate( $user_id )
   if(!database_row_exists('users', $user_id))
     return __('admin_reactivate_no_user');
 
-  // Fetch the user's old nickname
-  $duser = mysqli_fetch_array(query(" SELECT  users.deleted_nickname AS 'u_nick'
+  // Fetch the user's old username
+  $duser = mysqli_fetch_array(query(" SELECT  users.deleted_username AS 'u_nick'
                                       FROM    users
                                       WHERE   users.id = '$user_id' "));
   $username_raw = $duser['u_nick'];
@@ -122,8 +122,8 @@ function admin_account_reactivate( $user_id )
   query(" UPDATE  users
           SET     users.is_deleted        = 0           ,
                   users.deleted_at        = 0           ,
-                  users.deleted_nickname  = ''          ,
-                  users.nickname          = '$username'
+                  users.deleted_username  = ''          ,
+                  users.username          = '$username'
           WHERE   users.id                = '$user_id'  ");
 
   // Activity log
@@ -145,7 +145,7 @@ function admin_account_reactivate( $user_id )
  *
  * @param   string  Username to check for availability and legality.
  *
- * @return  array   Array containing whether the nickname is available and legal, and an error message if not.
+ * @return  array   Array containing whether the username is available and legal, and an error message if not.
  */
 
 function admin_account_check_availability( $username )
@@ -163,21 +163,21 @@ function admin_account_check_availability( $username )
   // Prepare the returned array
   $return['valid'] = 0;
 
-  // Error: Nickname too short
+  // Error: username too short
   if(mb_strlen($username) < 3)
   {
     $return['error'] = __('admin_rename_error_short');
     return $return;
   }
 
-  // Error: Nickname too long
+  // Error: username too long
   if(mb_strlen($username) > 15)
   {
     $return['error'] = __('admin_rename_error_long');
     return $return;
   }
 
-  // Error: Special characters in nickname
+  // Error: Special characters in username
   if(!preg_match("/^[a-zA-Z0-9]+$/", $username))
   {
     $return['error'] = __('admin_rename_error_characters');
@@ -198,7 +198,7 @@ function admin_account_check_availability( $username )
     return $return;
   }
 
-  // No error: The nickname is valid
+  // No error: The username is valid
   $return['valid'] = 1;
   return $return;
 }
@@ -230,14 +230,14 @@ function admin_account_rename(  $username     ,
   $username         = sanitize($username, 'string');
   $new_username_raw = $new_username;
   $new_username     = sanitize($username, 'string');
-  $mod_nick_raw     = user_get_nickname();
+  $mod_nick_raw     = user_get_username();
 
   // Error: No username provided
   if(!$username_raw || !$new_username_raw)
     return __('admin_deactivate_error_username');
 
   // Look for the user id
-  $user_id = sanitize(database_entry_exists('users', 'nickname', $username), 'int', 0);
+  $user_id = sanitize(database_entry_exists('users', 'username', $username), 'int', 0);
 
   // Error: User not found
   if(!$user_id)
@@ -254,7 +254,7 @@ function admin_account_rename(  $username     ,
 
   // Rename the users
   query(" UPDATE  users
-          SET     users.nickname  = '$new_username'
+          SET     users.username  = '$new_username'
           WHERE   users.id        = '$user_id' ");
 
   // Activity log

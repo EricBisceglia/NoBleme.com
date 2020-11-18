@@ -371,8 +371,8 @@ ___('yyyyddmm',   'FR', "AAAA-MM-JJ");
 
 
 // Generic user related terms
-___('nickname', 'EN', "username");
-___('nickname', 'FR', "pseudonyme");
+___('username', 'EN', "username");
+___('username', 'FR', "pseudonyme");
 ___('password', 'EN', "password");
 ___('password', 'FR', "mot de passe");
 ___('user',     'EN', "user");
@@ -722,8 +722,8 @@ ___('submenu_user_edit_email',        'EN', "Change my e-mail");
 ___('submenu_user_edit_email',        'FR', "Changer d'e-mail");
 ___('submenu_user_edit_password',     'EN', "Change my password");
 ___('submenu_user_edit_password',     'FR', "Changer de mot de passe");
-___('submenu_user_edit_nickname',     'EN', "Change my username");
-___('submenu_user_edit_nickname',     'FR', "Changer de pseudonyme");
+___('submenu_user_edit_username',     'EN', "Change my username");
+___('submenu_user_edit_username',     'FR', "Changer de pseudonyme");
 ___('submenu_user_edit_delete',       'EN', "Delete my account");
 ___('submenu_user_edit_delete',       'FR', "Supprimer mon compte");
 
@@ -741,8 +741,8 @@ ___('submenu_admin_users',          'EN', "User management");
 ___('submenu_admin_users',          'FR', "Gestion des membres");
 ___('submenu_admin_ban',            'EN', "Banned users management");
 ___('submenu_admin_ban',            'FR', "Gestion des bannissements");
-___('submenu_admin_nickname',       'EN', "Change a username");
-___('submenu_admin_nickname',       'FR', "Modifier un pseudonyme");
+___('submenu_admin_username',       'EN', "Change a username");
+___('submenu_admin_username',       'FR', "Modifier un pseudonyme");
 ___('submenu_admin_password',       'EN', "Change a password");
 ___('submenu_admin_password',       'FR', "Modifier un mot de passe");
 ___('submenu_admin_rights',         'EN', "User access rights");
@@ -815,8 +815,8 @@ ___('login_form_form_register', 'FR', "INSCRIPTION");
 
 
 // Error messages
-___('login_form_error_no_nickname',         'EN', "You must specify a username");
-___('login_form_error_no_nickname',         'FR', "Vous devez saisir un pseudonyme");
+___('login_form_error_no_username',         'EN', "You must specify a username");
+___('login_form_error_no_username',         'FR', "Vous devez saisir un pseudonyme");
 ___('login_form_error_no_password',         'EN', "You must specify a password");
 ___('login_form_error_no_password',         'FR', "Vous devez saisir un mot de passe");
 ___('login_form_error_bruteforce',          'EN', "You are trying to log in too often, please wait 10 minutes before your next attempt");

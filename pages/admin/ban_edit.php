@@ -74,8 +74,8 @@ if(isset($_POST['admin_ban_edit_submit']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch data about the user's ban
 
-// Get the user's nickname and some details regarding the ban
-$ban_username = user_get_nickname($user_id);
+// Get the user's username and some details regarding the ban
+$ban_username = user_get_username($user_id);
 $ban_details  = user_ban_details($user_id);
 
 // Hide the french ban justification in the english interface
@@ -104,7 +104,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <fieldset>
 
       <div class="smallpadding_bot">
-        <label for="admin_ban_edit_nick"><?=__('admin_ban_add_nickname')?></label>
+        <label for="admin_ban_edit_nick"><?=__('admin_ban_add_username')?></label>
         <input class="indiv" type="text" id="admin_ban_edit_nick" name="admin_ban_edit_nick" value="<?=$ban_username?>" disabled>
       </div>
 

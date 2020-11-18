@@ -22,12 +22,12 @@ page_must_be_fetched_dynamically();
 // Autocompletion
 
 // Fetch the postdata
-$autocomplete_nickname  = form_fetch_element('autocomplete_nickname', '');
+$autocomplete_username  = form_fetch_element('autocomplete_username', '');
 $autocomplete_datalist  = form_fetch_element('autocomplete_datalist', '');
 $autocomplete_type      = form_fetch_element('autocomplete_type', '');
 
-// Autocomplete the nickname
-$autocomplete_data = user_autocomplete_nickname(  $autocomplete_nickname  ,
+// Autocomplete the username
+$autocomplete_data = user_autocomplete_username(  $autocomplete_username  ,
                                                   $autocomplete_type      );
 
 

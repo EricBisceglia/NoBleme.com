@@ -87,7 +87,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <thead>
       <th>
-        <?=string_change_case(__('nickname'), 'uppercase')?>
+        <?=string_change_case(__('username'), 'uppercase')?>
       </th>
       <th>
         <?=__('users_online_activity')?>
@@ -108,9 +108,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <td class="align_center<?=$userlist[$i]['css']?>">
           <?php } ?>
             <?php if($userlist[$i]['type'] == 'user') { ?>
-            <?=__link('todo_link/user?id='.$userlist[$i]['id'], $userlist[$i]['nickname'], $userlist[$i]['css'])?>
+            <?=__link('todo_link/user?id='.$userlist[$i]['id'], $userlist[$i]['username'], $userlist[$i]['css'])?>
             <?php } else { ?>
-            <?=$userlist[$i]['nickname']?>
+            <?=$userlist[$i]['username']?>
             <?php } ?>
             <?php if($is_admin && $userlist[$i]['type'] == 'guest') { ?>
             <div class="tooltip">

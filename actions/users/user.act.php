@@ -15,7 +15,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_check_username                 Checks if a username currently exists in the database.                       */
 /*  user_check_username_illegality      Checks if a username is illegal.                                             */
 /*                                                                                                                   */
-/*  user_autocomplete_nickname          Autocompletes a nickname.                                                    */
+/*  user_autocomplete_username          Autocompletes a username.                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -85,8 +85,8 @@ function user_list( $sort_by          = ''    ,
                               users.id                    AS 'u_id'             ,
                               users.is_deleted            AS 'u_deleted'        ,
                               users.deleted_at            AS 'u_deleted_at'     ,
-                              users.deleted_nickname      AS 'u_deleted_nick'   ,
-                              users.nickname              AS 'u_nick'           ,
+                              users.deleted_username      AS 'u_deleted_nick'   ,
+                              users.username              AS 'u_nick'           ,
                               ''                          AS 'u_guest_name_en'  ,
                               ''                          AS 'u_guest_name_fr'  ,
                               users.is_administrator      AS 'u_admin'          ,
@@ -122,9 +122,9 @@ function user_list( $sort_by          = ''    ,
   if($search_id)
     $qusers .= "    AND       users.id                          = '$search_id'          ";
   if($search_username)
-    $qusers .= "    AND       users.nickname                 LIKE '%$search_username%'  ";
+    $qusers .= "    AND       users.username                 LIKE '%$search_username%'  ";
   if($search_del_user)
-    $qusers .= "    AND       users.deleted_nickname         LIKE '%$search_del_user%'  ";
+    $qusers .= "    AND       users.deleted_username         LIKE '%$search_del_user%'  ";
 
   // Sort the users
   if(!$include_guests)
@@ -134,9 +134,9 @@ function user_list( $sort_by          = ''    ,
     else if($sort_by == 'banned')
       $qusers .= "  ORDER BY  users.is_banned_until   ASC   ";
     else if($sort_by == 'username')
-      $qusers .= "  ORDER BY  users.nickname          ASC   ";
+      $qusers .= "  ORDER BY  users.username          ASC   ";
     else if($sort_by == 'deleted_username')
-      $qusers .= "  ORDER BY  users.deleted_nickname  ASC   ";
+      $qusers .= "  ORDER BY  users.deleted_username  ASC   ";
     else if($sort_by == 'deleted')
       $qusers .= "  ORDER BY  users.deleted_at        DESC  ";
     else
@@ -219,7 +219,7 @@ function user_list( $sort_by          = ''    ,
     $data[$i]['del_nick']   = sanitize_output($row['u_deleted_nick']);
     $temp                   = ($lang == 'EN') ? $row['u_guest_name_en'] : $row['u_guest_name_fr'];
     $temp                   = ($row['data_type'] == 'guest') ? $temp : $row['u_nick'];
-    $data[$i]['nickname']   = sanitize_output($temp);
+    $data[$i]['username']   = sanitize_output($temp);
     $data[$i]['activity']   = time_since($row['u_activity']);
     $temp                   = ($lang == 'EN') ? $row['u_last_page_en'] : $row['u_last_page_fr'];
     $data[$i]['last_page']  = sanitize_output(string_truncate($temp, 50, '...'));
@@ -329,7 +329,7 @@ function user_check_username($username)
   // Look for the username
   $dusername = mysqli_fetch_array(query(" SELECT  users.id  AS 'u_id'
                                           FROM    users
-                                          WHERE   users.nickname LIKE '$username' "));
+                                          WHERE   users.username LIKE '$username' "));
 
   // Return the result
   return isset($dusername['u_id']);
@@ -364,15 +364,15 @@ function user_check_username_illegality($username)
 
 
 /**
- * Autocompletes a nickname.
+ * Autocompletes a username.
  *
  * @param   string      $input              The input that needs to be autocompleted.
  * @param   string|null $type   (OPTIONAL)  The type of autocomplete query we're making (eg. 'normal', 'ban', 'unban')
  *
- * @return  array                           An array containing all the data required to autocomplete the nickname.
+ * @return  array                           An array containing all the data required to autocomplete the username.
  */
 
-function user_autocomplete_nickname(  $input          ,
+function user_autocomplete_username(  $input          ,
                                       $type   = NULL  )
 {
   // Sanitize the input
@@ -390,18 +390,18 @@ function user_autocomplete_nickname(  $input          ,
   else if($type == 'unban')
     $where .= ' AND users.is_banned_until > 0 ';
 
-  // Look for nicknames to add to autocompletion
-  $qnicknames = query(" SELECT    users.nickname AS 'u_nick'
+  // Look for usernames to add to autocompletion
+  $qusernames = query(" SELECT    users.username AS 'u_nick'
                         FROM      users
                         WHERE     is_deleted      =     0
-                        AND       users.nickname  LIKE  '$input%'
+                        AND       users.username  LIKE  '$input%'
                                   $where
-                        ORDER BY  users.nickname  ASC
+                        ORDER BY  users.username  ASC
                         LIMIT     10 ");
 
   // Prepare the returned data
-  for($i = 0; $dnicknames = mysqli_fetch_array($qnicknames); $i++)
-    $data[$i]['nick'] = sanitize_output($dnicknames['u_nick']);
+  for($i = 0; $dusernames = mysqli_fetch_array($qusernames); $i++)
+    $data[$i]['nick'] = sanitize_output($dusernames['u_nick']);
 
   // Add the number of rows to the data
   $data['rows'] = $i;

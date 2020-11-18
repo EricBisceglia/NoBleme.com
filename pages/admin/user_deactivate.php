@@ -22,7 +22,7 @@ $page_title_en    = "Delete an account";
 $page_title_fr    = "Supprimer un compte";
 
 // Extra JS
-$js = array('admin/user_management', 'users/autocomplete_nickname');
+$js = array('admin/user_management', 'users/autocomplete_username');
 
 
 
@@ -81,8 +81,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <form method="POST">
     <fieldset>
 
-      <label for="admin_deactivate_username"><?=string_change_case(__('nickname'), 'initials')?></label>
-      <input class="indiv" type="text" id="admin_deactivate_username" name="admin_deactivate_username" value="" autocomplete="off" list="admin_deactivate_username_list" onkeyup="autocomplete_nickname('admin_deactivate_username', 'admin_deactivate_username_list_parent', './../users/autocomplete_nickname', 'admin_deactivate_username_list', 'normal');">
+      <label for="admin_deactivate_username"><?=string_change_case(__('username'), 'initials')?></label>
+      <input class="indiv" type="text" id="admin_deactivate_username" name="admin_deactivate_username" value="" autocomplete="off" list="admin_deactivate_username_list" onkeyup="autocomplete_username('admin_deactivate_username', 'admin_deactivate_username_list_parent', './../users/autocomplete_username', 'admin_deactivate_username_list', 'normal');">
       <div id="admin_deactivate_username_list_parent">
         <datalist id="admin_deactivate_username_list">
           <option value=" ">&nbsp;</option>
@@ -131,7 +131,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>" onclick="admin_reactivate_search('id');">
         </th>
         <th>
-          <?=string_change_case(__('nickname'), 'uppercase')?>
+          <?=string_change_case(__('username'), 'uppercase')?>
           <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>" onclick="admin_reactivate_search('deleted_username');">
         </th>
         <th>

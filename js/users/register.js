@@ -22,20 +22,20 @@ function user_register_submit()
   form_failed = 0;
 
   // Ensure every text field is filled up
-  form_failed = (!form_require_field("register_nickname", "label_register_nickname")) ? 1 : form_failed;
+  form_failed = (!form_require_field("register_username", "label_register_username")) ? 1 : form_failed;
   form_failed = (!form_require_field("register_password_1", "label_register_password_1")) ? 1 : form_failed;
   form_failed = (!form_require_field("register_password_2", "label_register_password_2")) ? 1 : form_failed;
   form_failed = (!form_require_field("register_captcha", "label_register_captcha")) ? 1 : form_failed;
 
   // Ensure minimum/maximum string length are respected
-  if(document.getElementById("register_nickname").value.length < 3)
+  if(document.getElementById("register_username").value.length < 3)
   {
-    document.getElementById("label_register_nickname").classList.add('red');
+    document.getElementById("label_register_username").classList.add('red');
     form_failed = 1;
   }
-  if(document.getElementById("register_nickname").value.length > 15)
+  if(document.getElementById("register_username").value.length > 15)
   {
-    document.getElementById("label_register_nickname").classList.add('red');
+    document.getElementById("label_register_username").classList.add('red');
     form_failed = 1;
   }
   if(document.getElementById("register_password_1").value.length < 8)
@@ -102,30 +102,30 @@ function user_register_submit()
 
 function user_register_validate_username()
 {
-  // Define the nickname validation regular expression
+  // Define the username validation regular expression
   regex_username = new RegExp("^[a-zA-Z0-9]{3,15}$");
 
-  // Fetch the nickname
-  register_username = document.getElementById('register_nickname').value;
+  // Fetch the username
+  register_username = document.getElementById('register_username').value;
 
-  // If the nickname is valid, reset the label to normal
+  // If the username is valid, reset the label to normal
   if (regex_username.test(register_username))
   {
     // Reset the label to normal
-    document.getElementById("label_register_nickname").classList.remove('red');
+    document.getElementById("label_register_username").classList.remove('red');
 
     // Check if the username is already taken and display the warning container
-    fetch_page('register_check_username', 'register_nickname_error', 'register_username='+fetch_sanitize(register_username), document.getElementById("register_nickname_error").classList.remove('hidden'));
+    fetch_page('register_check_username', 'register_username_error', 'register_username='+fetch_sanitize(register_username), document.getElementById("register_username_error").classList.remove('hidden'));
   }
 
-  // If the nickname is invalid, show it
+  // If the username is invalid, show it
   else
   {
     // Make the label red
-    document.getElementById("label_register_nickname").classList.add('red');
+    document.getElementById("label_register_username").classList.add('red');
 
-    // Hide the nickname already taken warning container
-    document.getElementById("register_nickname_error").classList.add('hidden');
+    // Hide the username already taken warning container
+    document.getElementById("register_username_error").classList.add('hidden');
   }
 }
 

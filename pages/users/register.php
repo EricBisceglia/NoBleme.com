@@ -35,10 +35,10 @@ $js   = array('users/register');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Registration attempt
 
-if(isset($_POST['register_nickname']))
+if(isset($_POST['register_username']))
 {
   // Attempt to create the account
-  $user_register_attempt = user_create_account( form_fetch_element('register_nickname')   ,
+  $user_register_attempt = user_create_account( form_fetch_element('register_username')   ,
                                                 form_fetch_element('register_password_1') ,
                                                 form_fetch_element('register_email')      ,
                                                 form_fetch_element('register_password_2') ,
@@ -56,7 +56,7 @@ if(isset($_POST['register_nickname']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Form values
 
-$register_nickname    = isset($_POST['register_nickname'])    ? sanitize_output($_POST['register_nickname'])      : '';
+$register_username    = isset($_POST['register_username'])    ? sanitize_output($_POST['register_username'])      : '';
 $register_password_1  = isset($_POST['register_password_1'])  ? sanitize_output($_POST['register_password_1'])    : '';
 $register_password_2  = isset($_POST['register_password_2'])  ? sanitize_output($_POST['register_password_2'])    : '';
 $register_email       = isset($_POST['register_email'])       ? sanitize_output($_POST['register_email'])         : '';
@@ -104,11 +104,11 @@ $register_check_q4[2] = (isset($_POST['register_question_4']) && $_POST['registe
     <fieldset>
 
       <div class="padding_bot">
-        <label for="register_nickname" id="label_register_nickname"><?=__('users_register_form_nickname')?></label>
-        <div id="register_nickname_error" class="hidden">
+        <label for="register_username" id="label_register_username"><?=__('users_register_form_username')?></label>
+        <div id="register_username_error" class="hidden">
           <label class="hidden">&nbsp;</label>
         </div>
-        <input id="register_nickname" name="register_nickname" class="indiv" type="text" value="<?=$register_nickname?>" maxlength="15" onkeyup="user_register_validate_username();">
+        <input id="register_username" name="register_username" class="indiv" type="text" value="<?=$register_username?>" maxlength="15" onkeyup="user_register_validate_username();">
       </div>
 
       <div class="padding_bot">

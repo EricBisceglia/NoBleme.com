@@ -28,7 +28,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * Bans a user.
  *
  * @param   int         $banner_id                  The id of the moderator ordering the ban.
- * @param   string      $nickname                   The nickname of the user to ban.
+ * @param   string      $username                   The username of the user to ban.
  * @param   int         $ban_length                 The ban length.
  * @param   string|null $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
  * @param   string|null $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
@@ -37,7 +37,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  */
 
 function admin_ban_create(  $banner_id            ,
-                            $nickname             ,
+                            $username             ,
                             $ban_length           ,
                             $ban_reason_en  = ''  ,
                             $ban_reason_fr  = ''  )
@@ -50,25 +50,25 @@ function admin_ban_create(  $banner_id            ,
 
   // Prepare and sanitize the data
   $path                 = root_path();
-  $banned_nickname_raw  = $nickname;
+  $banned_username_raw  = $username;
   $ban_reason_en_raw    = $ban_reason_en;
   $ban_reason_fr_raw    = $ban_reason_fr;
-  $banner_nickname_raw  = user_get_nickname($banner_id);
+  $banner_username_raw  = user_get_username($banner_id);
   $banner_id            = sanitize($banner_id, 'int', 0);
-  $nickname             = sanitize($nickname, 'string');
+  $username             = sanitize($username, 'string');
   $ban_length           = sanitize($ban_length, 'int', 0, 3650);
   $ban_reason_en        = sanitize($ban_reason_en, 'string');
   $ban_reason_fr        = sanitize($ban_reason_fr, 'string');
   $ban_start            = sanitize(time(), 'int');
-  $banned_user_id       = sanitize(database_entry_exists('users', 'nickname', $nickname), 'int');
-  $banned_nickname      = user_get_nickname($banned_user_id);
+  $banned_user_id       = sanitize(database_entry_exists('users', 'username', $username), 'int');
+  $banned_username      = user_get_username($banned_user_id);
   $banned_user_language = user_get_language($banned_user_id);
 
-  // Error: No nickname specified
-  if(mb_strlen($nickname) < 3)
-    return __('admin_ban_add_error_no_nickname');
+  // Error: No username specified
+  if(mb_strlen($username) < 3)
+    return __('admin_ban_add_error_no_username');
 
-  // Error: Nickname does not exist
+  // Error: username does not exist
   if(!$banned_user_id)
     return __('admin_ban_add_error_wrong_user');
 
@@ -110,11 +110,11 @@ function admin_ban_create(  $banner_id            ,
           WHERE   users.id                    = '$banned_user_id' ");
 
   // Schedule the unbanning
-  schedule_task('users_unban', $banned_user_id, $ban_end, $nickname);
+  schedule_task('users_unban', $banned_user_id, $ban_end, $username);
 
   // Activity logs
-  log_activity('users_banned', 0, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_user_id, $banned_nickname);
-  $modlog = log_activity('users_banned', 1, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_user_id, $banned_nickname, $banner_nickname_raw);
+  log_activity('users_banned', 0, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_user_id, $banned_username);
+  $modlog = log_activity('users_banned', 1, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_user_id, $banned_username, $banner_username_raw);
 
   // Detailed activity logs
   if($ban_reason_en_raw)
@@ -146,9 +146,9 @@ function admin_ban_create(  $banner_id            ,
   $ban_extra_en     = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '';
   $ban_extra_fr     = ($ban_reason_fr_raw) ? '('.$ban_reason_fr_raw.')' : '';
   $ban_extra_mod    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
-  irc_bot_send_message("$banned_nickname_raw has been banned from the website $ban_duration_en[$ban_length] $ban_extra_en", 'english');
-  irc_bot_send_message("$banned_nickname_raw s'est fait bannir du site $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
-  irc_bot_send_message("$banner_nickname_raw has banned $banned_nickname_raw $ban_duration_en[$ban_length] $ban_extra_mod - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
+  irc_bot_send_message("$banned_username_raw has been banned from the website $ban_duration_en[$ban_length] $ban_extra_en", 'english');
+  irc_bot_send_message("$banned_username_raw s'est fait bannir du site $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
+  irc_bot_send_message("$banner_username_raw has banned $banned_username_raw $ban_duration_en[$ban_length] $ban_extra_mod - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
 }
 
 
@@ -181,13 +181,13 @@ function admin_ban_edit(  $banner_id            ,
   // Prepare and sanitize the data
   $path                 = root_path();
   $banned_id            = sanitize($banned_id, 'int', 0);
-  $banned_nickname_raw  = user_get_nickname($banned_id);
+  $banned_username_raw  = user_get_username($banned_id);
   $ban_reason_en_raw    = $ban_reason_en;
   $ban_reason_fr_raw    = $ban_reason_fr;
   $ban_reason_en        = sanitize($ban_reason_en, 'string');
   $ban_reason_fr        = sanitize($ban_reason_fr, 'string');
   $banner_id            = sanitize($banner_id, 'int', 0);
-  $banner_nickname_raw  = user_get_nickname($banner_id);
+  $banner_username_raw  = user_get_username($banner_id);
   $ban_length           = sanitize($ban_length, 'int', 0, 3650);
 
   // Do nothing if user does not exist
@@ -240,12 +240,12 @@ function admin_ban_edit(  $banner_id            ,
 
   // Generate activity logs if needed
   if($ban_length)
-    log_activity('users_banned_edit', 0, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_id, $banned_nickname_raw);
+    log_activity('users_banned_edit', 0, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_id, $banned_username_raw);
 
   // Generate a modlog and detailed activity logs if needed
   if($ban_length || $ban_reason_en_raw != $dban['b_reason_en'] || $ban_reason_fr_raw != $dban['b_reason_fr'])
   {
-    $modlog = log_activity('users_banned_edit', 1, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_id, $banned_nickname_raw, $banner_nickname_raw);
+    $modlog = log_activity('users_banned_edit', 1, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_id, $banned_username_raw, $banner_username_raw);
     if($ban_reason_en_raw != $dban['b_reason_en'])
       log_activity_details($modlog, 'New ban reason (EN)', 'Nouvelle raison du ban (EN)', $dban['b_reason_en'], $ban_reason_en_raw);
     if($ban_reason_fr_raw != $dban['b_reason_fr'])
@@ -273,9 +273,9 @@ function admin_ban_edit(  $banner_id            ,
     $ban_extra_en     = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '';
     $ban_extra_fr     = ($ban_reason_fr_raw) ? '('.$ban_reason_fr_raw.')' : '';
     $ban_extra_mod    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
-    irc_bot_send_message("$banned_nickname_raw has had their ban updated to $ban_duration_en[$ban_length] $ban_extra_en", 'english');
-    irc_bot_send_message("La date de fin du bannissement de $banned_nickname_raw a changé : $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
-    irc_bot_send_message("$banner_nickname_raw edited the ban of $banned_nickname_raw $ban_duration_mod[$ban_length] $ban_extra_mod - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
+    irc_bot_send_message("$banned_username_raw has had their ban updated to $ban_duration_en[$ban_length] $ban_extra_en", 'english');
+    irc_bot_send_message("La date de fin du bannissement de $banned_username_raw a changé : $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
+    irc_bot_send_message("$banner_username_raw edited the ban of $banned_username_raw $ban_duration_mod[$ban_length] $ban_extra_mod - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
   }
 
   // Private message to the user if the ban's duration has been changed
@@ -315,13 +315,13 @@ function admin_ban_delete(  $unbanner_id            ,
   // Prepare and sanitize the data
   $path                   = root_path();
   $unbanned_id            = sanitize($unbanned_id, 'int', 0);
-  $unbanned_nickname_raw  = user_get_nickname($unbanned_id);
+  $unbanned_username_raw  = user_get_username($unbanned_id);
   $unban_reason_en_raw    = $unban_reason_en;
   $unban_reason_fr_raw    = $unban_reason_fr;
   $unban_reason_en        = sanitize($unban_reason_en, 'string');
   $unban_reason_fr        = sanitize($unban_reason_fr, 'string');
   $unbanner_id            = sanitize($unbanner_id, 'int', 0);
-  $unbanner_nickname_raw  = user_get_nickname($unbanner_id);
+  $unbanner_username_raw  = user_get_username($unbanner_id);
 
   // Do nothing if user does not exist
   if(!database_entry_exists('users', 'id', $unbanned_id))
@@ -358,7 +358,7 @@ function admin_ban_delete(  $unbanner_id            ,
   $days_left    = time_days_elapsed(time(), $dban['b_end'], 1);
 
   // Generate a mod log with some detailed activity logs
-  $modlog = log_activity('users_banned_delete', 1, 'ENFR', 0, $unban_reason_en_raw, $unban_reason_fr_raw, 0, $unbanned_id, $unbanned_nickname_raw, $unbanner_nickname_raw);
+  $modlog = log_activity('users_banned_delete', 1, 'ENFR', 0, $unban_reason_en_raw, $unban_reason_fr_raw, 0, $unbanned_id, $unbanned_username_raw, $unbanner_username_raw);
   log_activity_details($modlog, 'Days left in the ban', 'Jours restants au bannissement', $days_left);
   log_activity_details($modlog, 'Days served before the unbanning', 'Jours purgés avant le débannissement', $days_served);
   if($unban_reason_en_raw)
@@ -377,7 +377,7 @@ function admin_ban_delete(  $unbanner_id            ,
 
   // IRC bot message
   $unban_reason_irc = ($unban_reason_en_raw) ? '('.$unban_reason_en_raw.')' : '';
-  irc_bot_send_message("$unbanner_nickname_raw has unbanned $unbanned_nickname_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'mod');
+  irc_bot_send_message("$unbanner_username_raw has unbanned $unbanned_username_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'mod');
 
   // Private message to let the user know they have been manually unbanned
   $unbanned_user_language = user_get_language($unbanned_id);
@@ -394,7 +394,7 @@ function admin_ban_delete(  $unbanner_id            ,
  * @param   string        $ip_address                 The IP address to ban.
  * @param   int           $ban_length                 The ban length.
  * @param   int|null      $severity       (OPTIONAL)  Whether the IP ban will be standard or full.
- * @param   string|null   $nickname       (OPTIONAL)  A user whose IP should be banned if no IP is specified.
+ * @param   string|null   $username       (OPTIONAL)  A user whose IP should be banned if no IP is specified.
  * @param   string|null   $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
  * @param   string|null   $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
  *
@@ -405,7 +405,7 @@ function admin_ip_ban_create( $banner_id            ,
                               $ip_address           ,
                               $ban_length           ,
                               $severity       = 0   ,
-                              $nickname       = ''  ,
+                              $username       = ''  ,
                               $ban_reason_en  = ''  ,
                               $ban_reason_fr  = ''  )
 {
@@ -419,27 +419,27 @@ function admin_ip_ban_create( $banner_id            ,
   $timestamp          = sanitize(time(), 'int', 0);
   $banner_id          = sanitize($banner_id, 'int', 0);
   $banner_ip          = sanitize($_SERVER['REMOTE_ADDR'], 'string');
-  $banner_nickname    = user_get_nickname($banner_id);
+  $banner_username    = user_get_username($banner_id);
   $ip_address_raw     = $ip_address;
   $ip_address         = sanitize($ip_address, 'string');
   $ban_length         = sanitize($ban_length, 'int', 0, 3650);
   $severity           = sanitize($severity, 'int', 0, 1);
-  $nickname           = sanitize($nickname, 'string');
+  $username           = sanitize($username, 'string');
   $ban_reason_en_raw  = $ban_reason_en;
   $ban_reason_fr_raw  = $ban_reason_fr;
   $ban_reason_en      = sanitize($ban_reason_en, 'string');
   $ban_reason_fr      = sanitize($ban_reason_fr, 'string');
 
-  // Error: No IP or nickname specified
-  if(mb_strlen($nickname) < 3 && !$ip_address)
+  // Error: No IP or username specified
+  if(mb_strlen($username) < 3 && !$ip_address)
     return __('admin_ban_add_error_no_ip');
 
-  // Error: Both IP and nickname have been specified
-  if($nickname && $ip_address)
+  // Error: Both IP and username have been specified
+  if($username && $ip_address)
     return __('admin_ban_add_error_ip_and_user');
 
   // Error: Cannot ban wildcard
-  if(!$nickname && $ip_address == '*')
+  if(!$username && $ip_address == '*')
     return __('admin_ban_add_error_wildcard');
 
   // Error: One wildcard maximum
@@ -447,7 +447,7 @@ function admin_ip_ban_create( $banner_id            ,
     return __('admin_ban_add_error_wildcards');
 
   // Error: must have certain characters
-  if(!$nickname && substr_count($ip_address, '.') < 3 && substr_count($ip_address, ':') < 3)
+  if(!$username && substr_count($ip_address, '.') < 3 && substr_count($ip_address, ':') < 3)
     return __('admin_ban_add_error_characters');
 
   // Determine when the ban ends
@@ -464,13 +464,13 @@ function admin_ip_ban_create( $banner_id            ,
   else
     return __('admin_ban_add_error_length');
 
-  // Retrieve the IP address from nickname if none was specified
-  if($nickname)
+  // Retrieve the IP address from username if none was specified
+  if($username)
   {
-    // Get the user's ID from their nickname
-    $banned_user_id = sanitize(database_entry_exists('users', 'nickname', $nickname), 'int');
+    // Get the user's ID from their username
+    $banned_user_id = sanitize(database_entry_exists('users', 'username', $username), 'int');
 
-    // Error: Nickname does not exist
+    // Error: username does not exist
     if(!$banned_user_id)
       return __('admin_ban_add_error_wrong_user');
 
@@ -541,7 +541,7 @@ function admin_ip_ban_create( $banner_id            ,
   schedule_task('users_unban_ip', $ip_ban_id, $ban_end, $ip_address);
 
   // Activity logs
-  $modlog = log_activity('users_banned_ip', 1, 'ENFR', $ip_ban_id, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, 0, $ip_address_raw, $banner_nickname);
+  $modlog = log_activity('users_banned_ip', 1, 'ENFR', $ip_ban_id, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, 0, $ip_address_raw, $banner_username);
 
   // Detailed activity logs
   if($ban_reason_en_raw)
@@ -562,8 +562,8 @@ function admin_ip_ban_create( $banner_id            ,
   // IRC bot message
   $ban_duration = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
   $ban_extra    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
-  irc_bot_send_message("$banner_nickname has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
-  irc_bot_send_message("$banner_nickname has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra - ".$GLOBALS['website_url']."pages/admin/ban#active", 'admin');
+  irc_bot_send_message("$banner_username has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
+  irc_bot_send_message("$banner_username has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra - ".$GLOBALS['website_url']."pages/admin/ban#active", 'admin');
 }
 
 
@@ -587,16 +587,16 @@ function admin_ip_ban_list_users( $banned_ip )
 
   // Fetch affeted users
   $qusers = query(" SELECT    users.id        AS 'u_id'   ,
-                              users.nickname  AS 'u_nick'
+                              users.username  AS 'u_nick'
                     FROM      users
                     WHERE     users.current_ip_address LIKE '$banned_ip'
-                    ORDER BY  users.nickname ASC ");
+                    ORDER BY  users.username ASC ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['u_id']);
-    $data[$i]['nickname'] = sanitize_output($row['u_nick']);
+    $data[$i]['username'] = sanitize_output($row['u_nick']);
   }
 
   // Add the number of rows to the data
@@ -713,8 +713,8 @@ function admin_ip_ban_delete( $ban_id                 ,
   schedule_task_delete('users_unban_ip', $ban_id);
 
   // Activity logs
-  $unbanner_nickname_raw = user_get_nickname($unbanner_id);
-  $modlog = log_activity('users_banned_ip_delete', 1, 'ENFR', $ban_id, $unban_reason_en_raw, $unban_reason_fr_raw, 0, 0, $banned_ip_raw, $unbanner_nickname_raw);
+  $unbanner_username_raw = user_get_username($unbanner_id);
+  $modlog = log_activity('users_banned_ip_delete', 1, 'ENFR', $ban_id, $unban_reason_en_raw, $unban_reason_fr_raw, 0, 0, $banned_ip_raw, $unbanner_username_raw);
 
   // Detailed activity logs
   log_activity_details($modlog, 'Days left in the ban', 'Jours restants au bannissement', $days_left);
@@ -736,8 +736,8 @@ function admin_ip_ban_delete( $ban_id                 ,
 
   // IRC bot message
   $unban_reason_irc = ($unban_reason_en_raw) ? '('.$unban_reason_en_raw.')' : '';
-  irc_bot_send_message("$unbanner_nickname_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'mod');
-  irc_bot_send_message("$unbanner_nickname_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'admin');
+  irc_bot_send_message("$unbanner_username_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'mod');
+  irc_bot_send_message("$unbanner_username_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'admin');
 }
 
 
@@ -825,11 +825,11 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
                             logs_bans.unban_reason_en   AS 'l_ureason_en'   ,
                             logs_bans.unban_reason_fr   AS 'l_ureason_fr'   ,
                             users_banned.id             AS 'banned_id'      ,
-                            users_banned.nickname       AS 'banned_nick'    ,
+                            users_banned.username       AS 'banned_nick'    ,
                             users_banner.id             AS 'banner_id'      ,
-                            users_banner.nickname       AS 'banner_nick'    ,
+                            users_banner.username       AS 'banner_nick'    ,
                             users_unbanner.id           AS 'unbanner_id'    ,
-                            users_unbanner.nickname     AS 'unbanner_nick'
+                            users_unbanner.username     AS 'unbanner_nick'
                   FROM      logs_bans
                   LEFT JOIN users AS users_banned   ON logs_bans.fk_banned_user       = users_banned.id
                   LEFT JOIN users AS users_banner   ON logs_bans.fk_banned_by_user    = users_banner.id
@@ -917,11 +917,11 @@ function admin_ban_logs_list( $sort_by  = 'banned'  ,
                           logs_bans.unban_reason_fr   AS 'l_ureason_fr' ,
                           logs_bans.is_a_total_ip_ban AS 'l_total_ban'  ,
                           users_banned.id             AS 'banned_id'    ,
-                          users_banned.nickname       AS 'banned_nick'  ,
+                          users_banned.username       AS 'banned_nick'  ,
                           users_banner.id             AS 'banner_id'    ,
-                          users_banner.nickname       AS 'banner_nick'  ,
+                          users_banner.username       AS 'banner_nick'  ,
                           users_unbanner.id           AS 'unbanner_id'  ,
-                          users_unbanner.nickname     AS 'unbanner_nick'
+                          users_unbanner.username     AS 'unbanner_nick'
                 FROM      logs_bans
                 LEFT JOIN users AS users_banned   ON logs_bans.fk_banned_user       = users_banned.id
                 LEFT JOIN users AS users_banner   ON logs_bans.fk_banned_by_user    = users_banner.id
@@ -934,17 +934,17 @@ function admin_ban_logs_list( $sort_by  = 'banned'  ,
   else if($search_status == 1)
     $qlogs .= " AND       logs_bans.unbanned_at         =     0                       ";
   if($search_username)
-    $qlogs .= " AND     ( users_banned.nickname         LIKE  '%$search_username%'
+    $qlogs .= " AND     ( users_banned.username         LIKE  '%$search_username%'
                 OR        logs_bans.banned_ip_address   LIKE  '%$search_username%' )  ";
   if($search_banner)
-    $qlogs .= " AND       users_banner.nickname         LIKE  '%$search_banner%'      ";
+    $qlogs .= " AND       users_banner.username         LIKE  '%$search_banner%'      ";
   if($search_unbanner)
-    $qlogs .= " AND       users_unbanner.nickname       LIKE  '%$search_unbanner%'    ";
+    $qlogs .= " AND       users_unbanner.username       LIKE  '%$search_unbanner%'    ";
 
   // Sort the data as requested
   if($sort_by == 'username')
     $qlogs .= " ORDER BY  logs_bans.banned_ip_address != '' ,
-                          users_banned.nickname       ASC   ,
+                          users_banned.username       ASC   ,
                           logs_bans.banned_ip_address ASC   ";
   else if($sort_by == 'unbanned')
     $qlogs .= " ORDER BY  logs_bans.unbanned_at       DESC  ";
@@ -962,7 +962,7 @@ function admin_ban_logs_list( $sort_by  = 'banned'  ,
   {
     $data[$i]['id']                 = $row['l_id'];
     $data[$i]['ban_type']           = ($row['banned_nick']) ? 'user' : 'ip_ban';
-    $data[$i]['nickname']           = sanitize_output($row['banned_nick']);
+    $data[$i]['username']           = sanitize_output($row['banned_nick']);
     $data[$i]['ip']                 = sanitize_output($row['l_ip']);
     $data[$i]['user_id']            = $row['banned_id'];
     $data[$i]['start']              = time_since($row['l_start']);

@@ -23,7 +23,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * No more than 10 login attempts for a specific user every 10 minutes (except 1 allowed attempt per unique IP).
  *
  * @param   string      $ip                     The IP adress of the user attempting to login.
- * @param   string      $nickname               The nickname the user is attempting to login with.
+ * @param   string      $username               The username the user is attempting to login with.
  * @param   string      $password               The password the user is attempting to login with.
  * @param   int|null    $remember_me  OPTIONAL  Whether the website's front should create a cookie to keep the user in.
  *
@@ -31,7 +31,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  */
 
 function user_authenticate( $ip               ,
-                            $nickname         ,
+                            $username         ,
                             $password         ,
                             $remember_me = 0  )
 {
@@ -40,14 +40,14 @@ function user_authenticate( $ip               ,
 
   // Sanitize the data
   $ip           = sanitize($ip, 'string');
-  $nickname     = sanitize($nickname, 'string');
+  $username     = sanitize($username, 'string');
   $password_raw = $password;
   $password     = sanitize($password, 'string');
   $timestamp    = sanitize(time(), 'int', 0);
 
-  // Error: No nickname specified
-  if(!$nickname)
-    return __('login_form_error_no_nickname');
+  // Error: No username specified
+  if(!$username)
+    return __('login_form_error_no_username');
 
   // Error: No password specified - allow passwordless users in dev mode though so that users can be made from fixtures
   if(!$password && !$GLOBALS['dev_mode'])
@@ -72,10 +72,10 @@ function user_authenticate( $ip               ,
   // Fetch the ID of the requested user
   $dfetch_user = mysqli_fetch_array(query(" SELECT  users.id          AS 'u_id'       ,
                                                     users.is_deleted  AS 'u_deleted'  ,
-                                                    users.nickname    AS 'u_nick'     ,
+                                                    users.username    AS 'u_nick'     ,
                                                     users.password    AS 'u_pass'
                                             FROM    users
-                                            WHERE   users.nickname LIKE '$nickname' "));
+                                            WHERE   users.username LIKE '$username' "));
 
   // If the user does not exist, log the bruteforce attempt and end the process here
   if(!isset($dfetch_user['u_id']))
@@ -164,7 +164,7 @@ function user_authenticate( $ip               ,
 /**
  * Accept or reject a user's registration attempt.
  *
- * @param   string      $nickname                   The nickname of the account to be created.
+ * @param   string      $username                   The username of the account to be created.
  * @param   string      $password                   The password of the account to be created.
  * @param   string      $email                      The e-mail address of the account to be created.
  * @param   string|null $password_check   OPTIONAL  The second entry of the password of the account to be created.
@@ -174,7 +174,7 @@ function user_authenticate( $ip               ,
  * @return  string|int                              Returns 1 if successfully registered, or a string in case of error.
  */
 
-function user_create_account( $nickname                 ,
+function user_create_account( $username                 ,
                               $password                 ,
                               $email                    ,
                               $password_check   = NULL  ,
@@ -186,17 +186,17 @@ function user_create_account( $nickname                 ,
 
   // Sanitize and prepare the data
   $path               = root_path();
-  $nickname_raw       = $nickname;
-  $nickname           = sanitize($nickname, 'string');
+  $username_raw       = $username;
+  $username           = sanitize($username, 'string');
   $password_raw       = $password;
   $password           = sanitize($password, 'string');
   $password_encrypted = sanitize(encrypt_data($password_raw), 'string');
   $email              = sanitize($email, 'string');
   $timestamp          = sanitize(time(), 'int', 0);
 
-  // Error: No nickname specified
-  if(!$nickname)
-    return __('users_register_error_no_nickname');
+  // Error: No username specified
+  if(!$username)
+    return __('users_register_error_no_username');
 
   // Error: No password specified
   if(!$password)
@@ -218,33 +218,33 @@ function user_create_account( $nickname                 ,
   if($captcha && ($captcha != $captcha_session))
     return __('users_register_error_captchas');
 
-  // Error: Nickname too short
-  if(mb_strlen($nickname) < 3)
-    return __('users_register_error_nickname_short');
+  // Error: username too short
+  if(mb_strlen($username) < 3)
+    return __('users_register_error_username_short');
 
-  // Error: Nickname too long
-  if(mb_strlen($nickname) > 15)
-    return __('users_register_error_nickname_long');
+  // Error: username too long
+  if(mb_strlen($username) > 15)
+    return __('users_register_error_username_long');
 
   // Error: Password too short
   if(mb_strlen($password) < 8)
     return __('users_register_error_password_short');
 
-  // Error: Special characters in nickname
-  if(!preg_match("/^[a-zA-Z0-9]+$/", $nickname))
-    return __('users_register_error_nickname_characters');
+  // Error: Special characters in username
+  if(!preg_match("/^[a-zA-Z0-9]+$/", $username))
+    return __('users_register_error_username_characters');
 
   // Error: Illegal string in username
-  if(user_check_username_illegality($nickname))
-    return __('users_register_error_nickname_illegal');
+  if(user_check_username_illegality($username))
+    return __('users_register_error_username_illegal');
 
-  // Error: Nickname already taken
-  if(user_check_username($nickname))
-    return __('users_register_error_nickname_taken');
+  // Error: username already taken
+  if(user_check_username($username))
+    return __('users_register_error_username_taken');
 
   // Create the account
   query(" INSERT INTO users
-          SET         users.nickname  = '$nickname'           ,
+          SET         users.username  = '$username'           ,
                       users.password  = '$password_encrypted' ");
 
   // Fetch the ID of the newly created account
@@ -261,11 +261,11 @@ function user_create_account( $nickname                 ,
           SET         users_stats.fk_users        = '$account_id' ");
 
   // Log the activity
-  log_activity('users_register', 0, 'ENFR', 0, NULL, NULL, 0, $account_id, $nickname);
+  log_activity('users_register', 0, 'ENFR', 0, NULL, NULL, 0, $account_id, $username);
 
   // IRC message
-  irc_bot_send_message("A new member registered on the website: $nickname_raw - ".$GLOBALS['website_url']."todo_link", "english");
-  irc_bot_send_message("Nouveau compte crée sur le site : $nickname_raw - ".$GLOBALS['website_url']."todo_link", "french");
+  irc_bot_send_message("A new member registered on the website: $username_raw - ".$GLOBALS['website_url']."todo_link", "english");
+  irc_bot_send_message("Nouveau compte crée sur le site : $username_raw - ".$GLOBALS['website_url']."todo_link", "french");
 
   // Welcome private message
   private_message_send(__('users_register_private_message_title'), __('users_register_private_message', null, 0, 0, array($path)), $account_id, 1);

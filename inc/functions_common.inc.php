@@ -1027,8 +1027,8 @@ function flood_check( $user_id = NULL )
  * @param   string|null     $activity_summary_fr  (OPTIONAL)  Summary of the activity log, in french.
  * @param   int|null        $activity_amount      (OPTIONAL)  An amout tied to the activity log.
  * @param   int|null        $fk_users             (OPTIONAL)  ID of the user implicated in the activity log.
- * @param   string|null     $nickname             (OPTIONAL)  Nickname of the user implicated in the activity log.
- * @param   string|null     $moderator_nickname   (OPTIONAL)  Nickname of the website admin implicated in the log.
+ * @param   string|null     $username             (OPTIONAL)  username of the user implicated in the activity log.
+ * @param   string|null     $moderator_username   (OPTIONAL)  username of the website admin implicated in the log.
  * @param   string|null     $moderation_reason    (OPTOINAL)  Reason specified by the moderator for the activity.
  * @param   bool|null       $do_not_sanitize      (OPTOINAL)  If set, do not sanitize the data.
  *
@@ -1043,8 +1043,8 @@ function log_activity(  $activity_type                  ,
                         $activity_summary_fr  = NULL    ,
                         $activity_amount      = 0       ,
                         $fk_users             = 0       ,
-                        $nickname             = NULL    ,
-                        $moderator_nickname   = NULL    ,
+                        $username             = NULL    ,
+                        $moderator_username   = NULL    ,
                         $moderation_reason    = NULL    ,
                         $do_not_sanitize      = 0       )
 {
@@ -1058,8 +1058,8 @@ function log_activity(  $activity_type                  ,
   $activity_summary_fr  = ($do_not_sanitize) ? $activity_summary_fr : sanitize($activity_summary_fr, 'string');
   $activity_amount      = sanitize($activity_amount, 'int');
   $fk_users             = sanitize($fk_users, 'int', 0);
-  $nickname             = ($do_not_sanitize) ? $nickname : sanitize($nickname, 'string');
-  $moderator_nickname   = ($do_not_sanitize) ? $moderator_nickname : sanitize($moderator_nickname, 'string');
+  $username             = ($do_not_sanitize) ? $username : sanitize($username, 'string');
+  $moderator_username   = ($do_not_sanitize) ? $moderator_username : sanitize($moderator_username, 'string');
   $moderation_reason    = ($do_not_sanitize) ? $moderation_reason : sanitize($moderation_reason, 'string');
 
   // Create the activity log by inserting it in the table
@@ -1073,8 +1073,8 @@ function log_activity(  $activity_type                  ,
                       logs_activity.activity_amount             = '$activity_amount'        ,
                       logs_activity.activity_summary_en         = '$activity_summary_en'    ,
                       logs_activity.activity_summary_fr         = '$activity_summary_fr'    ,
-                      logs_activity.activity_nickname           = '$nickname'               ,
-                      logs_activity.activity_moderator_nickname = '$moderator_nickname'     ,
+                      logs_activity.activity_username           = '$username'               ,
+                      logs_activity.activity_moderator_username = '$moderator_username'     ,
                       logs_activity.moderation_reason           = '$moderation_reason'      ");
 
   // Return the ID of the newly created activity log
@@ -1166,7 +1166,7 @@ function log_activity_purge_orphan_diffs()
  * @param   string          $activity_type                  The identifier of the activity log's type.
  * @param   bool|null       $is_moderators_only (OPTIONAL)  Is it a public activity log or a moderation log.
  * @param   int|null        $fk_users           (OPTIONAL)  ID of the user implicated in the activity log.
- * @param   string|null     $nickname           (OPTIONAL)  Nickname of the user implicated in the activity log.
+ * @param   string|null     $username           (OPTIONAL)  username of the user implicated in the activity log.
  * @param   int|null        $activity_id        (OPTIONAL)  ID of the item linked to the activity log.
  * @param   bool|null       $global_type_wipe   (OPTOINAL)  Deletes all logs of type beginning like $activity_type.
  *
@@ -1176,7 +1176,7 @@ function log_activity_purge_orphan_diffs()
 function log_activity_delete( $activity_type              ,
                               $is_moderators_only = 0     ,
                               $fk_users           = 0     ,
-                              $nickname           = NULL  ,
+                              $username           = NULL  ,
                               $activity_id        = 0     ,
                               $global_type_wipe   = 0     )
 {
@@ -1184,7 +1184,7 @@ function log_activity_delete( $activity_type              ,
   $activity_type      = sanitize($activity_type, 'string');
   $is_moderators_only = sanitize($is_moderators_only, 'int', 0, 1);
   $fk_users           = sanitize($fk_users, 'int', 0);
-  $nickname           = sanitize($nickname, 'string');
+  $username           = sanitize($username, 'string');
   $activity_id        = sanitize($activity_id, 'int', 0);
   $global_type_wipe   = sanitize($global_type_wipe, 'int', 0, 1);
 
@@ -1204,8 +1204,8 @@ function log_activity_delete( $activity_type              ,
   // Optional parameters
   if($fk_users)
     $qactivity .= " AND         logs_activity.fk_users            =     '$fk_users' ";
-  if($nickname)
-    $qactivity .= " AND         logs_activity.activity_nickname   LIKE  '$nickname' ";
+  if($username)
+    $qactivity .= " AND         logs_activity.activity_username   LIKE  '$username' ";
   if($activity_id)
     $qactivity .= " AND         logs_activity.activity_id         =     '$activity_id' ";
 

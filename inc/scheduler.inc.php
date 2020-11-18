@@ -196,7 +196,7 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
     if($scheduler_type == 'users_unban')
     {
       // Fetch data on the user
-      $duser = mysqli_fetch_array(query(" SELECT  users.nickname        AS 'u_nick'   ,
+      $duser = mysqli_fetch_array(query(" SELECT  users.username        AS 'u_nick'   ,
                                                   users.is_banned_until AS 'u_banned'
                                           FROM    users
                                           WHERE   users.id = '$scheduler_action_id' "));
@@ -208,8 +208,8 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
         user_unban($scheduler_action_id);
 
         // Activity logs
-        $banned_nickname = sanitize($duser['u_nick'], 'string');
-        log_activity('users_unbanned', 0, 'ENFR', 0, NULL, NULL, 0, $scheduler_action_id, $banned_nickname);
+        $banned_username = sanitize($duser['u_nick'], 'string');
+        log_activity('users_unbanned', 0, 'ENFR', 0, NULL, NULL, 0, $scheduler_action_id, $banned_username);
 
         // Ban logs
         query(" UPDATE    logs_bans

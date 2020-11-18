@@ -17,7 +17,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_unban                        Unbans a banned user.                                                          */
 /*                                                                                                                   */
 /*  user_get_id                       Returns the current user's id.                                                 */
-/*  user_get_nickname                 Returns a user's nickname from their id.                                       */
+/*  user_get_username                 Returns a user's username from their id.                                       */
 /*  user_get_language                 Returns a user's language.                                                     */
 /*                                                                                                                   */
 /*  user_is_administrator             Checks if a user is an administrator.                                          */
@@ -37,7 +37,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_settings_nsfw                NSFW filter settings of the current user.                                      */
 /*  user_settings_privacy             Third party content privacy settings of the current user.                      */
 /*                                                                                                                   */
-/*  user_generate_random_nickname     Generates a random nickname for a guest.                                       */
+/*  user_generate_random_username     Generates a random username for a guest.                                       */
 /*                                                                                                                   */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Let's begin by opening the session
@@ -379,9 +379,8 @@ function user_unban(  $user_id              ,
   // Sanitize the data
   $timestamp          = sanitize(time(), 'int', 0);
   $user_id            = sanitize($user_id, 'int', 0);
-  $user_nickname      = sanitize(user_get_nickname($user_id));
+  $user_username      = sanitize(user_get_username($user_id));
   $unbanner_id        = sanitize($unbanner_id, 'int', 0);
-  $unbanner_nickname  = sanitize(user_get_nickname($user_id));
 
   // Unban the user
   query(" UPDATE  users
@@ -408,7 +407,7 @@ function user_unban(  $user_id              ,
                         logs_activity.language            = 'ENFR'                ,
                         logs_activity.activity_type       = 'users_unbanned'      ,
                         logs_activity.activity_id         = '$user_id'            ,
-                        logs_activity.activity_nickname   = '$user_nickname'      ");
+                        logs_activity.activity_username   = '$user_username'      ");
 }
 
 
@@ -430,14 +429,14 @@ function user_get_id()
 
 
 /**
- * Returns a user's nickname from their id.
+ * Returns a user's username from their id.
  *
- * @param   int|null   $user_id  (OPTIONAL) If no id is specified, it will try to return the nickname of current user.
+ * @param   int|null   $user_id  (OPTIONAL) If no id is specified, it will try to return the username of current user.
  *
  * @return  string                          The user's nickame.
  */
 
-function user_get_nickname($user_id = NULL)
+function user_get_username($user_id = NULL)
 {
   // If no id is specified, grab the one currently stored in the session
   if(!$user_id && isset($_SESSION['user_id']))
@@ -450,13 +449,13 @@ function user_get_nickname($user_id = NULL)
   // Sanitize the provided id
   $user_id = sanitize($user_id, 'int', 0);
 
-  // Fetch the user's nickname
-  $dnickname = mysqli_fetch_array(query(" SELECT  users.nickname AS 'nickname'
+  // Fetch the user's username
+  $dusername = mysqli_fetch_array(query(" SELECT  users.username AS 'username'
                                           FROM    users
                                           WHERE   users.id = '$user_id' "));
 
   // Return whatever the database returned (could be NULL)
-  return $dnickname['nickname'];
+  return $dusername['username'];
 }
 
 
@@ -652,7 +651,7 @@ function user_is_ip_banned()
                       logs_activity.language            = 'ENFR'              ,
                       logs_activity.activity_type       = 'users_unbanned_ip' ,
                       logs_activity.activity_id         = '$ip_ban_id'        ,
-                      logs_activity.activity_nickname   = '$ip_ban'           ");
+                      logs_activity.activity_username   = '$ip_ban'           ");
 
   // Ban logs
   query(" UPDATE    logs_bans
@@ -970,18 +969,17 @@ function user_settings_privacy()
 
 
 /**
- * Generates a random nickname for a guest.
+ * Generates a random username for a guest.
  *
- * The nicknames are taken from an array of possible words instead of a database to minimize queries.
- * It doesn't create the best nicknames, but hey, good enough.
- * The nickname returned is in french. There is no english equivalent to this function for now. Sorry.
+ * The usernames are taken from an array of possible words instead of a database to minimize queries.
+ * It doesn't create the best usernames, but hey, good enough.
  *
- * @param   string|null  $lang  (OPTIONAL)  The language in which the nickname will be generated.
+ * @param   string|null  $lang  (OPTIONAL)  The language in which the username will be generated.
  *
- * @return  string                          The randomly generated nickname.
+ * @return  string                          The randomly generated username.
  */
 
-function user_generate_random_nickname($lang = 'EN')
+function user_generate_random_username($lang = 'EN')
 {
   // English logic
   if($lang == 'EN')
@@ -995,7 +993,7 @@ function user_generate_random_nickname($lang = 'EN')
     // Random word list: The core name that will be assigned to the guest
     $core_name = array("bear", "bird", "cat", "dog", "duck", "pidgeon", "bean", "tree", "rodent", "honeypot", "lawn", "peasant", "crumb", "goat", "elephant", "wild boar", "newspaper", "monkey", "heart", "seal", "dummy", "princess", "monster", "furniture", "wasp", "robot", "underwear", "cousin", "brother", "internet", "dude", "buddy", "rat", "sheep", "VIP", "pope", "blood cell", "opponent", "poo", "poopie", "king", "queen");
 
-    // Asemble and return the nickname
+    // Asemble and return the username
     return $qualifier1[rand(0,(count($qualifier1)-1))].$qualifier2[rand(0,(count($qualifier2)-1))].$core_name[rand(0,(count($core_name)-1))];
   }
 
@@ -1011,7 +1009,7 @@ function user_generate_random_nickname($lang = 'EN')
     // Random word list: A second qualifier that goes after the core name
     $qualifier2 = array("solitaire", "mignon", "moche", "farouche", "mystérieux", "lourdingue", "glandeur", "douteux", "noir", "blanc", "rose", "mauve", "chaotique", "pâle", "raciste", "rigolo", "choupinet", "borgne", "douteux", "baltique", "fatigué", "", "peureux", "millénaire", "bouseux", "crade", "des champs", "des villes", "des plaines", "urbain", "sourd", "techno", "fatigué", "cornu", "mort", "cool", "moelleux", "futé", "gourmand", "en slip", "naturiste", "trop cuit", "cru");
 
-    // Asemble and return the nickname
+    // Asemble and return the username
     return $qualifier1[rand(0,(count($qualifier1)-1))].$core_name[rand(0,(count($core_name)-1))]." ".$qualifier2[rand(0,(count($qualifier2)-1))];
   }
 }

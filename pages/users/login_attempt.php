@@ -24,14 +24,14 @@ user_restrict_to_guests();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Login attempt
 
-if(isset($_POST['login_form_nickname']) && isset($_POST['login_form_password']))
+if(isset($_POST['login_form_username']) && isset($_POST['login_form_password']))
 {
   // Check whether the remember me box is checked
   $login_form_remember_me = (form_fetch_element('login_form_remember_desktop') == 'false' || form_fetch_element('login_form_remember_mobile') == 'false') ? 0 : 1;
 
   // Attempt to login
   $login_form_attempt = user_authenticate(  $_SERVER["REMOTE_ADDR"]                   ,
-                                            form_fetch_element('login_form_nickname') ,
+                                            form_fetch_element('login_form_username') ,
                                             form_fetch_element('login_form_password') ,
                                             $login_form_remember_me                   );
 }

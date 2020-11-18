@@ -61,7 +61,7 @@ if(isset($_POST['admin_ipban_delete_submit']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch data about the IP ban
 
-// Get the user's nickname and some details regarding the ban
+// Get the user's username and some details regarding the ban
 $ban_details = admin_ip_ban_get($ip_ban_id);
 
 // Hide the french unban justification in the english interface

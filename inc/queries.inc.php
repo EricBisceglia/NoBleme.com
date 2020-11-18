@@ -731,16 +731,16 @@ if($last_query < 21)
   sql_create_field('logs_activity', 'language', 'VARCHAR(12) NOT NULL', 'is_moderators_only');
   sql_rename_field('logs_activity', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_move_field('logs_activity', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_rename_field('logs_activity', 'pseudonyme', 'activity_nickname', 'VARCHAR(45) NOT NULL');
+  sql_rename_field('logs_activity', 'pseudonyme', 'activity_username', 'VARCHAR(45) NOT NULL');
   sql_rename_field('logs_activity', 'action_type', 'activity_type', 'VARCHAR(40) NOT NULL');
   sql_create_field('logs_activity', 'activity_amount', 'INT UNSIGNED NOT NULL DEFAULT 0', 'activity_type');
   sql_rename_field('logs_activity', 'action_id', 'activity_id', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('logs_activity', 'activity_id', 'INT UNSIGNED NOT NULL DEFAULT 0', 'activity_nickname');
+  sql_move_field('logs_activity', 'activity_id', 'INT UNSIGNED NOT NULL DEFAULT 0', 'activity_username');
   sql_create_field('logs_activity', 'activity_summary_en', 'TEXT NOT NULL', 'activity_amount');
   sql_rename_field('logs_activity', 'action_titre', 'activity_summary_fr', 'TEXT NOT NULL');
   sql_rename_field('logs_activity', 'parent', 'activity_parent', 'TEXT NOT NULL');
-  sql_move_field('logs_activity', 'activity_nickname', 'VARCHAR(45) NOT NULL', 'activity_parent');
-  sql_create_field('logs_activity', 'activity_moderator_nickname', 'VARCHAR(45) NOT NULL', 'activity_nickname');
+  sql_move_field('logs_activity', 'activity_username', 'VARCHAR(45) NOT NULL', 'activity_parent');
+  sql_create_field('logs_activity', 'activity_moderator_username', 'VARCHAR(45) NOT NULL', 'activity_username');
   sql_rename_field('logs_activity', 'justification', 'moderation_reason', 'TEXT NOT NULL');
   sql_delete_index('logs_activity', 'index_membres');
   sql_delete_index('logs_activity', 'index_action');
@@ -858,15 +858,15 @@ if($last_query < 21)
           OR      logs_activity.activity_type    LIKE 'internet_%' ) ");
 
   query(" UPDATE  logs_activity
-          SET     logs_activity.activity_moderator_nickname = logs_activity.activity_nickname ,
-                  logs_activity.activity_nickname           = ''
+          SET     logs_activity.activity_moderator_username = logs_activity.activity_username ,
+                  logs_activity.activity_username           = ''
           WHERE ( logs_activity.activity_type            LIKE 'meetups_delete'
           OR      logs_activity.activity_type            LIKE 'meetups_edit'
           OR      logs_activity.activity_type            LIKE 'meetups_new'
           OR      logs_activity.activity_type            LIKE 'writings_text_delete' ) ");
 
   query(" UPDATE  logs_activity
-          SET     logs_activity.activity_moderator_nickname = logs_activity.activity_parent ,
+          SET     logs_activity.activity_moderator_username = logs_activity.activity_parent ,
                   logs_activity.activity_parent             = ''
           WHERE ( logs_activity.activity_type            LIKE 'meetups_people_delete'
           OR      logs_activity.activity_type            LIKE 'meetups_people_edit'
@@ -1216,7 +1216,7 @@ if($last_query < 26)
   sql_rename_table('notifications', 'users_private_messages');
 
   sql_change_field_type('users', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('users', 'pseudonyme', 'nickname', 'VARCHAR(45) NOT NULL');
+  sql_rename_field('users', 'pseudonyme', 'username', 'VARCHAR(45) NOT NULL');
   sql_rename_field('users', 'pass', 'password', 'MEDIUMTEXT NOT NULL');
   sql_rename_field('users', 'admin', 'is_administrator', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users', 'sysop', 'is_moderator', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
@@ -1248,7 +1248,7 @@ if($last_query < 26)
   sql_create_index('users', 'index_banned', 'is_banned_until');
 
   $qusers = query(" SELECT  users.id              AS 'u_id'     ,
-                            users.nickname        AS 'u_nick'   ,
+                            users.username        AS 'u_nick'   ,
                             users.last_visited_at AS 'u_visit'  ,
                             users.is_banned_until AS 'u_ban'
                     FROM    users ");
@@ -1274,7 +1274,7 @@ if($last_query < 26)
     }
     if($newnick != $dusers['u_nick'])
       query(" UPDATE  users
-              SET     users.nickname  = '".sql_sanitize_data($newnick)."'
+              SET     users.username  = '".sql_sanitize_data($newnick)."'
               WHERE   users.id        = '".sql_sanitize_data($dusers['u_id'])."'");
     if($dusers['u_ban'])
     {
@@ -1464,7 +1464,7 @@ if($last_query < 28)
   sql_change_field_type('meetups_people', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('meetups_people', 'FKirl', 'fk_meetups', "INT UNSIGNED NOT NULL DEFAULT 0");
   sql_rename_field('meetups_people', 'FKmembres', 'fk_users', "INT UNSIGNED NOT NULL DEFAULT 0");
-  sql_rename_field('meetups_people', 'pseudonyme', 'nickname', "VARCHAR(45) NOT NULL");
+  sql_rename_field('meetups_people', 'pseudonyme', 'username', "VARCHAR(45) NOT NULL");
   sql_rename_field('meetups_people', 'confirme', 'attendance_confirmed', "TINYINT UNSIGNED NOT NULL DEFAULT 0");
   sql_rename_field('meetups_people', 'details_fr', 'extra_information_fr', "VARCHAR(510) NOT NULL");
   sql_rename_field('meetups_people', 'details_en', 'extra_information_en', "VARCHAR(510) NOT NULL");
@@ -1719,7 +1719,7 @@ if($last_query < 31)
 
   sql_create_field('users', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('users', 'deleted_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'is_deleted');
-  sql_create_field('users', 'deleted_nickname', 'VARCHAR(45) NOT NULL', 'deleted_at');
+  sql_create_field('users', 'deleted_username', 'VARCHAR(45) NOT NULL', 'deleted_at');
   sql_create_index('users', 'index_deleted', 'is_deleted');
   sql_create_field('users_private_messages', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users_sender');
   sql_create_index('users_private_messages', 'index_deleted', 'is_deleted');

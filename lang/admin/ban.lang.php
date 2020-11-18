@@ -28,10 +28,10 @@ ___('admin_ban_add_type_ip',      'EN', "IP address (extreme cases only)");
 ___('admin_ban_add_type_ip',      'FR', "Adresse IP (cas extrêmes uniquement)");
 ___('admin_ban_add_ip',           'EN', "IP address to ban (you can use wildcards, eg. 127.0.0.*)");
 ___('admin_ban_add_ip',           'FR', "Adresse IP à bannir (jokers autorisés, par ex. 127.0.0.*)");
-___('admin_ban_add_nickname',     'EN', "User's nickname");
-___('admin_ban_add_nickname',     'FR', "Pseudonyme du compte à bannir");
-___('admin_ban_add_nickname_ip',  'EN', "OR nickname of a user - their IP address will be banned");
-___('admin_ban_add_nickname_ip',  'FR', "OU pseudonyme d'un compte - son adresse IP sera bannie");
+___('admin_ban_add_username',     'EN', "Account's username");
+___('admin_ban_add_username',     'FR', "Pseudonyme du compte à bannir");
+___('admin_ban_add_username_ip',  'EN', "OR account's username - their IP address will be banned");
+___('admin_ban_add_username_ip',  'FR', "OU pseudonyme d'un compte - son adresse IP sera bannie");
 ___('admin_ban_add_full_ip_ban',  'EN', "Severity of the IP ban (total bans are extreme cases only)");
 ___('admin_ban_add_full_ip_ban',  'FR', "Sévérité du ban IP (réserver le ban total aux cas extrêmes)");
 ___('admin_ban_add_full_ip_no',   'EN', "Standard: affected users will not be able to log into their accounts");
@@ -61,9 +61,9 @@ ___('admin_ban_add_ip_button',    'FR', "Bannir l'adresse IP");
 
 
 // User bans: errors
-___('admin_ban_add_error_no_nickname',  'EN', "No nickname has been specified");
-___('admin_ban_add_error_no_nickname',  'FR', "Il est nécessaire de préciser un pseudonyme");
-___('admin_ban_add_error_no_ip',        'EN', "No IP address or nickname have been specified");
+___('admin_ban_add_error_no_username',  'EN', "No username has been specified");
+___('admin_ban_add_error_no_username',  'FR', "Il est nécessaire de préciser un pseudonyme");
+___('admin_ban_add_error_no_ip',        'EN', "No IP address or username have been specified");
 ___('admin_ban_add_error_no_ip',        'FR', "Il est nécessaire de préciser une adresse IP ou un pseudonyme");
 ___('admin_ban_add_error_wildcard',     'EN', "You are not allowed to IP ban the whole planet");
 ___('admin_ban_add_error_wildcard',     'FR', "Vous n'avez pas le droit de bannir toute la planète");
@@ -71,7 +71,7 @@ ___('admin_ban_add_error_wildcards',    'EN', "Only one wildcard (*) is allowed 
 ___('admin_ban_add_error_wildcards',    'FR', "Un maximum d'un seul joker (*) est autorisé");
 ___('admin_ban_add_error_characters',   'EN', "The IP address must contain at least three commas , or semicolons ;");
 ___('admin_ban_add_error_characters',   'FR', "L'adresse IP doit contenir au moins trois virgules , ou points virgule ;");
-___('admin_ban_add_error_ip_and_user',  'EN', "You must specify an IP address OR a nickname, not both");
+___('admin_ban_add_error_ip_and_user',  'EN', "You must specify an IP address OR a username, not both");
 ___('admin_ban_add_error_ip_and_user',  'FR', "Il est nécessaire de préciser SOIT une adresse IP SOIT un pseudonyme, non pas les deux");
 ___('admin_ban_add_error_wrong_user',   'EN', "The specified username does not exist");
 ___('admin_ban_add_error_wrong_user',   'FR', "Ce pseudonyme n'est associé à aucun compte");
@@ -204,8 +204,8 @@ ___('admin_ban_delete_title',               'EN', "Unban a user");
 ___('admin_ban_delete_title',               'FR', "Débannir un compte");
 ___('admin_ban_delete_title_ip',            'EN', "Unban an IP");
 ___('admin_ban_delete_title_ip',            'FR', "Débannir une IP");
-___('admin_ban_delete_nickname',            'EN', "Nickname of the user you wish to unban");
-___('admin_ban_delete_nickname',            'FR', "Pseudonyme du compte à débannir");
+___('admin_ban_delete_username',            'EN', "username of the user you wish to unban");
+___('admin_ban_delete_username',            'FR', "Pseudonyme du compte à débannir");
 ___('admin_ban_delete_ip',                  'EN', "IP address you wish to unban");
 ___('admin_ban_delete_ip',                  'FR', "Adresse IP à débannir");
 ___('admin_ban_delete_ban_reason',          'EN', "Ban reason");

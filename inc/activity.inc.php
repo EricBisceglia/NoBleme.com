@@ -22,8 +22,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   string|null $title_en     (OPTIONAL)  Title of the activity in the log, in english.
  * @param   string|null $title_en     (OPTIONAL)  Title of the activity in the log, in french.
  * @param   int|null    $userid       (OPTIONAL)  ID of the user being implicated by the activity log.
- * @param   string|null $nickname     (OPTIONAL)  Nickname of the user being implicated by the activity log.
- * @param   string|null $mod_nickname (OPTIONAL)  Nickname of the staff member being implicated by the activity log.
+ * @param   string|null $username     (OPTIONAL)  username of the user being implicated by the activity log.
+ * @param   string|null $mod_username (OPTIONAL)  username of the staff member being implicated by the activity log.
  * @param   int|null    $amount       (OPTIONAL)  Amount linked to the activity log.
  *
  * @return  array                                 Array of elements used to output and format the activity log;
@@ -39,8 +39,8 @@ function log_activity_parse(  $admins_only          ,
                               $title_en     = NULL  ,
                               $title_fr     = NULL  ,
                               $userid       = 0     ,
-                              $nickname     = NULL  ,
-                              $mod_nickname = NULL  ,
+                              $username     = NULL  ,
+                              $mod_username = NULL  ,
                               $amount       = 0     )
 {
   //*****************************************************************************************************************//
@@ -72,8 +72,8 @@ function log_activity_parse(  $admins_only          ,
   else if($type === 'dev_task_new')
   {
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['EN']   = ($title_en) ? $nickname." opened a new task: ".$title_en : '';
-    $return['FR']   = ($title_fr) ? $nickname." a ouvert une tâche : ".$title_fr : '';
+    $return['EN']   = ($title_en) ? $username." opened a new task: ".$title_en : '';
+    $return['FR']   = ($title_fr) ? $username." a ouvert une tâche : ".$title_fr : '';
 
   }
 
@@ -94,31 +94,31 @@ function log_activity_parse(  $admins_only          ,
   {
     $return['css']  = 'text_green bold';
     $return['href'] = $path.'todo_link?id='.$userid;
-    $return['EN']   = $nickname." registered on NoBleme!";
-    $return['FR']   = $nickname." a crée son compte sur NoBleme !";
+    $return['EN']   = $username." registered on NoBleme!";
+    $return['FR']   = $username." a crée son compte sur NoBleme !";
   }
 
   else if($type === 'users_profile_edit')
   {
     $return['href'] = $path.'todo_link?id='.$userid;
-    $return['EN']   = $nickname.' edited their public profile';
-    $return['FR']   = $nickname.' a modifié son profil public';
+    $return['EN']   = $username.' edited their public profile';
+    $return['FR']   = $username.' a modifié son profil public';
   }
 
   else if($type === 'users_admin_edit_profile')
   {
     $return['css']  = 'orange bold';
     $return['href'] = $path.'todo_link?id='.$userid;
-    $return['EN']   = $mod_nickname.' edited '.$nickname."'s public profile";
-    $return['FR']   = $mod_nickname.' a modifié le profil public de '.$nickname;
+    $return['EN']   = $mod_username.' edited '.$username."'s public profile";
+    $return['FR']   = $mod_username.' a modifié le profil public de '.$username;
   }
 
   else if($type === 'users_admin_edit_password')
   {
     $return['css']  = 'red bold';
     $return['href'] = $path.'todo_link?id='.$userid;
-    $return['EN']   = $mod_nickname.' changed '.$nickname."'s password";
-    $return['FR']   = $mod_nickname.' a modifié le mot de passe de '.$nickname;
+    $return['EN']   = $mod_username.' changed '.$username."'s password";
+    $return['FR']   = $mod_username.' a modifié le mot de passe de '.$username;
   }
 
   else if($type === 'users_banned' && !$admins_only)
@@ -127,10 +127,10 @@ function log_activity_parse(  $admins_only          ,
     $return['href'] = $path.'todo_link?id='.$userid;
     $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
-    $return['EN']   = $nickname.' has been banned '.$temp[$amount].$temp2;
+    $return['EN']   = $username.' has been banned '.$temp[$amount].$temp2;
     $temp           = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
     $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = $nickname.' s\'est fait bannir '.$temp[$amount].$temp2;
+    $return['FR']   = $username.' s\'est fait bannir '.$temp[$amount].$temp2;
   }
   else if($type == 'users_banned')
   {
@@ -138,10 +138,10 @@ function log_activity_parse(  $admins_only          ,
     $return['href'] = $path.'todo_link';
     $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
-    $return['EN']   = $mod_nickname.' banned '.$nickname.' '.$temp[$amount].$temp2;
+    $return['EN']   = $mod_username.' banned '.$username.' '.$temp[$amount].$temp2;
     $temp           = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
     $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = $mod_nickname.' a banni '.$nickname.' '.$temp[$amount].$temp2;
+    $return['FR']   = $mod_username.' a banni '.$username.' '.$temp[$amount].$temp2;
   }
 
   else if($type === 'users_banned_edit' && !$admins_only)
@@ -150,10 +150,10 @@ function log_activity_parse(  $admins_only          ,
     $return['href'] = $path.'todo_link?id='.$userid;
     $temp           = array(0 => '', 1 => 'ending a day from now', 7 => 'ending a week from now', 30 => 'ending a month from now', '365' => 'ending a year from now', '3650' => 'a permanent ban');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
-    $return['EN']   = $nickname.' has had their ban updated to '.$temp[$amount].$temp2;
+    $return['EN']   = $username.' has had their ban updated to '.$temp[$amount].$temp2;
     $temp           = array(0 => '', 1 => 'dans un jour', 7 => 'dans une semaine', 30 => 'dans un mois', '365' => 'dans un an', '3650' => 'ban permanent');
     $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = 'La date de fin du bannissement de '.$nickname.' a changé : '.$temp[$amount].$temp2;
+    $return['FR']   = 'La date de fin du bannissement de '.$username.' a changé : '.$temp[$amount].$temp2;
   }
   else if($type == 'users_banned_edit')
   {
@@ -161,10 +161,10 @@ function log_activity_parse(  $admins_only          ,
     $return['href'] = $path.'todo_link';
     $temp           = array(0 => '', 1 => 'to ending a day from now', 7 => 'to ending a week from now', 30 => 'to ending a month from now', '365' => 'to ending a year from now', '3650' => 'to a permanent ban');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
-    $return['EN']   = $mod_nickname.' edited the ban of '.$nickname.' '.$temp[$amount].$temp2;
+    $return['EN']   = $mod_username.' edited the ban of '.$username.' '.$temp[$amount].$temp2;
     $temp           = array(0 => '', 1 => ': fini dans un jour', 7 => ': fini dans une semaine', 30 => ': fini dans un mois', '365' => ': fini dans un an', '3650' => 'en un ban permanent');
     $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = $mod_nickname.' a modifié le bannissement de '.$nickname.' '.$temp[$amount].$temp2;
+    $return['FR']   = $mod_username.' a modifié le bannissement de '.$username.' '.$temp[$amount].$temp2;
   }
 
   else if($type == 'users_banned_delete')
@@ -172,24 +172,24 @@ function log_activity_parse(  $admins_only          ,
     $return['css']  = 'red bold';
     $return['href'] = $path.'todo_link';
     $temp           = ($title_en) ? ' ('.$title_en.')' : '';
-    $return['EN']   = $mod_nickname.' unbanned '.$nickname.$temp;
+    $return['EN']   = $mod_username.' unbanned '.$username.$temp;
     $temp           = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = $mod_nickname.' a débanni '.$nickname.$temp;
+    $return['FR']   = $mod_username.' a débanni '.$username.$temp;
   }
 
   else if($type === 'users_unbanned' && !$admins_only)
   {
     $return['css']  = 'text_red bold';
     $return['href'] = $path.'todo_link?id='.$userid;
-    $return['EN']   = $nickname.' has been unbanned';
-    $return['FR']   = $nickname.' s\'est fait débannir';
+    $return['EN']   = $username.' has been unbanned';
+    $return['FR']   = $username.' s\'est fait débannir';
   }
   else if($type == 'users_unbanned')
   {
     $return['css']  = 'red bold';
     $return['href'] = $path.'todo_link';
-    $return['EN']   = $mod_nickname.' has unbanned '.$nickname;
-    $return['FR']   = $mod_nickname.' a débanni '.$nickname;
+    $return['EN']   = $mod_username.' has unbanned '.$username;
+    $return['FR']   = $mod_username.' a débanni '.$username;
   }
 
   else if($type == 'users_banned_ip')
@@ -198,73 +198,73 @@ function log_activity_parse(  $admins_only          ,
     $return['href'] = $path.'pages/admin/ban';
     $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
-    $return['EN']   = $mod_nickname.' banned the IP address '.$nickname.' '.$temp[$amount].$temp2;
+    $return['EN']   = $mod_username.' banned the IP address '.$username.' '.$temp[$amount].$temp2;
     $temp           = array(0 => '', 1 => 'un jour', 7 => 'une semaine', 30 => 'un mois', '365' => 'un an', '3650' => 'définitivement');
     $temp2          = ($title_fr) ? ' ('.$title_fr.')' : '';
-    $return['FR']   = $mod_nickname.' a banni l\'adresse IP '.$nickname.' '.$temp[$amount].$temp2;
+    $return['FR']   = $mod_username.' a banni l\'adresse IP '.$username.' '.$temp[$amount].$temp2;
   }
 
   else if($type == 'users_banned_ip_delete')
   {
     $return['css']  = 'red bold';
     $return['href'] = $path.'pages/admin/ban';
-    $return['EN']   = $mod_nickname.' unbanned the IP address '.$nickname;
-    $return['FR']   = $mod_nickname.' a débanni l\'adresse IP '.$nickname;
+    $return['EN']   = $mod_username.' unbanned the IP address '.$username;
+    $return['FR']   = $mod_username.' a débanni l\'adresse IP '.$username;
   }
 
   else if($type == 'users_unbanned_ip')
   {
     $return['css']  = 'text_red bold';
     $return['href'] = $path.'pages/admin/ban';
-    $return['EN']   = 'The ban of the IP address '.$nickname.' has ended';
-    $return['FR']   = 'Le bannissement de l\'adresse IP '.$nickname.' est fini';
+    $return['EN']   = 'The ban of the IP address '.$username.' has ended';
+    $return['FR']   = 'Le bannissement de l\'adresse IP '.$username.' est fini';
   }
 
   else if($type === 'users_rights_delete')
   {
     $return['css']  = 'text_red bold';
     $return['href'] = $path.'todo_link';
-    $return['EN']   = $nickname." is not part of the administrative team anymore";
-    $return['FR']   = $nickname." ne fait plus partie de l'équipe administrative";
+    $return['EN']   = $username." is not part of the administrative team anymore";
+    $return['FR']   = $username." ne fait plus partie de l'équipe administrative";
   }
 
   else if($type === 'users_rights_moderator')
   {
     $return['css']  = 'orange bold';
     $return['href'] = $path.'todo_link';
-    $return['EN']   = $nickname." has joined the administrative team as a moderator";
-    $return['FR']   = $nickname." a rejoint l'équipe de modération de NoBleme";
+    $return['EN']   = $username." has joined the administrative team as a moderator";
+    $return['FR']   = $username." a rejoint l'équipe de modération de NoBleme";
   }
 
   else if($type === 'users_rights_administrator')
   {
     $return['css']  = 'red bold';
     $return['href'] = $path.'todo_link';
-    $return['EN']   = $nickname." is now a website administrator";
-    $return['FR']   = $nickname." a rejoint l'équipe d'administration de NoBleme";
+    $return['EN']   = $username." is now a website administrator";
+    $return['FR']   = $username." a rejoint l'équipe d'administration de NoBleme";
   }
 
   else if($type === 'users_rename')
   {
     $return['css']  = 'yellow text_black bold';
     $return['href'] = $path.'todo_link?id='.$userid;
-    $return['EN']   = $title_en." has been renamed to ".$nickname." by ".$mod_nickname;
-    $return['FR']   = "Le compte de ".$title_en." a été renommé en ".$nickname." par ".$mod_nickname;
+    $return['EN']   = $title_en." has been renamed to ".$username." by ".$mod_username;
+    $return['FR']   = "Le compte de ".$title_en." a été renommé en ".$username." par ".$mod_username;
   }
 
   else if($type === 'users_delete')
   {
     $return['css']  = 'red bold';
-    $return['EN']   = $nickname."'s account has been deleted by ".$mod_nickname;
-    $return['FR']   = "Le compte de ".$nickname." a été supprimé par ".$mod_nickname;
+    $return['EN']   = $username."'s account has been deleted by ".$mod_username;
+    $return['FR']   = "Le compte de ".$username." a été supprimé par ".$mod_username;
   }
 
   else if($type === 'users_undelete')
   {
     $return['css']  = 'green bold';
     $return['href'] = $path.'todo_link?id='.$userid;
-    $return['EN']   = $nickname."'s account has been reactivated by ".$mod_nickname;
-    $return['FR']   = "Le compte de ".$nickname." a été réactivé par ".$mod_nickname;
+    $return['EN']   = $username."'s account has been reactivated by ".$mod_username;
+    $return['FR']   = "Le compte de ".$username." a été réactivé par ".$mod_username;
   }
 
 
@@ -285,55 +285,55 @@ function log_activity_parse(  $admins_only          ,
   {
     $return['css']  = 'text_green bold';
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['EN']   = $mod_nickname.' created a new meetup on '.date_to_text($title_en, 1);
-    $return['FR']   = $mod_nickname.' a crée une nouvelle IRL le '.date_to_text($title_fr, 1);
+    $return['EN']   = $mod_username.' created a new meetup on '.date_to_text($title_en, 1);
+    $return['FR']   = $mod_username.' a crée une nouvelle IRL le '.date_to_text($title_fr, 1);
   }
 
   else if($type === 'meetups_edit')
   {
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['EN']   = $mod_nickname." edited the ".date_to_text($title_en, 1)." meetup";
-    $return['FR']   = $mod_nickname." a modifié l'IRL du ".date_to_text($title_fr, 1);
+    $return['EN']   = $mod_username." edited the ".date_to_text($title_en, 1)." meetup";
+    $return['FR']   = $mod_username." a modifié l'IRL du ".date_to_text($title_fr, 1);
   }
 
   else if($type === 'meetups_delete')
   {
     $return['css']  = 'red bold';
-    $return['EN']   = $mod_nickname." deleted the ".date_to_text($title_en, 1)." meetup";
-    $return['FR']   = $mod_nickname." a supprimé l'IRL du ".date_to_text($title_fr, 1);
+    $return['EN']   = $mod_username." deleted the ".date_to_text($title_en, 1)." meetup";
+    $return['FR']   = $mod_username." a supprimé l'IRL du ".date_to_text($title_fr, 1);
   }
 
   else if($type === 'meetups_people_new' && !$admins_only)
   {
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['EN']   = $nickname.' joined the '.date_to_text($title_en, 1)." meetup";
-    $return['FR']   = $nickname." a rejoint l'IRL du ".date_to_text($title_fr, 1);
+    $return['EN']   = $username.' joined the '.date_to_text($title_en, 1)." meetup";
+    $return['FR']   = $username." a rejoint l'IRL du ".date_to_text($title_fr, 1);
   }
   else if($type === 'meetups_people_new')
   {
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['EN']   = $mod_nickname." added ".$nickname." to the ".date_to_text($title_en, 1)." meetup";
-    $return['FR']   = $mod_nickname.' a ajouté '.$nickname." à l'IRL du ".date_to_text($title_fr, 1);
+    $return['EN']   = $mod_username." added ".$username." to the ".date_to_text($title_en, 1)." meetup";
+    $return['FR']   = $mod_username.' a ajouté '.$username." à l'IRL du ".date_to_text($title_fr, 1);
   }
 
   else if($type === 'meetups_people_edit')
   {
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['EN']   = $mod_nickname.' modified '.$nickname."'s details in the ".date_to_text($title_en, 1)." meetup";
-    $return['FR']   = $mod_nickname.' a modifié les infos de '.$nickname." dans l'IRL du ".date_to_text($title_fr, 1);
+    $return['EN']   = $mod_username.' modified '.$username."'s details in the ".date_to_text($title_en, 1)." meetup";
+    $return['FR']   = $mod_username.' a modifié les infos de '.$username." dans l'IRL du ".date_to_text($title_fr, 1);
   }
 
   else if($type === 'meetups_people_delete' && !$admins_only)
   {
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['EN']   = $nickname.' left the '.date_to_text($title_en, 1)." meetup";
-    $return['FR']   = $nickname." a quitté l'IRL du ".date_to_text($title_fr, 1);
+    $return['EN']   = $username.' left the '.date_to_text($title_en, 1)." meetup";
+    $return['FR']   = $username." a quitté l'IRL du ".date_to_text($title_fr, 1);
   }
   else if($type === 'meetups_people_delete')
   {
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['EN']   = $mod_nickname.' removed '.$nickname.' from the '.date_to_text($title_en, 1)." meetup";
-    $return['FR']   = $mod_nickname.' a supprimé '.$nickname." de l'IRL du ".date_to_text($title_fr, 1);
+    $return['EN']   = $mod_username.' removed '.$username.' from the '.date_to_text($title_en, 1)." meetup";
+    $return['FR']   = $mod_username.' a supprimé '.$username." de l'IRL du ".date_to_text($title_fr, 1);
   }
 
 
@@ -417,20 +417,20 @@ function log_activity_parse(  $admins_only          ,
   {
     $return['css']  = 'brown bold';
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['FR']   = ($nickname != 'Anonyme') ? $nickname.' a publié un texte : '.$title_fr : 'Nouveau texte publié : '.$title_fr;
+    $return['FR']   = ($username != 'Anonyme') ? $username.' a publié un texte : '.$title_fr : 'Nouveau texte publié : '.$title_fr;
   }
 
   else if($type === 'writings_text_edit_fr')
   {
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['FR']   = $mod_nickname.' a modifié le contenu d\'un texte : '.$title_fr;
+    $return['FR']   = $mod_username.' a modifié le contenu d\'un texte : '.$title_fr;
   }
 
   else if($type === 'writings_text_delete')
   {
     $return['css']  = 'red bold';
-    $return['EN']   = $mod_nickname." deleted a french writer's corner entry: ".$title_en;
-    $return['FR']   = $mod_nickname.' a supprimé un texte du coin des écrivains : '.$title_fr;
+    $return['EN']   = $mod_username." deleted a french writer's corner entry: ".$title_en;
+    $return['FR']   = $mod_username.' a supprimé un texte du coin des écrivains : '.$title_fr;
   }
 
   else if($type === 'writings_contest_new_fr')
@@ -451,7 +451,7 @@ function log_activity_parse(  $admins_only          ,
   {
     $return['css']  = 'green bold';
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['FR']   = $nickname.' a gagné le concours du coin des écrivains : '.$title_fr;
+    $return['FR']   = $username.' a gagné le concours du coin des écrivains : '.$title_fr;
   }
 
 
