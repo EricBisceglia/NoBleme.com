@@ -252,6 +252,13 @@ function log_activity_parse(  $admins_only          ,
     $return['FR']   = "Le compte de ".$title_en." a été renommé en ".$username." par ".$mod_username;
   }
 
+  else if($type === 'users_password')
+  {
+    $return['css']  = 'orange bold';
+    $return['EN']   = $mod_username." has changed ".$username."'s password";
+    $return['FR']   = $mod_username." a modifié le mot de passe de ".$username;
+  }
+
   else if($type === 'users_delete')
   {
     $return['css']  = 'red bold';

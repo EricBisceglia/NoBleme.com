@@ -13,6 +13,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  admin_account_check_availability  Checks whether a username is available and legal.                              */
 /*  admin_account_rename              Renames an account.                                                            */
+/*  admin_account_change_password     Changes an account's password.                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -263,6 +264,77 @@ function admin_account_rename(  $username     ,
   // IRC bot message
   irc_bot_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw - ".$GLOBALS['website_url']."pages/todo_link?id=".$user_id, 'mod');
   irc_bot_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw - ".$GLOBALS['website_url']."pages/todo_link?id=".$user_id, 'admin');
+
+  // Return that all went well
+  return NULL;
+}
+
+
+
+
+/**
+ * Changes an account's password.
+ *
+ * @param   string        $username   Username of the account that will get their password changed.
+ * @param   string        $password   The new password to use.
+ *
+ * @return  string|int                Returns a string containing an error, or the user's id if all went well.
+ */
+
+function admin_account_change_password( $username ,
+                                        $password )
+{
+  // Require moderator rights to run this action
+  user_restrict_to_moderators();
+
+  // Check if the required files have been included
+  require_included_file('user_management.lang.php');
+
+  // Sanitize and prepare the data
+  $username_raw       = $username;
+  $username           = sanitize($username, 'string');
+  $password_encrypted = sanitize(encrypt_data($password), 'string');
+  $mod_nick_raw       = user_get_username();
+
+  // Error: No username provided
+  if(!$username_raw)
+    return __('admin_deactivate_error_username');
+
+  // Error: No password provided
+  if(!$password)
+    return __('admin_password_error_no_pass');
+
+  // Error: Password too short
+  if(mb_strlen($password) < 8)
+    return __('admin_password_error_length');
+
+  // Look for the user id
+  $user_id = sanitize(database_entry_exists('users', 'username', $username), 'int', 0);
+
+  // Error: User not found
+  if(!$user_id)
+    return __('admin_deactivate_error_id');
+
+  // Error: Mods can't change admin passwords
+  if(!user_is_administrator() && user_is_administrator($user_id))
+    return __('admin_password_error_admin');
+
+  // Update the password
+  query(" UPDATE  users
+          SET     users.password  = '$password_encrypted'
+          WHERE   users.id        = '$user_id' ");
+
+  // Delete all active sessions for the user
+  query(" DELETE FROM users_tokens
+          WHERE       users_tokens.fk_users   = '$user_id'
+          AND         users_tokens.token_type = 'session' ");
+
+  // Activity log
+  log_activity('users_password', 1, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw, $mod_nick_raw);
+
+  // IRC bot message
+  irc_bot_send_message("$mod_nick_raw has changed $username_raw's password - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
+  irc_bot_send_message("$mod_nick_raw has changed $username_raw's password - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'admin');
 
   // Return that all went well
   return NULL;

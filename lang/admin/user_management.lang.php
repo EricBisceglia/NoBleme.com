@@ -121,3 +121,43 @@ ___('admin_rename_error_taken',       'EN', "This username is already taken");
 ___('admin_rename_error_taken',       'FR', "Ce pseudonyme est déjà utilisé");
 ___('admin_rename_error_admin',       'EN', "Moderators can't rename administrators");
 ___('admin_rename_error_admin',       'FR', "Les modérateurs ne peuvent pas renommer les administrateurs");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 CHANGE A PASSWORD                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Change password: Title
+___('admin_password_title', 'EN', "Change a password");
+___('admin_password_title', 'FR', "Modifier un mot de passe");
+
+
+// Change password: Description
+___('admin_password_warning', 'EN', <<<EOT
+Changing a password should only be done if there is a very good reason to do so (for example if a user has lost their password, in case of security breach, or to lock a user out of their account). The system will not notify the user of the account's password change, therefore you should keep the user informed by yourself.
+EOT
+);
+___('admin_password_warning', 'FR', <<<EOT
+Changer un mot de passe ne doit être fait que s'il y a une très bonne raison de le faire (par exemple en cas de mot de passe perdu, en cas de problème de sécurité, ou pour verrouiller l'utilisateur hors de son compte). Le système ne notifiera pas l'utilisateur de son changement de mot de passe, par conséquent il faudra l'en informer vous-même.
+EOT
+);
+
+
+// Change password: Form
+___('admin_password_new',     'EN', 'New password (at least 8 characters long)');
+___('admin_password_new',     'FR', 'Nouveau mot de passe (8 caractères minimum)');
+___('admin_password_submit',  'EN', 'Change the password');
+___('admin_password_submit',  'FR', 'Modifier le mot de passe');
+
+
+// Change password: Errors
+___('admin_password_error_no_pass', 'EN', 'No password provided');
+___('admin_password_error_no_pass', 'FR', 'Précisez un mot de passe');
+___('admin_password_error_length',  'EN', 'The provided password is too short');
+___('admin_password_error_length',  'FR', 'Ce mot de passe est trop court');
+___('admin_password_error_admin',   'EN', "Moderators can't change administrator passwords");
+___('admin_password_error_admin',   'FR', "Les modérateurs ne peuvent pas changer les mots de passe des administrateurs");

@@ -476,7 +476,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
   </div>
 
   <div class="smallpadding_top bigpadding_bot">
-    <pre class="dev_pre_code" id="dev_palette_form_input" onclick="to_clipboard('', 'dev_palette_form_input', 1);">&lt;label for="example_input">Label&lt;/label>
+    <pre class="dev_pre_code" id="dev_palette_form_input" onclick="to_clipboard('', 'dev_palette_form_input', 1);">&lt;label for="example_input">&lt;?=__('nobleme')?>&lt;/label>
 &lt;input type="text" id="example_input" name="example_input" value=""></pre>
   </div>
 
@@ -487,9 +487,9 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
   </select>
 
   <div class="padding_top bigpadding_bot">
-    <pre class="dev_pre_code" id="dev_palette_form_select" onclick="to_clipboard('', 'dev_palette_form_select', 1);">&lt;label for="example_select">Label&lt;/label>
+    <pre class="dev_pre_code" id="dev_palette_form_select" onclick="to_clipboard('', 'dev_palette_form_select', 1);">&lt;label for="example_select">&lt;?=__('nobleme')?>&lt;/label>
 &lt;select id="example_select" name="example_select">
-  &lt;option value="0" selected>Option&lt;/option>
+  &lt;option value="0" selected>&lt;?=__('nobleme')?>&lt;/option>
 &lt;/select></pre>
   </div>
 
@@ -499,7 +499,7 @@ Line breaks are respected in a pre tag and the font is monospace.</pre>
 Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempor a risus ac, consectetur suscipit quam. Sed mattis pharetra eleifend. Integer nulla diam, tincidunt vel dignissim et, mollis nec arcu. Aliquam vehicula pulvinar mi, vitae imperdiet purus rutrum in. Etiam pulvinar volutpat fermentum. Morbi justo ligula, blandit at eros at, viverra placerat dui. Integer tempus porta sapien eget euismod. Nunc aliquet in quam nec elementum. Aliquam ultricies eleifend egestas. Nunc nisi lorem, dapibus et lobortis id, porttitor a diam. Aenean varius ac mauris sed convallis. Nunc in tellus viverra orci aliquet consectetur eu sit amet sapien. Maecenas placerat vel purus efficitur rhoncus. Etiam ex ligula, convallis quis laoreet a, bibendum vitae dolor. Suspendisse sagittis, massa ac viverra laoreet, nibh dolor ultrices urna, vel rutrum justo nibh quis lectus.</textarea>
 
   <div class="padding_top bigpadding_bot">
-    <pre class="dev_pre_code" id="dev_palette_form_textarea" onclick="to_clipboard('', 'dev_palette_form_textarea', 1);">&lt;label for="example_textarea">Label&lt;/label>
+    <pre class="dev_pre_code" id="dev_palette_form_textarea" onclick="to_clipboard('', 'dev_palette_form_textarea', 1);">&lt;label for="example_textarea">&lt;?=__('nobleme')?>&lt;/label>
 &lt;textarea id="example_textarea" name="example_textarea">&lt;/textarea></pre>
   </div>
 
@@ -516,14 +516,14 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
   <div class="padding_top padding_bot">
     <pre class="dev_pre_code" id="dev_palette_form_input_checkbox" onclick="to_clipboard('', 'dev_palette_form_input_checkbox', 1);">&lt;input type="checkbox" id="example_checkbox" name="example_checkbox">
-&lt;label class="label_inline" for="example_checkbox">Label&lt;/label></pre>
+&lt;label class="label_inline" for="example_checkbox">&lt;?=__('nobleme')?>&lt;/label></pre>
   </div>
 
   <div class="bigpadding_bot">
     <pre class="dev_pre_code" id="dev_palette_form_input_multi_checkbox" onclick="to_clipboard('', 'dev_palette_form_input_multi_checkbox', 1);">&lt;input type="checkbox" id="example_checkbox_1" name="example_checkbox[]" value="1">
-&lt;label class="label_inline" for="example_checkbox_1">Label&lt;/label>
+&lt;label class="label_inline" for="example_checkbox_1">&lt;?=__('nobleme')?>&lt;/label>
 &lt;input type="checkbox" id="example_checkbox_2" name="example_checkbox[]" value="2">
-&lt;label class="label_inline" for="example_checkbox_2">Label&lt;/label></pre>
+&lt;label class="label_inline" for="example_checkbox_2">&lt;?=__('nobleme')?>&lt;/label></pre>
   </div>
 
   <div>
@@ -539,9 +539,9 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
   <div class="padding_top bigpadding_bot">
     <pre class="dev_pre_code" id="dev_palette_form_input_radio" onclick="to_clipboard('', 'dev_palette_form_input_radio', 1);">&lt;input type="radio" id="example_radio_1" name="example_radio[]" value="1">
-&lt;label class="label_inline" for="example_radio_1">Label&lt;/label>
+&lt;label class="label_inline" for="example_radio_1">&lt;?=__('nobleme')?>&lt;/label>
 &lt;input type="radio" id="example_radio_2" name="example_radio[]" value="2">
-&lt;label class="label_inline" for="example_radio_2">Label&lt;/label></pre>
+&lt;label class="label_inline" for="example_radio_2">&lt;?=__('nobleme')?>&lt;/label></pre>
   </div>
 
   <div class="smallpadding_bot">
@@ -565,7 +565,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
   </div>
 
   <div class="padding_top">
-    <pre class="dev_pre_code" id="dev_palette_form_input_submit" onclick="to_clipboard('', 'dev_palette_form_input_submit', 1);">&lt;input type="submit" name="example_submit" value="Submit"></pre>
+    <pre class="dev_pre_code" id="dev_palette_form_input_submit" onclick="to_clipboard('', 'dev_palette_form_input_submit', 1);">&lt;input type="submit" name="example_submit" value="&lt;?=__('nobleme')?>"></pre>
   </div>
 
 </div>
