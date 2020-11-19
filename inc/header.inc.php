@@ -796,7 +796,7 @@ $javascripts .= '
         </div>
         <?php if($is_admin) { ?>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_admin_rights'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/admin/user_rights', __('submenu_admin_rights'), 'header_submenu_link', 1, $path);?>
         </div>
         <?php } ?>
         <div class="header_submenu_item">

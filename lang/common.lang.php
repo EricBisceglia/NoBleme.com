@@ -371,16 +371,24 @@ ___('yyyyddmm',   'FR', "AAAA-MM-JJ");
 
 
 // Generic user related terms
-___('username', 'EN', "username");
-___('username', 'FR', "pseudonyme");
-___('password', 'EN', "password");
-___('password', 'FR', "mot de passe");
-___('user',     'EN', "user");
-___('user',     'FR', "membre");
-___('login',    'EN', "login");
-___('login',    'FR', "connexion");
-___('register', 'EN', "register");
-___('register', 'FR', "inscription");
+___('activity',       'EN', "activity");
+___('activity',       'FR', "activité");
+___('administrator',  'EN', "administrator");
+___('administrator',  'FR', "administration");
+___('login',          'EN', "login");
+___('login',          'FR', "connexion");
+___('moderator',      'EN', "moderator");
+___('moderator',      'FR', "modération");
+___('password',       'EN', "password");
+___('password',       'FR', "mot de passe");
+___('register',       'EN', "register");
+___('register',       'FR', "inscription");
+___('rights',         'EN', "rights");
+___('rights',         'FR', "droits");
+___('user',           'EN', "user");
+___('user',           'FR', "membre");
+___('username',       'EN', "username");
+___('username',       'FR', "pseudonyme");
 
 
 

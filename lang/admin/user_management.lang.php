@@ -161,3 +161,16 @@ ___('admin_password_error_length',  'EN', 'The provided password is too short');
 ___('admin_password_error_length',  'FR', 'Ce mot de passe est trop court');
 ___('admin_password_error_admin',   'EN', "Moderators can't change administrator passwords");
 ___('admin_password_error_admin',   'FR', "Les modérateurs ne peuvent pas changer les mots de passe des administrateurs");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    USER RIGHTS                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Rights: Title
+___('admin_rights_title', 'EN', "Account permissions");
+___('admin_rights_title', 'FR', "Permissions utilisateur");

@@ -9,6 +9,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  user_list                           Fetches a list of users.                                                     */
+/*  user_list_admins                    Fetches a list of administrative team members.                               */
 /*                                                                                                                   */
 /*  user_ban_details                    Fetches information related to a user's ban.                                 */
 /*                                                                                                                   */
@@ -251,6 +252,68 @@ function user_list( $sort_by          = ''    ,
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
     var_dump(array('file' => 'users/user.act.php', 'function' => 'user_list', 'data' => $data));
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Fetches a list of administrative team members.
+ *
+ * @param   string|null   $sort_by  (OPTIONAL)  The way the list should be sorted.
+ *
+ * @return  array                               A list of administrative team members.
+ */
+
+function user_list_admins( $sort_by = NULL )
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+
+  // Fetch the admin list
+  $qadmins = "    SELECT    users.id                AS 'u_id'     ,
+                            users.username          AS 'u_nick'   ,
+                            users.is_administrator  AS 'u_admin'  ,
+                            users.is_moderator      AS 'u_mod'    ,
+                            users.last_visited_at   AS 'u_activity'
+                  FROM      users
+                  WHERE     users.is_deleted        = 0
+                  AND     ( users.is_administrator  = 1
+                  OR        users.is_moderator      = 1 ) ";
+
+  // Sorting order
+  if($sort_by == 'activity')
+    $qadmins .= " ORDER BY  users.is_administrator  DESC  ,
+                            users.last_visited_at   DESC   ";
+  else
+    $qadmins .= " ORDER BY  users.is_administrator  DESC  ,
+                            users.username          ASC   ";
+
+  // Run the query
+  $qadmins = query($qadmins);
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qadmins); $i++)
+  {
+    $data[$i]['id']       = sanitize_output($row['u_id']);
+    $data[$i]['username'] = sanitize_output($row['u_nick']);
+    $data[$i]['admin']    = sanitize_output($row['u_admin']);
+    $data[$i]['mod']      = sanitize_output($row['u_mod']);
+    $temp                 = ($row['u_admin']) ? __('administrator') : __('moderator');
+    $data[$i]['title']    = sanitize_output(string_change_case($temp, 'initials'));
+    $data[$i]['activity'] = sanitize_output(time_since($row['u_activity']));
+    $data[$i]['css']      = ($row['u_admin']) ? 'text_red bold' : 'text_orange bold';
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('file' => 'users/user.act.php', 'function' => 'user_list_admins', 'data' => $data));
 
   // Return the prepared data
   return $data;
