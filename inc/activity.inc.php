@@ -220,28 +220,49 @@ function log_activity_parse(  $admins_only          ,
     $return['FR']   = 'Le bannissement de l\'adresse IP '.$username.' est fini';
   }
 
-  else if($type === 'users_rights_delete')
+  else if($type === 'users_rights_delete' && !$admins_only)
   {
     $return['css']  = 'text_red bold';
     $return['href'] = $path.'todo_link';
     $return['EN']   = $username." is not part of the administrative team anymore";
     $return['FR']   = $username." ne fait plus partie de l'équipe administrative";
   }
+  else if($type === 'users_rights_delete')
+  {
+    $return['css']  = 'text_red bold';
+    $return['href'] = $path.'todo_link';
+    $return['EN']   = $mod_username." has removed ".$username." from the administrative team";
+    $return['FR']   = $mod_username." a viré ".$username." de l'équipe administrative";
+  }
 
-  else if($type === 'users_rights_moderator')
+  else if($type === 'users_rights_moderator' && !$admins_only)
   {
     $return['css']  = 'orange bold';
     $return['href'] = $path.'todo_link';
     $return['EN']   = $username." has joined the administrative team as a moderator";
     $return['FR']   = $username." a rejoint l'équipe de modération de NoBleme";
   }
+  else if($type === 'users_rights_moderator')
+  {
+    $return['css']  = 'orange bold';
+    $return['href'] = $path.'todo_link';
+    $return['EN']   = $mod_username." has promoted ".$username." as a moderator";
+    $return['FR']   = $mod_username." a promu ".$username." au sein de l'équipe de modération";
+  }
 
-  else if($type === 'users_rights_administrator')
+  else if($type === 'users_rights_administrator' && !$admins_only)
   {
     $return['css']  = 'red bold';
     $return['href'] = $path.'todo_link';
     $return['EN']   = $username." is now a website administrator";
     $return['FR']   = $username." a rejoint l'équipe d'administration de NoBleme";
+  }
+  else if($type === 'users_rights_administrator')
+  {
+    $return['css']  = 'red bold';
+    $return['href'] = $path.'todo_link';
+    $return['EN']   = $mod_username." has promoted ".$username." as an administrator";
+    $return['FR']   = $mod_username." a promu ".$username." au sein de l'équipe d'administration";
   }
 
   else if($type === 'users_rename')

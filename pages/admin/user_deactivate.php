@@ -89,10 +89,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </datalist>
       </div>
 
-      <div class="padding_top">
-        <input type="submit" name="admin_deactivate_submit" value="<?=__('admin_deactivate_submit')?>">
-      </div>
-
       <?php if(isset($_POST['admin_deactivate_submit'])) { ?>
       <div class="padding_top">
         <?php if($deactivate_error) { ?>
@@ -106,6 +102,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } ?>
       </div>
       <?php } ?>
+
+      <div class="padding_top">
+        <input type="submit" name="admin_deactivate_submit" value="<?=__('admin_deactivate_submit')?>">
+      </div>
 
     </fieldset>
   </form>

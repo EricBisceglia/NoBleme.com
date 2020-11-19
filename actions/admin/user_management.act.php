@@ -14,6 +14,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  admin_account_check_availability  Checks whether a username is available and legal.                              */
 /*  admin_account_rename              Renames an account.                                                            */
 /*  admin_account_change_password     Changes an account's password.                                                 */
+/*  admin_account_change_rights       Changes an account's access rights.                                            */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -335,6 +336,134 @@ function admin_account_change_password( $username ,
   // IRC bot message
   irc_bot_send_message("$mod_nick_raw has changed $username_raw's password - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
   irc_bot_send_message("$mod_nick_raw has changed $username_raw's password - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'admin');
+
+  // Return that all went well
+  return NULL;
+}
+
+
+
+
+/**
+ * Changes an account's access rights.
+ *
+ * @param   string        $username   Username of the account that will get their access rights changed.
+ * @param   string        $level      The new access rights to give the account.
+ *
+ * @return  string|int                Returns a string containing an error, or the user's id if all went well.
+ */
+
+function admin_account_change_rights( $username ,
+                                      $level    )
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Check if the required files have been included
+  require_included_file('user_management.lang.php');
+
+  // Sanitize and prepare the data
+  $username_raw   = $username;
+  $username       = sanitize($username, 'string');
+  $admin_id       = user_get_id();
+  $admin_nick_raw = user_get_username();
+
+  // Error: No username provided
+  if(!$username_raw)
+    return __('admin_deactivate_error_username');
+
+  // Error: Access rights don't exist
+  if($level < 0 || $level > 2)
+    return __('admin_rights_error_level');
+
+  // Look for the user id
+  $user_id = sanitize(database_entry_exists('users', 'username', $username), 'int', 0);
+
+  // Error: User not found
+  if(!$user_id)
+    return __('admin_deactivate_error_id');
+
+  // Error: Can't delete your own rights
+  if($user_id == $admin_id)
+    return __('admin_rights_error_self');
+
+  // Error: Can't get rid of the original user
+  if($user_id == 1 && $level < 2)
+    return __('admin_rights_error_founder');
+
+  // Demotion to user
+  if($level == 0)
+  {
+    // Error: User is already an user
+    if(!user_is_moderator($user_id) && !user_is_administrator($user_id))
+      return __('admin_rights_error_user');
+
+    // Update the access rights
+    query(" UPDATE  users
+            SET     users.is_moderator      = 0 ,
+                    users.is_administrator  = 0
+            WHERE   users.id                = '$user_id' ");
+
+    // Activity log
+    log_activity('users_rights_delete', 0, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw);
+    log_activity('users_rights_delete', 1, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw, $admin_nick_raw);
+
+    // IRC bot message
+    irc_bot_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'mod');
+    irc_bot_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'admin');
+  }
+
+  // Promotion to moderator
+  if($level == 1)
+  {
+    // Error: Demotions must go full circle
+    if(user_is_administrator($user_id))
+      return __('admin_rights_error_demotion');
+
+    // Error: User is already a moderator
+    if(user_is_moderator($user_id))
+      return __('admin_rights_error_mod');
+
+    // Update the access rights
+    query(" UPDATE  users
+            SET     users.is_moderator      = 1 ,
+                    users.is_administrator  = 0
+            WHERE   users.id                = '$user_id' ");
+
+    // Activity log
+    log_activity('users_rights_moderator', 0, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw);
+    log_activity('users_rights_moderator', 1, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw, $admin_nick_raw);
+
+    // IRC bot message
+    irc_bot_send_message("$username_raw has joined the website's administrative team as a moderator - ".$GLOBALS['website_url']."todo_link", 'english');
+    irc_bot_send_message("$username_raw a rejoint l'équipe de modération du site - ".$GLOBALS['website_url']."todo_link", 'french');
+    irc_bot_send_message("$username_raw has been promoted to moderator by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'mod');
+    irc_bot_send_message("$username_raw has been promoted to moderator by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'admin');
+  }
+
+  // Promotion to administrator
+  if($level == 2)
+  {
+    // Error: User is already an administrators
+    if(user_is_administrator($user_id))
+      return __('admin_rights_error_admin');
+
+    // Update the access rights
+    query(" UPDATE  users
+            SET     users.is_moderator      = 0 ,
+                    users.is_administrator  = 1
+            WHERE   users.id                = '$user_id' ");
+
+    // Activity log
+    log_activity('users_rights_administrator', 0, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw);
+    log_activity('users_rights_administrator', 1, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw, $admin_nick_raw);
+
+    // IRC bot message
+    irc_bot_send_message("$username_raw is now a website administrator - ".$GLOBALS['website_url']."todo_link", 'english');
+    irc_bot_send_message("$username_raw a rejoint l'équipe d'administration du site - ".$GLOBALS['website_url']."todo_link", 'french');
+    irc_bot_send_message("$username_raw has been promoted to administrator by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'mod');
+    irc_bot_send_message("$username_raw has been promoted to administrator by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'admin');
+  }
 
   // Return that all went well
   return NULL;

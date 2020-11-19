@@ -172,5 +172,34 @@ ___('admin_password_error_admin',   'FR', "Les modérateurs ne peuvent pas chang
 /*********************************************************************************************************************/
 
 // Rights: Title
-___('admin_rights_title', 'EN', "Account permissions");
+___('admin_rights_title', 'EN', "Account rights");
 ___('admin_rights_title', 'FR', "Permissions utilisateur");
+
+
+// Rights: Form
+___('admin_rights_form_title',  'EN', "Change an account's rights");
+___('admin_rights_form_title',  'FR', "Changer les droits d'un compte");
+___('admin_rights_submit',      'EN', "Change account rights");
+___('admin_rights_submit',      'FR', "Changer les permissions");
+
+
+// Rights: Form errors
+___('admin_rights_error_level',     'EN', "The requested access rights don't exist");
+___('admin_rights_error_level',     'FR', "Les droits d'accès souhaités n'existent pas");
+___('admin_rights_error_self',      'EN', "You can not remove your own rights");
+___('admin_rights_error_self',      'FR', "Impossible de changer vos propres droits d'accès");
+___('admin_rights_error_founder',   'EN', "The first website's account can't be demoted");
+___('admin_rights_error_founder',   'FR', "Impossible de rétrograder le premier compte du site");
+___('admin_rights_error_user',      'EN', "This account already has standard rights");
+___('admin_rights_error_user',      'FR', "Ce compte a déjà des droits standard");
+___('admin_rights_error_mod',       'EN', "This account is already a moderator");
+___('admin_rights_error_mod',       'FR', "Ce compte fait déjà partie de la modération");
+___('admin_rights_error_admin',     'EN', "This account is already an administrator");
+___('admin_rights_error_admin',     'FR', "Ce compte fait déjà partie de l'administration");
+___('admin_rights_error_demotion',  'EN', "Administrators can only be demoted to regular users (you can promote them back to anything afterwards)");
+___('admin_rights_error_demotion',  'FR', "Les administrateurs ne peuvent que être réduits au statut de simple utilisateurs (vous pourrez leur donner n'importe quel autre statut ensuite)");
+
+
+// Rights: Administrative team memebers
+___('admin_rights_list_title',  'EN', "Current administrative team");
+___('admin_rights_list_title',  'FR', "Équipe administrative actuelle");
