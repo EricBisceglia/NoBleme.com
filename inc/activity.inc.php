@@ -113,14 +113,6 @@ function log_activity_parse(  $admins_only          ,
     $return['FR']   = $mod_username.' a modifié le profil public de '.$username;
   }
 
-  else if($type === 'users_admin_edit_password')
-  {
-    $return['css']  = 'red bold';
-    $return['href'] = $path.'todo_link?id='.$userid;
-    $return['EN']   = $mod_username.' changed '.$username."'s password";
-    $return['FR']   = $mod_username.' a modifié le mot de passe de '.$username;
-  }
-
   else if($type === 'users_banned' && !$admins_only)
   {
     $return['css']  = 'red bold';

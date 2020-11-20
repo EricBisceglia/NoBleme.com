@@ -31,15 +31,17 @@ $copyright_date = date('Y');
 if(isset($page_url) && !isset($error_mode))
 {
   // Sanitize the data
+  $timestamp            = sanitize(time(), 'int');
   $page_url_sanitized   = sanitize($page_url, 'string');
   $queries_sanitized    = sanitize($GLOBALS['query'], 'int');
   $load_time_sanitized  = sanitize(($load_time * 1000), 'int');
 
   // Update the page stats
   query(" UPDATE  stats_pages
-          SET     stats_pages.query_count =     '$queries_sanitized'        ,
-                  stats_pages.load_time   =     '$load_time_sanitized'
-          WHERE   stats_pages.page_url    LIKE  '$page_url_sanitized' ");
+          SET     stats_pages.last_viewed_at  = '$timestamp'          ,
+                  stats_pages.query_count     = '$queries_sanitized'  ,
+                  stats_pages.load_time       = '$load_time_sanitized'
+          WHERE   stats_pages.page_url     LIKE '$page_url_sanitized' ");
 }
 
 

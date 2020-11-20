@@ -770,13 +770,13 @@ for($i = 0; $i < $random; $i++)
     {
       $edited_at = mt_rand($created_at, time());
       query(" INSERT INTO logs_activity
-              SET         logs_activity.happened_at                 = '$edited_at'                ,
-                          logs_activity.is_moderators_only          = 1                           ,
-                          logs_activity.language                    = 'ENFR'                      ,
-                          logs_activity.activity_type               = 'users_admin_edit_password' ,
-                          logs_activity.fk_users                    = '$user_id'                  ,
-                          logs_activity.activity_username           = '$username'                 ,
-                          logs_activity.activity_moderator_username = 'Admin'                     ");
+              SET         logs_activity.happened_at                 = '$edited_at'      ,
+                          logs_activity.is_moderators_only          = 1                 ,
+                          logs_activity.language                    = 'ENFR'            ,
+                          logs_activity.activity_type               = 'users_password'  ,
+                          logs_activity.fk_users                    = '$user_id'        ,
+                          logs_activity.activity_username           = '$username'       ,
+                          logs_activity.activity_moderator_username = 'Admin'           ");
     }
     if(mt_rand(0,66) >= 66)
     {

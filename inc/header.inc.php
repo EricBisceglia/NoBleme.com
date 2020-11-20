@@ -126,14 +126,17 @@ if(isset($page_url) && !isset($error_mode))
   $dpageviews = mysqli_fetch_array($qpageviews);
   $pageviews  = (isset($dpageviews["p_views"])) ? ($dpageviews["p_views"] + 1) : 1;
 
-  // If the page exists, increment its view count (unless user is an admin)
-  if(!$is_admin && mysqli_num_rows($qpageviews) != 0)
-    query(" UPDATE  stats_pages
-            SET     stats_pages.view_count      =     stats_pages.view_count + 1  ,
-                    stats_pages.page_name_en    =     '$page_en_sanitized'        ,
-                    stats_pages.page_name_fr    =     '$page_fr_sanitized'        ,
-                    stats_pages.last_viewed_at  =     '$page_timestamp'
-            WHERE   stats_pages.page_url        LIKE  '$page_url_sanitized' ");
+  // If the page exists, increment its view count
+  if(mysqli_num_rows($qpageviews) != 0)
+  {
+    // Don't increment it however if the user is an admin in production mode
+    if(!$is_admin || $GLOBALS['dev_mode'])
+      query(" UPDATE  stats_pages
+              SET     stats_pages.view_count      =     stats_pages.view_count + 1  ,
+                      stats_pages.page_name_en    =     '$page_en_sanitized'        ,
+                      stats_pages.page_name_fr    =     '$page_fr_sanitized'
+              WHERE   stats_pages.page_url        LIKE  '$page_url_sanitized' ");
+  }
 
   // If it doesn't, create the page and give it its first pageview
   else if(!isset($dpageviews["p_views"]))
@@ -808,6 +811,9 @@ $javascripts .= '
       <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_admin_stats')?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/admin/stats_metrics', __('submenu_admin_metrics'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_admin_pageviews'), 'header_submenu_link text_blue', 1, $path);?>

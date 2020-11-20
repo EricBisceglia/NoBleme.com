@@ -809,7 +809,7 @@ if($last_query < 21)
                                       'register'                        => 'users_register'             ,
                                       'profil'                          => 'users_profile_edit'         ,
                                       'profil_edit'                     => 'users_admin_edit_profile'   ,
-                                      'editpass'                        => 'users_admin_edit_password'  ,
+                                      'editpass'                        => 'users_password'             ,
                                       'ban'                             => 'users_banned'               ,
                                       'deban'                           => 'users_unbanned'             ,
                                       'droits_delete'                   => 'users_rights_delete'        ,

@@ -760,8 +760,10 @@ ___('submenu_admin_deactivate',     'FR', "Supprimer un compte");
 
 ___('submenu_admin_stats',          'EN', "Stats");
 ___('submenu_admin_stats',          'FR', "Statistiques");
+___('submenu_admin_metrics',        'EN', "Metrics");
+___('submenu_admin_metrics',        'FR', "Performances");
 ___('submenu_admin_pageviews',      'EN', "Pageviews");
-___('submenu_admin_pageviews',      'FR', "Popularité des pages");
+___('submenu_admin_pageviews',      'FR', "Pages populaires");
 ___('submenu_admin_doppelganger',   'EN', "Doppelgänger");
 ___('submenu_admin_doppelganger',   'FR', "Doppelgänger");
 
