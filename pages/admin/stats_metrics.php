@@ -21,6 +21,9 @@ $page_url         = "pages/admin/stats_metrics";
 $page_title_en    = "Metrics";
 $page_title_fr    = "Performances";
 
+// Extra JS
+$js = array('admin/stats');
+
 
 
 
@@ -29,6 +32,17 @@ $page_title_fr    = "Performances";
 /*                                                     BACK END                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Reset the metrics
+
+$admin_reset_metrics = form_fetch_element('admin_metrics_reset', -1);
+
+if(isset($_POST['admin_metrics_reset']))
+  stats_metrics_reset($admin_reset_metrics);
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Get the metrics
@@ -46,15 +60,19 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50">
 
-  <h1 class="align_center padding_bot">
+  <h1 class="align_center bigpadding_bot">
     <?=__('submenu_admin_metrics')?>
   </h1>
 
-  <table>
+  <table id="admin_metrics_table">
+    <?php } if($admin_reset_metrics <= 0) { ?>
     <thead class="align_center">
 
       <tr class="uppercase">
-        <th colspan="3" class="dark">
+        <th colspan="2" rowspan="7" class="dark valign_middle">
+          <button onclick="admin_metrics_reset('<?=__('admin_metrics_reset_warning')?>');"><?=__('admin_metrics_reset')?></button>
+        </th>
+        <th class="dark">
           &nbsp;
         </th>
         <th>
@@ -63,10 +81,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <th>
           <?=__('admin_metrics_load')?>
         </th>
+        <th rowspan="8" class="dark">
+          &nbsp;
+        </th>
       </tr>
 
       <tr>
-        <th colspan="3" class="uppercase align_right bold dark spaced">
+        <th class="uppercase align_right bold dark spaced">
           <?=__('admin_metrics_minimum').__(':')?>
         </th>
         <th class="bold blue">
@@ -78,7 +99,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <tr>
-        <th colspan="3" class="uppercase align_right bold dark spaced">
+        <th class="uppercase align_right bold dark spaced">
           <?=__('admin_metrics_target').__(':')?>
         </th>
         <th class="bold green">
@@ -90,7 +111,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <tr>
-        <th colspan="3" class="uppercase align_right bold dark spaced">
+        <th class="uppercase align_right bold dark spaced">
           <?=__('admin_metrics_average').__(':')?>
         </th>
         <th class="bold purple">
@@ -102,7 +123,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <tr>
-        <th colspan="3" class="uppercase align_right bold dark spaced">
+        <th class="uppercase align_right bold dark spaced">
           <?=__('admin_metrics_warning').__(':')?>
         </th>
         <th class="bold orange">
@@ -114,7 +135,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <tr>
-        <th colspan="3" class="uppercase align_right bold dark spaced">
+        <th class="uppercase align_right bold dark spaced">
           <?=__('admin_metrics_bad').__(':')?>
         </th>
         <th class="bold red">
@@ -126,7 +147,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <tr>
-        <th colspan="3" class="uppercase align_right bold dark spaced">
+        <th class="uppercase align_right bold dark spaced">
           <?=__('admin_metrics_maximum').__(':')?>
         </th>
         <th class="bold brown">
@@ -159,6 +180,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <th>
           <?=__('admin_metrics_load')?>
         </th>
+        <th>
+          <?=__('act')?>
+        </th>
       </tr>
 
     </thead>
@@ -166,7 +190,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?php for($i = 0; $i < $admin_metrics['rows']; $i++) { ?>
 
-      <tr>
+      <tr id="admin_metrics_row_<?=$admin_metrics[$i]['id']?>">
         <?php if($admin_metrics[$i]['url_full']) { ?>
         <td class="tooltip_container align_left">
           <?=__link($admin_metrics[$i]['url_full'], $admin_metrics[$i]['url'], 'bold noglow text_white')?>
@@ -191,11 +215,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td class="nowrap spaced bold <?=$admin_metrics[$i]['css_load']?>">
           <?=$admin_metrics[$i]['load']?>
         </td>
+        <td>
+          <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="<?=__('admin_metrics_table_reset')?>" onclick="admin_metrics_reset('<?=__('admin_metrics_table_reset_warning')?>', <?=$admin_metrics[$i]['id']?>);">
+        </td>
       </tr>
 
       <?php } ?>
 
     </tbody>
+    <?php } if(!page_is_fetched_dynamically()) { ?>
   </table>
 
 </div>

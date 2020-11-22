@@ -9,6 +9,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  stats_metrics_list          Lists data regarding website performance.                                            */
+/*  stats_metrics_reset         Resets website metrics.                                                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -77,11 +78,11 @@ function stats_metrics_list()
   $data['rows'] = $i;
 
   // Calculate the reference metrics
-  $average_queries  = round($total_queries / $data['rows']);
+  $average_queries  = ($data['rows']) ? round($total_queries / $data['rows']) : 0;
   $good_queries     = round($average_queries / 1.5);
   $bad_queries      = round($average_queries * 1.5);
   $awful_queries    = round($average_queries * 2);
-  $average_load     = round($total_load / $data['rows']);
+  $average_load     = ($data['rows']) ? round($total_load / $data['rows']) : 0;
   $good_load        = round($average_load / 2);
   $bad_load         = round($average_load * 2);
   $awful_load       = round($average_load * 3);
@@ -124,4 +125,37 @@ function stats_metrics_list()
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Resets website metrics.
+ *
+ * @param   int|null  $metric_id  The id of the metric to reset - all metrics will be reset if the id is 0.
+ *
+ * @return  void
+ */
+
+function stats_metrics_reset( $metric_id = NULL )
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Sanatize the metric id
+  $metric_id = sanitize($metric_id, 'int', -1);
+
+  // Wipe a specific metric
+  if($metric_id > 0)
+    query(" UPDATE  stats_pages
+            SET     stats_pages.query_count = 0 ,
+                    stats_pages.load_time   = 0
+            WHERE   stats_pages.id          = '$metric_id' ");
+
+  // Wipe all metrics
+  else if($metric_id == 0)
+    query(" UPDATE  stats_pages
+            SET     stats_pages.query_count = 0 ,
+                    stats_pages.load_time   = 0 ");
 }
