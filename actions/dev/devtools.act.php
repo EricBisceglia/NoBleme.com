@@ -40,7 +40,7 @@ function dev_doc_icon_to_clipboard( $name                               ,
                                     $size                   = 'normal'  )
 {
   // Prepare the data
-  $title  = ($title_is_a_translation) ? "&lt;?=__('$title')?>" : $title ;
+  $title  = ($title_is_a_translation) ? "&lt;?=string_change_case(__('$title'), 'initials')?>" : $title ;
   $class  = ($size == 'small') ? 'smallicon' : 'icon';
   $name   = ($size == 'small') ? $name.'_small' : $name;
 

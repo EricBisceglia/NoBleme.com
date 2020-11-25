@@ -743,7 +743,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           add
         </td>
         <td>
-          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/add.svg" alt="+" title="<?=__('add')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('add', 'add', 0, '+')?>');">
+          <img class="icon valign_middle pointer" src="<?=$path?>img/icons/add.svg" alt="+" title="<?=__('add')?>" onclick="to_clipboard('<?=dev_doc_icon_to_clipboard('add', 'add', 1, '+')?>');">
         </td>
         <td>
           &nbsp;
@@ -1441,11 +1441,11 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
         &lt;tr>
           &lt;th>
             HEADER
-            &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="&lt;?=__('sort')?>">
+            &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="&lt;?=string_change_case(__('sort'), 'initials')?>">
           &lt;/th>
           &lt;th>
             HEADER
-            &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="&lt;?=__('sort')?>">
+            &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="&lt;?=string_change_case(__('sort'), 'initials')?>">
           &lt;/th>
           &lt;th>
             ICONS
@@ -1456,7 +1456,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
           &lt;th>
             &lt;select class="table_search" name="example_select" id="example_select">
-              &lt;option value="0">Option&lt;/option>
+              &lt;option value="0">&amp;nbsp;&lt;/option>
             &lt;/select>
           &lt;/th>
 
@@ -1465,7 +1465,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           &lt;/th>
 
           &lt;th>
-            &lt;input type="submit" class="table_search" name="example_submit" id="example_submit" value="Search">
+            &lt;input type="submit" class="table_search" name="example_submit" id="example_submit" value="&lt;?=string_change_case(__('search'), 'initials')?>">
           &lt;/th>
 
         &lt;/tr>
@@ -1487,8 +1487,8 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
             body
           &lt;/td>
           &lt;td class="align_center">
-            &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/help_small.svg" alt="?" title="&lt;?=__('details')?>">
-            &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/delete_small.svg" alt="X" title="&lt;?=__('delete')?>">
+            &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/help_small.svg" alt="?" title="&lt;?=string_change_case(__('details'), 'initials')?>">
+            &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/delete_small.svg" alt="X" title="&lt;?=string_change_case(__('delete'), 'initials')?>">
           &lt;/td>
         &lt;/tr>
 

@@ -256,7 +256,7 @@ flush();
 // Task scheduler
 
 // Determine the number of scheduled tasks to generate
-$random = mt_rand(100,200);
+$random = mt_rand(15,30);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
@@ -622,7 +622,7 @@ flush();
 // Mass create randomly generated users
 
 // Determine the number of users to generate
-$random = mt_rand(500,1000);
+$random = mt_rand(250,500);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
@@ -934,7 +934,7 @@ flush();
 // Add some randomly generated private messages
 
 // Determine the number of messages to generate
-$random = mt_rand(1500,3000);
+$random = mt_rand(750,1500);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
@@ -975,7 +975,7 @@ flush();
 // Randomly generated devblogs
 
 // Determine the number of devblogs to generate
-$random = mt_rand(25, 75);
+$random = mt_rand(15, 30);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
@@ -1039,7 +1039,7 @@ ob_flush();
 flush();
 
 // Generate some random milestones
-$random = mt_rand(25,50);
+$random = mt_rand(10,20);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
@@ -1063,7 +1063,7 @@ ob_flush();
 flush();
 
 // Generate some random tasks
-$random = mt_rand(250,500);
+$random = mt_rand(100,200);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
@@ -1145,7 +1145,7 @@ flush();
 /*********************************************************************************************************************/
 
 // Generate some meetups
-$random       = mt_rand(40,60);
+$random       = mt_rand(10,20);
 $meetup_users = 0;
 for($i = 0; $i < $random; $i++)
 {
@@ -1379,7 +1379,7 @@ flush();
 /*********************************************************************************************************************/
 
 // Generate some quotes
-$random       = mt_rand(200,400);
+$random       = mt_rand(100,200);
 $quote_users  = 0;
 for($i = 0; $i < $random; $i++)
 {
@@ -1456,7 +1456,7 @@ flush();
 // Texts
 
 // Generate some random texts
-$random = mt_rand(100,200);
+$random = mt_rand(50,100);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
@@ -1495,7 +1495,7 @@ flush();
 // Contests
 
 // Generate some random contests
-$random         = mt_rand(8,14);
+$random         = mt_rand(5,10);
 $contest_votes  = 0;
 for($i = 1; $i < $random; $i++)
 {
@@ -1630,7 +1630,7 @@ flush();
 // internet encyclopedia
 
 // Generate some random categories
-$random = mt_rand(8,16);
+$random = mt_rand(10,15);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
@@ -1684,7 +1684,7 @@ flush();
 // Generate some random pages
 $page_titles_en = array();
 $page_titles_fr = array();
-$random         = mt_rand(200,400);
+$random         = mt_rand(150,300);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
@@ -1903,7 +1903,7 @@ flush();
 // IRC bot logs
 
 // Generate some random logs
-$random   = mt_rand(500,1000);
+$random   = mt_rand(100,200);
 $channels = array('#nobleme', '#english', '#dev', '#admin');
 for($i = 0; $i < $random; $i++)
 {
@@ -1929,48 +1929,5 @@ for($i = 0; $i < $random; $i++)
 
 // Output progress
 echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>IRC bot logs</td></tr>";
-ob_flush();
-flush();
-
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                       STATS                                                       */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Pageviews
-
-// Generate some random pages
-$random   = mt_rand(500,1000);
-for($i = 0; $i < $random; $i++)
-{
-  // Generate random data
-  $page_name_en       = ucfirst(fixtures_generate_data('sentence', 2, 8));
-  $page_name_fr       = ucfirst(fixtures_generate_data('sentence', 2, 8));
-  $page_url           = 'pages/'.mb_strtolower(fixtures_generate_data('sentence', 1, 1, 1)).'/'.fixtures_generate_data('string', 10, 20, 0, 1);
-  $last_viewed_at     = mt_rand(1111239420, time());
-  $view_count         = (mt_rand(0, 25) < 25) ? mt_rand(0, 100) : mt_rand(100, 1000000);
-  $view_count_archive = (mt_rand(0, $view_count));
-  $query_count        = (mt_rand(0, 50) < 50) ? mt_rand(10, 25) : mt_rand(10, 100);
-  $load_time          = (mt_rand(0, 50) < 50) ? mt_rand(30, 90) : mt_rand(50, 2500);
-
-  // Generate the stats
-  query(" INSERT INTO stats_pages
-          SET         stats_pages.page_name_en        = '$page_name_en'       ,
-                      stats_pages.page_name_fr        = '$page_name_fr'       ,
-                      stats_pages.page_url            = '$page_url'           ,
-                      stats_pages.last_viewed_at      = '$last_viewed_at'     ,
-                      stats_pages.view_count          = '$view_count'         ,
-                      stats_pages.view_count_archive  = '$view_count_archive' ,
-                      stats_pages.query_count         = '$query_count'        ,
-                      stats_pages.load_time           = '$load_time'          ");
-}
-
-// Output progress
-echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>page stats</td></tr>";
 ob_flush();
 flush();

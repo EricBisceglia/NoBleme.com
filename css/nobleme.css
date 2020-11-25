@@ -55,6 +55,8 @@
 .underlined      { text-decoration: underline;                 }
 .strikethrough   { text-decoration: line-through;              }
 .small           { font-size: 0.75em;                          }
+.smaller         { font-size: 0.50em;                          }
+.smallest        { font-size: 0.25em;                          }
 .big             { font-size: 1.25em;                          }
 .bigger          { font-size: 1.5em;                           }
 .biggest         { font-size: 2.0em;                           }

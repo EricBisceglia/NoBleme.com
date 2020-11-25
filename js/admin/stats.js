@@ -1,8 +1,37 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  admin_metrics_search    Performs a search through the metrics.                                                   */
 /*  admin_metrics_reset     Triggers the resetting of page metrics.                                                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+
+/**
+ * Performs a search through the metrics.
+ *
+ * @param   {string}  [sort_data] The column which should be used to sort the data.
+ *
+ * @returns {void}
+*/
+
+function admin_metrics_search( sort_data = null )
+{
+  // Update the data sort input if requested
+  if(sort_data)
+    document.getElementById('stats_metrics_sort').value = sort_data;
+
+  // Assemble the postdata
+  postdata  = 'stats_metrics_sort='             + fetch_sanitize_id('stats_metrics_sort');
+  postdata += '&stats_metrics_search_url='      + fetch_sanitize_id('stats_metrics_search_url');
+  postdata += '&stats_metrics_search_queries='  + fetch_sanitize_id('stats_metrics_search_queries');
+  postdata += '&stats_metrics_search_load='     + fetch_sanitize_id('stats_metrics_search_load');
+
+  // Submit the search
+  fetch_page('stats_metrics', 'stats_metrics_tbody', postdata);
+}
+
+
+
 
 
 /**

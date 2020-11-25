@@ -36,8 +36,10 @@ $js = array('admin/stats');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Reset the metrics
 
+// Fetch the reset requests
 $admin_reset_metrics = form_fetch_element('admin_metrics_reset', -1);
 
+// Reset the metrics if required
 if(isset($_POST['admin_metrics_reset']))
   stats_metrics_reset($admin_reset_metrics);
 
@@ -47,7 +49,14 @@ if(isset($_POST['admin_metrics_reset']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Get the metrics
 
-$admin_metrics = stats_metrics_list();
+// Check whether a search has been requested
+$admin_metrics_search = form_fetch_element('stats_metrics_sort', NULL, 1);
+
+// Fetch the metrics
+$admin_metrics = stats_metrics_list(  form_fetch_element('stats_metrics_sort', 'activity')  ,
+                 array( 'url'     =>  form_fetch_element('stats_metrics_search_url')        ,
+                        'queries' =>  form_fetch_element('stats_metrics_search_queries')    ,
+                        'load'    =>  form_fetch_element('stats_metrics_search_load')       ));
 
 
 
@@ -58,30 +67,30 @@ $admin_metrics = stats_metrics_list();
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_50">
+<div class="width_60">
 
   <h1 class="align_center bigpadding_bot">
     <?=__('submenu_admin_metrics')?>
   </h1>
 
   <table id="admin_metrics_table">
-    <?php } if($admin_reset_metrics <= 0) { ?>
+    <?php } if($admin_reset_metrics <= 0 && !$admin_metrics_search) { ?>
     <thead class="align_center">
 
       <tr class="uppercase">
-        <th colspan="2" rowspan="7" class="dark valign_middle">
+        <th colspan="2" rowspan="8" class="dark valign_middle">
           <button onclick="admin_metrics_reset('<?=__('admin_metrics_reset_warning')?>');"><?=__('admin_metrics_reset')?></button>
         </th>
         <th class="dark">
           &nbsp;
         </th>
-        <th>
+        <th class="dark">
           <?=__('admin_metrics_queries')?>
         </th>
-        <th>
+        <th class="dark">
           <?=__('admin_metrics_load')?>
         </th>
-        <th rowspan="8" class="dark">
+        <th rowspan="9" class="dark">
           &nbsp;
         </th>
       </tr>
@@ -100,18 +109,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <th class="uppercase align_right bold dark spaced">
-          <?=__('admin_metrics_target').__(':')?>
-        </th>
-        <th class="bold green">
-          <?=$admin_metrics['good_queries']?>
-        </th>
-        <th class="bold green">
-          <?=$admin_metrics['good_load']?>
-        </th>
-      </tr>
-
-      <tr>
-        <th class="uppercase align_right bold dark spaced">
           <?=__('admin_metrics_average').__(':')?>
         </th>
         <th class="bold purple">
@@ -119,6 +116,36 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </th>
         <th class="bold purple">
           <?=$admin_metrics['average_load']?>
+        </th>
+      </tr>
+
+      <tr>
+        <th class="uppercase align_right bold dark spaced">
+          <?=__('admin_metrics_maximum').__(':')?>
+        </th>
+        <th class="bold brown">
+          <?=$admin_metrics['max_queries']?>
+        </th>
+        <th class="bold brown">
+          <?=$admin_metrics['max_load']?>
+        </th>
+      </tr>
+
+      <tr>
+        <th colspan="3" class="dark smallest">
+          &nbsp;
+        </th>
+      </tr>
+
+      <tr>
+        <th class="uppercase align_right bold dark spaced">
+          <?=__('admin_metrics_target').__(':')?>
+        </th>
+        <th class="bold green">
+          <?=$admin_metrics['good_queries']?>
+        </th>
+        <th class="bold green">
+          <?=$admin_metrics['good_load']?>
         </th>
       </tr>
 
@@ -147,48 +174,99 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <tr>
-        <th class="uppercase align_right bold dark spaced">
-          <?=__('admin_metrics_maximum').__(':')?>
-        </th>
-        <th class="bold brown">
-          <?=$admin_metrics['max_queries']?>
-        </th>
-        <th class="bold brown">
-          <?=$admin_metrics['max_load']?>
-        </th>
-      </tr>
-
-      <tr>
         <th colspan="5" class="dark">
           &nbsp;
         </th>
       </tr>
 
       <tr class="uppercase">
+
         <th>
           <?=__('admin_metrics_page')?>
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_metrics_search('url');">
         </th>
+
         <th>
           <?=__('admin_metrics_activity')?>
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_metrics_search('activity');">
         </th>
+
         <th>
           <?=__('admin_metrics_views')?>
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_metrics_search('views');">
         </th>
+
         <th>
           <?=__('admin_metrics_queries')?>
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_metrics_search('queries');">
         </th>
+
         <th>
           <?=__('admin_metrics_load')?>
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_metrics_search('load');">
         </th>
+
         <th>
           <?=__('act')?>
         </th>
+
+      </tr>
+
+      <tr>
+
+        <th>
+          <input type="hidden" name="stats_metrics_sort" id="stats_metrics_sort" value="activity">
+          <input type="text" class="table_search" name="stats_metrics_search_url" id="stats_metrics_search_url" value="" onkeyup="admin_metrics_search();">
+        </th>
+
+        <th colspan="2">
+          &nbsp;
+        </th>
+
+        <th>
+          <select class="table_search" name="stats_metrics_search_queries" id="stats_metrics_search_queries" onchange="admin_metrics_search();">
+            <option value="0">&nbsp;</option>
+            <option value="1" class="bold blue"><?=string_change_case(__('admin_metrics_minimum'), 'uppercase')?></option>
+            <option value="2" class="bold green"><?=string_change_case(__('admin_metrics_target'), 'uppercase')?></option>
+            <option value="3" class="bold orange"><?=string_change_case(__('admin_metrics_warning'), 'uppercase')?></option>
+            <option value="4" class="bold red"><?=string_change_case(__('admin_metrics_bad'), 'uppercase')?></option>
+            <option value="5" class="bold brown"><?=string_change_case(__('admin_metrics_maximum'), 'uppercase')?></option>
+          </select>
+        </th>
+
+        <th>
+          <select class="table_search" name="stats_metrics_search_load" id="stats_metrics_search_load" onchange="admin_metrics_search();">
+            <option value="0">&nbsp;</option>
+            <option value="1" class="bold blue"><?=string_change_case(__('admin_metrics_minimum'), 'uppercase')?></option>
+            <option value="2" class="bold green"><?=string_change_case(__('admin_metrics_target'), 'uppercase')?></option>
+            <option value="3" class="bold orange"><?=string_change_case(__('admin_metrics_warning'), 'uppercase')?></option>
+            <option value="4" class="bold red"><?=string_change_case(__('admin_metrics_bad'), 'uppercase')?></option>
+            <option value="5" class="bold brown"><?=string_change_case(__('admin_metrics_maximum'), 'uppercase')?></option>
+          </select>
+        </th>
+
+        <th>
+          &nbsp;
+        </th>
+
       </tr>
 
     </thead>
-    <tbody class="altc align_center">
+    <tbody class="altc align_center" id="stats_metrics_tbody">
+    <?php } if($admin_reset_metrics <= 0) { ?>
+
+      <tr>
+        <td class="uppercase bold dark" colspan="6">
+          <?php if($admin_metrics['realrows'] == $admin_metrics['totalrows']) { ?>
+          <?=__('admin_metrics_count', $admin_metrics['totalrows'], 0, 0, array($admin_metrics['totalrows']))?>
+          <?php } else { ?>
+          <?=__('admin_metrics_count_search', $admin_metrics['realrows'], 0, 0, array($admin_metrics['realrows'], $admin_metrics['totalrows']))?>
+          <?php } ?>
+        </td>
+      </tr>
 
       <?php for($i = 0; $i < $admin_metrics['rows']; $i++) { ?>
+      <?php if(!$admin_metrics[$i]['skip']) { ?>
 
       <tr id="admin_metrics_row_<?=$admin_metrics[$i]['id']?>">
         <?php if($admin_metrics[$i]['url_full']) { ?>
@@ -221,7 +299,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <?php } ?>
+      <?php } ?>
 
+      <?php } if($admin_reset_metrics <= 0 && !$admin_metrics_search) { ?>
     </tbody>
     <?php } if(!page_is_fetched_dynamically()) { ?>
   </table>
