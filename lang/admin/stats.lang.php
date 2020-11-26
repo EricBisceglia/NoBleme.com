@@ -38,7 +38,7 @@ ___('admin_metrics_maximum',        'EN', "Maximum");
 ___('admin_metrics_maximum',        'FR', "Maximum");
 ___('admin_metrics_page',           'EN', "Page URL");
 ___('admin_metrics_page',           'FR', "URL de la page");
-___('admin_metrics_activity',       'EN', "Last used");
+___('admin_metrics_activity',       'EN', "Activity");
 ___('admin_metrics_activity',       'FR', "Activité");
 ___('admin_metrics_views',          'EN', "Views");
 ___('admin_metrics_views',          'FR', "Vues");
@@ -57,3 +57,27 @@ ___('admin_metrics_table_reset',          'EN', "Reset");
 ___('admin_metrics_table_reset',          'FR', "Remettre à zéro");
 ___('admin_metrics_table_reset_warning',  'EN', "Confirm the irreversible deletion of this page\'s metrics");
 ___('admin_metrics_table_reset_warning',  'FR', "Confirmer la suppression irréversible des indicateurs de cette page");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   DOPPELGÄNGER                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Doppelgänger: Header
+___('admin_doppel_subtitle',  'EN', "Accounts sharing an IP address");
+___('admin_doppel_subtitle',  'FR', "Comptes partageant une adresse IP");
+___('admin_doppel_none',      'EN', "There are currently no doppelgänger on the website.");
+___('admin_doppel_none',      'FR', "Il n'y a actuellement aucun doppelgänger sur le site.");
+
+
+// Doppelgänger: Table
+___('admin_doppel_ip',        'EN', "IP address");
+___('admin_doppel_ip',        'FR', "Adresse IP");
+___('admin_doppel_activity',  'EN', "Last active");
+___('admin_doppel_activity',  'FR', "Dernière activité");
+___('admin_doppel_banned',    'EN', "Banned until");
+___('admin_doppel_banned',    'FR', "Compte banni");

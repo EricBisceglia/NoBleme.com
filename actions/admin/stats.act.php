@@ -11,6 +11,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  stats_metrics_list          Lists data regarding website performance.                                            */
 /*  stats_metrics_reset         Resets website metrics.                                                              */
 /*                                                                                                                   */
+/*  stats_doppelgangers_list    Lists users sharing the same IP address.                                             */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -216,4 +218,76 @@ function stats_metrics_reset( $metric_id = NULL )
     query(" UPDATE  stats_pages
             SET     stats_pages.query_count = 0 ,
                     stats_pages.load_time   = 0 ");
+}
+
+
+
+
+/**
+ * Lists users sharing the same IP address.
+ *
+ * @return  void
+ */
+
+function stats_doppelgangers_list()
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+
+  // Fetch the doppelgangers
+  $qdoppel = query("  SELECT    users.id                  AS 'u_id'     ,
+                                users.username            AS 'u_nick'   ,
+                                users.last_visited_at     AS 'u_active' ,
+                                users.current_ip_address  AS 'u_ip'     ,
+                                users.is_banned_until     AS 'u_banned'
+                      FROM      users
+                      WHERE     users.current_ip_address  NOT LIKE  ''
+                      AND       users.current_ip_address  NOT LIKE  '0.0.0.0'
+                      AND       users.is_deleted          =         0
+                      AND       users.current_ip_address  IN (  SELECT    users.current_ip_address
+                                                                FROM      users
+                                                                GROUP BY  users.current_ip_address
+                                                                HAVING    COUNT(users.current_ip_address) > 1 )
+                      ORDER BY  users.current_ip_address  ASC   ,
+                                users.last_visited_at     DESC  ");
+
+  // Initialize the ban check counter
+  $data['includes_bans'] = 0;
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qdoppel); $i++)
+  {
+    $data[$i]['id']         = sanitize_output($row['u_id']);
+    $data[$i]['ip']         = sanitize_output($row['u_ip']);
+    $data[$i]['username']   = sanitize_output($row['u_nick']);
+    $data[$i]['activity']   = sanitize_output(time_since($row['u_active']));
+    $data[$i]['banned']     = ($row['u_banned']) ? date_to_text($row['u_banned'], 1) : 0;
+    $data['includes_bans']  = ($row['u_banned']) ? 1 : $data['includes_bans'];
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Initialize the rowspan counter
+  $count = 1;
+
+  // Go through the rows once again but in reverse in order count the amount of times an IP is shared
+  for($i = ($data['rows'] - 1); $i >= 0; $i--)
+  {
+    if($i < ($data['rows'] - 1) && $data[$i]['ip'] == $data[$i+1]['ip'])
+      $count++;
+    else
+      $count = 1;
+    $data[$i]['count'] = $count;
+  }
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('file' => 'admin/stats.act.php', 'function' => 'stats_doppelgangers_list', 'data' => $data));
+
+  // Return the prepared data
+  return $data;
 }
