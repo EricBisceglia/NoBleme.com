@@ -816,7 +816,7 @@ $javascripts .= '
           <?=__link('pages/admin/stats_metrics', __('submenu_admin_metrics'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_admin_pageviews'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/admin/stats_views', __('submenu_admin_pageviews'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('pages/admin/stats_doppelganger', __('submenu_admin_doppelganger'), 'header_submenu_link', 1, $path);?>

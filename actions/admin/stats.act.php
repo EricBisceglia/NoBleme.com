@@ -11,6 +11,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  stats_metrics_list          Lists data regarding website performance.                                            */
 /*  stats_metrics_reset         Resets website metrics.                                                              */
 /*                                                                                                                   */
+/*  stats_views_list            Lists data regarding pageviews.                                                      */
+/*                                                                                                                   */
 /*  stats_doppelgangers_list    Lists users sharing the same IP address.                                             */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -218,6 +220,70 @@ function stats_metrics_reset( $metric_id = NULL )
     query(" UPDATE  stats_pages
             SET     stats_pages.query_count = 0 ,
                     stats_pages.load_time   = 0 ");
+}
+
+
+
+
+/**
+ * Lists data regarding pageviews.
+ *
+ * @return  void
+ */
+
+function stats_views_list()
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+  require_included_file('functions_numbers.inc.php');
+  require_included_file('functions_mathematics.inc.php');
+
+  // Fetch the views
+  $qviews = query(" SELECT    stats_pages.id                  AS 'p_id'       ,
+                              stats_pages.page_name_en        AS 'p_name_en'  ,
+                              stats_pages.page_name_fr        AS 'p_name_fr'  ,
+                              stats_pages.page_url            AS 'p_url'      ,
+                              stats_pages.last_viewed_at      AS 'p_activity' ,
+                              stats_pages.view_count          AS 'p_views'    ,
+                              stats_pages.view_count_archive  AS 'p_oldviews'
+                    FROM      stats_pages
+                    ORDER BY  stats_pages.view_count          DESC ,
+                              stats_pages.view_count_archive  DESC ,
+                              stats_pages.last_viewed_at      DESC ");
+
+  // Fetch the current user'slanguage
+  $lang = user_get_language();
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qviews); $i++)
+  {
+    $data[$i]['id']       = sanitize_output($row['p_id']);
+    $temp                 = ($lang == 'EN') ? $row['p_name_en'] : $row['p_name_fr'];
+    $data[$i]['name']     = ($temp) ? sanitize_output(string_truncate($temp, 30, '...')) : '-';
+    $data[$i]['fullname'] = (mb_strlen($temp) > 30) ? sanitize_output($temp) : NULL;
+    $data[$i]['url']      = sanitize_output($row['p_url']);
+    $data[$i]['activity'] = sanitize_output(time_since($row['p_activity']));
+    $data[$i]['views']    = sanitize_output($row['p_views']);
+    $data[$i]['oldviews'] = sanitize_output($row['p_oldviews']);
+    $temp                 = $row['p_views'] - $row['p_oldviews'];
+    $data[$i]['growth']   = ($temp) ? sanitize_output(number_prepend_sign($temp)) : '-';
+    $temp                 = ($row['p_oldviews']) ? maths_percentage_growth($row['p_oldviews'], $row['p_views']) : 0;
+    $temp                 = ($temp) ? number_display_format($temp, 'percentage', 0, 1) : 0;
+    $data[$i]['pgrowth']  = ($temp) ? sanitize_output($temp) : '-';
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('file' => 'admin/stats.act.php', 'function' => 'stats_views_list', 'data' => $data));
+
+  // Return the prepared data
+  return $data;
 }
 
 
