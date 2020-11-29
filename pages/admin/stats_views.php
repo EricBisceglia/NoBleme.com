@@ -47,6 +47,13 @@ if($stats_views_delete)
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Reset the comparison date
+
+if(isset($_POST['stats_views_reset']))
+  stats_views_reset();
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the page popularity data
@@ -69,110 +76,125 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('submenu_admin_pageviews')?>
   </h1>
 
-  <table>
-    <thead>
+  <h5 class="align_center padding_bot">
+    <?=__('admin_views_date')?><br>
+    <?=$stats_views['comparison_date']?>
+  </h5>
 
-      <tr class="uppercase">
-        <th>
-          <?=__('admin_views_name')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('name');">
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/link_small.svg" alt="v" title="<?=string_change_case(__('link'), 'initials')?>" onclick="admin_views_search('url');">
-        </th>
-        <th class="black text_white">
-          <?=__('admin_metrics_views')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('views');">
-        </th>
-        <th colspan="2">
-          <?=__('admin_views_growth')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('growth');">
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('pgrowth');">
-        </th>
-        <th>
-          <?=__('admin_views_old')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('oldviews');">
-        </th>
-        <th>
-          <?=__('admin_metrics_activity')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('activity');">
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_up_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('ractivity');">
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/link_small.svg" alt="v" title="<?=string_change_case(__('link'), 'initials')?>" onclick="admin_views_search('uactivity');">
-        </th>
-        <th>
-          <?=__('act')?>
-        </th>
-      </tr>
+  <div class="align_center bigpadding_bot">
+    <form method="POST" onsubmit="return confirm('<?=__('admin_views_warning')?>');">
+      <fieldset>
+        <input type="submit" name="stats_views_reset" value="<?=__('admin_views_reset')?>">
+      </fieldset>
+    </form>
+  </div>
 
-      <tr>
+  <div class="padding_top">
+    <table>
+      <thead>
 
-        <th>
-          <input type="hidden" name="stats_views_sort" id="stats_views_sort" value="">
-          <input type="text" class="table_search" name="stats_views_name" id="stats_views_name" value="" onkeyup="admin_views_search();">
-        </th>
+        <tr class="uppercase">
+          <th>
+            <?=__('admin_views_name')?>
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('name');">
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/link_small.svg" alt="v" title="<?=string_change_case(__('link'), 'initials')?>" onclick="admin_views_search('url');">
+          </th>
+          <th class="black text_white">
+            <?=__('admin_metrics_views')?>
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('views');">
+          </th>
+          <th colspan="2">
+            <?=__('admin_views_growth')?>
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('growth');">
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('pgrowth');">
+          </th>
+          <th>
+            <?=__('admin_views_old')?>
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('oldviews');">
+          </th>
+          <th>
+            <?=__('admin_metrics_activity')?>
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('activity');">
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_up_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('ractivity');">
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/link_small.svg" alt="v" title="<?=string_change_case(__('link'), 'initials')?>" onclick="admin_views_search('uactivity');">
+          </th>
+          <th>
+            <?=__('act')?>
+          </th>
+        </tr>
 
-        <th class="black">
-          &nbsp;
-        </th>
+        <tr>
 
-        <th rowspan="4">
-          &nbsp;
-        </th>
+          <th>
+            <input type="hidden" name="stats_views_sort" id="stats_views_sort" value="">
+            <input type="text" class="table_search" name="stats_views_name" id="stats_views_name" value="" onkeyup="admin_views_search();">
+          </th>
 
-      </tr>
+          <th class="black">
+            &nbsp;
+          </th>
 
-    </thead>
-    <tbody class="altc align_center" id="stats_views_tbody">
+          <th rowspan="4">
+            &nbsp;
+          </th>
 
-      <?php } if(!$stats_views_delete) { ?>
+        </tr>
 
-      <?php for($i = 0; $i < $stats_views['rows']; $i++) { ?>
+      </thead>
+      <tbody class="altc align_center" id="stats_views_tbody">
 
-      <tr id="admin_views_row_<?=$stats_views[$i]['id']?>">
+        <?php } if(!$stats_views_delete) { ?>
 
-        <?php if(!$stats_views[$i]['fullname']) { ?>
-        <td class="align_left">
-          <?=__link($stats_views[$i]['url'], $stats_views[$i]['name'], 'bold noglow text_white')?>
-        </td>
-        <?php } else { ?>
-        <td class="align_left tooltip_container">
-          <?=__link($stats_views[$i]['url'], $stats_views[$i]['name'], 'bold noglow text_white')?>
-          <div class="tooltip">
-            <?=$stats_views[$i]['fullname']?>
-          </div>
-        </td>
+        <?php for($i = 0; $i < $stats_views['rows']; $i++) { ?>
+
+        <tr id="admin_views_row_<?=$stats_views[$i]['id']?>">
+
+          <?php if(!$stats_views[$i]['fullname']) { ?>
+          <td class="align_left">
+            <?=__link($stats_views[$i]['url'], $stats_views[$i]['name'], 'bold noglow text_white')?>
+          </td>
+          <?php } else { ?>
+          <td class="align_left tooltip_container">
+            <?=__link($stats_views[$i]['url'], $stats_views[$i]['name'], 'bold noglow text_white')?>
+            <div class="tooltip">
+              <?=$stats_views[$i]['fullname']?>
+            </div>
+          </td>
+          <?php } ?>
+
+          <td class="nowrap bold black text_white">
+            <?=$stats_views[$i]['views']?>
+          </td>
+
+          <td class="nowrap">
+            <?=$stats_views[$i]['growth']?>
+          </td>
+
+          <td class="nowrap">
+            <?=$stats_views[$i]['pgrowth']?>
+          </td>
+
+          <td class="nowrap">
+            <?=$stats_views[$i]['oldviews']?>
+          </td>
+
+          <td class="nowrap">
+            <?=$stats_views[$i]['activity']?>
+          </td>
+
+          <td class="align_center">
+            <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_views_delete('<?=__('admin_views_delete')?>','<?=$stats_views[$i]['id']?>')">
+          </td>
+
+        </tr>
+
         <?php } ?>
 
-        <td class="nowrap bold black text_white">
-          <?=$stats_views[$i]['views']?>
-        </td>
+        <?php } if(!page_is_fetched_dynamically()) { ?>
 
-        <td class="nowrap">
-          <?=$stats_views[$i]['growth']?>
-        </td>
-
-        <td class="nowrap">
-          <?=$stats_views[$i]['pgrowth']?>
-        </td>
-
-        <td class="nowrap">
-          <?=$stats_views[$i]['oldviews']?>
-        </td>
-
-        <td class="nowrap">
-          <?=$stats_views[$i]['activity']?>
-        </td>
-
-        <td class="align_center">
-          <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_views_delete('<?=__('admin_views_delete')?>','<?=$stats_views[$i]['id']?>')">
-        </td>
-
-      </tr>
-
-      <?php } ?>
-
-      <?php } if(!page_is_fetched_dynamically()) { ?>
-
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 
 </div>
 

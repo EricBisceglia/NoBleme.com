@@ -67,6 +67,17 @@ ___('admin_metrics_table_reset_warning',  'FR', "Confirmer la suppression irrév
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// Pageviews: Header
+___('admin_views_date',     'EN', "Current comparison date:");
+___('admin_views_date',     'FR', "Date de comparaison actuelle :");
+___('admin_views_nodate',   'EN', "The comparison data has never been reset");
+___('admin_views_nodate',   'FR', "Les données de comparaison n'ont jamais été remises à zéro");
+___('admin_views_reset',    'EN', "Reset the comparison data");
+___('admin_views_reset',    'FR', "Remise à zéro des données de comparaison");
+___('admin_views_warning',  'EN', "Confirm the irreversible loss of all archived page growth data in order to reset them");
+___('admin_views_warning',  'FR', "Confirmer la suppression irréversible de toutes les données sur la croissance des pages afin de les remettre à zéro");
+
+
 // Pageviews: Table
 ___('admin_views_name',   'EN', "Page name");
 ___('admin_views_name',   'FR', "Nom de la page");

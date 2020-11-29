@@ -12,6 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  stats_metrics_reset         Resets website metrics.                                                              */
 /*                                                                                                                   */
 /*  stats_views_list            Lists data regarding pageviews.                                                      */
+/*  stats_views_reset           Resets the pageview comparison data.                                                 */
 /*  stats_views_delete          Deletes a page's data.                                                               */
 /*                                                                                                                   */
 /*  stats_doppelgangers_list    Lists users sharing the same IP address.                                             */
@@ -324,12 +325,40 @@ function stats_views_list(  $sort_by  = NULL  ,
   // Add the number of rows to the data
   $data['rows'] = $i;
 
+  // Add the current comparison date to the data
+  $comparison_date          = system_variable_fetch('last_pageview_check');
+  $temp                     = date_to_text($comparison_date).' ('.time_since($comparison_date).')';
+  $data['comparison_date']  = ($comparison_date) ? sanitize_output($temp) : __('admin_views_nodate');
+
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
     var_dump(array('file' => 'admin/stats.act.php', 'function' => 'stats_views_list', 'data' => $data));
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Resets the pageview comparison data.
+ *
+ * @return  void
+ */
+
+function stats_views_reset()
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Reset all pageviews comparison data
+  query(" UPDATE  stats_pages
+          SET     stats_pages.view_count_archive = stats_pages.view_count ");
+
+  // Update the global variable
+  $timestamp = sanitize(time(), 'int', 0);
+  system_variable_update('last_pageview_check', $timestamp, 'int');
 }
 
 
