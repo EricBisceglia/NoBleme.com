@@ -1339,169 +1339,6 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 <hr>
 
-<div class="width_50 padding_bot">
-
-  <form class="padding_bot" method="post">
-    <fieldset>
-      <table>
-        <thead>
-          <tr>
-            <th>
-              HEADER
-              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>">
-            </th>
-            <th>
-              HEADER
-              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>">
-            </th>
-            <th>
-              ICONS
-            </th>
-          </tr>
-          <tr>
-            <th>
-              <select class="table_search" name="dev_palette_table_select">
-                <option>&lt;select class="table_search"></option>
-                <option>&lt;select class="table_search"></option>
-                <option>&lt;select class="table_search"></option>
-              </select>
-            </th>
-            <th>
-              <input type="text" class="table_search" name="dev_palette_table_input" value='&lt;input class="table_search">'>
-            </th>
-            <th>
-              <input type="submit" class="table_search" name="dev_palette_table_submit" value=".table_search">
-            </th>
-          </tr>
-        </thead>
-        <tbody class="altc2">
-          <tr>
-            <td colspan="3" class="uppercase text_light dark bold align_center">
-              XX results found
-            </td>
-          </tr>
-          <tr>
-            <td>
-              body text
-            </td>
-            <td>
-              body text
-            </td>
-            <td class="align_center">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="<?=__('details')?>">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="<?=__('refresh')?>">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=__('delete')?>">
-            </td>
-          </tr>
-          <tr>
-            <td>
-              body text
-            </td>
-            <td>
-              body text
-            </td>
-            <td class="align_center">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="<?=__('details')?>">
-            </td>
-          </tr>
-          <tr>
-            <td>
-              body text
-            </td>
-            <td>
-              body text
-            </td>
-            <td>
-              &nbsp;
-            </td>
-          </tr>
-          <tr>
-            <td>
-              body text
-            </td>
-            <td>
-              body text
-            </td>
-            <td class="align_center">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="<?=__('details')?>">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=__('delete')?>">
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </fieldset>
-  </form>
-
-  <pre class="dev_pre_code" id="dev_palette_table_icons" onclick="to_clipboard('', 'dev_palette_table_icons', 1);">&lt;form method="post">
-  &lt;fieldset>
-
-    &lt;table>
-      &lt;thead>
-
-        &lt;tr>
-          &lt;th>
-            HEADER
-            &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="&lt;?=string_change_case(__('sort'), 'initials')?>">
-          &lt;/th>
-          &lt;th>
-            HEADER
-            &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="&lt;?=string_change_case(__('sort'), 'initials')?>">
-          &lt;/th>
-          &lt;th>
-            ICONS
-          &lt;/th>
-        &lt;/tr>
-
-        &lt;tr>
-
-          &lt;th>
-            &lt;select class="table_search" name="example_select" id="example_select">
-              &lt;option value="0">&amp;nbsp;&lt;/option>
-            &lt;/select>
-          &lt;/th>
-
-          &lt;th>
-            &lt;input type="text" class="table_search" name="example_input" id="example_input" value="">
-          &lt;/th>
-
-          &lt;th>
-            &lt;input type="submit" class="table_search" name="example_submit" id="example_submit" value="&lt;?=string_change_case(__('search'), 'initials')?>">
-          &lt;/th>
-
-        &lt;/tr>
-
-      &lt;/thead>
-      &lt;tbody class="altc2">
-
-        &lt;tr>
-          &lt;td colspan="3" class="uppercase text_light dark bold align_center">
-            XX results found
-          &lt;/td>
-        &lt;/tr>
-
-        &lt;tr>
-          &lt;td>
-            body
-          &lt;/td>
-          &lt;td>
-            body
-          &lt;/td>
-          &lt;td class="align_center">
-            &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/help_small.svg" alt="?" title="&lt;?=string_change_case(__('details'), 'initials')?>">
-            &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/delete_small.svg" alt="X" title="&lt;?=string_change_case(__('delete'), 'initials')?>">
-          &lt;/td>
-        &lt;/tr>
-
-      &lt;/tbody>
-    &lt;/table>
-
-  &lt;/fieldset>
-&lt;/form></pre>
-
-</div>
-
-<hr>
-
 <div class="width_50 padding_top padding_bot">
 
   <table class="noresize">
@@ -1720,6 +1557,166 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
   &lt;/tbody>
 &lt;/table></pre>
+  </div>
+
+</div>
+
+<hr>
+
+<div class="width_50 padding_top padding_bot">
+
+  <form class="padding_bot" method="post">
+    <fieldset>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              HEADER
+              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>">
+            </th>
+            <th>
+              HEADER
+              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>">
+            </th>
+            <th>
+              ICONS
+            </th>
+          </tr>
+          <tr>
+            <th>
+              <select class="table_search" name="dev_palette_table_select">
+                <option>&lt;select class="table_search"></option>
+                <option>&lt;select class="table_search"></option>
+                <option>&lt;select class="table_search"></option>
+              </select>
+            </th>
+            <th>
+              <input type="text" class="table_search" name="dev_palette_table_input" value='&lt;input class="table_search">'>
+            </th>
+            <th>
+              <input type="submit" class="table_search" name="dev_palette_table_submit" value=".table_search">
+            </th>
+          </tr>
+        </thead>
+        <tbody class="altc2">
+          <tr>
+            <td colspan="3" class="uppercase text_light dark bold align_center">
+              XX results found
+            </td>
+          </tr>
+          <tr>
+            <td>
+              body text
+            </td>
+            <td>
+              body text
+            </td>
+            <td class="align_center">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="<?=__('details')?>">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="<?=__('refresh')?>">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=__('delete')?>">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              body text
+            </td>
+            <td>
+              body text
+            </td>
+            <td class="align_center">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="<?=__('details')?>">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              body text
+            </td>
+            <td>
+              body text
+            </td>
+            <td>
+              &nbsp;
+            </td>
+          </tr>
+          <tr>
+            <td>
+              body text
+            </td>
+            <td>
+              body text
+            </td>
+            <td class="align_center">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/help_small.svg" alt="?" title="<?=__('details')?>">
+              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=__('delete')?>">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+  </form>
+
+  <pre class="dev_pre_code" id="dev_palette_table_icons_header" onclick="to_clipboard('', 'dev_palette_table_icons_header', 1);">
+&lt;thead>
+
+  &lt;tr>
+    &lt;th>
+      HEADER
+      &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="&lt;?=string_change_case(__('sort'), 'initials')?>">
+    &lt;/th>
+    &lt;th>
+      HEADER
+      &lt;img class="smallicon pointer valign_middle" src="&lt;?=$path?>img/icons/sort_down_small.svg" alt="v" title="&lt;?=string_change_case(__('sort'), 'initials')?>">
+    &lt;/th>
+    &lt;th>
+      ICONS
+    &lt;/th>
+  &lt;/tr>
+
+  &lt;tr>
+
+    &lt;th>
+      &lt;select class="table_search" name="example_select" id="example_select">
+        &lt;option value="0">&amp;nbsp;&lt;/option>
+      &lt;/select>
+    &lt;/th>
+
+    &lt;th>
+      &lt;input type="text" class="table_search" name="example_input" id="example_input" value="">
+    &lt;/th>
+
+    &lt;th>
+      &lt;input type="submit" class="table_search" name="example_submit" id="example_submit" value="&lt;?=string_change_case(__('search'), 'initials')?>">
+    &lt;/th>
+
+  &lt;/tr>
+
+&lt;/thead></pre>
+
+  <div class="smallpadding_top">
+    <pre class="dev_pre_code" id="dev_palette_table_icons_body" onclick="to_clipboard('', 'dev_palette_table_icons_body', 1);">
+&lt;tbody class="altc2">
+
+  &lt;tr>
+    &lt;td colspan="3" class="uppercase text_light dark bold align_center">
+      XX results found
+    &lt;/td>
+  &lt;/tr>
+
+  &lt;tr>
+    &lt;td>
+      body
+    &lt;/td>
+    &lt;td>
+      body
+    &lt;/td>
+    &lt;td class="align_center">
+      &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/help_small.svg" alt="?" title="&lt;?=string_change_case(__('details'), 'initials')?>">
+      &lt;img class="smallicon valign_middle pointer spaced" src="&lt;?=$path?>img/icons/delete_small.svg" alt="X" title="&lt;?=string_change_case(__('delete'), 'initials')?>">
+    &lt;/td>
+  &lt;/tr>
+
+&lt;/tbody></pre>
   </div>
 
 </div>

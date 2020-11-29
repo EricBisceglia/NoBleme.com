@@ -3,6 +3,8 @@
 /*  admin_metrics_search    Performs a search through the metrics.                                                   */
 /*  admin_metrics_reset     Triggers the resetting of page metrics.                                                  */
 /*                                                                                                                   */
+/*  admin_views_search      Performs a search through the pageviews.                                                 */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -59,4 +61,29 @@ function admin_metrics_reset( message         ,
   // Make sure the user knows what they're doing and reset the metrics
   if(confirm(message))
     fetch_page('stats_metrics', target_element, postdata);
+}
+
+
+
+
+/**
+ * Performs a search through the pageviews.
+ *
+ * @param   {string}  [sort_data] The column which should be used to sort the data.
+ *
+ * @returns {void}
+*/
+
+function admin_views_search( sort_data = null )
+{
+  // Update the data sort input if requested
+  if(sort_data)
+    document.getElementById('stats_views_sort').value = sort_data;
+
+  // Assemble the postdata
+  postdata  = 'stats_views_sort='   + fetch_sanitize_id('stats_views_sort');
+  postdata += '&stats_views_name='  + fetch_sanitize_id('stats_views_name');
+
+  // Submit the search
+  fetch_page('stats_views', 'stats_views_tbody', postdata);
 }

@@ -228,10 +228,14 @@ function stats_metrics_reset( $metric_id = NULL )
 /**
  * Lists data regarding pageviews.
  *
- * @return  void
+ * @param   string|null   $sort_by  (OPTIONAL)  The order in which the returned data will be sorted.
+ * @param   array|null    $search   (OPTIONAL)  Search for specific field values.
+ *
+ * @return  array                               The pageviews data, ready for displaying.
  */
 
-function stats_views_list()
+function stats_views_list(  $sort_by  = NULL  ,
+                            $search   = NULL  )
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -241,39 +245,73 @@ function stats_views_list()
   require_included_file('functions_numbers.inc.php');
   require_included_file('functions_mathematics.inc.php');
 
-  // Fetch the views
-  $qviews = query(" SELECT    stats_pages.id                  AS 'p_id'       ,
-                              stats_pages.page_name_en        AS 'p_name_en'  ,
-                              stats_pages.page_name_fr        AS 'p_name_fr'  ,
-                              stats_pages.page_url            AS 'p_url'      ,
-                              stats_pages.last_viewed_at      AS 'p_activity' ,
-                              stats_pages.view_count          AS 'p_views'    ,
-                              stats_pages.view_count_archive  AS 'p_oldviews'
-                    FROM      stats_pages
-                    ORDER BY  stats_pages.view_count          DESC ,
-                              stats_pages.view_count_archive  DESC ,
-                              stats_pages.last_viewed_at      DESC ");
+  // Fetch the current user's language
+  $lang           = user_get_language();
+  $lang_lowercase = sanitize(string_change_case($lang, 'lowercase'), 'string');
 
-  // Fetch the current user'slanguage
-  $lang = user_get_language();
+  // Sanitize the search parameters
+  $search_name = isset($search['name']) ? sanitize($search['name'], 'string') : NULL;
+
+  // Prepare the query to fetch the views
+  $qviews = "     SELECT    stats_pages.id                  AS 'p_id'       ,
+                            stats_pages.page_name_en        AS 'p_name_en'  ,
+                            stats_pages.page_name_fr        AS 'p_name_fr'  ,
+                            stats_pages.page_url            AS 'p_url'      ,
+                            stats_pages.last_viewed_at      AS 'p_activity' ,
+                            stats_pages.view_count          AS 'p_views'    ,
+                            stats_pages.view_count_archive  AS 'p_oldviews'
+                  FROM      stats_pages
+                  WHERE     1 = 1 ";
+
+  // Search for data if requested
+  if($search_name)
+    $qviews .= "  AND (     stats_pages.page_url                  LIKE '%$search_name%'
+                  OR        stats_pages.page_name_$lang_lowercase LIKE '%$search_name%' ) ";
+
+  // Sort the data as requested
+  if($sort_by == 'name')
+    $qviews .= "  ORDER BY  stats_pages.page_url            ASC   ";
+  else if($sort_by == 'oldviews')
+    $qviews .= "  ORDER BY  stats_pages.view_count_archive  DESC  ,
+                            stats_pages.view_count          DESC  ,
+                            stats_pages.last_viewed_at      DESC  ";
+  else if($sort_by == 'activity')
+    $qviews .= "  ORDER BY  stats_pages.last_viewed_at      DESC  ";
+  else if($sort_by == 'ractivity')
+    $qviews .= "  ORDER BY  stats_pages.last_viewed_at      ASC   ";
+  else
+    $qviews .= "  ORDER BY  stats_pages.view_count          DESC  ,
+                            stats_pages.view_count_archive  DESC  ,
+                            stats_pages.last_viewed_at      DESC  ";
+
+  // Fetch the pageviews
+  $qviews = query($qviews);
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qviews); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['p_id']);
     $temp                 = ($lang == 'EN') ? $row['p_name_en'] : $row['p_name_fr'];
-    $data[$i]['name']     = ($temp) ? sanitize_output(string_truncate($temp, 30, '...')) : '-';
-    $data[$i]['fullname'] = (mb_strlen($temp) > 30) ? sanitize_output($temp) : NULL;
+    $data[$i]['name']     = ($temp) ? sanitize_output(string_truncate($temp, 40, '...')) : '-';
+    $data[$i]['fullname'] = (mb_strlen($temp) > 40) ? sanitize_output($temp) : NULL;
     $data[$i]['url']      = sanitize_output($row['p_url']);
     $data[$i]['activity'] = sanitize_output(time_since($row['p_activity']));
-    $data[$i]['views']    = sanitize_output($row['p_views']);
-    $data[$i]['oldviews'] = sanitize_output($row['p_oldviews']);
+    $data[$i]['views']    = sanitize_output(number_display_format($row['p_views'], 'number'));
+    $data[$i]['oldviews'] = sanitize_output(number_display_format($row['p_oldviews'], 'number'));
     $temp                 = $row['p_views'] - $row['p_oldviews'];
-    $data[$i]['growth']   = ($temp) ? sanitize_output(number_prepend_sign($temp)) : '-';
+    $data[$i]['sgrowth']  = $temp;
+    $data[$i]['growth']   = ($temp) ? sanitize_output(number_display_format($temp, 'number', 0, 1)) : '-';
     $temp                 = ($row['p_oldviews']) ? maths_percentage_growth($row['p_oldviews'], $row['p_views']) : 0;
+    $data[$i]['spgrowth'] = $temp;
     $temp                 = ($temp) ? number_display_format($temp, 'percentage', 0, 1) : 0;
     $data[$i]['pgrowth']  = ($temp) ? sanitize_output($temp) : '-';
   }
+
+  // If the sorting is by days sentenced or days banned, then it must still be sorted
+  if($sort_by == 'growth')
+    array_multisort(array_column($data, "sgrowth"), SORT_DESC, $data);
+  if($sort_by == 'pgrowth')
+    array_multisort(array_column($data, "spgrowth"), SORT_DESC, $data);
 
   // Add the number of rows to the data
   $data['rows'] = $i;

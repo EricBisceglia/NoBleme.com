@@ -22,6 +22,9 @@ $page_url         = "pages/nobleme/index";
 $page_title_en    = "Pageviews";
 $page_title_fr    = "Pages populaires";
 
+// Extra JS
+$js = array('admin/stats');
+
 
 
 
@@ -34,7 +37,9 @@ $page_title_fr    = "Pages populaires";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the page popularity data
 
-$stats_views = stats_views_list();
+// Fetch the data
+$stats_views  = stats_views_list(  form_fetch_element('stats_views_sort', 'views')  ,
+                  array( 'name' => form_fetch_element('stats_views_name')           ));
 
 
 
@@ -45,7 +50,7 @@ $stats_views = stats_views_list();
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_50">
+<div class="width_60">
 
   <h1 class="align_center bigpadding_bot">
     <?=__('submenu_admin_pageviews')?>
@@ -57,23 +62,49 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr class="uppercase">
         <th>
           <?=__('admin_views_name')?>
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('name');">
         </th>
         <th class="black text_white">
           <?=__('admin_metrics_views')?>
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('views');">
         </th>
         <th colspan="2">
           <?=__('admin_views_growth')?>
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('growth');">
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('pgrowth');">
         </th>
         <th>
           <?=__('admin_views_old')?>
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('oldviews');">
         </th>
         <th>
           <?=__('admin_metrics_activity')?>
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('activity');">
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_up_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('ractivity');">
         </th>
       </tr>
 
+      <tr>
+
+        <th>
+          <input type="hidden" name="stats_views_sort" id="stats_views_sort" value="">
+          <input type="text" class="table_search" name="stats_views_name" id="stats_views_name" value="" onkeyup="admin_views_search();">
+        </th>
+
+        <th class="black">
+          &nbsp;
+        </th>
+
+        <th rowspan="4">
+          &nbsp;
+        </th>
+
+      </tr>
+
     </thead>
-    <tbody class="altc align_center">
+    <tbody class="altc align_center" id="stats_views_tbody">
+
+      <?php } ?>
 
       <?php for($i = 0; $i < $stats_views['rows']; $i++) { ?>
 
@@ -92,29 +123,31 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <?php } ?>
 
-        <td class="bold black text_white">
+        <td class="nowrap bold black text_white">
           <?=$stats_views[$i]['views']?>
         </td>
 
-        <td>
+        <td class="nowrap">
           <?=$stats_views[$i]['growth']?>
         </td>
 
-        <td>
+        <td class="nowrap">
           <?=$stats_views[$i]['pgrowth']?>
         </td>
 
-        <td>
+        <td class="nowrap">
           <?=$stats_views[$i]['oldviews']?>
         </td>
 
-        <td>
+        <td class="nowrap">
           <?=$stats_views[$i]['activity']?>
         </td>
 
       </tr>
 
       <?php } ?>
+
+      <?php if(!page_is_fetched_dynamically()) { ?>
 
     </tbody>
   </table>
