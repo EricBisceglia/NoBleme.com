@@ -63,6 +63,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <th>
           <?=__('admin_views_name')?>
           <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('name');">
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/link_small.svg" alt="v" title="<?=string_change_case(__('link'), 'initials')?>" onclick="admin_views_search('url');">
         </th>
         <th class="black text_white">
           <?=__('admin_metrics_views')?>
@@ -81,6 +82,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('admin_metrics_activity')?>
           <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('activity');">
           <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_up_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('ractivity');">
+          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/link_small.svg" alt="v" title="<?=string_change_case(__('link'), 'initials')?>" onclick="admin_views_search('uactivity');">
         </th>
       </tr>
 

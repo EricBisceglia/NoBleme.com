@@ -269,20 +269,22 @@ function stats_views_list(  $sort_by  = NULL  ,
                   OR        stats_pages.page_name_$lang_lowercase LIKE '%$search_name%' ) ";
 
   // Sort the data as requested
-  if($sort_by == 'name')
-    $qviews .= "  ORDER BY  stats_pages.page_url            ASC   ";
+  if($sort_by == 'url')
+    $qviews .= "  ORDER BY  stats_pages.page_url                  ASC   ";
+  else if($sort_by == 'name')
+    $qviews .= "  ORDER BY  stats_pages.page_name_$lang_lowercase ASC   ";
   else if($sort_by == 'oldviews')
-    $qviews .= "  ORDER BY  stats_pages.view_count_archive  DESC  ,
-                            stats_pages.view_count          DESC  ,
-                            stats_pages.last_viewed_at      DESC  ";
+    $qviews .= "  ORDER BY  stats_pages.view_count_archive        DESC  ,
+                            stats_pages.view_count                DESC  ,
+                            stats_pages.last_viewed_at            DESC  ";
   else if($sort_by == 'activity')
-    $qviews .= "  ORDER BY  stats_pages.last_viewed_at      DESC  ";
-  else if($sort_by == 'ractivity')
-    $qviews .= "  ORDER BY  stats_pages.last_viewed_at      ASC   ";
+    $qviews .= "  ORDER BY  stats_pages.last_viewed_at            DESC  ";
+  else if($sort_by == 'ractivity' || $sort_by == 'uactivity')
+    $qviews .= "  ORDER BY  stats_pages.last_viewed_at            ASC   ";
   else
-    $qviews .= "  ORDER BY  stats_pages.view_count          DESC  ,
-                            stats_pages.view_count_archive  DESC  ,
-                            stats_pages.last_viewed_at      DESC  ";
+    $qviews .= "  ORDER BY  stats_pages.view_count                DESC  ,
+                            stats_pages.view_count_archive        DESC  ,
+                            stats_pages.last_viewed_at            DESC  ";
 
   // Fetch the pageviews
   $qviews = query($qviews);
@@ -292,6 +294,7 @@ function stats_views_list(  $sort_by  = NULL  ,
   {
     $data[$i]['id']       = sanitize_output($row['p_id']);
     $temp                 = ($lang == 'EN') ? $row['p_name_en'] : $row['p_name_fr'];
+    $temp                 = (in_array($sort_by, array('url', 'uactivity'))) ? $row['p_url'] : $temp;
     $data[$i]['name']     = ($temp) ? sanitize_output(string_truncate($temp, 40, '...')) : '-';
     $data[$i]['fullname'] = (mb_strlen($temp) > 40) ? sanitize_output($temp) : NULL;
     $data[$i]['url']      = sanitize_output($row['p_url']);
