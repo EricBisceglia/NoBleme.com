@@ -18,7 +18,7 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/nobleme/index";
+$page_url         = "pages/admin/stats_views";
 $page_title_en    = "Pageviews";
 $page_title_fr    = "Pages populaires";
 

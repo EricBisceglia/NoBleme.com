@@ -1028,6 +1028,14 @@ if($last_query < 22)
   query(" DELETE FROM stats_pages
           WHERE       stats_pages.page_url LIKE 'pages/user/login' ");
 
+  $timestamp = time();
+  query(" UPDATE  stats_pages
+          SET     stats_pages.view_count_archive  = stats_pages.view_count  ,
+                  stats_pages.last_viewed_at      = '$timestamp'            ");
+
+  query(" UPDATE  system_variables
+          SET     system_variables.last_pageview_check = '$timestamp' ");
+
   sql_update_query_id(22);
 }
 
