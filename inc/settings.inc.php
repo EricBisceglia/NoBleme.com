@@ -9,6 +9,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Project configuration
 
+// Require PHP8
+if (version_compare(phpversion(), '8.0.0', '<'))
+  exit("NoBleme requires at least PHP8 to run properly.");
+
 // Include the local configuration file
 @include_once 'configuration.inc.php';
 

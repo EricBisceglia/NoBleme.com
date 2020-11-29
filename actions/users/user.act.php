@@ -223,7 +223,7 @@ function user_list( $sort_by          = ''    ,
     $data[$i]['username']   = sanitize_output($temp);
     $data[$i]['activity']   = time_since($row['u_activity']);
     $temp                   = ($lang == 'EN') ? $row['u_last_page_en'] : $row['u_last_page_fr'];
-    $data[$i]['last_page']  = sanitize_output(string_truncate($temp, 50, '...'));
+    $data[$i]['last_page']  = sanitize_output(string_truncate($temp, 40, '...'));
     $data[$i]['last_url']   = sanitize_output($row['u_last_url']);
     $data[$i]['ip']         = sanitize_output($row['u_ip']);
     $data[$i]['ban_end']    = ($row['u_ban_end']) ? time_until($row['u_ban_end']) : '';
