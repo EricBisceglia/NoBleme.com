@@ -74,6 +74,10 @@ ___('admin_views_growth', 'EN', "Growth");
 ___('admin_views_growth', 'FR', "Croissance");
 ___('admin_views_old',    'EN', "Before");
 ___('admin_views_old',    'FR', "Avant");
+___('admin_views_new',    'EN', "NEW");
+___('admin_views_new',    'FR', "NOUV.");
+___('admin_views_delete', 'EN', "Confirm the irreversible deletion of this page\'s data");
+___('admin_views_delete', 'FR', "Confirmer la suppression irréversible des données de cette page");
 
 
 

@@ -35,9 +35,22 @@ $js = array('admin/stats');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete a page's data
+
+// Check whether a deletion is requested
+$stats_views_delete = form_fetch_element('admin_views_delete', 0);
+
+// Delete a page's data
+if($stats_views_delete)
+  stats_views_delete($stats_views_delete);
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the page popularity data
 
-// Fetch the data
 $stats_views  = stats_views_list(  form_fetch_element('stats_views_sort', 'views')  ,
                   array( 'name' => form_fetch_element('stats_views_name')           ));
 
@@ -84,6 +97,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_up_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('ractivity');">
           <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/link_small.svg" alt="v" title="<?=string_change_case(__('link'), 'initials')?>" onclick="admin_views_search('uactivity');">
         </th>
+        <th>
+          <?=__('act')?>
+        </th>
       </tr>
 
       <tr>
@@ -106,11 +122,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </thead>
     <tbody class="altc align_center" id="stats_views_tbody">
 
-      <?php } ?>
+      <?php } if(!$stats_views_delete) { ?>
 
       <?php for($i = 0; $i < $stats_views['rows']; $i++) { ?>
 
-      <tr>
+      <tr id="admin_views_row_<?=$stats_views[$i]['id']?>">
 
         <?php if(!$stats_views[$i]['fullname']) { ?>
         <td class="align_left">
@@ -145,11 +161,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$stats_views[$i]['activity']?>
         </td>
 
+        <td class="align_center">
+          <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_views_delete('<?=__('admin_views_delete')?>','<?=$stats_views[$i]['id']?>')">
+        </td>
+
       </tr>
 
       <?php } ?>
 
-      <?php if(!page_is_fetched_dynamically()) { ?>
+      <?php } if(!page_is_fetched_dynamically()) { ?>
 
     </tbody>
   </table>

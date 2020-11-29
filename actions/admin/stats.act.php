@@ -12,6 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  stats_metrics_reset         Resets website metrics.                                                              */
 /*                                                                                                                   */
 /*  stats_views_list            Lists data regarding pageviews.                                                      */
+/*  stats_views_delete          Deletes a page's data.                                                               */
 /*                                                                                                                   */
 /*  stats_doppelgangers_list    Lists users sharing the same IP address.                                             */
 /*                                                                                                                   */
@@ -244,6 +245,7 @@ function stats_views_list(  $sort_by  = NULL  ,
   require_included_file('functions_time.inc.php');
   require_included_file('functions_numbers.inc.php');
   require_included_file('functions_mathematics.inc.php');
+  require_included_file('stats.lang.php');
 
   // Fetch the current user's language
   $lang           = user_get_language();
@@ -300,13 +302,16 @@ function stats_views_list(  $sort_by  = NULL  ,
     $data[$i]['url']      = sanitize_output($row['p_url']);
     $data[$i]['activity'] = sanitize_output(time_since($row['p_activity']));
     $data[$i]['views']    = sanitize_output(number_display_format($row['p_views'], 'number'));
-    $data[$i]['oldviews'] = sanitize_output(number_display_format($row['p_oldviews'], 'number'));
+    $temp                 = ($row['p_oldviews']) ? number_display_format($row['p_oldviews'], 'number') : '-';
+    $temp                 = ($row['p_oldviews']) ? $temp : __('admin_views_new');
+    $data[$i]['oldviews'] = sanitize_output($temp);
     $temp                 = $row['p_views'] - $row['p_oldviews'];
     $data[$i]['sgrowth']  = $temp;
     $data[$i]['growth']   = ($temp) ? sanitize_output(number_display_format($temp, 'number', 0, 1)) : '-';
     $temp                 = ($row['p_oldviews']) ? maths_percentage_growth($row['p_oldviews'], $row['p_views']) : 0;
     $data[$i]['spgrowth'] = $temp;
     $temp                 = ($temp) ? number_display_format($temp, 'percentage', 0, 1) : 0;
+    $temp                 = ($row['p_oldviews']) ? $temp : __('admin_views_new');
     $data[$i]['pgrowth']  = ($temp) ? sanitize_output($temp) : '-';
   }
 
@@ -325,6 +330,30 @@ function stats_views_list(  $sort_by  = NULL  ,
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Delete a page's data.
+ *
+ * @param   int|null  $page_id  The id of the page to delete.
+ *
+ * @return  void
+ */
+
+function stats_views_delete( $page_id )
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Sanatize the page's id
+  $page_id = sanitize($page_id, 'int', 0);
+
+  // Delete the page's data
+  query(" DELETE FROM stats_pages
+          WHERE       stats_pages.id = '$page_id' ");
 }
 
 

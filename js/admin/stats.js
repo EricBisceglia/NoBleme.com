@@ -4,6 +4,7 @@
 /*  admin_metrics_reset     Triggers the resetting of page metrics.                                                  */
 /*                                                                                                                   */
 /*  admin_views_search      Performs a search through the pageviews.                                                 */
+/*  admin_views_delete      Triggers the deletion of an entry in the pageviews.                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -86,4 +87,30 @@ function admin_views_search( sort_data = null )
 
   // Submit the search
   fetch_page('stats_views', 'stats_views_tbody', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an entry in the pageviews.
+ *
+ * @param   {string}  message   The confirmation message which will be displayed.
+ * @param   {int}     page_id   The id of the page to delete.
+ *
+ * @returns {void}
+ */
+
+function admin_views_delete(  message ,
+                              page_id )
+{
+  // Assemble the postdata
+  postdata = 'admin_views_delete=' + fetch_sanitize(page_id);
+
+  // Assemble the targetted element's id
+  target_element = 'admin_views_row_' + page_id;
+
+  // Make sure the user knows what they're doing and trigger the deletion
+  if(confirm(message))
+    fetch_page('stats_views', target_element, postdata);
 }
