@@ -1245,24 +1245,14 @@ function irc_bot_send_message(  $message                          ,
   // Only use a limited amount of preset channel names
   if($channel)
   {
-    switch($channel)
+    $channel = match($channel)
     {
-      case 'french':
-        $channel = '#nobleme';
-        break;
-      case 'dev':
-        $channel = '#dev';
-        break;
-      case 'mod':
-        $channel = '#sysop';
-        break;
-      case 'admin':
-        $channel = '#admin';
-        break;
-      default:
-        $channel = '#english';
-        break;
-    }
+      'french'  => '#nobleme' ,
+      'dev'     => '#dev'     ,
+      'mod'     => '#sysop'   ,
+      'admin'   => '#admin'   ,
+      default   => '#english' ,
+    };
   }
 
   // Sanitize the message for IRC usage

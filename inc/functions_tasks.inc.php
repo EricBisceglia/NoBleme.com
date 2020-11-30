@@ -25,37 +25,19 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 function task_priority( $priority_level     ,
                         $styled         = 0 )
 {
-  // No trickery here, simply parse priority levels one by one using a switch
-  switch($priority_level)
-  {
-    // 5 -> Urgent task
-    case 5:
-      return (!$styled) ? __('task_priority_5') : '<span class="bold underlined">'.__('task_priority_5').'</span>';
-    break;
+  // Check if the required files have been included
+  require_included_file('tasks.lang.php');
 
-    // 4 -> Important task
-    case 4:
-      return (!$styled) ? __('task_priority_5') : '<span class="bold">'.__('task_priority_4').'</span>';
-    break;
+  // Parse priority levels one by one using a match and return their result
+  $return = match($priority_level)
+    {
+      5       => (!$styled) ? __('task_priority_5') : '<span class="bold underlined">'.__('task_priority_5').'</span>',
+      4       => (!$styled) ? __('task_priority_4') : '<span class="bold">'.__('task_priority_4').'</span>'           ,
+      3       => __('task_priority_3')                                                                                ,
+      2       => __('task_priority_2')                                                                                ,
+      1       => (!$styled) ? __('task_priority_1') : '<span class="italics">'.__('task_priority_1').'</span>'        ,
+      default => (!$styled) ? __('task_priority_0') : '<span class="italics">'.__('task_priority_0').'</span>'        ,
+    };
 
-    // 3 -> Averagely important task
-    case 3:
-      return __('task_priority_3');
-    break;
-
-    // 2 -> Not too important task
-    case 2:
-      return __('task_priority_2');
-    break;
-
-    // 1 -> Low importance task
-    case 1:
-      return (!$styled) ? __('task_priority_1') : '<span class="italics">'.__('task_priority_1').'</span>';
-    break;
-
-    // 0 (or other) -> Background task
-    default:
-      return (!$styled) ? __('task_priority_0') : '<span class="italics">'.__('task_priority_0').'</span>';
-    break;
-  }
+  echo $return;
 }
