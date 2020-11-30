@@ -72,7 +72,11 @@ function admin_account_deactivate( $username )
           WHERE   users.id                = '$delete_id'  ");
 
   // Activity log
-  log_activity('users_delete', 1, 'ENFR', 0, NULL, NULL, 0, $delete_id, $username_raw, $mod_nick_raw);
+  log_activity( 'users_delete'                    ,
+                is_moderators_only: 1             ,
+                fk_users:           $delete_id    ,
+                username:           $username_raw ,
+                moderator_username: $mod_nick_raw );
 
   // IRC bot message
   irc_bot_send_message("$mod_nick_raw has deleted the account of $username_raw - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
@@ -129,7 +133,11 @@ function admin_account_reactivate( $user_id )
           WHERE   users.id                = '$user_id'  ");
 
   // Activity log
-  log_activity('users_undelete', 1, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw, $admin_nick_raw);
+  log_activity( 'users_undelete'                    ,
+                is_moderators_only: 1               ,
+                fk_users:           $user_id        ,
+                username:           $username_raw   ,
+                moderator_username: $admin_nick_raw );
 
   // IRC bot message
   irc_bot_send_message("$admin_nick_raw has reactivated the deleted account of $username_raw - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
@@ -231,7 +239,7 @@ function admin_account_rename(  $username     ,
   $username_raw     = $username;
   $username         = sanitize($username, 'string');
   $new_username_raw = $new_username;
-  $new_username     = sanitize($username, 'string');
+  $new_username     = sanitize($new_username, 'string');
   $mod_nick_raw     = user_get_username();
 
   // Error: No username provided
@@ -260,7 +268,12 @@ function admin_account_rename(  $username     ,
           WHERE   users.id        = '$user_id' ");
 
   // Activity log
-  log_activity('users_rename', 1, 'ENFR', 0, $username_raw, NULL, 0, $user_id, $new_username_raw, $mod_nick_raw);
+  log_activity( 'users_rename'                          ,
+                is_moderators_only:   1                 ,
+                activity_summary_en:  $username_raw     ,
+                fk_users:             $user_id          ,
+                username:             $new_username_raw ,
+                moderator_username:   $mod_nick_raw     );
 
   // IRC bot message
   irc_bot_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw - ".$GLOBALS['website_url']."pages/todo_link?id=".$user_id, 'mod');
@@ -331,7 +344,11 @@ function admin_account_change_password( $username ,
           AND         users_tokens.token_type = 'session' ");
 
   // Activity log
-  log_activity('users_password', 1, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw, $mod_nick_raw);
+  log_activity( 'users_password'                  ,
+                is_moderators_only: 1             ,
+                fk_users:           $user_id      ,
+                username:           $username_raw ,
+                moderator_username: $mod_nick_raw );
 
   // IRC bot message
   irc_bot_send_message("$mod_nick_raw has changed $username_raw's password - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
@@ -405,8 +422,14 @@ function admin_account_change_rights( $username ,
             WHERE   users.id                = '$user_id' ");
 
     // Activity log
-    log_activity('users_rights_delete', 0, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw);
-    log_activity('users_rights_delete', 1, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw, $admin_nick_raw);
+    log_activity( 'users_rights_delete'               ,
+                  fk_users:             $user_id      ,
+                  username:             $username_raw );
+    log_activity( 'users_rights_delete'               ,
+                  is_moderators_only:   1               ,
+                  fk_users:             $user_id        ,
+                  username:             $username_raw   ,
+                  moderator_username:   $admin_nick_raw );
 
     // IRC bot message
     irc_bot_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'mod');
@@ -431,8 +454,14 @@ function admin_account_change_rights( $username ,
             WHERE   users.id                = '$user_id' ");
 
     // Activity log
-    log_activity('users_rights_moderator', 0, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw);
-    log_activity('users_rights_moderator', 1, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw, $admin_nick_raw);
+    log_activity( 'users_rights_moderator'                ,
+                  fk_users:                 1             ,
+                  username:                 $username_raw );
+    log_activity( 'users_rights_moderator'                  ,
+                  is_moderators_only:       1               ,
+                  fk_users:                 1               ,
+                  username:                 $username_raw   ,
+                  moderator_username:       $admin_nick_raw );
 
     // IRC bot message
     irc_bot_send_message("$username_raw has joined the website's administrative team as a moderator - ".$GLOBALS['website_url']."todo_link", 'english');
@@ -455,8 +484,14 @@ function admin_account_change_rights( $username ,
             WHERE   users.id                = '$user_id' ");
 
     // Activity log
-    log_activity('users_rights_administrator', 0, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw);
-    log_activity('users_rights_administrator', 1, 'ENFR', 0, NULL, NULL, 0, $user_id, $username_raw, $admin_nick_raw);
+    log_activity( 'users_rights_administrator'                ,
+                  fk_users:                     1             ,
+                  username:                     $username_raw );
+    log_activity( 'users_rights_administrator'                  ,
+                  is_moderators_only:           1               ,
+                  fk_users:                     1               ,
+                  username:                     $username_raw   ,
+                  moderator_username:           $admin_nick_raw );
 
     // IRC bot message
     irc_bot_send_message("$username_raw is now a website administrator - ".$GLOBALS['website_url']."todo_link", 'english');

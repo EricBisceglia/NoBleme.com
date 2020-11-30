@@ -113,8 +113,20 @@ function admin_ban_create(  $banner_id            ,
   schedule_task('users_unban', $banned_user_id, $ban_end, $username);
 
   // Activity logs
-  log_activity('users_banned', 0, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_user_id, $banned_username);
-  $modlog = log_activity('users_banned', 1, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_user_id, $banned_username, $banner_username_raw);
+  log_activity( 'users_banned'                            ,
+                activity_summary_en:  $ban_reason_en_raw  ,
+                activity_summary_fr:  $ban_reason_fr_raw  ,
+                activity_amount:      $ban_length         ,
+                fk_users:             $banned_user_id     ,
+                username:             $banned_username    );
+  $modlog = log_activity( 'users_banned'                              ,
+                          is_moderators_only:   1                     ,
+                          activity_summary_en:  $ban_reason_en_raw    ,
+                          activity_summary_fr:  $ban_reason_fr_raw    ,
+                          activity_amount:      $ban_length           ,
+                          fk_users:             $banned_user_id       ,
+                          username:             $banned_username      ,
+                          moderator_username:   $banner_username_raw  );
 
   // Detailed activity logs
   if($ban_reason_en_raw)
@@ -240,12 +252,24 @@ function admin_ban_edit(  $banner_id            ,
 
   // Generate activity logs if needed
   if($ban_length)
-    log_activity('users_banned_edit', 0, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_id, $banned_username_raw);
+    log_activity( 'users_banned_edit'                         ,
+                  activity_summary_en:  $ban_reason_en        ,
+                  activity_summary_fr:  $ban_reason_fr        ,
+                  activity_amount:      $ban_length           ,
+                  fk_users:             $banned_id            ,
+                  username:             $banned_username_raw  );
 
   // Generate a modlog and detailed activity logs if needed
   if($ban_length || $ban_reason_en_raw != $dban['b_reason_en'] || $ban_reason_fr_raw != $dban['b_reason_fr'])
   {
-    $modlog = log_activity('users_banned_edit', 1, 'ENFR', 0, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, $banned_id, $banned_username_raw, $banner_username_raw);
+    $modlog = log_activity( 'users_banned_edit'                         ,
+                            is_moderators_only:   1                     ,
+                            activity_summary_en:  $ban_reason_en        ,
+                            activity_summary_fr:  $ban_reason_fr        ,
+                            activity_amount:      $ban_length           ,
+                            fk_users:             $banned_id            ,
+                            username:             $banned_username_raw  ,
+                            moderator_username:   $banner_username_raw  );
     if($ban_reason_en_raw != $dban['b_reason_en'])
       log_activity_details($modlog, 'New ban reason (EN)', 'Nouvelle raison du ban (EN)', $dban['b_reason_en'], $ban_reason_en_raw);
     if($ban_reason_fr_raw != $dban['b_reason_fr'])
@@ -293,7 +317,6 @@ function admin_ban_edit(  $banner_id            ,
 /**
  * Unbans a banned user.
  *
- * @param   int         $unbanner_id                  The id of the moderator unbanning the user.
  * @param   string      $unbanned_id                  The id of the user getting unbanned.
  * @param   string|null $unban_reason_en  (OPTIONAL)  The justification for the unban, in english.
  * @param   string|null $unban_reason_fr  (OPTIONAL)  The justification for the unban, in french.
@@ -301,8 +324,7 @@ function admin_ban_edit(  $banner_id            ,
  * @return  void
  */
 
-function admin_ban_delete(  $unbanner_id            ,
-                            $unbanned_id            ,
+function admin_ban_delete(  $unbanned_id            ,
                             $unban_reason_en  = ''  ,
                             $unban_reason_fr  = '' )
 {
@@ -320,7 +342,7 @@ function admin_ban_delete(  $unbanner_id            ,
   $unban_reason_fr_raw    = $unban_reason_fr;
   $unban_reason_en        = sanitize($unban_reason_en, 'string');
   $unban_reason_fr        = sanitize($unban_reason_fr, 'string');
-  $unbanner_id            = sanitize($unbanner_id, 'int', 0);
+  $unbanner_id            = sanitize(user_get_id(), 'int', 0);
   $unbanner_username_raw  = user_get_username($unbanner_id);
 
   // Do nothing if user does not exist
@@ -358,7 +380,13 @@ function admin_ban_delete(  $unbanner_id            ,
   $days_left    = time_days_elapsed(time(), $dban['b_end'], 1);
 
   // Generate a mod log with some detailed activity logs
-  $modlog = log_activity('users_banned_delete', 1, 'ENFR', 0, $unban_reason_en_raw, $unban_reason_fr_raw, 0, $unbanned_id, $unbanned_username_raw, $unbanner_username_raw);
+  $modlog = log_activity( 'users_banned_delete'                         ,
+                          is_moderators_only:   1                       ,
+                          activity_summary_en:  $unban_reason_en_raw    ,
+                          activity_summary_fr:  $unban_reason_fr_raw    ,
+                          fk_users:             $unbanned_id            ,
+                          username:             $unbanned_username_raw  ,
+                          moderator_username:   $unbanner_username_raw  );
   log_activity_details($modlog, 'Days left in the ban', 'Jours restants au bannissement', $days_left);
   log_activity_details($modlog, 'Days served before the unbanning', 'Jours purgés avant le débannissement', $days_served);
   if($unban_reason_en_raw)
@@ -541,7 +569,14 @@ function admin_ip_ban_create( $banner_id            ,
   schedule_task('users_unban_ip', $ip_ban_id, $ban_end, $ip_address);
 
   // Activity logs
-  $modlog = log_activity('users_banned_ip', 1, 'ENFR', $ip_ban_id, $ban_reason_en_raw, $ban_reason_fr_raw, $ban_length, 0, $ip_address_raw, $banner_username);
+  $modlog = log_activity( 'users_banned_ip'                         ,
+                          is_moderators_only:   1                   ,
+                          activity_id:          $ip_ban_id          ,
+                          activity_summary_en:  $ban_reason_en_raw  ,
+                          activity_summary_fr:  $ban_reason_fr_raw  ,
+                          activity_amount:      $ban_length         ,
+                          username:             $ip_address_raw     ,
+                          moderator_username:   $banner_username    );
 
   // Detailed activity logs
   if($ban_reason_en_raw)
@@ -714,7 +749,13 @@ function admin_ip_ban_delete( $ban_id                 ,
 
   // Activity logs
   $unbanner_username_raw = user_get_username($unbanner_id);
-  $modlog = log_activity('users_banned_ip_delete', 1, 'ENFR', $ban_id, $unban_reason_en_raw, $unban_reason_fr_raw, 0, 0, $banned_ip_raw, $unbanner_username_raw);
+  $modlog = log_activity( 'users_banned_ip_delete'                          ,
+                          is_moderators_only:       1                       ,
+                          activity_id:              $ban_id                 ,
+                          activity_summary_en:      $unban_reason_en_raw    ,
+                          activity_summary_fr:      $unban_reason_fr_raw    ,
+                          username:                 $banned_ip_raw          ,
+                          moderator_username:       $unbanner_username_raw  );
 
   // Detailed activity logs
   log_activity_details($modlog, 'Days left in the ban', 'Jours restants au bannissement', $days_left);

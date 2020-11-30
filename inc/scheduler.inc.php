@@ -209,7 +209,9 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
 
         // Activity logs
         $banned_username = sanitize($duser['u_nick'], 'string');
-        log_activity('users_unbanned', 0, 'ENFR', 0, NULL, NULL, 0, $scheduler_action_id, $banned_username);
+        log_activity( 'users_unbanned'                        ,
+                      fk_users:         $scheduler_action_id  ,
+                      username:         $banned_username      );
 
         // Ban logs
         query(" UPDATE    logs_bans
@@ -241,7 +243,10 @@ if($dcheck_scheduler['scheduler_last'] < ($timestamp - 15))
                 WHERE       system_ip_bans.id = '$scheduler_action_id' ");
 
         // Activity logs
-        log_activity('users_unbanned_ip', 1, 'ENFR', $scheduler_action_id, NULL, NULL, 0, 0, $scheduler_desc_raw);
+        log_activity( 'users_unbanned_ip'                       ,
+                      is_moderators_only: 1                     ,
+                      activity_id:        $scheduler_action_id  ,
+                      username:           $scheduler_desc_raw   );
 
         // Ban logs
         query(" UPDATE    logs_bans

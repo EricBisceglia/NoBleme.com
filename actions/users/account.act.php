@@ -261,7 +261,9 @@ function user_create_account( $username                 ,
           SET         users_stats.fk_users        = '$account_id' ");
 
   // Log the activity
-  log_activity('users_register', 0, 'ENFR', 0, NULL, NULL, 0, $account_id, $username);
+  log_activity( 'users_register'              ,
+                fk_users:         $account_id ,
+                username:         $username   );
 
   // IRC message
   irc_bot_send_message("A new member registered on the website: $username_raw - ".$GLOBALS['website_url']."todo_link", "english");

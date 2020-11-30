@@ -258,7 +258,10 @@ function dev_versions_create( $major                ,
 
   // Log the activity
   if($publish_activity)
-    log_activity('dev_version', 0, 'ENFR', $version_id, $version_number, $version_number);
+    log_activity( 'dev_version'                         ,
+                  activity_id:          $version_id     ,
+                  activity_summary_en:  $version_number ,
+                  activity_summary_fr:  $version_number );
 
   // Send a message on IRC
   if($notify_irc)
@@ -373,7 +376,8 @@ function dev_versions_delete( $version_id )
           WHERE       system_versions.id = '$version_id' ");
 
   // Delete the related activity logs
-  log_activity_delete('dev_version', 0, 0, NULL, $version_id);
+  log_activity_delete(  'dev_version'             ,
+                        activity_id:  $version_id );
 
   // Return the deleted version number
   return $version_number;
