@@ -78,10 +78,10 @@ if(!$old_structure)
 /**
  * Checks whether a query should be ran or not.
  *
- * @return void
+ * @return  int|null  Returns null if the query should be ran, otherwise return the id of the latest query that ran.
  */
 
-function sql_check_query_id()
+function sql_check_query_id() : mixed
 {
   // As the name of the global variables table has been changed, check everything twice
   $query_ok     = 0;
@@ -95,7 +95,7 @@ function sql_check_query_id()
     $query_ok_old = ($dtablelist[0] == 'vars_globales')     ? 1 : $query_ok_old;
   }
   if(!$query_ok && !$query_ok_old)
-    return;
+    return NULL;
 
   // If it does exist, then fetch need its structure
   if($query_ok)
@@ -115,7 +115,7 @@ function sql_check_query_id()
 
   // If the query can't be run, abort here
   if(!$field_exists)
-    return;
+    return NULL;
 
   // Fetch the id of the last query that was ran
   if($query_ok)
@@ -139,12 +139,12 @@ function sql_check_query_id()
 /**
  * Updates th ID of the last query that was ran.
  *
- * @param   int $id ID of the query.
+ * @param   int   $id   ID of the query.
  *
  * @return  void
  */
 
-function sql_update_query_id($id)
+function sql_update_query_id( int $id ) : void
 {
   // As the name of the global variables table has been changed, check everything twice
   $query_ok     = 0;
@@ -200,13 +200,15 @@ function sql_update_query_id($id)
  *
  * The table will only contain one field, called "id", an auto incremented primary key.
  *
- * @return void
+ * @param   string  $table_name   The name of the table to create.
+ *
+ * @return  void
  */
 
-function sql_create_table($table_name)
+function sql_create_table( string $table_name ) : void
 {
   // Create the table
-  return query(" CREATE TABLE IF NOT EXISTS ".$table_name." ( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=MyISAM;");
+  query(" CREATE TABLE IF NOT EXISTS ".$table_name." ( id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=MyISAM;");
 }
 
 
@@ -215,14 +217,14 @@ function sql_create_table($table_name)
 /**
  * Renames an existing table.
  *
- * @param   string  $table_name The old name of the table.
- * @param   string  $new_name   The new name of the table.
+ * @param   string  $table_name   The old name of the table.
+ * @param   string  $new_name     The new name of the table.
  *
- * @return void
+ * @return  void
  */
 
-function sql_rename_table(  $table_name ,
-                            $new_name   )
+function sql_rename_table(  string  $table_name ,
+                            string  $new_name   ) : void
 {
   // Proceed only if the table exists and the new table name is not taken
   $query_old_ok = 0;
@@ -246,12 +248,12 @@ function sql_rename_table(  $table_name ,
 /**
  * Gets rid of all the data in an existing table.
  *
- * @param   string  $table_name The table's name.
+ * @param   string  $table_name   The table's name.
  *
  * @return  void
  */
 
-function sql_empty_table($table_name)
+function sql_empty_table( string $table_name ) : void
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -271,12 +273,12 @@ function sql_empty_table($table_name)
 /**
  * Deletes an existing table.
  *
- * @param   string  $table_name The table's name.
+ * @param   string  $table_name   The table's name.
  *
  * @return  void
  */
 
-function sql_delete_table($table_name)
+function sql_delete_table( string $table_name ) : void
 {
   // Delete the table
   query(" DROP TABLE IF EXISTS ".$table_name);
@@ -288,18 +290,18 @@ function sql_delete_table($table_name)
 /**
  * Creates a new field in an existing table.
  *
- * @param   string  $table_name       The existing table's name.
- * @param   string  $field_name       The new field's name.
- * @param   string  $field_type       The new field's MySQL type.
- * @param   string  $after_field_name Where to place the new field - name of the field that will be before the new one.
+ * @param   string  $table_name         The existing table's name.
+ * @param   string  $field_name         The new field's name.
+ * @param   string  $field_type         The new field's MySQL type.
+ * @param   string  $after_field_name   The name of the field that is located before the emplacement of the new one.
  *
- * @return void
+ * @return  void
  */
 
-function sql_create_field(  $table_name       ,
-                            $field_name       ,
-                            $field_type       ,
-                            $after_field_name )
+function sql_create_field(  string  $table_name       ,
+                            string  $field_name       ,
+                            string  $field_type       ,
+                            string  $after_field_name ) : void
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -339,18 +341,18 @@ function sql_create_field(  $table_name       ,
 /**
  * Renames an existing field in an existing table.
  *
- * @param   string  $table_name     The existing table's name.
- * @param   string  $old_field_name The field's old name.
- * @param   string  $new_field_name The field's new name.
- * @param   string  $field_type     The MySQL type of the field.
+ * @param   string  $table_name       The existing table's name.
+ * @param   string  $old_field_name   The field's old name.
+ * @param   string  $new_field_name   The field's new name.
+ * @param   string  $field_type       The MySQL type of the field.
  *
  * @return  void
  */
 
-function sql_rename_field(  $table_name     ,
-                            $old_field_name ,
-                            $new_field_name ,
-                            $field_type     )
+function sql_rename_field(  string  $table_name     ,
+                            string  $old_field_name ,
+                            string  $new_field_name ,
+                            string  $field_type     ) : void
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -387,16 +389,16 @@ function sql_rename_field(  $table_name     ,
 /**
  * Changes the type of an existing field in an existing table.
  *
- * @param   string  $table_name The existing table's name.
- * @param   string  $field_name The existing field's name.
- * @param   string  $field_type The MySQL type to give the field.
+ * @param   string  $table_name   The existing table's name.
+ * @param   string  $field_name   The existing field's name.
+ * @param   string  $field_type   The MySQL type to give the field.
  *
  * @return  void
  */
 
-function sql_change_field_type( $table_name ,
-                                $field_name ,
-                                $field_type )
+function sql_change_field_type( string  $table_name ,
+                                string  $field_name ,
+                                string  $field_type ) : void
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -423,16 +425,18 @@ function sql_change_field_type( $table_name ,
 /**
  * Moves an existing field in an existing table.
  *
- * @param   string  $table_name       The existing table's name.
- * @param   string  $field_name       The existing field's name.
- * @param   string  $field_type       The MySQL type of the field.
- * @param   string  $after_field_name Where to place this field - name of the existing field after which it should be.
+ * @param   string  $table_name         The existing table's name.
+ * @param   string  $field_name         The existing field's name.
+ * @param   string  $field_type         The MySQL type of the field.
+ * @param   string  $after_field_name   The name of the field that is located before the emplacement of the new one.
+ *
+ * @return  void
  */
 
-function sql_move_field(  $table_name       ,
-                          $field_name       ,
-                          $field_type       ,
-                          $after_field_name )
+function sql_move_field(  string  $table_name       ,
+                          string  $field_name       ,
+                          string  $field_type       ,
+                          string  $after_field_name ) : void
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -466,14 +470,14 @@ function sql_move_field(  $table_name       ,
 /**
  * Deletes an existing field in an existing table.
  *
- * @param   string  $table_name The existing table's name.
- * @param   string  $field_name The existing field's name
+ * @param   string  $table_name   The existing table's name.
+ * @param   string  $field_name   The existing field's name
  *
  * @return  void
  */
 
-function sql_delete_field(  $table_name ,
-                            $field_name )
+function sql_delete_field(  string  $table_name ,
+                            string  $field_name ) : void
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -500,18 +504,18 @@ function sql_delete_field(  $table_name ,
 /**
  * Creates an index in an existing table.
  *
- * @param   string    $table_name               The name of the existing table.
- * @param   string    $index_name               The name of the index that will be created.
- * @param   string    $field_names              One or more fields to be indexed (eg. "my_field, other_field").
- * @param   int|null  $fulltext     (OPTIONAL)  If set, the index will be created as fulltext.
+ * @param   string  $table_name               The name of the existing table.
+ * @param   string  $index_name               The name of the index that will be created.
+ * @param   string  $field_names              One or more fields to be indexed (eg. "my_field, other_field").
+ * @param   bool    $fulltext     (OPTIONAL)  If set, the index will be created as fulltext.
  *
  * @return  void
  */
 
-function sql_create_index(  $table_name           ,
-                            $index_name           ,
-                            $field_names          ,
-                            $fulltext     = NULL  )
+function sql_create_index(  string  $table_name           ,
+                            string  $index_name           ,
+                            string  $field_names          ,
+                            bool    $fulltext     = false )
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -540,14 +544,14 @@ function sql_create_index(  $table_name           ,
 /**
  * Deletes an existing index in an existing table.
  *
- * @param   string  $table_name The existing table's name.
- * @param   string  $index_name The existing index's name.
+ * @param   string  $table_name   The existing table's name.
+ * @param   string  $index_name   The existing index's name.
  *
  * @return  void
  */
 
-function sql_delete_index(  $table_name ,
-                            $index_name )
+function sql_delete_index(  string  $table_name ,
+                            string  $index_name ) : void
 {
   // Proceed only if the table exists
   $query_ok   = 0;
@@ -585,8 +589,8 @@ function sql_delete_index(  $table_name ,
  * @return  void
  */
 
-function sql_insert_value(  $condition  ,
-                            $query      )
+function sql_insert_value(  string  $condition  ,
+                            string  $query      ) : void
 {
   // If the condition is met, run the query
   if(!mysqli_num_rows(query($condition)))
@@ -599,12 +603,12 @@ function sql_insert_value(  $condition  ,
 /**
  * Sanitizes data for MySQL queries.
  *
- * @param   string  $data The data to sanitize.
+ * @param   mixed  $data  The data to sanitize.
  *
- * @return  void
+ * @return  mixed         The sanitized data
  */
 
-function sql_sanitize_data($data)
+function sql_sanitize_data( mixed $data ) : mixed
 {
   // Sanitize the data using the currently open MySQL connection
   return trim(mysqli_real_escape_string($GLOBALS['db'], $data));
@@ -619,7 +623,7 @@ function sql_sanitize_data($data)
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                          Allows replaying of all past queries that haven't been run yet                           */
+/*                               Allows replaying of queries that haven't been run yet                               */
 /*              in order to ensure a version upgrade between any two versions of NoBleme goes smoothly               */
 /*                                                                                                                   */
 /*                                 Older queries are archived in queries.archive.php                                 */
@@ -629,10 +633,6 @@ function sql_sanitize_data($data)
 
 // Fetch the id of the last query that was run
 $last_query = sql_check_query_id();
-
-// Call the query archive if necessary
-if($last_query < 19)
-  include_once 'queries.archive.php';
 
 
 

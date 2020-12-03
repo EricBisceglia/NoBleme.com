@@ -107,22 +107,22 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <tr class="nowrap uppercase">
             <th>
               <?=__('type')?>
-              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'type')?>" onclick="dev_scheduler_list_search('type');">
+              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="dev_scheduler_list_search('type');">
             </th>
             <th>
               <?=__('id')?>
             </th>
             <th>
               <?=__('dev_scheduler_task_execution')?>
-              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'date')?>" onclick="dev_scheduler_list_search('date');">
+              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="dev_scheduler_list_search('date');">
             </th>
             <th>
               <?=__('dev_scheduler_task_description')?>
-              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'description')?>" onclick="dev_scheduler_list_search('description');">
+              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="dev_scheduler_list_search('description');">
             </th>
             <th>
               <?=__('dev_scheduler_task_report')?>
-              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'report')?>" onclick="dev_scheduler_list_search('report');">
+              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="dev_scheduler_list_search('report');">
             </th>
             <th>
               <?=__('action')?>

@@ -27,7 +27,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  array|null            An array containing task related data, or NULL if it does not exist.
  */
 
-function dev_scheduler_get( $task_id )
+function dev_scheduler_get( int $task_id ) : mixed
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -65,14 +65,14 @@ function dev_scheduler_get( $task_id )
 /**
  * Returns a list of all task scheduler executions, past and future.
  *
- * @param   string|null   $sort_by  (OPTIONAL)  How the returned data should be sorted.
- * @param   array|null    $search   (OPTIONAL)  Search for specific field values.
+ * @param   string  $sort_by  (OPTIONAL)  How the returned data should be sorted.
+ * @param   array   $search   (OPTIONAL)  Search for specific field values.
  *
- * @return  array                               An array containing the scheduler logs and upcoming tasks.
+ * @return  array                        An array containing the scheduler logs and upcoming tasks.
  */
 
-function dev_scheduler_list(  $sort_by  = 'date'  ,
-                              $search   = NULL    )
+function dev_scheduler_list(  string  $sort_by  = 'date'  ,
+                              array   $search   = array() ) : array
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -205,9 +205,9 @@ function dev_scheduler_list(  $sort_by  = 'date'  ,
  * @return  string|null           NULL if all went according to plan, or an error string
  */
 
-function dev_scheduler_edit(  $id   ,
-                              $date ,
-                              $time )
+function dev_scheduler_edit(  int     $id   ,
+                              string  $date ,
+                              string  $time ) : mixed
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -235,7 +235,7 @@ function dev_scheduler_edit(  $id   ,
           WHERE   system_scheduler.id         = '$id' ");
 
   // Return that all went well
-  return;
+  return NULL;
 }
 
 
@@ -244,12 +244,12 @@ function dev_scheduler_edit(  $id   ,
 /**
  * Deletes an entry in the scheduled tasks.
  *
- * @param   int           $task_id    The tasks's id
+ * @param   int   $task_id  The tasks's id
  *
- * @return  string|int                The tasks's id, or 0 if the task does not exist.
+ * @return  int             The tasks's id, or 0 if the task does not exist.
  */
 
-function dev_scheduler_delete_task( $task_id )
+function dev_scheduler_delete_task( int $task_id ) : int
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -275,12 +275,12 @@ function dev_scheduler_delete_task( $task_id )
 /**
  * Deletes an entry in the scheduler execution logs.
  *
- * @param   int           $log_id   The log's id
+ * @param   int   $log_id   The log's id
  *
- * @return  string|int              The log's id, or 0 if the log does not exist.
+ * @return  int             The log's id, or 0 if the log does not exist.
  */
 
-function dev_scheduler_delete_log( $log_id )
+function dev_scheduler_delete_log( int $log_id ) : int
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -309,7 +309,7 @@ function dev_scheduler_delete_log( $log_id )
  * @return  array   An array containing the task types.
  */
 
-function dev_scheduler_types_list()
+function dev_scheduler_types_list() : array
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();

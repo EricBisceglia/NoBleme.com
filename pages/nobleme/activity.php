@@ -78,7 +78,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <?php if(!isset($_GET['mod'])) { ?>
 
   <h1 class="align_center bigpadding_bot">
+    <?php if($is_moderator) { ?>
+    <?=__link('pages/nobleme/activity?mod', __('activity_title'), 'noglow text_red')?>
+    <?php } else { ?>
     <?=__('activity_title')?>
+    <?php } ?>
 
     <?php if($is_admin) { ?>
     <img class="pointer icon" src="<?=$path?>img/icons/delete.svg" alt="X" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
@@ -89,7 +93,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <?php } else { ?>
 
   <h1 class="align_center padding_bot">
-    <?=__('activity_title_modlogs')?>
+    <?=__link('pages/nobleme/activity', __('activity_title_modlogs'), 'noglow text_red')?>
 
     <?php if($is_admin) { ?>
     <img class="pointer icon" src="<?=$path?>img/icons/delete.svg" alt="X" onclick="activity_submit_menus('<?=$logs_url?>', 1);">

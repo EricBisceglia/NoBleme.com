@@ -42,7 +42,7 @@ if(!$GLOBALS['dev_mode'])
  * @return  string  The randomly generated paragraph.
  */
 
-function fixtures_lorem_ipsum($word_count)
+function fixtures_lorem_ipsum( int $word_count ) : string
 {
   // Random words to use in the lorem genertion
   $words = array('lorem', 'lorem', 'lorem', 'ipsum', 'ipsum', 'ipsum', 'dolor', 'dolor', 'sit', 'sit', 'amet', 'consectetur', 'adipisicing', 'elit', 'sed', 'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'et', 'et', 'dolore', 'magna', 'aliqua', 'exercitationem', 'perferendis', 'perspiciatis', 'laborum', 'eveniet', 'sunt', 'iure', 'nam', 'nam', 'nobis', 'eum', 'cum', 'officiis', 'excepturi', 'odio', 'consectetur', 'quasi', 'aut', 'quisquam', 'vel', 'eligendi', 'itaque', 'non', 'odit', 'tempore', 'quaerat', 'dignissimos', 'facilis', 'neque', 'nihil', 'expedita', 'vitae', 'vero', 'ipsum', 'nisi', 'animi', 'cumque', 'pariatur', 'velit', 'modi', 'natus', 'iusto', 'eaque', 'sequi', 'illo', 'sed', 'ex', 'et', 'voluptatibus', 'tempora', 'veritatis', 'ratione', 'assumenda', 'incidunt', 'nostrum', 'placeat', 'aliquid', 'fuga', 'fuga', 'provident', 'praesentium', 'rem', 'necessitatibus', 'suscipit', 'adipisci', 'quidem', 'possimus', 'voluptas', 'debitis', 'sint', 'accusantium', 'unde', 'sapiente', 'voluptate', 'qui', 'aspernatur', 'laudantium', 'soluta', 'amet', 'quo', 'aliquam', 'saepe', 'culpa', 'libero', 'ipsa', 'dicta', 'reiciendis', 'nesciunt', 'doloribus', 'autem', 'impedit', 'minima', 'maiores', 'repudiandae', 'ipsam', 'obcaecati', 'ullam', 'enim', 'totam', 'totam', 'delectus', 'ducimus', 'quis', 'voluptates', 'dolores', 'molestiae', 'harum', 'dolorem', 'quia', 'voluptatem', 'molestias', 'magni', 'distinctio', 'omnis', 'illum', 'dolorum', 'voluptatum', 'ea', 'quas', 'quam', 'corporis', 'quae', 'blanditiis', 'atque', 'deserunt', 'laboriosam', 'earum', 'consequuntur', 'hic', 'cupiditate', 'quibusdam', 'accusamus', 'ut', 'rerum', 'error', 'minus', 'eius', 'ab', 'ad', 'nemo', 'fugit', 'officia', 'at', 'in', 'id', 'quos', 'reprehenderit', 'numquam', 'iste', 'fugiat', 'sit', 'inventore', 'beatae', 'repellendus', 'magnam', 'recusandae', 'quod', 'explicabo', 'doloremque', 'aperiam', 'consequatur', 'asperiores', 'commodi', 'optio', 'dolor', 'labore', 'temporibus', 'repellat', 'veniam', 'architecto', 'est', 'est', 'est', 'esse', 'mollitia', 'nulla', 'a', 'similique', 'eos', 'alias', 'dolore', 'tenetur', 'deleniti', 'porro', 'facere', 'maxime', 'corrupti');
@@ -65,24 +65,24 @@ function fixtures_lorem_ipsum($word_count)
 /**
  * Generates SQL safe random data.
  *
- * @param   string              $type       Type of data to generate ('int', 'digits', 'string', 'sentence', 'text').
- * @param   int                 $min        The minimum length or amount of data to be generated.
- * @param   int                 $max        The maximum length or amount of data to be generated.
- * @param   int|null  OPTIONAL  $no_periods If set, disables periods at the end of sentences.
- * @param   int|null  OPTIONAL  $no_spaces  If set, strings will not contain spaces.
+ * @param   string  $type                     Type of data to generate ('int', 'digits', 'string', 'sentence', 'text').
+ * @param   int     $min                      The minimum length or amount of data to be generated.
+ * @param   int     $max                      The maximum length or amount of data to be generated.
+ * @param   bool    $no_periods   (OPTIONAL)  If set, disables periods at the end of sentences.
+ * @param   bool    $no_spaces    (OPTIONAL)  If set, strings will not contain spaces.
  *
- * @return  string                          The randomly generated content.
+ * @return  string                            The randomly generated content.
  */
 
-function fixtures_generate_data(  $type           ,
-                                  $min            ,
-                                  $max            ,
-                                  $no_periods = 0 ,
-                                  $no_spaces  = 0 )
+function fixtures_generate_data(  string  $type               ,
+                                  int     $min                ,
+                                  int     $max                ,
+                                  bool    $no_periods = false ,
+                                  bool    $no_spaces  = false ) : string
 {
-  // Don't do aything if the min/max values are incorrect
+  // Don't generate aything if the min/max values are incorrect
   if($max < 1 || $min > $max)
-    return;
+    return '';
 
   // Random int between $min and $max
   if($type == 'int')
@@ -143,7 +143,7 @@ function fixtures_generate_data(  $type           ,
  * @return  int             The ID of an existing entry.
  */
 
-function fixtures_fetch_random_id($table)
+function fixtures_fetch_random_id( string $table ) : int
 {
   // Fetch an ID in the database
   $drand = mysqli_fetch_array(query(" SELECT    $table.id AS 'u_id'

@@ -19,12 +19,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Ensures a number is preceded by its sign.
  *
- * @param   int|double $number  The number in question.
+ * @param   int|float   $number   The number in question.
  *
- * @return  string|int|double   The same number, but signed.
+ * @return  string                The same number, but signed.
  */
 
-function number_prepend_sign($number)
+function number_prepend_sign( mixed $number ) : string
 {
   // If the number is above 0, then prepend a plus to it
   if($number > 0)
@@ -41,19 +41,19 @@ function number_prepend_sign($number)
 /**
  * Changes the formatting of a number.
  *
- * @param   int|double  $number                   The number to format.
- * @param   string|null $format       (OPTIONAL)  The format of the returned number.
+ * @param   int|float   $number                   The number to format.
+ * @param   string      $format       (OPTIONAL)  The format of the returned number.
  *                                                "number", "price", "price_cents", "percentage", "percentage_point"
- * @param   int|null    $decimals     (OPTIONAL)  Which amount of decimals should be returned.
- * @param   bool|null   $prepend_sign (OPTIONAL)  Should a sign always precede the returned number.
+ * @param   int         $decimals     (OPTIONAL)  Which amount of decimals should be returned.
+ * @param   bool        $prepend_sign (OPTIONAL)  Should a sign always precede the returned number.
  *
- * @return  int|double|string                     The formatted number.
+ * @return  string                                The formatted number.
  */
 
-function number_display_format( $number                   ,
-                                $format       = "number"  ,
-                                $decimals     = 0         ,
-                                $prepend_sign = 0         )
+function number_display_format( mixed   $number                   ,
+                                string  $format       = "number"  ,
+                                int     $decimals     = 0         ,
+                                bool    $prepend_sign = false     ) : string
 {
   // Standard format - 10,01
   if($format == "number")
@@ -85,14 +85,14 @@ function number_display_format( $number                   ,
 /**
  * Returns a styling depending on whether the number is positive, zero, or negative.
  *
- * @param   int|double  $number                       The value from which the style will be determined.
- * @param   bool|null   $return_color_hex (OPTIONAL)  If set, then return a hexadecimal color value instead of a style.
+ * @param   int|float   $number                         The value from which the style will be determined.
+ * @param   bool        $return_color_hex   (OPTIONAL)  If set, return a hexadecimal color value instead of a style.
  *
- * @return  string                                    The css styling or hexadecimal code corresponding to the value.
+ * @return  string                                      The css styling or hexadecimal code corresponding to the value.
  */
 
-function number_styling(  $number               ,
-                          $return_color_hex = 0 )
+function number_styling(  mixed $number                   ,
+                          bool  $return_color_hex = false ) : string
 {
   // Hex codes
   if($return_color_hex)

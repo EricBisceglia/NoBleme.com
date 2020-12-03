@@ -22,18 +22,18 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * No more than 15 login attempts per IP every 10 minutes.
  * No more than 10 login attempts for a specific user every 10 minutes (except 1 allowed attempt per unique IP).
  *
- * @param   string      $ip                     The IP adress of the user attempting to login.
- * @param   string      $username               The username the user is attempting to login with.
- * @param   string      $password               The password the user is attempting to login with.
- * @param   int|null    $remember_me  OPTIONAL  Whether the website's front should create a cookie to keep the user in.
+ * @param   string  $ip                     The IP adress of the user attempting to login.
+ * @param   string  $username               The username the user is attempting to login with.
+ * @param   string  $password               The password the user is attempting to login with.
+ * @param   bool    $remember_me  (OPTIONAL)  Whether the website's front should create a cookie to keep the user in.
  *
  * @return  string                              Returns 'OK' if successfully logged in, or an error if it went wrong.
  */
 
-function user_authenticate( $ip               ,
-                            $username         ,
-                            $password         ,
-                            $remember_me = 0  )
+function user_authenticate( string  $ip                   ,
+                            string  $username             ,
+                            string  $password             ,
+                            bool    $remember_me = false  ) : string
 {
   // Only logged out users may authenticate
   user_restrict_to_guests();
@@ -164,22 +164,22 @@ function user_authenticate( $ip               ,
 /**
  * Accept or reject a user's registration attempt.
  *
- * @param   string      $username                   The username of the account to be created.
- * @param   string      $password                   The password of the account to be created.
- * @param   string      $email                      The e-mail address of the account to be created.
- * @param   string|null $password_check   OPTIONAL  The second entry of the password of the account to be created.
- * @param   string|null $captcha          OPTIONAL  The captcha entered by the guest trying to register.
- * @param   string|null $captcha_session  OPTIONAL  The captcha value stored in the session.
+ * @param   string      $username                     The username of the account to be created.
+ * @param   string      $password                     The password of the account to be created.
+ * @param   string      $email                        The e-mail address of the account to be created.
+ * @param   string      $password_check   (OPTIONAL)  The second entry of the password of the account to be created.
+ * @param   string      $captcha          (OPTIONAL)  The captcha entered by the guest trying to register.
+ * @param   string      $captcha_session  (OPTIONAL)  The captcha value stored in the session.
  *
- * @return  string|int                              Returns 1 if successfully registered, or a string in case of error.
+ * @return  string|int                                1 if successfully registered, or a string in case of error.
  */
 
-function user_create_account( $username                 ,
-                              $password                 ,
-                              $email                    ,
-                              $password_check   = NULL  ,
-                              $captcha          = NULL  ,
-                              $captcha_session  = NULL  )
+function user_create_account( string  $username               ,
+                              string  $password               ,
+                              string  $email                  ,
+                              string  $password_check   = ''  ,
+                              string  $captcha          = ''  ,
+                              string  $captcha_session  = ''  ) : mixed
 {
   // Check if the required files have been included
   require_included_file('register.lang.php');

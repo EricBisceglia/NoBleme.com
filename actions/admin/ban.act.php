@@ -27,20 +27,20 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Bans a user.
  *
- * @param   int         $banner_id                  The id of the moderator ordering the ban.
- * @param   string      $username                   The username of the user to ban.
- * @param   int         $ban_length                 The ban length.
- * @param   string|null $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
- * @param   string|null $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
+ * @param   int           $banner_id                  The id of the moderator ordering the ban.
+ * @param   string        $username                   The username of the user to ban.
+ * @param   int           $ban_length                 The ban length.
+ * @param   string        $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
+ * @param   string        $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
  *
- * @return  string|null                             Returns a string containing an error, or null if all went well.
+ * @return  string|null                               Returns a string containing an error, or null if all went well.
  */
 
-function admin_ban_create(  $banner_id            ,
-                            $username             ,
-                            $ban_length           ,
-                            $ban_reason_en  = ''  ,
-                            $ban_reason_fr  = ''  )
+function admin_ban_create(  int     $banner_id            ,
+                            string  $username             ,
+                            int     $ban_length           ,
+                            string  $ban_reason_en  = ''  ,
+                            string  $ban_reason_fr  = ''  ) : mixed
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -161,6 +161,9 @@ function admin_ban_create(  $banner_id            ,
   irc_bot_send_message("$banned_username_raw has been banned from the website $ban_duration_en[$ban_length] $ban_extra_en", 'english');
   irc_bot_send_message("$banned_username_raw s'est fait bannir du site $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
   irc_bot_send_message("$banner_username_raw has banned $banned_username_raw $ban_duration_en[$ban_length] $ban_extra_mod - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
+
+  // All went well, return NULL
+  return NULL;
 }
 
 
@@ -169,20 +172,20 @@ function admin_ban_create(  $banner_id            ,
 /**
  * Modifies an existing ban.
  *
- * @param   int         $banner_id                  The id of the moderator modifying the ban.
- * @param   string      $banned_id                  The id of the user whose ban is being modified.
- * @param   int|null    $ban_length     (OPTIONAL)  The length of the ban extension (or 0 if it should not change).
- * @param   string|null $ban_reason_en  (OPTIONAL)  The justification for the ban modification, in english.
- * @param   string|null $ban_reason_fr  (OPTIONAL)  The justification for the ban modification, in french.
+ * @param   int     $banner_id                  The id of the moderator modifying the ban.
+ * @param   string  $banned_id                  The id of the user whose ban is being modified.
+ * @param   int     $ban_length     (OPTIONAL)  The length of the ban extension (or 0 if it should not change).
+ * @param   string  $ban_reason_en  (OPTIONAL)  The justification for the ban modification, in english.
+ * @param   string  $ban_reason_fr  (OPTIONAL)  The justification for the ban modification, in french.
  *
  * @return  void
  */
 
-function admin_ban_edit(  $banner_id            ,
-                          $banned_id            ,
-                          $ban_length     = 0   ,
-                          $ban_reason_en  = ''  ,
-                          $ban_reason_fr  = ''  )
+function admin_ban_edit(  int     $banner_id            ,
+                          string  $banned_id            ,
+                          int     $ban_length     = 0   ,
+                          string  $ban_reason_en  = ''  ,
+                          string  $ban_reason_fr  = ''  ) : void
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -317,16 +320,16 @@ function admin_ban_edit(  $banner_id            ,
 /**
  * Unbans a banned user.
  *
- * @param   string      $unbanned_id                  The id of the user getting unbanned.
- * @param   string|null $unban_reason_en  (OPTIONAL)  The justification for the unban, in english.
- * @param   string|null $unban_reason_fr  (OPTIONAL)  The justification for the unban, in french.
+ * @param   string  $unbanned_id                  The id of the user getting unbanned.
+ * @param   string  $unban_reason_en  (OPTIONAL)  The justification for the unban, in english.
+ * @param   string  $unban_reason_fr  (OPTIONAL)  The justification for the unban, in french.
  *
  * @return  void
  */
 
-function admin_ban_delete(  $unbanned_id            ,
-                            $unban_reason_en  = ''  ,
-                            $unban_reason_fr  = '' )
+function admin_ban_delete(  string  $unbanned_id            ,
+                            string  $unban_reason_en  = ''  ,
+                            string  $unban_reason_fr  = ''  ) : void
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -418,24 +421,24 @@ function admin_ban_delete(  $unbanned_id            ,
 /**
  * Bans a user.
  *
- * @param   int           $banner_id                  The id of the moderator ordering the ban.
- * @param   string        $ip_address                 The IP address to ban.
- * @param   int           $ban_length                 The ban length.
- * @param   int|null      $severity       (OPTIONAL)  Whether the IP ban will be standard or full.
- * @param   string|null   $username       (OPTIONAL)  A user whose IP should be banned if no IP is specified.
- * @param   string|null   $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
- * @param   string|null   $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
+ * @param   int         $banner_id                  The id of the moderator ordering the ban.
+ * @param   string      $ip_address                 The IP address to ban.
+ * @param   int         $ban_length                 The ban length.
+ * @param   bool        $severity       (OPTIONAL)  Whether the IP ban will be standard or full.
+ * @param   string      $username       (OPTIONAL)  A user whose IP should be banned if no IP is specified.
+ * @param   string      $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
+ * @param   string      $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
  *
- * @return  string|null                               Returns a string containing an error, or null if all went well.
+ * @return  string|null                             Returns a string containing an error, or null if all went well.
  */
 
-function admin_ip_ban_create( $banner_id            ,
-                              $ip_address           ,
-                              $ban_length           ,
-                              $severity       = 0   ,
-                              $username       = ''  ,
-                              $ban_reason_en  = ''  ,
-                              $ban_reason_fr  = ''  )
+function admin_ip_ban_create( int     $banner_id              ,
+                              string  $ip_address             ,
+                              int     $ban_length             ,
+                              bool    $severity       = false ,
+                              string  $username       = ''    ,
+                              string  $ban_reason_en  = ''    ,
+                              string  $ban_reason_fr  = ''    ) : mixed
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -599,6 +602,9 @@ function admin_ip_ban_create( $banner_id            ,
   $ban_extra    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
   irc_bot_send_message("$banner_username has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
   irc_bot_send_message("$banner_username has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra - ".$GLOBALS['website_url']."pages/admin/ban#active", 'admin');
+
+  // All went well, return NULL
+  return NULL;
 }
 
 
@@ -612,7 +618,7 @@ function admin_ip_ban_create( $banner_id            ,
  * @return  array               An array containing data related to users affected by the IP ban.
  */
 
-function admin_ip_ban_list_users( $banned_ip )
+function admin_ip_ban_list_users( string $banned_ip ) : array
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -651,12 +657,12 @@ function admin_ip_ban_list_users( $banned_ip )
 /**
  * Fetches information about an IP ban.
  *
- * @param   int           $ip_ban_id  The IP ban's ID.
+ * @param   int   $ip_ban_id  The IP ban's ID.
  *
- * @return  array|string              An array of data regarding the ban, or a string containing an error.
+ * @return  array             An array of data regarding the ban, or a string containing an error.
  */
 
-function admin_ip_ban_get( $ip_ban_id )
+function admin_ip_ban_get( int $ip_ban_id ) : array
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -696,18 +702,18 @@ function admin_ip_ban_get( $ip_ban_id )
 /**
  * Unbans a banned IP.
  *
- * @param   int         $ban_id                       The ID of the IP ban to remove.
- * @param   int         $unbanner_id                  The id of the moderator unbanning the user.
- * @param   string|null $unban_reason_en  (OPTIONAL)  The justification for the unban, in english.
- * @param   string|null $unban_reason_fr  (OPTIONAL)  The justification for the unban, in french.
+ * @param   int     $ban_id                       The ID of the IP ban to remove.
+ * @param   int     $unbanner_id                  The id of the moderator unbanning the user.
+ * @param   string  $unban_reason_en  (OPTIONAL)  The justification for the unban, in english.
+ * @param   string  $unban_reason_fr  (OPTIONAL)  The justification for the unban, in french.
  *
  * @return  void
  */
 
-function admin_ip_ban_delete( $ban_id                 ,
-                              $unbanner_id            ,
-                              $unban_reason_en  = ''  ,
-                              $unban_reason_fr  = ''  )
+function admin_ip_ban_delete( int     $ban_id                 ,
+                              int     $unbanner_id            ,
+                              string  $unban_reason_en  = ''  ,
+                              string  $unban_reason_fr  = ''  ) : void
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -787,11 +793,11 @@ function admin_ip_ban_delete( $ban_id                 ,
 /**
  * Fetches information about a ban log.
  *
- * @param   int|null      $log_id     (OPTIONAL)  The id of the ban log.
- * @param   int|null      $user_id    (OPTIONAL)  The id of the user that was banned.
- * @param   int|null      $ip_ban_id  (OPTIONAL)  The id of an IP ban.
+ * @param   int         $log_id     (OPTIONAL)  The id of the ban log.
+ * @param   int         $user_id    (OPTIONAL)  The id of the user that was banned.
+ * @param   int         $ip_ban_id  (OPTIONAL)  The id of an IP ban.
  *
- * @return  array|int                           The ban log history data, ready for displaying, or 0 if log not found.
+ * @return  array|null                          An array of formatted ban log history data, or NULL if log not found.
 */
 
 function admin_ban_logs_get(  $log_id     = NULL  ,
@@ -923,14 +929,14 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
 /**
  * Lists the ban log history.
  *
- * @param   string|null   $sort_by  (OPTIONAL)  The order in which the returned data will be sorted.
- * @param   array|null    $search   (OPTIONAL)  Search for specific field values.
+ * @param   string  $sort_by  (OPTIONAL)  The order in which the returned data will be sorted.
+ * @param   array   $search   (OPTIONAL)  Search for specific field values.
  *
- * @return  array                               The ban log history data, ready for displaying.
+ * @return  array                         The ban log history data, ready for displaying.
 */
 
-function admin_ban_logs_list( $sort_by  = 'banned'  ,
-                              $search   = NULL      )
+function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
+                              array  $search    = array()   ) : array
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -1058,7 +1064,7 @@ function admin_ban_logs_list( $sort_by  = 'banned'  ,
  * @return  void
 */
 
-function admin_ban_logs_delete( $log_id )
+function admin_ban_logs_delete( int $log_id ) : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();

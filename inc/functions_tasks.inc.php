@@ -16,14 +16,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Plaintext description of a task's priority level.
  *
- * @param   int         $priority_level             The priority level of the task as stored in the database (an int).
- * @param   bool|null   $styled         (OPTIONAL)  If set, returns a styled description with HTML tags.
+ * @param   int   $priority_level             The priority level of the task as stored in the database (an int).
+ * @param   bool  $styled         (OPTIONAL)  If set, returns a styled description with HTML tags.
  *
  * @return  string                                  A plaintext description of the priority level.
  */
 
-function task_priority( $priority_level     ,
-                        $styled         = 0 )
+function task_priority( int   $priority_level         ,
+                        bool  $styled         = false ) : string
 {
   // Check if the required files have been included
   require_included_file('tasks.lang.php');

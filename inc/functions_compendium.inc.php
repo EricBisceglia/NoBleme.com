@@ -16,14 +16,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Fetches all page titles of the compendium in a specific language.
  *
- * @return  array                         All of the page titles in the requested language.
+ * @return  array   All of the page titles in the requested language.
  */
 
-function compendium_list_pages()
+function compendium_list_pages() : array
 {
   // Prepare the language for use in a query by turning it lowercase and sanitizing it
   $lang_raw = user_get_language();
-  $lang     = sanitize(string_change_case($lang, 'lowercase'), 'string');
+  $lang     = sanitize(string_change_case($lang_raw, 'lowercase'), 'string');
 
   // Fetch the list of all page titles in the requested language
   $qpages = query(" SELECT  internet_pages.title_$lang AS 'w_title'

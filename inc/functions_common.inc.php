@@ -73,7 +73,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  string  The path to the root of the website.
  */
 
-function root_path()
+function root_path() : string
 {
   // Define where to look for URLs: account for the two slashes in http://, then add extra folders from local settings
   $uri_base_slashes = 2 + $GLOBALS['extra_folders'];
@@ -109,8 +109,8 @@ function root_path()
  * @return  bool            Whether the row exists or not.
  */
 
-function database_row_exists( $table  ,
-                              $id     )
+function database_row_exists( string  $table  ,
+                              int     $id     ) : bool
 {
   // Sanitize the data before running the query
   $table  = sanitize($table, 'string');
@@ -133,14 +133,14 @@ function database_row_exists( $table  ,
  *
  * @param   string  $table  Name of the table.
  * @param   string  $field  Name of the field.
- * @param   int     $value  Data value to look for.
+ * @param   mixed   $value  Data value to look for.
  *
  * @return  int             The id of the row containing the entry, or 0 if it does not exist.
  */
 
-function database_entry_exists( $table  ,
-                                $field  ,
-                                $value  )
+function database_entry_exists( string  $table  ,
+                                string  $field  ,
+                                mixed   $value  ) : int
 {
   // Sanitize the data before running the query
   $table  = sanitize($table, 'string');
@@ -162,12 +162,12 @@ function database_entry_exists( $table  ,
 /**
  * Fetches a system variable's value.
  *
- * @param   string  $var_name Name of the system variable.
+ * @param   string  $var_name   Name of the system variable.
  *
- * @return  string|int|null   The value of the variable, or null if it doesn't exist.
+ * @return  mixed               The value of the variable, or null if it doesn't exist.
  */
 
-function system_variable_fetch($var_name)
+function system_variable_fetch( string $var_name ) : mixed
 {
   // Sanitize the data before running the query
   $var_name = sanitize($var_name, 'string');
@@ -197,20 +197,20 @@ function system_variable_fetch($var_name)
 /**
  * Updates a system variable's value.
  *
- * @param   string  $var_name Name of the system variable.
- * @param   string  $value    The value to give the system variable.
- * @param   string  $type     The variable type (int, float, double or string)
+ * @param   string  $var_name   Name of the system variable.
+ * @param   string  $value      The value to give the system variable.
+ * @param   string  $type       The variable type (int, float or string)
  *
- * @return  bool              1 if it went well, 0 if something went wrong.
+ * @return  bool                1 if it went well, 0 if something went wrong.
  */
 
-function system_variable_update(  $var_name ,
-                                  $value    ,
-                                  $type     )
+function system_variable_update(  string  $var_name ,
+                                  string  $value    ,
+                                  string  $type     ) : bool
 {
   // Check that the variable type is allowed
   $type = sanitize($type, 'string');
-  if(!in_array($type, array('int', 'float', 'double', 'string')))
+  if(!in_array($type, array('int', 'float', 'string')))
     return 0;
 
   // Sanitize the data before running the query
@@ -242,18 +242,18 @@ function system_variable_update(  $var_name ,
 /**
  * Assembles a version number in accordance with SemVer 2.0.0 specification.
  *
- * @param   string                  $major      The major element of the version number.
- * @param   string                  $minor      The minor element of the version number.
- * @param   string                  $patch      The patch element of the version number.
- * @param   string|null (OPTIONAL)  $extension  The extension (beta, rc-0, etc.).
+ * @param   string              $major      The major element of the version number.
+ * @param   string              $minor      The minor element of the version number.
+ * @param   string              $patch      The patch element of the version number.
+ * @param   string  (OPTIONAL)  $extension  The extension (beta, rc-0, etc.).
  *
- * @return  string                              The assembled version number.
+ * @return  string                          The assembled version number.
  */
 
-function system_assemble_version_number(  $major            ,
-                                          $minor            ,
-                                          $patch            ,
-                                          $extension = NULL )
+function system_assemble_version_number(  string  $major          ,
+                                          string  $minor          ,
+                                          string  $patch          ,
+                                          string  $extension = '' ) : string
 {
   // Assemble the semver string
   $version  = $major.'.'.$minor.'.'.$patch;
@@ -271,12 +271,12 @@ function system_assemble_version_number(  $major            ,
 /**
  * Returns information about the current version number.
  *
- * @param   string|null (OPTIONAL)  $format The format of the returned data ('semver', 'full', 'array', 'next').
+ * @param   string  (OPTIONAL)  $format The format of the returned data ('semver', 'full', 'array', 'next').
  *
- * @return  string|array                    The current version number, in the chosen format.
+ * @return  mixed               The current version number, in the chosen format.
  */
 
-function system_get_current_version_number( $format = 'semver' )
+function system_get_current_version_number( string $format = 'semver' ) : mixed
 {
   // Fetch the user's language
   $lang = user_get_language();
@@ -321,7 +321,7 @@ function system_get_current_version_number( $format = 'semver' )
  * @return  bool  Whether the page is being called through fetch or not.
  */
 
-function page_is_fetched_dynamically()
+function page_is_fetched_dynamically() : bool
 {
   // Return whether the fetched header is set
   return isset($_SERVER['HTTP_FETCHED']);
@@ -336,7 +336,7 @@ function page_is_fetched_dynamically()
  * @return void
  */
 
-function page_must_be_fetched_dynamically()
+function page_must_be_fetched_dynamically() : void
 {
   // Fetch the path to the website's root
   $path = root_path();
@@ -357,7 +357,7 @@ function page_must_be_fetched_dynamically()
  * @return  bool                Whether the file has currently been included or not.
  */
 
-function has_file_been_included($file_name)
+function has_file_been_included( string $file_name ) : bool
 {
   // Fetch all included files
   $included_files = get_included_files();
@@ -385,7 +385,7 @@ function has_file_been_included($file_name)
  * @return  void
  */
 
-function require_included_file($file_name)
+function require_included_file( string $file_name ) : void
 {
   // If the file has not been included, exit the script
   if(!has_file_been_included($file_name))
@@ -398,18 +398,18 @@ function require_included_file($file_name)
 /**
  * Fetches the unsanitized value or returns the existence of submitted user data.
  *
- * @param   string                  $element_name               The name of the element.
- * @param   string|int|double|null  $default_value  (OPTIONAL)  Value to return if the element does not exist.
- * @param   bool|null               $element_exists (OPTIONAL)  Only returns whether the element exists (eg. checkbox).
- * @param   string|null             $request_type   (OPTIONAL)  The type of request ('POST', 'GET').
+ * @param   string  $element_name               The name of the element.
+ * @param   mixed   $default_value  (OPTIONAL)  Value to return if the element does not exist.
+ * @param   bool    $element_exists (OPTIONAL)  Only returns whether the element exists (eg. checkbox).
+ * @param   string  $request_type   (OPTIONAL)  The type of request ('POST', 'GET').
  *
- * @return  string|int|double                                   The unsanitized value of the element (or default).
+ * @return  mixed                               The unsanitized value of the element (or default).
  */
 
-function form_fetch_element(  $element_name             ,
-                              $default_value  = NULL    ,
-                              $element_exists = 0       ,
-                              $request_type   = 'POST'  )
+function form_fetch_element(  string  $element_name             ,
+                              mixed   $default_value  = NULL    ,
+                              bool    $element_exists = false   ,
+                              string  $request_type   = 'POST'  ) : mixed
 {
   // If the goal is only to check existence, just return whether the element exists or not
   if($element_exists)
@@ -443,16 +443,16 @@ function form_fetch_element(  $element_name             ,
 /**
  * Truncates a string if it is longer than a specified length.
  *
- * @param   string                  $string The string that will be truncated.
- * @param   int                     $length The length above which the string will be truncated.
- * @param   string|null (OPTIONAL)  $suffix Appends text to the end of the string if it has been truncated.
+ * @param   string  $string               The string that will be truncated.
+ * @param   int     $length               The length above which the string will be truncated.
+ * @param   string  $suffix   (OPTIONAL)  Appends text to the end of the string if it has been truncated.
  *
- * @return  string                          The string, truncated if necessary.
+ * @return  string                        The string, truncated if necessary.
  */
 
-function string_truncate( $string       ,
-                          $length       ,
-                          $suffix = ''  )
+function string_truncate( string  $string       ,
+                          int     $length       ,
+                          string  $suffix = ''  ) : string
 {
   // If the string needs to be truncated, then do it and apply the suffix, else return the string as is
   return (mb_strlen($string, 'UTF-8') > $length) ? mb_substr($string, 0, $length, 'UTF-8').$suffix : $string;
@@ -464,14 +464,14 @@ function string_truncate( $string       ,
 /**
  * Changes the case of a string.
  *
- * @param   string  $string The string that will have its case changed.
- * @param   string  $case   The case to apply to the string ('uppercase', 'lowercase', 'initials')
+ * @param   string  $string   The string that will have its case changed.
+ * @param   string  $case     The case to apply to the string ('uppercase', 'lowercase', 'initials')
  *
- * @return  string          The string, with its case changed.
+ * @return  string            The string, with its case changed.
  */
 
-function string_change_case(  $string ,
-                              $case   )
+function string_change_case(  string  $string ,
+                              string  $case   ) : string
 {
   // Changes the string to all uppercase
   if($case == 'uppercase')
@@ -484,6 +484,10 @@ function string_change_case(  $string ,
   // Changes the first character of the string to uppercase, ignores the rest
   else if($case == 'initials')
     return mb_substr(mb_convert_case($string, MB_CASE_UPPER, "UTF-8"), 0, 1, 'utf-8').mb_substr($string, 1, 65536, 'utf-8');
+
+  // Return nothing otherwise
+  else
+    return '';
 }
 
 
@@ -497,7 +501,7 @@ function string_change_case(  $string ,
  * @return  string            The string, without its latin accents.
  */
 
-function string_remove_accents($string)
+function string_remove_accents( string $string ) : string
 {
   // Simply enough, prepare two arrays: accents and their non accentuated equivalents
   $accents    = explode(",","ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,Ø,Å,Á,À,Â,Ä,È,É,Ê,Ë,Í,Î,Ï,Ì,Ò,Ó,Ô,Ö,Ú,Ù,Û,Ü,Ÿ,Ç,Æ,Œ");
@@ -521,7 +525,7 @@ function string_remove_accents($string)
  * @return  string            The incremented string.
  */
 
-function string_increment($string)
+function string_increment( string $string ) : string
 {
   // If the string is empty, return one
   if(!$string)
@@ -558,8 +562,8 @@ function string_increment($string)
  * @return  string              The formatted output.
  */
 
-function date_better_strftime(  $format     ,
-                                $timestamp  )
+function date_better_strftime(  string  $format     ,
+                                int     $timestamp  ) : string
 {
   // Add an extra parameter to strftime using the date standard function
   $format = str_replace('%O', date('S', $timestamp), $format);
@@ -582,7 +586,7 @@ function date_better_strftime(  $format     ,
  * @return  string              The formatted output.
  */
 
-function date_french_ordinal($timestamp)
+function date_french_ordinal( int $timestamp ) : string
 {
   // Get the full day from the timestamp
   $full_day = date('d', $timestamp);
@@ -604,18 +608,18 @@ function date_french_ordinal($timestamp)
  * We store a lot of our dates in timestamps aswell, this function can work with a timestamp as an input too.
  * If no date is specified, it returns the current date instead.
  *
- * @param   string|int|null $date         (OPTIONAL)  The MySQL date or timestamp that we want to transform.
- * @param   int|null        $strip_day    (OPTIONAL)  If 1, strips the day's name. If 2, strips the whole day.
- * @param   bool|null       $include_time (OPTIONAL)  If set, will add the time after the date.
- * @param   string|null     $lang         (OPTIONAL)  The language used, defaults to current lang.
+ * @param   string|int  $date           (OPTIONAL)  The MySQL date or timestamp that we want to transform.
+ * @param   int         $strip_day      (OPTIONAL)  If 1, strips the day's name. If 2, strips the whole day.
+ * @param   bool        $include_time   (OPTIONAL)  If set, will add the time after the date.
+ * @param   string      $lang           (OPTIONAL)  The language used, defaults to current lang.
  *
- * @return  string                      The required date, in plaintext.
+ * @return  string                                  The required date, in plaintext.
  */
 
-function date_to_text(  $date         = NULL  ,
-                        $strip_day    = 0     ,
-                        $include_time = 0     ,
-                        $lang         = NULL  )
+function date_to_text(  mixed   $date         = ''    ,
+                        int     $strip_day    = 0     ,
+                        bool    $include_time = false ,
+                        string  $lang         = ''    ) : string
 {
   // If no date has been entered, use the current timestamp instead
   $date = (!$date) ? time() : $date;
@@ -645,7 +649,7 @@ function date_to_text(  $date         = NULL  ,
     if($lang == 'EN')
       $full_date = date_better_strftime('%B %#d%O, %Y', $date);
     else
-      return utf8_encode(strftime('%#d'.date_french_ordinal($date), $date).' '.string_change_case(strftime('%B %Y', $date), "initials"));
+      $full_date = utf8_encode(strftime('%#d'.date_french_ordinal($date), $date).' '.string_change_case(strftime('%B %Y', $date), "initials"));
   }
 
   // And differently aswell if the full day is being stripped
@@ -674,12 +678,12 @@ function date_to_text(  $date         = NULL  ,
  * If any american reading this is unhappy with my use of DD/MM/YY over MM/DD/YY, sorry not sorry get used to it :)
  * If no date is specified or the mysql date is '0000-00-00', then we return nothing.
  *
- * @param   string      $date   The MySQL date that will be converted.
+ * @param   string        $date   The MySQL date that will be converted.
  *
- * @return  string|null         The converted MySQL date.
+ * @return  string|null           The converted MySQL date.
  */
 
-function date_to_ddmmyy($date)
+function date_to_ddmmyy( string $date ) : mixed
 {
   // If the date is not set or '0000-00-00', return null
   if(!$date || $date == '0000-00-00')
@@ -705,8 +709,8 @@ function date_to_ddmmyy($date)
  * @return  string            The converted date in MySQL date format.
  */
 
-function date_to_mysql( $date                   ,
-                        $default = '0000-00-00' )
+function date_to_mysql( string  $date                   ,
+                        string  $default = '0000-00-00' ) : string
 {
   // If the date is DD/MM/YYYY, convert it to the correct format
   if(strlen($date) == 10)
@@ -743,14 +747,14 @@ function date_to_mysql( $date                   ,
  * This function is a prerequisite for the more useful diff_strings() function to work properly.
  * The core logic was taken from Paul Butler's simplediff through arrays method @ https://github.com/paulgb/simplediff.
  *
- * @param   array $old  An array of strings, the older version of the texts being compared.
- * @param   array $new  An array of strings, the newer version of the texts being compared.
+ * @param   array   $old  An array of strings, the older version of the texts being compared.
+ * @param   array   $new  An array of strings, the newer version of the texts being compared.
  *
- * @return  array       An array of strings, showcasing the differences between the two arrays of strings.
+ * @return  array         An array of strings, showcasing the differences between the two arrays of strings.
  */
 
-function diff_raw_string_arrays(  $old  ,
-                                  $new  )
+function diff_raw_string_arrays(  array $old  ,
+                                  array $new  ) : array
 {
   // Prepare the variables
   $matrix = array();
@@ -795,14 +799,14 @@ function diff_raw_string_arrays(  $old  ,
  * The output contains HTML tags, as we use <del> and <ins> to highlight the differences.
  * The core logic was taken from Paul Butler's simplediff through arrays method @ https://github.com/paulgb/simplediff.
  *
- * @param   string $old  The older version of the texts being compared.
- * @param   string $new  The newer version of the texts being compared.
+ * @param   string  $old  The older version of the texts being compared.
+ * @param   string  $new  The newer version of the texts being compared.
  *
- * @return  string       Human readable list of differences between the two arrays.
+ * @return  string        Human readable list of differences between the two arrays.
  */
 
-function diff_strings(  $old  ,
-                        $new  )
+function diff_strings(  string  $old  ,
+                        string  $new  ) : string
 {
   // Break both strings in arrays of words, then run diff_raw_string_arrays() on them
   $diff = diff_raw_string_arrays(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
@@ -831,16 +835,16 @@ function diff_strings(  $old  ,
 /**
  * Searches for a string in a text, along with the words surrounding said string.
  *
- * @param   string    $search                       The string being searched.
- * @param   string    $text                         The text in which to search for the string.
- * @param   int|null  $nb_words_around  (OPTIONAL)  Number of words around the string to return.
+ * @param   string  $search                       The string being searched.
+ * @param   string  $text                         The text in which to search for the string.
+ * @param   int     $nb_words_around  (OPTIONAL)  Number of words to show around the string.
  *
- * @return  string                                  The searched string and the words around it (or an empty string).
+ * @return  string                                The searched string and the words around it (or an empty string).
  */
 
-function search_string_context( $search               ,
-                                $text                 ,
-                                $nb_words_around = 1  )
+function search_string_context( string  $search               ,
+                                string  $text                 ,
+                                int     $nb_words_around = 1  ) : string
 {
   // Escape special characters
   $search = preg_quote($search, '/');
@@ -893,10 +897,10 @@ function search_string_context( $search               ,
  * @return  string              The result of the operation.
  */
 
-function string_wrap_in_html_tags(  $search     ,
-                                    $text       ,
-                                    $open_tag   ,
-                                    $close_tag  )
+function string_wrap_in_html_tags(  string  $search     ,
+                                    string  $text       ,
+                                    string  $open_tag   ,
+                                    string  $close_tag  ) : string
 {
   // Escape special characters
   $search = preg_quote($search, '/');
@@ -918,22 +922,22 @@ function string_wrap_in_html_tags(  $search     ,
 /**
  * Sends a private message to a user.
  *
- * @param   string    $title                        The message's title.
- * @param   string    $body                         The message's body.
- * @param   int|null  $recipient        (OPTIONAL)  The ID of the user which gets the message - if 0, current user.
- * @param   int|null  $sender           (OPTIONAL)  The ID of the suer sending the message - if 0, system notification.
- * @param   bool|null $is_silent        (OPTIONAL)  If set, the message arrives as already read.
- * @param   bool|null $do_not_sanitize  (OPTIONAL)  If set, the data will not be sanitized.
+ * @param   string  $title                        The message's title.
+ * @param   string  $body                         The message's body.
+ * @param   int     $recipient        (OPTIONAL)  The ID of the user which gets the message - if 0, current user.
+ * @param   int     $sender           (OPTIONAL)  The ID of the suer sending the message - if 0, system notification.
+ * @param   bool    $is_silent        (OPTIONAL)  If set, the message arrives as already read.
+ * @param   bool    $do_not_sanitize  (OPTIONAL)  If set, the data will not be sanitized.
  *
- * @return  bool                                    Whether the message was sent or not.
+ * @return  bool                                  Whether the message was sent or not.
  */
 
-function private_message_send(  $title                ,
-                                $body                 ,
-                                $recipient        = 0 ,
-                                $sender           = 0 ,
-                                $is_silent        = 0 ,
-                                $do_not_sanitize  = 0 )
+function private_message_send(  string  $title                    ,
+                                string  $body                     ,
+                                int     $recipient        = 0     ,
+                                int     $sender           = 0     ,
+                                bool    $is_silent        = false ,
+                                bool    $do_not_sanitize  = false ) : bool
 {
   // If there is no recipient and current user is not logged in, no message should be sent
   if(!$recipient && !user_is_logged_in())
@@ -987,7 +991,7 @@ function private_message_send(  $title                ,
  * @return  bool                            Is the user allowed to post content to the website.
  */
 
-function flood_check( $user_id = NULL )
+function flood_check( ?int $user_id = NULL ) : bool
 {
   // If the user is logged out, then he shouldn't be able to do any actions: throw an error
   if(is_null($user_id) && !user_is_logged_in())
@@ -1011,6 +1015,9 @@ function flood_check( $user_id = NULL )
   query(" UPDATE  users
           SET     users.last_action_at  = '$timestamp'
           WHERE   users.id              = '$user_id' ");
+
+  // The user is allowed to proceed
+  return 1;
 }
 
 
@@ -1019,34 +1026,34 @@ function flood_check( $user_id = NULL )
 /**
  * Adds an entry to the recent activity logs.
  *
- * @param   string          $activity_type                    The identifier of the activity log's type.
- * @param   bool|null       $is_moderators_only   (OPTIONAL)  Is it a public activity log or a moderation log.
- * @param   string|null     $language             (OPTIONAL)  The language(s) in which the log should appear.
- * @param   int|null        $activity_id          (OPTIONAL)  ID of the item linked to the activity log.
- * @param   string|null     $activity_summary_en  (OPTIONAL)  Summary of the activity log, in english.
- * @param   string|null     $activity_summary_fr  (OPTIONAL)  Summary of the activity log, in french.
- * @param   int|null        $activity_amount      (OPTIONAL)  An amout tied to the activity log.
- * @param   int|null        $fk_users             (OPTIONAL)  ID of the user implicated in the activity log.
- * @param   string|null     $username             (OPTIONAL)  username of the user implicated in the activity log.
- * @param   string|null     $moderator_username   (OPTIONAL)  username of the website admin implicated in the log.
- * @param   string|null     $moderation_reason    (OPTOINAL)  Reason specified by the moderator for the activity.
- * @param   bool|null       $do_not_sanitize      (OPTOINAL)  If set, do not sanitize the data.
+ * @param   string  $activity_type                    The identifier of the activity log's type.
+ * @param   bool    $is_moderators_only   (OPTIONAL)  Is it a public activity log or a moderation log.
+ * @param   string  $language             (OPTIONAL)  The language(s) in which the log should appear.
+ * @param   int     $activity_id          (OPTIONAL)  ID of the item linked to the activity log.
+ * @param   string  $activity_summary_en  (OPTIONAL)  Summary of the activity log, in english.
+ * @param   string  $activity_summary_fr  (OPTIONAL)  Summary of the activity log, in french.
+ * @param   int     $activity_amount      (OPTIONAL)  An amout tied to the activity log.
+ * @param   int     $fk_users             (OPTIONAL)  ID of the user implicated in the activity log.
+ * @param   string  $username             (OPTIONAL)  username of the user implicated in the activity log.
+ * @param   string  $moderator_username   (OPTIONAL)  username of the website admin implicated in the log.
+ * @param   string  $moderation_reason    (OPTOINAL)  Reason specified by the moderator for the activity.
+ * @param   bool    $do_not_sanitize      (OPTOINAL)  If set, do not sanitize the data.
  *
- * @return  int                                               The ID of the newly inserted activity log.
+ * @return  int                                       The ID of the newly inserted activity log.
  */
 
-function log_activity(  $activity_type                  ,
-                        $is_moderators_only   = 0       ,
-                        $language             = 'ENFR'  ,
-                        $activity_id          = 0       ,
-                        $activity_summary_en  = NULL    ,
-                        $activity_summary_fr  = NULL    ,
-                        $activity_amount      = 0       ,
-                        $fk_users             = 0       ,
-                        $username             = NULL    ,
-                        $moderator_username   = NULL    ,
-                        $moderation_reason    = NULL    ,
-                        $do_not_sanitize      = 0       )
+function log_activity(  string  $activity_type                  ,
+                        bool    $is_moderators_only   = false   ,
+                        string  $language             = 'ENFR'  ,
+                        int     $activity_id          = 0       ,
+                        string  $activity_summary_en  = ''      ,
+                        string  $activity_summary_fr  = ''      ,
+                        int     $activity_amount      = 0       ,
+                        int     $fk_users             = 0       ,
+                        string  $username             = ''      ,
+                        string  $moderator_username   = ''      ,
+                        string  $moderation_reason    = ''      ,
+                        bool    $do_not_sanitize      = false   ) : int
 {
   // Sanitize and prepare the data
   $timestamp            = sanitize(time(), 'int', 0);
@@ -1087,28 +1094,28 @@ function log_activity(  $activity_type                  ,
 /**
  * Adds an entry to the recent activity detailed logs.
  *
- * @param   int         $linked_activity_log              ID of the recent activity log to which this is linked.
- * @param   string      $description_en                   Description of the detailed activity log, in english.
- * @param   string      $description_fr                   Description of the detailed activity log, in french.
- * @param   string      $before                           Previous value of the content.
- * @param   string|null $after                (OPTIONAL)  Current value of the content.
- * @param   bool|null   $optional             (OPTIONAL)  The log will only be created if before / after are different.
- * @param   bool|null   $do_not_sanitize      (OPTOINAL)  If set, do not sanitize the data.
+ * @param   int     $linked_activity_log              ID of the recent activity log to which this is linked.
+ * @param   string  $description_en                   Description of the detailed activity log, in english.
+ * @param   string  $description_fr                   Description of the detailed activity log, in french.
+ * @param   string  $before                           Previous value of the content.
+ * @param   string  $after                (OPTIONAL)  Current value of the content.
+ * @param   bool    $optional             (OPTIONAL)  The log will only be created if before / after are different.
+ * @param   bool    $do_not_sanitize      (OPTOINAL)  If set, do not sanitize the data.
  *
  * @return  void
  */
 
-function log_activity_details(  $linked_activity_log          ,
-                                $description_en               ,
-                                $description_fr               ,
-                                $before                       ,
-                                $after                = NULL  ,
-                                $optional             = 0     ,
-                                $do_not_sanitize      = 0     )
+function log_activity_details(  int     $linked_activity_log          ,
+                                string  $description_en               ,
+                                string  $description_fr               ,
+                                string  $before                       ,
+                                string  $after                = ''    ,
+                                bool    $optional             = false ,
+                                bool    $do_not_sanitize      = false ) : void
 {
   // If there are no differences, do not create a detailed activity log
   if($optional && ($before == $after))
-    return 0;
+    return;
 
   // In order to avoid strain caused by the diff functions, do not create a diff log if $after is too long
   $after = (strlen($after) > 10000) ? NULL : $after;
@@ -1140,7 +1147,7 @@ function log_activity_details(  $linked_activity_log          ,
  * @return  void
  */
 
-function log_activity_purge_orphan_diffs()
+function log_activity_purge_orphan_diffs() : void
 {
   // Fetch all orphan diffs
   $qorphans = query(" SELECT    logs_activity_details.id AS 'd_id'
@@ -1163,22 +1170,22 @@ function log_activity_purge_orphan_diffs()
 /**
  * Soft deletes an entry in the activity logs.
  *
- * @param   string          $activity_type                  The identifier of the activity log's type.
- * @param   bool|null       $is_moderators_only (OPTIONAL)  Is it a public activity log or a moderation log.
- * @param   int|null        $fk_users           (OPTIONAL)  ID of the user implicated in the activity log.
- * @param   string|null     $username           (OPTIONAL)  username of the user implicated in the activity log.
- * @param   int|null        $activity_id        (OPTIONAL)  ID of the item linked to the activity log.
- * @param   bool|null       $global_type_wipe   (OPTOINAL)  Deletes all logs of type beginning like $activity_type.
+ * @param   string  $activity_type                    The identifier of the activity log's type.
+ * @param   bool    $is_moderators_only   (OPTIONAL)  Is it a public activity log or a moderation log.
+ * @param   int     $fk_users             (OPTIONAL)  ID of the user implicated in the activity log.
+ * @param   string  $username             (OPTIONAL)  username of the user implicated in the activity log.
+ * @param   int     $activity_id          (OPTIONAL)  ID of the item linked to the activity log.
+ * @param   bool    $global_type_wipe     (OPTOINAL)  Deletes all logs of type beginning like $activity_type.
  *
  * @return  void
  */
 
-function log_activity_delete( $activity_type              ,
-                              $is_moderators_only = 0     ,
-                              $fk_users           = 0     ,
-                              $username           = NULL  ,
-                              $activity_id        = 0     ,
-                              $global_type_wipe   = 0     )
+function log_activity_delete( string  $activity_type              ,
+                              bool    $is_moderators_only = false ,
+                              int     $fk_users           = 0     ,
+                              string  $username           = ''    ,
+                              int     $activity_id        = 0     ,
+                              bool    $global_type_wipe   = false ) : void
 {
   // Begin by sanitizing the data
   $activity_type      = sanitize($activity_type, 'string');
@@ -1229,18 +1236,18 @@ function log_activity_delete( $activity_type              ,
 /**
  * Uses the IRC bot to broadcast a message.
  *
- * @param   string      $message                          The message to send.
- * @param   string|null $channel              (OPTIONAL)  The channel to use ('english' 'french' 'dev' 'mod' 'admin').
- * @param   bool|null   $allow_special_chars  (OPTIONAL)  Allow IRC formatting characters in the message.
- * @param   bool|null   $ignore_silenced_mode (OPTIONAL)  Sends the message even if the IRC bot is in silenced mode.
+ * @param   string  $message                            The message to send.
+ * @param   string  $channel                (OPTIONAL)  The channel to use ('english' 'french' 'dev' 'mod' 'admin').
+ * @param   bool    $allow_special_chars    (OPTIONAL)  Allow IRC formatting characters in the message.
+ * @param   bool    $ignore_silenced_mode   (OPTIONAL)  Sends the message even if the IRC bot is in silenced mode.
  *
- * @return  bool                                          Whether the message has been queued in the bot's file.
+ * @return  bool                                        Whether the message has been queued in the bot's file.
  */
 
-function irc_bot_send_message(  $message                          ,
-                                $channel                  = NULL  ,
-                                $allow_special_formatting = 0     ,
-                                $ignore_silenced_mode     = 0     )
+function irc_bot_send_message(  string  $message                          ,
+                                string  $channel                  = ''    ,
+                                bool    $allow_special_formatting = false ,
+                                bool    $ignore_silenced_mode     = false ) : bool
 {
   // Only use a limited amount of preset channel names
   if($channel)
@@ -1358,12 +1365,12 @@ function irc_bot_send_message(  $message                          ,
  * Some characters are forbidden in HTML <meta> tags, this function replaces them with their valid equivalent.
  * Note that I am not even sure this is the proper way to do things... I'm just hoping it's right.
  *
- * @param   string  $string A string to turn meta-tag-valid.
+ * @param   string  $string   A string to turn meta-tag-valid.
  *
- * @return  string          The meta-tag-valid string.
+ * @return  string            The meta-tag-valid string.
  */
 
-function html_fix_meta_tags($string)
+function html_fix_meta_tags( string $string ) : string
 {
   // Replace illegal characters by their legal counterparcs
   $string = str_replace("'","&#39;",$string);

@@ -30,19 +30,19 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  *
  * All this function does is creating an entry in the `system_scheduler` table.
  *
- * @param   string      $action_type                    A string identifying the task type, up to 40 characters long.
- * @param   int         $action_id                      The id of the element which will be affected by the task.
- * @param   int         $action_planned_at              A timestamp of the time at which the task must be run.
- * @param   string|null $action_description (OPTIONAL)  A description of the task.
- * @param   bool|null   $sanitize_data      (OPTIONAL)  If set, the data will be sanitized before insertion.
+ * @param   string  $action_type                      A string identifying the task type, up to 40 characters long.
+ * @param   int     $action_id                        The id of the element which will be affected by the task.
+ * @param   int     $action_planned_at                A timestamp of the time at which the task must be run.
+ * @param   string  $action_description   (OPTIONAL)  A description of the task.
+ * @param   bool    $sanitize_data        (OPTIONAL)  If set, the data will be sanitized before insertion.
  *
  * @return  void
  */
-function schedule_task( $action_type                ,
-                        $action_id                  ,
-                        $action_planned_at          ,
-                        $action_description = NULL  ,
-                        $sanitize_data      = 0     )
+function schedule_task( string  $action_type                ,
+                        int     $action_id                  ,
+                        int     $action_planned_at          ,
+                        string  $action_description = ''    ,
+                        bool    $sanitize_data      = false ) : void
 {
   // If sanitization is required, then do it
   if($sanitize_data)
@@ -72,19 +72,19 @@ function schedule_task( $action_type                ,
 /**
  * Update an existing scheduled task.
  *
- * @param   string      $action_type                    A string identifying the task type, up to 40 characters long.
- * @param   int         $action_id                      The id of the element which will be affected by the task.
- * @param   int|null    $action_planned_at  (OPTIONAL)  If set, the new time at which the action will be run.
- * @param   string|null $action_description (OPTIONAL)  If set, the new task description.
- * @param   bool|null   $sanitize_data      (OPTIONAL)  If set, data will be sanitized before insertion.
+ * @param   string  $action_type                      A string identifying the task type, up to 40 characters long.
+ * @param   int     $action_id                        The id of the element which will be affected by the task.
+ * @param   int     $action_planned_at    (OPTIONAL)  If set, the new time at which the action will be run.
+ * @param   string  $action_description   (OPTIONAL)  If set, the new task description.
+ * @param   bool    $sanitize_data        (OPTIONAL)  If set, data will be sanitized before insertion.
  *
  * @return  void
  */
-function schedule_task_update(  $action_type                ,
-                                $action_id                  ,
-                                $action_planned_at  = 0     ,
-                                $action_description = NULL  ,
-                                $sanitize_data      = 0     )
+function schedule_task_update(  string  $action_type                ,
+                                int     $action_id                  ,
+                                int     $action_planned_at  = 0     ,
+                                string  $action_description = ''    ,
+                                bool    $sanitize_data      = false ) : void
 {
   // If sanitization is required, then do it
   if($sanitize_data)
@@ -122,8 +122,8 @@ function schedule_task_update(  $action_type                ,
  *
  * @return  void
  */
-function schedule_task_delete(  $action_type  ,
-                                $action_id    )
+function schedule_task_delete(  string  $action_type  ,
+                                int     $action_id    ) : void
 {
   // Sanitize the data
   $action_type  = sanitize($action_type, 'string');

@@ -27,7 +27,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  string|null               Returns a string containing an error, or null if all went well.
  */
 
-function admin_account_deactivate( $username )
+function admin_account_deactivate( string $username ) : mixed
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -97,7 +97,7 @@ function admin_account_deactivate( $username )
  * @return  string|null             Returns a string containing an error, or null if all went well.
  */
 
-function admin_account_reactivate( $user_id )
+function admin_account_reactivate( string $user_id ) : mixed
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -158,7 +158,7 @@ function admin_account_reactivate( $user_id )
  * @return  array   Array containing whether the username is available and legal, and an error message if not.
  */
 
-function admin_account_check_availability( $username )
+function admin_account_check_availability( string $username ) : array
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -225,8 +225,8 @@ function admin_account_check_availability( $username )
  * @return  string|int                    Returns a string containing an error, or the user's id if all went well.
  */
 
-function admin_account_rename(  $username     ,
-                                $new_username )
+function admin_account_rename(  string  $username     ,
+                                string  $new_username ) : mixed
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -295,8 +295,8 @@ function admin_account_rename(  $username     ,
  * @return  string|int                Returns a string containing an error, or the user's id if all went well.
  */
 
-function admin_account_change_password( $username ,
-                                        $password )
+function admin_account_change_password( string  $username ,
+                                        string  $password ) : mixed
 {
   // Require moderator rights to run this action
   user_restrict_to_moderators();
@@ -370,8 +370,8 @@ function admin_account_change_password( $username ,
  * @return  string|int                Returns a string containing an error, or the user's id if all went well.
  */
 
-function admin_account_change_rights( $username ,
-                                      $level    )
+function admin_account_change_rights( string  $username ,
+                                      string  $level    ) : mixed
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();

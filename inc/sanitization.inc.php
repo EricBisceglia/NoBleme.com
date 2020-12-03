@@ -25,23 +25,23 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * For ints and floats, it also allows you to ensure that the number's value is between a set minimum and maximum.
  * For strings, it allows you to ensure that the string's length is between a minimum and maximum size.
  *
- * @param   string|int|float  $data               The data to be sanitized.
- * @param   string|null       $type    (OPTIONAL) The expected data type: "string", "int", "float", or "double".
- * @param   int|null          $min     (OPTIONAL) Minimum expected value or length of the data (see description above).
- * @param   int|null          $max     (OPTIONAL) Maximum expected value or length of the data (see description above).
- * @param   string            $padding (OPTIONAL) The character to be added at the end of strings that are too short.
+ * @param   mixed     $data                 The data to be sanitized.
+ * @param   string    $type     (OPTIONAL)  The expected data type: "string", "int", or "float"
+ * @param   int|null  $min      (OPTIONAL)  Minimum expected value or length of the data (see description above).
+ * @param   int|null  $max      (OPTIONAL)  Maximum expected value or length of the data (see description above).
+ * @param   string    $padding  (OPTIONAL)  The character to add at the end of strings that are too short.
  *
- * @return  string|int|float                      Sazitized version of your data.
+ * @return  mixed                           Sanitized version of your data.
  */
 
-function sanitize(  $data             ,
-                    $type     = NULL  ,
-                    $min      = NULL  ,
-                    $max      = NULL  ,
-                    $padding  = "_"   )
+function sanitize(  mixed   $data                 ,
+                    string  $type     = 'string'  ,
+                    ?int    $min      = NULL      ,
+                    ?int    $max      = NULL      ,
+                    string  $padding  = "_"       ) : mixed
 {
   // For floats, ensure that it is a float, else convert it, then ensure that it is between min and max values
-  if($type == "float" || $type == "double")
+  if($type == "float")
   {
     if(!is_float($data))
       $data = floatval($data);
@@ -90,24 +90,24 @@ function sanitize(  $data             ,
  * This function is a wrapper around the sanitize() function.
  * It provides more options and convenience when dealing with data from $_POST or $_GET values.
  *
- * @param   string                $input_type                 The type of input: 'POST' or 'GET'.
- * @param   string                $input_name                 The input's name (eg. for $_POST['abc'], this is 'abc').
- * @param   string                $data_type                  The expected data type ('string', 'int', 'float').
- * @param   string|int|float|null $default_value  (OPTIONAL)  Returns this value if the $input_name does not exist.
- * @param   int|null              $min            (OPTIONAL)  Min. value: see the documentation of sanitize().
- * @param   int|null              $max            (OPTIONAL)  Max. value: see the documentation of sanitize().
- * @param   string|null           $padding        (OPTIONAL)  Character used for padding strings, see sanitize().
+ * @param   string    $input_type                 The type of input: 'POST' or 'GET'.
+ * @param   string    $input_name                 The input's name (eg. for $_POST['abc'], this is 'abc').
+ * @param   string    $data_type                  The expected data type ('string', 'int', 'float').
+ * @param   mixed     $default_value  (OPTIONAL)  Returns this value if the $input_name does not exist.
+ * @param   int|null  $min            (OPTIONAL)  Min. value: see the documentation of sanitize().
+ * @param   int|null  $max            (OPTIONAL)  Max. value: see the documentation of sanitize().
+ * @param   string    $padding        (OPTIONAL)  Character used for padding strings, see sanitize().
  *
- * @return  string|int|float                                  Sanitized version of your inputted data.
+ * @return  mixed                                 Sanitized version of your inputted data.
  */
 
-function sanitize_input(  $input_type             ,
-                          $input_name             ,
-                          $data_type              ,
-                          $default_value  = NULL  ,
-                          $min            = NULL  ,
-                          $max            = NULL  ,
-                          $padding        = NULL  )
+function sanitize_input(  string  $input_type             ,
+                          string  $input_name             ,
+                          string  $data_type              ,
+                          mixed   $default_value  = ''    ,
+                          ?int    $min            = NULL  ,
+                          ?int    $max            = NULL  ,
+                          string  $padding        = "_"   )
 {
   // When dealing with $_POST, fetch the value (if it exists)
   if($input_type == 'POST')
@@ -127,16 +127,16 @@ function sanitize_input(  $input_type             ,
 /**
  * Sanitizes data for HTML usage.
  *
- * @param string  $data                             The data to be sanitized.
- * @param int     $prevent_line_breaks  (OPTIONAL)  If value is 0 or unset, will remove the line breaks from your data.
- * @param int     $preserve_backslashes (OPTIONAL)  If value is 0 or unset, backslashes will be removed from your data.
+ * @param   string|null $data                               The data to be sanitized.
+ * @param   bool        $prevent_line_breaks    (OPTIONAL)  If false/unset, will remove the line breaks from your data.
+ * @param   bool        $preserve_backslashes   (OPTIONAL)  If false/unset, will remove backslashes from your data.
  *
- * @return string                                   The sanitized data, ready to be printed in your HTML.
+ * @return  string                                      The sanitized data, ready to be printed in your HTML.
  */
 
-function sanitize_output( $data                     ,
-                          $preserve_line_breaks = 0 ,
-                          $preserve_backslashes = 0 )
+function sanitize_output( ?string $data                         ,
+                          bool    $preserve_line_breaks = false ,
+                          bool    $preserve_backslashes = false ) : string
 {
   // Prepare the data for use in HTML
   $data = ($preserve_backslashes) ? htmlentities($data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));
@@ -154,16 +154,16 @@ function sanitize_output( $data                     ,
  * Before printing some data, you might want to sanitize it so that it interacts as expected with HTML rules.
  * Applying this function will prevent users from using HTML themselves, and thus avoid potential silly XSS issues.
  *
- * @param string  $data                             The data to be sanitized.
- * @param int     $prevent_line_breaks  (OPTIONAL)  If value is 0 or unset, will remove the line breaks from your data.
- * @param int     $preserve_backslashes (OPTIONAL)  If value is 0 or unset, backslashes will be removed from your data.
+ * @param   string  $data                               The data to be sanitized.
+ * @param   int     $prevent_line_breaks    (OPTIONAL)  If false or unset, will remove the line breaks from your data.
+ * @param   int     $preserve_backslashes   (OPTIONAL)  If false or unset, backslashes will be removed from your data.
  *
- * @return string                                   The sanitized data, ready to be printed in your HTML.
+ * @return  string                                      The sanitized data, ready to be printed in your HTML.
  */
 
-function sanitize_output_full(  $data                     ,
-                                $preserve_line_breaks = 0 ,
-                                $preserve_backslashes = 0 )
+function sanitize_output_full(  string  $data                         ,
+                                bool    $preserve_line_breaks = false ,
+                                bool    $preserve_backslashes = false ) : string
 {
   // First off, get rid of all the HTML tags in the data - and if necessary remove backslashes
   $data = ($preserve_backslashes) ? htmlentities($data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));
@@ -290,12 +290,12 @@ function sanitize_output_full(  $data                     ,
 /**
  * Sanitizes data for passing to inline javascript.
  *
- * @param string  $data The data to be sanitized.
+ * @param   string  $data   The data to be sanitized.
  *
- * @return string       The sanitized data, ready to be printed in your HTML.
+ * @return  string          The sanitized data, ready to be printed in your HTML.
  */
 
-function sanitize_output_javascript($data)
+function sanitize_output_javascript( string $data ) : string
 {
   // Determine the length of the data
   $length = strlen($data);

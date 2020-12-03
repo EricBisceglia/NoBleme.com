@@ -254,7 +254,7 @@ if(substr($_SERVER["PHP_SELF"], -11) != "/banned.php" && user_is_logged_in())
  * @return void
  */
 
-function secure_session_start()
+function secure_session_start() : void
 {
   // This public token will be used to identify the session name
   $session_name = 'nobleme_session';
@@ -288,14 +288,14 @@ function secure_session_start()
  *
  * This is the function used to hash passwords or other data.
  *
- * @param string    $data               The data to encrypt.
- * @param int|null  $old    (OPTIONAL)  Will use the old (insecure) encryption method instead of the current one.
+ * @param   string  $data               The data to encrypt.
+ * @param   bool    $old    (OPTIONAL)  Will use the old (insecure) encryption method instead of the current one.
  *
- * @return string                       The encrypted data.
+ * @return  string                      The encrypted data.
  */
 
-function encrypt_data(  $data         ,
-                        $old  = NULL  )
+function encrypt_data(  string  $data         ,
+                        bool    $old  = false ) : string
 {
   // If the old method is still being used, call crypt with the salt key
   if($old)
@@ -312,10 +312,10 @@ function encrypt_data(  $data         ,
 /**
  * Checks whether the current user is logged in.
  *
- * @return  boolean   Whether the current user is logged in.
+ * @return  bool  Whether the current user is logged in.
  */
 
-function user_is_logged_in()
+function user_is_logged_in() : bool
 {
   // As simple as it seems, grab the value in the session
   return isset($_SESSION['user_id']);
@@ -330,7 +330,7 @@ function user_is_logged_in()
  * @return void
  */
 
-function user_log_out()
+function user_log_out() : void
 {
   // Delete the session cookie if it exists
   if(isset($_COOKIE['nobleme_memory']))
@@ -365,16 +365,16 @@ function user_log_out()
 /**
  * Unbans a banned user.
  *
- * @param   int       $user_id                      The user's ID.
- * @param   int|null  $unbanner_id      (OPTIONAL)  The ID of the moderator doing the unbanning.
- * @param   int|null  $recent_activity  (OPTIONAL)  If set, generates an entry in recent activity.
+ * @param   int   $user_id                      The user's ID.
+ * @param   int   $unbanner_id      (OPTIONAL)  The ID of the moderator doing the unbanning.
+ * @param   bool  $recent_activity  (OPTIONAL)  If set, generates an entry in recent activity.
  *
  * @return  void
  */
 
-function user_unban(  $user_id              ,
-                      $unbanner_id      = 0 ,
-                      $recent_activity  = 0 )
+function user_unban(  int   $user_id                  ,
+                      int   $unbanner_id      = 0     ,
+                      bool  $recent_activity  = false ) : void
 {
   // Sanitize the data
   $timestamp          = sanitize(time(), 'int', 0);
@@ -419,7 +419,7 @@ function user_unban(  $user_id              ,
  * @return  int   The current user's id, or 0 if logged out.
  */
 
-function user_get_id()
+function user_get_id() : int
 {
   // As simple as it sounds, return the value stored in the session if the user is logged in, else 0
   return (user_is_logged_in()) ? $_SESSION['user_id'] : 0;
@@ -431,12 +431,12 @@ function user_get_id()
 /**
  * Returns a user's username from their id.
  *
- * @param   int|null   $user_id  (OPTIONAL) If no id is specified, it will try to return the username of current user.
+ * @param   int|null    $user_id  (OPTIONAL)  The user's id - if none, try to return the username of current user.
  *
- * @return  string                          The user's nickame.
+ * @return  string|null                       The user's nickame, or NULL if not found.
  */
 
-function user_get_username($user_id = NULL)
+function user_get_username( ?int $user_id = NULL ) : ?string
 {
   // If no id is specified, grab the one currently stored in the session
   if(!$user_id && isset($_SESSION['user_id']))
@@ -444,7 +444,7 @@ function user_get_username($user_id = NULL)
 
   // If no id is stored in the session, then this is a guest, return nothing
   else if(!$user_id)
-    return;
+    return NULL;
 
   // Sanitize the provided id
   $user_id = sanitize($user_id, 'int', 0);
@@ -454,8 +454,8 @@ function user_get_username($user_id = NULL)
                                           FROM    users
                                           WHERE   users.id = '$user_id' "));
 
-  // Return whatever the database returned (could be NULL)
-  return $dusername['username'];
+  // Return whatever the database returned, or NULL if not found
+  return $dusername['username'] ?? NULL;
 }
 
 
@@ -464,12 +464,12 @@ function user_get_username($user_id = NULL)
 /**
  * Returns a user's language.
  *
- * @param   int|null  $user_id  (OPTIONAL)  Gets the language of a specified user instead of the current user.
+ * @param   int|null    $user_id  (OPTIONAL)  The user's id - if none, try to return the language of current user.
  *
- * @return  string                          The user's language settings.
+ * @return  string|null                       The user's language, or NULL if not found.
  */
 
-function user_get_language($user_id = NULL)
+function user_get_language( ?int $user_id = NULL ) : ?string
 {
   // If no user is specified, returns the language settings stored in the session - or english if none
   if(!$user_id)
@@ -484,7 +484,7 @@ function user_get_language($user_id = NULL)
                                           WHERE   users.id = '$user_id' "));
 
   // Return the user's language, or english if nothing was found
-  return ($dlanguage['language']) ? $dlanguage['language'] : 'EN';
+  return $dlanguage['language'] ?? 'EN';
 }
 
 
@@ -495,12 +495,12 @@ function user_get_language($user_id = NULL)
  *
  * Defaults to checking whether current user is an administrator unless the $user_id optional parameter is specified.
  *
- * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is an administrator.
+ * @param   int|null  $user_id  (OPTIONAL)  The user's id - if none, try to return the rights of current user.
  *
  * @return  bool                            Returns 1 if the user has administrator rights, 0 if they don't.
  */
 
-function user_is_administrator($user_id = NULL)
+function user_is_administrator( ?int $user_id = NULL ) : bool
 {
   // If no user id is specified, use the current active session instead
   if(!$user_id && isset($_SESSION['user_id']))
@@ -530,12 +530,12 @@ function user_is_administrator($user_id = NULL)
  *
  * Defaults to checking whether current user is a moderator unless the $user_id optional parameter is specified.
  *
- * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is a moderator.
+ * @param   int|null  $user_id  (OPTIONAL)  The user's id - if none, try to return the rights of current user.
  *
  * @return  bool                            Returns 1 if the user has moderator rights, 0 if they don't.
  */
 
-function user_is_moderator($user_id = NULL)
+function user_is_moderator( ?int $user_id = NULL ) : bool
 {
   // If no user id is specified, use the current active session instead
   if(!$user_id && isset($_SESSION['user_id']))
@@ -570,12 +570,12 @@ function user_is_moderator($user_id = NULL)
  *
  * Defaults to checking whether current user is banned unless the $user_id optional parameter is specified.
  *
- * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is banned.
+ * @param   int|null  $user_id  (OPTIONAL)  The user's id - if none, try to return if the current user is banned.
  *
  * @return  bool                            Returns 1 if the user is banned, 0 if they don't.
  */
 
-function user_is_banned($user_id = NULL)
+function user_is_banned( ?int $user_id = NULL ) : bool
 {
   // If no user id is specified, use the current active session instead
   if(!$user_id && isset($_SESSION['user_id']))
@@ -615,7 +615,7 @@ function user_is_banned($user_id = NULL)
  * @return  int   0 if the user is not IP banned, 1 if the user is IP banned, 2 if the user is total IP banned
  */
 
-function user_is_ip_banned()
+function user_is_ip_banned() : int
 {
   // Get the current user's IP and sanitize it
   $user_ip = sanitize($_SERVER['REMOTE_ADDR'], 'string');
@@ -679,12 +679,12 @@ function user_is_ip_banned()
  *
  * Defaults to checking whether current account is deleted unless the $user_id optional parameter is specified.
  *
- * @param   int|null  $user_id  (OPTIONAL)  Checks if user with a specific id is deleted.
+ * @param   int|null  $user_id  (OPTIONAL)  The user's id - if none, check if the current user is deleted.
  *
  * @return  bool                            Returns 1 if the account is deleted, 0 if it isn't.
  */
 
-function user_is_deleted($user_id = NULL)
+function user_is_deleted( ?int $user_id = NULL) : bool
 {
   // If no user id is specified, use the current active session instead
   if(!$user_id && isset($_SESSION['user_id']))
@@ -718,7 +718,7 @@ function user_is_deleted($user_id = NULL)
  * @return  void
  */
 
-function user_restrict_to_administrators()
+function user_restrict_to_administrators() : void
 {
   // Fetch the user's language
   $lang = user_get_language();
@@ -750,7 +750,7 @@ function user_restrict_to_administrators()
  * @return  void
  */
 
-function user_restrict_to_moderators()
+function user_restrict_to_moderators() : void
 {
   // Fetch the user's language
   $lang = user_get_language();
@@ -782,7 +782,7 @@ function user_restrict_to_moderators()
  * @return  void
  */
 
-function user_restrict_to_users()
+function user_restrict_to_users() : void
 {
   // Fetch the path to the website's root
   $path = root_path();
@@ -812,7 +812,7 @@ function user_restrict_to_users()
  * @return  void
  */
 
-function user_restrict_to_guests()
+function user_restrict_to_guests() : void
 {
   // Fetch the user's language
   $lang = user_get_language();
@@ -837,7 +837,7 @@ function user_restrict_to_guests()
  * @return  void
  */
 
-function user_restrict_to_banned()
+function user_restrict_to_banned() : void
 {
   // Fetch the path to the website's root
   $path = root_path();
@@ -859,7 +859,7 @@ function user_restrict_to_banned()
  * @return  void
  */
 
-function user_restrict_to_ip_banned()
+function user_restrict_to_ip_banned() : void
 {
   // Fetch the path to the website's root
   $path = root_path();
@@ -881,7 +881,7 @@ function user_restrict_to_ip_banned()
  * @return  void
  */
 
-function user_restrict_to_non_ip_banned()
+function user_restrict_to_non_ip_banned() : void
 {
   // Fetch the path to the website's root
   $path = root_path();
@@ -903,7 +903,7 @@ function user_restrict_to_non_ip_banned()
  * @return  int   The current NSFW filter level of the user.
  */
 
-function user_settings_nsfw()
+function user_settings_nsfw() : int
 {
   // If the user isn't logged in, return 0
   if(!user_is_logged_in())
@@ -933,7 +933,7 @@ function user_settings_nsfw()
  * @return  array   The current third party privacy settings of the user, in the form of an array.
  */
 
-function user_settings_privacy()
+function user_settings_privacy() : array
 {
   // By default, set all of the privacy values to 0
   $privacy_twitter  = 0;
@@ -974,12 +974,12 @@ function user_settings_privacy()
  * The usernames are taken from an array of possible words instead of a database to minimize queries.
  * It doesn't create the best usernames, but hey, good enough.
  *
- * @param   string|null  $lang  (OPTIONAL)  The language in which the username will be generated.
+ * @param   string  $lang  (OPTIONAL)  The language in which the username will be generated.
  *
- * @return  string                          The randomly generated username.
+ * @return  string                      The randomly generated username.
  */
 
-function user_generate_random_username($lang = 'EN')
+function user_generate_random_username( string $lang = 'EN' ) : string
 {
   // English logic
   if($lang == 'EN')

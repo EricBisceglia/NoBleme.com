@@ -61,13 +61,13 @@ else
  * Keep in mind that no sanitization/escaping is being done here, you must add your own (see sanitization.inc.php).
  *
  * @param   string      $query                      The query that you want to run.
- * @param   string|int  $ignore_errors  (OPTIONAL)  Do not stop execution if an error is encountered.
+ * @param   bool        $ignore_errors  (OPTIONAL)  Do not stop execution if an error is encountered.
  *
- * @return  object                                  The result of the query, in the form of a mysqli_object.
+ * @return  object|bool                             A mysqli_object or a boolean, depending on the type of query.
  */
 
-function query( $query                  ,
-                $ignore_errors  = NULL  )
+function query( string  $query                  ,
+                bool    $ignore_errors  = false ) : mixed
 {
   // First off let's increment the global query counter for this session
   $GLOBALS['query']++;
@@ -125,10 +125,10 @@ function query( $query                  ,
 /**
  * Returns the ID of the latest inserted row.
  *
- * @return  int The ID of the latest inserted row.
+ * @return  int   The ID of the latest inserted row.
  */
 
-function query_id()
+function query_id() : int
 {
   return mysqli_insert_id($GLOBALS['db']);
 }

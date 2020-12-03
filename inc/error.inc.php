@@ -26,7 +26,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  void
  */
 
-function error_page($message)
+function error_page( string $message ) : void
 {
   // Fetch the path to the website's root
   $path = root_path();

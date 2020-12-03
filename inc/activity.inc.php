@@ -16,32 +16,32 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Transforms an entry of the `logs_activity` table into human readable content.
  *
- * @param   bool        $admins_only              Is the log public (0) or private (1).
- * @param   string      $type                     Identifies the type of activity being processed.
- * @param   int|null    $id           (OPTIONAL)  ID of the action/element of the activity in the log.
- * @param   string|null $title_en     (OPTIONAL)  Title of the activity in the log, in english.
- * @param   string|null $title_en     (OPTIONAL)  Title of the activity in the log, in french.
- * @param   int|null    $userid       (OPTIONAL)  ID of the user being implicated by the activity log.
- * @param   string|null $username     (OPTIONAL)  username of the user being implicated by the activity log.
- * @param   string|null $mod_username (OPTIONAL)  username of the staff member being implicated by the activity log.
- * @param   int|null    $amount       (OPTIONAL)  Amount linked to the activity log.
+ * @param   bool    $admins_only                Is the log public (0) or private (1).
+ * @param   string  $type                       Identifies the type of activity being processed.
+ * @param   int     $id             (OPTIONAL)  ID of the action/element of the activity in the log.
+ * @param   string  $title_en       (OPTIONAL)  Title of the activity in the log, in english.
+ * @param   string  $title_en       (OPTIONAL)  Title of the activity in the log, in french.
+ * @param   int     $userid         (OPTIONAL)  ID of the user being implicated by the activity log.
+ * @param   string  $username       (OPTIONAL)  username of the user being implicated by the activity log.
+ * @param   string  $mod_username   (OPTIONAL)  username of the staff member being implicated by the activity log.
+ * @param   int     $amount         (OPTIONAL)  Amount linked to the activity log.
  *
- * @return  array                                 Array of elements used to output and format the activity log;
- *                                                return['css']   is the style of the table line (if empty, no style);
- *                                                return['href']  is the url of the activity (if empty, not clickable);
- *                                                return['EN']    is the activity in english (if empty, french only);
- *                                                return['FR']    is the activity in french (if empty, english only).
+ * @return  array                               Array of elements used to output and format the activity log;
+ *                                              return['css']   is the style of the table line (if empty, no style),
+ *                                              return['href']  is the url of the activity (if empty, not clickable),
+ *                                              return['EN']    is the activity in english (if empty, french only),
+ *                                              return['FR']    is the activity in french (if empty, english only).
  */
 
-function log_activity_parse(  $admins_only          ,
-                              $type                 ,
-                              $id           = 0     ,
-                              $title_en     = NULL  ,
-                              $title_fr     = NULL  ,
-                              $userid       = 0     ,
-                              $username     = NULL  ,
-                              $mod_username = NULL  ,
-                              $amount       = 0     )
+function log_activity_parse(  bool    $admins_only        ,
+                              string  $type               ,
+                              int     $id           = 0   ,
+                              string  $title_en     = ''  ,
+                              string  $title_fr     = ''  ,
+                              int     $userid       = 0   ,
+                              string  $username     = ''  ,
+                              string  $mod_username = ''  ,
+                              int     $amount       = 0   ) : array
 {
   //*****************************************************************************************************************//
   // Fetch the path to the website's root

@@ -7,7 +7,7 @@ users_online_loop = false;
 /**
  * Alters the data shown in the table depending on the options selected above.
  *
- * @param   {boolean} user_is_administrator Whether the user is an administrator.
+ * @param   {bool}  user_is_administrator   Whether the user is an administrator.
  *
  * @returns {void}
  */

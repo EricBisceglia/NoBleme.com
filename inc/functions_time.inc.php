@@ -19,12 +19,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Returns in plain text how long ago a timestamp happened.
  *
- * @param   string      $timestamp              The timestamp at which the event happened.
+ * @param   int     $timestamp  The timestamp at which the event happened.
  *
- * @return  string                              A plain text description of how long ago the event happened.
+ * @return  string              A plain text description of how long ago the event happened.
  */
 
-function time_since($timestamp)
+function time_since( int $timestamp ) : string
 {
   // Base the result on the difference between the event and the current timestamp
   $time_since = time() - $timestamp;
@@ -68,12 +68,12 @@ function time_since($timestamp)
 /**
  * Returns in plain text in how long a timestamp will happen.
  *
- * @param   string      $timestamp              The timestamp at which the event will happen.
+ * @param   int     $timestamp  The timestamp at which the event will happen.
  *
- * @return  string                              A plain text description of how long remains until the event.
+ * @return  string              A plain text description of how long remains until the event.
  */
 
-function time_until($timestamp)
+function time_until( int $timestamp ) : string
 {
   // Base the result on the difference between the event and the current timestamp
   $time_until = $timestamp - time();
@@ -117,16 +117,16 @@ function time_until($timestamp)
 /**
  * Calculates the number of days elapsed between two MySQL dates or timestamps.
  *
- * @param   string                $date_start     The starting date.
- * @param   string                $date_end       The ending date.
- * @param   int|null  (OPTIONAL)  $use_timestamps The function will expect timestamps instead of MySQL dates.
+ * @param   string  $date_start                   The starting date.
+ * @param   string  $date_end                     The ending date.
+ * @param   bool    $use_timestamps   (OPTIONAL)  The function will expect timestamps instead of MySQL dates.
  *
- * @return  int                 The amount of days elapsed.
+ * @return  int                                   The amount of days elapsed.
  */
 
-function time_days_elapsed( $date_start         ,
-                            $date_end           ,
-                            $use_timestamps = 0 )
+function time_days_elapsed( string  $date_start             ,
+                            string  $date_end               ,
+                            bool    $use_timestamps = false ) : int
 {
   // Convert timestamps to dates if required
   if($use_timestamps)

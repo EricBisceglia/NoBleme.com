@@ -17,14 +17,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * The percentage of a number that another number represents.
  *
- * @param   double  $number The number which is a percentage of a total.
- * @param   double  $total  The total of which another number is a percentage of.
+ * @param   float   $number   The number which is a percentage of a total.
+ * @param   float   $total    The total of which another number is a percentage of.
  *
- * @return  double          This function returns $number as a percentage of $total.
+ * @return  float             This function returns $number as a percentage of $total.
  */
 
-function maths_percentage_of( $number ,
-                              $total  )
+function maths_percentage_of( float $number ,
+                              float $total  ) : float
 {
   // Simple enough: do the calculation and return its result (and avoid division by zero)
   return ($total) ? (($number/$total)*100) : 0;
@@ -36,14 +36,14 @@ function maths_percentage_of( $number ,
 /**
  * Growth in percent from one value to another.
  *
- * @param   double  $before The value before the growth.
- * @param   double  $after  The value after the growth.
+ * @param   float   $before   The value before the growth.
+ * @param   float   $after    The value after the growth.
  *
- * @return  double          Growth in % between the two values.
+ * @return  float             Growth in % between the two values.
  */
 
-function maths_percentage_growth( $before ,
-                                  $after  )
+function maths_percentage_growth( float $before ,
+                                  float $after  ) : float
 {
   // Simple enough: do the calculation and return its result (and avoid division by zero)
   return ($before) ? (($after/$before)*100)-100 : 0;

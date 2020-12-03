@@ -23,32 +23,32 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  /**
  * Fetches a list of users.
  *
- * @param   string|null $sort_by          OPTIONAL  The way the user list should be sorted.
- * @param   array|null  $search           OPTIONAL  Search for specific field values.
- * @param   int|null    $max_count        OPTIONAL  The number of users to return (0 for unlimited).
- * @param   bool|null   $deleted          OPTIONAL  If set, shows deleted users only.
- * @param   int|null    $activity_cutoff  OPTIONAL  If set, will only return users active since this many seconds.
- * @param   bool|null   $include_guests   OPTIONAL  If set, guests will be included in the user list.
- * @param   int|null    $max_guest_count  OPTIONAL  The number of guests to return (if guests are included, 0 for all).
- * @param   int|null    $banned_only      OPTIONAL  If set, returns only banned users.
- * @param   int|null    $include_ip_bans  OPTIONAL  If set, IP bans will be included in the banned_only user list.
- * @param   int|null    $is_admin         OPTIONAL  Whether the current user is an administrator.
- * @param   int|null    $is_activity      OPTIONAL  Whether the list will be used to display user activity.
+ * @param   string  $sort_by          (OPTIONAL)  The way the user list should be sorted.
+ * @param   array   $search           (OPTIONAL)  Search for specific field values.
+ * @param   int     $max_count        (OPTIONAL)  The number of users to return (0 for unlimited).
+ * @param   bool    $deleted          (OPTIONAL)  If true, shows deleted users only.
+ * @param   int     $activity_cutoff  (OPTIONAL)  If set, will only return users active since this many seconds.
+ * @param   bool    $include_guests   (OPTIONAL)  If true, guests will be included in the user list.
+ * @param   int     $max_guest_count  (OPTIONAL)  The number of guests to return (if guests are included, 0 for all).
+ * @param   bool    $banned_only      (OPTIONAL)  If true, returns only banned users.
+ * @param   bool    $include_ip_bans  (OPTIONAL)  If true, IP bans will be included in the banned_only user list.
+ * @param   bool    $is_admin         (OPTIONAL)  Whether the current user is an administrator.
+ * @param   bool    $is_activity      (OPTIONAL)  Whether the list will be used to display user activity.
  *
- * @return  array                                   A list of users, prepared for displaying.
+ * @return  array                                 A list of users, prepared for displaying.
  */
 
-function user_list( $sort_by          = ''    ,
-                    $search           = NULL  ,
-                    $max_count        = 0     ,
-                    $deleted          = 0     ,
-                    $activity_cutoff  = 0     ,
-                    $include_guests   = 0     ,
-                    $max_guest_count  = 0     ,
-                    $banned_only      = 0     ,
-                    $include_ip_bans  = 0     ,
-                    $is_admin         = 0     ,
-                    $is_activity      = 0     )
+function user_list( string  $sort_by          = ''      ,
+                    array   $search           = array() ,
+                    int     $max_count        = 0       ,
+                    bool    $deleted          = false   ,
+                    int     $activity_cutoff  = 0       ,
+                    bool    $include_guests   = false   ,
+                    int     $max_guest_count  = 0       ,
+                    bool    $banned_only      = false   ,
+                    bool    $include_ip_bans  = false   ,
+                    bool    $is_admin         = false   ,
+                    bool    $is_activity      = false   ) : array
 {
   // Require special rights to run this action in special cases
   if($include_ip_bans)
@@ -263,12 +263,12 @@ function user_list( $sort_by          = ''    ,
 /**
  * Fetches a list of administrative team members.
  *
- * @param   string|null   $sort_by  (OPTIONAL)  The way the list should be sorted.
+ * @param   string  $sort_by  (OPTIONAL)  The way the list should be sorted.
  *
- * @return  array                               A list of administrative team members.
+ * @return  array                         A list of administrative team members.
  */
 
-function user_list_admins( $sort_by = NULL )
+function user_list_admins( string $sort_by = '' ) : array
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -325,12 +325,12 @@ function user_list_admins( $sort_by = NULL )
 /**
  * Fetches information related to a user's ban.
  *
- * @param   int|null    $user_id  The user's ID in the database. If null, fetches the current user's ID.
+ * @param   int|null  $user_id  The user's ID in the database. If null, fetches the current user's ID.
  *
- * @return  array                 An array of data regarding the ban.
+ * @return  array               An array of data regarding the ban.
  */
 
-function user_ban_details( $user_id = NULL )
+function user_ban_details( ?int $user_id = NULL ) : array
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -379,12 +379,12 @@ function user_ban_details( $user_id = NULL )
 /**
  * Checks if a username currently exists in the database.
  *
- * @param   string  $username The username to check.
+ * @param   string  $username   The username to check.
  *
- * @return  bool              Whether the username exists.
+ * @return  bool                Whether the username exists.
  */
 
-function user_check_username($username)
+function user_check_username( string $username ) : bool
 {
   // Sanitize the data
   $username = sanitize($username, 'string');
@@ -404,12 +404,12 @@ function user_check_username($username)
 /**
  * Checks if a username is illegal.
  *
- * @param   string  $username The username to check.
+ * @param   string  $username   The username to check.
  *
- * @return  bool              Whether the username is illegal on the website.
+ * @return  bool                Whether the username is illegal on the website.
  */
 
-function user_check_username_illegality($username)
+function user_check_username_illegality( string $username ) : bool
 {
   // Define a list of badwords
   $bad_words = array('admin', 'biatch', 'bitch', 'coon', 'fagg', 'kike', 'moderat', 'nigg', 'offici', 'putain', 'salope', 'trann', 'whore');
@@ -430,22 +430,21 @@ function user_check_username_illegality($username)
  * Autocompletes a username.
  *
  * @param   string      $input              The input that needs to be autocompleted.
- * @param   string|null $type   (OPTIONAL)  The type of autocomplete query we're making (eg. 'normal', 'ban', 'unban')
+ * @param   string      $type   (OPTIONAL)  The type of autocomplete query we're making (eg. 'normal', 'ban', 'unban')
  *
- * @return  array                           An array containing all the data required to autocomplete the username.
+ * @return  array|null                      An array containing the autocomplete data, or NULL if something went wrong.
  */
 
-function user_autocomplete_username(  $input          ,
-                                      $type   = NULL  )
+function user_autocomplete_username(  string  $input        ,
+                                      string  $type   = ''  ) : mixed
 {
   // Sanitize the input
-  $input_raw  = $input;
-  $input      = sanitize($input, 'string');
-  $where      = '';
+  $input  = sanitize($input, 'string');
+  $where  = '';
 
-  // Only work when more than 1 character has been input
+  // Only work when more than 1 character has been submitted
   if(mb_strlen($input) < 1)
-    return;
+    return NULL;
 
   // Exclude banned users if required
   if($type == 'ban')

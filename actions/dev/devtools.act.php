@@ -24,20 +24,20 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Generates the source code of an icon, ready for pasting to the clipboard.
  *
- * @param   string      $name                                 The name of the icon.
- * @param   string|null $title                                The translation which will be used for the image's title.
- * @param   bool|null   $title_is_a trasnslation  (OPTIONAL)  Whether the title is the entered string or a translation.
- * @param   string      $alt_text                 (OPTIONAL)  The alt text for the icon.
- * @param   string|null $size                     (OPTIONAL)  The size of the icon ('normal', 'small').
+ * @param   string  $name                                 The name of the icon.
+ * @param   string  $title                                The translation which will be used for the image's title.
+ * @param   bool    $title_is_a trasnslation  (OPTIONAL)  Whether the title is the entered string or a translation.
+ * @param   string  $alt_text                 (OPTIONAL)  The alt text for the icon.
+ * @param   string  $size                     (OPTIONAL)  The size of the icon ('normal', 'small').
  *
- * @return  string                                            The source code ready to be sent to the clipboard.
+ * @return  string                                        The source code ready to be sent to the clipboard.
  */
 
-function dev_doc_icon_to_clipboard( $name                               ,
-                                    $title                  = ''        ,
-                                    $title_is_a_translation = 0         ,
-                                    $alt_text               = 'X'       ,
-                                    $size                   = 'normal'  )
+function dev_doc_icon_to_clipboard( string  $name                               ,
+                                    string  $title                  = ''        ,
+                                    bool    $title_is_a_translation = false     ,
+                                    string  $alt_text               = 'X'       ,
+                                    string  $size                   = 'normal'  ) : string
 {
   // Prepare the data
   $title  = ($title_is_a_translation) ? "&lt;?=string_change_case(__('$title'), 'initials')?>" : $title ;
@@ -57,12 +57,12 @@ function dev_doc_icon_to_clipboard( $name                               ,
 /**
  * Toggles the website's status between open and closed.
  *
- * @param   int   $website_status   Whether an update is currently in progress
+ * @param   bool  $website_status   Whether an update is currently in progress
  *
  * @return  void
  */
 
-function dev_toggle_website_status( $website_status )
+function dev_toggle_website_status( bool $website_status ) : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -88,7 +88,7 @@ function dev_toggle_website_status( $website_status )
  * @return  array|null              An array containing elements related to the version, or NULL if it does not exist.
  */
 
-function dev_versions_get($version_id)
+function dev_versions_get( int $version_id ) : mixed
 {
   // Sanitize the id
   $version_id = sanitize($version_id, 'int', 0);
@@ -130,7 +130,7 @@ function dev_versions_get($version_id)
  * @return  array   An array containing past version numbers, sorted in reverse chronological order by date.
  */
 
-function dev_versions_list()
+function dev_versions_list() : array
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -198,22 +198,22 @@ function dev_versions_list()
  *
  * The version number will respect the SemVer v2.0.0 standard.
  *
- * @param   int           $major            The major version number.
- * @param   int           $minor            The minor version number.
- * @param   int           $patch            The patch number.
- * @param   string        $extension        The extension string (eg. beta, rc-1, etc.).
- * @param   bool|null     $publish_activity Whether to publish an entry in recent activity.
- * @param   bool|null     $notify_irc       Whether to send a notification on IRC.
+ * @param   int     $major                          The major version number.
+ * @param   int     $minor                          The minor version number.
+ * @param   int     $patch                          The patch number.
+ * @param   string  $extension                      The extension string (eg. beta, rc-1, etc.).
+ * @param   bool    $publish_activity   (OPTIONAL)  Whether to publish an entry in recent activity.
+ * @param   bool    $notify_irc         (OPTIONAL)  Whether to send a notification on IRC.
  *
- * @return  string|null                     NULL if all went according to plan, or an error string
+ * @return  string|null                             NULL if all went according to plan, or an error string
  */
 
-function dev_versions_create( $major                ,
-                              $minor                ,
-                              $patch                ,
-                              $extension            ,
-                              $publish_activity = 1 ,
-                              $notify_irc       = 0 )
+function dev_versions_create( int     $major                    ,
+                              int     $minor                    ,
+                              int     $patch                    ,
+                              string  $extension                ,
+                              bool    $publish_activity = true  ,
+                              bool    $notify_irc       = false ) : mixed
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -268,7 +268,7 @@ function dev_versions_create( $major                ,
   irc_bot_send_message(chr(0x02).chr(0x03).'03'."A new version of NoBleme has been released: $version_number - ".$GLOBALS['website_url']."todo_link", "dev");
 
   // Return that all went well
-  return;
+  return NULL;
 }
 
 
@@ -277,22 +277,22 @@ function dev_versions_create( $major                ,
 /**
  * Edits an entry in the website's version numbering history.
  *
- * @param   int           $id           The version's id.
- * @param   int           $major        The major version number.
- * @param   int           $minor        The minor version number.
- * @param   int           $patch        The patch number.
- * @param   string        $extension    The extension string (eg. beta, rc-1, etc.).
- * @param   string        $release_date The version's release date.
+ * @param   int     $id             The version's id.
+ * @param   int     $major          The major version number.
+ * @param   int     $minor          The minor version number.
+ * @param   int     $patch          The patch number.
+ * @param   string  $extension      The extension string (eg. beta, rc-1, etc.).
+ * @param   string  $release_date   The version's release date.
  *
- * @return  string|null                 NULL if all went according to plan, or an error string
+ * @return  string|null             NULL if all went according to plan, or an error string
  */
 
-function dev_versions_edit( $id           ,
-                            $major        ,
-                            $minor        ,
-                            $patch        ,
-                            $extension    ,
-                            $release_date )
+function dev_versions_edit( int     $id           ,
+                            int     $major        ,
+                            int     $minor        ,
+                            int     $patch        ,
+                            string  $extension    ,
+                            string  $release_date ) : mixed
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -334,7 +334,7 @@ function dev_versions_edit( $id           ,
           WHERE   system_versions.id            = '$id' ");
 
   // Return that all went well
-  return;
+  return NULL;
 }
 
 
@@ -345,10 +345,10 @@ function dev_versions_edit( $id           ,
  *
  * @param   int           $version_id   The version number's id.
  *
- * @return  string|int                  The version number, or 0 if the version does not exist.
+ * @return  string|null                 The version number, or NULL if the version does not exist.
  */
 
-function dev_versions_delete( $version_id )
+function dev_versions_delete( int $version_id ) : mixed
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -356,9 +356,9 @@ function dev_versions_delete( $version_id )
   // Sanitize the data
   $version_id = sanitize($version_id, 'int', 0);
 
-  // Ensure the version number exists or return 0
+  // Ensure the version number exists or return NULL
   if(!database_row_exists('system_versions', $version_id))
-    return 0;
+    return NULL;
 
   // Fetch the version number
   $dversion = mysqli_fetch_array(query("  SELECT    system_versions.major     AS 'v_major'      ,

@@ -23,14 +23,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Lists data regarding website performance.
  *
- * @param   string|null   $sort_by  (OPTIONAL)  The order in which the returned data will be sorted.
- * @param   array|null    $search   (OPTIONAL)  Search for specific field values.
+ * @param   string  $sort_by  (OPTIONAL)  The order in which the returned data will be sorted.
+ * @param   array   $search   (OPTIONAL)  Search for specific field values.
  *
- * @return  array                               The metrics data, ready for displaying.
+ * @return  array                         The metrics data, ready for displaying.
  */
 
-function stats_metrics_list(  $sort_by  = 'activity'  ,
-                              $search   = NULL        )
+function stats_metrics_list(  string  $sort_by  = 'activity'  ,
+                              array   $search   = array()     ) : array
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -197,12 +197,12 @@ function stats_metrics_list(  $sort_by  = 'activity'  ,
 /**
  * Resets website metrics.
  *
- * @param   int|null  $metric_id  The id of the metric to reset - all metrics will be reset if the id is 0.
+ * @param   int   $metric_id  (OPTIONAL)  The id of the metric to reset - all metrics will be reset if the id is 0.
  *
  * @return  void
  */
 
-function stats_metrics_reset( $metric_id = NULL )
+function stats_metrics_reset( int $metric_id = NULL ) : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -230,14 +230,14 @@ function stats_metrics_reset( $metric_id = NULL )
 /**
  * Lists data regarding pageviews.
  *
- * @param   string|null   $sort_by  (OPTIONAL)  The order in which the returned data will be sorted.
- * @param   array|null    $search   (OPTIONAL)  Search for specific field values.
+ * @param   string  $sort_by  (OPTIONAL)  The order in which the returned data will be sorted.
+ * @param   array   $search   (OPTIONAL)  Search for specific field values.
  *
- * @return  array                               The pageviews data, ready for displaying.
+ * @return  array                         The pageviews data, ready for displaying.
  */
 
-function stats_views_list(  $sort_by  = NULL  ,
-                            $search   = NULL  )
+function stats_views_list(  string  $sort_by  = NULL    ,
+                            array   $search   = array() ) : array
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -347,7 +347,7 @@ function stats_views_list(  $sort_by  = NULL  ,
  * @return  void
  */
 
-function stats_views_reset()
+function stats_views_reset() : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -367,12 +367,12 @@ function stats_views_reset()
 /**
  * Delete a page's data.
  *
- * @param   int|null  $page_id  The id of the page to delete.
+ * @param   int   $page_id  The id of the page to delete.
  *
  * @return  void
  */
 
-function stats_views_delete( $page_id )
+function stats_views_delete( int $page_id ) : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -391,10 +391,10 @@ function stats_views_delete( $page_id )
 /**
  * Lists users sharing the same IP address.
  *
- * @return  void
+ * @return  array   An array of data regarding IP doppelgangers.
  */
 
-function stats_doppelgangers_list()
+function stats_doppelgangers_list() : array
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();

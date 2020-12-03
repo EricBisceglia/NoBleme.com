@@ -21,20 +21,20 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * Inside those translations, links can be built using the {{link|href|text|style|internal|path}} format.
  * The last 3 parameters of this format are optional - see the doc of the __link() function for details.
  *
- * @param   string                  $string         The string identifying the phrase to be translated.
- * @param   int|null    (OPTIONAL)  $amount         Amount of elements: 1 or null is singular, anything else is plural.
- * @param   int|null    (OPTIONAL)  $spaces_before  Number of spaces to insert before the translation.
- * @param   int|null    (OPTIONAL)  $spaces_after   Number of spaces to append to the end of the translation.
- * @param   array|null  (OPTIONAL)  $preset_values  An array of values to be included in the phrase.
+ * @param   string                $string         The string identifying the phrase to be translated.
+ * @param   int|null  (OPTIONAL)  $amount         Amount of elements: 1 or null is singular, anything else is plural.
+ * @param   int       (OPTIONAL)  $spaces_before  Number of spaces to insert before the translation.
+ * @param   int       (OPTIONAL)  $spaces_after   Number of spaces to append to the end of the translation.
+ * @param   array     (OPTIONAL)  $preset_values  An array of values to be included in the phrase.
  *
- * @return  string                          The translated string, or an empty string if no translation was found.
+ * @return  string                              The translated string, or an empty string if no translation was found.
  */
 
-function __(  $string                   ,
-              $amount         = NULL    ,
-              $spaces_before  = 0       ,
-              $spaces_after   = 0       ,
-              $preset_values  = array() )
+function __(  string  $string                   ,
+              ?int    $amount         = NULL    ,
+              int     $spaces_before  = 0       ,
+              int     $spaces_after   = 0       ,
+              array   $preset_values  = array() ) : string
 {
   // If there are no global translations, return nothing
   if(!isset($GLOBALS['translations']))
@@ -109,14 +109,14 @@ function __(  $string                   ,
  * @return  void
  */
 
-function ___( $name         ,
-              $lang         ,
-              $translation  )
+function ___( string  $name         ,
+              string  $lang         ,
+              string  $translation  ) : void
 {
   // Only treat this if we are in the current language
   $current_lang = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
   if($current_lang != $lang)
-    return null;
+    return;
 
   // Check if a translation by this name already exists - if yes publicly humiliate the coder for their poor work :(
   if(isset($GLOBALS['translations'][$name]))
@@ -132,22 +132,22 @@ function ___( $name         ,
  /**
  * Builds a link.
  *
- * @param   string      $href                     The destination of the link.
- * @param   string      $text                     The text to be displayed on the link.
- * @param   string|null $style        (OPTIONAL)  The CSS style(s) to apply to the link.
- * @param   bool|null   $is_internal  (OPTIONAL)  Whether the link is internal (on the website) or external.
- * @param   string|null $path         (OPTIONAL)  The path to the website's root (defaults to 2 folders from root).
- * @param   string|null $onclick      (OPTIONAL)  A javascript option to trigger upon clicking the link.
+ * @param   string  $href                     The destination of the link.
+ * @param   string  $text                     The text to be displayed on the link.
+ * @param   string  $style        (OPTIONAL)  The CSS style(s) to apply to the link.
+ * @param   bool    $is_internal  (OPTIONAL)  Whether the link is internal (on the website) or external.
+ * @param   string  $path         (OPTIONAL)  The path to the website's root (defaults to 2 folders from root).
+ * @param   string  $onclick      (OPTIONAL)  A javascript option to trigger upon clicking the link.
  *
- * @return  string                    The link, ready for use.
+ * @return  string                            The link, ready for use.
  */
 
-function __link(  $href                       ,
-                  $text                       ,
-                  $style        = "bold"      ,
-                  $is_internal  = 1           ,
-                  $path         = "./../../"  ,
-                  $onclick      = NULL        )
+function __link(  string  $href                       ,
+                  string  $text                       ,
+                  string  $style        = "bold"      ,
+                  bool    $is_internal  = true        ,
+                  string  $path         = "./../../"  ,
+                  string  $onclick      = ''          ) : string
 {
   // Prepare the style
   $class = ($style) ? " class=\"$style\"" : "";
@@ -169,20 +169,20 @@ function __link(  $href                       ,
  /**
  * Builds an inline tooltip.
  *
- * @param   string      $title                    The element that triggers the tooltip.
- * @param   string      $tooltip_body             The tooltip's body.
- * @param   string|null $title_style    OPTIONAL  The CSS style(s) to apply to the tooltip's triggering element.
- * @param   string|null $tooltip_style  OPTIONAL  CSS style(s) to apply to the tooltip's body.
- * @param   bool|null   $use_link       OPTIONAL  If unset, does not use a link for the triggering element.
+ * @param   string  $title                      The element that triggers the tooltip.
+ * @param   string  $tooltip_body               The tooltip's body.
+ * @param   string  $title_style    (OPTIONAL)  The CSS style(s) to apply to the tooltip's triggering element.
+ * @param   string  $tooltip_style  (OPTIONAL)  CSS style(s) to apply to the tooltip's body.
+ * @param   bool    $use_link       (OPTIONAL)  Style the triggering element as a link.
  *
- * @return  string                      The tooltip, ready for use.
+ * @return  string                              The tooltip, ready for use.
  */
 
-function __tooltip( $title                      ,
-                    $tooltip_body               ,
-                    $title_style    = "bold"    ,
-                    $tooltip_style  = "notbold" ,
-                    $use_link       = 1         )
+function __tooltip( string  $title                      ,
+                    string  $tooltip_body               ,
+                    string  $title_style    = "bold"    ,
+                    string  $tooltip_style  = "notbold" ,
+                    bool    $use_link       = false     ) : string
 {
   // Decide whether to use a link or text for the triggering element
   $title = ($use_link) ? "<a>".$title."</a>" : $title;
@@ -200,12 +200,12 @@ function __tooltip( $title                      ,
  * This is a debugging function and should only be used locally during development.
  * To enforce this requirement, the function ends with an exit().
  *
- * @param   int|null  $print_all  OPTIONAL  If set, prints all values in the array after the duplicates.
+ * @param   bool  $print_all  (OPTIONAL)  If set, prints all values in the array after the duplicates.
  *
  * @return  void
  */
 
-function debug_duplicate_translations($print_all = NULL)
+function debug_duplicate_translations( bool $print_all = false ) : void
 {
   // We do a diff between the array before and after filtering all unique values, and dump it
   $diff = var_dump(array_unique(array_diff_assoc($GLOBALS['translations'], array_unique($GLOBALS['translations']))));

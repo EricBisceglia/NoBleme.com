@@ -24,7 +24,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  array             An array of activity log details, prepared for displaying.
  */
 
-function activity_get( $log_id )
+function activity_get( int $log_id ) : array
 {
   // Check if the required files have been included
   require_included_file('bbcodes.inc.php');
@@ -75,20 +75,20 @@ function activity_get( $log_id )
 /**
  * Fetches activity logs.
  *
- * @param   bool|null   $modlogs  OPTIONAL  If set to 1, display moderation logs instead of global activity logs.
- * @param   int|null    $amount   OPTIONAL  The amount of logs to fetch.
- * @param   string|null $type     OPTIONAL  Filters the output by only showing logs of a specific type.
- * @param   bool|null   $deleted  OPTIONAL  If set, shows deleted activity logs only.
- * @param   bool|null   $is_admin OPTIONAL  Is the user seeing the logs an administrator.
+ * @param   bool    $modlogs    (OPTIONAL)  If true, display moderation logs instead of global activity logs.
+ * @param   int     $amount     (OPTIONAL)  The amount of logs to fetch.
+ * @param   string  $type       (OPTIONAL)  Filters the output by only showing logs of a specific type.
+ * @param   bool    $deleted    (OPTIONAL)  If true, shows deleted activity logs only.
+ * @param   bool    $is_admin   (OPTIONAL)  Is the user seeing the logs an administrator.
  *
  * @return  array                           An array of activity logs, prepared for displaying.
  */
 
-function activity_list( $modlogs  = 0     ,
-                        $amount   = 100   ,
-                        $type     = 'all' ,
-                        $deleted  = 0     ,
-                        $is_admin = 0     )
+function activity_list( bool    $modlogs  = false ,
+                        int     $amount   = 100   ,
+                        string  $type     = 'all' ,
+                        bool    $deleted  = false ,
+                        bool    $is_admin = false ) : array
 {
   // Require administrator rights to run this action in special cases
   if($is_admin)
@@ -196,14 +196,14 @@ function activity_list( $modlogs  = 0     ,
 /**
  * Deletes an activity log.
  *
- * @param   int         $log_id         The id of the log which will be deleted.
- * @param   bool|null   $deletion_type  Performs a soft (0) or hard (1) delete.
+ * @param   int   $log_id         The id of the log which will be deleted.
+ * @param   bool  $deletion_type  Performs a soft (false) or hard (true) delete.
  *
  * @return  void
  */
 
-function activity_delete( $log_id             ,
-                          $deletion_type  = 0 )
+function activity_delete( int   $log_id                 ,
+                          bool  $deletion_type  = false ) : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -241,7 +241,7 @@ function activity_delete( $log_id             ,
  * @return  void
  */
 
-function activity_restore( $log_id )
+function activity_restore( int $log_id ) : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();

@@ -23,14 +23,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * This implementation nicely detects unclosed tags and closes them for you. I'm just cool like that.
  * Some CSS is involved, so make sure nobleme.css is included in your page when using BBCodes.
  *
- * @param   string      $message                    The message which contains BBCodes.
- * @param   array|null  $privacy_level  (OPTIONAL)  The output of user_settings_privacy() (third party settings).
+ * @param   string  $message                    The message which contains BBCodes.
+ * @param   array   $privacy_level  (OPTIONAL)  The output of user_settings_privacy() (third party settings).
  *
- * @return  string                            The message, with BBCodes converted to HTML, ready for display.
+ * @return  string                              The message, with BBCodes converted to HTML, ready for display.
  */
 
-function bbcodes( $message                                                                ,
-                  $privacy_level  = array('twitter' => 0, 'youtube' => 0, 'trends' => 0)  )
+function bbcodes( string  $message                                                                ,
+                  array   $privacy_level  = array('twitter' => 0, 'youtube' => 0, 'trends' => 0)  ) : string
 {
   /*******************************************************************************************************************/
   // [b]Bold[/b]
@@ -248,18 +248,18 @@ function bbcodes( $message                                                      
  * To this end, I needed acces sto more BBCodes, which users will not be allowed to use on the rest of the website.
  * Basically these are only for administrators, so there's not too much worries to be had about user input.
  *
- * @param   string      $message                      The message which contains BBCodes.
- * @param   array       $page_list        (OPTIONAL)  Output of compendium_list_pages() (pages in current language).
- * @param   array|null  $privacy_level    (OPTIONAL)  The output of user_settings_privacy() (third party settings).
- * @param   int|null    $nsfw_settings    (OPTIONAL)  The optuput of user_settings_nsfw() (profanity/nudity filter).
+ * @param   string  $message                    The message which contains BBCodes.
+ * @param   array   $page_list      (OPTIONAL)  Output of compendium_list_pages() (pages in current language).
+ * @param   array   $privacy_level  (OPTIONAL)  The output of user_settings_privacy() (third party settings).
+ * @param   int     $nsfw_settings  (OPTIONAL)  The optuput of user_settings_nsfw() (profanity/nudity filter).
  *
- * @return  string                            The message, with NBCodes converted to HTML, ready for display.
+ * @return  string                              The message, with NBCodes converted to HTML, ready for display.
  */
 
-function nbcodes( $message                                                                ,
-                  $page_list      = array()                                               ,
-                  $privacy_level  = array('twitter' => 0, 'youtube' => 0, 'trends' => 0)  ,
-                  $nsfw_settings  = 0                                                     )
+function nbcodes( string  $message                                                                ,
+                  array   $page_list      = array()                                               ,
+                  array   $privacy_level  = array('twitter' => 0, 'youtube' => 0, 'trends' => 0)  ,
+                  int     $nsfw_settings  = 0                                                     ) : string
 {
   /*******************************************************************************************************************/
   // Fetch the path to the website's root

@@ -28,10 +28,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Starts the IRC bot.
  *
- * @return  string|null   A string if an error happened, nothing if the loop is running as intended.
+ * @return  string|void   A string if an error happened, nothing if the loop is running as intended.
  */
 
-function irc_bot_start()
+function irc_bot_start() : string
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -155,7 +155,7 @@ function irc_bot_start()
  * @return  void
  */
 
-function irc_bot_stop()
+function irc_bot_stop() : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -183,7 +183,7 @@ function irc_bot_stop()
  * @return  bool              The new status of silent mode.
  */
 
-function irc_bot_toggle_silence_mode( $silenced )
+function irc_bot_toggle_silence_mode( bool $silenced ) : bool
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -213,16 +213,16 @@ function irc_bot_toggle_silence_mode( $silenced )
 /**
  * Sends a message through the IRC bot from the admin interface.
  *
- * @param   string        $body                 The message to send on IRC.
- * @param   string|null   $channel  (OPTIONAL)  If the string isn't empty, send the message to a channel instead.
- * @param   string|null   $user     (OPTIONAL)  If the string isn't empty, send the message to a user instead.
+ * @param   string  $body                 The message to send on IRC.
+ * @param   string  $channel  (OPTIONAL)  If the string isn't empty, send the message to a channel instead.
+ * @param   string  $user     (OPTIONAL)  If the string isn't empty, send the message to a user instead.
  *
  * @return  void
  */
 
-function irc_bot_admin_send_message(  $body           ,
-                                      $channel  = ''  ,
-                                      $user     = ''  )
+function irc_bot_admin_send_message(  string  $body           ,
+                                      string  $channel  = ''  ,
+                                      string  $user     = ''  ) : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -253,10 +253,10 @@ function irc_bot_admin_send_message(  $body           ,
 /**
  * Fetches the queue of messages that have not been sent yet by the IRC bot.
  *
- * @return  array   An array containing the log of queued messages.
+ * @return  array   An array containing the formatted backlog of queued messages.
  */
 
-function irc_bot_message_queue_list()
+function irc_bot_message_queue_list() : array
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -299,12 +299,12 @@ function irc_bot_message_queue_list()
 /**
  * Purges a message from the IRC bot's upcoming message queue.
  *
- * @param   int   $line_id  The line number that must be purged - whole file if this is set to -1.
+ * @param   int         $line_id  The line number that must be purged - whole file if this is set to -1.
  *
- * @return  void
+ * @return  string|null           A string in case of error, or NULL if all went well.
  */
 
-function irc_bot_message_queue_delete( $line_id )
+function irc_bot_message_queue_delete( int $line_id ) : mixed
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -352,6 +352,9 @@ function irc_bot_message_queue_delete( $line_id )
       file_put_contents($irc_bot_file, implode("", $file_contents));
     }
   }
+
+  // All went well, return NULL
+  return NULL;
 }
 
 
@@ -360,12 +363,12 @@ function irc_bot_message_queue_delete( $line_id )
 /**
  * Fetches the history of past messages sent by the IRC bot.
  *
- * @param   array|null    $search   (OPTIONAL)  Search for specific field values.
+ * @param   array   $search   (OPTIONAL)  Search for specific field values.
  *
- * @return  array                               An array containing the message history.
+ * @return  array                         An array containing the message history.
  */
 
-function irc_bot_message_history_list( $search = NULL )
+function irc_bot_message_history_list( array $search = array() ) : array
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -448,7 +451,7 @@ function irc_bot_message_history_list( $search = NULL )
  * @return  void
  */
 
-function irc_bot_message_history_replay( $log_id )
+function irc_bot_message_history_replay( int $log_id ) : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -488,7 +491,7 @@ function irc_bot_message_history_replay( $log_id )
  * @return  void
  */
 
-function irc_bot_message_history_delete( $log_id )
+function irc_bot_message_history_delete( int $log_id ) : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
