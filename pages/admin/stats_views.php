@@ -58,8 +58,12 @@ if(isset($_POST['stats_views_reset']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the page popularity data
 
-$stats_views  = stats_views_list(  form_fetch_element('stats_views_sort', 'views')  ,
-                  array( 'name' => form_fetch_element('stats_views_name')           ));
+// Fetch the search data
+$stats_views_search = array('name' => form_fetch_element('stats_views_name'));
+
+// Fetch the popularity data
+$stats_views = stats_views_list(  form_fetch_element('stats_views_sort', 'views') ,
+                                  $stats_views_search                             );
 
 
 

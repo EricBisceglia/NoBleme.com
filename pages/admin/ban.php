@@ -121,11 +121,15 @@ if(isset($_POST['admin_ban_logs_delete']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ban history
 
+// Fetch the search data
+$ban_logs_search = array( 'status'    =>  form_fetch_element('admin_ban_logs_search_status', -1)  ,
+                          'username'  =>  form_fetch_element('admin_ban_logs_search_username')    ,
+                          'banner'    =>  form_fetch_element('admin_ban_logs_search_banner')      ,
+                          'unbanner'  =>  form_fetch_element('admin_ban_logs_search_unbanner')    );
+
+// Fetch the ban history logs
 $ban_logs = admin_ban_logs_list(  form_fetch_element('admin_ban_logs_sorting_order', 'banned')  ,
-          array(  'status'    =>  form_fetch_element('admin_ban_logs_search_status', -1)        ,
-                  'username'  =>  form_fetch_element('admin_ban_logs_search_username')          ,
-                  'banner'    =>  form_fetch_element('admin_ban_logs_search_banner')            ,
-                  'unbanner'  =>  form_fetch_element('admin_ban_logs_search_unbanner')          ));
+                                  $ban_logs_search                                              );
 
 
 

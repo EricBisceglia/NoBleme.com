@@ -68,12 +68,15 @@ if(isset($_POST['scheduler_log_delete']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Get the past and future tasks
 
+// Fetch the search data
+$scheduler_tasks_search = array(  'type'        =>  form_fetch_element('scheduler_search_type')         ,
+                                  'id'          =>  form_fetch_element('scheduler_search_id')           ,
+                                  'date'        =>  form_fetch_element('scheduler_search_date')         ,
+                                  'description' =>  form_fetch_element('scheduler_search_description')  ,
+                                  'report'      =>  form_fetch_element('scheduler_search_report')       );
+
 $scheduler_tasks = dev_scheduler_list(  form_fetch_element('scheduler_search_order', 'date')  ,
-              array(  'type'        =>  form_fetch_element('scheduler_search_type')           ,
-                      'id'          =>  form_fetch_element('scheduler_search_id')             ,
-                      'date'        =>  form_fetch_element('scheduler_search_date')           ,
-                      'description' =>  form_fetch_element('scheduler_search_description')    ,
-                      'report'      =>  form_fetch_element('scheduler_search_report')         ));
+                                        $scheduler_tasks_search                               );
 
 
 

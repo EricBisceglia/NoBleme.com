@@ -52,11 +52,14 @@ if(isset($_POST['admin_metrics_reset']))
 // Check whether a search has been requested
 $admin_metrics_search = form_fetch_element('stats_metrics_sort', NULL, 1);
 
+// Fetch the search data
+$admin_metrics_search_data = array( 'url'     =>  form_fetch_element('stats_metrics_search_url')      ,
+                                    'queries' =>  form_fetch_element('stats_metrics_search_queries')  ,
+                                    'load'    =>  form_fetch_element('stats_metrics_search_load')     );
+
 // Fetch the metrics
 $admin_metrics = stats_metrics_list(  form_fetch_element('stats_metrics_sort', 'activity')  ,
-                 array( 'url'     =>  form_fetch_element('stats_metrics_search_url')        ,
-                        'queries' =>  form_fetch_element('stats_metrics_search_queries')    ,
-                        'load'    =>  form_fetch_element('stats_metrics_search_load')       ));
+                                      $admin_metrics_search_data                            );
 
 
 

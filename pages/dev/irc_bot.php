@@ -146,10 +146,13 @@ if(isset($_POST['dev_irc_bot_history_submit']))
   $irc_bot_history_search_sent_0  = ($irc_bot_history_search_sent == 0) ? ' selected' : '';
   $irc_bot_history_search_sent_1  = ($irc_bot_history_search_sent == 1) ? ' selected' : '';
 
+  // Fetch the search data
+  $irc_bot_history_search = array(  'channel' =>  $irc_bot_history_search_channel ,
+                                    'message' =>  $irc_bot_history_search_message ,
+                                    'sent'    => $irc_bot_history_search_sent     );
+
   // Submit the search and fetch the data for the history table
-  $irc_bot_message_history = irc_bot_message_history_list( array( 'channel' =>  $irc_bot_history_search_channel ,
-                                                                  'message' =>  $irc_bot_history_search_message ,
-                                                                  'sent'    => $irc_bot_history_search_sent     ));
+  $irc_bot_message_history = irc_bot_message_history_list($irc_bot_history_search);
 
   // Display the history table
   $bot_action_selector = 'message_log';
