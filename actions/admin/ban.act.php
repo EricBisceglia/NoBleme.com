@@ -424,7 +424,7 @@ function admin_ban_delete(  string  $unbanned_id            ,
  * @param   int         $banner_id                  The id of the moderator ordering the ban.
  * @param   string      $ip_address                 The IP address to ban.
  * @param   int         $ban_length                 The ban length.
- * @param   bool        $severity       (OPTIONAL)  Whether the IP ban will be standard or full.
+ * @param   bool        $is_full_ban    (OPTIONAL)  Whether the IP ban will be standard or full (can't even browse).
  * @param   string      $username       (OPTIONAL)  A user whose IP should be banned if no IP is specified.
  * @param   string      $ban_reason_en  (OPTIONAL)  The justification for the ban, in english.
  * @param   string      $ban_reason_fr  (OPTIONAL)  The justification for the ban, in french.
@@ -435,7 +435,7 @@ function admin_ban_delete(  string  $unbanned_id            ,
 function admin_ip_ban_create( int     $banner_id              ,
                               string  $ip_address             ,
                               int     $ban_length             ,
-                              bool    $severity       = false ,
+                              bool    $is_full_ban    = false ,
                               string  $username       = ''    ,
                               string  $ban_reason_en  = ''    ,
                               string  $ban_reason_fr  = ''    ) : mixed
@@ -454,7 +454,7 @@ function admin_ip_ban_create( int     $banner_id              ,
   $ip_address_raw     = $ip_address;
   $ip_address         = sanitize($ip_address, 'string');
   $ban_length         = sanitize($ban_length, 'int', 0, 3650);
-  $severity           = sanitize($severity, 'int', 0, 1);
+  $severity           = sanitize($is_full_ban, 'int', 0, 1);
   $username           = sanitize($username, 'string');
   $ban_reason_en_raw  = $ban_reason_en;
   $ban_reason_fr_raw  = $ban_reason_fr;

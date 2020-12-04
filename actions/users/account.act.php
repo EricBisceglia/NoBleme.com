@@ -22,12 +22,12 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * No more than 15 login attempts per IP every 10 minutes.
  * No more than 10 login attempts for a specific user every 10 minutes (except 1 allowed attempt per unique IP).
  *
- * @param   string  $ip                     The IP adress of the user attempting to login.
- * @param   string  $username               The username the user is attempting to login with.
- * @param   string  $password               The password the user is attempting to login with.
+ * @param   string  $ip                       The IP adress of the user attempting to login.
+ * @param   string  $username                 The username the user is attempting to login with.
+ * @param   string  $password                 The password the user is attempting to login with.
  * @param   bool    $remember_me  (OPTIONAL)  Whether the website's front should create a cookie to keep the user in.
  *
- * @return  string                              Returns 'OK' if successfully logged in, or an error if it went wrong.
+ * @return  string                            Returns 'OK' if successfully logged in, or an error if it went wrong.
  */
 
 function user_authenticate( string  $ip                   ,

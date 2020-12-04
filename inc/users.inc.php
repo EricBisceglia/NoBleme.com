@@ -288,17 +288,17 @@ function secure_session_start() : void
  *
  * This is the function used to hash passwords or other data.
  *
- * @param   string  $data               The data to encrypt.
- * @param   bool    $old    (OPTIONAL)  Will use the old (insecure) encryption method instead of the current one.
+ * @param   string  $data                         The data to encrypt.
+ * @param   bool    $use_old_method   (OPTIONAL)  Will use the old insecure encryption method instead of the current.
  *
  * @return  string                      The encrypted data.
  */
 
-function encrypt_data(  string  $data         ,
-                        bool    $old  = false ) : string
+function encrypt_data(  string  $data                     ,
+                        bool    $use_old_method  = false  ) : string
 {
   // If the old method is still being used, call crypt with the salt key
-  if($old)
+  if($use_old_method)
     return crypt($data, $GLOBALS['salt_key']);
 
   // If not, then use sha1 with the salt key

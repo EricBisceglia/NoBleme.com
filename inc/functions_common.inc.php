@@ -1099,7 +1099,7 @@ function log_activity(  string  $activity_type                  ,
  * @param   string  $description_fr                   Description of the detailed activity log, in french.
  * @param   string  $before                           Previous value of the content.
  * @param   string  $after                (OPTIONAL)  Current value of the content.
- * @param   bool    $optional             (OPTIONAL)  The log will only be created if before / after are different.
+ * @param   bool    $is_optional          (OPTIONAL)  The log will only be created if before / after are different.
  * @param   bool    $do_not_sanitize      (OPTOINAL)  If set, do not sanitize the data.
  *
  * @return  void
@@ -1110,11 +1110,11 @@ function log_activity_details(  int     $linked_activity_log          ,
                                 string  $description_fr               ,
                                 string  $before                       ,
                                 string  $after                = ''    ,
-                                bool    $optional             = false ,
+                                bool    $is_optional          = false ,
                                 bool    $do_not_sanitize      = false ) : void
 {
   // If there are no differences, do not create a detailed activity log
-  if($optional && ($before == $after))
+  if($is_optional && ($before == $after))
     return;
 
   // In order to avoid strain caused by the diff functions, do not create a diff log if $after is too long

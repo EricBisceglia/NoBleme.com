@@ -178,25 +178,25 @@ function irc_bot_stop() : void
 /**
  * Toggles the silent IRC bot mode on and off.
  *
- * @param   bool  $silenced   The current status of silent mode.
+ * @param   bool  $is_silent  The current status of silent mode.
  *
  * @return  bool              The new status of silent mode.
  */
 
-function irc_bot_toggle_silence_mode( bool $silenced ) : bool
+function irc_bot_toggle_silence_mode( bool $is_silent ) : bool
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
 
   // Decide which mode to toggle to
-  $silenced = ($silenced) ? 0 : 1;
+  $is_silent = ($is_silent) ? 0 : 1;
 
   // Update the system variable
-  system_variable_update('irc_bot_is_silenced', $silenced, 'int');
+  system_variable_update('irc_bot_is_silenced', $is_silent, 'int');
 
   // Write a log in the database
   $timestamp    = sanitize(time(), 'int', 0);
-  $silenced_log = ($silenced) ? '** Silencing IRC bot **' : '** Unsilencing IRC bot **';
+  $silenced_log = ($is_silent) ? '** Silencing IRC bot **' : '** Unsilencing IRC bot **';
   query(" INSERT INTO logs_irc_bot
           SET         logs_irc_bot.sent_at    = '$timestamp'    ,
                       logs_irc_bot.body       = '$silenced_log' ,
@@ -204,7 +204,7 @@ function irc_bot_toggle_silence_mode( bool $silenced ) : bool
                       logs_irc_bot.is_action  = 1               ");
 
   // Return the new value of silent mode
-  return $silenced;
+  return $is_silent;
 }
 
 

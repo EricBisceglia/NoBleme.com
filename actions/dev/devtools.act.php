@@ -26,7 +26,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  *
  * @param   string  $name                                 The name of the icon.
  * @param   string  $title                                The translation which will be used for the image's title.
- * @param   bool    $title_is_a trasnslation  (OPTIONAL)  Whether the title is the entered string or a translation.
+ * @param   bool    $title_is_a_translation   (OPTIONAL)  Whether the title is the entered string or a translation.
  * @param   string  $alt_text                 (OPTIONAL)  The alt text for the icon.
  * @param   string  $size                     (OPTIONAL)  The size of the icon ('normal', 'small').
  *
@@ -57,21 +57,21 @@ function dev_doc_icon_to_clipboard( string  $name                               
 /**
  * Toggles the website's status between open and closed.
  *
- * @param   bool  $website_status   Whether an update is currently in progress
+ * @param   bool  $website_is_closed  Whether an update is currently in progress
  *
  * @return  void
  */
 
-function dev_toggle_website_status( bool $website_status ) : void
+function dev_toggle_website_status( bool $website_is_closed ) : void
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
 
   // Sanitize the data
-  $website_status = sanitize($website_status, 'int', 0, 1);
+  $website_is_closed = sanitize($website_is_closed, 'int', 0, 1);
 
   // Determine the required new value
-  $new_status = ($website_status) ? 0 : 1;
+  $new_status = ($website_is_closed) ? 0 : 1;
 
   // Toggle the website status
   system_variable_update('update_in_progress', $new_status, 'int');

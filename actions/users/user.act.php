@@ -26,7 +26,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @param   string  $sort_by          (OPTIONAL)  The way the user list should be sorted.
  * @param   array   $search           (OPTIONAL)  Search for specific field values.
  * @param   int     $max_count        (OPTIONAL)  The number of users to return (0 for unlimited).
- * @param   bool    $deleted          (OPTIONAL)  If true, shows deleted users only.
+ * @param   bool    $show_deleted     (OPTIONAL)  If true, shows deleted users only.
  * @param   int     $activity_cutoff  (OPTIONAL)  If set, will only return users active since this many seconds.
  * @param   bool    $include_guests   (OPTIONAL)  If true, guests will be included in the user list.
  * @param   int     $max_guest_count  (OPTIONAL)  The number of guests to return (if guests are included, 0 for all).
@@ -41,7 +41,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 function user_list( string  $sort_by          = ''      ,
                     array   $search           = array() ,
                     int     $max_count        = 0       ,
-                    bool    $deleted          = false   ,
+                    bool    $show_deleted     = false   ,
                     int     $activity_cutoff  = 0       ,
                     bool    $include_guests   = false   ,
                     int     $max_guest_count  = 0       ,
@@ -65,7 +65,7 @@ function user_list( string  $sort_by          = ''      ,
   $lang             = user_get_language();
   $sort_by          = sanitize($sort_by, 'string');
   $max_count        = sanitize($max_count, 'int', 0);
-  $deleted          = sanitize($deleted, 'int', 0, 1);
+  $deleted          = sanitize($show_deleted, 'int', 0, 1);
   $activity_cutoff  = sanitize($activity_cutoff, 'int', 0);
   $include_guests   = sanitize($include_guests, 'int', 0, 1);
   $max_guest_count  = sanitize($max_guest_count, 'int', 0);

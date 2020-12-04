@@ -16,7 +16,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Transforms an entry of the `logs_activity` table into human readable content.
  *
- * @param   bool    $admins_only                Is the log public (0) or private (1).
+ * @param   bool    $admins_only                Is the log public (true) or private (false) to the standard user.
  * @param   string  $type                       Identifies the type of activity being processed.
  * @param   int     $id             (OPTIONAL)  ID of the action/element of the activity in the log.
  * @param   string  $title_en       (OPTIONAL)  Title of the activity in the log, in english.

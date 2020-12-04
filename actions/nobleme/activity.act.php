@@ -75,20 +75,20 @@ function activity_get( int $log_id ) : array
 /**
  * Fetches activity logs.
  *
- * @param   bool    $modlogs    (OPTIONAL)  If true, display moderation logs instead of global activity logs.
- * @param   int     $amount     (OPTIONAL)  The amount of logs to fetch.
- * @param   string  $type       (OPTIONAL)  Filters the output by only showing logs of a specific type.
- * @param   bool    $deleted    (OPTIONAL)  If true, shows deleted activity logs only.
- * @param   bool    $is_admin   (OPTIONAL)  Is the user seeing the logs an administrator.
+ * @param   bool    $show_mod_logs  (OPTIONAL)  If true, display moderation logs instead of global activity logs.
+ * @param   int     $amount         (OPTIONAL)  The amount of logs to fetch.
+ * @param   string  $type           (OPTIONAL)  Filters the output by only showing logs of a specific type.
+ * @param   bool    $show_deleted   (OPTIONAL)  If true, shows deleted activity logs only.
+ * @param   bool    $is_admin       (OPTIONAL)  Is the user seeing the logs an administrator.
  *
  * @return  array                           An array of activity logs, prepared for displaying.
  */
 
-function activity_list( bool    $modlogs  = false ,
-                        int     $amount   = 100   ,
-                        string  $type     = 'all' ,
-                        bool    $deleted  = false ,
-                        bool    $is_admin = false ) : array
+function activity_list( bool    $show_mod_logs  = false ,
+                        int     $amount         = 100   ,
+                        string  $type           = 'all' ,
+                        bool    $show_deleted   = false ,
+                        bool    $is_admin       = false ) : array
 {
   // Require administrator rights to run this action in special cases
   if($is_admin)
@@ -99,12 +99,12 @@ function activity_list( bool    $modlogs  = false ,
   require_included_file('activity.inc.php');
 
   // Sanitize the data
-  $modlogs  = ($modlogs) ? 1 : 0;
+  $modlogs  = ($show_mod_logs) ? 1 : 0;
   $amount   = sanitize($amount, 'int', 100);
   $type     = sanitize($type, 'string');
   $lang_raw = user_get_language();
   $lang     = sanitize($lang_raw, 'string');
-  $deleted  = sanitize($deleted, 'int', 0, 1);
+  $deleted  = sanitize($show_deleted, 'int', 0, 1);
 
   // Only allow admins to see full activity logs or deleted activity items
   $amount  = (!$is_admin && $amount > 1000) ? 1000 : $amount;
