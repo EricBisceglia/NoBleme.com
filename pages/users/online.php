@@ -16,7 +16,7 @@ $page_title_fr    = "Qui est en ligne";
 $page_description = "List of recent visitors of NoBleme and their latest activity.";
 
 // JS
-$js = array('users/online');
+$js = array('users/user_list');
 
 
 

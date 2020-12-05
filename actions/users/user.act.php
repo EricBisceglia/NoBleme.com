@@ -69,11 +69,15 @@ function user_list( string  $sort_by          = ''      ,
   $activity_cutoff  = sanitize($activity_cutoff, 'int', 0);
   $include_guests   = sanitize($include_guests, 'int', 0, 1);
   $max_guest_count  = sanitize($max_guest_count, 'int', 0);
+  $active_limit     = sanitize(time() - 2629746, 'int', 0);
 
   // Sanitize the search parameters
-  $search_id        = isset($search['id'])        ? sanitize($search['id'], 'int', 0)       : NULL;
-  $search_username  = isset($search['username'])  ? sanitize($search['username'], 'string') : NULL;
-  $search_del_user  = isset($search['del_user'])  ? sanitize($search['del_user'], 'string') : NULL;
+  $search_id          = isset($search['id'])          ? sanitize($search['id'], 'int', 0)                     : NULL;
+  $search_username    = isset($search['username'])    ? sanitize($search['username'], 'string')               : NULL;
+  $search_del_user    = isset($search['del_user'])    ? sanitize($search['del_user'], 'string')               : NULL;
+  $search_registered  = isset($search['registered'])  ? sanitize($search['registered'], 'int', 0, date('Y'))  : NULL;
+  $search_active      = isset($search['active'])      ? sanitize($search['active'], 'int', 0, 1)              : NULL;
+  $search_languages   = isset($search['languages'])   ? sanitize($search['languages'], 'string')              : NULL;
 
   // Prepare data
   $minimum_activity = sanitize((time() - $activity_cutoff), 'int', 0);
@@ -108,32 +112,41 @@ function user_list( string  $sort_by          = ''      ,
                     FROM      users
                     LEFT JOIN users_settings  ON users.id = users_settings.fk_users
                     LEFT JOIN users_profile   ON users.id = users_profile.fk_users
-                    WHERE     users.is_deleted                  = '$deleted'            ";
+                    WHERE     users.is_deleted                              = '$deleted'              ";
 
   // Hide user activity based on their settings
   if($is_activity && !$is_admin)
-    $qusers .= "    AND       users_settings.hide_from_activity = 0                     ";
+    $qusers .= "    AND       users_settings.hide_from_activity             = 0                       ";
 
   // Activity cutoff
   if($activity_cutoff)
-    $qusers .= "    AND       users.last_visited_at             >= '$minimum_activity'  ";
+    $qusers .= "    AND       users.last_visited_at                         >= '$minimum_activity'    ";
 
   // Banned users view
   if($banned_only)
-    $qusers .= "    AND       users.is_banned_until             > 0                     ";
+    $qusers .= "    AND       users.is_banned_until                         > 0                       ";
 
   // Run the searches
   if($search_id)
-    $qusers .= "    AND       users.id                          = '$search_id'          ";
+    $qusers .= "    AND       users.id                                      = '$search_id'            ";
   if($search_username)
-    $qusers .= "    AND       users.username                 LIKE '%$search_username%'  ";
+    $qusers .= "    AND       users.username                             LIKE '%$search_username%'    ";
   if($search_del_user)
-    $qusers .= "    AND       users.deleted_username         LIKE '%$search_del_user%'  ";
+    $qusers .= "    AND       users.deleted_username                     LIKE '%$search_del_user%'    ";
+  if($search_registered)
+    $qusers .= "    AND       YEAR(FROM_UNIXTIME(users_profile.created_at)) = '$search_registered'    ";
+  if($search_active)
+    $qusers .= "    AND     ( users.last_visited_at                         > '$active_limit'
+                    OR        users_profile.created_at                      > '$active_limit' )       ";
+  if($search_languages)
+    $qusers .= "    AND       users_profile.spoken_languages             LIKE '%$search_languages%'   ";
 
   // Sort the users
   if(!$include_guests)
   {
-    if($sort_by == 'activity')
+    if($sort_by == 'id')
+      $qusers .= "  ORDER BY  users.id                  ASC   ";
+    else if($sort_by == 'activity')
       $qusers .= "  ORDER BY  users.last_visited_at     DESC  ";
     else if($sort_by == 'banned')
       $qusers .= "  ORDER BY  users.is_banned_until     ASC   ";
@@ -145,6 +158,14 @@ function user_list( string  $sort_by          = ''      ,
       $qusers .= "  ORDER BY  users.deleted_at          DESC  ";
     else if($sort_by == 'registered')
       $qusers .= "  ORDER BY  users_profile.created_at  DESC  ";
+    else if($sort_by == 'rregistered')
+      $qusers .= "  ORDER BY  users_profile.created_at  ASC   ";
+    else if($sort_by == 'language')
+      $qusers .= "  ORDER BY  users_profile.spoken_languages = 'ENFR' DESC  ,
+                              users_profile.spoken_languages = 'FREN' DESC  ,
+                              users_profile.spoken_languages = 'EN'   DESC  ,
+                              users_profile.spoken_languages = 'FR'   DESC  ,
+                              users.last_visited_at                   DESC  ";
     else
       $qusers .= "  ORDER BY  users.id                  ASC   ";
   }
@@ -265,7 +286,7 @@ function user_list( string  $sort_by          = ''      ,
     else
     {
       $temp                 = ($row['u_activity']) ?: $row['u_created'];
-      $temp                 = ($temp > (time() - 2629746)) ? 'bold green text_white' : '';
+      $temp                 = ($temp > $active_limit) ? 'bold green text_white' : '';
       $temp                 = ($row['u_ban_end']) ? 'bold brown text_white' : $temp;
       $temp                 = ($row['u_mod']) ? 'bold orange text_white' : $temp;
       $temp                 = ($row['u_admin']) ? 'bold red text_white' : $temp;

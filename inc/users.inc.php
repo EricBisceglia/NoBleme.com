@@ -37,6 +37,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_settings_nsfw                NSFW filter settings of the current user.                                      */
 /*  user_settings_privacy             Third party content privacy settings of the current user.                      */
 /*                                                                                                                   */
+/*  user_get_oldest                   Finds when the oldest user registered on the website.                          */
+/*                                                                                                                   */
 /*  user_generate_random_username     Generates a random username for a guest.                                       */
 /*                                                                                                                   */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -963,6 +965,25 @@ function user_settings_privacy() : array
   return array( 'twitter' => $privacy_twitter ,
                 'youtube' => $privacy_youtube ,
                 'trends'  => $privacy_trends  );
+}
+
+
+
+
+/**
+ * Finds when the oldest user registered on the website.
+ *
+ * @return  int   The year at which the oldest account was created.
+ */
+
+function user_get_oldest() : int
+{
+  // Fetch the oldest user's registration date
+  $qoldest = mysqli_fetch_array(query(" SELECT  MIN(users_profile.created_at) AS 'u_min'
+                                        FROM    users_profile "));
+
+  // Return the registration year
+  return isset($qoldest['u_min']) ? date('Y', $qoldest['u_min']) : date('Y');
 }
 
 
