@@ -82,29 +82,32 @@ function user_list( string  $sort_by          = ''      ,
   $data = array();
 
   // Fetch the user list
-  $qusers = "       SELECT    'user'                      AS 'data_type'        ,
-                              users.id                    AS 'u_id'             ,
-                              users.is_deleted            AS 'u_deleted'        ,
-                              users.deleted_at            AS 'u_deleted_at'     ,
-                              users.deleted_username      AS 'u_deleted_nick'   ,
-                              users.username              AS 'u_nick'           ,
-                              ''                          AS 'u_guest_name_en'  ,
-                              ''                          AS 'u_guest_name_fr'  ,
-                              users.is_administrator      AS 'u_admin'          ,
-                              users.is_moderator          AS 'u_mod'            ,
-                              users.last_visited_at       AS 'u_activity'       ,
-                              users.last_visited_page_en  AS 'u_last_page_en'   ,
-                              users.last_visited_page_fr  AS 'u_last_page_fr'   ,
-                              users.last_visited_url      AS 'u_last_url'       ,
-                              users.current_ip_address    AS 'u_ip'             ,
-                              users.is_banned_since       AS 'u_ban_start'      ,
-                              users.is_banned_until       AS 'u_ban_end'        ,
-                              users.is_banned_because_en  AS 'u_ban_reason_en'  ,
-                              users.is_banned_because_fr  AS 'u_ban_reason_fr'  ,
-                              0                           AS 'u_ip_ban_id'      ,
-                              0                           AS 'u_total_ip_ban'
+  $qusers = "       SELECT    'user'                          AS 'data_type'        ,
+                              users.id                        AS 'u_id'             ,
+                              users.is_deleted                AS 'u_deleted'        ,
+                              users.deleted_at                AS 'u_deleted_at'     ,
+                              users.deleted_username          AS 'u_deleted_nick'   ,
+                              users.username                  AS 'u_nick'           ,
+                              ''                              AS 'u_guest_name_en'  ,
+                              ''                              AS 'u_guest_name_fr'  ,
+                              users.is_administrator          AS 'u_admin'          ,
+                              users.is_moderator              AS 'u_mod'            ,
+                              users_profile.created_at        AS 'u_created'        ,
+                              users.last_visited_at           AS 'u_activity'       ,
+                              users.last_visited_page_en      AS 'u_last_page_en'   ,
+                              users.last_visited_page_fr      AS 'u_last_page_fr'   ,
+                              users.last_visited_url          AS 'u_last_url'       ,
+                              users.current_ip_address        AS 'u_ip'             ,
+                              users_profile.spoken_languages  AS 'u_languages'      ,
+                              users.is_banned_since           AS 'u_ban_start'      ,
+                              users.is_banned_until           AS 'u_ban_end'        ,
+                              users.is_banned_because_en      AS 'u_ban_reason_en'  ,
+                              users.is_banned_because_fr      AS 'u_ban_reason_fr'  ,
+                              0                               AS 'u_ip_ban_id'      ,
+                              0                               AS 'u_total_ip_ban'
                     FROM      users
-                    LEFT JOIN users_settings ON users.id = users_settings.fk_users
+                    LEFT JOIN users_settings  ON users.id = users_settings.fk_users
+                    LEFT JOIN users_profile   ON users.id = users_profile.fk_users
                     WHERE     users.is_deleted                  = '$deleted'            ";
 
   // Hide user activity based on their settings
@@ -131,17 +134,19 @@ function user_list( string  $sort_by          = ''      ,
   if(!$include_guests)
   {
     if($sort_by == 'activity')
-      $qusers .= "  ORDER BY  users.last_visited_at   DESC  ";
+      $qusers .= "  ORDER BY  users.last_visited_at     DESC  ";
     else if($sort_by == 'banned')
-      $qusers .= "  ORDER BY  users.is_banned_until   ASC   ";
+      $qusers .= "  ORDER BY  users.is_banned_until     ASC   ";
     else if($sort_by == 'username')
-      $qusers .= "  ORDER BY  users.username          ASC   ";
+      $qusers .= "  ORDER BY  users.username            ASC   ";
     else if($sort_by == 'deleted_username')
-      $qusers .= "  ORDER BY  users.deleted_username  ASC   ";
+      $qusers .= "  ORDER BY  users.deleted_username    ASC   ";
     else if($sort_by == 'deleted')
-      $qusers .= "  ORDER BY  users.deleted_at        DESC  ";
+      $qusers .= "  ORDER BY  users.deleted_at          DESC  ";
+    else if($sort_by == 'registered')
+      $qusers .= "  ORDER BY  users_profile.created_at  DESC  ";
     else
-      $qusers .= "  ORDER BY  users.id                ASC   ";
+      $qusers .= "  ORDER BY  users.id                  ASC   ";
   }
 
   // Limit the amount of users returned
@@ -160,11 +165,13 @@ function user_list( string  $sort_by          = ''      ,
                                 users_guests.randomly_assigned_name_fr  AS 'u_guest_name_fr'  ,
                                 0                                       AS 'u_admin'          ,
                                 0                                       AS 'u_mod'            ,
+                                0                                       AS 'u_created'        ,
                                 users_guests.last_visited_at            AS 'u_activity'       ,
                                 users_guests.last_visited_page_en       AS 'u_last_page_en'   ,
                                 users_guests.last_visited_page_fr       AS 'u_last_page_fr'   ,
                                 users_guests.last_visited_url           AS 'u_last_url'       ,
                                 users_guests.ip_address                 AS 'u_ip'             ,
+                                ''                                      AS 'u_languages'      ,
                                 0                                       AS 'u_ban_start'      ,
                                 0                                       AS 'u_ban_end'        ,
                                 ''                                      AS 'u_ban_reason_en'  ,
@@ -190,11 +197,13 @@ function user_list( string  $sort_by          = ''      ,
                                 ''                            AS 'u_guest_name_fr'      ,
                                 0                             AS 'u_admin'              ,
                                 0                             AS 'u_mod'                ,
+                                0                             AS 'u_created'            ,
                                 0                             AS 'u_activity'           ,
                                 ''                            AS 'u_last_page_en'       ,
                                 ''                            AS 'u_last_page_fr'       ,
                                 ''                            AS 'u_last_url'           ,
                                 system_ip_bans.ip_address     AS 'u_ip'                 ,
+                                ''                            AS 'u_languages'          ,
                                 system_ip_bans.banned_since   AS 'u_ban_start'          ,
                                 system_ip_bans.banned_until   AS 'u_ban_end'            ,
                                 system_ip_bans.ban_reason_en  AS 'u_ban_reason_en'      ,
@@ -221,11 +230,17 @@ function user_list( string  $sort_by          = ''      ,
     $temp                   = ($lang == 'EN') ? $row['u_guest_name_en'] : $row['u_guest_name_fr'];
     $temp                   = ($row['data_type'] == 'guest') ? $temp : $row['u_nick'];
     $data[$i]['username']   = sanitize_output($temp);
-    $data[$i]['activity']   = time_since($row['u_activity']);
+    $data[$i]['registered'] = sanitize_output(time_since($row['u_created']));
+    $data[$i]['created']    = sanitize_output(date_to_text($row['u_created'], include_time: true));
+    $temp                   = ($row['u_activity']) ?: $row['u_created'];
+    $data[$i]['activity']   = sanitize_output(time_since($temp));
+    $data[$i]['active_at']  = sanitize_output(date_to_text($temp, include_time: true));
     $temp                   = ($lang == 'EN') ? $row['u_last_page_en'] : $row['u_last_page_fr'];
     $data[$i]['last_page']  = sanitize_output(string_truncate($temp, 40, '...'));
     $data[$i]['last_url']   = sanitize_output($row['u_last_url']);
     $data[$i]['ip']         = sanitize_output($row['u_ip']);
+    $data[$i]['lang_en']    = str_contains($row['u_languages'], 'EN');
+    $data[$i]['lang_fr']    = str_contains($row['u_languages'], 'FR');
     $data[$i]['ban_end']    = ($row['u_ban_end']) ? time_until($row['u_ban_end']) : '';
     $data[$i]['ban_endf']   = ($row['u_ban_end']) ? date_to_text($row['u_ban_end'], 0, 1) : '';
     $data[$i]['ban_start']  = ($row['u_ban_start']) ? time_since($row['u_ban_start']) : '';
@@ -238,11 +253,23 @@ function user_list( string  $sort_by          = ''      ,
     $data[$i]['ban_full']   = (strlen($temp) > 30) ? sanitize_output($temp) : '';
     $data[$i]['ip_ban_id']  = $row['u_ip_ban_id'];
     $data[$i]['ip_bans']    = ($row['data_type'] == 'ip_ban') ? admin_ip_ban_list_users($row['u_ip']) : '';
-    $data[$i]['total_ban']  = ($row['u_total_ip_ban']) ? 1 : 0;
-    $temp                   = ($row['data_type'] == 'user') ? ' bold noglow' : ' noglow';
-    $temp                   = ($row['u_mod']) ? ' bold text_orange noglow' : $temp;
-    $temp                   = ($row['u_admin']) ? ' bold text_red' : $temp;
-    $temp                   = ($row['u_total_ip_ban']) ? 'text_red' : $temp;
+    $data[$i]['total_ban']  = ($row['u_total_ip_ban']);
+    if($is_activity)
+    {
+      $temp                 = ($row['data_type'] == 'user') ? ' bold noglow' : ' noglow';
+      $temp                 = ($row['u_mod']) ? ' bold text_orange noglow' : $temp;
+      $temp                 = ($row['u_admin']) ? ' bold text_red' : $temp;
+    }
+    else if($include_ip_bans)
+      $temp                 = ($row['u_total_ip_ban']) ? 'text_red glow' : 'noglow';
+    else
+    {
+      $temp                 = ($row['u_activity']) ?: $row['u_created'];
+      $temp                 = ($temp > (time() - 2629746)) ? 'bold green text_white' : '';
+      $temp                 = ($row['u_ban_end']) ? 'bold brown text_white' : $temp;
+      $temp                 = ($row['u_mod']) ? 'bold orange text_white' : $temp;
+      $temp                 = ($row['u_admin']) ? 'bold red text_white' : $temp;
+    }
     $data[$i]['css']        = $temp;
   }
 

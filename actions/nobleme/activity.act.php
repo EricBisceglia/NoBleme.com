@@ -99,7 +99,7 @@ function activity_list( bool    $show_mod_logs  = false ,
   require_included_file('activity.inc.php');
 
   // Sanitize the data
-  $modlogs  = ($show_mod_logs) ? 1 : 0;
+  $modlogs  = ($show_mod_logs);
   $amount   = sanitize($amount, 'int', 100);
   $type     = sanitize($type, 'string');
   $lang_raw = user_get_language();
@@ -176,7 +176,7 @@ function activity_list( bool    $show_mod_logs  = false ,
     $data[$i]['href']     = $parsed_row['href'];
     $data[$i]['text']     = (mb_strlen($parsed_row[$lang]) < 90) ? sanitize_output($parsed_row[$lang]) : sanitize_output(string_truncate($parsed_row[$lang], 85, '...'));
     $data[$i]['fulltext'] = (mb_strlen($parsed_row[$lang]) < 90) ? '' : sanitize_output($parsed_row[$lang]);
-    $data[$i]['details']  = ($row['l_reason'] || $row['l_details']) ? 1 : 0;
+    $data[$i]['details']  = ($row['l_reason'] || $row['l_details']);
   }
 
   // Add the number of rows to the data

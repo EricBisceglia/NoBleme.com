@@ -126,7 +126,7 @@ else
 
   // Set them as variables, which the header will use
   $is_admin     = $drights['m_admin'];
-  $is_moderator = ($is_admin || $drights['m_mod']) ? 1 : 0;
+  $is_moderator = ($is_admin || $drights['m_mod']);
 
   // If the user's account doesn't exist or is deleted, log them out and set all permissions to 0
   if($drights['m_deleted'] || !isset($drights['m_admin']))

@@ -26,10 +26,10 @@ EOD
 ___('users_online_header_colors', 'EN', <<<EOD
 In order to tell them apart from each other, users are color coded:
 <ul class="nopadding">
-  <li>Guests will not have any specific formatting.</li>
-  <li>{{link|todo_link|Registered users}} will appear in <span class="bold">bold</span>.</li>
-  <li>{{link|todo_link|Moderators}} have an <span class="text_orange bold">orange</span> background.</li>
-  <li>{{link|todo_link|Administrators}} have a <span class="text_red glow bold">red</span> background.</li>
+  <li>Guests do not have any specific formatting.</li>
+  <li>{{link|pages/users/list|Registered users}} appear in <span class="bold">bold</span>.</li>
+  <li>{{link|todo_link|Moderators}} appear in <span class="text_orange bold">orange</span>.</li>
+  <li>{{link|todo_link|Administrators}} appear in <span class="text_red glow bold">red</span>.</li>
 </ul>
 EOD
 );
@@ -37,7 +37,7 @@ ___('users_online_header_colors', 'FR', <<<EOD
 Afin de les distinguer, les visiteurs suivent un code couleur :
 <ul class="nopadding">
   <li>Les invités n'ont pas de formattage spécifique.</li>
-  <li>{{link|todo_link|Les membres du site}} apparaissent en <span class="bold">gras</span>.</li>
+  <li>{{link|pages/users/list|Les membres du site}} apparaissent en <span class="bold">gras</span>.</li>
   <li>{{link|todo_link|La modération}} apparait en <span class="text_orange bold">orange.</span></li>
   <li>{{link|todo_link|L'administration}} apparait en <span class="text_red glow bold">rouge.</span></li>
 </ul>
@@ -61,3 +61,49 @@ ___('users_online_activity',  'EN', "LATEST ACTIVITY");
 ___('users_online_activity',  'FR', "DERNIÈRE ACTIVITÉ");
 ___('users_online_page',      'EN', "LAST VISITED PAGE");
 ___('users_online_page',      'FR', "DERNIÈRE PAGE VISITÉE");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 REGISTERED USERS                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('users_list_description_intro',  'EN',  <<<EOT
+The table below lists all accounts that have been registered on NoBleme, from the most recent to the oldest. Clicking on a username will bring you to the account's profile page.
+EOT
+);
+___('users_list_description_intro',  'FR',  <<<EOT
+Le tableau ci-dessous recense tous les comptes qui ont été crées sur NoBleme, du plus récent au plus ancien. Cliquer sur un pseudonyme vous amènera sur le profil du compte.
+EOT
+);
+___('users_list_description_colors', 'EN', <<<EOD
+Some users will appear with color coding:
+<ul class="nopadding">
+  <li>Actively used accounts have a <span class="green text_white spaced bold">green</span> background.</li>
+  <li>Banned accounts have a <span class="brown text_white spaced bold">brown</span> background.</li>
+  <li>{{link|todo_link|Moderators}} have an <span class="orange text_white spaced bold">orange</span> background.</li>
+  <li>{{link|todo_link|Administrators}} have a <span class="red text_white spaced bold">red</span> background.</li>
+</ul>
+EOD
+);
+___('users_list_description_colors', 'FR', <<<EOD
+Certains comptes apparaissent avec un code couleur :
+<ul class="nopadding">
+  <li>Les comptes activement utilisés sur un fond <span class="green text_white spaced bold">vert</span>.</li>
+  <li>Les comptes bannis sur un fond <span class="brown text_white spaced bold">marron</span>.</li>
+  <li>{{link|todo_link|La modération}} sur un fond <span class="orange text_white spaced bold">orange</span>.</li>
+  <li>{{link|todo_link|L'administration}} sur un fond <span class="red text_white spaced bold">rouge</span>.</li>
+</ul>
+EOD
+);
+
+
+// Table
+___('users_list_registered',  "EN", "Registered");
+___('users_list_registered',  "FR", "Création");
+___('users_list_languages',   "EN", "Languages");
+___('users_list_languages',   "FR", "Langues");

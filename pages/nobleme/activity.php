@@ -62,7 +62,7 @@ $activity_logs    = activity_list(  $activity_modlogs                           
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Set deletion type to soft or hard depending on the view
 
-$deletion_type = ($is_admin && $activity_deleted) ? 1 : 0;
+$deletion_type = ($is_admin && $activity_deleted);
 
 
 

@@ -122,7 +122,7 @@ function database_row_exists( string  $table  ,
                                         WHERE   $table.id = '$id' "));
 
   // Return the result
-  return (isset($dcheck['r_id'])) ? 1 : 0;
+  return (isset($dcheck['r_id']));
 }
 
 
@@ -415,9 +415,9 @@ function form_fetch_element(  string  $element_name             ,
   if($element_exists)
   {
     if($request_type == 'GET')
-      return (isset($_GET[$element_name])) ? 1 : 0;
+      return (isset($_GET[$element_name]));
     else
-      return (isset($_POST[$element_name])) ? 1 : 0;
+      return (isset($_POST[$element_name]));
 
   }
 
@@ -1300,7 +1300,7 @@ function irc_bot_send_message(  string  $message                          ,
   $timestamp          = sanitize(time(), 'int', 0);
   $channel_sanitized  = sanitize($channel, 'string');
   $body_sanitized     = sanitize($message, 'string');
-  $temp               = (system_variable_fetch('irc_bot_is_silenced')) ? 1 : 0;
+  $temp               = (system_variable_fetch('irc_bot_is_silenced'));
   $temp               = $ignore_silenced_mode ? 0 : $temp;
   $silenced_mode      = sanitize($temp, 'int', 0, 1);
   $manual_mode        = ($channel) ? 0 : 1;

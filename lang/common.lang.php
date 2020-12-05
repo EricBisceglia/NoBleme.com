@@ -296,16 +296,23 @@ ___('warning',    'EN', "warning");
 ___('warning',    'FR', "avertissement");
 
 
-
 // Common words
-___('yes',  'EN', "yes");
-___('yes',  'FR', "oui");
-___('no',   'EN', "no");
-___('no',   'FR', "non");
-___('the',  'EN', "the");
-___('the',  'FR', "le");
-___('with', 'EN', "with");
-___('with', 'FR', "avec");
+___('en',       'EN', "EN");
+___('en',       'FR', "EN");
+___('english',  'EN', "english");
+___('english',  'FR', "anglais");
+___('fr',       'EN', "FR");
+___('fr',       'FR', "FR");
+___('french',   'EN', "french");
+___('french',   'FR', "français");
+___('no',       'EN', "no");
+___('no',       'FR', "non");
+___('the',      'EN', "the");
+___('the',      'FR', "le");
+___('with',     'EN', "with");
+___('with',     'FR', "avec");
+___('yes',      'EN', "yes");
+___('yes',      'FR', "oui");
 
 
 // Common actions
@@ -615,7 +622,7 @@ ___('submenu_nobleme_users',          'EN', "Users");
 ___('submenu_nobleme_users',          'FR', "Membres");
 ___('submenu_nobleme_online',         'EN', "Who's online");
 ___('submenu_nobleme_online',         'FR', "Qui est en ligne");
-___('submenu_nobleme_userlist',       'EN', "Registered user list");
+___('submenu_nobleme_userlist',       'EN', "Registered users");
 ___('submenu_nobleme_userlist',       'FR', "Liste des membres");
 ___('submenu_nobleme_staff',          'EN', "Administrative team");
 ___('submenu_nobleme_staff',          'FR', "Équipe administrative");

@@ -49,7 +49,7 @@ if(!isset($lang))
 // Default variable values (those are required by the header but it's fine if they're not set)
 
 // Check whether the page exist in the user's current language - if not, throw an error message
-$lang_error = (isset($page_lang) && !in_array($lang, $page_lang)) ? 1 : 0;
+$lang_error = (isset($page_lang) && !in_array($lang, $page_lang));
 
 // If page names and URLs for user activity are not set, give them a default value
 $activity_url     = (isset($page_url) && !isset($hidden_activity)) ? $page_url : '';
@@ -482,7 +482,7 @@ $javascripts .= '
           <?=__link('pages/users/online', __('submenu_nobleme_online'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_userlist'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/users/list', __('submenu_nobleme_userlist'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_nobleme_staff'), 'header_submenu_link text_blue', 1, $path);?>

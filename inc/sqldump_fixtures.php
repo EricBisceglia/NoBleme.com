@@ -201,7 +201,7 @@ for($i = 0; $i < $random; $i++)
       $extension = 'hotfix';
     else
     {
-      $reset_major  = (mt_rand(0,15) > 14) ? 1 : 0;
+      $reset_major  = (mt_rand(0,15) > 14);
       if($reset_major)
       {
         $major      = $major + 1;
@@ -211,7 +211,7 @@ for($i = 0; $i < $random; $i++)
       }
       else
       {
-        $reset_minor = (mt_rand(0,4) > 3) ? 1 : 0;
+        $reset_minor = (mt_rand(0,4) > 3);
         if($reset_minor)
         {
           $minor      = $minor + 1;
@@ -260,7 +260,7 @@ $random = mt_rand(15,30);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
-  $finished     = (mt_rand(0, 3) > 0) ? 1 : 0;
+  $finished     = (mt_rand(0, 3) > 0);
   $planned_at   = ($finished) ? mt_rand(1111239420, time()) : mt_rand(time(), time() + 100000000);
   $task_id      = mt_rand(0, 10000);
   $description  = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
@@ -478,7 +478,7 @@ for($i = 0; $i < $random; $i++)
   $id               = $i + 1;
   $ip               = fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.';
   $ip               = (mt_rand(0, 3) > 2) ? $ip.'*' : $ip.fixtures_generate_data('int', 0, 255);
-  $total_ban        = (mt_rand(0, 3) > 2) ? 1 : 0;
+  $total_ban        = (mt_rand(0, 3) > 2);
   $banned_since     = mt_rand(1111239420, time());
   $banned_until     = mt_rand($banned_since, (time() + (time() - $banned_since)));
   $unbanned_at      = ($banned_until > time()) ? 0 : $banned_until;
@@ -1071,8 +1071,8 @@ for($i = 0; $i < $random; $i++)
   $fk_users         = (mt_rand(0,4) < 4) ? 1 : fixtures_fetch_random_id('users');
   $created_at       = mt_rand(1111239420, time());
   $finished_at      = (mt_rand(0,4) < 4) ? mt_rand($created_at, time()) : 0;
-  $admin_validation = (mt_rand(0,50) < 50) ? 1 : 0;
-  $is_public        = (mt_rand(0,20) < 20) ? 1 : 0;
+  $admin_validation = (mt_rand(0,50) < 50);
+  $is_public        = (mt_rand(0,20) < 20);
   $priority_level   = mt_rand(0,5);
   $title_en         = ucfirst(fixtures_generate_data('sentence', 2, 10, 1));
   $title_fr         = ucfirst(fixtures_generate_data('sentence', 2, 10, 1));
@@ -1386,7 +1386,7 @@ for($i = 0; $i < $random; $i++)
   // Generate random data
   $deleted    = (mt_rand(0,10) < 10) ? 0 : 1;
   $submitter  = fixtures_fetch_random_id('users');
-  $validated  = (mt_rand(0,50) < 50) ? 1 : 0;
+  $validated  = (mt_rand(0,50) < 50);
   $submitted  = mt_rand(1111239420, time());
   $nsfw       = (mt_rand(0,8) < 8) ? 0 : 1;
   $language   = (mt_rand(0,1)) ? 'EN' : 'FR';

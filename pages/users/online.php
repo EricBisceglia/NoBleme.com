@@ -3,10 +3,10 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';        # Core
-include_once './../../inc/functions_time.inc.php';  # Time management
-include_once './../../actions/users/user.act.php';  # Actions
-include_once './../../lang/users/online.lang.php';  # Translations
+include_once './../../inc/includes.inc.php';          # Core
+include_once './../../inc/functions_time.inc.php';    # Time management
+include_once './../../actions/users/user.act.php';    # Actions
+include_once './../../lang/users/user_list.lang.php'; # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
@@ -30,7 +30,7 @@ $js = array('users/online');
 // Sanitize postdata
 $include_guests = (sanitize_input('POST', 'online_hide_guests', 'int', 0, 0, 1)) ? 0 : 1;
 $admin_view     = (sanitize_input('POST', 'online_admin_view', 'int', $is_admin, 0, 1)) ? 0 : 1;;
-$admin_view     = ($admin_view && $is_admin) ? 1 : 0;
+$admin_view     = ($admin_view && $is_admin);
 
 // Fetch the user list
 $userlist = user_list(  'activity'                        ,
@@ -101,7 +101,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </th>
     </thead>
 
-    <tbody id="users_online_table">
+    <tbody class="altc" id="users_online_table">
       <?php } ?>
       <?php for($i=0;$i<$userlist['rows'];$i++) { ?>
         <tr>
