@@ -618,15 +618,6 @@ ___('submenu_nobleme_irc',            'FR', "Serveur de chat IRC");
 ___('submenu_nobleme_manifesto',      'EN', "Political manifesto");
 ___('submenu_nobleme_manifesto',      'FR', "Manifeste politique");
 
-___('submenu_nobleme_users',          'EN', "Users");
-___('submenu_nobleme_users',          'FR', "Membres");
-___('submenu_nobleme_online',         'EN', "Who's online");
-___('submenu_nobleme_online',         'FR', "Qui est en ligne");
-___('submenu_nobleme_userlist',       'EN', "Registered users");
-___('submenu_nobleme_userlist',       'FR', "Liste des membres");
-___('submenu_nobleme_staff',          'EN', "Administrative team");
-___('submenu_nobleme_staff',          'FR', "Équipe administrative");
-
 ___('submenu_nobleme_documentation',  'EN', "Documentation");
 ___('submenu_nobleme_documentation',  'FR', "Documentation");
 ___('submenu_nobleme_coc',            'EN', "Code of conduct");
@@ -652,8 +643,15 @@ ___('submenu_nobleme_roadmap',        'EN', "Website roadmap");
 ___('submenu_nobleme_roadmap',        'FR', "Plan de route");
 ___('submenu_nobleme_report_bug',     'EN', "Report a bug");
 ___('submenu_nobleme_report_bug',     'FR', "Rapporter un bug");
-___('submenu_nobleme_feature',        'EN', "Request a feature");
-___('submenu_nobleme_feature',        'FR', "Quémander un feature");
+
+___('submenu_nobleme_users',          'EN', "Users");
+___('submenu_nobleme_users',          'FR', "Membres");
+___('submenu_nobleme_online',         'EN', "Who's online");
+___('submenu_nobleme_online',         'FR', "Qui est en ligne");
+___('submenu_nobleme_userlist',       'EN', "Registered users");
+___('submenu_nobleme_userlist',       'FR', "Liste des membres");
+___('submenu_nobleme_staff',          'EN', "Administrative team");
+___('submenu_nobleme_staff',          'FR', "Équipe administrative");
 
 
 // Submenu: Pages
@@ -690,13 +688,6 @@ ___('submenu_social_irc_client',    'FR', "Utiliser un client IRC");
 ___('submenu_social_irc_channels',  'EN', "Channel list");
 ___('submenu_social_irc_channels',  'FR', "Liste des canaux");
 
-___('submenu_social_meetups',       'EN', "Real life meetups");
-___('submenu_social_meetups',       'FR', "Rencontres IRL");
-___('submenu_social_meetups_list',  'EN', "List of meetups");
-___('submenu_social_meetups_list',  'FR', "Liste des IRL");
-___('submenu_social_meetups_host',  'EN', "Plan a new meetup");
-___('submenu_social_meetups_host',  'FR', "Organiser une IRL");
-
 ___('submenu_social_quotes',        'EN', "Quotes");
 ___('submenu_social_quotes',        'FR', "Citations");
 ___('submenu_social_quotes_list',   'EN', "Quote database");
@@ -705,6 +696,13 @@ ___('submenu_social_quotes_random', 'EN', "Random quote");
 ___('submenu_social_quotes_random', 'FR', "Citation au hasard");
 ___('submenu_social_quotes_submit', 'EN', "Submit a new quote");
 ___('submenu_social_quotes_submit', 'FR', "Proposer une citation");
+
+___('submenu_social_meetups',       'EN', "Real life meetups");
+___('submenu_social_meetups',       'FR', "Rencontres IRL");
+___('submenu_social_meetups_list',  'EN', "List of meetups");
+___('submenu_social_meetups_list',  'FR', "Liste des IRL");
+___('submenu_social_meetups_host',  'EN', "Plan a new meetup");
+___('submenu_social_meetups_host',  'FR', "Organiser une IRL");
 
 
 // Submenu: Account
@@ -717,20 +715,6 @@ ___('submenu_user_pms_outbox',        'FR', "Messages envoyés");
 ___('submenu_user_pms_write',         'EN', "Write a message");
 ___('submenu_user_pms_write',         'FR', "Écrire un message");
 
-___('submenu_user_profile',           'EN', "Public profile");
-___('submenu_user_profile',           'FR', "Profil public");
-___('submenu_user_profile_self',      'EN', "My public profile");
-___('submenu_user_profile_self',      'FR', "Voir mon profil public");
-___('submenu_user_profile_edit',      'EN', "Edit my profile");
-___('submenu_user_profile_edit',      'FR', "Modifier mon profil");
-
-___('submenu_user_settings',          'EN', "Website settings");
-___('submenu_user_settings',          'FR', "Réglages du site");
-___('submenu_user_settings_privacy',  'EN', "Privacy options");
-___('submenu_user_settings_privacy',  'FR', "Options de vie privée");
-___('submenu_user_settings_nsfw',     'EN', "Adult content options");
-___('submenu_user_settings_nsfw',     'FR', "Options de vulgarité");
-
 ___('submenu_user_edit',              'EN', "Account settings");
 ___('submenu_user_edit',              'FR', "Réglages du compte");
 ___('submenu_user_edit_email',        'EN', "Change my e-mail");
@@ -742,6 +726,20 @@ ___('submenu_user_edit_username',     'FR', "Changer de pseudonyme");
 ___('submenu_user_edit_delete',       'EN', "Delete my account");
 ___('submenu_user_edit_delete',       'FR', "Supprimer mon compte");
 
+___('submenu_user_settings',          'EN', "Website settings");
+___('submenu_user_settings',          'FR', "Réglages du site");
+___('submenu_user_settings_privacy',  'EN', "Privacy options");
+___('submenu_user_settings_privacy',  'FR', "Options de vie privée");
+___('submenu_user_settings_nsfw',     'EN', "Adult content options");
+___('submenu_user_settings_nsfw',     'FR', "Options de vulgarité");
+
+___('submenu_user_profile',           'EN', "Public profile");
+___('submenu_user_profile',           'FR', "Profil public");
+___('submenu_user_profile_self',      'EN', "My public profile");
+___('submenu_user_profile_self',      'FR', "Voir mon profil public");
+___('submenu_user_profile_edit',      'EN', "Edit my profile");
+___('submenu_user_profile_edit',      'FR', "Modifier mon profil");
+
 ___('submenu_user_logout_logout',     'EN', "Log out of this account");
 ___('submenu_user_logout_logout',     'FR', "Se déconnecter du compte");
 
@@ -751,6 +749,8 @@ ___('submenu_admin_activity',       'EN', "Mod tools");
 ___('submenu_admin_activity',       'FR', "Outils de modération");
 ___('submenu_admin_modlogs',        'EN', "Moderation logs");
 ___('submenu_admin_modlogs',        'FR', "Logs de modération");
+___('submenu_admin_doppelganger',   'EN', "Doppelgänger");
+___('submenu_admin_doppelganger',   'FR', "Doppelgänger");
 
 ___('submenu_admin_users',          'EN', "User management");
 ___('submenu_admin_users',          'FR', "Gestion des membres");
@@ -765,15 +765,6 @@ ___('submenu_admin_rights',         'FR', "Changer les permissions");
 ___('submenu_admin_deactivate',     'EN', "Delete an account");
 ___('submenu_admin_deactivate',     'FR', "Supprimer un compte");
 
-___('submenu_admin_stats',          'EN', "Stats");
-___('submenu_admin_stats',          'FR', "Statistiques");
-___('submenu_admin_metrics',        'EN', "Metrics");
-___('submenu_admin_metrics',        'FR', "Performances");
-___('submenu_admin_pageviews',      'EN', "Pageviews");
-___('submenu_admin_pageviews',      'FR', "Pages populaires");
-___('submenu_admin_doppelganger',   'EN', "Doppelgänger");
-___('submenu_admin_doppelganger',   'FR', "Doppelgänger");
-
 ___('submenu_admin_website',        'EN', "Admin tools");
 ___('submenu_admin_website',        'FR', "Outils admin");
 ___('submenu_admin_ircbot',         'EN', "IRC bot management");
@@ -786,6 +777,13 @@ ___('submenu_admin_versions',       'EN', "Version numbers");
 ___('submenu_admin_versions',       'FR', "Numéros de version");
 ___('submenu_admin_scheduler',      'EN', "Scheduled tasks");
 ___('submenu_admin_scheduler',      'FR', "Tâches planifiées");
+
+___('submenu_admin_stats',          'EN', "Stats");
+___('submenu_admin_stats',          'FR', "Statistiques");
+___('submenu_admin_metrics',        'EN', "Metrics");
+___('submenu_admin_metrics',        'FR', "Performances");
+___('submenu_admin_pageviews',      'EN', "Pageviews");
+___('submenu_admin_pageviews',      'FR', "Pages populaires");
 
 ___('submenu_admin_doc',            'EN', "Dev docs");
 ___('submenu_admin_doc',            'FR', "Docs dev");

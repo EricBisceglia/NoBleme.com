@@ -397,7 +397,7 @@ function stats_views_delete( int $page_id ) : void
 function stats_doppelgangers_list() : array
 {
   // Require administrator rights to run this action
-  user_restrict_to_administrators();
+  user_restrict_to_moderators();
 
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -427,6 +427,7 @@ function stats_doppelgangers_list() : array
   {
     $data[$i]['id']         = sanitize_output($row['u_id']);
     $data[$i]['ip']         = sanitize_output($row['u_ip']);
+    $data[$i]['hiddenip']   = sanitize_output(preg_replace('#[0-9 ]*#', '*', $row['u_ip']));
     $data[$i]['username']   = sanitize_output($row['u_nick']);
     $data[$i]['activity']   = sanitize_output(time_since($row['u_active']));
     $data[$i]['banned']     = ($row['u_banned']) ? date_to_text($row['u_banned'], 1) : 0;

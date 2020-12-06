@@ -9,7 +9,7 @@ include_once './../../actions/admin/stats.act.php'; # Actions
 include_once './../../lang/admin/stats.lang.php';   # Translations
 
 // Limit page access rights
-user_restrict_to_administrators();
+user_restrict_to_moderators();
 
 // Hide the page from who's online
 $hidden_activity = 1;
@@ -63,20 +63,25 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <thead>
 
       <tr class="uppercase">
+
         <th>
           <?=__('admin_doppel_ip')?>
         </th>
+
         <th>
           <?=__('username')?>
         </th>
+
         <th>
           <?=__('admin_doppel_activity')?>
         </th>
+
         <?php if($doppelgangers['includes_bans']) { ?>
         <th>
           <?=__('admin_doppel_banned')?>
         </th>
         <?php } ?>
+
       </tr>
 
     </thead>
@@ -97,17 +102,28 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php } ?>
 
       <tr>
+
         <?php if(!$i || $doppelgangers[$i]['ip'] != $doppelgangers[$i-1]['ip']) { ?>
+
+        <?php if($is_admin) { ?>
         <td rowspan="<?=$doppelgangers[$i]['count']?>" class="bold">
           <?=$doppelgangers[$i]['ip']?>
         </td>
+        <?php } else { ?>
+        <td rowspan="<?=$doppelgangers[$i]['count']?>" class="bold">
+          <?=$doppelgangers[$i]['hiddenip']?>
+        </td>
         <?php } ?>
+        <?php } ?>
+
         <td>
           <?=__link('todo_link?id='.$doppelgangers[$i]['id'], $doppelgangers[$i]['username'])?>
         </td>
+
         <td>
           <?=$doppelgangers[$i]['activity']?>
         </td>
+
         <?php if($doppelgangers['includes_bans']) { ?>
         <?php if($doppelgangers[$i]['banned']) { ?>
         <td class="red bold">
@@ -118,7 +134,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           &nbsp;
         </td>
         <?php } ?>
+
         <?php } ?>
+
       </tr>
 
       <?php } ?>

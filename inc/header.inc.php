@@ -461,9 +461,6 @@ $javascripts .= '
           <?=__link('pages/nobleme/activity', __('submenu_nobleme_activity'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_what_is'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_nobleme_internet'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
@@ -476,16 +473,22 @@ $javascripts .= '
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_nobleme_users')?>
+          <?=__('submenu_nobleme_documentation')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/users/online', __('submenu_nobleme_online'), 'header_submenu_link', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_what_is'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/users/list', __('submenu_nobleme_userlist'), 'header_submenu_link', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_coc'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_staff'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_nobleme_privacy'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_personal_data'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_contact_admin'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -508,29 +511,20 @@ $javascripts .= '
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_nobleme_report_bug'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_feature'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
       </div>
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_nobleme_documentation')?>
+          <?=__('submenu_nobleme_users')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_what_is'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/users/online', __('submenu_nobleme_online'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_coc'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/users/list', __('submenu_nobleme_userlist'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_privacy'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_personal_data'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_contact_admin'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/users/admins', __('submenu_nobleme_staff'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
@@ -601,18 +595,6 @@ $javascripts .= '
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_social_meetups')?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_social_meetups_list'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_social_meetups_host'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-      </div>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
           <?=__('submenu_social_quotes')?>
         </div>
         <div class="header_submenu_item">
@@ -623,6 +605,18 @@ $javascripts .= '
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_social_quotes_submit'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=__('submenu_social_meetups')?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_social_meetups_list'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_social_meetups_host'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -651,13 +645,19 @@ $javascripts .= '
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_user_profile')?>
+          <?=__('submenu_user_edit')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_profile_self'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_user_edit_email'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_profile_edit'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_user_edit_password'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_edit_username'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_user_edit_delete'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -675,19 +675,13 @@ $javascripts .= '
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_user_edit')?>
+          <?=__('submenu_user_profile')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_edit_email'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_user_profile_self'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_edit_password'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_edit_username'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_edit_delete'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_user_profile_edit'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -782,6 +776,12 @@ $javascripts .= '
         <div class="header_submenu_item">
           <?=__link('pages/nobleme/activity?mod', __('submenu_admin_modlogs'), 'header_submenu_link', 1, $path);?>
         </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/users/admins', __('submenu_nobleme_staff'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/admin/stats_doppelganger', __('submenu_admin_doppelganger'), 'header_submenu_link', 1, $path);?>
+        </div>
       </div>
 
       <div class="header_submenu_column">
@@ -810,21 +810,6 @@ $javascripts .= '
       <?php if($is_admin) { ?>
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_admin_stats')?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('pages/admin/stats_metrics', __('submenu_admin_metrics'), 'header_submenu_link', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('pages/admin/stats_views', __('submenu_admin_pageviews'), 'header_submenu_link', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('pages/admin/stats_doppelganger', __('submenu_admin_doppelganger'), 'header_submenu_link', 1, $path);?>
-        </div>
-      </div>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
           <?=__('submenu_admin_website')?>
         </div>
         <div class="header_submenu_item">
@@ -841,6 +826,18 @@ $javascripts .= '
         </div>
         <div class="header_submenu_item">
           <?=__link('pages/dev/scheduler', __('submenu_admin_scheduler'), 'header_submenu_link', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=__('submenu_admin_stats')?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/admin/stats_metrics', __('submenu_admin_metrics'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/admin/stats_views', __('submenu_admin_pageviews'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 

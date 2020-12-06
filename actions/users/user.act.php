@@ -322,12 +322,14 @@ function user_list_admins( string $sort_by = '' ) : array
   require_included_file('functions_time.inc.php');
 
   // Fetch the admin list
-  $qadmins = "    SELECT    users.id                AS 'u_id'     ,
-                            users.username          AS 'u_nick'   ,
-                            users.is_administrator  AS 'u_admin'  ,
-                            users.is_moderator      AS 'u_mod'    ,
-                            users.last_visited_at   AS 'u_activity'
+  $qadmins = "    SELECT    users.id                        AS 'u_id'       ,
+                            users.username                  AS 'u_nick'     ,
+                            users.is_administrator          AS 'u_admin'    ,
+                            users.is_moderator              AS 'u_mod'      ,
+                            users.last_visited_at           AS 'u_activity' ,
+                            users_profile.spoken_languages  AS 'u_languages'
                   FROM      users
+                  LEFT JOIN users_profile ON users.id = users_profile.fk_users
                   WHERE     users.is_deleted        = 0
                   AND     ( users.is_administrator  = 1
                   OR        users.is_moderator      = 1 ) ";
@@ -353,6 +355,8 @@ function user_list_admins( string $sort_by = '' ) : array
     $temp                 = ($row['u_admin']) ? __('administrator') : __('moderator');
     $data[$i]['title']    = sanitize_output(string_change_case($temp, 'initials'));
     $data[$i]['activity'] = sanitize_output(time_since($row['u_activity']));
+    $data[$i]['lang_en']  = str_contains($row['u_languages'], 'EN');
+    $data[$i]['lang_fr']  = str_contains($row['u_languages'], 'FR');
     $data[$i]['css']      = ($row['u_admin']) ? 'text_red bold' : 'text_orange bold';
   }
 
