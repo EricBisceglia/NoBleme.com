@@ -633,7 +633,7 @@ $javascripts .= '
           <?=__('submenu_user_pms')?>
         </div>
         <div class="header_submenu_item<?=$nb_private_messages_css?>">
-          <?=__link('todo_link', __('submenu_user_pms_inbox'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/users/inbox', __('submenu_user_pms_inbox'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_user_pms_outbox'), 'header_submenu_link text_blue', 1, $path);?>

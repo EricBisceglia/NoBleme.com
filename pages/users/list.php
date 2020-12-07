@@ -60,9 +60,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('users_list_description_intro')?>
   </p>
 
-  <p>
+  <div class="padding_top padding_bot">
     <?=__('users_list_description_colors')?>
-  </p>
+  </div>
 
   <div class="smallpadding_top">
     <table>
@@ -148,7 +148,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <?php for($i = 0; $i < $user_list['rows']; $i++) { ?>
 
-        <tr class="<?=$user_list[$i]['css']?>"">
+        <tr class="<?=$user_list[$i]['css']?>">
 
           <td>
             <?=__link('todo_link?id='.$user_list[$i]['id'], $user_list[$i]['username'], 'text_white bold noglow')?>

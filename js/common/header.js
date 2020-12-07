@@ -113,7 +113,7 @@ function user_login_attempt_process()
   if(login_status == "OK")
   {
     root_path = document.getElementById('root_path').value;
-    window.location = root_path;
+    window.location = root_path + 'pages/users/inbox';
   }
 
   // If there is an error, display it

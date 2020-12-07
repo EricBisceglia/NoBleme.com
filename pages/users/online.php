@@ -76,29 +76,30 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <?php } ?>
 
-    <div class="desktop">
-      <input id="online_refresh" name="online_refresh" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
-      <label class="label_inline" for="online_refresh"><?=__('users_online_refresh')?></label><br>
-    </div>
-    <div class="mobile">
-      <input id="online_refresh" name="online_refresh" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
-      <label class="label_inline" for="online_refresh"><?=__('users_online_refresh_mobile')?></label><br>
-    </div>
+    <input id="online_refresh" name="online_refresh" type="checkbox" onclick="users_online_table_settings(<?=$is_admin?>);">
+    <span class="desktop">
+      <label class="label_inline desktop" for="online_refresh"><?=__('users_online_refresh')?></label>
+    </span>
+    <span class="mobile">
+      <label class="label_inline mobile" for="online_refresh"><?=__('users_online_refresh_mobile')?></label>
+    </span>
 
   </fieldset>
 
   <table>
 
     <thead>
-      <th>
-        <?=string_change_case(__('username'), 'uppercase')?>
-      </th>
-      <th>
-        <?=__('users_online_activity')?>
-      </th>
-      <th>
-        <?=__('users_online_page')?>
-      </th>
+      <tr>
+        <th>
+          <?=string_change_case(__('username'), 'uppercase')?>
+        </th>
+        <th>
+          <?=__('users_online_activity')?>
+        </th>
+        <th>
+          <?=__('users_online_page')?>
+        </th>
+      </tr>
     </thead>
 
     <tbody class="altc" id="users_online_table">
