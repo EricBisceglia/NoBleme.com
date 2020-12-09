@@ -152,7 +152,7 @@ function admin_ban_create(  int     $banner_id            ,
   $ban_reason_pm_en   = ($ban_reason_en) ? __('admin_ban_add_private_message_reason_en', null, 0, 0, array($path, $ban_reason_en)) : __('admin_ban_add_private_message_no_reason_en', null, 0, 0, array($path));
   $ban_reason_pm_fr   = ($ban_reason_fr) ? __('admin_ban_add_private_message_reason_fr', null, 0, 0, array($path, $ban_reason_fr)) : __('admin_ban_add_private_message_no_reason_fr', null, 0, 0, array($path));
   $ban_reason_pm      = ($banned_user_language == 'EN') ? $ban_reason_pm_en : $ban_reason_pm_fr;
-  private_message_send(__('admin_ban_add_private_message_title_'.strtolower($banned_user_language)), __('admin_ban_add_private_message_'.strtolower($banned_user_language), null, 0, 0, array($path, date_to_text(time(), 1, $banned_user_language), $ban_duration_pm[$ban_length] , $ban_reason_pm)), $banned_user_id, 0);
+  private_message_send(__('admin_ban_add_private_message_title_'.strtolower($banned_user_language)), __('admin_ban_add_private_message_'.strtolower($banned_user_language), null, 0, 0, array($path, date_to_text(time(), 0, 2, $banned_user_language), $ban_duration_pm[$ban_length] , $ban_reason_pm)), $banned_user_id, 0);
 
   // IRC bot messages
   $ban_extra_en     = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '';
@@ -310,7 +310,7 @@ function admin_ban_edit(  int     $banner_id            ,
   {
     $ban_user_language  = user_get_language($banned_id);
     $ban_duration_pm    = ($ban_user_language == 'EN') ? $ban_duration_en : $ban_duration_fr;
-    private_message_send(__('admin_ban_edit_private_message_title_'.strtolower($ban_user_language)), __('admin_ban_edit_private_message_'.strtolower($ban_user_language), null, 0, 0, array($path, date_to_text(time(), 1, $ban_user_language), $ban_duration_pm[$ban_length])), $banned_id, 0);
+    private_message_send(__('admin_ban_edit_private_message_title_'.strtolower($ban_user_language)), __('admin_ban_edit_private_message_'.strtolower($ban_user_language), null, 0, 0, array($path, date_to_text(time(), 0, 2, $ban_user_language), $ban_duration_pm[$ban_length])), $banned_id, 0);
   }
 }
 
@@ -412,7 +412,7 @@ function admin_ban_delete(  string  $unbanned_id            ,
 
   // Private message to let the user know they have been manually unbanned
   $unbanned_user_language = user_get_language($unbanned_id);
-  private_message_send(__('admin_ban_delete_private_message_title_'.strtolower($unbanned_user_language)), __('admin_ban_delete_private_message_'.strtolower($unbanned_user_language), 0, 0, 0, array($path, date_to_text(time(), 1, $unbanned_user_language), $days_served, $days_left)), $unbanned_id, 0);
+  private_message_send(__('admin_ban_delete_private_message_title_'.strtolower($unbanned_user_language)), __('admin_ban_delete_private_message_'.strtolower($unbanned_user_language), 0, 0, 0, array($path, date_to_text(time(), 0, 2, $unbanned_user_language), $days_served, $days_left)), $unbanned_id, 0);
 }
 
 
@@ -659,7 +659,7 @@ function admin_ip_ban_list_users( string $banned_ip ) : array
  *
  * @param   int   $ip_ban_id  The IP ban's ID.
  *
- * @return  array             An array of data regarding the ban, or a string containing an error.
+ * @return  array             An array of data regarding the ban.
  */
 
 function admin_ip_ban_get( int $ip_ban_id ) : array

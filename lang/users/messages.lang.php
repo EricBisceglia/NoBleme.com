@@ -8,6 +8,30 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                  PRIVATE MESSAGE                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Errors
+___('users_message_not_found',  'EN', "Private message not found");
+___('users_message_not_found',  'FR', "Le message privé n'a pas été trouvé");
+___('users_message_neighbor',   'EN', "You are not allowed to view other people's private messages");
+___('users_message_neighbor',   'FR', "Vous ne pouvez pas voir les messages privés des autres comptes");
+
+
+// Private message
+___('users_message_sent_by',  'EN', "Sent by {{link|{{1}}|{{2}}}} on {{3}}.");
+___('users_message_sent_by',  'FR', "Envoyé par {{link|{{1}}|{{2}}}} le {{3}}.");
+___('users_message_system',   'EN', "Automated message sent on {{1}}.");
+___('users_message_system',   'FR', "Message automatisé envoyé le {{1}}.");
+___('users_message_read',     'EN', "Read on {{1}}.");
+___('users_message_read',     'FR', "Lu le {{1}}.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                       INBOX                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -40,3 +64,9 @@ ___('users_inbox_count+',   'EN', "{{1}} messages in your inbox");
 ___('users_inbox_count+',   'FR', "{{1}} messages dans votre boîte de réception");
 ___('users_inbox_empty',    'EN', "There are currently no messages in your inbox");
 ___('users_inbox_empty',    'FR', "Vous n'avez aucun message dans votre boîte de réception");
+___('users_inbox_unread',   'EN', "Unread");
+___('users_inbox_unread',   'FR', "Non lu");
+___('users_inbox_system',   'EN', "Automated message");
+___('users_inbox_system',   'FR', "Message automatisé");
+___('users_inbox_not_read', 'EN', "You have not read this message yet - click here to open it.");
+___('users_inbox_not_read', 'FR', "Vous n'avez pas encore lu ce message - cliquez ici pour l'ouvrir.");

@@ -252,10 +252,10 @@ function user_list( string  $sort_by          = ''      ,
     $temp                   = ($row['data_type'] == 'guest') ? $temp : $row['u_nick'];
     $data[$i]['username']   = sanitize_output($temp);
     $data[$i]['registered'] = sanitize_output(time_since($row['u_created']));
-    $data[$i]['created']    = sanitize_output(date_to_text($row['u_created'], include_time: true));
+    $data[$i]['created']    = sanitize_output(date_to_text($row['u_created'], include_time: 2));
     $temp                   = ($row['u_activity']) ?: $row['u_created'];
     $data[$i]['activity']   = sanitize_output(time_since($temp));
-    $data[$i]['active_at']  = sanitize_output(date_to_text($temp, include_time: true));
+    $data[$i]['active_at']  = sanitize_output(date_to_text($temp, include_time: 2));
     $temp                   = ($lang == 'EN') ? $row['u_last_page_en'] : $row['u_last_page_fr'];
     $data[$i]['last_page']  = sanitize_output(string_truncate($temp, 40, '...'));
     $data[$i]['last_url']   = sanitize_output($row['u_last_url']);
@@ -263,9 +263,9 @@ function user_list( string  $sort_by          = ''      ,
     $data[$i]['lang_en']    = str_contains($row['u_languages'], 'EN');
     $data[$i]['lang_fr']    = str_contains($row['u_languages'], 'FR');
     $data[$i]['ban_end']    = ($row['u_ban_end']) ? time_until($row['u_ban_end']) : '';
-    $data[$i]['ban_endf']   = ($row['u_ban_end']) ? date_to_text($row['u_ban_end'], 0, 1) : '';
+    $data[$i]['ban_endf']   = ($row['u_ban_end']) ? date_to_text($row['u_ban_end'], 0, 2) : '';
     $data[$i]['ban_start']  = ($row['u_ban_start']) ? time_since($row['u_ban_start']) : '';
-    $data[$i]['ban_startf'] = ($row['u_ban_start']) ? date_to_text($row['u_ban_start'], 0, 1) : '';
+    $data[$i]['ban_startf'] = ($row['u_ban_start']) ? date_to_text($row['u_ban_start'], 0, 2) : '';
     $data[$i]['ban_length'] = ($row['u_ban_end']) ? time_days_elapsed($row['u_ban_start'], $row['u_ban_end'], 1) : '';
     $data[$i]['ban_served'] = ($row['u_ban_end']) ? time_days_elapsed($row['u_ban_start'], time(), 1) : '';
     $temp                   = ($row['u_ban_reason_en']) ? $row['u_ban_reason_en'] : '';

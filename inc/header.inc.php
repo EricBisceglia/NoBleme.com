@@ -230,7 +230,7 @@ if ($activity_user)
 
   // Fetch the result for display
   $nb_private_messages      = $dpms['pm_nb'];
-  $nb_private_messages_css  = ($nb_private_messages) ? ' header_submenu_blink' : '';
+  $nb_private_messages_css  = ($nb_private_messages && basename($_SERVER['PHP_SELF']) != 'inbox.php') ? ' header_submenu_blink' : '';
 }
 
 
@@ -424,7 +424,7 @@ $javascripts .= '
 
       <div class="header_topmenu_zone">
 
-        <?php if(user_is_logged_in() && $nb_private_messages) { ?>
+        <?php if(user_is_logged_in() && $nb_private_messages && basename($_SERVER['PHP_SELF']) != 'inbox.php') { ?>
         <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="Account" onclick="toggle_header_menu('account');">
         <?php } else { ?>
         <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_account" src="<?=$path?>img/icons/login.svg" alt="Account" onclick="toggle_header_menu('account');">

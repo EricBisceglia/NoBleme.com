@@ -5,6 +5,7 @@
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';            # Core
 include_once './../../inc/functions_time.inc.php';      # Time management
+include_once './../../inc/bbcodes.inc.php';             # Text formatting
 include_once './../../actions/users/messages.act.php';  # Actions
 include_once './../../lang/users/messages.lang.php';    # Translations
 
@@ -18,6 +19,9 @@ $page_title_en    = "Message inbox";
 $page_title_fr    = "Boite de réception";
 $page_description = "Private message inbox - for private messages from the system or from other users.";
 
+// Extra JS
+$js = array('users/messages');
+
 
 
 
@@ -28,9 +32,25 @@ $page_description = "Private message inbox - for private messages from the syste
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch the years at which the user got private messages
+
+$messages_years = private_message_years_list();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the private messages
 
-$messages_list = private_messages_list();
+// Fetch the search data
+$inbox_search = array(  'title'   => form_fetch_element('inbox_search_title')   ,
+                        'sender'  => form_fetch_element('inbox_search_sender')  ,
+                        'date'    => form_fetch_element('inbox_search_date')    ,
+                        'read'    => form_fetch_element('inbox_search_read')    );
+
+// Fetch the messages
+$messages_list = private_message_list(  form_fetch_element('inbox_sort_order', 'sent')  ,
+                                        $inbox_search                                   );
 
 
 
@@ -63,24 +83,61 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <th>
             <?=__('users_inbox_message')?>
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_inbox_search('title')">
           </th>
 
           <th>
             <?=__('users_inbox_sender')?>
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_inbox_search('sender')">
           </th>
 
           <th>
             <?=__('users_inbox_sent')?>
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_inbox_search('sent')">
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_up_small.svg" alt="^" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_inbox_search('rsent')">
           </th>
 
           <th>
             <?=__('users_inbox_read')?>
+            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_inbox_search('read')">
+          </th>
+
+        </tr>
+
+        <tr>
+
+          <th>
+            <input type="hidden" name="inbox_sort_order" id="inbox_sort_order" value="">
+            <input type="text" class="table_search" name="inbox_search_title" id="inbox_search_title" value="" onkeyup="users_inbox_search();">
+          </th>
+
+          <th>
+            <input type="text" class="table_search" name="inbox_search_sender" id="inbox_search_sender" value="" onkeyup="users_inbox_search();">
+          </th>
+
+          <th>
+            <select class="table_search" name="inbox_search_date" id="inbox_search_date" onchange="users_inbox_search();">
+              <option value="0">&nbsp;</option>
+              <?php for($i = 0; $i < $messages_years['rows']; $i++) { ?>
+              <option value="<?=$messages_years[$i]['year']?>"><?=$messages_years[$i]['year']?></option>
+              <?php } ?>
+            </select>
+          </th>
+
+          <th>
+            <select class="table_search" name="inbox_search_read" id="inbox_search_read" onchange="users_inbox_search();">
+              <option value="0">&nbsp;</option>
+              <option value="-1"><?=__('users_inbox_unread')?></option>
+              <option value="1"><?=__('users_inbox_read')?></option>
+            </select>
           </th>
 
         </tr>
 
       </thead>
-      <tbody class="altc">
+      <tbody class="altc" id="inbox_tbody">
+
+        <?php } ?>
 
         <tr>
           <td class="uppercase text_white align_center dark bold" colspan="4">
@@ -94,36 +151,63 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <?php for($i = 0; $i < $messages_list['rows']; $i++) { ?>
 
-        <tr class="align_center pointer">
+        <tr class="align_center pointer" onclick="users_message_open('<?=$messages_list[$i]['id']?>');">
 
-          <td class="align_left<?=$messages_list[$i]['css']?>">
+          <td class="align_left tooltip_container<?=$messages_list[$i]['css']?>" id="private_message_title_<?=$messages_list[$i]['id']?>">
             <?=$messages_list[$i]['title']?>
+            <div class="tooltip">
+              <?=$messages_list[$i]['body']?>
+            </div>
           </td>
 
-          <td class="nowrap">
-            <?php if($messages_list[$i]['system']) { ?>
+          <?php if($messages_list[$i]['system']) { ?>
+          <td class="nowrap tooltip_container">
             <?=__('nobleme')?>
-            <?php } else { ?>
-            <span class="bold"><?=$messages_list[$i]['sender']?></span>
-            <?php } ?>
+            <div class="tooltip">
+              <?=__('users_inbox_system')?>
+            </div>
           </td>
-
+          <?php } else { ?>
           <td class="nowrap">
+            <?=__link('todo_link?id='.$messages_list[$i]['sender_id'], $messages_list[$i]['sender'])?>
+          </td>
+          <?php } ?>
+
+          <td class="nowrap tooltip_container">
             <?=$messages_list[$i]['sent']?>
+            <div class="tooltip">
+              <?=$messages_list[$i]['fsent']?>
+            </div>
           </td>
 
-          <td class="nowrap">
+          <td class="nowrap tooltip_container">
             <?=$messages_list[$i]['read']?>
+            <div class="tooltip">
+              <?php if($messages_list[$i]['fread']) { ?>
+              <?=$messages_list[$i]['fread']?>
+              <?php } else { ?>
+              <?=__('users_inbox_not_read')?>
+              <?php } ?>
+            </div>
           </td>
 
         </tr>
 
         <?php } ?>
 
+        <?php if(!page_is_fetched_dynamically()) { ?>
+
       </tbody>
     </table>
   </div>
 
+</div>
+
+<div id="popin_private_message" class="popin_background">
+  <div class="popin_body">
+    <a class="popin_close" onclick="popin_close('popin_private_message');">×</a>
+    <div class="nopadding_top" id="popin_private_message_body"></div>
+  </div>
 </div>
 
 <?php /***************************************************************************************************************/

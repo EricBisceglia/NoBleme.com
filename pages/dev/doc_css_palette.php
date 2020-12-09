@@ -1676,13 +1676,13 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
   &lt;tr>
 
     &lt;th>
-      &lt;select class="table_search" name="example_select" id="example_select">
-        &lt;option value="0">&amp;nbsp;&lt;/option>
-      &lt;/select>
+      &lt;input type="text" class="table_search" name="example_input" id="example_input" value="">
     &lt;/th>
 
     &lt;th>
-      &lt;input type="text" class="table_search" name="example_input" id="example_input" value="">
+      &lt;select class="table_search" name="example_select" id="example_select">
+        &lt;option value="0">&amp;nbsp;&lt;/option>
+      &lt;/select>
     &lt;/th>
 
     &lt;th>

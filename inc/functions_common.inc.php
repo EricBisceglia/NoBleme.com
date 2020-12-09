@@ -610,16 +610,16 @@ function date_french_ordinal( int $timestamp ) : string
  *
  * @param   string|int  $date           (OPTIONAL)  The MySQL date or timestamp that we want to transform.
  * @param   int         $strip_day      (OPTIONAL)  If 1, strips the day's name. If 2, strips the whole day.
- * @param   bool        $include_time   (OPTIONAL)  If set, will add the time after the date.
+ * @param   int         $include_time   (OPTIONAL)  If 1, will add the time after the date. If 2, strips milliseconds.
  * @param   string      $lang           (OPTIONAL)  The language used, defaults to current lang.
  *
  * @return  string                                  The required date, in plaintext.
  */
 
-function date_to_text(  mixed   $date         = ''    ,
-                        int     $strip_day    = 0     ,
-                        bool    $include_time = false ,
-                        string  $lang         = ''    ) : string
+function date_to_text(  mixed   $date         = ''  ,
+                        int     $strip_day    = 0   ,
+                        int     $include_time = 0   ,
+                        string  $lang         = ''  ) : string
 {
   // If no date has been entered, use the current timestamp instead
   $date = (!$date) ? time() : $date;
@@ -662,7 +662,9 @@ function date_to_text(  mixed   $date         = ''    ,
   }
 
   // Append the time to the date if requested
-  if($include_time)
+  if($include_time == 2)
+    return $full_date.__('at_date', 0, 1, 1).date('H:i', $date);
+  else if($include_time)
     return $full_date.__('at_date', 0, 1, 1).date('H:i:s', $date);
   else
     return $full_date;
