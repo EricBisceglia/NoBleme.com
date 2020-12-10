@@ -11,6 +11,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  private_message_list            Lists a user's private messages and system notifications.                        */
 /*  private_message_years_list      Fetches all years during which the current user got private messages.            */
 /*  private_message_get             Fetches information about a private message.                                     */
+/*  private_message_delete          Deletes a private message.                                                       */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -53,7 +54,8 @@ function private_message_list(  string  $sort_by  = ''      ,
                                 users_private_messages.body             AS 'pm_body'
                     FROM        users_private_messages
                     LEFT JOIN   users AS users_sender ON users_private_messages.fk_users_sender = users_sender.id
-                    WHERE       users_private_messages.fk_users_recipient = '$user_id' ";
+                    WHERE       users_private_messages.fk_users_recipient   = '$user_id'
+                    AND         users_private_messages.deleted_by_recipient = 0 ";
 
   // Search for data if requested
   if($search_title)
@@ -188,19 +190,27 @@ function private_message_get( int $message_id ) : array
   }
 
   // Prepare the query to fetch the message's data
-  $qmessage = " SELECT    users_private_messages.fk_users_recipient AS 'pm_recipient' ,
-                          users_private_messages.fk_users_sender    AS 'pm_sender_id' ,
-                          users_sender.username                     AS 'pm_sender'    ,
-                          users_private_messages.sent_at            AS 'pm_sent'      ,
-                          users_private_messages.read_at            AS 'pm_read'      ,
-                          users_private_messages.title              AS 'pm_title'     ,
-                          users_private_messages.body               AS 'pm_body'
+  $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted'   ,
+                          users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
+                          users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
+                          users_sender.username                       AS 'pm_sender'    ,
+                          users_private_messages.sent_at              AS 'pm_sent'      ,
+                          users_private_messages.read_at              AS 'pm_read'      ,
+                          users_private_messages.title                AS 'pm_title'     ,
+                          users_private_messages.body                 AS 'pm_body'
                 FROM      users_private_messages
                 LEFT JOIN users AS users_sender ON users_private_messages.fk_users_sender = users_sender.id
                 WHERE     users_private_messages.id = '$message_id' ";
 
   // Fetch data regarding the message
   $dmessage = mysqli_fetch_array(query($qmessage));
+
+  // Error: Deleted messages
+  if($dmessage['pm_deleted'])
+  {
+    $data['error'] = __('users_message_deleted');
+    return $data;
+  }
 
   // Error: Message not found
   if($dmessage['pm_recipient'] != $user_id)
@@ -210,6 +220,7 @@ function private_message_get( int $message_id ) : array
   }
 
   // Prepare the data
+  $data['id']         = sanitize_output($message_id);
   $data['title']      = sanitize_output($dmessage['pm_title']);
   $data['sender_id']  = sanitize_output($dmessage['pm_sender_id']);
   $data['sender']     = ($dmessage['pm_sender_id']) ? sanitize_output($dmessage['pm_sender']) : NULL;
@@ -232,4 +243,60 @@ function private_message_get( int $message_id ) : array
 
   // Return the data
   return $data;
+}
+
+
+
+
+/**
+ * Deletes a private message.
+ *
+ * @param   int         $message_id   The private message's id
+ *
+ * @return  string|null               An error string, or NULL if all went well.
+ */
+
+function users_message_delete( int $message_id ) : mixed
+{
+  // Require users to be logged in to run this action
+  user_restrict_to_users();
+
+  // Sanitize the data
+  $user_id    = sanitize(user_get_id(), 'int', 1);
+  $message_id = sanitize($message_id, 'int', 0);
+  $timestamp  = time();
+
+  // Error: Message ID not found
+  if(!database_row_exists('users_private_messages', $message_id))
+    return __('users_message_not_found');
+
+  // Fetch some data regarding the message
+  $dmessage = mysqli_fetch_array(query("  SELECT  users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
+                                                  users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
+                                                  users_private_messages.fk_users_recipient   AS 'pm_recipient'
+                                          FROM    users_private_messages
+                                          WHERE   users_private_messages.id = '$message_id' "));
+
+  // Error: Message is already deleted
+  if($dmessage['pm_deleted_r'])
+    return __('users_message_predeleted');
+
+  // Error: Message does not belong to user
+  if($dmessage['pm_recipient'] != $user_id)
+    return __('users_message_ownership');
+
+  // If the sender had already deleted the message, hard delete it
+  if($dmessage['pm_deleted_s'])
+    query(" DELETE FROM users_private_messages
+            WHERE       users_private_messages.id = '$message_id' ");
+
+  // Otherwise soft delete it
+  else
+    query(" UPDATE  users_private_messages
+            SET     users_private_messages.deleted_by_recipient = 1 ,
+                    users_private_messages.read_at              = '$timestamp'
+            WHERE   users_private_messages.id = '$message_id' ");
+
+  // All went well, return NULL
+  return NULL;
 }

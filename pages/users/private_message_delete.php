@@ -4,8 +4,6 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';            # Core
-include_once './../../inc/functions_time.inc.php';      # Time management
-include_once './../../inc/bbcodes.inc.php';             # Text formatting
 include_once './../../actions/users/messages.act.php';  # Actions
 include_once './../../lang/users/messages.lang.php';    # Translations
 
@@ -25,9 +23,9 @@ user_restrict_to_users();
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch the requested private message
+// Delete the private message
 
-$private_message_data = private_message_get(form_fetch_element('private_message_id'));
+$delete_error = users_message_delete(form_fetch_element('private_message_delete', 0));
 
 
 
@@ -36,42 +34,12 @@ $private_message_data = private_message_get(form_fetch_element('private_message_
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-/*********************************************************************************************************************/
+/******************************************************************************************************************/ ?>
 
-if(isset($private_message_data['error'])) { ?>
-
-<h4 class="hugepadding_top hugepadding_bot uppercase align_center"><?=__('error').__(':', spaces_after: 1).$private_message_data['error']?></h4>
-
-<?php } else { ?>
-
-<h4 class="tinypadding_bot"><?=$private_message_data['title']?></h4>
-
-<p class="nopadding_top smallpadding_bot">
-  <?php if($private_message_data['sender']) { ?>
-  <?=__('users_message_sent_by', preset_values: array('todo_link?id='.$private_message_data['sender_id'], $private_message_data['sender'], $private_message_data['sent_at']))?>
+<td colspan="5" class="red text_white bold align_center uppercase">
+  <?php if($delete_error) { ?>
+  <?=__('error').__(':', spaces_after: 1).$delete_error?>
   <?php } else { ?>
-  <?=__('users_message_system', preset_values: array($private_message_data['sent_at']))?>
-  <?php } if ($private_message_data['read_at']) { ?>
-  <br>
-  <?=__('users_message_read', preset_values: array($private_message_data['read_at']))?>
+  <?=__('users_message_deleted')?>
   <?php } ?>
-</p>
-
-<hr>
-
-<div class="tinypadding_top tinypadding_bot flexcontainer">
-  <div class="flex align_center">
-    <button><?=__('users_message_reply')?></button>
-  </div>
-  <div class="flex align_center">
-    <button onclick="users_message_delete(<?=$private_message_data['id']?>, '<?=__('users_message_confirm')?>');"><?=__('users_message_delete')?></button>
-  </div>
-</div>
-
-<hr>
-
-<div class="smallpadding_top smallpadding_bot">
-  <?=$private_message_data['body']?>
-</div>
-
-<?php } ?>
+</td>

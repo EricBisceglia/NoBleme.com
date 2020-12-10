@@ -26,6 +26,21 @@ ___('users_message_system',   'EN', "Automated message sent on {{1}}.");
 ___('users_message_system',   'FR', "Message automatisé envoyé le {{1}}.");
 ___('users_message_read',     'EN', "Read on {{1}}.");
 ___('users_message_read',     'FR', "Lu le {{1}}.");
+___('users_message_reply',    'EN', "Reply to this message");
+___('users_message_reply',    'FR', "Répondre au message");
+
+
+// Delete a private message
+___('users_message_delete',     'EN', "Delete this message");
+___('users_message_delete',     'FR', "Supprimer ce message");
+___('users_message_confirm',    'EN', "Confirm the irreversible deletion of this private message.");
+___('users_message_confirm',    'FR', "Confirmer la suppression irréversible de ce message privé.");
+___('users_message_deleted',    'EN', "This private message has been deleted");
+___('users_message_deleted',    'FR', "Ce message privé a été supprimé");
+___('users_message_predeleted', 'EN', "This private message has already been deleted");
+___('users_message_predeleted', 'FR', "Ce message privé a déjà été supprimé");
+___('users_message_ownership',  'EN', "You can not delete other people's private messages");
+___('users_message_ownership',  'FR', "Vous ne pouvez pas supprimer les messages privés des autres");
 
 
 

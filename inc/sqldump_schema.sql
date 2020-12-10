@@ -417,9 +417,11 @@ CREATE TABLE IF NOT EXISTS `users_login_attempts` (
 DROP TABLE IF EXISTS `users_private_messages`;
 CREATE TABLE IF NOT EXISTS `users_private_messages` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `deleted_by_recipient` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `deleted_by_sender` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `fk_users_recipient` int UNSIGNED NOT NULL DEFAULT '0',
   `fk_users_sender` int UNSIGNED NOT NULL DEFAULT '0',
-  `is_deleted` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `fk_parent_message` int UNSIGNED NOT NULL DEFAULT '0',
   `sent_at` int UNSIGNED NOT NULL DEFAULT '0',
   `read_at` int UNSIGNED NOT NULL DEFAULT '0',
   `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -427,7 +429,8 @@ CREATE TABLE IF NOT EXISTS `users_private_messages` (
   PRIMARY KEY (`id`),
   KEY `index_inbox` (`fk_users_recipient`),
   KEY `index_outbox` (`fk_users_sender`),
-  KEY `index_deleted` (`is_deleted`)
+  KEY `index_deleted_by_recipient` (`deleted_by_recipient`),
+  KEY `index_deleted_by_sender` (`deleted_by_sender`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `users_profile`;

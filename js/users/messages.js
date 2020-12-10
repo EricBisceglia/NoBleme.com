@@ -1,7 +1,9 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  users_inbox_search          Performs a search through a user's private messages inbox.                           */
+/*                                                                                                                   */
 /*  users_message_open          Triggers the opening of a private message.                                           */
+/*  users_message_delete        Triggers the deletion of a private message.                                          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 // Close the private messages popin if it is open upon loading the page
@@ -59,4 +61,30 @@ function users_message_open( message_id )
 
   // Fetch the private message
   fetch_page('private_message', 'popin_private_message_body', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of a private message.
+ *
+ * @param   {int}     message_id        The id of the private message.
+ * @param   {string}  confirm_message   The confirmation message which will be displayed.
+ *
+ * @returns {void}
+ */
+
+function users_message_delete(  message_id      ,
+                                confirm_message )
+{
+  // Make sure the user knows what they're doing
+  if(confirm(confirm_message))
+  {
+    // Close the popin in case it is open
+    popin_close('popin_private_message');
+
+    // Trigger the deletion request
+    fetch_page('private_message_delete', 'private_message_row_' + message_id, 'private_message_delete=' + message_id);
+  }
 }

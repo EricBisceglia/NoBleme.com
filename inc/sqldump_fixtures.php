@@ -938,7 +938,8 @@ $random = mt_rand(750,1500);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
-  $deleted    = (mt_rand(0,5) < 5) ? 0 : 1;
+  $deleted_r  = (mt_rand(0,50) < 50) ? 0 : 1;
+  $deleted_s  = (mt_rand(0,50) < 50) ? 0 : 1;
   $recipient  = fixtures_fetch_random_id('users');
   $sender     = (mt_rand(0,1)) ? fixtures_fetch_random_id('users') : 0;
   $sent_at    = mt_rand(1111239420, time());
@@ -948,13 +949,14 @@ for($i = 0; $i < $random; $i++)
 
   // Generate the private messages
   query(" INSERT INTO users_private_messages
-          SET         users_private_messages.is_deleted         = '$deleted'    ,
-                      users_private_messages.fk_users_recipient = '$recipient'  ,
-                      users_private_messages.fk_users_sender    = '$sender'     ,
-                      users_private_messages.sent_at            = '$sent_at'    ,
-                      users_private_messages.read_at            = '$read_at'    ,
-                      users_private_messages.title              = '$title'      ,
-                      users_private_messages.body               = '$body'       ");
+          SET         users_private_messages.deleted_by_recipient = '$deleted_r'  ,
+                      users_private_messages.deleted_by_sender    = '$deleted_s'  ,
+                      users_private_messages.fk_users_recipient   = '$recipient'  ,
+                      users_private_messages.fk_users_sender      = '$sender'     ,
+                      users_private_messages.sent_at              = '$sent_at'    ,
+                      users_private_messages.read_at              = '$read_at'    ,
+                      users_private_messages.title                = '$title'      ,
+                      users_private_messages.body                 = '$body'       ");
 }
 
 // Output progress

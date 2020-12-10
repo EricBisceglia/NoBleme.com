@@ -1404,6 +1404,7 @@ if($last_query < 26)
   sql_change_field_type('users_private_messages', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('users_private_messages', 'FKmembres_destinataire', 'fk_users_recipient', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users_private_messages', 'FKmembres_envoyeur', 'fk_users_sender', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_create_field('users_private_messages', 'fk_parent_message', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_users_sender');
   sql_rename_field('users_private_messages', 'date_envoi', 'sent_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users_private_messages', 'date_consultation', 'read_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users_private_messages', 'titre', 'title', 'TEXT NOT NULL');
@@ -1729,8 +1730,10 @@ if($last_query < 31)
   sql_create_field('users', 'deleted_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'is_deleted');
   sql_create_field('users', 'deleted_username', 'VARCHAR(45) NOT NULL', 'deleted_at');
   sql_create_index('users', 'index_deleted', 'is_deleted');
-  sql_create_field('users_private_messages', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users_sender');
-  sql_create_index('users_private_messages', 'index_deleted', 'is_deleted');
+  sql_create_field('users_private_messages', 'deleted_by_recipient', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_field('users_private_messages', 'deleted_by_sender', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'deleted_by_recipient');
+  sql_create_index('users_private_messages', 'index_deleted_by_recipient', 'deleted_by_recipient');
+  sql_create_index('users_private_messages', 'index_deleted_by_sender', 'deleted_by_sender');
 
   sql_create_field('writings_contests', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_writings_texts_winner');
   sql_create_index('writings_contests', 'index_deleted', 'is_deleted');
