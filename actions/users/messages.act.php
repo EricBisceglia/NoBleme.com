@@ -9,9 +9,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  private_message_list            Lists a user's private messages and system notifications.                        */
-/*  private_message_years_list      Fetches all years during which the current user got private messages.            */
 /*  private_message_get             Fetches information about a private message.                                     */
+/*  private_message_reply           Reply to an existing private message.                                            */
 /*  private_message_delete          Deletes a private message.                                                       */
+/*                                                                                                                   */
+/*  private_message_years_list      Fetches all years during which the current user got private messages.            */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -122,45 +124,6 @@ function private_message_list(  string  $sort_by  = ''      ,
 
 
 /**
- * Fetches all years during which the current user got private messages.
- *
- * @return  array   The data, ready for use.
- */
-
-function private_message_years_list() : array
-{
-  // Require users to be logged in to run this action
-  user_restrict_to_users();
-
-  // Fetch the user's id
-  $user_id = sanitize(user_get_id(), 'int', 1);
-
-  // Fetch the years during which the user got private messages
-  $qyears = query(" SELECT    YEAR(FROM_UNIXTIME(users_private_messages.sent_at)) AS 'pm_year'
-                    FROM      users_private_messages
-                    WHERE     users_private_messages.fk_users_recipient = '$user_id'
-                    GROUP BY  YEAR(FROM_UNIXTIME(users_private_messages.sent_at))
-                    ORDER BY  YEAR(FROM_UNIXTIME(users_private_messages.sent_at)) DESC ");
-
-  // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
-    $data[$i]['year'] = sanitize_output($row['pm_year']);
-
-  // Add the number of rows to the data
-  $data['rows'] = $i;
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'users/messages.act.php', 'function' => 'private_messages_years_list', 'data' => $data));
-
-  // Return the prepared data
-  return $data;
-}
-
-
-
-
-/**
  * Fetches information about a private message.
  *
  * @param   int     $message_id   The private message's ID.
@@ -221,6 +184,7 @@ function private_message_get( int $message_id ) : array
 
   // Prepare the data
   $data['id']         = sanitize_output($message_id);
+  $data['self']       = ($user_id == $dmessage['pm_sender_id']);
   $data['title']      = sanitize_output($dmessage['pm_title']);
   $data['sender_id']  = sanitize_output($dmessage['pm_sender_id']);
   $data['sender']     = ($dmessage['pm_sender_id']) ? sanitize_output($dmessage['pm_sender']) : NULL;
@@ -249,14 +213,97 @@ function private_message_get( int $message_id ) : array
 
 
 /**
- * Deletes a private message.
+ * Reply to an existing private message.
  *
- * @param   int         $message_id   The private message's id
+ * @param   int         $message_id   The id of the message being replied to.
+ * @param   string      $body         The private message's body.
  *
  * @return  string|null               An error string, or NULL if all went well.
  */
 
-function users_message_delete( int $message_id ) : mixed
+function private_message_reply( int     $message_id ,
+                                string  $body       ) : mixed
+{
+  // Require users to be logged in to run this action
+  user_restrict_to_users();
+
+  // Check if the required files have been included
+  require_included_file('messages.lang.php');
+
+  // Sanitize the data
+  $user_id    = sanitize(user_get_id(), 'int', 1);
+  $message_id = sanitize($message_id, 'int', 0);
+  $body       = sanitize($body, 'string');
+  $timestamp  = time();
+
+  // Error: Message ID not found
+  if(!database_row_exists('users_private_messages', $message_id))
+    return __('users_message_not_found');
+
+  // Error: Empty body
+  if(!$body)
+    return __('users_message_reply_no_body');
+
+  // Fetch some data regarding the message being replied to
+  $dmessage = mysqli_fetch_array(query("  SELECT  users_private_messages.deleted_by_recipient AS 'pm_deleted'   ,
+                                                  users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
+                                                  users_private_messages.fk_users_sender      AS 'pm_sender'    ,
+                                                  users_private_messages.title                AS 'pm_title'
+                                          FROM    users_private_messages
+                                          WHERE   users_private_messages.id = '$message_id' "));
+
+  // Error: Message has been deleted
+  if($dmessage['pm_deleted'])
+    return __('users_message_deleted');
+
+  // Error: Can not reply to self
+  if($user_id == $dmessage['pm_sender'])
+    return __('users_message_reply_self');
+
+  // Error: Can not reply to other people's messages
+  if($user_id != $dmessage['pm_recipient'])
+    return __('users_message_reply_others');
+
+  // Check if the user is flooding the website
+  if(!flood_check(error_page: false))
+    return __('users_message_reply_flood');
+
+  // Prepare the message's data
+  $recipient  = sanitize($dmessage['pm_sender'], 'int', 0);
+  $title_raw  = 'RE '.string_truncate($dmessage['pm_title'], 25, '…');
+  $title      = sanitize($title_raw, 'string');
+
+  // Send the message
+  private_message_send( $title                      ,
+                        $body                       ,
+                        recipient: $recipient       ,
+                        sender: $user_id            ,
+                        parent_message: $message_id ,
+                        do_not_sanitize: true       );
+
+  // Notify IRC in case of admin message
+  if(!$recipient)
+  {
+    $sender = user_get_username($user_id);
+    irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."todo_link", 'mod');
+  }
+
+  // Everything went well
+  return NULL;
+}
+
+
+
+
+/**
+ * Deletes a private message.
+ *
+ * @param   int         $message_id   The private message's id.
+ *
+ * @return  string|null               An error string, or NULL if all went well.
+ */
+
+function private_message_delete( int $message_id ) : mixed
 {
   // Require users to be logged in to run this action
   user_restrict_to_users();
@@ -299,4 +346,43 @@ function users_message_delete( int $message_id ) : mixed
 
   // All went well, return NULL
   return NULL;
+}
+
+
+
+
+/**
+ * Fetches all years during which the current user got private messages.
+ *
+ * @return  array   The data, ready for use.
+ */
+
+function private_message_years_list() : array
+{
+  // Require users to be logged in to run this action
+  user_restrict_to_users();
+
+  // Fetch the user's id
+  $user_id = sanitize(user_get_id(), 'int', 1);
+
+  // Fetch the years during which the user got private messages
+  $qyears = query(" SELECT    YEAR(FROM_UNIXTIME(users_private_messages.sent_at)) AS 'pm_year'
+                    FROM      users_private_messages
+                    WHERE     users_private_messages.fk_users_recipient = '$user_id'
+                    GROUP BY  YEAR(FROM_UNIXTIME(users_private_messages.sent_at))
+                    ORDER BY  YEAR(FROM_UNIXTIME(users_private_messages.sent_at)) DESC ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qyears); $i++)
+    $data[$i]['year'] = sanitize_output($row['pm_year']);
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('file' => 'users/messages.act.php', 'function' => 'private_messages_years_list', 'data' => $data));
+
+  // Return the prepared data
+  return $data;
 }

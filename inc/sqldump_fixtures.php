@@ -955,7 +955,7 @@ while($dusers = mysqli_fetch_array($qusers))
     $sender           = (mt_rand(0,1)) ? fixtures_fetch_random_id('users') : 0;
     $sent_at          = mt_rand(1111239420, time());
     $read_at          = (mt_rand(0,5) < 3) ? mt_rand($sent_at, time()) : 0;
-    $title            = fixtures_generate_data('sentence', 3, 5);
+    $title            = fixtures_generate_data('sentence', 2, 3);
     $body             = fixtures_generate_data('text', 1, 3);
 
     // Generate the private messages

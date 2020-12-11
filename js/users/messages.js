@@ -1,9 +1,11 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  users_inbox_search          Performs a search through a user's private messages inbox.                           */
+/*  users_inbox_search            Performs a search through a user's private messages inbox.                         */
 /*                                                                                                                   */
-/*  users_message_open          Triggers the opening of a private message.                                           */
-/*  users_message_delete        Triggers the deletion of a private message.                                          */
+/*  users_message_open            Triggers the opening of a private message.                                         */
+/*  users_message_reply           Opens the form allowing replying to a private message.                             */
+/*  users_message_reply_send      Triggers the sending of a reply to a private message.                              */
+/*  users_message_delete          Triggers the deletion of a private message.                                        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 // Close the private messages popin if it is open upon loading the page
@@ -61,6 +63,58 @@ function users_message_open( message_id )
 
   // Fetch the private message
   fetch_page('private_message', 'popin_private_message_body', postdata);
+}
+
+
+
+
+/**
+ * Opens the form allowing replying to a private message.
+ *
+ * @returns {void}
+ */
+
+function users_message_reply()
+{
+  // Hide the action buttons
+  toggle_class_oneway('private_message_buttons', 0);
+
+  // Show the reply form
+  toggle_element_oneway('private_message_reply', 1);
+}
+
+
+
+
+/**
+ * Triggers the sending of a reply to a private message.
+ *
+ * @param   {int}   message_id  The id of the private message.
+ *
+ * @return  {void}
+ */
+
+function users_message_reply_send( message_id )
+{
+  // Don't send empty messages
+  if(!document.getElementById('private_message_reply_body').value)
+  {
+    document.getElementById('private_message_reply_body').classList.add('glow');
+    return;
+  }
+
+  // Hide the reply box
+  toggle_element_oneway('private_message_reply', 0);
+
+  // Show the reply acknowledgement
+  toggle_element_oneway('private_message_reply_return', 1);
+
+  // Prepare the postdata
+  postdata  = 'private_message_id=' + fetch_sanitize(message_id);
+  postdata += '&private_message_body=' + fetch_sanitize_id('private_message_reply_body');
+
+  // Fetch the private message
+  fetch_page('private_message_reply', 'private_message_reply_return', postdata);
 }
 
 

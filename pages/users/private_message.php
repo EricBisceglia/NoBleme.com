@@ -59,13 +59,47 @@ if(isset($private_message_data['error'])) { ?>
 
 <hr>
 
-<div class="tinypadding_top tinypadding_bot flexcontainer">
-  <div class="flex align_center">
-    <button><?=__('users_message_reply')?></button>
+<div class="private_message_buttons desktop">
+  <div class="tinypadding_top tinypadding_bot flexcontainer">
+    <?php if(!$private_message_data['self']) { ?>
+    <div class="flex align_center">
+      <button onclick="users_message_reply();"><?=__('users_message_reply')?></button>
+    </div>
+    <?php } ?>
+    <div class="flex align_center">
+      <button onclick="users_message_delete(<?=$private_message_data['id']?>, '<?=__('users_message_confirm')?>');"><?=__('users_message_delete')?></button>
+    </div>
   </div>
-  <div class="flex align_center">
-    <button onclick="users_message_delete(<?=$private_message_data['id']?>, '<?=__('users_message_confirm')?>');"><?=__('users_message_delete')?></button>
+</div>
+
+<div class="private_message_buttons tinypadding_top tinypadding_bot mobile">
+<?php if(!$private_message_data['self']) { ?>
+  <div class="tinypadding_bot">
+    <button onclick="users_message_reply();"><?=__('users_message_reply')?></button>
   </div>
+  <?php } ?>
+  <button onclick="users_message_delete(<?=$private_message_data['id']?>, '<?=__('users_message_confirm')?>');"><?=__('users_message_delete')?></button>
+</div>
+
+<div class="smallpadding_top hidden" id="private_message_reply">
+  <form method="POST">
+    <fieldset>
+      <?php if(!$private_message_data['sender']) { ?>
+      <div class="smallpadding_bot">
+        <p class="nopadding"><?=__('users_message_reply_system')?></p>
+      </div>
+      <?php } ?>
+      <label for="private_message_reply_body"><?=__('users_message_reply_title')?></label>
+      <textarea id="private_message_reply_body" name="private_message_reply_body"></textarea>
+      </fieldset>
+  </form>
+  <div class="smallpadding_top smallpadding_bot">
+    <button onclick="users_message_reply_send(<?=$private_message_data['id']?>);"><?=__('users_message_reply_send')?></button>
+  </div>
+</div>
+
+<div class="smallpadding_bot smallpadding_top hidden" id="private_message_reply_return">
+  &nbsp;
 </div>
 
 <hr>

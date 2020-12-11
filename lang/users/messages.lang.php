@@ -26,8 +26,27 @@ ___('users_message_system',   'EN', "Automated message sent on {{1}}.");
 ___('users_message_system',   'FR', "Message automatisé envoyé le {{1}}.");
 ___('users_message_read',     'EN', "Read on {{1}}.");
 ___('users_message_read',     'FR', "Lu le {{1}}.");
-___('users_message_reply',    'EN', "Reply to this message");
-___('users_message_reply',    'FR', "Répondre au message");
+
+
+// Reply to a private message
+___('users_message_reply',          'EN', "Reply to this message");
+___('users_message_reply',          'FR', "Répondre au message");
+___('users_message_reply_system',   'EN', "Replies to automated messages will be sent to the website administration's collective inbox. This means that everyone on the {{link|pages/users/admins|administrative team}} will be able to see your reply and to reply back to you.");
+___('users_message_reply_system',   'FR', "Les réponses aux messages automatisés sont envoyées à la boîte de réception collective de l'administration du site. Cela signifie que toute {{link|pages/users/admins|l'équipe administrative}} pourra voir votre message et y répondre.");
+___('users_message_reply_title',    'EN', "Your reply - you can use {{link|todo_link|BBCodes}} for formatting");
+___('users_message_reply_title',    'FR', "Votre réponse - vous pouvez la formater avec des {{link|todo_link|BBCodes}}");
+___('users_message_reply_send',     'EN', "Send reply");
+___('users_message_reply_send',     'FR', "Envoyer la réponse");
+___('users_message_reply_no_body',  'EN', "Your message must not be empty");
+___('users_message_reply_no_body',  'FR', "Votre message ne peut pas être vide");
+___('users_message_reply_self',     'EN', "You can not reply to yourself");
+___('users_message_reply_self',     'FR', "Vous ne pouvez pas répondre à vos propres messages");
+___('users_message_reply_others',   'EN', "You can not reply to messages that do not belong to you");
+___('users_message_reply_others',   'FR', "Vous ne pouvez pas réponder à des messages qui ne vous sont pas destinés");
+___('users_message_reply_flood',    'EN', "Your message has not been sent. In order to prevent flood, you must wait 10 seconds before performing another action on the website");
+___('users_message_reply_flood',    'FR', "Votre message n'a pas été envoyé. Afin d'éviter le flood, vous devez attendre 10 secondes avant de pouvoir effectuer une action sur le site");
+___('users_message_sent',           'EN', "The message has been sent");
+___('users_message_sent',           'FR', "Le message a été envoyé");
 
 
 // Delete a private message

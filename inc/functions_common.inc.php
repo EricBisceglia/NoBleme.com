@@ -926,8 +926,9 @@ function string_wrap_in_html_tags(  string  $search     ,
  *
  * @param   string  $title                        The message's title.
  * @param   string  $body                         The message's body.
- * @param   int     $recipient        (OPTIONAL)  The ID of the user which gets the message - if 0, current user.
+ * @param   int     $recipient        (OPTIONAL)  The ID of the user which gets the message - if -1, current user.
  * @param   int     $sender           (OPTIONAL)  The ID of the suer sending the message - if 0, system notification.
+ * @param   int     $parent_message   (OPTIONAL)  The ID of the parent message, if it is part of a message chain.
  * @param   bool    $is_silent        (OPTIONAL)  If set, the message arrives as already read.
  * @param   bool    $do_not_sanitize  (OPTIONAL)  If set, the data will not be sanitized.
  *
@@ -938,6 +939,7 @@ function private_message_send(  string  $title                    ,
                                 string  $body                     ,
                                 int     $recipient        = 0     ,
                                 int     $sender           = 0     ,
+                                int     $parent_message   = 0     ,
                                 bool    $is_silent        = false ,
                                 bool    $do_not_sanitize  = false ) : bool
 {
@@ -948,13 +950,14 @@ function private_message_send(  string  $title                    ,
   // Sanitize and prepare the data
   $title      = ($do_not_sanitize) ? $title : sanitize($title, 'string');
   $body       = ($do_not_sanitize) ? $body : sanitize($body, 'string');
-  $recipient  = ($recipient) ? sanitize($recipient, 'int', 0) : sanitize(user_get_id(), 'int', 0);
+  $recipient  = ($recipient > -1) ? sanitize($recipient, 'int', 0) : sanitize(user_get_id(), 'int', 0);
   $sender     = sanitize($sender, 'int', 0);
+  $parent     = sanitize($parent_message, 'int', 0);
   $sent_at    = sanitize(time(), 'int', 0);
   $read_at    = ($is_silent) ? sanitize(time(), 'int', 0) : 0;
 
   // If the recipient does not exist, do not send the message
-  if(!database_row_exists('users', $recipient))
+  if($recipient && !database_row_exists('users', $recipient))
     return 0;
 
   // If the sender does not exist, do not send the message either
@@ -965,6 +968,7 @@ function private_message_send(  string  $title                    ,
   query(" INSERT INTO   users_private_messages
           SET           users_private_messages.fk_users_recipient = '$recipient'  ,
                         users_private_messages.fk_users_sender    = '$sender'     ,
+                        users_private_messages.fk_parent_message  = '$parent'     ,
                         users_private_messages.sent_at            = '$sent_at'    ,
                         users_private_messages.read_at            = '$read_at'    ,
                         users_private_messages.title              = '$title'      ,
@@ -988,12 +992,14 @@ function private_message_send(  string  $title                    ,
  *
  * Keep in mind, since an error is being thrown, this interrupts the rest of the process of the page.
  *
- * @param   int|null  $user_id  (OPTIONAL)  Specifies the ID of the user to check - if null, current user.
+ * @param   bool      $error_&age   (OPTIONAL)  If set, throws an error page.
+ * @param   int|null  $user_id      (OPTIONAL)  Specifies the ID of the user to check - if null, current user.
  *
- * @return  bool                            Is the user allowed to post content to the website.
+ * @return  bool                                Is the user allowed to post content to the website.
  */
 
-function flood_check( ?int $user_id = NULL ) : bool
+function flood_check( bool  $error_page = true  ,
+                      ?int  $user_id    = NULL  ) : bool
 {
   // If the user is logged out, then he shouldn't be able to do any actions: throw an error
   if(is_null($user_id) && !user_is_logged_in())
@@ -1008,10 +1014,15 @@ function flood_check( ?int $user_id = NULL ) : bool
                                           FROM    users
                                           WHERE   users.id = '$user_id' "));
 
-  // If the last activity for the user happened less than 10 seconds ago, throw an error
+  // If the last activity for the user happened less than 10 seconds ago, throw an error or return false
   $timestamp = time();
   if(($timestamp - $dactivity['u_last']) <= 10 )
-    error_page(__('error_flood_wait'));
+  {
+    if($error_page)
+      error_page(__('error_flood_wait'));
+    else
+      return false;
+  }
 
   // Update the last activity of the user
   query(" UPDATE  users
@@ -1019,7 +1030,7 @@ function flood_check( ?int $user_id = NULL ) : bool
           WHERE   users.id              = '$user_id' ");
 
   // The user is allowed to proceed
-  return 1;
+  return true;
 }
 
 

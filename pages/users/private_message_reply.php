@@ -23,9 +23,10 @@ user_restrict_to_users();
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Delete the private message
+// Send the private message reply
 
-$delete_error = private_message_delete(form_fetch_element('private_message_delete', 0));
+$reply_error =  private_message_reply(  form_fetch_element('private_message_id', 0) ,
+                                        form_fetch_element('private_message_body')  );
 
 
 
@@ -34,12 +35,14 @@ $delete_error = private_message_delete(form_fetch_element('private_message_delet
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-/******************************************************************************************************************/ ?>
+/*********************************************************************************************************************/
 
-<td colspan="5" class="red text_white bold align_center uppercase">
-  <?php if($delete_error) { ?>
-  <?=__('error').__(':', spaces_after: 1).$delete_error?>
-  <?php } else { ?>
-  <?=__('users_message_deleted')?>
-  <?php } ?>
-</td>
+if($reply_error) { ?>
+<h5 class="red text_white bold uppercase align_center">
+  <?=__('error').__(':', spaces_after: 1).$reply_error?>
+</h5>
+<?php } else { ?>
+<h5 class="green text_white bold uppercase align_center">
+  <?=__('users_message_sent')?>
+</h5>
+<?php } ?>
