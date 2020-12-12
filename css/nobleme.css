@@ -77,7 +77,9 @@
 .indented        { padding-left: 2.0rem;                        }
 .spaced          { padding-left: 0.5rem; padding-right: 0.5rem; }
 .spaced_left     { padding-left: 0.5rem;                        }
+.bigspaced_left  { padding-left: 1.5rem;                        }
 .spaced_right    { padding-right: 0.5rem;                       }
+.bigspaced_right { padding-right: 1.5rem;                       }
 .nospaced        { padding-left: 0; padding-right: 0;           }
 .tinypadding_top { padding-top: 1.0rem;                         }
 .smallpadding_top{ padding-top: 1.5rem;                         }

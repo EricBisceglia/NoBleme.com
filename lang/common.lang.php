@@ -262,12 +262,8 @@ ___('edit',       'EN', "edit");
 ___('edit',       'FR', "modifier");
 ___('help',       'EN', "help");
 ___('help',       'FR', "aide");
-___('image',      'EN', "image");
-___('image',      'FR', "image");
 ___('info',       'EN', "info");
 ___('info',       'FR', "info");
-___('link',       'EN', "link");
-___('link',       'FR', "lien");
 ___('maximize',   'EN', "maximize");
 ___('maximize',   'FR', "agrandir");
 ___('minimize',   'EN', "minimize");
@@ -405,6 +401,34 @@ ___('username',       'FR', "pseudonyme");
 /*                                                 BBCODES / NBCODES                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+// BBCodes editor
+___('bold',       'EN', "Bold");
+___('bold',       'FR', "Gras");
+___('underlined', 'EN', "Underline");
+___('underlined', 'FR', "Souligner");
+___('quote',      'EN', "Quote");
+___('quote',      'FR', "Citation");
+___('spoiler',    'EN', "Spoiler");
+___('spoiler',    'FR', "Divulgâchage");
+___('link',       'EN', "Link");
+___('link',       'FR', "Lien");
+___('image',      'EN', "Image");
+___('image',      'FR', "Image");
+
+
+// BBcodes editor prompts
+___('quote_prompt',   'EN', "Who or what are you quoting? (you can leave this empty)");
+___('quote_prompt',   'FR', "Qui ou quoi citez-vous ? (vous pouvez laisser ceci vide)");
+___('spoiler_prompt', 'EN', "What is the name of the content that you are spoiling? (you can leave this empty)");
+___('spoiler_prompt', 'FR', "Quel est le nom de ce que vous divulgâchez ? (vous pouvez laisser ceci vide)");
+___('link_prompt',    'EN', "What is the URL you want to link to?");
+___('link_prompt',    'FR', "Vers quelle adresse internet voulez-vous faire pointer votre lien ?");
+___('link_prompt_2',  'EN', "What text do you want your link to show (optional)");
+___('link_prompt_2',  'FR', "Quel texte voulez-vous afficher sur votre lien (optionnel)");
+___('image_prompt',   'EN', "What is the URL of the image you want to insert?");
+___('image_prompt',   'FR', "Quelle est l'URL de l'image que vous voulez insérer ?");
+
 
 // BBCodes
 ___('bbcodes_quote',        'EN', "Quote:");

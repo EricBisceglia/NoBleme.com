@@ -262,6 +262,11 @@ function nbcodes( string  $message                                              
                   int     $nsfw_settings  = 0                                                     ) : string
 {
   /*******************************************************************************************************************/
+  // Run bbcodes on the data
+  $message = bbcodes($message, $privacy_level);
+
+
+  /*******************************************************************************************************************/
   // Fetch the path to the website's root
   $path = root_path();
 
@@ -546,9 +551,6 @@ function nbcodes( string  $message                                              
 
   /*******************************************************************************************************************/
   // All NBCodes have been treated
-
-  // Run bbcodes on the data
-  $message = bbcodes($message, $privacy_level);
 
   // Return the data
   return $message;

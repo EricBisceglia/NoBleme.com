@@ -82,20 +82,37 @@ if(isset($private_message_data['error'])) { ?>
 </div>
 
 <div class="smallpadding_top hidden" id="private_message_reply">
+
   <form method="POST">
     <fieldset>
+
       <?php if(!$private_message_data['sender']) { ?>
       <div class="smallpadding_bot">
         <p class="nopadding"><?=__('users_message_reply_system')?></p>
       </div>
       <?php } ?>
+
       <label for="private_message_reply_body"><?=__('users_message_reply_title')?></label>
-      <textarea id="private_message_reply_body" name="private_message_reply_body"></textarea>
-      </fieldset>
+      <div class="flexcontainer">
+        <div style="flex:9">
+          <textarea id="private_message_reply_body" name="private_message_reply_body"></textarea>
+        </div>
+        <div class="flex desktop">
+          <?php
+          $editor_line_break = 1;
+          $editor_target_element = 'private_message_reply_body';
+          include './../../inc/editor.inc.php';
+          ?>
+        </div>
+      </div>
+
+    </fieldset>
   </form>
+
   <div class="smallpadding_top smallpadding_bot">
     <button onclick="users_message_reply_send(<?=$private_message_data['id']?>);"><?=__('users_message_reply_send')?></button>
   </div>
+
 </div>
 
 <div class="smallpadding_bot smallpadding_top hidden" id="private_message_reply_return">

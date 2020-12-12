@@ -20,7 +20,7 @@ $page_title_fr    = "Boite de réception";
 $page_description = "Private message inbox - for private messages from the system or from other users.";
 
 // Extra JS
-$js = array('common/toggle', 'users/messages');
+$js = array('common/editor', 'common/toggle', 'users/messages');
 
 
 

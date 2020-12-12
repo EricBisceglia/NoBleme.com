@@ -225,8 +225,9 @@ if ($activity_user)
   // Fetch unread private message count
   $dpms = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 'pm_nb'
                                       FROM    users_private_messages
-                                      WHERE   users_private_messages.read_at            = 0
-                                      AND     users_private_messages.fk_users_recipient = '$activity_user' "));
+                                      WHERE   users_private_messages.read_at              = 0
+                                      AND     users_private_messages.deleted_by_recipient = 0
+                                      AND     users_private_messages.fk_users_recipient   = '$activity_user' "));
 
   // Fetch the result for display
   $nb_private_messages      = $dpms['pm_nb'];
