@@ -92,7 +92,7 @@ if(isset($private_message_data['error'])) { ?>
       </div>
       <?php } ?>
 
-      <label for="private_message_reply_body"><?=__('users_message_reply_title')?></label>
+      <label for="private_message_reply_body"><?=__('users_message_reply_title', preset_values: array(__link('pages/doc/bbcodes', __('bbcodes'), popup:true)))?></label>
       <div class="flexcontainer">
         <div style="flex:9">
           <textarea id="private_message_reply_body" name="private_message_reply_body"></textarea>

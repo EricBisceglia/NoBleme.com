@@ -62,15 +62,16 @@ function __(  string  $string                   ,
 
   /*
   / Replace URLs if needed, using a regex that can work in either of the following ways:
-  / {{link+++|href|text|style|is_internal|path}}  # Will always be an internal link
-  / {{link++|href|text|style|is_internal}}        # Will always be an external link
+  / {{link++|href|text|style|path}} # Will always be an internal link
   / {{link+|href|text|style}}
   / {{link|href|text}}
+  / {{external|href|text}}
   */
-  $returned_string = preg_replace('/\{\{link\+\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", 1, "$5"), $returned_string);
+  $returned_string = preg_replace('/\{\{link\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", path: "$5"), $returned_string);
   $returned_string = preg_replace('/\{\{link\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", 0), $returned_string);
   $returned_string = preg_replace('/\{\{link\+\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3"), $returned_string);
   $returned_string = preg_replace('/\{\{link\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2"), $returned_string);
+  $returned_string = preg_replace('/\{\{external\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", is_internal: false), $returned_string);
 
   /*
   / Replace tooltips if needed, using a regex that can work in either of the following ways:
@@ -138,6 +139,7 @@ function ___( string  $name         ,
  * @param   bool    $is_internal  (OPTIONAL)  Whether the link is internal (on the website) or external.
  * @param   string  $path         (OPTIONAL)  The path to the website's root (defaults to 2 folders from root).
  * @param   string  $onclick      (OPTIONAL)  A javascript option to trigger upon clicking the link.
+ * @param   bool    $popup        (OPTIONAL)  Opens the link in a new window.
  *
  * @return  string                            The link, ready for use.
  */
@@ -147,7 +149,8 @@ function __link(  string  $href                       ,
                   string  $style        = "bold"      ,
                   bool    $is_internal  = true        ,
                   string  $path         = "./../../"  ,
-                  string  $onclick      = ''          ) : string
+                  string  $onclick      = ''          ,
+                  bool    $popup        = false       ) : string
 {
   // Prepare the style
   $class = ($style) ? " class=\"$style\"" : "";
@@ -156,11 +159,14 @@ function __link(  string  $href                       ,
   $url = ($is_internal) ? $path.$href : $href;
   $url = ($url) ? "href=\"".$url."\"" : "";
 
+  // Make it pop-up if needed
+  $popup = ($popup) ? 'target="_blank"' : '';
+
   // Prepare the onclick
   $onclick = ($onclick) ? 'onclick="'.$onclick.'"' : '';
 
   // Return the built link
-  return "<a $class $url $onclick>$text</a>";
+  return "<a $class $url $popup $onclick>$text</a>";
 }
 
 
@@ -431,6 +437,8 @@ ___('image_prompt',   'FR', "Quelle est l'URL de l'image que vous voulez insére
 
 
 // BBCodes
+___('bbcodes',              'EN', "BBCodes");
+___('bbcodes',              'FR', "BBCodes");
 ___('bbcodes_quote',        'EN', "Quote:");
 ___('bbcodes_quote',        'FR', "Citation :");
 ___('bbcodes_quote_by',     'EN', "Quote by");
@@ -876,19 +884,19 @@ ___('login_form_error_forgotten_password',  'FR', "Mot de passe oublié ?");
 ___('users_lost_access_title',    'EN', "Lost account access");
 ___('users_lost_access_title',    'FR', "Accès perdu à votre compte");
 ___('users_lost_access_body',     'EN', <<<EOT
-As a part of its {{link+++|todo_link|privacy policy|bold|1|{{1}}}}, NoBleme will protect your anonymity as much as possible. This means that you will never be sent any emails that could be used to link you to your identity on the website, or asking you to provide your password. On top of that, automated password recovery systems can be used in a few nefarious ways that we would rather not have to deal with. With this context in mind, NoBleme decided to not implement an automated account recovery process.
+As a part of its {{link++|todo_link|privacy policy|bold|{{1}}}}, NoBleme will protect your anonymity as much as possible. This means that you will never be sent any emails that could be used to link you to your identity on the website, or asking you to provide your password. On top of that, automated password recovery systems can be used in a few nefarious ways that we would rather not have to deal with. With this context in mind, NoBleme decided to not implement an automated account recovery process.
 EOT
 );
 ___('users_lost_access_body',     'FR', <<<EOT
-Par respect pour la {{link+++|todo_link|politique de confidentialité|bold|1|{{1}}}} de NoBleme, votre anonymité doit être protégée le plus possible. Cela signifie que vous ne recevrez jamais d'e-mail permettant de vous relier à votre identité sur NoBleme, ou vous demandant votre mot de passe. Par ailleurs, les systèmes de récupération automatique de mots de passe perdus peuvent être exploités de plusieurs façons que nous n'avons pas envie de devoir gérer. Ce contexte devrait vous aider à comprendre pourquoi NoBleme a fait le choix de ne pas avoir de système de récupération de compte automatisé.
+Par respect pour la {{link++|todo_link|politique de confidentialité|bold|{{1}}}} de NoBleme, votre anonymité doit être protégée le plus possible. Cela signifie que vous ne recevrez jamais d'e-mail permettant de vous relier à votre identité sur NoBleme, ou vous demandant votre mot de passe. Par ailleurs, les systèmes de récupération automatique de mots de passe perdus peuvent être exploités de plusieurs façons que nous n'avons pas envie de devoir gérer. Ce contexte devrait vous aider à comprendre pourquoi NoBleme a fait le choix de ne pas avoir de système de récupération de compte automatisé.
 EOT
 );
 ___('users_lost_access_solution', 'EN', <<<EOT
-If you have lost access to your account (forgotten username, forgotten password, or otherwise), the only way to recover that access is to go on NoBleme's {{link+++|todo_link|NoBleme's IRC chat server|bold|1|{{1}}}} and ask for a {{link+++|todo_link|website administrator|bold|1|{{1}}}} to manually reset your account's password. No need to worry about identity usurpation, there is a strict process in place that will allow the administrator to verify your identity before doing the resetting.
+If you have lost access to your account (forgotten username, forgotten password, or otherwise), the only way to recover that access is to go on NoBleme's {{link++|todo_link|NoBleme's IRC chat server|bold|{{1}}}} and ask for a {{link++|todo_link|website administrator|bold|{{1}}}} to manually reset your account's password. No need to worry about identity usurpation, there is a strict process in place that will allow the administrator to verify your identity before doing the resetting.
 EOT
 );
 ___('users_lost_access_solution', 'FR', <<<EOT
-Si vous avez perdu l'accès à votre compte (pseudonyme oublié, mot de passe oublié, ou autre), la seule façon de récupérer cet accès est d'aller sur le {{link+++|todo_link|chat IRC NoBleme|bold|1|{{1}}}} afin d'y demander à {{link+++|todo_link|l'équipe administrative|bold|1|{{1}}}} de manuellement remettre à zéro le mot de passe de votre compte. Pas d'inquiétude pour ce qui est de l'usurpation d'identité, un processus strict de vérification est en place et devra être respecté avant que l'administration puisse remettre à zéro votre mot de passe et vous rendre l'accès à votre compte perdu.
+Si vous avez perdu l'accès à votre compte (pseudonyme oublié, mot de passe oublié, ou autre), la seule façon de récupérer cet accès est d'aller sur le {{link++|todo_link|chat IRC NoBleme|bold|{{1}}}} afin d'y demander à {{link++|todo_link|l'équipe administrative|bold|{{1}}}} de manuellement remettre à zéro le mot de passe de votre compte. Pas d'inquiétude pour ce qui est de l'usurpation d'identité, un processus strict de vérification est en place et devra être respecté avant que l'administration puisse remettre à zéro votre mot de passe et vous rendre l'accès à votre compte perdu.
 EOT
 );
 
@@ -901,7 +909,7 @@ ___('users_ip_banned_body',   'EN', <<<EOT
   Your current IP address has been banned from logging into or registering an account on this website.
 </p>
 <p>
-  This type of extreme punishment is only given in special cases where we have no other choice left. If you are the author of the mischief that caused you to be IP banned, then you know exactly why you are reading this. If not, then we are deeply sorry that you have been banned as collateral damage, but we have no other choice than to restrict your access to the website as your {{link++|https://en.wikipedia.org/wiki/IP_address|IP address|bold|0}} is shared with someone else who has been using the website in abusive ways.
+  This type of extreme punishment is only given in special cases where we have no other choice left. If you are the author of the mischief that caused you to be IP banned, then you know exactly why you are reading this. If not, then we are deeply sorry that you have been banned as collateral damage, but we have no other choice than to restrict your access to the website as your {{external|https://en.wikipedia.org/wiki/IP_address|IP address}} is shared with someone else who has been using the website in abusive ways.
 </p>
 <p>
   Once this IP ban expires, we hope to see you again under different circumstances. Until then, you are free to continue using the website as a guest.
@@ -913,7 +921,7 @@ ___('users_ip_banned_body',   'FR', <<<EOT
   Votre adresse IP actuelle est bannie : vous ne pouvez pas vous connecter à un compte utilisateur.
 </p>
 <p>
-Ce type de punition extrême n'est utilisé que dans des cas spéciaux où nous n'avons pas d'autre option qu'une exclusion totale. Si vous êtes responsable du chaos qui a mené à ce bannissement, vous savez exactement pourquoi vous voyez ce message. Si ce n'est pas le cas, nous sommes désolés de vous annoncer que vous êtes victime de dommages collatéraux : quelqu'un d'autre partageant la même {{link++|https://fr.wikipedia.org/wiki/Adresse_IP|Adresse IP|bold|0}} que vous a causé tant de problèmes que nous n'avons pas eu d'autre option que de bannir cette adresse IP.
+Ce type de punition extrême n'est utilisé que dans des cas spéciaux où nous n'avons pas d'autre option qu'une exclusion totale. Si vous êtes responsable du chaos qui a mené à ce bannissement, vous savez exactement pourquoi vous voyez ce message. Si ce n'est pas le cas, nous sommes désolés de vous annoncer que vous êtes victime de dommages collatéraux : quelqu'un d'autre partageant la même {{external|https://fr.wikipedia.org/wiki/Adresse_IP|Adresse IP}} que vous a causé tant de problèmes que nous n'avons pas eu d'autre option que de bannir cette adresse IP.
 </p>
 <p>
 Une fois ce bannissement fini, nous espérons vous revoir dans de meilleures circonstances. En attendant, vous êtes libre de continuer à utiliser le site, mais sans pouvoir utiliser de compte.
