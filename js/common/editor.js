@@ -17,7 +17,7 @@ function editor_bold( target_element          ,
   // Fetch the target element
   target_element = document.getElementById(target_element);
 
-  // Determine where the cursor is
+  // Determine where the cursor and/or selection currently are within the target element
 	length    = target_element.value.length;
 	start     = target_element.selectionStart;
   end       = target_element.selectionEnd;
@@ -34,6 +34,7 @@ function editor_bold( target_element          ,
   // Apply BBcode: quote
   else if(bbcode == 'quote')
   {
+    // Ask for the author and act accordingly
     author = prompt(prompt_text);
     if(author)
       replace = '[quote=' + author + ']' + selection + '[/quote]';
@@ -44,6 +45,7 @@ function editor_bold( target_element          ,
   // Apply BBcode: spoiler
   else if(bbcode == 'spoiler')
   {
+    // Ask for the author and act accordingly
     author = prompt(prompt_text);
     if(author)
       replace = '[spoiler=' + author + ']' + selection + '[/spoiler]';
@@ -54,10 +56,22 @@ function editor_bold( target_element          ,
   // Apply BBcode: link
   else if(bbcode == 'link')
   {
+    // Ask for the url and the text
     link = prompt(prompt_text);
     text = prompt(prompt_text_2);
+
+    // If the url doesn't have a valid prefix, prepend https to it
+    if(link)
+    {
+      if(link.substr(0, 'https://'.length) !== 'https://' && link.substr(0, 'http://'.length) !== 'http://')
+        link = 'https://' + link;
+    }
+
+    // If no url was given, wrap the selected text with url tags
     if(!link)
       replace = '[url]' + selection + '[/url]';
+
+    // Otherwise assemble the given link
     else if(!text)
       replace = selection + '[url=' + link + ']' + link + '[/url]';
     else
@@ -67,9 +81,21 @@ function editor_bold( target_element          ,
   // Apply BBcode: image
   else if(bbcode == 'image')
   {
+    // Ask for the url
     source = prompt(prompt_text);
+
+    // If the url doesn't have a valid prefix, prepend https to it
+    if(source)
+    {
+      if(source.substr(0, 'https://'.length) !== 'https://' && source.substr(0, 'http://'.length) !== 'http://')
+      source = 'https://' + source;
+    }
+
+    // If an url was given, assemble the image
     if(source)
       replace = selection + '[img]' + source + '[/img]';
+
+    // Otherwise wrap the selected text with img tags
     else
       replace = '[img]' + selection + '[/img]';
   }

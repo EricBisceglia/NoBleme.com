@@ -20,7 +20,7 @@
  * @param   {string}  [postdata]        This content will be passed to the target page as postdata.
  * @param   {string}  [callback]        Script element to call once the content has been fetched.
  * @param   {int}     [append_content]  Should the content be appended to the target element instead of replacing it.
- * @param   {string}  [path]            The path to the root of the website.
+ * @param   {string}  [path]            The path to the root of the website - only used if load bar should be shown.
  * @param   {int}     [show_load_bar]   If set, there will be a "loading" bar until the fetched content is loaded.
  *
  * @returns {void}

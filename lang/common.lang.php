@@ -433,7 +433,7 @@ ___('link_prompt',    'FR', "Vers quelle adresse internet voulez-vous faire poin
 ___('link_prompt_2',  'EN', "What text do you want your link to show (optional)");
 ___('link_prompt_2',  'FR', "Quel texte voulez-vous afficher sur votre lien (optionnel)");
 ___('image_prompt',   'EN', "What is the URL of the image you want to insert?");
-___('image_prompt',   'FR', "Quelle est l'URL de l'image que vous voulez insérer ?");
+___('image_prompt',   'FR', "Quelle est l\'adresse internet de l\'image que vous désirez insérer ?");
 
 
 // BBCodes
@@ -444,7 +444,7 @@ ___('bbcodes_quote',        'FR', "Citation :");
 ___('bbcodes_quote_by',     'EN', "Quote by");
 ___('bbcodes_quote_by',     'FR', "Citation de");
 ___('bbcodes_spoiler',      'EN', "SPOILER");
-___('bbcodes_spoiler',      'FR', "SPOILER");
+___('bbcodes_spoiler',      'FR', "DIVULGÂCHAGE");
 ___('bbcodes_spoiler_hide', 'EN', "HIDE SPOILER CONTENTS");
 ___('bbcodes_spoiler_hide', 'FR', "MASQUER LE CONTENU CACHÉ");
 ___('bbcodes_spoiler_show', 'EN', "SHOW SPOILER CONTENTS");

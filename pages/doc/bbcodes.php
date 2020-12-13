@@ -14,17 +14,8 @@ $page_title_en    = "BBCodes";
 $page_title_fr    = "BBCodes";
 $page_description = "Guide on available BBCodes and how to use them on NoBleme.";
 
-
-
-
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                     BACK END                                                      */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
+// Extra JS
+$js = array('common/preview', 'common/editor');
 
 
 
@@ -315,6 +306,26 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     </tbody>
   </table>
+
+  <h1 class="hugepadding_top">
+    <?=__('bbcodes_experiment')?>
+  </h1>
+
+  <p class="padding_bot">
+    <?=__('bbcodes_test_zone')?>
+  </p>
+
+  <?php
+  $editor_target_element  = 'bbcodes_doc_input';
+  $preview_output         = 'bbcodes_doc_result';
+  $preview_path           = $path;
+  include './../../inc/editor.inc.php';
+  ?>
+  <textarea id="bbcodes_doc_input" onkeyup="preview_bbcodes('bbcodes_doc_input', 'bbcodes_doc_result');"><?=__('bbcodes_test_input')?></textarea>
+
+  <div class="smallpadding_top" id="bbcodes_doc_result">
+    <?=bbcodes(sanitize_output(__('bbcodes_test_input'), true))?>
+  </div>
 
 </div>
 

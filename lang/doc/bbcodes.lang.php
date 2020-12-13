@@ -123,3 +123,32 @@ ___('bbcodes_doc_twitter',      'EN', "You need to find the tweet's ID");
 ___('bbcodes_doc_twitter',      'FR', "Vous devez trouver l'ID du tweet");
 ___('bbcodes_doc_twitter_link', 'EN', "[twitter]966143395918786560[/twitter]");
 ___('bbcodes_doc_twitter_link', 'FR', "[twitter]966143395918786560[/twitter]");
+
+
+// Experimental zone
+___('bbcodes_experiment', 'EN', "Experimental zone");
+___('bbcodes_experiment', 'FR', "Zone d'expérimentation");
+___('bbcodes_test_zone',  'EN', <<<EOT
+The best way to understand how BBCodes work is to try them out! Type anything you want in the text area below, the transformed result will appear in real time underneath. A few BBCodes have been pre-entered in the text area, feel free to delete them and try your own experiments.
+EOT
+);
+___('bbcodes_test_zone',  'FR', <<<EOT
+La meilleure façon de comprendre comment les BBCodes fonctionnent est de les utiliser ! Écrivez ce que vous voulez dans la zone de texte ci-dessous, le résultat transformé apparaîtra en temps réel en dessous. Quelques BBCodes y ont été pré-remplis , libre à vous de les supprimer et de faire vos propres expériences.
+EOT
+);
+___('bbcodes_test_input', 'EN', <<<EOT
+[s][b][i][color=orange][size=2]Combined BBCodes[/size][/color][/i][/b][/s]
+
+[spoiler][spoiler=One more][spoiler=Last one][quote][code]Nested spoilers[/code][/quote][/spoiler][/spoiler][/spoiler]
+
+[align=right][youtube]q6EoRBvdVPQ[/youtube][/align]
+EOT
+);
+___('bbcodes_test_input', 'FR', <<<EOT
+[s][b][i][color=orange][size=2]BBCodes combinés[/size][/color][/i][/b][/s]
+
+[spoiler][spoiler=Encore un][spoiler=Le dernier][quote][code]Divulgâchages encastrés[/code][/quote][/spoiler][/spoiler][/spoiler]
+
+[align=right][youtube]q6EoRBvdVPQ[/youtube][/align]
+EOT
+);
