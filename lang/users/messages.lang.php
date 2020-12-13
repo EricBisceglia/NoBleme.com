@@ -47,6 +47,8 @@ ___('users_message_reply_flood',    'EN', "Your message has not been sent. In or
 ___('users_message_reply_flood',    'FR', "Votre message n'a pas été envoyé. Afin d'éviter le flood, vous devez attendre 10 secondes avant de pouvoir effectuer une action sur le site");
 ___('users_message_sent',           'EN', "The message has been sent");
 ___('users_message_sent',           'FR', "Le message a été envoyé");
+___('users_message_preview_reply',  'EN', "Preview of your message :");
+___('users_message_preview_reply',  'FR', "Prévisualisation de votre message :");
 
 
 // Delete a private message

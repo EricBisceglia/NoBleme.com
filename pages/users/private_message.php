@@ -95,7 +95,7 @@ if(isset($private_message_data['error'])) { ?>
       <label for="private_message_reply_body"><?=__('users_message_reply_title', preset_values: array(__link('pages/doc/bbcodes', __('bbcodes'), popup:true)))?></label>
       <div class="flexcontainer">
         <div style="flex:9">
-          <textarea id="private_message_reply_body" name="private_message_reply_body"></textarea>
+          <textarea id="private_message_reply_body" name="private_message_reply_body" onkeyup="users_message_reply_preview()"></textarea>
         </div>
         <div class="flex desktop">
           <?php
@@ -111,6 +111,16 @@ if(isset($private_message_data['error'])) { ?>
 
   <div class="smallpadding_top smallpadding_bot">
     <button onclick="users_message_reply_send(<?=$private_message_data['id']?>);"><?=__('users_message_reply_send')?></button>
+  </div>
+
+  <div class="smallpadding_bot hidden" id="private_message_preview_area">
+    <hr>
+    <div class="smallpadding_top">
+      <label class="tinypadding_bot" for="private_message_preview_area"><?=__('users_message_preview_reply')?></label>
+      <div id="private_message_preview">
+        &nbsp;
+      </div>
+    </div>
   </div>
 
 </div>

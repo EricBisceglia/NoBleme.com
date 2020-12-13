@@ -4,6 +4,7 @@
 /*                                                                                                                   */
 /*  users_message_open            Triggers the opening of a private message.                                         */
 /*  users_message_reply           Opens the form allowing replying to a private message.                             */
+/*  users_message_reply_preview   Previews the reply to a private message.                                           */
 /*  users_message_reply_send      Triggers the sending of a reply to a private message.                              */
 /*  users_message_delete          Triggers the deletion of a private message.                                        */
 /*                                                                                                                   */
@@ -81,6 +82,24 @@ function users_message_reply()
 
   // Show the reply form
   toggle_element_oneway('private_message_reply', 1);
+}
+
+
+
+
+/**
+ *  Previews the reply to a private message.
+ *
+ * @return  {void}
+ */
+
+function users_message_reply_preview()
+{
+  // Show the preview area
+  toggle_element_oneway('private_message_preview_area', 1);
+
+  // Preview the message
+  preview_bbcodes('private_message_reply_body', 'private_message_preview');
 }
 
 

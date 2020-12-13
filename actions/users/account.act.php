@@ -139,7 +139,8 @@ function user_authenticate( string  $ip                   ,
     $token_expiry = sanitize(time() + 7890000, 'int', 0);
 
     // Create the cookie
-    setcookie("nobleme_memory", $token_hash, 2147483647, "/");
+    $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict', 'secure' => true);
+    setcookie("nobleme_memory", $token_hash, $cookie_options);
 
     // Update the database
     query(" INSERT INTO users_tokens
