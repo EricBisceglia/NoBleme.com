@@ -46,7 +46,7 @@ if(isset($private_message_data['error'])) { ?>
 
 <h4 class="tinypadding_bot"><?=$private_message_data['title']?></h4>
 
-<p class="nopadding_top smallpadding_bot">
+<p class="nopadding_top bigpadding_bot">
   <?php if($private_message_data['sender']) { ?>
   <?=__('users_message_sent_by', preset_values: array('todo_link?id='.$private_message_data['sender_id'], $private_message_data['sender'], $private_message_data['sent_at']))?>
   <?php } else { ?>
@@ -56,8 +56,6 @@ if(isset($private_message_data['error'])) { ?>
   <?=__('users_message_read', preset_values: array($private_message_data['read_at']))?>
   <?php } ?>
 </p>
-
-<hr>
 
 <div class="private_message_buttons desktop">
   <div class="tinypadding_top tinypadding_bot flexcontainer">
@@ -99,8 +97,10 @@ if(isset($private_message_data['error'])) { ?>
         </div>
         <div class="flex desktop">
           <?php
-          $editor_line_break = 1;
-          $editor_target_element = 'private_message_reply_body';
+          $editor_line_break      = 1;
+          $editor_target_element  = 'private_message_reply_body';
+          $preview_output         = 'private_message_preview';
+          $preview_path           = $path;
           include './../../inc/editor.inc.php';
           ?>
         </div>
@@ -115,24 +115,55 @@ if(isset($private_message_data['error'])) { ?>
 
   <div class="smallpadding_bot hidden" id="private_message_preview_area">
     <hr>
-    <div class="smallpadding_top">
-      <label class="tinypadding_bot" for="private_message_preview_area"><?=__('users_message_preview_reply')?></label>
+    <div class="smallpadding_top smallpadding_bot">
+      <label class="padding_bot" for="private_message_preview_area"><?=__('users_message_preview_reply')?></label>
       <div id="private_message_preview">
         &nbsp;
       </div>
     </div>
+    <hr>
   </div>
 
 </div>
 
-<div class="smallpadding_bot smallpadding_top hidden" id="private_message_reply_return">
+<div class="padding_top padding_bot hidden" id="private_message_reply_return">
   &nbsp;
 </div>
 
-<hr>
-
-<div class="smallpadding_top smallpadding_bot">
+<div class="bigpadding_top bigpadding_bot">
   <?=$private_message_data['body']?>
 </div>
+
+<?php if(isset($private_message_data['parents']) && $private_message_data['parents']) { ?>
+
+<hr>
+
+<p class="padding_bot">
+  <?=__('users_message_parents')?>
+</p>
+
+<?php for($i = 0; $i < $private_message_data['parents']; $i++) { ?>
+
+<hr>
+
+<?php if($private_message_data[$i]['deleted']) { ?>
+
+<p class="padding_bot align_center">
+  <?=__('users_message_chain_deleted')?>
+</p>
+
+<?php } else { ?>
+
+<h4 class="tinypadding_top tinypadding_bot indented"><?=$private_message_data[$i]['title']?></h4>
+
+<p class="nopadding_top indented">
+  <?=__('users_message_chain_sent', preset_values: array($private_message_data[$i]['sender'], $private_message_data[$i]['sent_at'], $private_message_data[$i]['sent_time']))?>
+</p>
+
+<div class="bigpadding_top bigpadding_bot">
+  <?=$private_message_data[$i]['body']?>
+</div>
+
+<?php } } } ?>
 
 <?php } ?>

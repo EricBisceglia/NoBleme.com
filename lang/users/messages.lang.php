@@ -28,6 +28,15 @@ ___('users_message_read',     'EN', "Read on {{1}}.");
 ___('users_message_read',     'FR', "Lu le {{1}}.");
 
 
+// Private message parents
+___('users_message_parents',        'EN', "This message is part of a conversation. Below is the rest of the messages in this conversation, from the most recent message to the oldest one.");
+___('users_message_parents',        'FR', "Ce message fait partie d'une conversation. Vous trouverez ci-dessous le reste de la conversation, du message le plus récent au message le plus ancien.");
+___('users_message_chain_sent',     'EN', "Sent by {{1}} on {{2}} ({{3}})");
+___('users_message_chain_sent',     'FR', "Envoyé par {{1}} le {{2}} ({{3}})");
+___('users_message_chain_deleted',  'EN', "[A message in the conversation has been deleted]");
+___('users_message_chain_deleted',  'FR', "[Un des messages de la conversation a été supprimé]");
+
+
 // Reply to a private message
 ___('users_message_reply',          'EN', "Reply to this message");
 ___('users_message_reply',          'FR', "Répondre au message");

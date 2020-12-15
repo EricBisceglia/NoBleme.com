@@ -139,7 +139,7 @@ function user_authenticate( string  $ip                   ,
     $token_expiry = sanitize(time() + 7890000, 'int', 0);
 
     // Create the cookie
-    $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict', 'secure' => true);
+    $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict');
     setcookie("nobleme_memory", $token_hash, $cookie_options);
 
     // Update the database

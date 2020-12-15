@@ -134,11 +134,17 @@ function user_login_attempt_process()
 
 function popin_close(popin_id)
 {
-  // If the requested popin has been opened, close it and get rid of the hash in the url
+  // If the requested popin has been opened, close it
   if(location.hash == popin_id || location.hash == '#'+popin_id || popin_id == '*')
   {
+    // Get rid of the hash in the URL
     location.hash = '#_';
     history.replaceState({}, document.title, window.location.href.split('#')[0]);
+
+    // Scroll back to the top
+    var popin_scroll = document.getElementsByClassName('popin_body');
+    for(var i = 0; i < popin_scroll.length; i++)
+      popin_scroll[i].scrollTop = 0;
   }
 }
 

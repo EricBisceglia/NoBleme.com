@@ -128,7 +128,7 @@ function private_message_list(  string  $sort_by  = ''      ,
  *
  * @param   int     $message_id   The private message's ID.
  *
- * @return  array                 An array of data regarding the ban.
+ * @return  array                 An array of data regarding the message.
  */
 
 function private_message_get( int $message_id ) : array
@@ -156,6 +156,7 @@ function private_message_get( int $message_id ) : array
   $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted'   ,
                           users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
                           users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
+                          users_private_messages.fk_parent_message    AS 'pm_parent'    ,
                           users_sender.username                       AS 'pm_sender'    ,
                           users_private_messages.sent_at              AS 'pm_sent'      ,
                           users_private_messages.read_at              AS 'pm_read'      ,
@@ -175,7 +176,7 @@ function private_message_get( int $message_id ) : array
     return $data;
   }
 
-  // Error: Message not found
+  // Error: Message does not belong to user
   if($dmessage['pm_recipient'] != $user_id)
   {
     $data['error'] = __('users_message_neighbor');
@@ -199,6 +200,76 @@ function private_message_get( int $message_id ) : array
     query(" UPDATE  users_private_messages
             SET     users_private_messages.read_at  = '$timestamp'
             WHERE   users_private_messages.id       = '$message_id' ");
+  }
+
+  // Get parent message chain
+  if($dmessage['pm_parent'] && $dmessage['pm_parent'] != $message_id)
+  {
+    // Initialize the parent counter
+    $i = 0;
+
+    // Loop through parent messages
+    do
+    {
+      // Fetch the parent ID
+      $message_id = sanitize($dmessage['pm_parent']);
+
+      // Prepare the query to fetch the message's data
+      $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
+                              users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
+                              users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
+                              users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
+                              users_private_messages.fk_parent_message    AS 'pm_parent'    ,
+                              users_sender.username                       AS 'pm_sender'    ,
+                              users_private_messages.sent_at              AS 'pm_sent'      ,
+                              users_private_messages.title                AS 'pm_title'     ,
+                              users_private_messages.body                 AS 'pm_body'
+                    FROM      users_private_messages
+                    LEFT JOIN users AS users_sender ON users_private_messages.fk_users_sender = users_sender.id
+                    WHERE     users_private_messages.id = '$message_id' ";
+
+      // Fetch data regarding the message
+      $dmessage = mysqli_fetch_array(query($qmessage));
+
+      // Error: Message does not exist
+      if(!isset($dmessage['pm_title']))
+        $message_error = 1;
+
+      // If the message does exist, look for more potential errors
+      if(!$message_error)
+      {
+        // Identify whether the user is the sender or the recipient
+        $user_is_sender = ($user_id == $dmessage['pm_sender_id']);
+
+        // Error: User is neither sender nor recipient
+        if(!$user_is_sender && $user_id != $dmessage['pm_recipient'])
+          $message_error = 1;
+
+        // Error: Too many parents (maybe an infinite loop?)
+        if($i >= 100)
+          $message_error = 1;
+      }
+
+      // Prepare the message's contents and increment the loop counter
+      if(!isset($message_error))
+      {
+        $temp                   = ($user_is_sender && $dmessage['pm_deleted_s']) ? 1 : 0;
+        $data[$i]['deleted']    = (!$user_is_sender && $dmessage['pm_deleted_r']) ? 1 : $temp;
+        $data[$i]['title']      = sanitize_output($dmessage['pm_title']);
+        $temp                   = ($dmessage['pm_sender_id']) ? $dmessage['pm_sender'] : __('NoBleme');
+        $data[$i]['sender']     = sanitize_output($temp);
+        $data[$i]['sent_at']    = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
+        $data[$i]['sent_time']  = sanitize_output(time_since($dmessage['pm_sent']));
+        $data[$i]['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
+        $i++;
+      }
+    }
+
+    // Keep looping as long as there is a parent and no error has arisen
+    while(!isset($message_error) && $dmessage['pm_parent'] && $dmessage['pm_parent'] != $message_id);
+
+    // Add the number of parents to the data
+    $data['parents'] = $i;
   }
 
   // In ACT debug mode, print debug data

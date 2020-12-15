@@ -75,7 +75,7 @@ if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
       $token_expiry = sanitize(time() + 7890000, 'int', 0);
 
       // Update the cookie
-      $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict', 'secure' => true);
+      $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict');
       setcookie("nobleme_memory", $token_hash, $cookie_options);
 
       // Update the database
@@ -156,7 +156,8 @@ if(!isset($_SESSION['lang']))
     $language_header = (substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == 'fr') ? 'FR' : 'EN';
 
     // Create the cookie and the session variable
-    setcookie("nobleme_language", $language_header , 2147483647, "/");
+    $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict');
+    setcookie("nobleme_language", $language_header, $cookie_options);
     $_SESSION['lang'] = $language_header;
   }
 
@@ -172,7 +173,8 @@ if(isset($_GET['changelang']))
   $changelang = ($_SESSION['lang'] == 'EN') ? 'FR' : 'EN';
 
   // Change the cookie and session language to the new one
-  setcookie("nobleme_language", $changelang , 2147483647 , "/");
+  $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict');
+  setcookie("nobleme_language", $changelang, $cookie_options);
   $_SESSION['lang'] = $changelang;
 }
 
@@ -180,7 +182,8 @@ if(isset($_GET['changelang']))
 if(isset($_GET['english']) || isset($_GET['anglais']))
 {
   // Change the cookie and session language to english on request
-  setcookie("nobleme_language", "EN" , 2147483647 , "/");
+  $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict');
+  setcookie("nobleme_language", "EN", $cookie_options);
   $_SESSION['lang'] = "EN";
 }
 
@@ -188,7 +191,8 @@ if(isset($_GET['english']) || isset($_GET['anglais']))
 else if(isset($_GET['francais']) || isset($_GET['french']))
 {
   // Change the cookie and session language to french on request
-  setcookie("nobleme_language", "FR" , 2147483647 , "/");
+  $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict');
+  setcookie("nobleme_language", "FR", $cookie_options);
   $_SESSION['lang'] = "FR";
 }
 
@@ -271,11 +275,11 @@ function secure_session_start() : void
   $cookieParams = session_get_cookie_params();
 
   // Prepare a session cookie every time a new page is loaded
-  session_set_cookie_params(  $cookieParams["lifetime"]                       ,
-                              $cookieParams["path"].';SameSite=None; Secure'  ,
-                              $cookieParams["domain"]                         ,
-                              false                                           ,  // Enforce HTTPS - TODO make it true
-                              true                                            ); // Ensures it can't be caught by js
+  session_set_cookie_params(  $cookieParams["lifetime"]                 ,
+                              $cookieParams["path"].';SameSite=Strict;' ,
+                              $cookieParams["domain"]                   ,
+                              false                                     ,  // Enforce HTTPS - TODO make it true
+                              true                                      ); // Ensures it can't be caught by js
 
   // Start the session, for real this time
   session_name($session_name);
