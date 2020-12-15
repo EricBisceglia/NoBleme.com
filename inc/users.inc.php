@@ -75,8 +75,12 @@ if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
       $token_expiry = sanitize(time() + 7890000, 'int', 0);
 
       // Update the cookie
-      $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict');
-      setcookie("nobleme_memory", $token_hash, $cookie_options);
+      setcookie(  "nobleme_memory"          ,
+                  $token_hash               ,
+                [ 'expires'   => 2147483647 ,
+                  'path'      => '/'        ,
+                  'samesite'  => 'None'     ,
+                  'secure'    => true       ]);
 
       // Update the database
       query(" UPDATE  users_tokens
@@ -156,9 +160,13 @@ if(!isset($_SESSION['lang']))
     $language_header = (substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == 'fr') ? 'FR' : 'EN';
 
     // Create the cookie and the session variable
-    $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict');
-    setcookie("nobleme_language", $language_header, $cookie_options);
     $_SESSION['lang'] = $language_header;
+    setcookie(  "nobleme_language"        ,
+                $language_header          ,
+              [ 'expires'   => 2147483647 ,
+                'path'      => '/'        ,
+                'samesite'  => 'None'     ,
+                'secure'    => true       ]);
   }
 
   // If the language cookie exists, set the session language to the one in the cookie
@@ -173,27 +181,39 @@ if(isset($_GET['changelang']))
   $changelang = ($_SESSION['lang'] == 'EN') ? 'FR' : 'EN';
 
   // Change the cookie and session language to the new one
-  $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict');
-  setcookie("nobleme_language", $changelang, $cookie_options);
   $_SESSION['lang'] = $changelang;
+  setcookie(  "nobleme_language"        ,
+              $changelang               ,
+            [ 'expires'   => 2147483647 ,
+              'path'      => '/'        ,
+              'samesite'  => 'None'     ,
+              'secure'    => true       ]);
 }
 
 // If the URL contains a request to change to a specific language, then fullfill that request
 if(isset($_GET['english']) || isset($_GET['anglais']))
 {
   // Change the cookie and session language to english on request
-  $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict');
-  setcookie("nobleme_language", "EN", $cookie_options);
   $_SESSION['lang'] = "EN";
+  setcookie(  "nobleme_language"        ,
+              "EN"                      ,
+            [ 'expires'   => 2147483647 ,
+              'path'      => '/'        ,
+              'samesite'  => 'None'     ,
+              'secure'    => true       ]);
 }
 
 // In case more than one language change request is being done, then english will be the final language
 else if(isset($_GET['francais']) || isset($_GET['french']))
 {
   // Change the cookie and session language to french on request
-  $cookie_options = array('expires' => 2147483647, 'path' => '/', 'samesite' => 'Strict');
-  setcookie("nobleme_language", "FR", $cookie_options);
   $_SESSION['lang'] = "FR";
+  setcookie(  "nobleme_language"        ,
+              "FR"                      ,
+            [ 'expires'   => 2147483647 ,
+              'path'      => '/'        ,
+              'samesite'  => 'None'     ,
+              'secure'    => true       ]);
 }
 
 // If a language change just happened, clean up the URL and reload the page
