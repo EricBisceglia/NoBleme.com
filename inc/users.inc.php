@@ -295,10 +295,11 @@ function secure_session_start() : void
   $cookieParams = session_get_cookie_params();
 
   // Prepare a session cookie every time a new page is loaded
+  $secure_cookie = ($GLOBALS['dev_mode']) ? false : true;
   session_set_cookie_params(  $cookieParams["lifetime"]                 ,
                               $cookieParams["path"].';SameSite=Strict;' ,
                               $cookieParams["domain"]                   ,
-                              false                                     ,  // Enforce HTTPS - TODO make it true
+                              $secure_cookie                            ,  // Enforce HTTPS
                               true                                      ); // Ensures it can't be caught by js
 
   // Start the session, for real this time

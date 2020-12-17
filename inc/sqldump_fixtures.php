@@ -944,19 +944,19 @@ $qusers = query(" SELECT    users.id AS 'u_id'
 // Loop through users
 while($dusers = mysqli_fetch_array($qusers))
 {
-  // Determine the number of messages to generate
-  $random = mt_rand(4, 8);
+  // Determine the number of individual messages to generate
+  $random = mt_rand(3, 5);
   for($i = 0; $i < $random; $i++)
   {
     // Generate random data
-    $deleted_r        = (mt_rand(0,50) < 50) ? 0 : 1;
-    $deleted_s        = (mt_rand(0,50) < 50) ? 0 : 1;
-    $recipient        = $dusers['u_id'];
-    $sender           = (mt_rand(0,1)) ? fixtures_fetch_random_id('users') : 0;
-    $sent_at          = mt_rand(1111239420, time());
-    $read_at          = (mt_rand(0,5) < 3) ? mt_rand($sent_at, time()) : 0;
-    $title            = fixtures_generate_data('sentence', 2, 3);
-    $body             = fixtures_generate_data('text', 1, 3);
+    $deleted_r  = (mt_rand(0,50) < 50) ? 0 : 1;
+    $deleted_s  = (mt_rand(0,50) < 50) ? 0 : 1;
+    $recipient  = $dusers['u_id'];
+    $sender     = (mt_rand(0,1)) ? fixtures_fetch_random_id('users') : 0;
+    $sent_at    = mt_rand(1111239420, time());
+    $read_at    = (mt_rand(0,5) < 3) ? mt_rand($sent_at, time()) : 0;
+    $title      = fixtures_generate_data('sentence', 2, 3);
+    $body       = fixtures_generate_data('text', 1, 3);
 
     // Generate the private messages
     query(" INSERT INTO users_private_messages
@@ -971,6 +971,40 @@ while($dusers = mysqli_fetch_array($qusers))
 
     // Count the private messages
     $private_messages++;
+  }
+
+  // Also generate a conversation chain
+  {
+    $random2  = mt_rand(3, 5);
+    $partner  = (mt_rand(0,1)) ? fixtures_fetch_random_id('users') : 0;
+    for($i = 0; $i < $random2; $i++)
+    {
+      // Generate random data
+      $deleted_r  = (mt_rand(0,50) < 50) ? 0 : 1;
+      $deleted_s  = (mt_rand(0,50) < 50) ? 0 : 1;
+      $recipient  = ($i % 2) ? $partner : $dusers['u_id'];
+      $sender     = ($recipient == $partner) ? $dusers['u_id'] : $partner;
+      $sent_at    = ($i) ? mt_rand($sent_at, time()) : mt_rand(1111239420, time());
+      $read_at    = ($i < $random2 || mt_rand(0,5) < 3) ? mt_rand($sent_at, time()) : 0;
+      $title      = ($i) ? 'RE: '.$title : fixtures_generate_data('sentence', 1, 2);
+      $body       = fixtures_generate_data('text', 1, 3);
+      $parent     = ($i) ? query_id() : 0;
+
+      // Generate the private messages
+      query(" INSERT INTO users_private_messages
+              SET         users_private_messages.deleted_by_recipient = '$deleted_r'  ,
+                          users_private_messages.deleted_by_sender    = '$deleted_s'  ,
+                          users_private_messages.fk_users_recipient   = '$recipient'  ,
+                          users_private_messages.fk_users_sender      = '$sender'     ,
+                          users_private_messages.fk_parent_message    = '$parent'     ,
+                          users_private_messages.sent_at              = '$sent_at'    ,
+                          users_private_messages.read_at              = '$read_at'    ,
+                          users_private_messages.title                = '$title'      ,
+                          users_private_messages.body                 = '$body'       ");
+
+      // Count the private messages
+      $private_messages++;
+    }
   }
 }
 

@@ -236,7 +236,7 @@ function private_message_get( int $message_id ) : array
         $message_error = 1;
 
       // If the message does exist, look for more potential errors
-      if(!$message_error)
+      if(!isset($message_error))
       {
         // Identify whether the user is the sender or the recipient
         $user_is_sender = ($user_id == $dmessage['pm_sender_id']);
@@ -256,7 +256,7 @@ function private_message_get( int $message_id ) : array
         $temp                   = ($user_is_sender && $dmessage['pm_deleted_s']) ? 1 : 0;
         $data[$i]['deleted']    = (!$user_is_sender && $dmessage['pm_deleted_r']) ? 1 : $temp;
         $data[$i]['title']      = sanitize_output($dmessage['pm_title']);
-        $temp                   = ($dmessage['pm_sender_id']) ? $dmessage['pm_sender'] : __('NoBleme');
+        $temp                   = ($dmessage['pm_sender_id']) ? $dmessage['pm_sender'] : __('nobleme');
         $data[$i]['sender']     = sanitize_output($temp);
         $data[$i]['sent_at']    = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
         $data[$i]['sent_time']  = sanitize_output(time_since($dmessage['pm_sent']));
