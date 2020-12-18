@@ -167,8 +167,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <tr class="align_center pointer" id="private_message_row_<?=$messages_list[$i]['id']?>">
 
-          <td class="align_left tooltip_container" id="private_message_title_<?=$messages_list[$i]['id']?>" onclick="users_message_open('<?=$messages_list[$i]['id']?>');">
-            <span class="<?=$messages_list[$i]['css']?>"><?=$messages_list[$i]['title']?></span>
+          <td class="align_left tooltip_container" onclick="users_message_open('<?=$messages_list[$i]['id']?>');">
+            <span class="<?=$messages_list[$i]['css']?>" id="private_message_title_<?=$messages_list[$i]['id']?>"><?=$messages_list[$i]['title']?></span>
             <div class="tooltip">
               <?=$messages_list[$i]['body']?>
             </div>

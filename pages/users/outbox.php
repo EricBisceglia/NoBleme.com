@@ -158,34 +158,34 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <tr class="align_center pointer" id="private_message_row_<?=$messages_list[$i]['id']?>">
 
-          <td class="align_left tooltip_container" id="private_message_title_<?=$messages_list[$i]['id']?>" onclick="users_message_open('<?=$messages_list[$i]['id']?>');">
-            <span class="<?=$messages_list[$i]['css']?>"><?=$messages_list[$i]['title']?></span>
+          <td class="align_left tooltip_container" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
+            <span class="<?=$messages_list[$i]['css']?>" id="private_message_title_<?=$messages_list[$i]['id']?>"><?=$messages_list[$i]['title']?></span>
             <div class="tooltip">
               <?=$messages_list[$i]['body']?>
             </div>
           </td>
 
           <?php if($messages_list[$i]['system']) { ?>
-          <td class="nowrap tooltip_container" onclick="users_message_open('<?=$messages_list[$i]['id']?>');">
+          <td class="nowrap tooltip_container" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
             <?=__('nobleme')?>
             <div class="tooltip">
               <?=__('users_outbox_system')?>
             </div>
           </td>
           <?php } else { ?>
-          <td class="nowrap" onclick="users_message_open('<?=$messages_list[$i]['id']?>');">
+          <td class="nowrap" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
             <?=__link('todo_link?id='.$messages_list[$i]['recipient_id'], $messages_list[$i]['recipient'])?>
           </td>
           <?php } ?>
 
-          <td class="nowrap tooltip_container" onclick="users_message_open('<?=$messages_list[$i]['id']?>');">
+          <td class="nowrap tooltip_container" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
             <?=$messages_list[$i]['sent']?>
             <div class="tooltip">
               <?=$messages_list[$i]['fsent']?>
             </div>
           </td>
 
-          <td class="nowrap tooltip_container" onclick="users_message_open('<?=$messages_list[$i]['id']?>');">
+          <td class="nowrap tooltip_container" onclick="users_message_open('<?=$messages_list[$i]['id']?>', true);">
             <?=$messages_list[$i]['read']?>
             <div class="tooltip">
               <?php if($messages_list[$i]['fread']) { ?>

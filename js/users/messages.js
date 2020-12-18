@@ -81,17 +81,22 @@ function users_outbox_search( sort_data = null )
 /**
  * Triggers the opening of a private message.
  *
- * @param   {int}   message_id  The private message's id.
+ * @param   {int}   message_id    The private message's id.
+ * @param   {bool}  keep_unread   If true, the message will not appear as read in the message list.
  *
  * @returns {void}
 */
 
-function users_message_open( message_id )
+function users_message_open(  message_id          ,
+                              keep_unread = null  )
 {
-  // Make it seem as if the message is unread in the message list
-  document.getElementById('private_message_title_' + message_id).classList.remove('text_red');
-  document.getElementById('private_message_title_' + message_id).classList.remove('glow');
-  document.getElementById('private_message_title_' + message_id).classList.remove('bold');
+  // Make it seem as if the message is read in the message list, unless specified otherwise
+  if(!keep_unread)
+  {
+    document.getElementById('private_message_title_' + message_id).classList.remove('text_red');
+    document.getElementById('private_message_title_' + message_id).classList.remove('glow');
+    document.getElementById('private_message_title_' + message_id).classList.remove('bold');
+  }
 
   // Open the private message popin
   location.hash = '#popin_private_message';

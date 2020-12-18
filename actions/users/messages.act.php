@@ -226,7 +226,7 @@ function private_message_get( int $message_id ) : array
   }
 
   // Error: Message does not belong to user
-  if($dmessage['pm_recipient'] != $user_id)
+  if($dmessage['pm_recipient'] != $user_id && $dmessage['pm_sender_id'] != $user_id)
   {
     $data['error'] = __('users_message_neighbor');
     return $data;
@@ -243,7 +243,7 @@ function private_message_get( int $message_id ) : array
   $data['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
 
   // Mark the message as read if it was previously unread
-  if(!$dmessage['pm_read'])
+  if(!$dmessage['pm_read'] && $user_id == $dmessage['pm_sender_id'])
   {
     $timestamp = sanitize(time(), 'int', 0);
     query(" UPDATE  users_private_messages
