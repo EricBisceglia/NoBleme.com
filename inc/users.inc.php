@@ -75,7 +75,7 @@ if(isset($_COOKIE['nobleme_memory']) && !isset($_GET['logout']))
       $token_expiry = sanitize(time() + 7890000, 'int', 0);
 
       // Update the cookie
-      if($GLOBALS['dev_mode'])
+      if($GLOBALS['dev_http_only'])
         setcookie("nobleme_memory", $token_hash, 2147483647, "/");
       else
         setcookie(  "nobleme_memory"          ,
@@ -164,7 +164,7 @@ if(!isset($_SESSION['lang']))
 
     // Create the cookie and the session variable
     $_SESSION['lang'] = $language_header;
-    if($GLOBALS['dev_mode'])
+    if($GLOBALS['dev_http_only'])
         setcookie("nobleme_language", $language_header, 2147483647, "/");
     else
       setcookie(  "nobleme_language"        ,
@@ -188,7 +188,7 @@ if(isset($_GET['changelang']))
 
   // Change the cookie and session language to the new one
   $_SESSION['lang'] = $changelang;
-  if($GLOBALS['dev_mode'])
+  if($GLOBALS['dev_http_only'])
     setcookie("nobleme_language", $changelang, 2147483647, "/");
   else
     setcookie(  "nobleme_language"        ,
@@ -204,7 +204,7 @@ if(isset($_GET['english']) || isset($_GET['anglais']))
 {
   // Change the cookie and session language to english on request
   $_SESSION['lang'] = "EN";
-  if($GLOBALS['dev_mode'])
+  if($GLOBALS['dev_http_only'])
     setcookie("nobleme_language", "EN", 2147483647, "/");
   else
     setcookie(  "nobleme_language"        ,
@@ -220,7 +220,7 @@ else if(isset($_GET['francais']) || isset($_GET['french']))
 {
   // Change the cookie and session language to french on request
   $_SESSION['lang'] = "FR";
-  if($GLOBALS['dev_mode'])
+  if($GLOBALS['dev_http_only'])
     setcookie("nobleme_language", "FR", 2147483647, "/");
   else
     setcookie(  "nobleme_language"        ,

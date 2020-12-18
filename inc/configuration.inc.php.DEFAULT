@@ -38,6 +38,7 @@ $GLOBALS['irc_bot_password']  = 'password';                                     
 // These variables should never be toggled on in a production environment, only use them for toying around locally
 
 $GLOBALS['dev_mode']        = 0;  // Change this to 1 if you are running NoBleme locally and don't mind debug features
+$GLOBALS['dev_http_only']   = 0;  // Change this to 1 if you don't want to enable https in your local environment
 $GLOBALS['env_debug_mode']  = 0;  // Change this and dev mode to 1 to dump all environment variables
 $GLOBALS['sql_debug_mode']  = 0;  // Change this and dev mode to 1 to dump all queries and their results
 $GLOBALS['act_debug_mode']  = 0;  // Change this and dev mode to 1 to dump the logic of some action functions

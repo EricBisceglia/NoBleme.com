@@ -139,7 +139,7 @@ function user_authenticate( string  $ip                   ,
     $token_expiry = sanitize(time() + 7890000, 'int', 0);
 
     // Create the cookie
-    if($GLOBALS['dev_mode'])
+    if($GLOBALS['dev_http_only'])
       setcookie("nobleme_memory", $token_hash, 2147483647, "/");
     else
       setcookie(  "nobleme_memory"          ,

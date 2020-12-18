@@ -328,7 +328,6 @@ function private_message_reply( int     $message_id ,
   $user_id    = sanitize(user_get_id(), 'int', 1);
   $message_id = sanitize($message_id, 'int', 0);
   $body       = sanitize($body, 'string');
-  $timestamp  = time();
 
   // Error: Message ID not found
   if(!database_row_exists('users_private_messages', $message_id))
