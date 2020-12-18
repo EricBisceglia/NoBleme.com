@@ -52,8 +52,8 @@ ___('users_message_reply_self',     'EN', "You can not reply to yourself");
 ___('users_message_reply_self',     'FR', "Vous ne pouvez pas répondre à vos propres messages");
 ___('users_message_reply_others',   'EN', "You can not reply to messages that do not belong to you");
 ___('users_message_reply_others',   'FR', "Vous ne pouvez pas réponder à des messages qui ne vous sont pas destinés");
-___('users_message_reply_flood',    'EN', "Your message has not been sent. In order to prevent flood, you must wait 10 seconds before performing another action on the website");
-___('users_message_reply_flood',    'FR', "Votre message n'a pas été envoyé. Afin d'éviter le flood, vous devez attendre 10 secondes avant de pouvoir effectuer une action sur le site");
+___('users_message_reply_flood',    'EN', "Your message has not been sent. In order to prevent flood, you must wait before performing another action on the website");
+___('users_message_reply_flood',    'FR', "Votre message n'a pas été envoyé. Afin d'éviter le flood, vous devez attendre avant de pouvoir effectuer une autre action sur le site");
 ___('users_message_sent',           'EN', "The message has been sent");
 ___('users_message_sent',           'FR', "Le message a été envoyé");
 ___('users_message_preview_reply',  'EN', "Preview of your message :");
@@ -152,3 +152,44 @@ ___('users_outbox_system',    'EN', "The website's administrative team");
 ___('users_outbox_system',    'FR', "Équipe administrative du site");
 ___('users_outbox_not_read',  'EN', "This message has not been read by its recipient yet.");
 ___('users_outbox_not_read',  'FR', "Ce message n'a pas encore été lu.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                              WRITE A PRIVATE MESSAGE                                              */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('users_message_intro',  'EN', <<<EOD
+Private messages sent to other users of the website are - as their name implies - a private conversation between two users, which website administrators can not read. They are however still subject to the website's {{link|todo_link|code of conduct}}, any reports of abusive private messages will lead to measures being taken against the offending party. Stay civil, private messages are not used to settle grudges or harrass people.
+EOD
+);
+___('users_message_intro',  'FR', <<<EOD
+Les messages privés sont - comme leur nom le suggère - des conversations privées que l'administration du site ne peut pas consulter. Ces messages sont toutefois soumis au {{link|todo_link|code de conduite}} de NoBleme : si l'administration est contactée au sujet d'un message privé abusif, elle agira en conséquence. Même en privé, restez courtois, la messagerie privée n'est pas un lieu pour régler vos comptes ou harceler des gens.
+EOD
+);
+
+
+// Message form
+___('users_message_form_recipient', 'EN', "Message recipient");
+___('users_message_form_recipient', 'FR', "Destinataire du message");
+___('users_message_form_title',     'EN', "Message title");
+___('users_message_form_title',     'FR', "Titre du message");
+___('users_message_form_body',      'EN', "Message body - you can use {{1}} for formatting");
+___('users_message_form_body',      'FR', "Contenu du message - vous pouvez utiliser des {{1}}");
+___('users_message_form_send',      'EN', "Send the message");
+___('users_message_form_send',      'FR', "Envoyer le message");
+
+
+// Message errors
+___('users_message_error_recipient',  'EN', "You must specify a recipient for your private message");
+___('users_message_error_recipient',  'FR', "Votre message privé doit avoir un destinataire");
+___('users_message_error_title',      'EN', "Your private message must have a title");
+___('users_message_error_title',      'FR', "Votre message privé doit avoir un titre");
+___('users_message_error_body',       'EN', "Your private message must have a body");
+___('users_message_error_body',       'FR', "Votre message privé doit avoir un contenu");
+___('users_message_error_ghost',      'EN', "The specified username does not exist on the website");
+___('users_message_error_ghost',      'FR', "Le pseudonyme spécifié n'existe pas sur le site");

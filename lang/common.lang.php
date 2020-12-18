@@ -532,8 +532,8 @@ EOT
 // Flood check
 ___('error_flood_login',  'EN', "You can only do this action while logged into your account");
 ___('error_flood_login',  'FR', "Vous devez vous connecter à votre compte pour effectuer cette action");
-___('error_flood_wait',   'EN', "You must wait a bit between each action on the website<br><br>Try doing it again in 10 seconds");
-___('error_flood_wait',   'FR', "Vous devez attendre quelques secondes entre chaque action<br><br>Réessayez dans 10 secondes");
+___('error_flood_wait',   'EN', "In order to prevent flood, you must wait between each action on the website<br><br>Try doing it again later");
+___('error_flood_wait',   'FR', "Afin d'éviter le flood, vous devez attendre entre chaque action<br><br>Réessayez plus tard");
 
 
 

@@ -10,7 +10,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  private_message_list            Lists a user's private messages and system notifications.                        */
 /*  private_message_get             Fetches information about a private message.                                     */
-/*  private_message_reply           Reply to an existing private message.                                            */
+/*  private_message_write           Sends a new private message.                                                     */
+/*  private_message_reply           Replies to an existing private message.                                          */
 /*  private_message_delete          Deletes a private message.                                                       */
 /*                                                                                                                   */
 /*  private_message_years_list      Fetches all years during which the current user got or sent private messages.    */
@@ -334,7 +335,70 @@ function private_message_get( int $message_id ) : array
 
 
 /**
- * Reply to an existing private message.
+ * Sends a new private message.
+ *
+ * @param   string      $recipient  The private message's recipient nickname.
+ * @param   string      $title      The private message's title.
+ * @param   string      $body       The private message's body.
+ *
+ * @return  string|null             An error string, or NULL if all went well.
+*/
+
+function private_message_write( string  $recipient  ,
+                                string  $title      ,
+                                string  $body       ) : mixed
+{
+  // Require users to be logged in to run this action
+  user_restrict_to_users();
+
+  // Check if the required files have been included
+  require_included_file('messages.lang.php');
+
+  // Sanitize the data
+  $sender_id  = sanitize(user_get_id(), 'int', 1);
+  $recipient  = sanitize($recipient, 'string');
+  $title      = sanitize(string_truncate($title, 25), 'string');
+  $body       = sanitize($body, 'string');
+
+  // Error: No recipient
+  if(!$recipient)
+    return __('users_message_error_recipient');
+
+  // Error: No title
+  if(!str_replace(' ', '', $title))
+    return __('users_message_error_title');
+
+  // Error: No body
+  if(!str_replace(' ', '', $body))
+    return __('users_message_error_body');
+
+  // Find the recipient's user id
+  $recipient_id = sanitize(database_entry_exists('users', 'username', $recipient), 'int', 0);
+
+  // Error: Recipient does not exist
+  if(!$recipient_id || user_is_deleted($recipient_id))
+    return __('users_message_error_ghost');
+
+  // Check if the user is flooding the website
+  if(!flood_check(error_page: false))
+    return __('users_message_reply_flood');
+
+  // Send the message
+  private_message_send( $title                      ,
+                        $body                       ,
+                        recipient: $recipient_id    ,
+                        sender: $sender_id          ,
+                        do_not_sanitize: true       );
+
+  // All went well
+  return NULL;
+}
+
+
+
+
+/**
+ * Replies to an existing private message.
  *
  * @param   int         $message_id   The id of the message being replied to.
  * @param   string      $body         The private message's body.

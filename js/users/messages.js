@@ -3,6 +3,7 @@
 /*  users_inbox_search            Performs a search through a user's private messages inbox.                         */
 /*  users_outbox_search           Performs a search through a user's private messages outbox.                        */
 /*                                                                                                                   */
+/*  users_message_preview         Previews a private message.                                                        */
 /*  users_message_open            Triggers the opening of a private message.                                         */
 /*  users_message_reply           Opens the form allowing replying to a private message.                             */
 /*  users_message_reply_preview   Previews the reply to a private message.                                           */
@@ -73,6 +74,24 @@ function users_outbox_search( sort_data = null )
 
   // Submit the search
   fetch_page('outbox', 'outbox_tbody', postdata);
+}
+
+
+
+
+/**
+ *  Previews a private message.
+ *
+ * @return  {void}
+ */
+
+function users_message_preview()
+{
+  // Show the preview area
+  toggle_element_oneway('private_message_preview_container', 1);
+
+  // Preview the message
+  preview_bbcodes('private_message_body', 'private_message_preview');
 }
 
 

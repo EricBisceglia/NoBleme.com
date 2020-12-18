@@ -640,7 +640,7 @@ $javascripts .= '
           <?=__link('pages/users/outbox', __('submenu_user_pms_outbox'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_pms_write'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/users/message', __('submenu_user_pms_write'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
