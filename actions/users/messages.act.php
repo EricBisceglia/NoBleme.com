@@ -202,7 +202,8 @@ function private_message_get( int $message_id ) : array
   }
 
   // Prepare the query to fetch the message's data
-  $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted'   ,
+  $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
+                          users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
                           users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
                           users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
                           users_private_messages.fk_parent_message    AS 'pm_parent'    ,
@@ -219,7 +220,7 @@ function private_message_get( int $message_id ) : array
   $dmessage = mysqli_fetch_array(query($qmessage));
 
   // Error: Deleted messages
-  if($dmessage['pm_deleted'])
+  if(($dmessage['pm_deleted_r'] && $dmessage['pm_recipient'] == $user_id) || ($dmessage['pm_deleted_s'] && $dmessage['pm_sender_id'] == $user_id))
   {
     $data['error'] = __('users_message_deleted');
     return $data;
@@ -243,7 +244,7 @@ function private_message_get( int $message_id ) : array
   $data['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
 
   // Mark the message as read if it was previously unread
-  if(!$dmessage['pm_read'] && $user_id == $dmessage['pm_sender_id'])
+  if(!$dmessage['pm_read'] && $user_id == $dmessage['pm_recipient'])
   {
     $timestamp = sanitize(time(), 'int', 0);
     query(" UPDATE  users_private_messages
@@ -439,29 +440,37 @@ function private_message_delete( int $message_id ) : mixed
   // Fetch some data regarding the message
   $dmessage = mysqli_fetch_array(query("  SELECT  users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
                                                   users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
-                                                  users_private_messages.fk_users_recipient   AS 'pm_recipient'
+                                                  users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
+                                                  users_private_messages.fk_users_sender      AS 'pm_sender'
                                           FROM    users_private_messages
                                           WHERE   users_private_messages.id = '$message_id' "));
 
+  // Determine whether user is sender or recipient
+  $user_is_sender = ($dmessage['pm_sender'] == $user_id);
+
   // Error: Message is already deleted
-  if($dmessage['pm_deleted_r'])
+  if(($user_is_sender && $dmessage['pm_deleted_s']) || (!$user_is_sender && $dmessage['pm_deleted_r']))
     return __('users_message_predeleted');
 
   // Error: Message does not belong to user
-  if($dmessage['pm_recipient'] != $user_id)
+  if($dmessage['pm_recipient'] != $user_id && $dmessage['pm_sender'] != $user_id)
     return __('users_message_ownership');
 
-  // If the sender had already deleted the message, hard delete it
-  if($dmessage['pm_deleted_s'])
+  // If both sender and recipient deleted the message, hard delete it
+  if((!$user_is_sender && $dmessage['pm_deleted_s']) || ($user_is_sender && $dmessage['pm_deleted_r']))
     query(" DELETE FROM users_private_messages
             WHERE       users_private_messages.id = '$message_id' ");
 
   // Otherwise soft delete it
+  else if($user_is_sender)
+    query(" UPDATE  users_private_messages
+            SET     users_private_messages.deleted_by_sender  = 1
+            WHERE   users_private_messages.id                 = '$message_id' ");
   else
     query(" UPDATE  users_private_messages
-            SET     users_private_messages.deleted_by_recipient = 1 ,
+            SET     users_private_messages.deleted_by_recipient = 1             ,
                     users_private_messages.read_at              = '$timestamp'
-            WHERE   users_private_messages.id = '$message_id' ");
+            WHERE   users_private_messages.id                   = '$message_id' ");
 
   // All went well, return NULL
   return NULL;
