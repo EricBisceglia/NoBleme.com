@@ -16,12 +16,16 @@ popin_close('popin_private_message');
 /**
  * Performs a search through a user's private messages inbox.
  *
- * @param   {string}  [sort_data]   The column which should be used to sort the data.
+ * @param   {string}  [sort_data]         The column which should be used to sort the data.
+ * @param   {bool}    [mark_as_read]      Marks all unread messages as read.
+ * @param   {string}  [confirm_message]   The confirmation message which will be displayed before marking all as read.
  *
  * @returns {void}
 */
 
-function users_inbox_search( sort_data = null )
+function users_inbox_search(  sort_data       = null ,
+                              mark_as_read    = null ,
+                              confirm_message = null  )
 {
   // Update the data sort input if requested
   if(sort_data)
@@ -33,6 +37,10 @@ function users_inbox_search( sort_data = null )
   postdata += '&inbox_search_sender=' + fetch_sanitize_id('inbox_search_sender');
   postdata += '&inbox_search_date='   + fetch_sanitize_id('inbox_search_date');
   postdata += '&inbox_search_read='   + fetch_sanitize_id('inbox_search_read');
+
+  // Mark all items as read if requested
+  if(mark_as_read && confirm_message && confirm(confirm_message))
+    postdata += '&inbox_mark_as_read='  + fetch_sanitize('mark_as_read');
 
   // Submit the search
   fetch_page('inbox', 'inbox_tbody', postdata);

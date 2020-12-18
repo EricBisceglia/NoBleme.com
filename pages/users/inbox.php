@@ -50,7 +50,8 @@ $inbox_search = array(  'title'   => form_fetch_element('inbox_search_title')   
 
 // Fetch the messages
 $messages_list = private_message_list(  form_fetch_element('inbox_sort_order', 'sent')  ,
-                                        $inbox_search                                   );
+                                        $inbox_search                                   ,
+                                        form_fetch_element('inbox_mark_as_read')        );
 
 
 
@@ -151,6 +152,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <td class="uppercase text_white align_center dark bold" colspan="5">
             <?php if($messages_list['rows']) { ?>
             <?=__('users_inbox_count', $messages_list['rows'], 0, 0, array($messages_list['rows']))?>
+            <?php if($messages_list['unread'] > 1) { ?>
+            <div class="smallpadding_top smallpadding_bot align_center" id="inbox_read_button">
+              <button onclick="users_inbox_search(null, true, '<?=__('users_inbox_mark_ok')?>');"><?=__('users_inbox_mark', preset_values: array($messages_list['unread']))?></button>
+            </div>
+            <?php } ?>
             <?php } else { ?>
             <?=__('users_inbox_empty')?>
             <?php } ?>

@@ -21,14 +21,16 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Lists a user's private messages and system notifications.
  *
- * @param   string  $sort_by  (OPTIONAL)  The order in which the returned data will be sorted.
- * @param   array   $search   (OPTIONAL)  Search for specific field values.
+ * @param   string  $sort_by        (OPTIONAL)  The order in which the returned data will be sorted.
+ * @param   array   $search         (OPTIONAL)  Search for specific field values.
+ * @param   bool    $mark_as_read   (OPTIONAL)  Marks all unread messages in the selection as read.
  *
- * @return  array                         The private messages, ready for displaying.
+ * @return  array                               The private messages, ready for displaying.
  */
 
-function private_message_list(  string  $sort_by  = ''      ,
-                                array   $search   = array() ) : array
+function private_message_list(  string  $sort_by      = ''      ,
+                                array   $search       = array() ,
+                                ?bool   $mark_as_read = false   ) : array
 {
   // Require users to be logged in to run this action
   user_restrict_to_users();
@@ -45,6 +47,7 @@ function private_message_list(  string  $sort_by  = ''      ,
   $search_sender  = isset($search['sender'])  ? sanitize($search['sender'], 'string')           : NULL;
   $search_date    = isset($search['date'])    ? sanitize($search['date'], 'int', 0, date('Y'))  : NULL;
   $search_read    = isset($search['read'])    ? sanitize($search['read'], 'int', -1, 1)         : NULL;
+  $timestamp      = sanitize(time(), 'int', 0);
 
   // Fetch the private messages
   $qmessages = "    SELECT      users_private_messages.id               AS 'pm_id'    ,
@@ -93,9 +96,13 @@ function private_message_list(  string  $sort_by  = ''      ,
   // Execute the query
   $qmessages = query($qmessages);
 
-  // Prepare the data
+  // Initialize the unread messages counter
+  $count_unread = 0;
+
+  // Loop through the messages
   for($i = 0; $row = mysqli_fetch_array($qmessages); $i++)
   {
+    // Prepare the data
     $data[$i]['id']         = sanitize_output($row['pm_id']);
     $data[$i]['title']      = sanitize_output($row['pm_title']);
     $data[$i]['body']       = bbcodes(sanitize_output(string_truncate($row['pm_body'], 400, ' [...]'), 1));
@@ -107,10 +114,26 @@ function private_message_list(  string  $sort_by  = ''      ,
     $data[$i]['read']       = ($row['pm_read']) ? sanitize_output(time_since($row['pm_read'])) : '-';
     $data[$i]['fread']      = ($row['pm_read']) ? sanitize_output(date_to_text($row['pm_sent'], 0, 2)) : NULL;
     $data[$i]['css']        = ($row['pm_read']) ? '' : ' bold glow text_red';
+
+    // Update the unread message count
+    $count_unread          += ($row['pm_read']) ? 0 : 1;
+
+    // Mark the messages as read if requested
+    if(!$row['pm_read'] && $mark_as_read)
+    {
+      $data[$i]['read']     = sanitize_output(time_since($timestamp));
+      $data[$i]['fread']    = sanitize_output(date_to_text($timestamp, 0, 2));
+      $data[$i]['css']      = '';
+      $message_id           = sanitize($row['pm_id'], 0);
+      query(" UPDATE  users_private_messages
+              SET     users_private_messages.read_at  = '$timestamp'
+              WHERE   users_private_messages.id       = '$message_id' ");
+    }
   }
 
-  // Add the number of rows to the data
-  $data['rows'] = $i;
+  // Add the number of rows and the unread message count to the data
+  $data['rows']   = $i;
+  $data['unread'] = ($mark_as_read) ? 0 : $count_unread;
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
