@@ -8,7 +8,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                  PRIVATE MESSAGE                                                  */
+/*                                                 PRIVATE MESSAGES                                                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -119,3 +119,36 @@ ___('users_inbox_system',   'EN', "Automated message");
 ___('users_inbox_system',   'FR', "Message automatisé");
 ___('users_inbox_not_read', 'EN', "You have not read this message yet - click here to open it.");
 ___('users_inbox_not_read', 'FR', "Vous n'avez pas encore lu ce message - cliquez ici pour l'ouvrir.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      OUTBOX                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('users_outbox_intro', 'EN', <<<EOD
+Messages with a <span class="bold glow text_red">glowing red</span> title have not been read yet by their recipient. Click on a message in the list below to display the content of the message.
+EOD
+);
+___('users_outbox_intro', 'FR', <<<EOD
+Les messages avec un titre <span class="bold glow text_red">néon rouge</span> n'ont pas encore été lus par leur destinataire. Cliquez sur un message dans la liste ci-dessous pour en afficher le contenu.
+EOD
+);
+
+// Table
+___('users_outbox_recipient', 'EN', "Recipient");
+___('users_outbox_recipient', 'FR', "Destinataire");
+___('users_outbox_count',     'EN', "{{1}} message in your outbox");
+___('users_outbox_count',     'FR', "{{1}} message envoyé");
+___('users_outbox_count+',    'EN', "{{1}} messages in your outbox");
+___('users_outbox_count+',    'FR', "{{1}} messages envoyés");
+___('users_outbox_empty',     'EN', "There are currently no messages in your outbox");
+___('users_outbox_empty',     'FR', "Vous n'avez aucun message envoyé");
+___('users_outbox_system',    'EN', "The website's administrative team");
+___('users_outbox_system',    'FR', "Équipe administrative du site");
+___('users_outbox_not_read',  'EN', "This message has not been read by its recipient yet.");
+___('users_outbox_not_read',  'FR', "Ce message n'a pas encore été lu.");

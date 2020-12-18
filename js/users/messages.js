@@ -1,6 +1,7 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  users_inbox_search            Performs a search through a user's private messages inbox.                         */
+/*  users_outbox_search           Performs a search through a user's private messages outbox.                        */
 /*                                                                                                                   */
 /*  users_message_open            Triggers the opening of a private message.                                         */
 /*  users_message_reply           Opens the form allowing replying to a private message.                             */
@@ -44,6 +45,34 @@ function users_inbox_search(  sort_data       = null ,
 
   // Submit the search
   fetch_page('inbox', 'inbox_tbody', postdata);
+}
+
+
+
+
+/**
+ * Performs a search through a user's private messages outbox.
+ *
+ * @param   {string}  [sort_data]   The column which should be used to sort the data.
+ *
+ * @returns {void}
+*/
+
+function users_outbox_search( sort_data = null )
+{
+  // Update the data sort input if requested
+  if(sort_data)
+    document.getElementById('outbox_sort_order').value = sort_data;
+
+  // Assemble the postdata
+  postdata  = 'outbox_sort_order='        + fetch_sanitize_id('outbox_sort_order');
+  postdata += '&outbox_search_title='     + fetch_sanitize_id('outbox_search_title');
+  postdata += '&outbox_search_recipient=' + fetch_sanitize_id('outbox_search_recipient');
+  postdata += '&outbox_search_date='      + fetch_sanitize_id('outbox_search_date');
+  postdata += '&outbox_search_read='      + fetch_sanitize_id('outbox_search_read');
+
+  // Submit the search
+  fetch_page('outbox', 'outbox_tbody', postdata);
 }
 
 
