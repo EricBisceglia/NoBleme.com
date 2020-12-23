@@ -16,6 +16,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  private_message_years_list      Fetches all years during which the current user got or sent private messages.    */
 /*                                                                                                                   */
+/*  private_message_admins          Sends a private message to the administrative team.                              */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -587,5 +589,63 @@ function private_message_years_list( bool $sent_messages = false ) : array
     var_dump(array('file' => 'users/messages.act.php', 'function' => 'private_messages_years_list', 'data' => $data));
 
   // Return the prepared data
+  return $data;
+}
+
+
+
+
+
+/**
+ * Sends a private message to the administrative team.
+ *
+ * @param   string  $body   The message's body.
+ *
+ * @return  array           An array of data regarding the sent message.
+*/
+
+function private_message_admins( string $body ) : array
+{
+  // Require users to be logged in to run this action
+  user_restrict_to_users();
+
+  // Check if the required files have been included
+  require_included_file('messages.lang.php');
+
+  // Sanitize the data
+  $sender_id        = sanitize(user_get_id(), 'int', 1);
+  $sender_language  = sanitize(user_get_language());
+  $sender           = user_get_username();
+  $body             = sanitize($body, 'string');
+
+  // Error: No body
+  if(!str_replace(' ', '', $body))
+  {
+    $data['error'] = __('users_message_error_body');
+    return $data;
+  }
+
+  // Check if the user is flooding the website
+  if(!flood_check(error_page: false))
+  {
+    $data['error'] = __('users_message_reply_flood');
+    return $data;
+  }
+
+  // Determine how the message should be named based on the user's language
+  $title = __('users_message_admins_name');
+
+  // Send the message
+  private_message_send( $title                ,
+                        $body                 ,
+                        recipient: 0          ,
+                        sender: $sender_id    ,
+                        do_not_sanitize: true );
+
+  // Notify the admins through IRC that a message has been sent
+  irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."todo_link", 'mod');
+
+  // All went well
+  $data['sent'] = 1;
   return $data;
 }

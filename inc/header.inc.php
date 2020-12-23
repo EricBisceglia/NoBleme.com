@@ -489,7 +489,7 @@ $javascripts .= '
           <?=__link('todo_link', __('submenu_nobleme_personal_data'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_contact_admin'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/users/message_admins', __('submenu_nobleme_contact_admin'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 

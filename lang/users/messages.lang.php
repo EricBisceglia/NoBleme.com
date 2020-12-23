@@ -193,3 +193,49 @@ ___('users_message_error_body',       'EN', "Your private message must have a bo
 ___('users_message_error_body',       'FR', "Votre message privé doit avoir un contenu");
 ___('users_message_error_ghost',      'EN', "The specified username does not exist on the website");
 ___('users_message_error_ghost',      'FR', "Le pseudonyme spécifié n'existe pas sur le site");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                            CONTACT THE ADMINISTRATION                                             */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('users_message_admins_title', 'EN', "Contact the administrative team");
+___('users_message_admins_title', 'FR', "Contacter l'équipe administrative");
+___('users_message_admins_intro', 'EN', <<<EOD
+Messages sent using this form will be displayed on a page that can be accessed by every member of the website's {{link|pages/users/admins|administrative team}}. You can use it for anything that warrants a private conversation with the administrative team including reporting illicit content, asking questions related to account security or private data collection, reporting breach of your intellectual property, etc.
+EOD
+);
+___('users_message_admins_intro', 'FR', <<<EOD
+Les messages envoyés via ce formulaire arriveront sur une page que toute {{link|pages/users/admins|l'équipe administrative}} du site peut consulter. Vous pouvez l'utiliser pour tout ce qui peut nécessiter une conversation privée avec l'équipe administrative, que ce soit le signalement de contenus illicites, des questions sur la sécurité ou vos données privées, une plainte pour usurpation de votre propriété intellectuelle, etc.
+EOD
+);
+___('users_message_admins_proof', 'EN', <<<EOD
+If you plan to use this form to report a breach of the {{link|todo_link|code of conduct}} by another user, make sure to provide enough proof (links, screenshots, descriptions of incriminating content).
+EOD
+);
+___('users_message_admins_proof', 'FR', <<<EOD
+Si vous avez l'intention de signaler le non respect du {{link|todo_link|code de conduite}} par un autre compte, assurez-vous d'inclure des preuves (liens, captures d'écran, descriptions du contenu incriminant).
+EOD
+);
+___('users_message_admins_bug',   'EN', <<<EOD
+If you want to report a bug in the website's usage, or want to suggest a new feature that you'd like to have on the website, please use the {{link|todo_link|bug report form}} instead.
+EOD
+);
+___('users_message_admins_bug',   'FR', <<<EOD
+Si vous avez trouvé un bug dans le fonctionnement du site, ou que vous avez une suggestion pour un nouveau contenu que vous aimeriez bien voir sur le site, utilisez plutôt le {{link|todo_link|formulaire de rapport de bug}}.
+EOD
+);
+
+
+// Message form
+___('users_message_admins_name',  'EN', "Admin contact form");
+___('users_message_admins_name',  'FR', "Formulaire de contact");
+___('users_message_admins_body',  'EN', "Your private must not be empty");
+___('users_message_admins_body',  'FR', "Votre message doit avoir un contenu");
+___('users_message_admins_sent',  'EN', "Your message has successfully be sent to the administrative team. They have been notified of the message, and will reply whenever they are available.");
+___('users_message_admins_sent',  'FR', "Votre message a bien été envoyé à l'équipe administrative, ainsi qu'une notification les informant de l'envoi du message.");
