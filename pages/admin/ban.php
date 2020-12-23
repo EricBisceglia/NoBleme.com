@@ -182,7 +182,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <div class="smallpadding_bot">
         <label for="admin_ban_add_nick" class="admin_ban_add_swap_user<?=$admin_ban_add_visiblity_user?>"><?=__('admin_ban_add_username')?></label>
         <label for="admin_ban_add_nick" class="admin_ban_add_swap_ip<?=$admin_ban_add_visiblity_ip?>"><?=__('admin_ban_add_username_ip')?></label>
-        <input class="indiv" type="text" id="admin_ban_add_nick" name="admin_ban_add_nick" value="<?=$admin_ban_add_nick?>" autocomplete="off" list="admin_ban_add_nick_list" onkeyup="autocomplete_username('admin_ban_add_nick', 'admin_ban_add_nick_list_parent', './../users/autocomplete_username', 'admin_ban_add_nick_list', 'ban');">
+        <input class="indiv" type="text" id="admin_ban_add_nick" name="admin_ban_add_nick" value="<?=$admin_ban_add_nick?>" autocomplete="off" list="admin_ban_add_nick_list" onkeyup="autocomplete_username('admin_ban_add_nick', 'admin_ban_add_nick_list_parent', './../common/autocomplete_username', 'admin_ban_add_nick_list', 'ban');">
         <div id="admin_ban_add_nick_list_parent">
           <datalist id="admin_ban_add_nick_list">
             <option value=" ">

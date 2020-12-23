@@ -231,7 +231,7 @@ if ($activity_user)
 
   // Fetch the result for display
   $private_message_count      = $dpms['pm_nb'];
-  $private_message_count_css  = ($private_message_count && basename($_SERVER['PHP_SELF']) != 'inbox.php') ? ' header_submenu_blink' : '';
+  $private_message_count_css  = ($private_message_count && basename($_SERVER['PHP_SELF']) != 'message_inbox.php') ? ' header_submenu_blink' : '';
 }
 
 
@@ -425,7 +425,7 @@ $javascripts .= '
 
       <div class="header_topmenu_zone">
 
-        <?php if(user_is_logged_in() && $private_message_count && basename($_SERVER['PHP_SELF']) != 'inbox.php') { ?>
+        <?php if(user_is_logged_in() && $private_message_count && basename($_SERVER['PHP_SELF']) != 'message_inbox.php') { ?>
         <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="Account" onclick="toggle_header_menu('account');">
         <?php } else { ?>
         <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_account" src="<?=$path?>img/icons/login.svg" alt="Account" onclick="toggle_header_menu('account');">
@@ -474,7 +474,7 @@ $javascripts .= '
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_nobleme_documentation')?>
+          <?=__('submenu_nobleme_support')?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_nobleme_what_is'), 'header_submenu_link text_blue', 1, $path);?>
@@ -634,13 +634,13 @@ $javascripts .= '
           <?=__('submenu_user_pms')?>
         </div>
         <div class="header_submenu_item<?=$private_message_count_css?>">
-          <?=__link('pages/users/inbox', __('submenu_user_pms_inbox'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/users/message_inbox', __('submenu_user_pms_inbox'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/users/outbox', __('submenu_user_pms_outbox'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/users/message_outbox', __('submenu_user_pms_outbox'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/users/message', __('submenu_user_pms_write'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/users/message_write', __('submenu_user_pms_write'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 

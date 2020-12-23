@@ -16,7 +16,7 @@ function preview_bbcodes( input                   ,
   postdata = 'preview_element=' + fetch_sanitize_id(input);
 
   // Assemble the file path
-  path = root_path + 'pages/nobleme/preview_bbcodes';
+  path = root_path + 'pages/common/preview_bbcodes';
 
   // Submit the preview
   fetch_page(path, output, postdata);

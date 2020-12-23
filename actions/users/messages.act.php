@@ -520,8 +520,8 @@ function private_message_delete( int $message_id ) : mixed
   if($dmessage['pm_recipient'] != $user_id && $dmessage['pm_sender'] != $user_id)
     return __('users_message_ownership');
 
-  // If both sender and recipient deleted the message, hard delete it
-  if((!$user_is_sender && $dmessage['pm_deleted_s']) || ($user_is_sender && $dmessage['pm_deleted_r']))
+  // If both sender and recipient deleted the message, or if the message is sent to self, hard delete it
+  if((!$user_is_sender && $dmessage['pm_deleted_s']) || ($user_is_sender && $dmessage['pm_deleted_r']) || ($dmessage['pm_recipient'] == $dmessage['pm_sender']))
     query(" DELETE FROM users_private_messages
             WHERE       users_private_messages.id = '$message_id' ");
 

@@ -13,7 +13,7 @@ user_restrict_to_users();
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/users/message";
+$page_url         = "pages/users/message_write";
 $page_title_en    = "Private message";
 $page_title_fr    = "Message privé";
 $page_description = "Write a private message to another website user.";
@@ -51,7 +51,7 @@ if(isset($_POST['private_message_send']))
 
   // Redirect to the outbox if the message was successfully sent
   if(!$private_message_error)
-    exit(header("Location: ./outbox"));
+    exit(header("Location: ./message_outbox"));
 }
 
 
@@ -78,7 +78,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <div class="smallpadding_bot">
         <label for="private_message_recipient"><?=__('users_message_form_recipient')?></label>
-        <input type="text" class="indiv" id="private_message_recipient" name="private_message_recipient" value="<?=$private_message_recipient?>" autocomplete="off" list="private_message_user_list" onkeyup="autocomplete_username('private_message_recipient', 'private_message_user_list_parent', './../users/autocomplete_username', 'private_message_user_list', 'normal');">
+        <input type="text" class="indiv" id="private_message_recipient" name="private_message_recipient" value="<?=$private_message_recipient?>" autocomplete="off" list="private_message_user_list" onkeyup="autocomplete_username('private_message_recipient', 'private_message_user_list_parent', './../common/autocomplete_username', 'private_message_user_list', 'normal');">
       </div>
       <div id="private_message_user_list_parent">
         <datalist id="private_message_user_list">

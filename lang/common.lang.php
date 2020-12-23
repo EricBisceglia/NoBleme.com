@@ -650,8 +650,8 @@ ___('submenu_nobleme_irc',            'FR', "Serveur de chat IRC");
 ___('submenu_nobleme_manifesto',      'EN', "Political manifesto");
 ___('submenu_nobleme_manifesto',      'FR', "Manifeste politique");
 
-___('submenu_nobleme_documentation',  'EN', "Documentation");
-___('submenu_nobleme_documentation',  'FR', "Documentation");
+___('submenu_nobleme_support',        'EN', "Support");
+___('submenu_nobleme_support',        'FR', "Support");
 ___('submenu_nobleme_coc',            'EN', "Code of conduct");
 ___('submenu_nobleme_coc',            'FR', "Code de conduite");
 ___('submenu_nobleme_rss',            'EN', "RSS feeds");

@@ -89,7 +89,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <div class="smallpadding_bot">
         <label for="admin_rename_current"><?=__('admin_rename_current')?></label>
-        <input class="indiv" type="text" id="admin_rename_current" name="admin_rename_current" value="<?=$admin_rename_current?>" autocomplete="off" list="admin_rename_current_list" onkeyup="autocomplete_username('admin_rename_current', 'admin_rename_current_list_parent', './../users/autocomplete_username', 'admin_rename_current_list', 'normal');">
+        <input class="indiv" type="text" id="admin_rename_current" name="admin_rename_current" value="<?=$admin_rename_current?>" autocomplete="off" list="admin_rename_current_list" onkeyup="autocomplete_username('admin_rename_current', 'admin_rename_current_list_parent', './../common/autocomplete_username', 'admin_rename_current_list', 'normal');">
       </div>
       <div id="admin_rename_current_list_parent">
         <datalist id="admin_rename_current_list">

@@ -82,7 +82,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <fieldset>
 
       <label for="admin_deactivate_username"><?=string_change_case(__('username'), 'initials')?></label>
-      <input class="indiv" type="text" id="admin_deactivate_username" name="admin_deactivate_username" value="" autocomplete="off" list="admin_deactivate_username_list" onkeyup="autocomplete_username('admin_deactivate_username', 'admin_deactivate_username_list_parent', './../users/autocomplete_username', 'admin_deactivate_username_list', 'normal');">
+      <input class="indiv" type="text" id="admin_deactivate_username" name="admin_deactivate_username" value="" autocomplete="off" list="admin_deactivate_username_list" onkeyup="autocomplete_username('admin_deactivate_username', 'admin_deactivate_username_list_parent', './../common/autocomplete_username', 'admin_deactivate_username_list', 'normal');">
       <div id="admin_deactivate_username_list_parent">
         <datalist id="admin_deactivate_username_list">
           <option value=" ">&nbsp;</option>
