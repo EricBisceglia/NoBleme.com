@@ -239,3 +239,27 @@ ___('users_message_admins_body',  'EN', "Your private must not be empty");
 ___('users_message_admins_body',  'FR', "Votre message doit avoir un contenu");
 ___('users_message_admins_sent',  'EN', "Your message has successfully be sent to the administrative team. They have been notified of the message, and will reply whenever they are available.");
 ___('users_message_admins_sent',  'FR', "Votre message a bien été envoyé à l'équipe administrative, ainsi qu'une notification les informant de l'envoi du message.");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                ADMINISTRATIVE MAIL                                                */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('admin_mail_header',  'EN', <<<EOD
+Messages with a <span class="text_red glow bold">glowing red title</span> are unread. They will automatically be marked as read once you click on them. All private messages sent through this tool will appear as being sent anonymously from the fictive user <a>NoBleme</a>, and will be readable by all other members of the {{link|pages/users/admins|administrative team}}. With great power comes great responsibility, make a sensible usage of this tool!
+EOD
+);
+___('admin_mail_header',  'FR', <<<EOD
+Les messages avec un titre <span class="text_red glow bold">néon rouge</span> n'ont pas encore été lus. Ils seront automatiquement marqués comme lus une fois que vous aurez cliqué dessus. Tous les messages privés envoyés depuis cet outil apparaitront comme envoyés anonymement par le compte fictif <a>NoBleme</a>, et seront visibles par tout le reste de {{link|pages/users/admins|l'équipe administrative}}. Avec de grands pouvoirs viennent de grandes responsabilités, faites-en bon usage !
+EOD
+);
+
+
+// Message list
+___('admin_mail_list_search', 'EN', "Search through the messages:");
+___('admin_mail_list_search', 'FR', "Recherche dans les messages :");

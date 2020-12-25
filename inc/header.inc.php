@@ -775,13 +775,13 @@ $javascripts .= '
           <?=__('submenu_admin_activity')?>
         </div>
         <div class="header_submenu_item">
+          <?=__link('pages/admin/inbox', __('submenu_admin_inbox'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
           <?=__link('pages/nobleme/activity?mod', __('submenu_admin_modlogs'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('pages/users/admins', __('submenu_nobleme_staff'), 'header_submenu_link', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('pages/admin/stats_doppelganger', __('submenu_admin_doppelganger'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
@@ -805,6 +805,9 @@ $javascripts .= '
         <?php } ?>
         <div class="header_submenu_item">
           <?=__link('pages/admin/user_deactivate', __('submenu_admin_deactivate'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/admin/stats_doppelganger', __('submenu_admin_doppelganger'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 

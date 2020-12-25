@@ -1,0 +1,18 @@
+/**************************************************** ADMIN MAIL ****************************************************/
+.admin_mail_border      { border: 2px solid #FF0000;                                    }
+.admin_mail_container   { height: 50rem; padding: 3px; box-shadow: 0 0 15px #FF0000     ;
+                          border-radius: 10px;                                          }
+.admin_mail_left_panel  { margin-right: 3px; padding: 5px; box-shadow: 0 0 10px #FF0000 ;
+                          border-top-left-radius: 8px; border-bottom-left-radius: 8px   ;
+                          flex: 11;                                                     }
+.admin_mail_right_panel { overflow-y: scroll; box-shadow: 0 0 10px #FF0000              ;
+                          border-bottom: 2px solid #FF0000; border-top-right-radius: 8px;
+                          border-bottom-right-radius: 8px; flex: 4;                     }
+.admin_mail_search      { padding: 5px;                                                 }
+.admin_mail_right_entry { padding-left: 4px; padding-right: 4px; padding-top: 2px       ;
+                          padding-bottom: 2px; text-align: center;                      }
+
+@media (max-width: 1024px) {
+.admin_mail_left_panel    { flex: 2;              }
+.admin_mail_right_panel   { flex: 1;              }
+.admin_mail_search_label  { font-size: 0.6rem;  } }
