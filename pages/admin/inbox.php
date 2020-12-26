@@ -74,9 +74,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </div>
 
     <?php for($i = 0; $i < $admin_mail['rows']; $i++) { ?>
+    <?php if($admin_mail[$i]['top_level']) { ?>
     <div class="admin_mail_border admin_mail_right_entry pointer" onclick="admin_mail_display(<?=$admin_mail[$i]['id']?>);">
 
-      <?php if(!$admin_mail[$i]['read']) { ?>
+      <?php if(!$admin_mail[$i]['read'] && !$admin_mail[$i]['recipient']) { ?>
       <span class="text_red glow bold" id="admin_mail_list_<?=$admin_mail[$i]['id']?>"><?=$admin_mail[$i]['title']?></span><br>
       <?php } else { ?>
         <span id="admin_mail_list_<?=$admin_mail[$i]['id']?>"><?=$admin_mail[$i]['title']?></span><br>
@@ -84,6 +85,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <span class="bold glow text_light"><?=$admin_mail[$i]['sender']?></span> - <?=$admin_mail[$i]['sent']?>
 
     </div>
+    <?php } ?>
     <?php } ?>
 
   </div>

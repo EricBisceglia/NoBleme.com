@@ -673,30 +673,41 @@ function admin_mail_list( string $search = '' ) : array
   require_included_file('functions_time.inc.php');
 
   // Fetch the private messages
-  $qmessages = query("  SELECT    users_private_messages.id               AS 'pm_id'    ,
-                                  users_private_messages.title            AS 'pm_title' ,
-                                  users_private_messages.sent_at          AS 'pm_sent'  ,
-                                  users_private_messages.read_at          AS 'pm_read'  ,
-                                  users_private_messages.fk_users_sender  AS 'us_id'    ,
-                                  sender.username                         AS 'us_nick'
+  $qmessages = query("  SELECT    users_private_messages.id                 AS 'pm_id'        ,
+                                  users_private_messages.title              AS 'pm_title'     ,
+                                  users_private_messages.sent_at            AS 'pm_sent'      ,
+                                  users_private_messages.read_at            AS 'pm_read'      ,
+                                  users_private_messages.fk_users_recipient AS 'pm_recipient' ,
+                                  users_private_messages.fk_users_sender    AS 'us_id'        ,
+                                  sender.username                           AS 'us_nick'      ,
+                                  users_private_messages.fk_parent_message  AS 'pm_parent'
                         FROM      users_private_messages
                         LEFT JOIN users AS sender
                         ON        users_private_messages.fk_users_sender = sender.id
                         WHERE     users_private_messages.fk_users_recipient = 0
+                        OR        users_private_messages.fk_users_sender    = 0
                         ORDER BY  users_private_messages.sent_at DESC ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qmessages); $i++)
   {
     $data[$i]['id']         = sanitize_output($row['pm_id']);
+    $data[$i]['display']    = (!$row['pm_recipient']);
     $data[$i]['title']      = sanitize_output($row['pm_title']);
     $data[$i]['read']       = ($row['pm_read']);
+    $data[$i]['recipient']  = $row['pm_recipient'];
     $data[$i]['sender']     = $row['us_id'] ? sanitize_output($row['us_nick']) : __('nobleme');
     $data[$i]['sent']       = sanitize_output(time_since($row['pm_sent']));
+    $data[$i]['parent']     = $row['pm_parent'];
+    $parent_ids[$i]         = $row['pm_parent'];
   }
 
   // Add the number of rows to the data
   $data['rows'] = $i;
+
+  // Loop through the messages to identify the top level ones (latest message of a message chain)
+  for($i = 0; $i < $data['rows']; $i++)
+    $data[$i]['top_level'] = !in_array($data[$i]['id'], $parent_ids);
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
@@ -738,25 +749,27 @@ function admin_mail_get( int $message_id ) : array
   }
 
   // Prepare the query to fetch the message's data
-  $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
-                          users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
-                          users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
-                          users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
-                          users_private_messages.fk_parent_message    AS 'pm_parent'    ,
-                          users_sender.username                       AS 'pm_sender'    ,
-                          users_private_messages.sent_at              AS 'pm_sent'      ,
-                          users_private_messages.read_at              AS 'pm_read'      ,
-                          users_private_messages.title                AS 'pm_title'     ,
+  $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r'     ,
+                          users_private_messages.deleted_by_sender    AS 'pm_deleted_s'     ,
+                          users_private_messages.fk_users_recipient   AS 'pm_recipient_id'  ,
+                          users_recipient.username                    AS 'pm_recipient'     ,
+                          users_private_messages.fk_users_sender      AS 'pm_sender_id'     ,
+                          users_sender.username                       AS 'pm_sender'        ,
+                          users_private_messages.fk_parent_message    AS 'pm_parent'        ,
+                          users_private_messages.sent_at              AS 'pm_sent'          ,
+                          users_private_messages.read_at              AS 'pm_read'          ,
+                          users_private_messages.title                AS 'pm_title'         ,
                           users_private_messages.body                 AS 'pm_body'
                 FROM      users_private_messages
-                LEFT JOIN users AS users_sender ON users_private_messages.fk_users_sender = users_sender.id
+                LEFT JOIN users AS users_sender     ON users_private_messages.fk_users_sender     = users_sender.id
+                LEFT JOIN users AS users_recipient  ON users_private_messages.fk_users_recipient  = users_recipient.id
                 WHERE     users_private_messages.id = '$message_id' ";
 
   // Fetch data regarding the message
   $dmessage = mysqli_fetch_array(query($qmessage));
 
   // Error: Message is a private message belonging to a user
-  if($dmessage['pm_recipient'])
+  if($dmessage['pm_recipient'] && $dmessage['pm_sender'])
   {
     $data['error'] = __('users_message_neighbor');
     return $data;
@@ -770,17 +783,19 @@ function admin_mail_get( int $message_id ) : array
   }
 
   // Prepare the data
-  $data['id']         = sanitize_output($message_id);
-  $data['self']       = (!$dmessage['pm_sender_id']);
-  $data['title']      = sanitize_output($dmessage['pm_title']);
-  $data['sender_id']  = sanitize_output($dmessage['pm_sender_id']);
-  $data['sender']     = ($dmessage['pm_sender_id']) ? sanitize_output($dmessage['pm_sender']) : NULL;
-  $data['sent_at']    = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
-  $data['read_at']    = ($dmessage['pm_read']) ? sanitize_output(date_to_text($dmessage['pm_read'], 0, 2)) : NULL;
-  $data['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
+  $data['id']           = sanitize_output($message_id);
+  $data['self']         = (!$dmessage['pm_sender_id']);
+  $data['title']        = sanitize_output($dmessage['pm_title']);
+  $data['sender_id']    = sanitize_output($dmessage['pm_sender_id']);
+  $data['sender']       = ($dmessage['pm_sender_id']) ? sanitize_output($dmessage['pm_sender']) : __('nobleme');
+  $data['recipient_id'] = sanitize_output($dmessage['pm_recipient_id']);
+  $data['recipient']    = ($dmessage['pm_recipient_id']) ? sanitize_output($dmessage['pm_recipient']) : __('nobleme');
+  $data['sent_at']      = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
+  $data['read_at']      = ($dmessage['pm_read']) ? sanitize_output(date_to_text($dmessage['pm_read'], 0, 2)) : NULL;
+  $data['body']         = bbcodes(sanitize_output($dmessage['pm_body'], true));
 
   // Mark the message as read if it was previously unread
-  if(!$dmessage['pm_read'])
+  if(!$dmessage['pm_read'] && !$dmessage['pm_recipient'])
   {
     $timestamp = sanitize(time(), 'int', 0);
     query(" UPDATE  users_private_messages

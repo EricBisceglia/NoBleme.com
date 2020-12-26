@@ -266,8 +266,10 @@ ___('admin_mail_list_search', 'FR', "Recherche dans les messages :");
 
 
 // Message chain
-___('admin_mail_chain_reply', 'EN', "Reply");
-___('admin_mail_chain_reply', 'FR', "Répondre");
+___('admin_mail_chain_reply',   'EN', "Reply");
+___('admin_mail_chain_reply',   'FR', "Répondre");
+___('admin_mail_chain_system',  'EN', "Sent to {{link|todo_link?id={{1}}|{{2}}}} by <span class=\"bold glow\">{{3}}</span> on {{4}}");
+___('admin_mail_chain_system',  'FR', "Envoyé à {{link|todo_link?id={{1}}|{{2}}}} par <span class=\"bold glow\">{{3}}</span> le {{4}}");
 
 
 // Errors
