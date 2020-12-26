@@ -4,6 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';            # Core
+include_once './../../inc/functions_time.inc.php';      # Time management
 include_once './../../actions/users/messages.act.php';  # Actions
 include_once './../../lang/users/messages.lang.php';    # Translations
 
@@ -20,8 +21,9 @@ $page_title_en    = "Administrative mail";
 $page_title_fr    = "Courrier administratif";
 $page_description = "Private message exchanges between users and the administrative team";
 
-// Extra CSS
-$css = array('admin');
+// Extra JS & CSS
+$js   = array('admin/messages');
+$css  = array('admin');
 
 
 
@@ -33,7 +35,9 @@ $css = array('admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
+// Fetch the admin mail
+
+$admin_mail = admin_mail_list();
 
 
 
@@ -58,7 +62,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_70 flexcontainer admin_mail_border admin_mail_container">
 
-  <div class="admin_mail_border admin_mail_left_panel">
+  <div class="admin_mail_border admin_mail_left_panel" id="admin_mail_main_panel">
     &nbsp;
   </div>
 
@@ -69,18 +73,17 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <input class="table_search indiv" value="">
     </div>
 
-    <?php for($i = 0; $i < 50; $i++) { ?>
-    <?php if($i < 3) { ?>
-    <div class="admin_mail_border admin_mail_right_entry pointer">
-      <span class="text_red glow bold">Unread message title</span><br>
-      <a>Sender</a> - 10 days ago
+    <?php for($i = 0; $i < $admin_mail['rows']; $i++) { ?>
+    <div class="admin_mail_border admin_mail_right_entry pointer" onclick="admin_mail_display(<?=$admin_mail[$i]['id']?>);">
+
+      <?php if(!$admin_mail[$i]['read']) { ?>
+      <span class="text_red glow bold" id="admin_mail_list_<?=$admin_mail[$i]['id']?>"><?=$admin_mail[$i]['title']?></span><br>
+      <?php } else { ?>
+        <span id="admin_mail_list_<?=$admin_mail[$i]['id']?>"><?=$admin_mail[$i]['title']?></span><br>
+      <?php } ?>
+      <span class="bold glow text_light"><?=$admin_mail[$i]['sender']?></span> - <?=$admin_mail[$i]['sent']?>
+
     </div>
-    <?php } else { ?>
-    <div class="admin_mail_border admin_mail_right_entry pointer">
-      Twenty five characters MM<br>
-      <a>Sender</a> - 10 days ago
-    </div>
-    <?php } ?>
     <?php } ?>
 
   </div>

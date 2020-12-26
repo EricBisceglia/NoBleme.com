@@ -18,6 +18,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  private_message_admins          Sends a private message to the administrative team.                              */
 /*                                                                                                                   */
+/*  admin_mail_list                 Lists private messages sent to the administrative team.                          */
+/*  admin_mail_get                  Fetches information about a private message sent to the administrative team.     */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -647,5 +650,219 @@ function private_message_admins( string $body ) : array
 
   // All went well
   $data['sent'] = 1;
+  return $data;
+}
+
+
+
+
+/**
+ * Lists private messages sent to the administrative team.
+ *
+ * @param   array   $search   (OPTIONAL)  Search for specific field values.
+ *
+ * @return  array                         The admin mail messages, ready for displaying.
+ */
+
+function admin_mail_list( string $search = '' ) : array
+{
+  // Only moderators and above can see this
+  user_restrict_to_moderators();
+
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+
+  // Fetch the private messages
+  $qmessages = query("  SELECT    users_private_messages.id               AS 'pm_id'    ,
+                                  users_private_messages.title            AS 'pm_title' ,
+                                  users_private_messages.sent_at          AS 'pm_sent'  ,
+                                  users_private_messages.read_at          AS 'pm_read'  ,
+                                  users_private_messages.fk_users_sender  AS 'us_id'    ,
+                                  sender.username                         AS 'us_nick'
+                        FROM      users_private_messages
+                        LEFT JOIN users AS sender
+                        ON        users_private_messages.fk_users_sender = sender.id
+                        WHERE     users_private_messages.fk_users_recipient = 0
+                        ORDER BY  users_private_messages.sent_at DESC ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qmessages); $i++)
+  {
+    $data[$i]['id']         = sanitize_output($row['pm_id']);
+    $data[$i]['title']      = sanitize_output($row['pm_title']);
+    $data[$i]['read']       = ($row['pm_read']);
+    $data[$i]['sender']     = $row['us_id'] ? sanitize_output($row['us_nick']) : __('nobleme');
+    $data[$i]['sent']       = sanitize_output(time_since($row['pm_sent']));
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('file' => 'users/messages.act.php', 'function' => 'admin_mail_list', 'data' => $data));
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Fetches information about a private message sent to the administrative team.
+ *
+ * @param   int     $message_id   The message's ID.
+ *
+ * @return  array                 An array of data regarding the message.
+ */
+
+function admin_mail_get( int $message_id ) : array
+{
+  // Only moderators and above can see this
+  user_restrict_to_moderators();
+
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+  require_included_file('bbcodes.inc.php');
+  require_included_file('messages.lang.php');
+
+  // Sanitize the message ID
+  $message_id = sanitize($message_id, 'int', 0);
+
+  // Error: Message ID not found
+  if(!database_row_exists('users_private_messages', $message_id))
+  {
+    $data['error'] = __('admin_mail_error_not_found');
+    return $data;
+  }
+
+  // Prepare the query to fetch the message's data
+  $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
+                          users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
+                          users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
+                          users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
+                          users_private_messages.fk_parent_message    AS 'pm_parent'    ,
+                          users_sender.username                       AS 'pm_sender'    ,
+                          users_private_messages.sent_at              AS 'pm_sent'      ,
+                          users_private_messages.read_at              AS 'pm_read'      ,
+                          users_private_messages.title                AS 'pm_title'     ,
+                          users_private_messages.body                 AS 'pm_body'
+                FROM      users_private_messages
+                LEFT JOIN users AS users_sender ON users_private_messages.fk_users_sender = users_sender.id
+                WHERE     users_private_messages.id = '$message_id' ";
+
+  // Fetch data regarding the message
+  $dmessage = mysqli_fetch_array(query($qmessage));
+
+  // Error: Message is a private message belonging to a user
+  if($dmessage['pm_recipient'])
+  {
+    $data['error'] = __('users_message_neighbor');
+    return $data;
+  }
+
+  // Error: Deleted messages
+  if($dmessage['pm_deleted_r'])
+  {
+    $data['error'] = __('admin_mail_error_deleted');
+    return $data;
+  }
+
+  // Prepare the data
+  $data['id']         = sanitize_output($message_id);
+  $data['self']       = (!$dmessage['pm_sender_id']);
+  $data['title']      = sanitize_output($dmessage['pm_title']);
+  $data['sender_id']  = sanitize_output($dmessage['pm_sender_id']);
+  $data['sender']     = ($dmessage['pm_sender_id']) ? sanitize_output($dmessage['pm_sender']) : NULL;
+  $data['sent_at']    = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
+  $data['read_at']    = ($dmessage['pm_read']) ? sanitize_output(date_to_text($dmessage['pm_read'], 0, 2)) : NULL;
+  $data['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
+
+  // Mark the message as read if it was previously unread
+  if(!$dmessage['pm_read'])
+  {
+    $timestamp = sanitize(time(), 'int', 0);
+    query(" UPDATE  users_private_messages
+            SET     users_private_messages.read_at  = '$timestamp'
+            WHERE   users_private_messages.id       = '$message_id' ");
+  }
+
+  // Get parent message chain
+  if($dmessage['pm_parent'] && $dmessage['pm_parent'] != $message_id)
+  {
+    // Initialize the parent counter
+    $i = 0;
+
+    // Loop through parent messages
+    do
+    {
+      // Fetch the parent ID
+      $message_id = sanitize($dmessage['pm_parent']);
+
+      // Prepare the query to fetch the message's data
+      $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r' ,
+                              users_private_messages.deleted_by_sender    AS 'pm_deleted_s' ,
+                              users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
+                              users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
+                              users_private_messages.fk_parent_message    AS 'pm_parent'    ,
+                              users_sender.username                       AS 'pm_sender'    ,
+                              users_private_messages.sent_at              AS 'pm_sent'      ,
+                              users_private_messages.title                AS 'pm_title'     ,
+                              users_private_messages.body                 AS 'pm_body'
+                    FROM      users_private_messages
+                    LEFT JOIN users AS users_sender ON users_private_messages.fk_users_sender = users_sender.id
+                    WHERE     users_private_messages.id = '$message_id' ";
+
+      // Fetch data regarding the message
+      $dmessage = mysqli_fetch_array(query($qmessage));
+
+      // Error: Message does not exist
+      if(!isset($dmessage['pm_title']))
+        $message_error = 1;
+
+      // If the message does exist, look for more potential errors
+      if(!isset($message_error))
+      {
+        // Identify whether the user is the sender or the recipient
+        $user_is_sender = (!$dmessage['pm_sender_id']);
+
+        // Error: User is neither sender nor recipient
+        if(!$user_is_sender && $dmessage['pm_recipient'])
+          $message_error = 1;
+
+        // Error: Too many parents (maybe an infinite loop?)
+        if($i >= 100)
+          $message_error = 1;
+      }
+
+      // Prepare the message's contents and increment the loop counter
+      if(!isset($message_error))
+      {
+        $temp                   = ($user_is_sender && $dmessage['pm_deleted_s']) ? 1 : 0;
+        $data[$i]['deleted']    = (!$user_is_sender && $dmessage['pm_deleted_r']) ? 1 : $temp;
+        $data[$i]['title']      = sanitize_output($dmessage['pm_title']);
+        $temp                   = ($dmessage['pm_sender_id']) ? $dmessage['pm_sender'] : __('nobleme');
+        $data[$i]['sender']     = sanitize_output($temp);
+        $data[$i]['sender_id']  = sanitize_output($dmessage['pm_sender_id']);
+        $data[$i]['sent_at']    = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
+        $data[$i]['sent_time']  = sanitize_output(time_since($dmessage['pm_sent']));
+        $data[$i]['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
+        $i++;
+      }
+    }
+
+    // Keep looping as long as there is a parent and no error has arisen
+    while(!isset($message_error) && $dmessage['pm_parent'] && $dmessage['pm_parent'] != $message_id);
+
+    // Add the number of parents to the data
+    $data['parents'] = $i;
+  }
+
+  // In ACT debug mode, print debug data
+  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
+    var_dump(array('file' => 'users/messages.act.php', 'function' => 'admin_mail_get', 'data' => $data));
+
+  // Return the data
   return $data;
 }

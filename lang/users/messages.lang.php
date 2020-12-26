@@ -20,8 +20,8 @@ ___('users_message_neighbor',   'FR', "Vous ne pouvez pas voir les messages priv
 
 
 // Private message
-___('users_message_sent_by',  'EN', "Sent by {{link|{{1}}|{{2}}}} on {{3}}.");
-___('users_message_sent_by',  'FR', "Envoyé par {{link|{{1}}|{{2}}}} le {{3}}.");
+___('users_message_sent_by',  'EN', "Sent by {{link|todo_link?id={{1}}|{{2}}}} on {{3}}.");
+___('users_message_sent_by',  'FR', "Envoyé par {{link|todo_link?id={{1}}|{{2}}}} le {{3}}.");
 ___('users_message_system',   'EN', "Automated message sent on {{1}}.");
 ___('users_message_system',   'FR', "Message automatisé envoyé le {{1}}.");
 ___('users_message_read',     'EN', "Read on {{1}}.");
@@ -263,3 +263,15 @@ EOD
 // Message list
 ___('admin_mail_list_search', 'EN', "Search through the messages:");
 ___('admin_mail_list_search', 'FR', "Recherche dans les messages :");
+
+
+// Message chain
+___('admin_mail_chain_reply', 'EN', "Reply");
+___('admin_mail_chain_reply', 'FR', "Répondre");
+
+
+// Errors
+___('admin_mail_error_not_found', 'EN', "The requested message does not exist");
+___('admin_mail_error_not_found', 'FR', "Le message demandé n'existe pas");
+___('admin_mail_error_deleted',   'EN', "The requested message has been deleted");
+___('admin_mail_error_deleted',   'FR', "Le message demandé a été supprimé");
