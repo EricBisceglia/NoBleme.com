@@ -693,6 +693,9 @@ $javascripts .= '
         <div class="header_submenu_item">
           <a class="header_submenu_link" href="<?=$url_logout?>"><?=__('submenu_user_logout_logout')?></a>
         </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/users/message_admins', __('submenu_nobleme_contact_admin'), 'header_submenu_link', 1, $path);?>
+        </div>
       </div>
 
       <?php } else if(!$is_ip_banned) { ?>

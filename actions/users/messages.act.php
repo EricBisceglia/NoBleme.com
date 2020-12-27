@@ -683,9 +683,10 @@ function admin_mail_list( string $search = '' ) : array
                                   users_private_messages.fk_parent_message  AS 'pm_parent'
                         FROM      users_private_messages
                         LEFT JOIN users AS sender
-                        ON        users_private_messages.fk_users_sender = sender.id
-                        WHERE     users_private_messages.fk_users_recipient = 0
-                        OR        users_private_messages.fk_users_sender    = 0
+                        ON        users_private_messages.fk_users_sender      = sender.id
+                        WHERE     users_private_messages.hide_from_admin_mail = 0
+                        AND     ( users_private_messages.fk_users_recipient   = 0
+                        OR        users_private_messages.fk_users_sender      = 0 )
                         ORDER BY  users_private_messages.sent_at DESC ");
 
   // Prepare the data
@@ -705,9 +706,15 @@ function admin_mail_list( string $search = '' ) : array
   // Add the number of rows to the data
   $data['rows'] = $i;
 
+  // Initialize the unread message counter
+  $data['unread'] = 0;
+
   // Loop through the messages to identify the top level ones (latest message of a message chain)
   for($i = 0; $i < $data['rows']; $i++)
-    $data[$i]['top_level'] = !in_array($data[$i]['id'], $parent_ids);
+  {
+    $data[$i]['top_level']  = !in_array($data[$i]['id'], $parent_ids);
+    $data['unread']        += ($data[$i]['display'] && $data[$i]['top_level'] && !$data[$i]['read']);
+  }
 
   // In ACT debug mode, print debug data
   if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
@@ -791,6 +798,7 @@ function admin_mail_get( int $message_id ) : array
   $data['recipient_id'] = sanitize_output($dmessage['pm_recipient_id']);
   $data['recipient']    = ($dmessage['pm_recipient_id']) ? sanitize_output($dmessage['pm_recipient']) : __('nobleme');
   $data['sent_at']      = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
+  $data['read']         = ($dmessage['pm_read']);
   $data['read_at']      = ($dmessage['pm_read']) ? sanitize_output(date_to_text($dmessage['pm_read'], 0, 2)) : NULL;
   $data['body']         = bbcodes(sanitize_output($dmessage['pm_body'], true));
 

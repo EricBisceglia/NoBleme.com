@@ -263,6 +263,8 @@ EOD
 // Message list
 ___('admin_mail_list_search', 'EN', "Search through the messages:");
 ___('admin_mail_list_search', 'FR', "Recherche dans les messages :");
+___('admin_mail_list_none',   'EN', "There are currently no private messages in the admin mail inbox.");
+___('admin_mail_list_none',   'FR', "Il n'y a actuellement aucun message privé dans la boîte de courrier administratif.");
 
 
 // Message chain
@@ -270,6 +272,8 @@ ___('admin_mail_chain_reply',   'EN', "Reply");
 ___('admin_mail_chain_reply',   'FR', "Répondre");
 ___('admin_mail_chain_system',  'EN', "Sent to {{link|todo_link?id={{1}}|{{2}}}} by <span class=\"bold glow\">{{3}}</span> on {{4}}");
 ___('admin_mail_chain_system',  'FR', "Envoyé à {{link|todo_link?id={{1}}|{{2}}}} par <span class=\"bold glow\">{{3}}</span> le {{4}}");
+___('users_mail_chain_unread', 'EN', "This message has not been read yet.");
+___('users_mail_chain_unread', 'FR', "Ce message n'a pas encore été lu.");
 
 
 // Errors

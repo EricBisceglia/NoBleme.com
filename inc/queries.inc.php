@@ -1404,7 +1404,10 @@ if($last_query < 26)
   sql_change_field_type('users_private_messages', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('users_private_messages', 'FKmembres_destinataire', 'fk_users_recipient', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users_private_messages', 'FKmembres_envoyeur', 'fk_users_sender', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_create_field('users_private_messages', 'fk_parent_message', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_users_sender');
+  sql_create_field('users_private_messages', 'fk_users_true_sender', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_users_sender');
+  sql_create_field('users_private_messages', 'fk_parent_message', 'INT UNSIGNED NOT NULL DEFAULT 0', 'fk_users_true_sender');
+  sql_create_field('users_private_messages', 'is_admin_only_message', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_parent_message');
+  sql_create_field('users_private_messages', 'hide_from_admin_mail', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'is_admin_only_message');
   sql_rename_field('users_private_messages', 'date_envoi', 'sent_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users_private_messages', 'date_consultation', 'read_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users_private_messages', 'titre', 'title', 'TEXT NOT NULL');
@@ -1414,6 +1417,12 @@ if($last_query < 26)
   sql_delete_index('users_private_messages', 'index_chronologie');
   sql_create_index('users_private_messages', 'index_inbox', 'fk_users_recipient');
   sql_create_index('users_private_messages', 'index_outbox', 'fk_users_sender');
+  sql_create_index('users_private_messages', 'index_message_chain', 'fk_parent_message');
+  sql_create_index('users_private_messages', 'index_read', 'read_at');
+
+  query(" UPDATE  users_private_messages
+          SET     users_private_messages.hide_from_admin_mail = 1
+          WHERE   users_private_messages.fk_users_sender      = 0 ");
 
   sql_create_table('users_tokens');
   sql_create_field('users_tokens', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');

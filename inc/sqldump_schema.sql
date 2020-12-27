@@ -421,7 +421,10 @@ CREATE TABLE IF NOT EXISTS `users_private_messages` (
   `deleted_by_sender` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `fk_users_recipient` int UNSIGNED NOT NULL DEFAULT '0',
   `fk_users_sender` int UNSIGNED NOT NULL DEFAULT '0',
+  `fk_users_true_sender` int UNSIGNED NOT NULL DEFAULT '0',
   `fk_parent_message` int UNSIGNED NOT NULL DEFAULT '0',
+  `is_admin_only_message` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `hide_from_admin_mail` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `sent_at` int UNSIGNED NOT NULL DEFAULT '0',
   `read_at` int UNSIGNED NOT NULL DEFAULT '0',
   `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -429,6 +432,8 @@ CREATE TABLE IF NOT EXISTS `users_private_messages` (
   PRIMARY KEY (`id`),
   KEY `index_inbox` (`fk_users_recipient`),
   KEY `index_outbox` (`fk_users_sender`),
+  KEY `index_message_chain` (`fk_parent_message`),
+  KEY `index_read` (`read_at`),
   KEY `index_deleted_by_recipient` (`deleted_by_recipient`),
   KEY `index_deleted_by_sender` (`deleted_by_sender`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

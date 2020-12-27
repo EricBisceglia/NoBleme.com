@@ -68,10 +68,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="admin_mail_right_panel">
 
+    <?php if(!$admin_mail['rows']) { ?>
+    <div class="admin_mail_border admin_mail_right_entry text_red bold glow bigger">
+      <?=__('admin_mail_list_none')?>
+    </div>
+    <?php } else { ?>
     <div class="admin_mail_border admin_mail_search">
       <label class="admin_mail_search_label"><?=__('admin_mail_list_search')?></label>
       <input class="table_search indiv" value="">
     </div>
+    <?php } ?>
 
     <?php for($i = 0; $i < $admin_mail['rows']; $i++) { ?>
     <?php if($admin_mail[$i]['top_level']) { ?>

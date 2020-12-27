@@ -56,9 +56,13 @@ if(isset($admin_mail['error'])) { ?>
 
 <div class="indented padding_bot">
   <?php if($admin_mail['sender_id']) { ?>
-  <?=__('users_message_sent_by', preset_values: array($admin_mail['sender_id'], $admin_mail['sender'], $admin_mail['sent_at']))?>
+  <?=__('users_message_sent_by', preset_values: array($admin_mail['sender_id'], $admin_mail['sender'], $admin_mail['sent_at']))?><br>
   <?php } else { ?>
-  <?=__('admin_mail_chain_system', preset_values: array($admin_mail['recipient_id'], $admin_mail['recipient'], $admin_mail['sender'], $admin_mail['sent_at']))?>
+  <?=__('admin_mail_chain_system', preset_values: array($admin_mail['recipient_id'], $admin_mail['recipient'], $admin_mail['sender'], $admin_mail['sent_at']))?><br>
+  <?php } if($admin_mail['read']) { ?>
+  <?=__('users_message_read', preset_values: array($admin_mail['read_at']))?>
+  <?php } else { ?>
+  <span class="bold glow"><?=__('users_mail_chain_unread')?></span>
   <?php } ?>
 </div>
 
