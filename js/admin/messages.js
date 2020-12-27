@@ -1,6 +1,7 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  admin_mail_display          Displays the contents of the desired admin mail.                                     */
+/*  admin_mail_search           Searches through the admin mail.                                                     */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -24,4 +25,22 @@ function admin_mail_display( message_id = 0 )
 
   // Trigger the message displaying
   fetch_page('inbox_message', 'admin_mail_main_panel', postdata);
+}
+
+
+
+
+/**
+ * Searches through the admin mail.
+ *
+ * @returns {void}
+ */
+
+function admin_mail_search()
+{
+  // Assemble the postdata
+  postdata = 'admin_mail_search=' + fetch_sanitize_id('admin_mail_search');
+
+  // Trigger the search
+  fetch_page('inbox', 'admin_mail_message_list', postdata);
 }

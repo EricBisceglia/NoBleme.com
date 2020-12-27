@@ -672,22 +672,38 @@ function admin_mail_list( string $search = '' ) : array
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
 
+  // Sanitize the search value
+  $search = sanitize($search, 'string');
+
   // Fetch the private messages
-  $qmessages = query("  SELECT    users_private_messages.id                 AS 'pm_id'        ,
-                                  users_private_messages.title              AS 'pm_title'     ,
-                                  users_private_messages.sent_at            AS 'pm_sent'      ,
-                                  users_private_messages.read_at            AS 'pm_read'      ,
-                                  users_private_messages.fk_users_recipient AS 'pm_recipient' ,
-                                  users_private_messages.fk_users_sender    AS 'us_id'        ,
-                                  sender.username                           AS 'us_nick'      ,
-                                  users_private_messages.fk_parent_message  AS 'pm_parent'
-                        FROM      users_private_messages
-                        LEFT JOIN users AS sender
-                        ON        users_private_messages.fk_users_sender      = sender.id
-                        WHERE     users_private_messages.hide_from_admin_mail = 0
-                        AND     ( users_private_messages.fk_users_recipient   = 0
-                        OR        users_private_messages.fk_users_sender      = 0 )
-                        ORDER BY  users_private_messages.sent_at DESC ");
+  $qmessages = "    SELECT    users_private_messages.id                 AS 'pm_id'        ,
+                              users_private_messages.title              AS 'pm_title'     ,
+                              users_private_messages.sent_at            AS 'pm_sent'      ,
+                              users_private_messages.read_at            AS 'pm_read'      ,
+                              users_private_messages.fk_users_recipient AS 'pm_recipient' ,
+                              users_private_messages.fk_users_sender    AS 'us_id'        ,
+                              sender.username                           AS 'us_nick'      ,
+                              users_private_messages.fk_parent_message  AS 'pm_parent'
+                    FROM      users_private_messages
+                    LEFT JOIN users AS sender
+                    ON        users_private_messages.fk_users_sender      = sender.id
+                    LEFT JOIN users AS recipient
+                    ON        users_private_messages.fk_users_recipient   = recipient.id
+                    WHERE     users_private_messages.hide_from_admin_mail = 0
+                    AND     ( users_private_messages.fk_users_recipient   = 0
+                    OR        users_private_messages.fk_users_sender      = 0 ) ";
+
+  // Execute the search
+  if($search)
+    $qmessages .= " AND     ( users_private_messages.title  LIKE '%$search%'
+                    OR        sender.username               LIKE '%$search%'
+                    OR        recipient.username            LIKE '%$search%' ) ";
+
+  // Sort the results
+  $qmessages .= "   ORDER BY  users_private_messages.sent_at DESC ";
+
+  // Run the query
+  $qmessages = query($qmessages);
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qmessages); $i++)
