@@ -929,6 +929,8 @@ function string_wrap_in_html_tags(  string  $search     ,
  * @param   int     $recipient        (OPTIONAL)  The ID of the user which gets the message - if -1, current user.
  * @param   int     $sender           (OPTIONAL)  The ID of the suer sending the message - if 0, system notification.
  * @param   int     $parent_message   (OPTIONAL)  The ID of the parent message, if it is part of a message chain.
+ * @param   int     $true_sender      (OPTIONAL)  For admin mail, the id of the true sender.
+ * @param   bool    $is_admin_only    (OPTIONAL)  If set, moderators will not be able to see this message.
  * @param   bool    $hide_admin_mail  (OPTIONAL)  If set, the message will not appear in the collective admin outbox.
  * @param   bool    $is_silent        (OPTIONAL)  If set, the message arrives as already read.
  * @param   bool    $do_not_sanitize  (OPTIONAL)  If set, the data will not be sanitized.
@@ -941,6 +943,8 @@ function private_message_send(  string  $title                    ,
                                 int     $recipient        = 0     ,
                                 int     $sender           = 0     ,
                                 int     $parent_message   = 0     ,
+                                int     $true_sender      = 0     ,
+                                bool    $is_admin_only    = false ,
                                 bool    $hide_admin_mail  = false ,
                                 bool    $is_silent        = false ,
                                 bool    $do_not_sanitize  = false ) : bool
@@ -950,14 +954,16 @@ function private_message_send(  string  $title                    ,
     return 0;
 
   // Sanitize and prepare the data
-  $title      = ($do_not_sanitize) ? $title : sanitize($title, 'string');
-  $body       = ($do_not_sanitize) ? $body : sanitize($body, 'string');
-  $recipient  = ($recipient > -1) ? sanitize($recipient, 'int', 0) : sanitize(user_get_id(), 'int', 0);
-  $sender     = sanitize($sender, 'int', 0);
-  $parent     = sanitize($parent_message, 'int', 0);
-  $sent_at    = sanitize(time(), 'int', 0);
-  $read_at    = ($is_silent) ? sanitize(time(), 'int', 0) : 0;
-  $admin_mail = sanitize($hide_admin_mail, 'int', 0, 1);
+  $title        = ($do_not_sanitize) ? $title : sanitize($title, 'string');
+  $body         = ($do_not_sanitize) ? $body : sanitize($body, 'string');
+  $recipient    = ($recipient > -1) ? sanitize($recipient, 'int', 0) : sanitize(user_get_id(), 'int', 0);
+  $sender       = sanitize($sender, 'int', 0);
+  $parent       = sanitize($parent_message, 'int', 0);
+  $sent_at      = sanitize(time(), 'int', 0);
+  $read_at      = ($is_silent) ? sanitize(time(), 'int', 0) : 0;
+  $true_sender  = sanitize($true_sender, 'int', 0);
+  $admin_only   = sanitize($is_admin_only, 'int', 0, 1);
+  $admin_mail   = sanitize($hide_admin_mail, 'int', 0, 1);
 
   // If the recipient does not exist, do not send the message
   if($recipient && !database_row_exists('users', $recipient))
@@ -969,14 +975,16 @@ function private_message_send(  string  $title                    ,
 
   // Send the message by inserting a new row in the private messages table
   query(" INSERT INTO   users_private_messages
-          SET           users_private_messages.fk_users_recipient   = '$recipient'  ,
-                        users_private_messages.fk_users_sender      = '$sender'     ,
-                        users_private_messages.fk_parent_message    = '$parent'     ,
-                        users_private_messages.hide_from_admin_mail = '$admin_mail' ,
-                        users_private_messages.sent_at              = '$sent_at'    ,
-                        users_private_messages.read_at              = '$read_at'    ,
-                        users_private_messages.title                = '$title'      ,
-                        users_private_messages.body                 = '$body'       ");
+          SET           users_private_messages.fk_users_recipient     = '$recipient'    ,
+                        users_private_messages.fk_users_sender        = '$sender'       ,
+                        users_private_messages.fk_users_true_sender   = '$true_sender'  ,
+                        users_private_messages.fk_parent_message      = '$parent'       ,
+                        users_private_messages.is_admin_only_message  = '$admin_only'   ,
+                        users_private_messages.hide_from_admin_mail   = '$admin_mail'   ,
+                        users_private_messages.sent_at                = '$sent_at'      ,
+                        users_private_messages.read_at                = '$read_at'      ,
+                        users_private_messages.title                  = '$title'        ,
+                        users_private_messages.body                   = '$body'         ");
 
   // Return 1 to show the message was sent
   return 1;

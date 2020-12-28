@@ -62,11 +62,13 @@ function __(  string  $string                   ,
 
   /*
   / Replace URLs if needed, using a regex that can work in either of the following ways:
+  / {{link_popup|href|text}}        # Will open in a popup (target blank)
   / {{link++|href|text|style|path}} # Will always be an internal link
   / {{link+|href|text|style}}
   / {{link|href|text}}
   / {{external|href|text}}
   */
+  $returned_string = preg_replace('/\{\{link_popup\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", popup: true), $returned_string);
   $returned_string = preg_replace('/\{\{link\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", path: "$5"), $returned_string);
   $returned_string = preg_replace('/\{\{link\+\+\|(.*?)\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3", 0), $returned_string);
   $returned_string = preg_replace('/\{\{link\+\|(.*?)\|(.*?)\|(.*?)\}\}/is',__link("$1", "$2", "$3"), $returned_string);

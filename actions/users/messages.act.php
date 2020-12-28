@@ -20,6 +20,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  admin_mail_list                 Lists private messages sent to the administrative team.                          */
 /*  admin_mail_get                  Fetches information about a private message sent to the administrative team.     */
+/*  admin_mail_reply                Replies to an existing private message sent to the administrative team.          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -434,10 +435,11 @@ function private_message_reply( int     $message_id ,
     return __('users_message_reply_no_body');
 
   // Fetch some data regarding the message being replied to
-  $dmessage = mysqli_fetch_array(query("  SELECT  users_private_messages.deleted_by_recipient AS 'pm_deleted'   ,
-                                                  users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
-                                                  users_private_messages.fk_users_sender      AS 'pm_sender'    ,
-                                                  users_private_messages.title                AS 'pm_title'
+  $dmessage = mysqli_fetch_array(query("  SELECT  users_private_messages.deleted_by_recipient   AS 'pm_deleted'   ,
+                                                  users_private_messages.fk_users_recipient     AS 'pm_recipient' ,
+                                                  users_private_messages.fk_users_sender        AS 'pm_sender'    ,
+                                                  users_private_messages.is_admin_only_message  AS 'pm_admin'     ,
+                                                  users_private_messages.title                  AS 'pm_title'
                                           FROM    users_private_messages
                                           WHERE   users_private_messages.id = '$message_id' "));
 
@@ -461,6 +463,7 @@ function private_message_reply( int     $message_id ,
   $recipient  = sanitize($dmessage['pm_sender'], 'int', 0);
   $title_raw  = 'RE '.string_truncate($dmessage['pm_title'], 25, '…');
   $title      = sanitize($title_raw, 'string');
+  $admin_only = sanitize($dmessage['pm_admin']);
 
   // Send the message
   private_message_send( $title                      ,
@@ -468,6 +471,7 @@ function private_message_reply( int     $message_id ,
                         recipient: $recipient       ,
                         sender: $user_id            ,
                         parent_message: $message_id ,
+                        is_admin_only: $admin_only  ,
                         do_not_sanitize: true       );
 
   // Notify IRC in case of admin message
@@ -672,7 +676,7 @@ function admin_mail_list( string $search = '' ) : array
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
 
-  // Sanitize the search value
+  // Sanitize the search data
   $search = sanitize($search, 'string');
 
   // Fetch the private messages
@@ -681,23 +685,28 @@ function admin_mail_list( string $search = '' ) : array
                               users_private_messages.sent_at            AS 'pm_sent'      ,
                               users_private_messages.read_at            AS 'pm_read'      ,
                               users_private_messages.fk_users_recipient AS 'pm_recipient' ,
+                              recipient.username                        AS 'ur_nick'      ,
                               users_private_messages.fk_users_sender    AS 'us_id'        ,
                               sender.username                           AS 'us_nick'      ,
                               users_private_messages.fk_parent_message  AS 'pm_parent'
                     FROM      users_private_messages
                     LEFT JOIN users AS sender
-                    ON        users_private_messages.fk_users_sender      = sender.id
+                    ON        users_private_messages.fk_users_sender        = sender.id
                     LEFT JOIN users AS recipient
-                    ON        users_private_messages.fk_users_recipient   = recipient.id
-                    WHERE     users_private_messages.hide_from_admin_mail = 0
-                    AND     ( users_private_messages.fk_users_recipient   = 0
-                    OR        users_private_messages.fk_users_sender      = 0 ) ";
+                    ON        users_private_messages.fk_users_recipient     = recipient.id
+                    WHERE     users_private_messages.hide_from_admin_mail   = 0
+                    AND     ( users_private_messages.fk_users_recipient     = 0
+                    OR        users_private_messages.fk_users_sender        = 0 ) ";
 
   // Execute the search
   if($search)
-    $qmessages .= " AND     ( users_private_messages.title  LIKE '%$search%'
-                    OR        sender.username               LIKE '%$search%'
-                    OR        recipient.username            LIKE '%$search%' ) ";
+    $qmessages .= " AND     ( users_private_messages.title                  LIKE '%$search%'
+                    OR        sender.username                               LIKE '%$search%'
+                    OR        recipient.username                            LIKE '%$search%' ) ";
+
+  // Hide admin mail from moderators
+  if(!user_is_administrator())
+    $qmessages .= " AND       users_private_messages.is_admin_only_message  = 0 ";
 
   // Sort the results
   $qmessages .= "   ORDER BY  users_private_messages.sent_at DESC ";
@@ -713,7 +722,8 @@ function admin_mail_list( string $search = '' ) : array
     $data[$i]['title']      = sanitize_output($row['pm_title']);
     $data[$i]['read']       = ($row['pm_read']);
     $data[$i]['recipient']  = $row['pm_recipient'];
-    $data[$i]['sender']     = $row['us_id'] ? sanitize_output($row['us_nick']) : __('nobleme');
+    $temp                   = $row['us_id'] ? sanitize_output($row['us_nick']) : sanitize_output($row['ur_nick']);
+    $data[$i]['sender']     = (!$row['us_id'] && !$row['pm_recipient']) ? __('nobleme') : $temp;
     $data[$i]['sent']       = sanitize_output(time_since($row['pm_sent']));
     $data[$i]['parent']     = $row['pm_parent'];
     $parent_ids[$i]         = $row['pm_parent'];
@@ -772,21 +782,29 @@ function admin_mail_get( int $message_id ) : array
   }
 
   // Prepare the query to fetch the message's data
-  $qmessage = " SELECT    users_private_messages.deleted_by_recipient AS 'pm_deleted_r'     ,
-                          users_private_messages.deleted_by_sender    AS 'pm_deleted_s'     ,
-                          users_private_messages.fk_users_recipient   AS 'pm_recipient_id'  ,
-                          users_recipient.username                    AS 'pm_recipient'     ,
-                          users_private_messages.fk_users_sender      AS 'pm_sender_id'     ,
-                          users_sender.username                       AS 'pm_sender'        ,
-                          users_private_messages.fk_parent_message    AS 'pm_parent'        ,
-                          users_private_messages.sent_at              AS 'pm_sent'          ,
-                          users_private_messages.read_at              AS 'pm_read'          ,
-                          users_private_messages.title                AS 'pm_title'         ,
-                          users_private_messages.body                 AS 'pm_body'
+  $qmessage = " SELECT    users_private_messages.deleted_by_recipient   AS 'pm_deleted_r'     ,
+                          users_private_messages.deleted_by_sender      AS 'pm_deleted_s'     ,
+                          users_private_messages.fk_users_recipient     AS 'pm_recipient_id'  ,
+                          users_recipient.username                      AS 'pm_recipient'     ,
+                          users_private_messages.fk_users_sender        AS 'pm_sender_id'     ,
+                          users_sender.username                         AS 'pm_sender'        ,
+                          users_private_messages.fk_users_true_sender   AS 'pm_true'          ,
+                          users_true_sender.username                    AS 'ts_username'      ,
+                          users_private_messages.fk_parent_message      AS 'pm_parent'        ,
+                          users_private_messages.is_admin_only_message  AS 'pm_admin'         ,
+                          users_private_messages.hide_from_admin_mail   AS 'pm_hidden'        ,
+                          users_private_messages.sent_at                AS 'pm_sent'          ,
+                          users_private_messages.read_at                AS 'pm_read'          ,
+                          users_private_messages.title                  AS 'pm_title'         ,
+                          users_private_messages.body                   AS 'pm_body'
                 FROM      users_private_messages
-                LEFT JOIN users AS users_sender     ON users_private_messages.fk_users_sender     = users_sender.id
-                LEFT JOIN users AS users_recipient  ON users_private_messages.fk_users_recipient  = users_recipient.id
-                WHERE     users_private_messages.id = '$message_id' ";
+                LEFT JOIN users AS users_sender
+                ON        users_private_messages.fk_users_sender      = users_sender.id
+                LEFT JOIN users AS users_recipient
+                ON        users_private_messages.fk_users_recipient   = users_recipient.id
+                LEFT JOIN users AS users_true_sender
+                ON        users_private_messages.fk_users_true_sender = users_true_sender.id
+                WHERE     users_private_messages.id                   = '$message_id' ";
 
   // Fetch data regarding the message
   $dmessage = mysqli_fetch_array(query($qmessage));
@@ -805,12 +823,27 @@ function admin_mail_get( int $message_id ) : array
     return $data;
   }
 
+  // Error: Admin only mail
+  if($dmessage['pm_admin'] && !user_is_administrator())
+  {
+    $data['error'] = __('admin_mail_error_admins');
+    return $data;
+  }
+
+  // Error: Hidden mail
+  if($dmessage['pm_hidden'])
+  {
+    $data['error'] = __('users_message_neighbor');
+    return $data;
+  }
+
   // Prepare the data
   $data['id']           = sanitize_output($message_id);
   $data['self']         = (!$dmessage['pm_sender_id']);
   $data['title']        = sanitize_output($dmessage['pm_title']);
   $data['sender_id']    = sanitize_output($dmessage['pm_sender_id']);
-  $data['sender']       = ($dmessage['pm_sender_id']) ? sanitize_output($dmessage['pm_sender']) : __('nobleme');
+  $temp                 = ($dmessage['pm_true']) ? sanitize_output($dmessage['ts_username']) : __('nobleme');
+  $data['sender']       = ($dmessage['pm_sender_id']) ? sanitize_output($dmessage['pm_sender']) : $temp;
   $data['recipient_id'] = sanitize_output($dmessage['pm_recipient_id']);
   $data['recipient']    = ($dmessage['pm_recipient_id']) ? sanitize_output($dmessage['pm_recipient']) : __('nobleme');
   $data['sent_at']      = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
@@ -846,11 +879,13 @@ function admin_mail_get( int $message_id ) : array
                               users_private_messages.fk_users_sender      AS 'pm_sender_id' ,
                               users_private_messages.fk_parent_message    AS 'pm_parent'    ,
                               users_sender.username                       AS 'pm_sender'    ,
+                              users_true.username                         AS 'pm_true'      ,
                               users_private_messages.sent_at              AS 'pm_sent'      ,
                               users_private_messages.title                AS 'pm_title'     ,
                               users_private_messages.body                 AS 'pm_body'
                     FROM      users_private_messages
-                    LEFT JOIN users AS users_sender ON users_private_messages.fk_users_sender = users_sender.id
+                    LEFT JOIN users AS users_sender ON users_private_messages.fk_users_sender       = users_sender.id
+                    LEFT JOIN users AS users_true   ON users_private_messages.fk_users_true_sender  = users_true.id
                     WHERE     users_private_messages.id = '$message_id' ";
 
       // Fetch data regarding the message
@@ -881,7 +916,8 @@ function admin_mail_get( int $message_id ) : array
         $temp                   = ($user_is_sender && $dmessage['pm_deleted_s']) ? 1 : 0;
         $data[$i]['deleted']    = (!$user_is_sender && $dmessage['pm_deleted_r']) ? 1 : $temp;
         $data[$i]['title']      = sanitize_output($dmessage['pm_title']);
-        $temp                   = ($dmessage['pm_sender_id']) ? $dmessage['pm_sender'] : __('nobleme');
+        $temp                   = ($dmessage['pm_true']) ? sanitize_output($dmessage['pm_true']) : __('nobleme');
+        $temp                   = ($dmessage['pm_sender_id']) ? $dmessage['pm_sender'] : $temp;
         $data[$i]['sender']     = sanitize_output($temp);
         $data[$i]['sender_id']  = sanitize_output($dmessage['pm_sender_id']);
         $data[$i]['sent_at']    = sanitize_output(date_to_text($dmessage['pm_sent'], 0, 2));
@@ -904,4 +940,84 @@ function admin_mail_get( int $message_id ) : array
 
   // Return the data
   return $data;
+}
+
+
+
+
+/**
+ * Replies to an existing private message sent to the administrative team.
+ *
+ * @param   int         $message_id   The id of the message being replied to.
+ * @param   string      $body         The private message's body.
+ *
+ * @return  string|null               An error string, or NULL if all went well.
+ */
+
+function admin_mail_reply(  int     $message_id ,
+                            string  $body       ) : mixed
+{
+  // Only moderators or above can do this
+  user_restrict_to_moderators();
+
+  // Check if the required files have been included
+  require_included_file('messages.lang.php');
+
+  // Sanitize the data
+  $user_id    = sanitize(user_get_id(), 'int', 1);
+  $message_id = sanitize($message_id, 'int', 0);
+  $body       = sanitize($body, 'string');
+
+  // Error: Message ID not found
+  if(!database_row_exists('users_private_messages', $message_id))
+    return __('users_message_not_found');
+
+  // Error: Empty body
+  if(!$body)
+    return __('users_message_reply_no_body');
+
+  // Fetch some data regarding the message being replied to
+  $dmessage = mysqli_fetch_array(query("  SELECT  users_private_messages.deleted_by_recipient   AS 'pm_deleted'   ,
+                                                  users_private_messages.fk_users_recipient     AS 'pm_recipient' ,
+                                                  users_private_messages.fk_users_sender        AS 'pm_sender'    ,
+                                                  users_private_messages.is_admin_only_message  AS 'pm_admin'     ,
+                                                  users_private_messages.hide_from_admin_mail   AS 'pm_hide'      ,
+                                                  users_private_messages.title                  AS 'pm_title'
+                                          FROM    users_private_messages
+                                          WHERE   users_private_messages.id = '$message_id' "));
+
+  // Error: Can not reply to self
+  if($user_id == $dmessage['pm_sender'])
+    return __('users_message_reply_self');
+
+  // Error: Can not reply to other people's messages
+  if($dmessage['pm_recipient'])
+    return __('users_message_reply_others');
+
+  // Error: Can not reply to admin only messages as a moderator
+  if($dmessage['pm_admin'] && !user_is_administrator())
+    return __('admin_mail_reply_admins');
+
+  // Error: Can not reply to messages hidden from the admin inbox
+  if($dmessage['pm_hide'])
+    return __('users_message_deleted');
+
+  // Prepare the message's data
+  $recipient  = sanitize($dmessage['pm_sender'], 'int', 0);
+  $title_raw  = 'RE '.string_truncate($dmessage['pm_title'], 25, '…');
+  $title      = sanitize($title_raw, 'string');
+  $admin_only = sanitize($dmessage['pm_admin']);
+
+  // Send the message
+  private_message_send( $title                      ,
+                        $body                       ,
+                        recipient: $recipient       ,
+                        sender: 0                   ,
+                        true_sender: $user_id       ,
+                        parent_message: $message_id ,
+                        is_admin_only: $admin_only  ,
+                        do_not_sanitize: true       );
+
+  // Everything went well
+  return NULL;
 }

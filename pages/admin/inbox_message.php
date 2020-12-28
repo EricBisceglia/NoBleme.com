@@ -46,10 +46,46 @@ if(isset($admin_mail['error'])) { ?>
 
 <?php } else { ?>
 
+<div class="hidden" id="admin_mail_reply_container">
+
+  <fieldset>
+
+    <label for="admin_mail_reply_textarea"><?=__('admin_mail_reply_label')?></label>
+    <?php
+    $editor_target_element  = 'admin_mail_reply_textarea';
+    $preview_output         = 'admin_mail_preview';
+    $preview_path           = $path;
+    include './../../inc/editor.inc.php';
+    ?>
+    <textarea id="admin_mail_reply_textarea" name="admin_mail_reply_textarea" onkeyup="admin_mail_reply_preview();"></textarea>
+
+    <div class="smallpadding_top smallpadding_bot">
+      <button onclick="admin_mail_reply_send(<?=$admin_mail['id']?>);"><?=__('users_message_reply_send')?></button>
+    </div>
+
+  </fieldset>
+
+  <hr>
+
+</div>
+
+<div class="hidden" id="admin_mail_preview_container">
+
+  <label class="smallpadding_top"><?=__('users_message_preview_reply')?></label>
+
+  <div id="admin_mail_preview" class="smallpadding_top smallpadding_bot">
+    &nbsp;
+  </div>
+
+  <hr>
+
+</div>
+
 <h5 class="padding_top indented">
   <?=$admin_mail['title']?>
-  <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/edit.svg" alt="E" title="<?=__('admin_mail_chain_reply')?>">
-  <?php if($is_admin) { ?>
+  <?php if($admin_mail['sender_id']) { ?>
+  <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/edit.svg" alt="E" title="<?=__('admin_mail_chain_reply')?>" id="admin_mail_reply_icon" onclick="admin_mail_reply();">
+  <?php } if($is_admin) { ?>
   <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/delete.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>">
   <?php } ?>
 </h5>
@@ -66,7 +102,17 @@ if(isset($admin_mail['error'])) { ?>
   <?php } ?>
 </div>
 
+<div class="hidden padding_bot" id="admin_mail_reply_return">
+  &nbsp;
+</div>
+
 <div class="spaced padding_bot"><?=$admin_mail['body']?></div>
+
+<?php if($admin_mail['sender_id']) { ?>
+<div class="indented padding_bot">
+  <button id="admin_mail_reply_button" onclick="admin_mail_reply();"><?=__('users_message_reply')?></button>
+</div>
+<?php } ?>
 
 <?php if(isset($admin_mail['parents'])) { ?>
 <?php for($i = 0; $i < $admin_mail['parents']; $i++) { ?>

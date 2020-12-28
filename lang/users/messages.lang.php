@@ -276,8 +276,17 @@ ___('users_mail_chain_unread', 'EN', "This message has not been read yet.");
 ___('users_mail_chain_unread', 'FR', "Ce message n'a pas encore été lu.");
 
 
-// Errors
+// Message chain errors
 ___('admin_mail_error_not_found', 'EN', "The requested message does not exist");
 ___('admin_mail_error_not_found', 'FR', "Le message demandé n'existe pas");
 ___('admin_mail_error_deleted',   'EN', "The requested message has been deleted");
 ___('admin_mail_error_deleted',   'FR', "Le message demandé a été supprimé");
+___('admin_mail_error_admins',    'EN', "Only administrators may view this message");
+___('admin_mail_error_admins',    'FR', "Seule l'administration peut consulter ce message");
+
+
+// Reply to a message chain
+___('admin_mail_reply_label',   'EN', "Your reply to the message - you can use {{link_popup|pages/doc/bbcodes|BBCodes}} for formatting");
+___('admin_mail_reply_label',   'FR', "Votre réponse au message - vous pouvez la formater avec des {{link_popup|pages/doc/bbcodes|BBCodes}}");
+___('admin_mail_reply_admins',  'EN', "Only administrators can reply to this message");
+___('admin_mail_reply_admins',  'FR', "Seule l'adiminstration peut répondre à ce message");
