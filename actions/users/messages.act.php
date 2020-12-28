@@ -881,6 +881,7 @@ function admin_mail_get( int $message_id ) : array
                               users_sender.username                       AS 'pm_sender'    ,
                               users_true.username                         AS 'pm_true'      ,
                               users_private_messages.sent_at              AS 'pm_sent'      ,
+                              users_private_messages.read_at              AS 'pm_read'      ,
                               users_private_messages.title                AS 'pm_title'     ,
                               users_private_messages.body                 AS 'pm_body'
                     FROM      users_private_messages
@@ -924,6 +925,15 @@ function admin_mail_get( int $message_id ) : array
         $data[$i]['sent_time']  = sanitize_output(time_since($dmessage['pm_sent']));
         $data[$i]['body']       = bbcodes(sanitize_output($dmessage['pm_body'], true));
         $i++;
+
+        // Mark the message as read if it was previously unread
+        if(!$dmessage['pm_read'] && !$dmessage['pm_recipient'])
+        {
+          $timestamp = sanitize(time(), 'int', 0);
+          query(" UPDATE  users_private_messages
+                  SET     users_private_messages.read_at  = '$timestamp'
+                  WHERE   users_private_messages.id       = '$message_id' ");
+        }
       }
     }
 

@@ -62,8 +62,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_70 flexcontainer admin_mail_border admin_mail_container">
 
-  <div class="admin_mail_border admin_mail_left_panel" id="admin_mail_main_panel">
-    &nbsp;
+  <div class="admin_mail_border admin_mail_left_panel spaced" id="admin_mail_main_panel">
+    <h2 class="hugepadding_top align_center uppercase spaced">
+      <?=__('admin_mail_list_select')?>
+    </h2>
   </div>
 
   <div class="admin_mail_right_panel">

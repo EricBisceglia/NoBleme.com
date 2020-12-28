@@ -22,8 +22,8 @@ ___('users_message_neighbor',   'FR', "Vous ne pouvez pas voir les messages priv
 // Private message
 ___('users_message_sent_by',  'EN', "Sent by {{link|todo_link?id={{1}}|{{2}}}} on {{3}}.");
 ___('users_message_sent_by',  'FR', "Envoyé par {{link|todo_link?id={{1}}|{{2}}}} le {{3}}.");
-___('users_message_system',   'EN', "Automated message sent on {{1}}.");
-___('users_message_system',   'FR', "Message automatisé envoyé le {{1}}.");
+___('users_message_system',   'EN', "System message sent on {{1}}.");
+___('users_message_system',   'FR', "Message système envoyé le {{1}}.");
 ___('users_message_read',     'EN', "Read on {{1}}.");
 ___('users_message_read',     'FR', "Lu le {{1}}.");
 
@@ -40,8 +40,8 @@ ___('users_message_chain_deleted',  'FR', "[Un des messages de la conversation a
 // Reply to a private message
 ___('users_message_reply',          'EN', "Reply to this message");
 ___('users_message_reply',          'FR', "Répondre au message");
-___('users_message_reply_system',   'EN', "Replies to automated messages will be sent to the website administration's collective inbox. This means that everyone on the {{link|pages/users/admins|administrative team}} will be able to see your reply and to reply back to you.");
-___('users_message_reply_system',   'FR', "Les réponses aux messages automatisés sont envoyées à la boîte de réception collective de l'administration du site. Cela signifie que toute {{link|pages/users/admins|l'équipe administrative}} pourra voir votre message et y répondre.");
+___('users_message_reply_system',   'EN', "Replies to system messages will be sent to the website administration's collective inbox. This means that everyone on the {{link|pages/users/admins|administrative team}} will be able to see your reply and to reply back to you.");
+___('users_message_reply_system',   'FR', "Les réponses aux messages système sont envoyées à la boîte de réception collective de l'administration du site. Cela signifie que toute {{link|pages/users/admins|l'équipe administrative}} pourra voir votre message et y répondre.");
 ___('users_message_reply_title',    'EN', "Your reply - you can use {{1}} for formatting");
 ___('users_message_reply_title',    'FR', "Votre réponse - vous pouvez la formater avec des {{1}}");
 ___('users_message_reply_send',     'EN', "Send reply");
@@ -115,8 +115,8 @@ ___('users_inbox_empty',    'EN', "There are currently no messages in your inbox
 ___('users_inbox_empty',    'FR', "Vous n'avez aucun message dans votre boîte de réception");
 ___('users_inbox_unread',   'EN', "Unread");
 ___('users_inbox_unread',   'FR', "Non lu");
-___('users_inbox_system',   'EN', "Automated message");
-___('users_inbox_system',   'FR', "Message automatisé");
+___('users_inbox_system',   'EN', "System message");
+___('users_inbox_system',   'FR', "Message système");
 ___('users_inbox_not_read', 'EN', "You have not read this message yet - click here to open it.");
 ___('users_inbox_not_read', 'FR', "Vous n'avez pas encore lu ce message - cliquez ici pour l'ouvrir.");
 
@@ -261,6 +261,8 @@ EOD
 
 
 // Message list
+___('admin_mail_list_select', 'EN', "Select an adminin mail in the right column by clicking on it");
+___('admin_mail_list_select', 'FR', "Sélectionnez un courrier administratif dans la colonne de droite en cliquant dessus");
 ___('admin_mail_list_search', 'EN', "Search through the messages:");
 ___('admin_mail_list_search', 'FR', "Recherche dans les messages :");
 ___('admin_mail_list_none',   'EN', "There are currently no private messages in the admin mail inbox.");

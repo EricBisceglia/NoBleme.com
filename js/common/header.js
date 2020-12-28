@@ -57,6 +57,13 @@ function toggle_header_menu(  menu_name             ,
     var account_icon = document.getElementById('header_topmenu_account_icon');
     account_icon.setAttribute('src', account_icon.getAttribute('src').replace("login_mail.svg", "login.svg"));
   }
+
+  // Same for admin mail notifications
+  else if(menu_name == 'admin')
+  {
+    var account_icon = document.getElementById('header_topmenu_admin_icon');
+    account_icon.setAttribute('src', account_icon.getAttribute('src').replace("login_mail.svg", "admin_panel.svg"));
+  }
 }
 
 

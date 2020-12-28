@@ -219,8 +219,11 @@ else
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Private messages
+
 // Check only if the user is logged in
-if ($activity_user)
+if($activity_user)
 {
   // Fetch unread private message count
   $dpms = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 'pm_nb'
@@ -232,6 +235,31 @@ if ($activity_user)
   // Fetch the result for display
   $private_message_count      = $dpms['pm_nb'];
   $private_message_count_css  = ($private_message_count && basename($_SERVER['PHP_SELF']) != 'message_inbox.php') ? ' header_submenu_blink' : '';
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Administrative mail
+
+// Check only if the user is moderator or above
+if($is_moderator)
+{
+  // Prevent moderators from being warned for admin only mail
+  $admin_condition = ($is_admin) ? '' : ' AND users_private_messages.is_admin_only_message = 0 ';
+  // Fetch unread private message count
+  $dpms = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 'pm_nb'
+                                      FROM    users_private_messages
+                                      WHERE   users_private_messages.read_at                = 0
+                                      AND     users_private_messages.hide_from_admin_mail   = 0
+                                      AND     users_private_messages.deleted_by_recipient   = 0
+                                      AND     users_private_messages.fk_users_recipient     = 0
+                                              $admin_condition "));
+
+  // Fetch the result for display
+  $admin_mail_count     = $dpms['pm_nb'];
+  $admin_mail_count_css = ($admin_mail_count && basename($_SERVER['PHP_SELF']) != 'inbox.php') ? ' header_submenu_blink' : '';
 }
 
 
@@ -426,20 +454,22 @@ $javascripts .= '
       <div class="header_topmenu_zone">
 
         <?php if(user_is_logged_in() && $private_message_count && basename($_SERVER['PHP_SELF']) != 'message_inbox.php') { ?>
-        <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="Account" onclick="toggle_header_menu('account');">
+        <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="<?=string_change_case('account', 'initials');?>" title="<?=string_change_case('account', 'initials');?>" onclick="toggle_header_menu('account');">
         <?php } else { ?>
-        <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_account" src="<?=$path?>img/icons/login.svg" alt="Account" onclick="toggle_header_menu('account');">
+        <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_account" src="<?=$path?>img/icons/login.svg" alt="<?=string_change_case('account', 'initials');?>" title="<?=string_change_case('account', 'initials');?>" onclick="toggle_header_menu('account');">
         <?php } ?>
 
-        <?php if($is_moderator) { ?>
-        <img class="header_topmenu_icon header_topmenu_panel" src="<?=$path?>img/icons/admin_panel.svg" alt="Account" onclick="toggle_header_menu('admin');">
+        <?php if($is_moderator && $admin_mail_count && basename($_SERVER['PHP_SELF']) != 'inbox.php') { ?>
+        <img id="header_topmenu_admin_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="<?=string_change_case('administration', 'initials');?>" title="<?=string_change_case('administration', 'initials');?>" onclick="toggle_header_menu('admin');">
+        <?php } else if($is_moderator) { ?>
+        <img id="header_topmenu_admin_icon" class="header_topmenu_icon header_topmenu_panel" src="<?=$path?>img/icons/admin_panel.svg" alt="<?=string_change_case('administration', 'initials');?>" title="<?=string_change_case('administration', 'initials');?>" onclick="toggle_header_menu('admin');">
         <?php } ?>
 
         <a href="<?=$url_lang?>">
           <?php if($lang == 'FR') { ?>
-          <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_en.png" alt="EN">
+          <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_en.png" alt="EN" title="EN">
           <?php } else { ?>
-          <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_fr.png" alt="FR">
+          <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_fr.png" alt="FR" title="FR">
           <?php } ?>
         </a>
 
@@ -642,6 +672,9 @@ $javascripts .= '
         <div class="header_submenu_item">
           <?=__link('pages/users/message_write', __('submenu_user_pms_write'), 'header_submenu_link', 1, $path);?>
         </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/users/message_admins', __('submenu_nobleme_contact_admin'), 'header_submenu_link', 1, $path);?>
+        </div>
       </div>
 
       <div class="header_submenu_column">
@@ -692,9 +725,6 @@ $javascripts .= '
         </div>
         <div class="header_submenu_item">
           <a class="header_submenu_link" href="<?=$url_logout?>"><?=__('submenu_user_logout_logout')?></a>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('pages/users/message_admins', __('submenu_nobleme_contact_admin'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
@@ -777,7 +807,7 @@ $javascripts .= '
         <div class="header_submenu_title">
           <?=__('submenu_admin_activity')?>
         </div>
-        <div class="header_submenu_item">
+        <div class="header_submenu_item<?=$admin_mail_count_css?>">
           <?=__link('pages/admin/inbox', __('submenu_admin_inbox'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">

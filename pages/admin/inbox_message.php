@@ -50,7 +50,7 @@ if(isset($admin_mail['error'])) { ?>
 
   <fieldset>
 
-    <label for="admin_mail_reply_textarea"><?=__('admin_mail_reply_label')?></label>
+    <label class="admin_mail_search_label" for="admin_mail_reply_textarea"><?=__('admin_mail_reply_label')?></label>
     <?php
     $editor_target_element  = 'admin_mail_reply_textarea';
     $preview_output         = 'admin_mail_preview';
@@ -121,7 +121,7 @@ if(isset($admin_mail['error'])) { ?>
 
 <h5 class="padding_top indented">
   <?=$admin_mail['title']?>
-  <?php if($is_admin && !$admin_mail[$i]['sender_id']) { ?>
+  <?php if($is_admin) { ?>
   <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/delete.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>">
   <?php } ?>
 </h5>

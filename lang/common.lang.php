@@ -256,6 +256,8 @@ ___(':', 'FR', " :");
 // Buttons and labels
 ___('add',        'EN', "add");
 ___('add',        'FR', "créer");
+___('account',    'EN', "account");
+___('account',    'FR', "compte");
 ___('confirm',    'EN', "confirm");
 ___('confirm',    'FR', "confirmer");
 ___('copy',       'EN', "copy");
@@ -384,6 +386,8 @@ ___('yyyyddmm',   'FR', "AAAA-MM-JJ");
 // Generic user related terms
 ___('activity',       'EN', "activity");
 ___('activity',       'FR', "activité");
+___('administration', 'EN', "administration");
+___('administration', 'FR', "administration");
 ___('administrator',  'EN', "administrator");
 ___('administrator',  'FR', "administration");
 ___('login',          'EN', "login");
