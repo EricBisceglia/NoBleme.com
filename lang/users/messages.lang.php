@@ -292,3 +292,8 @@ ___('admin_mail_reply_label',   'EN', "Your reply to the message - you can use {
 ___('admin_mail_reply_label',   'FR', "Votre réponse au message - vous pouvez la formater avec des {{link_popup|pages/doc/bbcodes|BBCodes}}");
 ___('admin_mail_reply_admins',  'EN', "Only administrators can reply to this message");
 ___('admin_mail_reply_admins',  'FR', "Seule l'adiminstration peut répondre à ce message");
+
+
+// Delete a message
+___('admin_mail_delete_confirm',  'EN', "Confirm the irreversible deletion of this private message. Do not use this feature lightly, only when strictly necessary.");
+___('admin_mail_delete_confirm',  'FR', "Confirmer la suppression irréversible de ce message privé. Ne supprimez pas des messages à outrance, seulement lorsque c\'est strictement nécessaire.");

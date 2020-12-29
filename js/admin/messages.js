@@ -5,6 +5,7 @@
 /*  admin_mail_reply                Opens the form allowing to write a reply to admin mail.                          */
 /*  admin_mail_reply_preview        Previews the reply to an admin mail.                                             */
 /*  admin_mail_reply_send           Triggers the sending of a reply to an admin mail.                                */
+/*  admin_mail_delete               Triggers the deletion of an admin mail.                                          */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -116,6 +117,32 @@ function admin_mail_reply_send( message_id )
   postdata  = 'admin_mail_id='    + fetch_sanitize(message_id);
   postdata += '&admin_mail_body=' + fetch_sanitize_id('admin_mail_reply_textarea');
 
-  // Fetch the private message
+  // Trigger the sending
   fetch_page('inbox_reply', 'admin_mail_reply_return', postdata);
+}
+
+
+
+
+/**
+ * Triggers the deletion of an admin mail.
+ *
+ * @param   {int}   message_id        The ID of the private message.
+ * @param   {int}   confirm_message   The confirmation message which will be displayed.
+ *
+ * @return  {void}
+ */
+
+function admin_mail_delete( message_id      ,
+                            confirm_message )
+{
+  // Prepare the postdata
+  postdata = 'admin_mail_id=' + fetch_sanitize(message_id);
+
+  // Prepare the target element
+  target = 'admin_mail_message_' + message_id;
+
+  // Trigger the deletion and reload the right panel
+  if(confirm(confirm_message))
+    fetch_page('inbox_delete', target, postdata, admin_mail_search());
 }

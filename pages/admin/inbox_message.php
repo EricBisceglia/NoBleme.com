@@ -81,54 +81,62 @@ if(isset($admin_mail['error'])) { ?>
 
 </div>
 
-<h5 class="padding_top indented">
-  <?=$admin_mail['title']?>
+<div id="admin_mail_message_<?=$admin_mail['id']?>">
+
+  <h5 class="padding_top indented">
+    <?=$admin_mail['title']?>
+    <?php if($admin_mail['sender_id']) { ?>
+    <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/edit.svg" alt="E" title="<?=__('admin_mail_chain_reply')?>" id="admin_mail_reply_icon" onclick="admin_mail_reply();">
+    <?php } if($is_admin) { ?>
+    <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/delete.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_mail_delete(<?=$admin_mail['id']?>, '<?=__('admin_mail_delete_confirm')?>');">
+    <?php } ?>
+  </h5>
+
+  <div class="indented padding_bot">
+    <?php if($admin_mail['sender_id']) { ?>
+    <?=__('users_message_sent_by', preset_values: array($admin_mail['sender_id'], $admin_mail['sender'], $admin_mail['sent_at']))?><br>
+    <?php } else { ?>
+    <?=__('admin_mail_chain_system', preset_values: array($admin_mail['recipient_id'], $admin_mail['recipient'], $admin_mail['sender'], $admin_mail['sent_at']))?><br>
+    <?php } if($admin_mail['read']) { ?>
+    <?=__('users_message_read', preset_values: array($admin_mail['read_at']))?>
+    <?php } else { ?>
+    <span class="bold glow"><?=__('users_mail_chain_unread')?></span>
+    <?php } ?>
+  </div>
+
+  <div class="hidden padding_bot" id="admin_mail_reply_return">
+    &nbsp;
+  </div>
+
+  <div class="spaced padding_bot"><?=$admin_mail['body']?></div>
+
   <?php if($admin_mail['sender_id']) { ?>
-  <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/edit.svg" alt="E" title="<?=__('admin_mail_chain_reply')?>" id="admin_mail_reply_icon" onclick="admin_mail_reply();">
-  <?php } if($is_admin) { ?>
-  <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/delete.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>">
+  <div class="indented padding_bot">
+    <button id="admin_mail_reply_button" onclick="admin_mail_reply();"><?=__('users_message_reply')?></button>
+  </div>
   <?php } ?>
-</h5>
 
-<div class="indented padding_bot">
-  <?php if($admin_mail['sender_id']) { ?>
-  <?=__('users_message_sent_by', preset_values: array($admin_mail['sender_id'], $admin_mail['sender'], $admin_mail['sent_at']))?><br>
-  <?php } else { ?>
-  <?=__('admin_mail_chain_system', preset_values: array($admin_mail['recipient_id'], $admin_mail['recipient'], $admin_mail['sender'], $admin_mail['sent_at']))?><br>
-  <?php } if($admin_mail['read']) { ?>
-  <?=__('users_message_read', preset_values: array($admin_mail['read_at']))?>
-  <?php } else { ?>
-  <span class="bold glow"><?=__('users_mail_chain_unread')?></span>
-  <?php } ?>
 </div>
-
-<div class="hidden padding_bot" id="admin_mail_reply_return">
-  &nbsp;
-</div>
-
-<div class="spaced padding_bot"><?=$admin_mail['body']?></div>
-
-<?php if($admin_mail['sender_id']) { ?>
-<div class="indented padding_bot">
-  <button id="admin_mail_reply_button" onclick="admin_mail_reply();"><?=__('users_message_reply')?></button>
-</div>
-<?php } ?>
 
 <?php if(isset($admin_mail['parents'])) { ?>
 <?php for($i = 0; $i < $admin_mail['parents']; $i++) { ?>
 
 <hr>
 
-<h5 class="padding_top indented">
-  <?=$admin_mail['title']?>
-  <?php if($is_admin) { ?>
-  <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/delete.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>">
-  <?php } ?>
-</h5>
+<div id="admin_mail_message_<?=$admin_mail[$i]['id']?>">
 
-<div class="indented padding_bot"><?=__('users_message_chain_sent', preset_values: array($admin_mail[$i]['sender'], $admin_mail[$i]['sent_at'], $admin_mail[$i]['sent_time']))?></div>
+  <h5 class="padding_top indented">
+    <?=$admin_mail['title']?>
+    <?php if($is_admin) { ?>
+    <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/delete.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_mail_delete(<?=$admin_mail[$i]['id']?>, '<?=__('admin_mail_delete_confirm')?>');">
+    <?php } ?>
+  </h5>
 
-<div class="spaced padding_bot"><?=$admin_mail[$i]['body']?></div>
+  <div class="indented padding_bot"><?=__('users_message_chain_sent', preset_values: array($admin_mail[$i]['sender'], $admin_mail[$i]['sent_at'], $admin_mail[$i]['sent_time']))?></div>
+
+  <div class="spaced padding_bot"><?=$admin_mail[$i]['body']?></div>
+
+</div>
 
 <?php } ?>
 <?php } ?>

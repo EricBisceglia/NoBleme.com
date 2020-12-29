@@ -8,19 +8,20 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  private_message_list            Lists a user's private messages and system notifications.                        */
-/*  private_message_get             Fetches information about a private message.                                     */
-/*  private_message_write           Sends a new private message.                                                     */
-/*  private_message_reply           Replies to an existing private message.                                          */
-/*  private_message_delete          Deletes a private message.                                                       */
+/*  private_message_list          Lists a user's private messages and system notifications.                          */
+/*  private_message_get           Fetches information about a private message.                                       */
+/*  private_message_write         Sends a new private message.                                                       */
+/*  private_message_reply         Replies to an existing private message.                                            */
+/*  private_message_delete        Deletes a private message.                                                         */
 /*                                                                                                                   */
-/*  private_message_years_list      Fetches all years during which the current user got or sent private messages.    */
+/*  private_message_years_list    Fetches all years during which the current user got or sent private messages.      */
 /*                                                                                                                   */
-/*  private_message_admins          Sends a private message to the administrative team.                              */
+/*  private_message_admins        Sends a private message to the administrative team.                                */
 /*                                                                                                                   */
-/*  admin_mail_list                 Lists private messages sent to the administrative team.                          */
-/*  admin_mail_get                  Fetches information about a private message sent to the administrative team.     */
-/*  admin_mail_reply                Replies to an existing private message sent to the administrative team.          */
+/*  admin_mail_list               Lists private messages sent to or by the administrative team.                      */
+/*  admin_mail_get                Fetches information about a private message sent to or by the administrative team. */
+/*  admin_mail_reply              Replies to an existing private message sent to the administrative team.            */
+/*  admin_mail_delete             Deletes a private message sent to or by the administrative team.                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -477,8 +478,9 @@ function private_message_reply( int     $message_id ,
   // Notify IRC in case of admin message
   if(!$recipient)
   {
-    $sender = user_get_username($user_id);
-    irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."todo_link", 'mod');
+    $sender   = user_get_username($user_id);
+    $channel  = ($admin_only) ? 'admin' : 'mod';
+    irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", $admin_only);
   }
 
   // Everything went well
@@ -650,7 +652,7 @@ function private_message_admins( string $body ) : array
                         do_not_sanitize: true );
 
   // Notify the admins through IRC that a message has been sent
-  irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."todo_link", 'mod');
+  irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", 'mod');
 
   // All went well
   $data['sent'] = 1;
@@ -661,7 +663,7 @@ function private_message_admins( string $body ) : array
 
 
 /**
- * Lists private messages sent to the administrative team.
+ * Lists private messages sent to or by the administrative team.
  *
  * @param   array   $search   (OPTIONAL)  Search for specific field values.
  *
@@ -754,7 +756,7 @@ function admin_mail_list( string $search = '' ) : array
 
 
 /**
- * Fetches information about a private message sent to the administrative team.
+ * Fetches information about a private message sent to or by the administrative team.
  *
  * @param   int     $message_id   The message's ID.
  *
@@ -914,6 +916,7 @@ function admin_mail_get( int $message_id ) : array
       // Prepare the message's contents and increment the loop counter
       if(!isset($message_error))
       {
+        $data[$i]['id']         = sanitize_output($message_id);
         $temp                   = ($user_is_sender && $dmessage['pm_deleted_s']) ? 1 : 0;
         $data[$i]['deleted']    = (!$user_is_sender && $dmessage['pm_deleted_r']) ? 1 : $temp;
         $data[$i]['title']      = sanitize_output($dmessage['pm_title']);
@@ -1029,5 +1032,51 @@ function admin_mail_reply(  int     $message_id ,
                         do_not_sanitize: true       );
 
   // Everything went well
+  return NULL;
+}
+
+
+
+
+/**
+ * Deletes a private message sent to or by the administrative team.
+ *
+ * @param   int         $message_id   The private message's id.
+ *
+ * @return  string|null               An error string, or NULL if all went well.
+ */
+
+function admin_mail_delete( int $message_id ) : mixed
+{
+  // Only administrators can delete admin mail
+  user_restrict_to_administrators();
+
+  // Sanitize the message id
+  $message_id = sanitize($message_id, 'int', 0);
+
+  // Error: Message ID not found
+  if(!database_row_exists('users_private_messages', $message_id))
+    return __('users_message_not_found');
+
+  // Fetch some data regarding the message
+  $dmessage = mysqli_fetch_array(query("  SELECT  users_private_messages.fk_users_recipient   AS 'pm_recipient' ,
+                                                  users_private_messages.fk_users_sender      AS 'pm_sender'    ,
+                                                  users_private_messages.hide_from_admin_mail AS 'pm_hide'
+                                          FROM    users_private_messages
+                                          WHERE   users_private_messages.id = '$message_id'"));
+
+  // Error: Can not delete messages hidden from the admin inbox
+  if($dmessage['pm_hide'])
+    return __('users_message_ownership');
+
+  // Error: Message does not belong to user
+  if($dmessage['pm_recipient'] && $dmessage['pm_sender'])
+    return __('users_message_ownership');
+
+  // Hard delete the message
+  query(" DELETE FROM users_private_messages
+          WHERE       users_private_messages.id = '$message_id' ");
+
+  // All went well, return NULL
   return NULL;
 }
