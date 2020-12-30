@@ -297,10 +297,6 @@ function user_list( string  $sort_by          = ''      ,
   // Add the number of rows to the data
   $data['rows'] = $i;
 
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'users/user.act.php', 'function' => 'user_list', 'data' => $data));
-
   // Return the prepared data
   return $data;
 }
@@ -363,10 +359,6 @@ function user_list_admins( string $sort_by = '' ) : array
   // Add the number of rows to the data
   $data['rows'] = $i;
 
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'users/user.act.php', 'function' => 'user_list_admins', 'data' => $data));
-
   // Return the prepared data
   return $data;
 }
@@ -416,10 +408,6 @@ function user_ban_details( ?int $user_id = NULL ) : array
   $data['ban_reason'] = ($lang == 'EN') ? sanitize_output($dban['u_ban_en']) : $temp;
   $data['ban_r_en']   = sanitize_output($dban['u_ban_en']);
   $data['ban_r_fr']   = sanitize_output($dban['u_ban_fr']);
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'users/users.act.php', 'function' => 'user_ban_details', 'data' => $data));
 
   // Return the data
   return $data;

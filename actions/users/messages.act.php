@@ -169,10 +169,6 @@ function private_message_list(  string  $sort_by        = ''      ,
   $data['rows']   = $i;
   $data['unread'] = ($mark_as_read) ? 0 : $count_unread;
 
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'users/messages.act.php', 'function' => 'private_messages_list', 'data' => $data));
-
   // Return the prepared data
   return $data;
 }
@@ -329,10 +325,6 @@ function private_message_get( int $message_id ) : array
     // Add the number of parents to the data
     $data['parents'] = $i;
   }
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'users/messages.act.php', 'function' => 'private_message_get', 'data' => $data));
 
   // Return the data
   return $data;
@@ -593,10 +585,6 @@ function private_message_years_list( bool $sent_messages = false ) : array
   // Add the number of rows to the data
   $data['rows'] = $i;
 
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'users/messages.act.php', 'function' => 'private_messages_years_list', 'data' => $data));
-
   // Return the prepared data
   return $data;
 }
@@ -743,10 +731,6 @@ function admin_mail_list( string $search = '' ) : array
     $data[$i]['top_level']  = !in_array($data[$i]['id'], $parent_ids);
     $data['unread']        += ($data[$i]['display'] && $data[$i]['top_level'] && !$data[$i]['read']);
   }
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'users/messages.act.php', 'function' => 'admin_mail_list', 'data' => $data));
 
   // Return the prepared data
   return $data;
@@ -946,10 +930,6 @@ function admin_mail_get( int $message_id ) : array
     // Add the number of parents to the data
     $data['parents'] = $i;
   }
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'users/messages.act.php', 'function' => 'admin_mail_get', 'data' => $data));
 
   // Return the data
   return $data;

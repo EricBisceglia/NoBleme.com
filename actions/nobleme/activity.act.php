@@ -61,10 +61,6 @@ function activity_get( int $log_id ) : array
       $data['diff'] .= '<span class="bold underlined">'.sanitize_output($ddiff['d_desc']).' :</span> '.bbcodes(diff_strings(sanitize_output($ddiff['d_before'], 1), sanitize_output($ddiff['d_after'], 1))).'<br><br>';
   }
 
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'nobleme/activity.act.php', 'function' => 'activity_get', 'data' => $data));
-
   // Return the prepared data
   return $data;
 }
@@ -181,10 +177,6 @@ function activity_list( bool    $show_mod_logs  = false ,
 
   // Add the number of rows to the data
   $data['rows'] = $i;
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'nobleme/activity.act.php', 'function' => 'activity_list', 'data' => $data));
 
   // Return the prepared data
   return $data;

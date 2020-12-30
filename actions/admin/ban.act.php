@@ -643,10 +643,6 @@ function admin_ip_ban_list_users( string $banned_ip ) : array
   // Add the number of rows to the data
   $data['rows'] = $i;
 
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'dev/ban.act.php', 'function' => 'admin_ip_ban_list_users', 'data' => $data));
-
   // Return the prepared data
   return $data;
 }
@@ -687,10 +683,6 @@ function admin_ip_ban_get( int $ip_ban_id ) : array
   $temp               = ($dban['b_reason_fr']) ? $dban['b_reason_fr'] : $dban['b_reason_en'];
   $lang               = user_get_language();
   $data['ban_reason'] = ($lang == 'EN') ? sanitize_output($dban['b_reason_en']) : sanitize_output($temp);
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'users/ban.act.php', 'function' => 'admin_ip_ban_get', 'data' => $data));
 
   // Return the data
   return $data;
@@ -915,10 +907,6 @@ function admin_ban_logs_get(  $log_id     = NULL  ,
   $data['unban_reason_en']  = ($dlog['l_ureason_en']) ? sanitize_output($dlog['l_ureason_en']) : '-';
   $data['unban_reason_fr']  = ($dlog['l_ureason_fr']) ? sanitize_output($dlog['l_ureason_fr']) : '-';
 
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'admin/ban.act.php', 'function' => 'admin_ban_logs_get', 'data' => $data));
-
   // Return the prepared data
   return $data;
 }
@@ -1044,10 +1032,6 @@ function admin_ban_logs_list( string  $sort_by  = 'banned'  ,
 
   // Add the number of rows to the data
   $data['rows'] = $i;
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'admin/ban.act.php', 'function' => 'admin_ban_logs_list', 'data' => $data));
 
   // Return the prepared data
   return $data;

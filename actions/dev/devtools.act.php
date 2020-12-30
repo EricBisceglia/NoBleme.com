@@ -113,10 +113,6 @@ function dev_versions_get( int $version_id ) : mixed
   $data['extension']    = sanitize_output($dversions['v_extension']);
   $data['release_date'] = sanitize_output(date_to_ddmmyy($dversions['v_date']));
 
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'dev/devtools.act.php', 'function' => 'dev_versions_get', 'data' => $data));
-
   // Return the array
   return $data;
 }
@@ -181,10 +177,6 @@ function dev_versions_list() : array
       $data[$i]['css']  = ($temp_diff > 365) ? ' class="bold glow"' : $temp_style;
     }
   }
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'dev/devtools.act.php', 'function' => 'dev_versions_list', 'data' => $data));
 
   // Return the prepared data
   return $data;

@@ -51,10 +51,6 @@ function dev_scheduler_get( int $task_id ) : mixed
   $data['date_days']  = sanitize_output(date('d/m/y', $dtask['t_date']));
   $data['date_time']  = sanitize_output(date('h:i:s', $dtask['t_date']));
 
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'dev/scheduler.act.php', 'function' => 'dev_scheduler_get', 'data' => $data));
-
   // Return the array
   return $data;
 }
@@ -183,10 +179,6 @@ function dev_scheduler_list(  string  $sort_by  = 'date'  ,
 
   // Add the number of rows to the data
   $data['rows'] = $i;
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'dev/scheduler.act.php', 'function' => 'dev_scheduler_list', 'data' => $data));
 
   // Return the prepared data
   return $data;
@@ -329,10 +321,6 @@ function dev_scheduler_types_list() : array
 
   // Add the number of rows to the data
   $data['rows'] = $i;
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'dev/scheduler.act.php', 'function' => 'dev_scheduler_types_list', 'data' => $data));
 
   // Return the prepared data
   return $data;

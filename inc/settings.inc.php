@@ -31,7 +31,6 @@ $GLOBALS['extra_folders']   = isset($GLOBALS['extra_folders'])    ? $GLOBALS['ex
 $GLOBALS['dev_mode']        = isset($GLOBALS['dev_mode'])         ? $GLOBALS['dev_mode']        : 0;
 $GLOBALS['env_debug_mode']  = isset($GLOBALS['env_debug_mode'])   ? $GLOBALS['env_debug_mode']  : 0;
 $GLOBALS['sql_debug_mode']  = isset($GLOBALS['sql_debug_mode'])   ? $GLOBALS['sql_debug_mode']  : 0;
-$GLOBALS['act_debug_mode']  = isset($GLOBALS['act_debug_mode'])   ? $GLOBALS['act_debug_mode']  : 0;
 $GLOBALS['full_debug_mode'] = isset($GLOBALS['full_debug_mode'])  ? $GLOBALS['full_debug_mode'] : 0;
 
 // Enforce a global timezone on the server side

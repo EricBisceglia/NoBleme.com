@@ -46,7 +46,6 @@ $GLOBALS['extra_folders']   = 1;
 $GLOBALS['dev_mode']        = 0;
 $GLOBALS['env_debug_mode']  = 0;
 $GLOBALS['sql_debug_mode']  = 0;
-$GLOBALS['act_debug_mode']  = 0;
 $GLOBALS['full_debug_mode'] = 0;
 ```
 

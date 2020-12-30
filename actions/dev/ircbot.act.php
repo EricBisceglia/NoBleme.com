@@ -285,10 +285,6 @@ function irc_bot_message_queue_list() : array
   // Add the number of lines to the data (minus one for the empty line at end of file)
   $data['line_count'] = $i - 1;
 
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'dev/ircbot.act.php', 'function' => 'irc_bot_message_queue_list', 'data' => $data));
-
   // Return the prepared data
   return $data;
 }
@@ -431,10 +427,6 @@ function irc_bot_message_history_list( array $search = array() ) : array
 
   // Add the number of lines to the data
   $data['line_count'] = $i;
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'dev/ircbot.act.php', 'function' => 'irc_bot_message_history_list', 'data' => $data));
 
   // Return the prepared data
   return $data;

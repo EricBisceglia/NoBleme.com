@@ -183,10 +183,6 @@ function stats_metrics_list(  string  $sort_by  = 'activity'  ,
     $data[$i]['load']         = sanitize_output(number_display_format($data[$i]['load'], 'number')).'ms';
   }
 
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'admin/stats.act.php', 'function' => 'stats_metrics_list', 'data' => $data));
-
   // Return the prepared data
   return $data;
 }
@@ -330,10 +326,6 @@ function stats_views_list(  string  $sort_by  = NULL    ,
   $temp                     = date_to_text($comparison_date).' ('.time_since($comparison_date).')';
   $data['comparison_date']  = ($comparison_date) ? sanitize_output($temp) : __('admin_views_nodate');
 
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'admin/stats.act.php', 'function' => 'stats_views_list', 'data' => $data));
-
   // Return the prepared data
   return $data;
 }
@@ -449,10 +441,6 @@ function stats_doppelgangers_list() : array
       $count = 1;
     $data[$i]['count'] = $count;
   }
-
-  // In ACT debug mode, print debug data
-  if($GLOBALS['dev_mode'] && $GLOBALS['act_debug_mode'])
-    var_dump(array('file' => 'admin/stats.act.php', 'function' => 'stats_doppelgangers_list', 'data' => $data));
 
   // Return the prepared data
   return $data;
