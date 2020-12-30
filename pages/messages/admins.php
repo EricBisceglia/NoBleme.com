@@ -13,7 +13,7 @@ user_restrict_to_users();
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/users/message_admins";
+$page_url         = "pages/messages/admins";
 $page_title_en    = "Contact the administrative team";
 $page_title_fr    = "Contacter l'équipe administrative";
 $page_description = "Send a message to the website's administrative team";

@@ -13,13 +13,13 @@ user_restrict_to_users();
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/users/message_write";
+$page_url         = "pages/messages/write";
 $page_title_en    = "Private message";
 $page_title_fr    = "Message privé";
 $page_description = "Write a private message to another website user.";
 
 // Extra JS
-$js = array('common/editor', 'common/preview', 'common/toggle', 'users/messages', 'users/autocomplete_username');
+$js = array('common/editor', 'common/preview', 'common/toggle', 'messages/messages', 'users/autocomplete_username');
 
 
 
@@ -51,7 +51,7 @@ if(isset($_POST['private_message_send']))
 
   // Redirect to the outbox if the message was successfully sent
   if(!$private_message_error)
-    exit(header("Location: ./message_outbox"));
+    exit(header("Location: ./outbox"));
 }
 
 

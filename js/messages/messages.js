@@ -45,7 +45,7 @@ function users_inbox_search(  sort_data       = null ,
     postdata += '&inbox_mark_as_read='  + fetch_sanitize('mark_as_read');
 
   // Submit the search
-  fetch_page('message_inbox', 'inbox_tbody', postdata);
+  fetch_page('inbox', 'inbox_tbody', postdata);
 }
 
 
@@ -73,7 +73,7 @@ function users_outbox_search( sort_data = null )
   postdata += '&outbox_search_read='      + fetch_sanitize_id('outbox_search_read');
 
   // Submit the search
-  fetch_page('message_outbox', 'outbox_tbody', postdata);
+  fetch_page('outbox', 'outbox_tbody', postdata);
 }
 
 
@@ -124,7 +124,7 @@ function users_message_open(  message_id          ,
   postdata = 'private_message_id=' + fetch_sanitize(message_id);
 
   // Fetch the private message
-  fetch_page('message_show', 'popin_private_message_body', postdata);
+  fetch_page('message', 'popin_private_message_body', postdata);
 }
 
 
@@ -194,7 +194,7 @@ function users_message_reply_send( message_id )
   postdata += '&private_message_body=' + fetch_sanitize_id('private_message_reply_body');
 
   // Fetch the private message
-  fetch_page('message_reply', 'private_message_reply_return', postdata);
+  fetch_page('reply', 'private_message_reply_return', postdata);
 }
 
 
@@ -219,6 +219,6 @@ function users_message_delete(  message_id      ,
     popin_close('popin_private_message');
 
     // Trigger the deletion request
-    fetch_page('message_delete', 'private_message_row_' + message_id, 'private_message_delete=' + message_id);
+    fetch_page('delete', 'private_message_row_' + message_id, 'private_message_delete=' + message_id);
   }
 }
