@@ -105,9 +105,6 @@ If you are curious about what is happening on the website and within its communi
 
 Enjoy your stay on NoBleme!
 If you have any questions, feel free to reply to this message.
-
-Your admin,
-[url={{1}}todo_link]Bad[/url]
 EOT
 );
 ___('users_register_private_message',       'FR', <<<EOT
@@ -119,9 +116,6 @@ Si vous voulez suivre ce qui est publié sur le site et ce qui se passe au sein 
 
 Bon séjour sur NoBleme !
 Si vous avez la moindre question, n'hésitez pas à répondre à ce message.
-
-Votre administrateur,
-[url={{1}}todo_link]Bad[/url]
 EOT
 );
 

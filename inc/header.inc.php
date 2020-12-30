@@ -742,7 +742,7 @@ $javascripts .= '
           &nbsp;
         </h5>
 
-        <form method="POST" name="login_form" onsubmit="user_login_attempt('<?=$path?>pages/users/login_attempt', <?=$GLOBALS['dev_mode']?>); return false;">
+        <form method="POST" name="login_form" onsubmit="user_login_attempt('<?=$path?>pages/account/login_attempt', <?=$GLOBALS['dev_mode']?>); return false;">
           <fieldset>
 
             <div class="smallpadding_bot">
@@ -767,7 +767,7 @@ $javascripts .= '
 
             <input type="submit" class="button_chain" value="<?=__('login_form_title')?>">
 
-            <button type="button" onclick="window.location = '<?=$path?>pages/users/register';"><?=__('login_form_form_register')?></button>
+            <button type="button" onclick="window.location = '<?=$path?>pages/account/register';"><?=__('login_form_form_register')?></button>
 
           </fieldset>
         </form>

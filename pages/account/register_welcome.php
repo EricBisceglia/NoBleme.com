@@ -11,7 +11,7 @@ user_restrict_to_guests();
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/users/register_welcome";
+$page_url         = "pages/account/register_welcome";
 $page_title_en    = "Welcome to NoBleme";
 $page_title_fr    = "Bienvenue sur NoBleme";
 $page_description = "Welcome to NoBleme - thank you for creating a new account";

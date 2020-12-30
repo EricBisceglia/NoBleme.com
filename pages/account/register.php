@@ -14,14 +14,14 @@ user_restrict_to_non_ip_banned();
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/users/login";
+$page_url         = "pages/account/register";
 $page_title_en    = "Register";
 $page_title_fr    = "S'inscrire";
 $page_description = "Register a new NoBleme account";
 
 // Extra CSS & JS
-$css  = array('users');
-$js   = array('users/register');
+$css  = array('account');
+$js   = array('account/register');
 
 
 
@@ -47,7 +47,7 @@ if(isset($_POST['register_username']))
 
   // If the user has succesfully registered, redirect them
   if($user_register_attempt === 1)
-    header("location: ".$path."pages/users/register_welcome");
+    header("location: ".$path."pages/account/register_welcome");
 }
 
 

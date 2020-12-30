@@ -1,1 +1,0 @@
-<?php exit(header("Location: message_outbox")); ?>
