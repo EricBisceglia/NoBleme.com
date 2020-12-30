@@ -5,8 +5,8 @@
 // File inclusions /**************************************************************************************************/
 include_once './inc/includes.inc.php';        # Core
 include_once './inc/functions_time.inc.php';  # Time management
-include_once './actions/user.act.php';        # Actions
-include_once './lang/users/banned.lang.php';  # Translations
+include_once './actions/users.act.php';       # Actions
+include_once './lang/ban.lang.php';           # Translations
 
 // Limit page access rights
 user_restrict_to_banned();

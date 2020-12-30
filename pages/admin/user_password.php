@@ -3,9 +3,9 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';                  # Core
-include_once './../../actions/user_management.act.php';       # Actions
-include_once './../../lang/admin/user_management.lang.php';   # Translations
+include_once './../../inc/includes.inc.php';            # Core
+include_once './../../actions/user_management.act.php'; # Actions
+include_once './../../lang/user_management.lang.php';   # Translations
 
 // Limit page access rights
 user_restrict_to_moderators();

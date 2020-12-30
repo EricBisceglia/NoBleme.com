@@ -3,10 +3,10 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-$GLOBALS['sql_skip_system_variables'] = 1;          # Ignore global SQL configuration
-include_once './../../inc/queries.inc.php';         # Run all queries awaiting execution
-include_once './../../inc/includes.inc.php';        # Core
-include_once './../../lang/dev/devtools.lang.php';  # Translations
+$GLOBALS['sql_skip_system_variables'] = 1;    # Ignore global SQL configuration
+include_once './../../inc/queries.inc.php';   # Run all queries awaiting execution
+include_once './../../inc/includes.inc.php';  # Core
+include_once './../../lang/dev.lang.php';     # Translations
 
 // Limit page access rights
 user_restrict_to_administrators();

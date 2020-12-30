@@ -3,10 +3,10 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';          # Core
-include_once './../../inc/functions_time.inc.php';    # Time management
-include_once './../../actions/user.act.php';          # Actions
-include_once './../../lang/users/user_list.lang.php'; # Translations
+include_once './../../inc/includes.inc.php';        # Core
+include_once './../../inc/functions_time.inc.php';  # Time management
+include_once './../../actions/users.act.php';       # Actions
+include_once './../../lang/users.lang.php';         # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');

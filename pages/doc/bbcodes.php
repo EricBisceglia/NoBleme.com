@@ -3,9 +3,9 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';      # Core
-include_once './../../inc/bbcodes.inc.php';       # BBCodes
-include_once './../../lang/doc/bbcodes.lang.php'; # Translations
+include_once './../../inc/includes.inc.php';  # Core
+include_once './../../inc/bbcodes.inc.php';   # BBCodes
+include_once './../../lang/doc.lang.php';     # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');

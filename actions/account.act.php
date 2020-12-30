@@ -190,7 +190,7 @@ function user_create_account( string  $username               ,
                               string  $captcha_session  = ''  ) : mixed
 {
   // Check if the required files have been included
-  require_included_file('register.lang.php');
+  require_included_file('account.lang.php');
 
   // Sanitize and prepare the data
   $path               = root_path();

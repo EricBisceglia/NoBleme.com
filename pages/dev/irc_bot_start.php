@@ -3,9 +3,9 @@
 /*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED DYNAMICALLY                               */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';      # Core
-include_once './../../actions/irc_bot.act.php';   # Actions
-include_once './../../lang/dev/ircbot.lang.php';  # Translations
+include_once './../../inc/includes.inc.php';    # Core
+include_once './../../actions/irc_bot.act.php'; # Actions
+include_once './../../lang/irc_bot.lang.php';   # Translations
 
 // Throw a 404 if the page is being accessed directly
 page_must_be_fetched_dynamically();

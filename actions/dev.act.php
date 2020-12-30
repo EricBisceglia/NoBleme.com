@@ -211,7 +211,7 @@ function dev_versions_create( int     $major                    ,
   user_restrict_to_administrators();
 
   // Check if the required files have been included
-  require_included_file('devtools.lang.php');
+  require_included_file('dev.lang.php');
 
   // Sanitize the data
   $major            = sanitize($major, 'int', 0);
@@ -290,7 +290,7 @@ function dev_versions_edit( int     $id           ,
   user_restrict_to_administrators();
 
   // Check if the required files have been included
-  require_included_file('devtools.lang.php');
+  require_included_file('dev.lang.php');
 
   // Sanitize the data
   $id            = sanitize($id, 'int', 0);

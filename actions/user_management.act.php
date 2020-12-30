@@ -165,7 +165,7 @@ function admin_account_check_availability( string $username ) : array
 
   // Check if the required files have been included
   require_included_file('user_management.lang.php');
-  require_included_file('user.act.php');
+  require_included_file('users.act.php');
 
   // Sanitize the data
   $username = sanitize($username, 'string');
@@ -233,7 +233,7 @@ function admin_account_rename(  string  $username     ,
 
   // Check if the required files have been included
   require_included_file('user_management.lang.php');
-  require_included_file('user.act.php');
+  require_included_file('users.act.php');
 
   // Sanitize and prepare the data
   $username_raw     = $username;

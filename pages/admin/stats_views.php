@@ -8,7 +8,7 @@ include_once './../../inc/functions_time.inc.php';        # Time management
 include_once './../../inc/functions_numbers.inc.php';     # Number formatting
 include_once './../../inc/functions_mathematics.inc.php'; # Maths
 include_once './../../actions/stats.act.php';             # Actions
-include_once './../../lang/admin/stats.lang.php';         # Translations
+include_once './../../lang/stats.lang.php';               # Translations
 
 // Limit page access rights
 user_restrict_to_administrators();
