@@ -10,7 +10,14 @@ RewriteCond %{HTTPS} off
 RewriteCond %{HTTP_HOST} nobleme.com
 RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
 
-# Remove .php from the end of urls
+# Better looking URLs (not enforced though)
+RewriteRule ^pages/users/([0-9]+)$ pages/users/profile.php?id=$1 [NC]
+
+# Actively get rid of .php extension
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.php [NC]
+RewriteRule ^ /%1 [NE,L,R]
+
+# Apply .php to files without a extension
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC]
