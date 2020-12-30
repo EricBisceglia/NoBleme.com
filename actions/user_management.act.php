@@ -276,8 +276,8 @@ function admin_account_rename(  string  $username     ,
                 moderator_username:   $mod_nick_raw     );
 
   // IRC bot message
-  irc_bot_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw - ".$GLOBALS['website_url']."pages/todo_link?id=".$user_id, 'mod');
-  irc_bot_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw - ".$GLOBALS['website_url']."pages/todo_link?id=".$user_id, 'admin');
+  irc_bot_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw - ".$GLOBALS['website_url']."pages/users/".$user_id, 'mod');
+  irc_bot_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw - ".$GLOBALS['website_url']."pages/users/".$user_id, 'admin');
 
   // Return that all went well
   return NULL;
@@ -432,8 +432,8 @@ function admin_account_change_rights( string  $username ,
                   moderator_username:   $admin_nick_raw );
 
     // IRC bot message
-    irc_bot_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'mod');
-    irc_bot_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'admin');
+    irc_bot_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'mod');
+    irc_bot_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'admin');
   }
 
   // Promotion to moderator
@@ -464,10 +464,10 @@ function admin_account_change_rights( string  $username ,
                   moderator_username:       $admin_nick_raw );
 
     // IRC bot message
-    irc_bot_send_message("$username_raw has joined the website's administrative team as a moderator - ".$GLOBALS['website_url']."todo_link", 'english');
-    irc_bot_send_message("$username_raw a rejoint l'équipe de modération du site - ".$GLOBALS['website_url']."todo_link", 'french');
-    irc_bot_send_message("$username_raw has been promoted to moderator by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'mod');
-    irc_bot_send_message("$username_raw has been promoted to moderator by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'admin');
+    irc_bot_send_message("$username_raw has joined the website's administrative team as a moderator - ".$GLOBALS['website_url']."pages/users/admins", 'english');
+    irc_bot_send_message("$username_raw a rejoint l'équipe de modération du site - ".$GLOBALS['website_url']."pages/users/admins", 'french');
+    irc_bot_send_message("$username_raw has been promoted to moderator by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'mod');
+    irc_bot_send_message("$username_raw has been promoted to moderator by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'admin');
   }
 
   // Promotion to administrator
@@ -494,10 +494,10 @@ function admin_account_change_rights( string  $username ,
                   moderator_username:           $admin_nick_raw );
 
     // IRC bot message
-    irc_bot_send_message("$username_raw is now a website administrator - ".$GLOBALS['website_url']."todo_link", 'english');
-    irc_bot_send_message("$username_raw a rejoint l'équipe d'administration du site - ".$GLOBALS['website_url']."todo_link", 'french');
-    irc_bot_send_message("$username_raw has been promoted to administrator by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'mod');
-    irc_bot_send_message("$username_raw has been promoted to administrator by $admin_nick_raw - ".$GLOBALS['website_url']."todo_link", 'admin');
+    irc_bot_send_message("$username_raw is now a website administrator - ".$GLOBALS['website_url']."pages/users/admins", 'english');
+    irc_bot_send_message("$username_raw a rejoint l'équipe d'administration du site - ".$GLOBALS['website_url']."pages/users/admins", 'french');
+    irc_bot_send_message("$username_raw has been promoted to administrator by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'mod');
+    irc_bot_send_message("$username_raw has been promoted to administrator by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'admin');
   }
 
   // Return that all went well

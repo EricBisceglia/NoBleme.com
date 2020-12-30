@@ -285,7 +285,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <?php if($banned_users[$i]['type'] == 'user') { ?>
         <td>
-          <?=__link('todo_link?id='.$banned_users[$i]['id'], $banned_users[$i]['username'], $banned_users[$i]['css'])?>
+          <?=__link('pages/users/'.$banned_users[$i]['id'], $banned_users[$i]['username'], $banned_users[$i]['css'])?>
         </td>
         <?php } else { ?>
         <td class="tooltip_container">
@@ -303,7 +303,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <ul>
               <?php for($j = 0; $j < $banned_users[$i]['ip_bans']['rows']; $j++) { ?>
                 <li>
-                  <?=__link('todo_link?id='.$banned_users[$i]['ip_bans'][$j]['id'], $banned_users[$i]['ip_bans'][$j]['username'])?>
+                  <?=__link('pages/users/'.$banned_users[$i]['ip_bans'][$j]['id'], $banned_users[$i]['ip_bans'][$j]['username'])?>
                 </li>
               <?php } ?>
             </ul>
@@ -484,7 +484,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <td>
             <?php if($ban_logs[$i]['ban_type'] == 'user') { ?>
-            <?=__link('todo_link?id='.$ban_logs[$i]['user_id'], $ban_logs[$i]['username'], 'bold noglow')?>
+            <?=__link('pages/users/'.$ban_logs[$i]['user_id'], $ban_logs[$i]['username'], 'bold noglow')?>
             <?php } else { ?>
             <?=$ban_logs[$i]['ip']?>
             <?php } ?>
@@ -525,12 +525,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
 
           <td>
-            <?=__link('todo_link?id='.$ban_logs[$i]['banned_by_id'], $ban_logs[$i]['banned_by'], 'bold noglow')?>
+            <?=__link('pages/users/'.$ban_logs[$i]['banned_by_id'], $ban_logs[$i]['banned_by'], 'bold noglow')?>
           </td>
 
           <td>
             <?php if($ban_logs[$i]['unbanned_by']) { ?>
-            <?=__link('todo_link?id='.$ban_logs[$i]['unbanned_by_id'], $ban_logs[$i]['unbanned_by'], 'bold noglow')?>
+            <?=__link('pages/users/'.$ban_logs[$i]['unbanned_by_id'], $ban_logs[$i]['unbanned_by'], 'bold noglow')?>
             <?php } ?>
           </td>
 

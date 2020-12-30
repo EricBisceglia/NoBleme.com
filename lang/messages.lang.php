@@ -20,8 +20,8 @@ ___('users_message_neighbor',   'FR', "Vous ne pouvez pas voir les messages priv
 
 
 // Private message
-___('users_message_sent_by',  'EN', "Sent by {{link|todo_link?id={{1}}|{{2}}}} on {{3}}.");
-___('users_message_sent_by',  'FR', "Envoyé par {{link|todo_link?id={{1}}|{{2}}}} le {{3}}.");
+___('users_message_sent_by',  'EN', "Sent by {{link|pages/users/{{1}}|{{2}}}} on {{3}}.");
+___('users_message_sent_by',  'FR', "Envoyé par {{link|pages/users/{{1}}|{{2}}}} le {{3}}.");
 ___('users_message_system',   'EN', "System message sent on {{1}}.");
 ___('users_message_system',   'FR', "Message système envoyé le {{1}}.");
 ___('users_message_read',     'EN', "Read on {{1}}.");
@@ -272,8 +272,8 @@ ___('admin_mail_list_none',   'FR', "Il n'y a actuellement aucun message privé 
 // Message chain
 ___('admin_mail_chain_reply',   'EN', "Reply");
 ___('admin_mail_chain_reply',   'FR', "Répondre");
-___('admin_mail_chain_system',  'EN', "Sent to {{link|todo_link?id={{1}}|{{2}}}} by <span class=\"bold glow\">{{3}}</span> on {{4}}");
-___('admin_mail_chain_system',  'FR', "Envoyé à {{link|todo_link?id={{1}}|{{2}}}} par <span class=\"bold glow\">{{3}}</span> le {{4}}");
+___('admin_mail_chain_system',  'EN', "Sent to {{link|pages/users/{{1}}|{{2}}}} by <span class=\"bold glow\">{{3}}</span> on {{4}}");
+___('admin_mail_chain_system',  'FR', "Envoyé à {{link|pages/users/{{1}}|{{2}}}} par <span class=\"bold glow\">{{3}}</span> le {{4}}");
 ___('users_mail_chain_unread', 'EN', "This message has not been read yet.");
 ___('users_mail_chain_unread', 'FR', "Ce message n'a pas encore été lu.");
 

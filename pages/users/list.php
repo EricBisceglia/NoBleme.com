@@ -151,7 +151,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <tr class="<?=$user_list[$i]['css']?>">
 
           <td>
-            <?=__link('todo_link?id='.$user_list[$i]['id'], $user_list[$i]['username'], 'text_white bold noglow')?>
+            <?=__link('pages/users/'.$user_list[$i]['id'], $user_list[$i]['username'], 'text_white bold noglow')?>
           </td>
 
           <td class="tooltip_container">

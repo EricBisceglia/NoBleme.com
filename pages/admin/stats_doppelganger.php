@@ -117,7 +117,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } ?>
 
         <td>
-          <?=__link('todo_link?id='.$doppelgangers[$i]['id'], $doppelgangers[$i]['username'])?>
+          <?=__link('pages/users/'.$doppelgangers[$i]['id'], $doppelgangers[$i]['username'])?>
         </td>
 
         <td>

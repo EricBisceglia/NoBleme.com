@@ -93,14 +93,14 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'users_register')
   {
     $return['css']  = 'text_green bold';
-    $return['href'] = $path.'todo_link?id='.$userid;
+    $return['href'] = $path.'pages/users/'.$userid;
     $return['EN']   = $username." registered on NoBleme!";
     $return['FR']   = $username." a crée son compte sur NoBleme !";
   }
 
   else if($type === 'users_profile_edit')
   {
-    $return['href'] = $path.'todo_link?id='.$userid;
+    $return['href'] = $path.'pages/users/'.$userid;
     $return['EN']   = $username.' edited their public profile';
     $return['FR']   = $username.' a modifié son profil public';
   }
@@ -108,7 +108,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'users_admin_edit_profile')
   {
     $return['css']  = 'orange bold';
-    $return['href'] = $path.'todo_link?id='.$userid;
+    $return['href'] = $path.'pages/users/'.$userid;
     $return['EN']   = $mod_username.' edited '.$username."'s public profile";
     $return['FR']   = $mod_username.' a modifié le profil public de '.$username;
   }
@@ -116,7 +116,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'users_banned' && !$admins_only)
   {
     $return['css']  = 'red bold';
-    $return['href'] = $path.'todo_link?id='.$userid;
+    $return['href'] = $path.'pages/users/'.$userid;
     $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
     $return['EN']   = $username.' has been banned '.$temp[$amount].$temp2;
@@ -127,7 +127,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type == 'users_banned')
   {
     $return['css']  = 'red bold';
-    $return['href'] = $path.'todo_link';
+    $return['href'] = $path.'pages/admin/ban';
     $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
     $return['EN']   = $mod_username.' banned '.$username.' '.$temp[$amount].$temp2;
@@ -139,7 +139,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'users_banned_edit' && !$admins_only)
   {
     $return['css']  = 'red bold';
-    $return['href'] = $path.'todo_link?id='.$userid;
+    $return['href'] = $path.'pages/users/'.$userid;
     $temp           = array(0 => '', 1 => 'ending a day from now', 7 => 'ending a week from now', 30 => 'ending a month from now', '365' => 'ending a year from now', '3650' => 'a permanent ban');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
     $return['EN']   = $username.' has had their ban updated to '.$temp[$amount].$temp2;
@@ -150,7 +150,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type == 'users_banned_edit')
   {
     $return['css']  = 'red bold';
-    $return['href'] = $path.'todo_link';
+    $return['href'] = $path.'pages/admin/ban';
     $temp           = array(0 => '', 1 => 'to ending a day from now', 7 => 'to ending a week from now', 30 => 'to ending a month from now', '365' => 'to ending a year from now', '3650' => 'to a permanent ban');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
     $return['EN']   = $mod_username.' edited the ban of '.$username.' '.$temp[$amount].$temp2;
@@ -162,7 +162,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type == 'users_banned_delete')
   {
     $return['css']  = 'red bold';
-    $return['href'] = $path.'todo_link';
+    $return['href'] = $path.'pages/admin/ban';
     $temp           = ($title_en) ? ' ('.$title_en.')' : '';
     $return['EN']   = $mod_username.' unbanned '.$username.$temp;
     $temp           = ($title_fr) ? ' ('.$title_fr.')' : '';
@@ -172,14 +172,14 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'users_unbanned' && !$admins_only)
   {
     $return['css']  = 'text_red bold';
-    $return['href'] = $path.'todo_link?id='.$userid;
+    $return['href'] = $path.'pages/users/'.$userid;
     $return['EN']   = $username.' has been unbanned';
     $return['FR']   = $username.' s\'est fait débannir';
   }
   else if($type == 'users_unbanned')
   {
     $return['css']  = 'red bold';
-    $return['href'] = $path.'todo_link';
+    $return['href'] = $path.'pages/admin/ban';
     $return['EN']   = $mod_username.' has unbanned '.$username;
     $return['FR']   = $mod_username.' a débanni '.$username;
   }
@@ -215,14 +215,14 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'users_rights_delete' && !$admins_only)
   {
     $return['css']  = 'text_red bold';
-    $return['href'] = $path.'todo_link';
+    $return['href'] = $path.'pages/users/admins';
     $return['EN']   = $username." is not part of the administrative team anymore";
     $return['FR']   = $username." ne fait plus partie de l'équipe administrative";
   }
   else if($type === 'users_rights_delete')
   {
     $return['css']  = 'text_red bold';
-    $return['href'] = $path.'todo_link';
+    $return['href'] = $path.'pages/users/admins';
     $return['EN']   = $mod_username." has removed ".$username." from the administrative team";
     $return['FR']   = $mod_username." a viré ".$username." de l'équipe administrative";
   }
@@ -230,14 +230,14 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'users_rights_moderator' && !$admins_only)
   {
     $return['css']  = 'orange bold';
-    $return['href'] = $path.'todo_link';
+    $return['href'] = $path.'pages/users/admins';
     $return['EN']   = $username." has joined the administrative team as a moderator";
     $return['FR']   = $username." a rejoint l'équipe de modération de NoBleme";
   }
   else if($type === 'users_rights_moderator')
   {
     $return['css']  = 'orange bold';
-    $return['href'] = $path.'todo_link';
+    $return['href'] = $path.'pages/users/admins';
     $return['EN']   = $mod_username." has promoted ".$username." as a moderator";
     $return['FR']   = $mod_username." a promu ".$username." au sein de l'équipe de modération";
   }
@@ -245,14 +245,14 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'users_rights_administrator' && !$admins_only)
   {
     $return['css']  = 'red bold';
-    $return['href'] = $path.'todo_link';
+    $return['href'] = $path.'pages/users/admins';
     $return['EN']   = $username." is now a website administrator";
     $return['FR']   = $username." a rejoint l'équipe d'administration de NoBleme";
   }
   else if($type === 'users_rights_administrator')
   {
     $return['css']  = 'red bold';
-    $return['href'] = $path.'todo_link';
+    $return['href'] = $path.'pages/users/admins';
     $return['EN']   = $mod_username." has promoted ".$username." as an administrator";
     $return['FR']   = $mod_username." a promu ".$username." au sein de l'équipe d'administration";
   }
@@ -260,7 +260,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'users_rename')
   {
     $return['css']  = 'yellow text_black bold';
-    $return['href'] = $path.'todo_link?id='.$userid;
+    $return['href'] = $path.'pages/users/'.$userid;
     $return['EN']   = $title_en." has been renamed to ".$username." by ".$mod_username;
     $return['FR']   = "Le compte de ".$title_en." a été renommé en ".$username." par ".$mod_username;
   }
@@ -282,7 +282,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'users_undelete')
   {
     $return['css']  = 'green bold';
-    $return['href'] = $path.'todo_link?id='.$userid;
+    $return['href'] = $path.'pages/users/'.$userid;
     $return['EN']   = $username."'s account has been reactivated by ".$mod_username;
     $return['FR']   = "Le compte de ".$username." a été réactivé par ".$mod_username;
   }
@@ -436,13 +436,11 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'writings_text_new_fr')
   {
     $return['css']  = 'brown bold';
-    $return['href'] = $path.'todo_link?id='.$id;
     $return['FR']   = ($username != 'Anonyme') ? $username.' a publié un texte : '.$title_fr : 'Nouveau texte publié : '.$title_fr;
   }
 
   else if($type === 'writings_text_edit_fr')
   {
-    $return['href'] = $path.'todo_link?id='.$id;
     $return['FR']   = $mod_username.' a modifié le contenu d\'un texte : '.$title_fr;
   }
 
@@ -456,21 +454,18 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'writings_contest_new_fr')
   {
     $return['css']  = 'green bold';
-    $return['href'] = $path.'todo_link?id='.$id;
     $return['FR']   = 'Nouveau concours du coin des écrivains : '.$title_fr;
   }
 
   else if($type === 'writings_contest_winner_fr')
   {
     $return['css']  = 'brown bold';
-    $return['href'] = $path.'todo_link?id='.$id;
     $return['FR']   = 'Concours du coin des écrivains ouvert aux votes : '.$title_fr;
   }
 
   else if($type === 'writings_contest_vote_fr')
   {
     $return['css']  = 'green bold';
-    $return['href'] = $path.'todo_link?id='.$id;
     $return['FR']   = $username.' a gagné le concours du coin des écrivains : '.$title_fr;
   }
 

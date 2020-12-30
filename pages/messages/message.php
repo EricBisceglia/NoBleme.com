@@ -48,7 +48,7 @@ if(isset($private_message_data['error'])) { ?>
 
 <p class="nopadding_top bigpadding_bot">
   <?php if($private_message_data['sender']) { ?>
-  <?=__('users_message_sent_by', preset_values: array('todo_link?id='.$private_message_data['sender_id'], $private_message_data['sender'], $private_message_data['sent_at']))?>
+  <?=__('users_message_sent_by', preset_values: array('pages/users/'.$private_message_data['sender_id'], $private_message_data['sender'], $private_message_data['sent_at']))?>
   <?php } else { ?>
   <?=__('users_message_system', preset_values: array($private_message_data['sent_at']))?>
   <?php } if ($private_message_data['read_at']) { ?>

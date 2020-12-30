@@ -83,7 +83,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <tr class="<?=$admin_list[$i]['css']?>">
 
           <td>
-            <?=__link('todo_link?id='.$admin_list[$i]['id'], $admin_list[$i]['username'], $admin_list[$i]['css'])?>
+            <?=__link('pages/users/'.$admin_list[$i]['id'], $admin_list[$i]['username'], $admin_list[$i]['css'])?>
           </td>
 
           <td>

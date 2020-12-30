@@ -56,7 +56,7 @@ if(!$ban_log)
         <?=__('admin_ban_logs_full_user')?>
       </td>
       <td>
-        <?=__link('todo_link?id='.$ban_log['user_id'], $ban_log['username'])?>
+        <?=__link('pages/users/'.$ban_log['user_id'], $ban_log['username'])?>
       </td>
     </tr>
     <?php } ?>
@@ -97,7 +97,7 @@ if(!$ban_log)
       </td>
       <?php } ?>
       <td>
-        <?=__link('todo_link?id='.$ban_log['ip_bans'][$i]['id'], $ban_log['ip_bans'][$i]['username'])?>
+        <?=__link('pages/users/'.$ban_log['ip_bans'][$i]['id'], $ban_log['ip_bans'][$i]['username'])?>
       </td>
     </tr>
     <?php } ?>
@@ -179,7 +179,7 @@ if(!$ban_log)
         <?=__('admin_ban_logs_full_banned_by')?>
       </td>
       <td>
-        <?=__link('todo_link?id='.$ban_log['banned_by_id'], $ban_log['banned_by'])?>
+        <?=__link('pages/users/'.$ban_log['banned_by_id'], $ban_log['banned_by'])?>
       </td>
     </tr>
 
@@ -209,7 +209,7 @@ if(!$ban_log)
       </td>
       <td>
         <?php if($ban_log['unbanned_by_id']) { ?>
-        <?=__link('todo_link?id='.$ban_log['unbanned_by_id'], $ban_log['unbanned_by'])?>
+        <?=__link('pages/users/'.$ban_log['unbanned_by_id'], $ban_log['unbanned_by'])?>
         <?php } else { ?>
         -
         <?php } ?>

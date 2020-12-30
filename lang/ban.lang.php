@@ -328,17 +328,17 @@ ___('admin_ban_edit_error_rights',  'FR', "Seule l'administration peut bannir ou
 // Banned private message
 $admin_ban_add_private_message_title_en     = "Your account has been banned";
 $admin_ban_add_private_message_title_fr     = "Votre compte a été banni";
-$admin_ban_add_private_message_no_reason_en = "No reason was specified for the ban. If you don't understand what you did wrong, feel free to discuss it with the [url={{1}}todo_link]administrative team[/url].";
-$admin_ban_add_private_message_no_reason_fr = "Aucune raison n'a été spécifiée pour votre bannissement. Si vous ne comprenez pas ce que vous avez commis comme faute, vous pouvez en discuter avec [url={{1}}todo_link]l'équipe administrative[/url].";
+$admin_ban_add_private_message_no_reason_en = "No reason was specified for the ban. If you don't understand what you did wrong, feel free to discuss it with the [url={{1}}pages/users/admins]administrative team[/url].";
+$admin_ban_add_private_message_no_reason_fr = "Aucune raison n'a été spécifiée pour votre bannissement. Si vous ne comprenez pas ce que vous avez commis comme faute, vous pouvez en discuter avec [url={{1}}pages/users/admins]l'équipe administrative[/url].";
 $admin_ban_add_private_message_reason_en    = <<<EOT
 You have been banned for the following reason: [b]{{2}}[/b].
 
-If you don't understand what you did wrong, feel free to discuss it with the [url={{1}}todo_link]administrative team[/url].
+If you don't understand what you did wrong, feel free to discuss it with the [url={{1}}pages/users/admins]administrative team[/url].
 EOT;
 $admin_ban_add_private_message_reason_fr    = <<<EOT
 Votre compte a été banni pour la raison suivante : [b]{{2}}[/b].
 
-Si vous ne comprenez pas ce que vous avez commis comme faute, vous pouvez en discuter avec [url={{1}}todo_link]l'équipe administrative[/url].
+Si vous ne comprenez pas ce que vous avez commis comme faute, vous pouvez en discuter avec [url={{1}}pages/users/admins]l'équipe administrative[/url].
 EOT;
 $admin_ban_add_private_message_en           = <<<EOT
 On {{2}}, your account has been banned {{3}}.

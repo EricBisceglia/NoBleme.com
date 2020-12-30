@@ -73,11 +73,11 @@ if($GLOBALS['dev_mode'] && $GLOBALS['full_debug_mode'])
 
         <?php if($pageviews) { ?>
 
-        <?=__link("todo_link", $pageviews, "", 1, $path);?><br>
+        <?=__link("pages/admin/stats_views", $pageviews, "", 1, $path);?><br>
 
         <?php } ?>
 
-        <?=__link("todo_link", $metrics, "pointer", 1, $path);?><br>
+        <?=__link("pages/admin/stats_metrics", $metrics, "pointer", 1, $path);?><br>
 
         <?php } ?>
 

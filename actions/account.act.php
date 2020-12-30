@@ -274,8 +274,8 @@ function user_create_account( string  $username               ,
                 username:         $username   );
 
   // IRC message
-  irc_bot_send_message("A new member registered on the website: $username_raw - ".$GLOBALS['website_url']."todo_link", "english");
-  irc_bot_send_message("Nouveau compte crée sur le site : $username_raw - ".$GLOBALS['website_url']."todo_link", "french");
+  irc_bot_send_message("A new member registered on the website: $username_raw - ".$GLOBALS['website_url']."pages/users/".$account_id, "english");
+  irc_bot_send_message("Nouveau compte crée sur le site : $username_raw - ".$GLOBALS['website_url']."pages/users/".$account_id, "french");
 
   // Welcome private message
   private_message_send(__('users_register_private_message_title'), __('users_register_private_message', null, 0, 0, array($path)), $account_id, 0, hide_admin_mail: true);

@@ -183,7 +183,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
           <?php } else { ?>
           <td class="nowrap" onclick="users_message_open('<?=$messages_list[$i]['id']?>');">
-            <?=__link('todo_link?id='.$messages_list[$i]['sender_id'], $messages_list[$i]['sender'])?>
+            <?=__link('pages/users/'.$messages_list[$i]['sender_id'], $messages_list[$i]['sender'])?>
           </td>
           <?php } ?>
 

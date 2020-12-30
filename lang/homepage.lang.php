@@ -92,7 +92,6 @@ ___('nobleme_home_tour',        'EN', <<<EOT
 </ul>
 <p>
   Enjoy your stay on NoBleme!<br>
-  {{link++|todo_link|- Bad|indented bold|}}
 </p>
 EOT
 );

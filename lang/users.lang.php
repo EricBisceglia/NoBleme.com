@@ -125,11 +125,11 @@ ___('users_list_count+',      "FR", "{{1}} membres de NoBleme");
 
 // Header
 ___('users_admins_intro',   'EN', <<<EOT
-NoBleme's administrative team are a group of volunteers that ensure the smooth running of the website and its community by dealing with any potential issues that could arise within them. If you need their help with an issue - be it of a human or technical nature - you can ask for it {{link|todo_link|through our irc server}} or {{link|todo_link|through the website}}.
+NoBleme's administrative team are a group of volunteers that ensure the smooth running of the website and its community by dealing with any potential issues that could arise within them. If you need their help with an issue - be it of a human or technical nature - you can ask for it {{link|todo_link|through our irc server}} or {{link|pages/messages/admins|through the website}}.
 EOT
 );
 ___('users_admins_intro',   'FR', <<<EOT
-L'équipe administrative de NoBleme est un groupe de volontaires qui maintiennent le site internet et sa communauté en gérant les potentiels problèmes qui peuvent y apparaître. Si vous avez besion de leur aide avec un sujet - qu'il soit humain ou technique - vous pouvez les contacter {{link|todo_link|via le serveur IRC}} ou {{link|todo_link|via le site web}}.
+L'équipe administrative de NoBleme est un groupe de volontaires qui maintiennent le site internet et sa communauté en gérant les potentiels problèmes qui peuvent y apparaître. Si vous avez besion de leur aide avec un sujet - qu'il soit humain ou technique - vous pouvez les contacter {{link|todo_link|via le serveur IRC}} ou {{link|pages/messages/admins|via le site web}}.
 EOT
 );
 ___('users_admins_mods',    'EN', <<<EOT
