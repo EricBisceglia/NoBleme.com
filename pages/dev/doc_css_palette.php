@@ -4,7 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';            # Core
-include_once './../../actions/dev/devtools.act.php';    # Actions
+include_once './../../actions/dev.act.php';             # Actions
 include_once './../../lang/dev/documentation.lang.php'; # Translations
 include_once './../../inc/bbcodes.inc.php';             # BBCodes
 

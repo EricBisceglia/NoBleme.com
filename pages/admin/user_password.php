@@ -4,7 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';                  # Core
-include_once './../../actions/admin/user_management.act.php'; # Actions
+include_once './../../actions/user_management.act.php';       # Actions
 include_once './../../lang/admin/user_management.lang.php';   # Translations
 
 // Limit page access rights

@@ -3,9 +3,9 @@
 /*                              THIS PAGE WILL WORK ONLY WHEN IT IS CALLED DYNAMICALLY                               */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';            # Core
-include_once './../../actions/users/messages.act.php';  # Actions
-include_once './../../lang/users/messages.lang.php';    # Translations
+include_once './../../inc/includes.inc.php';          # Core
+include_once './../../actions/messages.act.php';      # Actions
+include_once './../../lang/users/messages.lang.php';  # Translations
 
 // Throw a 404 if the page is being accessed directly
 page_must_be_fetched_dynamically();
