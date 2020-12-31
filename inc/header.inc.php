@@ -712,7 +712,7 @@ $javascripts .= '
           <?=__('submenu_user_profile')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_profile_self'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/users/profile', __('submenu_user_profile_self'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_user_profile_edit'), 'header_submenu_link text_blue', 1, $path);?>

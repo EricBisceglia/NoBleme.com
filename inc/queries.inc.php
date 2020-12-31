@@ -1295,33 +1295,28 @@ if($last_query < 26)
   sql_create_field('users_profile', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('users_profile', 'email_address', 'VARCHAR(510) NOT NULL', 'fk_users');
   sql_create_field('users_profile', 'created_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'email_address');
-  sql_create_field('users_profile', 'spoken_languages', 'VARCHAR(12) NOT NULL', 'created_at');
-  sql_create_field('users_profile', 'gender', 'VARCHAR(105) NOT NULL', 'spoken_languages');
   sql_create_field('users_profile', 'birthday', "DATE NOT NULL DEFAULT '0000-00-00'", 'created_at');
-  sql_create_field('users_profile', 'lives_at', 'VARCHAR(105) NOT NULL', 'gender');
-  sql_create_field('users_profile', 'occupation', 'VARCHAR(105) NOT NULL', 'lives_at');
-  sql_create_field('users_profile', 'profile_text', 'LONGTEXT NOT NULL', 'occupation');
+  sql_create_field('users_profile', 'spoken_languages', 'VARCHAR(12) NOT NULL', 'birthday');
+  sql_create_field('users_profile', 'lives_at', 'TEXT NOT NULL', 'spoken_languages');
+  sql_create_field('users_profile', 'pronouns_en', 'TEXT NOT NULL', 'lives_at');
+  sql_create_field('users_profile', 'pronouns_fr', 'TEXT NOT NULL', 'pronouns_en');
+  sql_create_field('users_profile', 'profile_text_en', 'LONGTEXT NOT NULL', 'pronouns_fr');
+  sql_create_field('users_profile', 'profile_text_fr', 'LONGTEXT NOT NULL', 'profile_text_en');
   $qusers = query(" SELECT  users.id            AS 'u_id'         ,
                             users.email         AS 'u_mail'       ,
                             users.date_creation AS 'u_created'    ,
                             users.langue        AS 'u_languages'  ,
-                            users.genre         AS 'u_gender'     ,
                             users.anniversaire  AS 'u_birthday'   ,
-                            users.habite        AS 'u_lives_at'   ,
-                            users.metier        AS 'u_occupation' ,
-                            users.profil        AS 'u_profile'
+                            users.habite        AS 'u_lives_at'
                     FROM    users ");
   while($dusers = mysqli_fetch_array($qusers))
     query(" INSERT INTO users_profile
-            SET         users_profile.fk_users          = '".sql_sanitize_data($dusers['u_id'])."'         ,
-                        users_profile.email_address     = '".sql_sanitize_data($dusers['u_mail'])."'       ,
-                        users_profile.created_at        = '".sql_sanitize_data($dusers['u_created'])."'    ,
-                        users_profile.spoken_languages  = '".sql_sanitize_data($dusers['u_languages'])."'  ,
-                        users_profile.gender            = '".sql_sanitize_data($dusers['u_gender'])."'     ,
-                        users_profile.birthday          = '".sql_sanitize_data($dusers['u_birthday'])."'   ,
-                        users_profile.lives_at          = '".sql_sanitize_data($dusers['u_lives_at'])."'   ,
-                        users_profile.occupation        = '".sql_sanitize_data($dusers['u_occupation'])."' ,
-                        users_profile.profile_text      = '".sql_sanitize_data($dusers['u_profile'])."'    ");
+            SET         users_profile.fk_users          = '".sql_sanitize_data($dusers['u_id'])."'        ,
+                        users_profile.email_address     = '".sql_sanitize_data($dusers['u_mail'])."'      ,
+                        users_profile.created_at        = '".sql_sanitize_data($dusers['u_created'])."'   ,
+                        users_profile.spoken_languages  = '".sql_sanitize_data($dusers['u_languages'])."' ,
+                        users_profile.birthday          = '".sql_sanitize_data($dusers['u_birthday'])."'  ,
+                        users_profile.lives_at          = '".sql_sanitize_data($dusers['u_lives_at'])."'  ");
   sql_create_index('users_profile', 'index_user', 'fk_users');
   sql_delete_field('users', 'email');
   sql_delete_field('users', 'date_creation');

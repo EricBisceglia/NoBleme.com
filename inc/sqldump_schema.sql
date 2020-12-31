@@ -446,10 +446,11 @@ CREATE TABLE IF NOT EXISTS `users_profile` (
   `created_at` int UNSIGNED NOT NULL DEFAULT '0',
   `birthday` date NOT NULL DEFAULT '0000-00-00',
   `spoken_languages` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gender` varchar(105) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lives_at` varchar(105) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `occupation` varchar(105) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `profile_text` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lives_at` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pronouns_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pronouns_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profile_text_en` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profile_text_fr` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_user` (`fk_users`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

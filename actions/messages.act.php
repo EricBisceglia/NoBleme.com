@@ -802,13 +802,6 @@ function admin_mail_get( int $message_id ) : array
     return $data;
   }
 
-  // Error: Deleted messages
-  if($dmessage['pm_deleted_r'])
-  {
-    $data['error'] = __('admin_mail_error_deleted');
-    return $data;
-  }
-
   // Error: Admin only mail
   if($dmessage['pm_admin'] && !user_is_administrator())
   {

@@ -641,10 +641,11 @@ for($i = 0; $i < $random; $i++)
   $birthday     = (mt_rand(0,4) < 4) ? '0000-00-00' : mt_rand(1980, 2010).'-'.mt_rand(1,12).'-'.mt_rand(1,28);
   $languages    = (mt_rand(0,5) < 5) ? '' : 'EN';
   $languages   .= (mt_rand(0,5) < 5) ? '' : 'FR';
-  $gender       = (mt_rand(0,5) < 5) ? '' : ucfirst(fixtures_generate_data('string', 2, 8));
+  $pronouns_en  = (mt_rand(0,5) < 5) ? '' : ucfirst(fixtures_generate_data('string', 2, 8));
+  $pronouns_fr  = (mt_rand(0,5) < 5) ? '' : ucfirst(fixtures_generate_data('string', 2, 8));
   $lives_at     = (mt_rand(0,6) < 6) ? '' : ucfirst(fixtures_generate_data('string', 10, 15));
-  $occupation   = (mt_rand(0,6) < 6) ? '' : ucfirst(fixtures_generate_data('string', 10, 15));
-  $profile_text = (mt_rand(0,5) < 5) ? '' : ucfirst(fixtures_generate_data('text', 1, 10));
+  $text_en      = (mt_rand(0,5) < 5) ? '' : ucfirst(fixtures_generate_data('text', 1, 10));
+  $text_fr      = (mt_rand(0,5) < 5) ? '' : ucfirst(fixtures_generate_data('text', 1, 10));
 
   // Check if the username was already generated
   $dcheck = mysqli_fetch_array(query("  SELECT  users.id
@@ -678,10 +679,11 @@ for($i = 0; $i < $random; $i++)
                         users_profile.created_at        = '$created_at '  ,
                         users_profile.birthday          = '$birthday'     ,
                         users_profile.spoken_languages  = '$languages'    ,
-                        users_profile.gender            = '$gender'       ,
                         users_profile.lives_at          = '$lives_at'     ,
-                        users_profile.occupation        = '$occupation'   ,
-                        users_profile.profile_text      = '$profile_text' ");
+                        users_profile.pronouns_en       = '$pronouns_en'  ,
+                        users_profile.pronouns_fr       = '$pronouns_fr'  ,
+                        users_profile.profile_text_en   = '$text_en'      ,
+                        users_profile.profile_text_fr   = '$text_fr'      ");
 
     query(" INSERT INTO users_settings
             SET         users_settings.fk_users = '$user_id' ");
@@ -702,7 +704,7 @@ for($i = 0; $i < $random; $i++)
                           logs_activity.activity_username = '$username'       ");
     }
 
-    if(!$deleted && $profile_text && mt_rand(0,3) >= 3)
+    if(!$deleted && ($text_en || $text_fr) && mt_rand(0,5) >= 5)
     {
       $deleted_log  = (mt_rand(0,50) < 50) ? 0 : 1;
       $edited_at    = mt_rand($created_at, time());
@@ -716,14 +718,22 @@ for($i = 0; $i < $random; $i++)
                           logs_activity.fk_users            = '$user_id'            ,
                           logs_activity.activity_username   = '$username'           ");
       $log_id = query_id();
-      query(" INSERT INTO logs_activity_details
-              SET         logs_activity_details.fk_logs_activity        = '$log_id'       ,
-                          logs_activity_details.content_description_en  = 'Profile text'  ,
-                          logs_activity_details.content_description_fr  = 'Texte libre'   ,
-                          logs_activity_details.content_before          = '$text_before'  ,
-                          logs_activity_details.content_after           = '$profile_text' ");
+      if($text_en)
+        query(" INSERT INTO logs_activity_details
+                SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
+                            logs_activity_details.content_description_en  = 'Profile text (EN)' ,
+                            logs_activity_details.content_description_fr  = 'Texte libre (EN)'  ,
+                            logs_activity_details.content_before          = '$text_before'      ,
+                            logs_activity_details.content_after           = '$text_en'          ");
+      if($text_fr)
+        query(" INSERT INTO logs_activity_details
+                SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
+                            logs_activity_details.content_description_en  = 'Profile text (FR)' ,
+                            logs_activity_details.content_description_fr  = 'Texte libre (FR)'  ,
+                            logs_activity_details.content_before          = '$text_before'      ,
+                            logs_activity_details.content_after           = '$text_fr'          ");
     }
-    else if(!$deleted && $profile_text && mt_rand(0,3) >= 3)
+    else if(!$deleted && ($text_en || $text_fr) && mt_rand(0,5) >= 5)
     {
       $deleted_log  = (mt_rand(0,15) < 15) ? 0 : 1;
       $edited_at    = mt_rand($created_at, time());
@@ -738,14 +748,22 @@ for($i = 0; $i < $random; $i++)
                           logs_activity.activity_username           = '$username'                 ,
                           logs_activity.activity_moderator_username = 'Admin'                     ");
       $log_id = query_id();
-      query(" INSERT INTO logs_activity_details
-              SET         logs_activity_details.fk_logs_activity        = '$log_id'       ,
-                          logs_activity_details.content_description_en  = 'Profile text'  ,
-                          logs_activity_details.content_description_fr  = 'Texte libre'   ,
-                          logs_activity_details.content_before          = '$text_before'  ,
-                          logs_activity_details.content_after           = '$profile_text' ");
+      if($text_en)
+        query(" INSERT INTO logs_activity_details
+                SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
+                            logs_activity_details.content_description_en  = 'Profile text (EN)' ,
+                            logs_activity_details.content_description_fr  = 'Texte libre (EN)'  ,
+                            logs_activity_details.content_before          = '$text_before'      ,
+                            logs_activity_details.content_after           = '$text_en'          ");
+      if($text_fr)
+        query(" INSERT INTO logs_activity_details
+                SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
+                            logs_activity_details.content_description_en  = 'Profile text (EN)' ,
+                            logs_activity_details.content_description_fr  = 'Texte libre (EN)'  ,
+                            logs_activity_details.content_before          = '$text_before'      ,
+                            logs_activity_details.content_after           = '$text_fr'          ");
     }
-    else if(!$deleted && !$profile_text && mt_rand(0,50) >= 50)
+    else if(!$deleted && !$text_en && !$text_fr && mt_rand(0,50) >= 50)
     {
       $deleted_log  = (mt_rand(0,25) < 25) ? 0 : 1;
       $edited_at    = mt_rand($created_at, time());
@@ -760,11 +778,11 @@ for($i = 0; $i < $random; $i++)
                           logs_activity.activity_username   = '$username'           ");
       $log_id = query_id();
       query(" INSERT INTO logs_activity_details
-              SET         logs_activity_details.fk_logs_activity        = '$log_id'       ,
-                          logs_activity_details.content_description_en  = 'Profile text'  ,
-                          logs_activity_details.content_description_fr  = 'Texte libre'   ,
-                          logs_activity_details.content_before          = '$text_before'  ,
-                          logs_activity_details.content_after           = ''              ");
+              SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
+                          logs_activity_details.content_description_en  = 'Profile text (EN)' ,
+                          logs_activity_details.content_description_fr  = 'Texte libre (EN)'  ,
+                          logs_activity_details.content_before          = '$text_before'      ,
+                          logs_activity_details.content_after           = ''                  ");
     }
     if(mt_rand(0,100) >= 100)
     {
