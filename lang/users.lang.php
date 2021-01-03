@@ -153,3 +153,68 @@ EOT
 // Table
 ___('users_admins_title', "EN", "Title");
 ___('users_admins_title', "FR", "Titre");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  PUBLIC  PROFILE                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('users_profile_ban',  'EN', "Ban");
+___('users_profile_ban',  'FR', "Bannir");
+
+
+// Deleted account
+___('users_profile_deleted',    'EN', "[deleted account]");
+___('users_profile_deleted',    'FR', "[compte supprimé]");
+
+
+// Banned account
+___('users_profile_banned',     'EN', "[banned account]");
+___('users_profile_banned',     'FR', "[compte banni]");
+___('users_profile_unban',      'EN', "Unban");
+___('users_profile_unban',      'FR', "Débannir");
+___('users_profile_ban_end',    'EN', "Ban scheduled to end {{1}}");
+___('users_profile_ban_end',    'FR', "Fin du bannissement prévue {{1}}");
+
+
+// Account summary
+___('users_profile_summary',    'EN', "Account #{{1}}");
+___('users_profile_summary',    'FR', "Compte #{{1}}");
+___('users_profile_languages',  'EN', "Languages");
+___('users_profile_languages',  'FR', "Langues");
+___('users_profile_pronouns',   'EN', "Pronouns");
+___('users_profile_pronouns',   'FR', "Pronoms");
+___('users_profile_country',    'EN', "Country / Location");
+___('users_profile_country',    'FR', "Pays / Localisation");
+___('users_profile_created',    'EN', "Account registration");
+___('users_profile_created',    'FR', "Création du compte");
+___('users_profile_activity',   'EN', "Latest visit");
+___('users_profile_activity',   'FR', "Dernière visite");
+___('users_profile_age',        'EN', "Age");
+___('users_profile_age',        'FR', "Âge");
+___('users_profile_age_years',  'EN', "{{1}} years old");
+___('users_profile_age_years',  'FR', "{{1}} ans");
+___('users_profile_birthday',   'EN', "Birthday");
+___('users_profile_birthday',   'FR', "Anniversaire");
+
+
+// Admin info
+___('users_profile_admin',    'EN', "Administrative toolbox - keep this private");
+___('users_profile_admin',    'FR', "Informations administratives - à garder privé");
+___('users_profile_ip',       'EN', "Latest IP address");
+___('users_profile_ip',       'FR', "Dernière adresse IP");
+___('users_profile_email',    'EN', "E-mail address");
+___('users_profile_email',    'FR', "Adresse e-mail");
+___('users_profile_unknown',  'EN', "Unknown");
+___('users_profile_unknown',  'FR', "Inconnue");
+___('users_profile_page',     'EN', "Last visited page");
+___('users_profile_page',     'FR', "Dernière page visitée");
+___('users_profile_action',   'EN', "Latest action");
+___('users_profile_action',   'FR', "Dernière action");
+___('users_profile_noaction', 'EN', "None");
+___('users_profile_noaction', 'FR', "Aucune");

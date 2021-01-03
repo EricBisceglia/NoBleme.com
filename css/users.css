@@ -1,0 +1,15 @@
+/************************************************** PUBLIC PROFILES **************************************************/
+.profile_box      { margin-top: 3em; overflow-x: auto; border-radius: 10px    ;
+                    border: 2px solid #FF0000; box-shadow: 0 0 15px #FF0000;  }
+.profile_info_box { border-bottom: 2px solid #FF0000; padding: 0.4em 0.5em    ;
+                    box-shadow: 0 0 8px #FF0000; text-align: center;          }
+.profile_admin    { margin-top: 4em;                                          }
+
+@media (min-width: 1025px) {
+.profile_text { max-height: 12em; padding: 0.25em 0.5em;  }
+.profile_info { max-height: 24em;                         }
+.profile_flag { height: 18px; margin: 0 0.1em;          } }
+
+@media (max-width: 1024px) {
+.profile_text { max-height: 20em; padding: 1.0em;         }
+.profile_flag { height: 32px; margin: 0 0.2em;          } }

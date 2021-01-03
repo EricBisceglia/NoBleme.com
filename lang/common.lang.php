@@ -390,6 +390,8 @@ ___('administration', 'EN', "administration");
 ___('administration', 'FR', "administration");
 ___('administrator',  'EN', "administrator");
 ___('administrator',  'FR', "administration");
+___('deleted',        'EN', "deleted");
+___('deleted',        'FR', "supprimé");
 ___('login',          'EN', "login");
 ___('login',          'FR', "connexion");
 ___('moderator',      'EN', "moderator");

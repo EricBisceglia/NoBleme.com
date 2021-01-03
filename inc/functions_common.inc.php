@@ -611,15 +611,17 @@ function date_french_ordinal( int $timestamp ) : string
  * @param   string|int  $date           (OPTIONAL)  The MySQL date or timestamp that we want to transform.
  * @param   int         $strip_day      (OPTIONAL)  If 1, strips the day's name. If 2, strips the whole day.
  * @param   int         $include_time   (OPTIONAL)  If 1, will add the time after the date. If 2, strips milliseconds.
+ * @param   bool        $strip_year     (OPTIONAL)  If set, omits the year from the returned data.
  * @param   string      $lang           (OPTIONAL)  The language used, defaults to current lang.
  *
  * @return  string                                  The required date, in plaintext.
  */
 
-function date_to_text(  mixed   $date         = ''  ,
-                        int     $strip_day    = 0   ,
-                        int     $include_time = 0   ,
-                        string  $lang         = ''  ) : string
+function date_to_text(  mixed   $date         = ''    ,
+                        int     $strip_day    = 0     ,
+                        int     $include_time = 0     ,
+                        bool    $strip_year   = false ,
+                        string  $lang         = ''    ) : string
 {
   // If no date has been entered, use the current timestamp instead
   $date = (!$date) ? time() : $date;
@@ -634,31 +636,35 @@ function date_to_text(  mixed   $date         = ''  ,
   else
     setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 
+  // Prepare the year stripping option if needed
+  $year       = ($strip_year) ? '' : ' %Y';
+  $year_comma = ($strip_year) ? '' : ', %Y';
+
   // Return the formatted date - each language has its own date formatting rules
   if(!$strip_day)
   {
     if($lang == 'EN')
-      $full_date = date_better_strftime('%A, %B %#d%O, %Y', $date);
+      $full_date = date_better_strftime('%A, %B %#d%O'.$year_comma, $date);
     else
-      $full_date = string_change_case(utf8_encode(strftime('%A %#d'.date_french_ordinal($date).' %B %Y', $date)), "initials");
+      $full_date = string_change_case(utf8_encode(strftime('%A %#d'.date_french_ordinal($date).' %B'.$year, $date)), "initials");
   }
 
   // Treat this situation differently if the day needs to be stripped
   else if($strip_day == 1)
   {
     if($lang == 'EN')
-      $full_date = date_better_strftime('%B %#d%O, %Y', $date);
+      $full_date = date_better_strftime('%B %#d%O'.$year_comma, $date);
     else
-      $full_date = utf8_encode(strftime('%#d'.date_french_ordinal($date), $date).' '.string_change_case(strftime('%B %Y', $date), "initials"));
+      $full_date = utf8_encode(strftime('%#d'.date_french_ordinal($date), $date).' '.string_change_case(strftime('%B'.$year, $date), "initials"));
   }
 
   // And differently aswell if the full day is being stripped
   else
   {
     if($lang == 'EN')
-      $full_date = date_better_strftime('%B %Y', $date);
+      $full_date = date_better_strftime('%B'.$year, $date);
     else
-      $full_date = string_change_case(utf8_encode(strftime('%B %Y', $date)), "initials");
+      $full_date = string_change_case(utf8_encode(strftime('%B'.$year, $date)), "initials");
   }
 
   // Append the time to the date if requested

@@ -3,7 +3,11 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './../../inc/includes.inc.php';  # Core
+include_once './../../inc/includes.inc.php';        # Core
+include_once './../../inc/functions_time.inc.php';  # Time management
+include_once './../../inc/bbcodes.inc.php';         # BBCodes
+include_once './../../actions/users.act.php';       # Actions
+include_once './../../lang/users.lang.php';         # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
@@ -11,6 +15,9 @@ $page_url         = "pages/users/profile";
 $page_title_en    = "Public profile";
 $page_title_fr    = "Profil public";
 $page_description = "Your account's public profile on NoBleme";
+
+// Extra CSS
+$css = array('users');
 
 
 
@@ -22,7 +29,26 @@ $page_description = "Your account's public profile on NoBleme";
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// This page is here as a decoy for now, it serves no purpose at the moment
+// Get data about the user
+
+// Fetch the profile id and the user's current id
+$profile_id = form_fetch_element('id', request_type: 'GET');
+$user_id    = user_get_id();
+
+// Fetch the data
+$user_data = user_get($profile_id);
+
+// Stop there if the profile can't be found
+if(!$user_data)
+  exit(header("Location: ./"));
+
+// Update the page data if required
+if($profile_id)
+{
+  $page_title_en    = $user_data['username'];
+  $page_title_fr    = $user_data['username'];
+  $page_description = "Public profile of the user $page_title_en on NoBleme";
+}
 
 
 
@@ -33,13 +59,155 @@ $page_description = "Your account's public profile on NoBleme";
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_50">
+<?php if($user_data['deleted']) { ?>
 
-  <h1>
-    <?=__('nobleme')?>
+<div class="gigapadding_top hugepadding_bot align_center text_red bigger">
+  <?=__('users_profile_deleted')?>
+</div>
+
+<?php } else if($user_data['banned']) { ?>
+
+<div class="gigapadding_top hugepadding_bot align_center text_red bigger">
+  <?=__('users_profile_banned')?>
+  <?php if($is_moderator) { ?>
+  <img class="icon valign_middle pointer spaced_left" src="<?=$path?>img/icons/user_confirm.svg" alt="O" title="<?=string_change_case(__('users_profile_unban'), 'initials')?>">
+  <?php } ?>
+  <div class="small bigpadding_top">
+    <?=__('users_profile_ban_end', preset_values: array($user_data['unbanned']))?>
+  </div>
+</div>
+
+<?php } else { ?>
+
+<div class="width_30">
+
+  <h1 class="align_center">
+    <?=__link('pages/users/list', $user_data['username'], 'text_red noglow')?>
+    <?php if(!$profile_id || $profile_id == $user_id) { ?>
+    <img class="icon valign_middle pointer" src="<?=$path?>img/icons/edit.svg" alt="E" title="<?=string_change_case(__('edit'), 'initials')?>">
+    <?php } ?>
+    <?php if($is_moderator && $profile_id && $profile_id != $user_id) { ?>
+    <img class="icon valign_middle pointer" src="<?=$path?>img/icons/edit.svg" alt="E" title="<?=string_change_case(__('edit'), 'initials')?>">
+    <img class="icon valign_middle pointer" src="<?=$path?>img/icons/user_delete.svg" alt="X" title="<?=__('users_profile_ban')?>">
+    <?php } ?>
   </h1>
 
+  <?php if($user_data['title']) { ?>
+  <h5 class="align_center tinypadding_bot">
+    <?=__link('pages/users/admins', $user_data['title'], $user_data['title_css'])?>
+  </h5>
+  <?php } ?>
+
+  <?php if($user_data['text']) { ?>
+  <div class="profile_box profile_text">
+    <?=$user_data['text']?>
+  </div>
+  <?php } ?>
+
+  <div class="profile_box profile_info">
+
+    <div class="profile_info_box glow text_red bold">
+      <?=__('users_profile_summary', preset_values: array($user_data['id']))?>
+    </div>
+
+    <?php if($user_data['lang_en'] || $user_data['lang_fr']) { ?>
+    <div class="profile_info_box">
+      <span class="bold"><?=__('users_profile_languages')?></span><br>
+      <div class="tinypadding_bot">
+        <?php if($user_data['lang_en']) { ?>
+        <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle profile_flag" alt="<?=__('EN')?>" title="<?=string_change_case(__('english'), 'initials')?>">
+        <?php } if($user_data['lang_fr']) { ?>
+        <img src="<?=$path?>img/icons/lang_fr.png" class="valign_middle profile_flag" alt="<?=__('FR')?>" title="<?=string_change_case(__('french'), 'initials')?>">
+        <?php } ?>
+      </div>
+    </div>
+    <?php } ?>
+
+    <?php if($user_data['pronouns']) { ?>
+    <div class="profile_info_box">
+      <span class="bold"><?=__('users_profile_pronouns')?></span><br>
+      <?=$user_data['pronouns']?>
+    </div>
+    <?php } ?>
+
+    <?php if($user_data['country']) { ?>
+    <div class="profile_info_box">
+      <span class="bold"><?=__('users_profile_country')?></span><br>
+      <?=$user_data['country']?>
+    </div>
+    <?php } ?>
+
+    <div class="profile_info_box">
+      <span class="bold"><?=__('users_profile_created')?></span><br>
+      <?=$user_data['created']?> (<?=$user_data['screated']?>)
+    </div>
+
+    <?php if(!$user_data['hideact']) { ?>
+    <div class="profile_info_box">
+      <span class="bold"><?=__('users_profile_activity')?></span><br>
+      <?=$user_data['activity']?>
+    </div>
+    <?php } ?>
+
+    <?php if($user_data['age']) { ?>
+    <div class="profile_info_box">
+      <span class="bold"><?=__('users_profile_age')?></span><br>
+      <?=__('users_profile_age_years', preset_values: array($user_data['age']))?>
+    </div>
+    <?php } ?>
+
+    <?php if($user_data['birthday']) { ?>
+    <div class="profile_info_box">
+      <span class="bold"><?=__('users_profile_birthday')?></span><br>
+      <?=$user_data['birthday']?>
+    </div>
+    <?php } ?>
+
+  </div>
+
+  <?php if($is_moderator && $profile_id) { ?>
+
+  <div class="profile_box profile_info profile_admin">
+
+    <div class="profile_info_box glow text_red bold">
+      <?=__('users_profile_admin')?>
+    </div>
+
+    <?php if($is_admin) { ?>
+
+    <div class="profile_info_box">
+      <span class="bold"><?=__('users_profile_ip')?></span><br>
+      <?=$user_data['ip']?>
+    </div>
+
+    <div class="profile_info_box">
+      <span class="bold"><?=__('users_profile_email')?></span><br>
+      <?=$user_data['email']?>
+    </div>
+
+    <?php } ?>
+
+    <div class="profile_info_box">
+      <span class="bold"><?=__('users_profile_page')?></span><br>
+      <?php if($user_data['lasturl']) { ?>
+      <?=__link($user_data['lasturl'], $user_data['lastpage'])?>
+      <?php } else { ?>
+      <?=$user_data['lastpage']?>
+      <?php } ?>
+    </div>
+
+    <div class="profile_info_box">
+      <span class="bold"><?=__('users_profile_action')?></span><br>
+      <?=$user_data['lastaction']?>
+    </div>
+
+  </div>
+
+  <?php } ?>
+
 </div>
+
+<?php } ?>
 
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */

@@ -8,6 +8,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  user_get                            Fetches data related to a user.                                              */
 /*  user_list                           Fetches a list of users.                                                     */
 /*  user_list_admins                    Fetches a list of administrative team members.                               */
 /*                                                                                                                   */
@@ -19,6 +20,107 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_autocomplete_username          Autocompletes a username.                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+/**
+ * Fetches data related to a user.
+ *
+ * @param   int|null    $user_id  The scheduled task's id, will default to current user if unset.
+ *
+ * @return  array|null            An array containing user related data, or NULL if it does not exist.
+ */
+
+function user_get( ?int $user_id = NULL ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('users.lang.php');
+  require_included_file('functions_time.inc.php');
+  require_included_file('bbcodes.inc.php');
+
+  // User must be logged in if no id is provided
+  if(!$user_id && !user_is_logged_in())
+    return NULL;
+
+  // Get current user id if needed
+  $user_id = ($user_id) ? $user_id : user_get_id();
+
+  // Sanitize the user id
+  $user_id = sanitize($user_id, 'int', 0);
+
+  // Check if the user exists
+  if(!database_row_exists('users', $user_id))
+    return NULL;
+
+  // Fetch the data
+  $duser = mysqli_fetch_array(query(" SELECT    users.is_deleted                  AS 'u_deleted'      ,
+                                                users.is_banned_until             AS 'u_banned'       ,
+                                                users.username                    AS 'u_nick'         ,
+                                                users.is_administrator            AS 'u_admin'        ,
+                                                users.is_moderator                AS 'u_mod'          ,
+                                                users.last_visited_at             AS 'u_activity'     ,
+                                                users.last_visited_page_en        AS 'u_active_en'    ,
+                                                users.last_visited_page_fr        AS 'u_active_fr'    ,
+                                                users.last_visited_url            AS 'u_active_url'   ,
+                                                users.last_action_at              AS 'u_lastaction'   ,
+                                                users.current_ip_address          AS 'u_ip'           ,
+                                                users_profile.created_at          AS 'u_created'      ,
+                                                users_profile.spoken_languages    AS 'u_lang'         ,
+                                                users_profile.pronouns_en         AS 'u_pronouns_en'  ,
+                                                users_profile.pronouns_fr         AS 'u_pronouns_fr'  ,
+                                                users_profile.lives_at            AS 'u_country'      ,
+                                                users_profile.birthday            AS 'u_birthday'     ,
+                            TIMESTAMPDIFF(YEAR, users_profile.birthday, NOW())    AS 'u_age'          ,
+                                                users_profile.profile_text_en     AS 'u_text_en'      ,
+                                                users_profile.profile_text_fr     AS 'u_text_fr'      ,
+                                                users_profile.email_address       AS 'u_mail'         ,
+                                                users_settings.hide_from_activity AS 'u_hideact'
+                                      FROM      users
+                                      LEFT JOIN users_profile   ON users_profile.fk_users   = users.id
+                                      LEFT JOIN users_settings  ON users_settings.fk_users  = users.id
+                                      WHERE     users.id = '$user_id' "));
+
+  // Get the current user's language
+  $lang = user_get_language();
+
+  // Assemble an array with the data
+  $data['id']         = sanitize_output($user_id);
+  $data['deleted']    = sanitize_output($duser['u_deleted']);
+  $data['banned']     = ($duser['u_banned']);
+  $data['unbanned']   = sanitize_output(string_change_case(time_until($duser['u_banned']), 'lowercase'));
+  $data['username']   = sanitize_output($duser['u_nick']);
+  $temp               = $duser['u_mod'] ? __('moderator') : '';
+  $temp               = $duser['u_admin'] ? __('administrator') : $temp;
+  $data['title']      = sanitize_output(string_change_case($temp, 'initials'));
+  $temp               = $duser['u_mod'] ? ' text_orange noglow' : '';
+  $data['title_css']  = $duser['u_admin'] ? ' text_red glow' : $temp;
+  $data['lang_en']    = str_contains($duser['u_lang'], 'EN');
+  $data['lang_fr']    = str_contains($duser['u_lang'], 'FR');
+  $temp               = ($lang == 'FR' && $duser['u_text_fr']) ? $duser['u_text_fr'] : $duser['u_text_en'];
+  $data['text']       = sanitize_output(bbcodes($temp), true);
+  $temp               = ($lang == 'FR' && $duser['u_pronouns_fr']) ? $duser['u_pronouns_fr'] : $duser['u_pronouns_en'];
+  $data['pronouns']   = sanitize_output($temp);
+  $data['country']    = sanitize_output($duser['u_country']);
+  $data['created']    = sanitize_output(date_to_text($duser['u_created'], strip_day: 1));
+  $data['screated']   = sanitize_output(time_since($duser['u_created']));
+  $temp               = ($duser['u_activity']) ? $duser['u_activity'] : $duser['u_created'];
+  $data['activity']   = sanitize_output(time_since($temp));
+  $temp               = date_to_text($duser['u_birthday'], strip_day: true, strip_year: true);
+  $data['birthday']   = ($duser['u_birthday'] != '0000-00-00') ? sanitize_output($temp) : 0;
+  $data['age']        = ($duser['u_birthday'] != '0000-00-00') ? sanitize_output($duser['u_age']) : 0;
+  $data['hideact']    = ($duser['u_hideact']);
+  $data['ip']         = ($duser['u_ip'] == '0.0.0.0') ? __('users_profile_unknown') : sanitize_output($duser['u_ip']);
+  $temp               = ($lang == 'FR' && $duser['u_active_fr']) ? $duser['u_active_fr'] : $duser['u_active_en'];
+  $data['lastpage']   = sanitize_output($temp);
+  $data['lasturl']    = sanitize_output($duser['u_active_url']);
+  $temp               = ($duser['u_lastaction']) ? time_since($duser['u_lastaction']) : __('users_profile_noaction');
+  $data['lastaction'] = sanitize_output($temp);
+  $data['email']      = ($duser['u_mail']) ? sanitize_output($duser['u_mail']) : __('users_profile_noaction');
+
+  // Return the array
+  return $data;
+}
+
+
+
 
  /**
  * Fetches a list of users.
