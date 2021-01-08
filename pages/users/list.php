@@ -72,28 +72,28 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <th>
             <?=('username')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_list_search('username');">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_list_search('username');")?>
           </th>
 
           <th>
             <?=__('users_list_registered')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_up_small.svg" alt="^" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_list_search('registered');">
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_list_search('rregistered');">
+            <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "users_list_search('registered');")?>
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_list_search('rregistered');")?>
           </th>
 
           <th>
             <?=__('users_online_activity')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_list_search('activity');">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_list_search('activity');")?>
           </th>
 
           <th>
             <?=__('users_list_languages')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_list_search('language');">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_list_search('language');")?>
           </th>
 
           <th>
             <?=__('id')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_list_search('id');">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_list_search('id');")?>
           </th>
 
         </tr>

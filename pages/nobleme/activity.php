@@ -85,7 +85,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } ?>
 
     <?php if($is_admin) { ?>
-    <img class="pointer icon" src="<?=$path?>img/icons/delete.svg" alt="X" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
+    <?=__icon('delete', alt: 'X', title: __('activity_icon_deleted'), onclick: "activity_submit_menus('".$logs_url."', 1);")?>
     <?php } ?>
 
   </h1>
@@ -96,7 +96,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__link('pages/nobleme/activity', __('activity_title_modlogs'), 'noglow text_red')?>
 
     <?php if($is_admin) { ?>
-    <img class="pointer icon" src="<?=$path?>img/icons/delete.svg" alt="X" onclick="activity_submit_menus('<?=$logs_url?>', 1);">
+      <?=__icon('delete', alt: 'X', title: __('activity_icon_deleted'), onclick: "activity_submit_menus('".$logs_url."', 1);")?>
     <?php } ?>
 
   </h1>
@@ -182,13 +182,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <td class="nowrap <?=$activity_logs[$i]['css']?>">
 
           <?php if($activity_logs[$i]['details']) { ?>
-          <img class="smallicon valign_center spaced pointer" src="<?=$path?>img/icons/help.svg" alt="?" onclick="activity_show_details('<?=$activity_logs[$i]['id']?>');">
+          <?=__icon('help', is_small: true, alt: '?', title: __('edit'), title_case: 'initials', onclick: "activity_show_details('".$activity_logs[$i]['id']."');")?>
           <?php } if($is_admin) { ?>
-
           <?php if($deletion_type) { ?>
-          <img class="smallicon valign_center pointer spaced_right" src="<?=$path?>img/icons/refresh.svg" alt="R" onclick="activity_restore_log('<?=$activity_logs[$i]['id']?>');">
+          <?=__icon('refresh', is_small: true, class: 'valign_middle pointer spaced', alt: 'R', title: __('activity_restore'), onclick: "activity_restore_log('".$activity_logs[$i]['id']."');")?>
           <?php } ?>
-          <img class="smallicon valign_center pointer spaced_right" src="<?=$path?>img/icons/delete.svg" alt="X" onclick="activity_delete_log('<?=$activity_logs[$i]['id']?>', '<?=addslashes(__('activity_delete'))?>', '<?=$deletion_type?>');">
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "activity_delete_log('".$activity_logs[$i]['id']."', '".addslashes(__('activity_delete'))."', '".$deletion_type."');")?>
           <?php } ?>
 
         </td>

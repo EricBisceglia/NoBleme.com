@@ -86,9 +86,9 @@ if(isset($admin_mail['error'])) { ?>
   <h5 class="padding_top indented">
     <?=$admin_mail['title']?>
     <?php if($admin_mail['sender_id']) { ?>
-    <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/edit.svg" alt="E" title="<?=__('admin_mail_chain_reply')?>" id="admin_mail_reply_icon" onclick="admin_mail_reply();">
+    <?=__icon('edit', class: 'pointer admin_mail_icon valign_middle spaced_left', alt: 'E', title: __('admin_mail_chain_reply'), identifier: 'admin_mail_reply_icon', onclick: 'admin_mail_reply();')?>
     <?php } if($is_admin) { ?>
-    <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/delete.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_mail_delete(<?=$admin_mail['id']?>, '<?=__('admin_mail_delete_confirm')?>');">
+    <?=__icon('delete', class: 'pointer admin_mail_icon valign_middle spaced_left', alt: 'X', title: __('delete'), title_case: 'initials' , identifier: 'admin_mail_reply_icon', onclick: "admin_mail_delete(".$admin_mail['id'].", '".__('admin_mail_delete_confirm')."');")?>
     <?php } ?>
   </h5>
 
@@ -128,7 +128,7 @@ if(isset($admin_mail['error'])) { ?>
   <h5 class="padding_top indented">
     <?=$admin_mail['title']?>
     <?php if($is_admin) { ?>
-    <img class="pointer icon admin_mail_icon valign_middle spaced_left" src="<?=$path?>img/icons/delete.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_mail_delete(<?=$admin_mail[$i]['id']?>, '<?=__('admin_mail_delete_confirm')?>');">
+    <?=__icon('delete', class: 'pointer admin_mail_icon valign_middle spaced_left', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_mail_delete(".$admin_mail[$i]['id'].", '".__('admin_mail_delete_confirm')."');")?>
     <?php } ?>
   </h5>
 

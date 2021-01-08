@@ -100,27 +100,27 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <tr class="uppercase">
           <th>
             <?=__('admin_views_name')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('name');">
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/link_small.svg" alt="v" title="<?=string_change_case(__('link'), 'initials')?>" onclick="admin_views_search('url');">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('name');")?>
+            <?=__icon('link', is_small: true, alt: 'v', title: __('link'), title_case: 'initials', onclick: "admin_views_search('url');")?>
           </th>
           <th class="black text_white">
             <?=__('admin_metrics_views')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('views');">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('views');")?>
           </th>
           <th colspan="2">
             <?=__('admin_views_growth')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('growth');">
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('pgrowth');">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('growth');")?>
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('pgrowth');")?>
           </th>
           <th>
             <?=__('admin_views_old')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('oldviews');">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('oldviews');")?>
           </th>
           <th>
             <?=__('admin_metrics_activity')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('activity');">
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_up_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_views_search('ractivity');">
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/link_small.svg" alt="v" title="<?=string_change_case(__('link'), 'initials')?>" onclick="admin_views_search('uactivity');">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('activity');")?>
+            <?=__icon('sort_up', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_views_search('ractivity');")?>
+            <?=__icon('link', is_small: true, alt: 'v', title: __('link'), title_case: 'initials', onclick: "admin_views_search('uactivity');")?>
           </th>
           <th>
             <?=__('act')?>
@@ -187,7 +187,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
 
           <td class="align_center">
-            <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_views_delete('<?=__('admin_views_delete')?>','<?=$stats_views[$i]['id']?>')">
+            <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'x', title: __('delete'), title_case: 'initials', onclick: "admin_views_delete('".__('admin_views_delete')."','".$stats_views[$i]['id']."')")?>
           </td>
 
         </tr>

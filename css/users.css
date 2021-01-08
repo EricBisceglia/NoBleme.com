@@ -7,7 +7,6 @@
 
 @media (min-width: 1025px) {
 .profile_text { max-height: 12em; padding: 0.25em 0.5em;  }
-.profile_info { max-height: 24em;                         }
 .profile_flag { height: 18px; margin: 0 0.1em;          } }
 
 @media (max-width: 1024px) {

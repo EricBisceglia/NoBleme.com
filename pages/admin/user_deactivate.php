@@ -128,15 +128,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
         <th>
           <?=__('id')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>" onclick="admin_reactivate_search('id');">
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_reactivate_search('id');")?>
         </th>
         <th>
           <?=string_change_case(__('username'), 'uppercase')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>" onclick="admin_reactivate_search('deleted_username');">
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_reactivate_search('deleted_username');")?>
         </th>
         <th>
           <?=__('admin_deactivate_list_deleted_at')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=__('sort')?>" onclick="admin_reactivate_search('deleted');">
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_reactivate_search('deleted');")?>
         </th>
         <th>
           <?=string_change_case(__('action+'), 'uppercase')?>
@@ -189,7 +189,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$deleted_users[$i]['del_since']?>
         </td>
         <td class="align_center">
-          <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="<?=__('admin_deactivate_list_reactivate')?>" onclick="admin_reactivate_account('<?=$deleted_users[$i]['id']?>', '<?=__('admin_deactivate_list_confirm')?>')">
+          <?=__icon('refresh', is_small: true, alt: 'R', title: __('admin_deactivate_list_reactivate'), onclick: "admin_reactivate_account('".$deleted_users[$i]['id']."', '".__('admin_deactivate_list_confirm')."')")?>
         </td>
       </tr>
 

@@ -80,23 +80,23 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <th>
             <?=__('users_inbox_message')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_outbox_search('title')">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_outbox_search('title');")?>
           </th>
 
           <th>
             <?=__('users_outbox_recipient')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_outbox_search('recipient')">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_outbox_search('recipient');")?>
           </th>
 
           <th>
             <?=__('users_inbox_sent')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_outbox_search('sent')">
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_up_small.svg" alt="^" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_outbox_search('rsent')">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_outbox_search('sent');")?>
+            <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "users_outbox_search('rsent');")?>
           </th>
 
           <th>
             <?=__('users_inbox_read')?>
-            <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="users_outbox_search('read')">
+            <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "users_outbox_search('read');")?>
           </th>
 
           <th>
@@ -197,7 +197,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
 
           <td class="nowrap valign_middle align_center">
-            <img class="smallicon valign_middle spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="users_message_delete(<?=$messages_list[$i]['id']?>, '<?=__('users_message_confirm')?>');">
+            <?=__icon('delete', is_small: true, alt: 'X', title: __('delete'), title_case: 'initials', onclick: "users_message_delete(".$messages_list[$i]['id'].", '".__('users_message_confirm')."');")?>
           </td>
 
         </tr>

@@ -186,27 +186,27 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <th>
           <?=__('admin_metrics_page')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_metrics_search('url');">
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_metrics_search('url');")?>
         </th>
 
         <th>
           <?=__('admin_metrics_activity')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_metrics_search('activity');">
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_metrics_search('activity');")?>
         </th>
 
         <th>
           <?=__('admin_metrics_views')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_metrics_search('views');">
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_metrics_search('views');")?>
         </th>
 
         <th>
           <?=__('admin_metrics_queries')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_metrics_search('queries');">
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_metrics_search('queries');")?>
         </th>
 
         <th>
           <?=__('admin_metrics_load')?>
-          <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_metrics_search('load');">
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_metrics_search('load');")?>
         </th>
 
         <th>
@@ -297,7 +297,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$admin_metrics[$i]['load']?>
         </td>
         <td>
-          <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="<?=__('admin_metrics_table_reset')?>" onclick="admin_metrics_reset('<?=__('admin_metrics_table_reset_warning')?>', <?=$admin_metrics[$i]['id']?>);">
+          <?=__icon('refresh', is_small: true, class: 'valign_middle pointer spaced', alt: 'R', title: __('admin_metrics_table_reset'), onclick: "admin_metrics_reset('".__('admin_metrics_table_reset_warning')."', ".$admin_metrics[$i]['id'].");")?>
         </td>
       </tr>
 

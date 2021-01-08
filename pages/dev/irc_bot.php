@@ -290,7 +290,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td class="align_center">
-          <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete" onclick="irc_bot_purge_message_queue(<?=$i?>)">
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: 'irc_bot_purge_message_queue('.$i.');')?>
         </td>
         <td>
           <?=$irc_bot_message_queue[$i]['line']?>
@@ -388,8 +388,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
               <?=$irc_bot_message_history[$i]['failed']?>
             </td>
             <td class="align_center nowrap">
-              <img class="smallicon valign_middle spaced_right pointer" src="<?=$path?>img/icons/refresh_small.svg" alt="R" title="resend" onclick="irc_bot_replay_history_entry('<?=$irc_bot_message_history[$i]['id']?>', '<?=__('irc_bot_history_confirm_replay')?>', '<?=$irc_bot_message_history[$i]['body_js']?>');">
-              <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="delete" onclick="irc_bot_delete_history_entry('<?=$irc_bot_message_history[$i]['id']?>', '<?=__('irc_bot_history_confirm_delete')?>', '<?=$irc_bot_message_history[$i]['body_js']?>');">
+              <?=__icon('refresh', is_small: true, class: 'valign_middle spaced_right pointer', alt: 'R', title: __('irc_bot_history_resend'), onclick: "irc_bot_replay_history_entry('".$irc_bot_message_history[$i]['id']."', '".__('irc_bot_history_confirm_replay')."', '".$irc_bot_message_history[$i]['body_js']."');")?>
+              <?=__icon('delete', is_small: true, alt: 'X', title: __('delete'), title_case: 'initials', onclick: "irc_bot_delete_history_entry('".$irc_bot_message_history[$i]['id']."', '".__('irc_bot_history_confirm_delete')."', '".$irc_bot_message_history[$i]['body_js']."');")?>
             </td>
           </tr>
 
@@ -403,7 +403,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
               <?=$irc_bot_message_history[$i]['body']?>
             </td>
             <td class="align_center nowrap dark">
-              <img class="smallicon valign_middle pointer" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="delete" onclick="irc_bot_delete_history_entry('<?=$irc_bot_message_history[$i]['id']?>', '<?=__('irc_bot_history_confirm_delete')?>');">
+              <?=__icon('delete', is_small: true, alt: 'X', title: __('delete'), title_case: 'initials', onclick: "irc_bot_delete_history_entry('".$irc_bot_message_history[$i]['id']."', '".__('irc_bot_history_confirm_delete')."');")?>
             </td>
           </tr>
 

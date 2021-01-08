@@ -17,6 +17,8 @@ ___('activity_title',           'EN', "Recent activity");
 ___('activity_title',           'FR', "Activité récente");
 ___('activity_title_modlogs',   'EN', "Moderation logs");
 ___('activity_title_modlogs',   'FR', "Logs de modération");
+___('activity_icon_deleted',    'EN', "Deleted logs");
+___('activity_icon_deleted',    'FR', "Logs supprimés");
 ___('activity_mod_info',        'EN', <<<EOT
 Some of the moderation logs below have an icon to their right: <img class="smallicon valign_middle" src="{{1}}img/icons/help.svg" alt="?"><br>
 Clicking one of these icons will load some extra information about the logged action.
@@ -57,5 +59,7 @@ ___('activity_delete',    'EN', "Are you sure you want to delete this activity l
 ___('activity_delete',    'FR', "Êtes-vous sûr de vouloir supprimer ce log d'activité ?");
 ___('activity_deleted',   'EN', "THIS ACTIVITY LOG HAS BEEN DELETED");
 ___('activity_deleted',   'FR', "CE LOG D'ACTIVITÉ A ÉTÉ SUPPRIMÉ");
+___('activity_restore',   'EN', "Restore log");
+___('activity_restore',   'FR', "Restaurer le log");
 ___('activity_restored',  'EN', "THIS ACTIVITY LOG HAS BEEN RESTORED");
 ___('activity_restored',  'FR', "CE LOG D'ACTIVITÉ A ÉTÉ RÉTABLI");

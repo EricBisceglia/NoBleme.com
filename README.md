@@ -5,7 +5,7 @@ This repository contains the source code of [NoBleme.com](http://nobleme.com).
 
 The website was started in 2005 - that's so old it makes it older than youtube -  developed in purely procedural PHP, then maintained and refactored on a regular basis ever since. Even though its source code has been modernized throughout the development process, its heart still relies on ancient (but safe and stable) technology. There is no plan to ever change the language or the coding style, NoBleme is and will remain a showcase of oldschool monolithic fully procedural vanilla PHP.
 
-Despite its age, the codebase has been designed from the start for readability: The code is well indented, comments show the logical train of thought of every file, and the code logic is split within files by huge comment blocks. Scroll further down this readme for an explanation of how the codebase should be read.
+Despite its age, the codebase has been designed from the start with readability in mind: The code is well indented, comments show the logical train of thought of every file, and the code logic is split within files by huge comment blocks. Scroll further down this readme for an explanation of how the codebase should be read.
 
 The website is open sourced for educative and collaborative reasons. Furthermore, the license (MIT) allows you to reuse code from NoBleme if you so desire, as long as you keep the license in your own codebase.
 
@@ -20,7 +20,7 @@ Installing a pre-assembled LAMP/MAMP/WAMP stack (depending on your OS) will let 
 
 1. Have Apache 2.2 or above running locally (it is required, can't use nginx with NoBleme)
 
-2. Have PHP 7.0 or above installed and working in Apache
+2. Have PHP 8.0 or above installed and working in Apache
 
 3. Have MySQL 5.6 or above installed and running
 
@@ -51,6 +51,21 @@ $GLOBALS['full_debug_mode'] = 0;
 
  
 
+Editor setup
+===
+
+The codebase is designed with the following editor settings in mind:
+
+* Maximum column width of 120 (many decorations in the codebase have a width of 119 characters)
+
+* Indentation of width 2 using spaces only (no let's not have this debate)
+
+For a best experience viewing the source code, it is recommended that your text editor be used with the above settings in mind.
+
+Any contributions to the project are expected to respect those settings (no tabs, indent width 2, max line width 119).
+
+ 
+
 Understanding the codebase
 ===
 
@@ -62,11 +77,11 @@ Hopefully, the code is well commented enough that you should have no issue under
 
 * `css` contains all the CSS files used on the website (`reset.css` and `nobleme.css` are the core files)
 
-* `img` contains all the images used on the website (to make the project lighter, a lot are missing in the local copy)
+* `img` contains all the images used on the website (to make the project lighter, only the core ones are in the local copy)
 
 * `inc` is the applicative core of the website, all of the functions and most of the core logic are in here
 
-* `js` contains all the JS used on the website (common functions are at the root of this folder)
+* `js` contains all the JS used on the website (the `common` folder is shared by multiple website sections)
 
 * `lang` contains all translations and templates (`common.lang.php` contains the core logic for them)
 
@@ -106,6 +121,6 @@ This project is under MIT license, which means that it is extremely permissive: 
 Something went wrong
 ===
 
-If you're stuck trying to read, install, or use this codebase, you can always ask visit the #dev channel of [NoBleme's IRC server](https://nobleme.com/pages/irc/). Ask your question, be very patient (timezones and work times might come in play), and someone should eventually help you out.
+If you're stuck trying to read, install, or use this codebase, you can always visit the #dev channel of [NoBleme's IRC server](https://nobleme.com/todo_link). Ask your question, be very patient (timezones and private lives might be in the way), and someone should eventually help you out.
 
 NoBleme is a welcoming community, so don't be scared - just hop on IRC and ask away. There's no shame in being stuck, and bug reports are more than welcome.

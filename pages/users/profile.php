@@ -45,6 +45,7 @@ if(!$user_data)
 // Update the page data if required
 if($profile_id)
 {
+  $page_url         = 'pages/users/'.$user_data['id'];
   $page_title_en    = $user_data['username'];
   $page_title_fr    = $user_data['username'];
   $page_description = "Public profile of the user $page_title_en on NoBleme";
@@ -70,7 +71,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="gigapadding_top hugepadding_bot align_center text_red bigger">
   <?=__('users_profile_banned')?>
   <?php if($is_moderator) { ?>
-  <img class="icon valign_middle pointer spaced_left" src="<?=$path?>img/icons/user_confirm.svg" alt="O" title="<?=string_change_case(__('users_profile_unban'), 'initials')?>">
+  <?=__icon('user_confirm', href: 'pages/admin/ban_delete?user='.$user_data['id'], class: 'valign_middle spaced_left pointer', alt: 'O', title: __('users_profile_unban'), title_case: 'initials')?>
   <?php } ?>
   <div class="small bigpadding_top">
     <?=__('users_profile_ban_end', preset_values: array($user_data['unbanned']))?>
@@ -84,11 +85,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <h1 class="align_center">
     <?=__link('pages/users/list', $user_data['username'], 'text_red noglow')?>
     <?php if(!$profile_id || $profile_id == $user_id) { ?>
-    <img class="icon valign_middle pointer" src="<?=$path?>img/icons/edit.svg" alt="E" title="<?=string_change_case(__('edit'), 'initials')?>">
+    <?=__icon('edit', href: 'todo_link', alt: 'E', title: __('edit'), title_case: 'initials')?>
     <?php } ?>
     <?php if($is_moderator && $profile_id && $profile_id != $user_id) { ?>
-    <img class="icon valign_middle pointer" src="<?=$path?>img/icons/edit.svg" alt="E" title="<?=string_change_case(__('edit'), 'initials')?>">
-    <img class="icon valign_middle pointer" src="<?=$path?>img/icons/user_delete.svg" alt="X" title="<?=__('users_profile_ban')?>">
+    <?=__icon('edit', href: 'todo_link', alt: 'E', title: __('edit'), title_case: 'initials')?>
+    <?=__icon('user_delete', href: 'pages/admin/ban?id='.$user_data['id'], alt: 'X', title: __('edit'), title_case: 'initials')?>
     <?php } ?>
   </h1>
 

@@ -110,22 +110,22 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <tr class="nowrap uppercase">
             <th>
               <?=__('type')?>
-              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="dev_scheduler_list_search('type');">
+              <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('type');")?>
             </th>
             <th>
               <?=__('id')?>
             </th>
             <th>
               <?=__('dev_scheduler_task_execution')?>
-              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="dev_scheduler_list_search('date');">
+              <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('date');")?>
             </th>
             <th>
               <?=__('dev_scheduler_task_description')?>
-              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="dev_scheduler_list_search('description');">
+              <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('description');")?>
             </th>
             <th>
               <?=__('dev_scheduler_task_report')?>
-              <img class="smallicon pointer valign_middle" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="dev_scheduler_list_search('report');">
+              <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "dev_scheduler_list_search('report');")?>
             </th>
             <th>
               <?=__('action')?>
@@ -250,10 +250,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
             <td class="align_center nowrap">
               <?php if($scheduler_tasks[$i]['type'] == 'future') { ?>
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/edit_small.svg" alt="?" title="Edit" onclick="dev_scheduler_edit_popin('<?=$scheduler_tasks[$i]['id']?>', '<?=$scheduler_tasks[$i]['type']?>');">
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete" onclick="dev_scheduler_delete_task('<?=$scheduler_tasks[$i]['id']?>', '<?=__('dev_scheduler_delete_task')?>');">
+              <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: '?', title: __('edit'), title_case: 'initials', onclick: "dev_scheduler_edit_popin('".$scheduler_tasks[$i]['id']."', '".$scheduler_tasks[$i]['type']."');")?>
+              <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_scheduler_delete_task('".$scheduler_tasks[$i]['id']."', '".__('dev_scheduler_delete_task')."');")?>
               <?php } else { ?>
-              <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete" onclick="dev_scheduler_delete_log('<?=$scheduler_tasks[$i]['id']?>', '<?=__('dev_scheduler_delete_log')?>');">
+              <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_scheduler_delete_log('".$scheduler_tasks[$i]['id']."', '".__('dev_scheduler_delete_log')."');")?>
               <?php } ?>
             </td>
 

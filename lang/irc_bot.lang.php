@@ -82,6 +82,8 @@ ___('irc_bot_history_failed',         'FR', "Échec");
 
 ___('irc_bot_history_confirm_delete', 'EN', "Confirm permanent deletion of this log: ");
 ___('irc_bot_history_confirm_delete', 'FR', "Confirmer la suppression définitive de ce message : ");
+___('irc_bot_history_resend',         'EN', "Resend");
+___('irc_bot_history_resend',         'FR', "Renvoyer");
 ___('irc_bot_history_confirm_replay', 'EN', "Confirm that you want to replay this log: ");
 ___('irc_bot_history_confirm_replay', 'FR', "Confirmer vouloir rejouer ce message : ");
 

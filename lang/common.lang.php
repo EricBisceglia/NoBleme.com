@@ -159,7 +159,7 @@ function __link(  string  $href                       ,
 
   // Prepare the URL
   $url = ($is_internal) ? $path.$href : $href;
-  $url = ($url) ? "href=\"".$url."\"" : "";
+  $url = ($url)         ? "href=\"".$url."\"" : "";
 
   // Make it pop-up if needed
   $popup = ($popup) ? 'target="_blank"' : '';
@@ -169,6 +169,76 @@ function __link(  string  $href                       ,
 
   // Return the built link
   return "<a $class $url $popup $onclick>$text</a>";
+}
+
+
+
+ /**
+ * Builds an icon.
+ *
+ * @param   string  $icon                     The icon's name.
+ * @param   bool    $is_small     (OPTIONAL)  Use the small version of an icon instead of the full version.
+ * @param   string  $href         (OPTIONAL)  The URL the icon links to.
+ * @param   bool    $is_internal  (OPTIONAL)  Whether the link is internal (on the website) or external.
+ * @param   string  $class        (OPTIONAL)  Extra css classes to apply to the icon.
+ * @param   string  $alt          (OPTIONAL)  The alt text which will be displayed if the image can't be found.
+ * @param   string  $title        (OPTIONAL)  The hover text which shows up when the pointer rests over the image.
+ * @param   string  $title_case   (OPTIONAL)  Change the case of the icon's hover title.
+ * @param   string  $identifier   (OPTIONAL)  Gives a html id to the element.
+ * @param   string  $path         (OPTIONAL)  The path to the website's root (defaults to 2 folders from root).
+ * @param   string  $onclick      (OPTIONAL)  A javascript option to trigger upon clicking the link.
+ * @param   bool    $popup        (OPTIONAL)  Opens the link in a new window.
+ *
+ * @return  string                            The icon, ready for use.
+ */
+
+function __icon(  string  $icon                                   ,
+                  bool    $is_small     = false                   ,
+                  string  $href         = ''                      ,
+                  bool    $is_internal  = true                    ,
+                  string  $class        = 'valign_middle pointer' ,
+                  string  $alt          = 'X'                     ,
+                  string  $title        = ' '                     ,
+                  string  $title_case   = ''                      ,
+                  string  $identifier   = ''                      ,
+                  string  $path         = "./../../"              ,
+                  string  $onclick      = ''                      ,
+                  bool    $popup        = false                   ) : string
+{
+  // Prepare the URL
+  $url = ($is_internal) ? $path.$href : $href;
+  $url = ($url)         ? "href=\"".$url."\"" : "";
+
+  // Make the link pop-up if needed
+  $popup = ($popup) ? 'target="_blank"' : '';
+
+  // Prepare the identifier if needed
+  $id = ($identifier) ? ' id="'.$identifier.'"' : '';
+
+  // Prepare the style
+  $style  = ($is_small) ? 'smallicon' : 'icon';
+  $style .= ($class)    ? ' '.$class : '';
+  $class  = 'class="'.$style.'"';
+
+  // Prepare the onclick
+  $onclick = ($onclick) ? 'onclick="'.$onclick.'"' : '';
+
+  // Prepare the image path
+  $icon = ($is_small) ? $icon.'_small.svg' : $icon.'.svg';
+  $src  = 'src="'.$path.'img/icons/'.$icon.'"';
+
+  // Prepare the alt text and title
+  $alt = 'alt="'.$alt.'"';
+
+  // Prepare the title
+  $title  = ($title_case) ? string_change_case($title, $title_case) : $title;
+  $title  = 'title="'.$title.'"';
+
+  // Return the assembled icon
+  if($href)
+    return "<a class=\"noglow\" $url $popup><img $id $class $src $alt $title $onclick></a>";
+  else
+    return "<img $id $class $src $alt $title $onclick>";
 }
 
 

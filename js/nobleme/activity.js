@@ -58,7 +58,7 @@ function activity_show_details(log_id)
   postdata = 'log_id=' + log_id;
 
   // Fetch the data
-  fetch_page('activity_details.php', 'activity_details_' + log_id, postdata);
+  fetch_page('activity_details', 'activity_details_' + log_id, postdata);
 }
 
 
@@ -90,7 +90,7 @@ function activity_delete_log( log_id            ,
     postdata += '&deletion_type=' + deletion_type;
 
     // Fetch the data
-    fetch_page('activity_delete.php', 'activity_row_' + log_id, postdata);
+    fetch_page('activity_delete', 'activity_row_' + log_id, postdata);
   }
 }
 
@@ -115,5 +115,5 @@ function activity_restore_log(log_id)
   postdata = 'log_id=' + log_id;
 
   // Fetch the data
-  fetch_page('activity_restore.php', 'activity_row_' + log_id, postdata);
+  fetch_page('activity_restore', 'activity_row_' + log_id, postdata);
 }

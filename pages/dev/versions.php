@@ -214,8 +214,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$version_history[$i]['date_diff']?>
         </td>
         <td class="align_center">
-          <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/edit_small.svg" alt="X" title="Edit" onclick="dev_versions_edit_popin(<?=$version_history[$i]['id']?>);">
-          <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="Delete" onclick="dev_versions_delete(<?=$version_history[$i]['id']?>, '<?=__('dev_versions_table_confirm_deletion', 0, 0, 0, array($version_history[$i]['version']))?>');">
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', onclick: "dev_versions_edit_popin(".$version_history[$i]['id'].");")?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_versions_delete(".$version_history[$i]['id'].", '".__('dev_versions_table_confirm_deletion', preset_values: array($version_history[$i]['version']))."');")?>
         </td>
       </tr>
 

@@ -40,12 +40,12 @@ function dev_doc_icon_to_clipboard( string  $name                               
                                     string  $size                   = 'normal'  ) : string
 {
   // Prepare the data
-  $title  = ($title_is_a_translation) ? "&lt;?=string_change_case(__('$title'), 'initials')?>" : $title ;
-  $class  = ($size == 'small') ? 'smallicon' : 'icon';
-  $name   = ($size == 'small') ? $name.'_small' : $name;
+  $title    = ($title_is_a_translation) ? "__('$title')" : "'$title'" ;
+  $initials = ($title_is_a_translation) ? ", title_case: 'initials'" : '';
+  $small    = ($size == 'small') ? ', is_small: true' : '';
 
   // Assemble the string
-  $icon = sanitize_output_javascript('<img class="'.$class.' valign_middle" src="<?=$path?>img/icons/'.$name.'.svg" alt="'.$alt_text.'" title="'.$title.'">');
+  $icon = sanitize_output_javascript("&lt;?=__icon('$name'".$small.", alt: '$alt_text', title: $title".$initials.");?>");
 
   // Return the assembled string
   return $icon;

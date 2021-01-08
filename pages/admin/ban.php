@@ -50,6 +50,13 @@ $admin_ban_add_reason_en  = form_fetch_element('admin_ban_add_reason_en', '');
 $admin_ban_add_reason_fr  = form_fetch_element('admin_ban_add_reason_fr', '');
 $admin_ban_add_length     = form_fetch_element('admin_ban_add_length', 0);
 
+// If an ID is pre-entered and the user ID exists and isn't banned, grab their username and lock some form elements
+if(isset($_GET['id']) && (!database_row_exists('users', $_GET['id']) || user_is_banned($_GET['id'])))
+  header("Location: ./ban");
+$admin_ban_add_nick   = (isset($_GET['id'])) ? user_get_username($_GET['id']) : '';
+$admin_ban_hide_type  = (isset($_GET['id'])) ? ' hidden' : '';
+$admin_ban_lock_nick  = (isset($_GET['id'])) ? ' disabled' : '';
+
 // Keep the ban type selector as is aswell by setting the correct element to selected
 $admin_ban_add_type_selector['user']  = ($admin_ban_add_type == 'user') ? ' selected' : '';
 $admin_ban_add_type_selector['ip']    = ($admin_ban_add_type == 'ip')   ? ' selected' : '';
@@ -166,7 +173,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <form method="POST">
     <fieldset>
 
-      <div class="smallpadding_bot">
+      <div class="smallpadding_bot<?=$admin_ban_hide_type?>">
         <label for="admin_ban_add_type"><?=__('admin_ban_add_type')?></label>
         <select class="indiv align_left" id="admin_ban_add_type" name="admin_ban_add_type" onchange="admin_ban_add_swap_form()">
           <option value="user"<?=$admin_ban_add_type_selector['user']?>><?=__('admin_ban_add_type_user')?></option>
@@ -182,7 +189,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <div class="smallpadding_bot">
         <label for="admin_ban_add_nick" class="admin_ban_add_swap_user<?=$admin_ban_add_visiblity_user?>"><?=__('admin_ban_add_username')?></label>
         <label for="admin_ban_add_nick" class="admin_ban_add_swap_ip<?=$admin_ban_add_visiblity_ip?>"><?=__('admin_ban_add_username_ip')?></label>
-        <input class="indiv" type="text" id="admin_ban_add_nick" name="admin_ban_add_nick" value="<?=$admin_ban_add_nick?>" autocomplete="off" list="admin_ban_add_nick_list" onkeyup="autocomplete_username('admin_ban_add_nick', 'admin_ban_add_nick_list_parent', './../common/autocomplete_username', 'admin_ban_add_nick_list', 'ban');">
+        <input class="indiv" type="text" id="admin_ban_add_nick" name="admin_ban_add_nick" value="<?=$admin_ban_add_nick?>" autocomplete="off" list="admin_ban_add_nick_list" onkeyup="autocomplete_username('admin_ban_add_nick', 'admin_ban_add_nick_list_parent', './../common/autocomplete_username', 'admin_ban_add_nick_list', 'ban');"<?=$admin_ban_lock_nick?>>
         <div id="admin_ban_add_nick_list_parent">
           <datalist id="admin_ban_add_nick_list">
             <option value=" ">
@@ -356,12 +363,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td>
-          <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log(0, '.$banned_users[$i]['id'].', '.$banned_users[$i]['ip_ban_id'].');')?>
+          <?=__icon('info', is_small: true, href: '#ban_log_popin', is_internal: false, class: 'valign_middle spaced', alt: 'M', title: __('details'), title_case: 'initials', onclick: 'admin_ban_fetch_log(0, '.$banned_users[$i]['id'].', '.$banned_users[$i]['ip_ban_id'].');')?>
           <?php if($banned_users[$i]['type'] == 'user') { ?>
-          <?=__link('pages/admin/ban_edit?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/edit_small.svg" alt="M" title="'.string_change_case(__('modify'), 'initials').'">', 'noglow')?>
-          <?=__link('pages/admin/ban_delete?user='.$banned_users[$i]['id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/delete_small.svg" alt="X" title="'.string_change_case(__('delete'), 'initials').'">', 'noglow')?>
+          <?=__icon('edit', is_small: true, href: 'pages/admin/ban_edit?user='.$banned_users[$i]['id'], class: 'valign_middle spaced', alt: 'M', title: __('modify'), title_case: 'initials')?>
+          <?=__icon('delete', is_small: true, href: 'pages/admin/ban_delete?user='.$banned_users[$i]['id'], class: 'valign_middle spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
           <?php } else { ?>
-          <?=__link('pages/admin/ban_ip_delete?id='.$banned_users[$i]['ip_ban_id'], '<img class="smallicon valign_middle pointer spaced" src="'.$path.'img/icons/delete_small.svg" alt="X" title="'.string_change_case(__('delete'), 'initials').'">', 'noglow')?>
+          <?=__icon('delete', is_small: true, href: 'pages/admin/ban_ip_delete?id='.$banned_users[$i]['ip_ban_id'], class: 'valign_middle spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
           <?php } ?>
         </td>
 
@@ -393,23 +400,23 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <tr class="uppercase">
           <th>
             <?=__('admin_ban_list_account')?>
-            <img class="smallicon pointer valign_middle spaced_right" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_ban_search_logs('username');">
+            <?=__icon('sort_down', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_ban_search_logs('username');")?>
           </th>
           <th>
             <?=__('admin_ban_logs_start')?>
-            <img class="smallicon pointer valign_middle spaced_right" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_ban_search_logs('banned');">
+            <?=__icon('sort_down', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_ban_search_logs('banned');")?>
           </th>
           <th>
             <?=__('admin_ban_logs_end')?>
-            <img class="smallicon pointer valign_middle spaced_right" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_ban_search_logs('unbanned');">
+            <?=__icon('sort_down', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_ban_search_logs('unbanned');")?>
           </th>
           <th class="desktop">
             <?=__('admin_ban_logs_length')?>
-            <img class="smallicon pointer valign_twolines spaced_right" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_ban_search_logs('sentence');">
+            <?=__icon('sort_down', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_ban_search_logs('sentence');")?>
           </th>
           <th  class="desktop">
             <?=__('admin_ban_logs_served')?>
-            <img class="smallicon pointer valign_twolines spaced_right" src="<?=$path?>img/icons/sort_down_small.svg" alt="v" title="<?=string_change_case(__('sort'), 'initials')?>" onclick="admin_ban_search_logs('served');">
+            <?=__icon('sort_down', is_small: true, class: 'valign_middle pointer spaced_right', alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_ban_search_logs('served');")?>
           </th>
           <th class="desktop">
             <?=__('admin_ban_logs_percent')?>
@@ -561,9 +568,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </td>
 
           <td>
-            <?=__link('#ban_log_popin', '<img class="smallicon valign_middle pointer" src="'.$path.'img/icons/info.svg" alt="M" title="'.string_change_case(__('details'), 'initials').'">', 'noglow', 0, $path, 'admin_ban_fetch_log('.$ban_logs[$i]['id'].');')?>
+            <?=__icon('info', is_small: true, href: '#ban_log_popin', is_internal: false, alt: 'M', title: __('details'), title_case: 'initials', onclick: 'admin_ban_fetch_log('.$ban_logs[$i]['id'].');')?>
             <?php if($is_admin && $ban_logs[$i]['end']) { ?>
-            <img class="smallicon valign_middle pointer spaced" src="<?=$path?>img/icons/delete_small.svg" alt="X" title="<?=string_change_case(__('delete'), 'initials')?>" onclick="admin_ban_delete_log('<?=$ban_logs[$i]['id']?>', '<?=__('admin_ban_logs_info_delete')?>')">
+            <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "admin_ban_delete_log('".$ban_logs[$i]['id']."', '".__('admin_ban_logs_info_delete')."')")?>
             <?php } ?>
           </td>
 
