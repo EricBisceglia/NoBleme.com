@@ -11,6 +11,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_get                            Fetches data related to a user.                                              */
 /*  user_list                           Fetches a list of users.                                                     */
 /*  user_list_admins                    Fetches a list of administrative team members.                               */
+/*  user_edit_profile                   Modifies a user's own profile.                                               */
 /*                                                                                                                   */
 /*  user_ban_details                    Fetches information related to a user's ban.                                 */
 /*                                                                                                                   */
@@ -69,6 +70,9 @@ function user_get( ?int $user_id = NULL ) : mixed
                                                 users_profile.lives_at            AS 'u_country'      ,
                                                 users_profile.birthday            AS 'u_birthday'     ,
                             TIMESTAMPDIFF(YEAR, users_profile.birthday, NOW())    AS 'u_age'          ,
+                                                DAY(users_profile.birthday)       AS 'u_birth_d'      ,
+                                                MONTH(users_profile.birthday)     AS 'u_birth_m'      ,
+                                                YEAR(users_profile.birthday)      AS 'u_birth_y'      ,
                                                 users_profile.profile_text_en     AS 'u_text_en'      ,
                                                 users_profile.profile_text_fr     AS 'u_text_fr'      ,
                                                 users_profile.email_address       AS 'u_mail'         ,
@@ -95,17 +99,24 @@ function user_get( ?int $user_id = NULL ) : mixed
   $data['lang_en']    = str_contains($duser['u_lang'], 'EN');
   $data['lang_fr']    = str_contains($duser['u_lang'], 'FR');
   $temp               = ($lang == 'FR' && $duser['u_text_fr']) ? $duser['u_text_fr'] : $duser['u_text_en'];
-  $data['text']       = sanitize_output(bbcodes($temp), true);
+  $data['text']       = bbcodes(sanitize_output($temp, true));
+  $data['text_fr']    = sanitize_output($duser['u_text_fr']);
+  $data['text_en']    = sanitize_output($duser['u_text_en']);
   $temp               = ($lang == 'FR' && $duser['u_pronouns_fr']) ? $duser['u_pronouns_fr'] : $duser['u_pronouns_en'];
   $data['pronouns']   = sanitize_output($temp);
+  $data['pronoun_en'] = sanitize_output($duser['u_pronouns_en']);
+  $data['pronoun_fr'] = sanitize_output($duser['u_pronouns_fr']);
   $data['country']    = sanitize_output($duser['u_country']);
   $data['created']    = sanitize_output(date_to_text($duser['u_created'], strip_day: 1));
   $data['screated']   = sanitize_output(time_since($duser['u_created']));
   $temp               = ($duser['u_activity']) ? $duser['u_activity'] : $duser['u_created'];
   $data['activity']   = sanitize_output(time_since($temp));
   $temp               = date_to_text($duser['u_birthday'], strip_day: true, strip_year: true);
-  $data['birthday']   = ($duser['u_birthday'] != '0000-00-00') ? sanitize_output($temp) : 0;
-  $data['age']        = ($duser['u_birthday'] != '0000-00-00') ? sanitize_output($duser['u_age']) : 0;
+  $data['birthday']   = ($duser['u_birth_d'] && $duser['u_birth_m']) ? sanitize_output($temp) : 0;
+  $data['age']        = ($duser['u_birth_y']) ? sanitize_output($duser['u_age']) : 0;
+  $data['birth_d']    = ($duser['u_birth_d']) ? sanitize_output($duser['u_birth_d']) : '';
+  $data['birth_m']    = ($duser['u_birth_m']) ? sanitize_output($duser['u_birth_m']) : '';
+  $data['birth_y']    = ($duser['u_birth_y']) ? sanitize_output($duser['u_birth_y']) : '';
   $data['hideact']    = ($duser['u_hideact']);
   $data['ip']         = ($duser['u_ip'] == '0.0.0.0') ? __('users_profile_unknown') : sanitize_output($duser['u_ip']);
   $temp               = ($lang == 'FR' && $duser['u_active_fr']) ? $duser['u_active_fr'] : $duser['u_active_en'];
@@ -469,11 +480,60 @@ function user_list_admins( string $sort_by = '' ) : array
 
 
 /**
+ * Modifies a user's own profile.
+ *
+ * @param   array   $user_data   The data to update on the user's profile.
+ *
+ * @return  void
+ */
+
+function user_edit_profile( array $user_data ) : void
+{
+  // Require the user to be logged in
+  user_restrict_to_users();
+
+  // Flood prevention
+  flood_check();
+
+  // Get the current user's ID
+  $user_id = sanitize(user_get_id(), 'int');
+
+  // Sanitize and assemble the data
+  $languages    = ($user_data['lang_en']) ? 'EN' : '';
+  $languages   .= ($user_data['lang_fr']) ? 'FR' : '';
+  $languages    = sanitize($languages, 'string');
+  $birthday     = $user_data['birth_year'].'-'.$user_data['birth_month'].'-'.$user_data['birth_day'];
+  $birthday     = sanitize($birthday, 'string');
+  $residence    = sanitize(string_truncate($user_data['residence'], 50), 'string');
+  $pronouns_en  = sanitize(string_truncate($user_data['pronouns_en'], 50), 'string');
+  $pronouns_fr  = sanitize(string_truncate($user_data['pronouns_fr'], 50), 'string');
+  $text_en      = sanitize($user_data['text_en'], 'string');
+  $text_fr      = sanitize($user_data['text_fr'], 'string');
+
+  // Update the user's profile
+  query(" UPDATE  users_profile
+          SET     users_profile.spoken_languages  = '$languages'    ,
+                  users_profile.birthday          = '$birthday'     ,
+                  users_profile.lives_at          = '$residence'    ,
+                  users_profile.pronouns_en       = '$pronouns_en'  ,
+                  users_profile.pronouns_fr       = '$pronouns_fr'  ,
+                  users_profile.profile_text_en   = '$text_en'      ,
+                  users_profile.profile_text_fr   = '$text_fr'
+          WHERE   users_profile.fk_users          = '$user_id'      ");
+
+  // Done
+  return;
+}
+
+
+
+
+/**
  * Fetches information related to a user's ban.
  *
- * @param   int|null  $user_id  The user's ID in the database. If null, fetches the current user's ID.
+ * @param   int    $user_id   (OPTIONAL)  The user's ID in the database. If null, fetches the current user's ID.
  *
- * @return  array               An array of data regarding the ban.
+ * @return  array                         An array of data regarding the ban.
  */
 
 function user_ban_details( ?int $user_id = NULL ) : array

@@ -218,3 +218,49 @@ ___('users_profile_action',   'EN', "Latest action");
 ___('users_profile_action',   'FR', "Dernière action");
 ___('users_profile_noaction', 'EN', "None");
 ___('users_profile_noaction', 'FR', "Aucune");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                EDIT PUBLIC PROFILE                                                */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('users_profile_edit_subtitle',  'EN', "Customize your public profile");
+___('users_profile_edit_subtitle',  'FR', "Personnaliser mon profil public");
+___('users_profile_edit_intro',     'EN', <<<EOT
+Your {{link|pages/users/profile|public profile}} contains a summary of your account on NoBleme for all other users to see. Some elements of your public profile will appear only if you customize them on this page. It is up to you whether you want to leave your public profile bare to preserve your anonymity or whether you'd rather fill it up to give a summary of yourself to others. Every single field below is optional, you can choose to fill in only some of them.
+EOT
+);
+___('users_profile_edit_intro',     'FR', <<<EOT
+Votre {{link|pages/users/profile|profil public}} sert de vitrine à destination des autres membres du site, résumant qui vous êtes au sein de NoBleme. Certains éléments de votre profil public n'apparaîtront que si vous les renseignez sur cette page. C'est à vous de choisir si vous préférez laisser votre profil vide afin de préserver votre anonymat, ou si vous préférez le remplir pour que les autres sachent qui vous êtes. Chacun des champs ci-dessous est optionnel, vous pouvez opter pour ne remplir que certains d'entre eux. Le site étant bilingue, il vous est proposé de remplir votre profil en français et en anglais - libre à vous de laisser les parties anglaises vides si vous n'êtes pas confortable dans cette langue.
+EOT
+);
+
+
+// Edit form
+___('users_profile_edit_bilingual', 'EN', "Spoken languages");
+___('users_profile_edit_bilingual', 'FR', "Langues parlées");
+
+___('users_profile_edit_birthday',  'EN', "Birth date (day - month - year)");
+___('users_profile_edit_birthday',  'FR', "Date de naissance (jour - mois - année)");
+
+___('users_profile_edit_residence', 'EN', "Your place of residence (country, city, etc.)");
+___('users_profile_edit_residence', 'FR', "Votre localisation (pays, ville, etc.)");
+
+___('users_profile_edit_english',   'EN', " (in english)");
+___('users_profile_edit_english',   'FR', " (en anglais)");
+___('users_profile_edit_french',    'EN', " (in french)");
+___('users_profile_edit_french',    'FR', " (en français)");
+
+___('users_profile_edit_pronouns',  'EN', "Your {{external|https://en.wikipedia.org/wiki/Preferred_gender_pronoun|preferred pronouns}}");
+___('users_profile_edit_pronouns',  'FR', "Vos {{external|https://scfp.ca/sites/cupe/files/pronouns_fr.pdf|pronoms}}");
+
+___('users_profile_edit_text',      'EN', "Custom text - You can use {{link|pages/doc/bbcodes|BBCodes}}");
+___('users_profile_edit_text',      'FR', "Texte libre - {{link|pages/doc/bbcodes|BBCodes}} autorisés");
+
+___('users_profile_edit_submit',    'EN', "Customize my public profile");
+___('users_profile_edit_submit',    'FR', "Personnaliser mon profil profil");

@@ -428,29 +428,68 @@ ___('version',  'FR', "version");
 
 
 // Common time and quantity related terms
-___('all',        'EN', "All");
-___('all',        'FR', "Tous");
-___('date',       'EN', "date");
-___('date',       'FR', "date");
-___('at_date',    'EN', "at");
-___('at_date',    'FR', "à");
-___('day',        'EN', "day");
-___('day+',       'EN', "days");
-___('day',        'FR', "jour");
-___('day+',       'FR', "jours");
-___('day_short',  'EN', "d");
-___('day_short',  'FR', "j");
-___('ddmmyy',     'EN', "DD/MM/YY");
-___('ddmmyy',     'FR', "JJ/MM/AA");
-___('hhiiss',     'EN', "hours:minutes:seconds");
-___('hhiiss',     'FR', "heures:minutes:secondes");
-___('time',       'EN', "time");
-___('time',       'FR', "heure");
-___('times',      'EN', "time");
-___('times+',     'EN', "times");
-___('times',      'FR', "fois");
-___('yyyyddmm',   'EN', "YYYY-DD-MM");
-___('yyyyddmm',   'FR', "AAAA-MM-JJ");
+___('all',          'EN', "All");
+___('all',          'FR', "Tous");
+___('date',         'EN', "date");
+___('date',         'FR', "date");
+___('at_date',      'EN', "at");
+___('at_date',      'FR', "à");
+___('day',          'EN', "day");
+___('day+',         'EN', "days");
+___('day',          'FR', "jour");
+___('day+',         'FR', "jours");
+___('day_short',    'EN', "d");
+___('day_short',    'FR', "j");
+___('ddmmyy',       'EN', "DD/MM/YY");
+___('ddmmyy',       'FR', "JJ/MM/AA");
+___('hhiiss',       'EN', "hours:minutes:seconds");
+___('hhiiss',       'FR', "heures:minutes:secondes");
+___('month',        'EN', "month");
+___('month+',       'EN', "months");
+___('month',        'FR', "mois");
+___('month+',       'FR', "mois");
+___('month_short',  'EN', "m");
+___('month_short',  'FR', "m");
+___('time',         'EN', "time");
+___('time',         'FR', "heure");
+___('times',        'EN', "time");
+___('times+',       'EN', "times");
+___('times',        'FR', "fois");
+___('yyyyddmm',     'EN', "YYYY-DD-MM");
+___('yyyyddmm',     'FR', "AAAA-MM-JJ");
+___('year',         'EN', "year");
+___('year+',        'EN', "years");
+___('year',         'FR', "année");
+___('year+',        'FR', "années");
+___('year_short',   'EN', "y");
+___('year_short',   'FR', "a");
+
+
+// Month names
+___('month_1',  'EN', 'January');
+___('month_1',  'FR', 'Janvier');
+___('month_2',  'EN', 'February');
+___('month_2',  'FR', 'Février');
+___('month_3',  'EN', 'March');
+___('month_3',  'FR', 'Mars');
+___('month_4',  'EN', 'April');
+___('month_4',  'FR', 'Avril');
+___('month_5',  'EN', 'May');
+___('month_5',  'FR', 'Mai');
+___('month_6',  'EN', 'June');
+___('month_6',  'FR', 'Juin');
+___('month_7',  'EN', 'July');
+___('month_7',  'FR', 'Juillet');
+___('month_8',  'EN', 'August');
+___('month_8',  'FR', 'Août');
+___('month_9',  'EN', 'September');
+___('month_9',  'FR', 'Septembre');
+___('month_10', 'EN', 'October');
+___('month_10', 'FR', 'Octobre');
+___('month_11', 'EN', 'November');
+___('month_11', 'FR', 'Novembre');
+___('month_12', 'EN', 'December');
+___('month_12', 'FR', 'Décembre');
 
 
 // Generic user related terms
