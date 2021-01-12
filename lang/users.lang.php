@@ -263,4 +263,4 @@ ___('users_profile_edit_text',      'EN', "Custom text - You can use {{link|page
 ___('users_profile_edit_text',      'FR', "Texte libre - {{link|pages/doc/bbcodes|BBCodes}} autorisés");
 
 ___('users_profile_edit_submit',    'EN', "Customize my public profile");
-___('users_profile_edit_submit',    'FR', "Personnaliser mon profil profil");
+___('users_profile_edit_submit',    'FR', "Personnaliser mon profil public");

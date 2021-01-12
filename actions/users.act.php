@@ -499,16 +499,34 @@ function user_edit_profile( array $user_data ) : void
   $user_id = sanitize(user_get_id(), 'int');
 
   // Sanitize and assemble the data
-  $languages    = ($user_data['lang_en']) ? 'EN' : '';
-  $languages   .= ($user_data['lang_fr']) ? 'FR' : '';
-  $languages    = sanitize($languages, 'string');
-  $birthday     = $user_data['birth_year'].'-'.$user_data['birth_month'].'-'.$user_data['birth_day'];
-  $birthday     = sanitize($birthday, 'string');
-  $residence    = sanitize(string_truncate($user_data['residence'], 50), 'string');
-  $pronouns_en  = sanitize(string_truncate($user_data['pronouns_en'], 50), 'string');
-  $pronouns_fr  = sanitize(string_truncate($user_data['pronouns_fr'], 50), 'string');
-  $text_en      = sanitize($user_data['text_en'], 'string');
-  $text_fr      = sanitize($user_data['text_fr'], 'string');
+  $languages        = ($user_data['lang_en']) ? 'EN' : '';
+  $languages       .= ($user_data['lang_fr']) ? 'FR' : '';
+  $languages        = sanitize($languages, 'string');
+  $birthday         = str_pad($user_data['birth_year'], 4, 0, STR_PAD_LEFT).'-';
+  $birthday        .= str_pad($user_data['birth_month'], 2, 0, STR_PAD_LEFT).'-';
+  $birthday        .= str_pad($user_data['birth_day'], 2, 0, STR_PAD_LEFT);
+  $birthday         = sanitize($birthday, 'string');
+  $residence_raw    = $user_data['residence'];
+  $residence        = sanitize(string_truncate($user_data['residence'], 50), 'string');
+  $pronouns_en_raw  = $user_data['pronouns_en'];
+  $pronouns_en      = sanitize(string_truncate($user_data['pronouns_en'], 50), 'string');
+  $pronouns_fr_raw  = $user_data['pronouns_fr'];
+  $pronouns_fr      = sanitize(string_truncate($user_data['pronouns_fr'], 50), 'string');
+  $text_en_raw      = $user_data['text_en'];
+  $text_en          = sanitize($user_data['text_en'], 'string');
+  $text_fr_raw      = $user_data['text_fr'];
+  $text_fr          = sanitize($user_data['text_fr'], 'string');
+
+  // Fetch the current (soon to be previous) values before updating
+  $old_user_data = mysqli_fetch_array(query(" SELECT  users_profile.spoken_languages AS 'u_lang'        ,
+                                                      users_profile.birthday         AS 'u_birthday'    ,
+                                                      users_profile.lives_at         AS 'u_residence'   ,
+                                                      users_profile.pronouns_en      AS 'u_pronouns_en' ,
+                                                      users_profile.pronouns_fr      AS 'u_pronouns_fr' ,
+                                                      users_profile.profile_text_en  AS 'u_text_en'     ,
+                                                      users_profile.profile_text_fr  AS 'u_text_fr'
+                                              FROM    users_profile
+                                              WHERE   users_profile.fk_users = '$user_id' "));
 
   // Update the user's profile
   query(" UPDATE  users_profile
@@ -520,6 +538,55 @@ function user_edit_profile( array $user_data ) : void
                   users_profile.profile_text_en   = '$text_en'      ,
                   users_profile.profile_text_fr   = '$text_fr'
           WHERE   users_profile.fk_users          = '$user_id'      ");
+
+  // Check for differences between the previous and new profiles
+  if($languages != $old_user_data['u_lang'])
+    $differences['languages'] = 1;
+  if($birthday != $old_user_data['u_birthday'])
+    $differences['birthday'] = 1;
+  if($residence_raw != $old_user_data['u_residence'])
+    $differences['residence'] = 1;
+  if($pronouns_en_raw != $old_user_data['u_pronouns_en'])
+    $differences['pronouns_en'] = 1;
+  if($pronouns_fr_raw != $old_user_data['u_pronouns_fr'])
+    $differences['pronouns_fr'] = 1;
+  if($text_en_raw != $old_user_data['u_text_en'])
+    $differences['text_en'] = 1;
+  if($text_fr_raw != $old_user_data['u_text_fr'])
+    $differences['text_fr'] = 1;
+
+  // If any differences have been spotted, notify the moderation team - just in case
+  if(isset($differences))
+  {
+    // Get the user's nickname
+    $username_raw = user_get_username();
+    $username     = sanitize($username_raw, 'string');
+
+    // Activity log
+    $modlog = log_activity( 'users_profile_edit'      ,
+                            is_moderators_only: true  ,
+                            fk_users: $user_id        ,
+                            username: $username       );
+
+    // Detailed activity logs
+    if(isset($differences['languages']))
+      log_activity_details($modlog, 'Languages', 'Langues', $old_user_data['u_lang'], $languages);
+    if(isset($differences['birthday']))
+      log_activity_details($modlog, 'Birth date', 'Date de naissance', $old_user_data['u_birthday'], $birthday);
+    if(isset($differences['residence']))
+      log_activity_details($modlog, 'Location', 'Localisation', $old_user_data['u_residence'], $residence_raw);
+    if(isset($differences['pronouns_en']))
+      log_activity_details($modlog, 'Pronouns (EN)', 'Pronoms (EN)', $old_user_data['u_pronouns_en'], $pronouns_en_raw);
+    if(isset($differences['pronouns_fr']))
+      log_activity_details($modlog, 'Pronouns (FR)', 'Pronoms (FR)', $old_user_data['u_pronouns_fr'], $pronouns_en_raw);
+    if(isset($differences['text_en']))
+      log_activity_details($modlog, 'Free text (EN)', 'Texte libre (FR)', $old_user_data['u_text_en'], $text_en_raw);
+    if(isset($differences['text_fr']))
+      log_activity_details($modlog, 'Free text (FR)', 'Texte libre (FR)', $old_user_data['u_text_fr'], $text_fr_raw);
+
+    // IRC bot message
+    irc_bot_send_message("$username_raw has made changes to their public profile - ".$GLOBALS['website_url']."pages/users/".$user_id." - detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'english');
+  }
 
   // Done
   return;

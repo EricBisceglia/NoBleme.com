@@ -58,38 +58,16 @@ if(isset($_POST['profile_edit_submit']))
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Current user profile data
 
-// If the goal is to modify another user's profile, only admins are allowed
-if(isset($_GET['id']))
-{
-  // Limit page access rights
-  user_restrict_to_moderators();
-
-  // Hide the page from who's online
-  $hidden_activity = 1;
-
-  // Page summary
-  $page_title_en    = "Edit a public profile";
-  $page_title_fr    = "Modifier un profil public";
-  $page_description = "Edit the contents of a user's public profile";
-
-  // Fetch the profile ID
-  $profile_id = form_fetch_element('id', request_type: 'GET');
-}
-
-// Otherwise, do not specify a profile ID
-else
-  $profile_id = NULL;
-
 // Fetch the profile data
-$profile_data = user_get($profile_id);
+$profile_data = user_get();
 
 // Stop there if the profile can't be found
 if(!$profile_data)
   exit(header("Location: ./"));
 
 // Hide the french inputs when the user's language is english
-$hide_lang      = ($lang == 'FR' || $profile_data['lang_fr'] || $is_moderator) ? '' : ' hidden';
-$hide_lang_full = ($lang == 'FR' || $profile_data['lang_fr'] || $is_moderator) ? '' : ' class="hidden"';
+$hide_lang      = ($lang == 'FR' || $profile_data['lang_fr']) ? '' : ' hidden';
+$hide_lang_full = ($lang == 'FR' || $profile_data['lang_fr']) ? '' : ' class="hidden"';
 
 // Determine whether the language checkboxes should be checked
 $check_lang_en = ($profile_data['lang_en']) ? ' checked' : '';
