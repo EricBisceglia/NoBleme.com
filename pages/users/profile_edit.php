@@ -19,6 +19,10 @@ $page_title_en    = "Modify your profile";
 $page_title_fr    = "Modifier mon profil";
 $page_description = "Modify your account's public profile to better reflect (or hide) your identity";
 
+// Extra CSS & JS
+$css  = array('users');
+$js   = array('users/profile', 'common/toggle', 'common/preview', 'common/editor');
+
 
 
 
@@ -183,7 +187,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <div class="padding_top">
             <label for="users_profile_edit_text_fr"><?=__('users_profile_edit_text')?><span<?=$hide_lang_full?>><?=__('users_profile_edit_french')?></span></label>
-            <textarea id="users_profile_edit_text_fr" name="users_profile_edit_text_fr"><?=$profile_data['text_fr']?></textarea>
+            <?php
+            $editor_target_element  = 'users_profile_edit_text_fr';
+            $preview_output         = 'users_profile_text_preview';
+            $preview_path           = $path;
+            include './../../inc/editor.inc.php';
+            ?>
+            <textarea id="users_profile_edit_text_fr" name="users_profile_edit_text_fr" onkeyup="users_profile_preview('users_profile_edit_text_fr');"><?=$profile_data['text_fr']?></textarea>
           </div>
 
         </div>
@@ -199,7 +209,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <div class="padding_top">
             <label for="users_profile_edit_text_en"><?=__('users_profile_edit_text')?><span<?=$hide_lang_full?>><?=__('users_profile_edit_english')?></span></label>
-            <textarea id="users_profile_edit_text_en" name="users_profile_edit_text_en"><?=$profile_data['text_en']?></textarea>
+            <?php
+            $editor_target_element  = 'users_profile_edit_text_en';
+            $preview_output         = 'users_profile_text_preview';
+            $preview_path           = $path;
+            include './../../inc/editor.inc.php';
+            ?>
+            <textarea id="users_profile_edit_text_en" name="users_profile_edit_text_en" onkeyup="users_profile_preview('users_profile_edit_text_en');"><?=$profile_data['text_en']?></textarea>
           </div>
 
         </div>
@@ -210,12 +226,20 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <input type="submit" name="profile_edit_submit" value="<?=__('users_profile_edit_submit')?>">
       </div>
 
-      <div class="padding_top hidden" id="users_profile_text_preview">
-        &nbsp;
-      </div>
-
     </fieldset>
   </form>
+
+</div>
+
+<div class="padding_top hidden width_30" id="users_profile_text_preview_container">
+
+  <h5 class="padding_top">
+    <?=__('users_profile_edit_preview')?>
+  </h5>
+
+  <div class="profile_box profile_text" id="users_profile_text_preview">
+    &nbsp;
+  </div>
 
 </div>
 

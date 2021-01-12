@@ -80,7 +80,7 @@ function users_outbox_search( sort_data = null )
 
 
 /**
- *  Previews a private message.
+ * Previews a private message.
  *
  * @return  {void}
  */

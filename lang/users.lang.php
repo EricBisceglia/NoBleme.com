@@ -264,3 +264,6 @@ ___('users_profile_edit_text',      'FR', "Texte libre - {{link|pages/doc/bbcode
 
 ___('users_profile_edit_submit',    'EN', "Customize my public profile");
 ___('users_profile_edit_submit',    'FR', "Personnaliser mon profil public");
+
+___('users_profile_edit_preview',   'EN', "Preview of your custom text:");
+___('users_profile_edit_preview',   'FR', "Prévisualisation de votre texte libre :");

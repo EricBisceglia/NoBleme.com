@@ -2,6 +2,8 @@
 /*                                                                                                                   */
 /*  users_online_table_settings     Alters the data shown in the "who's online" table.                               */
 /*                                                                                                                   */
+/*  users_list_search               Performs a search through the registered users list.                             */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 // Define a variable that prevents execution of parallel loops on the "who's online" page
 users_online_loop = false;
