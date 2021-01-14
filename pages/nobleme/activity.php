@@ -78,6 +78,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <?php if(!isset($_GET['mod'])) { ?>
 
   <h1 class="align_center bigpadding_bot">
+
     <?php if($is_moderator) { ?>
     <?=__link('pages/nobleme/activity?mod', __('activity_title'), 'noglow text_red')?>
     <?php } else { ?>
@@ -88,15 +89,24 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__icon('delete', alt: 'X', title: __('activity_icon_deleted'), onclick: "activity_submit_menus('".$logs_url."', 1);")?>
     <?php } ?>
 
+    <?php if($is_moderator) { ?>
+    <?=__icon('user_confirm', href: 'pages/nobleme/activity?mod', alt: 'X', title: __('activity_title_modlogs'));?>
+    <?php } ?>
+
   </h1>
 
   <?php } else { ?>
 
   <h1 class="align_center padding_bot">
+
     <?=__link('pages/nobleme/activity', __('activity_title_modlogs'), 'noglow text_red')?>
 
     <?php if($is_admin) { ?>
-      <?=__icon('delete', alt: 'X', title: __('activity_icon_deleted'), onclick: "activity_submit_menus('".$logs_url."', 1);")?>
+    <?=__icon('delete', alt: 'X', title: __('activity_icon_deleted'), onclick: "activity_submit_menus('".$logs_url."', 1);")?>
+    <?php } ?>
+
+    <?php if($is_moderator) { ?>
+    <?=__icon('user_delete', href: 'pages/nobleme/activity', alt: 'X', title: __('activity_title'));?>
     <?php } ?>
 
   </h1>

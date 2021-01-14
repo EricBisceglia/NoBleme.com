@@ -164,11 +164,11 @@ ___('users_outbox_not_read',  'FR', "Ce message n'a pas encore été lu.");
 
 // Header
 ___('users_message_intro',  'EN', <<<EOD
-Private messages sent to other users of the website are - as their name implies - a private conversation between two users, which website administrators can not read. They are however still subject to the website's {{link|todo_link|code of conduct}}, any reports of abusive private messages will lead to measures being taken against the offending party. Stay civil, private messages are not used to settle grudges or harrass people.
+Private messages sent to other users of the website are - as their name implies - a private conversation between two users, which website administrators can not read. They are however still subject to the website's {{link|pages/doc/coc|code of conduct}}, any reports of abusive private messages will lead to measures being taken against the offending party. Stay civil, private messages are not used to settle grudges or harrass people.
 EOD
 );
 ___('users_message_intro',  'FR', <<<EOD
-Les messages privés sont - comme leur nom le suggère - des conversations privées que l'administration du site ne peut pas consulter. Ces messages sont toutefois soumis au {{link|todo_link|code de conduite}} de NoBleme : si l'administration est contactée au sujet d'un message privé abusif, elle agira en conséquence. Même en privé, restez courtois, la messagerie privée n'est pas un lieu pour régler vos comptes ou harceler des gens.
+Les messages privés sont - comme leur nom le suggère - des conversations privées que l'administration du site ne peut pas consulter. Ces messages sont toutefois soumis au {{link|pages/doc/coc|code de conduite}} de NoBleme : si l'administration est contactée au sujet d'un message privé abusif, elle agira en conséquence. Même en privé, restez courtois, la messagerie privée n'est pas un lieu pour régler vos comptes ou harceler des gens.
 EOD
 );
 
@@ -215,11 +215,11 @@ Les messages envoyés via ce formulaire arriveront sur une page que toute {{link
 EOD
 );
 ___('users_message_admins_proof', 'EN', <<<EOD
-If you plan to use this form to report a breach of the {{link|todo_link|code of conduct}} by another user, make sure to provide enough proof (links, screenshots, descriptions of incriminating content).
+If you plan to use this form to report a breach of the {{link|pages/doc/coc|code of conduct}} by another user, make sure to provide enough proof (links, screenshots, descriptions of incriminating content).
 EOD
 );
 ___('users_message_admins_proof', 'FR', <<<EOD
-Si vous avez l'intention de signaler le non respect du {{link|todo_link|code de conduite}} par un autre compte, assurez-vous d'inclure des preuves (liens, captures d'écran, descriptions du contenu incriminant).
+Si vous avez l'intention de signaler le non respect du {{link|pages/doc/coc|code de conduite}} par un autre compte, assurez-vous d'inclure des preuves (liens, captures d'écran, descriptions du contenu incriminant).
 EOD
 );
 ___('users_message_admins_bug',   'EN', <<<EOD

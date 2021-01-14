@@ -11,7 +11,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_get                            Fetches data related to a user.                                              */
 /*  user_list                           Fetches a list of users.                                                     */
 /*  user_list_admins                    Fetches a list of administrative team members.                               */
-/*  user_edit_profile                   Modifies a user's own profile.                                               */
+/*  user_edit_profile                   Modifies a user's own public profile.                                        */
+/*  user_delete_profile                 Deletes a user's public profile.                                             */
 /*                                                                                                                   */
 /*  user_ban_details                    Fetches information related to a user's ban.                                 */
 /*                                                                                                                   */
@@ -102,6 +103,8 @@ function user_get( ?int $user_id = NULL ) : mixed
   $data['text']       = bbcodes(sanitize_output($temp, true));
   $data['text_fr']    = sanitize_output($duser['u_text_fr']);
   $data['text_en']    = sanitize_output($duser['u_text_en']);
+  $data['ftext_fr']   = bbcodes(sanitize_output($duser['u_text_fr'], true));
+  $data['ftext_en']   = bbcodes(sanitize_output($duser['u_text_en'], true));
   $temp               = ($lang == 'FR' && $duser['u_pronouns_fr']) ? $duser['u_pronouns_fr'] : $duser['u_pronouns_en'];
   $data['pronouns']   = sanitize_output($temp);
   $data['pronoun_en'] = sanitize_output($duser['u_pronouns_en']);
@@ -480,7 +483,7 @@ function user_list_admins( string $sort_by = '' ) : array
 
 
 /**
- * Modifies a user's own profile.
+ * Modifies a user's own public profile.
  *
  * @param   array   $user_data   The data to update on the user's profile.
  *
@@ -585,8 +588,107 @@ function user_edit_profile( array $user_data ) : void
       log_activity_details($modlog, 'Free text (FR)', 'Texte libre (FR)', $old_user_data['u_text_fr'], $text_fr_raw);
 
     // IRC bot message
-    irc_bot_send_message("$username_raw has made changes to their public profile - ".$GLOBALS['website_url']."pages/users/".$user_id." - detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'english');
+    irc_bot_send_message("$username_raw has made changes to their public profile - ".$GLOBALS['website_url']."pages/users/".$user_id." - detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
   }
+
+  // Done
+  return;
+}
+
+
+
+
+/**
+ * Deletes a user's public profile.
+ *
+ * @param   int     $user_id              The ID of the user whose public profile will be deleted.
+ * @param   string  $fields   (OPTIONAL)  The list of fields to delete from their public profile.
+ *
+ * @return  void
+ */
+
+function user_delete_profile( $user_id              ,
+                              $fields     = array() ) : void
+{
+  // Check if the required files have been included
+  require_included_file('users.lang.php');
+
+  // Only moderators or above should run this action
+  user_restrict_to_moderators();
+
+  // End here if no fields are requested for deletion
+  if(!$fields['country'] && !$fields['pronouns_en'] && !$fields['pronouns_fr'] && !$fields['text_en'] && !$fields['text_fr'])
+    return;
+
+  // Sanitize the user id
+  $user_id = sanitize($user_id, 'int');
+
+  // End here if the user doesn't exist
+  if(!database_row_exists('users', $user_id))
+    return;
+
+  // Get the moderator's id
+  $mod_id = sanitize(user_get_id(), 'int');
+
+  // End here if the moderator is trying to delete their own profile
+  if($user_id == $mod_id)
+    return;
+
+  // Prepare and sanitize the data
+  $path         = root_path();
+  $username     = user_get_username($user_id);
+  $user_lang    = string_change_case(user_get_language($user_id), 'lowercase');
+  $mod_username = user_get_username($mod_id);
+
+  // Grab the values of the public profile fields before deleting them
+  $profile_data = mysqli_fetch_array(query("  SELECT  users_profile.lives_at         AS 'u_country'     ,
+                                                      users_profile.pronouns_en      AS 'u_pronouns_en' ,
+                                                      users_profile.pronouns_fr      AS 'u_pronouns_fr' ,
+                                                      users_profile.profile_text_en  AS 'u_text_en'     ,
+                                                      users_profile.profile_text_fr  AS 'u_text_fr'
+                                              FROM    users_profile
+                                              WHERE   users_profile.fk_users = '$user_id' "));
+
+  // Assemble the deletion query
+  $delete_fields  = ($fields['country'])      ? " users_profile.lives_at        = '' ," : '';
+  $delete_fields .= ($fields['pronouns_en'])  ? " users_profile.pronouns_en     = '' ," : '';
+  $delete_fields .= ($fields['pronouns_fr'])  ? " users_profile.pronouns_fr     = '' ," : '';
+  $delete_fields .= ($fields['text_en'])      ? " users_profile.profile_text_en = '' ," : '';
+  $delete_fields .= ($fields['text_fr'])      ? " users_profile.profile_text_fr = '' ," : '';
+  $delete_fields  = mb_substr($delete_fields, 0, -1);
+
+  // Proceed with the deletion of requested fields
+  query(" UPDATE  users_profile
+          SET     $delete_fields
+          WHERE   users_profile.fk_users = '$user_id' ");
+
+  // Activity log
+  $modlog = log_activity( 'users_admin_edit_profile'        ,
+                          is_moderators_only: true          ,
+                          fk_users: $user_id                ,
+                          username: $username               ,
+                          moderator_username: $mod_username );
+
+  // Detailed activity logs
+  if($fields['country'])
+    log_activity_details($modlog, 'Location', 'Localisation', $profile_data['u_country']);
+  if($fields['pronouns_en'])
+    log_activity_details($modlog, 'Pronouns (EN)', 'Pronoms (EN)', $profile_data['u_pronouns_en']);
+  if($fields['pronouns_fr'])
+    log_activity_details($modlog, 'Pronouns (FR)', 'Pronoms (FR)', $profile_data['u_pronouns_fr']);
+  if($fields['text_en'])
+    log_activity_details($modlog, 'Custom text (EN)', 'Texte libre (EN)', $profile_data['u_text_en']);
+  if($fields['text_fr'])
+    log_activity_details($modlog, 'Custom text (FR)', 'Texte libre (FR)', $profile_data['u_text_fr']);
+
+  // IRC bot message
+  irc_bot_send_message("$mod_username has deleted parts of $username's public profile - ".$GLOBALS['website_url']."pages/users/".$user_id." - detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
+
+  // Private message
+  private_message_send( __('users_profile_delete_pm_title_'.$user_lang)                                       ,
+                        __('users_profile_delete_pm_body_'.$user_lang, preset_values: array($path, $user_id)) ,
+                        recipient: $user_id                                                                   ,
+                        hide_admin_mail: true                                                                 );
 
   // Done
   return;

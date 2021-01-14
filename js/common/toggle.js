@@ -2,6 +2,7 @@
 /*                                                                                                                   */
 /*  toggle_element            Toggles the visibility state of an element.                                            */
 /*  toggle_class              Toggles the visibility state of all elements of a specific class.                      */
+/*  toggle_checkbox           Toggles the checked status of a checkbox.                                              */
 /*  toggle_element_oneway     Sets the visibility state of an element.                                               */
 /*  toggle_class_oneway       Sets the visibility state of all elements of a specific class.                         */
 /*                                                                                                                   */
@@ -62,6 +63,24 @@ function toggle_class(  element_class           ,
   for(var i = 0; i < selected_class.length; i++)
     selected_class[i].style.display = new_visibility_state;
 }
+
+
+
+
+/**
+ * Toggles the checked status of a checkbox.
+ *
+ * @param   {string}  checkbox_id   The checkbox whose visibility will be toggled.
+ *
+ * @returns {void}
+ */
+
+function toggle_checkbox( checkbox_id )
+{
+  // Swap the checked status
+  document.getElementById(checkbox_id).click();
+}
+
 
 
 

@@ -48,7 +48,7 @@ ___('nobleme_home_statement_title', 'EN', "Mission statement");
 ___('nobleme_home_statement_title', 'FR', "Qu'est-ce que NoBleme ?");
 ___('nobleme_home_statement',       'EN', <<<EOT
 <p>
-  NoBleme has has no central theme or topic. It has no goal other than being a place where you can hang out with friendly people. However, there is a {{link++|todo_link|code of conduct|bold|}} which must be respected by all. It can be summarized as such: be mindful and respectful of others, and they shall be mindful and respectful of you.
+  NoBleme has has no central theme or topic. It has no goal other than being a place where you can hang out with friendly people. However, there is a {{link++|pages/doc/coc|code of conduct|bold|}} which must be respected by all. It can be summarized as such: be mindful and respectful of others, and they shall be mindful and respectful of you.
 </p>
 <p>
   There is a deliberate political stance on NoBleme: conservatives, reactionaries, and fascists are not welcome. There are a great number of websites and communities that already cater to their needs, NoBleme is not one of them. Instead, we try to have a vision which is not compatible with theirs: be a place where people who might feel oppressed in daily life feel comfortable expressing themselves without fear of being oppressed online. NoBleme is not a safe space though, everyone from every background is welcome, but we show low tolerance for aggressive or oppressive behaviors.
@@ -60,7 +60,7 @@ EOT
 );
 ___('nobleme_home_statement',       'FR', <<<EOT
 <p>
-  NoBleme n'a pas de thème ou de sujet spécifique, ni d'objectif autre que de continuer à maintenir sa communauté. Toutefois, il y a un {{link++|todo_link|code de conduite|bold|}} à respecter lors de vos interactions avec la communauté.
+  NoBleme n'a pas de thème ou de sujet spécifique, ni d'objectif autre que de continuer à maintenir sa communauté. Toutefois, il y a un {{link++|pages/doc/coc|code de conduite|bold|}} à respecter lors de vos interactions avec la communauté.
 </p>
 <p>
   NoBleme impose une seule limitation : les conservateurs, traditionnalistes, nationalistes, fascistes, et autres réactionnaires ne sont pas les bienvenus. Il y a un grand nombre de sites Internet et communautés faits pour eux, NoBleme n'en fait pas partie. En effet, leur vision est incompatible avec celle de NoBleme : nous voulons être une communauté inclusive, où celles et ceux qui souffrent de l'oppression de la société au quotidien peuvent venir s'exprimer librement sans craindre la moindre oppression ou aggression.

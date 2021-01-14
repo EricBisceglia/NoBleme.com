@@ -1,9 +1,10 @@
 /************************************************** PUBLIC PROFILES **************************************************/
-.profile_box      { margin-top: 3em; overflow-x: auto; border-radius: 10px    ;
-                    border: 2px solid #FF0000; box-shadow: 0 0 15px #FF0000;  }
-.profile_info_box { border-bottom: 2px solid #FF0000; padding: 0.4em 0.5em    ;
-                    box-shadow: 0 0 8px #FF0000; text-align: center;          }
-.profile_admin    { margin-top: 4em;                                          }
+.profile_box        { margin-top: 3em; overflow-x: auto; border-radius: 10px    ;
+                      border: 2px solid #FF0000; box-shadow: 0 0 15px #FF0000;  }
+.profile_info_box   { border-bottom: 2px solid #FF0000; padding: 0.4em 0.5em    ;
+                      box-shadow: 0 0 8px #FF0000; text-align: center;          }
+.profile_admin      { margin-top: 4em;                                          }
+.profile_text_cell  { max-height: 10em; overflow-x: auto;                       }
 
 @media (min-width: 1025px) {
 .profile_text { max-height: 12em; padding: 0.25em 0.5em;  }

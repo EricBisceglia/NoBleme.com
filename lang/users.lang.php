@@ -267,3 +267,83 @@ ___('users_profile_edit_submit',    'FR', "Personnaliser mon profil public");
 
 ___('users_profile_edit_preview',   'EN', "Preview of your custom text:");
 ___('users_profile_edit_preview',   'FR', "Prévisualisation de votre texte libre :");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                              DELETE A PUBLIC PROFILE                                              */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('users_profile_delete_subtitle',  'EN', "Delete a public profile");
+___('users_profile_delete_subtitle',  'FR', "Supprimer un profil public");
+___('users_profile_delete_intro',     'EN', <<<EOT
+Check the boxes next to each profile section that you wish to delete below, then press the button at the bottom of the page to proceed with the deletion. The user will get a private message notifying them that parts of their public profile have been deleted, so make sure to only do this if the {{link|pages/doc/coc|code of conduct}} is being violated.
+EOT
+);
+___('users_profile_delete_intro',     'FR', <<<EOT
+Cochez les cases à côté de chaque section du profil que vous voulez supprimer ci-dessous, puis appuyez sur le bouton en bas de la page pour effectuer la suppression. Le compte reçevra un message privé expliquant qu'une partie de leur profil public a été supprimé, donc assurez-vous de ne le faire qu'en cas de violation du {{link|pages/doc/coc|code de conduite}} du site.
+EOT
+);
+___('users_profile_delete_none',      'EN', <<<EOT
+This user's public profile contains no customizable fields - this means that there is nothing you can delete here.
+EOT
+);
+___('users_profile_delete_none',      'FR', <<<EOT
+Le profil public de ce compte ne contient aucun contenu personnalisé - cela signifie que vous ne pouvez effectuer aucune action ici.
+EOT
+);
+
+
+// Table
+___('users_profile_delete_selection', 'EN', "Selection");
+___('users_profile_delete_selection', 'FR', "Sélection");
+___('users_profile_delete_field',     'EN', "Field");
+___('users_profile_delete_field',     'FR', "Champ");
+___('users_profile_delete_contens',   'EN', "Contents");
+___('users_profile_delete_contens',   'FR', "Contenu");
+___('users_profile_delete_text',      'EN', "Custom text");
+___('users_profile_delete_text',      'FR', "Texte libre");
+
+
+// Fields
+___('users_profile_delete_reason_en', 'EN', "Reason for the deletion (optional)");
+___('users_profile_delete_reason_en', 'FR', "Raison de la suppression (en anglais) - optionnel");
+___('users_profile_delete_reason_fr', 'EN', "Reason for the deletion (in french) - optional");
+___('users_profile_delete_reason_fr', 'FR', "Raison de la suppression (en français) - optionnel");
+___('users_profile_delete_submit',    'EN', "Delete the selected fields");
+___('users_profile_delete_submit',    'FR', "Supprimer la sélection");
+
+
+// Private message
+___('users_profile_delete_pm_title_en', 'EN', "Your public profile");
+___('users_profile_delete_pm_title_en', 'FR', "Your public profile");
+___('users_profile_delete_pm_title_fr', 'EN', "Votre profil public");
+___('users_profile_delete_pm_title_fr', 'FR', "Votre profil public");
+___('users_profile_delete_pm_body_en',  'EN', <<<EOT
+Parts of your [url={{1}}pages/users/{{2}}]public profile[/url] have been deleted.
+
+This most likely happened because some of the customized content you had there went against [url={{1}}pages/doc/coc]NoBleme's code of conduct[/url]. Please make sure to respect it in the future.
+EOT
+);
+___('users_profile_delete_pm_body_en',  'FR', <<<EOT
+Parts of your [url={{1}}pages/users/{{2}}]public profile[/url] have been deleted.
+
+This most likely happened because some of the customized content you had there went against [url={{1}}pages/doc/coc]NoBleme's code of conduct[/url]. Please make sure to respect it in the future.
+EOT
+);
+___('users_profile_delete_pm_body_fr',  'EN', <<<EOT
+Une partie de votre [url={{1}}pages/users/{{2}}]profil public[/url] a été supprimé.
+
+Dans le futur, assurez-vous que le contenu personnalisable de votre profil public respecte le [url={{1}}pages/doc/coc]code de conduite de NoBleme[/url].
+EOT
+);
+___('users_profile_delete_pm_body_fr',  'FR', <<<EOT
+Une partie de votre [url={{1}}pages/users/{{2}}]profil public[/url] a été supprimé.
+
+Dans le futur, assurez-vous que le contenu personnalisable de votre profil public respecte le [url={{1}}pages/doc/coc]code de conduite de NoBleme[/url].
+EOT
+);

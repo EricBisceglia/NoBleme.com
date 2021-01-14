@@ -1063,10 +1063,10 @@ ___('coc', 'EN', <<<EOT
 </p>
 <ul>
   <li>
-    Obviously, illegal content will immediately be sent to the police. Don't play with fire.
+    Obviously, illegal content will immediately be sent to the authorities. Don't play with fire.
   </li>
   <li>
-    Since NoBleme has no age restriction pornography or highly suggestive content is forbidden.
+    Since NoBleme has no age restriction, pornography and highly suggestive content are forbidden.
   </li>
   <li>
     All gore images and other disgusting things are also forbidden. NoBleme is not the right place for that.
@@ -1082,7 +1082,7 @@ ___('coc', 'EN', <<<EOT
   </li>
 </ul>
 <p>
-We know tensions always tend to appear in shared spaces containing varied personalities and opinions. However, if your behavior or your vocabulary prevent other people from having a good time, then we will have to exclude you. Let's all be respectful of others, we'll collectively benefit from it.
+We know tensions always tend to appear in shared spaces containing varied personalities and opinions. However, if your behavior prevents other people from having a good time, then we will have to exclude you. Let's all be respectful of others, we collectively benefit from it.
 </p>
 EOT
 );
@@ -1093,7 +1093,7 @@ ___('coc', 'FR', <<<EOT
 </p>
 <ul>
   <li>
-    Tout contenu illégal sera immédiatement envoyé à la police. Ne jouez pas avec le feu.
+    Tout contenu illégal sera immédiatement envoyé aux autorités. Ne jouez pas avec le feu.
   </li>
   <li>
     Comme NoBleme n'a pas de restriction d'âge, la pornographie et la nudité gratuite sont interdits.
@@ -1112,7 +1112,7 @@ ___('coc', 'FR', <<<EOT
   </li>
 </ul>
 <p>
-Il est normal que des tensions apparaissent dans des lieux où des personnalités et opinions variées coexistent. Toutefois, si votre comportement ou votre vocabulaire empêchent d'autres personnes de passer un bon moment, nous devrons vous exclure. La bonne ambiance de la communauté dépend de la bienveillance collective de ses membres.
+Il est normal que des tensions apparaissent dans des lieux où des personnalités et opinions variées coexistent. Toutefois, si votre comportement empêche d'autres personnes de passer un bon moment, nous devrons vous exclure. La bonne ambiance de la communauté dépend de la bienveillance collective de ses membres.
 </p>
 EOT
 );

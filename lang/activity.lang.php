@@ -30,6 +30,8 @@ Cliquer sur une de ces icônes affiche plus de détails sur l'action qui a été
 EOT
 );
 
+
+// Activity amount/type selector
 ___('activity_latest_actions',  'EN', "LATEST ACTIONS");
 ___('activity_latest_actions',  'FR', "DERNIÈRES ACTIONS");
 
