@@ -703,7 +703,7 @@ $javascripts .= '
           <?=__link('todo_link', __('submenu_user_settings_privacy'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_settings_nsfw'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/account/settings_nsfw', __('submenu_user_settings_nsfw'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 

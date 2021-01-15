@@ -139,3 +139,46 @@ ___('users_welcome_body',   'FR', <<<EOT
 Votre compte a bien été crée. Vous pouvez maintenant utiliser le formulaire de connexion ci-dessus afin de vous connecter sur votre nouveau compte. Bienvenue dans la communauté NoBlemeuse !
 EOT
 );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                              SETTINGS: ADULT CONTENT                                              */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('account_nsfw_intro',   'EN', <<<EOT
+As NoBleme does not have any age restrictions, and as some users might be browsing the website at work, in public, or around children, all adult content (mostly extreme vulgarity and nudity) is blurred by default. Regardless of your settings, blurred content can still be seen by hovering your mouse over it or clicking on it.
+EOT
+);
+___('account_nsfw_intro',   'FR', <<<EOT
+Comme NoBleme n'a pas de restriction d'âge, et comme il n'est pas possible de savoir si vous accédez au site sur un lieu de travail, en public, ou autour d'enfants, tout le contenu adulte (principalement la vulgarité extrême et la nudité) sont floutés par défaut. Peu importe vos réglages, le contenu flouté peut toutefois être vu en le survolant avec votre pointeur ou en cliquant dessus.
+EOT
+);
+___('account_nsfw_levels',  'EN', <<<EOT
+Instead of being a simple on/off switch, this setting allows you to have three different possible setups: keep all the adult content blurred, reveal all texts but blur adult images, or reveal everything. This allows for the middle ground where you don't mind extreme vulgarity or sexual topics in writing, but would rather not have sexual images show up on your screen around people.
+EOT
+);
+___('account_nsfw_levels',  'FR', <<<EOT
+Plutôt qu'un simple oui/non, ce réglage possède trois options possibles : conserver le floutage sur tout le contenu adulte, révéler tous les textes mais flouter les images vulgaires, ou tout révéler. Cela permet un entre deux dans le cas où vous n'avez aucun problème avec la vulgarité extrême et les sujets sexuels par écrit, mais préférez éviter que des images suggestives soient présentes sur votre écran en public.
+EOT
+);
+
+
+// Selector
+___('account_nsfw_label', 'EN', "Your desired adult content settings");
+___('account_nsfw_label', 'FR', "Votre niveau de vulgarité désiré");
+___('account_nsfw_0',     'EN', "Blur everything");
+___('account_nsfw_0',     'FR', "Tout flouter");
+___('account_nsfw_1',     'EN', "Blur images only");
+___('account_nsfw_1',     'FR', "Ne flouter que les images");
+___('account_nsfw_2',     'EN', "Show everything");
+___('account_nsfw_2',     'FR', "Tout révéler");
+
+
+// Confirmation
+___('account_nsfw_confirm', 'EN', "Your settings have been updated");
+___('account_nsfw_confirm', 'FR', "Vos réglages ont été mis à jour");

@@ -8,9 +8,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  user_authenticate         Logs the user into their account (or refuses to).                                      */
+/*  user_authenticate             Logs the user into their account (or refuses to).                                  */
 /*                                                                                                                   */
-/*  user_create_account       Accept or reject a user's registration attempt.                                        */
+/*  user_create_account           Accept or reject a user's registration attempt.                                    */
+/*                                                                                                                   */
+/*  account_settings_update       Updates the currently logged in account's settings.                                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -282,4 +284,41 @@ function user_create_account( string  $username               ,
 
   // The registration process is complete
   return 1;
+}
+
+
+
+
+/**
+ * Updates the currently logged in account's settings.
+ *
+ * @param   string  $setting  The account setting which should be updated.
+ * @param   int     $value    The value to which the account setting should be updated.
+ *
+ * @return  void
+ */
+
+function account_settings_update( string  $setting  ,
+                                  int     $value    ) : void
+{
+  // Only logged in users can use this
+  user_restrict_to_users();
+
+  // Prepare and sanitize the data
+  $user_id  = sanitize(user_get_id(), 'int');
+  $setting  = sanitize($setting, 'string');
+
+  // Ensure the values are within allowed boundaries and sanitize them
+  if($setting == 'show_nsfw_content')
+    $value = sanitize($value, 'int', 0, 2);
+  else
+    $value = sanitize($value, 'int', 0, 1);
+
+  // Update the setting
+  query(" UPDATE  users_settings
+          SET     users_settings.$setting = '$value'
+          WHERE   users_settings.fk_users = '$user_id' ");
+
+  // All went well
+  return;
 }
