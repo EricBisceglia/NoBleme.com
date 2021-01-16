@@ -71,7 +71,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('account_nsfw_levels')?>
   </p>
 
-  <div class="padding_top">
+  <div class="bigpadding_top">
     <fieldset>
 
       <label for="account_settings_nsfw"><?=__('account_nsfw_label')?></label>

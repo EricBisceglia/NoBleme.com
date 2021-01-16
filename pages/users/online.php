@@ -29,7 +29,8 @@ $js = array('users/user_list');
 
 // Sanitize postdata
 $include_guests = (sanitize_input('POST', 'online_hide_guests', 'int', 0, 0, 1)) ? 0 : 1;
-$admin_view     = (sanitize_input('POST', 'online_admin_view', 'int', $is_admin, 0, 1)) ? 0 : 1;;
+$admin_view     = (sanitize_input('POST', 'online_admin_view', 'int', $is_admin, 0, 1)) ? 0 : 1;
+$admin_view     = (!isset($_POST['online_admin_view']) && $is_admin) ? 1 : $admin_view;
 $admin_view     = ($admin_view && $is_admin);
 
 // Fetch the user list

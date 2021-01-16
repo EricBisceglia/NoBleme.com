@@ -985,9 +985,10 @@ function user_settings_nsfw() : int
 function user_settings_privacy() : array
 {
   // By default, set all of the privacy values to 0
-  $privacy_twitter  = 0;
-  $privacy_youtube  = 0;
-  $privacy_trends   = 0;
+  $privacy_twitter    = 0;
+  $privacy_youtube    = 0;
+  $privacy_trends     = 0;
+  $privacy_activtity  = 0;
 
   // If the user is logged in, fetch their third party privacy settings
   if(user_is_logged_in())
@@ -998,20 +999,23 @@ function user_settings_privacy() : array
     // Fetch the settings
     $dprivacy = mysqli_fetch_array(query("  SELECT  users_settings.hide_tweets        AS 'user_twitter' ,
                                                     users_settings.hide_youtube       AS 'user_youtube' ,
-                                                    users_settings.hide_google_trends AS 'user_trends'
+                                                    users_settings.hide_google_trends AS 'user_trends'  ,
+                                                    users_settings.hide_from_activity AS 'user_online'
                                             FROM    users_settings
                                             WHERE   users_settings.fk_users = '$user_id' "));
 
     // Set the privacy values to those wanted by the user
-    $privacy_twitter = $dprivacy['user_twitter'];
-    $privacy_youtube = $dprivacy['user_youtube'];
-    $privacy_trends  = $dprivacy['user_trends'];
+    $privacy_twitter  = $dprivacy['user_twitter'];
+    $privacy_youtube  = $dprivacy['user_youtube'];
+    $privacy_trends   = $dprivacy['user_trends'];
+    $privacy_online   = $dprivacy['user_online'];
   }
 
   // Return those privacy settings, neatly folded in a cozy array
   return array( 'twitter' => $privacy_twitter ,
                 'youtube' => $privacy_youtube ,
-                'trends'  => $privacy_trends  );
+                'trends'  => $privacy_trends  ,
+                'online'  => $privacy_online  );
 }
 
 

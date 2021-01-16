@@ -16,11 +16,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 ___('users_online_title',         'EN', "Who's online?");
 ___('users_online_title',         'FR', "Qui est en ligne ?");
 ___('users_online_header_intro',  'EN', <<<EOD
-This page lists the most recently visited page of all users that were active on NoBleme in the last month. In the case of guests (users without an account), only the 1000 most recent ones are displayed, and randomly generated silly usernames are assigned to each of them. If you fear that it might enable stalking in ways you're not comfortable with and want to be hidden from this page, you can do that in your account's {{link|todo_link|privacy options}}.
+This page lists the most recently visited page of all users that were active on NoBleme in the last month. In the case of guests (users without an account), only the 1000 most recent ones are displayed, and randomly generated silly usernames are assigned to each of them. If you fear that it might enable stalking in ways you're not comfortable with and want to be hidden from this page, you can do that in your account's {{link|pages/account/settings_privacy|privacy options}}.
 EOD
 );
 ___('users_online_header_intro',  'FR', <<<EOD
-Cette page recense la dernière activité des visiteurs de NoBleme ce mois-ci. Dans le cas des invités (visiteurs non connectés), seuls les 1000 entrées les plus récentes sont affichées, et de petits surnoms stupides leur sont aléatoirement assignés. Si vous craignez que cette page permette à des gens de vous traquer ou n'êtes juste pas confortable avec le fait d'avoir votre activité listée publiquement, vous pouvez retirer votre compte de la liste via vos {{link|todo_link|options de vie privée}}.
+Cette page recense la dernière activité des visiteurs de NoBleme ce mois-ci. Dans le cas des invités (visiteurs non connectés), seuls les 1000 entrées les plus récentes sont affichées, et de petits surnoms stupides leur sont aléatoirement assignés. Si vous craignez que cette page permette à des gens de vous traquer ou n'êtes juste pas confortable avec le fait d'avoir votre activité listée publiquement, vous pouvez retirer votre compte de la liste via vos {{link|pages/account/settings_privacy|options de vie privée}}.
 EOD
 );
 ___('users_online_header_colors', 'EN', <<<EOD
@@ -50,7 +50,7 @@ ___('users_online_hide_gests',      'EN', "Do not show guests in the list");
 ___('users_online_hide_gests',      'FR', "Ne pas afficher les invités dans la liste");
 ___('users_online_admin_view',      'EN', "See the table like a regular user would");
 ___('users_online_admin_view',      'FR', "Voir la page comme un utilisateur normal");
-___('users_online_refresh',         'EN', "Automatically reload the table every 10 seconds");
+___('users_online_refresh',         'EN', "Automatically reload the list every 10 seconds");
 ___('users_online_refresh',         'FR', "Recharger automatiquement la liste toutes les 10 secondes");
 ___('users_online_refresh_mobile',  'EN', "Refresh the table every 10 seconds");
 ___('users_online_refresh_mobile',  'FR', "Actualiser la liste toutes les 10 secondes");

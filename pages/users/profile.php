@@ -46,8 +46,8 @@ if(!$profile_data)
 if($profile_id)
 {
   $page_url         = 'pages/users/'.$profile_data['id'];
-  $page_title_en    = $profile_data['username'];
-  $page_title_fr    = $profile_data['username'];
+  $page_title_en    = $profile_data['username']."'s public profile";
+  $page_title_fr    = "Profil public de ".$profile_data['username'];
   $page_description = "Public profile of the user $page_title_en on NoBleme";
 }
 

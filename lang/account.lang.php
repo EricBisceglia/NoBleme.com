@@ -182,3 +182,55 @@ ___('account_nsfw_2',     'FR', "Tout révéler");
 // Confirmation
 ___('account_nsfw_confirm', 'EN', "Your settings have been updated");
 ___('account_nsfw_confirm', 'FR', "Vos réglages ont été mis à jour");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 SETTINGS: PRIVACY                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('account_privacy_intro',    'EN', <<<EOT
+On NoBleme, we highly value online privacy. As our {{link|todo_link|privacy policy}} states, we will only gather the bare minimum {{link|todo_link|user data}}, we will not use it in ways other than the bare minimum required to run the website, we will never share or sell your personal data, and we let you {{link|todo_link|fully opt out}} at any time.
+EOT
+);
+___('account_privacy_intro',    'FR', <<<EOT
+Sur NoBleme, nous prêtons beaucoup d'importance au respect de votre vie privée. Comme indiqué dans notre {{link|todo_link|politique de confidentialité}}, nous conservons le strict minimum de vos {{link|todo_link|données personnelles}}, ne les utilisons que dans le fonctionnement interne du site, n'avons pas l'intention de partager ou vendre vos données personnelles, et vous offrons la possibilité de {{link|todo_link|tout supprimer}} à tout moment.
+EOT
+);
+___('account_privacy_others',   'EN', <<<EOT
+However, we have no control over any third party content that might be embedded on some of the website's pages. To manage the impact this might have on your privacy, we try to minimize the number of third parties that can be embedded on NoBleme (currently only YouTube and Google Trends), and give you the option to completely disable third party embedded content if you'd rather not have them.
+EOT
+);
+___('account_privacy_others',   'FR', <<<EOT
+Toutefois, nous ne pouvons pas contrôler ce que font les tiers que nous intégrons sur le site. Afin de vous laisser un maximum de contrôle sur vos données personnelles, nous minimisons le nombre de tiers qui sont intégrables sur le site (actuellement uniquement YouTube et Google Trends), et vous donnons la possibilité de complètement désactiver les contenus tiers.
+EOT
+);
+___('account_privacy_disable',  'EN', <<<EOT
+If you disable any of the third parties, they will simply not appear at all when you are browsing pages that include external content (for example, a YouTube video embedded in a page will instead be replaced by a link to the YouTube video which you can manually click if you do want to watch it).
+EOT
+);
+___('account_privacy_disable',  'FR', <<<EOT
+Dans le cas où vous désactiveriez un des tiers, il n'apparaitra plus lorsque vous visiterez des pages du site qui les contiennent (par exemple, au lieu de voir une vidéo YouTube incrustée dans la page, vous verrez un lien vers la vidéo YouTube en question que vous pourrez cliquer manuellement si vous désirez la voir).
+EOT
+);
+___('account_privacy_activity', 'EN', <<<EOT
+We also offer the ability to have your account hidden from the {{link|pages/users/online|Who's online}} page of the website. Appearing on this page allows users to know what each other are up to on the website, but we understand that some of you would rather stay hidden or would like a way to avoid being stalked.
+EOT
+);
+___('account_privacy_activity', 'FR', <<<EOT
+Nous vous offrons également la possibilité de ne pas apparaître sur la page {{link|pages/users/online|Qui est en ligne}}. Cette page permet de voir ce que font les autres comptes sur le site, mais nous comprenons très bien qu'un désir d'anonymité ou un besoin d'échapper à des harcèlements peuvent vous mettre mal à l'aise face à ce concept.
+EOT
+);
+
+
+// Selectors
+___('account_privacy_youtube',  'EN', "Show embedded {{external|http://youtube.com/|YouTube}} videos");
+___('account_privacy_youtube',  'FR', "Afficher les vidéos {{external|http://youtube.com/|YouTube}}");
+___('account_privacy_trends',   'EN', "Show embedded {{external|http://trends.google.com/|Google Trends}} graphs");
+___('account_privacy_trends',   'FR', "Afficher les graphes {{external|http://trends.google.com/|Google Trends}}");
+___('account_privacy_online',   'EN', "Show my account on {{link|pages/users/online|Who's online}}");
+___('account_privacy_online',   'FR', "Afficher mon compte sur {{link|pages/users/online|Qui est en ligne}}");
