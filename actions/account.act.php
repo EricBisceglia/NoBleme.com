@@ -14,6 +14,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  account_settings_update       Updates the currently logged in account's settings.                                */
 /*                                                                                                                   */
+/*  account_get_email             Returns the currently logged in account's e-mail address.                          */
+/*  account_update_email          Updates the currently logged in account's e-mail address.                          */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -321,4 +324,69 @@ function account_settings_update( string  $setting  ,
 
   // All went well
   return;
+}
+
+
+
+
+/**
+ * Returns the currently logged in account's e-mail address.
+ *
+ * @return  string
+ */
+
+function account_get_email() : string
+{
+  // Only logged in users can use this
+  user_restrict_to_users();
+
+  // Fetch and sanitize the user's id
+  $user_id = sanitize(user_get_id(), 'int', 0);
+
+  // Fetch the user's e-mail address
+  $duser = mysqli_fetch_array(query(" SELECT  users_profile.email_address AS 'u_mail'
+                                      FROM    users_profile
+                                      WHERE   users_profile.fk_users = '$user_id' "));
+
+  // Prepare the data
+  $email = sanitize_output($duser['u_mail']);
+
+  // Return the email address
+  return $email;
+}
+
+
+
+
+/**
+ * Updates the currently logged in account's e-mail address.
+ *
+ * @param   string      $email  The account's new e-mail address.
+ *
+ * @return  string|null         A string if something went wrong, or null if all went well.
+ */
+
+function account_update_email( string  $email ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('account.lang.php');
+
+  // Only logged in users can use this
+  user_restrict_to_users();
+
+  // Prepare and sanitize the data
+  $user_id  = sanitize(user_get_id(), 'int');
+  $email    = sanitize($email, 'string');
+
+  // Incorrect email (will not be updated)
+  if($email && !filter_var($email, FILTER_VALIDATE_EMAIL))
+    return(__('account_email_error'));
+
+  // Update the setting
+  query(" UPDATE  users_profile
+          SET     users_profile.email_address = '$email'
+          WHERE   users_profile.fk_users      = '$user_id' ");
+
+  // All went well
+  return NULL;
 }

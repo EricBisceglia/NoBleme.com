@@ -26,7 +26,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Fetches data related to a user.
  *
- * @param   int|null    $user_id  The scheduled task's id, will default to current user if unset.
+ * @param   int|null    $user_id  The user's id, will default to current user if unset.
  *
  * @return  array|null            An array containing user related data, or NULL if it does not exist.
  */

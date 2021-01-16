@@ -234,3 +234,33 @@ ___('account_privacy_trends',   'EN', "Show embedded {{external|http://trends.go
 ___('account_privacy_trends',   'FR', "Afficher les graphes {{external|http://trends.google.com/|Google Trends}}");
 ___('account_privacy_online',   'EN', "Show my account on {{link|pages/users/online|Who's online}}");
 ___('account_privacy_online',   'FR', "Afficher mon compte sur {{link|pages/users/online|Qui est en ligne}}");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 SETTINGS: E-MAIL                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('account_email_intro',  'EN', <<<EOT
+On NoBleme, as we highly value {{link|todo_link|privacy}}, we do not require any form of personal identification. You are free to have an account with no e-mail address. If you do choose to enter an e-mail address, know that it will never be shown publicly on the website, and that e-mails will never be sent to you from NoBleme. The only usage we have for your e-mail address is as a tool for recovering access to your account, in the event that you would forget your username and/or password.
+EOT
+);
+___('account_email_intro',  'FR', <<<EOT
+Sur NoBleme, comme nous respectons {{link|todo_link|votre vie privée}}, nous n'avons pas besoin de la moindre preuve d'identité. Vous êtes libre de ne pas avoir d'adresse e-mail liée à votre compte. Si vous choisissez d'enregistrer une adresse e-mail, sachez qu'elle ne sera jamais affichée publiquement sur le site, et qu'aucun e-mail ne vous sera envoyé par NoBleme. La seule utilisation que nous faisons des adresses e-mail est pour la récupération de l'accès à votre compte dans le cas où vous oublieriez votre pseudonyme et/ou mot de passe.
+EOT
+);
+
+
+// Form
+___('account_email_label',    'EN', "Your e-mail address");
+___('account_email_label',    'FR', "Votre adresse e-mail");
+___('account_email_submit',   'EN', "Change my e-mail");
+___('account_email_submit',   'FR', "Changer mon e-mail");
+___('account_email_error',    'EN', "The provided e-mail address is not valid");
+___('account_email_error',    'FR', "L'adresse e-mail fournie est invalide");
+___('account_email_confirm',  'EN', "Your account's e-mail address has been updated");
+___('account_email_confirm',  'FR', "L'adresse e-mail de votre compte a été mise à jour");
