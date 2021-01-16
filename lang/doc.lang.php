@@ -110,13 +110,6 @@ ___('bbcodes_doc_spoiler',      'FR', "[spoiler]Ce contenu est caché[/spoiler]"
 ___('bbcodes_doc_spoiler_full', 'EN', "[spoiler=Star Wars]Han shot first[/spoiler]");
 ___('bbcodes_doc_spoiler_full', 'FR', "[spoiler=Star Wars]Han a tiré en premier[/spoiler]");
 
-___('bbcodes_youtube',          'EN', "Youtube video");
-___('bbcodes_youtube',          'FR', "Vidéo Youtube");
-___('bbcodes_doc_youtube',      'EN', "You need to find the video's ID");
-___('bbcodes_doc_youtube',      'FR', "Vous devez trouver l'ID de la vidéo");
-___('bbcodes_doc_youtube_vid',  'EN', "[youtube]4o5baMYWdtQ[/youtube]");
-___('bbcodes_doc_youtube_vid',  'FR', "[youtube]4o5baMYWdtQ[/youtube]");
-
 
 // Experimental zone
 ___('bbcodes_experiment', 'EN', "Experimental zone");
@@ -133,15 +126,11 @@ ___('bbcodes_test_input', 'EN', <<<EOT
 [s][b][i][color=orange][size=2]Combined BBCodes[/size][/color][/i][/b][/s]
 
 [spoiler][spoiler=One more][spoiler=Last one][quote][code]Nested spoilers[/code][/quote][/spoiler][/spoiler][/spoiler]
-
-[align=right][youtube]q6EoRBvdVPQ[/youtube][/align]
 EOT
 );
 ___('bbcodes_test_input', 'FR', <<<EOT
 [s][b][i][color=orange][size=2]BBCodes combinés[/size][/color][/i][/b][/s]
 
 [spoiler][spoiler=Encore un][spoiler=Le dernier][quote][code]Divulgâchages encastrés[/code][/quote][/spoiler][/spoiler][/spoiler]
-
-[align=right][youtube]q6EoRBvdVPQ[/youtube][/align]
 EOT
 );

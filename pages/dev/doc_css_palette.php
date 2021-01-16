@@ -120,11 +120,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=bbcodes('[spoiler=topic]Spoily text[/spoiler]')?>
   </p>
 
-  <p>
-    [youtube]videoid[/youtube]:<br>
-    <?=bbcodes('[youtube]4o5baMYWdtQ[/youtube]')?>
-  </p>
-
 </div>
 
 <hr>

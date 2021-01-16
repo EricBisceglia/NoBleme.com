@@ -274,21 +274,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
 
-      <tr>
-        <td class="nowrap monospace">
-          [youtube][/youtube]
-        </td>
-        <td class="bold nowrap">
-          <?=__('bbcodes_youtube')?>
-        </td>
-        <td class="padding_top padding_bot">
-          <?=__('bbcodes_doc_youtube')?><br>
-          <?=__('bbcodes_doc_youtube_vid')?><br>
-          <br>
-          <?=bbcodes(__('bbcodes_doc_youtube_vid'))?>
-        </td>
-      </tr>
-
     </tbody>
   </table>
 

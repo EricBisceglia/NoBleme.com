@@ -24,13 +24,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * Some CSS is involved, so make sure nobleme.css is included in your page when using BBCodes.
  *
  * @param   string  $message                    The message which contains BBCodes.
- * @param   array   $privacy_level  (OPTIONAL)  The output of user_settings_privacy() (third party settings).
  *
  * @return  string                              The message, with BBCodes converted to HTML, ready for display.
  */
 
-function bbcodes( string  $message                                                ,
-                  array   $privacy_level  = array('youtube' => 0, 'trends' => 0)  ) : string
+function bbcodes( string  $message ) : string
 {
   /*******************************************************************************************************************/
   // [b]Bold[/b]
@@ -164,16 +162,6 @@ function bbcodes( string  $message                                              
 
   // Solved with a regex
   $message = preg_replace('/\[code\](.*?)\[\/code\]/is','<pre>$1</pre>', $message);
-
-
-  /*******************************************************************************************************************/
-  // [youtube]videoid[/youtube]
-
-  // Depending on privacy levels, show or hide the content - solved with a regex
-  if(!$privacy_level['youtube'])
-    $message = preg_replace('/\[youtube\](.*?)\[\/youtube\]/is',"<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/$1\" frameborder=\"0\" gesture=\"media\" allow=\"encrypted-media\" allowfullscreen></iframe>", $message);
-  else
-    $message = preg_replace('/\[youtube\](.*?)\[\/youtube\]/is',"<div><a class=\"bold\" href=\"https://www.youtube.com/watch?v=$1\">YouTube: $1</a></div>", $message);
 
 
   /*******************************************************************************************************************/
