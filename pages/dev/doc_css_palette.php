@@ -125,11 +125,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=bbcodes('[youtube]4o5baMYWdtQ[/youtube]')?>
   </p>
 
-  <p>
-    [twitter]tweetid[/twitter]:<br>
-    <?=bbcodes('[twitter]855477729084440576[/twitter]')?>
-  </p>
-
 </div>
 
 <hr>

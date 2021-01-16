@@ -1340,13 +1340,11 @@ if($last_query < 26)
 
   sql_create_field('users_settings', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_field('users_settings', 'show_nsfw_content', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
-  sql_create_field('users_settings', 'hide_tweets', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'show_nsfw_content');
-  sql_create_field('users_settings', 'hide_youtube', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_tweets');
+  sql_create_field('users_settings', 'hide_youtube', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'show_nsfw_content');
   sql_create_field('users_settings', 'hide_google_trends', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_youtube');
   sql_create_field('users_settings', 'hide_from_activity', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_google_trends');
   $qusers = query(" SELECT  users.id                  AS 'u_id'       ,
                             users.voir_nsfw           AS 'u_nsfw'     ,
-                            users.voir_tweets         AS 'u_tweets'   ,
                             users.voir_youtube        AS 'u_youtube'  ,
                             users.voir_google_trends  AS 'u_trends'
                     FROM    users ");
@@ -1354,7 +1352,6 @@ if($last_query < 26)
     query(" INSERT INTO users_settings
             SET         users_settings.fk_users               = '".sql_sanitize_data($dusers['u_id'])."'        ,
                         users_settings.show_nsfw_content      = '".sql_sanitize_data($dusers['u_nsfw'])."'      ,
-                        users_settings.hide_tweets            = '".sql_sanitize_data($dusers['u_tweets'])."'    ,
                         users_settings.hide_youtube           = '".sql_sanitize_data($dusers['u_youtube'])."'   ,
                         users_settings.hide_google_trends     = '".sql_sanitize_data($dusers['u_trends'])."'    ");
   sql_create_index('users_settings', 'index_user', 'fk_users');

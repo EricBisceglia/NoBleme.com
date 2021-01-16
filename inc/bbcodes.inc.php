@@ -29,8 +29,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  * @return  string                              The message, with BBCodes converted to HTML, ready for display.
  */
 
-function bbcodes( string  $message                                                                ,
-                  array   $privacy_level  = array('twitter' => 0, 'youtube' => 0, 'trends' => 0)  ) : string
+function bbcodes( string  $message                                                ,
+                  array   $privacy_level  = array('youtube' => 0, 'trends' => 0)  ) : string
 {
   /*******************************************************************************************************************/
   // [b]Bold[/b]
@@ -177,16 +177,6 @@ function bbcodes( string  $message                                              
 
 
   /*******************************************************************************************************************/
-  // [twitter]tweetid[/twitter]
-
-  // Depending on privacy levels, show or hide the content - solved with a regex
-  if(!$privacy_level['twitter'])
-    $message = preg_replace('/\[twitter\](.*?)\[\/twitter\]/is',"<script type=\"text/javascript\"> function loadx(data) { document.write(data.html); } </script><script type=\"text/javascript\" src=\"https://api.twitter.com/1/statuses/oembed.json?id=$1&callback=loadx\"></script> <div onLoad='loadx().html'/></div>", $message);
-  else
-    $message = preg_replace('/\[twitter\](.*?)\[\/twitter\]/is',"<div><a class=\"bold\" href=\"http://www.twitter.com/statuses/$1\">Tweet: $1</a></div>", $message);
-
-
-  /*******************************************************************************************************************/
   // [quote]Quoted text[/quote]
 
   // Solved with a regex in a while loop
@@ -256,10 +246,10 @@ function bbcodes( string  $message                                              
  * @return  string                              The message, with NBCodes converted to HTML, ready for display.
  */
 
-function nbcodes( string  $message                                                                ,
-                  array   $page_list      = array()                                               ,
-                  array   $privacy_level  = array('twitter' => 0, 'youtube' => 0, 'trends' => 0)  ,
-                  int     $nsfw_settings  = 0                                                     ) : string
+function nbcodes( string  $message                                                ,
+                  array   $page_list      = array()                               ,
+                  array   $privacy_level  = array('youtube' => 0, 'trends' => 0)  ,
+                  int     $nsfw_settings  = 0                                     ) : string
 {
   /*******************************************************************************************************************/
   // Run bbcodes on the data

@@ -117,13 +117,6 @@ ___('bbcodes_doc_youtube',      'FR', "Vous devez trouver l'ID de la vidéo");
 ___('bbcodes_doc_youtube_vid',  'EN', "[youtube]4o5baMYWdtQ[/youtube]");
 ___('bbcodes_doc_youtube_vid',  'FR', "[youtube]4o5baMYWdtQ[/youtube]");
 
-___('bbcodes_twitter',          'EN', "Tweet");
-___('bbcodes_twitter',          'FR', "Tweet");
-___('bbcodes_doc_twitter',      'EN', "You need to find the tweet's ID");
-___('bbcodes_doc_twitter',      'FR', "Vous devez trouver l'ID du tweet");
-___('bbcodes_doc_twitter_link', 'EN', "[twitter]966143395918786560[/twitter]");
-___('bbcodes_doc_twitter_link', 'FR', "[twitter]966143395918786560[/twitter]");
-
 
 // Experimental zone
 ___('bbcodes_experiment', 'EN', "Experimental zone");

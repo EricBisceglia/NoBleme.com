@@ -289,21 +289,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
 
-      <tr>
-        <td class="nowrap monospace">
-          [twitter][/twitter]
-        </td>
-        <td class="bold nowrap">
-          <?=__('bbcodes_twitter')?>
-        </td>
-        <td class="padding_top padding_bot">
-          <?=__('bbcodes_doc_twitter')?><br>
-          <?=__('bbcodes_doc_twitter_link')?><br>
-          <br>
-          <?=bbcodes(__('bbcodes_doc_twitter_link'))?>
-        </td>
-      </tr>
-
     </tbody>
   </table>
 

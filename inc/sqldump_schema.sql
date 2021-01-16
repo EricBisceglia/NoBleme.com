@@ -460,7 +460,6 @@ CREATE TABLE IF NOT EXISTS `users_settings` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `fk_users` int UNSIGNED NOT NULL DEFAULT '0',
   `show_nsfw_content` tinyint UNSIGNED NOT NULL DEFAULT '0',
-  `hide_tweets` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `hide_youtube` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `hide_google_trends` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `hide_from_activity` tinyint UNSIGNED NOT NULL DEFAULT '0',
