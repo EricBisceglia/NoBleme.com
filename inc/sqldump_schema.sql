@@ -488,59 +488,6 @@ CREATE TABLE IF NOT EXISTS `users_tokens` (
   KEY `index_user` (`fk_users`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `writings_contests`;
-CREATE TABLE IF NOT EXISTS `writings_contests` (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `fk_users_winner` int UNSIGNED NOT NULL DEFAULT '0',
-  `fk_writings_texts_winner` int UNSIGNED NOT NULL DEFAULT '0',
-  `is_deleted` tinyint UNSIGNED NOT NULL DEFAULT '0',
-  `language` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `started_at` int UNSIGNED NOT NULL DEFAULT '0',
-  `ended_at` int UNSIGNED NOT NULL DEFAULT '0',
-  `nb_entries` int UNSIGNED NOT NULL DEFAULT '0',
-  `contest_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contest_topic` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_winner` (`fk_users_winner`),
-  KEY `index_winning_text` (`fk_writings_texts_winner`),
-  KEY `index_language` (`language`),
-  KEY `index_deleted` (`is_deleted`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `writings_contests_votes`;
-CREATE TABLE IF NOT EXISTS `writings_contests_votes` (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `fk_writings_contests` int UNSIGNED NOT NULL DEFAULT '0',
-  `fk_writings_texts` int UNSIGNED NOT NULL DEFAULT '0',
-  `fk_users` int UNSIGNED NOT NULL DEFAULT '0',
-  `vote_weight` tinyint UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `index_author` (`fk_users`),
-  KEY `index_contest` (`fk_writings_contests`),
-  KEY `index_text` (`fk_writings_texts`),
-  KEY `index_votes` (`vote_weight`,`fk_writings_contests`,`fk_writings_texts`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `writings_texts`;
-CREATE TABLE IF NOT EXISTS `writings_texts` (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `fk_users` int UNSIGNED NOT NULL DEFAULT '0',
-  `fk_writings_contests` int UNSIGNED NOT NULL DEFAULT '0',
-  `is_deleted` tinyint UNSIGNED NOT NULL DEFAULT '0',
-  `language` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_anonymous` tinyint UNSIGNED NOT NULL DEFAULT '0',
-  `created_at` int UNSIGNED NOT NULL DEFAULT '0',
-  `edited_at` int UNSIGNED NOT NULL DEFAULT '0',
-  `character_count` int UNSIGNED NOT NULL DEFAULT '0',
-  `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `body` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_author` (`fk_users`,`is_anonymous`),
-  KEY `index_contest` (`fk_writings_contests`),
-  KEY `index_language` (`language`),
-  KEY `index_deleted` (`is_deleted`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 ALTER TABLE `dev_tasks` ADD FULLTEXT KEY `index_title_en` (`title_en`);
 ALTER TABLE `dev_tasks` ADD FULLTEXT KEY `index_title_fr` (`title_fr`);

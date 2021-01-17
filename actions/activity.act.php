@@ -136,8 +136,6 @@ function activity_list( bool    $show_mod_logs  = false ,
     $qlogs .= " AND       logs_activity.activity_type LIKE 'internet_%' ";
   else if($type == 'quotes')
     $qlogs .= " AND       logs_activity.activity_type LIKE 'quotes_%' ";
-  else if($type == 'writers')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'writings_%' ";
   else if($type == 'dev')
     $qlogs .= " AND       logs_activity.activity_type LIKE 'dev_%' ";
 

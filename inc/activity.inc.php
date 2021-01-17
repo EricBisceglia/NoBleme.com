@@ -86,6 +86,8 @@ function log_activity_parse(  bool    $admins_only        ,
   }
 
 
+
+
   //*****************************************************************************************************************//
   //                                                      USERS                                                      //
   //*****************************************************************************************************************//
@@ -426,48 +428,6 @@ function log_activity_parse(  bool    $admins_only        ,
     $return['FR']   = 'Citation anglophone #'.$id.' ajoutée à la collection';
   }
 
-
-
-
-  //*****************************************************************************************************************//
-  //                                                 WRITER'S CORNER                                                 //
-  //*****************************************************************************************************************//
-
-  else if($type === 'writings_text_new_fr')
-  {
-    $return['css']  = 'brown bold';
-    $return['FR']   = ($username != 'Anonyme') ? $username.' a publié un texte : '.$title_fr : 'Nouveau texte publié : '.$title_fr;
-  }
-
-  else if($type === 'writings_text_edit_fr')
-  {
-    $return['FR']   = $mod_username.' a modifié le contenu d\'un texte : '.$title_fr;
-  }
-
-  else if($type === 'writings_text_delete')
-  {
-    $return['css']  = 'red bold';
-    $return['EN']   = $mod_username." deleted a french writer's corner entry: ".$title_en;
-    $return['FR']   = $mod_username.' a supprimé un texte du coin des écrivains : '.$title_fr;
-  }
-
-  else if($type === 'writings_contest_new_fr')
-  {
-    $return['css']  = 'green bold';
-    $return['FR']   = 'Nouveau concours du coin des écrivains : '.$title_fr;
-  }
-
-  else if($type === 'writings_contest_winner_fr')
-  {
-    $return['css']  = 'brown bold';
-    $return['FR']   = 'Concours du coin des écrivains ouvert aux votes : '.$title_fr;
-  }
-
-  else if($type === 'writings_contest_vote_fr')
-  {
-    $return['css']  = 'green bold';
-    $return['FR']   = $username.' a gagné le concours du coin des écrivains : '.$title_fr;
-  }
 
 
 

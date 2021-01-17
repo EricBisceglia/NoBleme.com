@@ -269,7 +269,7 @@ Deleting an account includes the deletion of a lot of historical content on the 
 EOD
 );
 ___('users_message_admin_del_history',  'FR', <<<EOD
-Supprimer un compte implique la suppression de beaucoup de contenu historique du site, ce que nous essayons d'éviter de faire si ce n'est pas strictement nécessaire. Toutefois, notre {{link|todo_link|politique de confidentialité}} est plus importante pour nous que nos sentiments sur l'intégrité de l'historique du site. Par conséquent, nous honorerons votre droit à disparaître, à condition que vous expliquiez la raison pour laquelle vous désirez disparaître de NoBleme dans le forumlaire ci-dessous.
+Supprimer un compte implique la suppression de beaucoup de contenu historique du site, ce que nous essayons d'éviter de faire si ce n'est pas strictement nécessaire. Toutefois, notre {{link|todo_link|politique de confidentialité}} est plus importante pour nous que nos sentiments sur l'intégrité de l'historique du site. Par conséquent, nous honorerons votre droit à disparaître, à condition que vous expliquiez la raison pour laquelle vous désirez disparaître de NoBleme dans le formulaire ci-dessous.
 EOD
 );
 

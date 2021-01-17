@@ -138,8 +138,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <option value="users"><?=__('activity_type_users')?></option>
       <option value="meetups"><?=__('activity_type_meetups')?></option>
       <?php if(!$activity_modlogs) { ?>
-      <option value="internet"><?=__('activity_type_internet')?></option>
       <option value="quotes"><?=__('activity_type_quotes')?></option>
+      <option value="internet"><?=__('activity_type_internet')?></option>
       <?php } ?>
       <?php if(!$activity_modlogs) { ?>
       <option value="dev"><?=__('activity_type_dev')?></option>

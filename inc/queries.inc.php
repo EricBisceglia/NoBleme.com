@@ -661,12 +661,8 @@ if($last_query < 20)
   sql_delete_index('system_scheduler', 'index_action');
   sql_create_index('system_scheduler', 'index_task_id', 'task_id');
 
-  query(" UPDATE  system_scheduler
-          SET     system_scheduler.task_type    = 'writings_contest_vote'
-          WHERE   system_scheduler.task_type LIKE 'ecrivains_concours_vote' ");
-  query(" UPDATE  system_scheduler
-          SET     system_scheduler.task_type    = 'writings_contest_end'
-          WHERE   system_scheduler.task_type LIKE 'ecrivains_concours_fin' ");
+  query(" DELETE FROM system_scheduler
+          WHERE       system_scheduler.task_type LIKE 'ecrivains_*' ");
 
   $qbans = query("  SELECT  membres.id            AS 'm_id'   ,
                             membres.pseudonyme    AS 'm_nick' ,
@@ -778,20 +774,8 @@ if($last_query < 21)
                                     'irl_add_participant'             => 'ENFR' ,
                                     'irl_edit_participant'            => 'ENFR' ,
                                     'irl_del_participant'             => 'ENFR' ,
-                                    'ecrivains_new'                   => 'FR'   ,
-                                    'ecrivains_edit'                  => 'FR'   ,
-                                    'ecrivains_delete'                => 'FR'   ,
-                                    'ecrivains_concours_new'          => 'FR'   ,
-                                    'ecrivains_concours_gagnant'      => 'FR'   ,
-                                    'ecrivains_concours_vote'         => 'FR'   ,
                                     'quote_new_en'                    => 'ENFR' ,
-                                    'quote_new_fr'                    => 'FR'   ,
-                                    'nbdb_web_definition_new'         => 'ENFR' ,
-                                    'nbdb_web_definition_edit'        => 'ENFR' ,
-                                    'nbdb_web_definition_delete'      => 'ENFR' ,
-                                    'nbdb_web_page_new'               => 'ENFR' ,
-                                    'nbdb_web_page_edit'              => 'ENFR' ,
-                                    'nbdb_web_page_delete'            => 'ENFR' );
+                                    'quote_new_fr'                    => 'FR'   );
 
   foreach($logs_activity_language as $original_log => $log_language)
   {
@@ -821,20 +805,8 @@ if($last_query < 21)
                                       'irl_add_participant'             => 'meetups_people_new'         ,
                                       'irl_edit_participant'            => 'meetups_people_edit'        ,
                                       'irl_del_participant'             => 'meetups_people_delete'      ,
-                                      'ecrivains_new'                   => 'writings_text_new_fr'       ,
-                                      'ecrivains_edit'                  => 'writings_text_edit_fr'      ,
-                                      'ecrivains_delete'                => 'writings_text_delete'       ,
-                                      'ecrivains_concours_new'          => 'writings_contest_new_fr'    ,
-                                      'ecrivains_concours_gagnant'      => 'writings_contest_winner_fr' ,
-                                      'ecrivains_concours_vote'         => 'writings_contest_vote_fr'   ,
                                       'quote_new_en'                    => 'quotes_new_en'              ,
-                                      'quote_new_fr'                    => 'quotes_new_fr'              ,
-                                      'nbdb_web_definition_new'         => 'internet_definition_new'    ,
-                                      'nbdb_web_definition_edit'        => 'internet_definition_edit'   ,
-                                      'nbdb_web_definition_delete'      => 'internet_definition_delete' ,
-                                      'nbdb_web_page_new'               => 'internet_page_new'          ,
-                                      'nbdb_web_page_edit'              => 'internet_page_edit'         ,
-                                      'nbdb_web_page_delete'            => 'internet_page_delete'       );
+                                      'quote_new_fr'                    => 'quotes_new_fr'              );
 
   foreach($logs_activity_translation as $original_log => $translated_log)
   {
@@ -862,8 +834,7 @@ if($last_query < 21)
                   logs_activity.activity_username           = ''
           WHERE ( logs_activity.activity_type            LIKE 'meetups_delete'
           OR      logs_activity.activity_type            LIKE 'meetups_edit'
-          OR      logs_activity.activity_type            LIKE 'meetups_new'
-          OR      logs_activity.activity_type            LIKE 'writings_text_delete' ) ");
+          OR      logs_activity.activity_type            LIKE 'meetups_new' ) ");
 
   query(" UPDATE  logs_activity
           SET     logs_activity.activity_moderator_username = logs_activity.activity_parent ,
@@ -1114,65 +1085,17 @@ if($last_query < 23)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// #544 - Translation and optimization of all tables - Writer's corner
+// #544 - Get rid of the writer's corner
 
 if($last_query < 24)
 {
-  sql_rename_table('ecrivains_texte', 'writings_texts');
-  sql_rename_table('ecrivains_concours', 'writings_contests');
-  sql_rename_table('ecrivains_concours_vote', 'writings_contests_votes');
-
-  sql_change_field_type('writings_texts', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('writings_texts', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_texts', 'FKecrivains_concours', 'fk_writings_contests', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_create_field('writings_texts', 'language', 'VARCHAR(6) NOT NULL', 'fk_writings_contests');
-  sql_rename_field('writings_texts', 'anonyme', 'is_anonymous', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_texts', 'timestamp_creation', 'created_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_texts', 'timestamp_modification', 'edited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_delete_field('writings_texts', 'niveau_feedback');
-  sql_rename_field('writings_texts', 'titre', 'title', 'TEXT NOT NULL');
-  sql_delete_field('writings_texts', 'note_moyenne');
-  sql_rename_field('writings_texts', 'longueur_texte', 'character_count', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('writings_texts', 'title', 'TEXT NOT NULL', 'character_count');
-  sql_rename_field('writings_texts', 'contenu', 'body', 'LONGTEXT NOT NULL');
-  sql_delete_index('writings_texts', 'index_auteur');
-  sql_delete_index('writings_texts', 'index_concours');
-  sql_create_index('writings_texts', 'index_author', 'fk_users, is_anonymous');
-  sql_create_index('writings_texts', 'index_contest', 'fk_writings_contests');
-  sql_create_index('writings_texts', 'index_language', 'language');
-
-  sql_change_field_type('writings_contests', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('writings_contests', 'FKmembres_gagnant', 'fk_users_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_contests', 'FKecrivains_texte_gagnant', 'fk_writings_texts_winner', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_create_field('writings_contests', 'language', 'VARCHAR(6) NOT NULL', 'fk_writings_texts_winner');
-  sql_rename_field('writings_contests', 'timestamp_debut', 'started_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_contests', 'timestamp_fin', 'ended_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_contests', 'num_participants', 'nb_entries', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_contests', 'titre', 'contest_name', 'TEXT NOT NULL');
-  sql_rename_field('writings_contests', 'sujet', 'contest_topic', 'TEXT NOT NULL');
-  sql_delete_index('writings_contests', 'index_gagnant');
-  sql_create_index('writings_contests', 'index_winner', 'fk_users_winner');
-  sql_create_index('writings_contests', 'index_winning_text', 'fk_writings_texts_winner');
-  sql_create_index('writings_contests', 'index_language', 'language');
-
-  sql_change_field_type('writings_contests_votes', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('writings_contests_votes', 'FKecrivains_concours', 'fk_writings_contests', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_contests_votes', 'FKecrivains_texte', 'fk_writings_texts', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_contests_votes', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('writings_contests_votes', 'poids_vote', 'vote_weight', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_delete_index('writings_contests_votes', 'index_texte');
-  sql_delete_index('writings_contests_votes', 'index_concours');
-  sql_delete_index('writings_contests_votes', 'index_membre');
-  sql_delete_index('writings_contests_votes', 'index_poids');
-  sql_create_index('writings_contests_votes', 'index_author', 'fk_users');
-  sql_create_index('writings_contests_votes', 'index_contest', 'fk_writings_contests');
-  sql_create_index('writings_contests_votes', 'index_text', 'fk_writings_texts');
-  sql_create_index('writings_contests_votes', 'index_votes', 'vote_weight, fk_writings_contests, fk_writings_texts');
+  sql_delete_table('ecrivains_texte');
+  sql_delete_table('ecrivains_concours');
+  sql_delete_table('ecrivains_concours_vote');
+  sql_delete_table('ecrivains_note');
 
   query(" DELETE FROM logs_activity
-          WHERE       logs_activity.activity_type LIKE 'ecrivains_reaction_%' ");
-
-  sql_delete_table('ecrivains_note');
+          WHERE       logs_activity.activity_type LIKE 'ecrivains_%' ");
 
   sql_update_query_id(24);
 }
@@ -1185,24 +1108,13 @@ if($last_query < 24)
 
 if($last_query < 25)
 {
-  sql_delete_table('forum_sujet', 'forum_threads');
-  sql_delete_table('forum_message', 'forum_messages');
-  sql_delete_table('forum_categorie', 'forum_categories');
-  sql_delete_table('forum_filtrage', 'forum_categories_filters');
+  sql_delete_table('forum_sujet',);
+  sql_delete_table('forum_message');
+  sql_delete_table('forum_categorie');
+  sql_delete_table('forum_filtrage');
 
   query(" DELETE FROM logs_activity
           WHERE       logs_activity.activity_type LIKE 'forum_%' ");
-
-  $qorphans = query(" SELECT    logs_activity_details.id AS 'd_id'
-                      FROM      logs_activity_details
-                      LEFT JOIN logs_activity ON logs_activity_details.fk_logs_activity = logs_activity.id
-                      WHERE     logs_activity.id IS NULL ");
-  while($dorphans = mysqli_fetch_array($qorphans))
-  {
-    $orphan_id = $dorphans['d_id'];
-    query(" DELETE FROM logs_activity_details
-            WHERE       logs_activity_details.id = '$orphan_id' ");
-  }
 
   sql_update_query_id(25);
 }
@@ -1697,6 +1609,11 @@ if($last_query < 30)
   query(" UPDATE  internet_pages
           SET     internet_pages.definition_fr = REPLACE(internet_pages.definition_fr, '/galerie]]', '/gallery]]') ");
 
+  query(" DELETE FROM logs_activity
+          WHERE       logs_activity.activity_type LIKE 'internet_*' ");
+  query(" DELETE FROM logs_activity
+          WHERE       logs_activity.activity_type LIKE 'nbdb_*' ");
+
   sql_update_query_id(30);
 }
 
@@ -1736,11 +1653,6 @@ if($last_query < 31)
   sql_create_index('users_private_messages', 'index_deleted_by_recipient', 'deleted_by_recipient');
   sql_create_index('users_private_messages', 'index_deleted_by_sender', 'deleted_by_sender');
 
-  sql_create_field('writings_contests', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_writings_texts_winner');
-  sql_create_index('writings_contests', 'index_deleted', 'is_deleted');
-  sql_create_field('writings_texts', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_writings_contests');
-  sql_create_index('writings_texts', 'index_deleted', 'is_deleted');
-
   sql_update_query_id(31);
 }
 
@@ -1761,4 +1673,26 @@ if($last_query < 32)
   sql_create_field('system_ip_bans', 'ban_reason_fr', 'TEXT NOT NULL', 'ban_reason_en');
 
   sql_update_query_id(32);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// #544 - Leftover orphan activity logs
+
+if($last_query < 33)
+{
+  $qorphans = query(" SELECT    logs_activity_details.id AS 'd_id'
+                      FROM      logs_activity_details
+                      LEFT JOIN logs_activity ON logs_activity_details.fk_logs_activity = logs_activity.id
+                      WHERE     logs_activity.id IS NULL ");
+  while($dorphans = mysqli_fetch_array($qorphans))
+  {
+    $orphan_id = $dorphans['d_id'];
+    query(" DELETE FROM logs_activity_details
+            WHERE       logs_activity_details.id = '$orphan_id' ");
+  }
+
+  sql_update_query_id(33);
 }

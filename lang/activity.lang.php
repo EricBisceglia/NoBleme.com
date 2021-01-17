@@ -41,10 +41,10 @@ ___('activity_type_users',      'EN', "Users");
 ___('activity_type_users',      'FR', "Membres");
 ___('activity_type_meetups',    'EN', "Meetups");
 ___('activity_type_meetups',    'FR', "Rencontres IRL");
-___('activity_type_internet',   'EN', "Internet encyclopedia");
-___('activity_type_internet',   'FR', "Encyclopédie du web");
 ___('activity_type_quotes',     'EN', "Quotes");
 ___('activity_type_quotes',     'FR', "Citations");
+___('activity_type_internet',   'EN', "CompendiumXXI");
+___('activity_type_internet',   'FR', "CompendiumXXI");
 ___('activity_type_dev',        'EN', "Website internals");
 ___('activity_type_dev',        'FR', "Développement");
 
