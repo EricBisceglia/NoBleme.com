@@ -41,6 +41,10 @@ if(isset($_POST['contact_form_send']))
   if(isset($_GET['username']))
     $contact_form_return = private_message_admins($contact_form_body, 'username', $contact_form_nick);
 
+  // Account deletion request
+  else if(isset($_GET['delete']))
+    $contact_form_return = private_message_admins($contact_form_body, 'delete');
+
   // Generic contact form
   else
     $contact_form_return = private_message_admins($contact_form_body);
@@ -73,6 +77,20 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p class="smallpadding_bot">
     <?=__('users_message_admins_nick_past')?>
+  </p>
+
+  <?php } else if(isset($_GET['delete'])) { ?>
+
+  <h2>
+    <?=__('users_message_admins_del_title')?>
+  </h2>
+
+  <p>
+    <?=__('users_message_admins_del_intro')?>
+  </p>
+
+  <p class="smallpadding_bot">
+    <?=__('users_message_admin_del_history')?>
   </p>
 
   <?php } else { ?>

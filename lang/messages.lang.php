@@ -253,6 +253,27 @@ EOD
 );
 
 
+// Header: Account deletion request
+___('users_message_admins_del_title',   'EN', "Account deletion request");
+___('users_message_admins_del_title',   'FR', "Suppression de compte");
+___('users_message_admins_del_intro',   'EN', <<<EOD
+Account deletion requests are not automated. Instead, you must write a message to the {{link|pages/users/admins|administrative team}}, which will then proceed to delete your account if the request seems justified (we will do it in most cases).
+EOD
+);
+___('users_message_admins_del_intro',   'FR', <<<EOD
+La suppression de comptes n'est pas automatisée. Vous devez écrire un message à {{link|pages/users/admins|l'équipe administrative}}, qui se chargera de la suppression de votre compte si votre requête lui semble justifiée (nous le ferons dans la majorité des cas).
+EOD
+);
+___('users_message_admin_del_history',  'EN', <<<EOD
+Deleting an account includes the deletion of a lot of historical content on the website, which we are looking to avoid doing unless strictly necessary. However, our {{link|todo_link|privacy policy}} is more important to us than our feelings on the integrity of the website's history. Therefore, we will honor your right to disappearance as long as you properly explain in the form below why you want your account deleted.
+EOD
+);
+___('users_message_admin_del_history',  'FR', <<<EOD
+Supprimer un compte implique la suppression de beaucoup de contenu historique du site, ce que nous essayons d'éviter de faire si ce n'est pas strictement nécessaire. Toutefois, notre {{link|todo_link|politique de confidentialité}} est plus importante pour nous que nos sentiments sur l'intégrité de l'historique du site. Par conséquent, nous honorerons votre droit à disparaître, à condition que vous expliquiez la raison pour laquelle vous désirez disparaître de NoBleme dans le forumlaire ci-dessous.
+EOD
+);
+
+
 // Message form
 ___('users_message_admins_newnick',   'EN', "Your new username (3 to 15 characters, letters and numbers only)");
 ___('users_message_admins_newnick',   'FR', "Votre nouveau pseudonyme (3 à 15 caractères, chiffres et lettres sans accents)");
@@ -260,25 +281,41 @@ ___('users_message_admins_nick',      'EN', "Explanation message: Why do you wan
 ___('users_message_admins_nick',      'FR', "Message d'explication: Pourquoi désirez-vous changer votre pseudonyme ?");
 ___('users_message_admins_name_nick', 'EN', "Username change");
 ___('users_message_admins_name_nick', 'FR', "Chagement de pseudo");
+___('users_message_admins_name_del',  'EN', "Deletion request");
+___('users_message_admins_name_del',  'FR', "Suppression de compte");
 ___('users_message_admins_name',      'EN', "Admin contact form");
 ___('users_message_admins_name',      'FR', "Formulaire de contact");
-___('users_message_admins_body_nick', 'EN', <<<EOT
+___('users_message_admins_body_nick', 'EN', <<<EOD
 I would like to change my username.
 
-Desired new username: [b][u]{{1}}[/u][/b]
+Desired new username: [b]{{1}}[/b]
 
-Justification:
+[u]Justification:[/u]
 
-EOT
+EOD
 );
-___('users_message_admins_body_nick', 'FR', <<<EOT
+___('users_message_admins_body_nick', 'FR', <<<EOD
 Je désire changer mon pseudonyme.
 
-Nouveau pseudonyme désiré: [b][u]{{1}}[/u][/b]
+Nouveau pseudonyme désiré: [b]{{1}}[/b]
 
-Justification:
+[u]Justification:[/u]
 
-EOT
+EOD
+);
+___('users_message_admins_body_del',  'EN', <<<EOD
+I would like you to delete my account on NoBleme.
+
+[u]Justification:[/u]
+
+EOD
+);
+___('users_message_admins_body_del',  'FR', <<<EOD
+Je désire que vous supprimez mon compte sur NoBleme.
+
+[u]Justification:[/u]
+
+EOD
 );
 
 

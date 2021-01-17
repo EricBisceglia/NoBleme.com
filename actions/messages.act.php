@@ -657,12 +657,16 @@ function private_message_admins(  string  $body               ,
   // Determine how the message should be named based on the user's language
   if($type == 'username')
     $title = __('users_message_admins_name_nick');
+  else if($type == 'delete')
+    $title = __('users_message_admins_name_del');
   else
     $title = __('users_message_admins_name');
 
   // Prepare the body
   if($type == 'username')
     $body = __('users_message_admins_body_nick', preset_values: array($extra)).$body;
+  else if($type == 'delete')
+    $body = __('users_message_admins_body_del').$body;
 
   // Send the message
   private_message_send( $title                ,
