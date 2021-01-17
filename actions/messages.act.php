@@ -596,12 +596,16 @@ function private_message_years_list( bool $sent_messages = false ) : array
 /**
  * Sends a private message to the administrative team.
  *
- * @param   string  $body   The message's body.
+ * @param   string  $body               The message's body.
+ * @param   string  $type   (OPTIONAL)  The type of message to be sent.
+ * @param   string  $extra  (OPTIONAL)  Extra parameter to be sent along with the message.
  *
- * @return  array           An array of data regarding the sent message.
+ * @return  array                       An array of data regarding the sent message.
 */
 
-function private_message_admins( string $body ) : array
+function private_message_admins(  string  $body               ,
+                                  string  $type   = 'default' ,
+                                  mixed   $extra  = ''        ) : array
 {
   // Require users to be logged in to run this action
   user_restrict_to_users();
@@ -610,15 +614,36 @@ function private_message_admins( string $body ) : array
   require_included_file('messages.lang.php');
 
   // Sanitize the data
-  $sender_id        = sanitize(user_get_id(), 'int', 1);
-  $sender_language  = sanitize(user_get_language());
-  $sender           = user_get_username();
-  $body             = sanitize($body, 'string');
+  $sender_id  = sanitize(user_get_id(), 'int', 1);
+  $sender     = user_get_username();
+  $body       = sanitize($body, 'string');
+  $extra      = sanitize($extra, 'string');
 
   // Error: No body
   if(!str_replace(' ', '', $body))
   {
     $data['error'] = __('users_message_error_body');
+    return $data;
+  }
+
+  // Error: Requested username is too short
+  if($type == 'username' && mb_strlen($extra) < 3)
+  {
+    $data['error'] = __('users_message_error_nick_short');
+    return $data;
+  }
+
+  // Error: Requested username is too long
+  if($type == 'username' && mb_strlen($extra) > 15)
+  {
+    $data['error'] = __('users_message_error_nick_long');
+    return $data;
+  }
+
+  // Error: Special characters in username
+  if($type == 'username' && !preg_match("/^[a-zA-Z0-9]+$/", $extra))
+  {
+    $data['error'] = __('users_message_error_nick_type');
     return $data;
   }
 
@@ -630,7 +655,14 @@ function private_message_admins( string $body ) : array
   }
 
   // Determine how the message should be named based on the user's language
-  $title = __('users_message_admins_name');
+  if($type == 'username')
+    $title = __('users_message_admins_name_nick');
+  else
+    $title = __('users_message_admins_name');
+
+  // Prepare the body
+  if($type == 'username')
+    $body = __('users_message_admins_body_nick', preset_values: array($extra)).$body;
 
   // Send the message
   private_message_send( $title                ,

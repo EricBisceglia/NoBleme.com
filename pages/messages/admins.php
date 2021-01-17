@@ -31,11 +31,24 @@ $page_description = "Send a message to the website's administrative team";
 // Contact the admins
 
 // Fetch the form's content
-$contact_form_body = form_fetch_element('contact_form_body');
+$contact_form_nick  = form_fetch_element('contact_form_nick');
+$contact_form_body  = form_fetch_element('contact_form_body');
 
 // Send the message
 if(isset($_POST['contact_form_send']))
-  $contact_form_return = private_message_admins($contact_form_body);
+{
+  // Username change request
+  if(isset($_GET['username']))
+    $contact_form_return = private_message_admins($contact_form_body, 'username', $contact_form_nick);
+
+  // Generic contact form
+  else
+    $contact_form_return = private_message_admins($contact_form_body);
+}
+
+// Prepare the form contents for displaying
+$contact_form_nick = sanitize_output($contact_form_nick);
+$contact_form_body = sanitize_output($contact_form_body);
 
 
 
@@ -47,6 +60,22 @@ if(isset($_POST['contact_form_send']))
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
 <div class="width_50">
+
+  <?php if(isset($_GET['username'])) { ?>
+
+  <h2>
+    <?=__('users_message_admins_nick_title')?>
+  </h2>
+
+  <p>
+    <?=__('users_message_admins_nick_intro')?>
+  </p>
+
+  <p class="smallpadding_bot">
+    <?=__('users_message_admins_nick_past')?>
+  </p>
+
+  <?php } else { ?>
 
   <h2>
     <?=__('users_message_admins_title')?>
@@ -64,11 +93,25 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('users_message_admins_bug')?>
   </p>
 
+  <?php } ?>
+
   <?php if(!isset($contact_form_return['sent'])) { ?>
   <form method="POST" class="padding_top">
     <fieldset>
 
+      <?php if(isset($_GET['username'])) { ?>
+
       <div class="smallpadding_bot">
+        <label for="contact_form_nick"><?=__('users_message_admins_newnick')?></label>
+        <input class="indiv" type="text" id="contact_form_nick" name="contact_form_nick" value="<?=$contact_form_nick?>" maxlength="15">
+      </div>
+
+      <?php } ?>
+
+      <div class="smallpadding_bot">
+        <?php if(isset($_GET['username'])) { ?>
+        <label for="contact_form_body"><?=__('users_message_admins_nick')?></label>
+        <?php } ?>
         <textarea name="contact_form_body"><?=$contact_form_body?></textarea>
       </div>
 

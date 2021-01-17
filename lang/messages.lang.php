@@ -203,7 +203,7 @@ ___('users_message_error_ghost',      'FR', "Le pseudonyme spécifié n'existe p
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Header
+// Header: Standard
 ___('users_message_admins_title', 'EN', "Contact the administrative team");
 ___('users_message_admins_title', 'FR', "Contacter l'équipe administrative");
 ___('users_message_admins_intro', 'EN', <<<EOD
@@ -232,13 +232,67 @@ EOD
 );
 
 
+// Header: Username change request
+___('users_message_admins_nick_title',  'EN', "Username change request");
+___('users_message_admins_nick_title',  'FR', "Changement de pseudonyme");
+___('users_message_admins_nick_intro',  'EN', <<<EOD
+In order to avoid potential abuse, you can not change your username by yourself. Instead, you must write a request to the website's {{link|pages/users/admins|administrative team}}, which will then proceed to change your username if your request seems properly justified (we will do it in most cases). Before submitting the request, make sure to check that your desired new username is not already taken by searching for it on the {{link|pages/users/list|registered user list}}.
+EOD
+);
+___('users_message_admins_nick_intro',  'FR', <<<EOD
+Afin d'éviter certaines formes d'abus, nous ne vous laissons pas la possibilité de changer votre pseudonyme par vous-même. Il faut à la place écrire une requête à {{link|pages/users/admins|l'équipe administrative}}, qui se chargera de modifier votre pseudonyme si votre requête lui semble légitime (nous le ferons dans la majorité des cas). Avant de soumettre la requête, assurez-vous que votre choix de nouveau pseudonyme n'est pas déjà utilisé par un autre compte en le cherchant dans la {{link|pages/users/list|liste des membres}}.
+EOD
+);
+___('users_message_admins_nick_past',  'EN', <<<EOD
+Once your username is changed, it will also be retroactively changed in almost all of the website's past content. However there might remain a few places where your old username is still present - but with no link to your account. If you spot your old username still in use somewhere after changing to your new one, use the {{link|pages/messages/admins|administrative contact form}} to report it, and we will fix it. As stated in our {{link|todo_link|privacy policy}}, we believe in your right to remain anonymous, and as of such will help you erase any traces left following the change.
+EOD
+);
+___('users_message_admins_nick_past',  'FR', <<<EOD
+Une fois votre pseudonyme changé, il sera également changé rétroactivement dans la majorité des contenus du site. Toutefois, il se peut que votre ancien pseudonyme soit toujours présent à quelques endroits - mais sans lien avec votre compte. Si vous repérez votre ancien pseudonyme quelque part sur le site après en avoir changé, {{link|pages/messages/admins|contactez l'administration}} et nous le corrigerons. Comme indiqué dans notre {{link|todo_link|politique de confidentialité}}, nous croyons en votre droit à l'anonymat, et par conséquent vous aiderons à effacer toute trace qui pourrait rester suite à vote changement de pseudonyme.
+EOD
+);
+
+
 // Message form
-___('users_message_admins_name',  'EN', "Admin contact form");
-___('users_message_admins_name',  'FR', "Formulaire de contact");
-___('users_message_admins_body',  'EN', "Your private must not be empty");
-___('users_message_admins_body',  'FR', "Votre message doit avoir un contenu");
-___('users_message_admins_sent',  'EN', "Your message has successfully be sent to the administrative team. They have been notified of the message, and will reply whenever they are available.");
-___('users_message_admins_sent',  'FR', "Votre message a bien été envoyé à l'équipe administrative, ainsi qu'une notification les informant de l'envoi du message.");
+___('users_message_admins_newnick',   'EN', "Your new username (3 to 15 characters, letters and numbers only)");
+___('users_message_admins_newnick',   'FR', "Votre nouveau pseudonyme (3 à 15 caractères, chiffres et lettres sans accents)");
+___('users_message_admins_nick',      'EN', "Explanation message: Why do you want to change your username?");
+___('users_message_admins_nick',      'FR', "Message d'explication: Pourquoi désirez-vous changer votre pseudonyme ?");
+___('users_message_admins_name_nick', 'EN', "Username change");
+___('users_message_admins_name_nick', 'FR', "Chagement de pseudo");
+___('users_message_admins_name',      'EN', "Admin contact form");
+___('users_message_admins_name',      'FR', "Formulaire de contact");
+___('users_message_admins_body_nick', 'EN', <<<EOT
+I would like to change my username.
+
+Desired new username: [b][u]{{1}}[/u][/b]
+
+Justification:
+
+EOT
+);
+___('users_message_admins_body_nick', 'FR', <<<EOT
+Je désire changer mon pseudonyme.
+
+Nouveau pseudonyme désiré: [b][u]{{1}}[/u][/b]
+
+Justification:
+
+EOT
+);
+
+
+// Errors / Confirmation
+___('users_message_admins_body',      'EN', "Your private must not be empty");
+___('users_message_admins_body',      'FR', "Votre message doit avoir un contenu");
+___('users_message_error_nick_short', 'EN', "The provided username is too short");
+___('users_message_error_nick_short', 'FR', "Le pseudonyme choisi est trop court");
+___('users_message_error_nick_long',  'EN', "The provided username is too long");
+___('users_message_error_nick_long',  'FR', "Le pseudonyme choisi est trop long");
+___('users_message_error_nick_type',  'EN', "The provided username should contain only letters and numbers");
+___('users_message_error_nick_type',  'FR', "Le pseudonyme choisi ne doit contenir que des lettres et des chiffres");
+___('users_message_admins_sent',      'EN', "Your message has successfully be sent to the administrative team. They have been notified of the message, and will reply whenever they are available.");
+___('users_message_admins_sent',      'FR', "Votre message a bien été envoyé à l'équipe administrative, ainsi qu'une notification les informant de l'envoi du message.");
 
 
 

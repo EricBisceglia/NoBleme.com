@@ -688,7 +688,7 @@ $javascripts .= '
           <?=__link('pages/account/settings_password', __('submenu_user_edit_password'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_user_edit_username'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/messages/admins?username', __('submenu_user_edit_username'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_user_edit_delete'), 'header_submenu_link text_blue', 1, $path);?>
