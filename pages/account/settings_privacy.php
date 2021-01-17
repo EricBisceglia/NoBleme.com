@@ -34,15 +34,15 @@ $js = array('common/toggle', 'account/settings');
 
 // YouTube
 if(isset($_POST['account_privacy_youtube']))
-  account_settings_update('hide_youtube', form_fetch_element('account_privacy_youtube'));
+  account_update_settings('hide_youtube', form_fetch_element('account_privacy_youtube'));
 
 // Google trends
 if(isset($_POST['account_privacy_trends']))
-  account_settings_update('hide_google_trends', form_fetch_element('account_privacy_trends'));
+  account_update_settings('hide_google_trends', form_fetch_element('account_privacy_trends'));
 
 // Who's online
 if(isset($_POST['account_privacy_online']))
-  account_settings_update('hide_from_activity', form_fetch_element('account_privacy_online'));
+  account_update_settings('hide_from_activity', form_fetch_element('account_privacy_online'));
 
 
 

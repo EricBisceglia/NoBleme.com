@@ -12,7 +12,7 @@ user_restrict_to_users();
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/nobleme/index";
+$page_url         = "pages/account/settings_email";
 $page_title_en    = "Settings: E-mail";
 $page_title_fr    = "Réglages : E-mail";
 $page_description = "Change the e-mail address attached to your NoBleme account";

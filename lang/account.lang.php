@@ -264,3 +264,38 @@ ___('account_email_error',    'EN', "The provided e-mail address is not valid");
 ___('account_email_error',    'FR', "L'adresse e-mail fournie est invalide");
 ___('account_email_confirm',  'EN', "Your account's e-mail address has been updated");
 ___('account_email_confirm',  'FR', "L'adresse e-mail de votre compte a été mise à jour");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                SETTINGS: PASSWORD                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('account_password_title', 'EN', "New password");
+___('account_password_title', 'FR', "Nouveau mot de passe");
+
+
+// Form
+___('account_password_current', 'EN', "Your current password");
+___('account_password_current', 'FR', "Votre mot de passe actuel");
+___('account_password_new',     'EN', "Your new password (at least 8 characters long)");
+___('account_password_new',     'FR', "Nouveau mot de passe (8 caractères minimum)");
+___('account_password_confirm', 'EN', "Type your new password again to confirm it");
+___('account_password_confirm', 'FR', "Entrez à nouveau votre mot de passe pour le confirmer");
+___('account_password_submit',  'EN', "Change my password");
+___('account_password_submit',  'FR', "Changer mon mot de passe");
+
+
+// Errors / Success
+___('account_password_error_current', 'EN', "You must enter your current password");
+___('account_password_error_current', 'FR', "Vous devez remplir votre mot de passe actuel");
+___('account_password_error_confirm', 'EN', "You must enter and confirm your new password");
+___('account_password_error_confirm', 'FR', "Vous devez remplir et confirmer votre nouveau mot de passe");
+___('account_password_error_wrong',   'EN', "Your current password is incorrect");
+___('account_password_error_wrong',   'FR', "Votre mot de passe actuel est incorrect");
+___('account_password_success',       'EN', "Your password has been changed");
+___('account_password_success',       'FR', "Votre mot de passe a été changé");

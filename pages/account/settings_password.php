@@ -12,13 +12,10 @@ user_restrict_to_users();
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/account/settings_nsfw";
-$page_title_en    = "Settings: Adult content";
-$page_title_fr    = "Réglages : Vulgarité";
-$page_description = "Decide whether your account should let you display adult content on the website";
-
-// Extra JS
-$js = array('common/toggle', 'account/settings');
+$page_url         = "pages/account/settings_password";
+$page_title_en    = "Settings: Password";
+$page_title_fr    = "Réglages : Mot de passe";
+$page_description = "Change your NoBleme account's password";
 
 
 
@@ -30,23 +27,13 @@ $js = array('common/toggle', 'account/settings');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Update nsfw settings
+// Update the account's password
 
-if(isset($_POST['account_settings_nsfw']))
-  account_update_settings('show_nsfw_content', form_fetch_element('account_settings_nsfw'));
+if(isset($_POST['account_settings_password_submit']))
+  $account_password_error = account_update_password(  form_fetch_element('account_settings_password_current')  ,
+                                                      form_fetch_element('account_settings_password_new')      ,
+                                                      form_fetch_element('account_settings_password_confirm')  );
 
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Current nsfw settings
-
-// Fetch the current value
-$nsfw_settings = user_settings_nsfw();
-
-// Prepare the selector
-for($i = 0; $i <= 2; $i++)
-  $nsfw_selected[$i] = ($nsfw_settings == $i) ? ' selected' : '';
 
 
 
@@ -57,42 +44,54 @@ for($i = 0; $i <= 2; $i++)
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_50">
+<div class="width_30">
 
-  <h1>
-    <?=__('submenu_user_settings_nsfw')?>
-  </h1>
+  <h2 class="bigpadding_bot">
+    <?=__('account_password_title')?>
+  </h2>
 
-  <p>
-    <?=__('account_nsfw_intro')?>
-  </p>
-
-  <p>
-    <?=__('account_nsfw_levels')?>
-  </p>
-
-  <div class="bigpadding_top">
+  <form method="POST">
     <fieldset>
 
-      <label for="account_settings_nsfw"><?=__('account_nsfw_label')?></label>
-      <select class="indiv align_left" id="account_settings_nsfw" name="account_settings_nsfw" onchange="settings_nsfw_update();">
-        <option value="0"<?=$nsfw_selected[0]?>><?=__('account_nsfw_0')?></option>
-        <option value="1"<?=$nsfw_selected[1]?>><?=__('account_nsfw_1')?></option>
-        <option value="2"<?=$nsfw_selected[2]?>><?=__('account_nsfw_2')?></option>
-      </select>
+      <div class="smallpadding_bot">
+        <label for="account_settings_password_current"><?=__('account_password_current')?></label>
+        <input class="indiv" type="password" id="account_settings_password_current" name="account_settings_password_current" value="">
+      </div>
+
+      <div class="padding_top">
+        <label for="account_settings_password_new"><?=__('account_password_new')?></label>
+        <input class="indiv" type="password" id="account_settings_password_new" name="account_settings_password_new" value="">
+      </div>
+
+      <div class="smallpadding_top">
+        <label for="account_settings_password_confirm"><?=__('account_password_confirm')?></label>
+        <input class="indiv" type="password" id="account_settings_password_confirm" name="account_settings_password_confirm" value="">
+      </div>
+
+      <div class="padding_top">
+        <input type="submit" name="account_settings_password_submit" value="<?=__('account_password_submit')?>">
+      </div>
 
     </fieldset>
+  </form>
+
+  <?php if(isset($account_password_error) && $account_password_error) { ?>
+
+  <div class="padding_top">
+    <div class="red text_white bigger uppercase bold align_center">
+      <?=$account_password_error?>
+    </div>
   </div>
 
-  <div class="hidden padding_top bold uppercase" id="account_settings_nsfw_confirm">
-    <?php } if(isset($_POST['account_settings_nsfw'])) { ?>
-    <div class="green text_white align_center bigger vspaced">
-      <?=__('account_nsfw_confirm')?>
+  <?php } else if(isset($_POST['account_settings_password_submit'])) { ?>
+
+  <div class="padding_top">
+    <div class="green text_white bigger uppercase bold align_center">
+      <?=__('account_password_success')?>
     </div>
-    <?php } else { ?>
-    &nbsp;
-    <?php } if(!page_is_fetched_dynamically()) { ?>
   </div>
+
+  <?php } ?>
 
 </div>
 

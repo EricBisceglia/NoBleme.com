@@ -12,10 +12,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  user_create_account           Accept or reject a user's registration attempt.                                    */
 /*                                                                                                                   */
-/*  account_settings_update       Updates the currently logged in account's settings.                                */
-/*                                                                                                                   */
 /*  account_get_email             Returns the currently logged in account's e-mail address.                          */
 /*  account_update_email          Updates the currently logged in account's e-mail address.                          */
+/*  account_update_password       Updates the currently logged in account's password.                                */
+/*  account_update_settings       Updates the currently logged in account's settings.                                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -293,43 +293,6 @@ function user_create_account( string  $username               ,
 
 
 /**
- * Updates the currently logged in account's settings.
- *
- * @param   string  $setting  The account setting which should be updated.
- * @param   int     $value    The value to which the account setting should be updated.
- *
- * @return  void
- */
-
-function account_settings_update( string  $setting  ,
-                                  int     $value    ) : void
-{
-  // Only logged in users can use this
-  user_restrict_to_users();
-
-  // Prepare and sanitize the data
-  $user_id  = sanitize(user_get_id(), 'int');
-  $setting  = sanitize($setting, 'string');
-
-  // Ensure the values are within allowed boundaries and sanitize them
-  if($setting == 'show_nsfw_content')
-    $value = sanitize($value, 'int', 0, 2);
-  else
-    $value = sanitize($value, 'int', 0, 1);
-
-  // Update the setting
-  query(" UPDATE  users_settings
-          SET     users_settings.$setting = '$value'
-          WHERE   users_settings.fk_users = '$user_id' ");
-
-  // All went well
-  return;
-}
-
-
-
-
-/**
  * Returns the currently logged in account's e-mail address.
  *
  * @return  string
@@ -389,4 +352,106 @@ function account_update_email( string  $email ) : mixed
 
   // All went well
   return NULL;
+}
+
+
+
+
+/**
+ * Updates the currently logged in account's password.
+ *
+ * @param   string      $current_password       The account's current password.
+ * @param   string      $new_password           The desired new password.
+ * @param   string      $new_password_confirm   Confirmatino of the desired new password.
+ *
+ * @return  string|null                         A string if something went wrong, or null if all went well.
+ */
+
+function account_update_password( string  $current_password     ,
+                                  string  $new_password         ,
+                                  string  $new_password_confirm ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('account.lang.php');
+
+  // Only logged in users can use this
+  user_restrict_to_users();
+
+  // Error: No password provided (except in dev mode where passwordless accounts are allowed)
+  if(!$current_password && !$GLOBALS['dev_mode'])
+    return __('account_password_error_current');
+  if(!$new_password)
+    return __('account_password_error_confirm');
+  if(!$new_password_confirm)
+    return __('account_password_error_confirm');
+
+  // Error: Different passwords
+  if($new_password != $new_password_confirm)
+    return __('users_register_error_passwords');
+
+  // Error: Password is too short
+  if(mb_strlen($new_password) < 8)
+    return __('users_register_error_password_length');
+
+  // Run flood check to avoid using this form to bruteforce an account's password
+  flood_check();
+
+  // Prepare and sanitize the data
+  $user_id          = sanitize(user_get_id(), 'int');
+  $current_password = (!$current_password && $GLOBALS['dev_mode']) ? '' : encrypt_data($current_password);
+  $new_password     = sanitize(encrypt_data($new_password), 'string');
+
+  // Fetch the current password
+  $dpass = mysqli_fetch_array(query(" SELECT  users.password AS 'u_pass'
+                                      FROM    users
+                                      WHERE   users.id = '$user_id' "));
+
+  // Error: Incorrect password
+  if($current_password && $current_password != $dpass['u_pass'])
+    return __('account_password_error_wrong');
+
+  // Update the password
+  query(" UPDATE  users
+          SET     users.password  = '$new_password'
+          WHERE   users.id        = '$user_id' ");
+
+  // All went well
+  return NULL;
+}
+
+
+
+
+/**
+ * Updates the currently logged in account's settings.
+ *
+ * @param   string  $setting  The account setting which should be updated.
+ * @param   int     $value    The value to which the account setting should be updated.
+ *
+ * @return  void
+ */
+
+function account_update_settings( string  $setting  ,
+                                  int     $value    ) : void
+{
+  // Only logged in users can use this
+  user_restrict_to_users();
+
+  // Prepare and sanitize the data
+  $user_id  = sanitize(user_get_id(), 'int');
+  $setting  = sanitize($setting, 'string');
+
+  // Ensure the values are within allowed boundaries and sanitize them
+  if($setting == 'show_nsfw_content')
+    $value = sanitize($value, 'int', 0, 2);
+  else
+    $value = sanitize($value, 'int', 0, 1);
+
+  // Update the setting
+  query(" UPDATE  users_settings
+          SET     users_settings.$setting = '$value'
+          WHERE   users_settings.fk_users = '$user_id' ");
+
+  // All went well
+  return;
 }
