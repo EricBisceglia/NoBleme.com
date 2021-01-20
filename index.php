@@ -3,8 +3,8 @@
 /*                                                       SETUP                                                       */
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
-include_once './inc/includes.inc.php';    # Core
-include_once './lang/homepage.lang.php';  # Translations
+include_once './inc/includes.inc.php';  # Core
+include_once './lang/nobleme.lang.php'; # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');

@@ -98,24 +98,30 @@
 .nopadding_top   { padding-top: 0;                              }
 .nopadding       { padding-top: 0; padding-bottom: 0;           }
 
-.flexcontainer   { display: -webkit-flex; display: flex;      }
-.flex            { flex: 1;                                   }
-.gridcontainer   { display: grid;                             }
-.gridcenter      { display: grid; align-items: center;        }
-.clearfix:after  { clear: both; content: ' '; display: table; }
-.float_left      { float: left; margin-right: 0.5em;          }
-.float_right     { float: right; margin-left: 0.5em;          }
-.nowrap          { white-space: nowrap;                       }
-.dowrap          { white-space: normal;                       }
-.scrollbar       { overflow-x: scroll;                        }
-.vscrollbar      { overflow-y: scroll;                        }
+.flexcontainer   { display: -webkit-flex; display: flex;        }
+.flex            { flex: 1;                                     }
+.gridcontainer   { display: grid;                               }
+.gridcenter      { display: grid; align-items: center;          }
+.clearfix:after  { clear: both; content: ' '; display: table;   }
+.floater         { width: 25.0rem; border: double #CACACA 3px   ;
+                   padding: 0.5em; text-align: center;          }
+.float_left      { float: left; margin: 0.3em 0.8em 0.2em 0em;  }
+.float_right     { float: right; margin: 0.3em 0em 0.2em 0.8em; }
+.float_above     { margin-top: 2.2em;                           }
+.nowrap          { white-space: nowrap;                         }
+.dowrap          { white-space: normal;                         }
+.scrollbar       { overflow-x: scroll;                          }
+.vscrollbar      { overflow-y: scroll;                          }
 
-@media (min-width: 1025px)     {
-.icon      { height: 3.0rem;   }
-.smallicon { height: 1.6rem; } }
-@media (max-width: 1024px)     {
-.icon      { height: 2.0rem;   }
-.smallicon { height: 1.3rem; } }
+@media (min-width: 1025px)            {
+.icon         { height: 3.0rem;       }
+.smallicon    { height: 1.6rem;       }
+.floater      { font-size: 1.4rem;  } }
+@media (max-width: 1024px)            {
+.icon         { height: 2.0rem;       }
+.smallicon    { height: 1.3rem;       }
+.floater      { width: 20.0rem;       }
+.float_above  { margin-top: 3.0rem; } }
 
 /************************************************* SPECIFIC CLASSES **************************************************/
 table.noresize { table-layout: fixed; }
