@@ -81,7 +81,7 @@ if($GLOBALS['dev_mode'] && $GLOBALS['full_debug_mode'])
 
         <?php } ?>
 
-        <?=__link("todo_link", __('footer_legal'), "", 1, $path);?><br>
+        <?=__link("pages/doc/privacy", __('footer_legal'), "", 1, $path);?><br>
 
         <?=__link("todo_link", __('footer_copyright', 0, 0, 0, array($copyright_date)), "", 1, $path);?><br>
 

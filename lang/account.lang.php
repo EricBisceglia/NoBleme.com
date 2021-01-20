@@ -194,11 +194,11 @@ ___('account_nsfw_confirm', 'FR', "Vos réglages ont été mis à jour");
 
 // Header
 ___('account_privacy_intro',    'EN', <<<EOT
-On NoBleme, we highly value online privacy. As our {{link|todo_link|privacy policy}} states, we will only gather the bare minimum {{link|todo_link|user data}}, we will not use it in ways other than the bare minimum required to run the website, we will never share or sell your personal data, and we let you {{link|todo_link|fully opt out}} at any time.
+On NoBleme, we highly value online privacy. As our {{link|pages/doc/privacy|privacy policy}} states, we will only gather the bare minimum {{link|todo_link|user data}}, we will not use it in ways other than the bare minimum required to run the website, we will never share or sell your personal data, and we let you {{link|todo_link|fully opt out}} at any time.
 EOT
 );
 ___('account_privacy_intro',    'FR', <<<EOT
-Sur NoBleme, nous prêtons beaucoup d'importance au respect de votre vie privée. Comme indiqué dans notre {{link|todo_link|politique de confidentialité}}, nous conservons le strict minimum de vos {{link|todo_link|données personnelles}}, ne les utilisons que dans le fonctionnement interne du site, n'avons pas l'intention de partager ou vendre vos données personnelles, et vous offrons la possibilité de {{link|todo_link|tout supprimer}} à tout moment.
+Sur NoBleme, nous prêtons beaucoup d'importance au respect de votre vie privée. Comme indiqué dans notre {{link|pages/doc/privacy|politique de confidentialité}}, nous conservons le strict minimum de vos {{link|todo_link|données personnelles}}, ne les utilisons que dans le fonctionnement interne du site, n'avons pas l'intention de partager ou vendre vos données personnelles, et vous offrons la possibilité de {{link|todo_link|tout supprimer}} à tout moment.
 EOT
 );
 ___('account_privacy_others',   'EN', <<<EOT

@@ -244,11 +244,11 @@ Afin d'éviter certaines formes d'abus, nous ne vous laissons pas la possibilit�
 EOD
 );
 ___('users_message_admins_nick_past',  'EN', <<<EOD
-Once your username is changed, it will also be retroactively changed in almost all of the website's past content. However there might remain a few places where your old username is still present - but with no link to your account. If you spot your old username still in use somewhere after changing to your new one, use the {{link|pages/messages/admins|administrative contact form}} to report it, and we will fix it. As stated in our {{link|todo_link|privacy policy}}, we believe in your right to remain anonymous, and as of such will help you erase any traces left following the change.
+Once your username is changed, it will also be retroactively changed in almost all of the website's past content. However there might remain a few places where your old username is still present - but with no link to your account. If you spot your old username still in use somewhere after changing to your new one, use the {{link|pages/messages/admins|administrative contact form}} to report it, and we will fix it. As stated in our {{link|pages/doc/privacy|privacy policy}}, we believe in your right to remain anonymous, and as of such will help you erase any traces left following the change.
 EOD
 );
 ___('users_message_admins_nick_past',  'FR', <<<EOD
-Une fois votre pseudonyme changé, il sera également changé rétroactivement dans la majorité des contenus du site. Toutefois, il se peut que votre ancien pseudonyme soit toujours présent à quelques endroits - mais sans lien avec votre compte. Si vous repérez votre ancien pseudonyme quelque part sur le site après en avoir changé, {{link|pages/messages/admins|contactez l'administration}} et nous le corrigerons. Comme indiqué dans notre {{link|todo_link|politique de confidentialité}}, nous croyons en votre droit à l'anonymat, et par conséquent vous aiderons à effacer toute trace qui pourrait rester suite à vote changement de pseudonyme.
+Une fois votre pseudonyme changé, il sera également changé rétroactivement dans la majorité des contenus du site. Toutefois, il se peut que votre ancien pseudonyme soit toujours présent à quelques endroits - mais sans lien avec votre compte. Si vous repérez votre ancien pseudonyme quelque part sur le site après en avoir changé, {{link|pages/messages/admins|contactez l'administration}} et nous le corrigerons. Comme indiqué dans notre {{link|pages/doc/privacy|politique de confidentialité}}, nous croyons en votre droit à l'anonymat, et par conséquent vous aiderons à effacer toute trace qui pourrait rester suite à vote changement de pseudonyme.
 EOD
 );
 
@@ -265,11 +265,11 @@ La suppression de comptes n'est pas automatisée. Vous devez écrire un message 
 EOD
 );
 ___('users_message_admin_del_history',  'EN', <<<EOD
-Deleting an account includes the deletion of a lot of historical content on the website, which we are looking to avoid doing unless strictly necessary. However, our {{link|todo_link|privacy policy}} is more important to us than our feelings on the integrity of the website's history. Therefore, we will honor your right to disappearance as long as you properly explain in the form below why you want your account deleted.
+Deleting an account includes the deletion of a lot of historical content on the website, which we are looking to avoid doing unless strictly necessary. However, our {{link|pages/doc/privacy|privacy policy}} is more important to us than our feelings on the integrity of the website's history. Therefore, we will honor your right to disappearance as long as you properly explain in the form below why you want your account deleted.
 EOD
 );
 ___('users_message_admin_del_history',  'FR', <<<EOD
-Supprimer un compte implique la suppression de beaucoup de contenu historique du site, ce que nous essayons d'éviter de faire si ce n'est pas strictement nécessaire. Toutefois, notre {{link|todo_link|politique de confidentialité}} est plus importante pour nous que nos sentiments sur l'intégrité de l'historique du site. Par conséquent, nous honorerons votre droit à disparaître, à condition que vous expliquiez la raison pour laquelle vous désirez disparaître de NoBleme dans le formulaire ci-dessous.
+Supprimer un compte implique la suppression de beaucoup de contenu historique du site, ce que nous essayons d'éviter de faire si ce n'est pas strictement nécessaire. Toutefois, notre {{link|pages/doc/privacy|politique de confidentialité}} est plus importante pour nous que nos sentiments sur l'intégrité de l'historique du site. Par conséquent, nous honorerons votre droit à disparaître, à condition que vous expliquiez la raison pour laquelle vous désirez disparaître de NoBleme dans le formulaire ci-dessous.
 EOD
 );
 

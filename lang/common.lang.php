@@ -1003,11 +1003,11 @@ ___('login_form_error_forgotten_password',  'FR', "Mot de passe oublié ?");
 ___('users_lost_access_title',    'EN', "Lost account access");
 ___('users_lost_access_title',    'FR', "Accès perdu à votre compte");
 ___('users_lost_access_body',     'EN', <<<EOT
-As a part of its {{link++|todo_link|privacy policy|bold|{{1}}}}, NoBleme will protect your anonymity as much as possible. This means that you will never be sent any emails that could be used to link you to your identity on the website, or asking you to provide your password. On top of that, automated password recovery systems can be used in a few nefarious ways that we would rather not have to deal with. With this context in mind, NoBleme decided to not implement an automated account recovery process.
+As a part of its {{link++|pages/doc/privacy|privacy policy|bold|{{1}}}}, NoBleme will protect your anonymity as much as possible. This means that you will never be sent any emails that could be used to link you to your identity on the website, or asking you to provide your password. On top of that, automated password recovery systems can be used in a few nefarious ways that we would rather not have to deal with. With this context in mind, NoBleme decided to not implement an automated account recovery process.
 EOT
 );
 ___('users_lost_access_body',     'FR', <<<EOT
-Par respect pour la {{link++|todo_link|politique de confidentialité|bold|{{1}}}} de NoBleme, votre anonymité doit être protégée le plus possible. Cela signifie que vous ne recevrez jamais d'e-mail permettant de vous relier à votre identité sur NoBleme, ou vous demandant votre mot de passe. Par ailleurs, les systèmes de récupération automatique de mots de passe perdus peuvent être exploités de plusieurs façons que nous n'avons pas envie de devoir gérer. Ce contexte devrait vous aider à comprendre pourquoi NoBleme a fait le choix de ne pas avoir de système de récupération de compte automatisé.
+Par respect pour la {{link++|pages/doc/privacy|politique de confidentialité|bold|{{1}}}} de NoBleme, votre anonymité doit être protégée le plus possible. Cela signifie que vous ne recevrez jamais d'e-mail permettant de vous relier à votre identité sur NoBleme, ou vous demandant votre mot de passe. Par ailleurs, les systèmes de récupération automatique de mots de passe perdus peuvent être exploités de plusieurs façons que nous n'avons pas envie de devoir gérer. Ce contexte devrait vous aider à comprendre pourquoi NoBleme a fait le choix de ne pas avoir de système de récupération de compte automatisé.
 EOT
 );
 ___('users_lost_access_solution', 'EN', <<<EOT
