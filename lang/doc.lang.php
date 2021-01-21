@@ -254,11 +254,11 @@ Sachez tout de même que les contrats utilisateur ne concernent que les disputes
 EOT
 );
 ___('privacy_agreement_3',      'EN', <<<EOT
-Further details about the legal implications of using NoBleme - for example, the intellectual property of any content you'd share on NoBleme - can be found on our {{link|todo_link|legal notices page}}.
+Further details about the legal implications of using NoBleme - for example, the intellectual property of any content you'd share on NoBleme - can be found in our {{link|pages/doc/legal|legal notice}}.
 EOT
 );
 ___('privacy_agreement_3',      'FR', <<<EOT
-Vous trouverez plus de détails sur les implications légales de l'utilisation de NoBleme - par exemple sur la propriété intellectuelle des contenus que vous partagez sur le site - dans les {{link|todo_link|mentions légales}}.
+Vous trouverez plus de détails sur les implications légales de l'utilisation de NoBleme - par exemple sur la propriété intellectuelle des contenus que vous partagez sur le site - dans les {{link|pages/doc/legal|mentions légales}}.
 EOT
 );
 
@@ -280,5 +280,89 @@ EOT
 );
 ___('privacy_source_2',     'FR', <<<EOT
 Vous trouverez plus d'informations sur la décision de publier le code source dans les {{link|todo_link|coulisses de NoBleme}}.
+EOT
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   LEGAL  NOTICE                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('legal_intro',  'EN', <<<EOT
+NoBleme is based and hosted in France, thus french and european intellectual property laws apply to any creative and/or original content created by or for NoBleme. Any third party content (not created by or for NoBleme) still belongs to its creators and/or rights holder and thus international intellectual property laws may apply to some of the contents hosted on NoBleme. If any content over which you hold rights or for which you represent the rights holders is being used on NoBleme without your permission and you would like for it to be removed, please use the {{link|pages/messages/admins|administrative contact form}} - make sure to include proof of intellectual property ownership - and your request will be treated as soon as possible.
+EOT
+);
+___('legal_intro',  'FR', <<<EOT
+NoBleme est basé et hébergé en France, par conséquent les lois françaises et européennes sur la propriété intellectuelle s'appliquent à tout contenu créatif et/ou original crée par ou pour NoBleme. Tout contenu tiers (qui n'est pas crée par ou pour NoBleme) appartient à ses créateurs et/ou aux détenteurs de leurs droits, par conséquent des droits internationaux de propriété intellectuelle peuveunt s'appliquer à certains contenus de NoBleme. Si des contenus sur lesquels vous avez droits ou représentez les détenteurs de droits sont utilisés sur NoBleme sans votre permission, effectuez une réclamation via le {{link|pages/messages/admins|formulaire de contact administratif}} - assurez-vous d'inclure une preuve de vos droits - et votre requête sera traitée au plus vite.
+EOT
+);
+
+
+// Responsibility
+___('legal_responsibility_title', 'EN', "Responsibility over user submitted content");
+___('legal_responsibility_title', 'FR', "Responsabilité sur les contenus utilisateur");
+___('legal_responsibility_body',  'EN', <<<EOT
+As it is free for anyone to create an account on NoBleme, and as moderation of user submitted content happens only after said content has been submitted on the website, we can not be held responsible for the content being submitted by users on the website until we see them. However, we have a clear {{link|pages/doc/coc|code of conduct}} which we expect both our users and ourselves to follow. Any content which goes against this code of conduct will be deleted as soon as possible, in a <i>best effort</i> manner, depending on the availability of our administrative team. Any users which go against this code of conduct will find themselves temporarily or permanently excluded from submitting content to NoBleme, preventing further abuse.
+EOT
+);
+___('legal_responsibility_body',  'FR', <<<EOT
+Vu que créer un compte sur NoBleme est gratuit, et vu que la modération des contenus partagés par les membres du site a lieu à postériori, nous ne pouvons pas être responsables des contenus partagés par les membres avant d'en avoir pris connaissance. Toutefois, nous avons un {{link|pages/doc/coc|code de conduite}} clair que tous les membres sont tenus de respecter - l'équipe administrative incluse. Tout contenu allant à l'encontre de ce code de conduite sera supprimé au plus vite, selon la disponibilité de l'équipe administrative. Tout membre allant à l'encontre de ce code de conduite se verra privé de façon temporaire ou permanente de la possibilité de partager du contenu sur NoBleme.
+EOT
+);
+
+
+// User content
+___('legal_user_content_title', 'EN', "Intellectual property rights over user submitted content");
+___('legal_user_content_title', 'FR', "Propriété intellectuelle des contenus utilisateur");
+___('legal_user_content_body',  'EN', <<<EOT
+Any time you submit your own creative and/or original content on NoBleme, you implicitly authorize NoBleme to reuse this content within the boundaries of the website or any other platform belonging to NoBleme, and authorize other users of the website to quote the content that you posted. However, as the author of these creative and/or original works, you automatically gain the ownership of the full intellectual property rights on any of those works by submitting them to NoBleme. This means that NoBleme does not own the right to reuse, distribute, or monetize your works in any way of form without your authorization. We respect ownership.
+EOT
+);
+___('legal_user_content_body',  'FR', <<<EOT
+En publiant du contenu original sur NoBleme, vous autorisez implicitement à titre gracieux leur reproduction et diffusion sur le reste de NoBleme et sur les autres plateformes appartenent à NoBleme, et autorisez les autres membres de NoBleme à citer vos contenus sur le reste de NoBleme. Toutefois, en tant qu'auteur de tout contenu original que vous publiez sur NoBleme, vous en conservez la propriété intellectuelle et les droits d'auteur assortis. NoBleme s'engage par conséquent à ne pas publier hors du site sans votre permission et à ne pas monétiser les contenus originaux que vous publiez sur le site. Nous respectons entièrement vos droits d'auteur et ne nous donnons pas les pouvoirs requis pour en prendre le contrôle.
+EOT
+);
+
+
+// Fair use
+___('legal_fair_title', 'EN', "Fair use of third party content");
+___('legal_fair_title', 'FR', "Usage loyal de contenus tiers");
+___('legal_fair_body',  'EN', <<<EOT
+Some third party content might be used on NoBleme for educative or encyclopedic purposes, mainly in the {{link|todo_link|21st century compendium}}. For these use cases, credit will be given to the original author when possible. In some cases, due to the anonymous nature of many Internet platforms, it is hard or even impossible to find and credit the author of some original creative works. If you can demonstrate ownership of a piece of creative work hosted on NoBleme over which you hold intellectual property rights, use our {{link|pages/messages/admins|administrative contact form}} to make your request and it will be removed as soon as possible.
+EOT
+);
+___('legal_fair_body',  'FR', <<<EOT
+Certains contenus tiers sont utilisés sur NoBleme à titre pédagogique ou encyclopédique, principalement dans le {{link|todo_link|compendium du 21ème siècle}}. Dans ces cas, nous nous efforçons de créditer les auteurs de ces contenus. Malheureusement, de par la nature anonyme et chaotique d'Internet, il n'est pas toujours possible d'identifier l'auteur de contenus créatifs. Si vous pouvez démontrer que vous êtes à l'origine d'un contenu tiers hébergé sur NoBleme et que vous désirez vous faire créditer ou demander la suppression de ce contenu, utilisez notre {{link|pages/messages/admins|formulaire de contact administratif}} pour formuler votre requête, qui sera traitée dès que possible.
+EOT
+);
+
+
+// Source code
+___('legal_source_title', 'EN', "Using NoBleme's source code");
+___('legal_source_title', 'FR', "Utiliser le code source de NoBleme");
+___('legal_source_body',  'EN', <<<EOT
+As stated {{link|todo_link|behind the scenes}}, NoBleme's source code has been open sourced - thus made available to the general public. However, please take note that open sourced does not necessarily mean free to re-use for your own projects. In NoBleme's case, it has been open sourced under the very permissive {{external|https://en.wikipedia.org/wiki/MIT_License|MIT license}}, which means that you are free to use any or all of NoBleme's source code in your own projects as long as you properly credit its author by including a copy of the permission notice included in NoBleme's licence in your own source code - along with the copyright notice: <i>Copyright (c) 2005 Eric Bisceglia / NoBleme.com</i>.
+EOT
+);
+___('legal_source_body',  'FR', <<<EOT
+Comme expliqué dans les {{link|todo_link|coulisses de NoBleme}}, le code source de NoBleme a été <i>open sourcé</i> - c'est à dire publié intégralement et publiquement. Notez toutefois que <i>open source</i> ne signifie pas libre de droit. Dans le cas de NoBleme, le code source a été publié sous la très permissive {{external|https://fr.wikipedia.org/wiki/Licence_MIT|licence MIT}}, ce qui signifie que vous êtes libre de réutiliser une partie du code source ou même tout le code source de NoBleme dans vos propres projets, à condition de correctement en créditer l'auteur d'origine en incluant une copie de la <i>permission notice</i> incluse dans la licence se trouvant dans le code source de NoBleme - ainsi que la <i>copyright notice</i> suivante : <i>Copyright (c) 2005 Eric Bisceglia / NoBleme.com</i>.
+EOT
+);
+
+
+// Conclusion
+___('legal_conclusion_title', 'EN', "Questions, takedown notices, disputes");
+___('legal_conclusion_title', 'FR', "Questions, requêtes, disputes");
+___('legal_conclusion_body',  'EN', <<<EOT
+If you have any questions regarding our legal notice, if you would like to exercise your intellectual property rights through a takedown notice, or if you would like to open a legal dispute with NoBleme, please do so through our {{link|pages/messages/admins|administrative contact form}}. It is the only proper and guaranteed way to reach our administrative team. Using the form requires the creation of a NoBleme account, which is free, quick, and does not require you to submit any personal data. Replies to your inquiry will be done through a private message which you will find on your {{link|pages/messages/inbox|account's message inbox}}, unless you specify an e-mail address in your message in which case the conversation will continue through e-mails.
+EOT
+);
+___('legal_conclusion_body',  'FR', <<<EOT
+Si vous avez des questions sur nos mentions légales, si vous voulez exercer vos droits de propriété intellectuelle sur des contenus de NoBleme, ou si vous désirez initier une dispute légale avec NoBleme, merci de le faire via notre {{link|pages/messages/admins|formulaire de contact administratif}}. Il s'agit du seul moyen garanti de vous assurer que votre requête atteigne l'équipe d'administration du site. Pour utiliser ce formulaire, vous devrez créer un compte sur NoBleme, ce qui est gratuit, rapide, et ne requiert le partage d'aucune information personnelle. Les réponses à vos questions ou requêtes se feront via message privé que vous pourrez trouver sur la {{link|pages/messages/inbox|boîte de réception de votre compte}}, sauf si vous précisez une adresse e-mail à utiliser dans votre question ou requête, auquel cas la conversation pourra continuer par e-mail.
 EOT
 );

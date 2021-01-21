@@ -492,22 +492,28 @@ $javascripts .= '
           <?=__link('pages/nobleme/activity', __('submenu_nobleme_activity'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_internet'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/nobleme/nobleme', __('submenu_nobleme_what_is'), 'header_submenu_link', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=__('submenu_nobleme_users')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_irc'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/users/online', __('submenu_nobleme_online'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/politics/manifesto', __('submenu_nobleme_manifesto'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/users/list', __('submenu_nobleme_userlist'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/users/admins', __('submenu_nobleme_staff'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
           <?=__('submenu_nobleme_support')?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('pages/nobleme/nobleme', __('submenu_nobleme_what_is'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('pages/doc/coc', __('submenu_nobleme_coc'), 'header_submenu_link', 1, $path);?>
@@ -517,6 +523,9 @@ $javascripts .= '
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_nobleme_personal_data'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/doc/legal', __('submenu_nobleme_legal'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('pages/messages/admins', __('submenu_nobleme_contact_admin'), 'header_submenu_link', 1, $path);?>
@@ -541,21 +550,6 @@ $javascripts .= '
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_nobleme_report_bug'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-      </div>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
-          <?=__('submenu_nobleme_users')?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('pages/users/online', __('submenu_nobleme_online'), 'header_submenu_link', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('pages/users/list', __('submenu_nobleme_userlist'), 'header_submenu_link', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('pages/users/admins', __('submenu_nobleme_staff'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
