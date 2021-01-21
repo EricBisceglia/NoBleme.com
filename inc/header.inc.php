@@ -522,7 +522,7 @@ $javascripts .= '
           <?=__link('pages/doc/privacy', __('submenu_nobleme_privacy'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_personal_data'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/doc/data', __('submenu_nobleme_personal_data'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('pages/doc/legal', __('submenu_nobleme_legal'), 'header_submenu_link', 1, $path);?>

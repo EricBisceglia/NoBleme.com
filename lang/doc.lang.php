@@ -167,11 +167,11 @@ EOT
 ___('privacy_data_title', 'EN', "Your personal data");
 ___('privacy_data_title', 'FR', "Vos données personnelles");
 ___('privacy_data_1',     'EN', <<<EOT
-The most important part of online privacy is the fate of your personal data. NoBleme collects the strict minimum personal data required to properly run the website, which is not much. If you are curious about what we specifically collect about you, how long we keep it, why we need it, how we use it, where it is hosted, etc. we have a whole page of the website dedicated to it: {{link|todo_link|Your personal data}}.
+The most important part of online privacy is the fate of your personal data. NoBleme collects the strict minimum personal data required to properly run the website, which is not much. If you are curious about what we specifically collect about you, how long we keep it, why we need it, how we use it, where it is hosted, etc. we have a whole page of the website dedicated to it: {{link|pages/doc/data|Your personal data}}.
 EOT
 );
 ___('privacy_data_1',     'FR', <<<EOT
-L'aspect le plus important d'une politique de confidentialité est le destin de vos données personnelles. NoBleme ne collecte de ces données que le strict minimum requis au bon fonctionnement du site. Si vous êtes curieux de ce que nous collectons exactement comme données personnelles, pendant combien de temps nous les conservons, comment nous les utilisons, pourquoi nous en avons besoin, où elles sont stockées, etc. nous avons une page entière du site dédiée à répondre à ces questions : {{link|todo_link|Vos données personnelles}}.
+L'aspect le plus important d'une politique de confidentialité est le destin de vos données personnelles. NoBleme ne collecte de ces données que le strict minimum requis au bon fonctionnement du site. Si vous êtes curieux de ce que nous collectons exactement comme données personnelles, pendant combien de temps nous les conservons, comment nous les utilisons, pourquoi nous en avons besoin, où elles sont stockées, etc. nous avons une page entière du site dédiée à répondre à ces questions : {{link|pages/doc/data|Vos données personnelles}}.
 EOT
 );
 ___('privacy_data_2',     'EN', <<<EOT
@@ -364,5 +364,160 @@ EOT
 );
 ___('legal_conclusion_body',  'FR', <<<EOT
 Si vous avez des questions sur nos mentions légales, si vous voulez exercer vos droits de propriété intellectuelle sur des contenus de NoBleme, ou si vous désirez initier une dispute légale avec NoBleme, merci de le faire via notre {{link|pages/messages/admins|formulaire de contact administratif}}. Il s'agit du seul moyen garanti de vous assurer que votre requête atteigne l'équipe d'administration du site. Pour utiliser ce formulaire, vous devrez créer un compte sur NoBleme, ce qui est gratuit, rapide, et ne requiert le partage d'aucune information personnelle. Les réponses à vos questions ou requêtes se feront via message privé que vous pourrez trouver sur la {{link|pages/messages/inbox|boîte de réception de votre compte}}, sauf si vous précisez une adresse e-mail à utiliser dans votre question ou requête, auquel cas la conversation pourra continuer par e-mail.
+EOT
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   PERSONAL DATA                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('doc_data_intro_1', 'EN', <<<EOT
+As outlined in our {{link|pages/doc/privacy|privacy policy}} (which is short and simple - give it a read!), NoBleme collects the strict minimum amount of personal data required to make the website work correctly. On this page, you will find a list of all the personal data NoBleme collected about you, and for each element an explanation of why we gathered it, how long we plan to keep it, and how we use it. Move your pointer over or click on blurred text to reveal it.
+EOT
+);
+___('doc_data_intro_1', 'FR', <<<EOT
+Comme précisé dans notre {{link|pages/doc/privacy|politique de confidentialité}}, NoBleme collecte le strict minimum de vos données personnelles requis pour le bon fonctionnement du site. Sur cette page, vous trouverez la liste de toutes les données personnelles stockées par NoBleme à votre sujet, et pour chacune d'entre elle une explication de pourquoi nous les collectons, combien de temps nous comptons les garder, et comment nous les utilisons. Déplacez votre pointeur ou cliquez sur les textes floutés pour les révéler.
+EOT
+);
+___('doc_data_intro_2', 'EN', "The following statements are true for all of the personal data gathered on NoBleme:");
+___('doc_data_intro_2', 'FR', "Les affirmations suivantes sont vraies pour toutes les données personnelles collectées sur NoBleme :");
+___('doc_data_list_1',  'EN', "This data is only used within the confines of NoBleme.com");
+___('doc_data_list_1',  'FR', "Ces données ne seront utilisées que sur NoBleme.com");
+___('doc_data_list_2',  'EN', "This data will never be used outside of NoBleme.com");
+___('doc_data_list_2',  'FR', "Ces données ne seront jamais utilisées hors de NoBleme.com");
+___('doc_data_list_3',  'EN', "This data will never be shared or sold to third parties");
+___('doc_data_list_3',  'FR', "Ces données ne seront jamais partagées ou vendues à des tiers");
+___('doc_data_list_4',  'EN', "This data is only visible to yourself and the website's {{link|pages/users/admins|administrators}}");
+___('doc_data_list_4',  'FR', "Ces données ne sont visibles que par vous et par {{link|pages/users/admins|l'administration}}");
+___('doc_data_list_5',  'EN', "This data will be stored solely on our servers in France");
+___('doc_data_list_5',  'FR', "Ces données sont exclusivement stockées sur nos serveurs en France");
+
+
+// IP address
+___('doc_data_ip_title',    'EN', "Your IP address:");
+___('doc_data_ip_title',    'FR', "Votre adresse IP :");
+___('doc_data_ip_guest_1',  'EN', <<<EOT
+As a guest (not logged into an account), your IP address is kept in NoBleme's database for <span class="bold">up to a month</span>.
+EOT
+);
+___('doc_data_ip_guest_1',  'FR', <<<EOT
+En tant que visiteur (non connecté à un compte), votre adresse IP sera gardée dans la base de données de NoBleme pendant <span class="bold">un maximum d'un mois</span>.
+EOT
+);
+___('doc_data_ip_guest_2',  'EN', <<<EOT
+We use IP addresses as a way to differentiate guests on the {{link|pages/users/online|who's online}} page, and as a way to track login attempts done on each user account in order to prevent {{external|https://en.wikipedia.org/wiki/Brute-force_attack|bruteforcing}} of account passwords. Your IP address is not used to track your activity on the website, and it is not used in any website logs that are kept for more than a month. We have no interest in tracking guest activity beyond security measures.
+EOT
+);
+___('doc_data_ip_guest_2',  'FR', <<<EOT
+Nous utilisons les adresses IP pour différencier les invités sur {{link|pages/users/online|qui est en ligne}}, ainsi que pour conserver les tentatives de connexions aux comptes utilisateur afin de prévenir le {{external|https://fr.wikipedia.org/wiki/Attaque_par_force_brute|bruteforcing}} des mots de passe. Votre adresse IP n'est pas utilisée pour traquer votre activité sur le site, et n'apparait que dans des logs qui sont supprimés au bout d'un mois. Nous n'avons aucun intérêt à traquer l'activité des invités à part pour préserver la sécurité des comptes.
+EOT
+);
+___('doc_data_ip_user_1',  'EN', <<<EOT
+Your IP address is kept in NoBleme's database <span class="bold">indefinitely</span>, or until it changes.
+EOT
+);
+___('doc_data_ip_user_1',  'FR', <<<EOT
+Votre adresse IP sera gardée dans la base de données de NoBleme <span class="bold">indéfiniment</span>, ou jusqu'à ce qu'elle change.
+EOT
+);
+___('doc_data_ip_user_2',  'EN', <<<EOT
+We use IP addresses as a way to detect multiple accounts (users creating more than one account), as a way to detect ban evasions (users creating new accounts in order to avoid a ban), and as a way to IP ban users that try to use ban evasion methods (a security measure necessary to enforce our {{link|pages/doc/coc|code of conduct}}).
+EOT
+);
+___('doc_data_ip_user_2',  'FR', <<<EOT
+Nous utilisons les adresses IP pour détecter les comptes multiples (une personne ayant plusieurs comptes), pour détecter les évasions de bannissements (une personne créant un nouveau compte lorsque son compte princpal est banni), et pour bannir par IP les personnes utilisant des méthodes d'évasion de bannissement (une mesure de sécurité requise pour le maintien de notre {{link|pages/doc/coc|code de conduite}}).
+EOT
+);
+___('doc_data_ip_user_3',  'EN', <<<EOT
+Do note that only your <span class="bold">latest</span> IP address is kept in our database. In case of change your previous IP address will immediately be deleted. We have no interest in logging your IP history. As outlined in our {{link|pages/doc/privacy|privacy policy}}, we strongly believe in your right to remain anonymous.
+EOT
+);
+___('doc_data_ip_user_3',  'FR', <<<EOT
+Notez que seule votre adresse IP <span class="bold">la plus récente</span> est conservée dans notre base de données. En cas de changement, votre adresse IP précédente sera immédiatement supprimée. Nous n'avons aucun intérêt à conserver votre historique d'adresses IP. Comme précisé dans notre {{link|pages/doc/privacy|politique de confidentialité}}, nous respectons votre droit à l'anonymat.
+EOT
+);
+
+
+// E-mail
+___('doc_data_email_title', 'EN', "Your e-mail address:");
+___('doc_data_email_title', 'FR', "Votre adresse e-mail :");
+___('doc_data_email_1',     'EN', <<<EOT
+Your e-mail address will be kept in NoBleme's database <span class="bold">indefinitely</span>, or until you change or delete it.
+EOT
+);
+___('doc_data_email_1',     'FR', <<<EOT
+Votre adresse e-mail sera gardée dans la base de données de NoBleme <span class="bold">indéfiniment</span>, ou jusqu'à ce qu'elle change ou soit supprimée.
+EOT
+);
+___('doc_data_email_2',     'EN', <<<EOT
+Even though NoBleme allows you to optionally link an e-mail address to your account, you are free to change or delete it at any time in your {{link|pages/account/settings_email|e-mail settings}}. The only use to your e-mail address is for account recovery in the event that you would forget your username or password. NoBleme will never send you e-mails, and will never publicly display your e-mail address.
+EOT
+);
+___('doc_data_email_2',     'FR', <<<EOT
+Même si NoBleme vous propose de relier votre compte à votre adresse e-mail, vous êtes libre à tout moment de modifier ou supprimer l'adresse e-mail liée à votre compte via vos {{link|pages/account/settings_email|réglages e-mail}}. La seule utilisation que nous ferons de votre adresse e-mail est comme outil de récupération de l'accès à votre compte dans l'éventualité où vous oblieriez votre pseudonyme ou votre mot de passe. NoBleme ne vous enverra jamais d'e-mails, et ne partagera jamais publiquement votre adresse e-mail.
+EOT
+);
+
+
+// Language
+___('doc_data_lang_title',    'EN', "Your chosen language:");
+___('doc_data_lang_title',    'FR', "Votre choix de langue :");
+___('doc_data_lang_guest_1',  'EN', <<<EOT
+Your language settings will <span class="bold">not be stored at all</span> in NoBleme's database.
+EOT
+);
+___('doc_data_lang_guest_1',  'FR', <<<EOT
+Votre choix de langue n'est <span class="bold">pas du tout conservé</span> dans la base de données de NoBleme.
+EOT
+);
+___('doc_data_lang_guest_2',  'EN', <<<EOT
+NoBleme has no interest in tracking the language of guests browsing the website. Thus, this data is stored on your computer/device rather than on NoBleme.
+EOT
+);
+___('doc_data_lang_guest_2',  'FR', <<<EOT
+NoBleme n'a aucun intérêt à conserver les données de langue des invités. Par conséquent, cette information est stockée sur votre ordinateur/appareil plutôt que sur NoBleme.
+EOT
+);
+___('doc_data_lang_users_1',  'EN', <<<EOT
+Your language settings will be kept in NoBleme's database <span class="bold">indefinitely</span>, or until you switch language.
+EOT
+);
+___('doc_data_lang_users_1',  'FR', <<<EOT
+Votre choix de langue sera stocké dans la base de données de NoBleme <span class="bold">indéfiniment</span>, ou jusqu'à ce que vous changiez de langue.
+EOT
+);
+___('doc_data_lang_users_2',  'EN', <<<EOT
+Keeping your chosen language in our database allows us to always show you NoBleme in your language of choice, even if you change computer/device. This information will never publicly be shared on the website, it is up to you whether you want to display your language(s) of choice in your {{link|pages/users/profile_edit|public profile}}.
+EOT
+);
+___('doc_data_lang_users_2',  'FR', <<<EOT
+Conserver votre choix de langue nous permet de toujours afficher NoBleme dans le langage de votre choix, même si vous changez d'ordinateur/appareil. Cette information ne sera jamais affichée publiquement, c'est à vous de décider si vous désirez afficher votre langue sur votre {{link|pages/users/profile_edit|profil public}}.
+EOT
+);
+
+
+// Conclusion
+___('doc_data_conclusion_title',  'EN', "This is it");
+___('doc_data_conclusion_title',  'FR', "C'est tout");
+___('doc_data_conclusion_1',      'EN', <<<EOT
+We stand by the statements of our {{link|pages/doc/privacy|privacy policy}}: only the bare minimum amount of personal data is gathered on NoBleme, all of it is necessary to operating the website properly, and none of it will ever be shared to third parties unless under legal constraint.
+EOT
+);
+___('doc_data_conclusion_1',      'FR', <<<EOT
+Nous maintenons les affirmations de notre {{link|pages/doc/privacy|politique de confidentialité}} : seul le strict minimum de vos données personnelles est récolté sur NoBleme, l'intégralité de ce que nous récoltons comme données est requis pour le bon fonctionnement de NoBleme, et aucune de ces données ne sera partagée avec des tiers sauf sous la contrainte légale.
+EOT
+);
+___('doc_data_conclusion_2',      'EN', <<<EOT
+We hope that you appreciate our respect for your privacy, and will understand the underlying message: it is possible to properly operate a website without collecting, sharing, or selling the personal data of its users. Most other websites simply deliberately decide to do so.
+EOT
+);
+___('doc_data_conclusion_2',      'FR', <<<EOT
+Nous espérons que vous appréciez le respect que nous portons à votre vie privée, et que vous verrez le message que cela implique: le bon fonctionnement d'un site Internet ne dépend pas de la collecte, du partage, ou de la vente des données pesonnelles de ses visiteurs. C'est un choix délibéré que font la majorité des autres sites et applications.
 EOT
 );

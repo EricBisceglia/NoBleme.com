@@ -54,7 +54,7 @@ ___('nobleme_home_statement',       'EN', <<<EOT
   There is a deliberate political stance on NoBleme: conservatives, reactionaries, and fascists are not welcome. There are a great number of websites and communities that already cater to their needs, NoBleme is not one of them. We have a vision which is not compatible with theirs: be a place where people who might feel oppressed in daily life feel comfortable expressing themselves without fear of being oppressed online. NoBleme is not a safe space though, everyone from every background is welcome, but we show low tolerance for aggressive or oppressive behaviors.
 </p>
 <p>
-  In the spirit of the early Internet days, NoBleme is entirely free to use, does not need donations to live, does not have any ads or third party content, does not track or use {{link++|todo_link|your personal data|bold|}}, and {{link++|todo_link|respects your privacy|bold|}}.
+  In the spirit of the early Internet days, NoBleme is entirely free to use, does not need donations to live, does not have any advertisements or third party content, {{link++|pages/doc/privacy|respects your privacy|bold|}}, and does not share {{link++|pages/doc/data|your personal data|bold|}}.
 </p>
 EOT
 );
@@ -66,7 +66,7 @@ ___('nobleme_home_statement',       'FR', <<<EOT
   NoBleme impose une seule limitation : les conservateurs, traditionnalistes, nationalistes, fascistes, et autres réactionnaires ne sont pas les bienvenus. Il y a un grand nombre de sites Internet et communautés faits pour eux, NoBleme n'en fait pas partie. En effet, leur vision est incompatible avec celle de NoBleme : nous voulons être une communauté inclusive, où celles et ceux qui souffrent de l'oppression de la société au quotidien peuvent venir s'exprimer librement sans craindre la moindre aggression.
 </p>
 <p>
-  Dans l'esprit des anciennes communautés Internet, NoBleme est entièrement gratuit à utiliser, n'a pas besoin de donations pour vivre, ne contient pas de publicités ni de contenus tiers, ne traque pas et ne conserve pas {{link++|todo_link|vos données personnelles|bold|}} contre votre volonté, et {{link++|todo_link|respecte votre vie privée|bold|}}.
+  Dans l'esprit des anciennes communautés Internet, NoBleme est entièrement gratuit à utiliser, n'a pas besoin de donations pour vivre, ne contient pas de publicités ni de contenus tiers, {{link++|pages/doc/privacy|respecte votre vie privée|bold|}}, et ne partage pas {{link++|pages/doc/data|vos données personnelles|bold|}}.
 </p>
 EOT
 );
