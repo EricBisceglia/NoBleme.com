@@ -492,7 +492,7 @@ $javascripts .= '
           <?=__link('pages/nobleme/activity', __('submenu_nobleme_activity'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/nobleme/nobleme', __('submenu_nobleme_what_is'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/doc/nobleme', __('submenu_nobleme_what_is'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
@@ -508,6 +508,27 @@ $javascripts .= '
         </div>
         <div class="header_submenu_item">
           <?=__link('pages/users/admins', __('submenu_nobleme_staff'), 'header_submenu_link', 1, $path);?>
+        </div>
+      </div>
+
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=__('submenu_nobleme_dev')?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/doc/dev', __('submenu_nobleme_behind_scenes'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_devblog'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_todolist'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_roadmap'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_nobleme_report_bug'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 
@@ -529,27 +550,6 @@ $javascripts .= '
         </div>
         <div class="header_submenu_item">
           <?=__link('pages/messages/admins', __('submenu_nobleme_contact_admin'), 'header_submenu_link', 1, $path);?>
-        </div>
-      </div>
-
-      <div class="header_submenu_column">
-        <div class="header_submenu_title">
-          <?=__('submenu_nobleme_dev')?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_behind_scenes'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_devblog'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_todolist'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_roadmap'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_report_bug'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 

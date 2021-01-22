@@ -146,11 +146,11 @@ EOT
 
 // Header
 ___('privacy_intro_1',  'EN', <<<EOT
-Privacy is critical on NoBleme. If you've read the {{link|pages/nobleme/nobleme|website's history}}, you might understand that we stand against the modern state of the Internet, where your personal data is collected, shared, and sometimes even sold without your knowledge on nearly all websites and mobile applications.
+Privacy is critical on NoBleme. If you've read the {{link|pages/doc/nobleme|website's history}}, you might understand that we stand against the modern state of the Internet, where your personal data is collected, shared, and sometimes even sold without your knowledge on nearly all websites and mobile applications.
 EOT
 );
 ___('privacy_intro_1',  'FR', <<<EOT
-Le respect de votre vie privée est très important pour NoBleme. En lisant {{link|pages/nobleme/nobleme|l'histoire de NoBleme}}, vous comprendrez que nous sommes à l'opposé de l'état actuel d'Internet, où vos données personnelles sont collectées, partagées, et parfois même vendues sans que vous le sachiez lorsque vous utilisez la majorité des sites internet et des applications mobiles.
+Le respect de votre vie privée est très important pour NoBleme. En lisant {{link|pages/doc/nobleme|l'histoire de NoBleme}}, vous comprendrez que nous sommes à l'opposé de l'état actuel d'Internet, où vos données personnelles sont collectées, partagées, et parfois même vendues sans que vous le sachiez lorsque vous utilisez la majorité des sites internet et des applications mobiles.
 EOT
 );
 ___('privacy_intro_2',  'EN', <<<EOT
@@ -275,11 +275,11 @@ Naturellement, vous n'avez pas de raison de croire en tout ce qui est écrit ci-
 EOT
 );
 ___('privacy_source_2',     'EN', <<<EOT
-You can read more about the decision to open source NoBleme's source code {{link|todo_link|behind the scenes}}.
+You can read more about the decision to open source NoBleme's source code {{link|pages/doc/dev|behind the scenes}}.
 EOT
 );
 ___('privacy_source_2',     'FR', <<<EOT
-Vous trouverez plus d'informations sur la décision de publier le code source dans les {{link|todo_link|coulisses de NoBleme}}.
+Vous trouverez plus d'informations sur la décision de publier le code source dans les {{link|pages/doc/dev|coulisses de NoBleme}}.
 EOT
 );
 
@@ -307,7 +307,7 @@ EOT
 ___('legal_responsibility_title', 'EN', "Responsibility over user submitted content");
 ___('legal_responsibility_title', 'FR', "Responsabilité sur les contenus utilisateur");
 ___('legal_responsibility_body',  'EN', <<<EOT
-As it is free for anyone to create an account on NoBleme, and as moderation of user submitted content happens only after said content has been submitted on the website, we can not be held responsible for the content being submitted by users on the website until we see them. However, we have a clear {{link|pages/doc/coc|code of conduct}} which we expect both our users and ourselves to follow. Any content which goes against this code of conduct will be deleted as soon as possible, in a <i>best effort</i> manner, depending on the availability of our administrative team. Any users which go against this code of conduct will find themselves temporarily or permanently excluded from submitting content to NoBleme, preventing further abuse.
+As it is free for anyone to create an account on NoBleme, and as moderation of user submitted content happens only after said content has been submitted on the website, we can not be held responsible for the content being submitted by users on the website until we see them. However, we have a clear {{link|pages/doc/coc|code of conduct}} which we expect both our users and ourselves to follow. Any content which goes against this code of conduct will be deleted as soon as possible, in a <span class="italics">best effort</span> manner, depending on the availability of our administrative team. Any users which go against this code of conduct will find themselves temporarily or permanently excluded from submitting content to NoBleme, preventing further abuse.
 EOT
 );
 ___('legal_responsibility_body',  'FR', <<<EOT
@@ -346,11 +346,11 @@ EOT
 ___('legal_source_title', 'EN', "Using NoBleme's source code");
 ___('legal_source_title', 'FR', "Utiliser le code source de NoBleme");
 ___('legal_source_body',  'EN', <<<EOT
-As stated {{link|todo_link|behind the scenes}}, NoBleme's source code has been open sourced - thus made available to the general public. However, please take note that open sourced does not necessarily mean free to re-use for your own projects. In NoBleme's case, it has been open sourced under the very permissive {{external|https://en.wikipedia.org/wiki/MIT_License|MIT license}}, which means that you are free to use any or all of NoBleme's source code in your own projects as long as you properly credit its author by including a copy of the permission notice included in NoBleme's licence in your own source code - along with the copyright notice: <i>Copyright (c) 2005 Eric Bisceglia / NoBleme.com</i>.
+As stated {{link|pages/doc/dev|behind the scenes}}, NoBleme's source code has been open sourced - thus made available to the general public. However, please take note that open sourced does not necessarily mean free to re-use for your own projects. In NoBleme's case, it has been open sourced under the very permissive {{external|https://en.wikipedia.org/wiki/MIT_License|MIT license}}, which means that you are free to use any or all of NoBleme's source code in your own projects as long as you properly credit its author by including a copy of the permission notice included in NoBleme's licence in your own source code - along with the copyright notice: <span class="italics">Copyright (c) 2005 Eric Bisceglia / NoBleme.com</span>.
 EOT
 );
 ___('legal_source_body',  'FR', <<<EOT
-Comme expliqué dans les {{link|todo_link|coulisses de NoBleme}}, le code source de NoBleme a été <i>open sourcé</i> - c'est à dire publié intégralement et publiquement. Notez toutefois que <i>open source</i> ne signifie pas libre de droit. Dans le cas de NoBleme, le code source a été publié sous la très permissive {{external|https://fr.wikipedia.org/wiki/Licence_MIT|licence MIT}}, ce qui signifie que vous êtes libre de réutiliser une partie du code source ou même tout le code source de NoBleme dans vos propres projets, à condition de correctement en créditer l'auteur d'origine en incluant une copie de la <i>permission notice</i> incluse dans la licence se trouvant dans le code source de NoBleme - ainsi que la <i>copyright notice</i> suivante : <i>Copyright (c) 2005 Eric Bisceglia / NoBleme.com</i>.
+Comme expliqué dans les {{link|pages/doc/dev|coulisses de NoBleme}}, le code source de NoBleme a été <span class="italics">open sourcé</span> - c'est à dire publié intégralement et publiquement. Notez toutefois que <span class="italics">open source</span> ne signifie pas libre de droit. Dans le cas de NoBleme, le code source a été publié sous la très permissive {{external|https://fr.wikipedia.org/wiki/Licence_MIT|licence MIT}}, ce qui signifie que vous êtes libre de réutiliser une partie du code source ou même tout le code source de NoBleme dans vos propres projets, à condition de correctement en créditer l'auteur d'origine en incluant une copie de la <span class="italics">permission notice</span> incluse dans la licence se trouvant dans le code source de NoBleme - ainsi que la <span class="italics">copyright notice</span> suivante : <span class="italics">Copyright (c) 2005 Eric Bisceglia / NoBleme.com</span>.
 EOT
 );
 
@@ -519,5 +519,174 @@ EOT
 );
 ___('doc_data_conclusion_2',      'FR', <<<EOT
 Nous espérons que vous appréciez le respect que nous portons à votre vie privée, et que vous verrez le message que cela implique: le bon fonctionnement d'un site Internet ne dépend pas de la collecte, du partage, ou de la vente des données pesonnelles de ses visiteurs. C'est un choix délibéré que font la majorité des autres sites et applications.
+EOT
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 BEHIND THE SCENES                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('doc_bts_subtitle', 'EN', "NoBleme's design choices and development methods");
+___('doc_bts_subtitle', 'FR', "Design de NoBleme et méthodes de développement");
+___('doc_bts_intro',    'EN', <<<EOT
+NoBleme is a fully handcrafted website, developed entirely from scratch by {{link|todo_link|Éric Bisceglia}} (known online as {{link|pages/users/1|Bad}}). Ever since its launch in 2005, NoBleme's policy on development has been to be as public as possible: its {{external|https://github.com/EricBisceglia/NoBleme.com|source code}} is publicly available, its {{link|todo_link|roadmap}} allows you to follow the development progress, {{link|todo_link|devblogs}} keep you updated on what is going on, and this very page does its best to explain which philosophies and technologies are used in NoBleme's development.
+EOT
+);
+___('doc_bts_intro',    'FR', <<<EOT
+NoBleme est un site fabriqué artisanalement à partir de rien, développé intégralement par {{link|todo_link|Éric Bisceglia}} (utilisant sur Internet le pseudonyme {{link|pages/users/1|Bad}}). Depuis sa création en 2005, le développement de NoBleme a toujours été délibérément aussi public que possible : le {{external|https://github.com/EricBisceglia/NoBleme.com|code source}} est disponible publiquement, le {{link|todo_link|plan de route}} vous permet de suivre le progrès, les {{link|todo_link|devblogs}} vous tiennent à jour, et cette page vous explique les philosophies et technologies utilisées dans le développement de NoBleme.
+EOT
+);
+
+
+// Creed
+___('doc_bts_creed_title',  'EN', "The creed of NoBleme's design");
+___('doc_bts_creed_title',  'FR', "Les convictions du design de NoBleme");
+___('doc_bts_creed_intro',  'EN', <<<EOT
+When working on content or features for NoBleme, the following guidelines are always taken into account in order to achieve the best possible and most inclusive user experience.
+EOT
+);
+___('doc_bts_creed_intro',  'FR', <<<EOT
+En travaillant sur du contenu pour NoBleme, les lignes directrices ci-dessous sont toujours prises en considération afin que le résultat soit autant que possible inclusif et agréable à utiliser.
+EOT
+);
+___('doc_bts_creed_1',      'EN', <<<EOT
+<span class="bold text_red">Free to use and ad-free:</span> The Internet is a wonderful place for creativity and self expression, hijacked in far too many places by advertisements, sponsored content, and begging for money. In NoBleme's case, the website shall forever remain free to use and ad-free. The running costs are entirely covered and budgetted for. NoBleme is a passion project. I do not accept donations. Just enjoy the service.
+EOT
+);
+___('doc_bts_creed_1',      'FR', <<<EOT
+<span class="bold text_red">Gratuit et sans pubs :</span> Internet est un lieu merveilleux pour la créativité et l'expression, pollué par les publicités, le contenu sponsorisé, et les demandes de financement. Dans le cas de NoBleme, le site restera toujours gratuit à utiliser et libre de toute publicité. Les coûts d'exploitation sont connus à l'avance et budgétisés. NoBleme est une œuvre de passion. Je n'accepte pas les donations.
+EOT
+);
+___('doc_bts_creed_2',      'EN', <<<EOT
+<span class="bold text_red">Privacy oriented:</span> As stated in our {{link|pages/doc/privacy|privacy policy}}, we highly respect your privacy and your right to stay anonymous if you desire. As you can see in {{link|pages/doc/data|your personal data}}, we only collect the strict minimum amount of personal data required to run the website, and will never share or sell it to third parties.
+EOT
+);
+___('doc_bts_creed_2',      'FR', <<<EOT
+<span class="bold text_red">Respect de la vie privée :</span> Comme précisé dans notre {{link|pages/doc/privacy|politique de confidentialité}}, nous respectons fortement votre vie privée et votre droit de rester anonyme si vous le désirez. Comme précisé dans {{link|pages/doc/data|vos données personnelles}}, nous ne collectons que le strict minimum de données requises au bon fonctionnement du site, et ne partagerons ou vendrons jamais à des tiers vos données personnelles.
+EOT
+);
+___('doc_bts_creed_3',      'EN', <<<EOT
+<span class="bold text_red">Consider all user experiences:</span> {{external|https://en.wikipedia.org/wiki/Dark_pattern|Dark patterns}} are strictly prohibited. All of NoBleme's content is tested not only on a desktop computer, but also simulated as being viewed on several different mobile phones and tablets. Screen readers for blind people are also taken into account. While it is impossible to guarantee the best user experience on all devices, all of them should be equally considered when designing pages.
+EOT
+);
+___('doc_bts_creed_3',      'FR', <<<EOT
+<span class="bold text_red">Multiplicité des expériences utilisateur :</span> Les {{external|https://fr.wikipedia.org/wiki/Dark_pattern|dark patterns}} sont strictement interdits. Tout le contenu de NoBleme doit être testé sur un ordinateur fixe, mais doit également être testé via simulateur comme étant utilisé sur divers appareils mobiles, smartphones, tablettes. Les lecteurs d'écran pour personnes malvoyantes doivent également être pris en compte. Il est impossible de garantir la meilleure expérience utilisateur possible sur tous les appareils, mais ils doivent au moins tous être pris en compte lors des phases de design et de test.
+EOT
+);
+___('doc_bts_creed_4',      'EN', <<<EOT
+<span class="bold text_red">Educational transparency:</span> The role of a developer is not just to write code, it is also to share knowledge with other developers, so that we might all become collectively better at our craft. NoBleme's source code should always be heavily commented, to the extent that one should be able to understand what is going on in a source code file even without knowledge of the programming languages being used.
+EOT
+);
+___('doc_bts_creed_4',      'FR', <<<EOT
+<span class="bold text_red">Transparence et éducation :</span> Développer n'est pas juste écrire du code, c'est aussi partager ses connaissances avec les autres, afin de tous progresser collectivement dans notre métier et notre artisanat. Le code source de NoBleme doit toujours être lourdement commenté, au point où vous devriez arriver à comprendre la logique d'un fichier source même sans connaître les langages de programmation utilisés.
+EOT
+);
+___('doc_bts_creed_5',      'EN', <<<EOT
+<span class="bold text_red">Gender neutrality:</span> Every piece of text on NoBleme should be gender neutral. The default pronoun in use should be `they`, unless referring to specific people. Neutral forms are preferred for traditionally gendered nouns (eg. mailperson over mailman, police agent over policeman).
+EOT
+);
+___('doc_bts_creed_5',      'FR', <<<EOT
+<span class="bold text_red">Neutralité de genre :</span> Tout le contenu écrit pour NoBleme doit être non genré. Les variantes d'écriture inclusive (il·elle, ielle, etc.) ne prennent pas en compte les personnes non binaires, il faut donc aller plus loin encore et toujours privilégier les formes neutres (l'équipe d'administration plutôt que les administrateur·e·s, les personnes utilisant le site plutôt que les utilisateurices, etc.). Croyez-le ou non, le français est parfaitement compatible avec le neutre, il suffit de regarder la grande quantité de contenus écrits pour NoBleme !
+EOT
+);
+___('doc_bts_creed_6',      'EN', <<<EOT
+<span class="bold text_red">Sensitivity:</span> When writing text for NoBleme, a conscious effort should always be made to mind the sensitivities of potential readers. This goes further than simply not using slurs: common triggering topics should ideally be avoided, or at least preceded by a trigger warning, and an effort in educating oneself on any sensitive topics (race, identity, politics, mental health, etc.) should always be done before writing about them.
+EOT
+);
+___('doc_bts_creed_6',      'FR', <<<EOT
+<span class="bold text_red">Respect des sensibilités :</span> Toute écriture de contenus pour NoBleme doit inclure un effort conscient pour prendre en compte la sensibilité des personnes qui les liront. Cela va plus loin que de juste utiliser un vocabulaire propre : les contenus potentiellement traumatisants sont idéalement à éviter, sinon à précéder d'un avertissement, et un réel effort de recherche doit être fait pour s'éduquer sur les sujets sensibles (race, identité, politique, santé mentale, etc.) avant d'écrire des textes qui en parlent.
+EOT
+);
+
+
+// Stack
+___('doc_bts_stack_title',    'EN', "NoBleme's technological stack");
+___('doc_bts_stack_title',    'FR', "Technologies utilisées sur NoBleme");
+___('doc_bts_stack_intro',    'EN', "Here is the exhaustive list of all applications, services, and technologies used in the process of developing, maintaining, and administrating NoBleme:");
+___('doc_bts_stack_intro',    'FR', "Voici la liste exhaustive des applications, services, et technologies utilisés dans le processus de développement, de maintenance, et d'administration de NoBleme :");
+___('doc_bts_stack_domain',   'EN', "The domain name ({{external|https://reports.internic.net/cgi/whois?whois_nic=nobleme.com&type=domain|nobleme.com}}) is registered on {{external|https://www.ovh.com/|OVH}}");
+___('doc_bts_stack_domain',   'FR', "Le nom de domaine ({{external|https://reports.internic.net/cgi/whois?whois_nic=nobleme.com&type=domain|nobleme.com}}) est enregistré sur {{external|https://www.ovh.com/|OVH}}");
+___('doc_bts_stack_server',   'EN', "The web server is hosted by {{external|https://www.ovh.com/|OVH}} and runs {{external|https://en.wikipedia.org/wiki/Debian|Debian GNU/Linux}}");
+___('doc_bts_stack_server',   'FR', "Le serveur est hébergé chez {{external|https://www.ovh.com/|OVH}} et utilise {{external|https://fr.wikipedia.org/wiki/Debian|Debian GNU/Linux}}");
+___('doc_bts_stack_http',     'EN', "Web pages are delivered by an {{external|https://en.wikipedia.org/wiki/Apache_HTTP_Server|Apache HTTP server}}");
+___('doc_bts_stack_http',     'FR', "Les pages du site sont servies par un {{external|https://fr.wikipedia.org/wiki/Apache_HTTP_Server|serveur HTTP Apache}}");
+___('doc_bts_stack_database', 'EN', "The website's database uses {{external|https://en.wikipedia.org/wiki/MySQL|MySQL}}");
+___('doc_bts_stack_database', 'FR', "La base de données du site utilise {{external|https://fr.wikipedia.org/wiki/MySQL|MySQL}}");
+___('doc_bts_stack_back',     'EN', "The {{external|https://en.wikipedia.org/wiki/Front_end_and_back_end|back end}} is coded entirely in pure {{external|https://en.wikipedia.org/wiki/Procedural_programming|procedural}} {{external|https://en.wikipedia.org/wiki/PHP|PHP}}, with no {{external|https://en.wikipedia.org/wiki/Software_framework|framework}}");
+___('doc_bts_stack_back',     'FR', "Le {{external|https://fr.wikipedia.org/wiki/Backend|back end}} du site est codé entièrement en {{external|https://fr.wikipedia.org/wiki/PHP|PHP}} {{external|https://fr.wikipedia.org/wiki/Programmation_proc%C3%A9durale|procédural}}, sans {{external|https://fr.wikipedia.org/wiki/Framework|framework}}");
+___('doc_bts_stack_front',    'EN', "The {{external|https://en.wikipedia.org/wiki/Front_end_and_back_end|front end}} is {{external|https://en.wikipedia.org/wiki/HTML|HTML}}, styled with {{external|https://en.wikipedia.org/wiki/CSS|CSS}}, dynamized with vanilla {{external|https://en.wikipedia.org/wiki/JavaScript|JavaScript}}");
+___('doc_bts_stack_front',    'FR', "Le {{external|https://fr.wikipedia.org/wiki/D%C3%A9veloppement_web_frontal|front}} est du {{external|https://fr.wikipedia.org/wiki/HTML|HTML}}, stylé avec du {{external|https://fr.wikipedia.org/wiki/CSS|CSS}}, et dynamisé avec du {{external|https://en.wikipedia.org/wiki/JavaScript|JavaScript}}");
+___('doc_bts_stack_images',   'EN', "Some of the icons used on the website come from {{external|https://feathericons.com/|Feather}}");
+___('doc_bts_stack_images',   'FR', "Certaines des icônes utilisées viennent de {{external|https://feathericons.com/|Feather}}");
+___('doc_bts_stack_machine',  'EN', "My development machine runs {{external|https://en.wikipedia.org/wiki/Microsoft_Windows|Windows}} and emulates the stack using {{external|https://www.wampserver.com/|WampServer}}");
+___('doc_bts_stack_machine',  'FR', "Mon ordinateur de développement utilise {{external|https://fr.wikipedia.org/wiki/Microsoft_Windows|Windows}} et émule la production avec {{external|https://www.wampserver.com/|WampServer}}");
+___('doc_bts_stack_editor',   'EN', "I use {{external|https://code.visualstudio.com/|VSCode}} as my text editor when writing the source code");
+___('doc_bts_stack_editor',   'FR', "J'utilise {{external|https://code.visualstudio.com/|VSCode}} comme éditeur de texte pour écrire le code source");
+___('doc_bts_stack_git',      'EN', "{{external|https://en.wikipedia.org/wiki/Software_versioning|Versioning}} is done in a {{external|https://en.wikipedia.org/wiki/Git|Git}} repository which is published on {{external|https://github.com/EricBisceglia/NoBleme.com|GitHub}}");
+___('doc_bts_stack_git',      'FR', "Le {{external|https://fr.wikipedia.org/wiki/Gestion_de_versions|versionnage}} se fait dans un dépôt {{external|https://fr.wikipedia.org/wiki/Git|Git}} qui est publié sur {{external|https://github.com/EricBisceglia/NoBleme.com|GitHub}}");
+___('doc_bts_stack_shell',    'EN', "The shells I use are {{external|https://github.com/microsoft/terminal|Windows Terminal}} and {{external|https://gitforwindows.org/|Git for Windows}}");
+___('doc_bts_stack_shell',    'FR', "Les terminaux que j'utilise sont {{external|https://github.com/microsoft/terminal|Windows Terminal}} et {{external|https://gitforwindows.org/|Git pour Windows}}");
+
+
+// Source code
+___('doc_bts_source_title', 'EN', "NoBleme's source code");
+___('doc_bts_source_title', 'FR', "Code source de NoBleme");
+___('doc_bts_source_1',     'EN', <<<EOT
+The entirety of NoBleme's source code has been publicly open sourced: {{external|https://github.com/EricBisceglia/NoBleme.com|NoBleme on Github}}.
+EOT
+);
+___('doc_bts_source_1',     'FR', <<<EOT
+L'intégralité du code source de NoBleme est disponible publiquement : {{external|https://github.com/EricBisceglia/NoBleme.com|NoBleme sur Github}}.
+EOT
+);
+___('doc_bts_source_2',     'EN', <<<EOT
+Reasons for open sourcing NoBleme include transparency (allowing you to check that our {{link|pages/doc/privacy|privacy policy}} contains no lies), education (allowing you to satisfy your curiosity about how things work), security (allowing everyone to help in finding bugs and vulnerabilities on the website), and personal convictions (leading by example - I believe open sourcing should be the norm and not the exception).
+EOT
+);
+___('doc_bts_source_2',     'FR', <<<EOT
+Les raisons derrière l'ouverture au public du code source de NoBleme sont la transparence (vous permettre de vérifier que ce que nous affirmons dans notre {{link|pages/doc/privacy|politique de confidentialité}} est vrai), l'éducation (satisfaire votre curiosité quant au fonctionnement interne du site), la sécurité (donner à un plus grand nombre de personnes la possibilité de trouver des bugs ou des vulnérabilités sur le site), et des convictions personnelles (mener par l'exemple - l'open source devrait être la norme et non l'exception).
+EOT
+);
+___('doc_bts_source_3',     'EN', <<<EOT
+NoBleme's source code is protected by a the very permissive {{external|https://en.wikipedia.org/wiki/MIT_License|MIT license}}, which allows you to use any piece of code from NoBleme in your own projects without asking for permission first. The only condition is to properly credit NoBleme when reusing some of its code - as outlined in the {{external|https://github.com/EricBisceglia/NoBleme.com/blob/develop/LICENSE.md|LICENSE.MD}} file and in our {{link|pages/doc/legal|legal notice}}.
+EOT
+);
+___('doc_bts_source_3',     'FR', <<<EOT
+Le code source de NoBleme est protégé par la très permissive {{external|https://fr.wikipedia.org/wiki/Licence_MIT|licence MIT}}, qui vous autorise à réutiliser le code source de NoBleme dans vos propres projets sans avoir à demander la permission. La seule condition est de créditer NoBleme lorsque vous réutilisez du code qui en est issu - comme précisé dans {{external|https://github.com/EricBisceglia/NoBleme.com/blob/develop/LICENSE.md|LICENSE.MD}} et dans nos {{link|pages/doc/legal|mentions légales}}.
+EOT
+);
+___('doc_bts_source_4',     'EN', <<<EOT
+As the website has been started in 2005, and despite a few major rewrites, the way the website is coded might seem "old fashioned": all of the source code follows a {{external|https://en.wikipedia.org/wiki/Procedural_programming|procedural paradigm}} (there are no objects or classes). Despite this approach, and despite using technologies which often get labeled as "outdated" (PHP, MySQL), NoBleme's source code uses the latest versions available of every technology in its stack, respects modern standards, and keeps evolving over time.
+EOT
+);
+___('doc_bts_source_4',     'FR', <<<EOT
+Vu que NoBleme existe depuis 2005, et malgré quelques refontes intégrales du site, la façon dont le code source de NoBleme est structuré peut sembler « antique » : toute la logique du code est {{external|https://fr.wikipedia.org/wiki/Programmation_proc%C3%A9durale|procédurale}} (sans objets ni classes). Malgré cette approche, et malgré l'utilisation de technologies qui sont souvent considérées comme « dépassées » (PHP, MySQL), le code source de NoBleme utilise les dernières versions à jour de chaque technologie utilisée, respecte les standards modernes, et évolue avec son temps.
+EOT
+);
+___('doc_bts_source_5',     'EN', <<<EOT
+Every file in the source code is heavily commented, to the point where you should be able to understand what is going on in the codebase even if you're not familiar with the languages used. The {{external|https://github.com/EricBisceglia/NoBleme.com/blob/develop/README.md|README.MD}} file explains how the codebase is structured, aswell as how to install a local copy of NoBleme.
+EOT
+);
+___('doc_bts_source_5',     'FR', <<<EOT
+Tous les fichiers du code source de NoBleme sont lourdement commentés, au point où vous devriez pouvoir comprendre leur logique même si vous ne connaissez pas les langages de programmation utilisés. Le {{external|https://github.com/EricBisceglia/NoBleme.com/blob/develop/README.md|README.MD}} explique la structure de l'arborescence des fichiers, ainsi que comment installer une copie locale de NoBleme sur votre machine.
+EOT
+);
+
+
+// Contributing
+___('doc_bts_contributing_title', 'EN', "Contributing to NoBleme's source code");
+___('doc_bts_contributing_title', 'FR', "Contribuer au code source de NoBleme");
+___('doc_bts_contributing_body',  'EN', <<<EOT
+NoBleme is open to contributions, as stated in {{external|https://github.com/EricBisceglia/NoBleme.com/blob/develop/CONTRIBUTING.md|CONTRIBUTING.MD}}. Bug fixes should be submitted as a pull request on the `develop` branch of the repository. If you spot a bug but don't want to fix it or can't be bothered doing a pull request, that's perfectly fine: please use our {{link|todo_link|bug report form}} instead. For any bigger contributions (refactoring, features), please discuss it on the <span class="bold">#dev</span> channel of {{link|todo_link|NoBleme's IRC server}} before getting started.
+EOT
+);
+___('doc_bts_contributing_body',  'FR', <<<EOT
+Comme précisé dans {{external|https://github.com/EricBisceglia/NoBleme.com/blob/develop/CONTRIBUTING.md|CONTRIBUTING.MD}}, NoBleme accepte et encourage les contributions à son code source. Toute contribution doit être faite en anglais. Les correctifs de bugs doivent être soumis sous forme de pull request sur la branche `develop` du dépôt. Si vous avez repéré un bug mais n'avez pas envie de le corriger, ça me va très bien : utilisez notre {{link|todo_link|formulaire de rapport de bug}}. Pour toute contribution plus grosse (refactoring, feature), discutez-en sur le canal <span class="bold">#dev</span> du {{link|todo_link|serveur IRC NoBleme}} avant de commencer.
 EOT
 );

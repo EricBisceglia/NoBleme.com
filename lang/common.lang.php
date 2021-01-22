@@ -761,18 +761,14 @@ ___('submenu_nobleme_what_is',        'FR', "Qu'est-ce que NoBleme");
 ___('submenu_nobleme_activity',       'EN', "Recent activity");
 ___('submenu_nobleme_activity',       'FR', "Activité récente");
 
-___('submenu_nobleme_support',        'EN', "Support");
-___('submenu_nobleme_support',        'FR', "Support");
-___('submenu_nobleme_coc',            'EN', "Code of conduct");
-___('submenu_nobleme_coc',            'FR', "Code de conduite");
-___('submenu_nobleme_privacy',        'EN', "Privacy policy");
-___('submenu_nobleme_privacy',        'FR', "Politique de confidentialité");
-___('submenu_nobleme_personal_data',  'EN', "Your personal data");
-___('submenu_nobleme_personal_data',  'FR', "Vos données personnelles");
-___('submenu_nobleme_legal',          'EN', "Legal notice");
-___('submenu_nobleme_legal',          'FR', "Mentions légales");
-___('submenu_nobleme_contact_admin',  'EN', "Contact the admins");
-___('submenu_nobleme_contact_admin',  'FR', "Contacter l'administration");
+___('submenu_nobleme_users',          'EN', "Users");
+___('submenu_nobleme_users',          'FR', "Membres");
+___('submenu_nobleme_online',         'EN', "Who's online");
+___('submenu_nobleme_online',         'FR', "Qui est en ligne");
+___('submenu_nobleme_userlist',       'EN', "Registered users");
+___('submenu_nobleme_userlist',       'FR', "Liste des membres");
+___('submenu_nobleme_staff',          'EN', "Administrative team");
+___('submenu_nobleme_staff',          'FR', "Équipe administrative");
 
 ___('submenu_nobleme_dev',            'EN', "Development");
 ___('submenu_nobleme_dev',            'FR', "Développement");
@@ -787,14 +783,18 @@ ___('submenu_nobleme_roadmap',        'FR', "Plan de route");
 ___('submenu_nobleme_report_bug',     'EN', "Report a bug");
 ___('submenu_nobleme_report_bug',     'FR', "Rapporter un bug");
 
-___('submenu_nobleme_users',          'EN', "Users");
-___('submenu_nobleme_users',          'FR', "Membres");
-___('submenu_nobleme_online',         'EN', "Who's online");
-___('submenu_nobleme_online',         'FR', "Qui est en ligne");
-___('submenu_nobleme_userlist',       'EN', "Registered users");
-___('submenu_nobleme_userlist',       'FR', "Liste des membres");
-___('submenu_nobleme_staff',          'EN', "Administrative team");
-___('submenu_nobleme_staff',          'FR', "Équipe administrative");
+___('submenu_nobleme_support',        'EN', "Support");
+___('submenu_nobleme_support',        'FR', "Support");
+___('submenu_nobleme_coc',            'EN', "Code of conduct");
+___('submenu_nobleme_coc',            'FR', "Code de conduite");
+___('submenu_nobleme_privacy',        'EN', "Privacy policy");
+___('submenu_nobleme_privacy',        'FR', "Politique de confidentialité");
+___('submenu_nobleme_personal_data',  'EN', "Your personal data");
+___('submenu_nobleme_personal_data',  'FR', "Vos données personnelles");
+___('submenu_nobleme_legal',          'EN', "Legal notice");
+___('submenu_nobleme_legal',          'FR', "Mentions légales");
+___('submenu_nobleme_contact_admin',  'EN', "Contact the admins");
+___('submenu_nobleme_contact_admin',  'FR', "Contacter l'administration");
 
 
 // Submenu: Pages

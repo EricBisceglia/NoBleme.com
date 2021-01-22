@@ -8,7 +8,7 @@ include_once './../../lang/nobleme.lang.php'; # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/nobleme/nobleme";
+$page_url         = "pages/doc/nobleme";
 $page_title_en    = "What is NoBleme?";
 $page_title_fr    = "Qu'est-ce que NoBleme ?";
 $page_description = "What is NoBleme? Is it even a thing? Let's find out!";
@@ -32,7 +32,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('nobleme_what_subtitle')?>
   </h5>
 
-  <div class="floater float_right float_above"><a class="bigglow" href="<?=$path?>img/common/logo_full.png"><img src="<?=$path?>img/common/logo_full.png" alt="<?=__('image')?>"></a><?=__('nobleme_history_img_logo')?></div>
   <p>
     <?=__('nobleme_what_intro')?>
   </p>

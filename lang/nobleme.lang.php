@@ -22,7 +22,7 @@ ___('nobleme_home_welcome',           'EN', <<<EOT
   A product of the Internet's landscape in 2005, before the era of massive social networks and centralized websites, NoBleme is a small independent website trying to keep the spirit of Internet communities from the first decade of the 21st century alive.
 </p>
 <p>
-  For those who did not experience these communities, they were small websites with no specific main theme, usually centered around a forum and a chatroom. NoBleme used to be such a place for a small french community, which then grew in various ways over the years. The website's history gets covered in more detail on the {{link++|pages/nobleme/nobleme|"what is NoBleme?"|bold|}} page.
+  For those who did not experience these communities, they were small websites with no specific main theme, usually centered around a forum and a chatroom. NoBleme used to be such a place for a small french community, which then grew in various ways over the years. The website's history gets covered in more detail on the {{link++|pages/doc/nobleme|"what is NoBleme?"|bold|}} page.
 </p>
 <p>
   However, NoBleme is not meant to be an archeological museum or a tribute to the past. It is a living place, evolving with the times, maintaining an active community, always welcoming to those who would want to join.
@@ -34,7 +34,7 @@ ___('nobleme_home_welcome',           'FR', <<<EOT
   Produit de la culture Internet de 2005, avant l'ère des réseaux sociaux massifs et des plateformes centralisées, NoBleme est un petit site Internet indépendant qui tente de préserver l'esprit des commaunautés Internet de la première décennie du 21ème siècle.
 </p>
 <p>
-  Pour ceux qui n'ont pas connu ces communautés, il s'agissait de petits sites Internet sans sujet ou thème particulier, généralement composés d'un forum et d'un salon de discussion. NoBleme a été une de ces communautés, puis a grandi et changé. L'histoire du site est racontée de façon plus détaillée sur la page {{link++|pages/nobleme/nobleme|« qu'est-ce que NoBleme »|bold|}}.
+  Pour ceux qui n'ont pas connu ces communautés, il s'agissait de petits sites Internet sans sujet ou thème particulier, généralement composés d'un forum et d'un salon de discussion. NoBleme a été une de ces communautés, puis a grandi et changé. L'histoire du site est racontée de façon plus détaillée sur la page {{link++|pages/doc/nobleme|« qu'est-ce que NoBleme »|bold|}}.
 </p>
 <p>
   Toutefois, NoBleme n'est pas un musée archéologique ou un monument au passé. C'est un site Internet vivant, en évolution constante, dont la communauté est toujours accueillante envers ceux qui voudraient la rejoindre.
@@ -126,8 +126,6 @@ EOT
 /*********************************************************************************************************************/
 
 // Images
-___('nobleme_history_img_logo',       'EN', "NoBleme's current logo. Shiny!");
-___('nobleme_history_img_logo',       'FR', "Le logo actuel de NoBleme");
 ___('nobleme_history_img_2005_forum', 'EN', "NoBleme's message board in april 2005, a month after launch (click on images to view them full screen)");
 ___('nobleme_history_img_2005_forum', 'FR', "Le forum NoBleme en avril 2005, un mois après sa création (cliquez sur les images pour les agrandir)");
 ___('nobleme_history_img_2006_home',  'EN', "NoBleme's very bare homepage in early 2006 reflects how ugly the Internet used to look as a whole");
