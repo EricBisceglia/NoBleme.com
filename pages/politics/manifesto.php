@@ -11,7 +11,7 @@ $page_lang        = array('FR', 'EN');
 $page_url         = "pages/politics/manifesto";
 $page_title_en    = "Contra-manifesto";
 $page_title_fr    = "Contra-manifesto";
-$page_description = "The contrapositionist manifesto. The system has failed, the world is on a timer, but it is not too late for change to come from within.";
+$page_description = "The system has failed, the world is on a timer, but it is not too late for change to come from within.";
 
 // Hide the footer
 $hide_footer = 1;
@@ -143,6 +143,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <div class="smallpadding_top">
     <a class="bigger bold" href="#praxis">
       <?=__('pol_manifesto_praxis_title')?>
+    </a>
+  </div>
+  <div class="bigpadding_top">
+    <a class="bigger bold" href="#postface">
+      <?=__('pol_manifesto_postface_title')?>
     </a>
   </div>
 
@@ -471,6 +476,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <p>
     <?=__('pol_manifesto_inspirations_12')?>
   </p>
+  <p>
+    <?=__('pol_manifesto_inspirations_13')?>
+  </p>
 
   <h4 class="megapadding_top" id="philosophy">
     <?=__('pol_manifesto_philosophy_title')?>
@@ -734,7 +742,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('pol_manifesto_praxis_points_10')?>
   </p>
 
-  <h4 class="megapadding_top">
+  <h4 class="megapadding_top" id="postface">
     <?=__('pol_manifesto_postface_title')?>
   </h4>
 

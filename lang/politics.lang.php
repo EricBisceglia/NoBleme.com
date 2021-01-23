@@ -63,7 +63,7 @@ We will topple this system of oppression.
 EOT
 );
 ___('pol_manifesto_preamble_11',     'EN', <<<EOT
-We are contrapositionists.
+United, we will prevail.
 EOT
 );
 
@@ -88,15 +88,15 @@ English is mostly used as a gendered language. Male dominated languages are one 
 EOT
 );
 ___('pol_manifesto_intro_4',      'EN', <<<EOT
-You might be wondering why such a specific and long winded word - contrapositionism - was chosen to name this movement. Simply enough, at the time of writing, it seemed to be the only fitting name that did not return a single result in search engines. A blank slate to build on, which is a rare find in political theory.
+You might be wondering why such a specific and long winded word - contrapositionism - was chosen. As with every new movement and concept, names feel strange until one becomes used to them. Contrapositionism, or for short contra, properly represents the distilled essence of this manifesto: neutrality and compromise benefits the ruling class, standing fully against their ideals is the only option for change.
 EOT
 );
 ___('pol_manifesto_intro_5',      'EN', <<<EOT
-Contrapositionism is built on the shoulders of other political theories. Marxism, socialism, communism, anarchism, anarcho-pacifism, anarcho-syndicalism, feminism, and ecofeminism are all major inspirations. The need for a new paradigm will be discussed later, explaining why contrapositionism reject parts of those ideologies and therefore does not properly fit within any of them.
+Contrapositionism is built on the shoulders of other political theories. Marxism, socialism, communism, anarchism, feminism, social justice, pacifism, and more served as major inspirations. The need for a new paradigm will be discussed later, explaining why contrapositionism reject parts of those ideologies and therefore does not properly fit within any of them.
 EOT
 );
 ___('pol_manifesto_intro_6',      'EN', <<<EOT
-With this context in mind, we will begin by exploring the violent side of the system. A denouncement of the oppression, domination, submission, and wage slavery that most people experience in their lives. We will then shift into a more positive mindset by thinking about how we can collectively grow, pull others upwards along with us, and become better both as an individual person and as a society.
+With this context in mind, we will begin by exploring the violent side of the system. A denouncement of the oppression, domination, submission, and wage slavery that most people experience in their lives. We will then shift into a more positive mindset by thinking about how we can collectively grow, pull others upwards along with us, and become better both as an individual person and as a society, without the need for violence.
 EOT
 );
 ___('pol_manifesto_intro_7',      'EN', <<<EOT
@@ -158,7 +158,7 @@ The ultra rich's accumulation of wealth knows no limit, growing boundlessly only
 EOT
 );
 ___('pol_manifesto_capitalism_5',     'EN', <<<EOT
-There is no justification for the ultra wealthy to exist in a world where poverty also exists. However, they use their positions of power to spread class contempt, making us afraid of the underprivileged instead of willing to help them. Through closed borders, they ensure that those who are born in poorer areas of the world have no chance at the opportunities that the richer countries can offer. By spreading hate and maintaining systemic racism through the political game, they also keep themselves as a social class on top, ensuring that aspects of our being that we can not change - ancestry, skin color, gender, sexual orientation, physical handicaps - will constantly contribute to pushing the underprivileged below the rest of society.
+There is no justification for the ultra wealthy to exist in a world where poverty also exists. However, they use their positions of power to spread class contempt, making us afraid of the underprivileged instead of willing to help them. Through closed borders, they ensure that those who are born in poorer areas of the world are never given the opportunities that the richer countries can offer. By spreading hate and maintaining systemic racism through the political game, they also keep themselves as a social class on top, ensuring that aspects of our being that we can not change - ancestry, skin color, gender, sexual orientation, physical handicaps - will constantly contribute to pushing the underprivileged below the rest of society.
 EOT
 );
 ___('pol_manifesto_capitalism_6',     'EN', <<<EOT
@@ -252,7 +252,7 @@ In this ideal society where work is chosen and not done under threat, people wou
 EOT
 );
 ___('pol_manifesto_work_7',     'EN', <<<EOT
-For in this society of tomorrow, the so called "bullshit jobs" will be gone for good. Faced with problems that are currently being solved with wage slave labor, we will have to invent new solutions. Who will transport food or materials between producers and consumers? A collective solution will be to encourage those who travel to also transport goods. Who will clean up trash from the streets? It will be the perfect opportunity to learn as a community about recycling, trying to reach the zero waste goals needed for our collective survival on this planet that the capitalist consumerist society does not seem to care about.
+For, in this society of tomorrow, the so called "bullshit jobs" will be gone for good. Faced with problems that are currently being solved with wage slave labor, we will have to invent new solutions. Who will transport food or materials between producers and consumers? A collective solution will be to encourage those who travel to also transport goods. Who will clean up trash from the streets? It will be the perfect opportunity to learn as a community about recycling, trying to reach the zero waste goals needed for our collective survival on this planet that the capitalist consumerist society does not seem to care about.
 EOT
 );
 ___('pol_manifesto_work_8',     'EN', <<<EOT
@@ -289,7 +289,7 @@ This happened in every field of science and technology. Great inventions in acce
 EOT
 );
 ___('pol_manifesto_creativity_4',     'EN', <<<EOT
-Human nature is one of mutual aid. Just like in many other animal species, until capitalism and its patents appeared, progress had always been done through sharing knowledge and building upon the work of others to expand collective potential. The very people who mourn the destruction of the former Great Library of Alexandria will not realize that they are forbidden from reusing anything learned from a modern book or patent. Yet humans demonstrate their natural inclination towards mutual aid in the world of computer science by releasing most important building bricks of the collective computing ecosystem through open source licenses.
+Human nature is one of mutual aid. Just like in many other animal species, until capitalism and its patents appeared, progress had always been done through sharing knowledge and building upon the work of others to expand collective potential. The very people who mourn the destruction of the former Great Library of Alexandria will not realize that they are forbidden from reusing anything learned from a modern book or patent. Yet humans demonstrate their natural inclination towards mutual aid even in the very capitalistic world of computer science by releasing most important building bricks of the collective computing ecosystem through open source licenses.
 EOT
 );
 ___('pol_manifesto_creativity_5',     'EN', <<<EOT
@@ -346,7 +346,7 @@ The once strong link between humans and nature has been broken by capitalism. On
 EOT
 );
 ___('pol_manifesto_nature_8',     'EN', <<<EOT
-Stronger together through mutual aid, humans will evolve into a more caring, more respectful, and more creative society. But mutual aid is not only between humans, it is also between humans and nature, most importantly humans and animals. Sadly, we have turned our former partners of the animal kingdom into our enemies: the exploitation of farm animals for resources and meat has become an important part of climate change. As humans have demonstrated again and again their egotistical inability to change their diet, a strong focus must be placed on the development of laboratory grown meat, letting farm animals become our companions instead of our meals.
+Stronger together through mutual aid, humans will evolve into a more caring, more respectful, and more creative society. But mutual aid is not only between humans, it is also between humans and nature, most importantly humans and animals. Sadly, we have turned our former partners of the animal kingdom into our enemies: the exploitation of farm animals for resources and meat has become an important part of climate change. Farm animals should be treated as our companions instead of our meals.
 EOT
 );
 ___('pol_manifesto_nature_9',     'EN', <<<EOT
@@ -357,17 +357,17 @@ EOT
 
 // Inspirations and rejections
 ___('pol_manifesto_inspirations_title', 'EN', "Inspirations and rejections");
-___('pol_manifesto_inspirations_quote', 'EN', "A \"third way\" is possible for those who struggle to find an ideology that they fully agree with");
+___('pol_manifesto_inspirations_quote', 'EN', "Another way is possible for those who struggle to find an ideology that they fully agree with");
 ___('pol_manifesto_inspirations_1',     'EN', <<<EOT
-Believing that centrists, conservatives, and fascists will disappear along with capitalism's inevitable collapse, contrapositionism considers itself a future "third way", placed somewhere in the middle of the marxist political spectrum. This is why what capitalists call "far left" politics have so much infighting: the modern political scale is heavily skewed by capitalism, as social-democrats, centrists, and conservatives would ally even with fascists in their greedy pursuit of money and power. The so called "far left" however, truly cares for their values, will stand for their beliefs and not seek any compromise with capitalists.
+Believing that centrists, conservatives, and fascists will disappear along with capitalism's inevitable collapse, contrapositionism considers itself a future alternative ideology. This is why what capitalists call "far left" politics have so much infighting: the modern political scale is heavily skewed by capitalism, as social-democrats, centrists, and conservatives would ally even with fascists in their greedy pursuit of money and power. The so called "far left" however, truly cares for their values, will stand for their beliefs and not seek any compromise with capitalists.
 EOT
 );
 ___('pol_manifesto_inspirations_2',     'EN', <<<EOT
-It does not mean that contrapositionism is not an ally of other marxist movements - in fact, for now, they are our comrades in the fight against capitalism and social injustice. However, once the fight is over and the entire center and right sides of the capitalist political board disappear forever, we will have to choose new sides. Contrapositionism, even though it is inspired by other similar political theories and agrees with most of their substance, has irreconcilable differences with some of them that sets it apart. It is critical that we discuss those differences to better explain what contrapositionism really is.
+It does not mean that contrapositionism is not an ally of other similar movements - in fact, for now, they are our comrades in the fight against capitalism and social injustice. However, once the fight is over and the entire center and right sides of the political political board collapse, we will have to choose new sides. Contrapositionism, even though it is inspired by other similar political theories and agrees with most of their substance, has irreconcilable differences with some of them that sets it apart. It is critical that we discuss those differences to better explain what contrapositionism really is.
 EOT
 );
 ___('pol_manifesto_inspirations_3',     'EN', <<<EOT
-Marxism, the idea that society is a product of class struggle between the ruling class and the proletariat, is an obvious major source of inspiration. Marx's analysis of the social contract as stripping workers of their consent and humans of their nature is mirrored throughout this manifesto. His analysis went as far as taking into account post-scarcity economy, discussing the value of labor in a world of automation - a visionary perspective for its time. As it is not in itself a political movement, we have no reason to reject it, for we are the direct grandchildren of Marx's ideas.
+Marxism, the idea that society is a product of class struggle between the ruling class and the proletariat, is an obvious major source of inspiration. Marx's analysis of the social contract as stripping workers of their consent and humans of their nature is mirrored throughout this manifesto. His analysis went as far as taking into account post-scarcity economy, discussing the value of labor in a world of automation - a visionary perspective for its time. However, while marxism pretends to speak for the lower classes and wishes to abolish the dominant class, it is a bourgeois ideology born of this very same upper class they denounce. In their total rejection of the upper class, they also hypocritically reject themselves. Being in control of the wealth and power, members of the upper class should be welcomed as allies if they desire change, not rejected for being a part of the system they were born and raised in.
 EOT
 );
 ___('pol_manifesto_inspirations_4',     'EN', <<<EOT
@@ -379,11 +379,11 @@ Communism, the idea that social classes and the state must be fully abolished, i
 EOT
 );
 ___('pol_manifesto_inspirations_6',     'EN', <<<EOT
-Anarchism, the idea that hierarchy causes violence and that the concept of a state itself must be rejected, is also an important source of inspiration. In particular, the writings of Kropotkin on mutual aid are directly mentioned in multiple parts of the manifesto. Even though people think of anarchism as a violent or disorganized ideology, it is quite the opposite. Anarchism is an inherently peaceful ideology, calling for the removal of the main sources of violence in society: the state and the privileged. However, the power vacuum of a stateless society would likely lead to a power grab by opportunistic totalitarians. It is a sad byproduct of human nature that a state must exist, though stripped of as much violent power as possible.
+Anarchism, the idea that hierarchy causes violence and that the concept of a state itself must be rejected, is also an important source of inspiration. In particular, the writings of Kropotkin on mutual aid are directly mentioned in multiple parts of the manifesto. Even though people think of anarchism as a violent or disorganized ideology, it is quite the opposite. Anarchism is an inherently peaceful ideology, calling for the removal of the main sources of violence in society: the state and the privileged. However, the power vacuum of a stateless society would likely lead to a power grab by opportunistic totalitarians. It is a sad byproduct of human nature that a state must exist, though stripped of as much violent power as possible and without the focus on popularity contests and superstar heads of state. Furthermore, the open ended nature of anarchism allows for inherently brutal and counterproductive movements such as anarcho-capitalism to exist.
 EOT
 );
 ___('pol_manifesto_inspirations_7',     'EN', <<<EOT
-Anarcho-pacifism takes anarchism a step further by refusing to use violence in the conflict against capitalism. Fueled by the famous success of Mahatma Gandhi against India's colonial oppressors, anarcho-pacifists have grown in confidence that the removal of power structures can be achieved peacefully. As much as contrapositionism would like to be in agreement with this beautiful ideology, the mere fact that states, capitalists, and fascists use violence to maintain their domination of the underprivileged requires at least the ability to strike back against them. Violence is required against those who preach violent ideologies, punching a fascist is not an option but a duty. However, violence must only be a last resort, a defensive option used in situations when no other move exists, and it must always spare the innocent from any collateral damage.
+Anarcho-pacifism takes anarchism a step further by refusing to use violence in the conflict against capitalism. Fueled by the famous success of Mahatma Gandhi against India's colonial oppressors, anarcho-pacifists have grown in confidence that the removal of power structures can be achieved peacefully. As much as contrapositionism would like to be in agreement with this beautiful ideology, the mere fact that states, capitalists, and fascists use violence to maintain their domination of the underprivileged requires at least the ability to strike back against them. Violence is required against those who preach violent ideologies, punching a fascist is not an option but a duty. However, violence must only be a last resort, a stictly defensive and non lethal option used in situations when no other move exists, as collateral damage always punishes allies and innocents more than the percieved enemy.
 EOT
 );
 ___('pol_manifesto_inspirations_8',     'EN', <<<EOT
@@ -395,14 +395,18 @@ An extremely touchy ideology to partially reject, feminism is a movement that be
 EOT
 );
 ___('pol_manifesto_inspirations_10',    'EN', <<<EOT
-A lesser known ideology, ecofeminism suggests that nature has become an underprivileged entity along with other minorities, and thus the fight for feminism is one with the fight for ecology. Taking intersectionality to its extreme by pooling every fight together puts an interesting perspective on the unhealthy relationships between nature and privilege, spirituality and patriarchy, scientific progress and social injustice. However, the ideology has been pushed too far, often rejecting those who do not accept the link between the female body and nature. This emphasis on physicality implies a rejection of trans women. Thus, contrapositionism borrows a lot from the theoretical side of ecofeminism, but can not adhere to the spiritual side of ecofeminism.
+A lesser known ideology, ecofeminism suggests that nature has become an underprivileged entity along with other minorities, and thus the fight for feminism is one with the fight for ecology. Taking intersectionality to its extreme by pooling every fight together puts an interesting perspective on the unhealthy relationships between nature and privilege, spirituality and patriarchy, scientific progress and social injustice. However, the ideology has been pushed too far, often rejecting those who do not accept the link between the female body and nature. This emphasis on physicality implies a rejection of those who do not fit in the traditional gender roles of society, who already are victims of the system and do not need their oppressors to earn more power. Thus, contrapositionism borrows a lot from the theoretical side of ecofeminism, but can not adhere to the spiritual side of ecofeminism.
 EOT
 );
 ___('pol_manifesto_inspirations_11',    'EN', <<<EOT
-The rejection of aspects of all these ideologies is why contrapositionism exists in the first place - trying to show that a "third way" is possible for those who struggle to find an ideology that they fully agree with. Not everyone is made to fit in a box, but offering one more box to choose from - in the form of this manifesto - might help rally new supporters in the urgent fight against capitalism.
+Last but not least, the world of social justice must be mentioned. As a field of study, it leads to a much better understanding of the mechanics of control and oppression used by society. Its ability to make people feel uncomfortable about their own privileges is a key part of any social battle, as privileged people hold much more power than they think, and harnessing their powers in a fight will always be helpful. Sadly, many social justice movements devolve into a thirst for revenge, sometimes becoming even worse than the very thing they swore to destroy. The tunnelvision of a specific social justice battle can sometimes blind its leaders and followers to the damage that they are causing to other minorities, lacking the perspective required to simply take a step back and listen to the suffering of others. Using this knowledge, the ruling class manipulates the least intersectional social justice movements to make them seem like enemies of the lower class, turning them into tools to keep the population ideologically divided. Contrapositionism is a social justice movement, but with no thirst for revenge in mind - only a desire for a better world for all.
 EOT
 );
 ___('pol_manifesto_inspirations_12',    'EN', <<<EOT
+The rejection of aspects of all these ideologies is why contrapositionism exists in the first place - trying to show that another way is possible for those who struggle to find an ideology that they fully agree with. Not everyone is made to fit in a box, but offering one more box to choose from - in the form of this manifesto - might help rally new supporters in the urgent fight against capitalism.
+EOT
+);
+___('pol_manifesto_inspirations_13',    'EN', <<<EOT
 Until the system gets overthrown, we are stronger together.
 EOT
 );
@@ -420,11 +424,11 @@ Siddhārtha Gautama, after renouncing a life of luxury for one of asceticism, re
 EOT
 );
 ___('pol_manifesto_philosophy_3',     'EN', <<<EOT
-In an effort to mentally free yourself from the oppression of society, it will also become necessary to drain yourself and others of any toxicity. Reject those who cause chaos, distance yourself from the bad elements in your life, do your best to surround yourself with positive elements. If you can gather the required strength, become a positive figure in the lives of those who do not have the strength to become one. Help those who are in distress overcome the pain in their lives.
+In an effort to mentally free yourself from the oppression of society, it will also become necessary to drain yourself and others of any toxicity. Whenever possible, reject those who cause chaos. Try to distance yourself from the bad elements in your life. Do your best to surround yourself with positive elements. If you can gather the required strength, become a positive figure in the lives of those who do not have the strength to become one. Help those who are in distress overcome the pain in their lives.
 EOT
 );
 ___('pol_manifesto_philosophy_4',     'EN', <<<EOT
-No system can be toppled with anger alone. Change must come from within, and it begins within yourself. Society must be shown a positive image of alternative movements, one of people who have found strength in themselves and in each other. For those who have managed to become better versions of themselves, use it to lay the foundations required to change the system. In the workplace, unionize. On your free time, volunteer. Around others, spread the word of alternatives to the system and reassure those who think there is no hope.
+No system can be toppled with anger alone. Change must come from within, and it begins within yourself. Society must be shown a positive image of alternative movements, one of people who have found strength in themselves and in each other. For those who have the means to become better versions of themselves, use it to lay the foundations required to change the system. In the workplace, unionize. On your free time, volunteer. Around others, spread political theory and deconstruct the system, reassure those who think there is no hope.
 EOT
 );
 ___('pol_manifesto_philosophy_5',     'EN', <<<EOT
@@ -453,7 +457,7 @@ Listening is a social duty. We spend far too much time talking on behalf of othe
 EOT
 );
 ___('pol_manifesto_listening_3',      'EN', <<<EOT
-Of course, not everyone is worth listening to. Fascists and other oppressors can listen to each other as they rot in whichever hell they end up in, they are not worth your time and deserve zero tolerance. But as long as someone suffers from the system - even if their political opinions differ from yours radically - it is crucial that you let them tell you how and why the system oppresses them. Even those who seem like bad people can be lost souls, misguided, with a good nature hiding beneath the surface. Not always, but sometimes.
+Of course, not everyone is worth listening to. Fascists and other oppressors can listen to each other and it is not your duty to listen to them or to change their mind. But as long as someone suffers from the system - even if their political opinions differ from yours radically - it is crucial that you let them tell you how and why they feel that the system oppresses them. Even those who seem like bad people can be lost souls, misguided, with a good nature hiding beneath the surface. Not always, but sometimes.
 EOT
 );
 ___('pol_manifesto_listening_4',      'EN', <<<EOT
@@ -465,7 +469,7 @@ In order to grow as a person and as a member of society, you should put this in 
 EOT
 );
 ___('pol_manifesto_listening_6',      'EN', <<<EOT
-This is how this manifesto came to be: through the voices of those who have spoken in these circles, requesting a "third way" in post-capitalism politics. A common complaint was that they lacked representation within communism or anarchism or feminism because too much speaking was done on their behalf, and not enough listening. Tired of all the mansplaining, cissplaining, straightsplaining, ablesplainig, kāfirsplaining, goysplaining, and other forms of appropriation of their identity to further someone else's message, the most common query seemed to be this simple one: please listen to us more. We exist.
+This is how this manifesto came to be: through the voices of those who have spoken in these circles, requesting an alternative way in post-capitalism politics. A common complaint was that they lacked representation within communism or anarchism or feminism because too much speaking was done on their behalf, and not enough listening. Tired of all the mansplaining, cissplaining, straightsplaining, ablesplainig, kāfirsplaining, goysplaining, and other forms of appropriation of their identity to further someone else's message, the most common query seemed to be this simple one: please listen to us more. We exist.
 EOT
 );
 ___('pol_manifesto_listening_7',      'EN', <<<EOT
@@ -498,7 +502,7 @@ ___('pol_manifesto_solutions_point_2',  'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_solutions_point_3',  'EN', <<<EOT
-<span class="text_red bold glow">3 · Think inclusively.</span> The smaller details such as using non gendered and less violent language matter almost as much as the big changes such as fighting racism and hate.
+<span class="text_red bold glow">3 · Think inclusively.</span> The smaller details such as using non gendered and less violent language matter almost as much as the big changes such as fighting racism and hate. Battles are not mutually exclusive.
 EOT
 );
 ___('pol_manifesto_solutions_point_4',  'EN', <<<EOT
@@ -506,11 +510,11 @@ ___('pol_manifesto_solutions_point_4',  'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_solutions_point_5',  'EN', <<<EOT
-<span class="text_red bold glow">5 · Encourage varied social structures.</span> Society is designed around nuclear families and single parent families. Give voluntarily single individuals, childless couples, relationships involving more than two people, extended families, cooperative communities, and other structures an equal right to exist.
+<span class="text_red bold glow">5 · Encourage varied social structures.</span> Society is designed around nuclear families and single parent families. Give equal representation to voluntarily single individuals, childless couples, relationships involving more than two people, extended families, cooperative communities, and other structures.
 EOT
 );
 ___('pol_manifesto_solutions_point_6',  'EN', <<<EOT
-<span class="text_red bold glow">6 · Abolish inheritance.</span> Education must become more important than building capital when raising children, no system that causes children to await their relative's deaths is a good one. Only goods with an emotional value should be transferred to the next generation.
+<span class="text_red bold glow">6 · Abolish inheritance.</span> Education must become more important than building capital when raising children, no system that causes children to await their relative's deaths is a good one. Only items bearing an emotional value should be transferred to the next generation.
 EOT
 );
 ___('pol_manifesto_solutions_point_7',  'EN', <<<EOT
@@ -526,7 +530,7 @@ ___('pol_manifesto_solutions_point_9',  'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_solutions_point_10', 'EN', <<<EOT
-<span class="text_red bold glow">10 · Publicly condemn systemic violence.</span> Retroactively judge every crime committed by police forces, every war crime committed by military forces or ordered by politicians, using the rules and laws of the system they themselves have been enforcing. This is not about blood for blood revenge, but rather as a way to show the past is behind us. Punish only the highest offenders, by their own rules, to set an example.
+<span class="text_red bold glow">10 · Publicly condemn systemic violence.</span> Retroactively judge every crime committed by police forces, every war crime committed by military forces or ordered by politicians, using the rules and laws of the system they themselves have been enforcing. This is not about blood for blood revenge, they do not need to be punished, but this must happen as a way to give closure and show that the past is behind us.
 EOT
 );
 ___('pol_manifesto_solutions_point_11', 'EN', <<<EOT
@@ -534,15 +538,15 @@ ___('pol_manifesto_solutions_point_11', 'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_solutions_point_12', 'EN', <<<EOT
-<span class="text_red bold glow">12 · Abolish land ownership for profit.</span> Make currently existing buildings cooperatively owned by those who live in it. Let anyone have the right to claim empty land for their own purposes (building houses, working the land, or simply living), but let local governments deny these claims if they harm the collective good.
+<span class="text_red bold glow">12 · Abolish land ownership for profit.</span> Make currently existing buildings cooperatively owned by those who live in them. Let anyone have the right to claim empty land for their own purposes (building houses, working the land, or simply living), but let local governments deny these claims if they harm nature or the collective good.
 EOT
 );
 ___('pol_manifesto_solutions_point_13', 'EN', <<<EOT
-<span class="text_red bold glow">13 · Seize excessive wealth.</span> Take the excess money and goods of the ultra rich, use it to pay off the debts of individuals and nations that they have artificially created. Any remaining seized goods should be used towards building a better collective future. Only seize the excessive wealth, leave them some of their comfort of life. Even after these seizures, the former ultra rich should have a place in the new society.
+<span class="text_red bold glow">13 · Seize excessive wealth.</span> Take the excess money and goods of the ultra rich and use it to pay off the debts of individuals and nations that they have artificially created. Any remaining seized goods should be used towards building a better collective future. Only seize the excessive wealth, leave them some of their comfort of life. Even after these seizures, the former ultra rich should have an equel place in the new society.
 EOT
 );
 ___('pol_manifesto_solutions_point_14', 'EN', <<<EOT
-<span class="text_red bold glow">14 · End wage slavery.</span> Ensure that everyone's basic necessities are met without a need for money or hardships: food, water, healthcare, housing, etc. Make it so that working stops being a necessity and becomes a choice.
+<span class="text_red bold glow">14 · End wage slavery.</span> Ensure that everyone's basic necessities are met without a need for money or hardships: food, water, healthcare, housing, transportation, etc. Make it so that working stops being a necessity and becomes a choice.
 EOT
 );
 ___('pol_manifesto_solutions_point_15', 'EN', <<<EOT
@@ -550,11 +554,11 @@ ___('pol_manifesto_solutions_point_15', 'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_solutions_point_16', 'EN', <<<EOT
-<span class="text_red bold glow">16 · Disband vertical corporations.</span> Corporations can continue existing, but should be owned by those who contribute labor towards making them work. Any corporation that is owned by executives or shareholders must be given to its employees, who will decide whether to keep it alive as a collectively owned corporation or whether to disband it.
+<span class="text_red bold glow">16 · Disband vertical corporations.</span> Corporations can continue existing, but should be owned by those who contribute labor to them. Any corporation owned by executives or shareholders must be given to its employees, who will decide whether to keep it alive as a collectively owned corporation or whether to disband it.
 EOT
 );
 ___('pol_manifesto_solutions_point_17', 'EN', <<<EOT
-<span class="text_red bold glow">17 · Publicly condemn unethical capitalists.</span> Executives and shareholders must pay for any profit they have earned off wage slave labor, for any profit done over political instability and wars, for any profit derived from the deliberate destruction of the planet. This is not about blood for blood revenge, but rather as a way to show the past is behind us. Punish only the highest offenders, by their own rules, to set an example.
+<span class="text_red bold glow">17 · Publicly condemn unethical capitalists.</span> Executives and shareholders must pay for any profit they have earned off wage slave labor, for any profit done over political instability and wars, for any profit derived from the deliberate destruction of the planet. Just like any other criminals, they should not be victims of punishment or revenge, but rather destituted of their power and rehabilitated to become equal members of the new society.
 EOT
 );
 ___('pol_manifesto_solutions_point_18', 'EN', <<<EOT
@@ -562,7 +566,7 @@ ___('pol_manifesto_solutions_point_18', 'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_solutions_point_19', 'EN', <<<EOT
-<span class="text_red bold glow">19 · Abolish exclusive intellectual property.</span> Copyrights and patents are holding back science, art, and health care. Any form of intellectual property that prevents others from building upon existing things must disappear along with capitalism. However, permissive intellectual property should still be enforced, for example licenses that require crediting an author by name if their work is used.
+<span class="text_red bold glow">19 · Abolish exclusive intellectual property.</span> Copyrights and patents are holding back science, art, and health care. Any form of intellectual property that prevents others from building upon existing things must disappear along with capitalism. However, permissive intellectual property should still be enforced in order to ensure creators and artists always get the credit that they are rightfully due.
 EOT
 );
 ___('pol_manifesto_solutions_point_20', 'EN', <<<EOT
@@ -582,7 +586,7 @@ ___('pol_manifesto_solutions_point_23', 'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_solutions_point_24', 'EN', <<<EOT
-<span class="text_red bold glow">24 · Unite with like-minded movements.</span> We must come to the realization that we all have a common enemy in capitalism, and should unite along with similar political movements to fight centrists, neutrals, conservatives, capitalists, and fascists. It is only once that this fight has been won that we should be arguing about our political future.
+<span class="text_red bold glow">24 · Unite with like-minded movements.</span> We must come to the realization that we all have a common enemy in capitalism, and should unite along with like minded political movements to fight centrists, neutrals, conservatives, capitalists, and fascists. It is only once that this fight has been won that we should be arguing about our political future.
 EOT
 );
 ___('pol_manifesto_solutions_point_25', 'EN', <<<EOT
@@ -594,11 +598,11 @@ ___('pol_manifesto_solutions_point_26', 'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_solutions_point_27', 'EN', <<<EOT
-<span class="text_red bold glow">27 · Disband centralized governments.</span> Head of states have too much power, they represent a modern version of divine right monarchs. The existence of such power drives power hungry fiends into becoming career politicians. Instead, governments should be small scaled, local, and have no ruler as their head. Large scale decisions can be taken by exceptional assemblies of representatives of local political bodies.
+<span class="text_red bold glow">27 · Disband centralized governments.</span> Heads of state have too much power, they represent a modern version of divine right monarchs. The existence of such roles drives power hungry fiends into becoming career politicians. Instead, governments should be small scaled, local, and have no ruler as their head. Large scale decisions can be taken by exceptional assemblies of representatives of local political bodies.
 EOT
 );
 ___('pol_manifesto_solutions_point_28', 'EN', <<<EOT
-<span class="text_red bold glow">28 · Govern for the future.</span> As politics require planning ahead, they must serve those who have a long future ahead of them. There should be a maximum age of 60 years old on both voting and being an elected official. Politicians aged 60 or older should still remain involved in the system in a consulting role if they so desire, as younger ones will have a lot to learn from their accumulated experience.
+<span class="text_red bold glow">28 · Govern for the future.</span> As politics require planning ahead, they must serve those who have a long future ahead of them. There should be a maximum age on both voting and being an elected official. Politicians above this age should still remain involved in the system in a consulting role if they so desire, as younger ones will have a lot to learn from their accumulated experience.
 EOT
 );
 ___('pol_manifesto_solutions_point_29', 'EN', <<<EOT
@@ -610,7 +614,7 @@ ___('pol_manifesto_solutions_point_30', 'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_solutions_point_31', 'EN', <<<EOT
-<span class="text_red bold glow">31 · Prevent mutually assured destruction.</span> Countries and entities that sign the world constitution should disband their military - which is not necessary in a society where there are no more national interests to defend - and dismantle any form of military weapons under their control, especially those of mass destruction.
+<span class="text_red bold glow">31 · Prevent mutually assured destruction.</span> Countries and entities that sign the world constitution should disband their military - which is not necessary in a society where there are no more national interests to defend - and dismantle any form of military grade weapons under their control, especially those of mass destruction.
 EOT
 );
 ___('pol_manifesto_solutions_point_32', 'EN', <<<EOT
@@ -618,7 +622,7 @@ ___('pol_manifesto_solutions_point_32', 'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_solutions_point_33', 'EN', <<<EOT
-<span class="text_red bold glow">33 · Ruthlessly depollute.</span> The environmental emergency has reached a point of non return. Any corporation which relies of pollution or exploiting excessive resources must be forced to change their business model. Make the fight against climate change a frontal battle by giving climate scientists a voice in the media.
+<span class="text_red bold glow">33 · Ruthlessly depollute.</span> The environmental emergency has reached a point of non return. Any corporation which relies of pollution or exploiting excessive resources must be forced to change their business model. Make the fight against climate change a frontal battle.
 EOT
 );
 ___('pol_manifesto_solutions_point_34', 'EN', <<<EOT
@@ -630,7 +634,7 @@ ___('pol_manifesto_solutions_point_35', 'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_solutions_point_36', 'EN', <<<EOT
-<span class="text_red bold glow">36 · Forget about monoculture.</span> Agriculture too should respect diversity. Replace infinitely spanning fields with polycultures and forests. Humanity will easily be able to survive the drop in food production as farm animals - not humans - are the main consumers of the crops grown in monocultures. Through a healthier agriculture, we will also increase the quality of our food and remove the need for toxic products when growing crops.
+<span class="text_red bold glow">36 · Forget about monoculture.</span> Agriculture too should respect diversity. Replace infinitely spanning fields with polycultures and forests. Humanity will easily be able to survive the drop in food production as farm animals - not humans - are the main consumers of the crops grown in monocultures. Through a healthier agriculture, we will increase the quality of our food and remove the need for toxic products in crops.
 EOT
 );
 ___('pol_manifesto_solutions_point_37', 'EN', <<<EOT
@@ -675,11 +679,11 @@ ___('pol_manifesto_praxis_points_2',  'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_praxis_points_3',  'EN', <<<EOT
-<span class="text_red bold glow">3 · Hold workshops.</span> In these social circles, it is important to take the required time to listen to everyone. Always challenging your own views is necessary. The best way to achieve it is to hold workshops where people talk about their experiences as underprivileged members of the system, and others simply listen and learn. Invite people external to your circles, listen to what they have to say, and use the experiences of others to grow yourself as a person.
+<span class="text_red bold glow">3 · Hold workshops.</span> In these social circles, it is important to take the required time to listen to everyone. Always challenging your own views is necessary. The best way to achieve it is to hold workshops where people talk about their experiences, and others simply listen and learn. Invite people into your circles, listen to what they have to say, and use the experiences of others to grow yourself as a person.
 EOT
 );
 ___('pol_manifesto_praxis_points_4',  'EN', <<<EOT
-<span class="text_red bold glow">4 · Go vote.</span> It might seem like a lost cause given the unfairness of the electoral system, but every single voice counts when telling capitalism to get bent. Support your local anticapitalist candidates, vote against fascism, make capitalists afraid, and remember that change will come from within.
+<span class="text_red bold glow">4 · Go vote.</span> It might seem like a lost cause given the unfairness of the institutional electoral system, but every single voice counts when telling capitalism to get bent. Support your local anticapitalist candidates, vote against fascism, make capitalists afraid, and remember that change will come from within.
 EOT
 );
 ___('pol_manifesto_praxis_points_5',  'EN', <<<EOT
@@ -687,11 +691,11 @@ ___('pol_manifesto_praxis_points_5',  'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_praxis_points_6',  'EN', <<<EOT
-<span class="text_red bold glow">6 · Show yourself.</span> Capitalism turned politics into a show of public image. To grow a movement, it must grow not only in size and reach but also in visibility. Everything from flyers to posters to banners in demonstrations is helpful, especially if they catch the eye and send a clear message. Become a part of public culture. Become art, become memes, make yourselves a known element of the public discourse.
+<span class="text_red bold glow">6 · Show yourself.</span> Capitalism turned politics into a show of public image. To grow a movement, it must grow not only in size and reach but also in visibility. Everything from flyers to posters to demonstrations is helpful, especially if they catch the eye and send a clear message. Become a part of public culture. Become art, become memes, make yourselves a known element of the public discourse.
 EOT
 );
 ___('pol_manifesto_praxis_points_7',  'EN', <<<EOT
-<span class="text_red bold glow">7 · Share knowledge.</span> Make use of modern technology to share as much knowledge and as many tools as possible with each other. Ensure that anything you create is protected by permissive intellectual property licenses, so that it can not be appropriated by capitalists, but can also be shared and used freely without any limits. Become the bearers and sharers of collective knowledge.
+<span class="text_red bold glow">7 · Share knowledge.</span> Make use of modern technology to share as much knowledge and as many tools as possible with each other. Ensure that anything you create is protected by permissive intellectual property licenses, so that it can not be appropriated by capitalists, but can still be shared and used freely without any limitations. Become the bearers and sharers of collective knowledge.
 EOT
 );
 ___('pol_manifesto_praxis_points_8',  'EN', <<<EOT
@@ -699,11 +703,11 @@ ___('pol_manifesto_praxis_points_8',  'EN', <<<EOT
 EOT
 );
 ___('pol_manifesto_praxis_points_9',  'EN', <<<EOT
-<span class="text_red bold glow">9 · Use your privilege.</span> For those who are lucky enough to have some privileges, it is important that you make use of them - not because you can, but because you must. In capitalism, the underprivileged can only rely on the privileged to relieve them from the oppression of the system. However, do not do it seeking glory. Getting credit for actions that you are able to do solely because the system allows you to do them should be cause for selflessness, not for personal validation.
+<span class="text_red bold glow">9 · Use your privilege.</span> For those who are lucky enough to have some privileges, it is important that you make use of them. In capitalism, the underprivileged can only rely on the privileged to relieve them from the oppression of the system. However, do not do it seeking glory. Getting credit for actions that you are able to do solely because the system allows you to do them should be cause for selflessness, not for personal validation.
 EOT
 );
 ___('pol_manifesto_praxis_points_10', 'EN', <<<EOT
-<span class="text_red bold glow">10 · Fight fascism.</span> Capitalism harbors fascism and breeds it, using it as a tool to scare the masses. Sometimes, their creation gets out of their control, and needs to be kept in check. Even though pacifism is an important virtue when trying to rally the masses to your cause, the oppression of fascism justifies violence.
+<span class="text_red bold glow">10 · Fight fascism.</span> Capitalism harbors fascism and breeds it, using it as a tool to scare the masses. Sometimes, their creation gets out of their control, and needs to be kept in check. Even though pacifism is an important virtue when trying to rally the masses to your cause, the oppression of fascism justifies resistance.
 EOT
 );
 
