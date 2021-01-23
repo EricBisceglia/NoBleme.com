@@ -9,8 +9,8 @@ include_once './../../lang/politics.lang.php';  # Translations
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/politics/manifesto";
-$page_title_en    = "Contrapositionist manifesto";
-$page_title_fr    = "Manifeste contrapositioniste";
+$page_title_en    = "Contra-manifesto";
+$page_title_fr    = "Contra-manifesto";
 $page_description = "The contrapositionist manifesto. The system has failed, the world is on a timer, but it is not too late for change to come from within.";
 
 // Hide the footer
@@ -47,7 +47,39 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_preamble_body')?>
+  <p>
+    <?=__('pol_manifesto_preamble_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_preamble_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_preamble_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_preamble_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_preamble_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_preamble_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_preamble_7')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_preamble_8')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_preamble_9')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_preamble_10')?>
+  </p>
+  <p class="text_red glow bold">
+    <?=__('pol_manifesto_preamble_11')?>
+  </p>
 
   <h4 class="gigapadding_top">
     <?=__('pol_manifesto_contents')?>
@@ -126,7 +158,27 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_intro_body')?>
+  <p>
+    <?=__('pol_manifesto_intro_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_intro_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_intro_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_intro_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_intro_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_intro_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_intro_7')?>
+  </p>
 
   <h4 class="megapadding_top" id="contract">
     <?=__('pol_manifesto_contract_title')?>
@@ -140,7 +192,27 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_contract_body')?>
+  <p>
+    <?=__('pol_manifesto_contract_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_contract_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_contract_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_contract_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_contract_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_contract_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_contract_7')?>
+  </p>
 
   <h4 class="megapadding_top" id="capitalism">
     <?=__('pol_manifesto_capitalism_title')?>
@@ -154,7 +226,33 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_capitalism_body')?>
+  <p>
+    <?=__('pol_manifesto_capitalism_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_capitalism_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_capitalism_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_capitalism_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_capitalism_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_capitalism_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_capitalism_7')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_capitalism_8')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_capitalism_9')?>
+  </p>
 
   <h4 class="megapadding_top" id="violence">
     <?=__('pol_manifesto_violence_title')?>
@@ -168,7 +266,36 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_violence_body')?>
+  <p>
+    <?=__('pol_manifesto_violence_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_violence_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_violence_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_violence_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_violence_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_violence_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_violence_7')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_violence_8')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_violence_9')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_violence_10')?>
+  </p>
 
   <h4 class="megapadding_top" id="work">
     <?=__('pol_manifesto_work_title')?>
@@ -182,7 +309,39 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_work_body')?>
+  <p>
+    <?=__('pol_manifesto_work_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_work_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_work_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_work_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_work_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_work_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_work_7')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_work_8')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_work_9')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_work_10')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_work_11')?>
+  </p>
 
   <h4 class="megapadding_top" id="creativity">
     <?=__('pol_manifesto_creativity_title')?>
@@ -196,7 +355,33 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_creativity_body')?>
+  <p>
+    <?=__('pol_manifesto_creativity_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_creativity_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_creativity_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_creativity_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_creativity_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_creativity_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_creativity_7')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_creativity_8')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_creativity_9')?>
+  </p>
 
   <h4 class="megapadding_top" id="nature">
     <?=__('pol_manifesto_nature_title')?>
@@ -210,7 +395,33 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_nature_body')?>
+  <p>
+    <?=__('pol_manifesto_nature_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_nature_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_nature_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_nature_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_nature_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_nature_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_nature_7')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_nature_8')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_nature_9')?>
+  </p>
 
   <h4 class="megapadding_top" id="inspirations">
     <?=__('pol_manifesto_inspirations_title')?>
@@ -224,7 +435,42 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_inspirations_body')?>
+  <p>
+    <?=__('pol_manifesto_inspirations_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_inspirations_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_inspirations_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_inspirations_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_inspirations_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_inspirations_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_inspirations_7')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_inspirations_8')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_inspirations_9')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_inspirations_10')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_inspirations_11')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_inspirations_12')?>
+  </p>
 
   <h4 class="megapadding_top" id="philosophy">
     <?=__('pol_manifesto_philosophy_title')?>
@@ -238,7 +484,27 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_philosophy_body')?>
+  <p>
+    <?=__('pol_manifesto_philosophy_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_philosophy_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_philosophy_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_philosophy_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_philosophy_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_philosophy_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_philosophy_7')?>
+  </p>
 
   <h4 class="megapadding_top" id="listening">
     <?=__('pol_manifesto_listening_title')?>
@@ -252,7 +518,33 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_listening_body')?>
+  <p>
+    <?=__('pol_manifesto_listening_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_listening_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_listening_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_listening_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_listening_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_listening_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_listening_7')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_listening_8')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_listening_9')?>
+  </p>
 
   <h4 class="megapadding_top" id="solutions">
     <?=__('pol_manifesto_solutions_title')?>
@@ -266,7 +558,129 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_solutions_body')?>
+  <p>
+    <?=__('pol_manifesto_solutions_intro')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_7')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_8')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_9')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_10')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_11')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_12')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_13')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_14')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_15')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_16')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_17')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_18')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_19')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_20')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_21')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_22')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_23')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_24')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_25')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_26')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_27')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_28')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_29')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_30')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_31')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_32')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_33')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_34')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_35')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_36')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_37')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_38')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_39')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_solutions_point_40')?>
+  </p>
 
   <h4 class="megapadding_top" id="praxis">
     <?=__('pol_manifesto_praxis_title')?>
@@ -280,7 +694,45 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_praxis_body')?>
+  <p>
+    <?=__('pol_manifesto_praxis_intro_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_praxis_intro_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_praxis_intro_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_praxis_points_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_praxis_points_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_praxis_points_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_praxis_points_4')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_praxis_points_5')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_praxis_points_6')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_praxis_points_7')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_praxis_points_8')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_praxis_points_9')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_praxis_points_10')?>
+  </p>
 
   <h4 class="megapadding_top">
     <?=__('pol_manifesto_postface_title')?>
@@ -294,10 +746,26 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </blockquote>
   </div>
 
-  <?=__('pol_manifesto_postface_body')?>
+  <p>
+    <?=__('pol_manifesto_postface_1')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_postface_2')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_postface_3')?>
+  </p>
+  <p>
+    <?=__('pol_manifesto_postface_4')?>
+  </p>
+  <p class="bold glow text_red bigger">
+    <?=__('pol_manifesto_postface_5')?>
+  </p>
 
   <div class="hugepadding_top bigpadding_bot">
-    <?=__('pol_manifesto_credits')?>
+    <p class="hugepadding_top align_center text_red glow">
+      <?=__('pol_manifesto_credits')?>
+    </p>
   </div>
 
 </div>
