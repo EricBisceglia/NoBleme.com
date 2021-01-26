@@ -415,49 +415,93 @@ EOT
 ___('pol_manifesto_work_title', 'EN', "<span class=\"text_red\">Anger IV:</span> Work");
 ___('pol_manifesto_work_title', 'FR', "<span class=\"text_red\">Colère IV:</span> Le travail");
 ___('pol_manifesto_work_quote', 'EN', "Unchecked growth for the sake of growth is how cancer works");
-___('pol_manifesto_work_quote', 'FR', "La croissance non maîtrisée et sans limite équivaut au fonctionnement d'un cancer");
+___('pol_manifesto_work_quote', 'FR', "La croissance non maîtrisée et sans limite ressemble au fonctionnement d'un cancer");
 ___('pol_manifesto_work_1',     'EN', <<<EOT
 Using the threat of state violence, capitalism pushes its underprivileged citizens to follow the one and only allowed way of life: work or live an even more miserable life. Any attempt at finding a lifestyle that isn't centered on work will not only lead to financial ruin, but it will also lead to being ridiculed and rejected by the masses for not being "productive" or "useful" enough.
+EOT
+);
+___('pol_manifesto_work_1',     'FR', <<<EOT
+Sous la menace de la violence, le capitalisme force les défavorisés à suivre le seul et unique mode de vie autorisé : travailler ou vivre une vie encore plus misérable. Toute tentative de chercher un style de vie qui n'est pas centré sur le travail conduira non seulement à la ruine financière, mais aussi à se faire ridiculiser et rejeter par le reste de la société par manque de « productivité » ou « d'utilité ».
 EOT
 );
 ___('pol_manifesto_work_2',     'EN', <<<EOT
 Projecting their suffering on others, victims of the system will disregard those who they perceive as parasites - ignoring the fact that the true parasites of society are the privileged. What does a land owner or landlord contribute to the common good, other than collecting the money of the working class without much care for the condition of the land or housing they provide? What does a shareholder contribute to society other than collecting dividends and imposing their views on how companies should be ran in order to maximize profit, without care for the workers that will suffer under wage slavery to bring them said profit.
 EOT
 );
+___('pol_manifesto_work_2',     'FR', <<<EOT
+Projetant leurs souffrances sur les autres, les victimes du système méprisent ceux qu'elles perçoivent comme des « parasites », sans tenir compte du fait que les vrais parasites de la société sont les classes privilégiées. Quelle est la contribution des propriétaires fonciers ou terriens au bien commun, si ce n'est de collecter l'argent de la classe ouvrière en échange d'un effort minimal ? Quelle est la contribution des actionnaires à la société, si ce n'est de collecter des dividendes et d'obliger les entreprises à maximiser leurs profits peu importe la souffrance humaine et écologique causée par cette maximisation.
+EOT
+);
 ___('pol_manifesto_work_3',     'EN', <<<EOT
 The success of a country is measured in work related metrics: How low is unemployment? How high is the GDP? How strong is growth? Yet the metrics that should matter get ignored: How happy are the people? How big is the wage gap between the privileged and the underprivileged? Are everyone's basic needs met? Unchecked growth for the sake of growth is how cancer works.
+EOT
+);
+___('pol_manifesto_work_3',     'FR', <<<EOT
+Le succès d'une nation se mesure à partir de statistiques basées sur le travail : Quel est le taux de chômage ? Quel est le niveau du produit intérieur brut ? La croissance est-elle assez forte ? Les statistiques qui devraient déterminer le succès réel d'une nation sont négligées, voir même ignorées : Le peuple est-il heureux ? Quelle est l'ampleur des écarts salariaux entre les privilégiés et les défavorisés ? Les besoins fondamentaux des gens sont-ils satisfaits ? La croissance non maîtrisée et sans limite ressemble au fonctionnement d'un cancer.
 EOT
 );
 ___('pol_manifesto_work_4',     'EN', <<<EOT
 Work has become such a core part of the system that people would go to their jobs ill and risk spreading diseases rather than staying home. Employees are so afraid of the violent and unforgiving nature of work that it makes sense for them to threaten the collective wellbeing out of fear of personal punishment. What good does corporatism offer to society that would not also exist in a world of cooperative labor, where employees would not have to fear putting their wellbeing first and would get to actually earn the profits of their labor.
 EOT
 );
+___('pol_manifesto_work_4',     'FR', <<<EOT
+Le travail est devenu un élément tellement essentiel du système que les gens préfèreraient prendre le risque d'aller travailler malades que de rester chez eux. Effrayés par la nature violente et coercitive du travail, il leur semble logique de menacer le bien-être collectif par crainte de subir une punition personnelle. Qu'offre le corporatisme à la société qui n'existerait pas également dans un monde de travail coopératif, où le travail ne forcerait pas à compromettre son bien-être et permettrait de réellement bénéficier des fruits de son labeur ?
+EOT
+);
 ___('pol_manifesto_work_5',     'EN', <<<EOT
 Even in an ideal society where shareholders do not need to exist, where land owners and landlords are replaced by cooperatives of those who actually live in the land or the buildings, the value of work itself deserves to be questioned. Why do we work? What are we trying to achieve? Any work done as a learning experience, for personal growth, or for personal enjoyment is a net positive. Any work done for the collective good, with the end goal of improving the lives of each other, should most definitely be encouraged. Any other form of work has no reason to exist.
+EOT
+);
+___('pol_manifesto_work_5',     'FR', <<<EOT
+Même dans un monde idéal où les actionnaires n'existeraient plus, où la propriété terrienne et foncière serait remplacée par des coopératives au service des gens qui y habitent, la question même du travail mérite d'être remise en question. Pourquoi travaillons-nous ? Dans quel but ? Tout travail effectué dans un objectif d'apprentissage, de croissance personnelle, ou par plaisir est un net positif. Tout travail effectué pour le bien commun, dans le but d'améliorer sa vie ou la vie des autres, devrait assurément être encouragé. Toute autre forme de travail n'a aucune raison d'exister.
 EOT
 );
 ___('pol_manifesto_work_6',     'EN', <<<EOT
 In this ideal society where work is chosen and not done under threat, people would be able to live the lives they desire and set their own goals in how they want to contribute to society. Those who opt to work as little as possible would have a right to exist, and those who want to work to fill their days with labor would be able to spend their time and energy helping others and building a better world instead of chasing profit margins and pleasing middle managers.
 EOT
 );
+___('pol_manifesto_work_6',     'FR', <<<EOT
+Dans cette sociélé idéale où le travail serait choisi et non subi sous la contrainte, les gens seraient en mesure de vivre la vie qu'ils désirent et de décider de quelle façon ils souhaiteraient contribuer à la société. Certaines personnes choisiraient de travailler le moins possible, voir même de ne pas travailler, et leur choix devrait être respecté sans conséquences négatives. D'autres décideraient de remplir leurs journées par du travail, et pourraient consacrer leur temps et leur énergie à construire une meilleure société plutôt que de devoir chasser les marges financières et se tuer la santé à plaire à leur management.
+EOT
+);
 ___('pol_manifesto_work_7',     'EN', <<<EOT
 For, in this society of tomorrow, the so called "bullshit jobs" will be gone for good. Faced with problems that are currently being solved with wage slave labor, we will have to invent new solutions. Who will transport food or materials between producers and consumers? A collective solution will be to encourage those who travel to also transport goods. Who will clean up trash from the streets? It will be the perfect opportunity to learn as a community about recycling, trying to reach the zero waste goals needed for our collective survival on this planet that the capitalist consumerist society does not seem to care about.
+EOT
+);
+___('pol_manifesto_work_7',     'FR', <<<EOT
+C'est pourquoi, dans cette société de demain, les emplois inutiles doivent disparaitre. Nous aurons à inventer de nouvelles solutions pour résoudre les problèmes qui sont aujourd'hui résolus par l'esclavage salarial. Qui transportera la nourriture ou les biens matériaux entre les lieux de production et de consommation ? Une solution collective serait d'encourager toute personne qui se déplace à également transporter des biens sur son itinéraire. Qui enlèvera les poubelles ? Ce serait l'opportunité parfaite d'apprendre à recycler à l'échelle locale, de tendre vers les objectifs de zéro déchets requis pour notre survie collective sur cette planète, auxquels la classe dominante de la société capitaliste refuse de s'intéresser.
 EOT
 );
 ___('pol_manifesto_work_8',     'EN', <<<EOT
 As for the manufacturing jobs that produce the goods we consume, those would disappear thanks to automation. Few people will truly miss being a factory slave, working tedious jobs on assembly lines in exchange for the bare minimum required to survive. Former factory workers will still be able to transform their talents in manufacturing into true craftmanship, bringing back a higher quality of goods that have disappeared for lack of profitability or become exclusive to the privileged due to their price.
 EOT
 );
+___('pol_manifesto_work_8',     'FR', <<<EOT
+Quant aux emplois industriels qui servent à produire les biens que nous consommons, ceux-là devront être automatisés autant que possible. Peu de gens seront nostalgiques de la vie d'esclave d'usine, se ruinant chaque jour la santé en échange du strict minimum requis pour survivre. Le travail manuel ne disparaitrait pas pour autant, mais pourrait être traité comme il le mérite, comme un véritable savoir-faire artisanal : encourager la production de biens de qualité, qui ne sont aujourd'hui réservés qu'aux privilégiés, la cupidité capitaliste préférant la production de masse de biens à la durée de vie courte faits pour être constamment remplacés peu importe leur bilan humain et écologique.
+EOT
+);
 ___('pol_manifesto_work_9',     'EN', <<<EOT
 Another side effect of turning work into a choice will be the creation of local communities of like minded workers, learning from each other, combining their skills. Education also would become more efficient, giving passionate teachers more leeway to transfer their knowledge and passion to the next generation. Without the hysterical paranoia of losing their jobs to migrants, and with education drained of its nationalist component, closed borders would no longer be necessary and the rest of the world would be forced to become a better place for their citizens or risk losing them to this new society as they would inevitably escape the capitalistic dictatorship of work to join it.
+EOT
+);
+___('pol_manifesto_work_9',     'FR', <<<EOT
+L'éducation deviendrait également plus efficace, devenant un métier collectif de passion et de transfert de compétences plutôt qu'une préparation à des concours servant à assurer la reproduction sociale des classes dominantes. Sans la paranoïa permanente de se faire voler son emploi par des migrants, et sans le composant de propagande nationaliste du système éducatif, il n'y aurait plus besoin de fermer les frontières nationales. Le reste du monde serait à son tour forcé de devenir un lieu de vie plus agréable pour ses habitants, qui auraient désormais l'option de fuir pour cette nouvelle société si ce n'était pas le cas.
 EOT
 );
 ___('pol_manifesto_work_10',    'EN', <<<EOT
 Perhaps this all sounds too utopian, but to someone who would not know of capitalism, how nightmarish would capitalism sound? The current system is beyond extreme in the violence of wage slavery, thus any other normal system sounds so far removed from it that it will be perceived as being the extreme one. Perhaps, once freed from the chains of the "social contract" of capitalism, this utopia will look more like a tangible reachable reality to the masses who are currently victims of the very system they can not imagine an alternative to.
 EOT
 );
+___('pol_manifesto_work_10',    'FR', <<<EOT
+Peut-être que ce tableau d'un futur meilleur vous semble utopique et inimaginable, mais demandez-vous également à quel point le capitalisme semblerait cauchemardesque et inimaginable pour quelqu'un qui ne le connaitrait pas. Les futurs livres d'histoire parleront de la violence extrême du système, de l'esclavage salarial, posant la question de comment nous avons toléré collectivement cette société qui nous draine au quotidien de notre force de vie. Une fois les classes dominées libérées de leur « contrat social », cette utopie deviendra rapidement une réalité tangible, une alternative possible à un système auquel il semble aujourd'hui n'y avoir aucune alternative possible.
+EOT
+);
 ___('pol_manifesto_work_11',    'EN', <<<EOT
 We have lost touch with what makes us humans. Under capitalism, work is slavery.
+EOT
+);
+___('pol_manifesto_work_11',    'FR', <<<EOT
+Nous avons perdu contact avec notre humanité. Sous le capitalisme, le travail est une forme d'esclavage.
 EOT
 );
 
@@ -471,36 +515,72 @@ ___('pol_manifesto_creativity_1',     'EN', <<<EOT
 The usual defense of capitalism includes the dubious statement that without capitalism, we would never have done the leaps and bounds in science and technology that led us to the industrial and digital revolutions. Proud of human advancement powered by child labor and wage slavery, capitalists will dare claim that the world becomes a better place thanks to the benevolence of the ultra rich, who are "forced" to always innovate and improve the products they sell if they are to stay alive on the financial markets. Surely, without huge corporations running gigantic laboratories and hiring armies of scientists and engineers, we could not have made all the big discoveries that we did?
 EOT
 );
+___('pol_manifesto_creativity_1',     'FR', <<<EOT
+La défense habituelle du capitalisme inclut l'affirmation questionnable que sans le capitalisme, nous n'aurions jamais eu les progrès scientifiques et technologiques qui ont permis les révolutions industrielles et digitales. Fiers du progrès humain effectué sur le dos du travail d'enfants, d'esclaves, et de défavorisés, les capitalistes affirment que le monde est devenu meilleur grâce à la bienveillance des ultra-riches, qui sont « forcés » d'innover en continu afin de survivre à la concurrence. Assurément, sans d'énormes entreprises finançant de gigantesques laboratoires remplis d'armées de scientifiques, l'humanité n'aurait pas fait autant d'avancées technologiques et de grandes découvertes.
+EOT
+);
 ___('pol_manifesto_creativity_2',     'EN', <<<EOT
 A closer look at capitalistic history will show that this is pure fantasy. Many great discoveries have been patented even before they were manufactured, letting one company lazily own the monopoly of that product while the rest can not even try to compete. When its inventor purposefully decided not to patent the polio vaccine, global health improved greatly, sparing many children from an uncurable life long illness. The lesson capitalism learned from this was that there was money to be made in medicine. People's health became a game of patents and profits. Innovation in medical science is now controlled by those who own the rights to certain molecules or manufacturing processes.
 EOT
 );
+___('pol_manifesto_creativity_2',     'FR', <<<EOT
+Un examen plus approfondi de l'histoire du capitalisme vous montrera qu'il s'agit d'un pur fantasme, d'un mensonge cachant la triste réalité que le capitalisme a toujours été un frein majeur à l'innovation. De nombreuses grandes découvertes ont été brevetées avant même leur fabrication, laissant une entreprise détenir le monopole de cette avancée scientifique, empêchant les autres de rivaliser. Lorsque son inventeur a délibérément décidé de ne pas faire breveter le vaccin contre la polio, épargnant à des millions d'enfants une maladie incurable, le capitalisme en a tiré la leçon qu'il y avait de l'argent à gagner dans la médecine. La santé est devenue un jeu de brevets et de profits. L'innovation dans la science médicale est désormais contrôlée par les quelques groupes qui détiennent les droits sur certaines molécules ou certains procédés de fabrication.
+EOT
+);
 ___('pol_manifesto_creativity_3',     'EN', <<<EOT
-This happened in every field of science and technology. Great inventions in accessibility like the computer mouse have originally been straight up stolen from test labs, becoming widely used thanks to its first commercial manufacturers thinking it had no future and opting to not patent it. Meanwhile, simple concepts like finger movements on a touch screen are impossible to use on any device due to the large amounts of money those who patented it are willing to spend to prevent others from using it.
+This happened in every field of science and technology. Great inventions in accessibility like the computer mouse have originally been straight up stolen from test labs, becoming widely used thanks to its inventors generously opting to not enforce their patent. Meanwhile, simple concepts like finger movements on a touch screen are impossible to use on any device due to the large amounts of money those who patented it are willing to spend to prevent others from using it.
+EOT
+);
+___('pol_manifesto_creativity_3',     'FR', <<<EOT
+Ce même processus a eu lieu dans tous les champs de la science et de la technologie. Des inventions critiques pour l'accessibilité telles que la souris d'ordinateur ont dû être volées dans des laboratoires expérimentaux, n'existant à grande échelle que parce que ses inventeurs ont eu la bienveillance de ne pas faire respecter le brevet qu'ils avaient déposé. À l'opposé, des concepts basiques tels que des mouvements de doigts sur un écran tactile sont interdits à l'utilisation sur la majorité des appareils car ceux qui en ont déposé le brevet sont prêts à dépenser des fortunes pour empêcher les autres de s'en servir.
 EOT
 );
 ___('pol_manifesto_creativity_4',     'EN', <<<EOT
 Human nature is one of mutual aid. Just like in many other animal species, until capitalism and its patents appeared, progress had always been done through sharing knowledge and building upon the work of others to expand collective potential. The very people who mourn the destruction of the former Great Library of Alexandria will not realize that they are forbidden from reusing anything learned from a modern book or patent. Yet humans demonstrate their natural inclination towards mutual aid even in the very capitalistic world of computer science by releasing most important building bricks of the collective computing ecosystem through open source licenses.
 EOT
 );
+___('pol_manifesto_creativity_4',     'FR', <<<EOT
+La nature humaine est une nature d'entraide. Comme dans de nombreuses autres espèces animales, jusqu'à l'apparition du capitalisme et de la propriété intellectuelle restrictive, le progrès s'est toujours fait par le partage des connaissances et la mise en commun du travail de recherche et d'expérimentation. Les mêmes personnes qui pleurent la disparition de l'ancienne bibliothèque d'Alexandrie ne réalisent pas que la littérature a aujourd'hui le rôle inverse de celui qu'elle avait, qu'il est désormais interdit de reproduire tout ce que l'on voit dans un livre ou un brevet. Pourtant, même dans le monde capitaliste, les humains démontrent une tendance à faire preuve d'entraide lorsque c'est possible. C'est le cas du monde de l'informatique, où malgré les nombreux brevets restrictifs appliqués agessivement par les grandes entreprises du marché, les briques les plus importantes de l'écosystème collectif sont des biens communs partagés grâce aux licences logicielles libres.
+EOT
+);
 ___('pol_manifesto_creativity_5',     'EN', <<<EOT
 Even worse, those who control the monopolies on science and technology will often use them for evil purposes. In their drive for money, the biggest corporations in the world will happily collect people's personal data and hand them away to governments or use them for personal profit. We consent to using their services not out of choice, but because they entrenched themselves in a position where there is no alternative to their services. Denying us our right to anonymity, protecting hate speech in the name of "free speech", enforcing so called intellectual property solely when other huge entities threaten them with lawsuits, these corporations show how capitalism strips people of their very humanity.
+EOT
+);
+___('pol_manifesto_creativity_5',     'FR', <<<EOT
+La classe dominante, via son contrôle des monopoles de la science et de la technologie, utilise ses pouvoirs à des fins malveillantes. Dans une quête sans fin d'enrichissement, les entreprises technologiques collectent les données personnelles pour les revendre aux gouvernements ou les exploiter à des fins lucratives. Nous consentons à utiliser ces services non pas par choix, mais parce que la concurrence se fait écraser jusqu'à ce qu'il n'y ait plus d'alternative à ces services. En nous privant de notre droit à l'anonymat, en protégeant les discours haineux au nom de la « liberté d'expression », en ne faisant respecter la propriété intellectuelle que sous la menace de poursuites judiciaires, ces entreprises sont un exemple parfait de la façon dont le capitalisme ne se soucie pas du bien commun tant qu'il n'a pas d'impact sur son bilan comptable.
 EOT
 );
 ___('pol_manifesto_creativity_6',     'EN', <<<EOT
 Held down by the brutal constraints of patents, copyrights, intellectual property, creative people are stuck in a situation where it sometimes becomes illegal even to simply produce fan content in appreciation of something they enjoy. Further holding down potential artists, the system mocks those who choose to express themselves by pursuing a career in liberal arts, considering them failures for their inability to pick a field of study that leads to a stable and profitable job. How and why have we reached a point where we mock artists instead of celebrating them? Where people are ridiculed for following their passions?
 EOT
 );
+___('pol_manifesto_creativity_6',     'FR', <<<EOT
+Retenues par les contraintes strictes des brevets, du copyright, des droits d'auteur, les personnes créatives se retrouvent dans une situation où il est dangereux de simplement produire du fan-art d'une œuvre qu'elles apprécient. Méprisant la créativité, le système culturel encourage la moquerie des études artistiques ou littéraires, les considérant comme des échecs en raison de leur incapacité à choisir un domaine d'activité où les emplois sont stables et rentables. Comment en sommes-nous arrivés à un point où nous nous moquons des artistes au lieu de les célébrer, où nous ridiculisons les gens qui choisissent de suivre leurs passions, alors même que nous consommons chaque jour des médias artistiques ?
+EOT
+);
 ___('pol_manifesto_creativity_7',     'EN', <<<EOT
 Yet again, capitalism will claim that only it could produce modern works of art, such as blockbuster movies with outrageous budgets. But the truth is, in a society where people are free to work out of passion, those movie projects would still exist. Writers, producers, and actors would still be respected, but for their artistic ability rather than for their ability to earn money back on investments. Visual effect artists would earn the recognition they deserve, being able to express love for their craft instead of releasing half-finished content because of tight deadlines and poor financial compensation. Theaters would have no reason to stop existing, being ran collectively out of love for the visual medium.
+EOT
+);
+___('pol_manifesto_creativity_7',     'FR', <<<EOT
+Les capitalistes continueront à défendre leur système en affirmant que sans eux, nous ne pourrions pas profiter d'œuvres d'art telles que les films au budget colossal produits par les grands studios. Pourtant, dans une société où les gens seraient libres de vivre de leurs passions, ces films existeraient toujours. Les métiers de la scénarisation, de la production, ou de la comédie seraient toujours respectés, mais pour leur capacités créatives et artistiques plutôt que pour leurs capacités à rentabiliser les investissements des studios. Les artistes visuels produisant les effets spéciaux des films pourraient bénéficier de la reconnaissance que leur art mérite, pouvant exprimer librement leur créativité au lieu de devoir livrer des contenus bâclés ruinés par la pression des délais serrés et des salaires honteux. Même les cinémas n'auraient aucune raison de cesser d'exister, maintenus collectivement au nom de l'amour de l'expérience cinématographique, et devenant accessibles aux classes défavorisées qui ne peuvent que trop rarement en profiter.
 EOT
 );
 ___('pol_manifesto_creativity_8',     'EN', <<<EOT
 In its current state, intellectual property is nothing but a constraint on creativity. Patents are holding us back, preventing science and technology from fully blooming. The world would be a much better place if we could pool all our brainpower into one collective virtual library of knowledge, maintained not for greed but for the sole purpose of allowing us to mutualize the collective creativity and intellect. Billions of minds working together will always be more creative and more productive than the few privileged enough to currently benefit from the concentration of wealth that controls art and science.
 EOT
 );
+___('pol_manifesto_creativity_8',     'FR', <<<EOT
+Dans son état actuel, la propriété intellectuelle n'est rien d'autre qu'une contrainte sur la créativité. Les brevets nous retiennent, empêchant la recherche scientifique et technologique de s'épanouir pleinement. Le monde serait meilleur si nous pouvions regrouper notre intelligence et créativité collective dans une bibliothèque virtuelle commune plutôt que de devoir faire constamment attention à ne pas enfreindre la propriété intellectuelle des colosses financiers en documentant par accident des contenus brevetés. Des milliards d'esprits travaillant ensemble seront toujours plus créatifs et productifs que le petit groupe de privilégiés qui contrôlent aujourd'hui l'art et la science.
+EOT
+);
 ___('pol_manifesto_creativity_9',     'EN', <<<EOT
 Capitalism, even though it pretends otherwise, is holding us back.
+EOT
+);
+___('pol_manifesto_creativity_9',     'FR', <<<EOT
+Le capitalisme, même s'il prétend le contraire, freine l'humanité.
 EOT
 );
 
@@ -511,39 +591,75 @@ ___('pol_manifesto_nature_title', 'FR', "<span class=\"text_red\">Colère VI:</s
 ___('pol_manifesto_nature_quote', 'EN', "The true enemies of the Earth are the shareholders who only care about dividends and infinitely increasing greed");
 ___('pol_manifesto_nature_quote', 'FR', "Les vrais ennemis de la Terre sont les actionnaires qui ne se soucient que de leurs dividendes et de la satisfaction de leur cupidité sans limite");
 ___('pol_manifesto_nature_1',     'EN', <<<EOT
-There is no denying that humanity's obsession with greed, growth, and war has ruined the planet. Biodiversity is at an all time low, climate change is threatening our future, many places have had their soil ruined by intensive agriculture. So much irreversible damage has already been done that the richest of the privileged are now dumping money into interstellar planetary travel and the terraforming of Mars "just in case". Cowards, they would rather flee the scene of the murder they are committing.
+There is no denying that humanity's obsession with greed, growth, and war has ruined the planet. Biodiversity is at an all time low, climate change is threatening our future, many places have had their soil ruined by intensive agriculture, the planet's balance is threatened by deforestation. So much irreversible damage has already been done that the richest of the privileged are now dumping money into interstellar planetary travel and the terraforming of Mars "just in case". Cowards, they would rather flee the scene of their own crime.
+EOT
+);
+___('pol_manifesto_nature_1',     'FR', <<<EOT
+Il est indéniable que l'obssession de l'espèce humaine pour la cupidité, la croissance, et la guerre a ruiné la planète. La biodiversité est au plus bas. Le changement climatique menace notre avenir. De nombreux sols ont été ruinés par l'agriculture intensive. L'équilibre de la planète est menacé par la déforestation. Les dommages sont si importants qu'une partie des ultra-riches continuent à exploiter la nature tout en investissant dans les voyages interstellaires, « au cas où ». C'est un acte de lâcheté, une tentative de fuir la scène de leurs crimes.
 EOT
 );
 ___('pol_manifesto_nature_2',     'EN', <<<EOT
-Capitalism, realizing the impending financial loss from climate change, is treating ecology like a financial market. Small meaningless actions are done to look ecology-friendly, cheaply greenwashing brand images while they continue to destroy the planet. Large scale change is only done where greedy investors see potential markets. Renewable energy sources and organic agriculture are being invested into solely because they have become financially viable.
+Capitalism, realizing the public image cost of being complicit to climate change, is treating ecology like a financial market. Small meaningless actions are done to look ecology-friendly, cheaply greenwashing brand images while they continue to destroy the planet. Large scale change is only done where greedy investors see potential markets. Renewable energy sources and organic agriculture are being invested into solely because they have become financially viable.
+EOT
+);
+___('pol_manifesto_nature_2',     'FR', <<<EOT
+Les départements marketing du système capitaliste, conscients que la complicité au changement climatique déteriore l'image de marque, traitent l'écologie comme un marché financier. De petites actions insignifiantes sont engagées pour prétendre que les entreprises se rangent du côté de l'écologie, tout en continuant à démanteler la planète. Les changements à grande échelle n'ont lieu que très rarement, lorsque les marchés financiers ou politiques adjacents à ces changements deviennent intéressants. C'est ainsi que les énergies renouvelables ou l'agriculture biologique sont passées sous le contrôle des élites du capitalisme au premier signe de rentabilité, les mêmes capitalistes qui essayaient auparavant de détruire ces marchés.
 EOT
 );
 ___('pol_manifesto_nature_3',     'EN', <<<EOT
 The damage of capitalism is even worse in poorer countries, often located in places that suffer more from climate change. These new hardships imposed to them by first world capitalists on top of their already numerous challenges are causing underprivileged countries to invest enormous amounts of time and money in preventing and fighting climate crisis after climate crisis, ensuring that they will never be able to catch up to the higher life quality standards of the privileged world.
 EOT
 );
+___('pol_manifesto_nature_3',     'FR', <<<EOT
+Les conséquences écologiques du capitalisme sont bien pires dans de nombreux pays désavantagés, souvent situés dans des régions bien plus affectées par le changement climatique. Ces nouvelles difficultés imposées par les pays riches s'additionnent aux nombreux défis que doivent déjà surmonter les pays les plus pauvres, les obligeant à investir des quantités démesurées de temps et d'argent dans le combat contre les crises climatiques, garantissant ainsi qu'ils ne pourront jamais rattraper le niveau de vie des pays privilégiés.
+EOT
+);
 ___('pol_manifesto_nature_4',     'EN', <<<EOT
-Playing into this situation like a game of post-colonial chess, the richer countries are investing in those poorer countries. These so called investments are in actuality - as is tradition with capitalism - instances of modern slavery. Outsourcing manufacturing jobs in places that require long distance transport of goods, destroying the planet even more using cargo ships and planes to bring home the product of this modern day slavery.
+Playing into this situation like a game of post-colonial chess, the richer countries are investing in those poorer countries. These so called investments are in actuality the modern face of imperialism, instances of modern slavery. Outsourcing manufacturing jobs in places that require long distance transport of goods, destroying the planet even more using cargo ships and planes to bring home the product of this modern day slavery.
+EOT
+);
+___('pol_manifesto_nature_4',     'FR', <<<EOT
+Jouant de cette situation comme s'il s'agissait d'une partie d'échecs postcoloniale, les pays riches investissent dans les pays défavorisés. Ces prétendus investissements sont en réalité le visage moderne de l'impérialisme, un asservissement des populations de ces pays. Délocalisant les usines dans des endroits éloignés de leurs marchés de destination, les capitalistes exacerbent le problème climatique via la pollution générée par les navires et avions utilisés pour transporter ces produits de l'esclavage salarial moderne.
 EOT
 );
 ___('pol_manifesto_nature_5',     'EN', <<<EOT
 As the planet is falling apart, as irreversible damage is being done, the blame is being put in the wrong place. Countries and governments are being blamed for their industrial politics. People are being blamed for their overconsumption habits. Corporations are being blamed for their inability to change to greener ways. But in reality, the true enemies of the Earth are the leeches: the shareholders who only care about dividends and infinitely increasing greed. They are the ones who call the shots, the ones who decide to keep polluting on purpose for better returns, the ones who decide to sell goods with a planned short lifespan to consumers, the ones who decide to outsource production to poorer countries in order to optimize their profit margins.
 EOT
 );
+___('pol_manifesto_nature_5',     'FR', <<<EOT
+Tandis que des dommages irréversibles sont causés à la planète, la responsabilité est déplacée loin des coupables. Les pays et gouvernements se font blâmer pour leurs politiques industrielles. Les individus se font blâmer pour leurs habitudes de surconsommation. Les entreprises se font blâmer pour leur incapacité à adopter des comportements écoresponsables. Mais en réalité, les vrais ennemis de la Terre sont les actionnaires, qui ne se soucient que de leurs dividendes et de la satisfaction de leur cupidité sans limite. Ce sont les actionnaires qui prennent les décisions, qui choisissent délibérément de polluer plus pour gagner plus, qui se satisfont de la fabrication de biens à courte durée de vie pour en tirer plus de profits, qui décident sans scrupules de délocaliser la production dans des pays où la main d'œuvre est moins régulée et moins chère.
+EOT
+);
 ___('pol_manifesto_nature_6',     'EN', <<<EOT
 The cynical among us will claim that humans deserve to die of the very ecological collapse that they are triggering. But what of the innocents that would die along with us? What of all the innocent humans who actually try to change, what of all the underprivileged victims of this system, what of the innocent animal species that we are slowly exterminating, of all the fauna and flora that deserve a right to live on this planet along with us? It is our urgent duty to prevent this imminent collapse, those who suffer and die can no longer wait.
+EOT
+);
+___('pol_manifesto_nature_6',     'FR', <<<EOT
+Les plus cyniques affirmeront que l'espèce humaine mérite de disparaître, renversée par l'effondrement écologique qu'elle est en train de déclencher. Mais qu'en est-il des innocentes victimes collatérales ? De toutes les personnes innocentes qui tentent réellement de pousser au changement ? De toutes les personnes défavorisées qui ne peuvent rien faire d'autre que de subir le système ? Des espèces animales que nous sommes en train d'exterminer en masse ? De toute la faune et la flore qui a un droit de vivre à nos côtés sur cette planète ? C'est notre devoir urgent de prévenir cet effondrement imminent, ses victimes ont déjà trop souffert et ne peuvent plus se permettre d'attendre.
 EOT
 );
 ___('pol_manifesto_nature_7',     'EN', <<<EOT
 The once strong link between humans and nature has been broken by capitalism. Once the system is overthrown, it will become crucial to restore this symbiotic relationship. Agriculture must care for its environment: monocultures must disappear along with toxic pesticides, biodiversity must be protected, herding must be done with more respect for the animals. The wilderness must become wild again, landscapes must be protected, natural resources must only be extracted in reasonable amounts, and the infinite growth of concrete roads and cities must be stopped and reversed to give nature back the territory that we stole from it.
 EOT
 );
+___('pol_manifesto_nature_7',     'FR', <<<EOT
+Des liens ancestraux entre l'espèce humaine et la nature ont été rompus par le capitalisme. Une fois le système renversé, il sera crucial d'apprendre à vire de nouveau en symbiose. L'agriculture doit prendre soin de son environnement : les monocultures et les pesticides agressifs doivent disparaitre, la biodiversité doit être encouragée, l'élevage doit se faire avec beaucoup plus de respect pour les animaux. La nature doit redevenir sauvage : l'environnement doit être protégé, les ressources naturelles ne doivent être extraites qu'en quantités raisonnables, et la croissance sans frein des villes et des routes en béton doit être inversée afin de rendre à la nature le territoire que nous lui avons volé.
+EOT
+);
 ___('pol_manifesto_nature_8',     'EN', <<<EOT
-Stronger together through mutual aid, humans will evolve into a more caring, more respectful, and more creative society. But mutual aid is not only between humans, it is also between humans and nature, most importantly humans and animals. Sadly, we have turned our former partners of the animal kingdom into our enemies: the exploitation of farm animals for resources and meat has become an important part of climate change. Farm animals should be treated as our companions instead of our meals.
+Stronger together through mutual aid, humans will evolve into a more caring, more respectful, and more creative society. But mutual aid is not only between humans, it is also between humans and nature, most importantly humans and animals. Sadly, we have turned our former partners of the animal kingdom into our enemies: the disgusting exploitation of farm animals for resources and meat has become an important part of climate change. Farm animals should be treated as our companions instead of our meals.
+EOT
+);
+___('pol_manifesto_nature_8',     'FR', <<<EOT
+Plus forte collectivement par le pouvoir de l'entraide, l'espèce humaine évoluera vers une société plus respectueuse, heureuse, et créative. Mais l'entraide n'est pas limitée aux humains, elle doit aussi avoir lieu entre l'espèce humaine et la nature. Malheureusement, nous avons fait de nos anciens partenaires nos ennemis : l'ignoble exploitation du bétail pour leurs ressources et leur viande est devenue une contribution importante au changement climatique. Les animaux de ferme devraient être traités comme nos compagnons plutôt que comme nos repas.
 EOT
 );
 ___('pol_manifesto_nature_9',     'EN', <<<EOT
 It is not too late to save the Earth. Greed can not be green.
+EOT
+);
+___('pol_manifesto_nature_9',     'FR', <<<EOT
+Le capitalisme exploite la planète. Il n'est pas trop tard pour tenter de la sauver.
 EOT
 );
 
@@ -552,57 +668,109 @@ EOT
 ___('pol_manifesto_inspirations_title', 'EN', "Inspirations and rejections");
 ___('pol_manifesto_inspirations_title', 'FR', "Inspirations et oppositions");
 ___('pol_manifesto_inspirations_quote', 'EN', "Another way is possible for those who struggle to find an ideology that they fully agree with");
-___('pol_manifesto_inspirations_quote', 'FR', "Si vous n'arrivez pas à trouver votre zone de confort au sein des autres idéologies, nous vous proposons une voie différente");
+___('pol_manifesto_inspirations_quote', 'FR', "D'autres voies peuvent s'ouvrir à vous si vous ne parvenez pas à trouver une idéologie qui vous convient parfaitement");
 ___('pol_manifesto_inspirations_1',     'EN', <<<EOT
 Believing that centrists, conservatives, and fascists will disappear along with capitalism's inevitable collapse, contrapositionism considers itself a future alternative ideology. This is why what capitalists call "far left" politics have so much infighting: the modern political scale is heavily skewed by capitalism, as social-democrats, centrists, and conservatives would ally even with fascists in their greedy pursuit of money and power. The so called "far left" however, truly cares for their values, will stand for their beliefs and not seek any compromise with capitalists.
+EOT
+);
+___('pol_manifesto_inspirations_1',     'FR', <<<EOT
+Considérant que le centrisme, le conservatisme, et le fascisme disparaîtront lors de l'effondrement inévitable du capitalisme, le contrapositionnisme se veut une future idéologie alternative. C'est la raison pour laquelle ce que les capitalistes appellent les idéologies « d'extrême-gauche » contiennent tant de luttes internes : l'échiquier politique moderne est fortement biaisé par le capitalisme, car les sociaux-démocrates, les centristes, et les conservateurs s'allieraient sans hésiter même avec des fascistes si du profit pouvait en être tiré. La majorité de « l'extrême gauche », cependant, refuse d'abandonner ses valeurs et ne cherche pas à faire de compromis avec les autres idéologies dont elles réalisent le danger.
 EOT
 );
 ___('pol_manifesto_inspirations_2',     'EN', <<<EOT
 It does not mean that contrapositionism is not an ally of other similar movements - in fact, for now, they are our comrades in the fight against capitalism and social injustice. However, once the fight is over and the entire center and right sides of the political political board collapse, we will have to choose new sides. Contrapositionism, even though it is inspired by other similar political theories and agrees with most of their substance, has irreconcilable differences with some of them that sets it apart. It is critical that we discuss those differences to better explain what contrapositionism really is.
 EOT
 );
+___('pol_manifesto_inspirations_2',     'FR', <<<EOT
+Cela ne signifie pas que le contrapositionnisme est un mouvement ennemi des autres idéologies similaires. Au contraire, il s'agit actuellement de camarades dans la lutte collective contre le capitalisme et l'injustice sociale. Toutefois, une fois que cette lutte touchera à sa fin et que tout le centre et la droite de l'échiquier politique actuel s'effondreront, nous devrons avoir choisi notre camp. Même s'il s'inspire d'autres idéologies et s'accorde avec beaucoup de leurs idées, le contrapositionnisme présente des différences irréconciliables avec la plupart d'entre elles. Il est essentiel que nous expliquions ces différences afin de clarifier ce qu'est réellement le contrapositionnisme.
+EOT
+);
 ___('pol_manifesto_inspirations_3',     'EN', <<<EOT
 Marxism, the idea that society is a product of class struggle between the ruling class and the proletariat, is an obvious major source of inspiration. Marx's analysis of the social contract as stripping workers of their consent and humans of their nature is mirrored throughout this manifesto. His analysis went as far as taking into account post-scarcity economy, discussing the value of labor in a world of automation - a visionary perspective for its time. However, while marxism pretends to speak for the lower classes and wishes to abolish the dominant class, it is a bourgeois ideology born of this very same upper class they denounce. In their total rejection of the upper class, they also hypocritically reject themselves. Being in control of the wealth and power, members of the upper class should be welcomed as allies if they desire change, not rejected for being a part of the system they were born and raised in.
+EOT
+);
+___('pol_manifesto_inspirations_3',     'FR', <<<EOT
+Le marxisme, c'est à dire l'idée que la société est le produit d'une lutte continue entre la classe dominante et les classes dominées, est source majeure d'inspiration. L'analyse du contrat social par Marx comme dépouillant le prolétariat de sa liberté se reflète dans ce manifeste. Son analyse va jusqu'à prendre en compte l'économie future, parlant de la valeur du travail dans un monde d'automatisation - une perspective visionnaire pour son époque. Toutefois, même si le marxisme prétend parler au nom des classes dominées et souhaite abolir les classes dominantes, il s'agit d'une idéologie bourgeoise née de ces mêmes classes dominantes qu'elle dénonce. Dans leur rejet total de la classe dominante, les marxistes s'auto-rejettent. Les membres des classes dominantes ont un droit à la rédemption, ils devraient être traités comme des alliés s'ils acceptent de trahir leur situation sociale, car eux non plus n'ont pas choisi de naître et de vivre dans ce système.
 EOT
 );
 ___('pol_manifesto_inspirations_4',     'EN', <<<EOT
 Socialism, the idea that capitalism must be replaced by shared ownership of the means of production, is in agreement with this manifesto's baseline. However, socialism has been ruined by time, becoming what is nowadays referred to as "champagne socialism", a bourgeois ideology fueled by white guilt in which the privileged share part of their wealth with the underprivileged to shut them up temporarily. Undeniably, socialism has brought us many social advances, but all of them within the boundaries of capitalism. It is time to move on and let this once beautiful ideology rot in the rear view mirror of political theory.
 EOT
 );
+___('pol_manifesto_inspirations_4',     'FR', <<<EOT
+Le socialisme, c'est à dire l'idée que le capitalisme doit être remplacé par une mutualisation des moyens de production au service du bien public, est en accord avec ce manifeste. Toutefois, le socialisme a été ruiné par le temps, et est devenu ce que nous appelons aujourd'hui le « socialisme caviar », une idéologie bourgeoise alimentée par la culpabilité des riches, dans laquelle la classe privilégiée accepte de partager une partie de ses ressources avec les classes dominées pour se sentir mieux en achetant temporairement leur silence. Il est indéniable que cette idéologie nous a apporté de nombreuses avancées sociales, mais il est temps de passer à autre chose et d'abandonner cette idéologie parasitée par des complices du capitalisme.
+EOT
+);
 ___('pol_manifesto_inspirations_5',     'EN', <<<EOT
 Communism, the idea that social classes and the state must be fully abolished, is a beautiful but utopian pipe dream. Criticism of communism often points accusative fingers at the totalitarian regimes that borrowed its name, but in Marx's own theory, communism is an evolution of socialism. Trying to skip a step by going straight from capitalism into communism is a quixotic ideal. Contrapositionism also places itself as a transitional society, a realistic step up from capitalism, an alternative to socialism which could later itself be used as a stepping stone into communism. Simply put, it is too early for communism to make sense.
 EOT
 );
+___('pol_manifesto_inspirations_5',     'FR', <<<EOT
+Le communisme, c'est à dire l'idée que les classes sociales et l'État doivent être totalement abolis, est un superbe rêve utopique. La critique du communisme se fait habituellement en pointant du doigt les régimes totalitaires qui ont emprunté son nom, mais selon la théorie marxiste, le communisme est une évolution du socialisme. Essayer de sauter une étape en passant directement du capitalisme au communisme est un idéal chimérique. Le contrapositionnisme se place, comme le socialisme, dans le rôle d'une idéologie transitionnelle servant à sortir de l'emprise du capitalisme. Une fois la société libérée et la transition vers un nouveau système effectuée, il sera temps de considérer des étapes supérieures telles que le communisme.
+EOT
+);
 ___('pol_manifesto_inspirations_6',     'EN', <<<EOT
-Anarchism, the idea that hierarchy causes violence and that the concept of a state itself must be rejected, is also an important source of inspiration. In particular, the writings of Kropotkin on mutual aid are directly mentioned in multiple parts of the manifesto. Even though people think of anarchism as a violent or disorganized ideology, it is quite the opposite. Anarchism is an inherently peaceful ideology, calling for the removal of the main sources of violence in society: the state and the privileged. However, the power vacuum of a stateless society would likely lead to a power grab by opportunistic totalitarians. It is a sad byproduct of human nature that a state must exist, though stripped of as much violent power as possible and without the focus on popularity contests and superstar heads of state. Furthermore, the open ended nature of anarchism allows for inherently brutal and counterproductive movements such as anarcho-capitalism to exist.
+Anarchism, the idea that hierarchy causes violence and that the concept of a state itself must be rejected, is also an important source of inspiration. In particular, the writings of Kropotkin on mutual aid are directly mentioned in multiple parts of the manifesto. Even though people think of anarchism as a violent or disorganized ideology, it is quite the opposite. Anarchism is an inherently peaceful ideology, calling for the removal of the main sources of violence in society: the state and the privileged. However, directly replacing capitalism by a stateless society would likely lead to a power vacuum exploited by opportunistic totalitarians. It is a sad byproduct of human nature that a state must exist, though stripped of as much violent power as possible and without the focus on popularity contests and superstar heads of state. Furthermore, the open ended nature of anarchism allows for brutal and counterproductive movements such as anarcho-capitalism to exist and legitimately brand themselves as anarchists.
+EOT
+);
+___('pol_manifesto_inspirations_6',     'FR', <<<EOT
+L'anarchisme, c'est à dire l'idée que les hiérarchies sont à l'origine de la violence et que par conséquent toute forme d'autorité, incluant l'État, doit être abolie, est également une forte inspiration. En particulier, les écrits de Kropotkin sur l'aide mutuelle sont directement mentionnés à plusieurs reprises dans ce manifeste. Dans l'imaginaire populaire, l'anarchisme est une idéologie violente ou désorganisée, c'est pourtant tout l'opposé : c'est un mouvement intrinsèquement pacifiste, qui appelle a l'abolition des principales sources de violence dans la société. Cepandant, remplacer immédiatement le système capitaliste par une société sans État serait une occasion pour des totalitaires opportunistes de se saisir du pouvoir. C'est une triste conséquence de la nature humaine : un gouvernement doit exister, mais privé de toutes ses capacités à exercer de la violence, et sans l'accent mis par le capitalisme sur les concours de popularité politiques et les chefs d'État. Par ailleurs, la définition trop ouverte de l'idéologie anarchiste permet à des mouvements brutaux et contre-productifs tels que l'anarcho-capitalisme d'exister en son sein.
 EOT
 );
 ___('pol_manifesto_inspirations_7',     'EN', <<<EOT
-Anarcho-pacifism takes anarchism a step further by refusing to use violence in the conflict against capitalism. Fueled by the famous success of Mahatma Gandhi against India's colonial oppressors, anarcho-pacifists have grown in confidence that the removal of power structures can be achieved peacefully. As much as contrapositionism would like to be in agreement with this beautiful ideology, the mere fact that states, capitalists, and fascists use violence to maintain their domination of the underprivileged requires at least the ability to strike back against them. Violence is required against those who preach violent ideologies, punching a fascist is not an option but a duty. However, violence must only be a last resort, a stictly defensive and non lethal option used in situations when no other move exists, as collateral damage always punishes allies and innocents more than the percieved enemy.
+Anarcho-pacifism takes anarchism a step further by refusing to use violence in the conflict against capitalism. Fueled by the famous success of Mahatma Gandhi against India's colonial oppressors, anarcho-pacifists have grown in confidence that the removal of power structures can be achieved peacefully. As much as contrapositionism would like to be in agreement with this beautiful ideology, the mere fact that states, capitalists, and fascists use violence to maintain their domination of the underprivileged requires at least the ability to strike back against them. Violence is required against those who preach violent ideologies, punching a fascist is not an option but a duty, as the fascist will not hesitate to strike at the earliest opportunity. However, violence must only be a last resort, a stictly defensive and non lethal option used in situations when no other move exists, as collateral damage always punishes allies and innocents more than the percieved enemy.
+EOT
+);
+___('pol_manifesto_inspirations_7',     'FR', <<<EOT
+L'anarcho-pacifisme pousse plus loin en refusant d'utiliser toute forme de violence dans le conflit contre le capitalisme. S'inspirant du succès historique de Mahatma Gandhi contre l'impérialisme colonialiste en Inde, les anarcho-pacifistes ont acquis la conviction que la suppression des structures d'oppression peut se faire de façon intégralement pacifiste. Le contrapositionnisme voudrait être en accord avec ce principe, mais la quantité de violence utilisée par les États, les capitalistes, et les fascistes pour maintenir leur emprise sur les défavorisés nécessite au minimum la capacité de riposter. La violence est requise contre les idéologues violents, frapper un fasciste n'est pas une option mais un devoir, car le fasciste ne se retiendra pas de frapper à la première occasion. Cependant, la violence ne doit être qu'un dernier recours, une option purement défensive et non létale utilisée dans des situations où il n'y a aucune autre possibilité, car les dommages collatéraux punissent toujours plus les innocents que les ennemis.
 EOT
 );
 ___('pol_manifesto_inspirations_8',     'EN', <<<EOT
 Anarcho-syndicalism twists anarchism in another direction, suggesting that workers hold the power and should use it to topple the very power structures that turned them into wage slaves. Emphasizing direct action, it is a movement based on dissension, showing states and corporations that they are not needed to keep society running. A necessary step in the transition out of capitalism, anarcho-syndicalists are strong allies, but their ideology puts too much emphasis on workers. Removing the state's power should not lead to unions being the new ruling class, even if they have the best interests of the workers in mind - especially in a post-scarcity society where automation replaces manual jobs and full time work loses its importance.
 EOT
 );
+___('pol_manifesto_inspirations_8',     'FR', <<<EOT
+L'anarcho-syndicalisme pousse l'anarchisme dans une autre direction, suggérant que la main d'œuvre ouvrière détient le pouvoir et devrait l'utiliser pour renverser les structures qui les réduisent à l'esclavage salarial. Mettant l'accent sur l'action directe, c'est un mouvement basé sur la désobéissance, cherchant à montrer aux États et aux chefs d'entreprise que la société peut très bien fonctionner sans eux. Une étape nécessaire dans la transition hors du capitalisme, l'anarcho-syndicalisme est une idéologie alliée, mais qui met trop l'accent sur le travail. La prise du pouvoir par les classes dominées ne doit pas mener à une nouvelle classe dominante composée de syndicats ouvriers : l'importance d'une personne dans la future société post-capitaliste ne doit pas reposer sur la valeur de son travail.
+EOT
+);
 ___('pol_manifesto_inspirations_9',     'EN', <<<EOT
-An extremely touchy ideology to partially reject, feminism is a movement that began as a fight for women's rights, and has since evolved into a struggle for the support of all minorities against institutional oppression. As much as this manifesto uses many feminist talking points and supports the feminist movement, it must be pointed out that the fight for equal rights is not always a fight for progress. Fighting for 50% female slave ownership is a vain fight when the common fight should be against slavery itself. As for the intersectionality aspect, it becomes dangerous when it gives uncontested voices to every minority, as some of them are oppressors to other minorities. A risky game of power struggle between minorities is always brewing underneath the surface of intersectional feminism, often ending with voices being silenced by those who should have been defending them. With this in mind, contrapositionism is a feminist movement, but wishes that feminism would be more proactive in ridding itself of its regressive components.
+An extremely touchy ideology to partially reject, feminism is a movement that began as a fight for women's rights, and has since evolved into a struggle for the support of all silenced minorities against institutional patriarchal oppression. As much as this manifesto uses many feminist talking points and supports the feminist movement, it must be pointed out that the fight for equal rights is not always a fight for collective progress. Fighting for 50% female slave ownership is a vain fight when the common fight should be against slavery itself. The intersectionality aspect becomes dangerous when it gives uncontested voices to every minority, as some of them are oppressors to other minorities. A risky game of power struggle between minorities is always brewing underneath the surface of intersectional feminism, often ending with voices being silenced by those who should have been defending them. With this in mind, contrapositionism is a feminist movement, but will always push feminism towards more proactively ridding itself of its counterproductive or even sometimes dangerous components.
+EOT
+);
+___('pol_manifesto_inspirations_9',     'FR', <<<EOT
+Une idéologie très délicate à partiellement rejeter, le féminisme est un mouvement qui a initialement commencé comme un combat pour les droits des femmes, et a depuis évolué en une lutte pour le soutien de toutes les minorités invisibilisées contre l'oppression institutionnelle. Ce manifeste couvre un grand nombre de sujets féministes et soutient les mouvements féministes, mais il faut souligner que les combats pour l'égalité ne sont pas toujours des combats pour le progrès collectif. Se battre pour atteindre 50% de femmes propriétaires d'esclaves est un combat contreproductif à la lutte contre l'esclavage. L'aspect intersectionnel du féminisme pose ainsi le problème de donner des voix non filtrées à toutes les minorités, ne prenant pas suffisamment en compte le fait que des minorités peuvent avoir un rôle oppressif envers d'autres minorités. Un jeu de pouvoirs risqué entre des minorités se cache ainsi sous la surface du féminisme intersectionnel, finissant souvent par étouffer des voix qui devraient au contraire être défendues. Dans ce contexte, le contrapositionnisme est un mouvement féministe, mais poussera toujours le féminisme à être plus proactif dans son combat interne contre ses composantes contreproductives voir même parfois dangereuses.
 EOT
 );
 ___('pol_manifesto_inspirations_10',    'EN', <<<EOT
 A lesser known ideology, ecofeminism suggests that nature has become an underprivileged entity along with other minorities, and thus the fight for feminism is one with the fight for ecology. Taking intersectionality to its extreme by pooling every fight together puts an interesting perspective on the unhealthy relationships between nature and privilege, spirituality and patriarchy, scientific progress and social injustice. However, the ideology has been pushed too far, often rejecting those who do not accept the link between the female body and nature. This emphasis on physicality implies a rejection of those who do not fit in the traditional gender roles of society, who already are victims of the system and do not need their oppressors to earn more power. Thus, contrapositionism borrows a lot from the theoretical side of ecofeminism, but can not adhere to the spiritual side of ecofeminism.
 EOT
 );
+___('pol_manifesto_inspirations_10',    'FR', <<<EOT
+Beaucoup moins connue que son idéologie mère, l'écoféminisme suggère que la nature en soi est une entité défavorisée qui doit être défendue de la même façon que les autres contre l'oppression institutionnelle, et donc que le combat féministe ne fait qu'un avec la cause écologiste. Le fait de pousser l'intersectionnalité à cet extrême offre une perspective très intéressante sur la relation malsaine entre la nature et le privilège, entre la spiritualité et la patriarchie, entre le progrès scientifique et l'injustice sociale. Toutefois, l'idéologie écoféministe a été poussée trop loin, allant parfois jusqu'à voir un lien corporel entre la femme et la nature. Mettre cet accent sur la physicalité implique la présence du cadre strict des rôles traditionnels de genre imposés par la société, invisibilisant les non binaires, qui souffrent déjà assez de l'oppression systémique. Par conséquent, le contrapositionnisme emprunte beaucoup à la théorie écoféministe, mais ne peut pas adhérer à sa spiritualité.
+EOT
+);
 ___('pol_manifesto_inspirations_11',    'EN', <<<EOT
 Last but not least, the world of social justice must be mentioned. As a field of study, it leads to a much better understanding of the mechanics of control and oppression used by society. Its ability to make people feel uncomfortable about their own privileges is a key part of any social battle, as privileged people hold much more power than they think, and harnessing their powers in a fight will always be helpful. Sadly, many social justice movements devolve into a thirst for revenge, sometimes becoming even worse than the very thing they swore to destroy. The tunnelvision of a specific social justice battle can sometimes blind its leaders and followers to the damage that they are causing to other minorities, lacking the perspective required to simply take a step back and listen to the suffering of others. Using this knowledge, the ruling class manipulates the least intersectional social justice movements to make them seem like enemies of the lower class, turning them into tools to keep the population ideologically divided. Contrapositionism is a social justice movement, but with no thirst for revenge in mind - only a desire for a better world for all.
+EOT
+);
+___('pol_manifesto_inspirations_11',    'FR', <<<EOT
+Pour finir, le milieu de la justice sociale doit être mentionné. En tant que domaine d'étude, il conduit à une compréhension des mécaniques de contrôle et d'oppression utilisées par la société. Les sujets de justice sociale ont un rôle critique dans tout combat anticapitaliste, de par leur capacité à mettre mal à l'aise les gens par rapport à leurs propres privilèges. En effet, la classe privilégiée possède beaucoup de pouvoir, qui pourrait être rallié au service des causes de justice sociale. Malheureusement, trop de mouvements incluent une soif de vengeance, devenant parfois plus dommageables à leur propre cause que les personnes qu'ils tentent de combattre. Une vision trop étroite d'un combat social peut mener à l'oppression d'autres minorités, oubliant l'importance de prendre du recul et de s'intéresser également à la souffrance des autres. Exploitant ces luttes, la classe dominante manipule les mouvements de justice sociale les moins intersectionnels, les exihibant comme des ennemis des classes populaires, s'en servant comme outil pour s'assurer que la population reste divisée idéologiquement. Le contrapositionnisme est un mouvement de justice sociale, mais sans désir de revanche - uniquement d'un monde meilleur.
 EOT
 );
 ___('pol_manifesto_inspirations_12',    'EN', <<<EOT
 The rejection of aspects of all these ideologies is why contrapositionism exists in the first place - trying to show that another way is possible for those who struggle to find an ideology that they fully agree with. Not everyone is made to fit in a box, but offering one more box to choose from - in the form of this manifesto - might help rally new supporters in the urgent fight against capitalism.
 EOT
 );
+___('pol_manifesto_inspirations_12',    'FR', <<<EOT
+L'opposition à certains aspects de ces idéologies est la raison pour laquelle le contrapositionnisme existe : essayer de montrer que d'autres voies peuvent s'ouvrir à vous si vous ne parvenez pas à trouver une idéologie qui vous convient parfaitement. Tout le monde n'est pas fait pour tenir dans une boîte, mais le fait de proposer une boîte de plus - via ce manifeste - agrandit le champ des options dans la lutte urgente contre le capitalisme.
+EOT
+);
 ___('pol_manifesto_inspirations_13',    'EN', <<<EOT
 Until the system gets overthrown, we are stronger together.
+EOT
+);
+___('pol_manifesto_inspirations_13',    'FR', <<<EOT
+C'est par l'union des luttes convergentes que nous renverserons le système.
 EOT
 );
 
