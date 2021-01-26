@@ -21,212 +21,401 @@ ___('pol_manifesto_subtitle',       'FR', "LE MANIFESTE CONTRAPOSITIONNISTE");
 
 // Introduction
 ___('pol_manifesto_preamble_title', 'EN', "Preamble");
+___('pol_manifesto_preamble_title', 'FR', "Préambule");
 ___('pol_manifesto_preamble_quote', 'EN', "We, as a society, are knowingly heading into a state of total collapse");
+___('pol_manifesto_preamble_quote', 'FR', "Notre société se dirige délibérément vers son effondrement total");
 ___('pol_manifesto_preamble_1',     'EN', <<<EOT
 Despite multiple cultural and technological revolutions, society is refusing to change.
+EOT
+);
+___('pol_manifesto_preamble_1',     'FR', <<<EOT
+Malgré de nombreuses révolutions culturelles et technologiques, la société refuse de changer.
 EOT
 );
 ___('pol_manifesto_preamble_2',     'EN', <<<EOT
 The powerful always remain on top, only to be toppled by others who will fill the power vacuum with more class violence, more use of unilateral force, more abuse of the politico-judicial apparatus for their own benefit.
 EOT
 );
+___('pol_manifesto_preamble_2',     'FR', <<<EOT
+Les puissants monopolisent le pouvoir, jusqu'à se faire renverser par d'autres qui comblent le vide laissé par leur prédécesseurs avec de la violence de classe, de l'usage unilatéral de la force, et de l'abus du système politico-judiciaire pour satisfaire leurs propres intérêts.
+EOT
+);
 ___('pol_manifesto_preamble_3',     'EN', <<<EOT
 Creating an artificial need for money in order to turn the lower and middle classes into slave wages, those who sit on top of the capitalist food chain contribute barely anything to society and use their unfairly obtained wealth and power to forcefully keep others beneath them. Maintaining this status quo of oppressors and oppressed is the endgame of capitalism, protected by an illusion that anyone could one day become rich themselves and sit on top of the pyramid. The mere thought of pulling each other higher through mutual aid is seen as dangerous in this egotistical system.
+EOT
+);
+___('pol_manifesto_preamble_3',     'FR', <<<EOT
+Créant un besoin artificiel d'argent afin de transformer les classes inférieures en esclaves de leurs salaires, le haut de la chaîne alimentaire capitaliste ne contribue quasiment rien à la société et abuse de sa fortune injustement obtenue afin de s'assurer que les autres restent à leur place, en dessous d'eux. Maintenir ce status quo d'oppression et d'oppressés est l'objectif principal du capitalisme, protégé par l'illusion que n'importe qui peut devenir riche et s'asseoir à son tour au sommêt de la pyramide. L'idée même de s'entraider dans le but d'une ascension sociale collective est perçu comme dangereux dans ce système égoïste.
 EOT
 );
 ___('pol_manifesto_preamble_4',     'EN', <<<EOT
 We, as a society, are knowingly heading into a state of total collapse. The ecological consequences of unsustainable overconsumption is threatening our very future as a species. This voluntary lack of foresight is a side effect of the endless greed of capitalism, as the rich are lining up their pockets without care by exploiting the labor of the lower class to pillage the resources of the planet. Such a situation puts a time limit on the urge to change the power structures of society, as the Earth's ecological balance is close to collapsing irreversibly.
 EOT
 );
+___('pol_manifesto_preamble_4',     'FR', <<<EOT
+Notre société se dirige délibérément vers son effondrement total. Les conséquences écologiques d'une surconsommation insoutenable menacent l'existence future de l'espèce humaine. Cette vision volontairement court-termiste est un effet secondaire de la cupidité infinie du capitalisme, les riches se remplissant les poches sans se soucier des conséquences, forçant les classes inférieures à piller les ressources de la planète pour eux. Dans une telle situation, il ne faut pas perdre de temps pour agir : l'équilibre écologique de la Terre, déjà précaire aujourd'hui, se dirige vers un effondrement irréversible.
+EOT
+);
 ___('pol_manifesto_preamble_5',     'EN', <<<EOT
 Contraposition is a latin inspired word which means "being against". This manifesto is contrapositionist: it stands against everything that the current sociopolitical system stands for. All that we achieved as a capitalist society is disposable, without any care for the future unless it is for a financial investment, without any consideration for the victims of the system unless it becomes financially relevant to consider them. We worship financial growth as if it were a divinity, building an altar to it from the bones of those who were unlucky enough to stand in the way of the never ending grind of unrestricted greed.
+EOT
+);
+___('pol_manifesto_preamble_5',     'FR', <<<EOT
+Contraposition est un mot d'inspiration latine qui signifie « s'opposer à ». Ce manifeste est contrapositionniste : il s'oppose à tout ce que le système sociopolitique actuel représente. Tout ce que nous accomplissons en tant que société capitaliste est fait pour être jeté après usage, sans prêter la moindre attention au futur sauf s'il s'agit d'un investissement financier, sans prêter la moindre attention aux victimes du système sauf s'il est financièrement intéressant de les ménager. Nous vénérons la croissance économique comme s'il s'agissait d'une divinité, érigeant des autels en son nom à partir des ossements de ses victimes.
 EOT
 );
 ___('pol_manifesto_preamble_6',     'EN', <<<EOT
 This must end fast, and a new system must be reborn from the ashes of the current one. In this manifesto, we will expose ways in which the current system has undeniably failed, then provide concrete ways to build the future social system that must replace the current one.
 EOT
 );
+___('pol_manifesto_preamble_6',     'FR', <<<EOT
+Cette situation doit prendre fin au plus vite, et un nouveau système doit naître des cendres de l'actuel. Dans ce manifeste, nous exposerons en quoi le système actuel est un échec indéniable, puis proposerons des façons concrètes de construire la nouvelle société qui doit remplacer l'actuelle.
+EOT
+);
 ___('pol_manifesto_preamble_7',     'EN', <<<EOT
 Change is not doomed to fail. But it can only come from a total rejection of the current establishment.
+EOT
+);
+___('pol_manifesto_preamble_7',     'FR', <<<EOT
+Le changement n'est pas voué à l'échec. Mais il ne peut venir que d'un rejet total du monde actuel.
 EOT
 );
 ___('pol_manifesto_preamble_8',     'EN', <<<EOT
 We have no reason to place our faith in a society that wants to crush most of us.
 EOT
 );
+___('pol_manifesto_preamble_8',     'FR', <<<EOT
+Nous n'avons aucune raison de placer notre foi en une société qui cherche à nous écraser.
+EOT
+);
 ___('pol_manifesto_preamble_9',     'EN', <<<EOT
 We demand a right to have a collective future on this Earth.
+EOT
+);
+___('pol_manifesto_preamble_9',     'FR', <<<EOT
+Nous demandons le droit d'avoir un futur collectif sur cette Terre.
 EOT
 );
 ___('pol_manifesto_preamble_10',     'EN', <<<EOT
 We will topple this system of oppression.
 EOT
 );
+___('pol_manifesto_preamble_10',     'FR', <<<EOT
+Nous renverserons les systèmes d'oppression en place.
+EOT
+);
 ___('pol_manifesto_preamble_11',     'EN', <<<EOT
 United, we will prevail.
+EOT
+);
+___('pol_manifesto_preamble_11',     'FR', <<<EOT
+Unis, nous triompherons.
 EOT
 );
 
 
 // Table of contents
 ___('pol_manifesto_contents', 'EN', "Contents:");
+___('pol_manifesto_contents', 'FR', "Sommaire :");
 
 
 // Introduction
 ___('pol_manifesto_intro_title',  'EN', "Introduction");
+___('pol_manifesto_intro_title',  'FR', "Introduction");
 ___('pol_manifesto_intro_quote',  'EN', "Everyone deserves equal access to political theory");
+___('pol_manifesto_intro_quote',  'FR', "Tout le monde devrait pouvoir comprendre la théorie politique, qui est habituellement complexe et réservée aux élites");
 ___('pol_manifesto_intro_1',      'EN', <<<EOT
 Before going further into the manifesto, the use of language itself must be questioned.
+EOT
+);
+___('pol_manifesto_intro_1',      'FR', <<<EOT
+Avant de commencer le manifeste, l'utilisation même du langage doit être remise en question.
 EOT
 );
 ___('pol_manifesto_intro_2',      'EN', <<<EOT
 Language can be exclusive. With this in mind, the contrapositionist manifesto tries to use a simpler language whenever possible. Short sentences and simple words. Everyone deserves equal access to political theory.
 EOT
 );
+___('pol_manifesto_intro_2',      'FR', <<<EOT
+Certaines tournures de langage peuvent être excluantes. C'est pourquoi le manifeste contrapositionniste utilise le langage le plus simple possible. Des phrases articulées, du vocabulaire clair. Tout le monde devrait pouvoir comprendre la théorie politique, qui est habituellement complexe et réservée aux élites.
+EOT
+);
 ___('pol_manifesto_intro_3',      'EN', <<<EOT
 English is mostly used as a gendered language. Male dominated languages are one of many subtle tools used to remind women and others that they are considered second class citizens. Yet, english can easily be used without genders. This manifesto preaches inclusiveness, thus it must make use of non gendered language.
+EOT
+);
+___('pol_manifesto_intro_3',      'FR', <<<EOT
+Le français est une langue fortement genrée. L'utilisation par défaut du masculin est un des nombreux moyens subtils de rappeler aux femmes et aux non-binaires que leur place dans la société est au second plan. Pourtant, le français peut aisément être utilisé de façon neutre, sans masculin ni féminin. Ce manifeste prêche l'inclusivité, le langage utilisé y sera donc non-binaire et non-genré.
 EOT
 );
 ___('pol_manifesto_intro_4',      'EN', <<<EOT
 You might be wondering why such a specific and long winded word - contrapositionism - was chosen. As with every new movement and concept, names feel strange until one becomes used to them. Contrapositionism, or for short contra, properly represents the distilled essence of this manifesto: neutrality and compromise benefits the ruling class, standing fully against their ideals is the only option for change.
 EOT
 );
+___('pol_manifesto_intro_4',      'FR', <<<EOT
+Vous vous demandez probablement pourquoi un mot aussi long et inconfortable que « contrapositionniste » a été choisi. Comme pour tous les nouveaux concepts et mouvements, les noms semblent étranges jusqu'à ce qu'ils deviennent assez populaires pour devenir normaux. Le contrapositionnisme, ou en plus court contra, représente l'essence distillée de ce manifeste : la neutralité et les compromis profitent à la classe dirigeante. L'opposition totale à l'intégralité de leurs idéaux est la seule voie menant à un réel changement.
+EOT
+);
 ___('pol_manifesto_intro_5',      'EN', <<<EOT
 Contrapositionism is built on the shoulders of other political theories. Marxism, socialism, communism, anarchism, feminism, social justice, pacifism, and more served as major inspirations. The need for a new paradigm will be discussed later, explaining why contrapositionism reject parts of those ideologies and therefore does not properly fit within any of them.
+EOT
+);
+___('pol_manifesto_intro_5',      'FR', <<<EOT
+La conception de la théorie contrapositionniste repose sur d'autres théories politiques. Le marxisme, le socialisme, le communisme, l'anarchisme, le féminisme, la justice sociale, le pacifisme, ont été d'importantes sources d'inspiration. Ce manifeste contient une justification de la décision de vouloir créer un nouveau paradigme plutôt que de se contenter des existants, en expliquant pourquoi le contrapositionnisme s'oppose à certaines composantes de ces autres idéologies.
 EOT
 );
 ___('pol_manifesto_intro_6',      'EN', <<<EOT
 With this context in mind, we will begin by exploring the violent side of the system. A denouncement of the oppression, domination, submission, and wage slavery that most people experience in their lives. We will then shift into a more positive mindset by thinking about how we can collectively grow, pull others upwards along with us, and become better both as an individual person and as a society, without the need for violence.
 EOT
 );
+___('pol_manifesto_intro_6',      'FR', <<<EOT
+Nous allons commencer par explorer les aspects violents du système, en dénonçant l'oppression, la domination, la soumission, et l'esclavage salarial que la majorité des gens subissent. Nous canaliserons ensuite cette colère pour réfléchir calmement aux moyens de grandir ensemble, de se tirer collectivement vers le haut, et de devenir de meilleurs individus et une meilleure société sans pour autant avoir recours à la violence qui peut nous être instinctivement inspirée par cette colère.
+EOT
+);
 ___('pol_manifesto_intro_7',      'EN', <<<EOT
 This manifesto has been kept as short as possible. A sum of its whole, no section is meant to be skipped.
+EOT
+);
+___('pol_manifesto_intro_7',      'FR', <<<EOT
+Ce manifeste tente d'être aussi bref que possible. Ses chapitres sont faits pour êtres lus dans l'ordre.
 EOT
 );
 
 
 // The social contract
 ___('pol_manifesto_contract_title', 'EN', "<span class=\"text_red\">Anger I:</span> The social contract");
+___('pol_manifesto_contract_title', 'FR', "<span class=\"text_red\">Colère I:</span> Le contrat social");
 ___('pol_manifesto_contract_quote', 'EN', "The exchange of money for work undermines consent, as people would never consent to be yelled at by an old man in a suit every single day, yet here we are");
+___('pol_manifesto_contract_quote', 'FR', "L'échange du travail contre de l'argent invalide tout consentement, car personne ne consentirait à se faire hurler dessus tous les jours par un vieil homme en costume");
 ___('pol_manifesto_contract_1',     'EN', <<<EOT
 The system pretends that we are all born as equals, thanks to a so called "social contract": in exchange for performing certain duties, we will be rewarded with certain rights. Respect the law, and you will avoid jail. Vote, and you will be represented in the decision making process. Work, and you will earn money, which you can use to purchase goods. Breed, and your offspring will be given the same duties and rights as you were.
+EOT
+);
+___('pol_manifesto_contract_1',     'FR', <<<EOT
+La société affirme que tout le monde nait avec les mêmes droits et devoirs grâce à un supposé « contrat social » qui vous est automatiquement assigné : en échange de l'accomplissement de certaines tâches, vous bénéficierez de certains droits. Respectez la loi, et vous éviterez la prison. Votez, et vous aurez droit à une représentation dans le processus décisionnaire. Travaillez, et vous bénéficierez d'une rémunération financière, que vous pourrez utiliser pour acquérir des biens matériaux. Reproduisez-vous, et votre descendance bénéficiera du même contrat social que vous.
 EOT
 );
 ___('pol_manifesto_contract_2',     'EN', <<<EOT
 This unwritten "social contract" keeps most people satisfied with the state of society, even pushing many towards a conservative political stance: why would you change a system that works? If you are ill, then you will receive treatment. If you are poor, then you will get assistance. If you are the victim of a crime, then the criminal will be judged and you will be compensated for your suffering. The endless growth in productivity and endless rise in quality of life over time must be proof, in their minds, that this system just works. It must not be questioned, as challenging its status quo could cause a total collapse of the system.
 EOT
 );
+___('pol_manifesto_contract_2',     'FR', <<<EOT
+Ce « contrat social » implicite satisfait une part assez grande de la société, poussant même beaucoup de personnes vers une position politique conservatrice : pourquoi vouloir changer un système qui fonctionne ? Si vous êtes malade, vous aurez accès aux soins. Si vous êtes pauvre, vous recevrez de l'assistance. Si vous êtes victime d'un crime, le coupable en sera jugé et vous aurez droit à un dédommagement pour compenser vos souffrances. La croissance infinie et la hausse continue du niveau de vie est preuve, selon eux, que ce système fonctionne. Il ne doit pas être remis en cause, car ils savent que défier ne serait-ce qu'une petite partie du status quo risquerait de causer un effondrement total du système dans lequel ils se complaisent.
+EOT
+);
 ___('pol_manifesto_contract_3',     'EN', <<<EOT
 But collapsing the system is the dream of those who have awakened and seen it as it truly is. What is presented to you as a "social contract" is actually a bond of domination between the powerful and the rest of society. Those who are born privileged inherit a better "social contract" than those who are not. The law does not apply to them with the same degree of strictness, justice does not apply to them with the same amount of violence, even when considering working or producing value to society the "social contract" is optional to them - they get all the benefits but do not need to follow any of the duties.
+EOT
+);
+___('pol_manifesto_contract_3',     'FR', <<<EOT
+Pourtant, l'effondrement de ce système est le rêve de toute personne qui accepte de le voir tel qu'il est réellement. Ce qui vous est présenté comme un « contrat social » est en réalité un lien de domination entre les dominants et le reste de la société. Les personnes qui naissent dans une situation de privilège profitent d'un « contrat social » plus avantageux que celui des autres. La loi ne s'applique pas à ces gens avec le même degré de rigueur, la justice n'utilise pas le même degré de violence envers eux. Même lorsqu'il s'agit de travailler ou de produire de la valeur pour le bien commun de la société le « contrat social » n'est qu'une simple option pour eux : ils en ont tous les bénéfices mais n'ont pas à en respecter les conditions.
 EOT
 );
 ___('pol_manifesto_contract_4',     'EN', <<<EOT
 Meanwhile, those who are not given enough privileges from birth are coerced into following their duties to this "social contract" - which they never asked for or agreed to. The mere concept of capitalism goes against the nature of freedom: the exchange of money for work undermines consent, as people would never consent to be yelled at by an old man in a suit every single day, yet here we are. It becomes our duty to the underprivileged to tear up this metaphorical contract in order to free the working class from their chains.
 EOT
 );
+___('pol_manifesto_contract_4',     'FR', <<<EOT
+En parallèle, naitre dans un milieu non privilégié vient avec la contrainte permanente de devoir respecter vos engagements envers ce « contrat social », que vous n'avez jamais signé. Le concept même du capitalisme remet en cause la nature de la liberté individuelle : l'échange du travail contre de l'argent invalide tout consentement, car personne ne consentirait à se faire hurler dessus tous les jours par un vieil homme en costume. C'est notre devoir envers les moins privilégiés de déchirer ce contrat imaginaire afin de libérer les classes inférieures des conditions qu'elles ont développé l'habitude de subir.
+EOT
+);
 ___('pol_manifesto_contract_5',     'EN', <<<EOT
 No society can claim freedom or political representation exist when its workers spend most of their day laboring for the interests of privately owned autocracies. We are given leisure to be ourselves, have the lives we desire, yet when asked what your worth is, you will not answer "I am well versed in sociology", "I am a good carpenter", "I help people in need", or even "I am a human being", but instead just give a number: your financial worth. This is what the capitalist system reduces you to. A mere number.
+EOT
+);
+___('pol_manifesto_contract_5',     'FR', <<<EOT
+Aucune société ne peut affirmer qu'elle offre de la liberté ou de la représentation politique lorsque ses travailleurs passent la majorité de leurs journées à travailler pour les intérêts d'autocraties privées. Cette société vous offre prétendument le droit d'être vous-même, mais lorsque l'on vous demande quelle est votre valeur, vous ne répondrez pas « Je m'intéresse à la sociologie », « Je suis bon en charpenterie », « J'aide les gens dans le besoin », ou même « Je suis un être humain », mais donnerez plutôt un nombre : votre valeur financière. C'est à cela que le système capitaliste vous réduit. Un simple nombre.
 EOT
 );
 ___('pol_manifesto_contract_6',     'EN', <<<EOT
 In essence, the "social contract" deprives us of what makes us human. The laws that it follows are written by the dominant class to keep themselves in power. An obvious alternative is possible to this system: let people be who they want to be, do what they want to do, stop rewarding the privileged for being born in the right family, and pull the underprivileged upwards so that they become equal members of society.
 EOT
 );
+___('pol_manifesto_contract_6',     'FR', <<<EOT
+En soi, ce « contrat social » nous prive de ce qui fait de nous des êtres humains. Les règles auxquelles il nous attache sont écrites par la classe dominante dans le but de se maintenir au pouvoir. L'alternative à ce système est évidente : laisser les gens être qui ils veulent, faire ce qu'ils veulent faire, arrêter de récompenser le privilège de naitre dans la « bonne » famille, et tirer les classes inférieures vers le haut afin qu'elles deviennent des membres égaux de la société.
+EOT
+);
 ___('pol_manifesto_contract_7',     'EN', <<<EOT
 We should be humans. Not slave wages.
+EOT
+);
+___('pol_manifesto_contract_7',     'FR', <<<EOT
+Nous devrions avoir la liberté d'être humains plutôt qu'esclaves de nos salaires.
 EOT
 );
 
 
 // Capitalism
 ___('pol_manifesto_capitalism_title', 'EN', "<span class=\"text_red\">Anger II:</span> Capitalism");
+___('pol_manifesto_capitalism_title', 'FR', "<span class=\"text_red\">Colère II:</span> Le capitalisme");
 ___('pol_manifesto_capitalism_quote', 'EN', "The ultra rich are well adapted parasites: their existence is mostly detrimental to their host organism, without which they would not be able to survive");
+___('pol_manifesto_capitalism_quote', 'FR', "Les ultra-riches sont des parasites : leur existence est majoritairement préjudiciable à leur organisme hôte, sans lequel ils ne pourraient pas survivre");
 ___('pol_manifesto_capitalism_1',     'EN', <<<EOT
 Capitalism is a political and economic system in which corporations own most of the property and take most of the political decisions. The corporations themselves are the property of one or more rich individuals, who get full decision making power, thus making them the driving forces of the system as a whole.
+EOT
+);
+___('pol_manifesto_capitalism_1',     'FR', <<<EOT
+Le capitalisme est un système politique et économique dans lequel des entreprises privées contrôlent la plupart des biens et influencent la majorité des décisions politiques. Ces entreprises appartiennent à de riches individus, qui ont sur leurs entreprises le plein pouvoir décisionnel, et sont par conséquent les forces motrices du système capitaliste dans son ensemble.
 EOT
 );
 ___('pol_manifesto_capitalism_2',     'EN', <<<EOT
 As a consequence of capitalism, the political system is ruled by wealth, fear, and violence. Fascists prey on the uneducated masses who are tired of capitalism by convincing them that minorities are the real problem within our society. Meanwhile capitalists game the electoral system by saying "don't vote for this fascist" even though their own system contributes to people's willingness to listen to said fascist. They purposely and knowingly invest in raw hate in order to maintain their position on top.
 EOT
 );
+___('pol_manifesto_capitalism_2',     'FR', <<<EOT
+En conséquence, le système politique sous le capitalisme est régi par la richesse, la peur, et la violence. Les fascistes exploitent la colère des masses non éduquées envers ce système en les convainquant que les minorités sont les vrais problèmes de notre société. Les membres des classes dominantes profitent de cet état de fait pour monopoliser le pouvoir politique, motivant le peuple à voter pour eux en demandant « ne votez pas pour ce fasciste auquel je m'oppose », alors qu'ils sont responsables de l'existence même de ces fascistes. Ils investissent sciemment dans la haine afin de maintenir leur position au sommêt.
+EOT
+);
 ___('pol_manifesto_capitalism_3',     'EN', <<<EOT
 Not only do the rich prey on the lower classes to keep themselves in power, they also turn them into slave wages by making every necessary commodity (water, food, health care, etc.) worth arbitrary amounts of money. This forces people to work if they want to survive, even if it means working awful jobs that should not exist or should be replaced by machines, even if it means stifling their creativity and preventing them from contributing to society in more useful ways. All in all, the ultra rich are well adapted parasites. Their existence is mostly detrimental to their host organism, without which they would not be able to survive.
 EOT
 );
+___('pol_manifesto_capitalism_3',     'FR', <<<EOT
+En plus d'exploiter politiquement les classes inférieures afin de légitimer leur pouvoir, les dominants les rendent esclaves de leurs salaires en imposant une valeur financière arbitraire à tous les biens nécessaires à la survie (eau, nourriture, santé, etc.). Cela force les gens à travailler non pas pour vivre mais pour survivre, parfois en faisant d'horribles métiers qui ne devraient pas exister ou être automatisés, ce qui cause souvent un étouffement de leur créativité qui les empêche de contribuer à la société d'une façon plus utile. Les ultra-riches sont des parasites : leur existence est majoritairement préjudiciable à leur organisme hôte, sans lequel ils ne pourraient pas survivre
+EOT
+);
 ___('pol_manifesto_capitalism_4',     'EN', <<<EOT
-The ultra rich's accumulation of wealth knows no limit, growing boundlessly only to be transferred to the next generation through the patrilineal inheritance system that we have maintained since the middle ages. They would be angry if they discovered a resource leak within their corporations, yet they are a massive resource leak in their own system. Their endless race for growth forces society as a whole to exhaust the planet's resources, which are necessary for citizens of poorer countries to simply survive and have a future at all.
+The ultra rich's accumulation of wealth knows no limit, growing boundlessly only to be transferred to the next generation through the patrilineal inheritance system that we have maintained since the feudal era. They would be angry if they discovered a resource leak within their corporations, yet their obscene accumulation of wealth is a resource leak in a system where those resources could be used for the common good. Their endless race for growth forces society as a whole to exhaust the planet's resources, which are necessary for citizens of poorer countries to simply survive and have a future at all.
+EOT
+);
+___('pol_manifesto_capitalism_4',     'FR', <<<EOT
+L'accumulation de richesses par les dominants ne connaît aucune limite, elle croît démesurément jusqu'à être transmise à la génération suivante via un système d'héritage patrilinéaire que nous maintenons depuis l'époque féodale. Ces mêmes personnes qui seraient choquées de découvrir une fuite de ressources au sein de leurs entreprises sont une fuite de ressources massive pour la société, accumulant pour leur usage privé des ressources qui pourraient bénéficier au bien commun. La satisfaction de leur désir de croissance infinie force la société à épuiser les ressources de la planète, qui sont nécessaires à la survie des citoyens de régions plus pauvres, se retrouvant privés de futur parce qu'ils ont eu la malchance de naitre hors des zones protégées par l'impérialisme des dominants.
 EOT
 );
 ___('pol_manifesto_capitalism_5',     'EN', <<<EOT
 There is no justification for the ultra wealthy to exist in a world where poverty also exists. However, they use their positions of power to spread class contempt, making us afraid of the underprivileged instead of willing to help them. Through closed borders, they ensure that those who are born in poorer areas of the world are never given the opportunities that the richer countries can offer. By spreading hate and maintaining systemic racism through the political game, they also keep themselves as a social class on top, ensuring that aspects of our being that we can not change - ancestry, skin color, gender, sexual orientation, physical handicaps - will constantly contribute to pushing the underprivileged below the rest of society.
 EOT
 );
+___('pol_manifesto_capitalism_5',     'FR', <<<EOT
+Rien ne peut justifier l'existence des ultra-riches dans une société où la pauvreté existe également. Toutefois, les dominants utilisent leurs positions de pouvoir pour répandre le mépris de classe, nous faisant craindre les défavorisés au lieu de nous sensibiliser à leur souffrance. À l'aide de frontières fermées, ils s'assurent que les personnes qui naissent dans des régions pauvres du monde ne bénéficieront jamais des opportunités que les pays riches pourraient leur offrir. En divisant le peuple par la haine et en maintenant le racisme systémique via leur influence politique, ils maintiennent leur classe sociale au sommêt, s'assurant que des aspects de notre personne que nous ne pourrons jamais changer - nos ancêtres, notre couleur de peau, notre identité de genre, notre orientation sexuelle, nos handicaps physiques - contribueront en continu à pousser les minorités vers le bas de la hiérarchie sociale.
+EOT
+);
 ___('pol_manifesto_capitalism_6',     'EN', <<<EOT
 Yet, the rich need the underprivileged. Closed borders are a tool used to create masses of economic migrants that will work cheaply and get exploited by capitalists out of fear of being sent back to their home country. Minimum wage workers will have no money to save, investing all of their earnings back into the goods produced by the corporations owned by the wealthy. Oppressed minorities become opportunities to market specialized products, causing the wealthy to pinkwash or greenwash their corporations in exchange for a bigger range of devoted customers.
 EOT
 );
+___('pol_manifesto_capitalism_6',     'FR', <<<EOT
+Pourtant, les riches ont besoin des défavorisés. Les frontières fermées sont un outil servant à créer des masses de migrants économiques qui accepteront de travailler pour une rémunération misérable plutôt que de risquer de se faire renvoyer chez eux. Une grande proportion de la société travaille pour des salaires minimaux fixés par la loi, ne leur laissant pas la possibilité d'épargner, s'assurant ainsi que tout l'argent touché par ces personnes est dépensé pour acheter des biens produits par les entreprises possédées par les dominants. Les minorités opprimées deviennent des opportunités de commercialiser des produits spécialisés, poussant les riches à prétendre s'aligner avec leurs combats dans le but d'accumuler une clientèle dévouée.
+EOT
+);
 ___('pol_manifesto_capitalism_7',     'EN', <<<EOT
-When pondering the good and bad sides of capitalism, it is common to consider that the opposite of a privately owned corporation is a state owned corporation. Fear of an overly powerful state and the pipe dream of one day becoming the owner of a powerful corporation makes people forgiving towards the system's failures. However, it is critical to keep in mind that there are more alternatives to capitalism than you might think: for example, corporations could be owned by unions, workers, or people, and contribute to the collective good. The state could become the sole owner of capitalist markets for primary necessities (water, food, health care, etc.), and citizens could become owners of the state through less pyramidal politics.
+When pondering the worth of capitalism, it is common to consider that the opposite of a privately owned corporation is a state owned corporation. Fear of an overly powerful state and the pipe dream of one day becoming the owner of a powerful corporation makes people forgiving towards the system's failures. However, it is critical to keep in mind that there are more alternatives to capitalism than you might think: for example, corporations could be owned by unions, workers, or people, and contribute to the collective good. The state could become the sole owner of capitalist markets for primary necessities (water, food, health care, etc.), and citizens could become owners of the state through less pyramidal politics.
+EOT
+);
+___('pol_manifesto_capitalism_7',     'FR', <<<EOT
+Lorsque l'on remet en cause le capitalisme, il est courant de considérer que l'opposé d'une entreprise privée est un monopole d'état. La peur d'un État trop puissant et le rêve illusoire de devenir un jour riche propriétaire d'une fortune privée font que de nombreuses personnes sont prêtes à pardonner les dérives du capitalisme. Toutefois, il est important de considérer qu'il existe d'autres alternatives au capitalisme : par exemple, les entreprises pourraient être la propriété de syndicats, de travaileurs, de citoyens, et contribuer au bien collectif plutôt qu'à l'enrichissement d'individus. Les états pourraient devenir seuls responsables des marchés des premières nécessités (l'eau, la nourriture, la santé, etc.), et les citoyens pourraient à leur tour devenir propriétaires des états via un système politique moins pyramidal.
 EOT
 );
 ___('pol_manifesto_capitalism_8',     'EN', <<<EOT
 As an aside, capitalists love to point at the death tolls of other political or economic systems. This makes it important for us to face the death toll of capitalism: slavery, colonialism, endless useless wars, fascist puppet regimes used for proxy wars, work accidents, suicides caused by burnout, artificially caused famines, collateral victims of police brutality and military violence, the current and upcoming climate change deaths. All these things have been done in the name of capital gain or maintaining the status quo of the current system.
 EOT
 );
+___('pol_manifesto_capitalism_8',     'FR', <<<EOT
+Par ailleurs, les capitalistes adorent détourner l'attention en pointant du doigt le nombre de morts causés par les autres systèmes politiques ou économiques. Cela nous oblige à pointer du doigt les violences causées directement par le capitalisme : l'esclavage, le colonialisme, les guerres sans fin et sans but, les états fantoches utilisés pour mener des guerres par procuration, les famines artificielles, les corps ravagés par le travail dans des emplois inutiles, les vies ruinées par l'épuisement professionnel, les victimes collatérales de la brutalité policière et militaire, et la planète ruinée par le changement climatique. Toutes ces violences ont été exactées au nom de la plus-value financière ou pour maintenir le status quo du système actuel.
+EOT
+);
 ___('pol_manifesto_capitalism_9',     'EN', <<<EOT
 Capitalism only has good sides when you are privileged.
+EOT
+);
+___('pol_manifesto_capitalism_9',     'FR', <<<EOT
+Le capitalisme n'a de bons côtés que pour les classes privilégiées.
 EOT
 );
 
 
 // Violence
 ___('pol_manifesto_violence_title', 'EN', "<span class=\"text_red\">Anger III:</span> Violence");
+___('pol_manifesto_violence_title', 'FR', "<span class=\"text_red\">Colère III:</span> La violence");
 ___('pol_manifesto_violence_quote', 'EN', "Capitalism must have prisons to protect itself from the criminals that it creates");
+___('pol_manifesto_violence_quote', 'FR', "Le capitalisme a besoin de prisons pour se protéger de la criminalité qu'il crée");
 ___('pol_manifesto_violence_1',     'EN', <<<EOT
 The system's status quo rests on violence. The upper classes keep themselves on top through their control of the judicial system. They make sure that the laws they pass are enforced through their control of the police and military, whose jobs include making use of physical violence.
+EOT
+);
+___('pol_manifesto_violence_1',     'FR', <<<EOT
+Le système capitaliste repose sur la violence. Les classes supérieures conservent leur pouvoir en exploitant le système judiciare à leur avantage. Ses membres s'assurent que les lois qu'ils passent sont appliquées via leur contrôle de la police et de l'armée, dont le travail quotidien inclut l'usage de la violence physique.
 EOT
 );
 ___('pol_manifesto_violence_2',     'EN', <<<EOT
 How can anyone respect the rule of law when the laws are written by the dominant class to keep themselves in power? The disproportionate crime statistics of minorities are not caused by inherent violent tendencies in these minorities, but rather by the fact that the legal system targets them disproportionately. Every time the underprivileged find a new way to survive without relying on the privileged, a new law will follow to make it illegal, and police repression will be mandated to enforce this new law.
 EOT
 );
+___('pol_manifesto_violence_2',     'FR', <<<EOT
+Comment attendre du peuple qu'il respecte les lois quand ces lois sont écrites par la classe dominante pour servir ses propres intérêts ? Les statistiques montrant qu'une quantité de crime disproportionné est commis par des minorités ne signifient pas que ces minorités sont plus violentes que les autres, mais plutôt que le système légal criminalise leur quotidien de façon disproportionnée. Chaque fois que les défavorisés trouvent une nouvelle façon de survivre sans dépendre des privélégiés, qu'ils arrivent à s'émanciper de leurs oppresseurs, une nouvelle loi sera passée pour rendre cette façon de survivre illégale, accompagnée de répression policière poussant à une escalade bilatérale de la violence.
+EOT
+);
 ___('pol_manifesto_violence_3',     'EN', <<<EOT
 To make sure the masses remain docile, nationalism is used as a pretext. Basic necessities must be purchased using money earned through wage slavery, for the sake of the country's growth, lest it be overtaken by the growth of other rival countries. Migrants must be sent back to their home country, for the sake of preserving the country's "national identity" - in other words: eugenics. Preventive wars must be fought in poor countries to protect rich countries from imaginary threats, for the glory of the country's might and radiance.
+EOT
+);
+___('pol_manifesto_violence_3',     'FR', <<<EOT
+Afin de convaincre le peuple de rester docile, le nationalisme est invoqué comme prétexte pour tout. Les biens nécessaires à la survie doivent être achetés à l'aide de l'argent acquis via l'esclavage salarial, pour le bien de la croissance nationale, qui risquerait sinon d'être dépassée par la croissance de pays rivaux. Les migrants doivent être renvoyés dans leurs pays d'origines, au nom de « l'identité nationale » - en d'autres termes, de l'eugénisme et du suprémacisme culturel. Des guerres préventives doivent être menées dans des pays défavorisés afin de protéger les pays riches contre des menaces imaginaires, au nom de gloire, de la puissance, et du rayonnement de la nation.
 EOT
 );
 ___('pol_manifesto_violence_4',     'EN', <<<EOT
 These countries are all arbitrary plots of lands whose borders have been decided by the elders of our elder's elders, sometimes even stolen from the natives who lived there first. They hold worth only in the eyes of those who have been thoroughly indoctrinated by the system's schools, which include a lot of violent rhetoric and nationalist fearmongering within their study programs. A shame, given how education for all is by far the most important tool in reducing inequalities and giving everyone equal opportunities in life. Instead of its true purpose, education is being bent as a propaganda tool in ways optimized by the fascists and nazis of old, repurposed for modern society by the political ruling class.
 EOT
 );
+___('pol_manifesto_violence_4',     'FR', <<<EOT
+Tous ces pays ne sont pourtant que des territoires arbitraires dont les frontières ont été définies par les ancêtres de nos ancêtres, souvent même volés aux indigènes qui y vivaient initialement. Ils n'ont de valeur qu'aux yeux des gens qui ont été intégralement endoctrinés par le système éducatif, dont la conception de l'Histoire inclut beaucoup de révisionnisme historique. C'est une honte, car l'éducation est de loin l'outil le plus important dans la quête de la réduction des inégalités et du progrès social. Plutôt que de l'utiliser de façon constructive, la classe dominante politique utilise l'éducation comme un outil de propagande, reprenant des techniques optimisées il y a longtemps par les fascistes et les nazis.
+EOT
+);
 ___('pol_manifesto_violence_5',     'EN', <<<EOT
 For the country's sake, anything will be tolerated. Political leaders openly order war crimes, which their military force will gladly comply with. Some even build and maintain nuclear arsenals, being able to press a self destruct button on the whole planet for the sake of their country's grandeur. Drunk on the perceived superiority of their culture and country, citizens will encourage their government in this globally scaled mutual destruction, applauding acts of war, sending their own children to die for the sake of the wealthy's exploitation of the markets created by these constant wars.
+EOT
+);
+___('pol_manifesto_violence_5',     'FR', <<<EOT
+Au nom de l'unité nationale, tout est toléré. Les responsables politiques ordonnent ouvertement des crimes de guerre, que leurs forces armées exécuteront sans broncher voir même avec plaisir. Certains pays vont même jusqu'à assembler des arsenaux nucléaires, disposant d'un bouton capable d'autodétruire la planète entière, au nom de la grandeur de leur nation. Enivrés par la soi disant supériorité de leur culture et de leur pays, les citoyens soutiennent leurs gouvernements dans cette destruction mutuelle mondiale, applaudissant les crimes de guerre, envoyant leurs propres enfants mourir au front tandis que les privilégiés profitent de l'impérialisme de ces guerres pour établir de nouveaux marchés financiers et s'enrichir sur le dos des morts.
 EOT
 );
 ___('pol_manifesto_violence_6',     'EN', <<<EOT
 On a local scale, the ruling political class will use the threat of terrorism to terrorize their own citizens into giving up their basic rights to freedom. Establishment politicians will celebrate with glee as the people they have sworn to protect get blown to pieces by the villains that they themselves created through their wars and international manipulations. When the citizens try to fight back against this status quo, they too get labeled terrorists. Fascists get to openly demonstrate in the streets, but any glimpse of antifascism will get violently fought by the police or the military as if they were committing acts of terror by resisting fascism.
 EOT
 );
+___('pol_manifesto_violence_6',     'FR', <<<EOT
+À l'échelle locale, la classe politique dominante utilise la menace du terrorisme pour terroriser ses propres citoyens et les convaincre d'abandonner leurs droits et leurs libertés. Les politiciens célèbrent leurs victoires tandis que le peuple qu'ils ont juré de protéger se fait assassiner par des ennemis qu'ils ont eux-mêmes crée via leurs guerres et leurs manipulations internationales. Lorsque des citoyens essayent de se rebeller contre cet état de fait, ils se font à leur tour traiter comme des ennemis de la nation. Les fascistes peuvent librement manifester dans les rues, mais toute tentative d'action antifasciste sera brutalement réprimée par la police ou l'armée comme s'ils commettaient des crimes en résistant face au fascisme.
+EOT
+);
 ___('pol_manifesto_violence_7',     'EN', <<<EOT
 In order to maintain their grasp on the people, the ruling political class and the wealthy will use the service of police forces. Theoretically meant to protect all citizens, they will only ensure the law is applied to the underprivileged, through the usage of violence. Those in the police forces who disagree with their role as oppressors get silenced or booted away, turning state police into a gang of violent thugs. As police members are rarely if at all punished for their exactions when they make excessive use of violence, this gives them the belief that they are above the law, which creates a feedback loop of infinitely escalating one sided violence. It is for good reason that the underprivileged tend to say - once they become victims of this unfair police system - that all cops are bastards. The job itself has become one that only a bastard could hold.
+EOT
+);
+___('pol_manifesto_violence_7',     'FR', <<<EOT
+Pour maintenir leur emprise sur le peuple, la classe politique et les riches utilisent les services des forces de police. Théoriquement censées protéger tous les citoyens, elles s'assureront plutôt que la loi ne s'applique qu'aux défavorisés, par l'usage de la violence. Tout membre des forces de l'ordre tentant de protester contre ce rôle de chien de garde se fera taire, faisant de la police d'état un gang de criminels. Les forces de police étant rarement punies lorsqu'elles abusent de leurs pouvoirs, elles développent l'impression qu'elles sont au desuss de la loi, ce qui crée une escalade constante de l'usage unilatéral de la violence. Ce n'est pas par provocation que beaucoup de personnes défavorisées, une fois confrontées à ce système policier injuste, ont tendance à dire que tous les policiers sont des salauds. Le travail de policier, même s'il est souvent présenté comme allié du peuple, est en pratique une activité complice des mécaniques de domination.
 EOT
 );
 ___('pol_manifesto_violence_8',     'EN', <<<EOT
 Meanwhile, those who break the law get piled up in jails without regard for their lives. Even the smallest offense, even if done for the sake of survival, will lead the underprivileged to jail. In there, locked up along with actually violent criminals, they build up resentment against the system, ensuring that minor offenders can turn into violent criminals once released, thus padding up the crime statistics used by the ruling class to fan the flames of racism and hate. Instead of trying to prevent, the system punishes. Instead of trying to educate, the system locks people up. Capitalism must have prisons to protect itself from the criminals that it creates.
 EOT
 );
+___('pol_manifesto_violence_8',     'FR', <<<EOT
+Pendant ce temps, toute personne enfreignant les lois se retrouve entassée dans des prisons, privée de son droit d'exister librement. Même les plus petits délits, même ceux commis dans le but de simplement survivre, mènent à la prison pour les défavorisés. Là bas, enfermés aux côtés de criminels réellement violents, privés de leurs libertés, ils accumulent du ressentiment envers la société, transformant ainsi des délinquant mineurs en potentiels criminels violents une fois libérés, gonflant de ce fait les statistiques de criminalité utilisées par la classe dominante pour attiser les flammes du racisme et de la haine. Plutôt que de tenter de les réhabiliter, le système carcéral tente en vain d'effacer l'existence même de ses victimes. Le capitalisme a besoin de prisons pour se protéger de la criminalité qu'il crée.
+EOT
+);
 ___('pol_manifesto_violence_9',     'EN', <<<EOT
 The dominant class tries to make anyone who opposes the law, the police, the military, or other forms of state controlled violence look like a deviant, regardless of the context. In a climate of perpetual violence - which mostly targets minorities - being politically neutral is akin to being an accomplice to this systemic brutality. Neutrals, often too privileged to grasp the suffering of the underprivileged, are choosing the side of the oppressor. It is our duty to awaken them to the reality of the system's violence.
+EOT
+);
+___('pol_manifesto_violence_9',     'FR', <<<EOT
+La classe dominante essaye de faire passer toute personne qui s'oppose à la loi, à la police, à l'armée, ou aux autres formes de violence étatique pour des déviants. Dans un climat de violence perpétuelle - qui vise majoritairement les minorités - être neutre politiquement équivaut à être complice de cette brutalité systémique. Les neutres, souvent trop privilégiés pour réaliser la quantité de violence dont souffrent chaque jour les défavorisés, choisissent le camp de l'acceptation tacite de l'oppression. Notre devoir est de les éveiller à la réalité des violences systémiques.
 EOT
 );
 ___('pol_manifesto_violence_10',    'EN', <<<EOT
 Political centrism is just as complicit to violence as capitalism, fascism, or totalitarism. We must dissent.
 EOT
 );
+___('pol_manifesto_violence_10',    'FR', <<<EOT
+La neutralité politique encourage le capitalisme, le fascisme, le totalitarisme. Nous ne pouvons pas la tolérer.
+EOT
+);
 
 
 // Work
 ___('pol_manifesto_work_title', 'EN', "<span class=\"text_red\">Anger IV:</span> Work");
+___('pol_manifesto_work_title', 'FR', "<span class=\"text_red\">Colère IV:</span> Le travail");
 ___('pol_manifesto_work_quote', 'EN', "Unchecked growth for the sake of growth is how cancer works");
+___('pol_manifesto_work_quote', 'FR', "La croissance non maîtrisée et sans limite équivaut au fonctionnement d'un cancer");
 ___('pol_manifesto_work_1',     'EN', <<<EOT
 Using the threat of state violence, capitalism pushes its underprivileged citizens to follow the one and only allowed way of life: work or live an even more miserable life. Any attempt at finding a lifestyle that isn't centered on work will not only lead to financial ruin, but it will also lead to being ridiculed and rejected by the masses for not being "productive" or "useful" enough.
 EOT
@@ -275,7 +464,9 @@ EOT
 
 // Creativity
 ___('pol_manifesto_creativity_title', 'EN', "<span class=\"text_red\">Anger V:</span> Creativity");
+___('pol_manifesto_creativity_title', 'FR', "<span class=\"text_red\">Colère V:</span> La créativité");
 ___('pol_manifesto_creativity_quote', 'EN', "Human nature is one of mutual aid");
+___('pol_manifesto_creativity_quote', 'FR', "La nature humaine est une nature d'entraide");
 ___('pol_manifesto_creativity_1',     'EN', <<<EOT
 The usual defense of capitalism includes the dubious statement that without capitalism, we would never have done the leaps and bounds in science and technology that led us to the industrial and digital revolutions. Proud of human advancement powered by child labor and wage slavery, capitalists will dare claim that the world becomes a better place thanks to the benevolence of the ultra rich, who are "forced" to always innovate and improve the products they sell if they are to stay alive on the financial markets. Surely, without huge corporations running gigantic laboratories and hiring armies of scientists and engineers, we could not have made all the big discoveries that we did?
 EOT
@@ -316,7 +507,9 @@ EOT
 
 // Nature
 ___('pol_manifesto_nature_title', 'EN', "<span class=\"text_red\">Anger VI:</span> Nature");
+___('pol_manifesto_nature_title', 'FR', "<span class=\"text_red\">Colère VI:</span> La nature");
 ___('pol_manifesto_nature_quote', 'EN', "The true enemies of the Earth are the shareholders who only care about dividends and infinitely increasing greed");
+___('pol_manifesto_nature_quote', 'FR', "Les vrais ennemis de la Terre sont les actionnaires qui ne se soucient que de leurs dividendes et de la satisfaction de leur cupidité sans limite");
 ___('pol_manifesto_nature_1',     'EN', <<<EOT
 There is no denying that humanity's obsession with greed, growth, and war has ruined the planet. Biodiversity is at an all time low, climate change is threatening our future, many places have had their soil ruined by intensive agriculture. So much irreversible damage has already been done that the richest of the privileged are now dumping money into interstellar planetary travel and the terraforming of Mars "just in case". Cowards, they would rather flee the scene of the murder they are committing.
 EOT
@@ -357,7 +550,9 @@ EOT
 
 // Inspirations and rejections
 ___('pol_manifesto_inspirations_title', 'EN', "Inspirations and rejections");
+___('pol_manifesto_inspirations_title', 'FR', "Inspirations et oppositions");
 ___('pol_manifesto_inspirations_quote', 'EN', "Another way is possible for those who struggle to find an ideology that they fully agree with");
+___('pol_manifesto_inspirations_quote', 'FR', "Si vous n'arrivez pas à trouver votre zone de confort au sein des autres idéologies, nous vous proposons une voie différente");
 ___('pol_manifesto_inspirations_1',     'EN', <<<EOT
 Believing that centrists, conservatives, and fascists will disappear along with capitalism's inevitable collapse, contrapositionism considers itself a future alternative ideology. This is why what capitalists call "far left" politics have so much infighting: the modern political scale is heavily skewed by capitalism, as social-democrats, centrists, and conservatives would ally even with fascists in their greedy pursuit of money and power. The so called "far left" however, truly cares for their values, will stand for their beliefs and not seek any compromise with capitalists.
 EOT
@@ -414,7 +609,9 @@ EOT
 
 // Philosophy
 ___('pol_manifesto_philosophy_title', 'EN', "<span class=\"text_red\">Growth I:</span> Philosophy");
+___('pol_manifesto_philosophy_title', 'FR', "<span class=\"text_red\">Calme I:</span> Philosophie");
 ___('pol_manifesto_philosophy_quote', 'EN', "Change must come from within, and it begins within yourself");
+___('pol_manifesto_philosophy_quote', 'FR', "Le changement doit venir de l'intérieur, en commençant par soi");
 ___('pol_manifesto_philosophy_1',     'EN', <<<EOT
 Focusing on anger and rejection is an unhealthy worldview. Anger at the system, while important as an outlet for pain and suffering, causes angst and sadness in daily life. It is crucial that the negative energies that are created when being crushed by the gears of the system get absorbed and transformed into more positive thoughts - something which not everyone is able to do.
 EOT
@@ -447,7 +644,9 @@ EOT
 
 // Listening
 ___('pol_manifesto_listening_title',  'EN', "<span class=\"text_red\">Growth II:</span> Listening");
+___('pol_manifesto_listening_title',  'FR', "<span class=\"text_red\">Calme II:</span> Écoute");
 ___('pol_manifesto_listening_quote',  'EN', "We spend far too much time talking on behalf of others");
+___('pol_manifesto_listening_quote',  'FR', "Nous passons trop de temps à parler au nom des autres");
 ___('pol_manifesto_listening_1',      'EN', <<<EOT
 This manifesto was written by listening. Prior to writing the very first word, a lot of time had already been spent learning from disenfranchised people from many different backgrounds of oppression. As it turns out, listening is an underrated tool, you can learn a lot about yourself from the ways others perceive the world.
 EOT
@@ -488,7 +687,9 @@ EOT
 
 // Solutions
 ___('pol_manifesto_solutions_title',    'EN', "<span class=\"text_red\">Growth III:</span> Solutions");
+___('pol_manifesto_solutions_title',    'FR', "<span class=\"text_red\">Calme III:</span> Solutions");
 ___('pol_manifesto_solutions_quote',    'EN', "40 points for a better future");
+___('pol_manifesto_solutions_quote',    'FR', "40 propositions pour un avenir meilleur");
 ___('pol_manifesto_solutions_intro',    'EN', <<<EOT
 Everything that was discussed above, both the negatives and the positives, can be summed up in 40 points for a better future. Those are not mandatory rules to follow, nor are they strict and immutable, but rather guidelines for building a future society that will be free of the violence of capitalism and of all its side effects, without replacing it with another systemically violent or unjust society.
 EOT
@@ -657,7 +858,9 @@ EOT
 
 // Praxis
 ___('pol_manifesto_praxis_title',     'EN', "<span class=\"text_red\">Growth IV:</span> Praxis");
+___('pol_manifesto_praxis_title',     'FR', "<span class=\"text_red\">Calme IV:</span> Praxis");
 ___('pol_manifesto_praxis_quote',     'EN', "The system must fall apart before the planet does");
+___('pol_manifesto_praxis_quote',     'FR', "L'effondrement du système doit avoir lieu avant que notre planète s'effondre");
 ___('pol_manifesto_praxis_intro_1',   'EN', <<<EOT
 Praxis is the act of taking any theory and turning it into reality. In the case of political theory, praxis encompasses any form of activism, including simply educating others or spreading a message.
 EOT
@@ -714,7 +917,9 @@ EOT
 
 // Postface
 ___('pol_manifesto_postface_title', 'EN', "Postface");
+___('pol_manifesto_postface_title', 'FR', "Postface");
 ___('pol_manifesto_postface_quote', 'EN', "Society has failed us. We, in turn, must fail society");
+___('pol_manifesto_postface_quote', 'FR', "La société nous méprise. Nous devons, en retour, mépriser la société.");
 ___('pol_manifesto_postface_1',     'EN', <<<EOT
 If this manifesto resonates with you, then the cause awaits you. Join a circle, become one of us, practice praxis, and share the manifesto with others.
 EOT
@@ -746,5 +951,15 @@ First published: 2020-03-19<br>
 Current version: 2021-01-23<br>
 <br>
 <span class="bold">Thanks to all</span>
+EOT
+);
+___('pol_manifesto_credits', 'FR', <<<EOT
+<span class="bold">Écrit par Éric “Bad” Bisceglia</span><br>
+<br>
+Publié sur nobleme.com<br>
+Version initiale : 2020-03-19<br>
+Version actuelle : 2021-01-23<br>
+<br>
+<span class="bold">Merci à vous</span>
 EOT
 );

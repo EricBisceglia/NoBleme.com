@@ -813,10 +813,10 @@ ___('submenu_pages_internet_random',      'FR', "Page au hasard");
 
 ___('submenu_pages_politics',             'EN', "Politics");
 ___('submenu_pages_politics',             'FR', "Politique");
-___('submenu_pages_politics_manifesto',   'EN', "Contra-manifesto");
-___('submenu_pages_politics_manifesto',   'FR', "Contra-manifeste");
-___('submenu_pages_politics_join',        'EN', "Join the movement");
-___('submenu_pages_politics_join',        'FR', "Rejoindre le mouvement");
+___('submenu_pages_politics_manifesto',   'EN', "Contramanifesto");
+___('submenu_pages_politics_manifesto',   'FR', "Contremanifeste");
+___('submenu_pages_politics_join',        'EN', "The movement");
+___('submenu_pages_politics_join',        'FR', "Le mouvement");
 
 
 // Submenu: Social

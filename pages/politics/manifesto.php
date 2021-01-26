@@ -9,8 +9,8 @@ include_once './../../lang/politics.lang.php';  # Translations
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/politics/manifesto";
-$page_title_en    = "Contra-manifesto";
-$page_title_fr    = "Contra-manifesto";
+$page_title_en    = "Contramanifesto";
+$page_title_fr    = "Contremanifeste";
 $page_description = "The system has failed, the world is on a timer, but it is not too late for change to come from within.";
 
 // Hide the footer
