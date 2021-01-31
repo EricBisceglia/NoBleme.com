@@ -589,7 +589,7 @@ $javascripts .= '
           <?=__link('pages/politics/manifesto', __('submenu_pages_politics_manifesto'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_politics_join'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/politics/faq', __('submenu_pages_politics_join'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
