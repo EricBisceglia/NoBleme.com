@@ -463,6 +463,7 @@ CREATE TABLE IF NOT EXISTS `users_settings` (
   `hide_youtube` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `hide_google_trends` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `hide_from_activity` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `quotes_languages` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_user` (`fk_users`),
   KEY `index_nsfw_filter` (`show_nsfw_content`)

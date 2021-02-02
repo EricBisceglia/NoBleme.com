@@ -426,13 +426,13 @@ function account_update_password( string  $current_password     ,
  * Updates the currently logged in account's settings.
  *
  * @param   string  $setting  The account setting which should be updated.
- * @param   int     $value    The value to which the account setting should be updated.
+ * @param   mixed   $value    The value to which the account setting should be updated.
  *
  * @return  void
  */
 
 function account_update_settings( string  $setting  ,
-                                  int     $value    ) : void
+                                  mixed   $value    ) : void
 {
   // Only logged in users can use this
   user_restrict_to_users();
@@ -444,6 +444,8 @@ function account_update_settings( string  $setting  ,
   // Ensure the values are within allowed boundaries and sanitize them
   if($setting == 'show_nsfw_content')
     $value = sanitize($value, 'int', 0, 2);
+  else if($setting == 'quotes_languages')
+    $value = sanitize($value, 'string');
   else
     $value = sanitize($value, 'int', 0, 1);
 

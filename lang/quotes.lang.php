@@ -33,6 +33,13 @@ EOT
 );
 
 
+// Form
+___('quotes_languages',       'EN', "Show quotes in the following languages (this setting will be saved)");
+___('quotes_languages',       'FR', "Afficher les citations dans les langues suivantes (ce réglage sera enregistré)");
+___('quotes_languages_guest', 'EN', "Show quotes in the following languages");
+___('quotes_languages_guest', 'FR', "Afficher les citations dans les langues suivantes");
+
+
 // List
 ___('quotes_blur',    'EN', <<<EOT
 This quote is blurred as it contains crude or sensitive content. You can read it by hovering your pointer over the text. If you are bothered by the blurring or feel like you don't need it, you can permanently disable it in your account's {{link|pages/account/settings_nsfw|adult content options}}.
@@ -42,6 +49,8 @@ ___('quotes_blur',    'FR', <<<EOT
 Cette citation est floutée car elle contient des propos vulgaires ou sensibles. Vous pouvez révéler son contenu en passant votre curseur dessus. Si le floutage vous embête ou si vous n'en avez pas besoin, vous pouvez le désactiver de façon permanente dans vos {{link|pages/account/settings_nsfw|options de vulgarité}}.
 EOT
 );
+___('quotes_none',    'EN', "No quotes have been found");
+___('quotes_none',    'FR', "Aucune citation n'a été trouvée");
 ___('quotes_count',   'EN', "NoBleme's {{1}} quote:");
 ___('quotes_count',   'FR', "{{1}} citation NoBlemeuse :");
 ___('quotes_count+',  'EN', "NoBleme's {{1}} quotes:");

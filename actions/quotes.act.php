@@ -10,24 +10,32 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  quotes_list                   Returns a list of quotes.                                                          */
 /*                                                                                                                   */
+/*  user_setting_quotes           Quote related settings of the current user.                                        */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
 /**
  * Returns a list of quotes.
  *
+ * @param   array   $search     (OPTIONAL)  Search for specific field values.
  * @param   int     $quote_id   (OPTIONAL)  Return only a single quote instead of a list.
  *
  * @return  array   An array containing quotes.
  */
 
-function quotes_list( ?int  $quote_id = 0 ) : array
+function quotes_list( ?array  $search   = array() ,
+                      ?int    $quote_id = 0       ) : array
 {
   // Check if the required files have been included
   require_included_file('quotes.lang.php');
 
   // Sanitize the parameters
   $quote_id = sanitize($quote_id, 'int', 0);
+
+  // Prepare the language filter
+  $lang_en    = (isset($search['lang_en']) && $search['lang_en']);
+  $lang_fr    = (isset($search['lang_fr']) && $search['lang_fr']);
 
   // Fetch the quotes
   $qquotes = "    SELECT    quotes.id                                                               AS 'q_id'     ,
@@ -42,9 +50,17 @@ function quotes_list( ?int  $quote_id = 0 ) : array
                   WHERE     quotes.is_deleted       = 0
                   AND       quotes.admin_validation = 1 ";
 
-  // Search the quotes
+  // Show a single quote
   if($quote_id)
     $qquotes .= " AND       quotes.id               = '$quote_id' ";
+
+  // Filter the quotes by language
+  if($lang_en && !$lang_fr && !$quote_id)
+    $qquotes .= " AND       quotes.language      LIKE 'EN'        ";
+  if($lang_fr && !$lang_en && !$quote_id)
+    $qquotes .= " AND       quotes.language      LIKE 'FR'        ";
+  if(!$lang_fr && !$lang_en && !$quote_id)
+    $qquotes .= " AND       1                       = 0           ";
 
   // Finish the query
   $qquotes .= "   GROUP BY  quotes.id
@@ -69,9 +85,60 @@ function quotes_list( ?int  $quote_id = 0 ) : array
     $data[$i]['summary']      = sanitize_output(string_truncate($row['q_body'], 100, '...'));
   }
 
+  // Add the language filters to the data
+  $data['lang_en']  = $lang_en;
+  $data['lang_fr']  = $lang_fr;
+
   // Add the number of rows to the data
   $data['rows'] = $i;
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Quote related settings of the current user.
+ *
+ * @return  array   The current quote related settings of the user, in the form of an array.
+ */
+
+function user_settings_quotes() : array
+{
+  // By default, give the settings default values
+  $lang_en = 0;
+  $lang_fr = 0;
+
+  // If the user is logged in, fetch their quotes related settings
+  if(user_is_logged_in())
+  {
+    // Sanitize the user id
+    $user_id = sanitize($_SESSION['user_id'], 'int', 0);
+
+    // Fetch the settings
+    $dprivacy = mysqli_fetch_array(query("  SELECT  users_settings.quotes_languages AS 'sq_lang'
+                                            FROM    users_settings
+                                            WHERE   users_settings.fk_users = '$user_id' "));
+
+    // Set the values to the current user settings
+    $lang_en = (str_contains($dprivacy['sq_lang'], 'EN'));
+    $lang_fr = (str_contains($dprivacy['sq_lang'], 'FR'));
+  }
+
+  // If unset, set the language settings accordingly to the user's current language
+  if(!$lang_en && !$lang_fr)
+  {
+    // Fetch the current language
+    $lang = user_get_language();
+
+    // Set the language settings
+    $lang_en = ($lang == 'EN');
+    $lang_fr = ($lang == 'FR');
+  }
+
+  // Return those privacy settings, neatly folded in a cozy array
+  return array( 'show_en' => $lang_en ,
+                'show_fr' => $lang_fr );
 }

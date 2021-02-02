@@ -987,7 +987,7 @@ function user_settings_privacy() : array
   // By default, set all of the privacy values to 0
   $privacy_youtube    = 0;
   $privacy_trends     = 0;
-  $privacy_activtity  = 0;
+  $privacy_online     = 0;
 
   // If the user is logged in, fetch their third party privacy settings
   if(user_is_logged_in())

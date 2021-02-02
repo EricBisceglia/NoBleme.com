@@ -110,6 +110,7 @@
 .float_above     { margin-top: 2.2em;                           }
 .nowrap          { white-space: nowrap;                         }
 .dowrap          { white-space: normal;                         }
+.break_words     { word-wrap: break-word;                       }
 .scrollbar       { overflow-x: scroll;                          }
 .vscrollbar      { overflow-y: scroll;                          }
 
