@@ -623,7 +623,7 @@ $javascripts .= '
           <?=__('submenu_social_quotes')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_social_quotes_list'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/quotes/', __('submenu_social_quotes_list'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_social_quotes_random'), 'header_submenu_link text_blue', 1, $path);?>

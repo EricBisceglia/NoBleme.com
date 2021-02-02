@@ -834,7 +834,7 @@ ___('submenu_social_irc_channels',  'FR', "Liste des canaux");
 ___('submenu_social_quotes',        'EN', "Quotes");
 ___('submenu_social_quotes',        'FR', "Citations");
 ___('submenu_social_quotes_list',   'EN', "Quote database");
-___('submenu_social_quotes_list',   'FR', "Paroles de NoBlemeux");
+___('submenu_social_quotes_list',   'FR', "Paroles de NoBleme");
 ___('submenu_social_quotes_random', 'EN', "Random quote");
 ___('submenu_social_quotes_random', 'FR', "Citation au hasard");
 ___('submenu_social_quotes_submit', 'EN', "Submit a new quote");
