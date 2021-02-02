@@ -34,11 +34,19 @@ EOT
 
 
 // List
-___('quotes_count',   'EN', "NoBleme's {{1}} quotes:");
-___('quotes_count',   'FR', "{{1}} citations NoBlemeuses :");
+___('quotes_blur',    'EN', <<<EOT
+This quote is blurred as it contains crude or sensitive content. You can read it by hovering your pointer over the text. If you are bothered by the blurring or feel like you don't need it, you can permanently disable it in your account's {{link|pages/account/settings_nsfw|adult content options}}.
+EOT
+);
+___('quotes_blur',    'FR', <<<EOT
+Cette citation est floutée car elle contient des propos vulgaires ou sensibles. Vous pouvez révéler son contenu en passant votre curseur dessus. Si le floutage vous embête ou si vous n'en avez pas besoin, vous pouvez le désactiver de façon permanente dans vos {{link|pages/account/settings_nsfw|options de vulgarité}}.
+EOT
+);
+___('quotes_count',   'EN', "NoBleme's {{1}} quote:");
+___('quotes_count',   'FR', "{{1}} citation NoBlemeuse :");
+___('quotes_count+',  'EN', "NoBleme's {{1}} quotes:");
+___('quotes_count+',  'FR', "{{1}} citations NoBlemeuses :");
 ___('quotes_id',      'EN', "Quote #{{1}}");
 ___('quotes_id',      'FR', "Citation #{{1}}");
-___('quotes_date',    'EN', "{{1}}");
-___('quotes_date',    'FR', "du {{1}}");
 ___('quotes_nodate',  'EN', "Quote date unknown (before 2012)");
 ___('quotes_nodate',  'FR', "Date inconnue (avant 2012)");
