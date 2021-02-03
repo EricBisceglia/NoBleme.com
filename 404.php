@@ -8,8 +8,8 @@ include_once './inc/includes.inc.php'; # Core
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "404";
-$page_title_en    = "Lost in space";
-$page_title_fr    = "Perdus dans l'espace";
+$page_title_en    = "404 Lost in space";
+$page_title_fr    = "404 Perdus dans l'espace";
 $page_description = "Error 404: Page not found…";
 
 // Extra CSS & JS

@@ -18,5 +18,5 @@ function quotes_set_language()
   postdata += '&quotes_lang_fr='  + fetch_sanitize(document.getElementById('quotes_lang_fr').checked);
 
   // Submit the change request
-  fetch_page('index', 'quotes_list_body', postdata);
+  fetch_page('list', 'quotes_list_body', postdata);
 }

@@ -9,6 +9,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  quotes_list                   Returns a list of quotes.                                                          */
+/*  quotes_get_random_id          Returns a random quote ID.                                                         */
 /*                                                                                                                   */
 /*  user_setting_quotes           Quote related settings of the current user.                                        */
 /*                                                                                                                   */
@@ -82,7 +83,7 @@ function quotes_list( ?array  $search   = array() ,
     $data[$i]['linked_count'] = ($temp && $temp == count($data[$i]['linked_nicks'])) ? $temp : 0;
     $data[$i]['nsfw']         = $row['q_nsfw'];
     $data[$i]['body']         = sanitize_output($row['q_body'], true);
-    $data[$i]['summary']      = sanitize_output(string_truncate($row['q_body'], 100, '...'));
+    $data[$i]['summary']      = sanitize_output(string_truncate($row['q_body'], 80, '...'));
   }
 
   // Add the language filters to the data
@@ -94,6 +95,41 @@ function quotes_list( ?array  $search   = array() ,
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Returns a random quote ID.
+ *
+ * @return  int   A random quote's ID, in the user's allowed languages.
+ */
+
+function quotes_get_random_id() : int
+{
+  // Fetch the user's quotes related language settings
+  $settings = user_settings_quotes();
+
+  // Assemble the language settings into an extra query condition
+  if($settings['show_en'] && !$settings['show_fr'])
+    $limit_lang = " AND quotes.language LIKE 'EN' ";
+  else if($settings['show_fr'] && !$settings['show_en'])
+    $limit_lang = " AND quotes.language LIKE 'FR' ";
+  else
+    $limit_lang = '';
+
+  // Fetch a random quote
+  $drand = mysqli_fetch_array(query(" SELECT    quotes.id AS 'q_id'
+                                      FROM      quotes
+                                      WHERE     quotes.is_deleted       = 0
+                                      AND       quotes.admin_validation = 1
+                                                $limit_lang
+                                      ORDER BY  RAND()
+                                      LIMIT     1 "));
+
+  // Return the random quote's id
+  return $drand['q_id'];
 }
 
 

@@ -59,3 +59,7 @@ ___('quotes_id',      'EN', "Quote #{{1}}");
 ___('quotes_id',      'FR', "Citation #{{1}}");
 ___('quotes_nodate',  'EN', "Quote date unknown (before 2012)");
 ___('quotes_nodate',  'FR', "Date inconnue (avant 2012)");
+___('quotes_random',  'EN', "Random quote");
+___('quotes_random',  'FR', "Citation au hasard");
+___('quotes_another', 'EN', "Show me another random quote");
+___('quotes_another', 'FR', "Voir une autre citation au hasard");
