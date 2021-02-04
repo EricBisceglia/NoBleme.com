@@ -13,6 +13,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 
 // Header
+___('quotes_add',           'EN', "Submit a quote proposal");
+___('quotes_add',           'FR', "Proposer une citation");
+___('quotes_back',          'EN', "Back to normal list");
+___('quotes_back',          'FR', "Retour à la liste normale");
+___('quotes_waiting',       'EN', "Quotes awaiting approval");
+___('quotes_waiting',       'FR', "Citations en attente d'approbation");
+___('quotes_deleted',       'EN', "Deleted quotes");
+___('quotes_deleted',       'FR', "Citations supprimées");
 ___('quotes_subtitle',      'EN', "Words from NoBleme");
 ___('quotes_subtitle',      'FR', "Paroles de NoBleme");
 ___('quotes_header_intro',  'EN', <<<EOT
@@ -49,17 +57,33 @@ ___('quotes_blur',    'FR', <<<EOT
 Cette citation est floutée car elle contient des propos vulgaires ou sensibles. Vous pouvez révéler son contenu en passant votre curseur dessus. Si le floutage vous embête ou si vous n'en avez pas besoin, vous pouvez le désactiver de façon permanente dans vos {{link|pages/account/settings_nsfw|options de vulgarité}}.
 EOT
 );
-___('quotes_none',    'EN', "No quotes have been found");
-___('quotes_none',    'FR', "Aucune citation n'a été trouvée");
-___('quotes_count',   'EN', "NoBleme's {{1}} quote:");
-___('quotes_count',   'FR', "{{1}} citation NoBlemeuse :");
-___('quotes_count+',  'EN', "NoBleme's {{1}} quotes:");
-___('quotes_count+',  'FR', "{{1}} citations NoBlemeuses :");
-___('quotes_id',      'EN', "Quote #{{1}}");
-___('quotes_id',      'FR', "Citation #{{1}}");
-___('quotes_nodate',  'EN', "Quote date unknown (before 2012)");
-___('quotes_nodate',  'FR', "Date inconnue (avant 2012)");
-___('quotes_random',  'EN', "Random quote");
-___('quotes_random',  'FR', "Citation au hasard");
-___('quotes_another', 'EN', "Show me another random quote");
-___('quotes_another', 'FR', "Voir une autre citation au hasard");
+___('quotes_none',              'EN', "No quotes have been found");
+___('quotes_none',              'FR', "Aucune citation n'a été trouvée");
+___('quotes_count_waitlist',    'EN', "{{1}} quote waiting for approval:");
+___('quotes_count_waitlist',    'FR', "{{1}} citation en attente d'approbation :");
+___('quotes_count_waitlist+',   'EN', "{{1}} quotes waiting for approval:");
+___('quotes_count_waitlist+',   'FR', "{{1}} citations en attente d'approbation :");
+___('quotes_count_deleted',     'EN', "{{1}} deleted quote:");
+___('quotes_count_deleted',     'FR', "{{1}} citation supprimée :");
+___('quotes_count_deleted+',    'EN', "{{1}} deleted quotes:");
+___('quotes_count_deleted+',    'FR', "{{1}} citations supprimées :");
+___('quotes_count',             'EN', "NoBleme's {{1}} quote:");
+___('quotes_count',             'FR', "{{1}} citation NoBlemeuse :");
+___('quotes_count+',            'EN', "NoBleme's {{1}} quotes:");
+___('quotes_count+',            'FR', "{{1}} citations NoBlemeuses :");
+___('quotes_id',                'EN', "Quote #{{1}}");
+___('quotes_id',                'FR', "Citation #{{1}}");
+___('quotes_nodate',            'EN', "Quote date unknown (before 2012)");
+___('quotes_nodate',            'FR', "Date inconnue (avant 2012)");
+___('quotes_approve',           'EN', "Approve");
+___('quotes_approve',           'FR', "Approuver");
+___('quotes_deny',              'EN', "Reject");
+___('quotes_deny',              'FR', "Refuser");
+___('quotes_restore',           'EN', "Undelete");
+___('quotes_restore',           'FR', "Restaurer");
+___('quotes_hard_delete',       'EN', "Hard deletion");
+___('quotes_hard_delete',       'FR', "Suppression définitive");
+___('quotes_random',            'EN', "Random quote");
+___('quotes_random',            'FR', "Citation au hasard");
+___('quotes_another',           'EN', "Show me another random quote");
+___('quotes_another',           'FR', "Voir une autre citation au hasard");

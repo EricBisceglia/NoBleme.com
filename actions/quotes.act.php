@@ -19,20 +19,25 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Returns a list of quotes.
  *
- * @param   array   $search     (OPTIONAL)  Search for specific field values.
- * @param   int     $quote_id   (OPTIONAL)  Return only a single quote instead of a list.
+ * @param   array   $search         (OPTIONAL)  Search for specific field values.
+ * @param   int     $quote_id       (OPTIONAL)  Return only a single quote instead of a list.
+ * @param   bool    $show_waitlist  (OPTIONAL)  Only show quotes awaiting admin validation.
+ * @param   bool    $show_deleted   (OPTIONAL)  Only show soft deleted quotes.
  *
  * @return  array   An array containing quotes.
  */
 
-function quotes_list( ?array  $search   = array() ,
-                      ?int    $quote_id = 0       ) : array
+function quotes_list( ?array  $search         = array() ,
+                      ?int    $quote_id       = 0       ,
+                      bool    $show_waitlist  = false   ,
+                      bool    $show_deleted   = false   ) : array
 {
   // Check if the required files have been included
   require_included_file('quotes.lang.php');
 
-  // Sanitize the parameters
+  // Prepare and sanitize the parameters
   $quote_id = sanitize($quote_id, 'int', 0);
+  $is_admin = user_is_administrator();
 
   // Prepare the language filter
   $lang_en    = (isset($search['lang_en']) && $search['lang_en']);
@@ -48,20 +53,36 @@ function quotes_list( ?array  $search   = array() ,
                   FROM      quotes
                   LEFT JOIN quotes_users                  ON quotes.id              = quotes_users.fk_quotes
                   LEFT JOIN users         AS linked_users ON quotes_users.fk_users  = linked_users.id
-                  WHERE     quotes.is_deleted       = 0
-                  AND       quotes.admin_validation = 1 ";
+                  WHERE     1 = 1 ";
 
   // Show a single quote
-  if($quote_id)
+  if($quote_id && $is_admin)
     $qquotes .= " AND       quotes.id               = '$quote_id' ";
+  else if($quote_id)
+    $qquotes .= " AND       quotes.id               = '$quote_id'
+                  AND       quotes.admin_validation = 1
+                  AND       quotes.is_deleted       = 0           ";
+
+  // View quotes awaiting validation
+  else if($is_admin && $show_waitlist)
+    $qquotes .= " AND       quotes.admin_validation = 0           ";
+
+  // View deleted quotes
+  else if($is_admin && $show_deleted)
+    $qquotes .= " AND       quotes.is_deleted       = 1           ";
+
+  // Normal view
+  else
+    $qquotes .= " AND       quotes.admin_validation = 1
+                  AND       quotes.is_deleted       = 0 ";
 
   // Filter the quotes by language
   if($lang_en && !$lang_fr && !$quote_id)
-    $qquotes .= " AND       quotes.language      LIKE 'EN'        ";
+    $qquotes .= " AND       quotes.language      LIKE 'EN'          ";
   if($lang_fr && !$lang_en && !$quote_id)
-    $qquotes .= " AND       quotes.language      LIKE 'FR'        ";
+    $qquotes .= " AND       quotes.language      LIKE 'FR'          ";
   if(!$lang_fr && !$lang_en && !$quote_id)
-    $qquotes .= " AND       1                       = 0           ";
+    $qquotes .= " AND       1                       = 0             ";
 
   // Finish the query
   $qquotes .= "   GROUP BY  quotes.id

@@ -45,7 +45,7 @@ function dev_doc_icon_to_clipboard( string  $name                               
   $small    = ($size == 'small') ? ', is_small: true' : '';
 
   // Assemble the string
-  $icon = sanitize_output_javascript("&lt;?=__icon('$name'".$small.", alt: '$alt_text', title: $title".$initials.");?>");
+  $icon = sanitize_output_javascript("&lt;?=__icon('$name'".$small.", alt: '$alt_text', title: $title".$initials.")?>");
 
   // Return the assembled string
   return $icon;

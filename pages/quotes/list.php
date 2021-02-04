@@ -67,16 +67,25 @@ $quote_random = form_fetch_element('random', element_exists: true, request_type:
 // Fetch a random quote id based on the user's quotes language settings if needed
 $quote_id = ($quote_random) ? quotes_get_random_id() : $quote_id;
 
+// Check if unvalidated or soft deleted quotes should be shown
+$quotes_waitlist  = form_fetch_element('waiting', element_exists: true, request_type: 'GET');
+$quotes_waitlist  = (form_fetch_element('quotes_waitlist')) ? true : $quotes_waitlist;
+$quotes_deleted   = form_fetch_element('deleted', element_exists: true, request_type: 'GET');
+$quotes_deleted   = (form_fetch_element('quotes_deleted')) ? true : $quotes_deleted;
+
 // Prepare the search settings
 $quotes_search = array( 'lang_en' => $quotes_settings['show_en']  ,
                         'lang_fr' => $quotes_settings['show_fr']  );
 
 // Fetch relevant quotes
-$quotes_list = quotes_list( $quotes_search, $quote_id );
+$quotes_list = quotes_list( $quotes_search    ,
+                            $quote_id         ,
+                            $quotes_waitlist  ,
+                            $quotes_deleted   );
 
 // Redirect if a single quote is requested but doesn't exist
 if($quote_id && !$quotes_list['rows'])
-  exit(header("Location: ./"));
+  exit(header("Location: ./list"));
 
 // Change the page data in case of single quote
 if($quote_id)
@@ -105,6 +114,18 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <?php if(!$quote_id) { ?>
   <h1>
     <?=__('submenu_social_quotes')?>
+    <?=__icon('add', alt: '+', title: __('quotes_add'))?>
+    <?php if($is_admin) { ?>
+    <?php if($quotes_waitlist) { ?>
+    <?=__icon('refresh', alt: 'R', title: __('quotes_back'), href: "pages/quotes/list")?>
+    <?php } if(!$quotes_waitlist) { ?>
+    <?=__icon('user_confirm', alt: 'O', title: __('quotes_waiting'), href: "pages/quotes/list?waiting")?>
+    <?php } if($quotes_deleted) { ?>
+      <?=__icon('refresh', alt: 'R', title: __('quotes_back'), href: "pages/quotes/list")?>
+    <?php } if(!$quotes_deleted) { ?>
+    <?=__icon('delete', alt: 'X', title: __('quotes_deleted'), href: "pages/quotes/list?deleted")?>
+    <?php } ?>
+    <?php } ?>
   </h1>
 
   <h5>
@@ -122,6 +143,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <?php } ?>
 
   <fieldset class="padding_top">
+
+    <input type="hidden" id="quotes_waitlist" value="<?=$quotes_waitlist?>">
+    <input type="hidden" id="quotes_deleted" value="<?=$quotes_deleted?>">
 
     <label>
       <?php if(user_is_logged_in()) { ?>
@@ -144,7 +168,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } if(!$quote_id) { ?>
 
     <h5 class="bigpadding_top">
-      <?php if($quotes_list['rows']) { ?>
+      <?php if($is_admin && $quotes_waitlist) { ?>
+      <?=__('quotes_count_waitlist', $quotes_list['rows'], preset_values: array($quotes_list['rows']))?>
+      <?php } else if($is_admin && $quotes_deleted) { ?>
+      <?=__('quotes_count_deleted', $quotes_list['rows'], preset_values: array($quotes_list['rows']))?>
+      <?php } else if($quotes_list['rows']) { ?>
       <?=__('quotes_count', $quotes_list['rows'], preset_values: array($quotes_list['rows']))?>
       <?php } else { ?>
       <?=__('quotes_none')?>
@@ -183,18 +211,29 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php if($quotes_list[$i]['linked_count']) { ?>
         -
         <?php for($j = 0; $j < $quotes_list[$i]['linked_count']; $j++) { ?>
-        <?=__link('todo_link?id='.$quotes_list[$i]['linked_ids'][$j], $quotes_list[$i]['linked_nicks'][$j])?>
+        <?=__link('pages/users/'.$quotes_list[$i]['linked_ids'][$j], $quotes_list[$i]['linked_nicks'][$j])?>
         <?php } ?>
         <?php } ?>
 
         <?php if($is_admin) { ?>
-        <?=__icon('edit', is_small: true, alt: 'E', title: __('edit'), title_case: 'initials');?>
-        <?=__icon('delete', is_small: true, alt: 'X', title: __('delete'), title_case: 'initials');?>
+        <?=__icon('edit', is_small: true, alt: 'E', title: __('edit'), title_case: 'initials')?>
+        <?php if($quotes_waitlist) { ?>
+        <?=__icon('user_confirm', is_small: true, alt: 'Y', title: __('quotes_approve'))?>
+        <?=__icon('user_delete', is_small: true, alt: 'N', title: __('quotes_deny'))?>
+        <?php } else { ?>
+        <?php if($quotes_deleted) { ?>
+        <?=__icon('refresh', is_small: true, alt: 'R', title: __('quotes_restore'))?>
+        <?=__icon('delete', is_small: true, alt: 'X', title: __('quotes_hard_delete'))?>
+        <?php } else { ?>
+        <?=__icon('delete', is_small: true, alt: 'X', title: __('delete'), title_case: 'initials')?>
+        <?php } ?>
+        <?php } ?>
         <?php } ?>
         <?php if($quote_random) { ?>
         <br>
         <?=__link('pages/quotes/random', __('quotes_another'))?>
         <?php } ?>
+
       </div>
 
       <?php if($quotes_list[$i]['nsfw'] && !$adult_settings) { ?>
