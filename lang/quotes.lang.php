@@ -87,3 +87,20 @@ ___('quotes_random',            'EN', "Random quote");
 ___('quotes_random',            'FR', "Citation au hasard");
 ___('quotes_another',           'EN', "Show me another random quote");
 ___('quotes_another',           'FR', "Voir une autre citation au hasard");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   QUOTE ACTIONS                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Deletion
+___('quotes_delete_ok',     'EN', "The quote has been soft deleted");
+___('quotes_delete_ok',     'FR', "La citation a été supprimée de façon non définitive");
+___('quotes_delete_none',   'EN', "You must specify a quote ID");
+___('quotes_delete_none',   'FR', "Vous devez spécifier un ID de citation");
+___('quotes_delete_error',  'EN', "This quote does not exist or has already been deleted");
+___('quotes_delete_error',  'FR', "Cette citation n'existe pas ou a déjà été supprimée");

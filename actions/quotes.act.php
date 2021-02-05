@@ -10,6 +10,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  quotes_list                   Returns a list of quotes.                                                          */
 /*  quotes_get_random_id          Returns a random quote ID.                                                         */
+/*  quotes_delete                 Deletes a quote.                                                                   */
 /*                                                                                                                   */
 /*  user_setting_quotes           Quote related settings of the current user.                                        */
 /*                                                                                                                   */
@@ -151,6 +152,43 @@ function quotes_get_random_id() : int
 
   // Return the random quote's id
   return $drand['q_id'];
+}
+
+
+
+
+/**
+ * Deletes a quote.
+ *
+ * @param   int           $quote_id   The id of the quote to delete.
+ *
+ * @return  string|null               Null if all went well, or a string if an error happened.
+ */
+
+function quotes_delete( int $quote_id ) : mixed
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Check if the required files have been included
+  require_included_file('quotes.lang.php');
+
+  // Sanitize the quote's id
+  $quote_id = sanitize($quote_id, 'int', 0);
+
+  // Check if the quote exists
+  if(!$quote_id)
+    return __('quotes_delete_none');
+  if(!database_row_exists('quotes', $quote_id))
+    return __('quotes_delete_error');
+
+  // Delete the quote
+  query(" UPDATE  quotes
+          SET     quotes.is_deleted = 1
+          WHERE   quotes.id         = '$quote_id' ");
+
+  // All went well, return NULL
+  return NULL;
 }
 
 

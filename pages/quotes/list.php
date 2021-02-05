@@ -198,7 +198,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } ?>
     <?php } ?>
 
-    <div class="monospace padding_top padding_bot align_justify break_words">
+    <div class="monospace padding_top padding_bot align_justify break_words" id="quote_body_<?=$quotes_list[$i]['id']?>">
 
       <div class="tinypadding_bot">
         <span class="bold">
@@ -225,7 +225,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?=__icon('refresh', is_small: true, alt: 'R', title: __('quotes_restore'))?>
         <?=__icon('delete', is_small: true, alt: 'X', title: __('quotes_hard_delete'))?>
         <?php } else { ?>
-        <?=__icon('delete', is_small: true, alt: 'X', title: __('delete'), title_case: 'initials')?>
+        <?=__icon('delete', is_small: true, alt: 'X', title: __('delete'), title_case: 'initials', onclick: 'quote_delete('.$quotes_list[$i]['id'].');')?>
         <?php } ?>
         <?php } ?>
         <?php } ?>

@@ -1,8 +1,30 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  quotes_delete                 Triggers the deletion of a quote.                                                  */
+/*                                                                                                                   */
 /*  quotes_set_language           Submits a language change to the user's quotes settings.                           */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+
+/**
+ * Submits the deletion of a quote.
+ *
+ * @param   {int}   quote_id  The ID of the quote which will be deleted.
+ *
+ * @returns {void}
+ */
+
+function quote_delete(quote_id)
+{
+  // Assemble the postdata
+  postdata  = 'quote_id=' + fetch_sanitize(quote_id);
+
+  // Submit the deletion request
+  fetch_page('delete', 'quote_body_' + quote_id, postdata);
+}
+
+
 
 
 /**
