@@ -188,6 +188,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php for($i = 0; $i < $quotes_list['rows']; $i++) { ?>
 
     <?php if($quote_id) { ?>
+
     <h1 class="padding_bot">
       <?php if(!$quote_random) { ?>
       <?=__link('pages/quotes/list', __('quotes_id', preset_values: array($quotes_list[$i]['id'])), "noglow text_red")?>
@@ -195,11 +196,23 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?=__link('pages/quotes/list', __('quotes_random'), "noglow text_red")?>
       <?php } ?>
     </h1>
+
     <?php if($quotes_list[$i]['nsfw'] && !$adult_settings) { ?>
     <p class="padding_bot">
       <?=__('quotes_blur')?>
     </p>
     <?php } ?>
+
+    <?php if($is_admin && $quotes_list[0]['deleted']) { ?>
+    <div class="red text_white bold uppercase align_center">
+      <?=__('quotes_is_deleted')?>
+    </div>
+    <?php } if($is_admin && !$quotes_list[0]['validated']) { ?>
+    <div class="red text_white bold uppercase align_center">
+      <?=__('quotes_unapproved')?>
+    </div>
+    <?php } ?>
+
     <?php } ?>
 
     <div class="monospace padding_top padding_bot align_justify break_words" id="quote_body_<?=$quotes_list[$i]['id']?>">
@@ -221,6 +234,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <?php if($is_admin) { ?>
         <?=__icon('edit', is_small: true, alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/quotes/edit?id='.$quotes_list[$i]['id'])?>
+        <?=__icon('user', is_small: true, alt: 'U', title: __('quotes_users'), href: 'pages/quotes/users?id='.$quotes_list[$i]['id'])?>
         <?php if($quotes_waitlist || !$quotes_list[$i]['validated']) { ?>
         <?=__icon('user_confirm', is_small: true, alt: 'Y', title: __('quotes_approve'))?>
         <?=__icon('user_delete', is_small: true, alt: 'N', title: __('quotes_deny'))?>

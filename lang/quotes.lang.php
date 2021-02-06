@@ -75,6 +75,8 @@ ___('quotes_id',                'EN', "Quote #{{1}}");
 ___('quotes_id',                'FR', "Citation #{{1}}");
 ___('quotes_nodate',            'EN', "Quote date unknown (before 2012)");
 ___('quotes_nodate',            'FR', "Date inconnue (avant 2012)");
+___('quotes_users',             'EN', "Linked users");
+___('quotes_users',             'FR', "Comptes liés");
 ___('quotes_approve',           'EN', "Approve");
 ___('quotes_approve',           'FR', "Approuver");
 ___('quotes_deny',              'EN', "Reject");
@@ -87,6 +89,10 @@ ___('quotes_random',            'EN', "Random quote");
 ___('quotes_random',            'FR', "Citation au hasard");
 ___('quotes_another',           'EN', "Show me another random quote");
 ___('quotes_another',           'FR', "Voir une autre citation au hasard");
+___('quotes_is_deleted',        'EN', "This quote has been deleted, it is not publicly visible");
+___('quotes_is_deleted',        'FR', "Cette citation a été supprimée, elle n'est pas visible publiquement");
+___('quotes_unapproved',        'EN', "This quote is awaiting approval or rejection, it is not publicly visible");
+___('quotes_unapproved',        'FR', "Cette citation est en attente d'approbation ou de refus, elle n'est pas visible publiquement");
 
 
 
@@ -141,3 +147,30 @@ ___('quotes_restore_error', 'EN', "This quote does not exist");
 ___('quotes_restore_error', 'FR', "Cette citation n'existe pas");
 ___('quotes_restore_ok',    'EN', "The quote has been restored");
 ___('quotes_restore_ok',    'FR', "La citation a été restaurée");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                              LINK ACCOUNTS TO QUOTES                                              */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Linked users
+___('quotes_users_none',    'EN', "There are currently no accounts linked to this quote");
+___('quotes_users_none',    'FR', "Aucun compte n'est actuellement lié à cette citation");
+___('quotes_users_header',  'EN', "List of accounts linked to the quote:");
+___('quotes_users_header',  'FR', "Liste de comptes liés à la citation :");
+___('quotes_users_remove',  'EN', "Unlink account from quote");
+___('quotes_users_remove',  'FR', "Dissocier le compte de la citation");
+___('quotes_users_add',     'EN', "Link an account to the quote");
+___('quotes_users_add',     'FR', "Lier un compte à la citation");
+___('quotes_users_submit',  'EN', "Link account");
+___('quotes_users_submit',  'FR', "Lier le compte");
+___('quotes_users_empty',   'EN', "You must specify a username");
+___('quotes_users_empty',   'FR', "Vous devez indiquer un pseudonyme");
+___('quotes_users_error',   'EN', "This account does not exist");
+___('quotes_users_error',   'FR', "Ce compte n'existe pas");
+___('quotes_users_exists',  'EN', "This account has already been linked to this quote");
+___('quotes_users_exists',  'FR', "Ce compte est déjà lié à cette citation");

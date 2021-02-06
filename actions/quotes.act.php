@@ -9,11 +9,15 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  quotes_get                    Returns data related to a quote.                                                   */
+/*  quotes_get_linked_users       Returns a list of users linked to a quote.                                         */
 /*  quotes_get_random_id          Returns a random quote ID.                                                         */
 /*  quotes_list                   Returns a list of quotes.                                                          */
 /*  quotes_edit                   Modifies an existing quote.                                                        */
 /*  quotes_delete                 Deletes a quote.                                                                   */
 /*  quotes_restore                Restores a soft deleted quote.                                                     */
+/*                                                                                                                   */
+/*  quotes_link_user              Links a user to an existing quote.                                                 */
+/*  quotes_unlink_user            Unlinks a user from an existing quote.                                             */
 /*                                                                                                                   */
 /*  user_setting_quotes           Quote related settings of the current user.                                        */
 /*                                                                                                                   */
@@ -52,11 +56,60 @@ function quotes_get( int $quote_id ) : mixed
   // Assemble an array with the data
   $data['submitter']  = sanitize_output($dquote['q_submitter']);
   $data['body']       = sanitize_output($dquote['q_body']);
+  $data['body_full']  = sanitize_output($dquote['q_body'], true);
   $data['date']       = sanitize_output(date('Y-m-d', $dquote['q_date']));
   $data['lang']       = $dquote['q_lang'];
   $data['nsfw']       = $dquote['q_nsfw'];
 
   // Return the data
+  return $data;
+}
+
+
+
+/**
+ * Returns a list of users linked to a quote.
+ *
+ * @param   int         $quote_id   The quote's id.
+ *
+ * @return  array|null              An array containing related data, or null if it does not exist.
+*/
+
+function quotes_get_linked_users(int $quote_id) : mixed
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the data
+  $quote_id = sanitize($quote_id, 'int', 0);
+
+  // Check if the quote exists
+  if(!database_row_exists('quotes', $quote_id))
+    return NULL;
+
+  // Fetch the user list
+  $qusers = query(" SELECT    users.id                AS 'u_id'       ,
+                              users.username          AS 'u_nick'     ,
+                              users.is_deleted        AS 'u_deleted'  ,
+                              users.deleted_username  AS 'u_realnick'
+                    FROM      quotes_users
+                    LEFT JOIN users ON quotes_users.fk_users = users.id
+                    WHERE     quotes_users.fk_quotes = '$quote_id'
+                    ORDER BY  users.username ASC ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
+  {
+    $data[$i]['id']       = $row['u_id'];
+    $data[$i]['deleted']  = $row['u_deleted'];
+    $temp                 = ($row['u_deleted']) ? $row['u_realnick'] : $row['u_nick'];
+    $data[$i]['username'] = sanitize_output($temp);
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
   return $data;
 }
 
@@ -137,7 +190,7 @@ function quotes_list( ?array  $search         = array() ,
                   FROM      quotes
                   LEFT JOIN quotes_users                  ON quotes.id              = quotes_users.fk_quotes
                   LEFT JOIN users         AS linked_users ON quotes_users.fk_users  = linked_users.id
-                  WHERE     1 = 1 ";
+                  WHERE     linked_users.is_deleted = 0 ";
 
   // Show a single quote
   if($quote_id && $is_admin)
@@ -326,6 +379,101 @@ function quotes_restore( int $quote_id ) : string
           SET     quotes.is_deleted = 0
           WHERE   quotes.id         = '$quote_id' ");
   return __('quotes_restore_ok');
+}
+
+
+
+
+/**
+ * Links a user to an existing quote.
+ *
+ * @param   int         $quote_id   The quote's id.
+ * @param   string      $username   The username of the account that should be linked to the quote.
+ *
+ * @return  string|null             A string if an error happened, or null if all went well.
+ */
+
+function quotes_link_user(  int     $quote_id ,
+                            string  $username ) : mixed
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Check if the required files have been included
+  require_included_file('quotes.lang.php');
+
+  // Sanitize the parameters
+  $quote_id = sanitize($quote_id, 'int', 0);
+  $username = sanitize($username, 'string');
+
+  // Check if the quote exists
+  if(!$quote_id || !database_row_exists('quotes', $quote_id))
+    return __('quotes_restore_error');
+
+  // Check if a username has been provided
+  if(!$username)
+    return __('quotes_users_empty');
+
+  // Fetch the user id
+  $user_id = sanitize(database_entry_exists('users', 'username', $username), 'int', 0);
+
+  // Stop here if the account has not been found
+  if(!$user_id)
+    return __('quotes_users_error');
+
+  // Check if the link already exists
+  $dlink = mysqli_num_rows(query("  SELECT  quotes_users.id
+                                    FROM    quotes_users
+                                    WHERE   quotes_users.fk_quotes  = '$quote_id'
+                                    AND     quotes_users.fk_users   = '$user_id' "));
+
+  // Stop here if it does exist
+  if($dlink)
+    return __('quotes_users_exists');
+
+  // Link the account to the quote
+  query(" INSERT INTO quotes_users
+          SET         quotes_users.fk_quotes  = '$quote_id' ,
+                      quotes_users.fk_users   = '$user_id'  ");
+
+  // ALl went well
+  return NULL;
+}
+
+
+
+
+/**
+ * Unlinks a user from an existing quote.
+ *
+ * @param   int         $quote_id   The quote's id.
+ * @param   string      $user_id    The user's id.
+ *
+ * @return  void
+ */
+
+function quotes_unlink_user(  int     $quote_id ,
+                              string  $user_id ) : void
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the parameters
+  $quote_id = sanitize($quote_id, 'int', 0);
+  $user_id  = sanitize($user_id, 'int', 0);
+
+  // Check if the quote exists
+  if(!$quote_id || !database_row_exists('quotes', $quote_id))
+    return;
+
+  // Check if the user exists
+  if(!$user_id || !database_row_exists('users', $user_id))
+    return;
+
+  // Unlink the user
+  query(" DELETE FROM quotes_users
+          WHERE       quotes_users.fk_quotes  = '$quote_id'
+          AND         quotes_users.fk_users   = '$user_id' ");
 }
 
 
