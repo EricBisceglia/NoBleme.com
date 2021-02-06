@@ -190,7 +190,7 @@ function dev_scheduler_list(  string  $sort_by  = 'date'  ,
 /**
  * Edits an entry in the task scheduler.
  *
- * @param   int           $di     The task's id.
+ * @param   int           $id     The task's id.
  * @param   string        $date   The task's execution date.
  * @param   string        $time   The task's execution time.
  *

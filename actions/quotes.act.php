@@ -8,14 +8,94 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  quotes_list                   Returns a list of quotes.                                                          */
+/*  quotes_get                    Returns data related to a quote.                                                   */
 /*  quotes_get_random_id          Returns a random quote ID.                                                         */
+/*  quotes_list                   Returns a list of quotes.                                                          */
+/*  quotes_edit                   Modifies an existing quote.                                                        */
 /*  quotes_delete                 Deletes a quote.                                                                   */
 /*  quotes_restore                Restores a soft deleted quote.                                                     */
 /*                                                                                                                   */
 /*  user_setting_quotes           Quote related settings of the current user.                                        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+/**
+ * Returns data related to a quote.
+ *
+ * @param   int         $quote_id   The quote's id.
+ *
+ * @return  array|null              An array containing related data, or null if it does not exist.
+ */
+
+function quotes_get( int $quote_id ) : mixed
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the data
+  $quote_id = sanitize($quote_id, 'int', 0);
+
+  // Check if the quote exists
+  if(!database_row_exists('quotes', $quote_id))
+    return NULL;
+
+  // Fetch the data
+  $dquote = mysqli_fetch_array(query("  SELECT    submitter.username  AS 'q_submitter'  ,
+                                                  quotes.body         AS 'q_body'       ,
+                                                  quotes.submitted_at AS 'q_date'       ,
+                                                  quotes.language     AS 'q_lang'       ,
+                                                  quotes.is_nsfw      AS 'q_nsfw'
+                                        FROM      quotes
+                                        LEFT JOIN users AS submitter ON quotes.fk_users_submitter = submitter.id
+                                        WHERE     quotes.id = '$quote_id' "));
+
+  // Assemble an array with the data
+  $data['submitter']  = sanitize_output($dquote['q_submitter']);
+  $data['body']       = sanitize_output($dquote['q_body']);
+  $data['date']       = sanitize_output(date('Y-m-d', $dquote['q_date']));
+  $data['lang']       = $dquote['q_lang'];
+  $data['nsfw']       = $dquote['q_nsfw'];
+
+  // Return the data
+  return $data;
+}
+
+
+
+
+/**
+ * Returns a random quote ID.
+ *
+ * @return  int   A random quote's ID, in the user's allowed languages.
+ */
+
+function quotes_get_random_id() : int
+{
+  // Fetch the user's quotes related language settings
+  $settings = user_settings_quotes();
+
+  // Assemble the language settings into an extra query condition
+  if($settings['show_en'] && !$settings['show_fr'])
+    $limit_lang = " AND quotes.language LIKE 'EN' ";
+  else if($settings['show_fr'] && !$settings['show_en'])
+    $limit_lang = " AND quotes.language LIKE 'FR' ";
+  else
+    $limit_lang = '';
+
+  // Fetch a random quote
+  $drand = mysqli_fetch_array(query(" SELECT    quotes.id AS 'q_id'
+                                      FROM      quotes
+                                      WHERE     quotes.is_deleted       = 0
+                                      AND       quotes.admin_validation = 1
+                                                $limit_lang
+                                      ORDER BY  RAND()
+                                      LIMIT     1 "));
+
+  // Return the random quote's id
+  return $drand['q_id'];
+}
+
+
 
 
 /**
@@ -128,35 +208,44 @@ function quotes_list( ?array  $search         = array() ,
 
 
 /**
- * Returns a random quote ID.
+ * Modifies an existing quote.
  *
- * @return  int   A random quote's ID, in the user's allowed languages.
+ * @param   int     $quote_id     The quote's id.
+ * @param   array   $quote_data   The modified quote data.
+ *
+ * @return  void
  */
 
-function quotes_get_random_id() : int
+function quotes_edit( int   $quote_id   ,
+                      array $quote_data ) : void
 {
-  // Fetch the user's quotes related language settings
-  $settings = user_settings_quotes();
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
 
-  // Assemble the language settings into an extra query condition
-  if($settings['show_en'] && !$settings['show_fr'])
-    $limit_lang = " AND quotes.language LIKE 'EN' ";
-  else if($settings['show_fr'] && !$settings['show_en'])
-    $limit_lang = " AND quotes.language LIKE 'FR' ";
-  else
-    $limit_lang = '';
+  // Sanitize the quote's id
+  $quote_id = sanitize($quote_id, 'int', 0);
 
-  // Fetch a random quote
-  $drand = mysqli_fetch_array(query(" SELECT    quotes.id AS 'q_id'
-                                      FROM      quotes
-                                      WHERE     quotes.is_deleted       = 0
-                                      AND       quotes.admin_validation = 1
-                                                $limit_lang
-                                      ORDER BY  RAND()
-                                      LIMIT     1 "));
+  // Stop here if the quote does not exist
+  if(!database_row_exists('quotes', $quote_id))
+    return;
 
-  // Return the random quote's id
-  return $drand['q_id'];
+  // Sanitize the updated data
+  $quote_body = sanitize($quote_data['body'], 'string');
+  $quote_date = sanitize(strtotime($quote_data['date']), 'int', 0);
+  $quote_lang = sanitize($quote_data['lang'], 'string');
+  $quote_nsfw = sanitize($quote_data['nsfw'], 'int', 0, 1);
+
+  // Update the quote
+  query(" UPDATE  quotes
+          SET     quotes.body         = '$quote_body' ,
+                  quotes.submitted_at = '$quote_date' ,
+                  quotes.language     = '$quote_lang' ,
+                  quotes.is_nsfw      = '$quote_nsfw'
+          WHERE   quotes.id           = '$quote_id' ");
+
+  // IRC bot message
+  $username = user_get_username();
+  irc_bot_send_message("A quote has been modified by $username: ".$GLOBALS['website_url']."pages/quotes/".$quote_id, 'admin');
 }
 
 

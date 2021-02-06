@@ -94,6 +94,10 @@ if($quote_id)
   $page_title_en    = "Quote #".$quote_id;
   $page_title_fr    = "Citation #".$quote_id;
   $page_description = $quotes_list[0]['summary'];
+
+  // If the quote is deleted or not validated yet, it shouldn't show up in who's online
+  if($is_admin && ($quotes_list[0]['deleted'] || !$quotes_list[0]['validated']))
+    $hidden_activity = 1;
 }
 
 // Prepare the language checkboxes
@@ -216,7 +220,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } ?>
 
         <?php if($is_admin) { ?>
-        <?=__icon('edit', is_small: true, alt: 'E', title: __('edit'), title_case: 'initials')?>
+        <?=__icon('edit', is_small: true, alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/quotes/edit?id='.$quotes_list[$i]['id'])?>
         <?php if($quotes_waitlist || !$quotes_list[$i]['validated']) { ?>
         <?=__icon('user_confirm', is_small: true, alt: 'Y', title: __('quotes_approve'))?>
         <?=__icon('user_delete', is_small: true, alt: 'N', title: __('quotes_deny'))?>

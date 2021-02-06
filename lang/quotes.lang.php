@@ -93,6 +93,29 @@ ___('quotes_another',           'FR', "Voir une autre citation au hasard");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                   EDIT A QUOTE                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Quote contents
+___('quotes_edit_body',       'EN', "Contents");
+___('quotes_edit_body',       'FR', "Contenu");
+___('quotes_edit_submitted',  'EN', "Submitted by");
+___('quotes_edit_submitted',  'FR', "Proposée par");
+___('quotes_edit_date',       'EN', "Date (YYYY-MM-DD)");
+___('quotes_edit_date',       'FR', "Date (YYYY-MM-DD)");
+___('quotes_edit_language',   'EN', "Language");
+___('quotes_edit_language',   'FR', "Langue");
+___('quotes_edit_nsfw',       'EN', "NSFW contents (blurred)");
+___('quotes_edit_nsfw',       'FR', "Contenu vulgaire (floutée)");
+___('quotes_edit_submit',     'EN', "Edit quote");
+___('quotes_edit_submit',     'FR', "Modifier la citation");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                  DELETE A QUOTE                                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
