@@ -222,7 +222,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?=__icon('user_delete', is_small: true, alt: 'N', title: __('quotes_deny'))?>
         <?php } else { ?>
         <?php if($quotes_deleted || $quotes_list[$i]['deleted']) { ?>
-        <?=__icon('refresh', is_small: true, alt: 'R', title: __('quotes_restore'))?>
+        <?=__icon('refresh', is_small: true, alt: 'R', title: __('quotes_restore'), onclick: "quote_restore(".$quotes_list[$i]['id'].");")?>
         <?=__icon('delete', is_small: true, alt: 'X', title: __('quotes_hard_delete'), onclick: "quote_delete(".$quotes_list[$i]['id'].", '".__('quotes_delete_hard')."', 1);")?>
         <?php } else { ?>
         <?=__icon('delete', is_small: true, alt: 'X', title: __('delete'), title_case: 'initials', onclick: 'quote_delete('.$quotes_list[$i]['id'].');')?>

@@ -23,10 +23,9 @@ user_restrict_to_administrators();
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Delete the quote
+// Restore the quote
 
-$delete_results = quotes_delete(  form_fetch_element('quote_id', 0)           ,
-                                  form_fetch_element('quote_hard_delete', 0)  );
+$restore_results = quotes_restore(form_fetch_element('quote_id', 0));
 
 
 
@@ -37,6 +36,6 @@ $delete_results = quotes_delete(  form_fetch_element('quote_id', 0)           ,
 /*                                                                                                                   */
 /******************************************************************************************************************/ ?>
 
-<h5 class="uppercase align_center red text_white">
-  <?=$delete_results?>
+<h5 class="uppercase align_center green text_white">
+  <?=$restore_results?>
 </h5>

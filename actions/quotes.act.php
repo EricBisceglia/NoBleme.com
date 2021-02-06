@@ -11,6 +11,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  quotes_list                   Returns a list of quotes.                                                          */
 /*  quotes_get_random_id          Returns a random quote ID.                                                         */
 /*  quotes_delete                 Deletes a quote.                                                                   */
+/*  quotes_restore                Restores a soft deleted quote.                                                     */
 /*                                                                                                                   */
 /*  user_setting_quotes           Quote related settings of the current user.                                        */
 /*                                                                                                                   */
@@ -201,6 +202,41 @@ function quotes_delete( int   $quote_id             ,
           SET     quotes.is_deleted = 1
           WHERE   quotes.id         = '$quote_id' ");
   return __('quotes_delete_ok');
+}
+
+
+
+
+/**
+ * Restores a soft deleted quote
+ *
+ * @param   int     $quote_id   The id of the quote to restore.
+ *
+ * @return  string              A string recapping the results of the restoration process.
+ */
+
+function quotes_restore( int $quote_id ) : string
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Check if the required files have been included
+  require_included_file('quotes.lang.php');
+
+  // Sanitize the quote's id
+  $quote_id = sanitize($quote_id, 'int', 0);
+
+  // Check if the quote exists
+  if(!$quote_id)
+    return __('quotes_delete_none');
+  if(!database_row_exists('quotes', $quote_id))
+    return __('quotes_restore_error');
+
+  // Restore the quote
+  query(" UPDATE  quotes
+          SET     quotes.is_deleted = 0
+          WHERE   quotes.id         = '$quote_id' ");
+  return __('quotes_restore_ok');
 }
 
 

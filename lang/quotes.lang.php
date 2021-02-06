@@ -111,3 +111,10 @@ ___('quotes_delete_hard',     'EN', "Confirm the permanent and irreversible dele
 ___('quotes_delete_hard',     'FR', "Confirmer la suppression définitive et irréversible de cette citation");
 ___('quotes_delete_hard_ok',  'EN', "The quote has been deleted");
 ___('quotes_delete_hard_ok',  'FR', "La citation a été supprimée");
+
+
+// Restoration
+___('quotes_restore_error', 'EN', "This quote does not exist");
+___('quotes_restore_error', 'FR', "Cette citation n'existe pas");
+___('quotes_restore_ok',    'EN', "The quote has been restored");
+___('quotes_restore_ok',    'FR', "La citation a été restaurée");
