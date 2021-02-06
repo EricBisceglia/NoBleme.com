@@ -217,13 +217,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <?php if($is_admin) { ?>
         <?=__icon('edit', is_small: true, alt: 'E', title: __('edit'), title_case: 'initials')?>
-        <?php if($quotes_waitlist) { ?>
+        <?php if($quotes_waitlist || !$quotes_list[$i]['validated']) { ?>
         <?=__icon('user_confirm', is_small: true, alt: 'Y', title: __('quotes_approve'))?>
         <?=__icon('user_delete', is_small: true, alt: 'N', title: __('quotes_deny'))?>
         <?php } else { ?>
-        <?php if($quotes_deleted) { ?>
+        <?php if($quotes_deleted || $quotes_list[$i]['deleted']) { ?>
         <?=__icon('refresh', is_small: true, alt: 'R', title: __('quotes_restore'))?>
-        <?=__icon('delete', is_small: true, alt: 'X', title: __('quotes_hard_delete'))?>
+        <?=__icon('delete', is_small: true, alt: 'X', title: __('quotes_hard_delete'), onclick: "quote_delete(".$quotes_list[$i]['id'].", '".__('quotes_delete_hard')."', 1);")?>
         <?php } else { ?>
         <?=__icon('delete', is_small: true, alt: 'X', title: __('delete'), title_case: 'initials', onclick: 'quote_delete('.$quotes_list[$i]['id'].');')?>
         <?php } ?>

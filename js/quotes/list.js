@@ -10,15 +10,28 @@
 /**
  * Submits the deletion of a quote.
  *
- * @param   {int}   quote_id  The ID of the quote which will be deleted.
+ * @param   {int}     quote_id            The ID of the quote which will be deleted.
+ * @param   {string}  [confirm_message]   If set, this string will appear as a confirmation message.
+ * @param   {bool}    [hard_delete]       If set, triggers a hard deletion instead of a soft deletion.
  *
  * @returns {void}
  */
 
-function quote_delete(quote_id)
+function quote_delete(  quote_id        ,
+                        confirm_message ,
+                        hard_delete     )
 {
+  // Confirm the action if needed
+  if(confirm_message)
+  {
+    if(!confirm(confirm_message))
+      return;
+  }
+
   // Assemble the postdata
-  postdata  = 'quote_id=' + fetch_sanitize(quote_id);
+  postdata    = 'quote_id=' + fetch_sanitize(quote_id);
+  if(hard_delete)
+    postdata += '&quote_hard_delete=1';
 
   // Submit the deletion request
   fetch_page('delete', 'quote_body_' + quote_id, postdata);

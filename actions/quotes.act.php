@@ -45,11 +45,13 @@ function quotes_list( ?array  $search         = array() ,
   $lang_fr    = (isset($search['lang_fr']) && $search['lang_fr']);
 
   // Fetch the quotes
-  $qquotes = "    SELECT    quotes.id                                                               AS 'q_id'     ,
-                            quotes.submitted_at                                                     AS 'q_date'   ,
-                            GROUP_CONCAT(linked_users.id ORDER BY linked_users.username ASC)        AS 'lu_id'    ,
-                            GROUP_CONCAT(linked_users.username ORDER BY linked_users.username ASC)  AS 'lu_nick'  ,
-                            quotes.is_nsfw                                                          AS 'q_nsfw'   ,
+  $qquotes = "    SELECT    quotes.id                                                               AS 'q_id'       ,
+                            quotes.submitted_at                                                     AS 'q_date'     ,
+                            GROUP_CONCAT(linked_users.id ORDER BY linked_users.username ASC)        AS 'lu_id'      ,
+                            GROUP_CONCAT(linked_users.username ORDER BY linked_users.username ASC)  AS 'lu_nick'    ,
+                            quotes.is_nsfw                                                          AS 'q_nsfw'     ,
+                            quotes.is_deleted                                                       AS 'q_deleted'  ,
+                            quotes.admin_validation                                                 AS 'q_public'   ,
                             quotes.body                                                             AS 'q_body'
                   FROM      quotes
                   LEFT JOIN quotes_users                  ON quotes.id              = quotes_users.fk_quotes
@@ -104,6 +106,8 @@ function quotes_list( ?array  $search         = array() ,
     $temp                     = (is_array($data[$i]['linked_ids'])) ? count($data[$i]['linked_ids']) : 0;
     $data[$i]['linked_count'] = ($temp && $temp == count($data[$i]['linked_nicks'])) ? $temp : 0;
     $data[$i]['nsfw']         = $row['q_nsfw'];
+    $data[$i]['deleted']      = $row['q_deleted'];
+    $data[$i]['validated']    = $row['q_public'];
     $data[$i]['body']         = sanitize_output($row['q_body'], true);
     $data[$i]['summary']      = sanitize_output(string_truncate($row['q_body'], 80, '...'));
   }
@@ -160,12 +164,14 @@ function quotes_get_random_id() : int
 /**
  * Deletes a quote.
  *
- * @param   int           $quote_id   The id of the quote to delete.
+ * @param   int     $quote_id                 The id of the quote to delete.
+ * @param   bool    $hard_delete  (OPTIONAL)  If set, performs a hard deletion.
  *
- * @return  string|null               Null if all went well, or a string if an error happened.
+ * @return  string                            A string recapping the results of the deletion process.
  */
 
-function quotes_delete( int $quote_id ) : mixed
+function quotes_delete( int   $quote_id             ,
+                        bool  $hard_delete  = false ) : string
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -182,13 +188,19 @@ function quotes_delete( int $quote_id ) : mixed
   if(!database_row_exists('quotes', $quote_id))
     return __('quotes_delete_error');
 
-  // Delete the quote
+  // Hard delete the quote if requested
+  if($hard_delete)
+  {
+    query(" DELETE FROM quotes
+            WHERE       quotes.id = '$quote_id' ");
+    return __('quotes_delete_hard_ok');
+  }
+
+  // Soft delete the quote
   query(" UPDATE  quotes
           SET     quotes.is_deleted = 1
           WHERE   quotes.id         = '$quote_id' ");
-
-  // All went well, return NULL
-  return NULL;
+  return __('quotes_delete_ok');
 }
 
 

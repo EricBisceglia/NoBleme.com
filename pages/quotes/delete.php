@@ -26,7 +26,8 @@ user_restrict_to_administrators();
 // Soft delete the quote
 
 // Trigger the deletion
-$delete_error = quotes_delete(form_fetch_element('quote_id', 0));
+$delete_results = quotes_delete(  form_fetch_element('quote_id', 0)           ,
+                                  form_fetch_element('quote_hard_delete', 0)  );
 
 
 
@@ -38,9 +39,5 @@ $delete_error = quotes_delete(form_fetch_element('quote_id', 0));
 /******************************************************************************************************************/ ?>
 
 <h5 class="uppercase align_center red text_white">
-  <?php if($delete_error) { ?>
-  <?=$delete_error?>
-  <?php } else { ?>
-  <?=__('quotes_delete_ok')?>
-  <?php } ?>
+  <?=$delete_results?>
 </h5>
