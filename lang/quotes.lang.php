@@ -99,6 +99,63 @@ ___('quotes_unapproved',        'FR', "Cette citation est en attente d'approbati
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                  SUBMIT A QUOTE                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('quotes_add_subtitle',  'EN', "Submit a quote proposal");
+___('quotes_add_subtitle',  'FR', "Proposer une citation");
+___('quotes_add_intro_1',   'EN', <<<EOT
+If you witness a funny conversation or monologue on NoBleme and think that it would fit well within our {{link|pages/quotes/list|quote database}}, you can submit it as a quote proposal here. It will then be added to a queue that our {{link|pages/users/admins|administrators}} will review, and will eventually be approved or rejected. Once a decision has been taken, you will recieve a private message informing you of the fate of your proposal.
+EOT
+);
+___('quotes_add_intro_1',   'FR', <<<EOT
+Si vous êtes témoin d'une conversation rigolote ou d'un monologue amusant sur NoBleme et pensez que cette scène mérite d'être immortalisée dans nos {{link|pages/quotes/list|citations}}, vous pouvez la proposer ici. Votre proposition sera mise dans une file d'attente que notre {{link|pages/users/admins|administration}} traitera tôt ou tard. Une fois une décision prise, vous recevrez un message privé vous informant de si votre proposition a été approuvée ou rejetée.
+EOT
+);
+___('quotes_add_intro_2',   'EN', <<<EOT
+Keep in mind that we strive for quality over quantity in our quote database, thus a lot of quotes get rejected. Do not get discouraged if your proposal gets rejected, we actually strongly appreciate contributions. The criteria used to judge whether to approve or reject a quote are the following:
+EOT
+);
+___('quotes_add_intro_2',   'FR', <<<EOT
+Les décisions sont prises dans une optique de qualité plutôt que de quantité, par conséquent beaucoup de propositions se font rejeter. Ne vous découragez pas si votre proposition se fait rejeter, nous apprécions fortement les contributions. Les critères utilisés pour juger les propositions sont les suivants :
+EOT
+);
+___('quotes_add_rules_1',   'EN', "Is it funny enough?");
+___('quotes_add_rules_1',   'FR', "Est-ce suffisamment drôle ?");
+___('quotes_add_rules_2',   'EN', "Is there enough context to understand the quote?");
+___('quotes_add_rules_2',   'FR', "Y a-t-il assez de contexte pour comprendre la citation ?");
+___('quotes_add_rules_3',   'EN', "Will it stand the test of time and still be funny in a few years?");
+___('quotes_add_rules_3',   'FR', "La citation sera-t-elle toujours drôle dans quelques années ?");
+___('quotes_add_rules_4',   'EN', "Are we laughing *with* people rather than laughing *at* people?");
+___('quotes_add_rules_4',   'FR', "Sommes-nous bien en train de rire *avec* des gens plutôt que de se moquer des gens ?");
+___('quotes_add_rules_5',   'EN', "Can this quote be understood by people unfamiliar with NoBleme?");
+___('quotes_add_rules_5',   'FR', "La citation peut-elle être comprise par des personnes ne connaissant pas bien NoBleme ?");
+___('quotes_add_thanks',    'EN', <<<EOT
+Your quote proposal has been added to our review queue. You will be notified whether it has been approved or rejected by private message. Thank you for contributing to NoBleme's quote database!
+EOT
+);
+___('quotes_add_thanks',    'FR', <<<EOT
+Votre proposition de citation a été ajoutée à notre file d'attente. Vous recevrez un message privé vous informant de si votre proposition a été acceptée ou refusée. Merci de votre contribution à la collection de citations de NoBleme !
+EOT
+);
+
+
+// Form
+___('quotes_add_body',    'EN', "Your quote proposal");
+___('quotes_add_body',    'FR', "Votre proposition de citation");
+___('quotes_add_submit',  'EN', "Submit quote proposal");
+___('quotes_add_submit',  'FR', "Proposer la citation");
+___('quotes_add_empty',   'EN', "Your quote proposal cannot be empty");
+___('quotes_add_empty',   'FR', "Votre proposition de citation ne peut pas être vide");
+
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                   EDIT A QUOTE                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

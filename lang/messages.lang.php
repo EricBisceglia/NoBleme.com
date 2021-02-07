@@ -352,7 +352,7 @@ EOD
 
 
 // Message list
-___('admin_mail_list_select', 'EN', "Select an adminin mail in the right column by clicking on it");
+___('admin_mail_list_select', 'EN', "Select an admin mail in the right column by clicking on it");
 ___('admin_mail_list_select', 'FR', "Sélectionnez un courrier administratif dans la colonne de droite en cliquant dessus");
 ___('admin_mail_list_search', 'EN', "Search through the messages:");
 ___('admin_mail_list_search', 'FR', "Recherche dans les messages :");
