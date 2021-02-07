@@ -179,6 +179,23 @@ ___('quotes_edit_submit',     'FR', "Modifier la citation");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                            ADMIN VALIDATION OF QUOTES                                             */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Approval
+___('quotes_approve_confirm', 'EN', "Confirm that you want to approve this quote");
+___('quotes_approve_confirm', 'FR', "Confirmer la validation de cette citation");
+___('quotes_approve_already', 'EN', "This quote has already been approved");
+___('quotes_approve_already', 'FR', "Cette citation a déjà été validée");
+___('quotes_approve_ok',      'EN', "The quote has been approved and is now publicly visible");
+___('quotes_approve_ok',      'FR', "La citation a été acceptée et est maintenant visible publiquement");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                  DELETE A QUOTE                                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

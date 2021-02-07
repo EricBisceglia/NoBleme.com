@@ -513,12 +513,12 @@ function user_get_username( ?int $user_id = NULL ) : ?string
 /**
  * Returns a user's language.
  *
- * @param   int|null    $user_id  (OPTIONAL)  The user's id - if none, try to return the language of current user.
+ * @param   int|null  $user_id  (OPTIONAL)  The user's id - if none, try to return the language of current user.
  *
- * @return  string|null                       The user's language, or NULL if not found.
+ * @return  string                          The user's language, defaults to english if not found.
  */
 
-function user_get_language( ?int $user_id = NULL ) : ?string
+function user_get_language( ?int $user_id = NULL ) : string
 {
   // If no user is specified, returns the language settings stored in the session - or english if none
   if(!$user_id)

@@ -236,15 +236,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?=__icon('edit', is_small: true, alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/quotes/edit?id='.$quotes_list[$i]['id'])?>
         <?=__icon('user', is_small: true, alt: 'U', title: __('quotes_users'), href: 'pages/quotes/users?id='.$quotes_list[$i]['id'])?>
         <?php if($quotes_waitlist || !$quotes_list[$i]['validated']) { ?>
-        <?=__icon('user_confirm', is_small: true, alt: 'Y', title: __('quotes_approve'))?>
+        <?=__icon('user_confirm', is_small: true, alt: 'Y', title: __('quotes_approve'), onclick: "quotes_approve(".$quotes_list[$i]['id'].", '".__('quotes_approve_confirm')."');")?>
         <?=__icon('user_delete', is_small: true, alt: 'N', title: __('quotes_deny'))?>
-        <?=__icon('delete', is_small: true, alt: 'X', title: __('quotes_hard_delete'), onclick: "quote_delete(".$quotes_list[$i]['id'].", '".__('quotes_delete_hard')."', 1);")?>
+        <?=__icon('delete', is_small: true, alt: 'X', title: __('quotes_hard_delete'), onclick: "quotes_delete(".$quotes_list[$i]['id'].", '".__('quotes_delete_hard')."', 1);")?>
         <?php } else { ?>
         <?php if($quotes_deleted || $quotes_list[$i]['deleted']) { ?>
-        <?=__icon('refresh', is_small: true, alt: 'R', title: __('quotes_restore'), onclick: "quote_restore(".$quotes_list[$i]['id'].");")?>
-        <?=__icon('delete', is_small: true, alt: 'X', title: __('quotes_hard_delete'), onclick: "quote_delete(".$quotes_list[$i]['id'].", '".__('quotes_delete_hard')."', 1);")?>
+        <?=__icon('refresh', is_small: true, alt: 'R', title: __('quotes_restore'), onclick: "quotes_restore(".$quotes_list[$i]['id'].");")?>
+        <?=__icon('delete', is_small: true, alt: 'X', title: __('quotes_hard_delete'), onclick: "quotes_delete(".$quotes_list[$i]['id'].", '".__('quotes_delete_hard')."', 1);")?>
         <?php } else { ?>
-        <?=__icon('delete', is_small: true, alt: 'X', title: __('delete'), title_case: 'initials', onclick: 'quote_delete('.$quotes_list[$i]['id'].');')?>
+        <?=__icon('delete', is_small: true, alt: 'X', title: __('delete'), title_case: 'initials', onclick: 'quotes_delete('.$quotes_list[$i]['id'].');')?>
         <?php } ?>
         <?php } ?>
         <?php } ?>

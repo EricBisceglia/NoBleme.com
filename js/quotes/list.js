@@ -3,6 +3,8 @@
 /*  quotes_delete                 Triggers the deletion of a quote.                                                  */
 /*  quotes_restore                Triggers the undeletion of a soft deleted quote.                                   */
 /*                                                                                                                   */
+/*  quotes_approve                Triggers the approval of a quote awaiting admin validation.                        */
+/*                                                                                                                   */
 /*  quotes_set_language           Submits a language change to the user's quotes settings.                           */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -18,7 +20,7 @@
  * @returns {void}
  */
 
-function quote_delete(  quote_id        ,
+function quotes_delete( quote_id        ,
                         confirm_message ,
                         hard_delete     )
 {
@@ -49,13 +51,38 @@ function quote_delete(  quote_id        ,
  * @returns {void}
  */
 
-function quote_restore(quote_id)
+function quotes_restore(quote_id)
 {
   // Assemble the postdata
-  postdata    = 'quote_id=' + fetch_sanitize(quote_id);
+  postdata = 'quote_id=' + fetch_sanitize(quote_id);
 
   // Submit the deletion request
   fetch_page('restore', 'quote_body_' + quote_id, postdata);
+}
+
+
+
+/**
+ * Triggers the approval of a quote awaiting admin validation.
+ *
+ * @param   {int}     quote_id          The ID of the quote being approved.
+ * @param   {string}  confirm_message   The contents of the confirmation message.
+ *
+ * @returns {void}
+ */
+
+function quotes_approve(  quote_id        ,
+                          confirm_message )
+{
+  // Require confirmation
+  if(!confirm(confirm_message))
+    return;
+
+  // Assemble the postdata
+  postdata = 'quote_id=' + fetch_sanitize(quote_id);
+
+  // Submit the approval request
+  fetch_page('approve', 'quote_body_' + quote_id, postdata);
 }
 
 

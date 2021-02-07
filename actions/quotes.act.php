@@ -17,6 +17,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  quotes_delete                 Deletes a quote.                                                                   */
 /*  quotes_restore                Restores a soft deleted quote.                                                     */
 /*                                                                                                                   */
+/*  quotes_approve                Approve a quote awaiting admin validation.                                         */
+/*                                                                                                                   */
 /*  quotes_link_user              Links a user to an existing quote.                                                 */
 /*  quotes_unlink_user            Unlinks a user from an existing quote.                                             */
 /*                                                                                                                   */
@@ -451,6 +453,101 @@ function quotes_restore( int $quote_id ) : string
           SET     quotes.is_deleted = 0
           WHERE   quotes.id         = '$quote_id' ");
   return __('quotes_restore_ok');
+}
+
+
+
+
+/**
+ * Approve a quote awaiting admin validation.
+ *
+ * @param   int     $quote_id   The id of the quote to approve.
+ *
+ * @return  string              A string recapping the results of the approval process.
+ */
+
+function quotes_approve(int $quote_id) : string
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Check if the required files have been included
+  require_included_file('quotes.lang.php');
+
+  // Sanitize the quote's id
+  $quote_id = sanitize($quote_id, 'int', 0);
+
+  // Check if the quote exists
+  if(!$quote_id)
+    return __('quotes_delete_none');
+  if(!database_row_exists('quotes', $quote_id))
+    return __('quotes_restore_error');
+
+  // Fetch information about the quote
+  $dquote = mysqli_fetch_array(query("  SELECT  quotes.fk_users_submitter AS 'q_submitter'  ,
+                                                quotes.is_deleted         AS 'q_deleted'    ,
+                                                quotes.admin_validation   AS 'q_validated'  ,
+                                                quotes.language           AS 'q_lang'
+                                        FROM    quotes
+                                        WHERE   quotes.id = '$quote_id' "));
+
+  // Error: Quote has been deleted
+  if($dquote['q_deleted'])
+    return __('quotes_restore_error');
+
+  // Error: Quote has already been approved
+  if($dquote['q_validated'])
+    return __('quotes_approve_already');
+
+  // Approve the quote
+  query(" UPDATE  quotes
+          SET     quotes.admin_validation = 1
+          WHERE   quotes.id               = '$quote_id' ");
+
+  // Notify the user if they are not the one approving the quote
+  if($dquote['q_submitter'] && user_get_id() != $dquote['q_submitter'])
+  {
+    // Prepare some data
+    $admin_id = sanitize(user_get_id(), 'int', 0);
+    $user_id  = sanitize($dquote['q_submitter'], 'int', 0);
+    $lang     = user_get_language($user_id);
+    $path     = root_path();
+
+    // Prepare the message's title
+    $message_title = ($lang == 'FR') ? 'Citation approuvée' : 'Quote proposal approved';
+
+    // Prepare the message's body
+    if($lang == 'FR')
+      $message_body = <<<EOT
+Votre proposition de citation a été approuvée : [url=${path}pages/quotes/${quote_id}]Citation #${quote_id}[/url].
+
+Nous vous remercions pour votre participation à la collection de citations de NoBleme.
+EOT;
+    else
+      $message_body = <<<EOT
+Your quote proposal has been approved: [url=${path}pages/quotes/${quote_id}]Quote #${quote_id}[/url].
+
+Thank you for being a part of NoBleme's quote database. It is greatly appreciated.
+EOT;
+
+
+    // Send the notification message
+    private_message_send( $message_title          ,
+                          $message_body           ,
+                          recipient: $user_id     ,
+                          sender: 0               ,
+                          true_sender: $admin_id  ,
+                          hide_admin_mail: true   );
+  }
+
+  // Notify IRC in the correct language
+  if($dquote['q_lang'] == 'EN')
+    irc_bot_send_message("A new quote has been added to NoBleme's quote database: ".$GLOBALS['website_url']."pages/quotes/$quote_id", 'english');
+  else if($dquote['q_lang'] == 'FR')
+    irc_bot_send_message("Une nouvelle entrée a été ajoutée à la collection de citations de NoBleme : ".$GLOBALS['website_url']."pages/quotes/$quote_id", 'french');
+
+  // Return that all went well
+  return __('quotes_approve_ok');
 }
 
 

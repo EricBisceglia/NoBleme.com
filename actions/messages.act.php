@@ -472,7 +472,7 @@ function private_message_reply( int     $message_id ,
   {
     $sender   = user_get_username($user_id);
     $channel  = ($admin_only) ? 'admin' : 'mod';
-    irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", $admin_only);
+    irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", "admin");
   }
 
   // Everything went well
