@@ -108,7 +108,7 @@ if(isset($admin_mail['error'])) { ?>
     &nbsp;
   </div>
 
-  <div class="spaced padding_bot"><?=$admin_mail['body']?></div>
+  <div class="spaced padding_bot align_justify"><?=$admin_mail['body']?></div>
 
   <?php if($admin_mail['sender_id']) { ?>
   <div class="indented padding_bot">
@@ -134,7 +134,7 @@ if(isset($admin_mail['error'])) { ?>
 
   <div class="indented padding_bot"><?=__('users_message_chain_sent', preset_values: array($admin_mail[$i]['sender'], $admin_mail[$i]['sent_at'], $admin_mail[$i]['sent_time']))?></div>
 
-  <div class="spaced padding_bot"><?=$admin_mail[$i]['body']?></div>
+  <div class="spaced padding_bot align_justify"><?=$admin_mail[$i]['body']?></div>
 
 </div>
 

@@ -192,6 +192,17 @@ ___('quotes_approve_ok',      'EN', "The quote has been approved and is now publ
 ___('quotes_approve_ok',      'FR', "La citation a été acceptée et est maintenant visible publiquement");
 
 
+// Rejection
+___('quotes_reject_subtitle', 'EN', "Reject the quote proposal");
+___('quotes_reject_subtitle', 'FR', "Refuser la proposition de citation");
+___('quotes_reject_reason',   'EN', "Reason for rejecting the quote (optional)");
+___('quotes_reject_reason',   'FR', "Justification du refus (optionnel)");
+___('quotes_reject_language', 'EN', "Submitter's language");
+___('quotes_reject_language', 'FR', "Langue du message de refus");
+___('quotes_reject_submit',   'EN', "Reject quote");
+___('quotes_reject_submit',   'FR', "Refuser la citation");
+
+
 
 
 /*********************************************************************************************************************/

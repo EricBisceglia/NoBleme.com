@@ -8,14 +8,17 @@ include_once './../../actions/quotes.act.php';  # Actions
 include_once './../../lang/quotes.lang.php';    # Translations
 
 // Limit page access rights
-user_restrict_to_users();
+user_restrict_to_administrators();
+
+// Hide the page from who's online
+$hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/quotes/submit";
-$page_title_en    = "Submit a quote";
-$page_title_fr    = "Proposer une citation";
-$page_description = "Submit a proposal to NoBleme's quote database.";
+$page_url         = "pages/quotes/reject";
+$page_title_en    = "Reject a quote";
+$page_title_fr    = "Rejeter une citation";
+$page_description = "Reject a quote proposal before it can make it to NoBleme's quote database";
 
 
 
@@ -27,15 +30,39 @@ $page_description = "Submit a proposal to NoBleme's quote database.";
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Create the quote
+// Reject the quote
 
-// Submit the quote proposal
-if(isset($_POST['quotes_add_submit']))
-  $quote_create = quotes_add(form_fetch_element('quotes_add_body'));
+// Fetch the quote's ID
+$quote_id = form_fetch_element('id', 0, request_type: 'GET');
 
-// Admins should be directly redirected to the quote
-if($is_admin && isset($quote_create) && is_int($quote_create))
-  exit(header("Location: ".$path."pages/quotes/".$quote_create));
+// Trigger the rejection if requested
+if(isset($_POST['quotes_reject_submit']))
+{
+  // Reject the quote
+  $reject_error = quotes_reject(  $quote_id                                 ,
+                                  form_fetch_element('quote_reject_reason') );
+
+  // Redirect to the quote if the rejection was successful
+  if(!isset($reject_error))
+    exit(header("Location: ".$path."pages/quotes/".$quote_id));
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch the quote's contents
+
+// Fetch the quote data
+$quote_data = quotes_get($quote_id);
+
+// Redirect to the quotes list if it the selected quote does not exist, is deleted, or is approved
+if(!$quote_data || $quote_data['deleted'] || $quote_data['validated'])
+  header("Location: ".$path."pages/quotes/list");
+
+// Get the submitter's language
+$submitter_language = user_get_language($quote_data['submitter_id']);
+$submitter_language = ($submitter_language == 'FR') ? __('french') : __('english');
 
 
 
@@ -49,69 +76,47 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1>
-    <?=__link("pages/quotes/list", __('submenu_social_quotes'), 'text_red noglow')?>
+    <?=__link('pages/quotes/'.$quote_id, __('quotes_id', preset_values: array($quote_id)), 'text_red noglow')?>
   </h1>
 
-  <h5>
-    <?=__('quotes_add_subtitle')?>
+  <h5 class="padding_bot">
+    <?=__('quotes_reject_subtitle')?>
   </h5>
-
-  <?php if(isset($quote_create) && is_int($quote_create)) { ?>
-
-  <p>
-    <?=__('quotes_add_thanks')?>
-  </p>
-
-  <?php } else { ?>
-
-  <p>
-    <?=__('quotes_add_intro_1')?>
-  </p>
-
-  <p>
-    <?=__('quotes_add_intro_2')?>
-  </p>
-
-  <ul class="smallpadding_top padding_bot">
-    <li>
-      <?=__('quotes_add_rules_1')?>
-    </li>
-    <li>
-      <?=__('quotes_add_rules_2')?>
-    </li>
-    <li>
-      <?=__('quotes_add_rules_3')?>
-    </li>
-    <li>
-      <?=__('quotes_add_rules_4')?>
-    </li>
-    <li>
-      <?=__('quotes_add_rules_5')?>
-    </li>
-  </ul>
 
   <form method="POST">
     <fieldset>
 
-      <label for="quotes_add_body"><?=__('quotes_add_body')?></label>
-      <textarea id="quotes_add_body" name="quotes_add_body"></textarea>
+      <label for="quote_reject_submitted"><?=__('quotes_edit_submitted')?></label>
+      <input class="indiv" type="text" id="quote_reject_submitted" name="quote_reject_submitted" value="<?=$quote_data['submitter']?>" disabled>
 
-      <?php if(isset($quote_create) && !is_int($quote_create)) { ?>
       <div class="smallpadding_top">
-        <h5 class="text_white red uppercase align_center">
-          <?=$quote_create?>
+        <label for="quote_reject_language"><?=__('quotes_reject_language')?></label>
+        <input class="indiv" type="text" id="quote_reject_language" name="quote_reject_language" value="<?=string_change_case($submitter_language, 'initials')?>" disabled>
+      </div>
+
+      <div class="smallpadding_top">
+        <label for="quote_reject_reason"><?=__('quotes_reject_reason')?></label>
+        <input class="indiv" type="text" id="quote_reject_reason" name="quote_reject_reason" value="">
+      </div>
+
+      <?php if(isset($reject_error) && $reject_error) { ?>
+      <div class="smallpadding_top">
+        <h5 class="align_center red text_white uppercase">
+          <?=$reject_error?>
         </h5>
       </div>
       <?php } ?>
 
       <div class="smallpadding_top">
-        <input type="submit" name="quotes_add_submit" value="<?=__('quotes_add_submit')?>">
+        <input type="submit" name="quotes_reject_submit" value="<?=__('quotes_reject_submit')?>">
       </div>
 
     </fieldset>
   </form>
 
-  <?php } ?>
+  <div class="monospace bigpadding_top align_justify break_words">
+    <?=$quote_data['body_full']?>
+  </div>
 
 </div>
 

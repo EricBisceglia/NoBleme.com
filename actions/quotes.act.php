@@ -18,6 +18,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  quotes_restore                Restores a soft deleted quote.                                                     */
 /*                                                                                                                   */
 /*  quotes_approve                Approve a quote awaiting admin validation.                                         */
+/*  quotes_reject                 Reject a quote awaiting admin validation.                                          */
 /*                                                                                                                   */
 /*  quotes_link_user              Links a user to an existing quote.                                                 */
 /*  quotes_unlink_user            Unlinks a user from an existing quote.                                             */
@@ -117,22 +118,28 @@ function quotes_get( int $quote_id ) : mixed
     return NULL;
 
   // Fetch the data
-  $dquote = mysqli_fetch_array(query("  SELECT    submitter.username  AS 'q_submitter'  ,
-                                                  quotes.body         AS 'q_body'       ,
-                                                  quotes.submitted_at AS 'q_date'       ,
-                                                  quotes.language     AS 'q_lang'       ,
-                                                  quotes.is_nsfw      AS 'q_nsfw'
+  $dquote = mysqli_fetch_array(query("  SELECT    quotes.is_deleted       AS 'q_deleted'      ,
+                                                  quotes.admin_validation AS 'q_validated'    ,
+                                                  submitter.id            AS 'q_submitter_id' ,
+                                                  submitter.username      AS 'q_submitter'    ,
+                                                  quotes.body             AS 'q_body'         ,
+                                                  quotes.submitted_at     AS 'q_date'         ,
+                                                  quotes.language         AS 'q_lang'         ,
+                                                  quotes.is_nsfw          AS 'q_nsfw'
                                         FROM      quotes
                                         LEFT JOIN users AS submitter ON quotes.fk_users_submitter = submitter.id
                                         WHERE     quotes.id = '$quote_id' "));
 
   // Assemble an array with the data
-  $data['submitter']  = sanitize_output($dquote['q_submitter']);
-  $data['body']       = sanitize_output($dquote['q_body']);
-  $data['body_full']  = sanitize_output($dquote['q_body'], true);
-  $data['date']       = sanitize_output(date('Y-m-d', $dquote['q_date']));
-  $data['lang']       = $dquote['q_lang'];
-  $data['nsfw']       = $dquote['q_nsfw'];
+  $data['deleted']      = sanitize_output($dquote['q_deleted']);
+  $data['validated']    = sanitize_output($dquote['q_validated']);
+  $data['submitter_id'] = sanitize_output($dquote['q_submitter_id']);
+  $data['submitter']    = sanitize_output($dquote['q_submitter']);
+  $data['body']         = sanitize_output($dquote['q_body']);
+  $data['body_full']    = sanitize_output($dquote['q_body'], true);
+  $data['date']         = sanitize_output(date('Y-m-d', $dquote['q_date']));
+  $data['lang']         = $dquote['q_lang'];
+  $data['nsfw']         = $dquote['q_nsfw'];
 
   // Return the data
   return $data;
@@ -461,12 +468,12 @@ function quotes_restore( int $quote_id ) : string
 /**
  * Approve a quote awaiting admin validation.
  *
- * @param   int     $quote_id   The id of the quote to approve.
+ * @param   int         $quote_id   The id of the quote to approve.
  *
- * @return  string              A string recapping the results of the approval process.
+ * @return  string|null              A string if an error happened, or null if all went well.
  */
 
-function quotes_approve(int $quote_id) : string
+function quotes_approve(int $quote_id) : mixed
 {
   // Require administrator rights to run this action
   user_restrict_to_administrators();
@@ -546,8 +553,122 @@ EOT;
   else if($dquote['q_lang'] == 'FR')
     irc_bot_send_message("Une nouvelle entrée a été ajoutée à la collection de citations de NoBleme : ".$GLOBALS['website_url']."pages/quotes/$quote_id", 'french');
 
-  // Return that all went well
-  return __('quotes_approve_ok');
+  // All went well
+  return NULL;
+}
+
+
+
+
+/**
+ * Reject a quote awaiting admin validation.
+ *
+ * @param   int           $quote_id               The id of the quote to reject.
+ * @param   string        $reason     (OPTIONAL)  The reason for rejecting the quote.
+ *
+ * @return  string|null                           A string if an error happened, or null if all went well.
+ */
+
+function quotes_reject( int     $quote_id     ,
+                        string  $reason = ''  ) : mixed
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Check if the required files have been included
+  require_included_file('quotes.lang.php');
+
+  // Sanitize the quote's id
+  $quote_id = sanitize($quote_id, 'int', 0);
+
+  // Check if the quote exists
+  if(!$quote_id)
+    return __('quotes_delete_none');
+  if(!database_row_exists('quotes', $quote_id))
+    return __('quotes_restore_error');
+
+  // Fetch information about the quote
+  $dquote = mysqli_fetch_array(query("  SELECT  quotes.fk_users_submitter AS 'q_submitter'  ,
+                                                quotes.is_deleted         AS 'q_deleted'    ,
+                                                quotes.admin_validation   AS 'q_validated'  ,
+                                                quotes.language           AS 'q_lang'       ,
+                                                quotes.body               AS 'q_body'
+                                        FROM    quotes
+                                        WHERE   quotes.id = '$quote_id' "));
+
+  // Error: Quote has been deleted
+  if($dquote['q_deleted'])
+    return __('quotes_restore_error');
+
+  // Error: Quote has already been approved
+  if($dquote['q_validated'])
+    return __('quotes_approve_already');
+
+  // Reject the quote
+  query(" UPDATE  quotes
+          SET     quotes.admin_validation = 1 ,
+                  quotes.is_deleted       = 1
+          WHERE   quotes.id               = '$quote_id' ");
+
+  // Notify the user if they are not the one rejecting the quote
+  if($dquote['q_submitter'] && user_get_id() != $dquote['q_submitter'])
+  {
+    // Prepare some data
+    $admin_id = sanitize(user_get_id(), 'int', 0);
+    $user_id  = sanitize($dquote['q_submitter'], 'int', 0);
+    $lang     = user_get_language($user_id);
+    $body     = $dquote['q_body'];
+
+    // Prepare the message's title
+    $message_title = ($lang == 'FR') ? 'Citation rejetée' : 'Quote proposal rejected';
+
+    // Prepare the rejection reason
+    if($reason)
+    {
+      if($lang == 'FR')
+        $reason = "[u]Raison du refus[/u] : $reason";
+      else
+        $reason = "[u]Rejection reason[/u]: $reason";
+    }
+
+    // Prepare the message's body
+    if($lang == 'FR')
+      $message_body = <<<EOT
+Votre proposition de citation a été rejetée.
+
+Ce refus ne signifie pas que votre contribution n'est pas appréciée : dans une optique de faire primer la qualité sur la quantité, nous refusons un grand nombre de propositions. N'hésitez pas à soumettre d'autres propositions dans le futur. Nous vous remercions pour votre participation à la collection de citations de NoBleme.
+
+${reason}
+
+Le contenu de votre proposition de citation était le suivant :
+
+[quote]${body}[/quote]
+EOT;
+    else
+      $message_body = <<<EOT
+Your quote proposal has been rejected.
+
+This refusal does not mean that we do not appreciate your contribution: our goal is to prioritize quality over quantity, therefore we reject a lot of quote proposals. Do not hesitate to submit more quote proposals in the future. Thank you for contributing to NoBleme's quote database. It is greatly appreciated.
+
+${reason}
+
+Your proposal was the following:
+
+[quote]${body}[/quote]
+EOT;
+
+
+    // Send the notification message
+    private_message_send( $message_title          ,
+                          $message_body           ,
+                          recipient: $user_id     ,
+                          sender: 0               ,
+                          true_sender: $admin_id  ,
+                          hide_admin_mail: true   );
+  }
+
+  // All went well
+  return NULL;
 }
 
 

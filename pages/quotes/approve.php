@@ -25,7 +25,7 @@ user_restrict_to_administrators();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Approve the quote
 
-$approve_results = quotes_approve(form_fetch_element('quote_id', 0));
+$approve_error = quotes_approve(form_fetch_element('quote_id', 0));
 
 
 
@@ -36,6 +36,12 @@ $approve_results = quotes_approve(form_fetch_element('quote_id', 0));
 /*                                                                                                                   */
 /******************************************************************************************************************/ ?>
 
-<h5 class="uppercase align_center green text_white">
-  <?=$approve_results?>
+<?php if(isset($approve_error)) { ?>
+<h5 class="uppercase align_center red text_white">
+  <?=$approve_error?>
 </h5>
+<?php } else { ?>
+<h5 class="uppercase align_center green text_white">
+  <?=__('quotes_approve_ok')?>
+</h5>
+<?php } ?>

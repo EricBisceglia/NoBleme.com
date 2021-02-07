@@ -130,7 +130,7 @@ if(isset($private_message_data['error'])) { ?>
   &nbsp;
 </div>
 
-<div class="bigpadding_top bigpadding_bot">
+<div class="bigpadding_top bigpadding_bot align_justify">
   <?=$private_message_data['body']?>
 </div>
 
