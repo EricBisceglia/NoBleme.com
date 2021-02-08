@@ -12,7 +12,7 @@ $page_lang        = array('FR', 'EN');
 $page_url         = "pages/dev/blog_list";
 $page_title_en    = "Devblog";
 $page_title_fr    = "Blog de développement";
-$page_description = "Blogs containint updates on NoBleme's development over the years";
+$page_description = "Blogs containing updates on NoBleme's development over the years";
 
 
 
@@ -75,10 +75,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
         <td>
           <?php if($devblogs[$i]['deleted']) { ?>
-          <?=__link('todo_link?id='.$devblogs[$i]['id'], $devblogs[$i]['title'], style: 'text_red bold')?>
+          <?=__link('pages/dev/blog?id='.$devblogs[$i]['id'], $devblogs[$i]['title'], style: 'text_red bold')?>
           [<?=__('deleted')?>]
           <?php } else { ?>
-          <?=__link('todo_link?id='.$devblogs[$i]['id'], $devblogs[$i]['title'])?>
+          <?=__link('pages/dev/blog?id='.$devblogs[$i]['id'], $devblogs[$i]['title'])?>
           <?php } ?>
         </td>
         <td>

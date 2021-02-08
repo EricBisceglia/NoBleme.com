@@ -230,3 +230,16 @@ ___('dev_blog_table_title', 'EN', "Title");
 ___('dev_blog_table_title', 'FR', "Titre");
 ___('dev_blog_table_date',  'EN', "Publication date");
 ___('dev_blog_table_date',  'FR', "Date de publication");
+
+
+// Blog contents
+___('dev_blog_no_title',  'EN', "Unavailable");
+___('dev_blog_no_title',  'FR', "Indisponible");
+___('dev_blog_no_body',   'EN', "This devblog is not available in this language.");
+___('dev_blog_no_body',   'FR', "Ce devblog n'est pas disponible dans cette langue.");
+___('dev_blog_published', 'EN', "Published {{1}} ({{2}})");
+___('dev_blog_published', 'FR', "Publié le {{1}} ({{2}})");
+___('dev_blog_previous',  'EN', "Previous devblog:");
+___('dev_blog_previous',  'FR', "Devblog précédent :");
+___('dev_blog_next',      'EN', "Next devblog:");
+___('dev_blog_next',      'FR', "Devblog suivant :");
