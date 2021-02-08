@@ -200,3 +200,33 @@ ___('dev_functions_selector_users',         'EN', "Users");
 ___('dev_functions_selector_users',         'FR', "Utilisateurs");
 ___('dev_functions_selector_website',       'EN', "Website internals");
 ___('dev_functions_selector_website',       'FR', "Éléments internes");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     DEVBLOGS                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Blog list: Header
+___('dev_blog_title',     'EN', "Devblog");
+___('dev_blog_title',     'FR', "Devblog");
+___('dev_blog_subtitle',  'EN', "Updates on NoBleme");
+___('dev_blog_subtitle',  'FR', "Nouvelles de NoBleme");
+___('dev_blog_intro',     'EN', <<<EOT
+These blogs serve as a medium for {{link|pages/users/1|Bad}} to share updates on NoBleme's development, to reflect on the past, to announce plans for the website's future, or to discuss anything NoBleme related in general.
+EOT
+);
+___('dev_blog_intro',     'FR', <<<EOT
+Ces blogs servent de plateforme à {{link|pages/users/1|Bad}} dans le but de partager des nouvelles sur le développement de NoBleme, de parler du passé ou du futur du site, ou de discuter de NoBleme en général.
+EOT
+);
+
+
+// BLog list: Table
+___('dev_blog_table_title', 'EN', "Title");
+___('dev_blog_table_title', 'FR', "Titre");
+___('dev_blog_table_date',  'EN', "Publication date");
+___('dev_blog_table_date',  'FR', "Date de publication");

@@ -1025,10 +1025,10 @@ if($last_query < 23)
 
   sql_change_field_type('dev_blogs', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('dev_blogs', 'timestamp', 'posted_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('dev_blogs', 'titre', 'title_en', 'VARCHAR(255) NOT NULL');
-  sql_create_field('dev_blogs', 'title_fr', 'VARCHAR(255) NOT NULL', 'title_en');
-  sql_rename_field('dev_blogs', 'contenu', 'body_en', 'LONGTEXT NOT NULL');
-  sql_create_field('dev_blogs', 'body_fr', 'LONGTEXT NOT NULL', 'body_en');
+  sql_create_field('dev_blogs', 'title_en', 'VARCHAR(255) NOT NULL', 'posted_at');
+  sql_rename_field('dev_blogs', 'titre', 'title_fr', 'VARCHAR(255) NOT NULL');
+  sql_create_field('dev_blogs', 'body_en', 'LONGTEXT NOT NULL', 'title_fr');
+  sql_rename_field('dev_blogs', 'contenu', 'body_fr', 'LONGTEXT NOT NULL');
 
   sql_change_field_type('dev_tasks', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('dev_tasks', 'FKmembres', 'fk_users', 'INT UNSIGNED NOT NULL DEFAULT 0');

@@ -18,6 +18,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  dev_versions_edit             Edits an entry in the website's version numbering history.                         */
 /*  dev_versions_delete           Deletes an entry in the website's version numbering history.                       */
 /*                                                                                                                   */
+/*  dev_blogs_list                Returns a list of devblogs.                                                        */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -123,7 +125,7 @@ function dev_versions_get( int $version_id ) : mixed
 /**
  * Returns the website's version numbering history.
  *
- * @return  array   An array containing past version numbers, sorted in reverse chronological order by date.
+ * @return  array   An array containing past version numbers, sorted in reverse chronological order.
  */
 
 function dev_versions_list() : array
@@ -373,4 +375,48 @@ function dev_versions_delete( int $version_id ) : mixed
 
   // Return the deleted version number
   return $version_number;
+}
+
+
+
+
+/**
+ * Returns a list of devblogs.
+ *
+ * @return  array   An array containing data about devblogs, sorted in reverse chronological order.
+ */
+
+function dev_blogs_list() : array
+{
+  // Fetch the user's language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'));
+
+  // Decide whether to show deleted content
+  $show_deleted = (!user_is_maintainer()) ? ' AND dev_blogs.is_deleted = 0 ' : ' ';
+
+  // Fetch devblogs
+  $qblogs = query(" SELECT    dev_blogs.id          AS 'b_id'       ,
+                              dev_blogs.is_deleted  AS 'b_deleted'  ,
+                              dev_blogs.posted_at   AS 'b_date'     ,
+                              dev_blogs.title_en    AS 'b_title_en' ,
+                              dev_blogs.title_fr    AS 'b_title_fr'
+                    FROM      dev_blogs
+                    WHERE     dev_blogs.title_$lang != ''
+                              $show_deleted
+                    ORDER BY  dev_blogs.posted_at DESC ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qblogs); $i++)
+  {
+    $data[$i]['id']       = $row['b_id'];
+    $data[$i]['deleted']  = $row['b_deleted'];
+    $data[$i]['title']    = sanitize_output($row["b_title_$lang"]);
+    $data[$i]['date']     = sanitize_output(date_to_text($row['b_date'], strip_day: 1));
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
 }

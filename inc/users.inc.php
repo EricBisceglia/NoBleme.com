@@ -20,12 +20,14 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_get_username                 Returns a user's username from their id.                                       */
 /*  user_get_language                 Returns a user's language.                                                     */
 /*                                                                                                                   */
+/*  user_is_maintainer                Checks if the current user is the #1 registered user.                          */
 /*  user_is_administrator             Checks if a user is an administrator.                                          */
 /*  user_is_moderator                 Checks if a user is a moderator (or above).                                    */
 /*  user_is_banned                    Checks if a user is banned.                                                    */
 /*  user_is_ip_banned                 Checks if a user is IP banned.                                                 */
 /*  user_is_deleted                   Checks if a user's account is deleted.                                         */
 /*                                                                                                                   */
+/*  user_restrict_to_maintainer       Allows access only to the #1 registered user.                                  */
 /*  user_restrict_to_administrators   Allows access only to administrators.                                          */
 /*  user_restrict_to_moderators       Allows access only to moderators (or above).                                   */
 /*  user_restrict_to_users            Allows access only to logged in users.                                         */
@@ -540,6 +542,33 @@ function user_get_language( ?int $user_id = NULL ) : string
 
 
 /**
+ * Checks if the current user is the #1 registered user.
+ *
+ * @return  bool  Returns 1 if the user is the maintainer, 0 if they aren't.
+ */
+
+function user_is_maintainer() : bool
+{
+  // Fetch the current active session
+  $user_id = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : 0;
+
+  // If no user is specified, this means the user is a guest, in this case return 0
+  if(!$user_id)
+    return 0;
+
+  // If the user is the maintainer, return 1
+  if($user_id == 1)
+    return 1;
+
+  // Otherwise return 0
+  else
+    return 0;
+}
+
+
+
+
+/**
  * Checks if a user is an administrator.
  *
  * Defaults to checking whether current user is an administrator unless the $user_id optional parameter is specified.
@@ -753,6 +782,38 @@ function user_is_deleted( ?int $user_id = NULL) : bool
 
   // Return 1 if the user is an deleted, 0 if they aren't
   return $ddeleted['u_deleted'];
+}
+
+
+
+
+/**
+ * Allows access only to the #1 registered user.
+ *
+ * Any other user will get rejected and see an error page.
+ * Running this fuction interrupts the page with an exit() at the end if the user isn't the #1 registered user.
+ *
+ * @return  void
+ */
+
+function user_restrict_to_maintainer() : void
+{
+  // Fetch the user's language
+  $lang = user_get_language();
+
+  // Prepare the error message that will be displayed
+  $error_message = ($lang == 'EN') ? "This page is restricted to the website's maintainer only." : "Cette page est réservée à l'équipe de maintenance du site.";
+
+  // Check if the user is logged in
+  if(user_is_logged_in())
+  {
+    // If the user isn't the maintainer, throw the error
+    if(!user_is_maintainer())
+      error_page($error_message);
+  }
+  // If the user is logged out, throw the error
+  else
+    error_page($error_message);
 }
 
 
