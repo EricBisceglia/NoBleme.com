@@ -230,6 +230,10 @@ ___('dev_blog_table_title', 'EN', "Title");
 ___('dev_blog_table_title', 'FR', "Titre");
 ___('dev_blog_table_date',  'EN', "Publication date");
 ___('dev_blog_table_date',  'FR', "Date de publication");
+___('dev_blog_table_views', 'EN', "Views");
+___('dev_blog_table_views', 'FR', "Vues");
+___('dev_blog_table_lang',  'EN', "Languages");
+___('dev_blog_table_lang',  'FR', "Langues");
 
 
 // Devblog contents

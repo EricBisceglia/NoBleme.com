@@ -29,8 +29,11 @@ $page_description = "Blogs containing updates on NoBleme's development over the 
 // Check if the user is the maintainer
 $is_maintainer = user_is_maintainer();
 
+// Check if the list should be sorted by views
+$blogs_sort = ($is_maintainer && isset($_GET['views'])) ? 'views' : '';
+
 // Fetch the devblogs
-$devblogs = dev_blogs_list();
+$devblogs = dev_blogs_list($blogs_sort);
 
 
 
@@ -41,7 +44,11 @@ $devblogs = dev_blogs_list();
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
+<?php if($is_maintainer) { ?>
+<div class="width_60">
+<?php } else { ?>
 <div class="width_50">
+<?php } ?>
 
   <h1>
     <?=__('dev_blog_title')?>
@@ -62,12 +69,31 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <thead>
 
       <tr class="uppercase">
+
         <th>
           <?=__('dev_blog_table_title')?>
         </th>
+
         <th>
           <?=__('dev_blog_table_date')?>
+          <?php if($is_maintainer) { ?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', href: 'pages/dev/blog_list')?>
+          <?php } ?>
         </th>
+
+        <?php if($is_maintainer) { ?>
+
+        <th>
+          <?=__('dev_blog_table_views')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', href: 'pages/dev/blog_list?views')?>
+        </th>
+
+        <th>
+          <?=__('dev_blog_table_lang')?>
+        </th>
+
+        <?php } ?>
+
       </tr>
 
     </thead>
@@ -76,6 +102,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php for($i = 0; $i < $devblogs['rows']; $i++) { ?>
 
       <tr>
+
         <td>
           <?php if($devblogs[$i]['deleted']) { ?>
           <?=__link('pages/dev/blog?id='.$devblogs[$i]['id'], $devblogs[$i]['title'], style: 'text_red bold')?>
@@ -84,9 +111,27 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__link('pages/dev/blog?id='.$devblogs[$i]['id'], $devblogs[$i]['title'])?>
           <?php } ?>
         </td>
+
         <td>
           <?=$devblogs[$i]['date']?>
         </td>
+
+        <?php if($is_maintainer) { ?>
+
+        <td>
+          <?=$devblogs[$i]['views']?>
+        </td>
+
+        <td>
+          <?php if($devblogs[$i]['lang_en']) { ?>
+          <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle smallicon" alt="<?=__('EN')?>" title="<?=string_change_case(__('english'), 'initials')?>">
+          <?php } if($devblogs[$i]['lang_fr']) { ?>
+            <img src="<?=$path?>img/icons/lang_fr.png" class="valign_middle smallicon" alt="<?=__('FR')?>" title="<?=string_change_case(__('french'), 'initials')?>">
+          <?php } ?>
+        </td>
+
+        <?php } ?>
+
       </tr>
 
       <?php } ?>

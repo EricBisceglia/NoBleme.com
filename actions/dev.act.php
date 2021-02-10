@@ -533,27 +533,39 @@ function dev_blogs_get( int $blog_id ) : mixed
 /**
  * Returns a list of devblogs.
  *
- * @return  array   An array containing data about devblogs, sorted in reverse chronological order.
+ * @param   string  $sort   (OPTIONAL)  The value on which to sort the data.
+ *
+ * @return  array                       An array containing data about devblogs, sorted in reverse chronological order.
  */
 
-function dev_blogs_list() : array
+function dev_blogs_list( string $sort = '' ) : array
 {
   // Fetch the user's language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'));
 
+  // Check whether the user is the maintainer
+  $is_maintainer = user_is_maintainer();
+
   // Decide whether to show deleted content
-  $show_deleted = (!user_is_maintainer()) ? ' AND dev_blogs.is_deleted = 0 ' : ' ';
+  $show_deleted = (!$is_maintainer) ? ' AND dev_blogs.is_deleted = 0 ' : ' ';
+
+  // Sort the content if necessary
+  $order_by = " dev_blogs.posted_at DESC ";
+  $order_by = ($is_maintainer && $sort == 'views') ? " stats_pages.view_count DESC, ".$order_by : $order_by;
 
   // Fetch devblogs
-  $qblogs = query(" SELECT    dev_blogs.id          AS 'b_id'       ,
-                              dev_blogs.is_deleted  AS 'b_deleted'  ,
-                              dev_blogs.posted_at   AS 'b_date'     ,
-                              dev_blogs.title_en    AS 'b_title_en' ,
-                              dev_blogs.title_fr    AS 'b_title_fr'
+  $qblogs = query(" SELECT    dev_blogs.id            AS 'b_id'       ,
+                              dev_blogs.is_deleted    AS 'b_deleted'  ,
+                              dev_blogs.posted_at     AS 'b_date'     ,
+                              dev_blogs.title_en      AS 'b_title_en' ,
+                              dev_blogs.title_fr      AS 'b_title_fr' ,
+                              stats_pages.view_count  AS 'p_views'
                     FROM      dev_blogs
+                    LEFT JOIN stats_pages
+                    ON        stats_pages.page_url LIKE CONCAT('pages/dev/blog?id=', dev_blogs.id)
                     WHERE     dev_blogs.title_$lang != ''
                               $show_deleted
-                    ORDER BY  dev_blogs.posted_at DESC ");
+                    ORDER BY  $order_by ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qblogs); $i++)
@@ -562,6 +574,9 @@ function dev_blogs_list() : array
     $data[$i]['deleted']  = $row['b_deleted'];
     $data[$i]['title']    = sanitize_output($row["b_title_$lang"]);
     $data[$i]['date']     = sanitize_output(date_to_text($row['b_date'], strip_day: 1));
+    $data[$i]['views']    = sanitize_output($row['p_views']);
+    $data[$i]['lang_en']  = ($row['b_title_en']);
+    $data[$i]['lang_fr']  = ($row['b_title_fr']);
   }
 
   // Add the number of rows to the data
