@@ -352,6 +352,8 @@ ___('modify',     'EN', "modify");
 ___('modify',     'FR', "modifier");
 ___('more',       'EN', "more");
 ___('more',       'FR', "plus");
+___('preview',    'EN', "preview");
+___('preview',    'FR', "prévisualiser");
 ___('refresh',    'EN', "refresh");
 ___('refresh',    'FR', "recharger");
 ___('rss',        'EN', "RSS feed");

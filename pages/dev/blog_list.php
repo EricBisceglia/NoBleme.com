@@ -45,6 +45,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1>
     <?=__('dev_blog_title')?>
+    <?php if($is_maintainer) { ?>
+    <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/dev/blog_add')?>
+    <?php } ?>
   </h1>
 
   <h5>
@@ -58,7 +61,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <table>
     <thead>
 
-      <tr>
+      <tr class="uppercase">
         <th>
           <?=__('dev_blog_table_title')?>
         </th>

@@ -18,6 +18,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  dev_versions_edit             Edits an entry in the website's version numbering history.                         */
 /*  dev_versions_delete           Deletes an entry in the website's version numbering history.                       */
 /*                                                                                                                   */
+/*  dev_blogs_add                 Creates a new devblog.                                                             */
 /*  dev_blogs_get                 Returns elements related to a devblog.                                             */
 /*  dev_blogs_list                Returns a list of devblogs.                                                        */
 /*                                                                                                                   */
@@ -379,6 +380,69 @@ function dev_versions_delete( int $version_id ) : mixed
 }
 
 
+
+
+/**
+ * Creates a new devblog.
+ *
+ * @param   array         $contents   The contents of the devblog.
+ *
+ * @return  string|int                A string if an error happened, or the newly created blog's ID if all went well.
+ */
+
+function dev_blogs_add( array $contents ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('dev.lang.php');
+
+  // Only the maintainer can run this action
+  user_restrict_to_maintainer();
+
+  // Sanitize and prepare the data
+  $blog_title_en_raw  = $contents['title_en'];
+  $blog_title_fr_raw  = $contents['title_fr'];
+  $blog_title_en      = sanitize($contents['title_en'], 'string');
+  $blog_title_fr      = sanitize($contents['title_fr'], 'string');
+  $blog_body_en       = sanitize($contents['body_en'], 'string');
+  $blog_body_fr       = sanitize($contents['body_fr'], 'string');
+  $timestamp          = sanitize(time(), 'int', 0);
+
+  // Error: No title
+  if(!$blog_title_en && !$blog_title_fr)
+    return __('dev_blog_add_empty');
+
+  // Error: Title but no body
+  if($blog_title_en && !$blog_body_en)
+    return __('dev_blog_add_empty_en');
+  if($blog_title_fr && !$blog_body_fr)
+    return __('dev_blog_add_empty_fr');
+
+  // Error: Body but no title
+  if(!$blog_title_en && $blog_body_en)
+    return __('dev_blog_add_no_body_en');
+  if(!$blog_title_fr && $blog_body_fr)
+    return __('dev_blog_add_no_body_fr');
+
+  // Create the devblog
+  query(" INSERT INTO dev_blogs
+          SET         dev_blogs.posted_at = '$timestamp'      ,
+                      dev_blogs.title_en  = '$blog_title_en'  ,
+                      dev_blogs.title_fr  = '$blog_title_fr'  ,
+                      dev_blogs.body_en   = '$blog_body_en'   ,
+                      dev_blogs.body_fr   = '$blog_body_fr'   ");
+
+  // Fetch the newly created devblog's id
+  $blog_id = query_id();
+
+  // IRC bot messages in the appropriate languages
+  if($blog_title_en)
+    irc_bot_send_message("A new devblog has been posted: $blog_title_en_raw - ".$GLOBALS['website_url']."pages/dev/blog?id=".$blog_id, 'english');
+  if($blog_title_fr)
+    irc_bot_send_message("Un nouveau devblog a été publié : $blog_title_fr_raw - ".$GLOBALS['website_url']."pages/dev/blog?id=".$blog_id, 'french');
+
+  // Return the blog's id
+  return $blog_id;
+}
 
 
 /**

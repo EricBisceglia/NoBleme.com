@@ -210,7 +210,7 @@ ___('dev_functions_selector_website',       'FR', "Éléments internes");
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Blog list: Header
+// Devblog list: Header
 ___('dev_blog_title',     'EN', "Devblog");
 ___('dev_blog_title',     'FR', "Devblog");
 ___('dev_blog_subtitle',  'EN', "Updates on NoBleme");
@@ -225,14 +225,14 @@ EOT
 );
 
 
-// BLog list: Table
+// Devblog list: Table
 ___('dev_blog_table_title', 'EN', "Title");
 ___('dev_blog_table_title', 'FR', "Titre");
 ___('dev_blog_table_date',  'EN', "Publication date");
 ___('dev_blog_table_date',  'FR', "Date de publication");
 
 
-// Blog contents
+// Devblog contents
 ___('dev_blog_no_title',  'EN', "Unavailable");
 ___('dev_blog_no_title',  'FR', "Indisponible");
 ___('dev_blog_no_body',   'EN', "This devblog is not available in this language.");
@@ -243,3 +243,28 @@ ___('dev_blog_previous',  'EN', "Previous devblog:");
 ___('dev_blog_previous',  'FR', "Devblog précédent :");
 ___('dev_blog_next',      'EN', "Next devblog:");
 ___('dev_blog_next',      'FR', "Devblog suivant :");
+
+
+// Create a devblog
+___('dev_blog_add_subtitle',    'EN', "Write a new devblog");
+___('dev_blog_add_subtitle',    'FR', "Écrire un nouveau devblog");
+___('dev_blog_add_title_en',    'EN', "Title (english)");
+___('dev_blog_add_title_en',    'FR', "Titre (anglais)");
+___('dev_blog_add_title_fr',    'EN', "Title (french)");
+___('dev_blog_add_title_fr',    'FR', "Titre (français)");
+___('dev_blog_add_body_en',     'EN', "Body (english) - HTML allowed");
+___('dev_blog_add_body_en',     'FR', "Contenu (anglais) - HTML autorisé");
+___('dev_blog_add_body_fr',     'EN', "Body (french) - HTML allowed");
+___('dev_blog_add_body_fr',     'FR', "Contenu (français) - HTML autorisé");
+___('dev_blog_add_submit',      'EN', "Publish devblog");
+___('dev_blog_add_submit',      'FR', "Publier le devblog");
+___('dev_blog_add_empty',       'EN', "There must be a title in at least one language");
+___('dev_blog_add_empty',       'FR', "Il doit y avoir un titre dans au moins une langue");
+___('dev_blog_add_empty_en',    'EN', "There is an english title but no body");
+___('dev_blog_add_empty_en',    'FR', "Il y a un titre mais pas de contenu en anglais");
+___('dev_blog_add_empty_fr',    'EN', "There is a french title but no body");
+___('dev_blog_add_empty_fr',    'FR', "Il y a un titre mais pas de contenu en français");
+___('dev_blog_add_no_body_en',  'EN', "There is an english body but no title");
+___('dev_blog_add_no_body_en',  'FR', "Il y a un contenu mais pas de titre en anglais");
+___('dev_blog_add_no_body_fr',  'EN', "There is a french body but no title");
+___('dev_blog_add_no_body_fr',  'FR', "Il y a un contenu mais pas de titre en français");
