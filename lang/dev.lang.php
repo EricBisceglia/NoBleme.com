@@ -272,3 +272,10 @@ ___('dev_blog_add_no_body_en',  'EN', "There is an english body but no title");
 ___('dev_blog_add_no_body_en',  'FR', "Il y a un contenu mais pas de titre en anglais");
 ___('dev_blog_add_no_body_fr',  'EN', "There is a french body but no title");
 ___('dev_blog_add_no_body_fr',  'FR', "Il y a un contenu mais pas de titre en français");
+
+
+// Edit a devblog
+___('dev_blog_edit_submit', 'EN', "Edit devblog");
+___('dev_blog_edit_submit', 'FR', "Modifier le devblog");
+___('dev_blog_edit_error',  'EN', "This devblog does not exist or has been deleted");
+___('dev_blog_edit_error',  'FR', "Ce devblog n'existe pas ou a été supprimé");

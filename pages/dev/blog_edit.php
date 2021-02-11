@@ -16,10 +16,10 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/dev/blog_add";
-$page_title_en    = "New devblog";
-$page_title_fr    = "Nouveau devblog";
-$page_description = "Create a new devblog, documenting NoBleme's development history.";
+$page_url         = "pages/dev/blog_edit";
+$page_title_en    = "Edit devblog";
+$page_title_fr    = "Modifier un devblog";
+$page_description = "Edit an existing devblog, documenting NoBleme's development history.";
 
 
 
@@ -31,20 +31,40 @@ $page_description = "Create a new devblog, documenting NoBleme's development his
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Publish devblog
+// Edit devblog
+
+// Fetch the blog's id
+$blog_id = (int)form_fetch_element('id', request_type: 'GET');
+
+// Redirect if no ID is provided
+if(!$blog_id)
+  exit(header("Location: ".$path."pages/dev/blog_list"));
+
+// Fetch the devblog's contents
+$devblog_data = dev_blogs_get($blog_id);
+
+// Redirect if the devblog does not exist
+if(!isset($devblog_data))
+  exit(header("Location: ".$path."pages/dev/blog_list"));
 
 // Fetch the postdata
-$devblog_title_en = form_fetch_element('devblog_add_title_en');
-$devblog_title_fr = form_fetch_element('devblog_add_title_fr');
-$devblog_body_en  = form_fetch_element('devblog_add_body_en');
-$devblog_body_fr  = form_fetch_element('devblog_add_body_fr');
+$devblog_title_en = form_fetch_element('devblog_edit_title_en');
+$devblog_title_fr = form_fetch_element('devblog_edit_title_fr');
+$devblog_body_en  = form_fetch_element('devblog_edit_body_en');
+$devblog_body_fr  = form_fetch_element('devblog_edit_body_fr');
+
+// Prepare the form values
+$devblog_edit_title_en  = (isset($_POST['devblog_edit_title_en']))  ? $devblog_title_en : $devblog_data['title_en'];
+$devblog_edit_title_fr  = (isset($_POST['devblog_edit_title_fr']))  ? $devblog_title_fr : $devblog_data['title_fr'];
+$devblog_edit_body_en   = (isset($_POST['devblog_edit_body_en']))   ? $devblog_body_en  : $devblog_data['body_en'];
+$devblog_edit_body_fr   = (isset($_POST['devblog_edit_body_fr']))   ? $devblog_body_fr  : $devblog_data['body_fr'];
 
 // Prepare current date values for the preview form
 $devblog_date   = date_to_text(time(), strip_day: 1);
 $devblog_since  = time_since(time());
 
 // Publish the devblog
-if(isset($_POST['devblog_add_submit']))
+if(isset($_POST['devblog_edit_submit']))
 {
   // Prepare an array with the contents
   $devblog_contents = array(  'title_en'  => $devblog_title_en  ,
@@ -52,12 +72,13 @@ if(isset($_POST['devblog_add_submit']))
                               'body_en'   => $devblog_body_en   ,
                               'body_fr'   => $devblog_body_fr   );
 
-  // Attempt to create the devblog
-  $devblog_create = dev_blogs_add($devblog_contents);
+  // Attempt to edit the devblog
+  $devblog_edit = dev_blogs_edit( $blog_id          ,
+                                  $devblog_contents );
 
-  // Redirect to the newly created devblog if all went well
-  if(is_int($devblog_create))
-    exit(header("Location: ".$path."pages/dev/blog?id=".$devblog_create));
+  // Redirect to the edited devblog if all went well
+  if(!isset($devblog_edit))
+    exit(header("Location: ".$path."pages/dev/blog?id=".$blog_id));
 }
 
 
@@ -87,48 +108,48 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <div class="flex spaced">
 
-          <label for="devblog_add_title_en"><?=__('dev_blog_add_title_en')?></label>
-          <input class="indiv" type="text" id="devblog_add_title_en" name="devblog_add_title_en" value="<?=$devblog_title_en?>">
+          <label for="devblog_edit_title_en"><?=__('dev_blog_add_title_en')?></label>
+          <input class="indiv" type="text" id="devblog_edit_title_en" name="devblog_edit_title_en" value="<?=$devblog_edit_title_en?>">
 
           <div class="smallpadding_top">
-            <label for="devblog_add_body_en"><?=__('dev_blog_add_body_en')?></label>
-            <textarea id="devblog_add_body_en" name="devblog_add_body_en"><?=$devblog_body_en?></textarea>
+            <label for="devblog_edit_body_en"><?=__('dev_blog_add_body_en')?></label>
+            <textarea id="devblog_edit_body_en" name="devblog_edit_body_en"><?=$devblog_edit_body_en?></textarea>
           </div>
 
         </div>
         <div class="flex spaced">
 
-          <label for="devblog_add_title_fr"><?=__('dev_blog_add_title_fr')?></label>
-          <input class="indiv" type="text" id="devblog_add_title_fr" name="devblog_add_title_fr" value="<?=$devblog_title_fr?>">
+          <label for="devblog_edit_title_fr"><?=__('dev_blog_add_title_fr')?></label>
+          <input class="indiv" type="text" id="devblog_edit_title_fr" name="devblog_edit_title_fr" value="<?=$devblog_edit_title_fr?>">
 
           <div class="smallpadding_top">
-            <label for="devblog_add_body_fr"><?=__('dev_blog_add_body_fr')?></label>
-            <textarea id="devblog_add_body_fr" name="devblog_add_body_fr"><?=$devblog_body_fr?></textarea>
+            <label for="devblog_edit_body_fr"><?=__('dev_blog_add_body_fr')?></label>
+            <textarea id="devblog_edit_body_fr" name="devblog_edit_body_fr"><?=$devblog_edit_body_fr?></textarea>
           </div>
 
         </div>
 
       </div>
 
-      <?php if(isset($devblog_create)) { ?>
+      <?php if(isset($devblog_edit)) { ?>
 
       <div class="smallpadding_bot">
         <h5 class="align_center uppercase bold red text_white">
-          <?=$devblog_create?>
+          <?=$devblog_edit?>
         </h5>
       </div>
 
       <?php } ?>
 
       <span class="spaced_right">
-        <input type="submit" name="devblog_add_preview" value="<?=string_change_case(__('preview'), 'initials')?>">
+        <input type="submit" name="devblog_edit_preview" value="<?=string_change_case(__('preview'), 'initials')?>">
       </span>
-      <input type="submit" name="devblog_add_submit" value="<?=__('dev_blog_add_submit')?>">
+      <input type="submit" name="devblog_edit_submit" value="<?=__('dev_blog_edit_submit')?>">
 
     </fieldset>
   </form>
 
-  <?php if(isset($_POST['devblog_add_preview'])) { ?>
+  <?php if(isset($_POST['devblog_edit_preview'])) { ?>
 
   <?php if($devblog_title_en) { ?>
 

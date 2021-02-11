@@ -18,9 +18,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  dev_versions_edit             Edits an entry in the website's version numbering history.                         */
 /*  dev_versions_delete           Deletes an entry in the website's version numbering history.                       */
 /*                                                                                                                   */
-/*  dev_blogs_add                 Creates a new devblog.                                                             */
 /*  dev_blogs_get                 Returns elements related to a devblog.                                             */
 /*  dev_blogs_list                Returns a list of devblogs.                                                        */
+/*  dev_blogs_add                 Creates a new devblog.                                                             */
+/*  dev_blogs_edit                Modifies an existing devblog.                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -383,69 +384,6 @@ function dev_versions_delete( int $version_id ) : mixed
 
 
 /**
- * Creates a new devblog.
- *
- * @param   array         $contents   The contents of the devblog.
- *
- * @return  string|int                A string if an error happened, or the newly created blog's ID if all went well.
- */
-
-function dev_blogs_add( array $contents ) : mixed
-{
-  // Check if the required files have been included
-  require_included_file('dev.lang.php');
-
-  // Only the maintainer can run this action
-  user_restrict_to_maintainer();
-
-  // Sanitize and prepare the data
-  $blog_title_en_raw  = $contents['title_en'];
-  $blog_title_fr_raw  = $contents['title_fr'];
-  $blog_title_en      = sanitize($contents['title_en'], 'string');
-  $blog_title_fr      = sanitize($contents['title_fr'], 'string');
-  $blog_body_en       = sanitize($contents['body_en'], 'string');
-  $blog_body_fr       = sanitize($contents['body_fr'], 'string');
-  $timestamp          = sanitize(time(), 'int', 0);
-
-  // Error: No title
-  if(!$blog_title_en && !$blog_title_fr)
-    return __('dev_blog_add_empty');
-
-  // Error: Title but no body
-  if($blog_title_en && !$blog_body_en)
-    return __('dev_blog_add_empty_en');
-  if($blog_title_fr && !$blog_body_fr)
-    return __('dev_blog_add_empty_fr');
-
-  // Error: Body but no title
-  if(!$blog_title_en && $blog_body_en)
-    return __('dev_blog_add_no_body_en');
-  if(!$blog_title_fr && $blog_body_fr)
-    return __('dev_blog_add_no_body_fr');
-
-  // Create the devblog
-  query(" INSERT INTO dev_blogs
-          SET         dev_blogs.posted_at = '$timestamp'      ,
-                      dev_blogs.title_en  = '$blog_title_en'  ,
-                      dev_blogs.title_fr  = '$blog_title_fr'  ,
-                      dev_blogs.body_en   = '$blog_body_en'   ,
-                      dev_blogs.body_fr   = '$blog_body_fr'   ");
-
-  // Fetch the newly created devblog's id
-  $blog_id = query_id();
-
-  // IRC bot messages in the appropriate languages
-  if($blog_title_en)
-    irc_bot_send_message("A new devblog has been posted: $blog_title_en_raw - ".$GLOBALS['website_url']."pages/dev/blog?id=".$blog_id, 'english');
-  if($blog_title_fr)
-    irc_bot_send_message("Un nouveau devblog a été publié : $blog_title_fr_raw - ".$GLOBALS['website_url']."pages/dev/blog?id=".$blog_id, 'french');
-
-  // Return the blog's id
-  return $blog_id;
-}
-
-
-/**
  * Returns elements related to a devblog.
  *
  * @param   int           $blog_id The devblog's id.
@@ -474,7 +412,9 @@ function dev_blogs_get( int $blog_id ) : mixed
                                                 dev_blogs.title_en    AS 'b_title_en' ,
                                                 dev_blogs.title_fr    AS 'b_title_fr' ,
                                                 dev_blogs.posted_at   AS 'b_date'     ,
-                                                dev_blogs.body_$lang  AS 'b_body'
+                                                dev_blogs.body_$lang  AS 'b_body'     ,
+                                                dev_blogs.body_en     AS 'b_body_en'  ,
+                                                dev_blogs.body_fr     AS 'b_body_fr'
                                       FROM      dev_blogs
                                       WHERE     dev_blogs.id = '$blog_id' "));
 
@@ -491,6 +431,8 @@ function dev_blogs_get( int $blog_id ) : mixed
   $data['date']       = sanitize_output(date_to_text($dblog['b_date']));
   $data['date_since'] = sanitize_output(time_since($dblog['b_date']));
   $data['body']       = ($dblog['b_body']) ? $dblog['b_body'] : __('dev_blog_no_body');
+  $data['body_en']    = sanitize_output($dblog['b_body_en']);
+  $data['body_fr']    = sanitize_output($dblog['b_body_fr']);
 
   // Sanitize the devblog's timestamp
   $blog_timestamp = sanitize($dblog['b_date'], 'int', 0);
@@ -543,15 +485,15 @@ function dev_blogs_list( string $sort = '' ) : array
   // Fetch the user's language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'));
 
-  // Check whether the user is the maintainer
-  $is_maintainer = user_is_maintainer();
+  // Restrict this action to administrators only
+  $is_admin = user_is_administrator();
 
   // Decide whether to show deleted content
-  $show_deleted = (!$is_maintainer) ? ' AND dev_blogs.is_deleted = 0 ' : ' ';
+  $show_deleted = (!$is_admin) ? ' AND dev_blogs.is_deleted = 0 ' : ' ';
 
   // Sort the content if necessary
   $order_by = " dev_blogs.posted_at DESC ";
-  $order_by = ($is_maintainer && $sort == 'views') ? " stats_pages.view_count DESC, ".$order_by : $order_by;
+  $order_by = ($is_admin && $sort == 'views') ? " stats_pages.view_count DESC, ".$order_by : $order_by;
 
   // Fetch devblogs
   $qblogs = query(" SELECT    dev_blogs.id            AS 'b_id'       ,
@@ -584,4 +526,129 @@ function dev_blogs_list( string $sort = '' ) : array
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Creates a new devblog.
+ *
+ * @param   array         $contents   The contents of the devblog.
+ *
+ * @return  string|int                A string if an error happened, or the newly created blog's ID if all went well.
+ */
+
+function dev_blogs_add( array $contents ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('dev.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $blog_title_en_raw  = $contents['title_en'];
+  $blog_title_fr_raw  = $contents['title_fr'];
+  $blog_title_en      = sanitize($contents['title_en'], 'string');
+  $blog_title_fr      = sanitize($contents['title_fr'], 'string');
+  $blog_body_en       = sanitize($contents['body_en'], 'string');
+  $blog_body_fr       = sanitize($contents['body_fr'], 'string');
+  $timestamp          = sanitize(time(), 'int', 0);
+
+  // Error: No title
+  if(!$blog_title_en && !$blog_title_fr)
+    return __('dev_blog_add_empty');
+
+  // Error: Title but no body
+  if($blog_title_en && !$blog_body_en)
+    return __('dev_blog_add_empty_en');
+  if($blog_title_fr && !$blog_body_fr)
+    return __('dev_blog_add_empty_fr');
+
+  // Error: Body but no title
+  if(!$blog_title_en && $blog_body_en)
+    return __('dev_blog_add_no_body_en');
+  if(!$blog_title_fr && $blog_body_fr)
+    return __('dev_blog_add_no_body_fr');
+
+  // Create the devblog
+  query(" INSERT INTO dev_blogs
+          SET         dev_blogs.posted_at = '$timestamp'      ,
+                      dev_blogs.title_en  = '$blog_title_en'  ,
+                      dev_blogs.title_fr  = '$blog_title_fr'  ,
+                      dev_blogs.body_en   = '$blog_body_en'   ,
+                      dev_blogs.body_fr   = '$blog_body_fr'   ");
+
+  // Fetch the newly created devblog's id
+  $blog_id = query_id();
+
+  // IRC bot messages in the appropriate languages
+  if($blog_title_en)
+    irc_bot_send_message("A new devblog has been posted: $blog_title_en_raw - ".$GLOBALS['website_url']."pages/dev/blog?id=".$blog_id, 'english');
+  if($blog_title_fr)
+    irc_bot_send_message("Un nouveau devblog a été publié : $blog_title_fr_raw - ".$GLOBALS['website_url']."pages/dev/blog?id=".$blog_id, 'french');
+
+  // Return the blog's id
+  return $blog_id;
+}
+
+
+
+
+/**
+ * Edits an existing devblog.
+ *
+ * @param   int           $blog_id    The devblog's id.
+ * @param   array         $contents   The contents of the devblog.
+ *
+ * @return  string|int                A string if an error happened, or NULL if all went well.
+ */
+
+function dev_blogs_edit(  int   $blog_id  ,
+                          array $contents ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('dev.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $blog_id        = sanitize($blog_id, 'int', 0);
+  $blog_title_en  = sanitize($contents['title_en'], 'string');
+  $blog_title_fr  = sanitize($contents['title_fr'], 'string');
+  $blog_body_en   = sanitize($contents['body_en'], 'string');
+  $blog_body_fr   = sanitize($contents['body_fr'], 'string');
+
+  // Error: Devblog does not exist
+  if(!$blog_id || !database_row_exists('dev_blogs', $blog_id))
+    return __('dev_blog_edit_error');
+
+  // Error: No title
+  if(!$blog_title_en && !$blog_title_fr)
+    return __('dev_blog_add_empty');
+
+  // Error: Title but no body
+  if($blog_title_en && !$blog_body_en)
+    return __('dev_blog_add_empty_en');
+  if($blog_title_fr && !$blog_body_fr)
+    return __('dev_blog_add_empty_fr');
+
+  // Error: Body but no title
+  if(!$blog_title_en && $blog_body_en)
+    return __('dev_blog_add_no_body_en');
+  if(!$blog_title_fr && $blog_body_fr)
+    return __('dev_blog_add_no_body_fr');
+
+  // Update the devblog
+  query(" UPDATE  dev_blogs
+          SET     dev_blogs.title_en  = '$blog_title_en'  ,
+                  dev_blogs.title_fr  = '$blog_title_fr'  ,
+                  dev_blogs.body_en   = '$blog_body_en'   ,
+                  dev_blogs.body_fr   = '$blog_body_fr'
+          WHERE   dev_blogs.id        = '$blog_id' ");
+
+  // All went well
+  return NULL;
 }

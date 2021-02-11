@@ -29,11 +29,8 @@ $page_description = "Development blog:";
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the devblog
 
-// Check if the user is the maintainer
-$is_maintainer = user_is_maintainer();
-
 // Grab the devblog's id
-$blog_id = form_fetch_element('id', request_type: 'GET');
+$blog_id = (int)form_fetch_element('id', request_type: 'GET');
 
 // Redirect if no ID is provided
 if(!$blog_id)
@@ -46,15 +43,15 @@ $devblog_data = dev_blogs_get($blog_id);
 if(!isset($devblog_data))
   exit(header("Location: ".$path."pages/dev/blog_list"));
 
-// Redirect if the devblog is deleted and the user isn't the maintainer
-if(!$is_maintainer && $devblog_data['deleted'])
+// Redirect if the devblog is deleted and the user isn't an administrator
+if(!$is_admin && $devblog_data['deleted'])
   exit(header("Location: ".$path."pages/dev/blog_list"));
 
 // Redirect if the devblog doesn't exist in the current language
-if(!$is_maintainer && !$devblog_data['title'])
+if(!$is_admin && !$devblog_data['title'])
   exit(header("Location: ".$path."pages/dev/blog_list"));
 
-// Hide from activity if the maintainer is looking at a deleted devblog
+// Hide from activity if the administrator is looking at a deleted devblog
 if($devblog_data['deleted'])
   $hidden_activity = 1;
 
@@ -76,6 +73,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1>
     <?=__link('pages/dev/blog_list', __('dev_blog_title'), 'text_red noglow')?>
+    <?php if($is_admin) { ?>
+    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/dev/blog_edit?id='.$blog_id)?>
+    <?php } ?>
   </h1>
 
   <h5>

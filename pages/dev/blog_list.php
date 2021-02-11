@@ -26,11 +26,8 @@ $page_description = "Blogs containing updates on NoBleme's development over the 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the devblogs list
 
-// Check if the user is the maintainer
-$is_maintainer = user_is_maintainer();
-
 // Check if the list should be sorted by views
-$blogs_sort = ($is_maintainer && isset($_GET['views'])) ? 'views' : '';
+$blogs_sort = ($is_admin && isset($_GET['views'])) ? 'views' : '';
 
 // Fetch the devblogs
 $devblogs = dev_blogs_list($blogs_sort);
@@ -44,7 +41,7 @@ $devblogs = dev_blogs_list($blogs_sort);
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<?php if($is_maintainer) { ?>
+<?php if($is_admin) { ?>
 <div class="width_60">
 <?php } else { ?>
 <div class="width_50">
@@ -52,7 +49,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1>
     <?=__('dev_blog_title')?>
-    <?php if($is_maintainer) { ?>
+    <?php if($is_admin) { ?>
     <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/dev/blog_add')?>
     <?php } ?>
   </h1>
@@ -76,12 +73,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <th>
           <?=__('dev_blog_table_date')?>
-          <?php if($is_maintainer) { ?>
+          <?php if($is_admin) { ?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', href: 'pages/dev/blog_list')?>
           <?php } ?>
         </th>
 
-        <?php if($is_maintainer) { ?>
+        <?php if($is_admin) { ?>
 
         <th>
           <?=__('dev_blog_table_views')?>
@@ -116,7 +113,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$devblogs[$i]['date']?>
         </td>
 
-        <?php if($is_maintainer) { ?>
+        <?php if($is_admin) { ?>
 
         <td>
           <?=$devblogs[$i]['views']?>
