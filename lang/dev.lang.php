@@ -279,3 +279,12 @@ ___('dev_blog_edit_submit', 'EN', "Edit devblog");
 ___('dev_blog_edit_submit', 'FR', "Modifier le devblog");
 ___('dev_blog_edit_error',  'EN', "This devblog does not exist or has been deleted");
 ___('dev_blog_edit_error',  'FR', "Ce devblog n'existe pas ou a été supprimé");
+
+
+// Delete a devblog
+___('dev_blog_delete_confirm',  'EN', "Confirm the soft deletion of this devblog");
+___('dev_blog_delete_confirm',  'FR', "Confirmer la suppression non définitive de ce devblog");
+___('dev_blog_delete_error',    'EN', "This devblog does not exist or has already been deleted");
+___('dev_blog_delete_error',    'FR', "Ce devblog n'existe pas ou a déjà été supprimé");
+___('dev_blog_delete_ok',       'EN', "This devblog has been soft deleted");
+___('dev_blog_delete_ok',       'FR', "Ce devblog a été supprimé de façon non définitive");
