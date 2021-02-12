@@ -660,12 +660,14 @@ function dev_blogs_edit(  int   $blog_id  ,
 /**
  * Deletes an existing devblog.
  *
- * @param   int         $blog_id  The devblog's id.
+ * @param   int           $blog_id                    The devblog's id.
+ * @param   bool          $hard_deletion  (OPTIONAL)  Perform a hard deletion instead of a soft deletion.
  *
- * @return  string|null           A string if an error happened, or NULL if all went well.
+ * @return  string|null                               A string if an error happened, or NULL if all went well.
  */
 
-function dev_blogs_delete(int $blog_id) : mixed
+function dev_blogs_delete(  int   $blog_id                ,
+                            bool  $hard_deletion = false  ) : mixed
 {
   // Check if the required files have been included
   require_included_file('dev.lang.php');
@@ -680,10 +682,16 @@ function dev_blogs_delete(int $blog_id) : mixed
   if(!$blog_id || !database_row_exists('dev_blogs', $blog_id))
     return __('dev_blog_delete_error');
 
-  // Delete the devblog
-  query(" UPDATE  dev_blogs
-          SET     dev_blogs.is_deleted = 1
-          WHERE   dev_blogs.id = '$blog_id' ");
+  // Soft deletion
+  if(!$hard_deletion)
+    query(" UPDATE  dev_blogs
+            SET     dev_blogs.is_deleted = 1
+            WHERE   dev_blogs.id = '$blog_id' ");
+
+  // Hard deletion
+  else
+    query(" DELETE FROM dev_blogs
+            WHERE       dev_blogs.id = '$blog_id' ");
 
   // All went well
   return NULL;

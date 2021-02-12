@@ -72,6 +72,10 @@ $page_description .= ($devblog_data['title_en']) ? $devblog_data['title_en'] : $
 if($is_admin && isset($_POST['soft_delete']))
   $devblog_delete = dev_blogs_delete($blog_id);
 
+// Hard deletion
+if($is_admin && isset($_POST['hard_delete']))
+  $devblog_delete = dev_blogs_delete($blog_id, true);
+
 
 
 
@@ -86,9 +90,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <h1>
     <?=__link('pages/dev/blog_list', __('dev_blog_title'), 'text_red noglow')?>
     <?php if($is_admin) { ?>
-    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/dev/blog_edit?id='.$blog_id)?>
+    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/dev/blog_edit?id='.$blog_id, identifier: 'devblog_edit_icon')?>
     <?php if(!$devblog_data['deleted']) { ?>
     <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_blogs_delete($blog_id, '".__('dev_blog_delete_confirm')."');", identifier: 'devblog_delete_icon')?>
+    <?php } else { ?>
+      <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_blogs_delete($blog_id, '".__('dev_blog_delete_hard_confirm')."', 1);", identifier: 'devblog_delete_icon')?>
     <?php } ?>
     <?php } ?>
   </h1>
@@ -108,6 +114,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } else if(isset($_POST['soft_delete'])) { ?>
     <h5 class="align_center uppercase green text_white">
       <?=__('dev_blog_delete_ok')?>
+    </h5>
+    <?php } else if(isset($_POST['hard_delete'])) { ?>
+    <h5 class="align_center uppercase green text_white">
+      <?=__('dev_blog_delete_hard_ok')?>
     </h5>
     <?php } else { ?>
     <?=$devblog_data['body']?>

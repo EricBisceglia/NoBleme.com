@@ -26,8 +26,9 @@ function dev_blogs_delete(  blog_id             ,
     postdata = (hard_delete) ? 'hard_delete=1' : 'soft_delete=1';
 
     // Remove the unnecessary icons
-    if(!hard_delete)
-      toggle_element_oneway('devblog_delete_icon', 0);
+    toggle_element_oneway('devblog_delete_icon', 0);
+    if(hard_delete)
+      toggle_element_oneway('devblog_edit_icon', 0);
 
     // Submit the deletion request
     fetch_page('blog?id=' + blog_id, 'devblog_body', postdata);

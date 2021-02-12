@@ -236,7 +236,7 @@ ___('dev_blog_table_lang',  'EN', "Languages");
 ___('dev_blog_table_lang',  'FR', "Langues");
 
 
-// Devblog contents
+// Devblog
 ___('dev_blog_no_title',  'EN', "Unavailable");
 ___('dev_blog_no_title',  'FR', "Indisponible");
 ___('dev_blog_no_body',   'EN', "This devblog is not available in this language.");
@@ -249,7 +249,7 @@ ___('dev_blog_next',      'EN', "Next devblog:");
 ___('dev_blog_next',      'FR', "Devblog suivant :");
 
 
-// Create a devblog
+// Devblog: Create
 ___('dev_blog_add_subtitle',    'EN', "Write a new devblog");
 ___('dev_blog_add_subtitle',    'FR', "Écrire un nouveau devblog");
 ___('dev_blog_add_title_en',    'EN', "Title (english)");
@@ -274,17 +274,24 @@ ___('dev_blog_add_no_body_fr',  'EN', "There is a french body but no title");
 ___('dev_blog_add_no_body_fr',  'FR', "Il y a un contenu mais pas de titre en français");
 
 
-// Edit a devblog
+// Devblog: Edit
 ___('dev_blog_edit_submit', 'EN', "Edit devblog");
 ___('dev_blog_edit_submit', 'FR', "Modifier le devblog");
 ___('dev_blog_edit_error',  'EN', "This devblog does not exist or has been deleted");
 ___('dev_blog_edit_error',  'FR', "Ce devblog n'existe pas ou a été supprimé");
 
 
-// Delete a devblog
+// Devblog: Soft delete
 ___('dev_blog_delete_confirm',  'EN', "Confirm the soft deletion of this devblog");
 ___('dev_blog_delete_confirm',  'FR', "Confirmer la suppression non définitive de ce devblog");
 ___('dev_blog_delete_error',    'EN', "This devblog does not exist or has already been deleted");
 ___('dev_blog_delete_error',    'FR', "Ce devblog n'existe pas ou a déjà été supprimé");
 ___('dev_blog_delete_ok',       'EN', "This devblog has been soft deleted");
 ___('dev_blog_delete_ok',       'FR', "Ce devblog a été supprimé de façon non définitive");
+
+
+// Devblog: Hard delete
+___('dev_blog_delete_hard_confirm', 'EN', "Confirm the irreversible permanent deletion of this devblog");
+___('dev_blog_delete_hard_confirm', 'FR', "Confirmer la suppression définitive et irréversible de ce devblog");
+___('dev_blog_delete_hard_ok',      'EN', "This devblog has been hard deleted");
+___('dev_blog_delete_hard_ok',      'FR', "Ce devblog a été définitivement supprimé");
