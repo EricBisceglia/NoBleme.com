@@ -290,6 +290,15 @@ ___('dev_blog_delete_ok',       'EN', "This devblog has been soft deleted");
 ___('dev_blog_delete_ok',       'FR', "Ce devblog a été supprimé de façon non définitive");
 
 
+// Devblog: Restore
+___('dev_blog_restore_icon',      'EN', "Undelete");
+___('dev_blog_restore_icon',      'FR', "Restaurer");
+___('dev_blogs_restore_confirm',  'EN', "Confirm the undeletion of this devblog");
+___('dev_blogs_restore_confirm',  'FR', "Confirmer la restauration de ce devblog");
+___('dev_blog_restore_ok',        'EN', "This devblog has been restored");
+___('dev_blog_restore_ok',        'FR', "Ce devblog a été restauré");
+
+
 // Devblog: Hard delete
 ___('dev_blog_delete_hard_confirm', 'EN', "Confirm the irreversible permanent deletion of this devblog");
 ___('dev_blog_delete_hard_confirm', 'FR', "Confirmer la suppression définitive et irréversible de ce devblog");

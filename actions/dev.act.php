@@ -23,6 +23,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  dev_blogs_add                 Creates a new devblog.                                                             */
 /*  dev_blogs_edit                Modifies an existing devblog.                                                      */
 /*  dev_blogs_delete              Deletes an existing devblog.                                                       */
+/*  dev_blogs_restore             Restores a soft deleted devblog.                                                   */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -692,6 +693,41 @@ function dev_blogs_delete(  int   $blog_id                ,
   else
     query(" DELETE FROM dev_blogs
             WHERE       dev_blogs.id = '$blog_id' ");
+
+  // All went well
+  return NULL;
+}
+
+
+
+
+/**
+ * Restores a soft deleted devblog.
+ *
+ * @param   int         $blog_id  The devblog's id.
+ *
+ * @return  string|null           A string if an error happened, or NULL if all went well.
+ */
+
+function dev_blogs_restore(int $blog_id) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('dev.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the devblog's id
+  $blog_id = sanitize($blog_id, 'int', 0);
+
+  // Error: Devblog does not exist
+  if(!$blog_id || !database_row_exists('dev_blogs', $blog_id))
+    return __('dev_blog_delete_error');
+
+  // Undelete
+  query(" UPDATE  dev_blogs
+          SET     dev_blogs.is_deleted = 0
+          WHERE   dev_blogs.id = '$blog_id' ");
 
   // All went well
   return NULL;

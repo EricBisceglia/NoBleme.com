@@ -72,6 +72,10 @@ $page_description .= ($devblog_data['title_en']) ? $devblog_data['title_en'] : $
 if($is_admin && isset($_POST['soft_delete']))
   $devblog_delete = dev_blogs_delete($blog_id);
 
+// Retoration
+if($is_admin && isset($_POST['restore']))
+  $devblog_delete = dev_blogs_restore($blog_id);
+
 // Hard deletion
 if($is_admin && isset($_POST['hard_delete']))
   $devblog_delete = dev_blogs_delete($blog_id, true);
@@ -94,7 +98,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php if(!$devblog_data['deleted']) { ?>
     <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_blogs_delete($blog_id, '".__('dev_blog_delete_confirm')."');", identifier: 'devblog_delete_icon')?>
     <?php } else { ?>
-      <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_blogs_delete($blog_id, '".__('dev_blog_delete_hard_confirm')."', 1);", identifier: 'devblog_delete_icon')?>
+    <?=__icon('refresh', alt: 'R', title: __('dev_blog_restore_icon'), onclick: "dev_blogs_restore($blog_id, '".__('dev_blogs_restore_confirm')."');", identifier: 'devblog_restore_icon')?>
+    <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "dev_blogs_delete($blog_id, '".__('dev_blog_delete_hard_confirm')."', 1);", identifier: 'devblog_delete_icon')?>
     <?php } ?>
     <?php } ?>
   </h1>
@@ -112,12 +117,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?=$devblog_delete?>
     </h5>
     <?php } else if(isset($_POST['soft_delete'])) { ?>
-    <h5 class="align_center uppercase green text_white">
+    <h5 class="align_center uppercase red text_white">
       <?=__('dev_blog_delete_ok')?>
     </h5>
     <?php } else if(isset($_POST['hard_delete'])) { ?>
-    <h5 class="align_center uppercase green text_white">
+    <h5 class="align_center uppercase red text_white">
       <?=__('dev_blog_delete_hard_ok')?>
+    </h5>
+    <?php } else if(isset($_POST['restore'])) { ?>
+    <h5 class="align_center uppercase green text_white">
+      <?=__('dev_blog_restore_ok')?>
     </h5>
     <?php } else { ?>
     <?=$devblog_data['body']?>
