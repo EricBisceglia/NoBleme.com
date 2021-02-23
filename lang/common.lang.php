@@ -828,10 +828,10 @@ ___('submenu_social_irc_intro',     'EN', "What is IRC");
 ___('submenu_social_irc_intro',     'FR', "Qu'est-ce que IRC");
 ___('submenu_social_irc_browser',   'EN', "Chat from your browser");
 ___('submenu_social_irc_browser',   'FR', "Chat depuis le navigateur");
-___('submenu_social_irc_client',    'EN', "Using an IRC client");
-___('submenu_social_irc_client',    'FR', "Utiliser un client IRC");
 ___('submenu_social_irc_channels',  'EN', "Channel list");
 ___('submenu_social_irc_channels',  'FR', "Liste des canaux");
+___('submenu_social_irc_others',    'EN', "Other platforms");
+___('submenu_social_irc_others',    'FR', "Autres plateformes");
 
 ___('submenu_social_quotes',        'EN', "Quotes");
 ___('submenu_social_quotes',        'FR', "Citations");

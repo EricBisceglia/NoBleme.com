@@ -151,7 +151,7 @@ input.intext                            { width: 150px;                         
 select.intext:hover, input.intext:hover, input.intext[type='text']:hover:not([disabled]):not(:focus),
 input.intext:focus, select.intext:focus { border-color: #CACACA; background-color: #232323; border-color: #555555; }
 select.inh, input.inh                   { background-color: #121212; border: 2px solid #232323                     ;
-                                          color: #B00B1E; font-weight: bold; padding: 0.2rem; width: 250px;        }
+                                          color: #B00B1E; font-weight: bold; padding: 0.2rem; max-width: 100%;     }
 select.inh:hover, input.inh:hover, input.inh[type='text']:hover:not([disabled]):not(:focus),
 input.inh:focus, select.inh:focus       { border-color: #CACACA; background-color: #121212; border-color: #555555; }
 

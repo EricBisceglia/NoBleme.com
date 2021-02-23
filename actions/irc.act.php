@@ -37,7 +37,7 @@ function irc_bot_start() : string
   user_restrict_to_administrators();
 
   // Check if the required files have been included
-  require_included_file('irc_bot.lang.php');
+  require_included_file('irc.lang.php');
 
   // Write a log in the database
   $timestamp = sanitize(time(), 'int', 0);
@@ -262,7 +262,7 @@ function irc_bot_message_queue_list() : array
   user_restrict_to_administrators();
 
   // Check if the required files have been included
-  require_included_file('irc_bot.lang.php');
+  require_included_file('irc.lang.php');
 
   // Assemble the path to the bot's txt file
   $path         = root_path();
@@ -306,7 +306,7 @@ function irc_bot_message_queue_delete( int $line_id ) : mixed
   user_restrict_to_administrators();
 
   // Check if the required files have been included
-  require_included_file('irc_bot.lang.php');
+  require_included_file('irc.lang.php');
 
   // Ensure the line id is an int
   $line_id = sanitize($line_id, 'int', -1);
@@ -370,7 +370,7 @@ function irc_bot_message_history_list( array $search = array() ) : array
   user_restrict_to_administrators();
 
   // Check if the required files have been included
-  require_included_file('irc_bot.lang.php');
+  require_included_file('irc.lang.php');
   require_included_file('functions_time.inc.php');
 
   // Sanitize the search parameters
