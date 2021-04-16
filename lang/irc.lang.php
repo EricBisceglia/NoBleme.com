@@ -8,6 +8,153 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                      IRC BOT                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Bot action selector
+___('irc_bot_action_title',         'EN', "IRC bot management");
+___('irc_bot_action_title',         'FR', "Gestion du bot IRC");
+___('irc_bot_action_start',         'EN', "Start the bot");
+___('irc_bot_action_start',         'FR', "Démarrer le bot");
+___('irc_bot_action_stop',          'EN', "Stop the bot");
+___('irc_bot_action_stop',          'FR', "Arrêter le bot");
+___('irc_bot_action_silence',       'EN', "Silence the bot");
+___('irc_bot_action_silence',       'FR', "Faire taire le bot");
+___('irc_bot_action_upcoming',      'EN', "Message queue");
+___('irc_bot_action_upcoming',      'FR', "Messages en attente");
+___('irc_bot_action_message_log',   'EN', "Message history");
+___('irc_bot_action_message_log',   'FR', "Historique des messages");
+___('irc_bot_action_send_message',  'EN', "Send a message");
+___('irc_bot_action_send_message',  'FR', "Envoyer un message");
+___('irc_bot_action_specialchars',  'EN', "Special bytes");
+___('irc_bot_action_specialchars',  'FR', "Bytes spéciaux");
+
+
+// Start the bot
+___('irc_bot_start_warning',  'EN', "Warning: Only do this if the bot is not already currently running.");
+___('irc_bot_start_warning',  'FR', "Avertissement : Il ne faut pas démarrer le bot s'il est déjà présent sur IRC.");
+___('irc_bot_start_starting', 'EN', "The IRC bot is starting…");
+___('irc_bot_start_starting', 'FR', "Le bot IRC est en train de démarrer…");
+
+___('irc_bot_start_disabled', 'EN', "Error: The IRC bot is disabled in global settings.");
+___('irc_bot_start_disabled', 'FR', "Erreur : Le bot IRC est désactivé dans les réglages globaux.");
+___('irc_bot_start_no_file',  'EN', "Error: The IRC bot file must exist.");
+___('irc_bot_start_no_file',  'FR', "Erreur : Le fichier du bot IRC doit exister.");
+___('irc_bot_start_failed',   'EN', "Error: Connexion to IRC server failed.");
+___('irc_bot_start_failed',   'FR', "Erreur : La connexion au serveur IRC a échoué.");
+
+
+// Stop the bot
+___('irc_bot_stopped', 'EN', "The IRC bot has been stopped.");
+___('irc_bot_stopped', 'FR', "Le bot IRC a été arrêté.");
+
+
+// Silence the bot
+___('irc_bot_mute',   'EN', "Silence the IRC bot");
+___('irc_bot_mute',   'FR', "Faire taire le bot IRC");
+___('irc_bot_unmute', 'EN', "Reactivate the IRC bot");
+___('irc_bot_unmute', 'FR', "Réactiver le bot IRC");
+
+
+// Upcoming messages
+___('irc_bot_upcoming_empty',         'EN', "There are no upcoming messages, the IRC bot is probably currently running.");
+___('irc_bot_upcoming_empty',         'FR', "Il n'y a aucun message en attente, le bot IRC est probablement actif.");
+___('irc_bot_upcoming_purge',         'EN', "PURGE THE WHOLE QUEUE");
+___('irc_bot_upcoming_purge',         'FR', "PURGER TOUTE LA QUEUE");
+___('irc_bot_upcoming_confirm_purge', 'EN', "Confirm that you want to purge the full IRC bot message queue.");
+___('irc_bot_upcoming_confirm_purge', 'FR', "Confirmez que vous voulez purger l\'intégralité de la queue de messages du bot IRC.");
+___('irc_bot_upcoming_purged',        'EN', "The IRC bot's message queue has successfully been purged.");
+___('irc_bot_upcoming_purged',        'FR', "La queue de messages du bot IRC a bien été purgée.");
+
+
+// Message history
+___('irc_bot_history_channel',        'EN', "Channel");
+___('irc_bot_history_channel',        'FR', "Canal");
+___('irc_bot_history_nochan',         'EN', "----");
+___('irc_bot_history_nochan',         'FR', "----");
+___('irc_bot_history_silenced',       'EN', "Silenced");
+___('irc_bot_history_silenced',       'FR', "Silencieux");
+___('irc_bot_history_sent',           'EN', "Sent");
+___('irc_bot_history_sent',           'FR', "Envoyés");
+___('irc_bot_history_failed',         'EN', "Failed");
+___('irc_bot_history_failed',         'FR', "Échec");
+
+___('irc_bot_history_confirm_delete', 'EN', "Confirm permanent deletion of this log: ");
+___('irc_bot_history_confirm_delete', 'FR', "Confirmer la suppression définitive de ce message : ");
+___('irc_bot_history_resend',         'EN', "Resend");
+___('irc_bot_history_resend',         'FR', "Renvoyer");
+___('irc_bot_history_confirm_replay', 'EN', "Confirm that you want to replay this log: ");
+___('irc_bot_history_confirm_replay', 'FR', "Confirmer vouloir rejouer ce message : ");
+
+
+// Send a message
+___('irc_bot_message_body',     'EN', "Send a message on IRC through the bot");
+___('irc_bot_message_body',     'FR', "Envoyer un message sur IRC via le bot");
+___('irc_bot_message_channel',  'EN', "[OPTIONAL] Send the message on this channel");
+___('irc_bot_message_channel',  'FR', "[OPTIONNEL] Envoyer le message sur ce canal");
+___('irc_bot_message_user',     'EN', "[OPTIONAL] Send the message to this user");
+___('irc_bot_message_user',     'FR', "[OPTIONNEL] Envoyer le message à cet utilisateur");
+___('irc_bot_message_send',     'EN', "Send the message");
+___('irc_bot_message_send',     'FR', "Envoyer the message");
+
+
+// Special bytes
+___('irc_bot_bytes_effect',           'EN', "EFFECT");
+___('irc_bot_bytes_effect',           'FR', "EFFET");
+___('irc_bot_bytes_character',        'EN', "CHARACTER");
+___('irc_bot_bytes_character',        'FR', "CARACTÈRE");
+___('irc_bot_bytes_bytes',            'EN', "PHP CODE");
+___('irc_bot_bytes_bytes',            'FR', "CODE PHP");
+
+___('irc_bot_bytes_reset',            'EN', "Reset to default style");
+___('irc_bot_bytes_reset',            'FR', "Remise à zéro du style");
+___('irc_bot_bytes_bold',             'EN', "Bold");
+___('irc_bot_bytes_bold',             'FR', "Bold");
+___('irc_bot_bytes_italics',          'EN', "Italics");
+___('irc_bot_bytes_italics',          'FR', "Italique");
+___('irc_bot_bytes_underlined',       'EN', "Underlined");
+___('irc_bot_bytes_underlined',       'FR', "Souligné");
+___('irc_bot_bytes_text_white',       'EN', "Text color: White");
+___('irc_bot_bytes_text_white',       'FR', "Couleur du texte : Blanc");
+___('irc_bot_bytes_text_black',       'EN', "Text color: Black");
+___('irc_bot_bytes_text_black',       'FR', "Couleur du texte : Noir");
+___('irc_bot_bytes_text_blue',        'EN', "Text color: Blue");
+___('irc_bot_bytes_text_blue',        'FR', "Couleur du texte : Bleu");
+___('irc_bot_bytes_text_green',       'EN', "Text color: Green");
+___('irc_bot_bytes_text_green',       'FR', "Couleur du texte : Vert");
+___('irc_bot_bytes_text_red',         'EN', "Text color: Red");
+___('irc_bot_bytes_text_red',         'FR', "Couleur du texte : Rouge");
+___('irc_bot_bytes_text_brown',       'EN', "Text color: Brown");
+___('irc_bot_bytes_text_brown',       'FR', "Couleur du texte : Marron");
+___('irc_bot_bytes_text_purple',      'EN', "Text color: Purple");
+___('irc_bot_bytes_text_purple',      'FR', "Couleur du texte : Violet");
+___('irc_bot_bytes_text_orange',      'EN', "Text color: Orange");
+___('irc_bot_bytes_text_orange',      'FR', "Couleur du texte : Orange");
+___('irc_bot_bytes_text_yellow',      'EN', "Text color: Yellow");
+___('irc_bot_bytes_text_yellow',      'FR', "Couleur du texte : Jaune");
+___('irc_bot_bytes_text_light_green', 'EN', "Text color: Light green");
+___('irc_bot_bytes_text_light_green', 'FR', "Couleur du texte : Vert clair");
+___('irc_bot_bytes_text_teal',        'EN', "Text color: Teal");
+___('irc_bot_bytes_text_teal',        'FR', "Couleur du texte : Bleu-vert");
+___('irc_bot_bytes_text_light_cyan',  'EN', "Text color: Light cyan");
+___('irc_bot_bytes_text_light_cyan',  'FR', "Couleur du texte : Cyan clair");
+___('irc_bot_bytes_text_light_blue',  'EN', "Text color: Light blue");
+___('irc_bot_bytes_text_light_blue',  'FR', "Couleur du texte : Bleu clair");
+___('irc_bot_bytes_text_pink',        'EN', "Text color: Pink");
+___('irc_bot_bytes_text_pink',        'FR', "Couleur du texte : Rose");
+___('irc_bot_bytes_text_grey',        'EN', "Text color: Grey");
+___('irc_bot_bytes_text_grey',        'FR', "Couleur du texte : Gris");
+___('irc_bot_bytes_black_white',      'EN', "Bold white on black");
+___('irc_bot_bytes_black_white',      'FR', "Blanc gras sur fond noir");
+___('irc_bot_bytes_troll',            'EN', "Troll (brutal color contrast)");
+___('irc_bot_bytes_troll',            'FR', "Troll (contraste brutal)");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                      IRC FAQ                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -41,7 +188,7 @@ ___('irc_faq_select_others',    'EN', "Beyond IRC: Other platforms");
 ___('irc_faq_select_others',    'FR', "Hors d'IRC: Autres plateformes");
 
 
-// Faq: Main
+// FAQ: Main
 ___('irc_faq_main_body',  'EN', <<<EOT
 Like most online communities, NoBleme has a place where its members can hold conversations in real time, which is where most of the action happens: it is the heart of the community. This page is a FAQ explaining why we use IRC rather than anything else, and how to join us so that you can be a part of the conversation. Use the dropdown menu right above this paragraph to read more about NoBleme's IRC server and IRC in general.
 EOT
@@ -235,148 +382,162 @@ EOT
 );
 
 
+// FAQ: Why IRC
+___('irc_faq_why_body_1',         'EN', <<<EOT
+NoBleme has been using IRC as its main real time chat platform since 2005. Back then, it used to be the only option that made sense. Since then, the Internet has changed and evolved a lot, to the point where IRC might seem like an outdated and unnecessarily complicated platform catering to old timers.
+EOT
+);
+___('irc_faq_why_body_1',         'FR', <<<EOT
+NoBleme utilise IRC en tant que plateforme de chat en temps réel depuis 2005. À l'époque, il s'agissait de la seule plateforme de chat qui répondait à nos besoins. Entre temps, Internet a beaucoup changé et évolué, au point où IRC peut vous sembler être une plateforme antique et compliquée.
+EOT
+);
+___('irc_faq_why_body_2',         'EN', <<<EOT
+You might be expecting this page to be a defense of IRC, consider your expectations subverted: we are very well aware of IRC's many flaws and limitations, and would be happy to migrate to a more fitting alternative. Therefore, we often reconsider our choice of main communication platform, but are yet to find an alternative that meets our needs as well as IRC does. Since the question comes up quite often, this page will do its best to explain why we are yet to switch to something else.
+EOT
+);
+___('irc_faq_why_body_2',         'FR', <<<EOT
+Vous vous attendez probablement à ce que cette page soit une défense d'IRC, ce ne sera pas le cas : nous sommes très ouverts au sujet des nombreuses limitations d'IRC, et migrerions avec joie vers une meilleure solution. Par conséquent, nous remettons régulièrement en question le choix d'IRC, mais n'avons jusque-là pas trouvé d'alternative qui répond mieux qu'IRC à nos attentes. Comme la question revient souvent, cette page sert à expliquer notre choix.
+EOT
+);
 
+___('irc_faq_why_freedom_title',  'EN', "Freedom from corporations");
+___('irc_faq_why_freedom_title',  'FR', "Protection de la vie privée");
+___('irc_faq_why_freedom_body_1', 'EN', <<<EOT
+As stated in NoBleme's {{link|pages/doc/privacy|privacy policy}}, we do not want any third parties to be able to collect and use your {{link|pages/doc/data|personal data}} while you are taking part in any activity related to NoBleme. In order to achieve this goal, any real time chat service offered by NoBleme must be free to use, open sourced, privacy oriented, and have the ability to be hosted on NoBleme's own servers.
+EOT
+);
+___('irc_faq_why_freedom_body_1', 'FR', <<<EOT
+Comme précisé dans notre {{link|pages/doc/privacy|politique de confidentialité}}, nous ne voulons pas que des tiers puissent collecter et utiliser vos {{link|pages/doc/data|données personnelles}}. Dans cette optique, tout service de communication en temps réel proposé par NoBleme doit prendre en compte la protection de la vie privée, être libre de droits, son code source doit être public, et il doit pouvoir être hébergé sur les serveurs de NoBleme.
+EOT
+);
+___('irc_faq_why_freedom_body_2', 'EN', <<<EOT
+IRC's flexibility in letting you use any chat client of your choice actually acts as an issue in this regard: some of our users choose IRC clients privately hosted by corporations, which can collect and use data from any conversations they are involved in. Even if 100 users use non corporate IRC clients, it only takes one user in the same channel running a privately hosted client offered by a corporation to collect and use the data of these 100 other users without their consent. Hypocritically, we even suggest using {{link|pages/irc/faq?browser|KiwiIRC}} and {{link|pages/irc/faq?bouncer|IRCCloud}} in this FAQ, which might both potentially contribute to this very issue.
+EOT
+);
+___('irc_faq_why_freedom_body_2', 'FR', <<<EOT
+La flexibilité d'IRC est paradoxalement problématique à ce sujet : en vous donnant la liberté d'utiliser le client IRC de votre choix, nous vous laissons la possibilité d'utiliser des clients hébergés par des entreprises, qui peuvent en profiter pour collecter des données. Même si 100 membres d'un canal de discussion IRC utilisent des clients respectant la vie privée, il suffit d'un seul membre utilisant un client hébergé par une entreprise mal intentionnée pour collecter et utiliser les données des conversations de ces 100 autres membres, sans leur consentement. Hypocritement, nous vous suggérons même d'utiliser {{link|pages/irc/faq?browser|KiwiIRC}} et {{link|pages/irc/faq?bouncer|IRCCloud}} dans cette FAQ, qui contribuent potentiellement tous les deux à ce problème.
+EOT
+);
 
-/*********************************************************************************************************************/
-/*                                                                                                                   */
-/*                                                      IRC BOT                                                      */
-/*                                                                                                                   */
-/*********************************************************************************************************************/
+___('irc_faq_why_flex_title',     'EN', "Flexible user experience");
+___('irc_faq_why_flex_title',     'FR', "Expérience d'utilisation flexible");
+___('irc_faq_why_flex_body_1',    'EN', <<<EOT
+As every user chooses their preferred IRC client, you have a freedom to bend IRC's user experience any way you want to and can access IRC on any device or platform of your choice. This used to be extremely important in the early days of NoBleme's IRC server, when the competition (MSN, ICQ, Skype, Goole Talk, etc.) locked you into a forced user experience. Nowadays, most real time chat applications offer various degrees of customization, which allow for a properly flexible user experience.
+EOT
+);
+___('irc_faq_why_flex_body_1',    'FR', <<<EOT
+Étant donné que vous êtes libre de choisir votre client IRC, vous disposez de la possibilité de personnaliser votre expérience d'utilisation d'IRC sur chaque plateforme ou appareil que vous possédez. Cet avantage était beaucoup plus important aux débuts de NoBleme, du temps où les alternatives (MSN, ICQ, Skype, Google Talk, etc.) vous imposaient une expérence d'utilisation unique non personnalisable. De nos jours, ce problème est moins important, car la majorité des alternatives à IRC vous offrent un minimum d'options de personnalisation.
+EOT
+);
+___('irc_faq_why_flex_body_2',    'EN', <<<EOT
+The drawback in IRC's case is that the freedom to customize your user experience means that you actually need to setup and customize your own IRC client. This has a cost in both time and effort, which can be a harsh barrier of entry for some users, and thus turn them away from joining NoBleme's IRC chat. We are very well aware of this issue, and of the cost it has on our community's activity, but are willing to accept that cost.
+EOT
+);
+___('irc_faq_why_flex_body_2',    'FR', <<<EOT
+Dans le cas d'IRC, cet avantage est en partie un inconvénient : la liberté de personnaliser votre expérience d'utilisation implique l'obligation de mettre en place votre propre client IRC. Cela peut avoir un coût en temps et en efforts, créant une barrière d'entrée élevée pour certaines personnes, les démotivant potentiellement d'utiliser le chat IRC NoBleme. Nous sommes au courant de ce problème et de son impact sur l'activité de la communauté, mais choisissons de l'accepter.
+EOT
+);
 
-// Bot action selector
-___('irc_bot_action_title',         'EN', "IRC bot management");
-___('irc_bot_action_title',         'FR', "Gestion du bot IRC");
-___('irc_bot_action_start',         'EN', "Start the bot");
-___('irc_bot_action_start',         'FR', "Démarrer le bot");
-___('irc_bot_action_stop',          'EN', "Stop the bot");
-___('irc_bot_action_stop',          'FR', "Arrêter le bot");
-___('irc_bot_action_silence',       'EN', "Silence the bot");
-___('irc_bot_action_silence',       'FR', "Faire taire le bot");
-___('irc_bot_action_upcoming',      'EN', "Message queue");
-___('irc_bot_action_upcoming',      'FR', "Messages en attente");
-___('irc_bot_action_message_log',   'EN', "Message history");
-___('irc_bot_action_message_log',   'FR', "Historique des messages");
-___('irc_bot_action_send_message',  'EN', "Send a message");
-___('irc_bot_action_send_message',  'FR', "Envoyer un message");
-___('irc_bot_action_specialchars',  'EN', "Special bytes");
-___('irc_bot_action_specialchars',  'FR', "Bytes spéciaux");
+___('irc_faq_why_simple_title',   'EN', "Simplicity: chat comes first");
+___('irc_faq_why_simple_title',   'FR', "Simplicité : la conversation avant tout");
+___('irc_faq_why_simple_body_1',  'EN', <<<EOT
+As IRC is not trying to compete with any other platforms, there is no race to add features. The core of IRC's usage is and will always remain the simple action of chatting with other users. We appreciate this simplicity, and would only consider an alternative that shares this point of view.
+EOT
+);
+___('irc_faq_why_simple_body_1',  'FR', <<<EOT
+IRC n'étant pas en compétition avec d'autres plateformes, il n'y a pas de course à l'amélioration continue. Le cœur de l'utilisation d'IRC est et restera toujours la simple action d'avoir des conversations en temps réel avec d'autres personnes. Nous apprécions cette simplicité, et ne considèrerions que des solutions alternatives partageant ce point de vue.
+EOT
+);
+___('irc_faq_why_simple_body_2',  'EN', <<<EOT
+This does not mean that we reject the quality of life features of other real time chat services. If anything, we wish that IRC could find a way to evolve and integrate some of them (being able to chat in threads and adding emoji reactions to messages might be the two most requested ones). Any alternative to IRC that puts chatting first and does not try to overcomplicate itself with useless features but also embraces modern real time chat features would be welcome and taken into consideration.
+EOT
+);
+___('irc_faq_why_simple_body_2',  'FR', <<<EOT
+Cela ne signifie pas pour autant que nous rejetons les améliorations proposées par d'autres services de communication en temps réel. Au contraire, nous espérons que IRC pourrait un jour évoluer afin d'en intégrer certaines (les plus demandées sont la possibilité de répondre à des messages spécifiques et de rajouter des réactions à des messages sous forme d'emojis). Toute alternative à IRC faisant passer la conversation en premier mais intégrant tout de même quelques fonctionnalités modernes serait appréciée, et pourrait peut-être même remplacer IRC sur NoBleme dans le futur.
+EOT
+);
 
+___('irc_faq_why_habit_title',    'EN', "Force of habit");
+___('irc_faq_why_habit_title',    'FR', "L'habitude");
+___('irc_faq_why_habit_body_1',   'EN', <<<EOT
+When weighing the pros and cons of IRC as NoBleme's real time chat solution, it must be reiterated that we have been using it continuously since 2005, thus our community is simply used to it. For some of us, it is a major aspect of our daily lives, which can not be changed on a whim. Only a strictly superior solution would be considered, with no drawbacks compared to our current usage of IRC.
+EOT
+);
+___('irc_faq_why_habit_body_1',   'FR', <<<EOT
+Lorsque nous pesons les pour et les contre d'IRC en tant que plateforme de communication en temps réel sur NoBleme, il est important de se souvenir que nous l'utilisons de façon ininterrompue depuis 2005. Notre communauté y est habituée, pour certaines personnes il s'agit même d'une partie importante de leur vie quotidienne. Afin de ne pas bousculer des habitudes pour rien, seule une solution strictement supérieure à IRC serait une alternative acceptable.
+EOT
+);
+___('irc_faq_why_habit_body_2',   'EN', <<<EOT
+For those of you who are not convinced by our arguments for IRC but still want to interact with NoBleme's community, you can also find {{link|pages/irc/faq?others|NoBleme on other platforms}} (including the real time chat service Discord). However, IRC will remain the core of NoBleme's community in the foreseeable future, these other platforms are only peripheral services set up to allow those who don't use IRC to keep in touch with NoBleme's activity.
+EOT
+);
+___('irc_faq_why_habit_body_2',   'FR', <<<EOT
+Si nos arguments en faveur d'IRC ne sont pas assez convaincants mais que vous souhaitez tout de même interagir avec la communauté de NoBleme, vous pouvez retrouver {{link|pages/irc/faq?others|NoBleme sur d'autres platformes}} (incluant le service de chat en temps réel Discord). Toutefois, IRC restera le cœur de la communauté de NoBleme dans le futur proche, ces autres plateformes ne sont que des services périphériques mis en place afin de permettre à nos membres qui n'utilisent pas IRC de se tenir au courant de l'activité de NoBleme.
+EOT
+);
 
-// Start the bot
-___('irc_bot_start_warning',  'EN', "Warning: Only do this if the bot is not already currently running.");
-___('irc_bot_start_warning',  'FR', "Avertissement : Il ne faut pas démarrer le bot s'il est déjà présent sur IRC.");
-___('irc_bot_start_starting', 'EN', "The IRC bot is starting…");
-___('irc_bot_start_starting', 'FR', "Le bot IRC est en train de démarrer…");
+___('irc_faq_why_others_title',   'EN', "Alternatives: What will it take to switch?");
+___('irc_faq_why_others_title',   'FR', "Alternatives : Que faudra-t-il pour changer ?");
+___('irc_faq_why_others_body_1',  'EN', <<<EOT
+Every once in a while, we have community driven conversations about switching away from IRC, which so far have always settled on staying on IRC. Even though we currently thrive comfortably on IRC, we are on the lookout for an alternative, and would be open to eventually switching to another platform.
+EOT
+);
+___('irc_faq_why_others_body_1',  'FR', <<<EOT
+Nous avons régulièrement des conversations autour de la pertinence d'IRC comme solution de conversation en temps réel, qui jusque-là sont toujours arrivées à la conclusion que rester sur IRC est la meilleure solution. Même si nous sommes actuellement très confortables sur IRC, nous continuons à regarder les alternatives, et conservons une ouverture d'esprit face à l'idée de potentiellement migrer un jour vers une autre plateforme.
+EOT
+);
+___('irc_faq_why_others_body_2',  'EN', <<<EOT
+Here is a quick rundown on why we did not switch to the most popular alternatives:
+EOT
+);
+___('irc_faq_why_others_body_2',  'FR', <<<EOT
+Voici un résumé de pourquoi nous n'avons pas migré vers les alternatives les plus populaires :
+EOT
+);
+___('irc_faq_why_others_list',    'EN', <<<EOT
+<ul>
+  <li>
+    <span class="bold">Discord, Slack, etc.</span> are privately owned, collect user data, and can not be hosted on NoBleme.
+  </li>
+  <li>
+    <span class="bold">Matrix, Mattermost, Riot, etc.</span> do not add enough in comparison to IRC to warrant the switch.
+  </li>
+  <li>
+    <span class="bold">Telegram, Signal, etc.</span> are linked to your identity and require a mobile device.
+  </li>
+</ul>
+EOT
+);
+___('irc_faq_why_others_list',    'FR', <<<EOT
+<ul>
+  <li>
+    <span class="bold">Discord, Slack, etc.</span> sont privés, collectent les données personnelles, et ne peuvent pas être hébergés sur les serveurs de NoBleme.
+  </li>
+  <li>
+    <span class="bold">Matrix, Mattermost, Riot, etc.</span> n'ajoutent pas assez de fonctionnalités dont IRC ne dispose pas pour nous convaincre de migrer vers ces plateformes.
+  </li>
+  <li>
+    <span class="bold">Telegram, Signal, etc.</span> sont liés à votre identité et requièrent un appareil mobile.
+  </li>
+</ul>
+EOT
+);
 
-___('irc_bot_start_disabled', 'EN', "Error: The IRC bot is disabled in global settings.");
-___('irc_bot_start_disabled', 'FR', "Erreur : Le bot IRC est désactivé dans les réglages globaux.");
-___('irc_bot_start_no_file',  'EN', "Error: The IRC bot file must exist.");
-___('irc_bot_start_no_file',  'FR', "Erreur : Le fichier du bot IRC doit exister.");
-___('irc_bot_start_failed',   'EN', "Error: Connexion to IRC server failed.");
-___('irc_bot_start_failed',   'FR', "Erreur : La connexion au serveur IRC a échoué.");
-
-
-// Stop the bot
-___('irc_bot_stopped', 'EN', "The IRC bot has been stopped.");
-___('irc_bot_stopped', 'FR', "Le bot IRC a été arrêté.");
-
-
-// Silence the bot
-___('irc_bot_mute',   'EN', "Silence the IRC bot");
-___('irc_bot_mute',   'FR', "Faire taire le bot IRC");
-___('irc_bot_unmute', 'EN', "Reactivate the IRC bot");
-___('irc_bot_unmute', 'FR', "Réactiver le bot IRC");
-
-
-// Upcoming messages
-___('irc_bot_upcoming_empty',         'EN', "There are no upcoming messages, the IRC bot is probably currently running.");
-___('irc_bot_upcoming_empty',         'FR', "Il n'y a aucun message en attente, le bot IRC est probablement actif.");
-___('irc_bot_upcoming_purge',         'EN', "PURGE THE WHOLE QUEUE");
-___('irc_bot_upcoming_purge',         'FR', "PURGER TOUTE LA QUEUE");
-___('irc_bot_upcoming_confirm_purge', 'EN', "Confirm that you want to purge the full IRC bot message queue.");
-___('irc_bot_upcoming_confirm_purge', 'FR', "Confirmez que vous voulez purger l\'intégralité de la queue de messages du bot IRC.");
-___('irc_bot_upcoming_purged',        'EN', "The IRC bot's message queue has successfully been purged.");
-___('irc_bot_upcoming_purged',        'FR', "La queue de messages du bot IRC a bien été purgée.");
-
-
-// Message history
-___('irc_bot_history_channel',        'EN', "Channel");
-___('irc_bot_history_channel',        'FR', "Canal");
-___('irc_bot_history_nochan',         'EN', "----");
-___('irc_bot_history_nochan',         'FR', "----");
-___('irc_bot_history_silenced',       'EN', "Silenced");
-___('irc_bot_history_silenced',       'FR', "Silencieux");
-___('irc_bot_history_sent',           'EN', "Sent");
-___('irc_bot_history_sent',           'FR', "Envoyés");
-___('irc_bot_history_failed',         'EN', "Failed");
-___('irc_bot_history_failed',         'FR', "Échec");
-
-___('irc_bot_history_confirm_delete', 'EN', "Confirm permanent deletion of this log: ");
-___('irc_bot_history_confirm_delete', 'FR', "Confirmer la suppression définitive de ce message : ");
-___('irc_bot_history_resend',         'EN', "Resend");
-___('irc_bot_history_resend',         'FR', "Renvoyer");
-___('irc_bot_history_confirm_replay', 'EN', "Confirm that you want to replay this log: ");
-___('irc_bot_history_confirm_replay', 'FR', "Confirmer vouloir rejouer ce message : ");
-
-
-// Send a message
-___('irc_bot_message_body',     'EN', "Send a message on IRC through the bot");
-___('irc_bot_message_body',     'FR', "Envoyer un message sur IRC via le bot");
-___('irc_bot_message_channel',  'EN', "[OPTIONAL] Send the message on this channel");
-___('irc_bot_message_channel',  'FR', "[OPTIONNEL] Envoyer le message sur ce canal");
-___('irc_bot_message_user',     'EN', "[OPTIONAL] Send the message to this user");
-___('irc_bot_message_user',     'FR', "[OPTIONNEL] Envoyer le message à cet utilisateur");
-___('irc_bot_message_send',     'EN', "Send the message");
-___('irc_bot_message_send',     'FR', "Envoyer the message");
-
-
-// Special bytes
-___('irc_bot_bytes_effect',           'EN', "EFFECT");
-___('irc_bot_bytes_effect',           'FR', "EFFET");
-___('irc_bot_bytes_character',        'EN', "CHARACTER");
-___('irc_bot_bytes_character',        'FR', "CARACTÈRE");
-___('irc_bot_bytes_bytes',            'EN', "PHP CODE");
-___('irc_bot_bytes_bytes',            'FR', "CODE PHP");
-
-___('irc_bot_bytes_reset',            'EN', "Reset to default style");
-___('irc_bot_bytes_reset',            'FR', "Remise à zéro du style");
-___('irc_bot_bytes_bold',             'EN', "Bold");
-___('irc_bot_bytes_bold',             'FR', "Bold");
-___('irc_bot_bytes_italics',          'EN', "Italics");
-___('irc_bot_bytes_italics',          'FR', "Italique");
-___('irc_bot_bytes_underlined',       'EN', "Underlined");
-___('irc_bot_bytes_underlined',       'FR', "Souligné");
-___('irc_bot_bytes_text_white',       'EN', "Text color: White");
-___('irc_bot_bytes_text_white',       'FR', "Couleur du texte : Blanc");
-___('irc_bot_bytes_text_black',       'EN', "Text color: Black");
-___('irc_bot_bytes_text_black',       'FR', "Couleur du texte : Noir");
-___('irc_bot_bytes_text_blue',        'EN', "Text color: Blue");
-___('irc_bot_bytes_text_blue',        'FR', "Couleur du texte : Bleu");
-___('irc_bot_bytes_text_green',       'EN', "Text color: Green");
-___('irc_bot_bytes_text_green',       'FR', "Couleur du texte : Vert");
-___('irc_bot_bytes_text_red',         'EN', "Text color: Red");
-___('irc_bot_bytes_text_red',         'FR', "Couleur du texte : Rouge");
-___('irc_bot_bytes_text_brown',       'EN', "Text color: Brown");
-___('irc_bot_bytes_text_brown',       'FR', "Couleur du texte : Marron");
-___('irc_bot_bytes_text_purple',      'EN', "Text color: Purple");
-___('irc_bot_bytes_text_purple',      'FR', "Couleur du texte : Violet");
-___('irc_bot_bytes_text_orange',      'EN', "Text color: Orange");
-___('irc_bot_bytes_text_orange',      'FR', "Couleur du texte : Orange");
-___('irc_bot_bytes_text_yellow',      'EN', "Text color: Yellow");
-___('irc_bot_bytes_text_yellow',      'FR', "Couleur du texte : Jaune");
-___('irc_bot_bytes_text_light_green', 'EN', "Text color: Light green");
-___('irc_bot_bytes_text_light_green', 'FR', "Couleur du texte : Vert clair");
-___('irc_bot_bytes_text_teal',        'EN', "Text color: Teal");
-___('irc_bot_bytes_text_teal',        'FR', "Couleur du texte : Bleu-vert");
-___('irc_bot_bytes_text_light_cyan',  'EN', "Text color: Light cyan");
-___('irc_bot_bytes_text_light_cyan',  'FR', "Couleur du texte : Cyan clair");
-___('irc_bot_bytes_text_light_blue',  'EN', "Text color: Light blue");
-___('irc_bot_bytes_text_light_blue',  'FR', "Couleur du texte : Bleu clair");
-___('irc_bot_bytes_text_pink',        'EN', "Text color: Pink");
-___('irc_bot_bytes_text_pink',        'FR', "Couleur du texte : Rose");
-___('irc_bot_bytes_text_grey',        'EN', "Text color: Grey");
-___('irc_bot_bytes_text_grey',        'FR', "Couleur du texte : Gris");
-___('irc_bot_bytes_black_white',      'EN', "Bold white on black");
-___('irc_bot_bytes_black_white',      'FR', "Blanc gras sur fond noir");
-___('irc_bot_bytes_troll',            'EN', "Troll (brutal color contrast)");
-___('irc_bot_bytes_troll',            'FR', "Troll (contraste brutal)");
+___('irc_faq_why_summary_title',  'EN', "In summary…");
+___('irc_faq_why_summary_title',  'FR', "En résumé…");
+___('irc_faq_why_summary_body_1', 'EN', <<<EOT
+Taking all these elements in consideration, it is very likely that we will not switch from IRC to another real time chat service anytime soon. We acknowledge that the barrier of entry can seem high to new users, and are aware that IRC has quality of life limitations compared to more modern solutions, but also consider IRC to be good enough for us currently thanks to an ever evolving ecosystem of modern IRC clients.
+EOT
+);
+___('irc_faq_why_summary_body_1', 'FR', <<<EOT
+En prenant tous ces éléments en considération, il est très probable que nous continuions à utiliser IRC comme solution de communication en temps réel à long terme. Nous reconnaissons que la barrière d'entrée peut être effrayante si vous ne connaissez pas encore IRC, et reconnaissons également que IRC ne contient pas autant de fonctionnalités que d'autres alternatives. Toutefois, nous considérons IRC comme étant actuellement la bonne solution pour notre communauté.
+EOT
+);
+___('irc_faq_why_summary_body_2', 'EN', <<<EOT
+If you are scared by the barrier of entry, or do not wish to use IRC because it feels outdated, know that we understand your frustration, but be aware that we have no plan to change platform. It will remain the heart of NoBleme's community in the foreseeable future. You can still keep up with NoBleme's activity and interact with some of our community members on {{link|pages/irc/faq?others|other platforms}}, including real time chat on Discord.
+EOT
+);
+___('irc_faq_why_summary_body_2', 'FR', <<<EOT
+Si la barrière d'entrée vous repousse, ou si vous ne voulez pas utiliser IRC pour une raison quelconque, sachez que nous comprenons votre frustration, mais sachez également que nous ne prévoyons actuellement pas de changer de plateforme : IRC restera le cœur de la communauté de NoBleme dans le futur proche. Vous pouvez suivre l'activité de NoBleme et interagir avec une partie de sa communauté sur {{link|pages/irc/faq?others|d'autres plateformes}}, incluant le service de chat en temps réel Discord
+EOT
+);

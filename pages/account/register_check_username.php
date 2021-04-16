@@ -25,7 +25,7 @@ user_restrict_to_guests();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Check whether the username exists
 
-// Sanitize postdata
+// Fetch postdata
 $check_username = form_fetch_element('register_username');
 
 // Check if the username is legal

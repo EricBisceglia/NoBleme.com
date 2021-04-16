@@ -13,6 +13,9 @@ $page_title_en    = "IRC chat";
 $page_title_fr    = "Chat IRC";
 $page_description = "NoBleme's primary communication method, our real time IRC chat server";
 
+// Extra JS
+$js = array('irc/faq', 'common/toggle');
+
 
 
 
@@ -23,7 +26,36 @@ $page_description = "NoBleme's primary communication method, our real time IRC c
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
+// Display the correct FAQ section
+
+// Prepare a list of all FAQ sections
+$irc_faq_sections = array('main', 'why', 'browser', 'client', 'bouncer', 'guide', 'commands', 'nickserv', 'chanserv', 'bots', 'channels', 'others');
+
+// Prepare the CSS for each FAQ section
+foreach($irc_faq_sections as $irc_faq_section_name)
+{
+  // If a FAQ section is selected, display it and select the correct dropdown menu entry
+  if(!isset($irc_faq_section_is_selected) && isset($_GET[$irc_faq_section_name]))
+  {
+    $irc_faq_section_is_selected              = true;
+    $irc_faq_hide[$irc_faq_section_name]      = '';
+    $irc_faq_selected[$irc_faq_section_name]  = ' selected';
+  }
+
+  // Hide every other FAQ section
+  else
+  {
+    $irc_faq_hide[$irc_faq_section_name]      = ' hidden';
+    $irc_faq_selected[$irc_faq_section_name]  = '';
+  }
+}
+
+// If no FAQ section is selected, select the main one by default
+if(!isset($irc_faq_section_is_selected))
+{
+  $irc_faq_hide['main']     = '';
+  $irc_faq_selected['main'] = ' selected';
+}
 
 
 
@@ -43,25 +75,29 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <form method="POST">
     <fieldset>
       <h5 class="smallpadding_bot">
-        <select class="inh align_left">
-          <option value="main"><?=__('irc_faq_select_main')?></option>
-          <option value="why"><?=__('irc_faq_select_why')?></option>
-          <option value="browser"><?=__('irc_faq_select_browser')?></option>
-          <option value="client"><?=__('irc_faq_select_client')?></option>
-          <option value="bouncer"><?=__('irc_faq_select_bouncer')?></option>
-          <option value="guide"><?=__('irc_faq_select_guide')?></option>
-          <option value="commands"><?=__('irc_faq_select_commands')?></option>
-          <option value="nickserv"><?=__('irc_faq_select_nickserv')?></option>
-          <option value="chanserv"><?=__('irc_faq_select_chanserv')?></option>
-          <option value="bots"><?=__('irc_faq_select_bots')?></option>
-          <option value="channels"><?=__('irc_faq_select_channels')?></option>
-          <option value="others"><?=__('irc_faq_select_others')?></option>
+        <select class="inh align_left" id="irc_faq_section_selector" onchange="irc_faq_display_section();">
+          <option value="main"<?=$irc_faq_selected['main']?>><?=__('irc_faq_select_main')?></option>
+          <option value="why"<?=$irc_faq_selected['why']?>><?=__('irc_faq_select_why')?></option>
+          <option value="browser"<?=$irc_faq_selected['browser']?>><?=__('irc_faq_select_browser')?></option>
+          <option value="client"<?=$irc_faq_selected['client']?>><?=__('irc_faq_select_client')?></option>
+          <option value="bouncer"<?=$irc_faq_selected['bouncer']?>><?=__('irc_faq_select_bouncer')?></option>
+          <option value="guide"<?=$irc_faq_selected['guide']?>><?=__('irc_faq_select_guide')?></option>
+          <option value="commands"<?=$irc_faq_selected['commands']?>><?=__('irc_faq_select_commands')?></option>
+          <option value="nickserv"<?=$irc_faq_selected['nickserv']?>><?=__('irc_faq_select_nickserv')?></option>
+          <option value="chanserv"<?=$irc_faq_selected['chanserv']?>><?=__('irc_faq_select_chanserv')?></option>
+          <option value="bots"<?=$irc_faq_selected['bots']?>><?=__('irc_faq_select_bots')?></option>
+          <option value="channels"<?=$irc_faq_selected['channels']?>><?=__('irc_faq_select_channels')?></option>
+          <option value="others"<?=$irc_faq_selected['others']?>><?=__('irc_faq_select_others')?></option>
         </select>
       </h5>
     </fieldset>
   </form>
 
-  <div class="irc_faq_section irc_faq_main">
+
+  <?php /************************************************ MAIN ****************************************************/ ?>
+
+
+  <div class="irc_faq_section<?=$irc_faq_hide['main']?>" id="irc_faq_main">
 
     <p>
       <?=__('irc_faq_main_body')?>
@@ -174,6 +210,96 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <p>
       <span class="text_red bold indented"><?=__('irc_faq_question_11')?></span><br>
       <?=__('irc_faq_answer_11')?>
+    </p>
+
+  </div>
+
+
+  <?php /*********************************************** WHY IRC **************************************************/ ?>
+
+
+  <div class="irc_faq_section<?=$irc_faq_hide['why']?>" id="irc_faq_why">
+
+    <p>
+      <?=__('irc_faq_why_body_1')?>
+    </p>
+
+    <p>
+      <?=__('irc_faq_why_body_2')?>
+    </p>
+
+    <h5 class="bigpadding_top">
+      <?=__('irc_faq_why_freedom_title')?>
+    </h5>
+
+    <p>
+      <?=__('irc_faq_why_freedom_body_1')?>
+    </p>
+
+    <p>
+      <?=__('irc_faq_why_freedom_body_2')?>
+    </p>
+
+    <h5 class="bigpadding_top">
+      <?=__('irc_faq_why_flex_title')?>
+    </h5>
+
+    <p>
+      <?=__('irc_faq_why_flex_body_1')?>
+    </p>
+
+    <p>
+      <?=__('irc_faq_why_flex_body_2')?>
+    </p>
+
+    <h5 class="bigpadding_top">
+      <?=__('irc_faq_why_simple_title')?>
+    </h5>
+
+    <p>
+      <?=__('irc_faq_why_simple_body_1')?>
+    </p>
+
+    <p>
+      <?=__('irc_faq_why_simple_body_2')?>
+    </p>
+
+    <h5 class="bigpadding_top">
+      <?=__('irc_faq_why_habit_title')?>
+    </h5>
+
+    <p>
+      <?=__('irc_faq_why_habit_body_1')?>
+    </p>
+
+    <p>
+      <?=__('irc_faq_why_habit_body_2')?>
+    </p>
+
+    <h5 class="bigpadding_top">
+      <?=__('irc_faq_why_others_title')?>
+    </h5>
+
+    <p>
+      <?=__('irc_faq_why_others_body_1')?>
+    </p>
+
+    <p>
+      <?=__('irc_faq_why_others_body_2')?>
+    </p>
+
+    <?=__('irc_faq_why_others_list')?>
+
+    <h5 class="bigpadding_top">
+      <?=__('irc_faq_why_summary_title')?>
+    </h5>
+
+    <p>
+      <?=__('irc_faq_why_summary_body_1')?>
+    </p>
+
+    <p>
+      <?=__('irc_faq_why_summary_body_2')?>
     </p>
 
   </div>
