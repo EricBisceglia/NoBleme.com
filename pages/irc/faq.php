@@ -13,8 +13,9 @@ $page_title_en    = "IRC chat";
 $page_title_fr    = "Chat IRC";
 $page_description = "NoBleme's primary communication method, our real time IRC chat server";
 
-// Extra JS
-$js = array('irc/faq', 'common/toggle');
+// Extra CSS & JS
+$css  = array('irc');
+$js   = array('irc/faq', 'common/toggle');
 
 
 
@@ -93,216 +94,227 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </fieldset>
   </form>
 
+</div>
+
 
   <?php /************************************************ MAIN ****************************************************/ ?>
 
+<div class="width_50 irc_faq_section<?=$irc_faq_hide['main']?>" id="irc_faq_main">
 
-  <div class="irc_faq_section<?=$irc_faq_hide['main']?>" id="irc_faq_main">
+  <p>
+    <?=__('irc_faq_main_body')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_main_body')?>
-    </p>
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_main_what_title')?>
+  </h5>
 
-    <h5 class="bigpadding_top">
-      <?=__('irc_faq_main_what_title')?>
-    </h5>
+  <p>
+    <?=__('irc_faq_main_what_1')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_main_what_1')?>
-    </p>
+  <p>
+    <?=__('irc_faq_main_what_2')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_main_what_2')?>
-    </p>
+  <div class="flexcontainer padding_top">
 
-    <div class="flexcontainer padding_top">
-
-      <div class="flex align_right bold spaced_right monospace">
-        <?=__('irc_faq_main_what_server')?><br>
-        <?=__('irc_faq_main_what_port')?><br>
-        <?=__('irc_faq_main_what_channel')?><br>
-        <?=__('irc_faq_main_what_encoding')?>
-      </div>
-
-      <div class="spaced_left monospace" style="flex:5">
-        <?=__('irc_faq_main_what_url')?><br>
-        <?=__('irc_faq_main_what_ports')?><br>
-        <?=__('irc_faq_main_what_hub')?><br>
-        <?=__('irc_faq_main_what_utf')?>
-      </div>
-
+    <div class="flex align_right bold spaced_right monospace">
+      <?=__('irc_faq_main_what_server')?><br>
+      <?=__('irc_faq_main_what_port')?><br>
+      <?=__('irc_faq_main_what_channel')?><br>
+      <?=__('irc_faq_main_what_encoding')?>
     </div>
 
-    <h5 class="bigpadding_top">
-      <?=__('irc_faq_main_join_title')?>
-    </h5>
-
-    <p>
-      <?=__('irc_faq_main_join_1')?>
-    </p>
-
-    <p>
-      <?=__('irc_faq_main_join_2')?>
-    </p>
-
-    <p>
-      <?=__('irc_faq_main_join_3')?>
-    </p>
-
-    <p>
-      <?=__('irc_faq_main_join_4')?>
-    </p>
-
-    <h5 class="bigpadding_top">
-      <?=__('irc_faq_questions_title')?>
-    </h5>
-
-    <p>
-      <span class="text_red bold indented"><?=__('irc_faq_question_1')?></span><br>
-      <?=__('irc_faq_answer_1')?>
-    </p>
-
-    <p>
-      <span class="text_red bold indented"><?=__('irc_faq_question_2')?></span><br>
-      <?=__('irc_faq_answer_2')?>
-    </p>
-
-    <p>
-      <span class="text_red bold indented"><?=__('irc_faq_question_3')?></span><br>
-      <?=__('irc_faq_answer_3')?>
-    </p>
-
-    <p>
-      <span class="text_red bold indented"><?=__('irc_faq_question_4')?></span><br>
-      <?=__('irc_faq_answer_4')?>
-    </p>
-
-    <p>
-      <span class="text_red bold indented"><?=__('irc_faq_question_5')?></span><br>
-      <?=__('irc_faq_answer_5')?>
-    </p>
-
-    <p>
-      <span class="text_red bold indented"><?=__('irc_faq_question_6')?></span><br>
-      <?=__('irc_faq_answer_6')?>
-    </p>
-
-    <p>
-      <span class="text_red bold indented"><?=__('irc_faq_question_7')?></span><br>
-      <?=__('irc_faq_answer_7')?>
-    </p>
-
-    <p>
-      <span class="text_red bold indented"><?=__('irc_faq_question_8')?></span><br>
-      <?=__('irc_faq_answer_8')?>
-    </p>
-
-    <p>
-      <span class="text_red bold indented"><?=__('irc_faq_question_9')?></span><br>
-      <?=__('irc_faq_answer_9')?>
-    </p>
-
-    <p>
-      <span class="text_red bold indented"><?=__('irc_faq_question_10')?></span><br>
-      <?=__('irc_faq_answer_10')?>
-    </p>
-
-    <p>
-      <span class="text_red bold indented"><?=__('irc_faq_question_11')?></span><br>
-      <?=__('irc_faq_answer_11')?>
-    </p>
+    <div class="spaced_left monospace" style="flex:5">
+      <?=__('irc_faq_main_what_url')?><br>
+      <?=__('irc_faq_main_what_ports')?><br>
+      <?=__('irc_faq_main_what_hub')?><br>
+      <?=__('irc_faq_main_what_utf')?>
+    </div>
 
   </div>
 
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_main_join_title')?>
+  </h5>
 
-  <?php /*********************************************** WHY IRC **************************************************/ ?>
+  <p>
+    <?=__('irc_faq_main_join_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_main_join_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_main_join_3')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_main_join_4')?>
+  </p>
+
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_questions_title')?>
+  </h5>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_question_1')?></span><br>
+    <?=__('irc_faq_answer_1')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_question_2')?></span><br>
+    <?=__('irc_faq_answer_2')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_question_3')?></span><br>
+    <?=__('irc_faq_answer_3')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_question_4')?></span><br>
+    <?=__('irc_faq_answer_4')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_question_5')?></span><br>
+    <?=__('irc_faq_answer_5')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_question_6')?></span><br>
+    <?=__('irc_faq_answer_6')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_question_7')?></span><br>
+    <?=__('irc_faq_answer_7')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_question_8')?></span><br>
+    <?=__('irc_faq_answer_8')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_question_9')?></span><br>
+    <?=__('irc_faq_answer_9')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_question_10')?></span><br>
+    <?=__('irc_faq_answer_10')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_question_11')?></span><br>
+    <?=__('irc_faq_answer_11')?>
+  </p>
+
+</div>
 
 
-  <div class="irc_faq_section<?=$irc_faq_hide['why']?>" id="irc_faq_why">
+<?php /************************************************ WHY IRC ***************************************************/ ?>
 
-    <p>
-      <?=__('irc_faq_why_body_1')?>
-    </p>
 
-    <p>
-      <?=__('irc_faq_why_body_2')?>
-    </p>
+<div class="width_50 irc_faq_section<?=$irc_faq_hide['why']?>" id="irc_faq_why">
 
-    <h5 class="bigpadding_top">
-      <?=__('irc_faq_why_freedom_title')?>
-    </h5>
+  <p>
+    <?=__('irc_faq_why_body_1')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_why_freedom_body_1')?>
-    </p>
+  <p>
+    <?=__('irc_faq_why_body_2')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_why_freedom_body_2')?>
-    </p>
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_why_freedom_title')?>
+  </h5>
 
-    <h5 class="bigpadding_top">
-      <?=__('irc_faq_why_flex_title')?>
-    </h5>
+  <p>
+    <?=__('irc_faq_why_freedom_body_1')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_why_flex_body_1')?>
-    </p>
+  <p>
+    <?=__('irc_faq_why_freedom_body_2')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_why_flex_body_2')?>
-    </p>
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_why_flex_title')?>
+  </h5>
 
-    <h5 class="bigpadding_top">
-      <?=__('irc_faq_why_simple_title')?>
-    </h5>
+  <p>
+    <?=__('irc_faq_why_flex_body_1')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_why_simple_body_1')?>
-    </p>
+  <p>
+    <?=__('irc_faq_why_flex_body_2')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_why_simple_body_2')?>
-    </p>
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_why_simple_title')?>
+  </h5>
 
-    <h5 class="bigpadding_top">
-      <?=__('irc_faq_why_habit_title')?>
-    </h5>
+  <p>
+    <?=__('irc_faq_why_simple_body_1')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_why_habit_body_1')?>
-    </p>
+  <p>
+    <?=__('irc_faq_why_simple_body_2')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_why_habit_body_2')?>
-    </p>
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_why_habit_title')?>
+  </h5>
 
-    <h5 class="bigpadding_top">
-      <?=__('irc_faq_why_others_title')?>
-    </h5>
+  <p>
+    <?=__('irc_faq_why_habit_body_1')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_why_others_body_1')?>
-    </p>
+  <p>
+    <?=__('irc_faq_why_habit_body_2')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_why_others_body_2')?>
-    </p>
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_why_others_title')?>
+  </h5>
 
-    <?=__('irc_faq_why_others_list')?>
+  <p>
+    <?=__('irc_faq_why_others_body_1')?>
+  </p>
 
-    <h5 class="bigpadding_top">
-      <?=__('irc_faq_why_summary_title')?>
-    </h5>
+  <p>
+    <?=__('irc_faq_why_others_body_2')?>
+  </p>
 
-    <p>
-      <?=__('irc_faq_why_summary_body_1')?>
-    </p>
+  <?=__('irc_faq_why_others_list')?>
 
-    <p>
-      <?=__('irc_faq_why_summary_body_2')?>
-    </p>
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_why_summary_title')?>
+  </h5>
 
-  </div>
+  <p>
+    <?=__('irc_faq_why_summary_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_why_summary_body_2')?>
+  </p>
+
+</div>
+
+<?php /************************************************ BROWSER ***************************************************/ ?>
+
+<div class="width_70 padding_top irc_faq_section<?=$irc_faq_hide['browser']?>" id="irc_faq_browser">
+
+  <?php if($lang == 'EN') { ?>
+  <iframe src="https://kiwiirc.com/nextclient/?settings=dca8185023da919202f75b203494ecfc" class="indiv irc_client_iframe"></iframe>
+  <?php } else { ?>
+  <iframe src="https://kiwiirc.com/nextclient/?settings=f86b3e065d655e569e30eb214cbf0d6f" class="indiv irc_client_iframe"></iframe>
+  <?php } ?>
 
 </div>
 
