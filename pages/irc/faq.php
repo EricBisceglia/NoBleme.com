@@ -96,8 +96,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
-
-  <?php /************************************************ MAIN ****************************************************/ ?>
+<?php /************************************************ MAIN ****************************************************/ ?>
 
 <div class="width_50 irc_faq_section<?=$irc_faq_hide['main']?>" id="irc_faq_main">
 
@@ -216,9 +215,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
-
 <?php /************************************************ WHY IRC ***************************************************/ ?>
-
 
 <div class="width_50 irc_faq_section<?=$irc_faq_hide['why']?>" id="irc_faq_why">
 
@@ -311,10 +308,114 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_70 padding_top irc_faq_section<?=$irc_faq_hide['browser']?>" id="irc_faq_browser">
 
   <?php if($lang == 'EN') { ?>
-  <iframe src="https://kiwiirc.com/nextclient/?settings=dca8185023da919202f75b203494ecfc" class="indiv irc_client_iframe"></iframe>
+  <iframe src="https://kiwiirc.com/nextclient/?settings=d88c482df59c1ae0cca6627751a32973" class="indiv irc_client_iframe"></iframe>
   <?php } else { ?>
-  <iframe src="https://kiwiirc.com/nextclient/?settings=f86b3e065d655e569e30eb214cbf0d6f" class="indiv irc_client_iframe"></iframe>
+  <iframe src="https://kiwiirc.com/nextclient/?settings=5f080fa3340afd85b53f47188d628b10" class="indiv irc_client_iframe"></iframe>
   <?php } ?>
+
+</div>
+
+<?php /************************************************* CLIENT ***************************************************/ ?>
+
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['client']?>" id="irc_faq_client">
+
+  <p>
+    <?=__('irc_faq_client_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_client_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_client_body_3')?>
+  </p>
+
+  <div class="flexcontainer padding_top">
+
+    <div class="flex align_right bold spaced_right monospace">
+      <?=__('irc_faq_main_what_server')?><br>
+      <?=__('irc_faq_main_what_port')?><br>
+      <?=__('irc_faq_main_what_channel')?><br>
+      <?=__('irc_faq_main_what_encoding')?>
+    </div>
+
+    <div class="spaced_left monospace" style="flex:5">
+      <?=__('irc_faq_main_what_url')?><br>
+      <?=__('irc_faq_main_what_ports')?><br>
+      <?=__('irc_faq_main_what_hub')?><br>
+      <?=__('irc_faq_main_what_utf')?>
+    </div>
+
+  </div>
+
+  <p>
+    <?=__('irc_faq_client_body_4')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_client_body_5')?>
+  </p>
+
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_client_web_title')?>
+  </h5>
+
+  <p>
+    <?=__('irc_faq_client_web_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_client_web_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_client_web_body_3')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_client_web_body_4')?>
+  </p>
+
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_client_computer_title')?>
+  </h5>
+
+  <p>
+    <?=__('irc_faq_client_computer_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_client_computer_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_client_computer_body_3')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_client_computer_body_4')?>
+  </p>
+
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_client_mobile_title')?>
+  </h5>
+
+  <p>
+    <?=__('irc_faq_client_mobile_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_client_mobile_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_client_mobile_body_3')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_client_mobile_body_4')?>
+  </p>
 
 </div>
 

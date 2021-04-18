@@ -541,3 +541,151 @@ ___('irc_faq_why_summary_body_2', 'FR', <<<EOT
 Si la barrière d'entrée vous repousse, ou si vous ne voulez pas utiliser IRC pour une raison quelconque, sachez que nous comprenons votre frustration, mais sachez également que nous ne prévoyons actuellement pas de changer de plateforme : IRC restera le cœur de la communauté de NoBleme dans le futur proche. Vous pouvez suivre l'activité de NoBleme et interagir avec une partie de sa communauté sur {{link|pages/irc/faq?others|d'autres plateformes}}, incluant le service de chat en temps réel Discord
 EOT
 );
+
+
+// FAQ: IRC client
+___('irc_faq_client_body_1',          'EN', <<<EOT
+Our {{link|pages/irc/faq?browser|browser client}} allows you to easily take part in the conversation, but it lacks all of the customization options that you were promised existed within IRC. This issue is resolved by installing your own IRC client on your devices, or by using a more customizable web client.
+EOT
+);
+___('irc_faq_client_body_1',          'FR', <<<EOT
+Notre {{link|pages/irc/faq?browser|client navigateur}} vous permet de facilement rejoindre la conversation, mais ne vous propose pas les options de personnalisation de votre expérience d'utilisation d'IRC que vous pourrez trouver en installant un client IRC, ou en utilisant un client navigateur plus avancé.
+EOT
+);
+___('irc_faq_client_body_2',          'EN', <<<EOT
+There exists a huge number of IRC clients, each with their own features (or lack thereof). This page is going to suggest a few popular IRC clients for each platform / operating system. If the suggested ones don't fulfill your needs, feel free to look up alternatives, there is no client specific limitation in place on NoBleme's IRC server.
+EOT
+);
+___('irc_faq_client_body_2',          'FR', <<<EOT
+Un grand nombre de clients IRC existent, disposant chacun de leurs propres fonctionnalités spécifiques. Cette page vous suggèrera quelques clients IRC populaires pour chaque plateforme. Si les clients suggérés ne satisfont pas vos attentes, vous pouvez en chercher d'autres : il n'existe aucune restriction d'utilisation de clients spécifiques sur le serveur IRC NoBleme.
+EOT
+);
+___('irc_faq_client_body_3',          'EN', <<<EOT
+Regardless of which client you choose to use, you will need to input the following connection information in order to make it connect to NoBleme's IRC server:
+EOT
+);
+___('irc_faq_client_body_3',          'FR', <<<EOT
+Une fois votre client IRC choisi, vous aurez besoin d'y rentrer les informations de connection suivantes afin de rejoindre le serveur IRC NoBleme :
+EOT
+);
+___('irc_faq_client_body_4',          'EN', <<<EOT
+Once connected to NoBleme's IRC server, you might want to browse the {{link|pages/irc/faq?channels|channel list}} in order to join all channels that could be of interest to you, and to {{link|pages/irc/faq?nickserv|register your nickname}} in order to gain ownership of your nickname on the server and have access to a few useful features.
+EOT
+);
+___('irc_faq_client_body_4',          'FR', <<<EOT
+Une fois votre client configuré, vous pourrez ensuite parcourir la {{link|pages/irc/faq?channels|liste des canaux}} afin de rejoindre les conversations qui pourraient vous intéresser, et {{link|pages/irc/faq?nickserv|enregistrer votre pseudonyme}} afin d'avoir l'exclusivité de l'utilisation de votre pseudonyme sur le serveur IRC NoBleme.
+EOT
+);
+___('irc_faq_client_body_5',          'EN', <<<EOT
+If you get confused or stuck in the process of setting up your IRC client, feel free to ask for help using the {{link|pages/irc/faq?browser|browser client}}. If anyone is around, it is very likely that they will do their best to help you out. If not, be patient, someone will eventually show up.
+EOT
+);
+___('irc_faq_client_body_5',          'FR', <<<EOT
+Si une étape du processus de configuration d'un client IRC vous semble confuse ou vous bloque, n'hésitez pas à utiliser le {{link|pages/irc/faq?browser|client navigateur}} pour poser des questions. Si quelqu'un est dans les parages au moment où vous demandez, il est très probable que cette personne essaye de vous aider. Si personne ne vous répond, faites preuve de patience et quelqu'un finira par arriver.
+EOT
+);
+
+___('irc_faq_client_web_title',       'EN', "Third party web clients");
+___('irc_faq_client_web_title',       'FR', "Clients navigateur");
+___('irc_faq_client_web_body_1',      'EN', <<<EOT
+Web clients have the advantage of not requiring you to install anything on your computer. All you need to do is create an account on a website, which will then remember your customization options.
+EOT
+);
+___('irc_faq_client_web_body_1',      'FR', <<<EOT
+Utiliser un client IRC dans votre navigateur a l'avantage de ne pas nécessiter l'installation d'un programme ou d'une application sur vos appareils. Tout ce que vous avez à faire est créer un compte sur un site Internet, qui retiendra ensuite vos options de personnalisation.
+EOT
+);
+___('irc_faq_client_web_body_2',      'EN', <<<EOT
+A major downside to this simplicity however is that these clients are hosted by third party websites, which might exploit your user data, or even monitor your conversations. On top of that, you are relying on their website to stay online at all times, any downtime of their platform will mean that you are unable to access IRC during that time - or even permanently if their platform ever shuts down.
+EOT
+);
+___('irc_faq_client_web_body_2',      'FR', <<<EOT
+La cotrepartie de cette simplicité est que ces clients sont hébergés sur des sites tiers, qui peuvent potentiellement collecter et utiliser vos données personnelles, voir même monitorer vos conversations. De plus, vous devez compter sur la disponibilité de leur plateforme : si leur site est KO, votre accès à IRC sera également KO pendant ce temps.
+EOT
+);
+___('irc_faq_client_web_body_3',      'EN', <<<EOT
+{{external|https://www.irccloud.com|IRCCloud}} is a solid web client with a highly customizable user experience and a lot of modern features. It also comes with partial {{link|pages/irc/faq?bouncer|bouncer}} capabilities and high quality mobile applications for Android and iOS. There is an optional paying service which acts as a full time {{link|pages/irc/faq?bouncer|bouncer}}, but worry not, the free tier gives you access to every other feature, there is no need to pay for anything.
+EOT
+);
+___('irc_faq_client_web_body_3',      'FR', <<<EOT
+{{external|https://www.irccloud.com|IRCCloud}} est un client navigateur hautement personnalisable contenant de nombreuses fonctionnalités modernes. Il inclut un {{link|pages/irc/faq?bouncer|bouncer}} partiel, et des applications mobiles de haute qualité pour Android et iOS. Le site vous propose de payer pour avoir un {{link|pages/irc/faq?bouncer|bouncer}} permanent, mais ne vous inquiétez pas, l'option gratuite vous donne accès à toutes les autres fonctionnalités.
+EOT
+);
+___('irc_faq_client_web_body_4',      'EN', <<<EOT
+{{external|https://kiwiirc.com|KiwiIRC}} is a very simplistic web client with a few modern features. It is often used to embed onto websites: in fact we use it as our {{link|pages/irc/faq?browser|browser client}} on NoBleme. It also lets you register an account and can act as your regular IRC client - a simple yet efficient option.
+EOT
+);
+___('irc_faq_client_web_body_4',      'FR', <<<EOT
+{{external|https://kiwiirc.com|KiwiIRC}} est un client navigateur très simple incorporant quelques fonctionnalités modernes. NoBleme utilise KiwiIRC pour son {{link|pages/irc/faq?browser|client navigateur intégré}}, mais vous pouvez également créer un compte directement sur leur site et vous en servir comme client IRC permanent.
+EOT
+);
+
+___('irc_faq_client_computer_title',  'EN', "Computer software");
+___('irc_faq_client_computer_title',  'FR', "Applications pour ordinateur");
+___('irc_faq_client_computer_body_1', 'EN', <<<EOT
+If you'd rather install an IRC client on your computer, there are a lot of options to choose from. Most of them tend to be cross platform and work at least on Windows, Mac OS, and Linux.
+EOT
+);
+___('irc_faq_client_computer_body_1', 'FR', <<<EOT
+Si vous préférez garder le contrôle de vos données et installer un client IRC sur votre ordinateur, il existe de nombreuses options, dont la majorité sont compatibles avec Windows, Mac OS, et Linux.
+EOT
+);
+___('irc_faq_client_computer_body_2', 'EN', <<<EOT
+{{external|https://hexchat.github.io/|HexChat}} is one of the most common IRC clients for Windows, Mac OS, and Linux. Despite its simplistic (and a bit outdated) interface, it is fairly easy to configure, customize, and use for chatting.
+EOT
+);
+___('irc_faq_client_computer_body_2', 'FR', <<<EOT
+{{external|https://hexchat.github.io/|HexChat}} est un des clients IRC les plus courants pour Windows, Mac OS, et Linux. Malgré son interface simple (et dépassée), il est très simple à configurer, à personnaliser, et à utiliser pour discuter.
+EOT
+);
+___('irc_faq_client_computer_body_3', 'EN', <<<EOT
+{{external|https://quassel-irc.org/|Quassel}} is another solution available for Windows, Mac OS, and Linux. It is much more complicated to configure and use, but comes with more flexibility in how you want your user experience to be.
+EOT
+);
+___('irc_faq_client_computer_body_3', 'FR', <<<EOT
+{{external|https://quassel-irc.org/|Quassel}} est une autre option pour Windows, Mac OS, et Linux. Ce client est beaucoup plus compliqué à configurer et utiliser, mais offre en retour plus de flexibilité dans la personnalisation de votre expérience d'utilisation d'IRC.
+EOT
+);
+___('irc_faq_client_computer_body_4', 'EN', <<<EOT
+{{external|https://weechat.org/|WeeChat}} is a Linux only solution for the more technically inclined - avoid it if you are not versed in computer science. It is a purely command line client, which can be ran on a server and give you full {{link|pages/irc/faq?bouncer|bouncer}} capabilities. You can then access it through {{external|https://www.glowing-bear.org/|Glowing Bear}} for a better user experience.
+EOT
+);
+___('irc_faq_client_computer_body_4', 'FR', <<<EOT
+{{external|https://weechat.org/|WeeChat}} est un client disponible uniquement sous Linux à destination des personnes ayant un profil technique avancé - ne cherchez pas à l'utiliser si vous ne vous y connaissez pas en administration serveur. Il s'agit d'un client purement en ligne de commande, qui peut servir de {{link|pages/irc/faq?bouncer|bouncer}} une fois installé sur un serveur, et peut ensuite être utilisé via {{external|https://www.glowing-bear.org/|Glowing Bear}} pour une meilleure expérience d'utilisation.
+EOT
+);
+
+___('irc_faq_client_mobile_title',    'EN', "Mobile applications");
+___('irc_faq_client_mobile_title',    'FR', "Applications mobiles");
+___('irc_faq_client_mobile_body_1',   'EN', <<<EOT
+When away from your computer, or if you choose to use a mobile device instead of a computer as your main computing device, you will need to use an IRC client in the form of a mobile application.
+EOT
+);
+___('irc_faq_client_mobile_body_1',   'FR', <<<EOT
+Lorsque vous n'êtes pas sur votre ordinateur, ou si vous utilisez un appareil mobile à la place d'un ordinateur dans votre vie courante, vous aurez besoin d'un client IRC à destination des appareils mobiles.
+EOT
+);
+___('irc_faq_client_mobile_body_2',   'EN', <<<EOT
+{{external|https://www.irccloud.com|IRCCloud}} has already been mentioned earlier as a third party web option, it also happens to come with high quality mobile applications for Android and iOS. Keep in mind that the downside of this solution is that you are using a third party service, which might collect and use your personal data.
+EOT
+);
+___('irc_faq_client_mobile_body_2',   'FR', <<<EOT
+{{external|https://www.irccloud.com|IRCCloud}} a déjà été mentionné plus tôt comme une option de client navigateur, cette plateforme propose également des applications mobiles de haute qualité pour Android et iOS. Gardez à l'esprit qu'en contrepartie de leur solution qualitative, IRCCloud est un service tiers, qui peut potentiellement collecter et utiliser vos données personnelles.
+EOT
+);
+___('irc_faq_client_mobile_body_3',   'EN', <<<EOT
+{{external|https://play.google.com/store/apps/details?id=app.holoirc|HoloIRC}} is a minimalistic, simple, and efficient IRC client for Android. It has BNC support, which means it can be used to connect to a {{link|pages/irc/faq?bouncer|bouncer}} if you have access to one or are technically inclined enough to set one up.
+EOT
+);
+___('irc_faq_client_mobile_body_3',   'FR', <<<EOT
+{{external|https://play.google.com/store/apps/details?id=app.holoirc|HoloIRC}} est un client IRC Android minimaliste, simple, et efficace. Il permet de se connecter à un serveur (comme celui de NoBleme), mais également à un {{link|pages/irc/faq?bouncer|bouncer}} si vous avez les compétences techniques requises pour en mettre un en place.
+EOT
+);
+___('irc_faq_client_mobile_body_4',   'EN', <<<EOT
+{{external|https://iglooirc.com/|Igloo IRC}} is a minimalistic, simple, and efficient IRC client for iOS. It has BNC support, which means it can be used to connect to a {{link|pages/irc/faq?bouncer|bouncer}} if you have access to one or are technically inclined enough to set one up.
+EOT
+);
+___('irc_faq_client_mobile_body_4',   'FR', <<<EOT
+{{external|https://iglooirc.com/|Igloo IRC}} est un client IRC iOS minimaliste, simple, et efficace. Il permet de se connecter à un serveur (comme celui de NoBleme), mais également à un {{link|pages/irc/faq?bouncer|bouncer}} si vous avez les compétences techniques requises pour en mettre un en place.
+EOT
+);
