@@ -689,3 +689,92 @@ ___('irc_faq_client_mobile_body_4',   'FR', <<<EOT
 {{external|https://iglooirc.com/|Igloo IRC}} est un client IRC iOS minimaliste, simple, et efficace. Il permet de se connecter à un serveur (comme celui de NoBleme), mais également à un {{link|pages/irc/faq?bouncer|bouncer}} si vous avez les compétences techniques requises pour en mettre un en place.
 EOT
 );
+
+
+// FAQ: Bouncer
+___('irc_faq_bouncer_body_1',       'EN', <<<EOT
+A limitation of IRC is that while you are not connected to the server, you can not know which conversations are going on, and thus miss out on some chat history. To some people, this is actually a desirable thing. To others, it is an annoyance. If you are part of the latter, then bouncers are the solution you are looking for.
+EOT
+);
+___('irc_faq_bouncer_body_1',       'FR', <<<EOT
+Une limitation d'IRC est l'absence d'histoirique des conversations lorsque vous n'avez pas de client IRC connecté au serveur IRC. Pour certaines personnes, il s'agit de quelque chose de désirable. Pour d'autres, c'est un problème. Si vous faites partie de la seconde catégorie, les bouncers sont la réponse à ce problème.
+EOT
+);
+___('irc_faq_bouncer_body_2',       'EN', <<<EOT
+A bouncer is an IRC tool which, instead of being installed on your personal computer or device, is instead installed on a distant server. This allows it to be connected to IRC at all times, thus ensuring you never miss out on any chat history when your computer or devices are shut down or not connected to IRC.
+EOT
+);
+___('irc_faq_bouncer_body_2',       'FR', <<<EOT
+Un bouncer est un outil qui, au lieu d'être installé sur votre ordinateur ou appareil personnel, est à la place installé sur un serveur distant. Cela lui permet d'être connecté à IRC en permanence, et de continuer à recevoir les messages sur IRC lorsque votre ordinateur ou vos appareils sont éteints ou non connectés à IRC.
+EOT
+);
+___('irc_faq_bouncer_body_3',       'EN', <<<EOT
+Bouncers work in such a way that instead of using your IRC client to connect to NoBleme's IRC server, you would instead use your IRC client to connect to your IRC bouncer which is permanently connected to NoBleme's IRC server.
+EOT
+);
+___('irc_faq_bouncer_body_3',       'FR', <<<EOT
+Le fonctionnement d'un bouncer peut se résumer ainsi : au lieu de connecter votre client IRC au serveur IRC de NoBleme, vous connectez votre client IRC à votre bouncer, qui est connecté en permanence au serveur IRC de NoBleme.
+EOT
+);
+___('irc_faq_bouncer_body_4',       'EN', <<<EOT
+Sadly, there are no easy solutions to set up a bouncer. If you lack the technical knowledge required to do server administration, then you will not be able to install your own bouncer, and will need to use third party solutions or manage to find someone generous enough to lend you access to a bouncer on their own server.
+EOT
+);
+___('irc_faq_bouncer_body_4',       'FR', <<<EOT
+Malheureusement, il n'existe pas de solution simple pour mettre en place un bouncer. Si vous n'avez pas les compétences techniques requises pour faire de l'administration serveur, vous ne pourrez pas installer de bouncer, et devrez plutôt utiliser des solutions tierces ou trouver une personne assez généreuse pour vous prêter l'accès à un bouncer sur son serveur personnel.
+EOT
+);
+
+___('irc_faq_bouncer_third_title',  'EN', "Third party bouncer services");
+___('irc_faq_bouncer_third_title',  'FR', "Services tiers de bouncer");
+___('irc_faq_bouncer_third_body_1', 'EN', <<<EOT
+A few websites offer partial or full IRC bouncer services. Keep in mind however that these websites being third party services, they might collect or exploit your user data, or even monitor your conversations. On top of that, you are relying on their website to stay online at all times, any downtime of their platform will mean that you are unable to access IRC during that time - or even permanently if their platform ever shuts down.
+EOT
+);
+___('irc_faq_bouncer_third_body_1', 'FR', <<<EOT
+Quelques sites Internet offrent des services partiels ou complets de bouncer IRC. Ayez toutefois à l'esprit que ces sites sont des services tiers, et peuvent donc potentiellement collecter ou utiliser vos données personnelles, voir même monitorer vos conversations. De plus, vous devez compter sur la disponibilité de leur plateforme : si leur site est KO, votre accès à IRC sera également KO pendant ce temps.
+EOT
+);
+___('irc_faq_bouncer_third_body_2', 'EN', <<<EOT
+{{external|https://wiki.znc.in/Providers|Some free ZNC providers}} exist (ZNC is the most commonly used bouncer). Each of them require you to follow a unique and specific process to create your bouncer instance, which you can then connect to using any IRC client of your choice. Be aware that some of these are restricted to specific IRC networks, and thus might not allow you to create a bouncer instance connected to NoBleme's IRC server. It might be a bit of a pain to figure out how to go through the setup process, but at least once it is done you do not have to worry about it anymore and can focus on using IRC normally.
+EOT
+);
+___('irc_faq_bouncer_third_body_2', 'FR', <<<EOT
+{{external|https://wiki.znc.in/Providers|Des fournisseurs gratuits de ZNC}} existent (ZNC est le bouncer le plus communément utilisé). Chacun d'entre eux vous demande de suivre un processus unique et spécifique pour vous mettre en place un bouncer, auquel vous pourrez ensuite vous connecter avec le client IRC de votre choix. Une maitrise basique de l'anglais technique est requise pour utiliser ces services. Notez que certains de ces services sont restreints à certains serveurs IRC, et ne peuvent donc pas être utilisés sur le seurvr IRC de NoBleme. Le processus de mise en place d'un bouncer gratuit est complexe, mais une fois fini vous n'aurez plus à vous en soucier et pourrez vous concentrer sur l'utilisation d'IRC au quotidien.
+EOT
+);
+___('irc_faq_bouncer_third_body_3', 'EN', <<<EOT
+{{external|https://www.irccloud.com/|IRCCloud}} is a browser IRC client which also includes mobile applications for Android and iOS, aswell as a partial bouncer service (keeps tracking chat history for 2 hours after you log out). The service is free, but includes an optional paid solution (4€/month) which enables full bouncer capabilities, tracking full chat history no matter how long you are offline.
+EOT
+);
+___('irc_faq_bouncer_third_body_3', 'FR', <<<EOT
+{{external|https://www.irccloud.com/|IRCCloud}} est un client IRC navigateur qui propose également des applications mobiles pour Android et iOS, ainsi qu'un service de bouncer partiel (conserve l'historique des conversations IRC qui ont lieu dans les deux heures suivant votre déconnexion). Le service est gratuit, mais inclut également une solution payante optionnelle (4€/mois) qui en fait un bouncer complet, vous donnant un historique de toutes les conversations qui ont lieu lorsque vous êtes hors ligne.
+EOT
+);
+
+___('irc_faq_bouncer_tech_title',   'EN', "For the more technically inclined");
+___('irc_faq_bouncer_tech_title',   'FR', "Pour les personnes techniques");
+___('irc_faq_bouncer_tech_body_1',  'EN', <<<EOT
+If you already know how to setup a server, then you should not need advanced instructions on how to setup a bouncer - simply following the instructions in your bouncer of choice's documentation should be enough. Here are two common bouncers that are easy to setup and use.
+EOT
+);
+___('irc_faq_bouncer_tech_body_1',  'FR', <<<EOT
+Si vous savez déjà administrer un serveur, vous n'aurez pas besoin d'instructions supplémentaires pour mettre en place un bouncer - il vous suffira de suivre les instructions contenues dans la documentation du bouncer que vous choisirez. Voici deux options de bouncers simples à mettre en place et à utiliser.
+EOT
+);
+___('irc_faq_bouncer_tech_body_2',  'EN', <<<EOT
+{{external|https://wiki.znc.in/ZNC|ZNC}} is the most common bouncer choice, and has been the "standard" choice for a very long time. Its {{external|https://wiki.znc.in/Webadmin|webadmin module}} allows you to easily administrate user accounts on your ZNC instance if you want to offer bouncer services to other people.
+EOT
+);
+___('irc_faq_bouncer_tech_body_2',  'FR', <<<EOT
+{{external|https://wiki.znc.in/ZNC|ZNC}} est le choix de bouncer le plus commun, et est l'option "standard" depuis très longtemps. Son {{external|https://wiki.znc.in/Webadmin|module webadmin}} vous permet d'aministrer facilement des comptes sur votre instance ZNC, vous permettant si vous le désirez de partager votre service de bouncer avec d'autres personnes.
+EOT
+);
+___('irc_faq_bouncer_tech_body_3',  'EN', <<<EOT
+{{external|https://thelounge.chat/|The Lounge}} is a two for one solution, being both a bouncer and a modern browser IRC client with an interface that works well on both computers and mobile devices. As with ZNC, {{external|https://thelounge.chat/docs/users|you can add users}} to your installation of The Lounge if you want to offer bouncer services to other people.
+EOT
+);
+___('irc_faq_bouncer_tech_body_3',  'FR', <<<EOT
+{{external|https://thelounge.chat/|The Lounge}} est une solution deux en un, étant à la fois un bouncer et un client IRC navigateur, disposant d'une interface moderne sur ordinateur comme sur appareils mobiles. Comme sur ZNC, vous pouvez {{external|https://thelounge.chat/docs/users|gérer des comptes}} sur votre instance de The Lounge, et partager votre service de bouncer avec d'autres personnes.
+EOT
+);

@@ -419,6 +419,60 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
+<?php /************************************************ BOUNCER ***************************************************/ ?>
+
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['bouncer']?>" id="irc_faq_bouncer">
+
+  <p>
+    <?=__('irc_faq_bouncer_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bouncer_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bouncer_body_3')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bouncer_body_4')?>
+  </p>
+
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_bouncer_third_title')?>
+  </h5>
+
+  <p>
+    <?=__('irc_faq_bouncer_third_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bouncer_third_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bouncer_third_body_3')?>
+  </p>
+
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_bouncer_tech_title')?>
+  </h5>
+
+  <p>
+    <?=__('irc_faq_bouncer_tech_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bouncer_tech_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bouncer_tech_body_3')?>
+  </p>
+
+</div>
+
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */
