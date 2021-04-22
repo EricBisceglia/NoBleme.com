@@ -154,7 +154,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('irc_faq_main_join_4')?>
   </p>
 
-  <h5 class="bigpadding_top">
+  <h5 id="faq" class="bigpadding_top">
     <?=__('irc_faq_questions_title')?>
   </h5>
 
@@ -470,6 +470,198 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <p>
     <?=__('irc_faq_bouncer_tech_body_3')?>
   </p>
+
+</div>
+
+<?php /****************************************** VOCABULARY & SYMBOLS ********************************************/ ?>
+
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['guide']?>" id="irc_faq_guide">
+
+  <h5 id="server"><?=__('irc_faq_vocabulary_title_1')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_vocabulary_body_1')?>
+  </p>
+
+  <h5 id="client"><?=__('irc_faq_vocabulary_title_2')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_vocabulary_body_2')?>
+  </p>
+
+  <h5 id="bouncer"><?=__('irc_faq_vocabulary_title_3')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_vocabulary_body_3')?>
+  </p>
+
+  <h5 id="channel"><?=__('irc_faq_vocabulary_title_4')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_vocabulary_body_4')?>
+  </p>
+
+  <h5 id="operator"><?=__('irc_faq_vocabulary_title_5')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_vocabulary_body_5')?>
+  </p>
+
+  <h5 id="kick"><?=__('irc_faq_vocabulary_title_6')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_vocabulary_body_6')?>
+  </p>
+
+  <h5 id="services"><?=__('irc_faq_vocabulary_title_7')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_vocabulary_body_7')?>
+  </p>
+
+  <h5 id="command"><?=__('irc_faq_vocabulary_title_8')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_vocabulary_body_8')?>
+  </p>
+
+  <h5 id="mode"><?=__('irc_faq_vocabulary_title_9')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_vocabulary_body_9')?>
+  </p>
+
+  <h5 id="highlight"><?=__('irc_faq_vocabulary_title_10')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_vocabulary_body_10')?>
+  </p>
+
+  <h5 id="lurk"><?=__('irc_faq_vocabulary_title_11')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_vocabulary_body_11')?>
+  </p>
+
+  <h5 id="bot"><?=__('irc_faq_vocabulary_title_12')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_vocabulary_body_12')?>
+  </p>
+
+  <h5 id="symbols" class="bigpadding_top">
+    <?=__('irc_faq_symbols_title')?>
+  </h5>
+
+  <p>
+    <?=__('irc_faq_symbols_body_1')?>
+  </p>
+
+  <p class="bigpadding_bot">
+    <?=__('irc_faq_symbols_body_2')?>
+  </p>
+
+  <table>
+    <thead>
+
+      <tr class="bold uppercase spaced noflow">
+        <th>
+          <?=__('irc_faq_symbols_name')?>
+        </th>
+        <th>
+          <?=__('irc_faq_symbols_symbol')?>
+        </th>
+        <th>
+          <?=__('irc_faq_symbols_mode')?>
+        </th>
+        <th>
+          <?=__('irc_faq_symbols_abilities')?>
+        </th>
+      </tr>
+
+    </thead>
+    <tbody class="altc">
+
+      <tr>
+        <td class="align_center bold noflow">
+          <?=__('irc_faq_symbols_user')?>
+        </td>
+        <td class="align_center bold noflow">
+          &nbsp;
+        </td>
+        <td class="align_center bold noflow">
+          &nbsp;
+        </td>
+        <td>
+          <?=__('irc_faq_symbols_user_desc')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="align_center bold noflow">
+          <?=__('irc_faq_symbols_voice')?>
+        </td>
+        <td class="align_center bold noflow">
+          +
+        </td>
+        <td class="align_center bold noflow">
+          +v
+        </td>
+        <td>
+          <?=__('irc_faq_symbols_voice_desc')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="align_center bold noflow">
+          <?=__('irc_faq_symbols_halfop')?>
+        </td>
+        <td class="align_center bold noflow">
+          %
+        </td>
+        <td class="align_center bold noflow">
+          +h
+        </td>
+        <td>
+          <?=__('irc_faq_symbols_halfop_desc')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="align_center bold noflow">
+          <?=__('irc_faq_symbols_operator')?>
+        </td>
+        <td class="align_center bold noflow">
+          @
+        </td>
+        <td class="align_center bold noflow">
+          +o
+        </td>
+        <td>
+          <?=__('irc_faq_symbols_operator_desc')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="align_center bold noflow">
+          <?=__('irc_faq_symbols_admin')?>
+        </td>
+        <td class="align_center bold noflow">
+          &
+        </td>
+        <td class="align_center bold noflow">
+          +a
+        </td>
+        <td>
+          <?=__('irc_faq_symbols_admin_desc')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="align_center bold noflow">
+          <?=__('irc_faq_symbols_founder')?>
+        </td>
+        <td class="align_center bold noflow">
+          ~
+        </td>
+        <td class="align_center bold noflow">
+          +q
+        </td>
+        <td>
+          <?=__('irc_faq_symbols_founder_desc')?>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
 
 </div>
 

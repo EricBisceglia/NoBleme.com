@@ -778,3 +778,180 @@ ___('irc_faq_bouncer_tech_body_3',  'FR', <<<EOT
 {{external|https://thelounge.chat/|The Lounge}} est une solution deux en un, étant à la fois un bouncer et un client IRC navigateur, disposant d'une interface moderne sur ordinateur comme sur appareils mobiles. Comme sur ZNC, vous pouvez {{external|https://thelounge.chat/docs/users|gérer des comptes}} sur votre instance de The Lounge, et partager votre service de bouncer avec d'autres personnes.
 EOT
 );
+
+
+// FAQ: Vocabulary
+___('irc_faq_vocabulary_title_1',   'EN', "Server");
+___('irc_faq_vocabulary_title_1',   'FR', "Serveur");
+___('irc_faq_vocabulary_body_1',    'EN', <<<EOT
+The server is the interface to which everyone is connected in order to chat on IRC. When you send a message on IRC, it is first sent to the server, which then redistributes it to the people who should see that message. In NoBleme's case, the server is software called {{external|https://en.wikipedia.org/wiki/UnrealIRCd|UnrealIRCd}}.
+EOT
+);
+___('irc_faq_vocabulary_body_1',    'FR', <<<EOT
+Le serveur est l'interface à laquelle tout le monde est connecté pour discuter sur IRC. Lorsque vous envoyez un message sur IRC, il est d'abord envoyé au serveur, qui le redistribue ensuite. Dans le cas de NoBleme, il s'agit d'un programme nommé {{external|https://en.wikipedia.org/wiki/UnrealIRCd|UnrealIRCd}}.
+EOT
+);
+___('irc_faq_vocabulary_title_2',   'EN', "Client");
+___('irc_faq_vocabulary_title_2',   'FR', "Client");
+___('irc_faq_vocabulary_body_2',    'EN', <<<EOT
+An IRC client is a computer program or application that serves as an interface between a user and an IRC server. Each client has their own interface, appearance, and settings, which means that everyone sees IRC differently.
+EOT
+);
+___('irc_faq_vocabulary_body_2',    'FR', <<<EOT
+Un client IRC est un programme ou une application qui sert d'interface entre un serveur IRC et vous. Chaque client possède sa propre interface, apparence, et ses propre réglages, ce qui permet à plusieurs personnes d'avoir une expérience différente d'IRC selon leur choix de client et de configuration.
+EOT
+);
+___('irc_faq_vocabulary_title_3',  'EN', "Bouncer");
+___('irc_faq_vocabulary_title_3',  'FR', "Bouncer");
+___('irc_faq_vocabulary_body_3',   'EN', <<<EOT
+A bouncer is a tool that allows you to retain full history of conversations which happen on IRC, even while you are offline. You can find out more about bouncers on the {{link|pages/irc/faq?bouncer|bouncer}} page of this FAQ.
+EOT
+);
+___('irc_faq_vocabulary_body_3',   'FR', <<<EOT
+Un bouncer est un outil qui reste connecté en permanence à un serveur IRC, vous permettant de garder un historique complet des conversations qui ont lieu pendant votre absence.  Vous trouverez plus d'informations sur les bouncers dans la section {{link|pages/irc/faq?bouncer|bouncer}} de cette FAQ.
+EOT
+);
+___('irc_faq_vocabulary_title_4',   'EN', "Channel");
+___('irc_faq_vocabulary_title_4',   'FR', "Canal");
+___('irc_faq_vocabulary_body_4',    'EN', <<<EOT
+An IRC server is comprised of an unlimited number of channels, which can be public or private. When a message is sent on an IRC channel, only the users present on that channel will be able to read the message. IRC channel names begin with the pound sign (#NoBleme, #english, #dev). You can find more information about IRC channels on the {{link|pages/irc/faq?channels|channel list}}.
+EOT
+);
+___('irc_faq_vocabulary_body_4',    'FR', <<<EOT
+Un serveur IRC est constitué d'un nombre potentiellement infini de canaux de discussion, qui peuvent être publics ou privés. Lorsqu'un message est envoyé sur un canal, il ne sera visible que par les personnes qui y sont présentes à ce moment-là. Le nom des canaux IRC commence par un symbole croisillon (#NoBleme, #english, #dev). Vous trouverez plus d'informations sur les canaux sur la {{link|pages/irc/faq?channels|liste des canaux}}.
+EOT
+);
+___('irc_faq_vocabulary_title_5',   'EN', "Operator");
+___('irc_faq_vocabulary_title_5',   'FR', "Operator");
+___('irc_faq_vocabulary_body_5',    'EN', <<<EOT
+A channel's founder can give some abilities to specific users (such as the ability to kick problematic users) by making them channel operators. Different operator types have different abilities, which are documented at the bottom of this page in the symbols section. There are also global operators, which have the power to shut down channels, issue server-wide bans, and possess a few more tools useful in extreme situations. In order to avoid tracking their absence to plan mischievous acts when none of them are online, the identity of global operators will remain a secret.
+EOT
+);
+___('irc_faq_vocabulary_body_5',    'FR', <<<EOT
+La personne qui crée un canal peut déléguer des pouvoirs (par exemple le pouvoir d'éjecter les personnes problématiques) en donnant le statut d'Operator à d'autres personnes. Différents types d'Operator ont différents pouvoirs, qui sont documentés dans un tableau en bas de cette page. Il existe également des Operator globaux, qui ont le pouvoir de supprimer des canaux, d'éjecter des personnes du serveur IRC NoBleme, et quelques autres outils utiles en cas de problèmes majeurs. Afin d'éviter une situation où quelqu'un attendrait que les Operator globaux soient hors ligne pour causer des problèmes, leur identité restera secrète.
+EOT
+);
+___('irc_faq_vocabulary_title_6',   'EN', "Kick / Ban");
+___('irc_faq_vocabulary_title_6',   'FR', "Kick / Bannissement");
+___('irc_faq_vocabulary_body_6',    'EN', <<<EOT
+When a user misbehaves or breaks the {{link|pages/doc/coc|code of conduct}}, a few measures can be taken by operators against them. A kick will remove them from the channel, but leave them the ability to rejoin it afterwards, acting as a warning that they should keep it cool. A ban will exclude them from the channel and prevent them from rejoining it, for a set amount of time (which can be forever).
+EOT
+);
+___('irc_faq_vocabulary_body_6',    'FR', <<<EOT
+Lorsqu'une personne pose problème ou ne respecte pas le {{link|pages/doc/coc|code de conduite}}, les Operator disposent de pouvoirs permettant de les modérer. Un kick éjecte une personne d'un canal, mais leur donne la possibilité de le rejoindre de nouveau, il sert d'avertissement qu'il faut se calmer. Un bannissement les exclut du canal et les empêche de le rejoindre pendant un temps prédéterminé (ou peut être permanent).
+EOT
+);
+___('irc_faq_vocabulary_title_7',   'EN', "Services: NickServ & ChanServ");
+___('irc_faq_vocabulary_title_7',   'FR', "Services : NickServ & ChanServ");
+___('irc_faq_vocabulary_body_7',    'EN', <<<EOT
+All actions related to user accounts or channel administrations are done through what are called Services, special users on the IRC network which go by the nicknames NickServ (for users) and ChanServ (for channels). You can read more about them on the {{link|pages/irc/faq?nickserv|NickServ}} and {{link|pages/irc/faq?chanserv|ChanServ}} pages of this FAQ.
+EOT
+);
+___('irc_faq_vocabulary_body_7',    'FR', <<<EOT
+Toutes les actions touchant aux comptes des membres ou à l'administration des canaux se font via des utilisateurs automatisés nommés "Services", qui sont présents de façon permanente sur le serveur IRC NoBleme sous le nom NickServ (pour gérer les comptes) et ChanServ (pour gérer les canaux). Vous pouvez en apprendre plus à leur sujet dans les sections {{link|pages/irc/faq?nickserv|NickServ}} et {{link|pages/irc/faq?chanserv|ChanServ}} de cette FAQ.
+EOT
+);
+___('irc_faq_vocabulary_title_8',   'EN', "Command");
+___('irc_faq_vocabulary_title_8',   'FR', "Commande");
+___('irc_faq_vocabulary_body_8',    'EN', <<<EOT
+On IRC, in order to do any action other than chatting, you must use commands. They are sent on the server the same way as normal chat messages, but begin with a slash / character. For example, joining a channel is done by typing <span class="monospace">/join #channel</span>. You will find a guide of useful commands in the {{link|pages/irc/faq?commands|commands}}, {{link|pages/irc/faq?nickserv|NickServ}}, and {{link|pages/irc/faq?chanserv|ChanServ}} pages of this FAQ.
+EOT
+);
+___('irc_faq_vocabulary_body_8',    'FR', <<<EOT
+Si vous désirez effectuer n'importe quelle action autre que discuter sur IRC, vous devrez utiliser des commandes. Il s'agit de messages normaux envoyés sur le serveur de la même façon que lorsque vous discutez, mais dont le premier caractère est un / slash. Par exemple, rejoindre un canal se fait en envoyant le message <span class="monospace">/join #channel</span>. Vous trouverez une liste de commandes utiles dans les sections {{link|pages/irc/faq?commands|commandes}}, {{link|pages/irc/faq?nickserv|NickServ}}, et {{link|pages/irc/faq?chanserv|ChanServ}} de cette FAQ.
+EOT
+);
+___('irc_faq_vocabulary_title_9',   'EN', "Mode");
+___('irc_faq_vocabulary_title_9',   'FR', "Mode");
+___('irc_faq_vocabulary_body_9',    'EN', <<<EOT
+IRC channels have settings which are controlled by operators through changing what is called a "mode". It is materialized as a series of letters defining what can or cannot be done on that channel. For example, a channel with <span class="monospace">mode +m</span> is in mute mode: only operators and voiced users can chat in that channel, others will not be able to send messages.
+EOT
+);
+___('irc_faq_vocabulary_body_9',    'FR', <<<EOT
+Les canaux IRC peuvent être modifiés par des Operator en leur appliquant ce qui s'appelle un "mode". Il s'agit de réglages représentés par une série de lettres déterminant ce qui peut ou ne peut pas être fait sur un canal spécifique. Par exemple, un canal ayant le <span class="monospace">mode +m</span> est en mode muet : il n'y a que les Operators qui peuvent discuter sur ce canal, les autres ne pourront pas envoyer de messages.
+EOT
+);
+___('irc_faq_vocabulary_title_10',   'EN', "Highlight");
+___('irc_faq_vocabulary_title_10',   'FR', "Highlight (surlignage)");
+___('irc_faq_vocabulary_body_10',    'EN', <<<EOT
+In most IRC clients, when someone else writes your nickname, you will get notified in some way and see the line of text highlighted. Thus, highlighting someone is the term used for when you aim a message at a specific person on IRC by including their nickname in the message.
+EOT
+);
+___('irc_faq_vocabulary_body_10',    'FR', <<<EOT
+Dans la plupart des clients IRC, lorsque quelqu'un d'autre écrit votre pseudonyme, vous recevrez une notification et verrez la ligne de texte en question surlignée. Le mot highlight (surlignage en anglais) est par conséquent utilisé pour nommer l'action d'inclure le pseudonyme de quelqu'un d'autre dans un message.
+EOT
+);
+___('irc_faq_vocabulary_title_11',  'EN', "Lurk");
+___('irc_faq_vocabulary_title_11',  'FR', "Lurk");
+___('irc_faq_vocabulary_body_11',   'EN', <<<EOT
+A lurker is someone who idles in an IRC channel without sending any messages. Lurkers are as welcome as anyone else on NoBleme's IRC server, we have no issue with users who do not participate in the conversation.
+EOT
+);
+___('irc_faq_vocabulary_body_11',   'FR', <<<EOT
+Lorsqu'une personne est présente sur un canal IRC mais n'y participe jamais / n'y envoie jamais de messages, cette personne peut se faire appeler "lurker" (anglais pour une personne qui rôde). Certains serveurs IRC n'apprécient pas les lurkers, mais nous n'avons aucun problème avec leur présence sur NoBleme : vous êtes libre de rester sur notre serveur IRC même sans y participer.
+EOT
+);
+___('irc_faq_vocabulary_title_12',  'EN', "Bot");
+___('irc_faq_vocabulary_title_12',  'FR', "Bot");
+___('irc_faq_vocabulary_body_12',   'EN', <<<EOT
+Not every user on IRC is tied to a human person, some are automated computer programs which we call "Bots". They have different uses and abilities depending on the type of bot they are, you can find out more about them on the {{link|pages/irc/faq?bots|bots}} page of this FAQ.
+EOT
+);
+___('irc_faq_vocabulary_body_12',   'FR', <<<EOT
+Tous les pseudonymes sur IRC ne cachent pas un être humain, certains correspondent à des programmes informatiques automatisés que nous appelons des "Bots". Leur utilité varie d'un bot à l'autre, vous pouvez en apprendre plus à leur sujet sur la page {{link|pages/irc/faq?bots|bots}} de cette FAQ.
+EOT
+);
+
+
+// FAQ: Symbols
+___('irc_faq_symbols_title',          'EN', "Operator and user symbols");
+___('irc_faq_symbols_title',          'FR', "Operators et symboles");
+___('irc_faq_symbols_body_1',         'EN', <<<EOT
+On IRC channels, some users can be given operator abilities, which allow them to manage the channel and handle problematic users. In most IRC clients, operator levels are represented through specific symbols, which appear before the user's nickname (for example, @Planeshift or ~Bad). These also correspond to a specific user mode, represented by a letter (for example, a channel operator will have +o mode on that channel).
+EOT
+);
+___('irc_faq_symbols_body_1',         'FR', <<<EOT
+Sur les canaux IRC, certaines personnes peuvent avoir des pouvoirs d'Operator, qui leur permettent de modérer les personnes problématiques et de gérer le canal. Dans la plupart des clients IRC, des symboles spécifiques sont assignés aux Operators, apparaissant juste avant leur pseudonyme (par exemple @Planeshift ou ~Bad). À chaque type d'Operator correspond également un "mode", une lettre qui est utilisée pour modifier les pouvoirs d'une personne sur un canal spécifique.
+EOT
+);
+___('irc_faq_symbols_body_2',         'EN', <<<EOT
+You can find out more about operator rights and how to manage them on the {{link|pages/irc/faq?chanserv|ChanServ}} page of this FAQ. Below is a table of user modes and symbols, and their associated abilities.
+EOT
+);
+___('irc_faq_symbols_body_2',         'FR', <<<EOT
+Vous trouverez plus d'informations sur les Operator et comment gérer et utiliser leurs pouvoirs sur la page {{link|pages/irc/faq?chanserv|ChanServ}} de cette FAQ. Ci-dessous, un tableau des modes et symboles des Operator, et des pouvoirs qui y sont associés.
+EOT
+);
+
+___('irc_faq_symbols_name',           'EN', "Title");
+___('irc_faq_symbols_name',           'FR', "Titre");
+___('irc_faq_symbols_symbol',         'EN', "Symbol");
+___('irc_faq_symbols_symbol',         'FR', "Symbole");
+___('irc_faq_symbols_mode',           'EN', "Mode");
+___('irc_faq_symbols_mode',           'FR', "Mode");
+___('irc_faq_symbols_abilities',      'EN', "Abilities");
+___('irc_faq_symbols_abilities',      'FR', "Pouvoirs");
+___('irc_faq_symbols_user',           'EN', "User");
+___('irc_faq_symbols_user',           'FR', "User");
+___('irc_faq_symbols_user_desc',      'EN', "Regular user");
+___('irc_faq_symbols_user_desc',      'FR', "Personne normale.");
+___('irc_faq_symbols_voice',          'EN', "Voiced");
+___('irc_faq_symbols_voice',          'FR', "Voiced");
+___('irc_faq_symbols_voice_desc',     'EN', "Can still send messages if the channel is set to mute (+m) mode.");
+___('irc_faq_symbols_voice_desc',     'FR', "Peut envoyer des messages même si le canal est en mode muet (+m).");
+___('irc_faq_symbols_halfop',         'EN', "Halfop");
+___('irc_faq_symbols_halfop',         'FR', "Halfop");
+___('irc_faq_symbols_halfop_desc',    'EN', "Half operator. Can kick regular users.");
+___('irc_faq_symbols_halfop_desc',    'FR', "Demi-Operator. Peut kick les User et Voiced.");
+___('irc_faq_symbols_operator',       'EN', "Operator");
+___('irc_faq_symbols_operator',       'FR', "Operator");
+___('irc_faq_symbols_operator_desc',  'EN', "Can kick or ban anyone who is not an admin or channel founder.");
+___('irc_faq_symbols_operator_desc',  'FR', "Peut kick ou ban toute personne qui n'est pas Admin ou Founder.");
+___('irc_faq_symbols_admin',          'EN', "Admin");
+___('irc_faq_symbols_admin',          'FR', "Admin");
+___('irc_faq_symbols_admin_desc',     'EN', "Can kick or ban anyone who is not channel founder, and can name or remove operators.");
+___('irc_faq_symbols_admin_desc',     'FR', "Peut kick ou ban toute personne qui n'est pas Founder, gérer le canal, et nommer ou révoquer des Operators.");
+___('irc_faq_symbols_founder',        'EN', "Founder");
+___('irc_faq_symbols_founder',        'FR', "Founder");
+___('irc_faq_symbols_founder_desc',   'EN', "Can kick or ban anyone and name or remove admins and operators. There can only be one founder per channel at any given time.");
+___('irc_faq_symbols_founder_desc',   'FR', "Dispose des pouvoirs d'admin, et peut également nommer ou révoquer des Admin. Il ne peut y avoir qu'une seule personne à la fois portant le titre de Founder sur un canal.");
