@@ -244,7 +244,7 @@ Pour rejoindre un serveur IRC, vous avez besoin d'un <span class="italics">clien
 EOT
 );
 ___('irc_faq_main_join_2',        'EN', <<<EOT
-The quickiest and easiest way to join NoBleme's IRC server is by using a {{link|pages/irc/faq?browser|web client in your browser}}. All you have to do is {{link|pages/irc/faq?browser|click this link}}, choose a nickname, and you'll be in. Simple!
+The quickiest and easiest way to join NoBleme's IRC server is by using a {{link|pages/irc/faq?browser|web client in your browser}}. All you have to do is {{link|pages/irc/faq?browser|click this link}}, choose a username, and you'll be in. Simple!
 EOT
 );
 ___('irc_faq_main_join_2',        'FR', <<<EOT
@@ -300,20 +300,20 @@ ___('irc_faq_answer_3',         'FR', <<<EOT
 NoBleme est une communauté bilingue anglais/français. Certains canaux IRC sont uniquement en français (comme par exemple #NoBleme), d'autres uniquement en anglais, d'autres bilingues. La {{link|todo_link|liste des canaux}} documente les langues utilisées sur chaque canal de discussion.
 EOT
 );
-___('irc_faq_question_4',       'EN', "Can people \"steal\" my nickname?");
+___('irc_faq_question_4',       'EN', "Can people \"steal\" my username?");
 ___('irc_faq_question_4',       'FR', "Peut-on me « voler » mon pseudonyme ?");
 ___('irc_faq_answer_4',         'EN', <<<EOT
-In order to gain exclusive ownership of your nickname, you first have to register it using our IRC services. You can find more about it on the {{link|pages/irc/faq?nickserv|IRC account management}} page. You are also free to not register and use IRC as a guest, using whichever nickname you desire.
+In order to gain exclusive ownership of your username, you first have to register it using our IRC services. You can find more about it on the {{link|pages/irc/faq?nickserv|IRC account management}} page. You are also free to not register and use IRC as a guest, using whichever username you desire.
 EOT
 );
 ___('irc_faq_answer_4',         'FR', <<<EOT
 Afin d'avoir la propriété exclusive de votre pseudonyme, vous devez d'abord l'enregistrer auprès des services de notre serveur IRC. Plus d'informations à ce sujet sur la page {{link|pages/irc/faq?nickserv|Gérer votre pseudonyme}}. Vous êtes également libre de ne pas enregistrer votre pseudonyme, il ne s'agit que d'une option.
 EOT
 );
-___('irc_faq_question_5',       'EN', "How can I change my nickname?");
+___('irc_faq_question_5',       'EN', "How can I change my username?");
 ___('irc_faq_question_5',       'FR', "Comment changer mon pseudonyme ?");
 ___('irc_faq_answer_5',         'EN', <<<EOT
-You can change your nickname at any time. Some IRC clients allow you to change your nickname directly from their interface, others require you to use a command. You can find out more about commands on the {{link|pages/irc/faq?commands|IRC commands}} page.
+You can change your username at any time. Some IRC clients allow you to change your username directly from their interface, others require you to use a command. You can find out more about commands on the {{link|pages/irc/faq?commands|IRC commands}} page.
 EOT
 );
 ___('irc_faq_answer_5',         'FR', <<<EOT
@@ -569,7 +569,7 @@ Une fois votre client IRC choisi, vous aurez besoin d'y rentrer les informations
 EOT
 );
 ___('irc_faq_client_body_4',          'EN', <<<EOT
-Once connected to NoBleme's IRC server, you might want to browse the {{link|pages/irc/faq?channels|channel list}} in order to join all channels that could be of interest to you, and to {{link|pages/irc/faq?nickserv|register your nickname}} in order to gain ownership of your nickname on the server and have access to a few useful features.
+Once connected to NoBleme's IRC server, you might want to browse the {{link|pages/irc/faq?channels|channel list}} in order to join all channels that could be of interest to you, and to {{link|pages/irc/faq?nickserv|register your username}} in order to gain ownership of your username on the server and have access to a few useful features.
 EOT
 );
 ___('irc_faq_client_body_4',          'FR', <<<EOT
@@ -844,7 +844,7 @@ EOT
 ___('irc_faq_vocabulary_title_7',   'EN', "Services: NickServ & ChanServ");
 ___('irc_faq_vocabulary_title_7',   'FR', "Services : NickServ & ChanServ");
 ___('irc_faq_vocabulary_body_7',    'EN', <<<EOT
-All actions related to user accounts or channel administrations are done through what are called Services, special users on the IRC network which go by the nicknames NickServ (for users) and ChanServ (for channels). You can read more about them on the {{link|pages/irc/faq?nickserv|NickServ}} and {{link|pages/irc/faq?chanserv|ChanServ}} pages of this FAQ.
+All actions related to user accounts or channel administrations are done through what are called Services, special users on the IRC network which go by the usernames NickServ (for users) and ChanServ (for channels). You can read more about them on the {{link|pages/irc/faq?nickserv|NickServ}} and {{link|pages/irc/faq?chanserv|ChanServ}} pages of this FAQ.
 EOT
 );
 ___('irc_faq_vocabulary_body_7',    'FR', <<<EOT
@@ -874,7 +874,7 @@ EOT
 ___('irc_faq_vocabulary_title_10',   'EN', "Highlight");
 ___('irc_faq_vocabulary_title_10',   'FR', "Highlight (surlignage)");
 ___('irc_faq_vocabulary_body_10',    'EN', <<<EOT
-In most IRC clients, when someone else writes your nickname, you will get notified in some way and see the line of text highlighted. Thus, highlighting someone is the term used for when you aim a message at a specific person on IRC by including their nickname in the message.
+In most IRC clients, when someone else writes your username, you will get notified in some way and see the line of text highlighted. Thus, highlighting someone is the term used for when you aim a message at a specific person on IRC by including their username in the message.
 EOT
 );
 ___('irc_faq_vocabulary_body_10',    'FR', <<<EOT
@@ -907,7 +907,7 @@ EOT
 ___('irc_faq_symbols_title',          'EN', "Operator and user symbols");
 ___('irc_faq_symbols_title',          'FR', "Operators et symboles");
 ___('irc_faq_symbols_body_1',         'EN', <<<EOT
-On IRC channels, some users can be given operator abilities, which allow them to manage the channel and handle problematic users. In most IRC clients, operator levels are represented through specific symbols, which appear before the user's nickname (for example, @Planeshift or ~Bad). These also correspond to a specific user mode, represented by a letter (for example, a channel operator will have +o mode on that channel).
+On IRC channels, some users can be given operator abilities, which allow them to manage the channel and handle problematic users. In most IRC clients, operator levels are represented through specific symbols, which appear before the user's username (for example, @Planeshift or ~Bad). These also correspond to a specific user mode, represented by a letter (for example, a channel operator will have +o mode on that channel).
 EOT
 );
 ___('irc_faq_symbols_body_1',         'FR', <<<EOT
@@ -955,3 +955,144 @@ ___('irc_faq_symbols_founder',        'EN', "Founder");
 ___('irc_faq_symbols_founder',        'FR', "Founder");
 ___('irc_faq_symbols_founder_desc',   'EN', "Can kick or ban anyone and name or remove admins and operators. There can only be one founder per channel at any given time.");
 ___('irc_faq_symbols_founder_desc',   'FR', "Dispose des pouvoirs d'admin, et peut également nommer ou révoquer des Admin. Il ne peut y avoir qu'une seule personne à la fois portant le titre de Founder sur un canal.");
+
+
+// FAQ: Commands
+___('irc_faq_commands_body_1',    'EN', <<<EOT
+On IRC, any action other than chatting is done through what are called "commands". They are regular chat messages, with the only difference being that their first character must always be a / slash. It does not matter in which channel you send the commands, they will always be invisible to other users.
+EOT
+);
+___('irc_faq_commands_body_1',    'FR', <<<EOT
+Sur IRC, toute action autre que discuter se fait via ce qu'on appelle des commandes. Il s'agit de messages normaux, envoyés de la même façon que des lignes de conversation, à la différence que leur premier caractère est nécessairement un / slash. Peu importe dans quel canal vous écrivez des commandes, elles seront toujours invisibles aux autres personnes qui y sont présentes.
+EOT
+);
+___('irc_faq_commands_body_2',    'EN', <<<EOT
+You will find a list of a few useful commands below. When a word is between [brackets], then it means that its value can be anything you want and you should replace it with something else. For example, if given the command <span class="monospace">/join #[channel]</span>, you should use it as <span class="monospace">/join #NoBleme</span> or <span class="monospace">/join #english</span>.
+EOT
+);
+___('irc_faq_commands_body_2',    'FR', <<<EOT
+Vous trouverez ci-dessous une liste de quelques commandes utiles. Lorsqu'un mot est entre [crochets], cela signifie que sa valeur est à personnaliser. Par exemple, lorsque la commande <span class="monospace">/join #[canal]</span> est documentée, vous pouvez l'utiliser comme <span class="monospace">/join #NoBleme</span> ou <span class="monospace">/join #english</span>.
+EOT
+);
+___('irc_faq_commands_body_3',    'EN', <<<EOT
+More commands relating to account management and channel management can be found in the {{link|pages/irc/faq?nickserv|NickServ}} and {{link|pages/irc/faq?chanserv|ChanServ}} pages of this FAQ.
+EOT
+);
+___('irc_faq_commands_body_3',    'FR', <<<EOT
+Des commandes additionnelles liées à la gestion des comptes et des canaux se trouvent sur les pages {{link|pages/irc/faq?nickserv|NickServ}} et {{link|pages/irc/faq?chanserv|ChanServ}} de cette FAQ.
+EOT
+);
+
+___('irc_faq_commands_server',    'EN', "[server]");
+___('irc_faq_commands_server',    'FR', "[serveur]");
+___('irc_faq_commands_channel',   'EN', "[channel]");
+___('irc_faq_commands_channel',   'FR', "[canal]");
+___('irc_faq_commands_username',  'EN', "[username]");
+___('irc_faq_commands_username',  'FR', "[pseudonyme]");
+___('irc_faq_commands_message',   'EN', "[message]");
+___('irc_faq_commands_message',   'FR', "[message]");
+
+___('irc_faq_commands_clear',     'EN', <<<EOT
+Clears the currently visible chat messages by removing all text on your screen. Useful in case of clutter, or if you want to hide some history from view. This does not however permanently delete any archived chat logs, and does not clear the screens of other users' IRC clients (everyone else will still see the message history).
+EOT
+);
+___('irc_faq_commands_clear',     'FR', <<<EOT
+Supprime tous les messages visibles à l'écran. Pratique si du contenu indésirable est sur votre écran, ou si vous voulez vous souvenir de jusqu'où vous avez suivi une discussion. Cela n'affecte pas les autres personnes (seul votre client aura son écran nettoyé).
+EOT
+);
+___('irc_faq_commands_quit',      'EN', <<<EOT
+Disconnects you from the IRC server which you are currently using.
+EOT
+);
+___('irc_faq_commands_quit',      'FR', <<<EOT
+Vous déconnecte du serveur IRC sur lequel vous vous trouvez actuellement.
+EOT
+);
+___('irc_faq_commands_connect',   'EN', <<<EOT
+Connects to an existing IRC server. For example connecting to NoBleme's IRC server is done by typing <span class="monospace">/server irc.nobleme.com</span>. You may be on more than one IRC server at once, and can leave a specific server by using the <span class="monospace">/quit</span> command while in a channel located on that server.
+EOT
+);
+___('irc_faq_commands_connect',   'FR', <<<EOT
+Vous connecte à un serveur IRC existant. Par exemple, vous pouvez vous connecter au serveur IRC de NoBleme en écrivant <span class="monospace">/server irc.nobleme.com</span>. Vous pouvez vous connecter à plus d'un serveur IRC simultanément, et pouvez vous déconnecter d'un serveur spécifique en utilisant la commande <span class="monospace">/quit</span> dans un canal situé sur ce serveur.
+EOT
+);
+___('irc_faq_commands_list',      'EN', <<<EOT
+Lists all public IRC channels on the server, along with the number of users currently using each of them.
+EOT
+);
+___('irc_faq_commands_list',      'FR', <<<EOT
+Liste tous les canaux IRC publics sur le serveur, ainsi que le nombre de personnes qui s'y trouvent actuellement.
+EOT
+);
+___('irc_faq_commands_join',      'EN', <<<EOT
+Joins an existing IRC channel. Some channels are private and can not be joined unless you are specifically granted access to them. You can find out which channels exist on NoBleme's IRC server on our {{link|pages/irc/faq?channels|channel list}}, or by using the <span class="monospace">/list</span> command.
+EOT
+);
+___('irc_faq_commands_join',      'FR', <<<EOT
+Rejoint un canal IRC existant. Certains canaux sont privés et ne peuvent pas être rejoints si vous ne disposez pas du droit d'y accéder. Vous pouvez trouver la liste des canaux du serveur IRC de NoBleme sur notre {{link|pages/irc/faq?channels|liste des canaux}}, ou en utilisant la commande <span class="monospace">/list</span>.
+EOT
+);
+___('irc_faq_commands_names',     'EN', <<<EOT
+Lists all users currently in the specified channel, even if you are currently not present in it. This will not work if used on a private channel.
+EOT
+);
+___('irc_faq_commands_names',     'FR', <<<EOT
+Liste toutes les personnes actuellement présentes sur le canal spécifié, même si vous n'y êtes pas. Cela ne fonctionne pas sur les canaux privés.
+EOT
+);
+___('irc_faq_commands_part',      'EN', <<<EOT
+Leaves an IRC channel on which you currently are. You will no longer be able to send messages to this channel (unless you rejoin it), and will stop receiving messages sent to this channel by other users.
+EOT
+);
+___('irc_faq_commands_part',      'FR', <<<EOT
+Quitte un canal IRC spécifique dans lequel vous êtes actuellement. Vous ne pourrez plus envoyer de messages sur ce canal (à moins de le rejoindre), et ne recevrez plus les messages envoyés sur ce canal par les autres personnes.
+EOT
+);
+___('irc_faq_commands_nick',      'EN', <<<EOT
+Changes your current username to the desired new username. If the desired username is already in use, it will not work. Your username is the same in every IRC channel which you are on in a specific IRC server, there is no way to have a different username in different channels.
+EOT
+);
+___('irc_faq_commands_nick',      'FR', <<<EOT
+Change votre pseudonyme actuel en le remplaçant par le pseudonyme désiré. Si le pseudonyme choisi est déjà utilisé par quelqu'un d'autre, le changement ne se fera pas. Votre pseudonyme sera le même sur tous les canaux d'un serveur IRC donné, vous ne pouvez pas avoir un pseudonyme différent d'un canal à l'autre.
+EOT
+);
+___('irc_faq_commands_whois',     'EN', <<<EOT
+Returns various elements of information about the specified user. The amount and nature of the returned elements depend on the user's IRC client and settings.
+EOT
+);
+___('irc_faq_commands_whois',     'FR', <<<EOT
+Affiche diverses informations sur la personne spécifiée. La quantité et la nature de ces informations dépend du client IRC et des réglages de la personne en question.
+EOT
+);
+___('irc_faq_commands_whowas',    'EN', <<<EOT
+Returns various elements of information about a specified username, even if they are not present on the server anymore. This is a useful way to know when a person last used IRC.
+EOT
+);
+___('irc_faq_commands_whowas',    'FR', <<<EOT
+Affiche diverses informations sur un pseudonyme spécifié, même si personne n'est actuellement en train d'utiliser ce pseudonyme sur le serveur. Cela permet de savoir quand une personne était présente sur IRC pour la dernière fois.
+EOT
+);
+___('irc_faq_commands_msg',       'EN', <<<EOT
+Sends a private message to the specified user. Only you and the specified user will be able to see the contents of this message, it will not be shared on any channels and will be hidden even from the administrators of the IRC server. For example, if you were trying to initiate a private conversation with a user named SomeUser, you would send the following message: <span class="monospace">/msg SomeUser Hello, how are you doing?</span>
+EOT
+);
+___('irc_faq_commands_msg',       'FR', <<<EOT
+Envoie un message privé à la personne spécifiée. Seuls vous et la personne en question pourrez voir le contenu de ce message, il ne sera partagé sur aucun canal, et même l'administration du serveur ne pourra pas le voir. Par exemple, si vous désirez démarrer une conversation privée avec quelqu'un utilisant le pseudonyme QuelqUn, vous pouvez envoyer le message suivant : <span class="monospace">/msg QuelqUn Coucou, tu vas vraiment bien ?</span>
+EOT
+);
+___('irc_faq_commands_ignore',    'EN', <<<EOT
+Blocks all incoming messages from the specified user. Not only will you stop receiving their private messages, but you will also not see any further messages sent by them on IRC channels in which both of you are present. The ignored user will still be able to see your messages, there is no way to make your messages invisible to a specific user. The ignore command will automatically continue working on them even if they change username.
+EOT
+);
+___('irc_faq_commands_ignore',    'FR', <<<EOT
+Bloque toutes les communications venant de la personne spécifiée. Non seulement vous ne recevrez plus ses messages privés, mais vous ne verrez également plus ses futurs messages sur les canaux de discussion. La personne ignorée pourra toutefois continuer à voir vos messages, il n'existe pas de façon de rendre vos messages invisibles à une personne spécifique. La commande ignore continuera à fonctionner même si la personne ignorée change de pseudonyme.
+EOT
+);
+___('irc_faq_commands_unignore',  'EN', <<<EOT
+Stops blocking messages from a currently ignored user.
+EOT
+);
+___('irc_faq_commands_unignore',  'FR', <<<EOT
+Cesse de bloquer les communications venant de la personne spécifiée.
+EOT
+);

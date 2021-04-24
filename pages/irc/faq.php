@@ -665,6 +665,87 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
+<?php /************************************************ COMMANDS **************************************************/ ?>
+
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['commands']?>" id="irc_faq_commands">
+
+  <p>
+    <?=__('irc_faq_commands_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_commands_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_commands_body_3')?>
+  </p>
+
+  <h5 class="bigpadding_top" id="clear">/clear</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_clear')?>
+  </p>
+
+  <h5 id="quit">/quit</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_quit')?>
+  </p>
+
+  <h5 id="server">/server <?=__('irc_faq_commands_server')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_connect')?>
+  </p>
+
+  <h5 id="list">/list</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_list')?>
+  </p>
+
+  <h5 id="join">/join #<?=__('irc_faq_commands_channel')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_join')?>
+  </p>
+
+  <h5 id="names">/names #<?=__('irc_faq_commands_channel')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_names')?>
+  </p>
+
+  <h5 id="part">/part #<?=__('irc_faq_commands_channel')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_part')?>
+  </p>
+
+  <h5 id="nick">/nick <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_nick')?>
+  </p>
+
+  <h5 id="whois">/whois <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_whois')?>
+  </p>
+
+  <h5 id="whois">/whowas <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_whowas')?>
+  </p>
+
+  <h5 id="msg">/msg <?=__('irc_faq_commands_username')?> <?=__('irc_faq_commands_message')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_msg')?>
+  </p>
+
+  <h5 id="ignore">/ignore <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_ignore')?>
+  </p>
+
+  <h5 id="unignore">/unignore <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_unignore')?>
+  </p>
+
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */
