@@ -991,6 +991,10 @@ ___('irc_faq_commands_username',  'EN', "[username]");
 ___('irc_faq_commands_username',  'FR', "[pseudonyme]");
 ___('irc_faq_commands_message',   'EN', "[message]");
 ___('irc_faq_commands_message',   'FR', "[message]");
+___('irc_faq_commands_password',  'EN', "[password]");
+___('irc_faq_commands_password',  'FR', "[mot-de-passe]");
+___('irc_faq_commands_newpass',   'EN', "[new-password]");
+___('irc_faq_commands_newpass',   'FR', "[nouveau-mot-de-passe]");
 
 ___('irc_faq_commands_clear',     'EN', <<<EOT
 Clears the currently visible chat messages by removing all text on your screen. Useful in case of clutter, or if you want to hide some history from view. This does not however permanently delete any archived chat logs, and does not clear the screens of other users' IRC clients (everyone else will still see the message history).
@@ -1049,7 +1053,7 @@ Quitte un canal IRC spécifique dans lequel vous êtes actuellement. Vous ne pou
 EOT
 );
 ___('irc_faq_commands_nick',      'EN', <<<EOT
-Changes your current username to the desired new username. If the desired username is already in use, it will not work. Your username is the same in every IRC channel which you are on in a specific IRC server, there is no way to have a different username in different channels.
+Changes your current username to the desired new username. If the desired username is already in use, it will not work. Your username is the same in every IRC channel on specific IRC server, there is no way to have a different username in different channels.
 EOT
 );
 ___('irc_faq_commands_nick',      'FR', <<<EOT
@@ -1094,5 +1098,80 @@ EOT
 );
 ___('irc_faq_commands_unignore',  'FR', <<<EOT
 Cesse de bloquer les communications venant de la personne spécifiée.
+EOT
+);
+
+
+// FAQ: NickServ
+___('irc_faq_nickserv_body_1',    'EN', <<<EOT
+While using IRC, you might come to the realization that nothing is stopping other users from impersonating you by "stealing" your username. This can be avoided by sending messages to a special automated user called NickServ, which is always present on the server.
+EOT
+);
+___('irc_faq_nickserv_body_1',    'FR', <<<EOT
+Lors de votre utilisation d'IRC, vous vous rendrez compte que rien n'empêche d'autres personnes d'usurper votre identité en « volant » votre pseudonyme. Ce problème peut être évité en envoyant des messages à un compte automatisé portant le pseudonyme NickServ, qui est présent en permanence sur le serveur IRC NoBleme.
+EOT
+);
+___('irc_faq_nickserv_body_2',    'EN', <<<EOT
+You will find a list of NickServ related {{link|pages/irc/faq?commands|commands}} below. When a word is between [brackets], then it means that its value can be anything you want and you should replace it with something else. For example, if given the command <span class="monospace">/msg NickServ identify [password]</span>, you should use it as <span class="monospace">/msg NickServ identify myPassword123</span>.
+EOT
+);
+___('irc_faq_nickserv_body_2',    'FR', <<<EOT
+Vous trouverez ci-dessous une liste de commandes en rapport avec NickServ. Lorsqu'un mot est entre [crochets], cela signifie que sa valeur est à personnaliser. Par exemple, lorsque la commande <span class="monospace">/msg NickServ identify [mot-de-passe]</span> est documentée, vous pouvez l'utiliser comme <span class="monospace">/msg NickServ identify monPass123</span>.
+EOT
+);
+___('irc_faq_nickserv_body_3',    'EN', <<<EOT
+Most of the commands listed on this page begin with <span class="monospace">/msg NickServ</span>. Depending on your IRC client, you might be able to shorten any such command by using <span class="monospace">/ns</span> instead. For example, <span class="monospace">/msg NickServ identify [password]</span> would become <span class="monospace">/ns identify [password]</span>.
+EOT
+);
+___('irc_faq_nickserv_body_3',    'FR', <<<EOT
+La majorité des commandes listées sur cette page commencent par <span class="monospace">/msg NickServ</span>. Selon votre client IRC, il est possible que vous puissiez raccourcir ces commandes en utilisant <span class="monospace">/ns</span> à la place. Par exemple, <span class="monospace">/msg NickServ identify [mot-de-passe]</span> deviendrait <span class="monospace">/ns identify [mot-de-passe]</span>.
+EOT
+);
+___('irc_faq_nickserv_register',  'EN', <<<EOT
+Registers your current username with NickServ, making you its owner. <span class="bold">Make sure you remember your chosen password, as there is no way to recover it if you lose it.</span> Do not register other people's usernames in order to annoy or impersonate them, this would only lead to getting permanently banned from NoBleme's IRC server and all your registered usernames being unregistered.
+EOT
+);
+___('irc_faq_nickserv_register',  'FR', <<<EOT
+Enregistre votre pseudonyme actuel auprès de NickServ, vous en donnant la propriété exclusive. <span class="bold">Assurez-vous de retenir votre mot de passe, il n'existe aucune façon de le récupérer si vous le perdez.</span>. Ne cherchez pas à enregistrer les pseudonymes d'autres personnes dans le but de les embêter ou d'usurper leur identité, cela conduirait à une exclusion permanente du serveur IRC NoBleme ainsi qu'à un dé-enregistrement de tous les pseudonymes que vous aurez enregistré.
+EOT
+);
+___('irc_faq_nickserv_identify',  'EN', <<<EOT
+Identifies you as the owner of the username you are currently using. <span class="bold">You must execute this command every time you connect to NoBleme's IRC server,</span> otherwise your username will be changed at random after one minute. Most IRC clients give you ways to automatically execute certain commands as you connect to an IRC server, adding the identify command to this automation will avoid having to type it manually every single time.
+EOT
+);
+___('irc_faq_nickserv_identify',  'FR', <<<EOT
+Vous authentifie comme propriétaire du pseudonyme que vous utilisez actuellement. <span class="bold">Vous devez exécuter cette commande à chaque fois que vous vous connectez au serveur IRC NoBleme,</span> sous peine de voir votre pseudonyme automatiquement changé au bout d'une minute. La plupart des clients IRC vous offrent la possibilité d'automatiquement exécuter certaines commandes lorsque vous vous connectez à un serveur IRC, ajouter la commande identify à cette automatisation vous évitera d'avoir à systématiquement l'écrire manuellement.
+EOT
+);
+___('irc_faq_nickserv_password',  'EN', <<<EOT
+Changes your current password to a new password of your choosing. <span class="bold">Make sure you remember your chosen password, as there is no way to recover it if you lose it.</span>
+EOT
+);
+___('irc_faq_nickserv_password',  'FR', <<<EOT
+Change votre mot de passe actuel pour un nouveau mot de passe. <span class="bold">Assurez-vous de retenir votre mot de passe, il n'existe aucune façon de le récupérer si vous le perdez.</span>
+EOT
+);
+___('irc_faq_nickserv_recover',  'EN', <<<EOT
+Disconnects from the IRC server anyone who is currently using your registered username. This is useful in case you have been disconnected and a ghost of you still lingers idly on the server under your username.
+EOT
+);
+___('irc_faq_nickserv_recover',  'FR', <<<EOT
+Déconnecte du serveur IRC toute personne qui utilise actuellement votre pseudonyme enregistré. Cela est utile si vous avez subi une déconnexion accidentelle et que votre fantôme est toujours présent sur le serveur sous votre pseudonyme.
+EOT
+);
+___('irc_faq_nickserv_ghost',   'EN', <<<EOT
+If someone has been attempting to bruteforce your NickServ password (trying over and over to identify or recover in order to guess your password), the system might lock anyone out of using your username. In such a situation, the ghost command allows you to release your username, so that you can use it again.
+EOT
+);
+___('irc_faq_nickserv_ghost',   'FR', <<<EOT
+Dans le cas où une personne mal intentionnée essayerait de deviner votre mot de passe NickServ en tentant de s'authentifier plusieurs fois de suite, le système peut automatiquement verrouiller votre pseudonyme, le rendant temporairement impossible à utiliser. Dans ces situations, la commande ghost vous permet de libérer votre pseudonyme, afin que vous puissiez l'utiliser.
+EOT
+);
+___('irc_faq_nickserv_drop',    'EN', <<<EOT
+Unregisters your username, deleting it from NickServ's database.
+EOT
+);
+___('irc_faq_nickserv_drop',    'FR', <<<EOT
+Dé-enregistre votre pseudonyme, le supprimant de la base de données de NickServ.
 EOT
 );

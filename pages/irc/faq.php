@@ -746,6 +746,61 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('irc_faq_commands_unignore')?>
   </p>
 
+</div>
+
+<?php /************************************************ NICKSERV **************************************************/ ?>
+
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['nickserv']?>" id="irc_faq_nickserv">
+
+  <p>
+    <?=__('irc_faq_nickserv_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_nickserv_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_nickserv_body_3')?>
+  </p>
+
+  <h5 class="bigpadding_top" id="nick">/nick <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_commands_nick')?>
+  </p>
+
+  <h5 id="register">/msg NickServ register <?=__('irc_faq_commands_password')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_nickserv_register')?>
+  </p>
+
+  <h5 id="identify">/msg NickServ identify <?=__('irc_faq_commands_password')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_nickserv_identify')?>
+  </p>
+
+  <h5 id="password">/msg NickServ password <?=__('irc_faq_commands_password')?> <?=__('irc_faq_commands_newpass')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_nickserv_password')?>
+  </p>
+
+  <h5 id="recover">/msg NickServ recover <?=__('irc_faq_commands_username')?> <?=__('irc_faq_commands_password')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_nickserv_recover')?>
+  </p>
+
+  <h5 id="ghost">/msg NickServ ghost <?=__('irc_faq_commands_username')?> <?=__('irc_faq_commands_password')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_nickserv_ghost')?>
+  </p>
+
+  <h5 id="drop">/msg NickServ drop <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_nickserv_drop')?>
+  </p>
+
+</div>
+
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */
