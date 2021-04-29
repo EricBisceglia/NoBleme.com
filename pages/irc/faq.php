@@ -801,6 +801,235 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
+<?php /************************************************ CHANSERV **************************************************/ ?>
+
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['chanserv']?>" id="irc_faq_chanserv">
+
+  <p>
+    <?=__('irc_faq_chanserv_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_chanserv_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_chanserv_body_3')?>
+  </p>
+
+  <h3 id="hostmasks" class="bigpadding_top">
+    <?=__('irc_faq_chanserv_hostmasks_title')?>
+  </h3>
+
+  <p>
+    <?=__('irc_faq_chanserv_hostmasks_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_chanserv_hostmasks_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_chanserv_hostmasks_body_3')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_chanserv_hostmasks_ex_1')?></span><br>
+    <?=__('irc_faq_chanserv_hostmasks_body_4')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_chanserv_hostmasks_ex_2')?></span><br>
+    <?=__('irc_faq_chanserv_hostmasks_body_5')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_chanserv_hostmasks_ex_3')?></span><br>
+    <?=__('irc_faq_chanserv_hostmasks_body_6')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_chanserv_hostmasks_ex_4')?></span><br>
+    <?=__('irc_faq_chanserv_hostmasks_body_7')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_chanserv_hostmasks_ex_5')?></span><br>
+    <?=__('irc_faq_chanserv_hostmasks_body_8')?>
+  </p>
+
+  <p>
+    <span class="text_red bold indented"><?=__('irc_faq_chanserv_hostmasks_ex_6')?></span><br>
+    <?=__('irc_faq_chanserv_hostmasks_body_9')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_chanserv_hostmasks_body_10')?>
+  </p>
+
+  <h3 id="abilities" class="hugepadding_top">
+    <?=__('irc_faq_chanserv_optools_title')?>
+  </h3>
+
+  <p>
+    <?=__('irc_faq_chanserv_optools_body')?>
+  </p>
+
+  <h5 class="padding_top" id="topic">/msg ChanServ topic #<?=__('irc_faq_commands_channel')?> <?=__('irc_faq_commands_text')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_topic')?>
+  </p>
+
+  <h5 id="kick">/msg ChanServ kick #<?=__('irc_faq_commands_channel')?> <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_kick')?>
+  </p>
+
+  <h5 id="ban">/msg ChanServ mode #<?=__('irc_faq_commands_channel')?> set +b <?=__('irc_faq_commands_hostmask')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_ban')?>
+  </p>
+
+  <h5 id="banlist">/msg ChanServ mode #<?=__('irc_faq_commands_channel')?> b</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_banlist')?>
+  </p>
+
+  <h5 id="unban">/msg ChanServ mode #<?=__('irc_faq_commands_channel')?> set -b <?=__('irc_faq_commands_hostmask')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_unban')?>
+  </p>
+
+  <h5 id="mute">/msg ChanServ mode #<?=__('irc_faq_commands_channel')?> set +m</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_mute')?>
+  </p>
+
+  <h5 id="unmute">/msg ChanServ mode #<?=__('irc_faq_commands_channel')?> set +v <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_voice')?>
+  </p>
+
+  <h5 id="unmute">/msg ChanServ mode #<?=__('irc_faq_commands_channel')?> set -m</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_unmute')?>
+  </p>
+
+  <h3 id="management" class="hugepadding_top">
+    <?=__('irc_faq_chanserv_manage_title')?>
+  </h3>
+
+  <p>
+    <?=__('irc_faq_chanserv_manage_body')?>
+  </p>
+
+  <h5 class="padding_top" id="register">/msg ChanServ register #<?=__('irc_faq_commands_channel')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_register')?>
+  </p>
+
+  <h5 id="founder">/msg ChanServ set founder #<?=__('irc_faq_commands_channel')?> <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_founder')?>
+  </p>
+
+  <h5 id="autovoice">/msg ChanServ vop #<?=__('irc_faq_commands_channel')?> add <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_voiceop')?>
+  </p>
+
+  <h5 id="autohalfop">/msg ChanServ hop #<?=__('irc_faq_commands_channel')?> add <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_halfop')?>
+  </p>
+
+  <h5 id="autoop">/msg ChanServ aop #<?=__('irc_faq_commands_channel')?> add <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_op')?>
+  </p>
+
+  <h5 id="autoadmin">/msg ChanServ sop #<?=__('irc_faq_commands_channel')?> add <?=__('irc_faq_commands_username')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_admin')?>
+  </p>
+
+  <h3 id="modes" class="hugepadding_top">
+    <?=__('irc_faq_chanserv_modes_title')?>
+  </h3>
+
+  <p>
+    <?=__('irc_faq_chanserv_modes_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_chanserv_modes_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_chanserv_modes_body_3')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_chanserv_modes_body_4')?>
+  </p>
+
+  <h5 class="monospace bold padding_top">+i</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_mode_i')?>
+  </p>
+
+  <h5 class="monospace bold">+I <?=__('irc_faq_commands_hostmask')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_mode_i_caps')?>
+  </p>
+
+  <h5 class="monospace bold">+k <?=__('irc_faq_commands_password')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_mode_k')?>
+  </p>
+
+  <h5 class="monospace bold">+l <?=__('irc_faq_commands_number')?></h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_mode_l')?>
+  </p>
+
+  <h5 class="monospace bold">+m</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_mode_m')?>
+  </p>
+
+  <h5 class="monospace bold">+M</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_mode_m_caps')?>
+  </p>
+
+  <h5 class="monospace bold">+n</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_mode_n')?>
+  </p>
+
+  <h5 class="monospace bold">+R</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_mode_r_caps')?>
+  </p>
+
+  <h5 class="monospace bold">+s</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_mode_s')?>
+  </p>
+
+  <h5 class="monospace bold">+t</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_mode_t')?>
+  </p>
+
+  <h5 class="monospace bold">+u</h5>
+  <p class="tinypadding_top padding_bot">
+    <?=__('irc_faq_chanserv_mode_u')?>
+  </p>
+
+</div>
+
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */

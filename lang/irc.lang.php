@@ -176,7 +176,7 @@ ___('irc_faq_select_bouncer',   'EN', "Setting up an IRC bouncer");
 ___('irc_faq_select_bouncer',   'FR', "Mettre en place un bouncer IRC");
 ___('irc_faq_select_commands',  'EN', "Commands: Simple actions");
 ___('irc_faq_select_commands',  'FR', "Commandes: Actions de base");
-___('irc_faq_select_nickserv',  'EN', "NickServ: Account management");
+___('irc_faq_select_nickserv',  'EN', "NickServ: Username management");
 ___('irc_faq_select_nickserv',  'FR', "NickServ: Gérer votre pseudonyme");
 ___('irc_faq_select_chanserv',  'EN', "ChanServ: Channel management");
 ___('irc_faq_select_chanserv',  'FR', "ChanServ: Gérer vos canaux");
@@ -995,6 +995,12 @@ ___('irc_faq_commands_password',  'EN', "[password]");
 ___('irc_faq_commands_password',  'FR', "[mot-de-passe]");
 ___('irc_faq_commands_newpass',   'EN', "[new-password]");
 ___('irc_faq_commands_newpass',   'FR', "[nouveau-mot-de-passe]");
+___('irc_faq_commands_text',      'EN', "[text]");
+___('irc_faq_commands_text',      'FR', "[texte]");
+___('irc_faq_commands_hostmask',  'EN', "[hostmask]");
+___('irc_faq_commands_hostmask',  'FR', "[hostmask]");
+___('irc_faq_commands_number',    'EN', "[number]");
+___('irc_faq_commands_number',    'FR', "[nombre]");
 
 ___('irc_faq_commands_clear',     'EN', <<<EOT
 Clears the currently visible chat messages by removing all text on your screen. Useful in case of clutter, or if you want to hide some history from view. This does not however permanently delete any archived chat logs, and does not clear the screens of other users' IRC clients (everyone else will still see the message history).
@@ -1173,5 +1179,348 @@ EOT
 );
 ___('irc_faq_nickserv_drop',    'FR', <<<EOT
 Dé-enregistre votre pseudonyme, le supprimant de la base de données de NickServ.
+EOT
+);
+
+
+// FAQ: ChanServ
+___('irc_faq_chanserv_body_1',            'EN', <<<EOT
+During your usage of IRC, you might end up dealing with channel management - either because you want to create and administrate your own channel, or because you have been named operator in an already existing channel and are faced with a situation where you need to use your operator abilities. A lot of these actions are done by sending messages to a special automated user called ChanServ, which is always present on the server.
+EOT
+);
+___('irc_faq_chanserv_body_1',            'FR', <<<EOT
+Lors de votre utilisation d'IRC, vous pourrez vous retrouver à gérer un canal IRC - soit parce que vous désirez créer et administrer votre propre canal, soit parce que vous vous retrouvez Operator d'un canal existant et avez besoin d'utiliser vos pouvoirs. La majorité de ces actions se font en envoyant des messages à un compte automatisé portant le pseudonyme ChanServ, qui est présent en permanence sur le serveur IRC NoBleme.
+EOT
+);
+___('irc_faq_chanserv_body_2',            'EN', <<<EOT
+You will find a list of ChanServ related {{link|pages/irc/faq?commands|commands}} below. When a word is between [brackets], then it means that its value can be anything you want and you should replace it with something else. For example, if given the command <span class="monospace">/kick channel [username]</span>, you should use it as <span class="monospace">/kick channel SomeUser</span>.
+EOT
+);
+___('irc_faq_chanserv_body_2',            'FR', <<<EOT
+Vous trouverez ci-dessous une liste de {{link|pages/irc/faq?commands|commandes}} en rapport avec ChanServ. Lorsqu'un mot est entre [crochets], cela signifie que sa valeur est à personnaliser. Par exemple, lorsque la commande <span class="monospace">/kick channel [pseudonyme]</span> est documentée, vous pouvez l'utiliser comme <span class="monospace">/kick channel MonPseudo</span>.
+EOT
+);
+___('irc_faq_chanserv_body_3',            'EN', <<<EOT
+Most of the commands listed on this page begin with <span class="monospace">/msg ChanServ</span>. Depending on your IRC client, you might be able to shorten any such command by using <span class="monospace">/cs</span> instead. For example, <span class="monospace">/msg ChanServ aop #[channel] list</span> would become <span class="monospace">/cs aop #[channel] list</span>.
+EOT
+);
+___('irc_faq_chanserv_body_3',            'FR', <<<EOT
+Beaucoup de commandes listées sur cette page commencent par <span class="monospace">/msg ChanServ</span>. Selon votre client IRC, il est possible que vous puissiez raccourcir ces commandes en utilisant <span class="monospace">/cs</span> à la place. Par exemple, <span class="monospace">/msg ChanServ aop #[canal] list</span> deviendrait <span class="monospace">/cs aop #[canal] list</span>.
+EOT
+);
+
+___('irc_faq_chanserv_hostmasks_title',   'EN', "Hostmasks");
+___('irc_faq_chanserv_hostmasks_title',   'FR', "Hostmask");
+___('irc_faq_chanserv_hostmasks_body_1',  'EN', <<<EOT
+Every user connected to an IRC server is identified not by their nickname (which can be changed at will), but rather by a unique string of characters called their hostmask. It uses the following format: <span class="monospace">username!user@host</span>, where <span class="monospace">username</span> is self-explanatory, <span class="monospace">user</span> is a special name given by their IRC client, and <span class="monospace">host</span> is a unique identifier for a specific person.
+EOT
+);
+___('irc_faq_chanserv_hostmasks_body_1',  'FR', <<<EOT
+Toute personne connectée à un serveur IRC n'est pas identifiée par son pseudonyme (qui peut être changé à volonté), mais plutôt par une chaîne de caractères unique qui porte le nom de « hostmask » (masque d'hôte). Les hostmask utilisent le format suivant: <span class="monospace">pseudonyme!nom@hôte</span>, où <span class="monospace">pseudonyme</span> est le pseudonyme actuellement utilisé, <span class="monospace">nom</span> est une valeur assignée par le client IRC, et <span class="monospace">hôte</span> est une façon unique d'identifier une personne.
+EOT
+);
+___('irc_faq_chanserv_hostmasks_body_2',  'EN', <<<EOT
+Based on the way hostnames work, if you are looking to identify someone (for example to permanently ban them from a channel), you should specifically look for the <span class="monospace">host</span> part of their hostname, as the rest can be changed at will. Finding a user's hostname can be done by using the <span class="monospace">/whois [username]</span> or <span class="monospace">/whowas [username]</span> {{link|pages/irc/faq?commands|commands}}.
+EOT
+);
+___('irc_faq_chanserv_hostmasks_body_2',  'FR', <<<EOT
+En observant la structure des hostmask, la seule façon d'identifier une personne spécifique (par exemple afin de la bannir d'un canal IRC) est via la partie <span class="monospace">hôte</span> de son hostmask, le reste étant modifiable à volonté. Pour trouver l'hôte d'une personne, utilisez les {{link|pages/irc/faq?commands|commandes}} <span class="monospace">/whois [pseudonyme]</span> ou <span class="monospace">/whowas [pseudonyme]</span>.
+EOT
+);
+___('irc_faq_chanserv_hostmasks_body_3',  'EN', <<<EOT
+The asterisk * character can be used as a "wildcard" in a hostmask. For example, the hostmask <span class="monospace">SomeUsername!*@*.fr</span> will match every user that goes by the username "SomeUsername" and has a host ending in ".fr". Here are more concrete examples that should help you better understand the concept:
+EOT
+);
+___('irc_faq_chanserv_hostmasks_body_3',  'FR', <<<EOT
+Un astérisque * peut servir de « joker » dans un hostmask. Par exemple, le hostmask <span class="monospace">UnPseudonyme!*@*.fr</span> correspond à toutes les personnes utilisant le pseudonyme « UnPseudonyme » et dont l'hôte finit par « .fr ». Les exemples suivants devraient vous aider à mieux comprendre :
+EOT
+);
+___('irc_faq_chanserv_hostmasks_ex_1',    'EN', "SomeUsername!*@*");
+___('irc_faq_chanserv_hostmasks_ex_1',    'FR', "UnPseudonyme!*@*");
+___('irc_faq_chanserv_hostmasks_body_4',  'EN', "Matches every user that goes by the exact username SomeUsername");
+___('irc_faq_chanserv_hostmasks_body_4',  'FR', "Correspond à toutes les personnes utilisant le pseudonyme UnPseudonyme");
+___('irc_faq_chanserv_hostmasks_ex_2',    'EN', "*SomeWord*!*@*");
+___('irc_faq_chanserv_hostmasks_ex_2',    'FR', "*UnMot*!*@*");
+___('irc_faq_chanserv_hostmasks_body_5',  'EN', "Matches every user whose username contains SomeWord");
+___('irc_faq_chanserv_hostmasks_body_5',  'FR', "Correspond à toutes les personnes dont le pseudonyme contient UnMot");
+___('irc_faq_chanserv_hostmasks_ex_3',    'EN', "SomeWord*!*@*");
+___('irc_faq_chanserv_hostmasks_ex_3',    'FR', "UnMot*!*@*");
+___('irc_faq_chanserv_hostmasks_body_6',  'EN', "Matches every user whose username begins with SomeWord");
+___('irc_faq_chanserv_hostmasks_body_6',  'FR', "Correspond à toutes les personnes dont le pseudonyme commence par UnMot");
+___('irc_faq_chanserv_hostmasks_ex_4',    'EN', "*!*@123-456-789.something.com");
+___('irc_faq_chanserv_hostmasks_ex_4',    'FR', "*!*@123-456-789.quelquechose.fr");
+___('irc_faq_chanserv_hostmasks_body_7',  'EN', "Matches every user whose host is precisely 123-456-789.something.com");
+___('irc_faq_chanserv_hostmasks_body_7',  'FR', "Correspond à toutes les personnes dont l'hôte est 123-456-789.quelquechose.fr");
+___('irc_faq_chanserv_hostmasks_ex_5',    'EN', "*!*@*.something.com");
+___('irc_faq_chanserv_hostmasks_ex_5',    'FR', "*!*@*.quelquechose.fr");
+___('irc_faq_chanserv_hostmasks_body_8',  'EN', "Matches every user whose host ends in .something.com");
+___('irc_faq_chanserv_hostmasks_body_8',  'FR', "Correspond à toutes les personnes dont l'hôte finit par quelquechose.fr");
+___('irc_faq_chanserv_hostmasks_ex_6',    'EN', "*!*@*");
+___('irc_faq_chanserv_hostmasks_ex_6',    'FR', "*!*@*");
+___('irc_faq_chanserv_hostmasks_body_9',  'EN', "Matches literally everyone, be very careful when using this");
+___('irc_faq_chanserv_hostmasks_body_9',  'FR', "Correspond à littéralement tout le monde, faites très attention");
+___('irc_faq_chanserv_hostmasks_body_10', 'EN', <<<EOT
+When you see the word [hostmask] between brackets later on this page, you should now hopefully understand what to input as a hostmask. If you don't get it, or if you are scared by the complexity, then don't hesitate to ask around: someone will surely help you out.
+EOT
+);
+___('irc_faq_chanserv_hostmasks_body_10', 'FR', <<<EOT
+Lorsque vous verrez le mot [hostmask] entre crochets sur cette page, vous devriez maintenant comprendre ce qu'il faut écrire à la place. Si vous ne comprenez pas le concept, ou que vous avez peur de sa complexité, n'hésitez pas à demander un coup de main.
+EOT
+);
+
+___('irc_faq_chanserv_optools_title',   'EN', "Operator abilities");
+___('irc_faq_chanserv_optools_title',   'FR', "Pouvoirs d'Operator");
+___('irc_faq_chanserv_optools_body',    'EN', <<<EOT
+Operator abilities can only be used in a channel in which you are an operator, and require you to be registered with NickServ and identified. You can find more about operator names, abilities, and symbols at the bottom of the {{link|pages/irc/faq?guide#symbols|vocabulary and symbols}} section of this FAQ, and more about account management on the {{link|pages/irc/faq?nickserv|NickServ}} section of this FAQ.
+EOT
+);
+___('irc_faq_chanserv_optools_body',    'FR', <<<EOT
+Les pouvoirs d'Operator ne peuvent être utilisés que dans un canal IRC sur lequel vous êtes Operator, et requièrent que votre pseudonyme soit enregistré auprès de NickServ. Vous pouvez en lire plus sur les types d'Operator et leurs pouvoirs dans la section symboles de la page {{link|pages/irc/faq?guide#symbols|vocabulaire et symboles}} de cette FAQ, et plus sur l'enregistrement de votre pseudonyme dans la section {{link|pages/irc/faq?nickserv|NickServ}} de cette FAQ.
+EOT
+);
+___('irc_faq_chanserv_topic',           'EN', <<<EOT
+Changes a channel's topic. Each channel has a short piece of text which everyone will see when joining the channel (or might permanently see while using the channel, depending on their IRC client). In most IRC clients, this command can be shortened to simply /topic, for example <span class="monospace">/topic This is a topic</span> should work.
+EOT
+);
+___('irc_faq_chanserv_topic',           'FR', <<<EOT
+Change le sujet d'un canal. Chaque canal contient un court texte visible de toute personne qui s'y connecte (et est généralement visible en permanence lors de l'utilisation du canal, selon le client IRC). Sur la plupart des clients IRC, cette commande peut se raccourcir en simplement /topic, par exemple <span class="monospace">/topic Ceci est un sujet</span>.
+EOT
+);
+___('irc_faq_chanserv_kick',            'EN', <<<EOT
+Removes a user from the channel. They are free to rejoin the channel after being kicked. In most IRC clients, this command can be shortened to simply /kick, for example <span class="monospace">/kick SomeUser</span> should work. An optional justification can be added afterwards, for example <span class="monospace">/kick SomeUser Please chill out</span>.
+EOT
+);
+___('irc_faq_chanserv_kick',            'FR', <<<EOT
+Éjecte une personne du canal. Cette personne est libre de rejoindre le canal à tout moment. Sur la plupart des clients IRC, cette commande peut se raccourcir en simplement /kick, par exemple <span class="monospace">/kick UnPseudo</span>. Une justification optionnelle peut être rajoutée ensuite, par exemple <span class="monospace">/kick UnPseudo On se calme, merci</span>.
+EOT
+);
+___('irc_faq_chanserv_ban',             'EN', <<<EOT
+Bans a hostmask from the channel. Once banned, any user matching the hostmask will not be able to join or send messages on the channel anymore. If you kick them, if they leave the channel, or if they disconnect from the server, they will not be able to rejoin the channel until they are unbanned.
+EOT
+);
+___('irc_faq_chanserv_ban',             'FR', <<<EOT
+Bannit un hostmask du canal. Toute personne dont l'hostmask correspond au hostmask banni ne pourra plus rejoindre ou envoyer de messages sur le canal. Les personnes présentes sur le canal dont le hostmask correspond n'en seront pas automatiquement éjectées - par contre, si vous utiliser un /kick sur elles, ou qu'elles quittent le canal, elles ne pourront plus le rejoindre par la suite.
+EOT
+);
+___('irc_faq_chanserv_banlist',         'EN', <<<EOT
+Lists all hostmasks currently banned from the channel. This command might not always work, if it doesn't try simply typing <span class="monospace">/mode #[channel] b</span> in the channel instead of the full command.
+EOT
+);
+___('irc_faq_chanserv_banlist',         'FR', <<<EOT
+Liste tous les hostmask actuellement bannis sur le canal. Si cette commande ne fonctionne pas, essayez d'utiliser <span class="monospace">/mode #[canal] b</span> à la place.
+EOT
+);
+___('irc_faq_chanserv_unban',           'EN', <<<EOT
+Lifts a ban on a hostmask from the channel. Once unbanned, users matching the hostmask are free to join the channel once again.
+EOT
+);
+___('irc_faq_chanserv_unban',           'FR', <<<EOT
+Débannit un hostmask du canal. Une fois débannis, toute personne dont l'hostmask correspond est libre de rejoindre le canal de nouveau.
+EOT
+);
+___('irc_faq_chanserv_mute',            'EN', <<<EOT
+Sets the channel to mute mode: only voiced users and operators will be able to send messages in this channel as long as it is in mute mode. This is the best way to deal with attemps to flood a channel in order to render it unusable.
+EOT
+);
+___('irc_faq_chanserv_mute',            'FR', <<<EOT
+Passe le canal en mode muet : uniquement les Operator et les personnes Voiced pourront envoyer des messages sur ce canal tant qu'il sera en mode muet. Il s'agit de la meilleure façon de gérer les situations où des personnes tentent d'envahir un canal en y envoyant une grande quantité de messages.
+EOT
+);
+___('irc_faq_chanserv_voice',           'EN', <<<EOT
+Gives voice to a user: they will gain the ability to send messages in this channel even while it is in mute mode.
+EOT
+);
+___('irc_faq_chanserv_voice',           'FR', <<<EOT
+Rend une personne Voiced : il leur sera possible d'envoyer des messages sur le canal même s'il est en mode muet.
+EOT
+);
+___('irc_faq_chanserv_unmute',          'EN', <<<EOT
+Removes mute mode, everyone in the channel can once again send messages.
+EOT
+);
+___('irc_faq_chanserv_unmute',          'FR', <<<EOT
+Retire le mode muet : tout le monde peut de nouveau discuter sur le canal.
+EOT
+);
+
+___('irc_faq_chanserv_manage_title',    'EN', "Channel management");
+___('irc_faq_chanserv_manage_title',    'FR', "Gestion des canaux");
+___('irc_faq_chanserv_manage_body',     'EN', <<<EOT
+This section will list commands that you can only use if you are the founder or administrator of a channel (or looking to register a new channel), and require you to be registered with NickServ and identified. You can find more about operator names, abilities, and symbols at the bottom of the {{link|pages/irc/faq?guide#symbols|vocabulary and symbols}} section of this FAQ, and more about account management on the {{link|pages/irc/faq?nickserv|NickServ}} section of this FAQ.
+EOT
+);
+___('irc_faq_chanserv_manage_body',     'FR', <<<EOT
+Cette section contient une liste de commandes que vous ne pouvez utiliser que si vous êtes Founder ou Admin d'un canal IRC (ou désirez créer un nouveau canal IRC), et requièrent que votre pseudonyme soit enregistré auprès de NickServ Vous pouvez en lire plus sur les types d'Operator et leurs pouvoirs dans la section symboles de la page {{link|pages/irc/faq?guide#symbols|vocabulaire et symboles}} de cette FAQ, et plus sur l'enregistrement de votre pseudonyme dans la section {{link|pages/irc/faq?nickserv|NickServ}} de cette FAQ.
+EOT
+);
+___('irc_faq_chanserv_register',        'EN', <<<EOT
+Registers a channel, making you its founder. Once you start growing the channel and have regular users and conversations, you might want to get it added to NoBleme's {{link|pages/irc/faq?channels|channel list}}.
+EOT
+);
+___('irc_faq_chanserv_register',        'FR', <<<EOT
+Enregistre un canal auprès de ChanServ, faisant de vous son Founder. Une fois que votre canal est régulièrement utilisé, vous pouvez demander à ce qu'il soit ajouté à la {{link|pages/irc/faq?channels|liste des canaux}}.
+EOT
+);
+___('irc_faq_chanserv_founder',         'EN', <<<EOT
+Transfers founder status to another user. As there can only be one founder at a time in a channel, you will lose your founder status in the process.
+EOT
+);
+___('irc_faq_chanserv_founder',         'FR', <<<EOT
+Transfère le statut de Founder à quelqu'un d'autre. Comme il ne peut y avoir qu'une seule personne portant le statut Founder à la fois sur un canal IRC, vous perdrez votre statut de Founder.
+EOT
+);
+___('irc_faq_chanserv_voiceop',         'EN', <<<EOT
+Permanently gives voiced status to a user (the user will still be able to chat if the channel is set to mute mode). You can revoke this status by replacing <span class="monospace">add</span> by <span class="monospace">del</span> in this command.
+EOT
+);
+___('irc_faq_chanserv_voiceop',         'FR', <<<EOT
+Donne le statut Voiced de façon permanente à une personne (il lui sera possible de discuter sur le canal même s'il est en mode muet). Vous pouvez retirer ce statut à quelqu'un en remplaçant <span class="monospace">add</span> par <span class="monospace">del</span> dans cette commande.
+EOT
+);
+___('irc_faq_chanserv_halfop',          'EN', <<<EOT
+Permanently gives halfop status to a user (the user will be able to kick other users). You can revoke this status by replacing <span class="monospace">add</span> by <span class="monospace">del</span> in this command.
+EOT
+);
+___('irc_faq_chanserv_halfop',          'FR', <<<EOT
+Donne le statut Halfop de façon permanente à une personne (il lui sera possible d'éjecter d'autres personnes). Vous pouvez retirer ce statut à quelqu'un en remplaçant <span class="monospace">add</span> par <span class="monospace">del</span> dans cette commande.
+EOT
+);
+___('irc_faq_chanserv_op',              'EN', <<<EOT
+Permanently gives operator status to a user (the user will be able to kick and ban other users and manage the channel). You can revoke this status by replacing <span class="monospace">add</span> by <span class="monospace">del</span> in this command.
+EOT
+);
+___('irc_faq_chanserv_op',              'FR', <<<EOT
+Donne le statut Operator de façon permanente à une personne (il lui sera possible d'éjecter et bannir d'autres personnes et de gérer le canal). Vous pouvez retirer ce statut à quelqu'un en remplaçant <span class="monospace">add</span> par <span class="monospace">del</span> dans cette commande.
+EOT
+);
+___('irc_faq_chanserv_admin',           'EN', <<<EOT
+Permanently gives admin status to a user (the user will be able to kick and ban users, manage the channel, and name or revoke the operator status of other users). You can revoke this status by replacing <span class="monospace">add</span> by <span class="monospace">del</span> in this command.
+EOT
+);
+___('irc_faq_chanserv_admin',           'FR', <<<EOT
+Donne le statut Admin de façon permanente à une personne (il lui sera possible d'éjecter et bannir d'autres personnes, de gérer le canal, et de nommer ou retirer d'autres Operator). Vous pouvez retirer ce statut à quelqu'un en remplaçant <span class="monospace">add</span> par <span class="monospace">del</span> dans cette commande.
+EOT
+);
+
+___('irc_faq_chanserv_modes_title',     'EN', "Channel modes");
+___('irc_faq_chanserv_modes_title',     'FR', "Modes");
+___('irc_faq_chanserv_modes_body_1',    'EN', <<<EOT
+Some elements of channel administration are done through setting or removing "modes", special channel settings which materialize through the form of a single letter.
+EOT
+);
+___('irc_faq_chanserv_modes_body_1',    'FR', <<<EOT
+Certains éléments de l'administration des canaux IRC sont contrôlés par des « modes », des réglages qui se manifestent sous la forme d'une lettre de l'alphabet.
+EOT
+);
+___('irc_faq_chanserv_modes_body_2',    'EN', <<<EOT
+A channel mode is set through the command <span class="monospace text_red">/msg ChanServ mode #[channel] +[mode]</span>, where [mode] is a letter from the list of modes below. For example, forcing users to register before accessing a channel would look like this: <span class="monospace">/msg ChanServ mode #myChannel +R</span>.
+EOT
+);
+___('irc_faq_chanserv_modes_body_2',    'FR', <<<EOT
+Un mode s'active via la commande <span class="monospace text_red">/msg ChanServ mode #[canal] +[mode]</span>, où [mode] est une lettre. Par exemple, pour forcer toute personne souhaitant rejoindre le canal à s'authentifier préalablement auprès de NickServ, il faut utiliser la commande suivante : <span class="monospace">/msg ChanServ mode #monCanal +R</span>.
+EOT
+);
+___('irc_faq_chanserv_modes_body_3',    'EN', <<<EOT
+Removing a mode from a channel is done the same way as adding a mode, except that the plus + sign before the letter representing the mode is replaced by a minus - sign. For example, instead of using +R in the previous example, you would use -R.
+EOT
+);
+___('irc_faq_chanserv_modes_body_3',    'FR', <<<EOT
+Désactiver un mode se fait de la même façon qu'activer un mode, à la différence que le signe + plus avant la lettre représentant le mode est remplacée par un signe - moins. Par exemple, au lieu d'utiliser +R dans l'exemple précédent, vous utiliseriez -R.
+EOT
+);
+___('irc_faq_chanserv_modes_body_4',    'EN', <<<EOT
+You can check which modes your channel currently has set by running the following command: <span class="monospace text_red">/msg ChanServ mode #[channel]</span>. You will find a list of useful modes below, be warned that capitalization matters: mode +m is not at all the same thing as mode +M.
+EOT
+);
+___('irc_faq_chanserv_modes_body_4',    'FR', <<<EOT
+Vous pouvez vérifier quels modes sont actuellement activés sur votre canal en utilisant la commande suivante : <span class="monospace text_red">/msg ChanServ mode #[canal]</span>. Vous trouverez ci-dessous une liste de modes utiles, faites attention à la capitalisation : mode +m n'est pas du tout la même chose que mode +M.
+EOT
+);
+___('irc_faq_chanserv_mode_i',          'EN', <<<EOT
+Sets the channel to invite-only mode: the only way to join it is to be invited by someone who is already in it by using <span class="monospace">/msg ChanServ invite #[channel] [username]</span>, or to be on the invite list.
+EOT
+);
+___('irc_faq_chanserv_mode_i',          'FR', <<<EOT
+Passe le canal en mode invitation : il n'est possible de le rejoindre qu'en y étant invité par quelqu'un qui s'y trouve déjà via la commande <span class="monospace">/msg ChanServ invite #[canal] [pseudonyme]</span>, ou en étant sur la liste des invitations.
+EOT
+);
+___('irc_faq_chanserv_mode_i_caps',      'EN', <<<EOT
+Adds a hostmask to the invite list: they can freely join the channel even if it is set in invite-only mode.
+EOT
+);
+___('irc_faq_chanserv_mode_i_caps',      'FR', <<<EOT
+Ajoute un hostmask à la liste des invitations : toute personne correspondant à ce hostmask peut rejoindre le canal même s'il est en mode invitation.
+EOT
+);
+___('irc_faq_chanserv_mode_k',          'EN', <<<EOT
+Sets a password. The channel can only be joined by users who know the password, by adding it at the end of the /join command. For example: <span class="monospace">/join #myChannel somePass123</span>.
+EOT
+);
+___('irc_faq_chanserv_mode_k',          'FR', <<<EOT
+Ajoute un mot de passe au canal, le rendant impossible à rejoindre sans connaitre le mot de passe. Pour rejoindre un canal protégé par mot de passe, il faut rajouter le mot de passe à la fin de la commande /join. Par exemple : <span class="monospace">/join #myChannel motDePasse123</span>.
+EOT
+);
+___('irc_faq_chanserv_mode_l',          'EN', <<<EOT
+Sets a maximum number of users who can be on the channel at any given time. Any extra users will be denied entry if they try to join once the channel has reached maximum capacity.
+EOT
+);
+___('irc_faq_chanserv_mode_l',          'FR', <<<EOT
+Définit un nombre maximum de personnes qui peuvent être présentes sur un canal à un moment donné.
+EOT
+);
+___('irc_faq_chanserv_mode_m',          'EN', <<<EOT
+Sets the channel to mute mode: only voiced users and operators can chat.
+EOT
+);
+___('irc_faq_chanserv_mode_m',          'FR', <<<EOT
+Passe le canal en mode muet : seules les personnes Voiced et les Operator peuvent envoyer des messages.
+EOT
+);
+___('irc_faq_chanserv_mode_m_caps',      'EN', <<<EOT
+Only users who have registered and identified their username with {{link|pages/irc/faq?nickserv|NickServ}} can chat in the channel.
+EOT
+);
+___('irc_faq_chanserv_mode_m_caps',      'FR', <<<EOT
+Seules les personnes ayant enregistré leur pseudonyme auprès de {{link|pages/irc/faq?nickserv|NickServ}} peuvent envoyer des messages sur le canal.
+EOT
+);
+___('irc_faq_chanserv_mode_n',          'EN', <<<EOT
+Prevents users who are not in the channel from sending messages into the channel. This mode is enabled by default in every new channel and it is recommended that you leave it that way.
+EOT
+);
+___('irc_faq_chanserv_mode_n',          'FR', <<<EOT
+Empêche les personnes qui ne sont pas présentes sur le canal d'y envoyer des messages. Ce mode est activé par défaut sur les nouveaux canaux, il est recommandé de le laisser activé.
+EOT
+);
+___('irc_faq_chanserv_mode_r_caps',      'EN', <<<EOT
+Only users who have registered and identified their username with {{link|pages/irc/faq?nickserv|NickServ}} can join the channel. Non-registered and/or non-identified users who are already in the channel will not get removed from it, but they would be unable to rejoin it if they were to leave or get kicked.
+EOT
+);
+___('irc_faq_chanserv_mode_r_caps',      'FR', <<<EOT
+Seules les personnes ayant enregistré leur pseudonyme auprès de {{link|pages/irc/faq?nickserv|NickServ}} peuvent rejoindre le canal. Les personnes non enregistrées et/ou non authentifiées qui sont déjà présentes sur le canal ne s'en feront pas éjecter, mais il leur serait impossible de le rejoindre si elles s'en faisaient éjecter.
+EOT
+);
+___('irc_faq_chanserv_mode_s',          'EN', <<<EOT
+Makes the channel secret: it will not appear in the /list command, and will not show when using the /whois command on a user who is currently in the channel.
+EOT
+);
+___('irc_faq_chanserv_mode_s',          'FR', <<<EOT
+Passe le canal en mode secret : il n'apparaitra pas dans les résultats de la commande /list, et ne sera pas listé lorsque vous utiliserez /whois sur une personne qui s'y trouve.
+EOT
+);
+___('irc_faq_chanserv_mode_t',          'EN', <<<EOT
+Only operators (including halfops) can change the channel's topic. This mode is enabled by default in every new channel, disabling it will allow any of the channel's users to change the topic at will.
+EOT
+);
+___('irc_faq_chanserv_mode_t',          'FR', <<<EOT
+Verrouille le sujet : il n'est possible qu'aux Operators de changer le sujet du canal. Ce mode est activé par défaut sur les nouveaux canaux, le désactiver permettra à toute personne présente sur le canal de changer son sujet.
+EOT
+);
+___('irc_faq_chanserv_mode_u',          'EN', <<<EOT
+Sets the channel to "conference mode". The automated messages displayed when regular users (non operators) join or leave the channel will not be shown to other regular users. This drastically reduces the amount of join/leave spam seen by regular users in bigger and more active IRC channels.
+EOT
+);
+___('irc_faq_chanserv_mode_u',          'FR', <<<EOT
+Passe le canal en mode « conférence » : les messages automatisés qui s'affichent lorsqu'une personne non-Operator rejoint ou quitte le canal ne seront plus visibles des autres personnes non-Operator. Cela permet de grandement réduire la quantité de spam visible par les personnes non-Operator sur les canaux IRC à forte activité.
 EOT
 );
