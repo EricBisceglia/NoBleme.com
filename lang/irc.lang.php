@@ -1524,3 +1524,103 @@ ___('irc_faq_chanserv_mode_u',          'FR', <<<EOT
 Passe le canal en mode « conférence » : les messages automatisés qui s'affichent lorsqu'une personne non-Operator rejoint ou quitte le canal ne seront plus visibles des autres personnes non-Operator. Cela permet de grandement réduire la quantité de spam visible par les personnes non-Operator sur les canaux IRC à forte activité.
 EOT
 );
+
+
+// FAQ: Bots
+___('irc_faq_bots_body_1',          'EN', <<<EOT
+Not every user on NoBleme's IRC server is a human being. Some of them are automated programs designed to serve a specific role on the server, which we call IRC bots.
+EOT
+);
+___('irc_faq_bots_body_1',          'FR', <<<EOT
+Tous les pseudonymes que vous croisez sur le serveur IRC NoBleme ne correspondent pas à des humains. Certains cachent des programmes informatiques automatisés, que nous appelons des bots.
+EOT
+);
+___('irc_faq_bots_body_2',          'EN', <<<EOT
+Some of our IRC bots are an integral part of the server. Rather than acting like regalur users, they will never be present in any public IRC channel. They are {{link|pages/irc/faq?nickserv|NickServ}}, which handles username management, and {{link|pages/irc/faq?chanserv|ChanServ}}, which handles channel management.
+EOT
+);
+___('irc_faq_bots_body_2',          'FR', <<<EOT
+Certains de nos bots sont des éléments importants du serveur IRC NoBleme. Ils ne seront jamais visibles publiquement sur les canaux IRC, et ne servent qu'à échanger des messages en privé. Il s'agit de {{link|pages/irc/faq?nickserv|NickServ}}, qui gère les pseudonymes et les comptes, et de {{link|pages/irc/faq?chanserv|ChanServ}}, qui gère les canaux.
+EOT
+);
+___('irc_faq_bots_body_3',          'EN', <<<EOT
+Other bots will be present in IRC channels and directly interact with users in various ways (depending on their purpose). NoBleme's most important IRC bots will be documented on this page, but there might be more of them on the server… keep an eye out for them!
+EOT
+);
+___('irc_faq_bots_body_3',          'FR', <<<EOT
+Les autres bots sont présents sur des canaux IRC publics et intéragissent avec les personnes qui y sont présentes de diverses façons (chaque bot a sa propre utilité). Les bots IRC principaux de NoBleme sont documentés sur cette page, mais il peut y en avoir d'autres sur le serveur.
+EOT
+);
+
+___('irc_faq_bots_nobleme_title',   'EN', "The official NoBleme bot");
+___('irc_faq_bots_nobleme_title',   'FR', "Le bot NoBleme officiel");
+___('irc_faq_bots_nobleme_body_1',  'EN', <<<EOT
+NoBleme only has one official bot. It goes by the nickname <span class="bold">NoBleme</span>, and idles in a few {{link|pages/irc/faq?channels|channels}}. It is a non interactive bot : NoBleme will write content on IRC, but it will never reply to anyone's messages.
+EOT
+);
+___('irc_faq_bots_nobleme_body_1',  'FR', <<<EOT
+Il n'existe qu'un seul bot officiel sur le serveur IRC NoBleme. Il utilise le pseudonyme <span class="bold">NoBleme</span>, et se trouve en permanence sur quelques {{link|pages/irc/faq?channels|canaux}}. Il s'agit d'un bot non interactif : il écrit des messages sur IRC, mais ne répond pas aux messages des autres personnes.
+EOT
+);
+___('irc_faq_bots_nobleme_body_2',  'EN', <<<EOT
+The official NoBleme bot will relay any activity coming from the website on the channels #english (in english), #NoBleme (in french), and #dev (development updates). Most content that appears on the {{link|pages/nobleme/activity|recent activity}} page will also be shared on IRC by the official NoBleme bot, which allows you to keep in touch with what is happening on the website without having to check the website.
+EOT
+);
+___('irc_faq_bots_nobleme_body_2',  'FR', <<<EOT
+Le bot NoBleme officiel partage toute activité intéressante venant du site sur les canaux #NoBleme (en français), #english (en anglais), et #dev (développement du site). La plupart du contenu de l'{{link|pages/nobleme/activity|activité récente}} sera partagé sur IRC par le bot NoBleme officiel, ce qui vous permet de suivre en temps réel l'activité du site.
+EOT
+);
+
+___('irc_faq_bots_private_title',   'EN', "Non official bots");
+___('irc_faq_bots_private_title',   'FR', "Bots non officiels");
+___('irc_faq_bots_private_body_1',  'EN', <<<EOT
+A non official bot can be found in each of the two major {{link|pages/irc/faq?channels|channels}} of NoBleme's IRC server. Both of these are interactive bots, which have a variety of uses - observe how the regulars use the bots and you might find them useful for your own needs!
+EOT
+);
+___('irc_faq_bots_private_body_1',  'FR', <<<EOT
+Un bot IRC non officiel se trouve sur chacun des deux {{link|pages/irc/faq?channels|canaux}} principaux du serveur IRC NoBleme. Il s'agit de bots interactifs, qui peuvent s'utiliser de plusieurs façons - observez les utilisations qu'en font les personnes habituées, peut-être que vous leur trouverez une utilité !
+EOT
+);
+___('irc_faq_bots_private_body_2',  'EN', <<<EOT
+On the #english channel, the bot nicknamed <span class="bold">Croissant</span> gives a few quality of life features missing on IRC: previews links, offers a translation service, converts timezones, gives the weather on demand, and more. It is an instance of the {{external|https://sopel.chat/|Sopel}} bot maintained by a user nicknamed Phixion.
+EOT
+);
+___('irc_faq_bots_private_body_2',  'FR', <<<EOT
+Sur le canal #NoBleme, le bot portant le pseudonyme <span class="bold">Akundo</span> protège des spammeurs, et possède quelques commandes sans utilité particulière. Il s'agit d'un {{external|https://fr.wikipedia.org/wiki/Eggdrop|Eggdrop}} maintenu par ThArGos.
+EOT
+);
+___('irc_faq_bots_private_body_3',  'EN', <<<EOT
+On the #NoBleme channel, the bot nicknamed <span class="bold">Akundo</span> offers flood protection services and has a few silly and useless built-in commands. It is an instance of the {{external|https://en.wikipedia.org/wiki/Eggdrop|Eggdrop}} bot maintained by the user ThArGos.
+EOT
+);
+___('irc_faq_bots_private_body_3',  'FR', <<<EOT
+Sur le canal #english, le bot portant le pseudonyme <span class="bold">Croissant</span> offre des services de qualité de vie manquants sur IRC : prévisualisation de liens, traduction de messages, conversion de fuseaux horaires, météo à la demande, etc. Il s'agit d'un {{external|https://sopel.chat/|Sopel}} maintenu par Phixion.
+EOT
+);
+
+___('irc_faq_bots_custom_title',    'EN', "Can I run my own IRC bot on NoBleme's server?");
+___('irc_faq_bots_custom_title',    'FR', "Puis-je utiliser mon propre bot sur le serveur IRC NoBleme ?");
+___('irc_faq_bots_custom_body_1',   'EN', <<<EOT
+You are free to use bots on the server, as long as they do not cause any disruption.
+EOT
+);
+___('irc_faq_bots_custom_body_1',   'FR', <<<EOT
+Libre à vous d'utiliser vos propres bots IRC sur le serveur IRC NoBleme, tant qu'ils ne perturbent pas son bon fonctionnement.
+EOT
+);
+___('irc_faq_bots_custom_body_2',   'EN', <<<EOT
+Do keep in mind however that bots might not be welcomed in individual channels. Consult with the local Operators before adding your own bot to an already established channel. For example, the two main channels (#english and #NoBleme) will not accept more than the two bots they each currently have.
+EOT
+);
+___('irc_faq_bots_custom_body_2',   'FR', <<<EOT
+Gardez toutefois à l'esprit que vos bots ne seront pas forcément appréciés sur tous les canaux. Demandez d'abord aux Operator locaux si la présence de votre bot sur un canal IRC déjà établi pose problème. Par exemple, les deux canaux principaux (#NoBleme et #english) refusent la présence de bots, à l'exception des deux qui y sont déjà.
+EOT
+);
+___('irc_faq_bots_custom_body_3',   'EN', <<<EOT
+If you add a bot on NoBleme's IRC server and believe it could be of public utility, {{link|pages/messages/admins|contact the admins}} detailing your bot's purpose and where to find it. It might get added to this documentation page or maybe even welcomed in some of our official channels.
+EOT
+);
+___('irc_faq_bots_custom_body_3',   'FR', <<<EOT
+Si vous ajoutez un bot au serveur IRC NoBleme et pensez qu'il pourrait être d'utilité publique, {{link|pages/messages/admins|contactez l'administration}} en détaillant son utilité et où le trouver. Selon ses fonctionnalités, il pourrait être ajouté à cette page de documentation, voir même invité dans les canaux IRC officiels.
+EOT
+);

@@ -1030,6 +1030,68 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 </div>
 
+<?php /************************************************** BOTS ****************************************************/ ?>
+
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['bots']?>" id="irc_faq_bots">
+
+  <p>
+    <?=__('irc_faq_bots_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bots_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bots_body_3')?>
+  </p>
+
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_bots_nobleme_title')?>
+  </h5>
+
+  <p>
+    <?=__('irc_faq_bots_nobleme_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bots_nobleme_body_2')?>
+  </p>
+
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_bots_private_title')?>
+  </h5>
+
+  <p>
+    <?=__('irc_faq_bots_private_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bots_private_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bots_private_body_3')?>
+  </p>
+
+  <h5 class="bigpadding_top">
+    <?=__('irc_faq_bots_custom_title')?>
+  </h5>
+
+  <p>
+    <?=__('irc_faq_bots_custom_body_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bots_custom_body_2')?>
+  </p>
+
+  <p>
+    <?=__('irc_faq_bots_custom_body_3')?>
+  </p>
+
+</div>
+
 <?php /***************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                    END OF PAGE                                                    */
