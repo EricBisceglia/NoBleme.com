@@ -4,6 +4,7 @@
 /*                                                                                                                   */
 // File inclusions /**************************************************************************************************/
 include_once './../../inc/includes.inc.php';  # Core
+include_once './../../actions/irc.act.php';   # Actions
 include_once './../../lang/irc.lang.php';     # Translations
 
 // Page summary
@@ -57,6 +58,14 @@ if(!isset($irc_faq_section_is_selected))
   $irc_faq_hide['main']     = '';
   $irc_faq_selected['main'] = ' selected';
 }
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// IRC channels list
+
+$irc_channels = irc_channels_list();
 
 
 
@@ -1089,6 +1098,112 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <p>
     <?=__('irc_faq_bots_custom_body_3')?>
   </p>
+
+</div>
+
+<?php /************************************************** BOTS ****************************************************/ ?>
+
+<div class="width_60 padding_top irc_faq_section<?=$irc_faq_hide['channels']?>" id="irc_faq_channels">
+
+  <p>
+    <?=__('irc_channels_header_1')?>
+  </p>
+
+  <p>
+    <?=__('irc_channels_header_2')?>
+  </p>
+
+  <p class="bigpadding_bot">
+    <?=__('irc_channels_header_3')?>
+  </p>
+
+  <table>
+    <thead class="uppercase">
+
+      <?php if($is_moderator) { ?>
+      <tr >
+      <?php } else { ?>
+      <tr class="row_separator_dark_thin">
+      <?php } ?>
+        <th>
+          <?=__('irc_channels_name')?>
+        </th>
+        <th>
+          <?=__('irc_channels_type')?>
+        </th>
+        <th>
+          <?=__('irc_channels_language')?>
+        </th>
+        <th>
+          <?=__('irc_channels_desc')?>
+        </th>
+        <?php if($is_moderator) { ?>
+        <th>
+          <?=__('act')?>
+        </th>
+        <?php } ?>
+      </tr>
+
+    </thead>
+    <?php if($is_moderator) { ?>
+    <tbody class="altc2">
+    <?php } else { ?>
+    <tbody class="altc">
+    <?php } ?>
+
+      <?php if($is_moderator) { ?>
+      <tr>
+        <td colspan="5" class="align_center uppercase dark text_white bold">
+          <?=__link('pages/irc/channel_add', __('irc_channels_add'))?>
+        </td>
+      </tr>
+      <?php } ?>
+
+      <?php for($i = 0; $i < $irc_channels['rows']; $i++) { ?>
+
+      <?php if($i < ($irc_channels['rows'] - 1) && $irc_channels[$i]['type'] != $irc_channels[$i + 1]['type']) { ?>
+
+      <tr class="row_separator_dark_thin">
+
+      <?php } else { ?>
+
+      <tr>
+
+      <?php } ?>
+
+        <td class="align_center spaced nowrap bold">
+          <?=$irc_channels[$i]['name']?>
+        </td>
+
+        <td class="align_center spaced nowrap<?=$irc_channels[$i]['type_css']?>">
+          <?=$irc_channels[$i]['type']?>
+        </td>
+
+        <td class="align_center spaced nowrap">
+          <?php if($irc_channels[$i]['lang_en']) { ?>
+          <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle smallicon" alt="<?=__('EN')?>" title="<?=string_change_case(__('english'), 'initials')?>">
+          <?php } if($irc_channels[$i]['lang_fr']) { ?>
+          <img src="<?=$path?>img/icons/lang_fr.png" class="valign_middle smallicon" alt="<?=__('FR')?>" title="<?=string_change_case(__('french'), 'initials')?>">
+          <?php } ?>
+        </td>
+
+        <td>
+          <?=$irc_channels[$i]['desc']?>
+        </td>
+
+        <?php if($is_moderator) { ?>
+        <td class="align_center spaced nowrap">
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials')?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
+        </td>
+        <?php } ?>
+
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+  </table>
 
 </div>
 

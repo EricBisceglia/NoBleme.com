@@ -611,10 +611,10 @@ $javascripts .= '
           <?=__link('pages/irc/faq?browser', __('submenu_social_irc_browser'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_social_irc_channels'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/irc/faq?channels', __('submenu_social_irc_channels'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_social_irc_others'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/irc/faq?others', __('submenu_social_irc_others'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 

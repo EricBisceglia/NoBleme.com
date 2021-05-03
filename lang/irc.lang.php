@@ -155,6 +155,54 @@ ___('irc_bot_bytes_troll',            'FR', "Troll (contraste brutal)");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                   CHANNEL  LIST                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('irc_channels_header_1',  'EN', <<<EOT
+NoBleme's IRC server is comprised of different {{link|pages/irc/faq?guide#channel|channels}}, some public and some private. There are two "main" public channels used for general conversations, #english for english and #NoBleme for french, from which separate channels split when a specific topic starts taking too much space in general conversations.
+EOT
+);
+___('irc_channels_header_1',  'FR', <<<EOT
+Le serveur IRC NoBleme est composé de divers {{link|pages/irc/faq?guide#channel|canaux}}, dont certains sont publics et d'autres privés. Deux des canaux sont les « principaux », où ont lieu la majorité des conversations : #NoBleme pour le français et #english pour l'anglais. Lorsque des sujets spécifiques deviennent trop envahissants dans les canaux principaux, des canaux séparés sont crées pour les y canaliser.
+EOT
+);
+___('irc_channels_header_2',  'EN', <<<EOT
+The table below acts as a list of NoBleme's public IRC channels. You can join them by typing the {{link|pages/irc/faq?commands|command}} <span class="monospace">/join #channelName</span> in your IRC client, where #channelName is replaced by the desired channel's name.
+EOT
+);
+___('irc_channels_header_2',  'FR', <<<EOT
+Le tableau ci-dessous contient une liste de canaux publics sur le serveur IRC NoBleme. Vous pouvez les rejoindre en écrivant la {{link|pages/irc/faq?commands|commande}} <span class="monospace">/join #nomDuCanal</span> dans votre client IRC, en remplaçant #nomDuCanal par le nom d'un canal spécifique.
+EOT
+);
+___('irc_channels_header_3',  'EN', <<<EOT
+If you have created your own channel on NoBleme's IRC server (using {{link|pages/irc/faq?chanserv|ChanServ}}) and want it included in this list, {{link|pages/messages/admins|contact the administrative team}} with its name, its language, and a quick description of its purpose.
+EOT
+);
+___('irc_channels_header_3',  'FR', <<<EOT
+Si vous avez crée votre propre canal sur le serveur IRC NoBleme (en utilisant {{link|pages/irc/faq?chanserv|ChanServ}}) et aimeriez qu'il soit ajouté à cette liste, {{link|pages/messages/admins|contactez l'administration}} en précisant son nom, la langue qui y est parlée, et une description brève de son utilité.
+EOT
+);
+
+
+// Table
+___('irc_channels_name',      'EN', "Channel");
+___('irc_channels_name',      'FR', "Canal");
+___('irc_channels_type',      'EN', "Type");
+___('irc_channels_type',      'FR', "Type");
+___('irc_channels_language',  'EN', "Language");
+___('irc_channels_language',  'FR', "Langue");
+___('irc_channels_desc',      'EN', "Description");
+___('irc_channels_desc',      'FR', "Description");
+___('irc_channels_add',       'EN', "Add a new channel to the list");
+___('irc_channels_add',       'FR', "Ajouter un nouveau canal à la liste");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                      IRC FAQ                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

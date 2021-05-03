@@ -153,12 +153,12 @@ DROP TABLE IF EXISTS `irc_channels`;
 CREATE TABLE IF NOT EXISTS `irc_channels` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(153) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `channel_type` int UNSIGNED NOT NULL DEFAULT '0',
   `languages` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `display_order` int UNSIGNED NOT NULL DEFAULT '0',
-  `details_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `details_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `index_display_order` (`display_order`)
+  KEY `index_channel_type` (`channel_type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `logs_activity`;

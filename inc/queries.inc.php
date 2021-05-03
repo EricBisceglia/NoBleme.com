@@ -1353,12 +1353,32 @@ if($last_query < 27)
 
   sql_change_field_type('irc_channels', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('irc_channels', 'canal', 'name', 'VARCHAR(153) NOT NULL');
+  sql_rename_field('irc_channels', 'importance', 'channel_type', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('irc_channels', 'langue', 'languages', 'VARCHAR(12) NOT NULL');
-  sql_rename_field('irc_channels', 'importance', 'display_order', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('irc_channels', 'description_fr', 'details_fr', 'TEXT NOT NULL');
-  sql_rename_field('irc_channels', 'description_en', 'details_en', 'TEXT NOT NULL');
-  sql_move_field('irc_channels', 'details_fr', 'TEXT NOT NULL', 'details_en');
-  sql_create_index('irc_channels', 'index_display_order', 'display_order');
+  sql_move_field('irc_channels', 'languages', 'VARCHAR(12) NOT NULL', 'channel_type');
+  sql_change_field_type('irc_channels', 'description_fr', 'TEXT NOT NULL');
+  sql_change_field_type('irc_channels', 'description_en', 'TEXT NOT NULL');
+  sql_move_field('irc_channels', 'description_fr', 'TEXT NOT NULL', 'description_en');
+  sql_create_index('irc_channels', 'index_channel_type', 'channel_type');
+
+  query(" UPDATE  irc_channels
+          SET     irc_channels.channel_type   = 3
+          WHERE   irc_channels.channel_type  >= 50 ");
+  query(" UPDATE  irc_channels
+          SET     irc_channels.channel_type   = 2
+          WHERE   irc_channels.channel_type  >= 40 ");
+  query(" UPDATE  irc_channels
+          SET     irc_channels.channel_type   = 4
+          WHERE   irc_channels.channel_type  >= 10 ");
+  query(" UPDATE  irc_channels
+          SET     irc_channels.channel_type   = 4
+          WHERE   irc_channels.channel_type   = 1 ");
+  query(" UPDATE  irc_channels
+          SET     irc_channels.channel_type   = 1
+          WHERE   irc_channels.channel_type   = 0 " );
+  query(" UPDATE  irc_channels
+          SET     irc_channels.channel_type   = 0
+          WHERE   irc_channels.channel_type   = 4 " );
 
   sql_update_query_id(27);
 }

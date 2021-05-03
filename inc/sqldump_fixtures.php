@@ -1795,22 +1795,23 @@ $random = mt_rand(15,25);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
-  $name         = fixtures_generate_data('string', 5, 15);
-  $languages    = (mt_rand(0,1)) ? '' : 'FR';
-  $languages   .= (mt_rand(0,1)) ? '' : 'EN';
-  $languages    = (!$languages) ? 'FR' : $languages;
-  $display      = (mt_rand(0,1)) ? $i : (mt_rand(10,20) * $i);
-  $display      = (mt_rand(0,1)) ? 0 : $display;
-  $details_en   = ucfirst(fixtures_generate_data('sentence', 2, 8));
-  $details_fr   = ucfirst(fixtures_generate_data('sentence', 2, 8));
+  $name       = '#'.fixtures_generate_data('string', 5, 10, no_spaces: true);
+  $languages  = (mt_rand(0,1)) ? '' : 'FR';
+  $languages .= (mt_rand(0,1)) ? '' : 'EN';
+  $languages  = (!$languages) ? 'FR' : $languages;
+  $type       = ($i < 2) ? 3 : 1;
+  $type       = ($i < 5 && $i >= 2) ? 2 : $type;
+  $type       = ($i < 8 && $i >= 5) ? 0 : $type;
+  $desc_en    = ucfirst(fixtures_generate_data('sentence', 4, 8));
+  $desc_fr    = ucfirst(fixtures_generate_data('sentence', 4, 8));
 
   // Generate the channels
   query(" INSERT INTO irc_channels
           SET         irc_channels.name           = '$name'       ,
                       irc_channels.languages      = '$languages'  ,
-                      irc_channels.display_order  = '$display'    ,
-                      irc_channels.details_en     = '$details_en' ,
-                      irc_channels.details_fr     = '$details_fr' ");
+                      irc_channels.channel_type   = '$type'       ,
+                      irc_channels.description_en = '$desc_en'    ,
+                      irc_channels.description_fr = '$desc_fr'    ");
 }
 
 // Output progress

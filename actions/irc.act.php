@@ -8,6 +8,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  irc_channels_list                   Returns a list of IRC channels.                                              */
+/*                                                                                                                   */
+/*  irc_channels_type_get               Fetches data related to a channel type.                                      */
+/*                                                                                                                   */
 /*  irc_bot_start                       Starts the IRC bot.                                                          */
 /*  irc_bot_stop                        Stops the IRC bot.                                                           */
 /*                                                                                                                   */
@@ -23,6 +27,109 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  irc_bot_message_history_delete      Deletes an entry from the IRC bot's message history.                         */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+
+/**
+ * Returns a list of IRC channels.
+ *
+ * @return  array   An array containing IRC channels.
+ */
+
+function irc_channels_list() : array
+{
+  // Check if the required files have been included
+  require_included_file('irc.lang.php');
+
+  // Fetch the user's language
+  $lang = user_get_language();
+
+  // Fetch the IRC channels
+  $qchannels = query("  SELECT    irc_channels.id             AS 'c_id'       ,
+                                  irc_channels.name           AS 'c_name'     ,
+                                  irc_channels.channel_type   AS 'c_type'     ,
+                                  irc_channels.languages      AS 'c_lang'     ,
+                                  irc_channels.description_en AS 'c_desc_en'  ,
+                                  irc_channels.description_fr AS 'c_desc_fr'
+                        FROM      irc_channels
+                        ORDER BY  irc_channels.channel_type DESC  ,
+                                  irc_channels.name         ASC   ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qchannels); $i++)
+  {
+    $data[$i]['id']       = $row['c_id'];
+    $data[$i]['name']     = sanitize_output($row['c_name']);
+    $temp                 = irc_channels_type_get($row['c_type']);
+    $data[$i]['type']     = sanitize_output($temp['name']);
+    $data[$i]['type_css'] = sanitize_output($temp['css']);
+    $data[$i]['lang_en']  = str_contains($row['c_lang'], 'EN');
+    $data[$i]['lang_fr']  = str_contains($row['c_lang'], 'FR');
+    $temp                 = ($lang == 'EN') ? $row['c_desc_en'] : $row['c_desc_fr'];
+    $data[$i]['desc']     = sanitize_output($temp);
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Fetches data related to a channel type.
+ *
+ * @param   int     $type_id  The channel type's id.
+ *
+ * @return  array             An array containing data for that channel type.
+ */
+
+function irc_channels_type_get( int $type_id ) : array
+{
+  // Check if the required files have been included
+  require_included_file('irc.lang.php');
+
+  // Fetch the user's language
+  $lang = user_get_language();
+
+  // Channel type description
+  if($lang == 'EN')
+  {
+    $data['name'] = match($type_id)
+    {
+      3         => 'Main'       ,
+      2         => 'Major'      ,
+      1         => 'Minor'      ,
+      default   => 'Automated'  ,
+    };
+  }
+  else
+  {
+    $data['name'] = match($type_id)
+    {
+      3         => 'Principal'  ,
+      2         => 'Majeur'     ,
+      1         => 'Mineur'     ,
+      default   => 'Automatisé' ,
+    };
+  }
+
+  // Channel type CSS
+  $data['css'] = match($type_id)
+  {
+    3         => ' bold smallglow'  ,
+    2         => ' bold'            ,
+    1         => ''                 ,
+    default   => ' italics'         ,
+  };
+
+  // Return the data
+  return $data;
+}
+
+
 
 
 /**
