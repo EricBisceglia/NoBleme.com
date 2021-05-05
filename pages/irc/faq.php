@@ -59,6 +59,49 @@ if(!isset($irc_faq_section_is_selected))
   $irc_faq_selected['main'] = ' selected';
 }
 
+// Prepare a suffix for the page titles
+$irc_faq_page_name_suffix = ($GLOBALS['dev_mode']) ? ' | Devmode' : ' | NoBleme';
+
+// Set the correct page title
+$page_title_en  = (isset($_GET['why']))       ? "Why IRC?"                : $page_title_en;
+$page_title_fr  = (isset($_GET['why']))       ? "Pourquoi IRC ?"          : $page_title_fr;
+$page_title_en  = (isset($_GET['browser']))   ? "IRC web client"          : $page_title_en;
+$page_title_fr  = (isset($_GET['browser']))   ? "Client web IRC"          : $page_title_fr;
+$page_title_en  = (isset($_GET['client']))    ? "IRC client"              : $page_title_en;
+$page_title_fr  = (isset($_GET['client']))    ? "Client IRC"              : $page_title_fr;
+$page_title_en  = (isset($_GET['bouncer']))   ? "IRC bouncer"             : $page_title_en;
+$page_title_fr  = (isset($_GET['bouncer']))   ? "Bouncer IRC"             : $page_title_fr;
+$page_title_en  = (isset($_GET['guide']))     ? "IRC Commands"            : $page_title_en;
+$page_title_fr  = (isset($_GET['guide']))     ? "Commandes IRC"           : $page_title_fr;
+$page_title_en  = (isset($_GET['commands']))  ? "IRC Commands"            : $page_title_en;
+$page_title_fr  = (isset($_GET['commands']))  ? "Commandes IRC"           : $page_title_fr;
+$page_title_en  = (isset($_GET['nickserv']))  ? "IRC NickServ"            : $page_title_en;
+$page_title_fr  = (isset($_GET['nickserv']))  ? "IRC NickServ"            : $page_title_fr;
+$page_title_en  = (isset($_GET['chanserv']))  ? "IRC ChanServ"            : $page_title_en;
+$page_title_fr  = (isset($_GET['chanserv']))  ? "IRC ChanServ"            : $page_title_fr;
+$page_title_en  = (isset($_GET['bots']))      ? "IRC bots"                : $page_title_en;
+$page_title_fr  = (isset($_GET['bots']))      ? "Bots IRC"                : $page_title_fr;
+$page_title_en  = (isset($_GET['channels']))  ? "IRC channels"            : $page_title_en;
+$page_title_fr  = (isset($_GET['channels']))  ? "Canaux IRC"              : $page_title_fr;
+$page_title_en  = (isset($_GET['others']))    ? "Official platforms"      : $page_title_en;
+$page_title_fr  = (isset($_GET['others']))    ? "Plateformes officielles" : $page_title_fr;
+
+// Determine the title to use in the header
+$irc_faq_page_name = ($lang == 'EN') ? $page_title_en : $page_title_fr;
+
+// Set the correct page URLs
+$page_url = (isset($_GET['why']))       ? 'pages/irc/faq?why'       : $page_url;
+$page_url = (isset($_GET['browser']))   ? 'pages/irc/faq?browser'   : $page_url;
+$page_url = (isset($_GET['client']))    ? 'pages/irc/faq?client'    : $page_url;
+$page_url = (isset($_GET['bouncer']))   ? 'pages/irc/faq?bouncer'   : $page_url;
+$page_url = (isset($_GET['guide']))     ? 'pages/irc/faq?guide'     : $page_url;
+$page_url = (isset($_GET['commands']))  ? 'pages/irc/faq?commands'  : $page_url;
+$page_url = (isset($_GET['nickserv']))  ? 'pages/irc/faq?nickserv'  : $page_url;
+$page_url = (isset($_GET['chanserv']))  ? 'pages/irc/faq?chanserv'  : $page_url;
+$page_url = (isset($_GET['bots']))      ? 'pages/irc/faq?bots'      : $page_url;
+$page_url = (isset($_GET['channels']))  ? 'pages/irc/faq?channels'  : $page_url;
+$page_url = (isset($_GET['others']))    ? 'pages/irc/faq?others'    : $page_url;
+
 
 
 
@@ -78,8 +121,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50">
 
-  <h1>
-    <?=__('irc_faq_title')?>
+  <h1 id="irc_faq_title">
+    <?=$irc_faq_page_name?>
   </h1>
 
   <form method="POST">
@@ -102,6 +145,20 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </h5>
     </fieldset>
   </form>
+
+  <input type="hidden" id="irc_faq_name_suffix" value="<?=$irc_faq_page_name_suffix?>">
+  <input type="hidden" id="irc_faq_name_main" value="<?=__('irc_faq_title')?>">
+  <input type="hidden" id="irc_faq_name_why" value="<?=__('irc_faq_title_why')?>">
+  <input type="hidden" id="irc_faq_name_browser" value="<?=__('irc_faq_title_browser')?>">
+  <input type="hidden" id="irc_faq_name_client" value="<?=__('irc_faq_title_client')?>">
+  <input type="hidden" id="irc_faq_name_bouncer" value="<?=__('irc_faq_title_bouncer')?>">
+  <input type="hidden" id="irc_faq_name_guide" value="<?=__('irc_faq_title_guide')?>">
+  <input type="hidden" id="irc_faq_name_commands" value="<?=__('irc_faq_title_commands')?>">
+  <input type="hidden" id="irc_faq_name_nickserv" value="<?=__('irc_faq_title_nickserv')?>">
+  <input type="hidden" id="irc_faq_name_chanserv" value="<?=__('irc_faq_title_chanserv')?>">
+  <input type="hidden" id="irc_faq_name_bots" value="<?=__('irc_faq_title_bots')?>">
+  <input type="hidden" id="irc_faq_name_channels" value="<?=__('irc_faq_title_channels')?>">
+  <input type="hidden" id="irc_faq_name_others" value="<?=__('irc_faq_title_others')?>">
 
 </div>
 

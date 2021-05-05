@@ -207,9 +207,34 @@ ___('irc_channels_add',       'FR', "Ajouter un nouveau canal à la liste");
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Faq: Header
-___('irc_faq_title',            'EN', "IRC chat");
-___('irc_faq_title',            'FR', "Chat IRC");
+// FAQ: Titles
+___('irc_faq_title',          'EN', "IRC chat");
+___('irc_faq_title',          'FR', "Chat IRC");
+___('irc_faq_title_why',      'EN', "Why IRC?");
+___('irc_faq_title_why',      'FR', "Pourquoi IRC ?");
+___('irc_faq_title_guide',    'EN', "IRC vocabulary");
+___('irc_faq_title_guide',    'FR', "Vocabulaire IRC");
+___('irc_faq_title_browser',  'EN', "IRC web client");
+___('irc_faq_title_browser',  'FR', "Client web IRC");
+___('irc_faq_title_client',   'EN', "IRC client");
+___('irc_faq_title_client',   'FR', "Client IRC");
+___('irc_faq_title_bouncer',  'EN', "IRC bouncer");
+___('irc_faq_title_bouncer',  'FR', "Bouncer IRC");
+___('irc_faq_title_commands', 'EN', "IRC Commands");
+___('irc_faq_title_commands', 'FR', "Commandes IRC");
+___('irc_faq_title_nickserv', 'EN', "IRC NickServ");
+___('irc_faq_title_nickserv', 'FR', "IRC NickServ");
+___('irc_faq_title_chanserv', 'EN', "IRC ChanServ");
+___('irc_faq_title_chanserv', 'FR', "IRC ChanServ");
+___('irc_faq_title_bots',     'EN', "IRC bots");
+___('irc_faq_title_bots',     'FR', "Bots IRC");
+___('irc_faq_title_channels', 'EN', "IRC channels");
+___('irc_faq_title_channels', 'FR', "Canaux IRC");
+___('irc_faq_title_others',   'EN', "Official platforms");
+___('irc_faq_title_others',   'FR', "Plateformes officielles");
+
+
+// FAQ: Header
 ___('irc_faq_select_main',      'EN', "The heart of NoBleme's community");
 ___('irc_faq_select_main',      'FR', "Le cœur de la communauté de NoBleme");
 ___('irc_faq_select_why',       'EN', "Why IRC instead of anything else?");
