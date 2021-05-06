@@ -45,6 +45,8 @@ ___('activity_type_quotes',     'EN', "Quotes");
 ___('activity_type_quotes',     'FR', "Citations");
 ___('activity_type_internet',   'EN', "Compendium");
 ___('activity_type_internet',   'FR', "Compendium");
+___('activity_type_irc',        'EN', "IRC server");
+___('activity_type_irc',        'FR', "Serveur IRC");
 ___('activity_type_dev',        'EN', "Website internals");
 ___('activity_type_dev',        'FR', "Développement");
 

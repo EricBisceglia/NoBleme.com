@@ -274,7 +274,7 @@ ___('admin_ban_logs_full_reason_fr',    'EN', "Ban reason (french):");
 ___('admin_ban_logs_full_reason_fr',    'FR', "Justification du ban. (français) :");
 ___('admin_ban_logs_full_unbanned_by',  'EN', "Unbanned by:");
 ___('admin_ban_logs_full_unbanned_by',  'FR', "Débannissement par :");
-___('admin_ban_logs_full_unreason_en',  'EN', "Unan reason (english):");
+___('admin_ban_logs_full_unreason_en',  'EN', "Unban reason (english):");
 ___('admin_ban_logs_full_unreason_en',  'FR', "Justification du déban. (anglais) :");
 ___('admin_ban_logs_full_unreason_fr',  'EN', "Unban reason (french):");
 ___('admin_ban_logs_full_unreason_fr',  'FR', "Justification du déban. (français) :");

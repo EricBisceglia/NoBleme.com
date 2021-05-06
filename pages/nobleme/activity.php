@@ -140,6 +140,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php if(!$activity_modlogs) { ?>
       <option value="quotes"><?=__('activity_type_quotes')?></option>
       <option value="internet"><?=__('activity_type_internet')?></option>
+      <?php } else { ?>
+      <option value="irc"><?=__('activity_type_irc')?></option>
       <?php } ?>
       <?php if(!$activity_modlogs) { ?>
       <option value="dev"><?=__('activity_type_dev')?></option>

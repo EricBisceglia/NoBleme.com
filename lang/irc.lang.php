@@ -199,6 +199,93 @@ ___('irc_channels_add',       'EN', "Add a new channel to the list");
 ___('irc_channels_add',       'FR', "Ajouter un nouveau canal à la liste");
 
 
+// Channel edition instructions
+___('irc_channels_type_instructions', 'EN', <<<EOT
+Make sure to select the appropriate channel type. Try to apply a fair and objective judgement for its size: the goal here is to provide a solid documentation of our public channels for guests, we wouldn't want someone joining a channel categorized as major only to discover that it is in fact a minor channel with low activity.
+EOT
+);
+___('irc_channels_type_instructions', 'FR', <<<EOT
+Assurez-vous de choisir le type de canal approprié. Essayez d'appliquer un jugement juste et objectif sur sa taille : le but est de documenter de façon réaliste nos canaux IRC, nous ne voudrions pas qu'une personne en visite rejoigne un canal catégorisé comme majeur et se retrouve dans un lieu relativement vide et inactif.
+EOT
+);
+___('irc_channels_type_main',         'EN', <<<EOT
+<span class="bold underlined">Main</span> channels are the server's hubs - no more than one per language.
+EOT
+);
+___('irc_channels_type_main',         'FR', <<<EOT
+<span class="bold underlined">Principal</span> est réservé aux hubs du serveur - un seul par langue.
+EOT
+);
+___('irc_channels_type_major',        'EN', <<<EOT
+<span class="bold underlined">Major</span> channels have daily activity and a constant userbase of 10+ people.
+EOT
+);
+___('irc_channels_type_major',        'FR', <<<EOT
+<span class="bold underlined">Majeur</span> est un canal actif au quotidien et où 10+ personnes sont présentes en permanence.
+EOT
+);
+___('irc_channels_type_minor',        'EN', <<<EOT
+<span class="bold underlined">Minor</span> channels are side channels with a lower activity and userbase.
+EOT
+);
+___('irc_channels_type_minor',        'FR', <<<EOT
+<span class="bold underlined">Mineur</span> est un canal à l'activité ou à la population basse, à utiliser pour les nouveaux canaux.
+EOT
+);
+___('irc_channels_type_automated',    'EN', <<<EOT
+<span class="bold underlined">Automated</span> channels are centered around the activity of an IRC bot.
+EOT
+);
+___('irc_channels_type_automated',    'FR', <<<EOT
+<span class="bold underlined">Automatisé</span> est réservé aux canaux dont l'activité tourne autour d'un bot IRC.
+EOT
+);
+___('irc_channels_desc_instructions', 'EN', <<<EOT
+Also ensure that the channel's description is kept short but efficient. The goal is that it fits within one line in the {{link|pages/irc/faq?channels|channel list}}'s table. Take inspiration from the already existing channel descriptions if needed. If you do not speak french, ask the help of someone who does: a description must be present in both languages.
+EOT
+);
+___('irc_channels_desc_instructions', 'FR', <<<EOT
+Assurez-vous également que la description soit brève mais efficace. Le but est de la faire tenir dans une ligne du tableau de la {{link|pages/irc/faq?channels|liste des canaux}}. Inspirez-vous des descriptions existantes si nécessaire. Si vous parlez mal anglais, demandez un coup de main à quelqu'un d'autre : une description est impérative dans les deux langues.
+EOT
+);
+
+
+// Add an IRC channel
+___('irc_channels_add_title',     'EN', "New IRC channel");
+___('irc_channels_add_title',     'FR', "Nouveau canal IRC");
+___('irc_channels_add_type',      'EN', "Channel type");
+___('irc_channels_add_type',      'FR', "Type de canal");
+___('irc_channels_add_languages', 'EN', "Languages used in the channel");
+___('irc_channels_add_languages', 'FR', "Langues utilisées sur le canal");
+___('irc_channels_add_name',      'EN', "Channel name (including the # hash)");
+___('irc_channels_add_name',      'FR', "Nom du canal (incluant le # croisillon)");
+___('irc_channels_add_desc_en',   'EN', "Channel description in english");
+___('irc_channels_add_desc_en',   'FR', "Description du canal en anglais");
+___('irc_channels_add_desc_fr',   'EN', "Channel description in french");
+___('irc_channels_add_desc_fr',   'FR', "Description du canal en français");
+___('irc_channels_add_submit',    'EN', "Add the channel to the list");
+___('irc_channels_add_submit',    'FR', "Ajouter le canal à la liste");
+
+
+// Channel creation errors
+___('irc_channels_add_error_name',      'EN', "The channel must have a name");
+___('irc_channels_add_error_name',      'FR', "Le canal doit avoir un nom");
+___('irc_channels_add_error_hash',      'EN', "The channel name must start with a # hash");
+___('irc_channels_add_error_hash',      'FR', "Le nom du canal doit commencer par un # croisillon");
+___('irc_channels_add_error_spaces',    'EN', "The channel name may not contain spaces");
+___('irc_channels_add_error_spaces',    'FR', "Le nom du canal ne doit pas contenir d'espaces");
+___('irc_channels_add_error_illegal',   'EN', "The channel name contains an illegal character");
+___('irc_channels_add_error_illegal',   'FR', "Le nom du canal contient un caractère interdit");
+___('irc_channels_add_error_length',    'EN', "Channel name is too long");
+___('irc_channels_add_error_length',    'FR', "Le nom du canal est trop long");
+___('irc_channels_add_error_duplicate', 'EN', "This channel already exists in the list");
+___('irc_channels_add_error_duplicate', 'FR', "Ce canal est déjà présent dans la liste");
+___('irc_channels_add_error_desc',      'EN', "A description must be present in both languages");
+___('irc_channels_add_error_desc',      'FR', "Une description doit être présente dans les deux langues");
+___('irc_channels_add_error_lang',      'EN', "At least one language must be selected");
+___('irc_channels_add_error_lang',      'FR', "Au moins une langue doit être sélectionnée");
+
+
 
 
 /*********************************************************************************************************************/

@@ -757,7 +757,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('irc_faq_commands_quit')?>
   </p>
 
-  <h5 id="server">/server <?=__('irc_faq_commands_server')?></h5>
+  <h5 id="server_command">/server <?=__('irc_faq_commands_server')?></h5>
   <p class="tinypadding_top padding_bot">
     <?=__('irc_faq_commands_connect')?>
   </p>
@@ -792,7 +792,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('irc_faq_commands_whois')?>
   </p>
 
-  <h5 id="whois">/whowas <?=__('irc_faq_commands_username')?></h5>
+  <h5 id="whowas">/whowas <?=__('irc_faq_commands_username')?></h5>
   <p class="tinypadding_top padding_bot">
     <?=__('irc_faq_commands_whowas')?>
   </p>
@@ -830,7 +830,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('irc_faq_nickserv_body_3')?>
   </p>
 
-  <h5 class="bigpadding_top" id="nick">/nick <?=__('irc_faq_commands_username')?></h5>
+  <h5 class="bigpadding_top" id="nickserv">/nick <?=__('irc_faq_commands_username')?></h5>
   <p class="tinypadding_top padding_bot">
     <?=__('irc_faq_commands_nick')?>
   </p>
@@ -946,7 +946,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('irc_faq_chanserv_topic')?>
   </p>
 
-  <h5 id="kick">/msg ChanServ kick #<?=__('irc_faq_commands_channel')?> <?=__('irc_faq_commands_username')?></h5>
+  <h5 id="chanserv_kick">/msg ChanServ kick #<?=__('irc_faq_commands_channel')?> <?=__('irc_faq_commands_username')?></h5>
   <p class="tinypadding_top padding_bot">
     <?=__('irc_faq_chanserv_kick')?>
   </p>
@@ -971,7 +971,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('irc_faq_chanserv_mute')?>
   </p>
 
-  <h5 id="unmute">/msg ChanServ mode #<?=__('irc_faq_commands_channel')?> set +v <?=__('irc_faq_commands_username')?></h5>
+  <h5 id="voice">/msg ChanServ mode #<?=__('irc_faq_commands_channel')?> set +v <?=__('irc_faq_commands_username')?></h5>
   <p class="tinypadding_top padding_bot">
     <?=__('irc_faq_chanserv_voice')?>
   </p>
@@ -989,7 +989,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('irc_faq_chanserv_manage_body')?>
   </p>
 
-  <h5 class="padding_top" id="register">/msg ChanServ register #<?=__('irc_faq_commands_channel')?></h5>
+  <h5 class="padding_top" id="register_channel">/msg ChanServ register #<?=__('irc_faq_commands_channel')?></h5>
   <p class="tinypadding_top padding_bot">
     <?=__('irc_faq_chanserv_register')?>
   </p>

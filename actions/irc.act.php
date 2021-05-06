@@ -8,6 +8,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  irc_channels_add                    Creates a new entry in the IRC channel list.                                 */
 /*  irc_channels_list                   Returns a list of IRC channels.                                              */
 /*                                                                                                                   */
 /*  irc_channels_type_get               Fetches data related to a channel type.                                      */
@@ -27,6 +28,101 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  irc_bot_message_history_delete      Deletes an entry from the IRC bot's message history.                         */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+
+
+/**
+ * Creates a new entry in the IRC channel list.
+ *
+ * @param   array       $contents   The contents of the IRC channel.
+ *
+ * @return  string|int              A string if an error happened, or the newly created channel's ID if all went well.
+ */
+
+function irc_channels_add( array $contents ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('irc.lang.php');
+
+  // Only moderators can run this action
+  user_restrict_to_moderators();
+
+  // Sanitize and prepare the data
+  $channel_name_raw = (isset($contents['name']))    ? $contents['name']                         : '';
+  $channel_name     = (isset($contents['name']))    ? sanitize($contents['name'], 'string')     : '';
+  $channel_desc_en  = (isset($contents['desc_en'])) ? sanitize($contents['desc_en'], 'string')  : '';
+  $channel_desc_fr  = (isset($contents['desc_en'])) ? sanitize($contents['desc_fr'], 'string')  : '';
+  $channel_type     = (isset($contents['type']))    ? sanitize($contents['type'], 'int', 0, 3)  : 1;
+  $temp             = (isset($contents['lang_en'])) ? 'EN'                                      : '';
+  $channel_lang     = (isset($contents['lang_fr'])) ? $temp.'FR'                                : $temp;
+
+  // Error: No name
+  if(!$channel_name)
+    return __('irc_channels_add_error_name');
+
+  // Error: No hash in name
+  if(substr($channel_name, 0, 1) != '#')
+    return __('irc_channels_add_error_hash');
+
+  // Error: Spaces in name
+  if(str_contains($channel_name_raw, ' '))
+    return __('irc_channels_add_error_spaces');
+
+  // Error: Illegal character in name
+  if(str_contains($channel_name_raw, ',') || str_contains($channel_name_raw, '␇'))
+    return __('irc_channels_add_error_illegal');
+
+  // Error: Channel name is too long
+  if(strlen($channel_name) > 50)
+    return __('irc_channels_add_error_length');
+
+  // Error: Channel already exists
+  if(database_entry_exists('irc_channels', 'name', $channel_name))
+    return __('irc_channels_add_error_duplicate');
+
+  // Error: No description
+  if(!$channel_desc_en || !$channel_desc_fr)
+    return __('irc_channels_add_error_desc');
+
+  // Error: No language
+  if(!$channel_lang)
+    return __('irc_channels_add_error_lang');
+
+  // Create the channel
+  query(" INSERT INTO irc_channels
+          SET         irc_channels.name           = '$channel_name'     ,
+                      irc_channels.channel_type   = '$channel_type'     ,
+                      irc_channels.languages      = '$channel_lang'     ,
+                      irc_channels.description_en = '$channel_desc_en'  ,
+                      irc_channels.description_fr = '$channel_desc_fr'  ");
+
+  // Fetch the newly created channel's id
+  $channel_id = query_id();
+
+  // Fetch the username of the moderator creating the channel
+  $mod_username = user_get_username();
+
+  // Activity logs
+  $modlog = log_activity( 'irc_channels_new'                  ,
+                          is_moderators_only:   true          ,
+                          activity_summary_en:  $channel_name ,
+                          moderator_username:   $mod_username );
+
+  // Detailed activity logs
+  $channel_type_details = irc_channels_type_get($channel_type);
+  log_activity_details($modlog, 'Channel description (EN)', 'Description du canal (EN)', $channel_desc_en, $channel_desc_en);
+  log_activity_details($modlog, 'Channel description (FR)', 'Description du canal (FR)', $channel_desc_fr, $channel_desc_fr);
+  log_activity_details($modlog, "Channel type", "Type de canal", $channel_type_details['name_en'], $channel_type_details['name_en']);
+  log_activity_details($modlog, "Channel language(s)", "Langue(s) du canal", $channel_lang, $channel_lang);
+
+  // IRC bot message
+  irc_bot_send_message("New IRC channel added to the public channel list by $mod_username: $channel_name_raw - ".$GLOBALS['website_url']."pages/irc/faq?channels", 'mod');
+
+  // Return the channel's id
+  return $channel_id;
+}
+
+
 
 
 /**
@@ -115,6 +211,15 @@ function irc_channels_type_get( int $type_id ) : array
       default   => 'Automatisé' ,
     };
   }
+
+  // Channel type description in english only
+  $data['name_en'] = match($type_id)
+  {
+    3         => 'Main'       ,
+    2         => 'Major'      ,
+    1         => 'Minor'      ,
+    default   => 'Automated'  ,
+  };
 
   // Channel type CSS
   $data['css'] = match($type_id)

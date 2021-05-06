@@ -393,9 +393,9 @@ function admin_ban_delete(  string  $unbanned_id            ,
   log_activity_details($modlog, 'Days left in the ban', 'Jours restants au bannissement', $days_left);
   log_activity_details($modlog, 'Days served before the unbanning', 'Jours purgés avant le débannissement', $days_served);
   if($unban_reason_en_raw)
-    log_activity_details($modlog, 'Reason for unbanning (EN)', 'Raison du débannissement (EN)', $unban_reason_en_raw);
+    log_activity_details($modlog, 'Reason for unbanning (EN)', 'Raison du débannissement (EN)', $unban_reason_en_raw, $unban_reason_en_raw);
   if($unban_reason_fr_raw)
-    log_activity_details($modlog, 'Reason for unbanning (FR)', 'Raison du débannissement (FR)', $unban_reason_fr_raw);
+    log_activity_details($modlog, 'Reason for unbanning (FR)', 'Raison du débannissement (FR)', $unban_reason_en_raw, $unban_reason_fr_raw);
 
   // Update the ban log with the unban reasons if necessary
   if($unban_reason_fr || $unban_reason_en)
@@ -759,9 +759,9 @@ function admin_ip_ban_delete( int     $ban_id                 ,
   log_activity_details($modlog, 'Days left in the ban', 'Jours restants au bannissement', $days_left);
   log_activity_details($modlog, 'Days served before the unbanning', 'Jours purgés avant le débannissement', $days_served);
   if($unban_reason_en_raw)
-    log_activity_details($modlog, 'Unan reason (EN)', 'Raison du débannissement (EN)', $unban_reason_en_raw, $unban_reason_en_raw);
+    log_activity_details($modlog, 'Unban reason (EN)', 'Raison du débannissement (EN)', $unban_reason_en_raw, $unban_reason_en_raw);
   if($unban_reason_fr_raw)
-    log_activity_details($modlog, 'Unan reason (FR)', 'Raison du débannissement (FR)', $unban_reason_fr_raw, $unban_reason_fr_raw);
+    log_activity_details($modlog, 'Unban reason (FR)', 'Raison du débannissement (FR)', $unban_reason_fr_raw, $unban_reason_fr_raw);
 
   // Update the ban log
   query(" UPDATE    logs_bans

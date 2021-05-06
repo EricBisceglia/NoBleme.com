@@ -136,7 +136,7 @@ function sanitize_input(  string  $input_type             ,
 
 function sanitize_output( ?string $data                         ,
                           bool    $preserve_line_breaks = false ,
-                          bool    $preserve_backslashes = false ) : string
+                          bool    $preserve_backslashes = true  ) : string
 {
   // Prepare the data for use in HTML
   $data = ($preserve_backslashes) ? htmlentities($data, ENT_QUOTES, 'utf-8') : stripslashes(htmlentities($data, ENT_QUOTES, 'utf-8'));

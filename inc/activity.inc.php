@@ -432,6 +432,21 @@ function log_activity_parse(  bool    $admins_only        ,
 
 
   //*****************************************************************************************************************//
+  //                                                       IRC                                                       //
+  //*****************************************************************************************************************//
+
+  else if($type === 'irc_channels_new')
+  {
+    $return['css']  = '';
+    $return['href'] = $path.'pages/irc/faq?channels';
+    $return['EN']   = 'IRC channel '.$title_en.' added to the list by '.$mod_username;
+    $return['FR']   = 'Canal IRC '.$title_en.' ajouté à la liste par '.$mod_username;
+  }
+
+
+
+
+  //*****************************************************************************************************************//
   //                                                 DEFAULT VALUES                                                  //
   //*****************************************************************************************************************//
   // If no activity type has been matched, return some default content
