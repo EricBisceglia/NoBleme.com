@@ -286,6 +286,18 @@ ___('irc_channels_add_error_lang',      'EN', "At least one language must be sel
 ___('irc_channels_add_error_lang',      'FR', "Au moins une langue doit être sélectionnée");
 
 
+// Edit an IRC channel
+___('irc_channels_edit_title',  'EN', "Edit IRC channel {{1}}");
+___('irc_channels_edit_title',  'FR', "Modifier le canal IRC {{1}}");
+___('irc_channels_edit_submit', 'EN', "Edit channel");
+___('irc_channels_edit_submit', 'FR', "Modifier le canal");
+
+
+// Channel modification errors
+___('irc_channels_edit_error_id', 'EN', "This IRC channel does not exist");
+___('irc_channels_edit_error_id', 'FR', "Ce canal IRC n'existe pas");
+
+
 
 
 /*********************************************************************************************************************/
@@ -582,7 +594,7 @@ EOT
 ___('irc_faq_why_flex_title',     'EN', "Flexible user experience");
 ___('irc_faq_why_flex_title',     'FR', "Expérience d'utilisation flexible");
 ___('irc_faq_why_flex_body_1',    'EN', <<<EOT
-As every user chooses their preferred IRC client, you have a freedom to bend IRC's user experience any way you want to and can access IRC on any device or platform of your choice. This used to be extremely important in the early days of NoBleme's IRC server, when the competition (MSN, ICQ, Skype, Goole Talk, etc.) locked you into a forced user experience. Nowadays, most real time chat applications offer various degrees of customization, which allow for a properly flexible user experience.
+As every user chooses their preferred IRC client, you have a freedom to bend IRC's user experience any way you want to and can access IRC on any device or platform of your choice. This used to be extremely important in the early days of NoBleme's IRC server, when the competition (MSN, ICQ, Skype, Google Talk, etc.) locked you into a forced user experience. Nowadays, most real time chat applications offer various degrees of customization, which allow for a properly flexible user experience.
 EOT
 );
 ___('irc_faq_why_flex_body_1',    'FR', <<<EOT

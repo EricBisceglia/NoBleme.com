@@ -9,7 +9,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  irc_channels_add                    Creates a new entry in the IRC channel list.                                 */
+/*  irc_channels_get                    Returns data regarder to an IRC channel.                                     */
 /*  irc_channels_list                   Returns a list of IRC channels.                                              */
+/*  irc_channels_edit                   Modifies an existing IRC channel.                                            */
 /*                                                                                                                   */
 /*  irc_channels_type_get               Fetches data related to a channel type.                                      */
 /*                                                                                                                   */
@@ -28,7 +30,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  irc_bot_message_history_delete      Deletes an entry from the IRC bot's message history.                         */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-
 
 
 /**
@@ -126,6 +127,47 @@ function irc_channels_add( array $contents ) : mixed
 
 
 /**
+ * Returns data related to an IRC channel.
+ *
+ * @param   int         $channel_id   The channel's id.
+ *
+ * @return  array|null                An array containing related data, or null if it does not exist.
+ */
+
+function irc_channels_get( int $channel_id ) : mixed
+{
+  // Sanitize the data
+  $channel_id = sanitize($channel_id, 'int', 0);
+
+  // Check if the quote exists
+  if(!database_row_exists('irc_channels', $channel_id))
+    return NULL;
+
+  // Fetch the data
+  $dchannel = mysqli_fetch_array(query("  SELECT  irc_channels.name           AS 'c_name'     ,
+                                                  irc_channels.channel_type   AS 'c_type'     ,
+                                                  irc_channels.languages      AS 'c_lang'     ,
+                                                  irc_channels.description_en AS 'c_desc_en'  ,
+                                                  irc_channels.description_fr AS 'c_desc_fr'
+                                          FROM    irc_channels
+                                          WHERE   irc_channels.id = '$channel_id' "));
+
+  // Assemble an array with the data
+  $data['name']     = sanitize_output($dchannel['c_name']);
+  $data['type']     = sanitize_output($dchannel['c_type']);
+  $data['lang_en']  = str_contains($dchannel['c_lang'], 'EN');
+  $data['lang_fr']  = str_contains($dchannel['c_lang'], 'FR');
+  $data['desc_en']  = sanitize_output($dchannel['c_desc_en']);
+  $data['desc_fr']  = sanitize_output($dchannel['c_desc_fr']);
+
+  // Return the data
+  return $data;
+}
+
+
+
+
+/**
  * Returns a list of IRC channels.
  *
  * @return  array   An array containing IRC channels.
@@ -169,6 +211,93 @@ function irc_channels_list() : array
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Modifies an existing IRC channel.
+ *
+ * @param   int           $channel_id   The IRC channel's ID.
+ * @param   array         $contents     The updated IRC channel data.
+ *
+ * @return  string|null                 A string if an error happened, or null if all went well.
+ */
+
+function irc_channels_edit( int   $channel_id ,
+                            array $contents   ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('irc.lang.php');
+
+  // Only moderators can run this action
+  user_restrict_to_moderators();
+
+  // Stop here if the channel does not exist
+  if(!database_row_exists('irc_channels', $channel_id))
+    return __('irc_channels_edit_error_id');
+
+  // Sanitize and prepare the data
+  $channel_desc_en  = (isset($contents['desc_en'])) ? sanitize($contents['desc_en'], 'string')  : '';
+  $channel_desc_fr  = (isset($contents['desc_en'])) ? sanitize($contents['desc_fr'], 'string')  : '';
+  $channel_type     = (isset($contents['type']))    ? sanitize($contents['type'], 'int', 0, 3)  : 1;
+  $temp             = (isset($contents['lang_en'])) ? 'EN'                                      : '';
+  $channel_lang     = (isset($contents['lang_fr'])) ? $temp.'FR'                                : $temp;
+
+  // Error: No description
+  if(!$channel_desc_en || !$channel_desc_fr)
+    return __('irc_channels_add_error_desc');
+
+  // Error: No language
+  if(!$channel_lang)
+    return __('irc_channels_add_error_lang');
+
+  // Fetch the channel's data before updating it
+  $dchannel = mysqli_fetch_array(query("  SELECT  irc_channels.name           AS 'c_name'     ,
+                                                  irc_channels.channel_type   AS 'c_type'     ,
+                                                  irc_channels.languages      AS 'c_lang'     ,
+                                                  irc_channels.description_en AS 'c_desc_en'  ,
+                                                  irc_channels.description_fr AS 'c_desc_fr'
+                                          FROM    irc_channels
+                                          WHERE   irc_channels.id = '$channel_id' "));
+
+  // Update the channel
+  query(" UPDATE  irc_channels
+          SET     irc_channels.channel_type   = '$channel_type'     ,
+                  irc_channels.languages      = '$channel_lang'     ,
+                  irc_channels.description_en = '$channel_desc_en'  ,
+                  irc_channels.description_fr = '$channel_desc_fr'
+          WHERE   irc_channels.id             = '$channel_id'       ");
+
+  // Prepare data for the activity logs
+  $mod_username     = user_get_username();
+  $channel_name_raw = $dchannel['c_name'];
+  $channel_name     = sanitize($dchannel['c_name'], 'string');
+  $channel_type_old = irc_channels_type_get($dchannel['c_type']);
+  $channel_type_new = irc_channels_type_get($channel_type);
+
+  // Activity logs
+  $modlog = log_activity( 'irc_channels_edit'                 ,
+                          is_moderators_only:   true          ,
+                          activity_summary_en:  $channel_name ,
+                          moderator_username:   $mod_username );
+
+  // Detailed activity logs
+  if($dchannel['c_desc_en'] != $contents['desc_en'])
+    log_activity_details($modlog, 'Channel description (EN)', 'Description du canal (EN)', $dchannel['c_desc_en'], $contents['desc_en']);
+  if($dchannel['c_desc_fr'] != $contents['desc_fr'])
+    log_activity_details($modlog, 'Channel description (FR)', 'Description du canal (FR)', $dchannel['c_desc_fr'], $contents['desc_fr']);
+  if($dchannel['c_type'] != $contents['type'])
+    log_activity_details($modlog, "Channel type", "Type de canal", $channel_type_old['name_en'], $channel_type_new['name_en']);
+  if($dchannel['c_lang'] != $channel_lang)
+  log_activity_details($modlog, "Channel language(s)", "Langue(s) du canal", $dchannel['c_lang'], $channel_lang);
+
+  // IRC bot message
+  irc_bot_send_message("IRC channel $channel_name_raw has been updated on the channel list by $mod_username - ".$GLOBALS['website_url']."pages/irc/faq?channels", 'mod');
+
+  // All went well, return NULL
+  return NULL;
 }
 
 

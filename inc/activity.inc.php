@@ -443,6 +443,14 @@ function log_activity_parse(  bool    $admins_only        ,
     $return['FR']   = 'Canal IRC '.$title_en.' ajouté à la liste par '.$mod_username;
   }
 
+  else if($type === 'irc_channels_edit')
+  {
+    $return['css']  = '';
+    $return['href'] = $path.'pages/irc/faq?channels';
+    $return['EN']   = 'IRC channel '.$title_en.' updated by '.$mod_username;
+    $return['FR']   = 'Canal IRC '.$title_en.' mis à jour par '.$mod_username;
+  }
+
 
 
 

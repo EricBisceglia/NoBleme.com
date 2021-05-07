@@ -1250,7 +1250,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <?php if($is_moderator) { ?>
         <td class="align_center spaced nowrap">
-          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials')?>
+          <?=__link('pages/irc/channel_edit?id='.$irc_channels[$i]['id'], __icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials'), 'noglow')?>
           <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
         </td>
         <?php } ?>

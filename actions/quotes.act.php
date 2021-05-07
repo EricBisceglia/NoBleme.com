@@ -147,6 +147,7 @@ function quotes_get( int $quote_id ) : mixed
 
 
 
+
 /**
  * Returns a list of users linked to a quote.
  *
