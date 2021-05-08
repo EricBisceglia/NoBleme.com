@@ -298,6 +298,15 @@ ___('irc_channels_edit_error_id', 'EN', "This IRC channel does not exist");
 ___('irc_channels_edit_error_id', 'FR', "Ce canal IRC n'existe pas");
 
 
+// Delet an IRC channel
+___('irc_channels_delete_confirm',  'EN', "Confirm the permanent and irreversible deletion of this entry in the IRC channel list");
+___('irc_channels_delete_confirm',  'FR', "Confirmer la suppression permanente et irréversible de cette entrée dans la liste des canaux IRC");
+___('irc_channels_delete_error',    'EN', "This IRC channel does not exist or has already been deleted");
+___('irc_channels_delete_error',    'FR', "Ce canal IRC n'existe pas ou a déjà été supprimé");
+___('irc_channels_delete_ok',       'EN', "The channel has successfully been deleted");
+___('irc_channels_delete_ok',       'FR', "Le canal a bien été supprimé");
+
+
 
 
 /*********************************************************************************************************************/

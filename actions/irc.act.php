@@ -12,6 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  irc_channels_get                    Returns data regarder to an IRC channel.                                     */
 /*  irc_channels_list                   Returns a list of IRC channels.                                              */
 /*  irc_channels_edit                   Modifies an existing IRC channel.                                            */
+/*  irc_channels_delete                 Hard deletes an IRC channel.                                                 */
 /*                                                                                                                   */
 /*  irc_channels_type_get               Fetches data related to a channel type.                                      */
 /*                                                                                                                   */
@@ -117,7 +118,7 @@ function irc_channels_add( array $contents ) : mixed
   log_activity_details($modlog, "Channel language(s)", "Langue(s) du canal", $channel_lang, $channel_lang);
 
   // IRC bot message
-  irc_bot_send_message("New IRC channel added to the public channel list by $mod_username: $channel_name_raw - ".$GLOBALS['website_url']."pages/irc/faq?channels", 'mod');
+  irc_bot_send_message("IRC channel $channel_name_raw added to the public channel list by $mod_username - ".$GLOBALS['website_url']."pages/irc/faq?channels", 'mod');
 
   // Return the channel's id
   return $channel_id;
@@ -139,7 +140,7 @@ function irc_channels_get( int $channel_id ) : mixed
   // Sanitize the data
   $channel_id = sanitize($channel_id, 'int', 0);
 
-  // Check if the quote exists
+  // Check if the channel exists
   if(!database_row_exists('irc_channels', $channel_id))
     return NULL;
 
@@ -291,13 +292,77 @@ function irc_channels_edit( int   $channel_id ,
   if($dchannel['c_type'] != $contents['type'])
     log_activity_details($modlog, "Channel type", "Type de canal", $channel_type_old['name_en'], $channel_type_new['name_en']);
   if($dchannel['c_lang'] != $channel_lang)
-  log_activity_details($modlog, "Channel language(s)", "Langue(s) du canal", $dchannel['c_lang'], $channel_lang);
+    log_activity_details($modlog, "Channel language(s)", "Langue(s) du canal", $dchannel['c_lang'], $channel_lang);
 
   // IRC bot message
   irc_bot_send_message("IRC channel $channel_name_raw has been updated on the channel list by $mod_username - ".$GLOBALS['website_url']."pages/irc/faq?channels", 'mod');
 
   // All went well, return NULL
   return NULL;
+}
+
+
+
+
+/**
+ * Hard deletes an IRC channel
+ *
+ * @param   int     $channel_id   The id of the IRC channel to delete.
+ *
+ * @return  string                A string recapping the results of the deletion process.
+ */
+
+function irc_channels_delete( int $channel_id ) : string
+{
+  // Require moderator rights to run this action
+  user_restrict_to_moderators();
+
+  // Check if the required files have been included
+  require_included_file('irc.lang.php');
+
+  // Sanitize the channel's id
+  $channel_id = sanitize($channel_id, 'int', 0);
+
+  // Check if the channel exists
+  if(!$channel_id || !database_row_exists('irc_channels', $channel_id))
+    return __('irc_channels_delete_error');
+
+  // Fetch the channel's data before deleting it
+  $dchannel = mysqli_fetch_array(query("  SELECT  irc_channels.name           AS 'c_name'     ,
+                                                  irc_channels.channel_type   AS 'c_type'     ,
+                                                  irc_channels.languages      AS 'c_lang'     ,
+                                                  irc_channels.description_en AS 'c_desc_en'  ,
+                                                  irc_channels.description_fr AS 'c_desc_fr'
+                                          FROM    irc_channels
+                                          WHERE   irc_channels.id = '$channel_id' "));
+
+  // Hard delete the channel
+  query(" DELETE FROM irc_channels
+          WHERE       irc_channels.id = '$channel_id' ");
+
+  // Prepare data for the activity logs
+  $mod_username     = user_get_username();
+  $channel_name_raw = $dchannel['c_name'];
+  $channel_name     = sanitize($dchannel['c_name'], 'string');
+  $channel_type     = irc_channels_type_get($dchannel['c_type']);
+
+  // Activity logs
+  $modlog = log_activity( 'irc_channels_delete'               ,
+                          is_moderators_only:   true          ,
+                          activity_summary_en:  $channel_name ,
+                          moderator_username:   $mod_username );
+
+  // Detailed activity logs
+  log_activity_details($modlog, 'Channel description (EN)', 'Description du canal (EN)', $dchannel['c_desc_en']);
+  log_activity_details($modlog, 'Channel description (FR)', 'Description du canal (FR)', $dchannel['c_desc_fr']);
+  log_activity_details($modlog, "Channel type", "Type de canal", $channel_type['name_en']);
+  log_activity_details($modlog, "Channel language(s)", "Langue(s) du canal", $dchannel['c_lang']);
+
+  // IRC bot message
+  irc_bot_send_message("IRC channel $channel_name_raw has been deleted from the channel list by $mod_username - ".$GLOBALS['website_url']."pages/irc/faq?channels", 'mod');
+
+  // Return that all went well
+  return __('irc_channels_delete_ok');
 }
 
 

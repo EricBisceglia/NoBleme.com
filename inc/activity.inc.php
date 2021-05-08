@@ -451,6 +451,14 @@ function log_activity_parse(  bool    $admins_only        ,
     $return['FR']   = 'Canal IRC '.$title_en.' mis à jour par '.$mod_username;
   }
 
+  else if($type === 'irc_channels_delete')
+  {
+    $return['css']  = '';
+    $return['href'] = $path.'pages/irc/faq?channels';
+    $return['EN']   = 'IRC channel '.$title_en.' deleted by '.$mod_username;
+    $return['FR']   = 'Canal IRC '.$title_en.' supprimé par '.$mod_username;
+  }
+
 
 
 

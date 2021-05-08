@@ -1220,11 +1220,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?php if($i < ($irc_channels['rows'] - 1) && $irc_channels[$i]['type'] != $irc_channels[$i + 1]['type']) { ?>
 
-      <tr class="row_separator_dark_thin">
+      <tr class="row_separator_dark_thin" id="irc_channel_list_row_<?=$irc_channels[$i]['id']?>">
 
       <?php } else { ?>
 
-      <tr>
+      <tr id="irc_channel_list_row_<?=$irc_channels[$i]['id']?>">
 
       <?php } ?>
 
@@ -1251,7 +1251,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php if($is_moderator) { ?>
         <td class="align_center spaced nowrap">
           <?=__link('pages/irc/channel_edit?id='.$irc_channels[$i]['id'], __icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials'), 'noglow')?>
-          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "irc_channel_list_delete(".$irc_channels[$i]['id'].", '".__('irc_channels_delete_confirm')."');")?>
         </td>
         <?php } ?>
 
