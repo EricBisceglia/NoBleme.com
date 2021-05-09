@@ -29,6 +29,17 @@ ___('discord_webhook_message_submit',   'EN', "Send message through webhook");
 ___('discord_webhook_message_submit',   'FR', "Envoyer le message via le webhook");
 
 
+// Shut down the Discord integration
+___('discord_webhook_toggle_title_on',  'EN', "The Discord integration is currently active");
+___('discord_webhook_toggle_title_on',  'FR', "L'intégration Discord est actuellement active");
+___('discord_webhook_toggle_title_off', 'EN', "The Discord integration is currently inactive");
+___('discord_webhook_toggle_title_off', 'FR', "L'intégration Discord est actuellement désactivée");
+___('discord_webhook_toggle_off',       'EN', "Turn off the Discord integration");
+___('discord_webhook_toggle_off',       'FR', "Désactiver l'intégration Discord");
+___('discord_webhook_toggle_on',        'EN', "Turn on the Discord integration");
+___('discord_webhook_toggle_on',        'FR', "Activer l'intégration Discord");
+
+
 
 
 /*********************************************************************************************************************/

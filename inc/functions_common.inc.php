@@ -1409,6 +1409,10 @@ function discord_send_message(  string  $message          ,
   if(!$GLOBALS['enable_discord'])
     return;
 
+  // Stop here if Discord is silenced
+  if(system_variable_fetch('discord_is_silenced'))
+    return;
+
   // Determine which webhook to use
   if($channel == 'admin')
     $webhook = $GLOBALS['discord_admin'];

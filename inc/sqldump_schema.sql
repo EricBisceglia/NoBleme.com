@@ -346,6 +346,7 @@ CREATE TABLE IF NOT EXISTS `system_variables` (
   `last_scheduler_execution` int UNSIGNED NOT NULL DEFAULT '0',
   `last_pageview_check` int UNSIGNED NOT NULL DEFAULT '0',
   `irc_bot_is_silenced` smallint UNSIGNED NOT NULL DEFAULT '0',
+  `discord_is_silenced` smallint UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`update_in_progress`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

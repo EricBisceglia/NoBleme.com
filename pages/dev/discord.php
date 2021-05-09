@@ -29,11 +29,28 @@ $page_title_fr    = "Webhook Discord";
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Send message through webhook
+// Send message through Discord webhook
 
 if(isset($_POST['discord_webhook_message_submit']))
   discord_webhook_send_message( form_fetch_element('discord_webhook_message_body')    ,
                                 form_fetch_element('discord_webhook_message_channel') );
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Silence the Discord integration
+
+// Silence the integration
+if(isset($_POST['discord_webhook_toggle_off']))
+  system_variable_update('discord_is_silenced', 0, 'int');
+
+// Unsilence the integration
+if(isset($_POST['discord_webhook_toggle_on']))
+  system_variable_update('discord_is_silenced', 1, 'int');
+
+// Retrieve the current status
+$discord_is_silenced = system_variable_fetch('discord_is_silenced');
 
 
 
@@ -44,7 +61,7 @@ if(isset($_POST['discord_webhook_message_submit']))
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_50">
+<div class="width_50 bigpadding_bot">
 
   <h1>
     <?=__('submenu_admin_discord')?>
@@ -72,6 +89,32 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </div>
 
       <input type="submit" name="discord_webhook_message_submit" value="<?=__('discord_webhook_message_submit')?>">
+
+    </fieldset>
+  </form>
+
+</div>
+
+<hr>
+
+<div class="width_50 bigpadding_top">
+
+  <h5 class="padding_bot">
+    <?php if($discord_is_silenced) { ?>
+    <?=__('discord_webhook_toggle_title_off')?>
+    <?php } else { ?>
+    <?=__('discord_webhook_toggle_title_on')?>
+    <?php } ?>
+  </h5>
+
+  <form method="POST">
+    <fieldset>
+
+        <?php if($discord_is_silenced) { ?>
+        <input type="submit" name="discord_webhook_toggle_off" value="<?=__('discord_webhook_toggle_on')?>">
+        <?php } else { ?>
+        <input type="submit" name="discord_webhook_toggle_on" value="<?=__('discord_webhook_toggle_off')?>">
+        <?php } ?>
 
     </fieldset>
   </form>
