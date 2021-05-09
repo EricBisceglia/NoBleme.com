@@ -8,6 +8,31 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                  DISCORD WEBHOOK                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Send a message
+___('discord_webhook_message_title',    'EN', "Send a message through the webhook");
+___('discord_webhook_message_title',    'FR', "Envoyer un message via le webhook");
+___('discord_webhook_message_channel',  'EN', "Discord channel");
+___('discord_webhook_message_channel',  'FR', "Canal Discord");
+___('discord_webhook_message_main',     'EN', "Main channel");
+___('discord_webhook_message_main',     'FR', "Canal principal");
+___('discord_webhook_message_mod',      'EN', "Moderation team");
+___('discord_webhook_message_mod',      'FR', "Équipe de modération");
+___('discord_webhook_message_admin',    'EN', "Administrative team");
+___('discord_webhook_message_admin',    'FR', "Équipe d'administration");
+___('discord_webhook_message_body',     'EN', "Message contents");
+___('discord_webhook_message_body',     'FR', "Contenu du message");
+___('discord_webhook_message_submit',   'EN', "Send message through webhook");
+___('discord_webhook_message_submit',   'FR', "Envoyer le message via le webhook");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                      IRC BOT                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -155,7 +180,7 @@ ___('irc_bot_bytes_troll',            'FR', "Troll (contraste brutal)");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                   CHANNEL  LIST                                                   */
+/*                                                 IRC CHANNEL LIST                                                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 

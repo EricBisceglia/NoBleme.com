@@ -847,6 +847,9 @@ $javascripts .= '
           <?=__link('pages/dev/irc_bot', __('submenu_admin_ircbot'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
+          <?=__link('pages/dev/discord', __('submenu_admin_discord'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
           <?=__link('pages/dev/close_website', __('submenu_admin_close'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">

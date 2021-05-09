@@ -30,6 +30,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  irc_bot_message_history_replay      Replays an entry from the IRC bot's message history.                         */
 /*  irc_bot_message_history_delete      Deletes an entry from the IRC bot's message history.                         */
 /*                                                                                                                   */
+/*  discord_webhook_send_message        Sends a message through the Discord webhook from the admin interface.        */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -44,7 +46,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 function irc_channels_add( array $contents ) : mixed
 {
   // Check if the required files have been included
-  require_included_file('irc.lang.php');
+  require_included_file('integrations.lang.php');
 
   // Only moderators can run this action
   user_restrict_to_moderators();
@@ -177,7 +179,7 @@ function irc_channels_get( int $channel_id ) : mixed
 function irc_channels_list() : array
 {
   // Check if the required files have been included
-  require_included_file('irc.lang.php');
+  require_included_file('integrations.lang.php');
 
   // Fetch the user's language
   $lang = user_get_language();
@@ -230,7 +232,7 @@ function irc_channels_edit( int   $channel_id ,
                             array $contents   ) : mixed
 {
   // Check if the required files have been included
-  require_included_file('irc.lang.php');
+  require_included_file('integrations.lang.php');
 
   // Only moderators can run this action
   user_restrict_to_moderators();
@@ -318,7 +320,7 @@ function irc_channels_delete( int $channel_id ) : string
   user_restrict_to_moderators();
 
   // Check if the required files have been included
-  require_included_file('irc.lang.php');
+  require_included_file('integrations.lang.php');
 
   // Sanitize the channel's id
   $channel_id = sanitize($channel_id, 'int', 0);
@@ -379,7 +381,7 @@ function irc_channels_delete( int $channel_id ) : string
 function irc_channels_type_get( int $type_id ) : array
 {
   // Check if the required files have been included
-  require_included_file('irc.lang.php');
+  require_included_file('integrations.lang.php');
 
   // Fetch the user's language
   $lang = user_get_language();
@@ -443,7 +445,7 @@ function irc_bot_start() : string
   user_restrict_to_administrators();
 
   // Check if the required files have been included
-  require_included_file('irc.lang.php');
+  require_included_file('integrations.lang.php');
 
   // Write a log in the database
   $timestamp = sanitize(time(), 'int', 0);
@@ -668,7 +670,7 @@ function irc_bot_message_queue_list() : array
   user_restrict_to_administrators();
 
   // Check if the required files have been included
-  require_included_file('irc.lang.php');
+  require_included_file('integrations.lang.php');
 
   // Assemble the path to the bot's txt file
   $path         = root_path();
@@ -712,7 +714,7 @@ function irc_bot_message_queue_delete( int $line_id ) : mixed
   user_restrict_to_administrators();
 
   // Check if the required files have been included
-  require_included_file('irc.lang.php');
+  require_included_file('integrations.lang.php');
 
   // Ensure the line id is an int
   $line_id = sanitize($line_id, 'int', -1);
@@ -776,7 +778,7 @@ function irc_bot_message_history_list( array $search = array() ) : array
   user_restrict_to_administrators();
 
   // Check if the required files have been included
-  require_included_file('irc.lang.php');
+  require_included_file('integrations.lang.php');
   require_included_file('functions_time.inc.php');
 
   // Sanitize the search parameters
@@ -900,4 +902,30 @@ function irc_bot_message_history_delete( int $log_id ) : void
   // Delete the log
   query(" DELETE FROM logs_irc_bot
           WHERE       logs_irc_bot.id = '$log_id' ");
+}
+
+
+
+
+/**
+ * Sends a message through the Discord webhook from the admin interface.
+ *
+ * @param   string    $message              The message to send.
+ * @param   string    $channel  (OPTIONAL)  The channel on which the message should be sent.
+ *
+ * @return  void
+ */
+
+function discord_webhook_send_message(  string  $message        ,
+                                        string  $channel  = ''  ) : void
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Stop here if no message has been specified
+  if(!$message)
+    return;
+
+  // Send the message through the webhook
+  discord_send_message($message, $channel);
 }

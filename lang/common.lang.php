@@ -916,6 +916,8 @@ ___('submenu_admin_website',        'EN', "Admin tools");
 ___('submenu_admin_website',        'FR', "Outils admin");
 ___('submenu_admin_ircbot',         'EN', "IRC bot management");
 ___('submenu_admin_ircbot',         'FR', "Gestion du bot IRC");
+___('submenu_admin_discord',        'EN', "Discord webhook");
+___('submenu_admin_discord',        'FR', "Webhook Discord");
 ___('submenu_admin_close',          'EN', "Close the website");
 ___('submenu_admin_close',          'FR', "Fermer le site");
 ___('submenu_admin_sql',            'EN', "Run SQL queries");
