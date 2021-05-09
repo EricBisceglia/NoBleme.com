@@ -56,6 +56,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  irc_bot_send_message                Uses the IRC bot to broadcast a message.                                     */
 /*                                                                                                                   */
+/*  discord_send_message                Uses a Discord webhook to broadcast a message.                               */
+/*                                                                                                                   */
 /*  html_fix_meta_tags                  Makes the content of meta tags valid.                                        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -1379,6 +1381,83 @@ function irc_bot_send_message(  string  $message                          ,
     // Job failed, return 0
     return 0;
   }
+}
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      DISCORD                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+
+/**
+ * Uses a Discord webhook to broadcast a message.
+ *
+ * @param   string  $message              The message to send.
+ * @param   string  $channel  (OPTIONAL)  The channel to use ('main' 'mod' 'admin').
+ *
+ * @return  void
+ */
+
+function discord_send_message(  string  $message          ,
+                                string  $channel = 'main' ) : void
+{
+  // Stop here if Discord is toggled off
+  if(!$GLOBALS['enable_discord'])
+    return;
+
+  // Determine which webhook to use
+  if($channel == 'admin')
+    $webhook = $GLOBALS['discord_admin'];
+  else if($channel == 'mod')
+    $webhook = $GLOBALS['discord_mod'];
+  else
+    $webhook = $GLOBALS['discord_main'];
+
+  // If dev mod is enabled, use the dev webhook
+  if($GLOBALS['dev_mode'])
+  {
+    // Set the webhook to the dev one
+    $webhook = $GLOBALS['dev_discord'];
+
+    // Prepare extra debug information
+    if($channel == 'admin')
+      $prepend = "**DEBUG: Admin notification:**";
+    else if($channel == 'mod')
+      $prepend = "**DEBUG: Mod notification:**";
+    else
+      $prepend = "**DEBUG: Main channel notification:**";
+
+    // Prepend the message with extra debug information
+    $message = $prepend.PHP_EOL.$message;
+  }
+
+  // Stop here if the selected webhook is not set
+  if(!$webhook)
+    return;
+
+  // Encode the message
+  $encoded_message = json_encode(['content' => $message], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_LINE_TERMINATORS | JSON_PRETTY_PRINT);
+
+  // Determine the HTTP settings to use
+  $options = [
+      'http' => [
+          'method'        => 'POST'                           ,
+          'header'        => 'Content-Type: application/json' ,
+          'ignore_errors' => true                             , # Ignore any errors
+          'timeout'       => 5                                , # Stop hanging after 5 seconds
+          'content'       => $encoded_message
+      ]
+  ];
+
+  // Open the stream
+  $context = stream_context_create($options);
+
+  // Send the message through the webhook, ignore any errors
+  @file_get_contents($webhook, false, $context);
 }
 
 

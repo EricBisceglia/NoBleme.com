@@ -35,6 +35,15 @@ $GLOBALS['irc_bot_password']  = 'password';                                     
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Discord configuration, you don't need to change these if you're not going to use Discord
+
+$GLOBALS['enable_discord']  = 0;  // Toggle this to enable discord notifications
+$GLOBALS['discord_main']    = ''; // Webhook of the main public discord notifications channel
+$GLOBALS['discord_mod']     = ''; // Webhook of the moderation team's notifications channel
+$GLOBALS['discord_admin']   = ''; // Webhook of the admin team's notifications channel
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // These variables should never be toggled on in a production environment, only use them for toying around locally
 
 $GLOBALS['dev_mode']        = 0;  // Change this to 1 if you are running NoBleme locally and don't mind debug features
@@ -42,3 +51,4 @@ $GLOBALS['dev_http_only']   = 0;  // Change this to 1 if you don't want to enabl
 $GLOBALS['env_debug_mode']  = 0;  // Change this and dev mode to 1 to dump all environment variables
 $GLOBALS['sql_debug_mode']  = 0;  // Change this and dev mode to 1 to dump all queries and their results
 $GLOBALS['full_debug_mode'] = 0;  // Change this and dev mode to 1 to dump all variables in footer
+$GLOBALS['dev_discord']     = ''; // Change this to a discord webhook and dev mode to 1 to divert Discord dev spam

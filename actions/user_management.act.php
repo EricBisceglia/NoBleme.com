@@ -80,7 +80,9 @@ function admin_account_deactivate( string $username ) : mixed
 
   // IRC bot message
   irc_bot_send_message("$mod_nick_raw has deleted the account of $username_raw - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
-  irc_bot_send_message("$mod_nick_raw has deleted the account of $username_raw - ".$GLOBALS['website_url']."pages/admin/user_deactivate", 'admin');
+
+  // Discord message
+  discord_send_message("$mod_nick_raw has deleted the account of $username_raw - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
 
   // Return that all went well
   return NULL;
@@ -141,7 +143,9 @@ function admin_account_reactivate( string $user_id ) : mixed
 
   // IRC bot message
   irc_bot_send_message("$admin_nick_raw has reactivated the deleted account of $username_raw - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
-  irc_bot_send_message("$admin_nick_raw has reactivated the deleted account of $username_raw - ".$GLOBALS['website_url']."pages/admin/user_deactivate", 'admin');
+
+  // Discord message
+  discord_send_message("$admin_nick_raw has reactivated the deleted account of $username_raw - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
 
   // Return that all went well
   return NULL;
@@ -277,7 +281,9 @@ function admin_account_rename(  string  $username     ,
 
   // IRC bot message
   irc_bot_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw - ".$GLOBALS['website_url']."pages/users/".$user_id, 'mod');
-  irc_bot_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw - ".$GLOBALS['website_url']."pages/users/".$user_id, 'admin');
+
+  // Discord message
+  discord_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw - ".$GLOBALS['website_url']."pages/users/".$user_id, 'mod');
 
   // Return that all went well
   return NULL;
@@ -352,7 +358,9 @@ function admin_account_change_password( string  $username ,
 
   // IRC bot message
   irc_bot_send_message("$mod_nick_raw has changed $username_raw's password - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
-  irc_bot_send_message("$mod_nick_raw has changed $username_raw's password - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'admin');
+
+  // Discord message
+  discord_send_message("$mod_nick_raw has changed $username_raw's password - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
 
   // Return that all went well
   return NULL;
@@ -433,7 +441,9 @@ function admin_account_change_rights( string  $username ,
 
     // IRC bot message
     irc_bot_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'mod');
-    irc_bot_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'admin');
+
+    // Discord message
+    discord_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'mod');
   }
 
   // Promotion to moderator
@@ -467,7 +477,9 @@ function admin_account_change_rights( string  $username ,
     irc_bot_send_message("$username_raw has joined the website's administrative team as a moderator - ".$GLOBALS['website_url']."pages/users/admins", 'english');
     irc_bot_send_message("$username_raw a rejoint l'équipe de modération du site - ".$GLOBALS['website_url']."pages/users/admins", 'french');
     irc_bot_send_message("$username_raw has been promoted to moderator by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'mod');
-    irc_bot_send_message("$username_raw has been promoted to moderator by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'admin');
+
+    // Discord message
+    discord_send_message("$username_raw has been promoted to moderator by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'mod');
   }
 
   // Promotion to administrator
@@ -497,7 +509,9 @@ function admin_account_change_rights( string  $username ,
     irc_bot_send_message("$username_raw is now a website administrator - ".$GLOBALS['website_url']."pages/users/admins", 'english');
     irc_bot_send_message("$username_raw a rejoint l'équipe d'administration du site - ".$GLOBALS['website_url']."pages/users/admins", 'french');
     irc_bot_send_message("$username_raw has been promoted to administrator by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'mod');
-    irc_bot_send_message("$username_raw has been promoted to administrator by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'admin');
+
+    // Discord message
+    discord_send_message("$username_raw has been promoted to administrator by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'mod');
   }
 
   // Return that all went well

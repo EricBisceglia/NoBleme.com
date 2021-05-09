@@ -467,12 +467,13 @@ function private_message_reply( int     $message_id ,
                         is_admin_only: $admin_only  ,
                         do_not_sanitize: true       );
 
-  // Notify IRC in case of admin message
+  // Notify IRC and Discord in case of admin message
   if(!$recipient)
   {
     $sender   = user_get_username($user_id);
     $channel  = ($admin_only) ? 'admin' : 'mod';
     irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", "admin");
+    discord_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", "admin");
   }
 
   // Everything went well
@@ -675,8 +676,9 @@ function private_message_admins(  string  $body               ,
                         sender: $sender_id    ,
                         do_not_sanitize: true );
 
-  // Notify the admins through IRC that a message has been sent
+  // Notify the moderation team through IRC and Discord that a message has been sent
   irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", 'mod');
+  discord_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", 'mod');
 
   // All went well
   $data['sent'] = 1;

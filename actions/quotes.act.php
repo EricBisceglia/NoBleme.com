@@ -554,6 +554,12 @@ EOT;
   else if($dquote['q_lang'] == 'FR')
     irc_bot_send_message("Une nouvelle entrée a été ajoutée à la collection de citations de NoBleme : ".$GLOBALS['website_url']."pages/quotes/$quote_id", 'french');
 
+  // Notify Discord
+  if($dquote['q_lang'] == 'EN')
+    discord_send_message($GLOBALS['website_url']."pages/quotes/$quote_id".PHP_EOL."A new quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation anglophone a été ajoutée à la collection de citations de NoBleme.", 'main');
+  else if($dquote['q_lang'] == 'FR')
+    discord_send_message($GLOBALS['website_url']."pages/quotes/$quote_id".PHP_EOL."A new french speaking quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation a été ajoutée à la collection de citations de NoBleme.", 'main');
+
   // All went well
   return NULL;
 }

@@ -53,7 +53,7 @@ $admin_ban_add_length     = form_fetch_element('admin_ban_add_length', 0);
 // If an ID is pre-entered and the user ID exists and isn't banned, grab their username and lock some form elements
 if(isset($_GET['id']) && (!database_row_exists('users', $_GET['id']) || user_is_banned($_GET['id'])))
   header("Location: ./ban");
-$admin_ban_add_nick   = (isset($_GET['id'])) ? user_get_username($_GET['id']) : '';
+$admin_ban_add_nick   = (isset($_GET['id'])) ? user_get_username($_GET['id']) : $admin_ban_add_nick;
 $admin_ban_hide_type  = (isset($_GET['id'])) ? ' hidden' : '';
 $admin_ban_lock_nick  = (isset($_GET['id'])) ? ' disabled' : '';
 

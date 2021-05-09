@@ -162,6 +162,9 @@ function admin_ban_create(  int     $banner_id            ,
   irc_bot_send_message("$banned_username_raw s'est fait bannir du site $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
   irc_bot_send_message("$banner_username_raw has banned $banned_username_raw $ban_duration_en[$ban_length] $ban_extra_mod - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
 
+  // Discord message
+  discord_send_message("$banner_username_raw has banned $banned_username_raw $ban_duration_en[$ban_length] $ban_extra_mod - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
+
   // All went well, return NULL
   return NULL;
 }
@@ -294,7 +297,7 @@ function admin_ban_edit(  int     $banner_id            ,
   $ban_duration_fr  = array(0 => '', 1 => 'dans un jour', 7 => 'dans une semaine', 30 => 'dans un mois', '365' => 'dans un an', '3650' => 'ban permanent');
   $ban_duration_mod = array(0 => '', 1 => 'to ending a day from now', 7 => 'to ending a week from now', 30 => 'to ending a month from now', '365' => 'to ending a year from now', '3650' => 'to a permanent ban');
 
-  // IRC bot messages if the ban end date has been changed
+  // IRC bot and Discord messages if the ban end date has been changed
   if($ban_length)
   {
     $ban_extra_en     = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '';
@@ -303,6 +306,7 @@ function admin_ban_edit(  int     $banner_id            ,
     irc_bot_send_message("$banned_username_raw has had their ban updated to $ban_duration_en[$ban_length] $ban_extra_en", 'english');
     irc_bot_send_message("La date de fin du bannissement de $banned_username_raw a changé : $ban_duration_fr[$ban_length] $ban_extra_fr", 'french');
     irc_bot_send_message("$banner_username_raw edited the ban of $banned_username_raw $ban_duration_mod[$ban_length] $ban_extra_mod - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
+    discord_send_message("$banner_username_raw edited the ban of $banned_username_raw $ban_duration_mod[$ban_length] $ban_extra_mod - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
   }
 
   // Private message to the user if the ban's duration has been changed
@@ -409,6 +413,9 @@ function admin_ban_delete(  string  $unbanned_id            ,
   // IRC bot message
   $unban_reason_irc = ($unban_reason_en_raw) ? '('.$unban_reason_en_raw.')' : '';
   irc_bot_send_message("$unbanner_username_raw has unbanned $unbanned_username_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'mod');
+
+  // Discord message
+  discord_send_message("$unbanner_username_raw has unbanned $unbanned_username_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'mod');
 
   // Private message to let the user know they have been manually unbanned
   $unbanned_user_language = user_get_language($unbanned_id);
@@ -601,7 +608,9 @@ function admin_ip_ban_create( int     $banner_id              ,
   $ban_duration = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
   $ban_extra    = ($ban_reason_en_raw) ? '('.$ban_reason_en_raw.')' : '(no reason specified)';
   irc_bot_send_message("$banner_username has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
-  irc_bot_send_message("$banner_username has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra - ".$GLOBALS['website_url']."pages/admin/ban#active", 'admin');
+
+  // Discord message
+  discord_send_message("$banner_username has banned the IP address $ip_address_raw $ban_duration[$ban_length] $ban_extra - ".$GLOBALS['website_url']."pages/admin/ban#active", 'mod');
 
   // All went well, return NULL
   return NULL;
@@ -776,7 +785,9 @@ function admin_ip_ban_delete( int     $ban_id                 ,
   // IRC bot message
   $unban_reason_irc = ($unban_reason_en_raw) ? '('.$unban_reason_en_raw.')' : '';
   irc_bot_send_message("$unbanner_username_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'mod');
-  irc_bot_send_message("$unbanner_username_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'admin');
+
+  // Discord message
+  discord_send_message("$unbanner_username_raw has unbanned the IP address $banned_ip_raw $unban_reason_irc - ".$GLOBALS['website_url']."pages/admin/ban#logs", 'mod');
 }
 
 

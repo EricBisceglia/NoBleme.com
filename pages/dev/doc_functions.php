@@ -1293,7 +1293,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </table>
 
   <h2 class="align_center bigpadding_top padding_bot">
-    IRC bot
+    Integrations
   </h2>
 
   <table>
@@ -1317,6 +1317,14 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
         <td class="align_left">
           Uses the IRC bot to broadcast a message.
+        </td>
+      </tr>
+      <tr>
+        <td class="align_right smallglow">
+          discord_send_message()
+        </td>
+        <td class="align_left">
+          Uses a Discord webhook to broadcast a message.
         </td>
       </tr>
 
