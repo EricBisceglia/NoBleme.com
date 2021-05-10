@@ -197,27 +197,27 @@ ___('irc_bot_bytes_troll',            'FR', "Troll (contraste brutal)");
 
 // Header
 ___('irc_channels_header_1',  'EN', <<<EOT
-NoBleme's IRC server is comprised of different {{link|pages/irc/faq?guide#channel|channels}}, some public and some private. There are two "main" public channels used for general conversations, #english for english and #NoBleme for french, from which separate channels split when a specific topic starts taking too much space in general conversations.
+NoBleme's IRC server is comprised of different {{link|pages/social/irc?guide#channel|channels}}, some public and some private. There are two "main" public channels used for general conversations, #english for english and #NoBleme for french, from which separate channels split when a specific topic starts taking too much space in general conversations.
 EOT
 );
 ___('irc_channels_header_1',  'FR', <<<EOT
-Le serveur IRC NoBleme est composé de divers {{link|pages/irc/faq?guide#channel|canaux}}, dont certains sont publics et d'autres privés. Deux des canaux sont les « principaux », où ont lieu la majorité des conversations : #NoBleme pour le français et #english pour l'anglais. Lorsque des sujets spécifiques deviennent trop envahissants dans les canaux principaux, des canaux séparés sont crées pour les y canaliser.
+Le serveur IRC NoBleme est composé de divers {{link|pages/social/irc?guide#channel|canaux}}, dont certains sont publics et d'autres privés. Deux des canaux sont les « principaux », où ont lieu la majorité des conversations : #NoBleme pour le français et #english pour l'anglais. Lorsque des sujets spécifiques deviennent trop envahissants dans les canaux principaux, des canaux séparés sont crées pour les y canaliser.
 EOT
 );
 ___('irc_channels_header_2',  'EN', <<<EOT
-The table below acts as a list of NoBleme's public IRC channels. You can join them by typing the {{link|pages/irc/faq?commands|command}} <span class="monospace">/join #channelName</span> in your IRC client, where #channelName is replaced by the desired channel's name.
+The table below acts as a list of NoBleme's public IRC channels. You can join them by typing the {{link|pages/social/irc?commands|command}} <span class="monospace">/join #channelName</span> in your IRC client, where #channelName is replaced by the desired channel's name.
 EOT
 );
 ___('irc_channels_header_2',  'FR', <<<EOT
-Le tableau ci-dessous contient une liste de canaux publics sur le serveur IRC NoBleme. Vous pouvez les rejoindre en écrivant la {{link|pages/irc/faq?commands|commande}} <span class="monospace">/join #nomDuCanal</span> dans votre client IRC, en remplaçant #nomDuCanal par le nom d'un canal spécifique.
+Le tableau ci-dessous contient une liste de canaux publics sur le serveur IRC NoBleme. Vous pouvez les rejoindre en écrivant la {{link|pages/social/irc?commands|commande}} <span class="monospace">/join #nomDuCanal</span> dans votre client IRC, en remplaçant #nomDuCanal par le nom d'un canal spécifique.
 EOT
 );
 ___('irc_channels_header_3',  'EN', <<<EOT
-If you have created your own channel on NoBleme's IRC server (using {{link|pages/irc/faq?chanserv|ChanServ}}) and want it included in this list, {{link|pages/messages/admins|contact the administrative team}} with its name, its language, and a quick description of its purpose.
+If you have created your own channel on NoBleme's IRC server (using {{link|pages/social/irc?chanserv|ChanServ}}) and want it included in this list, {{link|pages/messages/admins|contact the administrative team}} with its name, its language, and a quick description of its purpose.
 EOT
 );
 ___('irc_channels_header_3',  'FR', <<<EOT
-Si vous avez crée votre propre canal sur le serveur IRC NoBleme (en utilisant {{link|pages/irc/faq?chanserv|ChanServ}}) et aimeriez qu'il soit ajouté à cette liste, {{link|pages/messages/admins|contactez l'administration}} en précisant son nom, la langue qui y est parlée, et une description brève de son utilité.
+Si vous avez crée votre propre canal sur le serveur IRC NoBleme (en utilisant {{link|pages/social/irc?chanserv|ChanServ}}) et aimeriez qu'il soit ajouté à cette liste, {{link|pages/messages/admins|contactez l'administration}} en précisant son nom, la langue qui y est parlée, et une description brève de son utilité.
 EOT
 );
 
@@ -277,11 +277,11 @@ ___('irc_channels_type_automated',    'FR', <<<EOT
 EOT
 );
 ___('irc_channels_desc_instructions', 'EN', <<<EOT
-Also ensure that the channel's description is kept short but efficient. The goal is that it fits within one line in the {{link|pages/irc/faq?channels|channel list}}'s table. Take inspiration from the already existing channel descriptions if needed. If you do not speak french, ask the help of someone who does: a description must be present in both languages.
+Also ensure that the channel's description is kept short but efficient. The goal is that it fits within one line in the {{link|pages/social/irc?channels|channel list}}'s table. Take inspiration from the already existing channel descriptions if needed. If you do not speak french, ask the help of someone who does: a description must be present in both languages.
 EOT
 );
 ___('irc_channels_desc_instructions', 'FR', <<<EOT
-Assurez-vous également que la description soit brève mais efficace. Le but est de la faire tenir dans une ligne du tableau de la {{link|pages/irc/faq?channels|liste des canaux}}. Inspirez-vous des descriptions existantes si nécessaire. Si vous parlez mal anglais, demandez un coup de main à quelqu'un d'autre : une description est impérative dans les deux langues.
+Assurez-vous également que la description soit brève mais efficace. Le but est de la faire tenir dans une ligne du tableau de la {{link|pages/social/irc?channels|liste des canaux}}. Inspirez-vous des descriptions existantes si nécessaire. Si vous parlez mal anglais, demandez un coup de main à quelqu'un d'autre : une description est impérative dans les deux langues.
 EOT
 );
 
@@ -374,8 +374,6 @@ ___('irc_faq_title_bots',     'EN', "IRC bots");
 ___('irc_faq_title_bots',     'FR', "Bots IRC");
 ___('irc_faq_title_channels', 'EN', "IRC channels");
 ___('irc_faq_title_channels', 'FR', "Canaux IRC");
-___('irc_faq_title_others',   'EN', "Official platforms");
-___('irc_faq_title_others',   'FR', "Plateformes officielles");
 
 
 // FAQ: Header
@@ -399,10 +397,8 @@ ___('irc_faq_select_chanserv',  'EN', "ChanServ: Channel management");
 ___('irc_faq_select_chanserv',  'FR', "ChanServ: Gérer vos canaux");
 ___('irc_faq_select_bots',      'EN', "The bots of NoBleme");
 ___('irc_faq_select_bots',      'FR', "Les bots de NoBleme");
-___('irc_faq_select_channels',  'EN', "Channel list");
-___('irc_faq_select_channels',  'FR', "Liste des canaux");
-___('irc_faq_select_others',    'EN', "Beyond IRC: Other platforms");
-___('irc_faq_select_others',    'FR', "Hors d'IRC: Autres plateformes");
+___('irc_faq_select_channels',  'EN', "Public channel list");
+___('irc_faq_select_channels',  'FR', "Liste des canaux publics");
 
 
 // FAQ: Main
@@ -418,11 +414,11 @@ EOT
 ___('irc_faq_main_what_title',    'EN', "What is IRC?");
 ___('irc_faq_main_what_title',    'FR', "Qu'est-ce que IRC ?");
 ___('irc_faq_main_what_1',        'EN', <<<EOT
-{{external|https://en.wikipedia.org/wiki/Internet_Relay_Chat|IRC (Internet Relay Chat)}} is a real time communication protocol from 1988. Back in 2005, when NoBleme was founded, IRC was the most commonly used way to chat in real time over the Internet. We still use it to this day, for a variety of reasons {{link|pages/irc/faq?why|detailed here}}. The way IRC works is that a central IRC server is hosted on NoBleme, and each user has to use their own IRC client of choice to connect to that server.
+{{external|https://en.wikipedia.org/wiki/Internet_Relay_Chat|IRC (Internet Relay Chat)}} is a real time communication protocol from 1988. Back in 2005, when NoBleme was founded, IRC was the most commonly used way to chat in real time over the Internet. We still use it to this day, for a variety of reasons {{link|pages/social/irc?why|detailed here}}. The way IRC works is that a central IRC server is hosted on NoBleme, and each user has to use their own IRC client of choice to connect to that server.
 EOT
 );
 ___('irc_faq_main_what_1',        'FR', <<<EOT
-{{external|https://fr.wikipedia.org/wiki/Internet_Relay_Chat|IRC (Internet Relay Chat)}} est un protocole permettant les conversations en temps réel datant de 1988. Lorsque NoBleme a été fondé, en 2005, IRC était la méthode de chat la plus communément utilisée sur Internet. Nous choisissons de continuer à l'utiliser encore aujourd'hui, pour des raisons {{link|pages/irc/faq?why|détaillées ici}}.
+{{external|https://fr.wikipedia.org/wiki/Internet_Relay_Chat|IRC (Internet Relay Chat)}} est un protocole permettant les conversations en temps réel datant de 1988. Lorsque NoBleme a été fondé, en 2005, IRC était la méthode de chat la plus communément utilisée sur Internet. Nous choisissons de continuer à l'utiliser encore aujourd'hui, pour des raisons {{link|pages/social/irc?why|détaillées ici}}.
 EOT
 );
 ___('irc_faq_main_what_2',        'EN', <<<EOT
@@ -461,27 +457,27 @@ Pour rejoindre un serveur IRC, vous avez besoin d'un <span class="italics">clien
 EOT
 );
 ___('irc_faq_main_join_2',        'EN', <<<EOT
-The quickiest and easiest way to join NoBleme's IRC server is by using a {{link|pages/irc/faq?browser|web client in your browser}}. All you have to do is {{link|pages/irc/faq?browser|click this link}}, choose a username, and you'll be in. Simple!
+The quickiest and easiest way to join NoBleme's IRC server is by using a {{link|pages/social/irc?browser|web client in your browser}}. All you have to do is {{link|pages/social/irc?browser|click this link}}, choose a username, and you'll be in. Simple!
 EOT
 );
 ___('irc_faq_main_join_2',        'FR', <<<EOT
-La façon la plus simple et rapide de rejoindre le serveur IRC de NoBleme est en utilisant un {{link|pages/irc/faq?browser|client web via votre navigateur}}. Tout ce que vous avez à faire est {{link|pages/irc/faq?browser|cliquer sur ce lien}}, choisir votre pseudonyme, et vous serez sur le serveur IRC de NoBleme. Aussi simple que ça !
+La façon la plus simple et rapide de rejoindre le serveur IRC de NoBleme est en utilisant un {{link|pages/social/irc?browser|client web via votre navigateur}}. Tout ce que vous avez à faire est {{link|pages/social/irc?browser|cliquer sur ce lien}}, choisir votre pseudonyme, et vous serez sur le serveur IRC de NoBleme. Aussi simple que ça !
 EOT
 );
 ___('irc_faq_main_join_3',        'EN', <<<EOT
-Once you spend time on NoBleme's IRC server, you might end up thinking that a web client has too many limitations. In this case, you can always {{link|pages/irc/faq?client|install an IRC client on your machine}}. And if you feel sad that your IRC client does not keep track of message history for you, then you can always upgrade to {{link|pages/irc/faq?bouncer|using a bouncer}}.
+Once you spend time on NoBleme's IRC server, you might end up thinking that a web client has too many limitations. In this case, you can always {{link|pages/social/irc?client|install an IRC client on your machine}}. And if you feel sad that your IRC client does not keep track of message history for you, then you can always upgrade to {{link|pages/social/irc?bouncer|using a bouncer}}.
 EOT
 );
 ___('irc_faq_main_join_3',        'FR', <<<EOT
-Si vous passez du temps sur le serveur IRC de NoBleme, vous vous direz probablement qu'un client web a ses limites. Dans ce cas, vous pouvez {{link|pages/irc/faq?client|installer un client IRC sur votre appareil}}. Et si vous regrettez que votre client ne garde pas la trace des messages lorsqu'il n'est pas connecté, vous pouvez {{link|pages/irc/faq?bouncer|utiliser un bouncer}}.
+Si vous passez du temps sur le serveur IRC de NoBleme, vous vous direz probablement qu'un client web a ses limites. Dans ce cas, vous pouvez {{link|pages/social/irc?client|installer un client IRC sur votre appareil}}. Et si vous regrettez que votre client ne garde pas la trace des messages lorsqu'il n'est pas connecté, vous pouvez {{link|pages/social/irc?bouncer|utiliser un bouncer}}.
 EOT
 );
 ___('irc_faq_main_join_4',        'EN', <<<EOT
-As you can tell, freedom to choose the way you want to use IRC is both a blessing and a curse. It lets you heavily customize your chatting experience, but also means that a bit of effort is required in setting up your experience to fit your needs. Why is NoBleme choosing to stay on IRC despite this complexity, why don't we switch to a more modern real time chat application? {{link|pages/irc/faq?why|It's complicated, here's a whole page dedicated to answering that question}}.
+As you can tell, freedom to choose the way you want to use IRC is both a blessing and a curse. It lets you heavily customize your chatting experience, but also means that a bit of effort is required in setting up your experience to fit your needs. Why is NoBleme choosing to stay on IRC despite this complexity, why don't we switch to a more modern real time chat application? {{link|pages/social/irc?why|It's complicated, here's a whole page dedicated to answering that question}}.
 EOT
 );
 ___('irc_faq_main_join_4',        'FR', <<<EOT
-Comme vous pouvez le voir, la liberté de choisir votre façon d'utiliser IRC est à la fois pratique et gênante. Vous avez l'opportunité de personnaliser votre utilisation autant que vous le voulez, mais cela signifie qu'un effort est requis pour la personnalisation initiale de votre expérience. Pourquoi est-ce que NoBleme choisit de continuer à utiliser IRC malgré cette complexité, pourquoi ne basculons-nous pas vers un système de communication en temps réel plus moderne ? {{link|pages/irc/faq?why|La réponse est compliquée, il y a une page entière du site dédiée à ce sujet}}.
+Comme vous pouvez le voir, la liberté de choisir votre façon d'utiliser IRC est à la fois pratique et gênante. Vous avez l'opportunité de personnaliser votre utilisation autant que vous le voulez, mais cela signifie qu'un effort est requis pour la personnalisation initiale de votre expérience. Pourquoi est-ce que NoBleme choisit de continuer à utiliser IRC malgré cette complexité, pourquoi ne basculons-nous pas vers un système de communication en temps réel plus moderne ? {{link|pages/social/irc?why|La réponse est compliquée, il y a une page entière du site dédiée à ce sujet}}.
 EOT
 );
 
@@ -490,11 +486,11 @@ ___('irc_faq_questions_title',  'FR', 'Foire aux questions');
 ___('irc_faq_question_1',       'EN', "What are channels?");
 ___('irc_faq_question_1',       'FR', "Qu'est-ce qu'un canal ?");
 ___('irc_faq_answer_1',         'EN', <<<EOT
-IRC servers are comprised of various channels, which are basically chat rooms. Channel names begin with a <span class="glow">#</span> hash character. Some of NoBleme's channels are generic hubs with no specific theme (such as #english being the main english speaking channel), others are used to offload specific conversations away from the generic channels (such as #dev for computer science related content). You are free to choose which channels you join on the server, the {{link|todo_link|channel list}} explains how to join a channel, and lists NoBleme's main IRC channels.
+IRC servers are comprised of various channels, which are basically chat rooms. Channel names begin with a <span class="glow">#</span> hash character. Some of NoBleme's channels are generic hubs with no specific theme (such as #english being the main english speaking channel), others are used to offload specific conversations away from the generic channels (such as #dev for computer science related content). You are free to choose which channels you join on the server, the {{link|pages/social/irc?channels|channel list}} explains how to join a channel, and lists NoBleme's main IRC channels.
 EOT
 );
 ___('irc_faq_answer_1',         'FR', <<<EOT
-Les serveurs IRC sont composés de divers canaux, qui sont des salles de discussion séparées les unes des autres. Les canaux ont un nom commençant par un croisillon (<span class="glow">#</span>). Sur le serveur IRC de NoBleme, chaque langue possède son canal prinicpal où la majorité des conversations ont lieu (#NoBleme pour le français et #english pour l'anglais), les autres canaux ont des thèmes spécifiques (comme par exemple #dev pour l'informatique). Vous êtes libre de choisir à quels canaux vous vous connectez, la {{link|todo_link|liste des canaux}} vous explique comment les rejoindre, et liste les principaux canaux IRC de NoBleme.
+Les serveurs IRC sont composés de divers canaux, qui sont des salles de discussion séparées les unes des autres. Les canaux ont un nom commençant par un croisillon (<span class="glow">#</span>). Sur le serveur IRC de NoBleme, chaque langue possède son canal prinicpal où la majorité des conversations ont lieu (#NoBleme pour le français et #english pour l'anglais), les autres canaux ont des thèmes spécifiques (comme par exemple #dev pour l'informatique). Vous êtes libre de choisir à quels canaux vous vous connectez, la {{link|pages/social/irc?channels|liste des canaux}} vous explique comment les rejoindre, et liste les principaux canaux IRC de NoBleme.
 EOT
 );
 ___('irc_faq_question_2',       'EN', "Why is nobody talking/replying to me?");
@@ -510,41 +506,41 @@ EOT
 ___('irc_faq_question_3',       'EN', "Why are people writing in french?");
 ___('irc_faq_question_3',       'FR', "Pourquoi ça parle anglais ?");
 ___('irc_faq_answer_3',         'EN', <<<EOT
-NoBleme is a bilingual french/english server. Some channels are french only (including the #NoBleme hub), some are english only, some are mixed. The {{link|todo_link|channel list}} shows the languages used in each channel.
+NoBleme is a bilingual french/english server. Some channels are french only (including the #NoBleme hub), some are english only, some are mixed. The {{link|pages/social/irc?channels|channel list}} shows the languages used in each channel.
 EOT
 );
 ___('irc_faq_answer_3',         'FR', <<<EOT
-NoBleme est une communauté bilingue anglais/français. Certains canaux IRC sont uniquement en français (comme par exemple #NoBleme), d'autres uniquement en anglais, d'autres bilingues. La {{link|todo_link|liste des canaux}} documente les langues utilisées sur chaque canal de discussion.
+NoBleme est une communauté bilingue anglais/français. Certains canaux IRC sont uniquement en français (comme par exemple #NoBleme), d'autres uniquement en anglais, d'autres bilingues. La {{link|pages/social/irc?channels|liste des canaux}} documente les langues utilisées sur chaque canal de discussion.
 EOT
 );
 ___('irc_faq_question_4',       'EN', "Can people \"steal\" my username?");
 ___('irc_faq_question_4',       'FR', "Peut-on me « voler » mon pseudonyme ?");
 ___('irc_faq_answer_4',         'EN', <<<EOT
-In order to gain exclusive ownership of your username, you first have to register it using our IRC services. You can find more about it on the {{link|pages/irc/faq?nickserv|IRC account management}} page. You are also free to not register and use IRC as a guest, using whichever username you desire.
+In order to gain exclusive ownership of your username, you first have to register it using our IRC services. You can find more about it on the {{link|pages/social/irc?nickserv|IRC account management}} page. You are also free to not register and use IRC as a guest, using whichever username you desire.
 EOT
 );
 ___('irc_faq_answer_4',         'FR', <<<EOT
-Afin d'avoir la propriété exclusive de votre pseudonyme, vous devez d'abord l'enregistrer auprès des services de notre serveur IRC. Plus d'informations à ce sujet sur la page {{link|pages/irc/faq?nickserv|Gérer votre pseudonyme}}. Vous êtes également libre de ne pas enregistrer votre pseudonyme, il ne s'agit que d'une option.
+Afin d'avoir la propriété exclusive de votre pseudonyme, vous devez d'abord l'enregistrer auprès des services de notre serveur IRC. Plus d'informations à ce sujet sur la page {{link|pages/social/irc?nickserv|Gérer votre pseudonyme}}. Vous êtes également libre de ne pas enregistrer votre pseudonyme, il ne s'agit que d'une option.
 EOT
 );
 ___('irc_faq_question_5',       'EN', "How can I change my username?");
 ___('irc_faq_question_5',       'FR', "Comment changer mon pseudonyme ?");
 ___('irc_faq_answer_5',         'EN', <<<EOT
-You can change your username at any time. Some IRC clients allow you to change your username directly from their interface, others require you to use a command. You can find out more about commands on the {{link|pages/irc/faq?commands|IRC commands}} page.
+You can change your username at any time. Some IRC clients allow you to change your username directly from their interface, others require you to use a command. You can find out more about commands on the {{link|pages/social/irc?commands|IRC commands}} page.
 EOT
 );
 ___('irc_faq_answer_5',         'FR', <<<EOT
-Vous pouvez changer de pseudonyme à tout moment. Certains clients IRC vous permettent de le faire directement depuis leur interface, d'autres attendent que vous le fassiez via une commande. Vous trouverez plus d'inofrmations à ce sujet sur la page {{link|pages/irc/faq?commands|Commandes IRC}}.
+Vous pouvez changer de pseudonyme à tout moment. Certains clients IRC vous permettent de le faire directement depuis leur interface, d'autres attendent que vous le fassiez via une commande. Vous trouverez plus d'inofrmations à ce sujet sur la page {{link|pages/social/irc?commands|Commandes IRC}}.
 EOT
 );
 ___('irc_faq_question_6',       'EN', "Can I create my own channel on NoBleme's IRC server?");
 ___('irc_faq_question_6',       'FR', "Puis-je créer mon propre canal sur le serveur IRC de NoBleme ?");
 ___('irc_faq_answer_6',         'EN', <<<EOT
-If it has anything to do with NoBleme or its community, sure, go ahead, no need to ask for permission. You will find more details on the {{link|pages/irc/faq?chanserv|IRC channel management}} page. You might even want it to be listed in the {{link|todo_link|channel list}}, in which case use our {{link|pages/messages/admins|administrative contact form}} to make a request. If you would like to create a channel for external people who have nothing to do with NoBleme, this is also fine, but please make sure they respect NoBleme's {{link|pages/doc/coc|code of conduct}} at all times, and use the {{link|pages/messages/admins|admin contact form}} to inform NoBleme's administrative team that you created a channel for your own community (if you don't keep us informed, we might think you are server squatters and shut it down by accident).
+If it has anything to do with NoBleme or its community, sure, go ahead, no need to ask for permission. You will find more details on the {{link|pages/social/irc?chanserv|IRC channel management}} page. You might even want it to be listed in the {{link|pages/social/irc?channels|channel list}}, in which case use our {{link|pages/messages/admins|administrative contact form}} to make a request. If you would like to create a channel for external people who have nothing to do with NoBleme, this is also fine, but please make sure they respect NoBleme's {{link|pages/doc/coc|code of conduct}} at all times, and use the {{link|pages/messages/admins|admin contact form}} to inform NoBleme's administrative team that you created a channel for your own community (if you don't keep us informed, we might think you are server squatters and shut it down by accident).
 EOT
 );
 ___('irc_faq_answer_6',         'FR', <<<EOT
-Si vous désirez créer un canal en rapport avec NoBleme ou sa communauté, allez-y, pas besoin de demander la permisison. Vous trouverez comment faire sur la page {{link|pages/irc/faq?chanserv|Gérer vos canaux}}. Si vous voulez que votre canal apparaisse sur la {{link|todo_list|liste des canaux}}, utilisez notre {{link|pages/messages/admins|formulaire de contact administratif}} pour en faire la demande. Si vous désirez créer un canal IRC pour des personnes externes qui n'ont aucun rapport avec NoBleme, cela n'est pas non plus un problème, mais assurez-vous toutefois que votre communauté respecte le {{link|pages/doc/coc|code de conduite de NoBleme}}, et utilisez le {{link|pages/messages/admins|formulaire de contact administratif}} pour prévenir l'équie administrative de NoBleme que vous utilisez son serveur IRC pour votre communauté (si vous ne le faites pas, nous risquons de supprimer votre canal par accident).
+Si vous désirez créer un canal en rapport avec NoBleme ou sa communauté, allez-y, pas besoin de demander la permisison. Vous trouverez comment faire sur la page {{link|pages/social/irc?chanserv|Gérer vos canaux}}. Si vous voulez que votre canal apparaisse sur la {{link|pages/social/irc?channels|liste des canaux}}, utilisez notre {{link|pages/messages/admins|formulaire de contact administratif}} pour en faire la demande. Si vous désirez créer un canal IRC pour des personnes externes qui n'ont aucun rapport avec NoBleme, cela n'est pas non plus un problème, mais assurez-vous toutefois que votre communauté respecte le {{link|pages/doc/coc|code de conduite de NoBleme}}, et utilisez le {{link|pages/messages/admins|formulaire de contact administratif}} pour prévenir l'équie administrative de NoBleme que vous utilisez son serveur IRC pour votre communauté (si vous ne le faites pas, nous risquons de supprimer votre canal par accident).
 EOT
 );
 ___('irc_faq_question_7',       'EN', "Where can I get help?");
@@ -570,11 +566,11 @@ EOT
 ___('irc_faq_question_9',       'EN', "Something bad happened, what do I do?");
 ___('irc_faq_question_9',       'FR', "Il m'est arrivé quelque chose de mal, que faire ?");
 ___('irc_faq_answer_9',         'EN', <<<EOT
-If a singular user is harrassing you, you can use the {{link|pages/irc/faq?commands|/ignore command}} to ignore them, then report their behavior {{link|pages/messages/admins|to NoBleme's administrative team}}. If a user or channel is breaking NoBleme's {{link|pages/doc/coc|code of conduct}}, please report them {{link|pages/messages/admins|to the admins}} aswell. If users are flooding the server, then no need to act: NoBleme's administrative team will be aware of it, and will take action as soon as they are able to. Simply stay patient and wait for it to be over.
+If a singular user is harrassing you, you can use the {{link|pages/social/irc?commands|/ignore command}} to ignore them, then report their behavior {{link|pages/messages/admins|to NoBleme's administrative team}}. If a user or channel is breaking NoBleme's {{link|pages/doc/coc|code of conduct}}, please report them {{link|pages/messages/admins|to the admins}} aswell. If users are flooding the server, then no need to act: NoBleme's administrative team will be aware of it, and will take action as soon as they are able to. Simply stay patient and wait for it to be over.
 EOT
 );
 ___('irc_faq_answer_9',         'FR', <<<EOT
-Si une personne vous harcèle, utilisez la {{link|pages/irc/faq?commands|commande /ignore}} pour ne plus voir ses messages, puis {{link|pages/messages/admins|contactez l'administration}} et faites-nous part du problème. Si une personne ou un canal enfreint le {{link|pages/doc/coc|code de conduite de NoBleme}}, utilisez également le {{link|pages/messages/admins|formulaire de contact administratif}} pour nous en informer. Si un problème a lieu à l'échelle de tout le serveur IRC (invasion, spam, lenteurs), vous n'avez rien besoin de faire : l'équipe administrative de NoBleme est assurément déjà au courant, et agira dès que possible.
+Si une personne vous harcèle, utilisez la {{link|pages/social/irc?commands|commande /ignore}} pour ne plus voir ses messages, puis {{link|pages/messages/admins|contactez l'administration}} et faites-nous part du problème. Si une personne ou un canal enfreint le {{link|pages/doc/coc|code de conduite de NoBleme}}, utilisez également le {{link|pages/messages/admins|formulaire de contact administratif}} pour nous en informer. Si un problème a lieu à l'échelle de tout le serveur IRC (invasion, spam, lenteurs), vous n'avez rien besoin de faire : l'équipe administrative de NoBleme est assurément déjà au courant, et agira dès que possible.
 EOT
 );
 ___('irc_faq_question_10',      'EN', "I can't join IRC, is the server dead?");
@@ -628,11 +624,11 @@ Comme précisé dans notre {{link|pages/doc/privacy|politique de confidentialit�
 EOT
 );
 ___('irc_faq_why_freedom_body_2', 'EN', <<<EOT
-IRC's flexibility in letting you use any chat client of your choice actually acts as an issue in this regard: some of our users choose IRC clients privately hosted by corporations, which can collect and use data from any conversations they are involved in. Even if 100 users use non corporate IRC clients, it only takes one user in the same channel running a privately hosted client offered by a corporation to collect and use the data of these 100 other users without their consent. Hypocritically, we even suggest using {{link|pages/irc/faq?browser|KiwiIRC}} and {{link|pages/irc/faq?bouncer|IRCCloud}} in this FAQ, which might both potentially contribute to this very issue.
+IRC's flexibility in letting you use any chat client of your choice actually acts as an issue in this regard: some of our users choose IRC clients privately hosted by corporations, which can collect and use data from any conversations they are involved in. Even if 100 users use non corporate IRC clients, it only takes one user in the same channel running a privately hosted client offered by a corporation to collect and use the data of these 100 other users without their consent. Hypocritically, we even suggest using {{link|pages/social/irc?browser|KiwiIRC}} and {{link|pages/social/irc?bouncer|IRCCloud}} in this FAQ, which might both potentially contribute to this very issue.
 EOT
 );
 ___('irc_faq_why_freedom_body_2', 'FR', <<<EOT
-La flexibilité d'IRC est paradoxalement problématique à ce sujet : en vous donnant la liberté d'utiliser le client IRC de votre choix, nous vous laissons la possibilité d'utiliser des clients hébergés par des entreprises, qui peuvent en profiter pour collecter des données. Même si 100 membres d'un canal de discussion IRC utilisent des clients respectant la vie privée, il suffit d'un seul membre utilisant un client hébergé par une entreprise mal intentionnée pour collecter et utiliser les données des conversations de ces 100 autres membres, sans leur consentement. Hypocritement, nous vous suggérons même d'utiliser {{link|pages/irc/faq?browser|KiwiIRC}} et {{link|pages/irc/faq?bouncer|IRCCloud}} dans cette FAQ, qui contribuent potentiellement tous les deux à ce problème.
+La flexibilité d'IRC est paradoxalement problématique à ce sujet : en vous donnant la liberté d'utiliser le client IRC de votre choix, nous vous laissons la possibilité d'utiliser des clients hébergés par des entreprises, qui peuvent en profiter pour collecter des données. Même si 100 membres d'un canal de discussion IRC utilisent des clients respectant la vie privée, il suffit d'un seul membre utilisant un client hébergé par une entreprise mal intentionnée pour collecter et utiliser les données des conversations de ces 100 autres membres, sans leur consentement. Hypocritement, nous vous suggérons même d'utiliser {{link|pages/social/irc?browser|KiwiIRC}} et {{link|pages/social/irc?bouncer|IRCCloud}} dans cette FAQ, qui contribuent potentiellement tous les deux à ce problème.
 EOT
 );
 
@@ -685,11 +681,11 @@ Lorsque nous pesons les pour et les contre d'IRC en tant que plateforme de commu
 EOT
 );
 ___('irc_faq_why_habit_body_2',   'EN', <<<EOT
-For those of you who are not convinced by our arguments for IRC but still want to interact with NoBleme's community, you can also find {{link|pages/irc/faq?others|NoBleme on other platforms}} (including the real time chat service Discord). However, IRC will remain the core of NoBleme's community in the foreseeable future, these other platforms are only peripheral services set up to allow those who don't use IRC to keep in touch with NoBleme's activity.
+For those of you who are not convinced by our arguments for IRC but still want to interact with NoBleme's community, you can also find {{link|todo_link|NoBleme on other platforms}} (including the real time chat service Discord). However, IRC will remain the core of NoBleme's community in the foreseeable future, these other platforms are only peripheral services set up to allow those who don't use IRC to keep in touch with NoBleme's activity.
 EOT
 );
 ___('irc_faq_why_habit_body_2',   'FR', <<<EOT
-Si nos arguments en faveur d'IRC ne sont pas assez convaincants mais que vous souhaitez tout de même interagir avec la communauté de NoBleme, vous pouvez retrouver {{link|pages/irc/faq?others|NoBleme sur d'autres platformes}} (incluant le service de chat en temps réel Discord). Toutefois, IRC restera le cœur de la communauté de NoBleme dans le futur proche, ces autres plateformes ne sont que des services périphériques mis en place afin de permettre à nos membres qui n'utilisent pas IRC de se tenir au courant de l'activité de NoBleme.
+Si nos arguments en faveur d'IRC ne sont pas assez convaincants mais que vous souhaitez tout de même interagir avec la communauté de NoBleme, vous pouvez retrouver {{link|todo_link|NoBleme sur d'autres platformes}} (incluant le service de chat en temps réel Discord). Toutefois, IRC restera le cœur de la communauté de NoBleme dans le futur proche, ces autres plateformes ne sont que des services périphériques mis en place afin de permettre à nos membres qui n'utilisent pas IRC de se tenir au courant de l'activité de NoBleme.
 EOT
 );
 
@@ -751,22 +747,22 @@ En prenant tous ces éléments en considération, il est très probable que nous
 EOT
 );
 ___('irc_faq_why_summary_body_2', 'EN', <<<EOT
-If you are scared by the barrier of entry, or do not wish to use IRC because it feels outdated, know that we understand your frustration, but be aware that we have no plan to change platform. It will remain the heart of NoBleme's community in the foreseeable future. You can still keep up with NoBleme's activity and interact with some of our community members on {{link|pages/irc/faq?others|other platforms}}, including real time chat on Discord.
+If you are scared by the barrier of entry, or do not wish to use IRC because it feels outdated, know that we understand your frustration, but be aware that we have no plan to change platform. It will remain the heart of NoBleme's community in the foreseeable future. You can still keep up with NoBleme's activity and interact with some of our community members on {{link|todo_link|other platforms}}, including real time chat on {{link|todo_link|Discord}}.
 EOT
 );
 ___('irc_faq_why_summary_body_2', 'FR', <<<EOT
-Si la barrière d'entrée vous repousse, ou si vous ne voulez pas utiliser IRC pour une raison quelconque, sachez que nous comprenons votre frustration, mais sachez également que nous ne prévoyons actuellement pas de changer de plateforme : IRC restera le cœur de la communauté de NoBleme dans le futur proche. Vous pouvez suivre l'activité de NoBleme et interagir avec une partie de sa communauté sur {{link|pages/irc/faq?others|d'autres plateformes}}, incluant le service de chat en temps réel Discord
+Si la barrière d'entrée vous repousse, ou si vous ne voulez pas utiliser IRC pour une raison quelconque, sachez que nous comprenons votre frustration, mais sachez également que nous ne prévoyons actuellement pas de changer de plateforme : IRC restera le cœur de la communauté de NoBleme dans le futur proche. Vous pouvez suivre l'activité de NoBleme et interagir avec une partie de sa communauté sur {{link|todo_link|d'autres plateformes}}, incluant le service de chat en temps réel {{link|todo_link|Discord}}.
 EOT
 );
 
 
 // FAQ: IRC client
 ___('irc_faq_client_body_1',          'EN', <<<EOT
-Our {{link|pages/irc/faq?browser|browser client}} allows you to easily take part in the conversation, but it lacks all of the customization options that you were promised existed within IRC. This issue is resolved by installing your own IRC client on your devices, or by using a more customizable web client.
+Our {{link|pages/socialirc/faq?browser|browser client}} allows you to easily take part in the conversation, but it lacks all of the customization options that you were promised existed within IRC. This issue is resolved by installing your own IRC client on your devices, or by using a more customizable web client.
 EOT
 );
 ___('irc_faq_client_body_1',          'FR', <<<EOT
-Notre {{link|pages/irc/faq?browser|client navigateur}} vous permet de facilement rejoindre la conversation, mais ne vous propose pas les options de personnalisation de votre expérience d'utilisation d'IRC que vous pourrez trouver en installant un client IRC, ou en utilisant un client navigateur plus avancé.
+Notre {{link|pages/social/irc?browser|client navigateur}} vous permet de facilement rejoindre la conversation, mais ne vous propose pas les options de personnalisation de votre expérience d'utilisation d'IRC que vous pourrez trouver en installant un client IRC, ou en utilisant un client navigateur plus avancé.
 EOT
 );
 ___('irc_faq_client_body_2',          'EN', <<<EOT
@@ -786,19 +782,19 @@ Une fois votre client IRC choisi, vous aurez besoin d'y rentrer les informations
 EOT
 );
 ___('irc_faq_client_body_4',          'EN', <<<EOT
-Once connected to NoBleme's IRC server, you might want to browse the {{link|pages/irc/faq?channels|channel list}} in order to join all channels that could be of interest to you, and to {{link|pages/irc/faq?nickserv|register your username}} in order to gain ownership of your username on the server and have access to a few useful features.
+Once connected to NoBleme's IRC server, you might want to browse the {{link|pages/social/irc?channels|channel list}} in order to join all channels that could be of interest to you, and to {{link|pages/social/irc?nickserv|register your username}} in order to gain ownership of your username on the server and have access to a few useful features.
 EOT
 );
 ___('irc_faq_client_body_4',          'FR', <<<EOT
-Une fois votre client configuré, vous pourrez ensuite parcourir la {{link|pages/irc/faq?channels|liste des canaux}} afin de rejoindre les conversations qui pourraient vous intéresser, et {{link|pages/irc/faq?nickserv|enregistrer votre pseudonyme}} afin d'avoir l'exclusivité de l'utilisation de votre pseudonyme sur le serveur IRC NoBleme.
+Une fois votre client configuré, vous pourrez ensuite parcourir la {{link|pages/social/irc?channels|liste des canaux}} afin de rejoindre les conversations qui pourraient vous intéresser, et {{link|pages/social/irc?nickserv|enregistrer votre pseudonyme}} afin d'avoir l'exclusivité de l'utilisation de votre pseudonyme sur le serveur IRC NoBleme.
 EOT
 );
 ___('irc_faq_client_body_5',          'EN', <<<EOT
-If you get confused or stuck in the process of setting up your IRC client, feel free to ask for help using the {{link|pages/irc/faq?browser|browser client}}. If anyone is around, it is very likely that they will do their best to help you out. If not, be patient, someone will eventually show up.
+If you get confused or stuck in the process of setting up your IRC client, feel free to ask for help using the {{link|pages/social/irc?browser|browser client}}. If anyone is around, it is very likely that they will do their best to help you out. If not, be patient, someone will eventually show up.
 EOT
 );
 ___('irc_faq_client_body_5',          'FR', <<<EOT
-Si une étape du processus de configuration d'un client IRC vous semble confuse ou vous bloque, n'hésitez pas à utiliser le {{link|pages/irc/faq?browser|client navigateur}} pour poser des questions. Si quelqu'un est dans les parages au moment où vous demandez, il est très probable que cette personne essaye de vous aider. Si personne ne vous répond, faites preuve de patience et quelqu'un finira par arriver.
+Si une étape du processus de configuration d'un client IRC vous semble confuse ou vous bloque, n'hésitez pas à utiliser le {{link|pages/social/irc?browser|client navigateur}} pour poser des questions. Si quelqu'un est dans les parages au moment où vous demandez, il est très probable que cette personne essaye de vous aider. Si personne ne vous répond, faites preuve de patience et quelqu'un finira par arriver.
 EOT
 );
 
@@ -821,19 +817,19 @@ La cotrepartie de cette simplicité est que ces clients sont hébergés sur des 
 EOT
 );
 ___('irc_faq_client_web_body_3',      'EN', <<<EOT
-{{external|https://www.irccloud.com|IRCCloud}} is a solid web client with a highly customizable user experience and a lot of modern features. It also comes with partial {{link|pages/irc/faq?bouncer|bouncer}} capabilities and high quality mobile applications for Android and iOS. There is an optional paying service which acts as a full time {{link|pages/irc/faq?bouncer|bouncer}}, but worry not, the free tier gives you access to every other feature, there is no need to pay for anything.
+{{external|https://www.irccloud.com|IRCCloud}} is a solid web client with a highly customizable user experience and a lot of modern features. It also comes with partial {{link|pages/social/irc?bouncer|bouncer}} capabilities and high quality mobile applications for Android and iOS. There is an optional paying service which acts as a full time {{link|pages/social/irc?bouncer|bouncer}}, but worry not, the free tier gives you access to every other feature, there is no need to pay for anything.
 EOT
 );
 ___('irc_faq_client_web_body_3',      'FR', <<<EOT
-{{external|https://www.irccloud.com|IRCCloud}} est un client navigateur hautement personnalisable contenant de nombreuses fonctionnalités modernes. Il inclut un {{link|pages/irc/faq?bouncer|bouncer}} partiel, et des applications mobiles de haute qualité pour Android et iOS. Le site vous propose de payer pour avoir un {{link|pages/irc/faq?bouncer|bouncer}} permanent, mais ne vous inquiétez pas, l'option gratuite vous donne accès à toutes les autres fonctionnalités.
+{{external|https://www.irccloud.com|IRCCloud}} est un client navigateur hautement personnalisable contenant de nombreuses fonctionnalités modernes. Il inclut un {{link|pages/social/irc?bouncer|bouncer}} partiel, et des applications mobiles de haute qualité pour Android et iOS. Le site vous propose de payer pour avoir un {{link|pages/social/irc?bouncer|bouncer}} permanent, mais ne vous inquiétez pas, l'option gratuite vous donne accès à toutes les autres fonctionnalités.
 EOT
 );
 ___('irc_faq_client_web_body_4',      'EN', <<<EOT
-{{external|https://kiwiirc.com|KiwiIRC}} is a very simplistic web client with a few modern features. It is often used to embed onto websites: in fact we use it as our {{link|pages/irc/faq?browser|browser client}} on NoBleme. It also lets you register an account and can act as your regular IRC client - a simple yet efficient option.
+{{external|https://kiwiirc.com|KiwiIRC}} is a very simplistic web client with a few modern features. It is often used to embed onto websites: in fact we use it as our {{link|pages/social/irc?browser|browser client}} on NoBleme. It also lets you register an account and can act as your regular IRC client - a simple yet efficient option.
 EOT
 );
 ___('irc_faq_client_web_body_4',      'FR', <<<EOT
-{{external|https://kiwiirc.com|KiwiIRC}} est un client navigateur très simple incorporant quelques fonctionnalités modernes. NoBleme utilise KiwiIRC pour son {{link|pages/irc/faq?browser|client navigateur intégré}}, mais vous pouvez également créer un compte directement sur leur site et vous en servir comme client IRC permanent.
+{{external|https://kiwiirc.com|KiwiIRC}} est un client navigateur très simple incorporant quelques fonctionnalités modernes. NoBleme utilise KiwiIRC pour son {{link|pages/social/irc?browser|client navigateur intégré}}, mais vous pouvez également créer un compte directement sur leur site et vous en servir comme client IRC permanent.
 EOT
 );
 
@@ -864,11 +860,11 @@ ___('irc_faq_client_computer_body_3', 'FR', <<<EOT
 EOT
 );
 ___('irc_faq_client_computer_body_4', 'EN', <<<EOT
-{{external|https://weechat.org/|WeeChat}} is a Linux only solution for the more technically inclined - avoid it if you are not versed in computer science. It is a purely command line client, which can be ran on a server and give you full {{link|pages/irc/faq?bouncer|bouncer}} capabilities. You can then access it through {{external|https://www.glowing-bear.org/|Glowing Bear}} for a better user experience.
+{{external|https://weechat.org/|WeeChat}} is a Linux only solution for the more technically inclined - avoid it if you are not versed in computer science. It is a purely command line client, which can be ran on a server and give you full {{link|pages/social/irc?bouncer|bouncer}} capabilities. You can then access it through {{external|https://www.glowing-bear.org/|Glowing Bear}} for a better user experience.
 EOT
 );
 ___('irc_faq_client_computer_body_4', 'FR', <<<EOT
-{{external|https://weechat.org/|WeeChat}} est un client disponible uniquement sous Linux à destination des personnes ayant un profil technique avancé - ne cherchez pas à l'utiliser si vous ne vous y connaissez pas en administration serveur. Il s'agit d'un client purement en ligne de commande, qui peut servir de {{link|pages/irc/faq?bouncer|bouncer}} une fois installé sur un serveur, et peut ensuite être utilisé via {{external|https://www.glowing-bear.org/|Glowing Bear}} pour une meilleure expérience d'utilisation.
+{{external|https://weechat.org/|WeeChat}} est un client disponible uniquement sous Linux à destination des personnes ayant un profil technique avancé - ne cherchez pas à l'utiliser si vous ne vous y connaissez pas en administration serveur. Il s'agit d'un client purement en ligne de commande, qui peut servir de {{link|pages/social/irc?bouncer|bouncer}} une fois installé sur un serveur, et peut ensuite être utilisé via {{external|https://www.glowing-bear.org/|Glowing Bear}} pour une meilleure expérience d'utilisation.
 EOT
 );
 
@@ -891,19 +887,19 @@ ___('irc_faq_client_mobile_body_2',   'FR', <<<EOT
 EOT
 );
 ___('irc_faq_client_mobile_body_3',   'EN', <<<EOT
-{{external|https://play.google.com/store/apps/details?id=app.holoirc|HoloIRC}} is a minimalistic, simple, and efficient IRC client for Android. It has BNC support, which means it can be used to connect to a {{link|pages/irc/faq?bouncer|bouncer}} if you have access to one or are technically inclined enough to set one up.
+{{external|https://play.google.com/store/apps/details?id=app.holoirc|HoloIRC}} is a minimalistic, simple, and efficient IRC client for Android. It has BNC support, which means it can be used to connect to a {{link|pages/social/irc?bouncer|bouncer}} if you have access to one or are technically inclined enough to set one up.
 EOT
 );
 ___('irc_faq_client_mobile_body_3',   'FR', <<<EOT
-{{external|https://play.google.com/store/apps/details?id=app.holoirc|HoloIRC}} est un client IRC Android minimaliste, simple, et efficace. Il permet de se connecter à un serveur (comme celui de NoBleme), mais également à un {{link|pages/irc/faq?bouncer|bouncer}} si vous avez les compétences techniques requises pour en mettre un en place.
+{{external|https://play.google.com/store/apps/details?id=app.holoirc|HoloIRC}} est un client IRC Android minimaliste, simple, et efficace. Il permet de se connecter à un serveur (comme celui de NoBleme), mais également à un {{link|pages/social/irc?bouncer|bouncer}} si vous avez les compétences techniques requises pour en mettre un en place.
 EOT
 );
 ___('irc_faq_client_mobile_body_4',   'EN', <<<EOT
-{{external|https://iglooirc.com/|Igloo IRC}} is a minimalistic, simple, and efficient IRC client for iOS. It has BNC support, which means it can be used to connect to a {{link|pages/irc/faq?bouncer|bouncer}} if you have access to one or are technically inclined enough to set one up.
+{{external|https://iglooirc.com/|Igloo IRC}} is a minimalistic, simple, and efficient IRC client for iOS. It has BNC support, which means it can be used to connect to a {{link|pages/social/irc?bouncer|bouncer}} if you have access to one or are technically inclined enough to set one up.
 EOT
 );
 ___('irc_faq_client_mobile_body_4',   'FR', <<<EOT
-{{external|https://iglooirc.com/|Igloo IRC}} est un client IRC iOS minimaliste, simple, et efficace. Il permet de se connecter à un serveur (comme celui de NoBleme), mais également à un {{link|pages/irc/faq?bouncer|bouncer}} si vous avez les compétences techniques requises pour en mettre un en place.
+{{external|https://iglooirc.com/|Igloo IRC}} est un client IRC iOS minimaliste, simple, et efficace. Il permet de se connecter à un serveur (comme celui de NoBleme), mais également à un {{link|pages/social/irc?bouncer|bouncer}} si vous avez les compétences techniques requises pour en mettre un en place.
 EOT
 );
 
@@ -1021,21 +1017,21 @@ EOT
 ___('irc_faq_vocabulary_title_3',  'EN', "Bouncer");
 ___('irc_faq_vocabulary_title_3',  'FR', "Bouncer");
 ___('irc_faq_vocabulary_body_3',   'EN', <<<EOT
-A bouncer is a tool that allows you to retain full history of conversations which happen on IRC, even while you are offline. You can find out more about bouncers on the {{link|pages/irc/faq?bouncer|bouncer}} page of this FAQ.
+A bouncer is a tool that allows you to retain full history of conversations which happen on IRC, even while you are offline. You can find out more about bouncers on the {{link|pages/social/irc?bouncer|bouncer}} page of this FAQ.
 EOT
 );
 ___('irc_faq_vocabulary_body_3',   'FR', <<<EOT
-Un bouncer est un outil qui reste connecté en permanence à un serveur IRC, vous permettant de garder un historique complet des conversations qui ont lieu pendant votre absence.  Vous trouverez plus d'informations sur les bouncers dans la section {{link|pages/irc/faq?bouncer|bouncer}} de cette FAQ.
+Un bouncer est un outil qui reste connecté en permanence à un serveur IRC, vous permettant de garder un historique complet des conversations qui ont lieu pendant votre absence.  Vous trouverez plus d'informations sur les bouncers dans la section {{link|pages/social/irc?bouncer|bouncer}} de cette FAQ.
 EOT
 );
 ___('irc_faq_vocabulary_title_4',   'EN', "Channel");
 ___('irc_faq_vocabulary_title_4',   'FR', "Canal");
 ___('irc_faq_vocabulary_body_4',    'EN', <<<EOT
-An IRC server is comprised of an unlimited number of channels, which can be public or private. When a message is sent on an IRC channel, only the users present on that channel will be able to read the message. IRC channel names begin with the pound sign (#NoBleme, #english, #dev). You can find more information about IRC channels on the {{link|pages/irc/faq?channels|channel list}}.
+An IRC server is comprised of an unlimited number of channels, which can be public or private. When a message is sent on an IRC channel, only the users present on that channel will be able to read the message. IRC channel names begin with the pound sign (#NoBleme, #english, #dev). You can find more information about IRC channels on the {{link|pages/social/irc?channels|channel list}}.
 EOT
 );
 ___('irc_faq_vocabulary_body_4',    'FR', <<<EOT
-Un serveur IRC est constitué d'un nombre potentiellement infini de canaux de discussion, qui peuvent être publics ou privés. Lorsqu'un message est envoyé sur un canal, il ne sera visible que par les personnes qui y sont présentes à ce moment-là. Le nom des canaux IRC commence par un symbole croisillon (#NoBleme, #english, #dev). Vous trouverez plus d'informations sur les canaux sur la {{link|pages/irc/faq?channels|liste des canaux}}.
+Un serveur IRC est constitué d'un nombre potentiellement infini de canaux de discussion, qui peuvent être publics ou privés. Lorsqu'un message est envoyé sur un canal, il ne sera visible que par les personnes qui y sont présentes à ce moment-là. Le nom des canaux IRC commence par un symbole croisillon (#NoBleme, #english, #dev). Vous trouverez plus d'informations sur les canaux sur la {{link|pages/social/irc?channels|liste des canaux}}.
 EOT
 );
 ___('irc_faq_vocabulary_title_5',   'EN', "Operator");
@@ -1061,21 +1057,21 @@ EOT
 ___('irc_faq_vocabulary_title_7',   'EN', "Services: NickServ & ChanServ");
 ___('irc_faq_vocabulary_title_7',   'FR', "Services : NickServ & ChanServ");
 ___('irc_faq_vocabulary_body_7',    'EN', <<<EOT
-All actions related to user accounts or channel administrations are done through what are called Services, special users on the IRC network which go by the usernames NickServ (for users) and ChanServ (for channels). You can read more about them on the {{link|pages/irc/faq?nickserv|NickServ}} and {{link|pages/irc/faq?chanserv|ChanServ}} pages of this FAQ.
+All actions related to user accounts or channel administrations are done through what are called Services, special users on the IRC network which go by the usernames NickServ (for users) and ChanServ (for channels). You can read more about them on the {{link|pages/social/irc?nickserv|NickServ}} and {{link|pages/social/irc?chanserv|ChanServ}} pages of this FAQ.
 EOT
 );
 ___('irc_faq_vocabulary_body_7',    'FR', <<<EOT
-Toutes les actions touchant aux comptes des membres ou à l'administration des canaux se font via des utilisateurs automatisés nommés "Services", qui sont présents de façon permanente sur le serveur IRC NoBleme sous le nom NickServ (pour gérer les comptes) et ChanServ (pour gérer les canaux). Vous pouvez en apprendre plus à leur sujet dans les sections {{link|pages/irc/faq?nickserv|NickServ}} et {{link|pages/irc/faq?chanserv|ChanServ}} de cette FAQ.
+Toutes les actions touchant aux comptes des membres ou à l'administration des canaux se font via des utilisateurs automatisés nommés "Services", qui sont présents de façon permanente sur le serveur IRC NoBleme sous le nom NickServ (pour gérer les comptes) et ChanServ (pour gérer les canaux). Vous pouvez en apprendre plus à leur sujet dans les sections {{link|pages/social/irc?nickserv|NickServ}} et {{link|pages/social/irc?chanserv|ChanServ}} de cette FAQ.
 EOT
 );
 ___('irc_faq_vocabulary_title_8',   'EN', "Command");
 ___('irc_faq_vocabulary_title_8',   'FR', "Commande");
 ___('irc_faq_vocabulary_body_8',    'EN', <<<EOT
-On IRC, in order to do any action other than chatting, you must use commands. They are sent on the server the same way as normal chat messages, but begin with a slash / character. For example, joining a channel is done by typing <span class="monospace">/join #channel</span>. You will find a guide of useful commands in the {{link|pages/irc/faq?commands|commands}}, {{link|pages/irc/faq?nickserv|NickServ}}, and {{link|pages/irc/faq?chanserv|ChanServ}} pages of this FAQ.
+On IRC, in order to do any action other than chatting, you must use commands. They are sent on the server the same way as normal chat messages, but begin with a slash / character. For example, joining a channel is done by typing <span class="monospace">/join #channel</span>. You will find a guide of useful commands in the {{link|pages/social/irc?commands|commands}}, {{link|pages/social/irc?nickserv|NickServ}}, and {{link|pages/social/irc?chanserv|ChanServ}} pages of this FAQ.
 EOT
 );
 ___('irc_faq_vocabulary_body_8',    'FR', <<<EOT
-Si vous désirez effectuer n'importe quelle action autre que discuter sur IRC, vous devrez utiliser des commandes. Il s'agit de messages normaux envoyés sur le serveur de la même façon que lorsque vous discutez, mais dont le premier caractère est un / slash. Par exemple, rejoindre un canal se fait en envoyant le message <span class="monospace">/join #channel</span>. Vous trouverez une liste de commandes utiles dans les sections {{link|pages/irc/faq?commands|commandes}}, {{link|pages/irc/faq?nickserv|NickServ}}, et {{link|pages/irc/faq?chanserv|ChanServ}} de cette FAQ.
+Si vous désirez effectuer n'importe quelle action autre que discuter sur IRC, vous devrez utiliser des commandes. Il s'agit de messages normaux envoyés sur le serveur de la même façon que lorsque vous discutez, mais dont le premier caractère est un / slash. Par exemple, rejoindre un canal se fait en envoyant le message <span class="monospace">/join #channel</span>. Vous trouverez une liste de commandes utiles dans les sections {{link|pages/social/irc?commands|commandes}}, {{link|pages/social/irc?nickserv|NickServ}}, et {{link|pages/social/irc?chanserv|ChanServ}} de cette FAQ.
 EOT
 );
 ___('irc_faq_vocabulary_title_9',   'EN', "Mode");
@@ -1111,11 +1107,11 @@ EOT
 ___('irc_faq_vocabulary_title_12',  'EN', "Bot");
 ___('irc_faq_vocabulary_title_12',  'FR', "Bot");
 ___('irc_faq_vocabulary_body_12',   'EN', <<<EOT
-Not every user on IRC is tied to a human person, some are automated computer programs which we call "Bots". They have different uses and abilities depending on the type of bot they are, you can find out more about them on the {{link|pages/irc/faq?bots|bots}} page of this FAQ.
+Not every user on IRC is tied to a human person, some are automated computer programs which we call "Bots". They have different uses and abilities depending on the type of bot they are, you can find out more about them on the {{link|pages/social/irc?bots|bots}} page of this FAQ.
 EOT
 );
 ___('irc_faq_vocabulary_body_12',   'FR', <<<EOT
-Tous les pseudonymes sur IRC ne cachent pas un être humain, certains correspondent à des programmes informatiques automatisés que nous appelons des "Bots". Leur utilité varie d'un bot à l'autre, vous pouvez en apprendre plus à leur sujet sur la page {{link|pages/irc/faq?bots|bots}} de cette FAQ.
+Tous les pseudonymes sur IRC ne cachent pas un être humain, certains correspondent à des programmes informatiques automatisés que nous appelons des "Bots". Leur utilité varie d'un bot à l'autre, vous pouvez en apprendre plus à leur sujet sur la page {{link|pages/social/irc?bots|bots}} de cette FAQ.
 EOT
 );
 
@@ -1132,11 +1128,11 @@ Sur les canaux IRC, certaines personnes peuvent avoir des pouvoirs d'Operator, q
 EOT
 );
 ___('irc_faq_symbols_body_2',         'EN', <<<EOT
-You can find out more about operator rights and how to manage them on the {{link|pages/irc/faq?chanserv|ChanServ}} page of this FAQ. Below is a table of user modes and symbols, and their associated abilities.
+You can find out more about operator rights and how to manage them on the {{link|pages/social/irc?chanserv|ChanServ}} page of this FAQ. Below is a table of user modes and symbols, and their associated abilities.
 EOT
 );
 ___('irc_faq_symbols_body_2',         'FR', <<<EOT
-Vous trouverez plus d'informations sur les Operator et comment gérer et utiliser leurs pouvoirs sur la page {{link|pages/irc/faq?chanserv|ChanServ}} de cette FAQ. Ci-dessous, un tableau des modes et symboles des Operator, et des pouvoirs qui y sont associés.
+Vous trouverez plus d'informations sur les Operator et comment gérer et utiliser leurs pouvoirs sur la page {{link|pages/social/irc?chanserv|ChanServ}} de cette FAQ. Ci-dessous, un tableau des modes et symboles des Operator, et des pouvoirs qui y sont associés.
 EOT
 );
 
@@ -1192,11 +1188,11 @@ Vous trouverez ci-dessous une liste de quelques commandes utiles. Lorsqu'un mot 
 EOT
 );
 ___('irc_faq_commands_body_3',    'EN', <<<EOT
-More commands relating to account management and channel management can be found in the {{link|pages/irc/faq?nickserv|NickServ}} and {{link|pages/irc/faq?chanserv|ChanServ}} pages of this FAQ.
+More commands relating to account management and channel management can be found in the {{link|pages/social/irc?nickserv|NickServ}} and {{link|pages/social/irc?chanserv|ChanServ}} pages of this FAQ.
 EOT
 );
 ___('irc_faq_commands_body_3',    'FR', <<<EOT
-Des commandes additionnelles liées à la gestion des comptes et des canaux se trouvent sur les pages {{link|pages/irc/faq?nickserv|NickServ}} et {{link|pages/irc/faq?chanserv|ChanServ}} de cette FAQ.
+Des commandes additionnelles liées à la gestion des comptes et des canaux se trouvent sur les pages {{link|pages/social/irc?nickserv|NickServ}} et {{link|pages/social/irc?chanserv|ChanServ}} de cette FAQ.
 EOT
 );
 
@@ -1252,11 +1248,11 @@ Liste tous les canaux IRC publics sur le serveur, ainsi que le nombre de personn
 EOT
 );
 ___('irc_faq_commands_join',      'EN', <<<EOT
-Joins an existing IRC channel. Some channels are private and can not be joined unless you are specifically granted access to them. You can find out which channels exist on NoBleme's IRC server on our {{link|pages/irc/faq?channels|channel list}}, or by using the <span class="monospace">/list</span> command.
+Joins an existing IRC channel. Some channels are private and can not be joined unless you are specifically granted access to them. You can find out which channels exist on NoBleme's IRC server on our {{link|pages/social/irc?channels|channel list}}, or by using the <span class="monospace">/list</span> command.
 EOT
 );
 ___('irc_faq_commands_join',      'FR', <<<EOT
-Rejoint un canal IRC existant. Certains canaux sont privés et ne peuvent pas être rejoints si vous ne disposez pas du droit d'y accéder. Vous pouvez trouver la liste des canaux du serveur IRC de NoBleme sur notre {{link|pages/irc/faq?channels|liste des canaux}}, ou en utilisant la commande <span class="monospace">/list</span>.
+Rejoint un canal IRC existant. Certains canaux sont privés et ne peuvent pas être rejoints si vous ne disposez pas du droit d'y accéder. Vous pouvez trouver la liste des canaux du serveur IRC de NoBleme sur notre {{link|pages/social/irc?channels|liste des canaux}}, ou en utilisant la commande <span class="monospace">/list</span>.
 EOT
 );
 ___('irc_faq_commands_names',     'EN', <<<EOT
@@ -1335,7 +1331,7 @@ Lors de votre utilisation d'IRC, vous vous rendrez compte que rien n'empêche d'
 EOT
 );
 ___('irc_faq_nickserv_body_2',    'EN', <<<EOT
-You will find a list of NickServ related {{link|pages/irc/faq?commands|commands}} below. When a word is between [brackets], then it means that its value can be anything you want and you should replace it with something else. For example, if given the command <span class="monospace">/msg NickServ identify [password]</span>, you should use it as <span class="monospace">/msg NickServ identify myPassword123</span>.
+You will find a list of NickServ related {{link|pages/social/irc?commands|commands}} below. When a word is between [brackets], then it means that its value can be anything you want and you should replace it with something else. For example, if given the command <span class="monospace">/msg NickServ identify [password]</span>, you should use it as <span class="monospace">/msg NickServ identify myPassword123</span>.
 EOT
 );
 ___('irc_faq_nickserv_body_2',    'FR', <<<EOT
@@ -1410,11 +1406,11 @@ Lors de votre utilisation d'IRC, vous pourrez vous retrouver à gérer un canal 
 EOT
 );
 ___('irc_faq_chanserv_body_2',            'EN', <<<EOT
-You will find a list of ChanServ related {{link|pages/irc/faq?commands|commands}} below. When a word is between [brackets], then it means that its value can be anything you want and you should replace it with something else. For example, if given the command <span class="monospace">/kick channel [username]</span>, you should use it as <span class="monospace">/kick channel SomeUser</span>.
+You will find a list of ChanServ related {{link|pages/social/irc?commands|commands}} below. When a word is between [brackets], then it means that its value can be anything you want and you should replace it with something else. For example, if given the command <span class="monospace">/kick channel [username]</span>, you should use it as <span class="monospace">/kick channel SomeUser</span>.
 EOT
 );
 ___('irc_faq_chanserv_body_2',            'FR', <<<EOT
-Vous trouverez ci-dessous une liste de {{link|pages/irc/faq?commands|commandes}} en rapport avec ChanServ. Lorsqu'un mot est entre [crochets], cela signifie que sa valeur est à personnaliser. Par exemple, lorsque la commande <span class="monospace">/kick channel [pseudonyme]</span> est documentée, vous pouvez l'utiliser comme <span class="monospace">/kick channel MonPseudo</span>.
+Vous trouverez ci-dessous une liste de {{link|pages/social/irc?commands|commandes}} en rapport avec ChanServ. Lorsqu'un mot est entre [crochets], cela signifie que sa valeur est à personnaliser. Par exemple, lorsque la commande <span class="monospace">/kick channel [pseudonyme]</span> est documentée, vous pouvez l'utiliser comme <span class="monospace">/kick channel MonPseudo</span>.
 EOT
 );
 ___('irc_faq_chanserv_body_3',            'EN', <<<EOT
@@ -1437,11 +1433,11 @@ Toute personne connectée à un serveur IRC n'est pas identifiée par son pseudo
 EOT
 );
 ___('irc_faq_chanserv_hostmasks_body_2',  'EN', <<<EOT
-Based on the way hostnames work, if you are looking to identify someone (for example to permanently ban them from a channel), you should specifically look for the <span class="monospace">host</span> part of their hostname, as the rest can be changed at will. Finding a user's hostname can be done by using the <span class="monospace">/whois [username]</span> or <span class="monospace">/whowas [username]</span> {{link|pages/irc/faq?commands|commands}}.
+Based on the way hostnames work, if you are looking to identify someone (for example to permanently ban them from a channel), you should specifically look for the <span class="monospace">host</span> part of their hostname, as the rest can be changed at will. Finding a user's hostname can be done by using the <span class="monospace">/whois [username]</span> or <span class="monospace">/whowas [username]</span> {{link|pages/social/irc?commands|commands}}.
 EOT
 );
 ___('irc_faq_chanserv_hostmasks_body_2',  'FR', <<<EOT
-En observant la structure des hostmask, la seule façon d'identifier une personne spécifique (par exemple afin de la bannir d'un canal IRC) est via la partie <span class="monospace">hôte</span> de son hostmask, le reste étant modifiable à volonté. Pour trouver l'hôte d'une personne, utilisez les {{link|pages/irc/faq?commands|commandes}} <span class="monospace">/whois [pseudonyme]</span> ou <span class="monospace">/whowas [pseudonyme]</span>.
+En observant la structure des hostmask, la seule façon d'identifier une personne spécifique (par exemple afin de la bannir d'un canal IRC) est via la partie <span class="monospace">hôte</span> de son hostmask, le reste étant modifiable à volonté. Pour trouver l'hôte d'une personne, utilisez les {{link|pages/social/irc?commands|commandes}} <span class="monospace">/whois [pseudonyme]</span> ou <span class="monospace">/whowas [pseudonyme]</span>.
 EOT
 );
 ___('irc_faq_chanserv_hostmasks_body_3',  'EN', <<<EOT
@@ -1488,11 +1484,11 @@ EOT
 ___('irc_faq_chanserv_optools_title',   'EN', "Operator abilities");
 ___('irc_faq_chanserv_optools_title',   'FR', "Pouvoirs d'Operator");
 ___('irc_faq_chanserv_optools_body',    'EN', <<<EOT
-Operator abilities can only be used in a channel in which you are an operator, and require you to be registered with NickServ and identified. You can find more about operator names, abilities, and symbols at the bottom of the {{link|pages/irc/faq?guide#symbols|vocabulary and symbols}} section of this FAQ, and more about account management on the {{link|pages/irc/faq?nickserv|NickServ}} section of this FAQ.
+Operator abilities can only be used in a channel in which you are an operator, and require you to be registered with NickServ and identified. You can find more about operator names, abilities, and symbols at the bottom of the {{link|pages/social/irc?guide#symbols|vocabulary and symbols}} section of this FAQ, and more about account management on the {{link|pages/social/irc?nickserv|NickServ}} section of this FAQ.
 EOT
 );
 ___('irc_faq_chanserv_optools_body',    'FR', <<<EOT
-Les pouvoirs d'Operator ne peuvent être utilisés que dans un canal IRC sur lequel vous êtes Operator, et requièrent que votre pseudonyme soit enregistré auprès de NickServ. Vous pouvez en lire plus sur les types d'Operator et leurs pouvoirs dans la section symboles de la page {{link|pages/irc/faq?guide#symbols|vocabulaire et symboles}} de cette FAQ, et plus sur l'enregistrement de votre pseudonyme dans la section {{link|pages/irc/faq?nickserv|NickServ}} de cette FAQ.
+Les pouvoirs d'Operator ne peuvent être utilisés que dans un canal IRC sur lequel vous êtes Operator, et requièrent que votre pseudonyme soit enregistré auprès de NickServ. Vous pouvez en lire plus sur les types d'Operator et leurs pouvoirs dans la section symboles de la page {{link|pages/social/irc?guide#symbols|vocabulaire et symboles}} de cette FAQ, et plus sur l'enregistrement de votre pseudonyme dans la section {{link|pages/social/irc?nickserv|NickServ}} de cette FAQ.
 EOT
 );
 ___('irc_faq_chanserv_topic',           'EN', <<<EOT
@@ -1563,19 +1559,19 @@ EOT
 ___('irc_faq_chanserv_manage_title',    'EN', "Channel management");
 ___('irc_faq_chanserv_manage_title',    'FR', "Gestion des canaux");
 ___('irc_faq_chanserv_manage_body',     'EN', <<<EOT
-This section will list commands that you can only use if you are the founder or administrator of a channel (or looking to register a new channel), and require you to be registered with NickServ and identified. You can find more about operator names, abilities, and symbols at the bottom of the {{link|pages/irc/faq?guide#symbols|vocabulary and symbols}} section of this FAQ, and more about account management on the {{link|pages/irc/faq?nickserv|NickServ}} section of this FAQ.
+This section will list commands that you can only use if you are the founder or administrator of a channel (or looking to register a new channel), and require you to be registered with NickServ and identified. You can find more about operator names, abilities, and symbols at the bottom of the {{link|pages/social/irc?guide#symbols|vocabulary and symbols}} section of this FAQ, and more about account management on the {{link|pages/social/irc?nickserv|NickServ}} section of this FAQ.
 EOT
 );
 ___('irc_faq_chanserv_manage_body',     'FR', <<<EOT
-Cette section contient une liste de commandes que vous ne pouvez utiliser que si vous êtes Founder ou Admin d'un canal IRC (ou désirez créer un nouveau canal IRC), et requièrent que votre pseudonyme soit enregistré auprès de NickServ Vous pouvez en lire plus sur les types d'Operator et leurs pouvoirs dans la section symboles de la page {{link|pages/irc/faq?guide#symbols|vocabulaire et symboles}} de cette FAQ, et plus sur l'enregistrement de votre pseudonyme dans la section {{link|pages/irc/faq?nickserv|NickServ}} de cette FAQ.
+Cette section contient une liste de commandes que vous ne pouvez utiliser que si vous êtes Founder ou Admin d'un canal IRC (ou désirez créer un nouveau canal IRC), et requièrent que votre pseudonyme soit enregistré auprès de NickServ Vous pouvez en lire plus sur les types d'Operator et leurs pouvoirs dans la section symboles de la page {{link|pages/social/irc?guide#symbols|vocabulaire et symboles}} de cette FAQ, et plus sur l'enregistrement de votre pseudonyme dans la section {{link|pages/social/irc?nickserv|NickServ}} de cette FAQ.
 EOT
 );
 ___('irc_faq_chanserv_register',        'EN', <<<EOT
-Registers a channel, making you its founder. Once you start growing the channel and have regular users and conversations, you might want to get it added to NoBleme's {{link|pages/irc/faq?channels|channel list}}.
+Registers a channel, making you its founder. Once you start growing the channel and have regular users and conversations, you might want to get it added to NoBleme's {{link|pages/social/irc?channels|channel list}}.
 EOT
 );
 ___('irc_faq_chanserv_register',        'FR', <<<EOT
-Enregistre un canal auprès de ChanServ, faisant de vous son Founder. Une fois que votre canal est régulièrement utilisé, vous pouvez demander à ce qu'il soit ajouté à la {{link|pages/irc/faq?channels|liste des canaux}}.
+Enregistre un canal auprès de ChanServ, faisant de vous son Founder. Une fois que votre canal est régulièrement utilisé, vous pouvez demander à ce qu'il soit ajouté à la {{link|pages/social/irc?channels|liste des canaux}}.
 EOT
 );
 ___('irc_faq_chanserv_founder',         'EN', <<<EOT
@@ -1694,11 +1690,11 @@ Passe le canal en mode muet : seules les personnes Voiced et les Operator peuve
 EOT
 );
 ___('irc_faq_chanserv_mode_m_caps',      'EN', <<<EOT
-Only users who have registered and identified their username with {{link|pages/irc/faq?nickserv|NickServ}} can chat in the channel.
+Only users who have registered and identified their username with {{link|pages/social/irc?nickserv|NickServ}} can chat in the channel.
 EOT
 );
 ___('irc_faq_chanserv_mode_m_caps',      'FR', <<<EOT
-Seules les personnes ayant enregistré leur pseudonyme auprès de {{link|pages/irc/faq?nickserv|NickServ}} peuvent envoyer des messages sur le canal.
+Seules les personnes ayant enregistré leur pseudonyme auprès de {{link|pages/social/irc?nickserv|NickServ}} peuvent envoyer des messages sur le canal.
 EOT
 );
 ___('irc_faq_chanserv_mode_n',          'EN', <<<EOT
@@ -1710,11 +1706,11 @@ Empêche les personnes qui ne sont pas présentes sur le canal d'y envoyer des m
 EOT
 );
 ___('irc_faq_chanserv_mode_r_caps',      'EN', <<<EOT
-Only users who have registered and identified their username with {{link|pages/irc/faq?nickserv|NickServ}} can join the channel. Non-registered and/or non-identified users who are already in the channel will not get removed from it, but they would be unable to rejoin it if they were to leave or get kicked.
+Only users who have registered and identified their username with {{link|pages/social/irc?nickserv|NickServ}} can join the channel. Non-registered and/or non-identified users who are already in the channel will not get removed from it, but they would be unable to rejoin it if they were to leave or get kicked.
 EOT
 );
 ___('irc_faq_chanserv_mode_r_caps',      'FR', <<<EOT
-Seules les personnes ayant enregistré leur pseudonyme auprès de {{link|pages/irc/faq?nickserv|NickServ}} peuvent rejoindre le canal. Les personnes non enregistrées et/ou non authentifiées qui sont déjà présentes sur le canal ne s'en feront pas éjecter, mais il leur serait impossible de le rejoindre si elles s'en faisaient éjecter.
+Seules les personnes ayant enregistré leur pseudonyme auprès de {{link|pages/social/irc?nickserv|NickServ}} peuvent rejoindre le canal. Les personnes non enregistrées et/ou non authentifiées qui sont déjà présentes sur le canal ne s'en feront pas éjecter, mais il leur serait impossible de le rejoindre si elles s'en faisaient éjecter.
 EOT
 );
 ___('irc_faq_chanserv_mode_s',          'EN', <<<EOT
@@ -1753,11 +1749,11 @@ Tous les pseudonymes que vous croisez sur le serveur IRC NoBleme ne corresponden
 EOT
 );
 ___('irc_faq_bots_body_2',          'EN', <<<EOT
-Some of our IRC bots are an integral part of the server. Rather than acting like regalur users, they will never be present in any public IRC channel. They are {{link|pages/irc/faq?nickserv|NickServ}}, which handles username management, and {{link|pages/irc/faq?chanserv|ChanServ}}, which handles channel management.
+Some of our IRC bots are an integral part of the server. Rather than acting like regalur users, they will never be present in any public IRC channel. They are {{link|pages/social/irc?nickserv|NickServ}}, which handles username management, and {{link|pages/social/irc?chanserv|ChanServ}}, which handles channel management.
 EOT
 );
 ___('irc_faq_bots_body_2',          'FR', <<<EOT
-Certains de nos bots sont des éléments importants du serveur IRC NoBleme. Ils ne seront jamais visibles publiquement sur les canaux IRC, et ne servent qu'à échanger des messages en privé. Il s'agit de {{link|pages/irc/faq?nickserv|NickServ}}, qui gère les pseudonymes et les comptes, et de {{link|pages/irc/faq?chanserv|ChanServ}}, qui gère les canaux.
+Certains de nos bots sont des éléments importants du serveur IRC NoBleme. Ils ne seront jamais visibles publiquement sur les canaux IRC, et ne servent qu'à échanger des messages en privé. Il s'agit de {{link|pages/social/irc?nickserv|NickServ}}, qui gère les pseudonymes et les comptes, et de {{link|pages/social/irc?chanserv|ChanServ}}, qui gère les canaux.
 EOT
 );
 ___('irc_faq_bots_body_3',          'EN', <<<EOT
@@ -1772,11 +1768,11 @@ EOT
 ___('irc_faq_bots_nobleme_title',   'EN', "The official NoBleme bot");
 ___('irc_faq_bots_nobleme_title',   'FR', "Le bot NoBleme officiel");
 ___('irc_faq_bots_nobleme_body_1',  'EN', <<<EOT
-NoBleme only has one official bot. It goes by the nickname <span class="bold">NoBleme</span>, and idles in a few {{link|pages/irc/faq?channels|channels}}. It is a non interactive bot : NoBleme will write content on IRC, but it will never reply to anyone's messages.
+NoBleme only has one official bot. It goes by the nickname <span class="bold">NoBleme</span>, and idles in a few {{link|pages/social/irc?channels|channels}}. It is a non interactive bot : NoBleme will write content on IRC, but it will never reply to anyone's messages.
 EOT
 );
 ___('irc_faq_bots_nobleme_body_1',  'FR', <<<EOT
-Il n'existe qu'un seul bot officiel sur le serveur IRC NoBleme. Il utilise le pseudonyme <span class="bold">NoBleme</span>, et se trouve en permanence sur quelques {{link|pages/irc/faq?channels|canaux}}. Il s'agit d'un bot non interactif : il écrit des messages sur IRC, mais ne répond pas aux messages des autres personnes.
+Il n'existe qu'un seul bot officiel sur le serveur IRC NoBleme. Il utilise le pseudonyme <span class="bold">NoBleme</span>, et se trouve en permanence sur quelques {{link|pages/social/irc?channels|canaux}}. Il s'agit d'un bot non interactif : il écrit des messages sur IRC, mais ne répond pas aux messages des autres personnes.
 EOT
 );
 ___('irc_faq_bots_nobleme_body_2',  'EN', <<<EOT
@@ -1791,11 +1787,11 @@ EOT
 ___('irc_faq_bots_private_title',   'EN', "Non official bots");
 ___('irc_faq_bots_private_title',   'FR', "Bots non officiels");
 ___('irc_faq_bots_private_body_1',  'EN', <<<EOT
-A non official bot can be found in each of the two major {{link|pages/irc/faq?channels|channels}} of NoBleme's IRC server. Both of these are interactive bots, which have a variety of uses - observe how the regulars use the bots and you might find them useful for your own needs!
+A non official bot can be found in each of the two major {{link|pages/social/irc?channels|channels}} of NoBleme's IRC server. Both of these are interactive bots, which have a variety of uses - observe how the regulars use the bots and you might find them useful for your own needs!
 EOT
 );
 ___('irc_faq_bots_private_body_1',  'FR', <<<EOT
-Un bot IRC non officiel se trouve sur chacun des deux {{link|pages/irc/faq?channels|canaux}} principaux du serveur IRC NoBleme. Il s'agit de bots interactifs, qui peuvent s'utiliser de plusieurs façons - observez les utilisations qu'en font les personnes habituées, peut-être que vous leur trouverez une utilité !
+Un bot IRC non officiel se trouve sur chacun des deux {{link|pages/social/irc?channels|canaux}} principaux du serveur IRC NoBleme. Il s'agit de bots interactifs, qui peuvent s'utiliser de plusieurs façons - observez les utilisations qu'en font les personnes habituées, peut-être que vous leur trouverez une utilité !
 EOT
 );
 ___('irc_faq_bots_private_body_2',  'EN', <<<EOT

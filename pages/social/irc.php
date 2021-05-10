@@ -9,14 +9,14 @@ include_once './../../lang/integrations.lang.php';    # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/irc/faq";
+$page_url         = "pages/social/irc";
 $page_title_en    = "IRC chat";
 $page_title_fr    = "Chat IRC";
 $page_description = "NoBleme's primary communication method, our real time IRC chat server";
 
 // Extra CSS & JS
 $css  = array('irc');
-$js   = array('irc/faq', 'common/toggle');
+$js   = array('social/irc', 'common/toggle');
 
 
 
@@ -31,7 +31,7 @@ $js   = array('irc/faq', 'common/toggle');
 // Display the correct FAQ section
 
 // Prepare a list of all FAQ sections
-$irc_faq_sections = array('main', 'why', 'browser', 'client', 'bouncer', 'guide', 'commands', 'nickserv', 'chanserv', 'bots', 'channels', 'others');
+$irc_faq_sections = array('main', 'why', 'browser', 'client', 'bouncer', 'guide', 'commands', 'nickserv', 'chanserv', 'bots', 'channels');
 
 // Prepare the CSS for each FAQ section
 foreach($irc_faq_sections as $irc_faq_section_name)
@@ -83,24 +83,21 @@ $page_title_en  = (isset($_GET['bots']))      ? "IRC bots"                : $pag
 $page_title_fr  = (isset($_GET['bots']))      ? "Bots IRC"                : $page_title_fr;
 $page_title_en  = (isset($_GET['channels']))  ? "IRC channels"            : $page_title_en;
 $page_title_fr  = (isset($_GET['channels']))  ? "Canaux IRC"              : $page_title_fr;
-$page_title_en  = (isset($_GET['others']))    ? "Official platforms"      : $page_title_en;
-$page_title_fr  = (isset($_GET['others']))    ? "Plateformes officielles" : $page_title_fr;
 
 // Determine the title to use in the header
 $irc_faq_page_name = ($lang == 'EN') ? $page_title_en : $page_title_fr;
 
 // Set the correct page URLs
-$page_url = (isset($_GET['why']))       ? 'pages/irc/faq?why'       : $page_url;
-$page_url = (isset($_GET['browser']))   ? 'pages/irc/faq?browser'   : $page_url;
-$page_url = (isset($_GET['client']))    ? 'pages/irc/faq?client'    : $page_url;
-$page_url = (isset($_GET['bouncer']))   ? 'pages/irc/faq?bouncer'   : $page_url;
-$page_url = (isset($_GET['guide']))     ? 'pages/irc/faq?guide'     : $page_url;
-$page_url = (isset($_GET['commands']))  ? 'pages/irc/faq?commands'  : $page_url;
-$page_url = (isset($_GET['nickserv']))  ? 'pages/irc/faq?nickserv'  : $page_url;
-$page_url = (isset($_GET['chanserv']))  ? 'pages/irc/faq?chanserv'  : $page_url;
-$page_url = (isset($_GET['bots']))      ? 'pages/irc/faq?bots'      : $page_url;
-$page_url = (isset($_GET['channels']))  ? 'pages/irc/faq?channels'  : $page_url;
-$page_url = (isset($_GET['others']))    ? 'pages/irc/faq?others'    : $page_url;
+$page_url = (isset($_GET['why']))       ? 'pages/social/irc?why'      : $page_url;
+$page_url = (isset($_GET['browser']))   ? 'pages/social/irc?browser'  : $page_url;
+$page_url = (isset($_GET['client']))    ? 'pages/social/irc?client'   : $page_url;
+$page_url = (isset($_GET['bouncer']))   ? 'pages/social/irc?bouncer'  : $page_url;
+$page_url = (isset($_GET['guide']))     ? 'pages/social/irc?guide'    : $page_url;
+$page_url = (isset($_GET['commands']))  ? 'pages/social/irc?commands' : $page_url;
+$page_url = (isset($_GET['nickserv']))  ? 'pages/social/irc?nickserv' : $page_url;
+$page_url = (isset($_GET['chanserv']))  ? 'pages/social/irc?chanserv' : $page_url;
+$page_url = (isset($_GET['bots']))      ? 'pages/social/irc?bots'     : $page_url;
+$page_url = (isset($_GET['channels']))  ? 'pages/social/irc?channels' : $page_url;
 
 
 
@@ -140,7 +137,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <option value="chanserv"<?=$irc_faq_selected['chanserv']?>><?=__('irc_faq_select_chanserv')?></option>
           <option value="bots"<?=$irc_faq_selected['bots']?>><?=__('irc_faq_select_bots')?></option>
           <option value="channels"<?=$irc_faq_selected['channels']?>><?=__('irc_faq_select_channels')?></option>
-          <option value="others"<?=$irc_faq_selected['others']?>><?=__('irc_faq_select_others')?></option>
         </select>
       </h5>
     </fieldset>
@@ -158,7 +154,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <input type="hidden" id="irc_faq_name_chanserv" value="<?=__('irc_faq_title_chanserv')?>">
   <input type="hidden" id="irc_faq_name_bots" value="<?=__('irc_faq_title_bots')?>">
   <input type="hidden" id="irc_faq_name_channels" value="<?=__('irc_faq_title_channels')?>">
-  <input type="hidden" id="irc_faq_name_others" value="<?=__('irc_faq_title_others')?>">
 
 </div>
 
@@ -1211,7 +1206,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php if($is_moderator) { ?>
       <tr>
         <td colspan="5" class="align_center uppercase dark text_white bold">
-          <?=__link('pages/irc/channel_add', __('irc_channels_add'))?>
+          <?=__link('pages/social/irc_channel_add', __('irc_channels_add'))?>
         </td>
       </tr>
       <?php } ?>
@@ -1250,7 +1245,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <?php if($is_moderator) { ?>
         <td class="align_center spaced nowrap">
-          <?=__link('pages/irc/channel_edit?id='.$irc_channels[$i]['id'], __icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials'), 'noglow')?>
+          <?=__link('pages/social/irc_channel_edit?id='.$irc_channels[$i]['id'], __icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials'), 'noglow')?>
           <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "irc_channel_list_delete(".$irc_channels[$i]['id'].", '".__('irc_channels_delete_confirm')."');")?>
         </td>
         <?php } ?>

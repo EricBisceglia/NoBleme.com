@@ -822,32 +822,34 @@ ___('submenu_pages_politics_join',        'FR', "Le mouvement");
 
 
 // Submenu: Social
-___('submenu_social_irc',           'EN', "IRC chat server");
-___('submenu_social_irc',           'FR', "Serveur de chat IRC");
-___('submenu_social_irc_intro',     'EN', "What is IRC");
-___('submenu_social_irc_intro',     'FR', "Qu'est-ce que IRC");
-___('submenu_social_irc_browser',   'EN', "Chat from your browser");
-___('submenu_social_irc_browser',   'FR', "Chat depuis le navigateur");
-___('submenu_social_irc_channels',  'EN', "Channel list");
-___('submenu_social_irc_channels',  'FR', "Liste des canaux");
-___('submenu_social_irc_others',    'EN', "Other platforms");
-___('submenu_social_irc_others',    'FR', "Autres plateformes");
+___('submenu_social_platforms',           'EN', "Social platforms");
+___('submenu_social_platforms',           'FR', "Plateformes sociales");
+___('submenu_social_platforms_irc',       'EN', "IRC chat server");
+___('submenu_social_platforms_irc',       'FR', "Serveur de chat IRC");
+___('submenu_social_platforms_irc_web',   'EN', "IRC from your browser");
+___('submenu_social_platforms_irc_web',   'FR', "Client navigateur IRC");
+___('submenu_social_platforms_irc_chans', 'EN', "IRC channel list");
+___('submenu_social_platforms_irc_chans', 'FR', "Liste des canaux IRC");
+___('submenu_social_platforms_discord',   'EN', "NoBleme on Discord");
+___('submenu_social_platforms_discord',   'FR', "NoBleme sur Discord");
+___('submenu_social_platforms_others',    'EN', "Other social platforms");
+___('submenu_social_platforms_others',    'FR', "Autres plateformes");
 
-___('submenu_social_quotes',        'EN', "Quotes");
-___('submenu_social_quotes',        'FR', "Citations");
-___('submenu_social_quotes_list',   'EN', "Quote database");
-___('submenu_social_quotes_list',   'FR', "Paroles de NoBleme");
-___('submenu_social_quotes_random', 'EN', "Random quote");
-___('submenu_social_quotes_random', 'FR', "Citation au hasard");
-___('submenu_social_quotes_submit', 'EN', "Submit a new quote");
-___('submenu_social_quotes_submit', 'FR', "Proposer une citation");
+___('submenu_social_quotes',              'EN', "Quotes");
+___('submenu_social_quotes',              'FR', "Citations");
+___('submenu_social_quotes_list',         'EN', "Quote database");
+___('submenu_social_quotes_list',         'FR', "Paroles de NoBleme");
+___('submenu_social_quotes_random',       'EN', "Random quote");
+___('submenu_social_quotes_random',       'FR', "Citation au hasard");
+___('submenu_social_quotes_submit',       'EN', "Submit a new quote");
+___('submenu_social_quotes_submit',       'FR', "Proposer une citation");
 
-___('submenu_social_meetups',       'EN', "Real life meetups");
-___('submenu_social_meetups',       'FR', "Rencontres IRL");
-___('submenu_social_meetups_list',  'EN', "List of meetups");
-___('submenu_social_meetups_list',  'FR', "Liste des IRL");
-___('submenu_social_meetups_host',  'EN', "Plan a new meetup");
-___('submenu_social_meetups_host',  'FR', "Organiser une IRL");
+___('submenu_social_meetups',             'EN', "Real life meetups");
+___('submenu_social_meetups',             'FR', "Rencontres IRL");
+___('submenu_social_meetups_list',        'EN', "List of meetups");
+___('submenu_social_meetups_list',        'FR', "Liste des IRL");
+___('submenu_social_meetups_host',        'EN', "Plan a new meetup");
+___('submenu_social_meetups_host',        'FR', "Organiser une IRL");
 
 
 // Submenu: Account

@@ -38,11 +38,11 @@ function irc_faq_display_section()
 
   // If the main FAQ section is being selected, remove all URL parameters
   if(page_name == 'main')
-    history.pushState({}, null, 'faq');
+    history.pushState({}, null, 'irc');
 
   // Otherwise, set the currently selected section as an URL parameter
   else
-    history.pushState({}, null, 'faq?' + page_name);
+    history.pushState({}, null, 'irc?' + page_name);
 }
 
 
@@ -68,5 +68,5 @@ function irc_channel_list_delete( channel_id      ,
   postdata = 'channel_id=' + fetch_sanitize(channel_id);
 
   // Submit the deletion request
-  fetch_page('channel_delete', 'irc_channel_list_row_' + channel_id, postdata);
+  fetch_page('irc_channel_delete', 'irc_channel_list_row_' + channel_id, postdata);
 }

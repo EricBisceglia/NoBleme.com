@@ -602,19 +602,22 @@ $javascripts .= '
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_social_irc')?>
+          <?=__('submenu_social_platforms')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/irc/faq', __('submenu_social_irc_intro'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/social/irc', __('submenu_social_platforms_irc'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/irc/faq?browser', __('submenu_social_irc_browser'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/social/irc?browser', __('submenu_social_platforms_irc_web'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/irc/faq?channels', __('submenu_social_irc_channels'), 'header_submenu_link', 1, $path);?>
+          <?=__link('pages/social/irc?channels', __('submenu_social_platforms_irc_chans'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/irc/faq?others', __('submenu_social_irc_others'), 'header_submenu_link', 1, $path);?>
+          <?=__link('todo_link', __('submenu_social_platforms_discord'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_social_platforms_others'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 

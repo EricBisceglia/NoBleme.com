@@ -438,7 +438,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'irc_channels_new')
   {
     $return['css']  = '';
-    $return['href'] = $path.'pages/irc/faq?channels';
+    $return['href'] = $path.'pages/social/irc?channels';
     $return['EN']   = 'IRC channel '.$title_en.' added to the list by '.$mod_username;
     $return['FR']   = 'Canal IRC '.$title_en.' ajouté à la liste par '.$mod_username;
   }
@@ -446,7 +446,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'irc_channels_edit')
   {
     $return['css']  = '';
-    $return['href'] = $path.'pages/irc/faq?channels';
+    $return['href'] = $path.'pages/social/irc?channels';
     $return['EN']   = 'IRC channel '.$title_en.' updated by '.$mod_username;
     $return['FR']   = 'Canal IRC '.$title_en.' mis à jour par '.$mod_username;
   }
@@ -454,7 +454,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'irc_channels_delete')
   {
     $return['css']  = '';
-    $return['href'] = $path.'pages/irc/faq?channels';
+    $return['href'] = $path.'pages/social/irc?channels';
     $return['EN']   = 'IRC channel '.$title_en.' deleted by '.$mod_username;
     $return['FR']   = 'Canal IRC '.$title_en.' supprimé par '.$mod_username;
   }

@@ -120,7 +120,7 @@ function irc_channels_add( array $contents ) : mixed
   log_activity_details($modlog, "Channel language(s)", "Langue(s) du canal", $channel_lang, $channel_lang);
 
   // IRC bot message
-  irc_bot_send_message("IRC channel $channel_name_raw added to the public channel list by $mod_username - ".$GLOBALS['website_url']."pages/irc/faq?channels", 'mod');
+  irc_bot_send_message("IRC channel $channel_name_raw added to the public channel list by $mod_username - ".$GLOBALS['website_url']."pages/social/irc?channels", 'mod');
 
   // Return the channel's id
   return $channel_id;
@@ -297,7 +297,7 @@ function irc_channels_edit( int   $channel_id ,
     log_activity_details($modlog, "Channel language(s)", "Langue(s) du canal", $dchannel['c_lang'], $channel_lang);
 
   // IRC bot message
-  irc_bot_send_message("IRC channel $channel_name_raw has been updated on the channel list by $mod_username - ".$GLOBALS['website_url']."pages/irc/faq?channels", 'mod');
+  irc_bot_send_message("IRC channel $channel_name_raw has been updated on the channel list by $mod_username - ".$GLOBALS['website_url']."pages/social/irc?channels", 'mod');
 
   // All went well, return NULL
   return NULL;
@@ -361,7 +361,7 @@ function irc_channels_delete( int $channel_id ) : string
   log_activity_details($modlog, "Channel language(s)", "Langue(s) du canal", $dchannel['c_lang']);
 
   // IRC bot message
-  irc_bot_send_message("IRC channel $channel_name_raw has been deleted from the channel list by $mod_username - ".$GLOBALS['website_url']."pages/irc/faq?channels", 'mod');
+  irc_bot_send_message("IRC channel $channel_name_raw has been deleted from the channel list by $mod_username - ".$GLOBALS['website_url']."pages/social/irc?channels", 'mod');
 
   // Return that all went well
   return __('irc_channels_delete_ok');
