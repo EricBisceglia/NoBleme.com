@@ -44,6 +44,74 @@ ___('discord_webhook_toggle_on',        'FR', "Activer l'intégration Discord");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                NOBLEME ON DISCORD                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Summary
+___('discord_summary_title',  'EN', "Our secondary real time chat platform");
+___('discord_summary_title',  'FR', "Notre plateforme secondaire de chat en temps réel");
+___('discord_summary_body_1', 'EN', <<<EOT
+While our {{link|pages/social/irc|IRC chat server}} is our main real time chat solution, and the place where most of our conversations happen, we have a few reasons to also use {{external|https://discord.gg|Discord}} as a secondary solution:
+EOT
+);
+___('discord_summary_body_1', 'FR', <<<EOT
+Même si notre {{link|pages/social/irc|serveur de chat IRC}} est notre solution principale de communication en temps réel, et est par conséquent le lieu où la majorité des conversations ont lieu, nous avons plusieurs raisons d'utiliser également {{external|https://discord.gg|Discord}} comme solution secondaire :
+EOT
+);
+___('discord_summary_list_1', 'EN', "We want to have a backup real time chat solution whenever our IRC server is unavailable or unusable");
+___('discord_summary_list_1', 'FR', "Nous voulons avoir une solution de secours lorsque notre serveur IRC est indisponible ou inutilisable");
+___('discord_summary_list_2', 'EN', "It is easier to use and more popular than IRC, thus allowing more people to stay in touch with NoBleme");
+___('discord_summary_list_2', 'FR', "Discord est plus facile à utiliser et plus populaire qu'IRC, ouvrant NoBleme à un plus grand public");
+___('discord_summary_list_3', 'EN', "It comes with voice chat and webcam integrations, which are useful for organized events");
+___('discord_summary_list_3', 'FR', "Les intégrations de chat vocal et de webcam sont pratiques pour l'organisation de certains évènements");
+___('discord_summary_list_4', 'EN', "Chat history is permanent, you do not miss out on anything occuring while you're gone");
+___('discord_summary_list_4', 'FR', "L'historique des conversations est permanent, vous ne ratez rien lorsque vous fermez Discord");
+___('discord_summary_list_5', 'EN', "Threads and emoji reactions can make conversations more fun and easy to follow");
+___('discord_summary_list_5', 'FR', "Les fils de discussion et réactions emoji rendent certaines conversations plus agréables et faciles à suivre");
+___('discord_summary_body_2', 'EN', <<<EOT
+Similarly to our IRC server, NoBleme's website activity has been integrated on NoBleme's Discord's server: many elements of the {{link|pages/nobleme/activity|recent activity}} will be automatically shared on Discord, thus allowing you to keep track of what is happening on the website without needing to visit it too often.
+EOT
+);
+___('discord_summary_body_2', 'FR', <<<EOT
+Comme sur notre serveur IRC, l'activité du site a été intégrée sur le serveur Discord NoBleme : beaucoup d'éléments de l'{{link|pages/nobleme/activity|activité récente}} sont automatiquement partagés sur Discord, ce qui vous permet de suivre l'activité du site sans avoir à le visiter.
+EOT
+);
+___('discord_summary_body_3', 'EN', <<<EOT
+While Discord has many advantages over IRC, we choose to keep IRC as our main real time chat platform for reasons {{link|pages/social/irc?why|detailed here}}, and would like to remind you that Discord is a privately owned platform: they are free to use your personal data and chat history as they wish. Even though Discord is appreciated by many regular NoBleme users, making it our primary chat platform would go against our {{link|pages/doc/data|stance on personal data}}.
+EOT
+);
+___('discord_summary_body_3', 'FR', <<<EOT
+Même si Discord a de nombreux avantages par rapport à IRC, nous choisissons de conserver IRC comme plateforme de chat en temps réel principale pour plusieurs raisons {{link|pages/social/irc?why|détaillées ici}}, et tenons à vous rappeler que Discord est une plateforme privée : ils sont libres d'utiliser vos données personnelles et le contenu de vos conversation comme bon leur semble. Même si Discord est très apprécié sur NoBleme, en faire notre plateforme de communication principale irait à l'encontre de notre {{link|pages/doc/data|position sur les données personnelles}}.
+EOT
+);
+___('discord_summary_body_4', 'EN', <<<EOT
+Be aware that conversations regarding computer science, programming, and any other related topics should be kept away from our Discord server, please keep them on the {{link|pages/social/irc?channels|#dev IRC channel}} instead. These conversations tend to take over public spaces, and exclude many people from taking part, which we would like to avoid on Discord. Besides, we expect people with a technical inclination to be able to setup and use an {{link|pages/social/irc?client|IRC client}}.
+EOT
+);
+___('discord_summary_body_4', 'FR', <<<EOT
+À noter, les conversations touchant à la programmation informatique ou à tout sujet lié sont à garder hors de notre serveur Discord, merci d'utiliser le {{link|pages/social/irc?channels|canal IRC #dev}} pour cela. Ces conversations ont tendance à envahir les espaces publics d'une façon excluante pour beaucoup de personnes, ce que nous aimerions éviter sur notre Discord. Nous partons du principe que les personnes ayant les compétences techniques pour discuter de ces sujets sauront installer et utiliser un {{link|pages/social/irc?client|client IRC}}.
+EOT
+);
+
+
+// Join Discord
+___('discord_join_title', 'EN', "Join NoBleme's Discord server");
+___('discord_join_title', 'FR', "Rejoindre le serveur Discord NoBleme");
+___('discord_join_body',  'EN', <<<EOT
+You can join NoBleme's Discord server by {{external|https://discord.gg/XTd3qQKZqV|clicking this link}} or by using the Discord widget below. There is no need to register a Discord account to use NoBleme's Discord server, but you might have a better experience with the platform if you do register one.
+EOT
+);
+___('discord_join_body',  'FR', <<<EOT
+Vous pouvez rejoindre le serveur Discord NoBleme en {{external|https://discord.gg/XTd3qQKZqV|cliquant ce lien}} ou via l'intégration ci-dessous. Il n'est pas nécessaire de créer de compte sur Discord pour utiliser le serveur Discord NoBleme, mais vous aurez probablement une meilleure expérience avec la plateforme si vous en créez un.
+EOT
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                      IRC BOT                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -407,7 +475,7 @@ Like most online communities, NoBleme has a place where its members can hold con
 EOT
 );
 ___('irc_faq_main_body',  'FR', <<<EOT
-Comme la plupart des autres communautés, NoBleme possède un lieu de conversation en temps réel, où la majorité des interactions ont lieu : il s'agit du cœur de la communauté. Cette page est une FAQ expliquant pourquoi nous avons choisi IRC plutôt qu'autre chose, et comment nous y rejoindre afin de faire partie de la conversation. Utilisez le menu déroulant situé juste au dessus de ce paragraphe pour en apprendre plus sur le serveur IRC de NoBleme et sur IRC en général.
+Comme la plupart des autres communautés, NoBleme possède un lieu de conversation en temps réel, où la majorité des interactions ont lieu : il s'agit du cœur de la communauté. Cette page est une FAQ expliquant pourquoi nous avons choisi IRC plutôt qu'autre chose, et comment nous y rejoindre afin de faire partie de la conversation. Utilisez le menu déroulant situé juste au dessus de ce paragraphe pour en apprendre plus sur le serveur IRC NoBleme et sur IRC en général.
 EOT
 );
 
@@ -447,7 +515,7 @@ ___('irc_faq_main_what_utf',      'EN', "UTF-8");
 ___('irc_faq_main_what_utf',      'FR', "UTF-8");
 
 ___('irc_faq_main_join_title',    'EN', "Joining NoBleme's IRC server");
-___('irc_faq_main_join_title',    'FR', "Rejoindre le serveur IRC de NoBleme");
+___('irc_faq_main_join_title',    'FR', "Rejoindre le serveur IRC NoBleme");
 ___('irc_faq_main_join_1',        'EN', <<<EOT
 In order to join an IRC server, you need what is called a <span class="italics">client</span>: an application that acts as a third party between the server and you. There are different types of clients, some of which need to be installed on your machine and others which don't, some which keep message history when you're not around and others which don't.
 EOT
@@ -461,7 +529,7 @@ The quickiest and easiest way to join NoBleme's IRC server is by using a {{link|
 EOT
 );
 ___('irc_faq_main_join_2',        'FR', <<<EOT
-La façon la plus simple et rapide de rejoindre le serveur IRC de NoBleme est en utilisant un {{link|pages/social/irc?browser|client web via votre navigateur}}. Tout ce que vous avez à faire est {{link|pages/social/irc?browser|cliquer sur ce lien}}, choisir votre pseudonyme, et vous serez sur le serveur IRC de NoBleme. Aussi simple que ça !
+La façon la plus simple et rapide de rejoindre le serveur IRC NoBleme est en utilisant un {{link|pages/social/irc?browser|client web via votre navigateur}}. Tout ce que vous avez à faire est {{link|pages/social/irc?browser|cliquer sur ce lien}}, choisir votre pseudonyme, et vous serez sur le serveur IRC NoBleme. Aussi simple que ça !
 EOT
 );
 ___('irc_faq_main_join_3',        'EN', <<<EOT
@@ -469,7 +537,7 @@ Once you spend time on NoBleme's IRC server, you might end up thinking that a we
 EOT
 );
 ___('irc_faq_main_join_3',        'FR', <<<EOT
-Si vous passez du temps sur le serveur IRC de NoBleme, vous vous direz probablement qu'un client web a ses limites. Dans ce cas, vous pouvez {{link|pages/social/irc?client|installer un client IRC sur votre appareil}}. Et si vous regrettez que votre client ne garde pas la trace des messages lorsqu'il n'est pas connecté, vous pouvez {{link|pages/social/irc?bouncer|utiliser un bouncer}}.
+Si vous passez du temps sur le serveur IRC NoBleme, vous vous direz probablement qu'un client web a ses limites. Dans ce cas, vous pouvez {{link|pages/social/irc?client|installer un client IRC sur votre appareil}}. Et si vous regrettez que votre client ne garde pas la trace des messages lorsqu'il n'est pas connecté, vous pouvez {{link|pages/social/irc?bouncer|utiliser un bouncer}}.
 EOT
 );
 ___('irc_faq_main_join_4',        'EN', <<<EOT
@@ -490,7 +558,7 @@ IRC servers are comprised of various channels, which are basically chat rooms. C
 EOT
 );
 ___('irc_faq_answer_1',         'FR', <<<EOT
-Les serveurs IRC sont composés de divers canaux, qui sont des salles de discussion séparées les unes des autres. Les canaux ont un nom commençant par un croisillon (<span class="glow">#</span>). Sur le serveur IRC de NoBleme, chaque langue possède son canal prinicpal où la majorité des conversations ont lieu (#NoBleme pour le français et #english pour l'anglais), les autres canaux ont des thèmes spécifiques (comme par exemple #dev pour l'informatique). Vous êtes libre de choisir à quels canaux vous vous connectez, la {{link|pages/social/irc?channels|liste des canaux}} vous explique comment les rejoindre, et liste les principaux canaux IRC de NoBleme.
+Les serveurs IRC sont composés de divers canaux, qui sont des salles de discussion séparées les unes des autres. Les canaux ont un nom commençant par un croisillon (<span class="glow">#</span>). Sur le serveur IRC NoBleme, chaque langue possède son canal prinicpal où la majorité des conversations ont lieu (#NoBleme pour le français et #english pour l'anglais), les autres canaux ont des thèmes spécifiques (comme par exemple #dev pour l'informatique). Vous êtes libre de choisir à quels canaux vous vous connectez, la {{link|pages/social/irc?channels|liste des canaux}} vous explique comment les rejoindre, et liste les principaux canaux IRC de NoBleme.
 EOT
 );
 ___('irc_faq_question_2',       'EN', "Why is nobody talking/replying to me?");
@@ -534,7 +602,7 @@ Vous pouvez changer de pseudonyme à tout moment. Certains clients IRC vous perm
 EOT
 );
 ___('irc_faq_question_6',       'EN', "Can I create my own channel on NoBleme's IRC server?");
-___('irc_faq_question_6',       'FR', "Puis-je créer mon propre canal sur le serveur IRC de NoBleme ?");
+___('irc_faq_question_6',       'FR', "Puis-je créer mon propre canal sur le serveur IRC NoBleme ?");
 ___('irc_faq_answer_6',         'EN', <<<EOT
 If it has anything to do with NoBleme or its community, sure, go ahead, no need to ask for permission. You will find more details on the {{link|pages/social/irc?chanserv|IRC channel management}} page. You might even want it to be listed in the {{link|pages/social/irc?channels|channel list}}, in which case use our {{link|pages/messages/admins|administrative contact form}} to make a request. If you would like to create a channel for external people who have nothing to do with NoBleme, this is also fine, but please make sure they respect NoBleme's {{link|pages/doc/coc|code of conduct}} at all times, and use the {{link|pages/messages/admins|admin contact form}} to inform NoBleme's administrative team that you created a channel for your own community (if you don't keep us informed, we might think you are server squatters and shut it down by accident).
 EOT
@@ -550,7 +618,7 @@ IRC can be overwhelming at first, but it is actually rather simple once you are 
 EOT
 );
 ___('irc_faq_answer_7',         'FR', <<<EOT
-IRC peut avoir l'air compliqué à première vue, mais une fois votre client installé et configuré tout devient beaucoup plus simple. Si vous avez besoin d'aide, vous pouvez tout simplement demander sur un des canaux du serveur IRC de NoBleme. La communauté est coopérative et vous aidera.
+IRC peut avoir l'air compliqué à première vue, mais une fois votre client installé et configuré tout devient beaucoup plus simple. Si vous avez besoin d'aide, vous pouvez tout simplement demander sur un des canaux du serveur IRC NoBleme. La communauté est coopérative et vous aidera.
 EOT
 );
 ___('irc_faq_question_8',       'EN', "Must I talk?");
@@ -576,11 +644,11 @@ EOT
 ___('irc_faq_question_10',      'EN', "I can't join IRC, is the server dead?");
 ___('irc_faq_question_10',      'FR', "Je ne peux pas me connecter à IRC, le serveur est-il KO ?");
 ___('irc_faq_answer_10',        'EN', <<<EOT
-Maybe. Ask on {{link|todo_link|NoBleme's Discord server}}, we use it as our backup communication method.
+Maybe. Ask on {{link|pages/social/discord|NoBleme's Discord server}}, we use it as our backup communication method.
 EOT
 );
 ___('irc_faq_answer_10',        'FR', <<<EOT
-Peut-être. Demandez sur le {{link|todo_link|serveur Discord de NoBleme}}, il sert de mode de communication de secours lorsque IRC a des problèmes.
+Peut-être. Demandez sur le {{link|pages/social/discord|serveur Discord de NoBleme}}, il sert de mode de communication de secours lorsque IRC a des problèmes.
 EOT
 );
 ___('irc_faq_question_11',      'EN', "Any plans to move from IRC to something else?");
@@ -747,11 +815,11 @@ En prenant tous ces éléments en considération, il est très probable que nous
 EOT
 );
 ___('irc_faq_why_summary_body_2', 'EN', <<<EOT
-If you are scared by the barrier of entry, or do not wish to use IRC because it feels outdated, know that we understand your frustration, but be aware that we have no plan to change platform. It will remain the heart of NoBleme's community in the foreseeable future. You can still keep up with NoBleme's activity and interact with some of our community members on {{link|todo_link|other platforms}}, including real time chat on {{link|todo_link|Discord}}.
+If you are scared by the barrier of entry, or do not wish to use IRC because it feels outdated, know that we understand your frustration, but be aware that we have no plan to change platform. It will remain the heart of NoBleme's community in the foreseeable future. You can still keep up with NoBleme's activity and interact with some of our community members on {{link|todo_link|other platforms}}, including real time chat on {{link|pages/social/discord|Discord}}.
 EOT
 );
 ___('irc_faq_why_summary_body_2', 'FR', <<<EOT
-Si la barrière d'entrée vous repousse, ou si vous ne voulez pas utiliser IRC pour une raison quelconque, sachez que nous comprenons votre frustration, mais sachez également que nous ne prévoyons actuellement pas de changer de plateforme : IRC restera le cœur de la communauté de NoBleme dans le futur proche. Vous pouvez suivre l'activité de NoBleme et interagir avec une partie de sa communauté sur {{link|todo_link|d'autres plateformes}}, incluant le service de chat en temps réel {{link|todo_link|Discord}}.
+Si la barrière d'entrée vous repousse, ou si vous ne voulez pas utiliser IRC pour une raison quelconque, sachez que nous comprenons votre frustration, mais sachez également que nous ne prévoyons actuellement pas de changer de plateforme : IRC restera le cœur de la communauté de NoBleme dans le futur proche. Vous pouvez suivre l'activité de NoBleme et interagir avec une partie de sa communauté sur {{link|todo_link|d'autres plateformes}}, incluant le service de chat en temps réel {{link|pages/social/discord|Discord}}.
 EOT
 );
 
@@ -926,7 +994,7 @@ Bouncers work in such a way that instead of using your IRC client to connect to 
 EOT
 );
 ___('irc_faq_bouncer_body_3',       'FR', <<<EOT
-Le fonctionnement d'un bouncer peut se résumer ainsi : au lieu de connecter votre client IRC au serveur IRC de NoBleme, vous connectez votre client IRC à votre bouncer, qui est connecté en permanence au serveur IRC de NoBleme.
+Le fonctionnement d'un bouncer peut se résumer ainsi : au lieu de connecter votre client IRC au serveur IRC NoBleme, vous connectez votre client IRC à votre bouncer, qui est connecté en permanence au serveur IRC NoBleme.
 EOT
 );
 ___('irc_faq_bouncer_body_4',       'EN', <<<EOT
@@ -953,7 +1021,7 @@ ___('irc_faq_bouncer_third_body_2', 'EN', <<<EOT
 EOT
 );
 ___('irc_faq_bouncer_third_body_2', 'FR', <<<EOT
-{{external|https://wiki.znc.in/Providers|Des fournisseurs gratuits de ZNC}} existent (ZNC est le bouncer le plus communément utilisé). Chacun d'entre eux vous demande de suivre un processus unique et spécifique pour vous mettre en place un bouncer, auquel vous pourrez ensuite vous connecter avec le client IRC de votre choix. Une maitrise basique de l'anglais technique est requise pour utiliser ces services. Notez que certains de ces services sont restreints à certains serveurs IRC, et ne peuvent donc pas être utilisés sur le seurvr IRC de NoBleme. Le processus de mise en place d'un bouncer gratuit est complexe, mais une fois fini vous n'aurez plus à vous en soucier et pourrez vous concentrer sur l'utilisation d'IRC au quotidien.
+{{external|https://wiki.znc.in/Providers|Des fournisseurs gratuits de ZNC}} existent (ZNC est le bouncer le plus communément utilisé). Chacun d'entre eux vous demande de suivre un processus unique et spécifique pour vous mettre en place un bouncer, auquel vous pourrez ensuite vous connecter avec le client IRC de votre choix. Une maitrise basique de l'anglais technique est requise pour utiliser ces services. Notez que certains de ces services sont restreints à certains serveurs IRC, et ne peuvent donc pas être utilisés sur le serveur IRC NoBleme. Le processus de mise en place d'un bouncer gratuit est complexe, mais une fois fini vous n'aurez plus à vous en soucier et pourrez vous concentrer sur l'utilisation d'IRC au quotidien.
 EOT
 );
 ___('irc_faq_bouncer_third_body_3', 'EN', <<<EOT
@@ -1236,7 +1304,7 @@ Connects to an existing IRC server. For example connecting to NoBleme's IRC serv
 EOT
 );
 ___('irc_faq_commands_connect',   'FR', <<<EOT
-Vous connecte à un serveur IRC existant. Par exemple, vous pouvez vous connecter au serveur IRC de NoBleme en écrivant <span class="monospace">/server irc.nobleme.com</span>. Vous pouvez vous connecter à plus d'un serveur IRC simultanément, et pouvez vous déconnecter d'un serveur spécifique en utilisant la commande <span class="monospace">/quit</span> dans un canal situé sur ce serveur.
+Vous connecte à un serveur IRC existant. Par exemple, vous pouvez vous connecter au serveur IRC NoBleme en écrivant <span class="monospace">/server irc.nobleme.com</span>. Vous pouvez vous connecter à plus d'un serveur IRC simultanément, et pouvez vous déconnecter d'un serveur spécifique en utilisant la commande <span class="monospace">/quit</span> dans un canal situé sur ce serveur.
 EOT
 );
 ___('irc_faq_commands_list',      'EN', <<<EOT
@@ -1252,7 +1320,7 @@ Joins an existing IRC channel. Some channels are private and can not be joined u
 EOT
 );
 ___('irc_faq_commands_join',      'FR', <<<EOT
-Rejoint un canal IRC existant. Certains canaux sont privés et ne peuvent pas être rejoints si vous ne disposez pas du droit d'y accéder. Vous pouvez trouver la liste des canaux du serveur IRC de NoBleme sur notre {{link|pages/social/irc?channels|liste des canaux}}, ou en utilisant la commande <span class="monospace">/list</span>.
+Rejoint un canal IRC existant. Certains canaux sont privés et ne peuvent pas être rejoints si vous ne disposez pas du droit d'y accéder. Vous pouvez trouver la liste des canaux du serveur IRC NoBleme sur notre {{link|pages/social/irc?channels|liste des canaux}}, ou en utilisant la commande <span class="monospace">/list</span>.
 EOT
 );
 ___('irc_faq_commands_names',     'EN', <<<EOT
