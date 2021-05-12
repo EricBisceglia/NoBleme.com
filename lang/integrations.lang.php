@@ -8,6 +8,45 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                  OTHER PLATFORMS                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Intro
+___('social_others_title',    'EN', "NoBleme on the Internet");
+___('social_others_title',    'FR', "NoBleme sur Internet");
+___('social_others_subtitle', 'EN', "Official NoBleme communities and accounts");
+___('social_others_subtitle', 'FR', "Communautés et comptes officiels NoBleme");
+___('social_others_body_1',   'EN', <<<EOT
+As of right now, there are no official NoBleme communities or accounts outside of this website, our {{link|pages/social/irc|IRC chat server}}, and {{link|pages/social/discord|NoBleme's Discord server}}. We plan at a later date to extend the reach of NoBleme, in order to give people more places to follow and interact with NoBleme.
+EOT
+);
+___('social_others_body_1',   'FR', <<<EOT
+Il n'existe actuellement aucune communauté NoBleme officielle à l'exception de ce site, notre {{link|pages/social/irc|serveur de chat IRC}}, et {{link|pages/social/discord|notre serveur Discord}}. Nous prévoyons dans le futur d'étendre la portée de NoBleme sur Internet afin d'offrir un plus grand nombre de façons de suivre et d'interagir avec NoBleme.
+EOT
+);
+___('social_others_body_2',   'EN', <<<EOT
+NoBleme has no direct link with any community, group, or individual claiming to represent NoBleme outside of those listed above. As we {{link|pages/doc/coc|strive for inclusivity}}, we want to ensure that any space officially associated with NoBleme is properly moderated and welcoming to all. Thus, we will not recognize any other spaces as being a part of the "official" NoBleme community.
+EOT
+);
+___('social_others_body_2',   'FR', <<<EOT
+NoBleme n'a aucun lien direct avec toute communauté, groupe, ou individu affirmant représenter NoBleme en dehors des espaces cités ci-dessus. Comme nous {{link|pages/doc/coc|prêtons beaucoup d'importance à l'inclusivité}}, nous voulons nous assurer que tout espace officiellement associé à NoBleme soit correctement modéré et accueillant pour toute personne le visitant. Par conséquent, nous ne reconnaîtrons pas d'autres espaces comme faisant partie de la communauté "officielle" de NoBleme.
+EOT
+);
+___('social_others_body_3',   'EN', <<<EOT
+This is not to say that you can not or should not create your own NoBleme related communities, groups, or pages. Feel free to do so, we will not try to claim ownership or intervene in any way as long as you respect the spirit of the main website and community: we do not believe in strong intellectual property, NoBleme is not a brand, it is merely a name that anyone can borrow if they feel a kinship towards it. We are already aware of a few NoBleme groups in various video games for example, and greatly appreciate that they have bonded over our community spirit enough to want to play together.
+EOT
+);
+___('social_others_body_3',   'FR', <<<EOT
+Cela ne signifie pas que vous ne devez ou pouvez pas créer vos propres communautés, groupes, ou pages liés à NoBleme. Libre à vous de le faire, nous ne comptons pas intervenir tant que vous respectez l'esprit général de la communauté principale : nous ne croyons pas en la propriété intellectuelle forte, NoBleme n'est pas une marque, juste un nom que n'importe qui est libre d'emprunter. Nous sommes par exemple au courant de l'existence de groupes NoBleme dans divers jeux vidéo, et apprécions que des personnes ressentent un lien assez fort autour de notre communauté pour avoir envie d'en faire partie même en dehors des cercles officiels.
+EOT
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                  DISCORD WEBHOOK                                                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -749,11 +788,11 @@ Lorsque nous pesons les pour et les contre d'IRC en tant que plateforme de commu
 EOT
 );
 ___('irc_faq_why_habit_body_2',   'EN', <<<EOT
-For those of you who are not convinced by our arguments for IRC but still want to interact with NoBleme's community, you can also find {{link|todo_link|NoBleme on other platforms}} (including the real time chat service Discord). However, IRC will remain the core of NoBleme's community in the foreseeable future, these other platforms are only peripheral services set up to allow those who don't use IRC to keep in touch with NoBleme's activity.
+For those of you who are not convinced by our arguments for IRC but still want to interact with NoBleme's community, you can also find {{link|pages/social/others|NoBleme on other platforms}} (including the real time chat service Discord). However, IRC will remain the core of NoBleme's community in the foreseeable future, these other platforms are only peripheral services set up to allow those who don't use IRC to keep in touch with NoBleme's activity.
 EOT
 );
 ___('irc_faq_why_habit_body_2',   'FR', <<<EOT
-Si nos arguments en faveur d'IRC ne sont pas assez convaincants mais que vous souhaitez tout de même interagir avec la communauté de NoBleme, vous pouvez retrouver {{link|todo_link|NoBleme sur d'autres platformes}} (incluant le service de chat en temps réel Discord). Toutefois, IRC restera le cœur de la communauté de NoBleme dans le futur proche, ces autres plateformes ne sont que des services périphériques mis en place afin de permettre à nos membres qui n'utilisent pas IRC de se tenir au courant de l'activité de NoBleme.
+Si nos arguments en faveur d'IRC ne sont pas assez convaincants mais que vous souhaitez tout de même interagir avec la communauté de NoBleme, vous pouvez retrouver {{link|pages/social/others|NoBleme sur d'autres platformes}} (incluant le service de chat en temps réel Discord). Toutefois, IRC restera le cœur de la communauté de NoBleme dans le futur proche, ces autres plateformes ne sont que des services périphériques mis en place afin de permettre à nos membres qui n'utilisent pas IRC de se tenir au courant de l'activité de NoBleme.
 EOT
 );
 
@@ -815,11 +854,11 @@ En prenant tous ces éléments en considération, il est très probable que nous
 EOT
 );
 ___('irc_faq_why_summary_body_2', 'EN', <<<EOT
-If you are scared by the barrier of entry, or do not wish to use IRC because it feels outdated, know that we understand your frustration, but be aware that we have no plan to change platform. It will remain the heart of NoBleme's community in the foreseeable future. You can still keep up with NoBleme's activity and interact with some of our community members on {{link|todo_link|other platforms}}, including real time chat on {{link|pages/social/discord|Discord}}.
+If you are scared by the barrier of entry, or do not wish to use IRC because it feels outdated, know that we understand your frustration, but be aware that we have no plan to change platform. It will remain the heart of NoBleme's community in the foreseeable future. You can still keep up with NoBleme's activity and interact with some of our community members on {{link|pages/social/others|other platforms}}, including real time chat on {{link|pages/social/discord|Discord}}.
 EOT
 );
 ___('irc_faq_why_summary_body_2', 'FR', <<<EOT
-Si la barrière d'entrée vous repousse, ou si vous ne voulez pas utiliser IRC pour une raison quelconque, sachez que nous comprenons votre frustration, mais sachez également que nous ne prévoyons actuellement pas de changer de plateforme : IRC restera le cœur de la communauté de NoBleme dans le futur proche. Vous pouvez suivre l'activité de NoBleme et interagir avec une partie de sa communauté sur {{link|todo_link|d'autres plateformes}}, incluant le service de chat en temps réel {{link|pages/social/discord|Discord}}.
+Si la barrière d'entrée vous repousse, ou si vous ne voulez pas utiliser IRC pour une raison quelconque, sachez que nous comprenons votre frustration, mais sachez également que nous ne prévoyons actuellement pas de changer de plateforme : IRC restera le cœur de la communauté de NoBleme dans le futur proche. Vous pouvez suivre l'activité de NoBleme et interagir avec une partie de sa communauté sur {{link|pages/social/others|d'autres plateformes}}, incluant le service de chat en temps réel {{link|pages/social/discord|Discord}}.
 EOT
 );
 

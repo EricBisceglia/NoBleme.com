@@ -571,12 +571,12 @@ ___('bbcodes_spoiler_show', 'FR', "VOIR LE CONTENU CACHÉ");
 
 
 // NBCodes
-___('nbcodes_video_hidden',       'EN', "This video is hidden ({{link|{{1}}todo_link|privacy options}})");
-___('nbcodes_video_hidden',       'FR', "Cette vidéo est masquée ({{link|{{1}}todo_link|options de vie privée}}");
-___('nbcodes_video_hidden_small', 'EN', "Video hidden ({{link|{{1}}todo_link|privacy options}})");
-___('nbcodes_video_hidden_small', 'FR', "Vidéo masquée ({{link|{{1}}todo_link|options de vie privée}})");
-___('nbcodes_trends_hidden',      'EN', "This Google trends graph is hidden ({{link|{{1}}todo_link|privacy options}})");
-___('nbcodes_trends_hidden',      'FR', "Ce graphe Google trends est masqué ({{link|{{1}}todo_link|options de vie privée}})");
+___('nbcodes_video_hidden',       'EN', "This video is hidden ({{link|{{1}}pages/account/settings_privacy|privacy options}})");
+___('nbcodes_video_hidden',       'FR', "Cette vidéo est masquée ({{link|{{1}}pages/account/settings_privacy|options de vie privée}}");
+___('nbcodes_video_hidden_small', 'EN', "Video hidden ({{link|{{1}}pages/account/settings_privacy|privacy options}})");
+___('nbcodes_video_hidden_small', 'FR', "Vidéo masquée ({{link|{{1}}pages/account/settings_privacy|options de vie privée}})");
+___('nbcodes_trends_hidden',      'EN', "This Google trends graph is hidden ({{link|{{1}}pages/account/settings_privacy|privacy options}})");
+___('nbcodes_trends_hidden',      'FR', "Ce graphe Google trends est masqué ({{link|{{1}}pages/account/settings_privacy|options de vie privée}})");
 
 
 
@@ -1011,11 +1011,11 @@ Par respect pour la {{link++|pages/doc/privacy|politique de confidentialité|bol
 EOT
 );
 ___('users_lost_access_solution', 'EN', <<<EOT
-If you have lost access to your account (forgotten username, forgotten password, or otherwise), the only way to recover that access is to go on NoBleme's {{link++|todo_link|NoBleme's IRC chat server|bold|{{1}}}} and ask for a {{link++|todo_link|website administrator|bold|{{1}}}} to manually reset your account's password. No need to worry about identity usurpation, there is a strict process in place that will allow the administrator to verify your identity before doing the resetting.
+If you have lost access to your account (forgotten username, forgotten password, or otherwise), the only way to recover that access is to go on NoBleme's {{link++|pages/social/irc|NoBleme's IRC chat server|bold|{{1}}}} and ask for a {{link++|pages/users/admins|website administrator|bold|{{1}}}} to manually reset your account's password. No need to worry about identity usurpation, there is a strict process in place that will allow the administrator to verify your identity before doing the resetting.
 EOT
 );
 ___('users_lost_access_solution', 'FR', <<<EOT
-Si vous avez perdu l'accès à votre compte (pseudonyme oublié, mot de passe oublié, ou autre), la seule façon de récupérer cet accès est d'aller sur le {{link++|todo_link|chat IRC NoBleme|bold|{{1}}}} afin d'y demander à {{link++|todo_link|l'équipe administrative|bold|{{1}}}} de manuellement remettre à zéro le mot de passe de votre compte. Pas d'inquiétude pour ce qui est de l'usurpation d'identité, un processus strict de vérification est en place et devra être respecté avant que l'administration puisse remettre à zéro votre mot de passe et vous rendre l'accès à votre compte perdu.
+Si vous avez perdu l'accès à votre compte (pseudonyme oublié, mot de passe oublié, ou autre), la seule façon de récupérer cet accès est d'aller sur le {{link++|pages/social/irc|chat IRC NoBleme|bold|{{1}}}} afin d'y demander à {{link++|pages/users/admins|l'équipe administrative|bold|{{1}}}} de manuellement remettre à zéro le mot de passe de votre compte. Pas d'inquiétude pour ce qui est de l'usurpation d'identité, un processus strict de vérification est en place et devra être respecté avant que l'administration puisse remettre à zéro votre mot de passe et vous rendre l'accès à votre compte perdu.
 EOT
 );
 

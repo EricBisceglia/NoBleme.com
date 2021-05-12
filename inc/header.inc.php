@@ -617,7 +617,7 @@ $javascripts .= '
           <?=__link('pages/social/discord', __('submenu_social_platforms_discord'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_social_platforms_others'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/social/others', __('submenu_social_platforms_others'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 

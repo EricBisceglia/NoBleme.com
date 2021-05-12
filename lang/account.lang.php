@@ -99,7 +99,7 @@ ___('users_register_private_message_title', 'FR', "Bienvenue sur NoBleme !");
 ___('users_register_private_message',       'EN', <<<EOT
 [size=1.3][b]Welcome to NoBleme![/b][/size]
 
-Now that you have registered, why not join the community where it is most active: on [url={{1}}todo_link]the IRC chat server[/url].
+Now that you have registered, why not join the community where it is most active: on [url={{1}}pages/social/irc]the IRC chat server[/url].
 
 If you are curious about what is happening on the website and within its community, why not check out the [url={{1}}pages/nobleme/activity]recent activity page[/url] - that's what it's here for!
 
@@ -110,7 +110,7 @@ EOT
 ___('users_register_private_message',       'FR', <<<EOT
 [size=1.3][b]Bienvenue sur NoBleme ![/b][/size]
 
-Maintenant que vous avez rejoint le site, pourquoi ne pas rejoindre la communauté là où elle est active : sur [url={{1}}todo_link]le serveur de discussion IRC[/url].
+Maintenant que vous avez rejoint le site, pourquoi ne pas rejoindre la communauté là où elle est active : sur [url={{1}}pages/social/irc]le serveur de discussion IRC[/url].
 
 Si vous voulez suivre ce qui est publié sur le site et ce qui se passe au sein de sa communauté, vous pouvez le faire via [url={{1}}pages/nobleme/activity]l'activité récente[/url].
 
@@ -194,11 +194,11 @@ ___('account_nsfw_confirm', 'FR', "Vos réglages ont été mis à jour");
 
 // Header
 ___('account_privacy_intro',    'EN', <<<EOT
-On NoBleme, we highly value online privacy. As our {{link|pages/doc/privacy|privacy policy}} states, we will only gather the bare minimum {{link|todo_link|user data}}, we will not use it in ways other than the bare minimum required to run the website, we will never share or sell your personal data, and we let you {{link|todo_link|fully opt out}} at any time.
+On NoBleme, we highly value online privacy. As our {{link|pages/doc/privacy|privacy policy}} states, we will only gather the bare minimum {{link|pages/doc/data|user data}}, we will not use it in ways other than the bare minimum required to run the website, we will never share or sell your personal data, and we let you {{link|pages/account/settings_privacy|fully opt out}} at any time.
 EOT
 );
 ___('account_privacy_intro',    'FR', <<<EOT
-Sur NoBleme, nous prêtons beaucoup d'importance au respect de votre vie privée. Comme indiqué dans notre {{link|pages/doc/privacy|politique de confidentialité}}, nous conservons le strict minimum de vos {{link|todo_link|données personnelles}}, ne les utilisons que dans le fonctionnement interne du site, n'avons pas l'intention de partager ou vendre vos données personnelles, et vous offrons la possibilité de {{link|todo_link|tout supprimer}} à tout moment.
+Sur NoBleme, nous prêtons beaucoup d'importance au respect de votre vie privée. Comme indiqué dans notre {{link|pages/doc/privacy|politique de confidentialité}}, nous conservons le strict minimum de vos {{link|pages/doc/data|données personnelles}}, ne les utilisons que dans le fonctionnement interne du site, n'avons pas l'intention de partager ou vendre vos données personnelles, et vous offrons la possibilité de {{link|pages/account/settings_privacy|tout supprimer}} à tout moment.
 EOT
 );
 ___('account_privacy_others',   'EN', <<<EOT
@@ -246,11 +246,11 @@ ___('account_privacy_online',   'FR', "Afficher mon compte sur {{link|pages/user
 
 // Header
 ___('account_email_intro',  'EN', <<<EOT
-On NoBleme, as we highly value {{link|todo_link|privacy}}, we do not require any form of personal identification. You are free to have an account with no e-mail address. If you do choose to enter an e-mail address, know that it will never be shown publicly on the website, and that e-mails will never be sent to you from NoBleme. The only usage we have for your e-mail address is as a tool for recovering access to your account, in the event that you would forget your username and/or password.
+On NoBleme, as we highly value {{link|pages/doc/privacy|privacy}}, we do not require any form of personal identification. You are free to have an account with no e-mail address. If you do choose to enter an e-mail address, know that it will never be shown publicly on the website, and that e-mails will never be sent to you from NoBleme. The only usage we have for your e-mail address is as a tool for recovering access to your account, in the event that you would forget your username and/or password.
 EOT
 );
 ___('account_email_intro',  'FR', <<<EOT
-Sur NoBleme, comme nous respectons {{link|todo_link|votre vie privée}}, nous n'avons pas besoin de la moindre preuve d'identité. Vous êtes libre de ne pas avoir d'adresse e-mail liée à votre compte. Si vous choisissez d'enregistrer une adresse e-mail, sachez qu'elle ne sera jamais affichée publiquement sur le site, et qu'aucun e-mail ne vous sera envoyé par NoBleme. La seule utilisation que nous faisons des adresses e-mail est pour la récupération de l'accès à votre compte dans le cas où vous oublieriez votre pseudonyme et/ou mot de passe.
+Sur NoBleme, comme nous respectons {{link|pages/doc/privacy|votre vie privée}}, nous n'avons pas besoin de la moindre preuve d'identité. Vous êtes libre de ne pas avoir d'adresse e-mail liée à votre compte. Si vous choisissez d'enregistrer une adresse e-mail, sachez qu'elle ne sera jamais affichée publiquement sur le site, et qu'aucun e-mail ne vous sera envoyé par NoBleme. La seule utilisation que nous faisons des adresses e-mail est pour la récupération de l'accès à votre compte dans le cas où vous oublieriez votre pseudonyme et/ou mot de passe.
 EOT
 );
 

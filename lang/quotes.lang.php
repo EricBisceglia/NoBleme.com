@@ -24,11 +24,11 @@ ___('quotes_deleted',       'FR', "Citations supprimées");
 ___('quotes_subtitle',      'EN', "Words from NoBleme");
 ___('quotes_subtitle',      'FR', "Paroles de NoBleme");
 ___('quotes_header_intro',  'EN', <<<EOT
-Sometimes, funny conversations or monologues happen on NoBleme, mostly on our {{link|todo_link|IRC chat server}}. This page aims at preserving them for posterity. You will find all of our quotes below, presented to you in reverse chronological order. We have quality guidelines in place: we'd rather have a few great quotes than a lot of average ones, and we'd rather laugh with people than laugh at people. If you witness a conversation on NoBleme worthy of joining this collection, you can {{link|todo_link|submit a quote proposal}}.
+Sometimes, funny conversations or monologues happen on NoBleme, mostly on our {{link|pages/social/irc|IRC chat server}}. This page aims at preserving them for posterity. You will find all of our quotes below, presented to you in reverse chronological order. We have quality guidelines in place: we'd rather have a few great quotes than a lot of average ones, and we'd rather laugh with people than laugh at people. If you witness a conversation on NoBleme worthy of joining this collection, you can {{link|pages/quotes/submit|submit a quote proposal}}.
 EOT
 );
 ___('quotes_header_intro',  'FR', <<<EOT
-Parfois, des conversations ou monologues amusants ont lieu sur NoBleme, principalement sur notre {{link|todo_link|serveur de chat IRC}}. Cette page a pour but de les conserver pour la postérité. Vous trouverez toutes les citations ci-dessous, présentées dans l'ordre antéchronologique. Des consignes de qualité sont appliquées : nous préférons avoir un petit nombre de citations drôles plutôt qu'un grand nombre de citations bof, et nous préférons rire avec les gens que rire des gens. Si vous êtes témoin d'une conversation sur NoBleme qui mérite d'être immortalisée sur cette page, vous pouvez {{link|todo_link|proposer une citation}}.
+Parfois, des conversations ou monologues amusants ont lieu sur NoBleme, principalement sur notre {{link|pages/social/irc|serveur de chat IRC}}. Cette page a pour but de les conserver pour la postérité. Vous trouverez toutes les citations ci-dessous, présentées dans l'ordre antéchronologique. Des consignes de qualité sont appliquées : nous préférons avoir un petit nombre de citations drôles plutôt qu'un grand nombre de citations bof, et nous préférons rire avec les gens que rire des gens. Si vous êtes témoin d'une conversation sur NoBleme qui mérite d'être immortalisée sur cette page, vous pouvez {{link|pages/quotes/submit|proposer une citation}}.
 EOT
 );
 ___('quotes_header_blur',   'EN', <<<EOT

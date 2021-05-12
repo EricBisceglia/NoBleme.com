@@ -121,6 +121,6 @@ This project is under MIT license, which means that it is extremely permissive: 
 Something went wrong
 ===
 
-If you're stuck trying to read, install, or use this codebase, you can always visit the #dev channel of [NoBleme's IRC server](https://nobleme.com/todo_link). Ask your question, be very patient (timezones and private lives might be in the way), and someone should eventually help you out.
+If you're stuck trying to read, install, or use this codebase, you can always visit the #dev channel of [NoBleme's IRC server](https://nobleme.com/pages/social/irc). Ask your question, be very patient (timezones and private lives might be in the way), and someone should eventually help you out.
 
 NoBleme is a welcoming community, so don't be scared - just hop on IRC and ask away. There's no shame in being stuck, and bug reports are more than welcome.

@@ -417,13 +417,13 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'quotes_new_fr')
   {
     $return['css']  = 'brown bold';
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/quotes/'.$id;
     $return['FR']   = 'Citation #'.$id.' ajoutée à la collection';
   }
   else if($type === 'quotes_new_en')
   {
     $return['css']  = 'brown bold';
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/quotes/'.$id;
     $return['EN']   = 'Quote #'.$id.' added to the collection';
     $return['FR']   = 'Citation anglophone #'.$id.' ajoutée à la collection';
   }

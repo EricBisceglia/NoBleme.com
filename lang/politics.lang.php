@@ -1459,11 +1459,11 @@ NoBleme héberge un {{link|pages/politics/manifesto|manifeste politique}} qui pr
 EOT
 );
 ___('politics_faq_nobleme_2',     'EN', <<<EOT
-However, if you are uneasy around the type of content preached in this manifesto, then odds are you might be uneasy on NoBleme as a whole. Inversely, if you are comfortable around the type of content preached by this manifesto, then you might find good company in joining {{link|todo_link|NoBleme's community}}.
+However, if you are uneasy around the type of content preached in this manifesto, then odds are you might be uneasy on NoBleme as a whole. Inversely, if you are comfortable around the type of content preached by this manifesto, then you might find good company in joining {{link|pages/social/irc|NoBleme's community}}.
 EOT
 );
 ___('politics_faq_nobleme_2',     'FR', <<<EOT
-Toutefois, si vous n'êtes pas confortable autour du contenu de ce manifeste, il est probable que vous ne soyez également pas confortable autour de NoBleme en général. Inversement, si vous êtes confortable avec ce type de contenu, vous vous entendrez probablement bien avec {{link|todo_link|la communauté de NoBleme}}.
+Toutefois, si vous n'êtes pas confortable autour du contenu de ce manifeste, il est probable que vous ne soyez également pas confortable autour de NoBleme en général. Inversement, si vous êtes confortable avec ce type de contenu, vous vous entendrez probablement bien avec {{link|pages/social/irc|la communauté de NoBleme}}.
 EOT
 );
 ___('politics_faq_nobleme_3',     'EN', <<<EOT

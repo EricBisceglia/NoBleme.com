@@ -81,7 +81,7 @@ ___('nobleme_home_tour',        'EN', <<<EOT
 </p>
 <ul class="padding_top padding_bot">
   <li>
-    {{link++|todo_link|The IRC chat server|bold|}} is where the community hangs out and communicates. Come join!
+    {{link++|pages/social/irc|The IRC chat server|bold|}} is where the community hangs out and communicates. Come join!
   </li>
   <li class="smallpadding_top">
     {{link++|todo_link|The 21st century compendium|bold|}} is a deep dive into modern culture, society, slang, and memes.
@@ -101,7 +101,7 @@ ___('nobleme_home_tour',        'FR', <<<EOT
 </p>
 <ul class="padding_top padding_bot">
   <li>
-    {{link++|todo_link|Le serveur de chat IRC|bold|}}, où vous pourrez trouver et interagir avec la communauté de NoBleme.
+    {{link++|pages/social/irc|Le serveur de chat IRC|bold|}}, où vous pourrez trouver et interagir avec la communauté de NoBleme.
   </li>
   <li class="smallpadding_top">
     {{link++|todo_link|Une étude du 21ème siècle|bold|}}, où sont analysés la culture, la société, le langage, et les memes.
@@ -291,11 +291,11 @@ Les premières années de NoBleme furent remplies d'essais, de succès, et d'éc
 EOT
 );
 ___('nobleme_history_community2', 'EN', <<<EOT
-At this point, a rational person would have stopped the experiment, learned a few lessons from it, and moved on. Our protagonist's strategy was quite the opposite: throw everything at the wall and see what sticks. Within the first months of 2006, many different new contents were added to NoBleme: an {{link|todo_link|IRC chat server}} for the community to interact in real time, some {{link|todo_link|real life meetups}} to create bonds between those who lived around Paris, an arcade page full of small video games with high score contests to compete for, a text based roleplaying game over IRC, a forum based automated cycling race simulator, a short story writing competition, a {{external|https://en.wikipedia.org/wiki/Wiki|wiki}} open to everyone which would eventually become a documentation of early internet culture, and a browser based strategy game in which users would become {{external|https://en.wikipedia.org/wiki/Mecha|mecha}} pilots and fight each other over month long seasons.
+At this point, a rational person would have stopped the experiment, learned a few lessons from it, and moved on. Our protagonist's strategy was quite the opposite: throw everything at the wall and see what sticks. Within the first months of 2006, many different new contents were added to NoBleme: an {{link|pages/social/irc|IRC chat server}} for the community to interact in real time, some {{link|todo_link|real life meetups}} to create bonds between those who lived around Paris, an arcade page full of small video games with high score contests to compete for, a text based roleplaying game over IRC, a forum based automated cycling race simulator, a short story writing competition, a {{external|https://en.wikipedia.org/wiki/Wiki|wiki}} open to everyone which would eventually become a documentation of early internet culture, and a browser based strategy game in which users would become {{external|https://en.wikipedia.org/wiki/Mecha|mecha}} pilots and fight each other over month long seasons.
 EOT
 );
 ___('nobleme_history_community2', 'FR', <<<EOT
-C'est là qu'une personne rationelle aurait arrêté l'expérience, en aurait tiré des leçons, et serait passée à autre chose. Mais notre protagoniste a choisi la stratégie opposée : tenter le plus de choses possibles et voir ce qui fonctionnait. En 2006, de nombreux nouveaux contenus furent ajoutés à NoBleme : un {{link|todo_link|serveur de chat IRC}} pour que la communauté puisse interagir en temps réel, des {{link|todo_link|rencontres IRL}} afin de créer des liens entre les membres habitant en région parisienne, une arcade remplie de minijeux et de concours pour obtenir les meilleurs scores, un jeu de rôle via IRC, un simulateur de course cycliste, une compétition d'écriture de nouvelles, un {{external|https://fr.wikipedia.org/wiki/Wiki|wiki}} ouvert à tous les membres qui deviendra par la suite une documentation de la culture Internet, et un jeu de stratégie dans lequel les membres incarnaient des pilotes de {{external|https://fr.wikipedia.org/wiki/Mecha|mechas}} qui se battaient entre eux.
+C'est là qu'une personne rationelle aurait arrêté l'expérience, en aurait tiré des leçons, et serait passée à autre chose. Mais notre protagoniste a choisi la stratégie opposée : tenter le plus de choses possibles et voir ce qui fonctionnait. En 2006, de nombreux nouveaux contenus furent ajoutés à NoBleme : un {{link|pages/social/irc|serveur de chat IRC}} pour que la communauté puisse interagir en temps réel, des {{link|todo_link|rencontres IRL}} afin de créer des liens entre les membres habitant en région parisienne, une arcade remplie de minijeux et de concours pour obtenir les meilleurs scores, un jeu de rôle via IRC, un simulateur de course cycliste, une compétition d'écriture de nouvelles, un {{external|https://fr.wikipedia.org/wiki/Wiki|wiki}} ouvert à tous les membres qui deviendra par la suite une documentation de la culture Internet, et un jeu de stratégie dans lequel les membres incarnaient des pilotes de {{external|https://fr.wikipedia.org/wiki/Mecha|mechas}} qui se battaient entre eux.
 EOT
 );
 ___('nobleme_history_community3', 'EN', <<<EOT
@@ -510,11 +510,11 @@ Pourquoi pas ? Si ce que vous voyez sur NoBleme vous plait, rejoignez la commun
 EOT
 );
 ___('nobleme_existential_why2',     'EN', <<<EOT
-The community is mostly active on the {{link|todo_link|IRC chat server}}, so hop in there and have a chat with us. Who knows, maybe we'll like eachother. And maybe we won't. Isn't it worth a try? If you feel shy, you can also just come and watch what happens on IRC, and judge by yourself whether you like it or not. If you do, cool. If you don't, it's fine, we'd rather have a community of people who enjoy being in each other's presence than force anyone to join us.
+The community is mostly active on the {{link|pages/social/irc|IRC chat server}}, so hop in there and have a chat with us. Who knows, maybe we'll like eachother. And maybe we won't. Isn't it worth a try? If you feel shy, you can also just come and watch what happens on IRC, and judge by yourself whether you like it or not. If you do, cool. If you don't, it's fine, we'd rather have a community of people who enjoy being in each other's presence than force anyone to join us.
 EOT
 );
 ___('nobleme_existential_why2',     'FR', <<<EOT
-Nous sommes principalement actifs sur le {{link|todo_link|serveur de chat IRC}}, venez y discuter avec nous. Qui sait, peut-être que nous nous apprécierons. Ou peut-être pas. Il n'y a rien à perdre à essayer. Si vous êtes timide, vous pouvez également venir observer ce qui s'y passe, et décider ensuite de si vous vous y sentez à l'aise ou non. Si oui, tant mieux. Si non, tant pis, nous préférons avoir une petite communauté de gens qui sont à l'aise entre eux que de pousser le plus possible de gens à nous rejoindre même s'ils ne seraient pas confortables parmi nous.
+Nous sommes principalement actifs sur le {{link|pages/social/irc|serveur de chat IRC}}, venez y discuter avec nous. Qui sait, peut-être que nous nous apprécierons. Ou peut-être pas. Il n'y a rien à perdre à essayer. Si vous êtes timide, vous pouvez également venir observer ce qui s'y passe, et décider ensuite de si vous vous y sentez à l'aise ou non. Si oui, tant mieux. Si non, tant pis, nous préférons avoir une petite communauté de gens qui sont à l'aise entre eux que de pousser le plus possible de gens à nous rejoindre même s'ils ne seraient pas confortables parmi nous.
 EOT
 );
 ___('nobleme_existential_why3',     'EN', <<<EOT
