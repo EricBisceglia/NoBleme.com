@@ -135,14 +135,22 @@ EOT
 
 
 // Join Discord
-___('discord_join_title', 'EN', "Join NoBleme's Discord server");
-___('discord_join_title', 'FR', "Rejoindre le serveur Discord NoBleme");
-___('discord_join_body',  'EN', <<<EOT
+___('discord_join_title',   'EN', "Join NoBleme's Discord server");
+___('discord_join_title',   'FR', "Rejoindre le serveur Discord NoBleme");
+___('discord_join_embed',   'EN', <<<EOT
 You can join NoBleme's Discord server by {{external|https://discord.gg/XTd3qQKZqV|clicking this link}} or by using the Discord widget below. There is no need to register a Discord account to use NoBleme's Discord server, but you might have a better experience with the platform if you do register one.
 EOT
 );
-___('discord_join_body',  'FR', <<<EOT
+___('discord_join_embed',   'FR', <<<EOT
 Vous pouvez rejoindre le serveur Discord NoBleme en {{external|https://discord.gg/XTd3qQKZqV|cliquant ce lien}} ou via l'intégration ci-dessous. Il n'est pas nécessaire de créer de compte sur Discord pour utiliser le serveur Discord NoBleme, mais vous aurez probablement une meilleure expérience avec la plateforme si vous en créez un.
+EOT
+);
+___('discord_join_noembed', 'EN', <<<EOT
+You can join NoBleme's Discord server by {{external|https://discord.gg/XTd3qQKZqV|clicking this link}}. There is no need to register a Discord account to use NoBleme's Discord server, but you might have a better experience with the platform if you do register one.
+EOT
+);
+___('discord_join_noembed', 'FR', <<<EOT
+Vous pouvez rejoindre le serveur Discord NoBleme en {{external|https://discord.gg/XTd3qQKZqV|cliquant ce lien}}. Il n'est pas nécessaire de créer de compte sur Discord pour utiliser le serveur Discord NoBleme, mais vous aurez probablement une meilleure expérience avec la plateforme si vous en créez un.
 EOT
 );
 
@@ -859,6 +867,17 @@ EOT
 );
 ___('irc_faq_why_summary_body_2', 'FR', <<<EOT
 Si la barrière d'entrée vous repousse, ou si vous ne voulez pas utiliser IRC pour une raison quelconque, sachez que nous comprenons votre frustration, mais sachez également que nous ne prévoyons actuellement pas de changer de plateforme : IRC restera le cœur de la communauté de NoBleme dans le futur proche. Vous pouvez suivre l'activité de NoBleme et interagir avec une partie de sa communauté sur {{link|pages/social/others|d'autres plateformes}}, incluant le service de chat en temps réel {{link|pages/social/discord|Discord}}.
+EOT
+);
+
+
+// FAQ: Browser client
+___('irc_faq_browser_body', 'EN', <<<EOT
+Nothing is showing on this page as you have disabled KiwiIRC's embedded client in your {{link|pages/account/settings_privacy|privacy settings}}.
+EOT
+);
+___('irc_faq_browser_body', 'FR', <<<EOT
+Cette page est vide car vous avez désactivé l'intégration du client web KiwiIRC dans vos {{link|pages/account/settings_privacy|options de vie privée}}.
 EOT
 );
 

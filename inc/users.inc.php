@@ -987,6 +987,8 @@ function user_settings_privacy() : array
   // By default, set all of the privacy values to 0
   $privacy_youtube    = 0;
   $privacy_trends     = 0;
+  $privacy_discord    = 0;
+  $privacy_kiwiirc    = 0;
   $privacy_online     = 0;
 
   // If the user is logged in, fetch their third party privacy settings
@@ -998,6 +1000,8 @@ function user_settings_privacy() : array
     // Fetch the settings
     $dprivacy = mysqli_fetch_array(query("  SELECT  users_settings.hide_youtube       AS 'user_youtube' ,
                                                     users_settings.hide_google_trends AS 'user_trends'  ,
+                                                    users_settings.hide_discord       AS 'user_discord' ,
+                                                    users_settings.hide_kiwiirc       AS 'user_kiwiirc' ,
                                                     users_settings.hide_from_activity AS 'user_online'
                                             FROM    users_settings
                                             WHERE   users_settings.fk_users = '$user_id' "));
@@ -1005,12 +1009,16 @@ function user_settings_privacy() : array
     // Set the privacy values to those wanted by the user
     $privacy_youtube  = $dprivacy['user_youtube'];
     $privacy_trends   = $dprivacy['user_trends'];
+    $privacy_discord  = $dprivacy['user_discord'];
+    $privacy_kiwiirc  = $dprivacy['user_kiwiirc'];
     $privacy_online   = $dprivacy['user_online'];
   }
 
   // Return those privacy settings, neatly folded in a cozy array
   return array( 'youtube' => $privacy_youtube ,
                 'trends'  => $privacy_trends  ,
+                'discord' => $privacy_discord ,
+                'kiwiirc' => $privacy_kiwiirc ,
                 'online'  => $privacy_online  );
 }
 

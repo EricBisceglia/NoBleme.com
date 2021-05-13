@@ -40,6 +40,14 @@ if(isset($_POST['account_privacy_youtube']))
 if(isset($_POST['account_privacy_trends']))
   account_update_settings('hide_google_trends', form_fetch_element('account_privacy_trends'));
 
+// Discord
+if(isset($_POST['account_privacy_discord']))
+  account_update_settings('hide_discord', form_fetch_element('account_privacy_discord'));
+
+// KiwiIRC
+if(isset($_POST['account_privacy_kiwiirc']))
+  account_update_settings('hide_kiwiirc', form_fetch_element('account_privacy_kiwiirc'));
+
 // Who's online
 if(isset($_POST['account_privacy_online']))
   account_update_settings('hide_from_activity', form_fetch_element('account_privacy_online'));
@@ -58,6 +66,10 @@ $privacy_youtube_yes  = ($privacy_settings['youtube'])  ? '' : ' checked';
 $privacy_youtube_no   = ($privacy_settings['youtube'])  ? ' checked' : '';
 $privacy_trends_yes   = ($privacy_settings['trends'])   ? '' : ' checked';
 $privacy_trends_no    = ($privacy_settings['trends'])   ? ' checked' : '';
+$privacy_discord_yes  = ($privacy_settings['discord'])  ? '' : ' checked';
+$privacy_discord_no   = ($privacy_settings['discord'])  ? ' checked' : '';
+$privacy_kiwiirc_yes  = ($privacy_settings['kiwiirc'])  ? '' : ' checked';
+$privacy_kiwiirc_no   = ($privacy_settings['kiwiirc'])  ? ' checked' : '';
 $privacy_online_yes   = ($privacy_settings['online'])   ? '' : ' checked';
 $privacy_online_no    = ($privacy_settings['online'])   ? ' checked' : '';
 
@@ -106,6 +118,18 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <label class="label_inline" for="account_privacy_trends_0"><?=string_change_case(__('yes'), 'initials')?></label>
       <input type="radio" id="account_privacy_trends_1" name="account_privacy_trends[]" value="1" onchange="settings_privacy_update('trends');"<?=$privacy_trends_no?>>
       <label class="label_inline" for="account_privacy_trends_1"><?=string_change_case(__('no'), 'initials')?></label>
+
+      <label class="padding_top"><?=__('account_privacy_discord')?></label>
+      <input type="radio" id="account_privacy_discord_0" name="account_privacy_discord[]" value="0" onchange="settings_privacy_update('discord');"<?=$privacy_discord_yes?>>
+      <label class="label_inline" for="account_privacy_discord_0"><?=string_change_case(__('yes'), 'initials')?></label>
+      <input type="radio" id="account_privacy_discord_1" name="account_privacy_discord[]" value="1" onchange="settings_privacy_update('discord');"<?=$privacy_discord_no?>>
+      <label class="label_inline" for="account_privacy_discord_1"><?=string_change_case(__('no'), 'initials')?></label>
+
+      <label class="padding_top"><?=__('account_privacy_kiwiirc')?></label>
+      <input type="radio" id="account_privacy_kiwiirc_0" name="account_privacy_kiwiirc[]" value="0" onchange="settings_privacy_update('kiwiirc');"<?=$privacy_kiwiirc_yes?>>
+      <label class="label_inline" for="account_privacy_kiwiirc_0"><?=string_change_case(__('yes'), 'initials')?></label>
+      <input type="radio" id="account_privacy_kiwiirc_1" name="account_privacy_kiwiirc[]" value="1" onchange="settings_privacy_update('kiwiirc');"<?=$privacy_kiwiirc_no?>>
+      <label class="label_inline" for="account_privacy_kiwiirc_1"><?=string_change_case(__('no'), 'initials')?></label>
 
       <label class="padding_top"><?=__('account_privacy_online')?></label>
       <input type="radio" id="account_privacy_online_0" name="account_privacy_online[]" value="0" onchange="settings_privacy_update('online');"<?=$privacy_online_yes?>>

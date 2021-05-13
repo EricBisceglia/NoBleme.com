@@ -463,6 +463,8 @@ CREATE TABLE IF NOT EXISTS `users_settings` (
   `show_nsfw_content` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `hide_youtube` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `hide_google_trends` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `hide_discord` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `hide_kiwiirc` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `hide_from_activity` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `quotes_languages` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),

@@ -18,6 +18,22 @@ $page_description = "NoBleme's official Discord server";
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                     BACK END                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Privacy settings
+
+// Fetch current Discord related privacy settings
+$privacy_settings   = user_settings_privacy();
+$discord_hide_embed = $privacy_settings['discord'];
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
@@ -70,13 +86,23 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('discord_join_title')?>
   </h5>
 
+  <?php if($discord_hide_embed) { ?>
+
   <p class="tinypadding_bot">
-    <?=__('discord_join_body')?>
+    <?=__('discord_join_noembed')?>
+  </p>
+
+  <?php } else { ?>
+
+  <p class="tinypadding_bot">
+    <?=__('discord_join_embed')?>
   </p>
 
   <div class="padding_top">
     <iframe src="https://discord.com/widget?id=694151150902968320&theme=dark" class="indiv" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
   </div>
+
+  <?php } ?>
 
 </div>
 

@@ -103,6 +103,16 @@ $page_url = (isset($_GET['channels']))  ? 'pages/social/irc?channels' : $page_ur
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Privacy settings
+
+// Fetch current Kiwiirc related privacy settings
+$privacy_settings   = user_settings_privacy();
+$kiwiirc_hide_embed = $privacy_settings['kiwiirc'];
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // IRC channels list
 
 $irc_channels = irc_channels_list();
@@ -366,6 +376,18 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <?php /************************************************ BROWSER ***************************************************/ ?>
 
+<?php if($kiwiirc_hide_embed) { ?>
+
+<div class="width_50 padding_top irc_faq_section<?=$irc_faq_hide['browser']?>" id="irc_faq_browser">
+
+  <p>
+    <?=__('irc_faq_browser_body')?>
+  </p>
+
+</div>
+
+<?php } else { ?>
+
 <div class="width_70 padding_top irc_faq_section<?=$irc_faq_hide['browser']?>" id="irc_faq_browser">
 
   <?php if($lang == 'EN') { ?>
@@ -375,6 +397,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <?php } ?>
 
 </div>
+
+<?php } ?>
 
 <?php /************************************************* CLIENT ***************************************************/ ?>
 

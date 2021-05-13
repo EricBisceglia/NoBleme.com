@@ -217,11 +217,11 @@ Tout NoBleme est fabriqué à la main, sur mesure, avec amour. Le site n'utilise
 EOT
 );
 ___('privacy_external_2',     'EN', <<<EOT
-There is however one area of NoBleme which contains third party content. For the purpose of documenting Internet culture, the {{link|todo_link|21st century compendium}} embeds external content in some of its pages. In order to minimize the potential for these third parties to do something nefarious with your data, we try to use as few of them as possible - at the moment, YouTube videos and Google Trends graphs are the only external content which you will find on NoBleme.
+There is however one area of NoBleme which contains third party content. For the purpose of documenting Internet culture, the {{link|todo_link|21st century compendium}} embeds external content in some of its pages (YouTube videos and Google Trends graphs). In order to minimize the potential for these third parties to do something nefarious with your data, we try to use as few of them as possible.
 EOT
 );
 ___('privacy_external_2',     'FR', <<<EOT
-Il y a toutefois une partie de NoBleme où se trouvent des contenus tiers. Dans le {{link|todo_link|compendium du 21ème siècle}}, certaines pages incluent des contenus externes, qui servent d'illustration. Afin de minimiser le potentiel de collecte de vos données personnelles par ces tiers, nous en utilisons le plus petit nombre possible : actuellement, les seuls contenus tiers que vous trouverez sur NoBleme sont des vidéos YouTube et des graphes Google Trends.
+Il y a toutefois une partie de NoBleme où se trouvent des contenus tiers. Dans le {{link|todo_link|compendium du 21ème siècle}}, certaines pages incluent des contenus externes, qui servent d'illustration (des vidéos YouTube et des graphes Google Trends). Afin de minimiser le potentiel de collecte de vos données personnelles par ces tiers, nous en utilisons le plus petit nombre possible.
 EOT
 );
 ___('privacy_external_3',     'EN', <<<EOT

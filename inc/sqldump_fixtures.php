@@ -459,7 +459,9 @@ query(" INSERT INTO users_settings
         SET         users_settings.fk_users = 5           ,
                     users_settings.show_nsfw_content  = 0 ,
                     users_settings.hide_youtube       = 1 ,
-                    users_settings.hide_google_trends = 1 ");
+                    users_settings.hide_google_trends = 1 ,
+                    users_settings.hide_discord       = 1 ,
+                    usesr_settings.hide_kiwiirc       = 1 ");
 query(" INSERT INTO users_settings
         SET         users_settings.fk_users = 6           ");
 

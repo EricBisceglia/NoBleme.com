@@ -1255,7 +1255,9 @@ if($last_query < 26)
   sql_create_field('users_settings', 'show_nsfw_content', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users');
   sql_create_field('users_settings', 'hide_youtube', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'show_nsfw_content');
   sql_create_field('users_settings', 'hide_google_trends', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_youtube');
-  sql_create_field('users_settings', 'hide_from_activity', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_google_trends');
+  sql_create_field('users_settings', 'hide_discord', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_google_trends');
+  sql_create_field('users_settings', 'hide_kiwiirc', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_discord');
+  sql_create_field('users_settings', 'hide_from_activity', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'hide_kiwiirc');
   sql_create_field('users_settings', 'quotes_languages', 'VARCHAR(12) NOT NULL', 'hide_from_activity');
   $qusers = query(" SELECT  users.id                  AS 'u_id'       ,
                             users.voir_nsfw           AS 'u_nsfw'     ,

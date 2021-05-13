@@ -202,11 +202,11 @@ Sur NoBleme, nous prêtons beaucoup d'importance au respect de votre vie privée
 EOT
 );
 ___('account_privacy_others',   'EN', <<<EOT
-However, we have no control over any third party content that might be embedded on some of the website's pages. To manage the impact this might have on your privacy, we try to minimize the number of third parties that can be embedded on NoBleme (currently only YouTube and Google Trends), and give you the option to completely disable third party embedded content if you'd rather not have them.
+However, we have no control over any third party content that might be embedded on some of the website's pages. To manage the impact this might have on your privacy, we try to minimize the number of third parties that can be embedded on NoBleme (currently only YouTube, Google Trends, Discord, and KiwiIRC), and give you the option to completely disable third party embedded content if you'd rather not have them.
 EOT
 );
 ___('account_privacy_others',   'FR', <<<EOT
-Toutefois, nous ne pouvons pas contrôler ce que font les tiers que nous intégrons sur le site. Afin de vous laisser un maximum de contrôle sur vos données personnelles, nous minimisons le nombre de tiers qui sont intégrables sur le site (actuellement uniquement YouTube et Google Trends), et vous donnons la possibilité de complètement désactiver les contenus tiers.
+Toutefois, nous ne pouvons pas contrôler ce que font les tiers que nous intégrons sur le site. Afin de vous laisser un maximum de contrôle sur vos données personnelles, nous minimisons le nombre de tiers qui sont intégrables sur le site (actuellement uniquement YouTube, Google Trends, Discord, et KiwiIRC), et vous donnons la possibilité de complètement désactiver les contenus tiers.
 EOT
 );
 ___('account_privacy_disable',  'EN', <<<EOT
@@ -232,6 +232,10 @@ ___('account_privacy_youtube',  'EN', "Show embedded {{external|http://youtube.c
 ___('account_privacy_youtube',  'FR', "Afficher les vidéos {{external|http://youtube.com/|YouTube}}");
 ___('account_privacy_trends',   'EN', "Show embedded {{external|http://trends.google.com/|Google Trends}} graphs");
 ___('account_privacy_trends',   'FR', "Afficher les graphes {{external|http://trends.google.com/|Google Trends}}");
+___('account_privacy_discord',  'EN', "Show live preview of {{link|pages/social/discord|NoBleme's Discord server}}");
+___('account_privacy_discord',  'FR', "Afficher un aperçu en direct du {{link|pages/social/discord|serveur Discord NoBleme}}");
+___('account_privacy_kiwiirc',  'EN', "Show embedded {{link|pages/social/irc?browser|KiwiIRC web client}}");
+___('account_privacy_kiwiirc',  'FR', "Afficher le {{link|pages/social/irc?browser|client web KiwiIRC}}");
 ___('account_privacy_online',   'EN', "Show my account on {{link|pages/users/online|Who's online}}");
 ___('account_privacy_online',   'FR', "Afficher mon compte sur {{link|pages/users/online|Qui est en ligne}}");
 
