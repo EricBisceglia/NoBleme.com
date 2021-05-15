@@ -461,7 +461,7 @@ query(" INSERT INTO users_settings
                     users_settings.hide_youtube       = 1 ,
                     users_settings.hide_google_trends = 1 ,
                     users_settings.hide_discord       = 1 ,
-                    usesr_settings.hide_kiwiirc       = 1 ");
+                    users_settings.hide_kiwiirc       = 1 ");
 query(" INSERT INTO users_settings
         SET         users_settings.fk_users = 6           ");
 
@@ -1220,11 +1220,11 @@ $meetup_users = 0;
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
-  $deleted    = (mt_rand(0,15) < 15) ? 0 : 1;
+  $deleted    = (mt_rand(0, 15) < 15) ? 0 : 1;
   $event_date = date('Y-m-d', mt_rand(1111339420, time()));
-  $location   = fixtures_generate_data('string', 5, 15);
-  $reason_en  = (mt_rand(0,3) < 3) ? '' : fixtures_generate_data('sentence', 1, 4, 1);
-  $reason_fr  = ($reason_en) ? fixtures_generate_data('sentence', 1, 4, 1) : '';
+  $location   = fixtures_generate_data('string', 5, 15, no_spaces: true);
+  $languages  = (mt_rand(0, 1)) ? 'FR' : 'EN';
+  $languages  = (mt_rand(0, 1)) ? $languages : 'FREN';
   $details_en = fixtures_generate_data('text', 1, 5);
   $details_fr = fixtures_generate_data('text', 1, 5);
 
@@ -1233,8 +1233,7 @@ for($i = 0; $i < $random; $i++)
           SET         meetups.is_deleted      = '$deleted'    ,
                       meetups.event_date      = '$event_date' ,
                       meetups.location        = '$location'   ,
-                      meetups.event_reason_en = '$reason_en'  ,
-                      meetups.event_reason_fr = '$reason_fr'  ,
+                      meetups.languages       = '$languages'  ,
                       meetups.details_en      = '$details_en' ,
                       meetups.details_fr      = '$details_fr' ");
 
@@ -1325,7 +1324,7 @@ for($i = 0; $i < $random; $i++)
   {
     // Generate random data
     $user       = (mt_rand(0,3) < 3) ? fixtures_fetch_random_id('users') : 0;
-    $username   = ($user) ? '' : fixtures_generate_data('string', 3, 18);
+    $username   = ($user) ? '' : fixtures_generate_data('string', 3, 18, no_spaces: true);
     $attendance = (strtotime($event_date) > time() && mt_rand(0,1)) ? 0 : 1;
     $extra_en   = (mt_rand(0,3) < 3) ? '' : fixtures_generate_data('sentence', 2, 5, 1);
     $extra_fr   = (mt_rand(0,3) < 3) ? '' : fixtures_generate_data('sentence', 2, 5, 1);

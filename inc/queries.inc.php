@@ -1400,12 +1400,15 @@ if($last_query < 28)
   sql_change_field_type('meetups', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('meetups', 'date', 'event_date', "DATE NOT NULL DEFAULT '0000-00-00'");
   sql_rename_field('meetups', 'lieu', 'location', "VARCHAR(60) NOT NULL");
-  sql_rename_field('meetups', 'raison_fr', 'event_reason_fr', "VARCHAR(105) NOT NULL");
-  sql_rename_field('meetups', 'raison_en', 'event_reason_en', "VARCHAR(105) NOT NULL");
-  sql_move_field('meetups', 'event_reason_fr', 'VARCHAR(105) NOT NULL', 'event_reason_en');
+  sql_create_field('meetups', 'languages', "VARCHAR(12) NOT NULL", 'location');
+  sql_delete_field('meetups', 'raison_fr');
+  sql_delete_field('meetups', 'raison_en');
   sql_rename_field('meetups', 'details_fr', 'details_fr', "MEDIUMTEXT NOT NULL");
   sql_rename_field('meetups', 'details_en', 'details_en', "MEDIUMTEXT NOT NULL");
   sql_move_field('meetups', 'details_fr', 'MEDIUMTEXT NOT NULL', 'details_en');
+
+  query(" UPDATE  meetups
+          SET     languages = 'FR' ");
 
   sql_change_field_type('meetups_people', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('meetups_people', 'FKirl', 'fk_meetups', "INT UNSIGNED NOT NULL DEFAULT 0");
