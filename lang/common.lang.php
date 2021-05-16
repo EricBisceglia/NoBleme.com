@@ -375,22 +375,26 @@ ___('warning',    'FR', "avertissement");
 
 
 // Common words
-___('en',       'EN', "EN");
-___('en',       'FR', "EN");
-___('english',  'EN', "english");
-___('english',  'FR', "anglais");
-___('fr',       'EN', "FR");
-___('fr',       'FR', "FR");
-___('french',   'EN', "french");
-___('french',   'FR', "français");
-___('no',       'EN', "no");
-___('no',       'FR', "non");
-___('the',      'EN', "the");
-___('the',      'FR', "le");
-___('with',     'EN', "with");
-___('with',     'FR', "avec");
-___('yes',      'EN', "yes");
-___('yes',      'FR', "oui");
+___('en',         'EN', "EN");
+___('en',         'FR', "EN");
+___('english',    'EN', "english");
+___('english',    'FR', "anglais");
+___('fr',         'EN', "FR");
+___('fr',         'FR', "FR");
+___('french',     'EN', "french");
+___('french',     'FR', "français");
+___('language',   'EN', "language");
+___('language',   'FR', "langue");
+___('language+',  'EN', "languages");
+___('language+',  'FR', "langues");
+___('no',         'EN', "no");
+___('no',         'FR', "non");
+___('the',        'EN', "the");
+___('the',        'FR', "le");
+___('with',       'EN', "with");
+___('with',       'FR', "avec");
+___('yes',        'EN', "yes");
+___('yes',        'FR', "oui");
 
 
 // Common actions
@@ -400,6 +404,8 @@ ___('action',   'EN', "action");
 ___('action+',  'EN', "actions");
 ___('action',   'FR', "action");
 ___('action+',  'FR', "actions");
+___('restore',  'EN', "restore");
+___('restore',  'FR', "restaurer");
 ___('search',   'EN', "search");
 ___('search',   'FR', "chercher");
 ___('sort',     'EN', "sort");

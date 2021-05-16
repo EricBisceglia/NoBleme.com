@@ -11,6 +11,7 @@ RewriteCond %{HTTP_HOST} nobleme.com
 RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
 
 # Better looking URLs (not strictly enforced though)
+RewriteRule ^pages/meetups/([0-9]+)$ pages/meetups/meetup.php?id=$1 [NC]
 RewriteRule ^pages/quotes/([0-9]+)$ pages/quotes/list.php?id=$1 [NC]
 RewriteRule ^pages/quotes/random pages/quotes/list.php?random [NC]
 RewriteRule ^pages/users/([0-9]+)$ pages/users/profile.php?id=$1 [NC]
