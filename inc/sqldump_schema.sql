@@ -253,6 +253,7 @@ CREATE TABLE IF NOT EXISTS `meetups` (
   `event_date` date NOT NULL DEFAULT '0000-00-00',
   `location` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `languages` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attendee_count` int UNSIGNED NOT NULL DEFAULT '0',
   `details_en` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `details_fr` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),

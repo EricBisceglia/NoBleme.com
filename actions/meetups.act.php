@@ -25,16 +25,14 @@ function meetups_list() : array
   $show_deleted = (user_is_moderator()) ? '' : ' AND meetups.is_deleted = 0 ';
 
   // Fetch the meetups
-  $qmeetups = query(" SELECT    meetups.id          AS 'm_id'       ,
-                                meetups.is_deleted  AS 'm_deleted'  ,
-                                meetups.event_date  AS 'm_date'     ,
-                                meetups.location    AS 'm_location' ,
-                                meetups.languages   AS 'm_lang'     ,
-                                meetups.details_en  AS 'm_desc_en'  ,
-                                meetups.details_fr  AS 'm_desc_fr'  ,
-                    ( SELECT    COUNT(meetups_people.id)
-                      FROM      meetups_people
-                      WHERE     meetups.id = meetups_people.fk_meetups ) AS 'm_people'
+  $qmeetups = query(" SELECT    meetups.id              AS 'm_id'       ,
+                                meetups.is_deleted      AS 'm_deleted'  ,
+                                meetups.event_date      AS 'm_date'     ,
+                                meetups.location        AS 'm_location' ,
+                                meetups.languages       AS 'm_lang'     ,
+                                meetups.attendee_count  AS 'm_people'   ,
+                                meetups.details_en      AS 'm_desc_en'  ,
+                                meetups.details_fr      AS 'm_desc_fr'
                       FROM      meetups
                       WHERE     1 = 1
                                 $show_deleted
@@ -44,8 +42,7 @@ function meetups_list() : array
   for($i = 0; $row = mysqli_fetch_array($qmeetups); $i++)
   {
     $data[$i]['id']         = $row['m_id'];
-    $temp                   = ($row['m_deleted']) ? 'text_red': 'green hover_red text_white';
-    $data[$i]['css_full']   = ($row['m_deleted'] || (strtotime($row['m_date']) > time())) ? ' class="'.$temp.'"' : '';
+    $temp                   = ($row['m_deleted']) ? 'text_red': 'green dark_hover text_white';
     $data[$i]['css']        = ($row['m_deleted'] || (strtotime($row['m_date']) > time())) ? ' '.$temp : '';
     $data[$i]['deleted']    = $row['m_deleted'];
     $data[$i]['date']       = sanitize_output(date_to_text($row['m_date']));

@@ -4,17 +4,28 @@
 /*          I could minify this, but I feel there is beauty in well indented code and want it to be visible          */
 /*        I like to call NoBleme's theme "retrofutirist anarcho-immaterial design". Purposefully pretentious.        */
 /****************************************************** COLORS *******************************************************/
-.dark   { background-color: #121212; } .text_dark   { color: #121212; }
-.black  { background-color: #000000; } .text_black  { color: #000000; }
-.white  { background-color: #FFFFFF; } .text_white  { color: #FFFFFF; }
-.light  { background-color: #CACACA; } .text_light  { color: #CACACA; }
-.yellow { background-color: #C8B900; } .text_yellow { color: #C8B900; }
-.orange { background-color: #C66900; } .text_orange { color: #C66900; }
-.red    { background-color: #B00B1E; } .text_red    { color: #B00B1E; }
-.purple { background-color: #673AB7; } .text_purple { color: #673AB7; }
-.blue   { background-color: #0069C0; } .text_blue   { color: #0069C0; }
-.brown  { background-color: #795548; } .text_brown  { color: #795548; }
-.green  { background-color: #087F23; } .text_green  { color: #087F23; }
+.dark               { background-color: #121212 !important; } .text_dark               { color: #121212 !important; }
+.black              { background-color: #000000 !important; } .text_black              { color: #000000 !important; }
+.white              { background-color: #FFFFFF !important; } .text_white              { color: #FFFFFF !important; }
+.light              { background-color: #CACACA !important; } .text_light              { color: #CACACA !important; }
+.yellow             { background-color: #C8B900 !important; } .text_yellow             { color: #C8B900 !important; }
+.orange             { background-color: #C66900 !important; } .text_orange             { color: #C66900 !important; }
+.red                { background-color: #B00B1E !important; } .text_red                { color: #B00B1E !important; }
+.purple             { background-color: #673AB7 !important; } .text_purple             { color: #673AB7 !important; }
+.blue               { background-color: #0069C0 !important; } .text_blue               { color: #0069C0 !important; }
+.brown              { background-color: #795548 !important; } .text_brown              { color: #795548 !important; }
+.green              { background-color: #087F23 !important; } .text_green              { color: #087F23 !important; }
+.dark_hover:hover   { background-color: #121212 !important; } .text_dark_hover:hover   { color: #121212 !important; }
+.black_hover:hover  { background-color: #000000 !important; } .text_black_hover:hover  { color: #000000 !important; }
+.white_hover:hover  { background-color: #FFFFFF !important; } .text_white_hover:hover  { color: #FFFFFF !important; }
+.light_hover:hover  { background-color: #CACACA !important; } .text_light_hover:hover  { color: #CACACA !important; }
+.yellow_hover:hover { background-color: #C8B900 !important; } .text_yellow_hover:hover { color: #C8B900 !important; }
+.orange_hover:hover { background-color: #C66900 !important; } .text_orange_hover:hover { color: #C66900 !important; }
+.red_hover:hover    { background-color: #B00B1E !important; } .text_red_hover:hover    { color: #B00B1E !important; }
+.purple_hover:hover { background-color: #673AB7 !important; } .text_purple_hover:hover { color: #673AB7 !important; }
+.blue_hover:hover   { background-color: #0069C0 !important; } .text_blue_hover:hover   { color: #0069C0 !important; }
+.brown_hover:hover  { background-color: #795548 !important; } .text_brown_hover:hover  { color: #795548 !important; }
+.green_hover:hover  { background-color: #087F23 !important; } .text_green_hover:hover  { color: #087F23 !important; }
 
 /************************************************** GENERIC CLASSES **************************************************/
 .hidden  { display: none;   }

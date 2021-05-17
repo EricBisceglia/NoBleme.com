@@ -1401,6 +1401,7 @@ if($last_query < 28)
   sql_rename_field('meetups', 'date', 'event_date', "DATE NOT NULL DEFAULT '0000-00-00'");
   sql_rename_field('meetups', 'lieu', 'location', "VARCHAR(60) NOT NULL");
   sql_create_field('meetups', 'languages', "VARCHAR(12) NOT NULL", 'location');
+  sql_create_field('meetups', 'attendee_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'languages');
   sql_delete_field('meetups', 'raison_fr');
   sql_delete_field('meetups', 'raison_en');
   sql_rename_field('meetups', 'details_fr', 'details_fr', "MEDIUMTEXT NOT NULL");
@@ -1422,6 +1423,18 @@ if($last_query < 28)
   sql_delete_index('meetups_people', 'index_membres');
   sql_create_index('meetups_people', 'index_meetup', 'fk_meetups');
   sql_create_index('meetups_people', 'index_people', 'fk_users');
+
+  $qmeetups = query(" SELECT  meetups.id AS 'm_id'
+                      FROM    meetups ");
+  while($dmeetups = mysqli_fetch_array($qmeetups))
+  {
+    $dpeople = mysqli_fetch_array(query(" SELECT  COUNT(*) AS 'mp_count'
+                                          FROM    meetups_people
+                                          WHERE   meetups_people.fk_meetups = '".$dmeetups['m_id']."' "));
+    query(" UPDATE  meetups
+            SET     meetups.attendee_count = '".$dpeople['mp_count']."'
+            WHERE   meetups.id = '".$dmeetups['m_id']."' ");
+  }
 
   query(" DELETE FROM logs_activity
           WHERE       logs_activity.activity_type LIKE 'meetups_delete' ");

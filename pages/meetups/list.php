@@ -80,13 +80,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?php for($i = 0; $i < $meetups_list['rows']; $i++) { ?>
 
-      <tr class="align_center pointer">
+      <tr class="align_center pointer<?=$meetups_list[$i]['css']?>">
 
-        <td<?=$meetups_list[$i]['css_full']?>>
+        <td>
           <?=$meetups_list[$i]['date']?>
         </td>
 
-        <td<?=$meetups_list[$i]['css_full']?>>
+        <td>
           <?php if($meetups_list[$i]['lang_en']) { ?>
           <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle" height="20" alt="<?=__('EN')?>" title="<?=string_change_case(__('english'), 'initials')?>">
           <?php } if($meetups_list[$i]['lang_fr']) { ?>
@@ -94,16 +94,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } ?>
         </td>
 
-        <td<?=$meetups_list[$i]['css_full']?>>
+        <td>
           <?=$meetups_list[$i]['location']?>
         </td>
 
-        <td class="bold<?=$meetups_list[$i]['css']?>">
+        <td class="bold">
           <?=$meetups_list[$i]['people']?>
         </td>
 
         <?php if($is_moderator) { ?>
-        <td<?=$meetups_list[$i]['css_full']?>>
+        <td>
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: '?', title: __('edit'), title_case: 'initials')?>
           <?php if($meetups_list[$i]['deleted']) { ?>
           <?=__icon('refresh', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('restore'), title_case: 'initials')?>

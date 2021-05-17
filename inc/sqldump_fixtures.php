@@ -1221,7 +1221,7 @@ for($i = 0; $i < $random; $i++)
 {
   // Generate random data
   $deleted    = (mt_rand(0, 15) < 15) ? 0 : 1;
-  $event_date = date('Y-m-d', mt_rand(1111339420, time()));
+  $event_date = date('Y-m-d', mt_rand(1111339420, (time() + 100000000)));
   $location   = fixtures_generate_data('string', 5, 15, no_spaces: true);
   $languages  = (mt_rand(0, 1)) ? 'FR' : 'EN';
   $languages  = (mt_rand(0, 1)) ? $languages : 'FREN';
@@ -1429,7 +1429,17 @@ for($i = 0; $i < $random; $i++)
                             logs_activity_details.content_before          = '$extra_info'   ");
       }
     }
+    else
+    {
+      $random2--;
+      $meetup_users--;
+    }
   }
+
+  // Update the attendee count
+  query(" UPDATE  meetups
+          SET     meetups.attendee_count  = '$random2'
+          WHERE   meetups.id              = '$meetup' ");
 }
 
 // Output progress
