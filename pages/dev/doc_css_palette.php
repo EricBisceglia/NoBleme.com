@@ -1569,6 +1569,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
               <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials')?>
             </th>
             <th>
+              HEADER
+              <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials')?>
+            </th>
+            <th>
               ICONS
             </th>
           </tr>
@@ -1584,17 +1588,23 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
               <input type="text" class="table_search" name="dev_palette_table_input" value='&lt;input class="table_search">'>
             </th>
             <th>
+              <input type="text" class="table_search" name="dev_palette_table_input" value='size="1"' size="1">
+            </th>
+            <th>
               <input type="submit" class="table_search" name="dev_palette_table_submit" value=".table_search">
             </th>
           </tr>
         </thead>
         <tbody class="altc2">
           <tr>
-            <td colspan="3" class="uppercase text_light dark bold align_center">
+            <td colspan="4" class="uppercase text_light dark bold align_center">
               XX results found
             </td>
           </tr>
           <tr>
+            <td>
+              body text
+            </td>
             <td>
               body text
             </td>
@@ -1614,6 +1624,9 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
             <td>
               body text
             </td>
+            <td>
+              body text
+            </td>
             <td class="align_center">
               <?=__icon('help', is_small: true, class: 'valign_middle pointer spaced', alt: '?', title: __('details'), title_case: 'initials')?>
             </td>
@@ -1626,10 +1639,16 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
               body text
             </td>
             <td>
+              body text
+            </td>
+            <td>
               &nbsp;
             </td>
           </tr>
           <tr>
+            <td>
+              body text
+            </td>
             <td>
               body text
             </td>
@@ -1659,6 +1678,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
       &lt;?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials')?>
     &lt;/th>
     &lt;th>
+      HEADER
+      &lt;?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials')?>
+    &lt;/th>
+    &lt;th>
       ICONS
     &lt;/th>
   &lt;/tr>
@@ -1667,6 +1690,10 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
     &lt;th>
       &lt;input type="text" class="table_search" name="example_input" id="example_input" value="">
+    &lt;/th>
+
+    &lt;th>
+      &lt;input type="text" class="table_search" name="example_input" id="example_input" value="" size="1">
     &lt;/th>
 
     &lt;th>
@@ -1688,12 +1715,15 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 &lt;tbody class="altc2">
 
   &lt;tr>
-    &lt;td colspan="3" class="uppercase text_light dark bold align_center">
+    &lt;td colspan="4" class="uppercase text_light dark bold align_center">
       XX results found
     &lt;/td>
   &lt;/tr>
 
   &lt;tr>
+    &lt;td>
+      body
+    &lt;/td>
     &lt;td>
       body
     &lt;/td>
