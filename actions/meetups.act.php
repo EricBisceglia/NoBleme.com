@@ -8,7 +8,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  meetups_get                   Fetches data related to a meetup.                                                  */
 /*  meetups_list                  Fetches a list of meetups.                                                         */
+/*  meetups_list_attendees        Fetches a list of people attending a specific meetup.                              */
 /*                                                                                                                   */
 /*  meetups_list_years            Fetches the years at which meetups happened.                                       */
 /*  meetups_get_max_attendees     Fetches the highest number of attendees in a meetup.                               */
@@ -17,12 +19,72 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 /**
+ * Fetches data related to a meetup.
+ *
+ * @param   int         $meetup_id  The meetup's id.
+ *
+ * @return  array|null              An array containing related data, or null if it does not exist.
+ */
+
+function meetups_get( int $meetup_id ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+  require_included_file('bbcodes.inc.php');
+
+  // Sanitize the data
+  $meetup_id = sanitize($meetup_id, 'int', 0);
+
+  // Check if the meetup exists
+  if(!database_row_exists('meetups', $meetup_id))
+    return NULL;
+
+  // Fetch the user's language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+
+  // Fetch the data
+  $dmeetup = mysqli_fetch_array(query(" SELECT    meetups.is_deleted      AS 'm_deleted'    ,
+                                                  meetups.event_date      AS 'm_date'       ,
+                                                  meetups.location        AS 'm_location'   ,
+                                                  meetups.languages       AS 'm_lang'       ,
+                                                  meetups.details_$lang   AS 'm_details'
+                                        FROM      meetups
+                                        WHERE     meetups.id = '$meetup_id' "));
+
+  // Only moderators can see deleted meetups
+  if($dmeetup['m_deleted'] && !user_is_moderator())
+    return NULL;
+
+  // Assemble an array with the data
+  $data['id']             = $meetup_id;
+  $data['is_deleted']     = sanitize_output($dmeetup['m_deleted']);
+  $data['is_finished']    = (strtotime(date('Y-m-d')) > strtotime($dmeetup['m_date']));
+  $data['is_today']       = (date('Y-m-d') == $dmeetup['m_date']);
+  $data['date']           = sanitize_output(date_to_text($dmeetup['m_date']));
+  $data['date_en']        = sanitize_output(date_to_text($dmeetup['m_date'], lang: 'EN'));
+  $data['date_short_en']  = date_to_text($dmeetup['m_date'], strip_day: 1, lang: 'EN');
+  $data['date_short_fr']  = date_to_text($dmeetup['m_date'], strip_day: 1, lang: 'FR');
+  $data['location']       = sanitize_output($dmeetup['m_location']);
+  $temp                   = time_days_elapsed(date('Y-m-d'), $dmeetup['m_date']);
+  $data['days_until']     = sanitize_output($temp.__('day', amount: $temp, spaces_before: 1));
+  $data['wrong_lang_en']  = ($lang == 'en' && !str_contains($dmeetup['m_lang'], 'EN'));
+  $data['wrong_lang_fr']  = ($lang == 'fr' && !str_contains($dmeetup['m_lang'], 'FR'));
+  $data['details']        = bbcodes(sanitize_output($dmeetup['m_details'], preserve_line_breaks: true));
+
+  // Return the data
+  return $data;
+}
+
+
+
+
+/**
  * Returns a list of meetups.
  *
  * @param   string  $sort_by  (OPTIONAL)  How the returned data should be sorted.
  * @param   array   $search   (OPTIONAL)  Search for specific field values.
  *
- * @return  array   An array containing meetups.
+ * @return  array                         An array containing meetups.
  */
 
 function meetups_list(  string  $sort_by  = 'date'  ,
@@ -82,12 +144,72 @@ function meetups_list(  string  $sort_by  = 'date'  ,
     $data[$i]['id']         = $row['m_id'];
     $temp                   = ($row['m_deleted']) ? 'text_red': 'green dark_hover text_white';
     $data[$i]['css']        = ($row['m_deleted'] || (strtotime($row['m_date']) > time())) ? ' '.$temp : '';
+    $data[$i]['css_link']   = ($row['m_deleted']) ? 'text_red text_white_hover' : '';
     $data[$i]['deleted']    = $row['m_deleted'];
     $data[$i]['date']       = sanitize_output(date_to_text($row['m_date']));
     $data[$i]['lang_en']    = str_contains($row['m_lang'], 'EN');
     $data[$i]['lang_fr']    = str_contains($row['m_lang'], 'FR');
     $data[$i]['location']   = sanitize_output($row['m_location']);
     $data[$i]['people']     = sanitize_output($row['m_people']);
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Returns a list of people attending a specific meetup.
+ *
+ * @param   string  $meetup_id  (OPTIONAL)  The meetup's id.
+ *
+ * @return  array                           An array containing meetup attendees, or NULL if it doesn't exist.
+ */
+
+function meetups_list_attendees( int $meetup_id = 0 ) : array
+{
+  // Check if the required files have been included
+  require_included_file('bbcodes.inc.php');
+
+  // Sanitize the data
+  $meetup_id = sanitize($meetup_id, 'int', 0);
+
+  // Check if the meetup exists
+  if(!database_row_exists('meetups', $meetup_id))
+    return NULL;
+
+  // Fetch the user's language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+
+  // Fetch the attendees
+  $qattendees = query(" SELECT    meetups.is_deleted                      AS 'm_deleted'  ,
+                                  users.id                                AS 'u_id'       ,
+                                  users.username                          AS 'u_nick'     ,
+                                  meetups_people.username                 AS 'm_nick'     ,
+                                  meetups_people.attendance_confirmed     AS 'm_lock'     ,
+                                  meetups_people.extra_information_$lang  AS 'm_extra'
+                        FROM      meetups_people
+                        LEFT JOIN users   ON meetups_people.fk_users    = users.id
+                        LEFT JOIN meetups ON meetups_people.fk_meetups  = meetups.id
+                        WHERE     meetups_people.fk_meetups             = '$meetup_id'
+                        ORDER BY  IF(meetups_people.username IS NULL, users.username, meetups_people.username) ASC ");
+
+  // Loop through the data
+  for($i = 0; $row = mysqli_fetch_array($qattendees); $i++)
+  {
+    // Only moderators can see deleted meetups
+    if(!$i && $row['m_deleted'] && !user_is_moderator())
+      return NULL;
+
+    // Prepare the data
+    $data[$i]['nick']   = ($row['m_nick']) ? sanitize_output($row['m_nick']) : sanitize_output($row['u_nick']);
+    $data[$i]['lock']   = $row['m_lock'];
+    $data[$i]['extra']  = bbcodes(sanitize_output($row['m_extra']));
   }
 
   // Add the number of rows to the data

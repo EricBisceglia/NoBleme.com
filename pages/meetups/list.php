@@ -64,7 +64,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1>
     <?=__('meetups_list_title')?>
+    <?php if($is_moderator) { ?>
     <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials')?>
+    <?php } ?>
   </h1>
 
   <p>
@@ -103,12 +105,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
               <?=__('meetups_list_attendees')?>
               <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "meetups_list_search('people');")?>
             </th>
-
-            <?php if($is_moderator) { ?>
-            <th>
-              <?=__('act')?>
-            </th>
-            <?php } ?>
 
           </tr>
 
@@ -151,12 +147,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
               </select>
             </th>
 
-            <?php if($is_moderator) { ?>
-            <th>
-              &nbsp;
-            </th>
-            <?php } ?>
-
           </tr>
 
         </thead>
@@ -180,10 +170,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <?php for($i = 0; $i < $meetups_list['rows']; $i++) { ?>
 
-          <tr class="align_center pointer<?=$meetups_list[$i]['css']?>">
+          <tr class="align_center pointer<?=$meetups_list[$i]['css']?>" onclick="window.location = '<?=$path.'pages/meetups/'.$meetups_list[$i]['id']?>';">
 
             <td class="nowrap">
-              <?=$meetups_list[$i]['date']?>
+              <?=__link('pages/meetups/'.$meetups_list[$i]['id'], $meetups_list[$i]['date'], 'noglow '.$meetups_list[$i]['css_link'])?>
             </td>
 
             <td class="nowrap">
@@ -201,19 +191,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <td class="bold nowrap">
               <?=$meetups_list[$i]['people']?>
             </td>
-
-            <?php if($is_moderator) { ?>
-            <td class="nowrap">
-              <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: '?', title: __('edit'), title_case: 'initials')?>
-              <?php if($meetups_list[$i]['deleted']) { ?>
-              <?=__icon('refresh', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('restore'), title_case: 'initials')?>
-              <?php } else { ?>
-              <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
-              <?php } if($meetups_list[$i]['deleted'] && $is_admin) { ?>
-              <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
-              <?php } ?>
-            </td>
-            <?php } ?>
 
           </tr>
 
