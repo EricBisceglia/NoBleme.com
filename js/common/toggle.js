@@ -3,8 +3,11 @@
 /*  toggle_element            Toggles the visibility state of an element.                                            */
 /*  toggle_class              Toggles the visibility state of all elements of a specific class.                      */
 /*  toggle_checkbox           Toggles the checked status of a checkbox.                                              */
+/*                                                                                                                   */
 /*  toggle_element_oneway     Sets the visibility state of an element.                                               */
 /*  toggle_class_oneway       Sets the visibility state of all elements of a specific class.                         */
+/*                                                                                                                   */
+/*  element_is_toggled        Checks whether an element is currently visible or not.                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -133,4 +136,29 @@ function toggle_class_oneway( element_class                   ,
   // Apply the changed visibility state to all elements of the class
   for(var i = 0; i < selected_class.length; i++)
     selected_class[i].style.display = visibility_state;
+}
+
+
+
+
+/**
+ * Checks whether an element is currently visible or not.
+ *
+ * @param   {string}  element_id  The element being checked.
+ *
+ * @return  {bool}                Whether the element is currently visible.
+ */
+function element_is_toggled( element_id )
+{
+  // Fetch the selected element
+  var selected_element = document.getElementById(element_id);
+
+  // Check the current visibility state of the element
+  var element_visibility = selected_element.currentStyle ? selected_element.currentStyle.display : getComputedStyle(selected_element,null).display;
+
+  // Return the appropriate value
+  if(element_visibility == 'none')
+    return false;
+  else
+    return true;
 }

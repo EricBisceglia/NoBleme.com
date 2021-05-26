@@ -110,6 +110,29 @@ ___('meetups_details_title',  'EN', "Meetup details");
 ___('meetups_details_title',  'FR', "Organisation de l'IRL");
 
 
+// Add an attendee
+___('meetups_attendees_add_username', 'EN', <<<EOT
+The form starts with two optional fields that seem similar: "account name" and "nickname or name". You must fill either one of the two. If the user is registered on NoBleme.com then enter their username in the first field. If the user isn't registered on NoBleme.com then enter a nickname for them in the second field. You also have the option to fill both, in which case the chosen nickname in the second field will be shown along with a link to the account named in the first field.
+EOT
+);
+___('meetups_attendees_add_username', 'FR', <<<EOT
+Le formulaire commence avec deux champs qui se ressemblent : « pseudonyme du compte » et « surnom ou nom ». Vous devez remplir un des deux. Si la personne possède un compte sur NoBleme.com, dans ce cas entrez le pseudonyme de son compte dans le premier champ. Si la personne n'en possède pas, dans ce cas entrez un surnom pour cette personne dans le second champ. Vous avez également l'option de remplir les deux, auquel cas le surnom choisi dans le second champ sera affiché et contiendra un lien vers le profil du compte NoBleme.com renseigné dans le premier champ.
+EOT
+);
+___('meetups_attendees_add_account',  'EN', "Account name on NoBleme.com (optional)");
+___('meetups_attendees_add_account',  'FR', "Pseudonyme du compte sur NoBleme.com (optionnel)");
+___('meetups_attendees_add_nickname', 'EN', "Nickname or name (optional)");
+___('meetups_attendees_add_nickname', 'FR', "Surnom ou nom (optionnel)");
+___('meetups_attendees_add_extra_en', 'EN', "Extra details in english (optional, keep it short and simple)");
+___('meetups_attendees_add_extra_en', 'FR', "Détails supplémentaires en anglais (optionnel, rester concis et simple)");
+___('meetups_attendees_add_extra_fr', 'EN', "Extra details in french (optional, keep it short and simple)");
+___('meetups_attendees_add_extra_fr', 'FR', "Détails supplémentaires en français (optionnel, rester concis et simple)");
+___('meetups_attendees_add_lock',     'EN', "100% confirmed attendance");
+___('meetups_attendees_add_lock',     'FR', "Présence 100% confirmée");
+___('meetups_attendees_add_submit',   'EN', "Add an attendee");
+___('meetups_attendees_add_submit',   'FR', "Ajouter une personne");
+
+
 // Attendees
 ___('meetups_attendees_future',       'EN', "{{1}} person will attend this meetup");
 ___('meetups_attendees_future+',      'EN', "{{1}} people will attend this meetup");

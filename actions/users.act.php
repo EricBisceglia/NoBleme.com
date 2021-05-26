@@ -805,15 +805,19 @@ function user_check_username_illegality( string $username ) : bool
  *
  * @param   string      $input              The input that needs to be autocompleted.
  * @param   string      $type   (OPTIONAL)  The type of autocomplete query we're making (eg. 'normal', 'ban', 'unban')
+ * @param   int         $id     (OPTIONAL)  An ID to use along with the type (eg. a meetup id)
  *
  * @return  array|null                      An array containing the autocomplete data, or NULL if something went wrong.
  */
 
 function user_autocomplete_username(  string  $input        ,
-                                      string  $type   = ''  ) : mixed
+                                      string  $type   = ''  ,
+                                      int     $id     = 0   ) : mixed
 {
   // Sanitize the input
   $input  = sanitize($input, 'string');
+  $id     = sanitize($id, 'int', 0);
+  $join   = '';
   $where  = '';
 
   // Only work when more than 1 character has been submitted
@@ -822,15 +826,23 @@ function user_autocomplete_username(  string  $input        ,
 
   // Exclude banned users if required
   if($type == 'ban')
-    $where .= ' AND users.is_banned_until = 0 ';
+    $where .= " AND users.is_banned_until = 0 ";
   else if($type == 'unban')
-    $where .= ' AND users.is_banned_until > 0 ';
+    $where .= " AND users.is_banned_until > 0 ";
+
+  // Look up a specific meetup if required
+  if($type == 'meetup')
+  {
+    $join  .= " LEFT JOIN meetups_people ON meetups_people.fk_meetups = '$id' AND meetups_people.fk_users = users.id ";
+    $where .= " AND meetups_people.id IS NULL ";
+  }
 
   // Look for usernames to add to autocompletion
   $qusernames = query(" SELECT    users.username AS 'u_nick'
                         FROM      users
-                        WHERE     is_deleted      =     0
-                        AND       users.username  LIKE  '$input%'
+                                  $join
+                        WHERE     users.is_deleted  =     0
+                        AND       users.username    LIKE  '$input%'
                                   $where
                         ORDER BY  users.username  ASC
                         LIMIT     10 ");

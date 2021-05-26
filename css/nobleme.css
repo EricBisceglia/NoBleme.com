@@ -197,8 +197,11 @@ table.xdebug-error tr:first-child th:first-child { filter: drop-shadow(0 0 4px #
 .tooltip_container .tooltip       { display: none; padding: 0.5em; z-index: 1337; margin-top: -20px; cursor: normal; }
 .tooltip_container:hover .tooltip { display: inline; position: absolute; color: #FFFFFF; text-align: left            ;
                                     background-color: #232323 ; border-radius: 5px; border: 1px solid #888888        ;
-                                    box-shadow: 2px 2px 2px #888888; max-width: 500px; max-height: 250px             ;
-                                    overflow-y: auto;                                                                }
+                                    box-shadow: 2px 2px 2px #888888;                                                 }
+@media (min-width: 1025px)        {
+.tooltip_container:hover .tooltip { max-width: 500px; max-height: 250px; overflow-y: auto;                         } }
+@media (max-width: 1024px)        {
+.tooltip_container:hover .tooltip { max-width: 750px; max-height: 1250px; overflow-y: scroll; font-size: 1.5em;    } }
 
 /****************************************************** POPINS *******************************************************/
 div.popin_background        { position: fixed; top: 0; bottom: 0; left: 0; right: 0                 ;

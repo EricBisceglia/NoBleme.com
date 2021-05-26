@@ -25,10 +25,12 @@ page_must_be_fetched_dynamically();
 $autocomplete_username  = form_fetch_element('autocomplete_username', '');
 $autocomplete_datalist  = form_fetch_element('autocomplete_datalist', '');
 $autocomplete_type      = form_fetch_element('autocomplete_type', '');
+$autocomplete_id        = form_fetch_element('autocomplete_id', 0);
 
 // Autocomplete the username
 $autocomplete_data = user_autocomplete_username(  $autocomplete_username  ,
-                                                  $autocomplete_type      );
+                                                  $autocomplete_type      ,
+                                                  $autocomplete_id        );
 
 
 

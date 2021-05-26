@@ -491,7 +491,8 @@ function dev_blogs_list( string $sort = '' ) : array
   $is_admin = user_is_administrator();
 
   // Decide whether to show deleted content
-  $show_deleted = (!$is_admin) ? ' AND dev_blogs.is_deleted = 0 ' : ' ';
+  $show_deleted = (!$is_admin) ? " AND dev_blogs.is_deleted = 0 "     : ' ';
+  $show_lang    = (!$is_admin) ? " AND dev_blogs.title_$lang != '' "  : ' ';
 
   // Sort the content if necessary
   $order_by = " dev_blogs.posted_at DESC ";
@@ -507,7 +508,8 @@ function dev_blogs_list( string $sort = '' ) : array
                     FROM      dev_blogs
                     LEFT JOIN stats_pages
                     ON        stats_pages.page_url LIKE CONCAT('pages/dev/blog?id=', dev_blogs.id)
-                    WHERE     dev_blogs.title_$lang != ''
+                    WHERE     1 = 1
+                              $show_lang
                               $show_deleted
                     ORDER BY  $order_by ");
 
@@ -516,7 +518,7 @@ function dev_blogs_list( string $sort = '' ) : array
   {
     $data[$i]['id']       = $row['b_id'];
     $data[$i]['deleted']  = $row['b_deleted'];
-    $data[$i]['title']    = sanitize_output($row["b_title_$lang"]);
+    $data[$i]['title']    = ($row["b_title_$lang"]) ? sanitize_output($row["b_title_$lang"]) : '----------';
     $data[$i]['date']     = sanitize_output(date_to_text($row['b_date'], strip_day: 1));
     $data[$i]['views']    = sanitize_output($row['p_views']);
     $data[$i]['lang_en']  = ($row['b_title_en']);

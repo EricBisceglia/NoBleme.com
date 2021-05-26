@@ -299,21 +299,21 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'meetups_new' && !$admins_only)
   {
     $return['css']  = 'green bold';
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = 'New real life meetup planned on '.date_to_text($title_en, 1);
     $return['FR']   = 'Nouvelle rencontre IRL planifiée le '.date_to_text($title_fr, 1);
   }
   else if($type === 'meetups_new')
   {
     $return['css']  = 'text_green bold';
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = $mod_username.' created a new meetup on '.date_to_text($title_en, 1);
     $return['FR']   = $mod_username.' a crée une nouvelle IRL le '.date_to_text($title_fr, 1);
   }
 
   else if($type === 'meetups_edit')
   {
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = $mod_username." edited the ".date_to_text($title_en, 1)." meetup";
     $return['FR']   = $mod_username." a modifié l'IRL du ".date_to_text($title_fr, 1);
   }
@@ -327,33 +327,33 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'meetups_people_new' && !$admins_only)
   {
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = $username.' joined the '.date_to_text($title_en, 1)." meetup";
     $return['FR']   = $username." a rejoint l'IRL du ".date_to_text($title_fr, 1);
   }
   else if($type === 'meetups_people_new')
   {
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = $mod_username." added ".$username." to the ".date_to_text($title_en, 1)." meetup";
     $return['FR']   = $mod_username.' a ajouté '.$username." à l'IRL du ".date_to_text($title_fr, 1);
   }
 
   else if($type === 'meetups_people_edit')
   {
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = $mod_username.' modified '.$username."'s details in the ".date_to_text($title_en, 1)." meetup";
     $return['FR']   = $mod_username.' a modifié les infos de '.$username." dans l'IRL du ".date_to_text($title_fr, 1);
   }
 
   else if($type === 'meetups_people_delete' && !$admins_only)
   {
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = $username.' left the '.date_to_text($title_en, 1)." meetup";
     $return['FR']   = $username." a quitté l'IRL du ".date_to_text($title_fr, 1);
   }
   else if($type === 'meetups_people_delete')
   {
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = $mod_username.' removed '.$username.' from the '.date_to_text($title_en, 1)." meetup";
     $return['FR']   = $mod_username.' a supprimé '.$username." de l'IRL du ".date_to_text($title_fr, 1);
   }
