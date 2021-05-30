@@ -1743,6 +1743,187 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
 
 <hr>
 
+<div class="width_50 padding_top padding_bot">
+
+  <table>
+    <thead>
+      <tr>
+        <th>
+          HEADER
+        </th>
+        <th>
+          HEADER
+        </th>
+        <th>
+          HEADER
+        </th>
+      </tr>
+    </thead>
+    <tbody class="doublealtc align_center">
+      <tr>
+        <td>
+          tbody.doublealtc
+        </td>
+        <td>
+          tbody.doublealtc
+        </td>
+        <td>
+          tbody.doublealtc
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          Hidden content goes here
+        </td>
+      </tr>
+      <tr>
+        <td>
+          tbody.doublealtc
+        </td>
+        <td>
+          tbody.doublealtc
+        </td>
+        <td>
+          tbody.doublealtc
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          Hidden content goes here
+        </td>
+      </tr>
+      <tr>
+        <td>
+          tbody.doublealtc
+        </td>
+        <td>
+          tbody.doublealtc
+        </td>
+        <td>
+          tbody.doublealtc
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          Hidden content goes here
+        </td>
+      </tr>
+      <tr>
+        <td>
+          tbody.doublealtc
+        </td>
+        <td>
+          tbody.doublealtc
+        </td>
+        <td>
+          tbody.doublealtc
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          Hidden content goes here
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<hr>
+
+<div class="width_50 padding_top padding_bot">
+
+  <table>
+    <thead>
+      <tr>
+        <th>
+          HEADER
+        </th>
+        <th>
+          HEADER
+        </th>
+        <th>
+          HEADER
+        </th>
+      </tr>
+    </thead>
+    <tbody class="doublealtc2 align_center">
+      <tr>
+        <td colspan="3" class="uppercase text_light dark bold align_center">
+          XX results found
+        </td>
+      </tr>
+      <tr>
+        <td>
+          tbody.doublealtc2
+        </td>
+        <td>
+          tbody.doublealtc2
+        </td>
+        <td>
+          tbody.doublealtc2
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          Hidden content goes here
+        </td>
+      </tr>
+      <tr>
+        <td>
+          tbody.doublealtc2
+        </td>
+        <td>
+          tbody.doublealtc2
+        </td>
+        <td>
+          tbody.doublealtc2
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          Hidden content goes here
+        </td>
+      </tr>
+      <tr>
+        <td>
+          tbody.doublealtc2
+        </td>
+        <td>
+          tbody.doublealtc2
+        </td>
+        <td>
+          tbody.doublealtc2
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          Hidden content goes here
+        </td>
+      </tr>
+      <tr>
+        <td>
+          tbody.doublealtc2
+        </td>
+        <td>
+          tbody.doublealtc2
+        </td>
+        <td>
+          tbody.doublealtc2
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          Hidden content goes here
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<hr>
+
 <div class="width_30 padding_top">
 
   <table>

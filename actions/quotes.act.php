@@ -556,9 +556,9 @@ EOT;
 
   // Notify Discord
   if($dquote['q_lang'] == 'EN')
-    discord_send_message($GLOBALS['website_url']."pages/quotes/$quote_id".PHP_EOL."A new quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation anglophone a été ajoutée à la collection de citations de NoBleme.", 'main');
+    discord_send_message("A new quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation anglophone a été ajoutée à la collection de citations de NoBleme.".PHP_EOL.$GLOBALS['website_url']."pages/quotes/$quote_id", 'main');
   else if($dquote['q_lang'] == 'FR')
-    discord_send_message($GLOBALS['website_url']."pages/quotes/$quote_id".PHP_EOL."A new french speaking quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation a été ajoutée à la collection de citations de NoBleme.", 'main');
+    discord_send_message("A new french speaking quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation a été ajoutée à la collection de citations de NoBleme.".PHP_EOL.$GLOBALS['website_url']."pages/quotes/$quote_id", 'main');
 
   // All went well
   return NULL;

@@ -11,8 +11,10 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  meetups_get                         Fetches data related to a meetup.                                            */
 /*  meetups_list                        Fetches a list of meetups.                                                   */
 /*                                                                                                                   */
+/*  meetups_attendees_get               Fetches data related to a meetup attendee.                                   */
 /*  meetups_attendees_list              Fetches a list of people attending a meetup.                                 */
 /*  meetups_attendees_add               Adds an attendee to a meetup.                                                */
+/*  meetups_attendees_edit              Modifies data related to a meetup attendee.                                  */
 /*  meetups_attendees_update_count      Recounts the number of people attending a meetup.                            */
 /*                                                                                                                   */
 /*  meetups_list_years                  Fetches the years at which meetups happened.                                 */
@@ -168,6 +170,61 @@ function meetups_list(  string  $sort_by  = 'date'  ,
 
 
 /**
+ * Fetches data related to a meetup attendee.
+ *
+ * @param   int           $attendee_id  The attendee's id, from the meetups_people table.
+ *
+ * @return  array|string                An array containing related data, or a string if something went wrong.
+ */
+
+function meetups_attendees_get( int $attendee_id ) : mixed
+{
+  // Sanitize the data
+  $attendee_id = sanitize($attendee_id, 'int', 0);
+
+  // Check if the attendee exists
+  if(!database_row_exists('meetups_people', $attendee_id))
+    return __('meetups_attendees_edit_error_id');
+
+  // Fetch the data
+  $dattendee = mysqli_fetch_array(query(" SELECT    meetups.id                          AS 'm_id'         ,
+                                                    meetups.is_deleted                  AS 'm_deleted'    ,
+                                                    meetups.event_date                  AS 'm_date'       ,
+                                                    users.username                      AS 'u_account'    ,
+                                                    meetups_people.username             AS 'p_nickname'   ,
+                                                    meetups_people.attendance_confirmed AS 'p_lock'       ,
+                                                    meetups_people.extra_information_en AS 'p_extra_en'   ,
+                                                    meetups_people.extra_information_fr AS 'p_extra_fr'
+                                          FROM      meetups_people
+                                          LEFT JOIN users   ON meetups_people.fk_users    = users.id
+                                          LEFT JOIN meetups ON meetups_people.fk_meetups  = meetups.id
+                                          WHERE     meetups_people.id = '$attendee_id' "));
+
+  // Can not edit attendees of non existing meetups
+  if(!$dattendee['m_id'])
+    return __('meetups_attendees_edit_error_meetup');
+
+  // Only moderators can see deleted meetups
+  if($dattendee['m_deleted'] && !user_is_moderator())
+    return __('meetups_attendees_edit_error_meetup');
+
+  // Assemble an array with the data
+  $data['meetup_id']    = sanitize_output($dattendee['m_id']);
+  $data['is_finished']  = (strtotime(date('Y-m-d')) > strtotime($dattendee['m_date']));
+  $data['account']      = sanitize_output($dattendee['u_account']);
+  $data['nickname']     = sanitize_output($dattendee['p_nickname']);
+  $data['extra_en']     = sanitize_output($dattendee['p_extra_en']);
+  $data['extra_fr']     = sanitize_output($dattendee['p_extra_fr']);
+  $data['lock']         = sanitize_output($dattendee['p_lock']);
+
+  // Return the data
+  return $data;
+}
+
+
+
+
+/**
  * Returns a list of people attending a meetup.
  *
  * @param   string  $meetup_id  (OPTIONAL)  The meetup's id.
@@ -191,7 +248,8 @@ function meetups_attendees_list( int $meetup_id = 0 ) : array
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch the attendees
-  $qattendees = query(" SELECT    meetups.is_deleted                      AS 'm_deleted'  ,
+  $qattendees = query(" SELECT    meetups_people.id                       AS 'p_id'       ,
+                                  meetups.is_deleted                      AS 'm_deleted'  ,
                                   users.id                                AS 'u_id'       ,
                                   users.username                          AS 'u_nick'     ,
                                   meetups_people.username                 AS 'm_nick'     ,
@@ -201,7 +259,7 @@ function meetups_attendees_list( int $meetup_id = 0 ) : array
                         LEFT JOIN users   ON meetups_people.fk_users    = users.id
                         LEFT JOIN meetups ON meetups_people.fk_meetups  = meetups.id
                         WHERE     meetups_people.fk_meetups             = '$meetup_id'
-                        ORDER BY  IF(users.username IS NULL, meetups_people.username, users.username) ASC ");
+                        ORDER BY  IF(meetups_people.username != '', meetups_people.username, users.username) ASC ");
 
   // Loop through the data
   for($i = 0; $row = mysqli_fetch_array($qattendees); $i++)
@@ -211,10 +269,11 @@ function meetups_attendees_list( int $meetup_id = 0 ) : array
       return NULL;
 
     // Prepare the data
-    $data[$i]['user_id']  = sanitize_output($row['u_id']);
-    $data[$i]['nick']     = ($row['m_nick']) ? sanitize_output($row['m_nick']) : sanitize_output($row['u_nick']);
-    $data[$i]['lock']     = $row['m_lock'];
-    $data[$i]['extra']    = bbcodes(sanitize_output($row['m_extra']));
+    $data[$i]['attendee_id']  = sanitize_output($row['p_id']);
+    $data[$i]['user_id']      = sanitize_output($row['u_id']);
+    $data[$i]['nick']         = ($row['m_nick']) ? sanitize_output($row['m_nick']) : sanitize_output($row['u_nick']);
+    $data[$i]['lock']         = $row['m_lock'];
+    $data[$i]['extra']        = bbcodes(sanitize_output($row['m_extra']));
   }
 
   // Add the number of rows to the data
@@ -348,8 +407,6 @@ function meetups_attendees_add( int   $meetup_id  ,
     irc_bot_send_message("$username has joined the $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'english');
   if(str_contains($meetup_lang, 'FR') && !$meetup_deleted && strtotime($meetup_date) > strtotime(date('Y-m-d')))
     irc_bot_send_message("$username a rejoint la rencontre IRL du $meetup_date_fr - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'french');
-  if($meetup_deleted)
-    irc_bot_send_message("$mod_username has added $username to the deleted $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'mod');
   if(strtotime($meetup_date) == strtotime(date('Y-m-d')))
     irc_bot_send_message("$mod_username has added $username to the currently ongoing $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'mod');
   if(strtotime($meetup_date) < strtotime(date('Y-m-d')))
@@ -363,6 +420,152 @@ function meetups_attendees_add( int   $meetup_id  ,
     $discord_message .= PHP_EOL.$GLOBALS['website_url']."pages/meetups/".$meetup_id;
     discord_send_message($discord_message, 'main');
   }
+}
+
+
+
+
+/**
+ * Modifies data related to a meetup attendee.
+ *
+ * @param   int     $attendee_id  The ID of the attendee (from the meetups_people table).
+ * @param   array   $contents     Data regarding the attendee.
+ *
+ * @return  void
+ */
+
+function meetups_attendees_edit(  int   $attendee_id  ,
+                                  array $contents     ) : void
+{
+  // Check if the required files have been included
+  require_included_file('users.inc.php');
+
+  // Only moderators can run this action
+  user_restrict_to_moderators();
+
+  // Sanitize and prepare the data
+  $attendee_id  = sanitize($attendee_id, 'int', 0);
+  $account      = (isset($contents['account']))   ? sanitize($contents['account'], 'string')            : '';
+  $nickname     = (isset($contents['nickname']))  ? sanitize($contents['nickname'], 'string', max: 20)  : '';
+  $extra_en     = (isset($contents['extra_en']))  ? sanitize($contents['extra_en'], 'string')           : '';
+  $extra_fr     = (isset($contents['extra_fr']))  ? sanitize($contents['extra_fr'], 'string')           : '';
+  $lock         = (isset($contents['lock']))      ? sanitize($contents['lock'], 'bool')                 : 'false';
+  $lock         = ($lock == 'true')               ? 1                                                   : 0;
+  $username     = ($nickname)                     ? string_truncate($contents['nickname'], 20) : $contents['account'];
+
+  // Error: No account or nickname provided
+  if(!$account && !$nickname)
+    return;
+
+  // Error: Attendee does not exist
+  if(!database_row_exists('meetups_people', $attendee_id))
+    return;
+
+  // Fetch data on the attendee and the meetup they are attending
+  $dattendee = mysqli_fetch_array(query(" SELECT    meetups.id                          AS 'm_id'         ,
+                                                    meetups.is_deleted                  AS 'm_deleted'    ,
+                                                    meetups.event_date                  AS 'm_date'       ,
+                                                    users.username                      AS 'u_account'    ,
+                                                    meetups_people.username             AS 'p_nickname'   ,
+                                                    meetups_people.attendance_confirmed AS 'p_lock'       ,
+                                                    meetups_people.extra_information_en AS 'p_extra_en'   ,
+                                                    meetups_people.extra_information_fr AS 'p_extra_fr'
+                                          FROM      meetups_people
+                                          LEFT JOIN users   ON meetups_people.fk_users    = users.id
+                                          LEFT JOIN meetups ON meetups_people.fk_meetups  = meetups.id
+                                          WHERE     meetups_people.id = '$attendee_id' "));
+
+  // Sanitize and prepare older data
+  $meetup_id      = sanitize($dattendee['m_id'], 'int', 0);
+  $meetup_deleted = $dattendee['m_deleted'];
+  $meetup_date    = $dattendee['m_date'];
+  $meetup_date_en = date_to_text($dattendee['m_date'], lang: 'EN');
+  $old_account    = sanitize($dattendee['u_account'], 'string');
+  $old_nickname   = sanitize($dattendee['p_nickname'], 'string');
+  $old_extra_en   = sanitize($dattendee['p_extra_en'], 'string');
+  $old_extra_fr   = sanitize($dattendee['p_extra_fr'], 'string');
+  $old_lock       = $dattendee['p_lock'];
+
+  // Error: Meetup does not exist or has been deleted
+  if(!$meetup_id || $meetup_deleted)
+    return;
+
+  // Remove the account's name if it does not exist
+  if(!user_check_username($account))
+    $account = '';
+
+  // Fetch the account's id
+  if($account)
+    $account_id = sanitize(database_entry_exists('users', 'username', $account), 'int');
+  else
+    $account_id = 0;
+
+  // Error: Account is already attending the meetup
+  if($account_id)
+  {
+    $dattendee = mysqli_fetch_array(query(" SELECT  meetups_people.id AS 'p_id'
+                                            FROM    meetups_people
+                                            WHERE   meetups_people.id        != '$attendee_id'
+                                            AND     meetups_people.fk_meetups = '$meetup_id'
+                                            AND     meetups_people.fk_users   = '$account_id' "));
+    if(isset($dattendee['p_id']))
+      return;
+  }
+
+  // Error: Nickname is already attending the meetup
+  if($nickname)
+  {
+    $dattendee = mysqli_fetch_array(query(" SELECT    meetups_people.id AS 'p_id'
+                                            FROM      meetups_people
+                                            LEFT JOIN users ON meetups_people.fk_users = users.id
+                                            WHERE     meetups_people.id         !=    '$attendee_id'
+                                            AND       meetups_people.fk_meetups =     '$meetup_id'
+                                            AND     ( meetups_people.username   LIKE  '$nickname'
+                                            OR        users.username            LIKE  '$nickname' ) "));
+    if(isset($dattendee['p_id']))
+      return;
+  }
+
+  // Edit the attendee
+  query(" UPDATE  meetups_people
+          SET     meetups_people.fk_users             = '$account_id' ,
+                  meetups_people.username             = '$nickname'   ,
+                  meetups_people.attendance_confirmed = '$lock'       ,
+                  meetups_people.extra_information_en = '$extra_en'   ,
+                  meetups_people.extra_information_fr = '$extra_fr'
+          WHERE   meetups_people.id                   = '$attendee_id' ");
+
+  // Fetch the username of the moderator editing the attendee
+  $mod_username = user_get_username();
+
+  // Moderation log
+  $modlog = log_activity( 'meetups_people_edit'               ,
+                          is_moderators_only:   true          ,
+                          activity_id:          $meetup_id    ,
+                          activity_summary_en:  $meetup_date  ,
+                          activity_summary_fr:  $meetup_date  ,
+                          username:             $username     ,
+                          moderator_username:   $mod_username );
+
+  // Detailed moderation log
+  if($account != $old_account)
+    log_activity_details($modlog, 'Account name', 'Nom du compte', $old_account, $account, do_not_sanitize: true);
+  if($nickname != $old_nickname)
+    log_activity_details($modlog, 'Nickname or name', 'Pseudonyme ou nom', $old_nickname, $nickname, do_not_sanitize: true);
+  if($extra_en != $old_extra_en)
+    log_activity_details($modlog, 'Extra details (EN)', 'Détails supplémentaires (EN)', $old_extra_en, $extra_en, do_not_sanitize: true);
+  if($extra_fr != $old_extra_fr)
+    log_activity_details($modlog, 'Extra details (FR)', 'Détails supplémentaires (FR)', $old_extra_fr, $extra_fr, do_not_sanitize: true);
+  if($lock != $old_lock)
+    log_activity_details($modlog, 'Confirmed attendance', 'Présence confirmée', $old_lock, $lock, do_not_sanitize: true);
+
+  // IRC bot message
+  if(strtotime($meetup_date) > strtotime(date('Y-m-d')))
+    irc_bot_send_message("$mod_username has edited $username's details in the upcoming $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id." - Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
+  if(strtotime($meetup_date) == strtotime(date('Y-m-d')))
+    irc_bot_send_message("$mod_username has edited $username's details in the currently ongoing $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id." - Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
+  if(strtotime($meetup_date) < strtotime(date('Y-m-d')))
+    irc_bot_send_message("$mod_username has edited $username's details in the already finished $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id." - Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
 }
 
 

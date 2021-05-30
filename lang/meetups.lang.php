@@ -133,6 +133,17 @@ ___('meetups_attendees_add_submit',   'EN', "Add an attendee");
 ___('meetups_attendees_add_submit',   'FR', "Ajouter une personne");
 
 
+// Edit an attendee
+___('meetups_attendees_edit_submit',        'EN', "Edit attendee details");
+___('meetups_attendees_edit_submit',        'FR', "Modifier les informations");
+___('meetups_attendees_edit_hide',          'EN', "Close this form");
+___('meetups_attendees_edit_hide',          'FR', "Fermer ce formulaire");
+___('meetups_attendees_edit_error_id',      'EN', "The attendee does not exist or has been deleted.");
+___('meetups_attendees_edit_error_id',      'FR', "La personne n'existe pas ou a été supprimée.");
+___('meetups_attendees_edit_error_meetup',  'EN', "The meetup does not exist or has been deleted.");
+___('meetups_attendees_edit_error_meetup',  'FR', "La rencontre IRL n'existe pas ou a été supprimée.");
+
+
 // Attendees
 ___('meetups_attendees_future',       'EN', "{{1}} person will attend this meetup");
 ___('meetups_attendees_future+',      'EN', "{{1}} people will attend this meetup");

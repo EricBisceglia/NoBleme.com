@@ -55,6 +55,27 @@ if(isset($_POST['meetup_attendees_add_submit']))
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Edit a meetup attendee
+
+if(isset($_POST['meetup_attendees_edit_submit']))
+{
+  // Prepare the attendee's data
+  $meetup_attendee_edit_id    = form_fetch_element('meetup_attendee_edit_id');
+  $meetup_attendee_edit_data  = array(  'account'   => form_fetch_element('meetup_attendee_edit_account')   ,
+                                        'nickname'  => form_fetch_element('meetup_attendee_edit_nickname')  ,
+                                        'extra_en'  => form_fetch_element('meetup_attendee_edit_extra_en')  ,
+                                        'extra_fr'  => form_fetch_element('meetup_attendee_edit_extra_fr')  ,
+                                        'lock'      => form_fetch_element('meetup_attendee_edit_lock')      );
+
+  // Submit the attendee modification request
+  meetups_attendees_edit( $meetup_attendee_edit_id    ,
+                          $meetup_attendee_edit_data  );
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Meetup data
 
 // Fetch the meetup's data
@@ -183,7 +204,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php } ?>
 
       <?php if($is_moderator) { ?>
-      <?=__icon('user_add', alt: '+', title: __('add'), title_case: 'initials', class: 'valign_h4 pointer spaced', onclick: 'meetups_add_attendee_form();')?>
+      <?=__icon('user_add', alt: '+', title: __('add'), title_case: 'initials', class: 'valign_h4 pointer spaced', onclick: 'meetups_attendee_add_form();')?>
       <?php } ?>
 
     </h4>
@@ -253,7 +274,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </form>
 
       <div class="tinypadding_top">
-        <button onclick="meetups_add_attendee('<?=$meetup_id?>')"><?=__('meetups_attendees_add_submit')?></button>
+        <button onclick="meetups_attendee_add('<?=$meetup_id?>');"><?=__('meetups_attendees_add_submit')?></button>
       </div>
 
     </div>
@@ -297,7 +318,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </tr>
 
         </thead>
-        <tbody class="altc">
+        <tbody class="doublealtc">
 
           <?php for($i = 0; $i < $meetup_attendees['rows']; $i++) { ?>
 
@@ -329,11 +350,23 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
             <?php if($is_moderator) { ?>
             <td class="nowrap">
-              <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials')?>
+              <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', onclick: "meetups_attendee_edit_form('".$meetup_attendees[$i]['attendee_id']."');")?>
               <?=__icon('user_delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
             </td>
             <?php } ?>
 
+          </tr>
+
+          <tr class="hidden meetup_edit_attendee_form" id="meetup_edit_attendee_form_<?=$meetup_attendees[$i]['attendee_id']?>">
+            <?php if(!$meetup_data['is_finished'] && $is_moderator) { ?>
+            <td colspan="4">
+            <?php } else if (!$meetup_data['is_finished'] || $is_moderator) { ?>
+            <td colspan="3">
+            <?php } else { ?>
+            <td colspan="2">
+            <?php } ?>
+              &nbsp;
+            </td>
           </tr>
 
           <?php } ?>

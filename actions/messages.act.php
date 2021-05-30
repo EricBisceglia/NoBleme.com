@@ -473,7 +473,7 @@ function private_message_reply( int     $message_id ,
     $sender   = user_get_username($user_id);
     $channel  = ($admin_only) ? 'admin' : 'mod';
     irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", "admin");
-    discord_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", "admin");
+    discord_send_message("Private message sent to the administrative team by $sender: $title".PHP_EOL.$GLOBALS['website_url']."pages/admin/inbox", "admin");
   }
 
   // Everything went well
@@ -678,7 +678,7 @@ function private_message_admins(  string  $body               ,
 
   // Notify the moderation team through IRC and Discord that a message has been sent
   irc_bot_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", 'mod');
-  discord_send_message("Private message sent to the administrative team by $sender: $title ".$GLOBALS['website_url']."pages/admin/inbox", 'mod');
+  discord_send_message("Private message sent to the administrative team by $sender: $title".PHP_EOL.$GLOBALS['website_url']."pages/admin/inbox", 'mod');
 
   // All went well
   $data['sent'] = 1;

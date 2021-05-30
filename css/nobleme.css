@@ -144,6 +144,14 @@ tbody.altc2 tr:nth-child(even)       { background-color: #282828; }
 tbody.altc2 tr:nth-child(even):hover { background-color: #121212; }
 tbody.altc tr, tbody.altc2 tr        { border-top: 0px;           }
 
+tbody.doublealtc tr:nth-child(4n-2), tbody.doublealtc tr:nth-child(4n-3)   { background-color: #282828; }
+tbody.doublealtc tr:nth-child(4n-3):hover                                  { background-color: #121212; }
+tbody.doublealtc tr:nth-child(4n):hover                                    { background-color: #212121; }
+tbody.doublealtc2 tr:nth-child(4n-1), tbody.doublealtc2 tr:nth-child(4n-2) { background-color: #282828; }
+tbody.doublealtc2 tr:nth-child(4n-2):hover                                 { background-color: #121212; }
+tbody.doublealtc2 tr:nth-child(4n-3):hover                                 { background-color: #212121; }
+tbody.doublealtc tr, tbody.doublealtc2 tr                                  { border-top: 0px;           }
+
 tr.row_separator_dark      { border-bottom: 1.0rem solid #121212; }
 tr.row_separator_dark_thin { border-bottom: 0.7rem solid #121212; }
 

@@ -685,7 +685,7 @@ function user_delete_profile( $user_id              ,
   irc_bot_send_message("$mod_username has deleted parts of $username's public profile - ".$GLOBALS['website_url']."pages/users/".$user_id." - detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
 
   // Discord message
-  discord_send_message("$mod_username has deleted parts of $username's public profile - ".$GLOBALS['website_url']."pages/users/".$user_id.PHP_EOL."Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
+  discord_send_message("$mod_username has deleted parts of $username's public profile: ".$GLOBALS['website_url']."pages/users/".$user_id.PHP_EOL."Detailed logs are available: ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
 
   // Private message
   private_message_send( __('users_profile_delete_pm_title_'.$user_lang)                                       ,
