@@ -322,7 +322,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <?php for($i = 0; $i < $meetup_attendees['rows']; $i++) { ?>
 
-          <tr class="align_center">
+          <tr class="align_center" id="meetup_attendee_row_<?=$meetup_attendees[$i]['attendee_id']?>">
 
             <td class="nowrap bold">
               <?php if($meetup_attendees[$i]['user_id']) { ?>
@@ -351,7 +351,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
             <?php if($is_moderator) { ?>
             <td class="nowrap">
               <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', onclick: "meetups_attendee_edit_form('".$meetup_attendees[$i]['attendee_id']."');")?>
-              <?=__icon('user_delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
+              <?=__icon('user_delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "meetups_attendee_delete('".$meetup_attendees[$i]['attendee_id']."', '".__('meetups_attendees_delete_confirm')."');")?>
             </td>
             <?php } ?>
 

@@ -2,10 +2,10 @@
 /*                                                                                                                   */
 /*  meetups_attendee_add_form       Opens the form which allows the addition of an attendee to a meetup.             */
 /*  meetups_attendee_add            Submits the form and adds an attendee to a meetup.                               */
-/*                                                                                                                   */
 /*  meetups_attendee_edit_form      Opens the form which allows the modification of a meetup's attendee.             */
 /*  meetups_attendee_edit_hide      Hides the form which allows the modification of a meetup's attendee.             */
 /*  meetups_attendee_edit           Submits the form and edits a meetup attendee.                                    */
+/*  meetups_attendee_delete         Triggers the removal of an attendee from a meetup.                               */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -93,7 +93,7 @@ function meetups_attendee_edit_form( attendee_id )
  * @return  {void}
  */
 
-function meetups_attendee_edit_hide( )
+function meetups_attendee_edit_hide()
 {
   // Close all open modification forms
   toggle_class_oneway('meetup_edit_attendee_form', 0);
@@ -129,4 +129,33 @@ function meetups_attendee_edit( meetup_id   ,
 
   // Submit the query
   fetch_page('meetup?id=' + meetup_id, 'meetup_attendees_table', postdata);
+}
+
+
+
+
+/**
+ * Triggers the removal of an attendee from a meetup.
+ *
+ * @param   {int}     attendee_id   The user ID of the attendee to remove from the meetup.
+ * @param   {string}  message       The message which will be displayed prior to deletion.
+ *
+ * @return  {void}
+ */
+
+function meetups_attendee_delete( attendee_id ,
+                                  message     )
+{
+  // Make sure the user knows what they're doing
+  if(!confirm(message))
+    return;
+
+  // Close the modification form if it was open
+  toggle_element_oneway('meetup_edit_attendee_form_' + attendee_id, 0, 'table-row');
+
+  // Assemble the postdata
+  postdata = 'attendee_id=' + fetch_sanitize(attendee_id);
+
+  // Submit the query
+  fetch_page('attendee_delete', 'meetup_attendee_row_' + attendee_id, postdata);
 }

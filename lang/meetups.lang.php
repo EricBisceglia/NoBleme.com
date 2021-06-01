@@ -144,6 +144,13 @@ ___('meetups_attendees_edit_error_meetup',  'EN', "The meetup does not exist or 
 ___('meetups_attendees_edit_error_meetup',  'FR', "La rencontre IRL n'existe pas ou a été supprimée.");
 
 
+// Delete an attendee
+___('meetups_attendees_delete_confirm', 'EN', "Confirm the deletion of an attendee from the meetup");
+___('meetups_attendees_delete_confirm', 'FR', "Confirmer la suppression d\'une personne participant à cette rencontre IRL");
+___('meetups_attendees_delete_ok',      'EN', "The attendee has succesfully been removed from the meetup");
+___('meetups_attendees_delete_ok',      'FR', "La personne a bien été supprimée de la rencontre IRL");
+
+
 // Attendees
 ___('meetups_attendees_future',       'EN', "{{1}} person will attend this meetup");
 ___('meetups_attendees_future+',      'EN', "{{1}} people will attend this meetup");

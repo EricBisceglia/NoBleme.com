@@ -16,6 +16,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  meetups_attendees_add               Adds an attendee to a meetup.                                                */
 /*  meetups_attendees_edit              Modifies data related to a meetup attendee.                                  */
 /*  meetups_attendees_update_count      Recounts the number of people attending a meetup.                            */
+/*  meetups_attendees_delete            Removes an attendee from a meetup.                                           */
 /*                                                                                                                   */
 /*  meetups_list_years                  Fetches the years at which meetups happened.                                 */
 /*  meetups_get_max_attendees           Fetches the highest number of attendees in a meetup.                         */
@@ -566,6 +567,129 @@ function meetups_attendees_edit(  int   $attendee_id  ,
     irc_bot_send_message("$mod_username has edited $username's details in the currently ongoing $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id." - Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
   if(strtotime($meetup_date) < strtotime(date('Y-m-d')))
     irc_bot_send_message("$mod_username has edited $username's details in the already finished $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id." - Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
+}
+
+
+
+
+/**
+ * Removes an attendee from a meetup.
+ *
+ * @param   int         $attendee_id  The ID of the attendee (from the meetups_people table).
+ *
+ * @return  string|null               A string contaiing an error message, or null if all went well.
+ */
+
+function meetups_attendees_delete( int $attendee_id ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('users.inc.php');
+
+  // Only moderators can run this action
+  user_restrict_to_moderators();
+
+  // Sanitize the attendee id
+  $attendee_id  = sanitize($attendee_id, 'int', 0);
+
+  // Error: Attendee does not exist
+  if(!database_row_exists('meetups_people', $attendee_id))
+    return __('meetups_attendees_edit_error_id');
+
+  // Fetch data on the attendee and the meetup they are attending
+  $dattendee = mysqli_fetch_array(query(" SELECT    meetups.id                          AS 'm_id'         ,
+                                                    meetups.is_deleted                  AS 'm_deleted'    ,
+                                                    meetups.event_date                  AS 'm_date'       ,
+                                                    meetups.languages                   AS 'm_lang'       ,
+                                                    users.username                      AS 'u_account'    ,
+                                                    meetups_people.username             AS 'p_nickname'   ,
+                                                    meetups_people.attendance_confirmed AS 'p_lock'       ,
+                                                    meetups_people.extra_information_en AS 'p_extra_en'   ,
+                                                    meetups_people.extra_information_fr AS 'p_extra_fr'
+                                          FROM      meetups_people
+                                          LEFT JOIN users   ON meetups_people.fk_users    = users.id
+                                          LEFT JOIN meetups ON meetups_people.fk_meetups  = meetups.id
+                                          WHERE     meetups_people.id = '$attendee_id' "));
+
+  // Sanitize and prepare the data
+  $meetup_id      = sanitize($dattendee['m_id'], 'int', 0);
+  $meetup_deleted = $dattendee['m_deleted'];
+  $meetup_date    = $dattendee['m_date'];
+  $meetup_date_en = date_to_text($dattendee['m_date'], lang: 'EN');
+  $meetup_date_fr = date_to_text($dattendee['m_date'], lang: 'FR');
+  $meetup_lang    = $dattendee['m_lang'];
+  $account        = sanitize($dattendee['u_account'], 'string');
+  $nickname       = sanitize($dattendee['p_nickname'], 'string');
+  $username       = ($nickname) ? $nickname : $account;
+  $username_raw   = ($dattendee['p_nickname']) ? $dattendee['p_nickname'] : $dattendee['u_account'];
+  $extra_en       = sanitize($dattendee['p_extra_en'], 'string');
+  $extra_fr       = sanitize($dattendee['p_extra_fr'], 'string');
+  $lock           = $dattendee['p_lock'];
+
+  // Error: Meetup does not exist or has been deleted
+  if(!$meetup_id || $meetup_deleted)
+    return __('meetups_attendees_edit_error_meetup');
+
+  // Remove the attendee
+  query(" DELETE FROM meetups_people
+          WHERE       meetups_people.id = '$attendee_id' ");
+
+  // Recount the meetup's attendees
+  meetup_attendees_update_count($meetup_id);
+
+  // Fetch the username of the moderator deleting the attendee
+  $mod_username = user_get_username();
+
+  // Activity log, for future meetups only
+  if(!$meetup_deleted && strtotime($meetup_date) > strtotime(date('Y-m-d')))
+    log_activity( 'meetups_people_delete'             ,
+                  language:             $meetup_lang  ,
+                  activity_id:          $meetup_id    ,
+                  activity_summary_en:  $meetup_date  ,
+                  activity_summary_fr:  $meetup_date  ,
+                  username:             $username_raw );
+
+  // Moderation log
+  $modlog = log_activity( 'meetups_people_delete'             ,
+                          is_moderators_only:   true          ,
+                          activity_id:          $meetup_id    ,
+                          activity_summary_en:  $meetup_date  ,
+                          activity_summary_fr:  $meetup_date  ,
+                          username:             $username_raw ,
+                          moderator_username:   $mod_username );
+
+  // Detailed moderation log
+  if($account)
+    log_activity_details($modlog, 'Account name', 'Nom du compte', $account, do_not_sanitize: true);
+  if($nickname)
+    log_activity_details($modlog, 'Nickname or name', 'Pseudonyme ou nom', $nickname, do_not_sanitize: true);
+  if($extra_en)
+    log_activity_details($modlog, 'Extra details (EN)', 'Détails supplémentaires (EN)', $extra_en, do_not_sanitize: true);
+  if($extra_fr)
+    log_activity_details($modlog, 'Extra details (FR)', 'Détails supplémentaires (FR)', $extra_fr, do_not_sanitize: true);
+  if($lock)
+    log_activity_details($modlog, 'Confirmed attendance', 'Présence confirmée', $lock, do_not_sanitize: true);
+
+  // IRC bot message
+  if(str_contains($meetup_lang, 'EN') && !$meetup_deleted && strtotime($meetup_date) > strtotime(date('Y-m-d')))
+    irc_bot_send_message("$username_raw has left the $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'english');
+  if(str_contains($meetup_lang, 'FR') && !$meetup_deleted && strtotime($meetup_date) > strtotime(date('Y-m-d')))
+    irc_bot_send_message("$username_raw a quitté la rencontre IRL du $meetup_date_fr - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'french');
+  if(strtotime($meetup_date) == strtotime(date('Y-m-d')))
+    irc_bot_send_message("$mod_username has removed $username_raw from the currently ongoing $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'mod');
+  if(strtotime($meetup_date) < strtotime(date('Y-m-d')))
+    irc_bot_send_message("$mod_username has removed $username_raw from the already finished $meetup_date_en real life meetup - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'mod');
+
+  // Discord message
+  if(!$meetup_deleted && strtotime($meetup_date) > strtotime(date('Y-m-d')))
+  {
+    $discord_message = "$username_raw has left the $meetup_date_en real life meetup";
+    $discord_message .= PHP_EOL."$username_raw a quitté la rencontre IRL du $meetup_date_fr";
+    $discord_message .= PHP_EOL.$GLOBALS['website_url']."pages/meetups/".$meetup_id;
+    discord_send_message($discord_message, 'main');
+  }
+
+  // All went well
+  return NULL;
 }
 
 
