@@ -65,7 +65,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <h1>
     <?=__('meetups_list_title')?>
     <?php if($is_moderator) { ?>
-    <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials')?>
+    <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/meetups/add')?>
     <?php } ?>
   </h1>
 

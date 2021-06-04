@@ -1,5 +1,7 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  meetups_details_preview         Previews a meetup's details.                                                     */
+/*                                                                                                                   */
 /*  meetups_attendee_add_form       Opens the form which allows the addition of an attendee to a meetup.             */
 /*  meetups_attendee_add            Submits the form and adds an attendee to a meetup.                               */
 /*  meetups_attendee_edit_form      Opens the form which allows the modification of a meetup's attendee.             */
@@ -8,6 +10,33 @@
 /*  meetups_attendee_delete         Triggers the removal of an attendee from a meetup.                               */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+
+/**
+ * Previews a meetup's details.
+ *
+ * @param   {string}  language  Which language should be previewed.
+ *
+ * @return  {void}
+ */
+
+function meetups_details_preview( language )
+{
+  // Hide both preview areas
+  toggle_class_oneway('meetups_add_preview', 0);
+
+  // Stop here if there is nothing to preview
+  if(!document.getElementById('meetups_add_details_' + language).value.length)
+    return;
+
+  // Show the correct preview area
+  toggle_element_oneway('meetups_add_preview_container_' + language, 1);
+
+  // Preview the details in the correct language
+  preview_bbcodes('meetups_add_details_' + language, 'meetups_add_preview_' + language);
+}
+
+
 
 
 /**

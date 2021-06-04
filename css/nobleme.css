@@ -155,6 +155,8 @@ tbody.doublealtc tr, tbody.doublealtc2 tr                                  { bor
 tr.row_separator_dark      { border-bottom: 1.0rem solid #121212; }
 tr.row_separator_dark_thin { border-bottom: 0.7rem solid #121212; }
 
+textarea.higher { min-height: 25.0rem; }
+
 img.valign_twolines { vertical-align: middle; margin-top: -1.5em; }
 
 label.label_inline { display: inline-block; font-weight: normal; margin-left: .2rem; }

@@ -180,3 +180,82 @@ ___('meetups_attendees_lock',         'EN', "Présence<br>confirmée");
 ___('meetups_attendees_lock',         'FR', "Confirmed<br>attendance");
 ___('meetups_attendees_details',      'EN', "Extra details");
 ___('meetups_attendees_details',      'FR', "Détails supplémentaires");
+
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 CREATE A MEETUP                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('meetups_new_title',  'EN', "Create a new meetup");
+___('meetups_new_title',  'FR', "Nouvelle rencontre IRL");
+___('meetups_new_header', 'EN', <<<EOT
+Before creating a meetup, spend a bit of time gauging interest: create it on the website only once a few people are interested in attending and/or a date and place have been 100% determined. Once you create the meetup, automated messages will be sent on IRC and Discord in the appropriate languages (eg. english only meetups will not get communications in french, check both languages if people from both languages will be attending).
+EOT
+);
+___('meetups_new_header', 'FR', <<<EOT
+Avant de créer une nouvelle IRL, passez un peu de temps à mesurer l'intérêt : créez-la sur le site seulement une fois que quelques personnes sont intéressées et/ou qu'une date et un lieu ont été 100% déterminés. Une fois l'IRL crée, des messages automatisés seront envoyés sur IRC et Discord dans les langues appropriées (par ex. une IRL uniquement en français n'enverra pas de communication en anglais, cochez les deux langues si l'IRL pourrait contenir des personnes des deux langues/communautés).
+EOT
+);
+
+
+// Form: Meetup summary
+___('meetups_new_summary',    'EN', "Meetup summary");
+___('meetups_new_summary',    'FR', "Résumé de l'IRL");
+___('meetups_new_date',       'EN', "Meetup date, DD/MM/YY format (ex. 19/03/05)");
+___('meetups_new_date',       'FR', "Date de l'IRL au format JJ/MM/AA (par ex. 19/03/05)");
+___('meetups_new_location',   'EN', "Meetup location (just a city or country, 20 characters max.)");
+___('meetups_new_location',   'FR', "Lieu de l'IRL (juste une ville ou un pays, 20 caractères max.)");
+___('meetups_new_languages',  'EN', "Languages spoken at the meetup");
+___('meetups_new_languages',  'FR', "Langues parlées lors de cette IRL");
+
+
+// Form: Meetup details
+___('meetups_new_details',        'EN', "Meetup details");
+___('meetups_new_details',        'FR', "Détails de l'IRL");
+___('meetups_new_details_body_1', 'EN', <<<EOT
+Try to answer all of the following questions:<br>
+* Where and when should people meet up?<br>
+* What is the general plan for the meetup?<br>
+* If it is a multi-day meetup, when does the meetup end?
+EOT
+);
+___('meetups_new_details_body_1', 'FR', <<<EOT
+Essayez de répondre aux questions suivantes :<br>
+* Où et quand est-ce que les personnes se retrouveront ?<br>
+* Quel est le planning de la rencontre IRL ?<br>
+* S'il s'agit d'une IRL sur plusieurs jours, quand est-ce que l'IRL finit ?
+EOT
+);
+___('meetups_new_details_body_2', 'EN', <<<EOT
+You can use {{link_popup|pages/doc/bbcodes|BBCodes}} for styling. A live preview of the styled text will appear at the bottom of the page as you type the meetup's details in the fields below. If the plans for the meetup are still vague, you can leave these two fields blank or incomplete and fill them up at a later time. If you do not speak french but the meetup is bilingual, ask a french person for help with translating the details in french. If in doubt what to write in those fields, you can look at {{link_popup|pages/meetups/list|previous meetups}} for inspiration.
+EOT
+);
+___('meetups_new_details_body_2', 'FR', <<<EOT
+Vous pouvez utiliser des {{link_popup|pages/doc/bbcodes|BBCodes}} pour mettre en forme le texte. Une prévisualisation en temps réel du texte mis en forme apparaitra en bas de la page au fur et à mesure que vous remplirez les détails de l'IRL dans les champs ci-dessous. Si la planification de l'IRL n'est pas encore finalisée, vous pouvez laisser ces champs vierges ou incomplets et les remplir plus tard. Si vous ne parlez pas assez bien anglais mais que l'IRL est bilingue, demandez de l'aide à quelqu'un qui parle bien anglais. Vous pouvez utiliser le contenu des {{link_popup|pages/meetups/list|IRL précédentes}} comme inspiration.
+EOT
+);
+___('meetups_new_details_en',     'EN', "Meetups details in english");
+___('meetups_new_details_en',     'FR', "Détails de l'IRL en anglais");
+___('meetups_new_details_fr',     'EN', "Meetups details in french");
+___('meetups_new_details_fr',     'FR', "Détails de l'IRL en français");
+___('meetups_new_submit',         'EN', "Create the meetup");
+___('meetups_new_submit',         'FR', "Créer la rencontre IRL");
+___('meetups_new_preview_en',     'EN', "Meetup details preview (english)");
+___('meetups_new_preview_en',     'FR', "Prévisualisation des détails de l'IRL (anglais)");
+___('meetups_new_preview_fr',     'EN', "Meetup details preview (french)");
+___('meetups_new_preview_fr',     'FR', "Prévisualisation des détails de l'IRL (français)");
+
+
+// Error messages
+___('meetups_new_error_date',     'EN', "A valid date must be provided for the meetup");
+___('meetups_new_error_date',     'FR', "La rencontre IRL doit avoir une date valide");
+___('meetups_new_error_location', 'EN', "The meetup must have a location");
+___('meetups_new_error_location', 'FR', "Un lieu doit être déterminé pour la rencontre IRL");
+___('meetups_new_error_language', 'EN', "The meetup must have a language");
+___('meetups_new_error_language', 'FR', "La rencontre IRL doit avoir une langue");
