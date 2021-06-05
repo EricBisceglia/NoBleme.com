@@ -15,25 +15,27 @@
 /**
  * Previews a meetup's details.
  *
- * @param   {string}  language  Which language should be previewed.
+ * @param   {string}  language    Which language should be previewed.
+ * @param   {string}  action_type The type of action being performed ('add' or 'edit').
  *
  * @return  {void}
  */
 
-function meetups_details_preview( language )
+function meetups_details_preview( language    ,
+                                  action_type )
 {
   // Hide both preview areas
-  toggle_class_oneway('meetups_add_preview', 0);
+  toggle_class_oneway('meetups_' + action_type + '_preview', 0);
 
   // Stop here if there is nothing to preview
-  if(!document.getElementById('meetups_add_details_' + language).value.length)
+  if(!document.getElementById('meetups_' + action_type + '_details_' + language).value.length)
     return;
 
   // Show the correct preview area
-  toggle_element_oneway('meetups_add_preview_container_' + language, 1);
+  toggle_element_oneway('meetups_' + action_type + '_preview_container_' + language, 1);
 
   // Preview the details in the correct language
-  preview_bbcodes('meetups_add_details_' + language, 'meetups_add_preview_' + language);
+  preview_bbcodes('meetups_' + action_type + '_details_' + language, 'meetups_' + action_type + '_preview_' + language);
 }
 
 

@@ -11,6 +11,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  meetups_add                         Creates a new meetup.                                                        */
 /*  meetups_get                         Fetches data related to a meetup.                                            */
 /*  meetups_list                        Fetches a list of meetups.                                                   */
+/*  meetups_edit                        Modifies an existing meetup.                                                 */
 /*                                                                                                                   */
 /*  meetups_attendees_add               Adds an attendee to a meetup.                                                */
 /*  meetups_attendees_get               Fetches data related to a meetup attendee.                                   */
@@ -30,7 +31,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
  *
  * @param   array       $contents   The contents of the meetup.
  *
- * @return  string|null             An error string, or an int if the meetup was properly created.
+ * @return  string|int              An error string, or the meetup's id if it was properly created.
  */
 
 function meetups_add( array $contents ) : mixed
@@ -99,9 +100,9 @@ function meetups_add( array $contents ) : mixed
   if(strtotime($meetup_date) > strtotime(date('Y-m-d')))
   {
     if(str_contains($meetup_lang, 'EN'))
-      irc_bot_send_message("A new real life meetup is being planned on $meetup_date - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'english');
+      irc_bot_send_message("A new real life meetup is being planned on $meetup_date_en - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'english');
     if(str_contains($meetup_lang, 'FR'))
-      irc_bot_send_message("Une nouvelle rencontre IRL est planifiée le $meetup_date - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'french');
+      irc_bot_send_message("Une nouvelle rencontre IRL est planifiée le $meetup_date_fr - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'french');
   }
   else
     irc_bot_send_message("A real life meetup has been created in the past by $mod_username on $meetup_date_en - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'mod');
@@ -160,21 +161,22 @@ function meetups_get( int $meetup_id ) : mixed
   if(!database_row_exists('meetups', $meetup_id))
     return NULL;
 
-  // Fetch the user's language
-  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
-
   // Fetch the data
   $dmeetup = mysqli_fetch_array(query(" SELECT    meetups.is_deleted      AS 'm_deleted'    ,
                                                   meetups.event_date      AS 'm_date'       ,
                                                   meetups.location        AS 'm_location'   ,
                                                   meetups.languages       AS 'm_lang'       ,
-                                                  meetups.details_$lang   AS 'm_details'
+                                                  meetups.details_en      AS 'm_details_en' ,
+                                                  meetups.details_fr      AS 'm_details_fr'
                                         FROM      meetups
                                         WHERE     meetups.id = '$meetup_id' "));
 
   // Only moderators can see deleted meetups
   if($dmeetup['m_deleted'] && !user_is_moderator())
     return NULL;
+
+  // Fetch the user's language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Assemble an array with the data
   $data['id']             = $meetup_id;
@@ -185,12 +187,17 @@ function meetups_get( int $meetup_id ) : mixed
   $data['date_en']        = sanitize_output(date_to_text($dmeetup['m_date'], lang: 'EN'));
   $data['date_short_en']  = date_to_text($dmeetup['m_date'], strip_day: 1, lang: 'EN');
   $data['date_short_fr']  = date_to_text($dmeetup['m_date'], strip_day: 1, lang: 'FR');
+  $data['date_ddmmyy']    = sanitize_output(date('d/m/y', strtotime($dmeetup['m_date'])));
   $data['location']       = sanitize_output($dmeetup['m_location']);
   $temp                   = time_days_elapsed(date('Y-m-d'), $dmeetup['m_date']);
   $data['days_until']     = sanitize_output($temp.__('day', amount: $temp, spaces_before: 1));
+  $data['lang_en']        = str_contains($dmeetup['m_lang'], 'EN');
+  $data['lang_fr']        = str_contains($dmeetup['m_lang'], 'FR');
   $data['wrong_lang_en']  = ($lang == 'en' && !str_contains($dmeetup['m_lang'], 'EN'));
   $data['wrong_lang_fr']  = ($lang == 'fr' && !str_contains($dmeetup['m_lang'], 'FR'));
-  $data['details']        = bbcodes(sanitize_output($dmeetup['m_details'], preserve_line_breaks: true));
+  $data['details']        = bbcodes(sanitize_output($dmeetup['m_details_'.$lang], preserve_line_breaks: true));
+  $data['details_en']     = sanitize_output($dmeetup['m_details_en']);
+  $data['details_fr']     = sanitize_output($dmeetup['m_details_fr']);
 
   // Return the data
   return $data;
@@ -280,6 +287,154 @@ function meetups_list(  string  $sort_by  = 'date'  ,
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Creates a new meetup.
+ *
+ * @param   array       $meetup_id  The meetup's id.
+ * @param   array       $contents   The edited contents of the meetup.
+ *
+ * @return  string|null             An error string, or null if all went well.
+ */
+
+function meetups_edit(  int   $meetup_id  ,
+                        array $contents   ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('meetups.lang.php');
+
+  // Only moderators can run this action
+  user_restrict_to_moderators();
+
+  // Sanitize and prepare the data
+  $meetup_id          = sanitize($meetup_id, 'int', 0);
+  $meetup_date        = (isset($contents['date']))        ? sanitize(date_to_mysql($contents['date']), 'string') : 0;
+  $meetup_location    = (isset($contents['location']))    ? sanitize($contents['location'], 'string', max: 20)    : '';
+  $meetup_details_en  = (isset($contents['details_en']))  ? sanitize($contents['details_en'], 'string')           : '';
+  $meetup_details_fr  = (isset($contents['details_fr']))  ? sanitize($contents['details_fr'], 'string')           : '';
+  $temp               = ($contents['lang_en'])            ? 'EN'                                                  : '';
+  $meetup_lang        = ($contents['lang_fr'])            ? $temp.'FR'                                         : $temp;
+
+  // Error: Meetup does not exist
+  if(!database_row_exists('meetups', $meetup_id))
+    return __('meetups_edit_error_id');
+
+  // Error: Incorrect date
+  if(!$meetup_date || $meetup_date == '0000-00-00')
+    return __('meetups_new_error_date');
+
+  // Error: No location
+  if(!$meetup_location)
+    return __('meetups_new_error_location');
+
+  // Error: No language
+  if(!$meetup_lang)
+    return __('meetups_new_error_language');
+
+  // Fetch the old meetup data
+  $dmeetup = mysqli_fetch_array(query(" SELECT  meetups.is_deleted  AS 'm_deleted'  ,
+                                                meetups.event_date  AS 'm_date'     ,
+                                                meetups.location    AS 'm_location' ,
+                                                meetups.languages   AS 'm_lang'     ,
+                                                meetups.details_en  AS 'm_extra_en' ,
+                                                meetups.details_fr  AS 'm_extra_fr'
+                                        FROM    meetups
+                                        WHERE   meetups.id = '$meetup_id' "));
+
+  // Sanitize and prepare the old meetup data
+  $meetup_deleted         = $dmeetup['m_deleted'];
+  $meetup_date_old        = sanitize($dmeetup['m_date'], 'string');
+  $meetup_location_old    = sanitize($dmeetup['m_location'], 'string');
+  $meetup_lang_old        = sanitize($dmeetup['m_lang'], 'string');
+  $meetup_details_en_old  = sanitize($dmeetup['m_extra_en'], 'string');
+  $meetup_details_fr_old  = sanitize($dmeetup['m_extra_fr'], 'string');
+
+  // Update the meetup
+  query(" UPDATE  meetups
+          SET     meetups.event_date  = '$meetup_date'        ,
+                  meetups.location    = '$meetup_location'    ,
+                  meetups.languages   = '$meetup_lang'        ,
+                  meetups.details_en  = '$meetup_details_en'  ,
+                  meetups.details_fr  = '$meetup_details_fr'
+          WHERE   meetups.id          = '$meetup_id'          ");
+
+  // Fetch the username of the moderator creating the meetup
+  $mod_username = user_get_username();
+
+  // Activity log, only for future meetups getting their date changed
+  if(!$meetup_deleted && $meetup_date != $meetup_date_old && strtotime($meetup_date) > strtotime(date('Y-m-d')))
+    log_activity( 'meetups_edit'                        ,
+                  language:             $meetup_lang    ,
+                  activity_id:          $meetup_id      ,
+                  activity_summary_en:  $meetup_date    ,
+                  activity_summary_fr:  $meetup_date    );
+
+  // Moderation log
+  $modlog = log_activity( 'meetups_edit'                        ,
+                          is_moderators_only:   true            ,
+                          activity_id:          $meetup_id      ,
+                          activity_summary_en:  $meetup_date    ,
+                          activity_summary_fr:  $meetup_date    ,
+                          moderator_username:   $mod_username   );
+
+  // Detailed moderation logs
+  if($meetup_date != $meetup_date_old)
+    log_activity_details($modlog, "Meetup date", "Date de l\'IRL", $meetup_date_old, $meetup_date, do_not_sanitize: true);
+  if($meetup_location != $meetup_location_old)
+    log_activity_details($modlog, "Meetup location", "Lieu de l\'IRL", $meetup_location_old, $meetup_location, do_not_sanitize: true);
+  if($meetup_lang != $meetup_lang_old)
+    log_activity_details($modlog, "Meetup languages", "Langues de l\'IRL", $meetup_lang_old, $meetup_lang, do_not_sanitize: true);
+  if($meetup_details_en != $meetup_details_en_old)
+    log_activity_details($modlog, "Extra details (english)", "Détails supplémentaires (anglais)", $meetup_details_en_old, $meetup_details_en, do_not_sanitize: true);
+  if($meetup_details_fr != $meetup_details_fr_old)
+    log_activity_details($modlog, "Extra details (french)", "Détails supplémentaires (français)", $meetup_details_fr_old, $meetup_details_fr, do_not_sanitize: true);
+
+  // Plain text meetup dates and location
+  $meetup_date_en = date_to_text($meetup_date, lang: 'EN');
+  $meetup_date_fr = date_to_text($meetup_date, lang: 'FR');
+
+  // IRC bot message
+  if(!$meetup_deleted && $meetup_date != $meetup_date_old && strtotime($meetup_date) > strtotime(date('Y-m-d')))
+  {
+    if(str_contains($meetup_lang, 'EN'))
+      irc_bot_send_message("The $meetup_date_en real life meetup has been moved to a new date - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'english');
+    if(str_contains($meetup_lang, 'FR'))
+      irc_bot_send_message("La date de la rencontre IRL du $meetup_date_fr a été modifiée - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'french');
+  }
+  irc_bot_send_message("The $meetup_date_en real life meetup has been modified by $mod_username - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id." - Detailed logs are available - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
+
+  // Discord message
+  if(!$meetup_deleted && $meetup_date != $meetup_date_old && strtotime($meetup_date) > strtotime(date('Y-m-d')))
+  {
+    if(str_contains($meetup_lang, 'EN') && str_contains($meetup_lang, 'FR'))
+    {
+      $discord_message  = "The $meetup_date_en real life meetup has been moved to a new date";
+      $discord_message .= PHP_EOL."La date de la rencontre IRL du $meetup_date_fr a été modifiée";
+      $discord_message .= PHP_EOL.$GLOBALS['website_url']."pages/meetups/".$meetup_id;
+      discord_send_message($discord_message, 'main');
+    }
+    else if(str_contains($meetup_lang, 'EN'))
+    {
+      $discord_message  = "The english speakig $meetup_date_en real life meetup has been moved to a new date";
+      $discord_message .= PHP_EOL."La date de la rencontre IRL anglophone du $meetup_date_fr a été modifiée";
+      $discord_message .= PHP_EOL.$GLOBALS['website_url']."pages/meetups/".$meetup_id;
+      discord_send_message($discord_message, 'main');
+    }
+    else if(str_contains($meetup_lang, 'FR'))
+    {
+      $discord_message  = "The french speaking $meetup_date_en real life meetup has been moved to a new date";
+      $discord_message .= PHP_EOL."La date de la rencontre IRL francophone du $meetup_date_fr a été modifiée";
+      $discord_message .= PHP_EOL.$GLOBALS['website_url']."pages/meetups/".$meetup_id;
+      discord_send_message($discord_message, 'main');
+    }
+  }
+
+  // All went well
+  return NULL;
 }
 
 

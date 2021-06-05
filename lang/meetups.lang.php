@@ -259,3 +259,26 @@ ___('meetups_new_error_location', 'EN', "The meetup must have a location");
 ___('meetups_new_error_location', 'FR', "Un lieu doit être déterminé pour la rencontre IRL");
 ___('meetups_new_error_language', 'EN', "The meetup must have a language");
 ___('meetups_new_error_language', 'FR', "La rencontre IRL doit avoir une langue");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   EDIT A MEETUP                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('meetups_edit_title', 'EN', "Edit a meetup");
+___('meetups_edit_title', 'FR', "Modifier une IRL");
+
+
+// Form
+___('meetups_edit_submit',  'EN', "Edit the meetup");
+___('meetups_edit_submit',  'FR', "Modifier la rencontre IRL");
+
+
+// Error messages
+___('meetups_edit_error_id',  'EN', "This meetup does not exist or has been deleted");
+___('meetups_edit_error_id',  'FR', "Cette rencontre IRL n'existe pas ou a été supprimée");

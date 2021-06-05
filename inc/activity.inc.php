@@ -311,6 +311,13 @@ function log_activity_parse(  bool    $admins_only        ,
     $return['FR']   = $mod_username.' a crée une nouvelle IRL le '.date_to_text($title_fr, 1);
   }
 
+  else if($type === 'meetups_edit' && !$admins_only)
+  {
+    $return['css']  = 'yellow text_dark bold';
+    $return['href'] = $path.'pages/meetups/'.$id;
+    $return['EN']   = "The ".date_to_text($title_en, 1)." meetup has been moved to a new date";
+    $return['FR']   = "La rencontre IRL du ".date_to_text($title_fr, 1)." a changé de date";
+  }
   else if($type === 'meetups_edit')
   {
     $return['href'] = $path.'pages/meetups/'.$id;

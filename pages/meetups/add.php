@@ -80,11 +80,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('meetups_new_header')?>
   </p>
 
-  <form method="POST" action="add">
+  <form method="POST">
     <fieldset>
 
       <?php if(isset($meetups_add)) { ?>
-      <div id="meetups_add_error" class="padding_bot">
+      <div class="padding_bot">
         <div class="red text_white uppercase bold spaced bigger">
           <?=__('error').__(':', spaces_after: 1).$meetups_add?>
         </div>
@@ -135,20 +135,20 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php if($lang == 'EN') { ?>
         <div class="flex spaced_right">
           <label for="meetups_add_details_en"><?=__('meetups_new_details_en')?></label>
-          <textarea class="higher" id="meetups_add_details_en" name="meetups_add_details_en" onkeyup="meetups_details_preview('en');" onfocus="meetups_details_preview('en');"><?=$meetups_add_details_en?></textarea>
+          <textarea class="higher" id="meetups_add_details_en" name="meetups_add_details_en" onkeyup="meetups_details_preview('en', 'add');" onfocus="meetups_details_preview('en', 'add');"><?=$meetups_add_details_en?></textarea>
         </div>
         <div class="flex spaced_left">
           <label for="meetups_add_details_fr"><?=__('meetups_new_details_fr')?></label>
-          <textarea class="higher" id="meetups_add_details_fr" name="meetups_add_details_fr" onkeyup="meetups_details_preview('fr');" onfocus="meetups_details_preview('fr');"><?=$meetups_add_details_fr?></textarea>
+          <textarea class="higher" id="meetups_add_details_fr" name="meetups_add_details_fr" onkeyup="meetups_details_preview('fr', 'add');" onfocus="meetups_details_preview('fr', 'add');"><?=$meetups_add_details_fr?></textarea>
         </div>
         <?php } else { ?>
         <div class="flex spaced_right">
           <label for="meetups_add_details_fr"><?=__('meetups_new_details_fr')?></label>
-          <textarea class="higher" id="meetups_add_details_fr" name="meetups_add_details_fr" onkeyup="meetups_details_preview('fr');" onfocus="meetups_details_preview('fr');"><?=$meetups_add_details_fr?></textarea>
+          <textarea class="higher" id="meetups_add_details_fr" name="meetups_add_details_fr" onkeyup="meetups_details_preview('fr', 'add');" onfocus="meetups_details_preview('fr', 'add');"><?=$meetups_add_details_fr?></textarea>
         </div>
         <div class="flex spaced_left">
           <label for="meetups_add_details_en"><?=__('meetups_new_details_en')?></label>
-          <textarea class="higher" id="meetups_add_details_en" name="meetups_add_details_en" onkeyup="meetups_details_preview('en');" onfocus="meetups_details_preview('en');"><?=$meetups_add_details_en?></textarea>
+          <textarea class="higher" id="meetups_add_details_en" name="meetups_add_details_en" onkeyup="meetups_details_preview('en', 'add');" onfocus="meetups_details_preview('en', 'add');"><?=$meetups_add_details_en?></textarea>
         </div>
         <?php } ?>
       </div>
