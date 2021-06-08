@@ -1,6 +1,8 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  meetups_delete                  Triggers the deletion of a meetup.                                               */
+/*  meetups_restore                 Triggers the undeletion of a deleted meetup.                                     */
+/*  meetups_reload_page             Reloads the page after a deletion or undeletion.                                 */
 /*                                                                                                                   */
 /*  meetups_details_preview         Previews a meetup's details.                                                     */
 /*                                                                                                                   */
@@ -34,7 +36,45 @@ function meetups_delete(  meetup_id     ,
 
   // Trigger the deletion
   if(confirm(message))
-    fetch_page('delete', 'meetup_delete_button', postdata, document.location.reload());
+    fetch_page('delete', 'meetup_delete_button', postdata, meetups_reload_page);
+}
+
+
+
+
+/**
+ * Triggers the undeletion of a deleted meetup.
+ *
+ * @param   {string}  meetup_id   The ID of the meetup that should be deleted.
+ * @param   {string}  message     The confirmation message which will be displayed prior to the undeletion.
+ *
+ * @return  {void}
+ */
+
+function meetups_restore( meetup_id ,
+                          message   )
+{
+  // Assemble the postdata
+  postdata = 'meetup_id=' + fetch_sanitize(meetup_id);
+
+  // Trigger the deletion
+  if(confirm(message))
+    fetch_page('restore', 'meetup_restore_button', postdata, meetups_reload_page);
+}
+
+
+
+
+/**
+ * Reloads the page after a deletion or undeletion.
+ *
+ * @return {void}
+ */
+
+function meetups_reload_page()
+{
+  // Reload the page
+  document.location.reload();
 }
 
 

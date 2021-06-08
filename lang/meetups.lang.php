@@ -295,3 +295,8 @@ ___('meetups_edit_error_id',  'FR', "Cette rencontre IRL n'existe pas ou a été
 // Soft delete
 ___('meetups_delete_confirm', 'EN', "Confirm the deletion of this meetup");
 ___('meetups_delete_confirm', 'FR', "Confirmer la suppression de cette rencontre IRL");
+
+
+// Restore
+___('meetups_restore_confirm',  'EN', "Confirm the undeletion of this meetup");
+___('meetups_restore_confirm',  'FR', "Confirmer la restauration de cette rencontre IRL");

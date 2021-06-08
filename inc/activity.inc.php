@@ -334,10 +334,24 @@ function log_activity_parse(  bool    $admins_only        ,
   }
   else if($type === 'meetups_delete')
   {
-    $return['css']  = 'red bold';
+    $return['css']  = 'text_red bold';
     $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = $mod_username." deleted the ".date_to_text($title_en, 1)." meetup";
     $return['FR']   = $mod_username." a supprimé l'IRL du ".date_to_text($title_fr, 1);
+  }
+
+  else if($type === 'meetups_restore' && !$admins_only)
+  {
+    $return['css']  = 'yellow text_dark bold';
+    $return['href'] = $path.'pages/meetups/'.$id;
+    $return['EN']   = 'The '.date_to_text($title_en, 1).' real life meetup is back on the menu!';
+    $return['FR']   = 'La rencontre IRL du '.date_to_text($title_fr, 1).' est de retour !';
+  }
+  else if($type === 'meetups_restore')
+  {
+    $return['href'] = $path.'pages/meetups/'.$id;
+    $return['EN']   = $mod_username." restored the ".date_to_text($title_en, 1)." meetup";
+    $return['FR']   = $mod_username." a restauré l'IRL du ".date_to_text($title_fr, 1);
   }
 
   else if($type === 'meetups_people_new' && !$admins_only)

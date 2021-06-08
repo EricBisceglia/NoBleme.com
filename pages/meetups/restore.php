@@ -23,12 +23,10 @@ user_restrict_to_moderators();
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Delete the meetup
+// Restore the meetup
 
 // Fetch the postdata
-$meetup_id      = (int)form_fetch_element('meetup_id', 0);
-$deletion_type  = form_fetch_element('deletion_type');
+$meetup_id = (int)form_fetch_element('meetup_id', 0);
 
-// Trigger a soft deletion
-if($deletion_type == 'soft')
-  meetups_delete( $meetup_id );
+// Trigger the undeletion
+meetups_restore( $meetup_id );
