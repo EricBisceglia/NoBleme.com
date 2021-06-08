@@ -282,3 +282,16 @@ ___('meetups_edit_submit',  'FR', "Modifier la rencontre IRL");
 // Error messages
 ___('meetups_edit_error_id',  'EN', "This meetup does not exist or has been deleted");
 ___('meetups_edit_error_id',  'FR', "Cette rencontre IRL n'existe pas ou a été supprimée");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  DELETE A MEETUP                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Soft delete
+___('meetups_delete_confirm', 'EN', "Confirm the deletion of this meetup");
+___('meetups_delete_confirm', 'FR', "Confirmer la suppression de cette rencontre IRL");

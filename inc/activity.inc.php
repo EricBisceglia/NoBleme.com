@@ -325,9 +325,17 @@ function log_activity_parse(  bool    $admins_only        ,
     $return['FR']   = $mod_username." a modifié l'IRL du ".date_to_text($title_fr, 1);
   }
 
+  else if($type === 'meetups_delete' && !$admins_only)
+  {
+    $return['css']  = 'red bold';
+    $return['href'] = $path.'pages/meetups/list';
+    $return['EN']   = 'The '.date_to_text($title_en, 1).' real life meetup has been cancelled';
+    $return['FR']   = 'La rencontre IRL du '.date_to_text($title_fr, 1).' a été annulée';
+  }
   else if($type === 'meetups_delete')
   {
     $return['css']  = 'red bold';
+    $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = $mod_username." deleted the ".date_to_text($title_en, 1)." meetup";
     $return['FR']   = $mod_username." a supprimé l'IRL du ".date_to_text($title_fr, 1);
   }

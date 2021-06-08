@@ -12,6 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  meetups_get                         Fetches data related to a meetup.                                            */
 /*  meetups_list                        Fetches a list of meetups.                                                   */
 /*  meetups_edit                        Modifies an existing meetup.                                                 */
+/*  meetups_delete                      Soft deletes a meetup.                                                       */
 /*                                                                                                                   */
 /*  meetups_attendees_add               Adds an attendee to a meetup.                                                */
 /*  meetups_attendees_get               Fetches data related to a meetup attendee.                                   */
@@ -435,6 +436,94 @@ function meetups_edit(  int   $meetup_id  ,
 
   // All went well
   return NULL;
+}
+
+
+
+
+/**
+ * Soft deletes a meetup
+ *
+ * @param   int     $meetup_id  The meetup's id.
+ *
+ * @return  void
+ */
+
+function meetups_delete( int $meetup_id ) : void
+{
+  // Only moderators can run this action
+  user_restrict_to_moderators();
+
+  // Sanitize the meetup's id
+  $meetup_id = sanitize($meetup_id, 'int', 0);
+
+  // Stop here if the meetup doesn't exist
+  if(!database_row_exists('meetups', $meetup_id))
+    return;
+
+  // Get some data on the meetup
+  $dmeetup = mysqli_fetch_array(query(" SELECT  meetups.is_deleted  AS 'm_deleted'  ,
+                                                meetups.event_date  AS 'm_date'     ,
+                                                meetups.languages   AS 'm_lang'
+                                        FROM    meetups
+                                        WHERE   meetups.id = '$meetup_id' "));
+
+  // Prepare the meetup data
+  $meetup_deleted = $dmeetup['m_deleted'];
+  $meetup_date    = $dmeetup['m_date'];
+  $meetup_date_en = date_to_text($meetup_date, lang: 'EN');
+  $meetup_date_fr = date_to_text($meetup_date, lang: 'FR');
+  $meetup_lang    = $dmeetup['m_lang'];
+
+  // Stop here if it is already deleted
+  if($meetup_deleted)
+    return;
+
+  // Soft delete the meetup
+  query(" UPDATE  meetups
+          SET     meetups.is_deleted  = 1
+          WHERE   meetups.id          = '$meetup_id' ");
+
+  // Activity log, only for future meetups getting deleted
+  if(strtotime($meetup_date) > strtotime(date('Y-m-d')))
+    log_activity( 'meetups_delete'                      ,
+                  language:             $meetup_lang    ,
+                  activity_id:          $meetup_id      ,
+                  activity_summary_en:  $meetup_date    ,
+                  activity_summary_fr:  $meetup_date    );
+
+  // Fetch the username of the moderator adding the attendee
+  $mod_username = user_get_username();
+
+  // Moderation log
+  log_activity( 'meetups_delete'                      ,
+                is_moderators_only:   true            ,
+                activity_id:          $meetup_id      ,
+                activity_summary_en:  $meetup_date    ,
+                activity_summary_fr:  $meetup_date    ,
+                moderator_username:   $mod_username   );
+
+  // IRC bot message
+  if(strtotime($meetup_date) > strtotime(date('Y-m-d')))
+  {
+    if(str_contains($meetup_lang, 'EN'))
+      irc_bot_send_message("The $meetup_date_en real life meetup has been cancelled - ".$GLOBALS['website_url']."pages/meetups/list", 'english');
+    if(str_contains($meetup_lang, 'FR'))
+      irc_bot_send_message("La rencontre IRL du $meetup_date_fr a été annulée - ".$GLOBALS['website_url']."pages/meetups/list", 'french');
+  }
+  irc_bot_send_message("The $meetup_date_en real life meetup has been deleted by $mod_username - ".$GLOBALS['website_url']."pages/meetups/".$meetup_id, 'mod');
+
+  // Discord message
+  if(strtotime($meetup_date) > strtotime(date('Y-m-d')))
+  {
+    $discord_message  = "The $meetup_date_en real life meetup has been cancelled";
+    $discord_message .= PHP_EOL."La rencontre IRL du $meetup_date_fr a été annulée";
+    $discord_message .= PHP_EOL.$GLOBALS['website_url']."pages/meetups/list";
+    discord_send_message($discord_message, 'main');
+  }
+
+  // End the function so that the js awaiting a callback doesn't get hung up
+  return;
 }
 
 

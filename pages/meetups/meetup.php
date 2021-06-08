@@ -122,7 +122,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php if($is_moderator) { ?>
     <?php if(!$meetup_data['is_deleted']) { ?>
     <?=__icon('edit', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/meetups/edit?id='.$meetup_id)?>
-    <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials')?>
+    <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "meetups_delete('$meetup_id', 'soft', '".__('meetups_delete_confirm')."');", identifier: 'meetup_delete_button')?>
     <?php } else { ?>
     <?=__icon('refresh', alt: 'R', title: __('restore'), title_case: 'initials')?>
     <?php if($is_admin) { ?>

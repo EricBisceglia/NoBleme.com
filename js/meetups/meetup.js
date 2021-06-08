@@ -1,5 +1,7 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  meetups_delete                  Triggers the deletion of a meetup.                                               */
+/*                                                                                                                   */
 /*  meetups_details_preview         Previews a meetup's details.                                                     */
 /*                                                                                                                   */
 /*  meetups_attendee_add_form       Opens the form which allows the addition of an attendee to a meetup.             */
@@ -10,6 +12,32 @@
 /*  meetups_attendee_delete         Triggers the removal of an attendee from a meetup.                               */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+
+/**
+ * Triggers the deletion of a meetup.
+ *
+ * @param   {string}  meetup_id       The ID of the meetup that should be deleted.
+ * @param   {string}  deletion_type   The type of deletion to perform ('soft', 'hard').
+ * @param   {string}  message         The confirmation message which will be displayed prior to the deletion.
+ *
+ * @return  {void}
+ */
+
+function meetups_delete(  meetup_id     ,
+                          deletion_type ,
+                          message       )
+{
+  // Assemble the postdata
+  postdata  = 'meetup_id='      + fetch_sanitize(meetup_id);
+  postdata += '&deletion_type=' + fetch_sanitize(deletion_type);
+
+  // Trigger the deletion
+  if(confirm(message))
+    fetch_page('delete', 'meetup_delete_button', postdata, document.location.reload());
+}
+
+
 
 
 /**

@@ -142,6 +142,7 @@ function ___( string  $name         ,
  * @param   string  $path         (OPTIONAL)  The path to the website's root (defaults to 2 folders from root).
  * @param   string  $onclick      (OPTIONAL)  A javascript option to trigger upon clicking the link.
  * @param   bool    $popup        (OPTIONAL)  Opens the link in a new window.
+ * @param   string  $confirm      (OPTIONAL)  A confirmation dialog that must be accepted before the link is followed.
  *
  * @return  string                            The link, ready for use.
  */
@@ -152,7 +153,8 @@ function __link(  string  $href                       ,
                   bool    $is_internal  = true        ,
                   string  $path         = "./../../"  ,
                   string  $onclick      = ''          ,
-                  bool    $popup        = false       ) : string
+                  bool    $popup        = false       ,
+                  string  $confirm      = ''          ) : string
 {
   // Prepare the style
   $class = ($style) ? " class=\"$style\"" : "";
@@ -163,6 +165,9 @@ function __link(  string  $href                       ,
 
   // Make it pop-up if needed
   $popup = ($popup) ? 'target="_blank"' : '';
+
+  // Prepare the confirmation dialog
+  $onclick = ($confirm) ? "return confirm('".$confirm."'); ".$onclick : $onclick;
 
   // Prepare the onclick
   $onclick = ($onclick) ? 'onclick="'.$onclick.'"' : '';
@@ -188,6 +193,7 @@ function __link(  string  $href                       ,
  * @param   string  $path         (OPTIONAL)  The path to the website's root (defaults to 2 folders from root).
  * @param   string  $onclick      (OPTIONAL)  A javascript option to trigger upon clicking the link.
  * @param   bool    $popup        (OPTIONAL)  Opens the link in a new window.
+ * @param   string  $confirm      (OPTIONAL)  A confirmation dialog that must be accepted before a link is followed.
  *
  * @return  string                            The icon, ready for use.
  */
@@ -203,7 +209,8 @@ function __icon(  string  $icon                                   ,
                   string  $identifier   = ''                      ,
                   string  $path         = "./../../"              ,
                   string  $onclick      = ''                      ,
-                  bool    $popup        = false                   ) : string
+                  bool    $popup        = false                   ,
+                  string  $confirm      = ''                      ) : string
 {
   // Prepare the URL
   $url = ($is_internal) ? $path.$href : $href;
@@ -219,6 +226,9 @@ function __icon(  string  $icon                                   ,
   $style  = ($is_small) ? 'smallicon' : 'icon';
   $style .= ($class)    ? ' '.$class : '';
   $class  = 'class="'.$style.'"';
+
+  // Prepare the confirmation dialog
+  $onclick = ($confirm) ? "return confirm('".$confirm."'); ".$onclick : $onclick;
 
   // Prepare the onclick
   $onclick = ($onclick) ? 'onclick="'.$onclick.'"' : '';
