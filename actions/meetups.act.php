@@ -14,6 +14,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  meetups_edit                        Modifies an existing meetup.                                                 */
 /*  meetups_delete                      Soft deletes a meetup.                                                       */
 /*  meetups_restore                     Restores a soft deleted meetup.                                              */
+/*  meetups_hard_delete                 Permanently deletes a meetup.                                                */
 /*                                                                                                                   */
 /*  meetups_attendees_add               Adds an attendee to a meetup.                                                */
 /*  meetups_attendees_get               Fetches data related to a meetup attendee.                                   */
@@ -610,6 +611,62 @@ function meetups_restore( int $meetup_id ) : void
     $discord_message .= PHP_EOL.$GLOBALS['website_url']."pages/meetups/".$meetup_id;
     discord_send_message($discord_message, 'main');
   }
+
+  // End the function so that the js awaiting a callback doesn't get hung up
+  return;
+}
+
+
+
+
+/**
+ * Permanently deletes a meetup
+ *
+ * @param   int     $meetup_id  The meetup's id.
+ *
+ * @return  void
+ */
+
+function meetups_hard_delete( int $meetup_id ) : void
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the meetup's id
+  $meetup_id = sanitize($meetup_id, 'int', 0);
+
+  // Stop here if the meetup doesn't exist
+  if(!database_row_exists('meetups', $meetup_id))
+    return;
+
+  // Get the meetup's date
+  $dmeetup = mysqli_fetch_array(query(" SELECT  meetups.event_date  AS 'm_date'
+                                        FROM    meetups
+                                        WHERE   meetups.id = '$meetup_id' "));
+
+  // Prepare and format the meetup's date
+  $meetup_date = date_to_text($dmeetup['m_date'], lang: 'EN');
+
+  // Hard delete the meetup
+  query(" DELETE FROM meetups
+          WHERE       meetups.id = '$meetup_id' ");
+
+  // Delete all related activity logs
+  log_activity_delete(  'meetups_'                      ,
+                        is_moderators_only: false       ,
+                        activity_id:        $meetup_id  ,
+                        global_type_wipe:   true        );
+  log_activity_delete(  'meetups_'                      ,
+                        is_moderators_only: true        ,
+                        activity_id:        $meetup_id  ,
+                        global_type_wipe:   true        );
+
+  // Fetch the username of the administrator adding the attendee
+  $admin_username = user_get_username();
+
+  // IRC bot message
+  irc_bot_send_message("The $meetup_date real life meetup has been permanently deleted by $admin_username - ".$GLOBALS['website_url']."pages/meetups/list", 'admin');
+
 
   // End the function so that the js awaiting a callback doesn't get hung up
   return;
