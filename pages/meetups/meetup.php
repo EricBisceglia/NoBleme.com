@@ -126,7 +126,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } else { ?>
     <?=__icon('refresh', alt: 'R', title: __('restore'), title_case: 'initials', onclick: "meetups_restore('$meetup_id', '".__('meetups_restore_confirm')."');", identifier: 'meetup_restore_button')?>
     <?php if($is_admin) { ?>
-    <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "meetups_delete('$meetup_id', 'hard', '".__('meetups_delete_confirm')."');", identifier: 'meetup_delete_button')?>
+    <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "meetups_delete('$meetup_id', 'hard', '".__('meetups_delete_hard_confirm')."');", identifier: 'meetup_delete_button')?>
     <?php } ?>
     <?php } ?>
     <?php } ?>

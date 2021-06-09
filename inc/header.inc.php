@@ -644,7 +644,7 @@ $javascripts .= '
           <?=__link('pages/meetups/list', __('submenu_social_meetups_list'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_social_meetups_host'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/meetups/organize', __('submenu_social_meetups_host'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 

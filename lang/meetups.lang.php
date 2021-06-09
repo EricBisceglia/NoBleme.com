@@ -300,3 +300,79 @@ ___('meetups_delete_confirm', 'FR', "Confirmer la suppression de cette rencontre
 // Restore
 ___('meetups_restore_confirm',  'EN', "Confirm the undeletion of this meetup");
 ___('meetups_restore_confirm',  'FR', "Confirmer la restauration de cette rencontre IRL");
+
+
+// Hard_delete
+___('meetups_delete_hard_confirm',  'EN', "Confirm the permanent and irreversible deletion of this meetup");
+___('meetups_delete_hard_confirm',  'FR', "Confirmer la suppression définitive et irréversible de cette rencontre IRL");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 ORGANIZE A MEETUP                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('meetups_organize_title', 'EN', "Plan a real life meetup");
+___('meetups_organize_title', 'FR', "Organiser une IRL");
+
+
+// Mod disclaimer
+___('meetups_organize_mod_title',   'EN', "Reminder: You are a moderator");
+___('meetups_organize_mod_title',   'FR', "Rappel : Vous faites partie de la modération");
+___('meetups_organize_mod_body_1',  'EN', <<<EOT
+Since you have the ability to host meetups yourself, the contents of the rest of this page do not apply to you. Feel free to use the website's tools to plan your own NoBleme meetups, it is why you were given those abilities! You can create a new meetup by pressing the icon to the right of the title on the {{link|pages/meetups/list|meetups list}} page.
+EOT
+);
+___('meetups_organize_mod_body_1',  'FR', <<<EOT
+Comme vous avez la possibilité de créer des rencontres IRL par vous-même, le contenu du reste de cette page ne vous concerne pas. N'hésitez pas à utiliser les outils du site pour planifier vos propres rencontres IRL NoBlemeuses, c'est pour cela que ces pouvoirs vous ont été donnés ! Vous pouvez créer une rencontre IRL en cliquant sur l'icône à droite du titre sur la {{link|pages/meetups/list|liste des IRL}}.
+EOT
+);
+
+
+// Planning
+___('meetups_organize_plan_title',  'EN', "Looking to organize a meetup of your own?");
+___('meetups_organize_plan_title',  'FR', "Vous désirez planifier votre propre rencontre IRL ?");
+___('meetups_organize_plan_body_1', 'EN', <<<EOT
+Most of NoBleme's {{link|pages/meetups/list|real life meetups}} happen at the behest of members of our community, usually because someone is travelling to a specific country or city where there are other community regulars, and would like to use the opportunity to meet up with them.
+EOT
+);
+___('meetups_organize_plan_body_1', 'FR', <<<EOT
+La plupart des {{link|pages/meetups/list|rencontres IRL}} de NoBleme sont organisées à la demande de membres de la communauté, généralement parce que quelqu'un voyage dans un pays ou une ville qui contient d'autres membres de la communauté de NoBleme, et voudrait en profiter pour les croiser.
+EOT
+);
+___('meetups_organize_plan_body_2', 'EN', <<<EOT
+If you are a NoBleme regular and happen to be traveling near other regulars, or would like to suggest hosting a meetup for any other reason, then start by gauging interest on NoBleme's {{link|pages/social/irc|IRC chat}} (or any other social platform containing NoBleme community members). If you can get a few people interested, then make sure a member of NoBleme's {{link|pages/users/admins|administrative team}} is part of the conversation, as they are the only ones with the ability to create new meetups on the website.
+EOT
+);
+___('meetups_organize_plan_body_2', 'FR', <<<EOT
+Si vous fréquentez NoBleme et comptez voyager quelque part où se trouvent d'autres membres de la communauté, ou voulez suggérer l'organisation d'une rencontre IRL pour n'importe quelle autre raison, commencez par mesurer l'intérêt que cela suscite sur le {{link|pages/social/irc|chat IRC NoBleme}} (ou n'importe quelle autre plateforme sociale contenant des membres de la communauté de NoBleme). Si le lieu et la date intéressent quelques personnes, dans ce cas assurez-vous qu'un membre de {{link|pages/users/admins|l'équipe administrative}} fasse partie de la conversation : ce sont les seules personnes à pouvoir créer de nouvelles rencontres IRL sur le site.
+EOT
+);
+___('meetups_organize_plan_body_3', 'EN', <<<EOT
+Try to suggest meetups a long time in advance whenever possible, ideally several months ahead of time. The further ahead you plan, the more people will be able to lock that date, and the more people will be able to consider travel plans in order to attend the meetup. Obviously, if you do not have the ability to plan in advance, we can always do last minute meetups, they just tend to attract fewer people.
+EOT
+);
+___('meetups_organize_plan_body_3', 'FR', <<<EOT
+Essayez de suggérer des rencontres IRL longtemps à l'avance si possible, idéalement plusieurs mois avant. Le plus tôt vous planifiez une IRL, le plus de personnes pourront verrouiller ce jour, et le plus de personnes pourront planifier des voyages pour se rendre à l'IRL. Bien entendu, si vous n'avez pas la possibilité de planifier, nous pouvons toujours organiser une IRL de dernière minute, elles ont juste tendance à attirer moins de monde.
+EOT
+);
+___('meetups_organize_plan_body_4', 'EN', <<<EOT
+Before suggesting a new meetup, check that there is no {{link|pages/meetups/list|other meetup}} already happening around that date, and try to think of the accomodations: Is there a place indoors large enough for a group of people to hang out? If outdoors, what are the plans in case of rain? If the meetup includes a meal, is there a restaurant that can be booked in advance and will satisfy everyone both pricewise and foodwise? Or would you rather have everyone bring their own food? If the meetup is over several days, is there a place that can house those who can not afford hotels? Don't worry, we are used to hosting meetups and can help you think of solutions.
+EOT
+);
+___('meetups_organize_plan_body_4', 'FR', <<<EOT
+Avant de suggérer l'organisation d'une rencontre IRL, vérifiez qu'il n'y en ait pas déjà {{link|pages/meetups/list|une autre autour de cette date}}, et essayez de penser à la planification : Quel lieu pour regrouper un groupe de personnes ? Si c'est dehors, quel plan en cas de pluie ? Si l'IRL inclut un repas, quel restaurant permet de réserver à l'avance et sera accepté par tout le monde ? Serait-il plutôt préférable que chacun ramène de la nourriture ? Si l'IRL est sur plusieurs jours, peut-on mutualiser les hébergements ? Ne vous inquiétez pas, nous avons l'habitude d'organiser des IRL et vous aiderons à trouver des solutions.
+EOT
+);
+___('meetups_organize_plan_body_5', 'EN', <<<EOT
+We are always looking for opportunities to organize meetups, so come forward if you think we should do one!
+EOT
+);
+___('meetups_organize_plan_body_5', 'FR', <<<EOT
+Nous sommes toujours à la recherche d'opportunités pour organiser des rencontres IRL, faites-nous signe si vous pensez que nous devrions en organiser une !
+EOT
+);

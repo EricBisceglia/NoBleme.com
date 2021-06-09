@@ -644,9 +644,6 @@ function meetups_hard_delete( int $meetup_id ) : void
                                         FROM    meetups
                                         WHERE   meetups.id = '$meetup_id' "));
 
-  // Prepare and format the meetup's date
-  $meetup_date = date_to_text($dmeetup['m_date'], lang: 'EN');
-
   // Hard delete the meetup
   query(" DELETE FROM meetups
           WHERE       meetups.id = '$meetup_id' ");
@@ -660,13 +657,6 @@ function meetups_hard_delete( int $meetup_id ) : void
                         is_moderators_only: true        ,
                         activity_id:        $meetup_id  ,
                         global_type_wipe:   true        );
-
-  // Fetch the username of the administrator adding the attendee
-  $admin_username = user_get_username();
-
-  // IRC bot message
-  irc_bot_send_message("The $meetup_date real life meetup has been permanently deleted by $admin_username - ".$GLOBALS['website_url']."pages/meetups/list", 'admin');
-
 
   // End the function so that the js awaiting a callback doesn't get hung up
   return;
