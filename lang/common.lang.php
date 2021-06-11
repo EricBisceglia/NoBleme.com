@@ -776,6 +776,8 @@ ___('submenu_nobleme_homepage',       'EN', "Home page");
 ___('submenu_nobleme_homepage',       'FR', "Page d'accueil");
 ___('submenu_nobleme_what_is',        'EN', "What is NoBleme");
 ___('submenu_nobleme_what_is',        'FR', "Qu'est-ce que NoBleme");
+___('submenu_nobleme_follow',         'EN', "Follow NoBleme");
+___('submenu_nobleme_follow',         'FR', "Suivre NoBleme");
 ___('submenu_nobleme_activity',       'EN', "Recent activity");
 ___('submenu_nobleme_activity',       'FR', "Activité récente");
 

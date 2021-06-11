@@ -121,6 +121,77 @@ EOT
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                  FOLLOW NOBLEME                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Community
+___('nobleme_follow_community_title',   'EN', "Community life");
+___('nobleme_follow_community_title',   'FR', "La communauté");
+___('nobleme_follow_community_body_1',  'EN', <<<EOT
+NoBleme's community can be found and interacted with in a few places. Our {{link|pages/social/irc|IRC chat server}} acts as our main real time chat hub, though you can also chat with some of us on our {{link|pages/social/discord|Discord}} server.
+EOT
+);
+___('nobleme_follow_community_body_1',  'FR', <<<EOT
+La communauté de NoBleme se trouve à plusieurs endroits différents. Notre {{link|pages/social/irc|chat IRC}} est la principale plateforme de communication en temps réel que nous utilisons, mais vous pouvez également discuter avec une partie d'entre nous sur notre {{link|pages/social/discord|serveur Discord}}.
+EOT
+);
+___('nobleme_follow_community_body_2',  'EN', <<<EOT
+You can also use the website to keep in touch with our {{link|pages/meetups/list|real life meetups}}, which are mostly organized on {{link|pages/social/irc|IRC}}.
+EOT
+);
+___('nobleme_follow_community_body_2',  'FR', <<<EOT
+Nos {{link|pages/meetups/list|rencontres IRL}} sont documentées sur le site, et sont principalement organisées sur {{link|pages/social/irc|IRC}}.
+EOT
+);
+
+
+// Activity
+___('nobleme_follow_activity_title',  'EN', "Website activity");
+___('nobleme_follow_activity_title',  'FR', "Activité du site");
+___('nobleme_follow_activity_body_1', 'EN', <<<EOT
+The website's {{link|pages/nobleme/activity|recent activity}} page lets you keep track of anything that happens on the website, and can be filtered to look for specific content you would like to follow.
+EOT
+);
+___('nobleme_follow_activity_body_1', 'FR', <<<EOT
+La page {{link|pages/nobleme/activity|activité récente}} vous permet de suivre tout ce qui se passe sur le site, et vous permet de filtrer l'activité si vous désirez suivre des contenus spécifiques.
+EOT
+);
+___('nobleme_follow_activity_body_2', 'EN', <<<EOT
+If, instead of checking periodically for new content, you would rather like to be notified in real time whenever anything new happens on the website, notifications are automatically sent to the main english and french channels of our {{link|pages/social/irc|IRC chat server}} anytime something of note happens. Some (but not all) of these notifications are also automatically sent on {{link|pages/social/discord|Discord}}.
+EOT
+);
+___('nobleme_follow_activity_body_2', 'FR', <<<EOT
+Si, plutôt que de regarder périodiquement la page activité récente, vous préférez avoir des notifications en temps réel de l'activité du site, toute forme d'activité sur le site est communiquée en temps réel sur le principal canal de discussion francophone et anglophone de notre {{link|pages/social/irc|serveur IRC}}. Certaines (mais pas toutes) de ces notifications sont également automatiquement envoyées sur {{link|pages/social/discord|Discord}}.
+EOT
+);
+
+
+// Activity
+___('nobleme_follow_social_title',  'EN', "Social media");
+___('nobleme_follow_social_title',  'FR', "Médias sociaux");
+___('nobleme_follow_social_body_1', 'EN', <<<EOT
+There are currently no official NoBleme accounts or pages on any social media.
+EOT
+);
+___('nobleme_follow_social_body_1', 'FR', <<<EOT
+Il n'existe actuellement aucun compte NoBleme officiel ni aucune page NoBleme officielle sur les réseaux sociaux.
+EOT
+);
+___('nobleme_follow_social_body_2', 'EN', <<<EOT
+This might change in the future, as we are aware that some people would like to be able to follow NoBleme's activity on bigger, more popular platforms or websites. These plans are however not a priority at the moment.
+EOT
+);
+___('nobleme_follow_social_body_2', 'FR', <<<EOT
+Cela pourrait changer dans le futur : nous sommes au courant que certaines personnes voudraient pouvoir suivre l'activité du NoBleme sur des plateformes plus grandes et plus populaires. Cela sera fait à terme, mais il ne s'agit actuellement pas d'un sujet prioritaire.
+EOT
+);
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                  WHAT IS NOBLEME                                                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -431,31 +502,31 @@ Anyone who has lived through the second decade of the 21st century will remember
 EOT
 );
 ___('nobleme_history_political1',  'FR', <<<EOT
-Toute personne qui a traversé la seconde décennie du 21ème siècle se souviendra d'à quel point Internet est devenu lourdement politisé. Militarisé par une machine à propagande, Internet permit la naissance de {{external|https://fr.wikipedia.org/wiki/Alt-right|l'alt-right}} et d'autres courants politiques similaires utilisant la peur, la haine, et la désinformation comme outils de recrutement de masse.
+Toute personne qui a traversé la seconde décennie du 21ème siècle se souviendra d'à quel point Internet est devenu lourdement politisé. Terrain propice pour la propagande et la radicalisation, Internet permit la naissance de {{external|https://fr.wikipedia.org/wiki/Alt-right|l'alt-right}} et d'autres courants politiques similaires utilisant la peur, la haine, et la désinformation comme outils de recrutement de masse.
 EOT
 );
 ___('nobleme_history_political2',  'EN', <<<EOT
-Back in the early days of NoBleme, the Wiki documenting Internet culture was devoid of all political content. It was a simple encyclopedia, listing and explaining {{link|todo_link|memes}}, assembling them into a fun little book of hilarious content. But now, Internet culture had changed. Even memes were weaponized with political discourse. And the rise of neofascism came with the resurgence of {{external|https://en.wikipedia.org/wiki/Social_justice|social justice}}, which felt now more than ever like a critical battle between two opposing sides.
+Back in the early days of NoBleme, the Wiki documenting Internet culture was devoid of all political content. It was a simple encyclopedia, listing and explaining {{link|todo_link|memes}}, assembling them into a fun little book of hilarious content. But now, Internet culture had changed. Even memes were weaponized with political discourse. And the rise of neofascism came with the resurgence of {{external|https://en.wikipedia.org/wiki/Social_justice|social justice}}, which felt now more than ever like a critical topic to address and support.
 EOT
 );
 ___('nobleme_history_political2',  'FR', <<<EOT
-Du temps du wiki NoBleme, la culture Internet y était documentée sans aucune notion de politique. C'était une simple encyclopédie, listant et expliquant les {{link|todo_link|memes}}, formant un grand livre rigolo plein de contenus hilarants. Hélas, entre temps, la culture Internet a changé. Les memes sont devenus des outils du discours politique, sortant d'Internet et débordant sur le monde réel, au point où la séparation entre Internet et le monde réel n'existe presque plus. S'opposant au retour du fascisme dans la sphère publique, des courants de {{external|https://fr.wikipedia.org/wiki/Justice_sociale|justice sociale}} prirent de l'ampleur, et ce qui était autrefois neutre et innocent sur Internet devint un champ de bataille entre ces deux idéologies.
+Du temps du wiki NoBleme, la culture Internet y était documentée sans aucune notion de politique. C'était une simple encyclopédie, listant et expliquant les {{link|todo_link|memes}}, formant un grand livre rigolo plein de contenus hilarants. Hélas, entre temps, la culture Internet a changé. Les memes sont devenus des outils du discours politique, sortant d'Internet et débordant sur le monde réel, au point où la séparation entre Internet et le monde réel n'existe presque plus. S'opposant au retour du fascisme dans la sphère publique, des courants de {{external|https://fr.wikipedia.org/wiki/Justice_sociale|justice sociale}} prirent de l'ampleur, en faveur desquels il semblait important de prendre position plutôt que de rester dans la neutralité.
 EOT
 );
 ___('nobleme_history_political3',  'EN', <<<EOT
-NoBleme, as a small community, had no weight in that battle. We stayed on the side and watched for a decade as the situation grew worse and worse. Eventually, being idle seemed like being complicit with the oppressive side of the battle. It was time for change. NoBleme's community leaned heavily on the side of social justice, which meant that rebranding the whole website in that direction was a no brainer, even if it meant breaking the comfort of being hidden from the rest of the Internet.
+NoBleme, as a small community, had no weight in that battle. We stayed on the side and watched for a decade as the situation grew worse and worse. Eventually, being idle seemed like being complicit with oppression. It was time for change. NoBleme's community leaned heavily on the side of social justice, which meant that rebranding the whole website in that direction was a no brainer, even if it meant breaking the comfort of being hidden from the rest of the Internet.
 EOT
 );
 ___('nobleme_history_political3',  'FR', <<<EOT
-NoBleme, en tant que petite communauté isolée, ne cherchait pas à avoir la moindre influence dans ce combat. Nous sommes restés spectateurs pendant une décennie tandis que la situation empirait progressivement. Au bout de trop longtemps à attendre, la neutralité se met parfois à ressembler à une complicité avec le côté dominant d'un combat. La communauté de NoBleme étant majoritairement du côté de la justice sociale, cette passivité devenait de plus en plus problématique, jusqu'à atteindre le point où il semblait logique de sortir NoBleme de sa zone de confort loin du reste d'Internet et d'accepter de radicalement changer le contenu du site.
+NoBleme, en tant que petite communauté isolée, ne cherchait pas à avoir la moindre influence dans ce combat. Nous étions de simples spectateurs pendant plus d'une décennie tandis que la situation empirait progressivement. Au bout de trop longtemps à attendre sans agir, la neutralité se met parfois à ressembler à une complicité avec l'oppression. La communauté de NoBleme étant majoritairement du côté de la justice sociale, cette passivité devenait de plus en plus problématique, jusqu'à atteindre le point où il semblait logique de sortir NoBleme de sa zone de confort loin du reste d'Internet et d'accepter de radicalement changer le contenu du site.
 EOT
 );
 ___('nobleme_history_political4',  'EN', <<<EOT
-On march 19th 2021, for NoBleme's 16th birthday, the website was yet again relaunched. A {{link|pages/politics/manifesto|political manifesto}} outlined what NoBleme wanted to stand for from now on, and the old Wiki documenting Internet culture was modernized and rebranded as the {{link|todo_link|21st century compendium}}. But at its core, NoBleme didn't change: it remains to this day a small community centered website, a living memory of what the Internet used to be.
+In 2021, as NoBleme was in its 16th year, the website was yet again relaunched. The presence of a {{link|pages/politics/manifesto|political manifesto}} made it clear where NoBleme stood, and the old Wiki documenting Internet culture was modernized and rebranded as the {{link|todo_link|21st century compendium}}. But at its core, NoBleme didn't change: it remains to this day a small community centered website, a living memory of what the Internet used to be.
 EOT
 );
 ___('nobleme_history_political4',  'FR', <<<EOT
-Le 19 mars 2021, à l'occasion du 16ème anniversaire de NoBleme, une nouvelle refonte du site eut lieu. La présence d'un {{link|pages/politics/manifesto|manifeste politique}} ne laisse plus aucune ambiguité sur les opinions que soutiennent NoBleme, et l'ancien wiki documentant la culture Internet fut retravaillé intégralement et remis à neuf sous le nom du {{link|todo_link|compendium du 21ème siècle}}. Malgré tout cela, NoBleme n'a pas changé : il s'agit toujours d'un petit site Internet plutôt isolé et centré sur sa communauté, une mémoire vivante de ce qu'Internet était à ses débuts.
+En 2021, lors de la 16ème année de NoBleme, une nouvelle refonte du site eut lieu. La présence d'un {{link|pages/politics/manifesto|manifeste politique}} ne laisse plus aucune ambiguité sur les opinions que soutiennent NoBleme, et l'ancien wiki documentant la culture Internet fut retravaillé intégralement et remis à neuf sous le nom du {{link|todo_link|compendium du 21ème siècle}}. Malgré tout cela, NoBleme n'a pas changé : il s'agit toujours d'un petit site Internet plutôt isolé et centré sur sa communauté, une mémoire vivante de ce qu'Internet était à ses débuts.
 EOT
 );
 

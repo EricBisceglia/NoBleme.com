@@ -492,6 +492,9 @@ $javascripts .= '
           <?=__link('pages/nobleme/activity', __('submenu_nobleme_activity'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
+          <?=__link('pages/nobleme/follow', __('submenu_nobleme_follow'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
           <?=__link('pages/doc/nobleme', __('submenu_nobleme_what_is'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
