@@ -869,6 +869,13 @@ ___('submenu_social_meetups_list',        'FR', "Liste des IRL");
 ___('submenu_social_meetups_host',        'EN', "Plan a new meetup");
 ___('submenu_social_meetups_host',        'FR', "Organiser une IRL");
 
+___('submenu_social_games',               'EN', "Games");
+___('submenu_social_games',               'FR', "Jeux");
+___('submenu_social_games_nobleme',       'EN', "Gaming nights");
+___('submenu_social_games_nobleme',       'FR', "Sessions de jeu");
+___('submenu_social_games_memories',      'EN', "Old memories");
+___('submenu_social_games_memories',      'FR', "Vieux souvenirs");
+
 
 // Submenu: Account
 ___('submenu_user_pms',               'EN', "Private messages");

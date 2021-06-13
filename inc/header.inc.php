@@ -651,6 +651,18 @@ $javascripts .= '
         </div>
       </div>
 
+      <div class="header_submenu_column">
+        <div class="header_submenu_title">
+          <?=__('submenu_social_games')?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/social/games', __('submenu_social_games_nobleme'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_social_games_memories'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+      </div>
+
     </div>
 
 
