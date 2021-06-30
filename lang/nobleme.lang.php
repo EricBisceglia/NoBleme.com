@@ -670,3 +670,136 @@ ___('nobleme_gaming_minecraft_body_4',  'FR', <<<EOT
 Le serveur Minecraft NoBleme peut être rejoint à tout moment via ce lien : {{external|https://realms.gg/COrD5pWobqo|Serveur Minecraft NoBleme}}.
 EOT
 );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                 GAMES OF THE PAST                                                 */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('nobleme_gaming_history_title',     'EN', "Games of the past");
+___('nobleme_gaming_history_title',     'FR', "Jeux du passé");
+___('nobleme_gaming_history_subtitle',  'EN', "Gone from NoBleme, but never forgotten");
+___('nobleme_gaming_history_subtitle',  'FR', "Disparus, mais jamais oubliés");
+___('nobleme_gaming_history_body_1',    'EN', <<<EOT
+During NoBleme's {{link|pages/doc/NoBleme|long history}}, there have been a few games designed especially for NoBleme and hosted on the website. Even though these games ended forever once it was considered that they had explored all they had to explore, some of NoBleme's community has fond memories of them, and thus this page serves as a short nostalgia trip documenting the most successful of NoBleme's past games.
+EOT
+);
+___('nobleme_gaming_history_body_1',    'FR', <<<EOT
+Lors de la {{link|pages/doc/NoBleme|longue vie}} de NoBleme, des jeux ont été fabriqués spécifiquement pour NoBleme et hébergés sur le site. Même si ces jeux ont été définitivement arrêtés lorsqu'ils avaient fini d'explorer tout ce qu'ils avaient à explorer, une partie de la communauté de NoBleme en garde de bons souvenirs. Par conséquent, cette page sert de voyage nostalgique rapide via les anciens jeux qui ont le mieux fonctionné sur NoBleme.
+EOT
+);
+___('nobleme_gaming_history_body_2',    'EN', <<<EOT
+As for everyone's favorite question, "when will [game] come back?", the answer is always the same: these games are best left as a good memory of a past era, rather than bringing them back by force and risking ruining those good memories. It was a hard decision to end them while they were still fun and active, but it was the correct one. There are no plans to bring any of them back, but they might serve as inspiration for future games or even sequels, who knows what the future holds!
+EOT
+);
+___('nobleme_gaming_history_body_2',    'FR', <<<EOT
+Pour ce qui est de la question préférée de tout le monde, « quand est-ce que [jeu] revient ? », la réponse est toujours la même : ils sont mieux en tant que bons souvenirs, ce n'est pas la peine de les faire revenir par la force si ce n'est de risquer de ruiner ces bons souvenirs. Mettre fin à ces jeux lorsqu'ils étaient toujours divertissants et populaires était une décision difficile, mais c'était la bonne. Même s'il n'est pas prévu de faire revenir ces jeux, ils pourraient servir d'inspiration pour de futurs jeux, qui sait de quoi le futur est fait !
+EOT
+);
+
+
+// NBRPG
+___('nobleme_gaming_history_nbrpg_title',   'EN', "NoBlemeRPG");
+___('nobleme_gaming_history_nbrpg_title',   'FR', "NoBlemeRPG");
+___('nobleme_gaming_history_nbrpg_image',   'EN', "Fan art drawn by good old {{external|https://twitter.com/chance_meeting|pins}}");
+___('nobleme_gaming_history_nbrpg_image',   'FR', "Illustration de fan-art réalisée par ce bon vieux {{external|https://twitter.com/chance_meeting|pins}}");
+___('nobleme_gaming_history_nbrpg_body_1',  'EN', <<<EOT
+For a whole decade, some of NoBleme's users regularly met on our {{link|pages/social/irc|IRC chat server}} to spend some evenings playing a text based {{external|https://en.wikipedia.org/wiki/Role-playing_game|roleplaying game}} called the NoBlemeRPG (or NBRPG for short). In this non linear game, a group of players, which changed every session, had to accomplish errands for a mysterious entity called the Oracle, evolving through a game universe in which literally every action imaginable was possible.
+EOT
+);
+___('nobleme_gaming_history_nbrpg_body_1',  'FR', <<<EOT
+Durant une dizaine d'années, une partie des la communauté de NoBleme se retrouvait régulièrement le soir sur notre {{link|pages/social/irc|chat IRC}} pour y jouer à un {{external|https://fr.wikipedia.org/wiki/Jeu_de_r%C3%B4le_(activit%C3%A9_ludique)|jeu de rôle}} s'appelant le NoBlemeRPG (ou NBRPG). Dans ce jeu non linéaire, un groupe de personnages changeant à chaque session (selon les personnes présentes) évoluait à travers un univers de jeu où littéralement toutes les actions imaginables étaient possibles, devant rendre divers services à une entité mystérieuse s'appelant l'Oracle.
+EOT
+);
+___('nobleme_gaming_history_nbrpg_body_2',  'EN', <<<EOT
+After a final and epic story arc in 2015, which concluded ten years of open storylines, the NoBlemeRPG reached the end of its life cycle. During that time, 32 different players roleplayed as many different characters over more than a hundred game sessions. They made their way through a variety of uniquely designed places and enemies, at first doing errands for the Oracle, then attempting to fight it in a long final battle that lasted hours, only for it to be revealed that the Oracle was none other than {{link|pages/users/1|Bad}} himself, acting as a puppetmaster controlling the players and the game's world all along for his own entertainment.
+EOT
+);
+___('nobleme_gaming_history_nbrpg_body_2',  'FR', <<<EOT
+Après un dernier arc narratif en 2015, au cours duquel une décennie d'histoires en cours ont été conclues, le NoBlemeRPG a atteint la fin de son cycle de vie. Durant cette période, 32 personnes différentes ont interprété une cinquantaine de personnages durant plus d'une centaine de sessions de jeu. Leurs aventures au service de l'Oracle se sont conclues par un affrontement contre celui-ci qui, après plusieurs heures de tension, finit par la révélation que l'Oracle n'était autre que {{link|pages/users/1|Bad}} en personne, interprétant depuis le début du jeu un rôle de marionettiste, contrôlant le destin des personnages selon son bon vouloir pour son divertissement personnel.
+EOT
+);
+___('nobleme_gaming_history_nbrpg_body_3',  'EN', <<<EOT
+The NBRPG will no doubt be mostly remembered for the wacky rules of its game world, letting players try anything they wanted, whether it made sense or not. The game world itself seemed to be in a struggle with the players, often interpreting their desired actions too literally, or striking them with bad luck and improbable events at the worst possible times. Yet, despite this permanent unpredictability and antagonism of the game itself, the players carved themselves a road through world after world, quest after quest, story after story, and kept asking for more.
+EOT
+);
+___('nobleme_gaming_history_nbrpg_body_3',  'FR', <<<EOT
+Nous nous souviendrons du NBRPG avant tout pour les règles farfelues de son univers, permettant aux personnages d'essayer de faire tout et n'importe quoi, même des actions sans aucun sens logique. L'univers du jeu lui-même semblait être en conflit perpétuel avec les personnages, interprétant parfois leurs actions de façon trop littérale, ou leur infligeant de la malchance extrême aux pires moments possibles. Malgré cette imprévisibilité perpétuelle et malgré l'antagonisme du jeu, les personnages trouvaient toujours une façon de se frayer un chemin à travers de nombreux mondes, aventures, histoires, et en redemandaient toujours plus.
+EOT
+);
+___('nobleme_gaming_history_nbrpg_body_4',  'EN', <<<EOT
+Running the game was a very demanding ordeal, requiring dozens of hours of software programming, worldbuilding, and general preparations ahead of every gaming session. As much as it was worth it for all the fun memories that it provided us with, working on the NBRPG became less fun and more of a chore after several years, which is why it was eventually decided to end the game forever after a final story arc.
+EOT
+);
+___('nobleme_gaming_history_nbrpg_body_4',  'FR', <<<EOT
+Préparer les sessions du NBRPG à l'avance était un travail conséquent, requiérant des dizaines d'heures de programmation informatique, de construction de l'univers du jeu, et de préparations diverses en amont de chaque soirée de jeu. Cette phase de préparation, qui était pendant longtemps un plaisir, devint avec le temps de plus en plus un calvaire, d'où la décision de mettre fin définitivement au jeu après un dernier arc narratif.
+EOT
+);
+___('nobleme_gaming_history_nbrpg_body_5',  'EN', <<<EOT
+Much of NoBleme's early french speaking community bonded over the NBRPG, which greatly helped in growing and retaining our early userbase and establishing the NoBleme community over {{link|pages/social/irc|IRC}}. You will find below a few screenshots of the NBRPG's rather complex game master interface (which players could not see). Click on a screenshot to see it in its full size. As the game was in french, so are those screenshots, sorry about that.
+EOT
+);
+___('nobleme_gaming_history_nbrpg_body_5',  'FR', <<<EOT
+Le NoBlemeRPG a joué un rôle central dans la construction de la communauté francophone initiale de NoBleme, et reste une source majeure de nostalgie au sein de cette communauté. Vous trouverez ci-dessous quelques captures d'écrans de l'interface de maître du jeu du NoBlemeRPG (que les personnes participant au jeu ne pouvaient pas voir). Cliquez sur une des images pour la voir dans sa taille réelle.
+EOT
+);
+
+
+// NRM Online
+___('nobleme_gaming_history_nrm_title',   'EN', "NRM Online");
+___('nobleme_gaming_history_nrm_title',   'FR', "NRM Online");
+___('nobleme_gaming_history_nrm_image',   'EN', "The NRM Online's login page");
+___('nobleme_gaming_history_nrm_image',   'FR', "La page de connexion au NRM Online");
+___('nobleme_gaming_history_nrm_body_1',  'EN', <<<EOT
+Inspired by another slowly dying game called Super Robot Wars Online, which was itself inspired by the {{external|https://en.wikipedia.org/wiki/Super_Robot_Wars|Super Robot Wars}} video game franchise, the NoBleme Robot Mayhem Online - or, for short, NRM - was a massively multiplayer game in which each player was a {{external|https://en.wikipedia.org/wiki/Mecha|mecha}} pilot trying to defeat other players in battles in order to ascend to the top of the global rankings.
+EOT
+);
+___('nobleme_gaming_history_nrm_body_1',  'FR', <<<EOT
+Inspiré par un autre jeu mourant nommé Super Robot Wars Online, qui était lui-même inspiré par la franchise de jeux vidéo {{external|https://fr.wikipedia.org/wiki/Super_Robot_Taisen|Super Robot Wars}}, le NoBleme Robot Mayhem Online - ou juste NRM - était un jeu massivement multijoueur dans lequel chaque personne incarnait un pilote de {{external|https://fr.wikipedia.org/wiki/Mecha|mecha}}, affrontant les autres mechas dans le but de grimper en haut d'un classement global.
+EOT
+);
+___('nobleme_gaming_history_nrm_body_2',  'EN', <<<EOT
+Focused entirely on planning, strategy, and battle tactics, the NRM was a mostly text based game with few images or glamour to it. Despite its simple appearance, it attracted a decently sized crowd culminating in over a hundred active simultaneous players at its most popular.
+EOT
+);
+___('nobleme_gaming_history_nrm_body_2',  'FR', <<<EOT
+Centré sur la planification, la stratégie, et les tactiques de combat, le NRM était majoritairement du texte, contenant peu d'images ou de glamour. Malgré son apparence très minimaliste, le jeu a su attirer une foule relativement grande, atteignant plus de 100 personnes actives simultanément à son plus populaire.
+EOT
+);
+___('nobleme_gaming_history_nrm_body_3',  'EN', <<<EOT
+The game was initially launched in early 2006 and ran for 26 seasons of roughly two months each until late 2008, when it was decided to have a 27th and final season which would have no end date, with the game shutting its doors once the last person stopped playing it. Each season of the game was a complete reset, allowing new players to be part of the competition from the start instead of having to catch up to the ones that had started before them.
+EOT
+);
+___('nobleme_gaming_history_nrm_body_3',  'FR', <<<EOT
+Initialement rendu public début 2006, le jeu a duré 26 saisons d'environ deux mois chacune jusqu'à fin 2008, où il a été décidé que la 27ème saison serait la dernière, n'aurait pas de date de fin, et que le jeu fermerait ses portes lorsque plus personne n'y jouerait activement. Chaque saison du jeu était une remise à zéro, permettant aux personnes nouvelles venues de participer à la compétition dès le début au lieu de devoir rattraper les autres qui y jouaient depuis plus longtemps.
+EOT
+);
+___('nobleme_gaming_history_nrm_body_4',  'EN', <<<EOT
+The first twenty seasons each brought improvements, balance changes, new mechas, and new features to the game, until real life issues caught up with {{link|pages/users/1|Bad}} and led the game to the same fate as the one that inspired it: a slow death as the bored playerbase slowly left the game, disappointed by the lack of new features. In retrospect, the timing was right for the NRM to be over: it had explored a lot of great ideas, to the point where it was getting harder and harder to come up with new ones without making the game overly complicated.
+EOT
+);
+___('nobleme_gaming_history_nrm_body_4',  'FR', <<<EOT
+Les vingt premières saisons contenaient chacune leur lot d'améliorations, d'équilibrage du jeu, de nouveaux mechas, et de nouveaux contenus, jusqu'à ce que des problèmes personnels forcent {{link|pages/users/1|Bad}} à arrêter de développer activement le jeu, faisant partir les personnes déçues par l'absence de nouveaux contenus, et condamnant le jeu à la même mort lente que son précedesseur. Rétrospectivement, il s'agissait du bon moment pour mettre fin au jeu : beaucoup de bonnes idées avaient été explorées, au point où il devenait difficile d'essayer de nouvelles choses sans rendre le jeu excessivement complexe.
+EOT
+);
+___('nobleme_gaming_history_nrm_body_5',  'EN', <<<EOT
+With the NRM came the first wave of NoBleme's french speaking community, most of which left after the game's demise, but some of which are still here to this day. You will find below a few screenshots of the NRM, which will probably look confusing and mysterious - even more so since they are in french. Click on a screenshot to see it in its full size.
+EOT
+);
+___('nobleme_gaming_history_nrm_body_5',  'FR', <<<EOT
+Le NRM permit d'attirer la première vague de la communauté francophone de NoBleme. Même si la plupart de ces personnes ont quitté la communauté suite à la fin du jeu, certaines sont toujours présentes sur NoBleme aujourd'hui. Vous trouverez ci-dessous quelques captures d'écran du NRM, qui auront probablement l'air très mystérieuses si vous n'avez jamais eu l'opportunité d'y jouer. Cliquez sur une des images pour la voir dans sa taille réelle.
+EOT
+);
+___('nobleme_gaming_history_nrm_body_6',  'EN', <<<EOT
+As a final and forever lasting tribute to the NRM Online and the players which took part in its numerous seasons, below is a screenshot of the game's hall of fame, which listed the winners and runner ups of most past seasons (a few have been lost in the sands of time).
+EOT
+);
+___('nobleme_gaming_history_nrm_body_6',  'FR', <<<EOT
+Afin de rendre hommage éternellement aux bons souvenirs du NRM et des personnes qui ont participé à ses nombreuses saisons, voici une capture d'écran du panthéon du jeu, listant les mechas qui ont gagné la plupart des saisons du jeu (le reste de l'historique a été perdu dans les sables du temps).
+EOT
+);
