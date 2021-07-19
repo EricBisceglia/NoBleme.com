@@ -513,6 +513,8 @@ ___('month_12', 'FR', 'Décembre');
 // Generic user related terms
 ___('activity',       'EN', "activity");
 ___('activity',       'FR', "activité");
+___('admin',          'EN', "admin");
+___('admin',          'FR', "admin");
 ___('administration', 'EN', "administration");
 ___('administration', 'FR', "administration");
 ___('administrator',  'EN', "administrator");
