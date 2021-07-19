@@ -13,7 +13,7 @@ $page_title_fr    = "404 Perdus dans l'espace";
 $page_description = "Error 404: Page not found…";
 
 // Extra CSS & JS
-$css = array('404');
+$css = ($mode == 'dark') ? array('404') : array('404_light');
 $js  = array('nobleme/404');
 
 

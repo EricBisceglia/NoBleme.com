@@ -30,28 +30,36 @@ $preview_onclick  = (isset($preview_output)) ? "preview_bbcodes('".$editor_targe
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Make the icons dark if needed
+
+$icon_dark = ($mode == 'light') ? '_dark' : '';
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Display the BBCode editor                                                                                         ?>
 
 <div class="nowrap">
 
-  <img class="pointer valign_middle tinypadding_bot<?=$padding_editor_left.$padding_editor_top.$padding_editor_spacing?>" src="<?=$path?>img/bbcodes/bold.svg" alt="B" title="<?=__('bold')?>" onclick="editor_bold('<?=$editor_target_element?>', 'bold');<?=$preview_onclick?>">
+  <img class="pointer valign_middle tinypadding_bot<?=$padding_editor_left.$padding_editor_top.$padding_editor_spacing?>" src="<?=$path?>img/bbcodes/bold<?=$icon_dark?>.svg" alt="B" title="<?=__('bold')?>" onclick="editor_bold('<?=$editor_target_element?>', 'bold');<?=$preview_onclick?>">
 
-  <img class="pointer valign_middle tinypadding_bot<?=$padding_editor_top.$padding_editor_spacing?>" src="<?=$path?>img/bbcodes/underlined.svg" alt="U" title="<?=__('underlined')?>" onclick="editor_bold('<?=$editor_target_element?>', 'underlined');<?=$preview_onclick?>">
-
-  <?php if(isset($editor_line_break)) { ?>
-  <br>
-  <?php } ?>
-
-  <img class="pointer valign_middle tinypadding_bot<?=$padding_editor_left.$padding_editor_spacing?>" src="<?=$path?>img/bbcodes/quote.svg" alt="Q" title="<?=__('quote')?>" onclick="editor_bold('<?=$editor_target_element?>', 'quote', '<?=__('quote_prompt')?>');<?=$preview_onclick?>">
-
-  <img class="pointer valign_middle tinypadding_bot<?=$padding_editor_spacing?>" src="<?=$path?>img/bbcodes/spoiler.svg" alt="S" title="<?=__('spoiler')?>" onclick="editor_bold('<?=$editor_target_element?>', 'spoiler', '<?=__('spoiler_prompt')?>');<?=$preview_onclick?>">
+  <img class="pointer valign_middle tinypadding_bot<?=$padding_editor_top.$padding_editor_spacing?>" src="<?=$path?>img/bbcodes/underlined<?=$icon_dark?>.svg" alt="U" title="<?=__('underlined')?>" onclick="editor_bold('<?=$editor_target_element?>', 'underlined');<?=$preview_onclick?>">
 
   <?php if(isset($editor_line_break)) { ?>
   <br>
   <?php } ?>
 
-  <img class="pointer valign_middle tinypadding_bot<?=$padding_editor_left.$padding_editor_spacing?>" src="<?=$path?>img/bbcodes/link.svg" alt="L" title="<?=__('link')?>" onclick="editor_bold('<?=$editor_target_element?>', 'link', '<?=__('link_prompt')?>', '<?=__('link_prompt_2')?>');<?=$preview_onclick?>">
+  <img class="pointer valign_middle tinypadding_bot<?=$padding_editor_left.$padding_editor_spacing?>" src="<?=$path?>img/bbcodes/quote<?=$icon_dark?>.svg" alt="Q" title="<?=__('quote')?>" onclick="editor_bold('<?=$editor_target_element?>', 'quote', '<?=__('quote_prompt')?>');<?=$preview_onclick?>">
 
-  <img class="pointer valign_middle tinypadding_bot<?=$padding_editor_spacing?>" src="<?=$path?>img/bbcodes/image.svg" alt="I" title="<?=__('image')?>" onclick="editor_bold('<?=$editor_target_element?>', 'image', '<?=__('image_prompt')?>');<?=$preview_onclick?>">
+  <img class="pointer valign_middle tinypadding_bot<?=$padding_editor_spacing?>" src="<?=$path?>img/bbcodes/spoiler<?=$icon_dark?>.svg" alt="S" title="<?=__('spoiler')?>" onclick="editor_bold('<?=$editor_target_element?>', 'spoiler', '<?=__('spoiler_prompt')?>');<?=$preview_onclick?>">
+
+  <?php if(isset($editor_line_break)) { ?>
+  <br>
+  <?php } ?>
+
+  <img class="pointer valign_middle tinypadding_bot<?=$padding_editor_left.$padding_editor_spacing?>" src="<?=$path?>img/bbcodes/link<?=$icon_dark?>.svg" alt="L" title="<?=__('link')?>" onclick="editor_bold('<?=$editor_target_element?>', 'link', '<?=__('link_prompt')?>', '<?=__('link_prompt_2')?>');<?=$preview_onclick?>">
+
+  <img class="pointer valign_middle tinypadding_bot<?=$padding_editor_spacing?>" src="<?=$path?>img/bbcodes/image<?=$icon_dark?>.svg" alt="I" title="<?=__('image')?>" onclick="editor_bold('<?=$editor_target_element?>', 'image', '<?=__('image_prompt')?>');<?=$preview_onclick?>">
 
 </div>

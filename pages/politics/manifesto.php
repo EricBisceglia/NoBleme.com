@@ -27,12 +27,24 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50">
 
-  <h1 class="align_center bigpadding_top bigglow">
+  <h1 class="align_center bigpadding_top">
+    <?php if($mode == 'dark') { ?>
+    <span class="bigglow">
+    <?php } ?>
     <?=__('politics_manifesto_title')?>
+    <?php if($mode == 'dark') { ?>
+    </span>
+    <?php } ?>
   </h1>
 
-  <h5 class="align_center hugepadding_bot bigglow">
+  <h5 class="align_center hugepadding_bot">
+    <?php if($mode == 'dark') { ?>
+    <span class="bigglow">
+    <?php } ?>
     <?=__('politics_manifesto_subtitle')?>
+    <?php if($mode == 'dark') { ?>
+    </span>
+    <?php } ?>
   </h5>
 
   <h4 class="bigpadding_top">
@@ -41,9 +53,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_preamble_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_preamble_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -77,7 +93,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <p>
     <?=__('politics_manifesto_preamble_10')?>
   </p>
+  <?php if($mode == "dark") { ?>
   <p class="text_red glow bold">
+  <?php } else { ?>
+  <p class="text_red bold">
+  <?php } ?>
     <?=__('politics_manifesto_preamble_11')?>
   </p>
 
@@ -157,9 +177,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_intro_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_intro_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -191,9 +215,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_contract_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_contract_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -225,9 +253,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_capitalism_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_capitalism_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -265,9 +297,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_violence_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_violence_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -308,9 +344,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_work_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_work_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -354,9 +394,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_creativity_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_creativity_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -394,9 +438,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_nature_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_nature_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -434,9 +482,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_inspirations_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_inspirations_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -486,9 +538,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_philosophy_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_philosophy_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -520,9 +576,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_listening_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_listening_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -560,9 +620,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_solutions_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_solutions_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -696,9 +760,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_praxis_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_praxis_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -748,9 +816,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <blockquote class="nobackground text_light bold">
+      <?php if($mode == 'dark') { ?>
       <span class="glow">
-        <?=__('politics_manifesto_postface_quote')?>
+      <?php } ?>
+      <?=__('politics_manifesto_postface_quote')?>
+      <?php if($mode == 'dark') { ?>
       </span>
+      <?php } ?>
     </blockquote>
   </div>
 
@@ -766,12 +838,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <p>
     <?=__('politics_manifesto_postface_4')?>
   </p>
-  <p class="bold glow text_red bigger">
+  <p class="bold glow_dark text_red bigger">
     <?=__('politics_manifesto_postface_5')?>
   </p>
 
   <div class="hugepadding_top bigpadding_bot">
-    <p class="hugepadding_top align_center text_red glow">
+    <p class="hugepadding_top align_center text_red glow_dark">
       <?=__('politics_manifesto_credits')?>
     </p>
   </div>

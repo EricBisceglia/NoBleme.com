@@ -42,6 +42,10 @@ if(!isset($is_admin) || !isset($is_moderator))
 if(!isset($lang))
   exit(__('error_forbidden'));
 
+// If the sure doesn't have a mode, stop here
+if(!isset($mode))
+  exit(__('error_forbidden'));
+
 
 
 
@@ -82,8 +86,10 @@ if($website_closed  && !$is_admin)
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Creation of URLs to use for logging out and changing language
+// Creation of URLs to use for logging out, changing language, and changing mode
 
+$temp       = ($mode == "dark") ? "light" : "dark";
+$url_mode   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&'.$temp.'_mode=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$temp.'_mode=1';
 $url_logout = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
 $url_lang   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
 
@@ -332,6 +338,11 @@ $stylesheets = '<link rel="stylesheet" href="'.$path.'css/reset.css" type="text/
     <link rel="stylesheet" href="'.$path.'css/header.css" type="text/css">
     <link rel="stylesheet" href="'.$path.'css/nobleme.css" type="text/css">';
 
+// Add light mode if required
+if($mode == "light")
+$stylesheets .= '
+    <link rel="stylesheet" href="'.$path.'css/light_mode.css" type="text/css">';
+
 // If extra stylesheets are set, add them to the list
 if (isset($css))
 {
@@ -454,22 +465,30 @@ $javascripts .= '
       <div class="header_topmenu_zone">
 
         <?php if(user_is_logged_in() && $private_message_count && basename($_SERVER['PHP_SELF']) != 'inbox.php') { ?>
-        <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="<?=string_change_case('account', 'initials');?>" title="<?=string_change_case('account', 'initials');?>" onclick="toggle_header_menu('account');">
+        <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="A" title="<?=string_change_case(__('account'), 'initials');?>" onclick="toggle_header_menu('account');">
         <?php } else { ?>
-        <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_account" src="<?=$path?>img/icons/login.svg" alt="<?=string_change_case('account', 'initials');?>" title="<?=string_change_case('account', 'initials');?>" onclick="toggle_header_menu('account');">
+        <img id="header_topmenu_account_icon" class="header_topmenu_icon header_topmenu_account" src="<?=$path?>img/icons/login.svg" alt="A" title="<?=string_change_case(__('account'), 'initials');?>" onclick="toggle_header_menu('account');">
         <?php } ?>
 
         <?php if($is_moderator && $admin_mail_count && basename($_SERVER['PHP_SELF']) != 'inbox.php') { ?>
-        <img id="header_topmenu_admin_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="<?=string_change_case('administration', 'initials');?>" title="<?=string_change_case('administration', 'initials');?>" onclick="toggle_header_menu('admin');">
+        <img id="header_topmenu_admin_icon" class="header_topmenu_icon header_topmenu_mail" src="<?=$path?>img/icons/login_mail.svg" alt="M" title="<?=string_change_case(__('administration'), 'initials');?>" onclick="toggle_header_menu('admin');">
         <?php } else if($is_moderator) { ?>
-        <img id="header_topmenu_admin_icon" class="header_topmenu_icon header_topmenu_panel" src="<?=$path?>img/icons/admin_panel.svg" alt="<?=string_change_case('administration', 'initials');?>" title="<?=string_change_case('administration', 'initials');?>" onclick="toggle_header_menu('admin');">
+        <img id="header_topmenu_admin_icon" class="header_topmenu_icon header_topmenu_panel" src="<?=$path?>img/icons/admin_panel.svg" alt="M" title="<?=string_change_case(__('administration'), 'initials');?>" onclick="toggle_header_menu('admin');">
         <?php } ?>
+
+        <a href="<?=$url_mode?>">
+          <?php if($mode == "dark") { ?>
+          <img class="header_topmenu_icon header_topmenu_panel" src="<?=$path?>img/icons/light_mode.svg" alt="L" title="<?=string_change_case(__('mode_light'), 'initials');?>">
+          <?php } else { ?>
+           <img class="header_topmenu_icon header_topmenu_panel" src="<?=$path?>img/icons/dark_mode.svg" alt="D" title="<?=string_change_case(__('mode_dark'), 'initials');?>">
+          <?php } ?>
+        </a>
 
         <a href="<?=$url_lang?>">
           <?php if($lang == 'FR') { ?>
-          <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_en.png" alt="EN" title="EN">
+          <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_en.png" alt="EN" title="<?=string_change_case(__('english'), 'initials')?>">
           <?php } else { ?>
-          <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_fr.png" alt="FR" title="FR">
+          <img class="header_topmenu_icon header_topmenu_flag" src="<?=$path?>img/icons/lang_fr.png" alt="FR" title="<?=string_change_case(__('french'), 'initials')?>">
           <?php } ?>
         </a>
 

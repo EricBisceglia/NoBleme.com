@@ -84,7 +84,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1 class="padding_bot">
-    <?=__link('pages/quotes/'.$quote_id, __('quotes_id', preset_values: array($quote_id)), 'text_red noglow')?>
+    <?=__link('pages/quotes/'.$quote_id, __('quotes_id', preset_values: array($quote_id)), 'noglow')?>
   </h1>
 
   <form method="POST">

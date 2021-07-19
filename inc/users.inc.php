@@ -5,7 +5,6 @@
 // Include only /*****************************************************************************************************/
 if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",substr(dirname($_SERVER['PHP_SELF']),-8).basename($_SERVER['PHP_SELF']))) { exit(header("Location: ./../404")); die(); }
 
-
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  secure_session_start              Starts a session.                                                              */
@@ -19,6 +18,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_get_id                       Returns the current user's id.                                                 */
 /*  user_get_username                 Returns a user's username from their id.                                       */
 /*  user_get_language                 Returns a user's language.                                                     */
+/*  user_get_mode                     Returns the current user's display mode.                                       */
 /*                                                                                                                   */
 /*  user_is_administrator             Checks if a user is an administrator.                                          */
 /*  user_is_moderator                 Checks if a user is a moderator (or above).                                    */
@@ -252,6 +252,86 @@ if(isset($_GET['english']) || isset($_GET['anglais']) || isset($_GET['francais']
 
 // Use the $lang variable to store the language for the duration of the session (the header and other pages need it)
 $lang = (!isset($_SESSION['lang'])) ? 'EN' : $_SESSION['lang'];
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Display mode
+
+// If there is no display mode in the session, assign one
+if(!isset($_SESSION['mode']))
+{
+  // If there is no display mode cookie, then default to dark mode
+  if(!isset($_COOKIE['nobleme_mode']))
+  {
+    // Create the cookie and the session variable
+    $_SESSION['mode'] = "dark";
+    if($GLOBALS['dev_http_only'])
+        setcookie("nobleme_mode", "dark", 2147483647, "/");
+    else
+      setcookie(  "nobleme_mode"            ,
+                  "dark"                    ,
+                [ 'expires'   => 2147483647 ,
+                  'path'      => '/'        ,
+                  'samesite'  => 'None'     ,
+                  'secure'    => true       ]);
+  }
+
+  // If the display mode cookie exists, set the display mode to the one in the cookie
+  else
+    $_SESSION['mode'] = $_COOKIE['nobleme_mode'];
+}
+
+// If the URL contains a request to change to a specific display mode, then fullfill that request
+if(isset($_GET['light_mode']))
+{
+  $_SESSION['mode'] = "light";
+  if($GLOBALS['dev_http_only'])
+    setcookie("nobleme_mode", "light", 2147483647, "/");
+  else
+    setcookie(  "nobleme_mode"            ,
+                "light"                   ,
+              [ 'expires'   => 2147483647 ,
+                'path'      => '/'        ,
+                'samesite'  => 'None'     ,
+                'secure'    => true       ]);
+}
+
+// In case more than one mode change request is being done, then dark will be the final mode
+else if(isset($_GET['dark_mode']))
+{
+  // Change the cookie and session language to french on request
+  $_SESSION['mode'] = "dark";
+  if($GLOBALS['dev_http_only'])
+    setcookie("nobleme_mode", "dark", 2147483647, "/");
+  else
+    setcookie(  "nobleme_mode"            ,
+                "dark"                    ,
+              [ 'expires'   => 2147483647 ,
+                'path'      => '/'        ,
+                'samesite'  => 'None'     ,
+                'secure'    => true       ]);
+}
+
+// If a mode change just happened, clean up the URL and reload the page
+if(isset($_GET['light_mode']) || isset($_GET['dark_mode']))
+{
+  // Get rid of all the mode related query parameters
+  unset($_GET['light_mode']);
+  unset($_GET['dark_mode']);
+
+  // Re-build the URL, with all its other query parameters intact
+  $url_self     = mb_substr(basename($_SERVER['PHP_SELF']), 0, -4);
+  $url_rebuild  = urldecode(http_build_query($_GET));
+  $url_rebuild  = ($url_rebuild) ? $url_self.'?'.$url_rebuild : $url_self;
+
+  // Reload the page by giving it the cleaned up URL (there better not be an infinite loop case I didn't test here)
+  exit(header("Location: ".$url_rebuild));
+}
+
+// Use the $mode variable to store the display mode for the duration of the session (header and other pages need it)
+$mode = (!isset($_SESSION['mode'])) ? 'dark' : $_SESSION['mode'];
 
 
 
@@ -534,6 +614,21 @@ function user_get_language( ?int $user_id = NULL ) : string
 
   // Return the user's language, or english if nothing was found
   return $dlanguage['language'] ?? 'EN';
+}
+
+
+
+
+/**
+ * Returns the current user's display mode.
+ *
+ * @return  string  The user's display mode, defaults to dark if not found.
+ */
+
+function user_get_mode() : string
+{
+  // Return the display mode, or dark if none in the session
+  return (!isset($_SESSION['mode'])) ? 'dark' : $_SESSION['mode'];
 }
 
 

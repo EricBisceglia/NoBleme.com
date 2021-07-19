@@ -73,7 +73,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1>
-    <?=__link('pages/dev/blog_list', __('dev_blog_title'), 'text_red noglow')?>
+    <?=__link('pages/dev/blog_list', __('dev_blog_title'), 'noglow')?>
   </h1>
 
   <h5 class="padding_bot">

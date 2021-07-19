@@ -96,7 +96,7 @@ function user_get( ?int $user_id = NULL ) : mixed
   $temp               = $duser['u_admin'] ? __('administrator') : $temp;
   $data['title']      = sanitize_output(string_change_case($temp, 'initials'));
   $temp               = $duser['u_mod'] ? ' text_orange noglow' : '';
-  $data['title_css']  = $duser['u_admin'] ? ' text_red glow' : $temp;
+  $data['title_css']  = $duser['u_admin'] ? ' text_red glow_dark' : $temp;
   $data['lang_en']    = str_contains($duser['u_lang'], 'EN');
   $data['lang_fr']    = str_contains($duser['u_lang'], 'FR');
   $temp               = ($lang == 'FR' && $duser['u_text_fr']) ? $duser['u_text_fr'] : $duser['u_text_en'];
@@ -398,7 +398,7 @@ function user_list( string  $sort_by          = ''      ,
       $temp                 = ($row['u_admin']) ? ' bold text_red' : $temp;
     }
     else if($include_ip_bans)
-      $temp                 = ($row['u_total_ip_ban']) ? 'text_red glow' : 'noglow';
+      $temp                 = ($row['u_total_ip_ban']) ? 'text_red glow_css' : 'noglow';
     else
     {
       $temp                 = ($row['u_activity']) ?: $row['u_created'];

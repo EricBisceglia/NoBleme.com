@@ -114,9 +114,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <h1>
 
     <?php if($meetup_data['is_deleted']) { ?>
-    <?=__link('pages/meetups/list', __('meetups_title_deleted'), 'text_red noglow')?>
+    <?=__link('pages/meetups/list', __('meetups_title_deleted'), 'noglow')?>
     <?php } else { ?>
-    <?=__link('pages/meetups/list', __('meetups_title'), 'text_red noglow')?>
+    <?=__link('pages/meetups/list', __('meetups_title'), 'noglow')?>
     <?php } ?>
 
     <?php if($is_moderator) { ?>

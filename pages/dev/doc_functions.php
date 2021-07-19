@@ -91,7 +91,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           query()
         </td>
         <td class="align_left">
@@ -99,7 +99,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           query_id()
         </td>
         <td class="align_left">
@@ -107,7 +107,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           database_row_exists()
         </td>
         <td class="align_left">
@@ -115,7 +115,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           database_entry_exists()
         </td>
         <td class="align_left">
@@ -150,7 +150,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_create_table()
         </td>
         <td class="align_left">
@@ -158,7 +158,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_rename_table()
         </td>
         <td class="align_left">
@@ -166,7 +166,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_empty_table()
         </td>
         <td class="align_left">
@@ -174,7 +174,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_delete_table()
         </td>
         <td class="align_left">
@@ -182,7 +182,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_create_field()
         </td>
         <td class="align_left">
@@ -190,7 +190,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_rename_field()
         </td>
         <td class="align_left">
@@ -198,7 +198,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_change_field_type()
         </td>
         <td class="align_left">
@@ -206,7 +206,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_move_field()
         </td>
         <td class="align_left">
@@ -214,7 +214,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_delete_field()
         </td>
         <td class="align_left">
@@ -222,7 +222,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_create_index()
         </td>
         <td class="align_left">
@@ -230,7 +230,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_delete_index()
         </td>
         <td class="align_left">
@@ -238,7 +238,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_insert_value()
         </td>
         <td class="align_left">
@@ -246,7 +246,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sql_sanitize_data()
         </td>
         <td class="align_left">
@@ -281,7 +281,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           fixtures_generate_data()
         </td>
         <td class="align_left">
@@ -289,7 +289,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           fixtures_fetch_random_id()
         </td>
         <td class="align_left">
@@ -329,7 +329,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           date_to_text()
         </td>
         <td class="align_left">
@@ -337,7 +337,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           date_to_ddmmyy()
         </td>
         <td class="align_left">
@@ -345,7 +345,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           date_to_mysql()
         </td>
         <td class="align_left">
@@ -383,10 +383,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           time_since()
         </td>
-        <td class="align_center smallglow">
+        <td class="align_center glow_dark bold">
           functions_time.inc.php
         </td>
         <td class="align_left">
@@ -394,10 +394,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           time_until()
         </td>
-        <td class="align_center smallglow">
+        <td class="align_center glow_dark bold">
           functions_time.inc.php
         </td>
         <td class="align_left">
@@ -405,10 +405,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           time_days_elapsed()
         </td>
-        <td class="align_center smallglow">
+        <td class="align_center glow_dark bold">
           functions_time.inc.php
         </td>
         <td class="align_left">
@@ -451,10 +451,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           number_prepend_sign()
         </td>
-        <td class="align_center smallglow">
+        <td class="align_center glow_dark bold">
           functions_numbers.inc.php
         </td>
         <td class="align_left">
@@ -462,10 +462,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           number_display_format()
         </td>
-        <td class="align_center smallglow">
+        <td class="align_center glow_dark bold">
           functions_numbers.inc.php
         </td>
         <td class="align_left">
@@ -473,10 +473,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           number_styling()
         </td>
-        <td class="align_center smallglow">
+        <td class="align_center glow_dark bold">
           functions_numbers.inc.php
         </td>
         <td class="align_left">
@@ -510,10 +510,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           maths_percentage_of()
         </td>
-        <td class="align_center smallglow">
+        <td class="align_center glow_dark bold">
           functions_mathematics.inc.php
         </td>
         <td class="align_left">
@@ -521,10 +521,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           maths_percentage_growth()
         </td>
-        <td class="align_center smallglow">
+        <td class="align_center glow_dark bold">
           functions_mathematics.inc.php
         </td>
         <td class="align_left">
@@ -564,7 +564,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sanitize()
         </td>
         <td class="align_left">
@@ -572,7 +572,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sanitize_input()
         </td>
         <td class="align_left">
@@ -603,7 +603,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sanitize_output()
         </td>
         <td class="align_left">
@@ -611,7 +611,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sanitize_output_full()
         </td>
         <td class="align_left">
@@ -619,7 +619,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           sanitize_output_javascript()
         </td>
         <td class="align_left">
@@ -627,7 +627,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           html_fix_meta_tags()
         </td>
         <td class="align_left">
@@ -667,7 +667,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           string_truncate()
         </td>
         <td class="align_left">
@@ -675,7 +675,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           string_change_case()
         </td>
         <td class="align_left">
@@ -683,7 +683,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           string_remove_accents()
         </td>
         <td class="align_left">
@@ -691,7 +691,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           string_wrap_in_html_tags()
         </td>
         <td class="align_left">
@@ -699,7 +699,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           string_increment()
         </td>
         <td class="align_left">
@@ -733,10 +733,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           bbcodes()
         </td>
-        <td class="align_center smallglow">
+        <td class="align_center glow_dark bold">
           bbcodes.inc.php
         </td>
         <td class="align_left">
@@ -744,10 +744,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           nbcodes()
         </td>
-        <td class="align_center smallglow">
+        <td class="align_center glow_dark bold">
           bbcodes.inc.php
         </td>
         <td class="align_left">
@@ -778,7 +778,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           diff_strings()
         </td>
         <td class="align_left">
@@ -809,7 +809,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           search_string_context()
         </td>
         <td class="align_left">
@@ -849,7 +849,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           error_page()
         </td>
         <td class="align_left">
@@ -880,7 +880,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           form_fetch_element()
         </td>
         <td class="align_left">
@@ -911,7 +911,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           page_is_fetched_dynamically()
         </td>
         <td class="align_left">
@@ -919,7 +919,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           page_must_be_fetched_dynamically()
         </td>
         <td class="align_left">
@@ -950,7 +950,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           has_file_been_included()
         </td>
         <td class="align_left">
@@ -958,7 +958,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           require_included_file()
         </td>
         <td class="align_left">
@@ -989,7 +989,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           encrypt_data()
         </td>
         <td class="align_left">
@@ -1029,7 +1029,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_get_id()
         </td>
         <td class="align_left">
@@ -1037,7 +1037,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_get_username()
         </td>
         <td class="align_left">
@@ -1045,7 +1045,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_get_language()
         </td>
         <td class="align_left">
@@ -1053,7 +1053,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_settings_nsfw()
         </td>
         <td class="align_left">
@@ -1061,7 +1061,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_settings_privacy()
         </td>
         <td class="align_left">
@@ -1092,7 +1092,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_is_moderator()
         </td>
         <td class="align_left">
@@ -1100,7 +1100,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_is_administrator()
         </td>
         <td class="align_left">
@@ -1108,7 +1108,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_restrict_to_guests()
         </td>
         <td class="align_left">
@@ -1116,7 +1116,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_restrict_to_users()
         </td>
         <td class="align_left">
@@ -1124,7 +1124,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_restrict_to_moderators()
         </td>
         <td class="align_left">
@@ -1132,7 +1132,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_restrict_to_administrators()
         </td>
         <td class="align_left">
@@ -1163,7 +1163,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_is_logged_in()
         </td>
         <td class="align_left">
@@ -1171,7 +1171,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_log_out()
         </td>
         <td class="align_left">
@@ -1202,7 +1202,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           user_generate_random_username()
         </td>
         <td class="align_left">
@@ -1242,7 +1242,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           system_variable_fetch()
         </td>
         <td class="align_left">
@@ -1250,7 +1250,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           system_variable_update()
         </td>
         <td class="align_left">
@@ -1281,7 +1281,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           private_message_send()
         </td>
         <td class="align_left">
@@ -1312,7 +1312,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           irc_bot_send_message()
         </td>
         <td class="align_left">
@@ -1320,7 +1320,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           discord_send_message()
         </td>
         <td class="align_left">
@@ -1351,7 +1351,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           flood_check()
         </td>
         <td class="align_left">
@@ -1359,7 +1359,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           log_activity()
         </td>
         <td class="align_left">
@@ -1367,7 +1367,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           log_activity_details()
         </td>
         <td class="align_left">
@@ -1375,7 +1375,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           log_activity_purge_orphan_diffs()
         </td>
         <td class="align_left">
@@ -1383,7 +1383,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           log_activity_delete()
         </td>
         <td class="align_left">
@@ -1414,7 +1414,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc">
 
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           system_get_current_version_number()
         </td>
         <td class="align_left">
@@ -1422,7 +1422,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
       </tr>
       <tr>
-        <td class="align_right smallglow">
+        <td class="align_right glow_dark bold">
           system_assemble_version_number()
         </td>
         <td class="align_left">

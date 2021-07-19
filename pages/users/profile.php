@@ -83,7 +83,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_30">
 
   <h1 class="align_center">
-    <?=__link('pages/users/list', $profile_data['username'], 'text_red noglow')?>
+    <?=__link('pages/users/list', $profile_data['username'], 'noglow')?>
     <?php if(!$profile_id || $profile_id == $user_id) { ?>
     <?=__icon('edit', href: 'pages/users/profile_edit', alt: 'E', title: __('edit'), title_case: 'initials')?>
     <?php } ?>
@@ -100,19 +100,19 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <?php } ?>
 
   <?php if($profile_data['text']) { ?>
-  <div class="profile_box profile_text">
+  <div class="profile_box_<?=$mode?> profile_text">
     <?=$profile_data['text']?>
   </div>
   <?php } ?>
 
-  <div class="profile_box profile_info">
+  <div class="profile_box_<?=$mode?> profile_info">
 
-    <div class="profile_info_box glow text_red bold">
+    <div class="profile_info_box_<?=$mode?> glow_dark text_red bold">
       <?=__('users_profile_summary', preset_values: array($profile_data['id']))?>
     </div>
 
     <?php if($profile_data['lang_en'] || $profile_data['lang_fr']) { ?>
-    <div class="profile_info_box">
+    <div class="profile_info_box_<?=$mode?>">
       <span class="bold"><?=__('users_profile_languages')?></span><br>
       <div class="tinypadding_bot">
         <?php if($profile_data['lang_en']) { ?>
@@ -125,40 +125,40 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } ?>
 
     <?php if($profile_data['pronouns']) { ?>
-    <div class="profile_info_box">
+    <div class="profile_info_box_<?=$mode?>">
       <span class="bold"><?=__('users_profile_pronouns')?></span><br>
       <?=$profile_data['pronouns']?>
     </div>
     <?php } ?>
 
     <?php if($profile_data['country']) { ?>
-    <div class="profile_info_box">
+    <div class="profile_info_box_<?=$mode?>">
       <span class="bold"><?=__('users_profile_country')?></span><br>
       <?=$profile_data['country']?>
     </div>
     <?php } ?>
 
-    <div class="profile_info_box">
+    <div class="profile_info_box_<?=$mode?>">
       <span class="bold"><?=__('users_profile_created')?></span><br>
       <?=$profile_data['created']?> (<?=$profile_data['screated']?>)
     </div>
 
     <?php if(!$profile_data['hideact']) { ?>
-    <div class="profile_info_box">
+    <div class="profile_info_box_<?=$mode?>">
       <span class="bold"><?=__('users_profile_activity')?></span><br>
       <?=$profile_data['activity']?>
     </div>
     <?php } ?>
 
     <?php if($profile_data['age']) { ?>
-    <div class="profile_info_box">
+    <div class="profile_info_box_<?=$mode?>">
       <span class="bold"><?=__('users_profile_age')?></span><br>
       <?=__('users_profile_age_years', preset_values: array($profile_data['age']))?>
     </div>
     <?php } ?>
 
     <?php if($profile_data['birthday']) { ?>
-    <div class="profile_info_box">
+    <div class="profile_info_box_<?=$mode?>">
       <span class="bold"><?=__('users_profile_birthday')?></span><br>
       <?=$profile_data['birthday']?>
     </div>
@@ -168,27 +168,27 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <?php if($is_moderator && $profile_id) { ?>
 
-  <div class="profile_box profile_info profile_admin">
+  <div class="profile_box_<?=$mode?> profile_info profile_admin">
 
-    <div class="profile_info_box glow text_red bold">
+    <div class="profile_info_box_<?=$mode?> glow_dark text_red bold">
       <?=__('users_profile_admin')?>
     </div>
 
     <?php if($is_admin) { ?>
 
-    <div class="profile_info_box">
+    <div class="profile_info_box_<?=$mode?>">
       <span class="bold"><?=__('users_profile_ip')?></span><br>
       <?=$profile_data['ip']?>
     </div>
 
-    <div class="profile_info_box">
+    <div class="profile_info_box_<?=$mode?>">
       <span class="bold"><?=__('users_profile_email')?></span><br>
       <?=$profile_data['email']?>
     </div>
 
     <?php } ?>
 
-    <div class="profile_info_box">
+    <div class="profile_info_box_<?=$mode?>">
       <span class="bold"><?=__('users_profile_page')?></span><br>
       <?php if($profile_data['lasturl']) { ?>
       <?=__link($profile_data['lasturl'], $profile_data['lastpage'])?>
@@ -197,7 +197,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php } ?>
     </div>
 
-    <div class="profile_info_box">
+    <div class="profile_info_box_<?=$mode?>">
       <span class="bold"><?=__('users_profile_action')?></span><br>
       <?=$profile_data['lastaction']?>
     </div>

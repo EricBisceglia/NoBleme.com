@@ -99,7 +99,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </p>
 
   <div class="padding_top">
-    <iframe src="https://discord.com/widget?id=694151150902968320&theme=dark" class="indiv" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+    <iframe src="https://discord.com/widget?id=694151150902968320&theme=<?=$mode?>" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
   </div>
 
   <?php } ?>

@@ -191,9 +191,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
     <h1 class="padding_bot">
       <?php if(!$quote_random) { ?>
-      <?=__link('pages/quotes/list', __('quotes_id', preset_values: array($quotes_list[$i]['id'])), "noglow text_red")?>
+      <?=__link('pages/quotes/list', __('quotes_id', preset_values: array($quotes_list[$i]['id'])), "noglow")?>
       <?php } else { ?>
-      <?=__link('pages/quotes/list', __('quotes_random'), "noglow text_red")?>
+      <?=__link('pages/quotes/list', __('quotes_random'), "noglow")?>
       <?php } ?>
     </h1>
 

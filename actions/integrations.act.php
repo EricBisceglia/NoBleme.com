@@ -420,7 +420,7 @@ function irc_channels_type_get( int $type_id ) : array
   // Channel type CSS
   $data['css'] = match($type_id)
   {
-    3         => ' bold smallglow'  ,
+    3         => ' bold glow_dark'  ,
     2         => ' bold'            ,
     1         => ''                 ,
     default   => ' italics'         ,

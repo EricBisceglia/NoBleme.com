@@ -931,324 +931,324 @@ Tout ce qui a été discuté plus tôt, le négatif comme le positif, peut se r�
 EOT
 );
 ___('politics_manifesto_solutions_point_1',   'EN', <<<EOT
-<span class="text_red bold glow">1 · Demand a right to have a future.</span>
+<span class="text_red bold glow_dark">1 · Demand a right to have a future.</span>
 EOT
 );
 ___('politics_manifesto_solutions_point_1',   'FR', <<<EOT
-<span class="text_red bold glow">1 · Exiger le droit d'avoir un avenir.</span>
+<span class="text_red bold glow_dark">1 · Exiger le droit d'avoir un avenir.</span>
 EOT
 );
 ___('politics_manifesto_solutions_point_2',   'EN', <<<EOT
-<span class="text_red bold glow">2 · Tear apart the social contract.</span> Create a new paradigm to replace capitalism.
+<span class="text_red bold glow_dark">2 · Tear apart the social contract.</span> Create a new paradigm to replace capitalism.
 EOT
 );
 ___('politics_manifesto_solutions_point_2',   'FR', <<<EOT
-<span class="text_red bold glow">2 · Déchirer le contrat social.</span> Créer un nouveau paradigme pour remplacer le capitalisme.
+<span class="text_red bold glow_dark">2 · Déchirer le contrat social.</span> Créer un nouveau paradigme pour remplacer le capitalisme.
 EOT
 );
 ___('politics_manifesto_solutions_point_3',   'EN', <<<EOT
-<span class="text_red bold glow">3 · Think inclusively.</span> The smaller details such as using non gendered and less violent language matter almost as much as the big changes such as fighting racism and hate. Battles are not mutually exclusive.
+<span class="text_red bold glow_dark">3 · Think inclusively.</span> The smaller details such as using non gendered and less violent language matter almost as much as the big changes such as fighting racism and hate. Battles are not mutually exclusive.
 EOT
 );
 ___('politics_manifesto_solutions_point_3',   'FR', <<<EOT
-<span class="text_red bold glow">3 · Penser inclusivement.</span> Même de petits détails comme l'utilisation d'un langage non genré et moins violent sont aussi importants que les grandes luttes contre le racisme et la haine. Les combats ne sont pas mutuellement exclusifs.
+<span class="text_red bold glow_dark">3 · Penser inclusivement.</span> Même de petits détails comme l'utilisation d'un langage non genré et moins violent sont aussi importants que les grandes luttes contre le racisme et la haine. Les combats ne sont pas mutuellement exclusifs.
 EOT
 );
 ___('politics_manifesto_solutions_point_4',   'EN', <<<EOT
-<span class="text_red bold glow">4 · Promote equality.</span> Remember that equality of opportunity matters just as much as equality of outcome: some people will need more help than others and it is fine. Nobody is less deserving of a chance in life just because they were born in a specific family, in a specific place, with a specific skin color, with a handicap, etc.
+<span class="text_red bold glow_dark">4 · Promote equality.</span> Remember that equality of opportunity matters just as much as equality of outcome: some people will need more help than others and it is fine. Nobody is less deserving of a chance in life just because they were born in a specific family, in a specific place, with a specific skin color, with a handicap, etc.
 EOT
 );
 ___('politics_manifesto_solutions_point_4',   'FR', <<<EOT
-<span class="text_red bold glow">4 · Promouvoir l'égalité.</span> L'égalité des chances est aussi importante que l'égalité dans les résultats : certaines personnes ont besoin de plus d'assistance que d'autres, ce n'est pas un problème. Tout le monde mérite une chance, il ne faut pas punir le fait de naître dans une certaine famille, dans un certain lieu, avec une certaine couleur de peau, avec un handicap.
+<span class="text_red bold glow_dark">4 · Promouvoir l'égalité.</span> L'égalité des chances est aussi importante que l'égalité dans les résultats : certaines personnes ont besoin de plus d'assistance que d'autres, ce n'est pas un problème. Tout le monde mérite une chance, il ne faut pas punir le fait de naître dans une certaine famille, dans un certain lieu, avec une certaine couleur de peau, avec un handicap.
 EOT
 );
 ___('politics_manifesto_solutions_point_5',   'EN', <<<EOT
-<span class="text_red bold glow">5 · Encourage varied social structures.</span> Society is designed around nuclear families and single parent families. Give equal representation to voluntarily single individuals, childless couples, relationships involving more than two people, extended families, communes and cooperative communities, and other structures.
+<span class="text_red bold glow_dark">5 · Encourage varied social structures.</span> Society is designed around nuclear families and single parent families. Give equal representation to voluntarily single individuals, childless couples, relationships involving more than two people, extended families, communes and cooperative communities, and other structures.
 EOT
 );
 ___('politics_manifesto_solutions_point_5',   'FR', <<<EOT
-<span class="text_red bold glow">5 · Encourager la diversité des structures sociales.</span> La société est conçue autour de familles nucléaires ou monoparentales. Il faut accorder une représentation égale au célibat volontaire, aux familles sans enfants, aux relations de plus de deux personnes, aux grandes familles, aux communes et communautés coopératives, et autres structures sociales qui sont aujourd'hui découragées.
+<span class="text_red bold glow_dark">5 · Encourager la diversité des structures sociales.</span> La société est conçue autour de familles nucléaires ou monoparentales. Il faut accorder une représentation égale au célibat volontaire, aux familles sans enfants, aux relations de plus de deux personnes, aux grandes familles, aux communes et communautés coopératives, et autres structures sociales qui sont aujourd'hui découragées.
 EOT
 );
 ___('politics_manifesto_solutions_point_6',   'EN', <<<EOT
-<span class="text_red bold glow">6 · Abolish inheritance.</span> Education must become more important than building capital when raising children, no system that causes children to await their relative's deaths is a good one. Only items bearing an emotional value should be transferred to the next generation.
+<span class="text_red bold glow_dark">6 · Abolish inheritance.</span> Education must become more important than building capital when raising children, no system that causes children to await their relative's deaths is a good one. Only items bearing an emotional value should be transferred to the next generation.
 EOT
 );
 ___('politics_manifesto_solutions_point_6',   'FR', <<<EOT
-<span class="text_red bold glow">6 · Abolir l'héritage.</span> L'éducation des enfants doit devenir plus importante que l'accumulation de capital. Tout système qui incite des personnes à attendre la mort de leurs parents est problématique. Seuls les biens portant une valeur émotionnelle devraient être transférés à la génération suivante.
+<span class="text_red bold glow_dark">6 · Abolir l'héritage.</span> L'éducation des enfants doit devenir plus importante que l'accumulation de capital. Tout système qui incite des personnes à attendre la mort de leurs parents est problématique. Seuls les biens portant une valeur émotionnelle devraient être transférés à la génération suivante.
 EOT
 );
 ___('politics_manifesto_solutions_point_7',   'EN', <<<EOT
-<span class="text_red bold glow">7 · Make justice universal.</span> Get rid of laws that disproportionately harm minorities, and apply the law equally to the privileged so that they become subjects of the very rules that they have been enforcing without respecting.
+<span class="text_red bold glow_dark">7 · Make justice universal.</span> Get rid of laws that disproportionately harm minorities, and apply the law equally to the privileged so that they become subjects of the very rules that they have been enforcing without respecting.
 EOT
 );
 ___('politics_manifesto_solutions_point_7',   'FR', <<<EOT
-<span class="text_red bold glow">7 · Rendre la justice universelle.</span> Les lois qui ne servent qu'à punir ou freiner les classes défavorisées doivent être abolies. La loi doit être appliquée de façon égale aux membres des classes privilégiées afin de les faire respecter leurs propres lois, pour lesquelles ils ont trop souvent des passe-droits.
+<span class="text_red bold glow_dark">7 · Rendre la justice universelle.</span> Les lois qui ne servent qu'à punir ou freiner les classes défavorisées doivent être abolies. La loi doit être appliquée de façon égale aux membres des classes privilégiées afin de les faire respecter leurs propres lois, pour lesquelles ils ont trop souvent des passe-droits.
 EOT
 );
 ___('politics_manifesto_solutions_point_8',   'EN', <<<EOT
-<span class="text_red bold glow">8 · Reboot the police.</span> Replace the current police institution so that instead of serving governments, they serve the people. Given their position of power, members of police forces should be even more strictly subjected to the laws that they enforce.
+<span class="text_red bold glow_dark">8 · Reboot the police.</span> Replace the current police institution so that instead of serving governments, they serve the people. Given their position of power, members of police forces should be even more strictly subjected to the laws that they enforce.
 EOT
 );
 ___('politics_manifesto_solutions_point_8',   'FR', <<<EOT
-<span class="text_red bold glow">8 · Repenser la police.</span> Remplacer l'institution policière actuelle pour qu'elle soit au service du peuple et non du gouvernement. Vu leur position de pouvoir, les membres des forces de police devraient être soumis de façon plus stricte que les autres aux lois qu'ils font appliquer.
+<span class="text_red bold glow_dark">8 · Repenser la police.</span> Remplacer l'institution policière actuelle pour qu'elle soit au service du peuple et non du gouvernement. Vu leur position de pouvoir, les membres des forces de police devraient être soumis de façon plus stricte que les autres aux lois qu'ils font appliquer.
 EOT
 );
 ___('politics_manifesto_solutions_point_9',   'EN', <<<EOT
-<span class="text_red bold glow">9 · Stop jailing everyone.</span> There are other ways to enact justice than to remove people's rights and lock them up. Think different. Give second chances. For the gravest offenders who require prison sentences, make jails more humane, and work on rehabilitating criminals.
+<span class="text_red bold glow_dark">9 · Stop jailing everyone.</span> There are other ways to enact justice than to remove people's rights and lock them up. Think different. Give second chances. For the gravest offenders who require prison sentences, make jails more humane, and work on rehabilitating criminals.
 EOT
 );
 ___('politics_manifesto_solutions_point_9',   'FR', <<<EOT
-<span class="text_red bold glow">9 · Cesser d'emprisonner à tout-va.</span> La justice peut s'appliquer autrement qu'en privant les gens de leurs droits et en les enfermant. Il faut penser autrement, donner des secondes chances. Pour les cas graves qui nécessitent l'ostracisation, il faut rendre les prisons plus humaines, et travailler sur la réhabilitation.
+<span class="text_red bold glow_dark">9 · Cesser d'emprisonner à tout-va.</span> La justice peut s'appliquer autrement qu'en privant les gens de leurs droits et en les enfermant. Il faut penser autrement, donner des secondes chances. Pour les cas graves qui nécessitent l'ostracisation, il faut rendre les prisons plus humaines, et travailler sur la réhabilitation.
 EOT
 );
 ___('politics_manifesto_solutions_point_10',  'EN', <<<EOT
-<span class="text_red bold glow">10 · Publicly condemn systemic violence.</span> Retroactively judge every crime committed by police forces, every war crime committed by military forces or ordered by politicians, using the rules and laws of the system they themselves have been enforcing. This is not about blood for blood revenge, they do not need to be punished, but this must happen as a way to give closure and show that the past is behind us.
+<span class="text_red bold glow_dark">10 · Publicly condemn systemic violence.</span> Retroactively judge every crime committed by police forces, every war crime committed by military forces or ordered by politicians, using the rules and laws of the system they themselves have been enforcing. This is not about blood for blood revenge, they do not need to be punished, but this must happen as a way to give closure and show that the past is behind us.
 EOT
 );
 ___('politics_manifesto_solutions_point_10',  'FR', <<<EOT
-<span class="text_red bold glow">10 · Condamner publiquement la violence systémique.</span> Tous les crimes commis par des forces de police, des forces militaires, ou ordonnés par la classe politique doivent être jugés rétroactivement, en appliquant les lois du système capitaliste. Le but n'est pas la revanche, cela ne doit pas être fait en quête de punition, mais il est nécessaire de les juger publiquement afin de pouvoir tourner la page.
+<span class="text_red bold glow_dark">10 · Condamner publiquement la violence systémique.</span> Tous les crimes commis par des forces de police, des forces militaires, ou ordonnés par la classe politique doivent être jugés rétroactivement, en appliquant les lois du système capitaliste. Le but n'est pas la revanche, cela ne doit pas être fait en quête de punition, mais il est nécessaire de les juger publiquement afin de pouvoir tourner la page.
 EOT
 );
 ___('politics_manifesto_solutions_point_11',  'EN', <<<EOT
-<span class="text_red bold glow">11 · Stop encouraging growth.</span> Greed or productivity related metrics are harmful. If social scientists must focus on metrics, then let us invent new metrics related to meeting essential needs, happiness, health care, life expectancy, scientific progress, individual fulfillment.
+<span class="text_red bold glow_dark">11 · Stop encouraging growth.</span> Greed or productivity related metrics are harmful. If social scientists must focus on metrics, then let us invent new metrics related to meeting essential needs, happiness, health care, life expectancy, scientific progress, individual fulfillment.
 EOT
 );
 ___('politics_manifesto_solutions_point_11',  'FR', <<<EOT
-<span class="text_red bold glow">11 · Cesser d'encourager la croissance.</span> Les statistiques liées à la rentabilité ou à la productivité sont néfastes. Les sciences sociales doivent mettre en avant de nouveaux indicateurs liés à la satisfaction des besoins essentiels, au bonheur, à la santé, à l'espérance de vie, à l'épanouissement individuel.
+<span class="text_red bold glow_dark">11 · Cesser d'encourager la croissance.</span> Les statistiques liées à la rentabilité ou à la productivité sont néfastes. Les sciences sociales doivent mettre en avant de nouveaux indicateurs liés à la satisfaction des besoins essentiels, au bonheur, à la santé, à l'espérance de vie, à l'épanouissement individuel.
 EOT
 );
 ___('politics_manifesto_solutions_point_12',  'EN', <<<EOT
-<span class="text_red bold glow">12 · Abolish land ownership for profit.</span> Make currently existing buildings cooperatively owned by those who live in them. Let anyone have the right to claim empty land for their own purposes (building houses, working the land, or simply living), but let local governments deny these claims if they harm nature or the collective good.
+<span class="text_red bold glow_dark">12 · Abolish land ownership for profit.</span> Make currently existing buildings cooperatively owned by those who live in them. Let anyone have the right to claim empty land for their own purposes (building houses, working the land, or simply living), but let local governments deny these claims if they harm nature or the collective good.
 EOT
 );
 ___('politics_manifesto_solutions_point_12',  'FR', <<<EOT
-<span class="text_red bold glow">12 · Abolir la propriété foncière lucrative.</span> Les terrains et bâtiments existants doivent devenir la propriété coopérative des gens qui y habitent. Toute personne devrait pouvoir revendiquer des logements ou terrains vides pour y vivre ou y travailler la terre, sous condition que les collectivités locales aient le pouvoir de refuser ces revendications si elles portent préjudice à la nature ou au bien collectif.
+<span class="text_red bold glow_dark">12 · Abolir la propriété foncière lucrative.</span> Les terrains et bâtiments existants doivent devenir la propriété coopérative des gens qui y habitent. Toute personne devrait pouvoir revendiquer des logements ou terrains vides pour y vivre ou y travailler la terre, sous condition que les collectivités locales aient le pouvoir de refuser ces revendications si elles portent préjudice à la nature ou au bien collectif.
 EOT
 );
 ___('politics_manifesto_solutions_point_13',  'EN', <<<EOT
-<span class="text_red bold glow">13 · Seize excessive wealth.</span> Take the excess money and goods of the ultra rich and use it to pay off the debts of individuals and nations that they have artificially created. Any remaining seized goods should be used towards building a better collective future. Only seize the excessive wealth, leave them some of their comfort of life. Even after these seizures, the former ultra rich should have an equel place in the new society.
+<span class="text_red bold glow_dark">13 · Seize excessive wealth.</span> Take the excess money and goods of the ultra rich and use it to pay off the debts of individuals and nations that they have artificially created. Any remaining seized goods should be used towards building a better collective future. Only seize the excessive wealth, leave them some of their comfort of life. Even after these seizures, the former ultra rich should have an equel place in the new society.
 EOT
 );
 ___('politics_manifesto_solutions_point_13',  'FR', <<<EOT
-<span class="text_red bold glow">13 · Confisquer les fortunes excessives.</span> L'argent des ultra riches doit être saisi afin de rembourser les dettes des pays et des individus. Le surplus de capitaux saisis sera utilisé pour investir dans le bien collectif. Seule la partie excessive des fortunes doit être saisie, il ne faut pas non plus priver les gens de leur confort de vie - même les classes privilégiées actuelles doivent avoir une place équitable dans la nouvelle société.
+<span class="text_red bold glow_dark">13 · Confisquer les fortunes excessives.</span> L'argent des ultra riches doit être saisi afin de rembourser les dettes des pays et des individus. Le surplus de capitaux saisis sera utilisé pour investir dans le bien collectif. Seule la partie excessive des fortunes doit être saisie, il ne faut pas non plus priver les gens de leur confort de vie - même les classes privilégiées actuelles doivent avoir une place équitable dans la nouvelle société.
 EOT
 );
 ___('politics_manifesto_solutions_point_14',  'EN', <<<EOT
-<span class="text_red bold glow">14 · End wage slavery.</span> Ensure that everyone's basic necessities are met without a need for money or hardships: food, water, healthcare, housing, transportation, etc. Make it so that working stops being a necessity and becomes a choice.
+<span class="text_red bold glow_dark">14 · End wage slavery.</span> Ensure that everyone's basic necessities are met without a need for money or hardships: food, water, healthcare, housing, transportation, etc. Make it so that working stops being a necessity and becomes a choice.
 EOT
 );
 ___('politics_manifesto_solutions_point_14',  'FR', <<<EOT
-<span class="text_red bold glow">14 · Abolir l'esclavage salarial.</span> S'assurer que les besoins fondamentaux de tout le monde soient satisfaits sans avoir besoin de travail ou d'argent : l'eau, la nourriture, la santé, le logement, le transport, etc. Le travail ne doit plus être une nécessité, il doit devenir un choix.
+<span class="text_red bold glow_dark">14 · Abolir l'esclavage salarial.</span> S'assurer que les besoins fondamentaux de tout le monde soient satisfaits sans avoir besoin de travail ou d'argent : l'eau, la nourriture, la santé, le logement, le transport, etc. Le travail ne doit plus être une nécessité, il doit devenir un choix.
 EOT
 );
 ___('politics_manifesto_solutions_point_15',  'EN', <<<EOT
-<span class="text_red bold glow">15 · Destroy useless jobs.</span> Any form of work that existed for the sole purpose of generating capital for the privileged and did not contribute to the common good of society, any job that is physically taxing and unrewarding, should be automated or stop existing - those who wish to continue practicing those jobs for any given reason are, of course, allowed to do it, but only out of their own free will.
+<span class="text_red bold glow_dark">15 · Destroy useless jobs.</span> Any form of work that existed for the sole purpose of generating capital for the privileged and did not contribute to the common good of society, any job that is physically taxing and unrewarding, should be automated or stop existing - those who wish to continue practicing those jobs for any given reason are, of course, allowed to do it, but only out of their own free will.
 EOT
 );
 ___('politics_manifesto_solutions_point_15',  'FR', <<<EOT
-<span class="text_red bold glow">15 · Éliminer les emplois inutiles.</span> Toute forme de travail qui existait dans le seul but de générer du capital pour les classes privilégiées sans contribuer au bien commun, tout travail qui est pénible physiquement sans gratification, doit être automatisé ou cesser d'exister. Toute personne voulant continuer à effectuer ces formes de travail peut, bien sûr, continuer à le faire, mais à leur rythme et sans pression.
+<span class="text_red bold glow_dark">15 · Éliminer les emplois inutiles.</span> Toute forme de travail qui existait dans le seul but de générer du capital pour les classes privilégiées sans contribuer au bien commun, tout travail qui est pénible physiquement sans gratification, doit être automatisé ou cesser d'exister. Toute personne voulant continuer à effectuer ces formes de travail peut, bien sûr, continuer à le faire, mais à leur rythme et sans pression.
 EOT
 );
 ___('politics_manifesto_solutions_point_16',  'EN', <<<EOT
-<span class="text_red bold glow">16 · Disband vertical corporations.</span> Corporations can continue existing, but should be owned by those who contribute labor to them. Any corporation owned by executives or shareholders must be given to its employees, who will decide whether to keep it alive as a collectively owned corporation or whether to disband it.
+<span class="text_red bold glow_dark">16 · Disband vertical corporations.</span> Corporations can continue existing, but should be owned by those who contribute labor to them. Any corporation owned by executives or shareholders must be given to its employees, who will decide whether to keep it alive as a collectively owned corporation or whether to disband it.
 EOT
 );
 ___('politics_manifesto_solutions_point_16',  'FR', <<<EOT
-<span class="text_red bold glow">16 · Démanteler les entreprises verticales.</span> Les entreprises continueront à exister, mais au service des personnes qui y contribuent du travail plutôt qu'au patronat. Toute entreprise appartenant à des cadres ou des actionnaires doit être transférée sous le contrôle de sa masse salariale, qui décidera soit de la garder en vie en tant qu'entreprise collectivisée, soit de la démanteler.
+<span class="text_red bold glow_dark">16 · Démanteler les entreprises verticales.</span> Les entreprises continueront à exister, mais au service des personnes qui y contribuent du travail plutôt qu'au patronat. Toute entreprise appartenant à des cadres ou des actionnaires doit être transférée sous le contrôle de sa masse salariale, qui décidera soit de la garder en vie en tant qu'entreprise collectivisée, soit de la démanteler.
 EOT
 );
 ___('politics_manifesto_solutions_point_17',  'EN', <<<EOT
-<span class="text_red bold glow">17 · Publicly condemn unethical capitalists.</span> Executives and shareholders must pay for any profit they have earned off wage slave labor, for any profit done over political instability and wars, for any profit derived from the deliberate destruction of the planet. Just like any other criminals, they should not be victims of punishment or revenge, but rather destituted of their power and rehabilitated to become equal members of the new society.
+<span class="text_red bold glow_dark">17 · Publicly condemn unethical capitalists.</span> Executives and shareholders must pay for any profit they have earned off wage slave labor, for any profit done over political instability and wars, for any profit derived from the deliberate destruction of the planet. Just like any other criminals, they should not be victims of punishment or revenge, but rather destituted of their power and rehabilitated to become equal members of the new society.
 EOT
 );
 ___('politics_manifesto_solutions_point_17',  'FR', <<<EOT
-<span class="text_red bold glow">17 · Condamner publiquement les capitalistes immoraux.</span> Les dirigeants et actionnaires doivent payer pour tout profit issu de l'esclavage salarial, de violences, de guerres, ou de la dégradation de la nature. Comme toute autre forme de criminalité, le but n'est pas de prendre sa revanche ou de les punir, mais plutôt de les condamner publiquement, de les priver de leur pouvoir, et d'en faire des membres égaux de la future société.
+<span class="text_red bold glow_dark">17 · Condamner publiquement les capitalistes immoraux.</span> Les dirigeants et actionnaires doivent payer pour tout profit issu de l'esclavage salarial, de violences, de guerres, ou de la dégradation de la nature. Comme toute autre forme de criminalité, le but n'est pas de prendre sa revanche ou de les punir, mais plutôt de les condamner publiquement, de les priver de leur pouvoir, et d'en faire des membres égaux de la future société.
 EOT
 );
 ___('politics_manifesto_solutions_point_18',  'EN', <<<EOT
-<span class="text_red bold glow">18 · Education is paramount.</span> Gather those who love teaching and give them all the tools and means required to do so. Encourage everyone to keep learning all life long, even if it is all that they choose to do in life.
+<span class="text_red bold glow_dark">18 · Education is paramount.</span> Gather those who love teaching and give them all the tools and means required to do so. Encourage everyone to keep learning all life long, even if it is all that they choose to do in life.
 EOT
 );
 ___('politics_manifesto_solutions_point_18',  'FR', <<<EOT
-<span class="text_red bold glow">18 · L'éducation est fondamentale.</span> Il faut donner à toute personne qui aime enseigner les outils et moyens requis pour le faire. L'apprentissage continu, les études, le transfert de compétences et de savoir doivent être encouragés tout du long de la vie.
+<span class="text_red bold glow_dark">18 · L'éducation est fondamentale.</span> Il faut donner à toute personne qui aime enseigner les outils et moyens requis pour le faire. L'apprentissage continu, les études, le transfert de compétences et de savoir doivent être encouragés tout du long de la vie.
 EOT
 );
 ___('politics_manifesto_solutions_point_19',  'EN', <<<EOT
-<span class="text_red bold glow">19 · Abolish exclusive intellectual property.</span> Copyrights and patents are holding back science, art, and health care. Any form of intellectual property that prevents others from building upon existing things must disappear along with capitalism. However, permissive intellectual property should still be enforced in order to ensure creators and artists always get the credit that they are rightfully due.
+<span class="text_red bold glow_dark">19 · Abolish exclusive intellectual property.</span> Copyrights and patents are holding back science, art, and health care. Any form of intellectual property that prevents others from building upon existing things must disappear along with capitalism. However, permissive intellectual property should still be enforced in order to ensure creators and artists always get the credit that they are rightfully due.
 EOT
 );
 ___('politics_manifesto_solutions_point_19',  'FR', <<<EOT
-<span class="text_red bold glow">19 · Abolir la propriété intellectuelle exclusive.</span> Les droits d'auteur et les brevets freinent la science, l'art, et la santé. Toute forme de propriété intellectuelle qui sert à empêcher de construire sur l'existant doit disparaître avec le capitalisme. Cependant, la propriété intellectuelle permissive doit continuer à exister afin que les artistes continuent à avoir le crédit qui leur est dû.
+<span class="text_red bold glow_dark">19 · Abolir la propriété intellectuelle exclusive.</span> Les droits d'auteur et les brevets freinent la science, l'art, et la santé. Toute forme de propriété intellectuelle qui sert à empêcher de construire sur l'existant doit disparaître avec le capitalisme. Cependant, la propriété intellectuelle permissive doit continuer à exister afin que les artistes continuent à avoir le crédit qui leur est dû.
 EOT
 );
 ___('politics_manifesto_solutions_point_20',  'EN', <<<EOT
-<span class="text_red bold glow">20 · Share knowledge.</span> Encourage the worldwide sharing of knowledge and blueprints, not for profit but for the common good. Equality in access to knowledge is a requirement for underprivileged areas of the world to catch up with the more privileged.
+<span class="text_red bold glow_dark">20 · Share knowledge.</span> Encourage the worldwide sharing of knowledge and blueprints, not for profit but for the common good. Equality in access to knowledge is a requirement for underprivileged areas of the world to catch up with the more privileged.
 EOT
 );
 ___('politics_manifesto_solutions_point_20',  'FR', <<<EOT
-<span class="text_red bold glow">20 · Partager le savoir.</span> Le partage mondial du savoir et des connaissances doit être encouragé, non pas pour le profit mais pour le bien commun. L'égalité face à l'accès au savoir est un prérequis pour que les régions défavorisées du monde rattrapent les plus privilégiées.
+<span class="text_red bold glow_dark">20 · Partager le savoir.</span> Le partage mondial du savoir et des connaissances doit être encouragé, non pas pour le profit mais pour le bien commun. L'égalité face à l'accès au savoir est un prérequis pour que les régions défavorisées du monde rattrapent les plus privilégiées.
 EOT
 );
 ___('politics_manifesto_solutions_point_21',  'EN', <<<EOT
-<span class="text_red bold glow">21 · Decentralize communications.</span> Create a global peer to peer communications network that is free of corporate greed and government control. Encourage everyone to contribute to this network by making it as user friendly as possible and making it easy to individually host a node of this network.
+<span class="text_red bold glow_dark">21 · Decentralize communications.</span> Create a global peer to peer communications network that is free of corporate greed and government control. Encourage everyone to contribute to this network by making it as user friendly as possible and making it easy to individually host a node of this network.
 EOT
 );
 ___('politics_manifesto_solutions_point_21',  'FR', <<<EOT
-<span class="text_red bold glow">21 · Décentraliser les communications.</span> Pour combattre la mainmise des classes dominantes sur Internet, il sera nécessaire de créer un réseau mondial pair-à-pair libre du contrôle de l'argent et des gouvernements. Encouragez la participation à ce réseau en le rendant aussi facile d'accès et d'utilisation que possible.
+<span class="text_red bold glow_dark">21 · Décentraliser les communications.</span> Pour combattre la mainmise des classes dominantes sur Internet, il sera nécessaire de créer un réseau mondial pair-à-pair libre du contrôle de l'argent et des gouvernements. Encouragez la participation à ce réseau en le rendant aussi facile d'accès et d'utilisation que possible.
 EOT
 );
 ___('politics_manifesto_solutions_point_22',  'EN', <<<EOT
-<span class="text_red bold glow">22 · Respect beliefs.</span> Encourage philosophy, meditation, spirituality, and respect the life choices of both those who choose spirituality and those who reject it. Humans are simultaneously spiritual animals and skeptical beasts, both sides of the coin must join each other in mutual respect.
+<span class="text_red bold glow_dark">22 · Respect beliefs.</span> Encourage philosophy, meditation, spirituality, and respect the life choices of both those who choose spirituality and those who reject it. Humans are simultaneously spiritual animals and skeptical beasts, both sides of the coin must join each other in mutual respect.
 EOT
 );
 ___('politics_manifesto_solutions_point_22',  'FR', <<<EOT
-<span class="text_red bold glow">22 · Respecter les croyances.</span> Encouragez la philosophie, la méditation, la spiritualité, et respectez autant les personnes qui ont fait le choix de la spiritualité que celles qui font le choix de la rejeter. Les êtres humains sont aussi spirituels que sceptiques, les deux doivent vivre en harmonie.
+<span class="text_red bold glow_dark">22 · Respecter les croyances.</span> Encouragez la philosophie, la méditation, la spiritualité, et respectez autant les personnes qui ont fait le choix de la spiritualité que celles qui font le choix de la rejeter. Les êtres humains sont aussi spirituels que sceptiques, les deux doivent vivre en harmonie.
 EOT
 );
 ___('politics_manifesto_solutions_point_23',  'EN', <<<EOT
-<span class="text_red bold glow">23 · Emasculate patriarchal religions.</span> If the conservative components of certain religions refuse to follow the transformation of society, then they must be forced to do so. Organised religions must be decapitalized, they must not seek profit from their followers. Oppressive cults must be disbanded and their victims freed.
+<span class="text_red bold glow_dark">23 · Emasculate patriarchal religions.</span> If the conservative components of certain religions refuse to follow the transformation of society, then they must be forced to do so. Organised religions must be decapitalized, they must not seek profit from their followers. Oppressive cults must be disbanded and their victims freed.
 EOT
 );
 ___('politics_manifesto_solutions_point_23',  'FR', <<<EOT
-<span class="text_red bold glow">23 · Émasculer les religions patriarcales.</span> Si les composantes conservatrices de certaines religions refusent de suivre la transformation de la société, il faudra les forcer à le faire. Les religions organisées doivent être décapitalisées, elles devront apprendre à fonctionner sans quête de gains financiers. Les sectes oppressives doivent être dissoutes afin de libérer leurs victimes.
+<span class="text_red bold glow_dark">23 · Émasculer les religions patriarcales.</span> Si les composantes conservatrices de certaines religions refusent de suivre la transformation de la société, il faudra les forcer à le faire. Les religions organisées doivent être décapitalisées, elles devront apprendre à fonctionner sans quête de gains financiers. Les sectes oppressives doivent être dissoutes afin de libérer leurs victimes.
 EOT
 );
 ___('politics_manifesto_solutions_point_24',  'EN', <<<EOT
-<span class="text_red bold glow">24 · Unite with like-minded movements.</span> We must come to the realization that we all have a common enemy in capitalism, and should unite along with like minded political movements to fight centrists, neutrals, conservatives, capitalists, and fascists. It is only once that this fight has been won that we should be arguing about our political future.
+<span class="text_red bold glow_dark">24 · Unite with like-minded movements.</span> We must come to the realization that we all have a common enemy in capitalism, and should unite along with like minded political movements to fight centrists, neutrals, conservatives, capitalists, and fascists. It is only once that this fight has been won that we should be arguing about our political future.
 EOT
 );
 ___('politics_manifesto_solutions_point_24',  'FR', <<<EOT
-<span class="text_red bold glow">24 · S'allier aux mouvements convergents.</span> Nous devons prendre conscience que notre ennemi commun est le capitalisme, et s'unir avec les mouvements convergents afin de trouver dans l'union la force requise pour combattre les mouvements centristes, neutres, conservateurs, capitalistes, fascistes. Ce n'est qu'une fois la chute du capitalisme engagée qu'il faudra se disputer au sujet de notre avenir politique.
+<span class="text_red bold glow_dark">24 · S'allier aux mouvements convergents.</span> Nous devons prendre conscience que notre ennemi commun est le capitalisme, et s'unir avec les mouvements convergents afin de trouver dans l'union la force requise pour combattre les mouvements centristes, neutres, conservateurs, capitalistes, fascistes. Ce n'est qu'une fois la chute du capitalisme engagée qu'il faudra se disputer au sujet de notre avenir politique.
 EOT
 );
 ___('politics_manifesto_solutions_point_25',  'EN', <<<EOT
-<span class="text_red bold glow">25 · Enact electoral reform.</span> Rotten electoral systems will destroy people's trust in politics. Switch to ranked choice single transferable votes or similar systems that make people choose their representatives instead of voting for those they hate the least. This will encourage diversity in the political discourse, create more varied political bodies, and encourage compromise and alliances rather than majority rule.
+<span class="text_red bold glow_dark">25 · Enact electoral reform.</span> Rotten electoral systems will destroy people's trust in politics. Switch to ranked choice single transferable votes or similar systems that make people choose their representatives instead of voting for those they hate the least. This will encourage diversity in the political discourse, create more varied political bodies, and encourage compromise and alliances rather than majority rule.
 EOT
 );
 ___('politics_manifesto_solutions_point_25',  'FR', <<<EOT
-<span class="text_red bold glow">25 · Réformer les systèmes électoraux.</span> Les systèmes électoraux simples avantagent les élites. Il faut basculer vers des systèmes plus représentatifs, tels que des votes à choix multiples, qui ne forcent pas les gens à voter pour les candidats qu'ils détestent le moins. Cela encouragera la diversité dans le débat politique, la variété dans les corps électoraux, et les compromis et alliances plutôt que la tyrannie de la majorité.
+<span class="text_red bold glow_dark">25 · Réformer les systèmes électoraux.</span> Les systèmes électoraux simples avantagent les élites. Il faut basculer vers des systèmes plus représentatifs, tels que des votes à choix multiples, qui ne forcent pas les gens à voter pour les candidats qu'ils détestent le moins. Cela encouragera la diversité dans le débat politique, la variété dans les corps électoraux, et les compromis et alliances plutôt que la tyrannie de la majorité.
 EOT
 );
 ___('politics_manifesto_solutions_point_26',  'EN', <<<EOT
-<span class="text_red bold glow">26 · Clean up political corruption.</span> Encourage the fact checking of anything politicians say. Exclude politicians from the system if they get caught defending interests other than those of the people they serve. Career politicians are a good thing, they accumulate experience and knowledge, but they must serve the people, not third party interests.
+<span class="text_red bold glow_dark">26 · Clean up political corruption.</span> Encourage the fact checking of anything politicians say. Exclude politicians from the system if they get caught defending interests other than those of the people they serve. Career politicians are a good thing, they accumulate experience and knowledge, but they must serve the people, not third party interests.
 EOT
 );
 ___('politics_manifesto_solutions_point_26',  'FR', <<<EOT
-<span class="text_red bold glow">26 · Nettoyer la corruption politique.</span> Il faut avant tout encourager la vérification des propos de toute personne ayant une influence politique. Les membres de la classe politique doivent en être exclus s'ils se font prendre à défendre des intérêts autres que ceux qu'ils sont élus pour représenter. Faire de la politique une carrière est une bonne chose, cela permet d'accumuler l'expérience et la maîtrise du sujet, mais cette carrière doit être altruiste et servir le peuple plutôt que des tiers.
+<span class="text_red bold glow_dark">26 · Nettoyer la corruption politique.</span> Il faut avant tout encourager la vérification des propos de toute personne ayant une influence politique. Les membres de la classe politique doivent en être exclus s'ils se font prendre à défendre des intérêts autres que ceux qu'ils sont élus pour représenter. Faire de la politique une carrière est une bonne chose, cela permet d'accumuler l'expérience et la maîtrise du sujet, mais cette carrière doit être altruiste et servir le peuple plutôt que des tiers.
 EOT
 );
 ___('politics_manifesto_solutions_point_27',  'EN', <<<EOT
-<span class="text_red bold glow">27 · Disband centralized governments.</span> Heads of state have too much power, they represent a modern version of divine right monarchs. The existence of such roles drives power hungry fiends into becoming career politicians. Instead, governments should be small scaled, local, and have no ruler as their head. Large scale decisions can be taken by exceptional assemblies of representatives of local political bodies.
+<span class="text_red bold glow_dark">27 · Disband centralized governments.</span> Heads of state have too much power, they represent a modern version of divine right monarchs. The existence of such roles drives power hungry fiends into becoming career politicians. Instead, governments should be small scaled, local, and have no ruler as their head. Large scale decisions can be taken by exceptional assemblies of representatives of local political bodies.
 EOT
 );
 ___('politics_manifesto_solutions_point_27',  'FR', <<<EOT
-<span class="text_red bold glow">27 · Décentraliser les gouvernements.</span> Les chefs d'état ont trop de pouvoir, leur rôle est une version modernisée des monarques de droit divin. L'existence même de ces positions pousse des monstres ivres de pouvoir à faire carrière en politique. Les gouvernements devraient plutôt être locaux, à petite échelle, sans individu à leur tête. Les décisions à grande échelle peuvent se prendre via des assemblées exceptionnelles régionales, continentales, ou globales composées de membres représentatifs des entités locales.
+<span class="text_red bold glow_dark">27 · Décentraliser les gouvernements.</span> Les chefs d'état ont trop de pouvoir, leur rôle est une version modernisée des monarques de droit divin. L'existence même de ces positions pousse des monstres ivres de pouvoir à faire carrière en politique. Les gouvernements devraient plutôt être locaux, à petite échelle, sans individu à leur tête. Les décisions à grande échelle peuvent se prendre via des assemblées exceptionnelles régionales, continentales, ou globales composées de membres représentatifs des entités locales.
 EOT
 );
 ___('politics_manifesto_solutions_point_28',  'EN', <<<EOT
-<span class="text_red bold glow">28 · Govern for the future.</span> As politics require planning ahead, they must serve those who have a long future ahead of them. There should be a maximum age on both voting and being an elected official. Politicians above this age should still remain involved in the system in a consulting role if they so desire, as younger ones will have a lot to learn from their accumulated experience.
+<span class="text_red bold glow_dark">28 · Govern for the future.</span> As politics require planning ahead, they must serve those who have a long future ahead of them. There should be a maximum age on both voting and being an elected official. Politicians above this age should still remain involved in the system in a consulting role if they so desire, as younger ones will have a lot to learn from their accumulated experience.
 EOT
 );
 ___('politics_manifesto_solutions_point_28',  'FR', <<<EOT
-<span class="text_red bold glow">28 · Gouverner pour l'avenir.</span> Les décisions politiques ayant des conséquences sur le très long terme, elles doivent être prises par des personnes directement concernées par l'avenir. Un âge maximum doit être imposé à la fois pour voter et pour se faire élire à un mandat politique. Passé cet âge, rien n'empêche un membre de la classe politique de continuer à transmettre son expérience, mais dans un rôle purement consultatif.
+<span class="text_red bold glow_dark">28 · Gouverner pour l'avenir.</span> Les décisions politiques ayant des conséquences sur le très long terme, elles doivent être prises par des personnes directement concernées par l'avenir. Un âge maximum doit être imposé à la fois pour voter et pour se faire élire à un mandat politique. Passé cet âge, rien n'empêche un membre de la classe politique de continuer à transmettre son expérience, mais dans un rôle purement consultatif.
 
 EOT
 );
 ___('politics_manifesto_solutions_point_29',  'EN', <<<EOT
-<span class="text_red bold glow">29 · Draft a world constitution.</span> Create a new constitution befitting a new era. This constitution must include a clause that any country or entity that signs it ceases to exist. It should be a key goal to get as many countries and entities as possible to sign this constitution.
+<span class="text_red bold glow_dark">29 · Draft a world constitution.</span> Create a new constitution befitting a new era. This constitution must include a clause that any country or entity that signs it ceases to exist. It should be a key goal to get as many countries and entities as possible to sign this constitution.
 EOT
 );
 ___('politics_manifesto_solutions_point_29',  'FR', <<<EOT
-<span class="text_red bold glow">29 · Rédiger une constitution mondiale.</span> Une nouvelle ère requiert une nouvelle constitution. Cette constitution globale doit contenir une clause forçant tout pays qui la signe à cesser d'exister. Faire signer cette constitution par un maximum de pays doit être un objectif clé de la société future.
+<span class="text_red bold glow_dark">29 · Rédiger une constitution mondiale.</span> Une nouvelle ère requiert une nouvelle constitution. Cette constitution globale doit contenir une clause forçant tout pays qui la signe à cesser d'exister. Faire signer cette constitution par un maximum de pays doit être un objectif clé de la société future.
 EOT
 );
 ___('politics_manifesto_solutions_point_30',  'EN', <<<EOT
-<span class="text_red bold glow">30 · Erase borders.</span> As countries and entities sign the world constitution, their borders must disappear. It should be free for anyone from anywhere in the world to move between two points on the planet without being stopped. We should become welcoming of migrants.
+<span class="text_red bold glow_dark">30 · Erase borders.</span> As countries and entities sign the world constitution, their borders must disappear. It should be free for anyone from anywhere in the world to move between two points on the planet without being stopped. We should become welcoming of migrants.
 EOT
 );
 ___('politics_manifesto_solutions_point_30',  'FR', <<<EOT
-<span class="text_red bold glow">30 · Supprimer les frontières.</span> Au fur et à mesure que des pays signent la constitution mondiale, leurs frontières disparaîtront. Toute personne, peu importe son origine géographique, devrait pouvoir se déplacer d'un point à l'autre de la planète sans se faire arrêter. Nous devrons apprendre à accueillir les migrants.
+<span class="text_red bold glow_dark">30 · Supprimer les frontières.</span> Au fur et à mesure que des pays signent la constitution mondiale, leurs frontières disparaîtront. Toute personne, peu importe son origine géographique, devrait pouvoir se déplacer d'un point à l'autre de la planète sans se faire arrêter. Nous devrons apprendre à accueillir les migrants.
 EOT
 );
 ___('politics_manifesto_solutions_point_31',  'EN', <<<EOT
-<span class="text_red bold glow">31 · Prevent mutually assured destruction.</span> Countries and entities that sign the world constitution should disband their military - which is not necessary in a society where there are no more national interests to defend - and dismantle any form of military grade weapons under their control, especially those of mass destruction.
+<span class="text_red bold glow_dark">31 · Prevent mutually assured destruction.</span> Countries and entities that sign the world constitution should disband their military - which is not necessary in a society where there are no more national interests to defend - and dismantle any form of military grade weapons under their control, especially those of mass destruction.
 EOT
 );
 ___('politics_manifesto_solutions_point_31',  'FR', <<<EOT
-<span class="text_red bold glow">31 · Mettre fin à la dissuasion militaire.</span> Les pays et entités signant la constitution mondiale devront dissoudre leurs forces militaires - qui n'ont plus de raison d'être dans une société sans intérêts nationaux à défendre - ainsi que toute forme d'armes militaires sous leur contrôle, particulièrement les armes nucléaires
+<span class="text_red bold glow_dark">31 · Mettre fin à la dissuasion militaire.</span> Les pays et entités signant la constitution mondiale devront dissoudre leurs forces militaires - qui n'ont plus de raison d'être dans une société sans intérêts nationaux à défendre - ainsi que toute forme d'armes militaires sous leur contrôle, particulièrement les armes nucléaires
 EOT
 );
 ___('politics_manifesto_solutions_point_32',  'EN', <<<EOT
-<span class="text_red bold glow">32 · Retcon nationalism.</span> A violent tool used to keep citizens subservient, nationalism should disappear altogether. People should no longer think of themselves as citizens of a country or as products of a military history, but rather as human beings and as products of local cultures.
+<span class="text_red bold glow_dark">32 · Retcon nationalism.</span> A violent tool used to keep citizens subservient, nationalism should disappear altogether. People should no longer think of themselves as citizens of a country or as products of a military history, but rather as human beings and as products of local cultures.
 EOT
 );
 ___('politics_manifesto_solutions_point_32',  'FR', <<<EOT
-<span class="text_red bold glow">32 · Faire oublier le nationalisme.</span> Un outil violent permettant d'asservir le peuple, toute forme de nationalisme doit disparaitre à jamais. Il ne faut plus se considérer comme une partie d'un pays ou d'une histoire militaire, mais plutôt comme des êtres humains et comme le produit de cultures locales.
+<span class="text_red bold glow_dark">32 · Faire oublier le nationalisme.</span> Un outil violent permettant d'asservir le peuple, toute forme de nationalisme doit disparaitre à jamais. Il ne faut plus se considérer comme une partie d'un pays ou d'une histoire militaire, mais plutôt comme des êtres humains et comme le produit de cultures locales.
 EOT
 );
 ___('politics_manifesto_solutions_point_33',  'EN', <<<EOT
-<span class="text_red bold glow">33 · Ruthlessly depollute.</span> The environmental emergency has reached a point of non return. Any corporation which relies of pollution or exploiting excessive resources must be forced to change their business model. Make the fight against climate change a frontal battle.
+<span class="text_red bold glow_dark">33 · Ruthlessly depollute.</span> The environmental emergency has reached a point of non return. Any corporation which relies of pollution or exploiting excessive resources must be forced to change their business model. Make the fight against climate change a frontal battle.
 EOT
 );
 ___('politics_manifesto_solutions_point_33',  'FR', <<<EOT
-<span class="text_red bold glow">33 · Dépolluer agressivement.</span> L'urgence environnementale a atteint un point de non-retour. Toute entreprise dont le modèle repose sur une activité polluante ou destructrice de ressources naturelles doit changer son modèle d'activité. Le combat contre le changement climatique doit être strict et sans compromis.
+<span class="text_red bold glow_dark">33 · Dépolluer agressivement.</span> L'urgence environnementale a atteint un point de non-retour. Toute entreprise dont le modèle repose sur une activité polluante ou destructrice de ressources naturelles doit changer son modèle d'activité. Le combat contre le changement climatique doit être strict et sans compromis.
 EOT
 );
 ___('politics_manifesto_solutions_point_34',  'EN', <<<EOT
-<span class="text_red bold glow">34 · Rethink transportation.</span> Encourage local public transports, shared rides, and non motorized transportation methods. In urban areas, increase the space offered to pedestrians. Mutualize the transportation of goods, so that there is no more need for private transportation dedicated to moving specific goods around.
+<span class="text_red bold glow_dark">34 · Rethink transportation.</span> Encourage local public transports, shared rides, and non motorized transportation methods. In urban areas, increase the space offered to pedestrians. Mutualize the transportation of goods, so that there is no more need for private transportation dedicated to moving specific goods around.
 EOT
 );
 ___('politics_manifesto_solutions_point_34',  'FR', <<<EOT
-<span class="text_red bold glow">34 · Repenser les transports.</span> Les transports locaux, les trajets partagés, et les moyens de transport non motorisés doivent être encouragés. Dans les zones urbaines, la place des voitures doit être réduite. Les transports de marchandises doivent être mutualisés, jusqu'à faire disparaître le besoin de transports privés dédiés au déplacement de biens de consommation.
+<span class="text_red bold glow_dark">34 · Repenser les transports.</span> Les transports locaux, les trajets partagés, et les moyens de transport non motorisés doivent être encouragés. Dans les zones urbaines, la place des voitures doit être réduite. Les transports de marchandises doivent être mutualisés, jusqu'à faire disparaître le besoin de transports privés dédiés au déplacement de biens de consommation.
 EOT
 );
 ___('politics_manifesto_solutions_point_35',  'EN', <<<EOT
-<span class="text_red bold glow">35 · Free farm animals.</span> The mass exploitation of farm animals for the sole purpose of slaughtering them must end. Not only is it inhumane, but it also heavily contributes to climate change. We should have symbiotic relationships with animals, not be their tormentors.
+<span class="text_red bold glow_dark">35 · Free farm animals.</span> The mass exploitation of farm animals for the sole purpose of slaughtering them must end. Not only is it inhumane, but it also heavily contributes to climate change. We should have symbiotic relationships with animals, not be their tormentors.
 EOT
 );
 ___('politics_manifesto_solutions_point_35',  'FR', <<<EOT
-<span class="text_red bold glow">35 · Libérer le bétail.</span> L'exploitation de masse des animaux fermiers dans le seul but de les abattre doit cesser. En plus d'être cruelle, cette pratique contribue fortement au changement climatique. Nous devons développer une relation symbiotique avec les animaux plutôt que d'être leurs bourreaux.
+<span class="text_red bold glow_dark">35 · Libérer le bétail.</span> L'exploitation de masse des animaux fermiers dans le seul but de les abattre doit cesser. En plus d'être cruelle, cette pratique contribue fortement au changement climatique. Nous devons développer une relation symbiotique avec les animaux plutôt que d'être leurs bourreaux.
 EOT
 );
 ___('politics_manifesto_solutions_point_36',  'EN', <<<EOT
-<span class="text_red bold glow">36 · Forget about monoculture.</span> Agriculture too should respect diversity. Replace infinitely spanning fields with polycultures and forests. Humanity will easily be able to survive the drop in food production as farm animals - not humans - are the main consumers of the crops grown in monocultures. Through a healthier agriculture, we will increase the quality of our food and remove the need for toxic products in crops.
+<span class="text_red bold glow_dark">36 · Forget about monoculture.</span> Agriculture too should respect diversity. Replace infinitely spanning fields with polycultures and forests. Humanity will easily be able to survive the drop in food production as farm animals - not humans - are the main consumers of the crops grown in monocultures. Through a healthier agriculture, we will increase the quality of our food and remove the need for toxic products in crops.
 EOT
 );
 ___('politics_manifesto_solutions_point_36',  'FR', <<<EOT
-<span class="text_red bold glow">36 · Oublier la monoculture.</span> L'agriculture doit respecter la diversité naturelle. Les étendues infinies de champs sont à remplacer par de la polyculture et des forêts. L'humanité pourra facilement survivre à la baisse de production alimentaire car c'est le bétail, et non pas les êtres humains, qui sont les principaux consommateurs des produits de la monoculture. Via une agriculture plus saine, nous pouvons augmenter la qualité de notre nourriture, et détoxifier les produits destinés à notre alimentation.
+<span class="text_red bold glow_dark">36 · Oublier la monoculture.</span> L'agriculture doit respecter la diversité naturelle. Les étendues infinies de champs sont à remplacer par de la polyculture et des forêts. L'humanité pourra facilement survivre à la baisse de production alimentaire car c'est le bétail, et non pas les êtres humains, qui sont les principaux consommateurs des produits de la monoculture. Via une agriculture plus saine, nous pouvons augmenter la qualité de notre nourriture, et détoxifier les produits destinés à notre alimentation.
 EOT
 );
 ___('politics_manifesto_solutions_point_37',  'EN', <<<EOT
-<span class="text_red bold glow">37 · Think locally.</span> Reduce the need to transport goods whenever possible. Encourage everyone to learn about agriculture so that they can grow crops locally as communities. Undo excessive concreteization in urban areas in order to give nature some space back in our lives. Promote the organization of local production chains so that every person involved in producing goods lives closely to each other.
+<span class="text_red bold glow_dark">37 · Think locally.</span> Reduce the need to transport goods whenever possible. Encourage everyone to learn about agriculture so that they can grow crops locally as communities. Undo excessive concreteization in urban areas in order to give nature some space back in our lives. Promote the organization of local production chains so that every person involved in producing goods lives closely to each other.
 EOT
 );
 ___('politics_manifesto_solutions_point_37',  'FR', <<<EOT
-<span class="text_red bold glow">37 · Penser localement.</span> Les transports de marchandises doivent être réduits au minimum. Tout le monde doit être encouragé à apprendre les bases de l'agriculture, afin de pouvoir cultiver à l'échelle locale. La débétonisation des zones urbaines est nécessaire afin de rendre de l'espace à la nature. Il faut encourager la production locale afin de rapprocher la consommation de la production.
+<span class="text_red bold glow_dark">37 · Penser localement.</span> Les transports de marchandises doivent être réduits au minimum. Tout le monde doit être encouragé à apprendre les bases de l'agriculture, afin de pouvoir cultiver à l'échelle locale. La débétonisation des zones urbaines est nécessaire afin de rendre de l'espace à la nature. Il faut encourager la production locale afin de rapprocher la consommation de la production.
 EOT
 );
 ___('politics_manifesto_solutions_point_38',  'EN', <<<EOT
-<span class="text_red bold glow">38 · Minimize waste.</span> Recycle as much as possible, have local communities try to achieve zero waste goals. Make manufacturing less wasteful by creating higher quality goods, as including planned obsolescence in manufacturing designs is a deliberate side effect of capitalism that must be reversed.
+<span class="text_red bold glow_dark">38 · Minimize waste.</span> Recycle as much as possible, have local communities try to achieve zero waste goals. Make manufacturing less wasteful by creating higher quality goods, as including planned obsolescence in manufacturing designs is a deliberate side effect of capitalism that must be reversed.
 EOT
 );
 ___('politics_manifesto_solutions_point_38',  'FR', <<<EOT
-<span class="text_red bold glow">38 · Minimiser le gâchis.</span> Pousser les communautés locales à atteindre des objectifs zéro déchet permettra de leur apprendre à recycler et réutiliser. La fabrication de biens de consommation doit se séparer de la doctrine de l'obsolescence planifiée, qui est un effet secondaire du capitalisme.
+<span class="text_red bold glow_dark">38 · Minimiser le gâchis.</span> Pousser les communautés locales à atteindre des objectifs zéro déchet permettra de leur apprendre à recycler et réutiliser. La fabrication de biens de consommation doit se séparer de la doctrine de l'obsolescence planifiée, qui est un effet secondaire du capitalisme.
 EOT
 );
 ___('politics_manifesto_solutions_point_39',  'EN', <<<EOT
-<span class="text_red bold glow">39 · Use renewable resources.</span> Switch all energy production towards renewable sources, and encourage energy production on a local scale. Only use natural resources when they are needed, push science aggressively towards finding alternatives to non renewable resources.
+<span class="text_red bold glow_dark">39 · Use renewable resources.</span> Switch all energy production towards renewable sources, and encourage energy production on a local scale. Only use natural resources when they are needed, push science aggressively towards finding alternatives to non renewable resources.
 EOT
 );
 ___('politics_manifesto_solutions_point_39',  'FR', <<<EOT
-<span class="text_red bold glow">39 · Utiliser des ressources renouvelables.</span> La production d'énergie doit basculer vers des sources renouvelables. Les ressources naturelles ne doivent être utilisées que lorsque c'est nécessaire, et la recherche scientifique doit être poussée agressivement vers la recherche d'alternatives renouvelables.
+<span class="text_red bold glow_dark">39 · Utiliser des ressources renouvelables.</span> La production d'énergie doit basculer vers des sources renouvelables. Les ressources naturelles ne doivent être utilisées que lorsque c'est nécessaire, et la recherche scientifique doit être poussée agressivement vers la recherche d'alternatives renouvelables.
 EOT
 );
 ___('politics_manifesto_solutions_point_40',  'EN', <<<EOT
-<span class="text_red bold glow">40 · Never give up.</span> If you can not find the strength to fight, then do not blame yourself and let others fight for you until you can gather the required strength. Remember that even once the battle is won, the fight is not over: contrapositionism is a transitional ideology, a set of goals that should be accomplished to advance society in a better direction. Once those goals are accomplished, it will be time to move on and create new political theories. Encourage political thinking, and make political theory as accessible as possible to all.
+<span class="text_red bold glow_dark">40 · Never give up.</span> If you can not find the strength to fight, then do not blame yourself and let others fight for you until you can gather the required strength. Remember that even once the battle is won, the fight is not over: contrapositionism is a transitional ideology, a set of goals that should be accomplished to advance society in a better direction. Once those goals are accomplished, it will be time to move on and create new political theories. Encourage political thinking, and make political theory as accessible as possible to all.
 EOT
 );
 ___('politics_manifesto_solutions_point_40',  'FR', <<<EOT
-<span class="text_red bold glow">40 · Ne jamais abandonner.</span> Si vous ne trouvez pas la force de vous battre, ne vous en voulez pas, et laissez les autres se battre à votre place jusqu'à ce que vous trouviez la force requise. N'oubliez pas qu'une fois que la bataille sera gagnée, le combat ne fera que commencer : le contrapositionnisme est une idéologie de transition, une série d'objectifs pour pousser la société dans une meilleure direction. Une fois ces objectifs accomplis, ce sera à vous de créer les nouvelles idéologies du futur. Encouragez l'éducation politique, et rendez la théorie politique aussi accessible et compréhensible que possible.
+<span class="text_red bold glow_dark">40 · Ne jamais abandonner.</span> Si vous ne trouvez pas la force de vous battre, ne vous en voulez pas, et laissez les autres se battre à votre place jusqu'à ce que vous trouviez la force requise. N'oubliez pas qu'une fois que la bataille sera gagnée, le combat ne fera que commencer : le contrapositionnisme est une idéologie de transition, une série d'objectifs pour pousser la société dans une meilleure direction. Une fois ces objectifs accomplis, ce sera à vous de créer les nouvelles idéologies du futur. Encouragez l'éducation politique, et rendez la théorie politique aussi accessible et compréhensible que possible.
 EOT
 );
 
@@ -1283,83 +1283,83 @@ Vous trouverez ci-dessous dix moyens d'atteindre la praxis. À l'instar des 40 p
 EOT
 );
 ___('politics_manifesto_praxis_points_1',   'EN', <<<EOT
-<span class="text_red bold glow">1 · Spread the word.</span> There are many others out there who could harbor revolutionary ideas, but need to be guided in the right direction. Exposing them to the failures of the system, and showing them solutions for a better future is key to releasing them from the trap of neutrality. They must be brought to the realization that political centrism is complicit to the violence of the system, as not rejecting the abuses of the system is seen as tacit approval by the ruling class.
+<span class="text_red bold glow_dark">1 · Spread the word.</span> There are many others out there who could harbor revolutionary ideas, but need to be guided in the right direction. Exposing them to the failures of the system, and showing them solutions for a better future is key to releasing them from the trap of neutrality. They must be brought to the realization that political centrism is complicit to the violence of the system, as not rejecting the abuses of the system is seen as tacit approval by the ruling class.
 EOT
 );
 ___('politics_manifesto_praxis_points_1',   'FR', <<<EOT
-<span class="text_red bold glow">1 · Répandre le message.</span> Une fois éduquées sur les problèmes systémiques, de nombreuses personnes pourraient entretenir des idées révolutionnaires. Il est important de les empêcher de tomber dans le piège de la neutralité, en les exposant aux échecs du système, et en leur montrant qu'il existe des solutions pour un avenir meilleur. Il faut les amener à la réalisation que le centrisme politique est complice de la violence systémique, et que tolérer les abus du système équivaut à une approbation tacite de la classe dominante.
+<span class="text_red bold glow_dark">1 · Répandre le message.</span> Une fois éduquées sur les problèmes systémiques, de nombreuses personnes pourraient entretenir des idées révolutionnaires. Il est important de les empêcher de tomber dans le piège de la neutralité, en les exposant aux échecs du système, et en leur montrant qu'il existe des solutions pour un avenir meilleur. Il faut les amener à la réalisation que le centrisme politique est complice de la violence systémique, et que tolérer les abus du système équivaut à une approbation tacite de la classe dominante.
 EOT
 );
 ___('politics_manifesto_praxis_points_2',   'EN', <<<EOT
-<span class="text_red bold glow">2 · Grow social circles.</span> Growing as a movement requires unity, and organization. This comes through the establishment of politically like-minded social circles. Break away from the conservatives, capitalists, and fascists around you. Join or create new social circles, actively drain them of any toxicity, and build them up as outlets that bring you comfort to help in relieving your mind from the constant systemic violence.
+<span class="text_red bold glow_dark">2 · Grow social circles.</span> Growing as a movement requires unity, and organization. This comes through the establishment of politically like-minded social circles. Break away from the conservatives, capitalists, and fascists around you. Join or create new social circles, actively drain them of any toxicity, and build them up as outlets that bring you comfort to help in relieving your mind from the constant systemic violence.
 EOT
 );
 ___('politics_manifesto_praxis_points_2',   'FR', <<<EOT
-<span class="text_red bold glow">2 · Développer des cercles sociaux.</span> La croissance d'un mouvement requiert de l'unité et de l'organisation. Cela passe par la création et le développement de cercles sociaux dont les membres sont idéologiquement alignés. Séparez-vous des personnes conservatrices, capitalistes, et fascistes qui vous entourent. Rejoignez ou créez des cercles sociaux, drainez-les activement de leur toxicité, et transformez-les en exutoires vous permettant de soulager votre esprit de la violence systémique afin de trouver du confort dans l'unité.
+<span class="text_red bold glow_dark">2 · Développer des cercles sociaux.</span> La croissance d'un mouvement requiert de l'unité et de l'organisation. Cela passe par la création et le développement de cercles sociaux dont les membres sont idéologiquement alignés. Séparez-vous des personnes conservatrices, capitalistes, et fascistes qui vous entourent. Rejoignez ou créez des cercles sociaux, drainez-les activement de leur toxicité, et transformez-les en exutoires vous permettant de soulager votre esprit de la violence systémique afin de trouver du confort dans l'unité.
 EOT
 );
 ___('politics_manifesto_praxis_points_3',   'EN', <<<EOT
-<span class="text_red bold glow">3 · Hold workshops.</span> In these social circles, it is important to take the required time to listen to everyone. Always challenging your own views is necessary. The best way to achieve it is to hold workshops where people talk about their experiences, and others simply listen and learn. Invite people into your circles, listen to what they have to say, and use the experiences of others to grow yourself as a person.
+<span class="text_red bold glow_dark">3 · Hold workshops.</span> In these social circles, it is important to take the required time to listen to everyone. Always challenging your own views is necessary. The best way to achieve it is to hold workshops where people talk about their experiences, and others simply listen and learn. Invite people into your circles, listen to what they have to say, and use the experiences of others to grow yourself as a person.
 EOT
 );
 ___('politics_manifesto_praxis_points_3',   'FR', <<<EOT
-<span class="text_red bold glow">3 · Organiser des ateliers.</span> Dans ces cercles sociaux, il est important de prendre le temps d'écouter les autres. Il faut toujours se donner des opportunités de remettre en question ses préjugés et ses opinions. La meilleure façon de le faire est d'organiser des ateliers où l'on peut parler de ses expériences de vie, tandis que les autres écoutent et apprennent. Invitez de nouvelles personnes dans vos cercles, écoutez-les, et grandissez collectivement et individuellement.
+<span class="text_red bold glow_dark">3 · Organiser des ateliers.</span> Dans ces cercles sociaux, il est important de prendre le temps d'écouter les autres. Il faut toujours se donner des opportunités de remettre en question ses préjugés et ses opinions. La meilleure façon de le faire est d'organiser des ateliers où l'on peut parler de ses expériences de vie, tandis que les autres écoutent et apprennent. Invitez de nouvelles personnes dans vos cercles, écoutez-les, et grandissez collectivement et individuellement.
 EOT
 );
 ___('politics_manifesto_praxis_points_4',   'EN', <<<EOT
-<span class="text_red bold glow">4 · Go vote.</span> It might seem like a lost cause given the unfairness of the institutional electoral system, but every single voice counts when telling capitalism to get bent. Support your local anticapitalist candidates, vote against fascism, make capitalists afraid, and remember that change will come from within.
+<span class="text_red bold glow_dark">4 · Go vote.</span> It might seem like a lost cause given the unfairness of the institutional electoral system, but every single voice counts when telling capitalism to get bent. Support your local anticapitalist candidates, vote against fascism, make capitalists afraid, and remember that change will come from within.
 EOT
 );
 ___('politics_manifesto_praxis_points_4',   'FR', <<<EOT
-<span class="text_red bold glow">4 · Allez voter.</span> Cela peut sembler être une cause perdue vu la nature injuste du système électoral institutionnel, mais chaque voix compte lorsqu'il s'agit de dire au capitalisme d'aller se faire voir. Soutenez vos partis anticapitalistes locaux, votez contre le fascisme, faites peur aux capitalistes, et n'oubliez pas que le changement viendra de l'intérieur.
+<span class="text_red bold glow_dark">4 · Allez voter.</span> Cela peut sembler être une cause perdue vu la nature injuste du système électoral institutionnel, mais chaque voix compte lorsqu'il s'agit de dire au capitalisme d'aller se faire voir. Soutenez vos partis anticapitalistes locaux, votez contre le fascisme, faites peur aux capitalistes, et n'oubliez pas que le changement viendra de l'intérieur.
 EOT
 );
 ___('politics_manifesto_praxis_points_5',   'EN', <<<EOT
-<span class="text_red bold glow">5 · Unionize.</span> Capitalists are deathly afraid of any loss of productivity. Unions threaten their livelihood. Strikes weaken them. It might not always be safe to do so, but if you are a member of the capitalist workforce, then unionizing is your most efficient method of direct action.
+<span class="text_red bold glow_dark">5 · Unionize.</span> Capitalists are deathly afraid of any loss of productivity. Unions threaten their livelihood. Strikes weaken them. It might not always be safe to do so, but if you are a member of the capitalist workforce, then unionizing is your most efficient method of direct action.
 EOT
 );
 ___('politics_manifesto_praxis_points_5',   'FR', <<<EOT
-<span class="text_red bold glow">5 · Se syndiquer.</span> Les capitalistes sont mortellement terrifiés à l'idée de perdre en productivité. Les syndicats mettent à mal leur capacité à exploiter leurs employés. Il peut y avoir une part de risque à se syndiquer selon votre situation, mais si vous êtes membre de la main d'œuvre capitaliste, se syndiquer est la méthode d'action directe la plus efficace qui soit.
+<span class="text_red bold glow_dark">5 · Se syndiquer.</span> Les capitalistes sont mortellement terrifiés à l'idée de perdre en productivité. Les syndicats mettent à mal leur capacité à exploiter leurs employés. Il peut y avoir une part de risque à se syndiquer selon votre situation, mais si vous êtes membre de la main d'œuvre capitaliste, se syndiquer est la méthode d'action directe la plus efficace qui soit.
 EOT
 );
 ___('politics_manifesto_praxis_points_6',   'EN', <<<EOT
-<span class="text_red bold glow">6 · Show yourself.</span> Capitalism turned politics into a show of public image. To grow a movement, it must grow not only in size and reach but also in visibility. Everything from flyers to posters to demonstrations is helpful, especially if they catch the eye and send a clear message. Become a part of public culture. Become art, become memes, make yourselves a known element of the public discourse.
+<span class="text_red bold glow_dark">6 · Show yourself.</span> Capitalism turned politics into a show of public image. To grow a movement, it must grow not only in size and reach but also in visibility. Everything from flyers to posters to demonstrations is helpful, especially if they catch the eye and send a clear message. Become a part of public culture. Become art, become memes, make yourselves a known element of the public discourse.
 EOT
 );
 ___('politics_manifesto_praxis_points_6',   'FR', <<<EOT
-<span class="text_red bold glow">6 · Se donner de la visibilité.</span> Le capitalisme a transformé la politique en un cirque de l'image publique. Pour qu'un mouvement grandisse, il doit gagner non seulement en taille et en portée, mais également en visibilité. Tout est utile, des prospectus aux affiches aux manifestations, particulièrement les contenus pensés pour happer l'attention et envoyer un message clair. Devenez un élément de la culture populaire. Soyez l'art, soyez les memes, soyez la contreculture, faites vous voir sur la scène politique.
+<span class="text_red bold glow_dark">6 · Se donner de la visibilité.</span> Le capitalisme a transformé la politique en un cirque de l'image publique. Pour qu'un mouvement grandisse, il doit gagner non seulement en taille et en portée, mais également en visibilité. Tout est utile, des prospectus aux affiches aux manifestations, particulièrement les contenus pensés pour happer l'attention et envoyer un message clair. Devenez un élément de la culture populaire. Soyez l'art, soyez les memes, soyez la contreculture, faites vous voir sur la scène politique.
 EOT
 );
 ___('politics_manifesto_praxis_points_7',   'EN', <<<EOT
-<span class="text_red bold glow">7 · Share knowledge.</span> Make use of modern technology to share as much knowledge and as many tools as possible with each other. Ensure that anything you create is protected by permissive intellectual property licenses, so that it can not be appropriated by capitalists, but can still be shared and used freely without any limitations. Become the bearers and sharers of collective knowledge, prevent disinformation and propaganda from defining the future.
+<span class="text_red bold glow_dark">7 · Share knowledge.</span> Make use of modern technology to share as much knowledge and as many tools as possible with each other. Ensure that anything you create is protected by permissive intellectual property licenses, so that it can not be appropriated by capitalists, but can still be shared and used freely without any limitations. Become the bearers and sharers of collective knowledge, prevent disinformation and propaganda from defining the future.
 EOT
 );
 ___('politics_manifesto_praxis_points_7',   'FR', <<<EOT
-<span class="text_red bold glow">7 · Partager le savoir.</span> La technologie moderne doit être mise à profit afin de partager collectivement autant de connaissances que possible. Assurez-vous que tout contenu que vous partagez soit protégé par une licence permissive, afin d'empêcher son appropriation pour le profit par les capitalistes, mais d'en permettre le partage et l'utilisation libre et sans limite. L'avenir est une lutte contre la désinformation et la propagande qui se construit via l'accumulation et le partage du savoir collectif.
+<span class="text_red bold glow_dark">7 · Partager le savoir.</span> La technologie moderne doit être mise à profit afin de partager collectivement autant de connaissances que possible. Assurez-vous que tout contenu que vous partagez soit protégé par une licence permissive, afin d'empêcher son appropriation pour le profit par les capitalistes, mais d'en permettre le partage et l'utilisation libre et sans limite. L'avenir est une lutte contre la désinformation et la propagande qui se construit via l'accumulation et le partage du savoir collectif.
 EOT
 );
 ___('politics_manifesto_praxis_points_8',   'EN', <<<EOT
-<span class="text_red bold glow">8 · Document systemic violence.</span> Helping others understand just how violent the system is requires facts, sources, comprehensive documentation. It is the duty of those who oppose the system to not let those events of systemic violence idly go by one by one, but rather to centralize lists showing just how widespread it is.
+<span class="text_red bold glow_dark">8 · Document systemic violence.</span> Helping others understand just how violent the system is requires facts, sources, comprehensive documentation. It is the duty of those who oppose the system to not let those events of systemic violence idly go by one by one, but rather to centralize lists showing just how widespread it is.
 EOT
 );
 ___('politics_manifesto_praxis_points_8',   'FR', <<<EOT
-<span class="text_red bold glow">8 · Documenter la violence systémique.</span> Aider les autres à réaliser à quel point le système est violent requiert des faits, des sources, de la documentation. Plutôt que de passivement laisser les cas de violence systémique avoir lieu un par un, il faut les documenter, les regrouper, exhiber la réalité au reste du monde.
+<span class="text_red bold glow_dark">8 · Documenter la violence systémique.</span> Aider les autres à réaliser à quel point le système est violent requiert des faits, des sources, de la documentation. Plutôt que de passivement laisser les cas de violence systémique avoir lieu un par un, il faut les documenter, les regrouper, exhiber la réalité au reste du monde.
 EOT
 );
 ___('politics_manifesto_praxis_points_9',   'EN', <<<EOT
-<span class="text_red bold glow">9 · Use your privilege.</span> For those who are lucky enough to have some privileges, it is important that you make use of them. In capitalism, the underprivileged can only rely on the privileged to relieve them from the oppression of the system. However, do not do it seeking glory. Getting credit for actions that you are able to do solely because the system allows you to do them should be cause for selflessness, not for personal validation.
+<span class="text_red bold glow_dark">9 · Use your privilege.</span> For those who are lucky enough to have some privileges, it is important that you make use of them. In capitalism, the underprivileged can only rely on the privileged to relieve them from the oppression of the system. However, do not do it seeking glory. Getting credit for actions that you are able to do solely because the system allows you to do them should be cause for selflessness, not for personal validation.
 EOT
 );
 ___('politics_manifesto_praxis_points_9',   'FR', <<<EOT
-<span class="text_red bold glow">9 · Utiliser ses privilèges.</span> Si vous avez la chance d'avoir des privilèges, il est important de les utiliser. Dans le système capitaliste, les classes défavorisées ont besoin d'assistance pour les tirer vers le haut. Cependant, ne le faites pas en quête de gloire. Il n'y a aucun mérite à accomplir des actions uniquement parce que vous en avez les moyens, il faut apprendre à agir par altruisme.
+<span class="text_red bold glow_dark">9 · Utiliser ses privilèges.</span> Si vous avez la chance d'avoir des privilèges, il est important de les utiliser. Dans le système capitaliste, les classes défavorisées ont besoin d'assistance pour les tirer vers le haut. Cependant, ne le faites pas en quête de gloire. Il n'y a aucun mérite à accomplir des actions uniquement parce que vous en avez les moyens, il faut apprendre à agir par altruisme.
 EOT
 );
 ___('politics_manifesto_praxis_points_10',  'EN', <<<EOT
-<span class="text_red bold glow">10 · Fight fascism.</span> Capitalism harbors fascism and breeds it, using it as a tool to scare the masses. Sometimes, their creation gets out of their control, and needs to be kept in check. Even though pacifism is an important virtue when trying to rally the masses to your cause, the oppression of fascism justifies resistance.
+<span class="text_red bold glow_dark">10 · Fight fascism.</span> Capitalism harbors fascism and breeds it, using it as a tool to scare the masses. Sometimes, their creation gets out of their control, and needs to be kept in check. Even though pacifism is an important virtue when trying to rally the masses to your cause, the oppression of fascism justifies resistance.
 EOT
 );
 ___('politics_manifesto_praxis_points_10',  'FR', <<<EOT
-<span class="text_red bold glow">10 · Combattre le fascisme.</span> Le capitalisme engendre le fascisme, l'utilisant comme un outil pour effrayer les masses. Parfois, il perd le contrôle de sa création. Dans ces situations, le devoir de la lutte contre le fascisme est collectif, même si cela signifie se battre aux côtés de la classe capitaliste. Le pacifisme est une vertu qui doit être encouragée, mais l'oppression du fascisme justifie la résistance.
+<span class="text_red bold glow_dark">10 · Combattre le fascisme.</span> Le capitalisme engendre le fascisme, l'utilisant comme un outil pour effrayer les masses. Parfois, il perd le contrôle de sa création. Dans ces situations, le devoir de la lutte contre le fascisme est collectif, même si cela signifie se battre aux côtés de la classe capitaliste. Le pacifisme est une vertu qui doit être encouragée, mais l'oppression du fascisme justifie la résistance.
 EOT
 );
 
@@ -1527,11 +1527,11 @@ Préfixer la racine contra- permet d'associer des mots au mouvement, comme par e
 EOT
 );
 ___('politics_faq_branding_3',      'EN', <<<EOT
-The symbol of the movement is a N within a circle. Obviously inspired by the anarchist circle-A symbol, it adds its own twist of making it about rejection of the system, by containing the word NO. Associated colors are black and red, but more specifically the visually pleasing and amusingly named <span class="text_red bold">#B00B1E</span> (RGB 176, 11, 30) instead of the traditional pure red of other anticapitalist movements. In order to catch the eye and fit with retro-modern æsthetics, a good dose of <span class="text_red bold glow">neon glow</span> can be applied.
+The symbol of the movement is a N within a circle. Obviously inspired by the anarchist circle-A symbol, it adds its own twist of making it about rejection of the system, by containing the word NO. Associated colors are black and red, but more specifically the visually pleasing and amusingly named <span class="text_red bold">#B00B1E</span> (RGB 176, 11, 30) instead of the traditional pure red of other anticapitalist movements. In order to catch the eye and fit with retro-modern æsthetics, a good dose of <span class="text_red bold glow_dark">neon glow</span> can be applied.
 EOT
 );
 ___('politics_faq_branding_3',      'FR', <<<EOT
-Le symbole du mouvement est un N à l'intérieur d'un cercle. Bien entendu inspiré par le symbole A-cerclé de l'anarchisme, il y ajoute sa propre touche en contenant le mot NON, illustrant son rejet total du système capitaliste et de ce qui l'entoure. Les couleurs associées sont le noir et le rouge, mais plus spécifiquement le rouge <span class="text_red bold">#B00B1E</span> (RGB 176, 11, 30), au nom amusant et qui est plus agréable pour les yeux que le traditionnel rouge vif des autres mouvements anticapitalistes. Afin de happer l'attention et de se donner une esthétique rétro-moderne, une bonne dose de <span class="text_red bold glow">néon rouge</span> peut être ajoutée.
+Le symbole du mouvement est un N à l'intérieur d'un cercle. Bien entendu inspiré par le symbole A-cerclé de l'anarchisme, il y ajoute sa propre touche en contenant le mot NON, illustrant son rejet total du système capitaliste et de ce qui l'entoure. Les couleurs associées sont le noir et le rouge, mais plus spécifiquement le rouge <span class="text_red bold">#B00B1E</span> (RGB 176, 11, 30), au nom amusant et qui est plus agréable pour les yeux que le traditionnel rouge vif des autres mouvements anticapitalistes. Afin de happer l'attention et de se donner une esthétique rétro-moderne, une bonne dose de <span class="text_red bold glow_dark">néon rouge</span> peut être ajoutée.
 EOT
 );
 ___('politics_faq_branding_4',      'EN', <<<EOT

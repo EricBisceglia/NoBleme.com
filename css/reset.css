@@ -60,6 +60,7 @@ h5                      { font-size: 1.5rem;                                    
 h6                      { font-size: 1.0rem;                                                                        } }
 a                       { color: #CACACA; text-decoration: none; filter: drop-shadow(0 0 3px #B00B1E);                }
 a:focus, a:hover        { color: #B00B1E;                                                                             }
+h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a { color: #B00B1E;                                                      }
 label, legend           { display: block; font-weight: bold; margin-bottom: 0.5rem; margin-left: 2.0px                ;
                           letter-spacing: 0.05rem;                                                                    }
 img                     { max-width: 100%;                                                                            }

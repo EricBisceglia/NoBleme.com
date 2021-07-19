@@ -1,0 +1,94 @@
+/********************************************** RESET / COMMON ELEMENTS **********************************************/
+body                    { background-color: #FFFFFF; color: #121212;                            }
+h1, h2, h3, h4, h5, h6  { color: #121212;                                                       }
+a                       { color: #37536B; text-decoration: none; filter: none;                  }
+a:focus, a:hover        { color: #78A1BC;                                                       }
+h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a { color: #121212;                                }
+table                   { background-color: #FFFFFF;                                            }
+tbody > tr              { border-top: 1px solid #EEEEEE;                                        }
+tbody > tr:hover        { background-color: #EEEEEE;                                            }
+hr                      { background-color: #EEEEEE;                                            }
+blockquote              { background-color: #EEEEEE; border-left: 0.3rem solid #B00B1E;         }
+pre                     { background-color: #EEEEEE; border-left: 0.3rem solid #B00B1E;         }
+textarea                { background-color: #EEEEEE; color: #121212;                            }
+input, select, button   { color: #121212; background-color: #EEEEEE; border: 1px solid #CACACA; }
+input[disabled], button[disabled] { background-color: #EEEEEE;                                  }
+select:hover, input[type='text']:hover:not([disabled]):not(:focus)                                                    ,
+input[type='password']:hover:not([disabled]):not(:focus), input[type='reset']:hover:not([disabled]):not(:focus)       ,
+input[type='submit']:hover:not([disabled]):not(:focus), button:hover:not([disabled]):not(:focus)                      {
+                          border-color: #121212; background-color: #EEEEEE;                                           }
+input[type='text']:focus, input[type='password']:focus, input[type='reset']:focus, input[type='submit']:focus         ,
+button:focus, select:focus { border-color: #EEEEEE; background-color: #EEEEEE;                                        }
+input:not([type])       { background-color: #EEEEEE;                                                                  }
+
+/****************************************************** HEADER *******************************************************/
+.header_topmenu                 { background-color: #EEEEEE;                                                    }
+.header_topmenu_title           { color: #121212; background-color: #EEEEEE;                                    }
+.header_topmenu_title:hover     { color: #B00B1E; background-color: #121212;                                    }
+.header_topmenu_title_selected  { color: #B00B1E; background-color: #121212;                                    }
+.header_infobar                 { background-color: #EEEEEE; border-bottom: 3px solid #121212;                  }
+.header_infobar_link            { color: #37536B;                                                               }
+.header_infobar_link:hover      { color: #78A1BC;                                                               }
+.header_submenu                 { background-color: #FFFFFF; color: #37536B; border-bottom: 2px solid #CACACA;  }
+.header_submenu_title           { color: #121212;                                                               }
+.header_submenu_link            { color: #37536B;                                                               }
+.header_submenu_link:hover      { filter: none; color: #78A1BC;                                                 }
+footer                          { color: #999999; filter: none;                                                 }
+
+/****************************************************** COLORS *******************************************************/
+.dark               { background-color: #CACACA !important; } .text_dark               { color: #CACACA !important; }
+.black              { background-color: #FFFFFF !important; } .text_black              { color: #FFFFFF !important; }
+.white              { background-color: #000000 !important; } .text_white              { color: #000000 !important; }
+.light              { background-color: #121212 !important; } .text_light              { color: #121212 !important; }
+.dark_hover:hover   { background-color: #EEEEEE !important; } .text_dark_hover:hover   { color: #CACACA !important; }
+.black_hover:hover  { background-color: #FFFFFF !important; } .text_black_hover:hover  { color: #FFFFFF !important; }
+.white_hover:hover  { background-color: #000000 !important; } .text_white_hover:hover  { color: #000000 !important; }
+.light_hover:hover  { background-color: #121212 !important; } .text_light_hover:hover  { color: #121212 !important; }
+
+/***************************************************** TOOLTIPS ******************************************************/
+.tooltip_container:hover .tooltip { color: #121212; background-color: #FFFFFF ; border-radius: 5px  ;
+  border: 1px solid #CACACA; box-shadow: 2px 2px 2px #CACACA;     }
+
+/****************************************************** POPINS *******************************************************/
+div.popin_body { background: #FFFFFF; }
+
+/****************************************************** BBCODES ******************************************************/
+.bbcode_quote_title   { border-bottom: 1px solid #121212;                     }
+.bbcode_quote_body    { background-color: #EEEEEE; border: 1px solid #121212; }
+.bbcode_spoiler_title { border-bottom: 1px solid #121212;                     }
+.bbcode_spoiler_body  { background-color: #EEEEEE; border: 1px solid #121212; }
+
+/**************************************************** NOBLEME.CSS ****************************************************/
+.blur       { text-shadow: 0 0 10px #121212; }
+.blur:hover { color: #121212;                }
+
+.glow_dark { filter: none; }
+
+
+select.intext, input.intext             { background-color: #FFFFFF; border: 2px solid #EEEEEE; color: #121212; }
+select.intext:hover, input.intext:hover, input.intext[type='text']:hover:not([disabled]):not(:focus),
+input.intext:focus, select.intext:focus { border-color: #CACACA; background-color: #FFFFFF;                     }
+select.inh, input.inh                   { background-color: #FFFFFF; border: 2px solid #EEEEEE; color: #121212; }
+select.inh:hover, input.inh:hover, input.inh[type='text']:hover:not([disabled]):not(:focus),
+input.inh:focus, select.inh:focus       { border-color: #CACACA; background-color: #FFFFFF;                     }
+
+tbody.altc tr:nth-child(odd)         { background-color: #EEEEEE; }
+tbody.altc tr:nth-child(odd):hover   { background-color: #CACACA; }
+tbody.altc2 tr:nth-child(even)       { background-color: #EEEEEE; }
+tbody.altc2 tr:nth-child(even):hover { background-color: #CACACA; }
+
+tbody.doublealtc tr:nth-child(4n-2), tbody.doublealtc tr:nth-child(4n-3)   { background-color: #EEEEEE; }
+tbody.doublealtc tr:nth-child(4n-3):hover                                  { background-color: #CACACA; }
+tbody.doublealtc tr:nth-child(4n):hover                                    { background-color: #CACACA; }
+tbody.doublealtc2 tr:nth-child(4n-1), tbody.doublealtc2 tr:nth-child(4n-2) { background-color: #EEEEEE; }
+tbody.doublealtc2 tr:nth-child(4n-2):hover                                 { background-color: #CACACA; }
+tbody.doublealtc2 tr:nth-child(4n-3):hover                                 { background-color: #CACACA; }
+
+tr.row_separator_dark      { border-bottom: 1.0rem solid #CACACA; }
+tr.row_separator_dark_thin { border-bottom: 0.7rem solid #CACACA; }
+
+select.table_search, input.table_search { background-color: #EEEEEE; }
+select.table_search:hover, input.table_search:hover, input.table_search[type='text']:hover:not([disabled]):not(:focus)
+                                        { background-color: #FFFFFF; }
+
+blockquote.nobackground { background-color: #FFFFFF; }

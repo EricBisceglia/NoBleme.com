@@ -73,7 +73,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1>
-    <?=__link('pages/meetups/list', __('meetups_new_title'), 'noglow text_red')?>
+    <?=__link('pages/meetups/list', __('meetups_new_title'), 'noglow')?>
   </h1>
 
   <p class="padding_bot">

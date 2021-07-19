@@ -49,7 +49,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1>
-    <?=__link("pages/quotes/list", __('submenu_social_quotes'), 'text_red noglow')?>
+    <?=__link("pages/quotes/list", __('submenu_social_quotes'), 'noglow')?>
   </h1>
 
   <h5>

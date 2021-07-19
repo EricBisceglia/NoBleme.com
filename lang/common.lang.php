@@ -234,8 +234,9 @@ function __icon(  string  $icon                                   ,
   $onclick = ($onclick) ? 'onclick="'.$onclick.'"' : '';
 
   // Prepare the image path
-  $icon = ($is_small) ? $icon.'_small.svg' : $icon.'.svg';
-  $src  = 'src="'.$path.'img/icons/'.$icon.'"';
+  $icon = ($is_small) ? $icon.'_small' : $icon;
+  $icon = (user_get_mode() == 'light') ? $icon.'_dark' : $icon;
+  $src  = 'src="'.$path.'img/icons/'.$icon.'.svg"';
 
   // Prepare the alt text and title
   $alt = 'alt="'.$alt.'"';
@@ -358,6 +359,10 @@ ___('maximize',   'EN', "maximize");
 ___('maximize',   'FR', "agrandir");
 ___('minimize',   'EN', "minimize");
 ___('minimize',   'FR', "réduire");
+___('mode_dark',  'EN', "dark mode");
+___('mode_dark',  'FR', "mode sombre");
+___('mode_light', 'EN', "light mode");
+___('mode_light', 'FR', "mode clair");
 ___('modify',     'EN', "modify");
 ___('modify',     'FR', "modifier");
 ___('more',       'EN', "more");
@@ -635,7 +640,7 @@ ___('error_website_update', 'EN', <<<EOT
   </head>
   <body style="background: #121212; color: #B00B1E; font-size: 2.5em; font-weight: bold;">
     <div style="text-align: center; width: 60%; margin: auto; padding-top: 3.0em;">
-      <img style="width: 100%; max-width: 750px; filter: drop-shadow(0 0 10px #B00B1E);" src="./../../img/common/logo_full.png" alt="NoBleme.com">
+      <img style="width: 100%; max-width: 750px; filter: drop-shadow(0 0 10px #B00B1E);" src="./img/common/logo_full.png" alt="NoBleme.com">
     </div>
     <div style="font-family: sans-serif; text-align: center; padding-top: 5.0em;">
       A maintenance operation is in progress.<br>
@@ -653,7 +658,7 @@ ___('error_website_update', 'FR', <<<EOT
   </head>
   <body style="background: #121212; color: #B00B1E; font-size: 2.5em; font-weight: bold;">
     <div style="text-align: center; width: 60%; margin: auto; padding-top: 3.0em;">
-      <img style="width: 100%; max-width: 750px; filter: drop-shadow(0 0 10px #B00B1E);" src="./../../img/common/logo_full.png" alt="NoBleme.com">
+      <img style="width: 100%; max-width: 750px; filter: drop-shadow(0 0 10px #B00B1E);" src="./img/common/logo_full.png" alt="NoBleme.com">
     </div>
     <div style="font-family: sans-serif; text-align: center; padding-top: 5.0em;">
       Une opération de maintenance est en cours.<br>
