@@ -35,16 +35,6 @@ input:not([type])       { background-color: #EEEEEE;                            
 .header_submenu_link:hover      { filter: none; color: #78A1BC;                                                 }
 footer                          { color: #999999; filter: none;                                                 }
 
-/****************************************************** COLORS *******************************************************/
-.dark               { background-color: #CACACA !important; } .text_dark               { color: #CACACA !important; }
-.black              { background-color: #FFFFFF !important; } .text_black              { color: #FFFFFF !important; }
-.white              { background-color: #000000 !important; } .text_white              { color: #000000 !important; }
-.light              { background-color: #121212 !important; } .text_light              { color: #121212 !important; }
-.dark_hover:hover   { background-color: #EEEEEE !important; } .text_dark_hover:hover   { color: #CACACA !important; }
-.black_hover:hover  { background-color: #FFFFFF !important; } .text_black_hover:hover  { color: #FFFFFF !important; }
-.white_hover:hover  { background-color: #000000 !important; } .text_white_hover:hover  { color: #000000 !important; }
-.light_hover:hover  { background-color: #121212 !important; } .text_light_hover:hover  { color: #121212 !important; }
-
 /***************************************************** TOOLTIPS ******************************************************/
 .tooltip_container:hover .tooltip { color: #121212; background-color: #FFFFFF ; border-radius: 5px  ;
   border: 1px solid #CACACA; box-shadow: 2px 2px 2px #CACACA;     }

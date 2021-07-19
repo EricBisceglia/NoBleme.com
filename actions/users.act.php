@@ -355,6 +355,9 @@ function user_list( string  $sort_by          = ''      ,
   // Run the query
   $qusers = query($qusers);
 
+  // Fetch the user's display mode
+  $mode = user_get_mode();
+
   // Go through the rows returned by query
   for($i = 0; $row = mysqli_fetch_array($qusers); $i++)
   {
@@ -404,8 +407,8 @@ function user_list( string  $sort_by          = ''      ,
       $temp                 = ($row['u_activity']) ?: $row['u_created'];
       $temp                 = ($temp > $active_limit) ? 'bold green text_white' : '';
       $temp                 = ($row['u_ban_end']) ? 'bold brown text_white' : $temp;
-      $temp                 = ($row['u_mod']) ? 'bold orange text_white' : $temp;
-      $temp                 = ($row['u_admin']) ? 'bold red text_white' : $temp;
+      $temp                 = ($row['u_mod']) ? 'bold orange text_white'  : $temp;
+      $temp                 = ($row['u_admin']) ? 'bold red text_white'  : $temp;
     }
     $data[$i]['css']        = $temp;
   }

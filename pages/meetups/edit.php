@@ -104,7 +104,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1 class="padding_bot">
-    <?=__link('pages/meetups/'.$meetup_id, __('meetups_edit_title'), 'noglow text_red')?>
+    <?=__link('pages/meetups/'.$meetup_id, __('meetups_edit_title'), 'noglow')?>
   </h1>
 
   <form method="POST">

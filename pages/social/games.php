@@ -40,26 +40,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('nobleme_gaming_body_3')?>
   </p>
 
-  <h5 class="bigpadding_top">
-    <?=__('nobleme_gaming_minecraft_title')?>
-  </h5>
-
-  <p>
-    <?=__('nobleme_gaming_minecraft_body_1')?>
-  </p>
-
-  <p>
-    <?=__('nobleme_gaming_minecraft_body_2')?>
-  </p>
-
-  <p>
-    <?=__('nobleme_gaming_minecraft_body_3')?>
-  </p>
-
-  <p>
-    <?=__('nobleme_gaming_minecraft_body_4')?>
-  </p>
-
 </div>
 
 <?php /***************************************************************************************************************/

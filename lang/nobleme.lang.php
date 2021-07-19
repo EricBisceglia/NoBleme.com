@@ -635,43 +635,6 @@ EOT
 );
 
 
-// Minecraft server
-___('nobleme_gaming_minecraft_title',   'EN', "NoBleme's Minecraft server");
-___('nobleme_gaming_minecraft_title',   'FR', "Serveur Minecraft NoBleme");
-___('nobleme_gaming_minecraft_body_1',  'EN', <<<EOT
-The only game for which we currently do more than just occasional gaming sessions is our {{external|https://en.wikipedia.org/wiki/Minecraft|Minecraft}} server. Every time a new major Minecraft update is released (usually once every year), we reset our server, destroying the previous world in the process, and start anew. This leads to NoBleme's Minecraft server seeing heavy traffic during the first days/weeks following a new update, then slowly fading away to zero activity for a rest period that lasts months until the next major game update.
-EOT
-);
-___('nobleme_gaming_minecraft_body_1',  'FR', <<<EOT
-Le seul jeu vidéo pour lequel nous organisons plus que des sessions de jeu ponctuelles est notre serveur {{external|https://fr.wikipedia.org/wiki/Minecraft|Minecraft}}. Chaque fois qu'une mise à jour majeure de Minecraft est publiée (généralement une fois par an), nous créons un nouveau monde pour l'occasion, détruisant à jamais le monde précédent. L'attrait d'un nouveau monde vierge fait que le serveur Minecraft NoBleme est fortement fréquenté dans les jours et semaines suivant les mises à jour majeures du jeu, mais n'est presque pas utilisé le reste du temps.
-EOT
-);
-___('nobleme_gaming_minecraft_body_2',  'EN', <<<EOT
-We play on the "Bedrock" version of Minecraft, which means that there are several limitations: NoBleme's server can only have up to 11 people connected at the same time, and you can not join the server with the Java edition of the game. The upside of the Bedrock version is that it is available on many different computer operating systems, game consoles, and mobile devices.
-EOT
-);
-___('nobleme_gaming_minecraft_body_2',  'FR', <<<EOT
-Nous jouons à la version « Bedrock » de Minecraft, ce qui nous impose certaines limites : il ne peut pas y avoir plus de 11 personnes connectées simultanément au serveur Minecraft de NoBleme, et vous ne pouvez pas rejoindre ce serveur avec la version Java de Minecraft. Le choix de Bedrock est lié à sa portabilité : vous pouvez y jouer depuis la plupart des ordinateurs, consoles de jeu, et même appareils mobiles.
-EOT
-);
-___('nobleme_gaming_minecraft_body_3',  'EN', <<<EOT
-When joining NoBleme's Minecraft server, you will be considered a guest, preventing you from interacting with the world (you can walk and look around but can't interact with or build anything). This is a safety measure we had to implement in order to limit griefing. If you want to participate in NoBleme's Minecraft world, ask on {{link|pages/social/irc|IRC}} or {{link|pages/social/discord|Discord}} and full building rights should be granted to you.
-EOT
-);
-___('nobleme_gaming_minecraft_body_3',  'FR', <<<EOT
-Lorsque vous rejoignez le serveur Minecraft NoBleme, vous aurez le statut « invité », qui vous empêche d'interagir avec le monde (vous pouvez vous y balader, mais impossible d'y construire). Nous avons du mettre ce système en place pour gérer des intrus au comportement destructif. Si vous voulez participer au serveur Minecraft de NoBleme, demandez sur {{link|pages/social/irc|IRC}} ou {{link|pages/social/discord|Discord}}, et les droits d'y construire vous seront donnés.
-EOT
-);
-___('nobleme_gaming_minecraft_body_4',  'EN', <<<EOT
-NoBleme's Minecraft server can be accessed at any time through this link: {{external|https://realms.gg/COrD5pWobqo|NoBleme Minecraft server}}.
-EOT
-);
-___('nobleme_gaming_minecraft_body_4',  'FR', <<<EOT
-Le serveur Minecraft NoBleme peut être rejoint à tout moment via ce lien : {{external|https://realms.gg/COrD5pWobqo|Serveur Minecraft NoBleme}}.
-EOT
-);
-
-
 
 
 /*********************************************************************************************************************/

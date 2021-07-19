@@ -44,9 +44,10 @@ function log_activity_parse(  bool    $admins_only        ,
                               int     $amount       = 0   ) : array
 {
   //*****************************************************************************************************************//
-  // Fetch the path to the website's root
+  // Fetch the path to the website's root and the user's display mode
 
   $path = root_path();
+  $mode = user_get_mode();
 
 
   //*****************************************************************************************************************//
@@ -55,7 +56,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   if($type === 'dev_version')
   {
-    $return['css']  = 'bold green';
+    $return['css']  = ($mode == 'dark') ? 'bold green' : 'bold green text_white';
     $return['href'] = $path.'todo_link';
     $return['EN']   = "New version of the website: ".$title_en;
     $return['FR']   = "Nouvelle version du site : ".$title_fr;
@@ -63,7 +64,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'dev_blog')
   {
-    $return['css']  = 'brown bold';
+    $return['css']  = ($mode == 'dark') ? 'brown bold' : 'light bold';
     $return['href'] = $path.'todo_link?id='.$id;
     $return['EN']   = ($title_en) ? "New devblog published: ".$title_en : '';
     $return['FR']   = ($title_fr) ? "Nouveau devblog publié : ".$title_fr : '';
@@ -109,7 +110,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'users_admin_edit_profile')
   {
-    $return['css']  = 'orange bold';
+    $return['css']  = ($mode == 'dark') ? 'orange bold' : 'orange bold text_white';
     $return['href'] = $path.'pages/users/'.$userid;
     $return['EN']   = $mod_username.' edited '.$username."'s public profile";
     $return['FR']   = $mod_username.' a modifié le profil public de '.$username;
@@ -117,7 +118,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'users_banned' && !$admins_only)
   {
-    $return['css']  = 'red bold';
+    $return['css']  = ($mode == 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/users/'.$userid;
     $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
@@ -128,7 +129,7 @@ function log_activity_parse(  bool    $admins_only        ,
   }
   else if($type == 'users_banned')
   {
-    $return['css']  = 'red bold';
+    $return['css']  = ($mode == 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/admin/ban';
     $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
@@ -140,7 +141,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'users_banned_edit' && !$admins_only)
   {
-    $return['css']  = 'red bold';
+    $return['css']  = ($mode == 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/users/'.$userid;
     $temp           = array(0 => '', 1 => 'ending a day from now', 7 => 'ending a week from now', 30 => 'ending a month from now', '365' => 'ending a year from now', '3650' => 'a permanent ban');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
@@ -151,7 +152,7 @@ function log_activity_parse(  bool    $admins_only        ,
   }
   else if($type == 'users_banned_edit')
   {
-    $return['css']  = 'red bold';
+    $return['css']  = ($mode == 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/admin/ban';
     $temp           = array(0 => '', 1 => 'to ending a day from now', 7 => 'to ending a week from now', 30 => 'to ending a month from now', '365' => 'to ending a year from now', '3650' => 'to a permanent ban');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
@@ -163,7 +164,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type == 'users_banned_delete')
   {
-    $return['css']  = 'red bold';
+    $return['css']  = ($mode == 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/admin/ban';
     $temp           = ($title_en) ? ' ('.$title_en.')' : '';
     $return['EN']   = $mod_username.' unbanned '.$username.$temp;
@@ -180,7 +181,7 @@ function log_activity_parse(  bool    $admins_only        ,
   }
   else if($type == 'users_unbanned')
   {
-    $return['css']  = 'red bold';
+    $return['css']  = ($mode == 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/admin/ban';
     $return['EN']   = $mod_username.' has unbanned '.$username;
     $return['FR']   = $mod_username.' a débanni '.$username;
@@ -188,7 +189,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type == 'users_banned_ip')
   {
-    $return['css']  = 'red bold';
+    $return['css']  = ($mode == 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/admin/ban';
     $temp           = array(0 => '', 1 => 'for a day', 7 => 'for a week', 30 => 'for a month', '365' => 'for a year', '3650' => 'permanently');
     $temp2          = ($title_en) ? ' ('.$title_en.')' : '';
@@ -200,7 +201,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type == 'users_banned_ip_delete')
   {
-    $return['css']  = 'red bold';
+    $return['css']  = ($mode == 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/admin/ban';
     $return['EN']   = $mod_username.' unbanned the IP address '.$username;
     $return['FR']   = $mod_username.' a débanni l\'adresse IP '.$username;
@@ -231,14 +232,14 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'users_rights_moderator' && !$admins_only)
   {
-    $return['css']  = 'orange bold';
+    $return['css']  = ($mode == 'dark') ? 'orange bold' : 'orange bold text_white';
     $return['href'] = $path.'pages/users/admins';
     $return['EN']   = $username." has joined the administrative team as a moderator";
     $return['FR']   = $username." a rejoint l'équipe de modération de NoBleme";
   }
   else if($type === 'users_rights_moderator')
   {
-    $return['css']  = 'orange bold';
+    $return['css']  = ($mode == 'dark') ? 'orange bold' : 'orange bold text_white';
     $return['href'] = $path.'pages/users/admins';
     $return['EN']   = $mod_username." has promoted ".$username." as a moderator";
     $return['FR']   = $mod_username." a promu ".$username." au sein de l'équipe de modération";
@@ -246,14 +247,14 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'users_rights_administrator' && !$admins_only)
   {
-    $return['css']  = 'red bold';
+    $return['css']  = ($mode == 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/users/admins';
     $return['EN']   = $username." is now a website administrator";
     $return['FR']   = $username." a rejoint l'équipe d'administration de NoBleme";
   }
   else if($type === 'users_rights_administrator')
   {
-    $return['css']  = 'red bold';
+    $return['css']  = ($mode == 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/users/admins';
     $return['EN']   = $mod_username." has promoted ".$username." as an administrator";
     $return['FR']   = $mod_username." a promu ".$username." au sein de l'équipe d'administration";
@@ -269,21 +270,21 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'users_password')
   {
-    $return['css']  = 'orange bold';
+    $return['css']  = ($mode == 'dark') ? 'orange bold' : 'orange bold text_white';
     $return['EN']   = $mod_username." has changed ".$username."'s password";
     $return['FR']   = $mod_username." a modifié le mot de passe de ".$username;
   }
 
   else if($type === 'users_delete')
   {
-    $return['css']  = 'red bold';
+    $return['css']  = ($mode == 'dark') ? 'red bold' : 'red bold text_white';
     $return['EN']   = $username."'s account has been deleted by ".$mod_username;
     $return['FR']   = "Le compte de ".$username." a été supprimé par ".$mod_username;
   }
 
   else if($type === 'users_undelete')
   {
-    $return['css']  = 'green bold';
+    $return['css']  = ($mode == 'dark') ? 'green bold' : 'green bold text_white';
     $return['href'] = $path.'pages/users/'.$userid;
     $return['EN']   = $username."'s account has been reactivated by ".$mod_username;
     $return['FR']   = "Le compte de ".$username." a été réactivé par ".$mod_username;
@@ -298,7 +299,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'meetups_new' && !$admins_only)
   {
-    $return['css']  = 'green bold';
+    $return['css']  = ($mode == 'dark') ? 'green bold' : 'green bold text_black';
     $return['href'] = $path.'pages/meetups/'.$id;
     $return['EN']   = 'New real life meetup planned on '.date_to_text($title_en, 1);
     $return['FR']   = 'Nouvelle rencontre IRL planifiée le '.date_to_text($title_fr, 1);
@@ -327,7 +328,7 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'meetups_delete' && !$admins_only)
   {
-    $return['css']  = 'red bold';
+    $return['css']  = ($mode == 'dark') ? 'red bold' : 'red bold text_white';
     $return['href'] = $path.'pages/meetups/list';
     $return['EN']   = 'The '.date_to_text($title_en, 1).' real life meetup has been cancelled';
     $return['FR']   = 'La rencontre IRL du '.date_to_text($title_fr, 1).' a été annulée';
@@ -445,13 +446,13 @@ function log_activity_parse(  bool    $admins_only        ,
 
   else if($type === 'quotes_new_fr')
   {
-    $return['css']  = 'brown bold';
+    $return['css']  = ($mode == 'dark') ? 'brown bold' : 'text_brown bold';
     $return['href'] = $path.'pages/quotes/'.$id;
     $return['FR']   = 'Citation #'.$id.' ajoutée à la collection';
   }
   else if($type === 'quotes_new_en')
   {
-    $return['css']  = 'brown bold';
+    $return['css']  = ($mode == 'dark') ? 'brown bold' : 'text_brown bold';
     $return['href'] = $path.'pages/quotes/'.$id;
     $return['EN']   = 'Quote #'.$id.' added to the collection';
     $return['FR']   = 'Citation anglophone #'.$id.' ajoutée à la collection';
