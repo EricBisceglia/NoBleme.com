@@ -10,18 +10,36 @@
 .header_infobar_link           { color: #CACACA; font-size: 2.0em; font-weight: bold; padding-left: 0.2em;      }
 .header_infobar_link:hover     { color: #121212;                                                                }
 
-@media (min-width: 1025px) {
+@media (min-width: 1081px) {
 .header_topmenu_title   { padding: 6px 20px 6px 20px; font-size: 2.8rem; }
 .header_topmenu_account { height: 32px; margin: 0.3em 0.8em 0 0;         }
 .header_topmenu_mail    { height: 36px; margin: 0.2em 0.8em 0 0;         }
 .header_topmenu_panel   { height: 32px; margin: 0.1em 0.8em 0 -0.2em;    }
 .header_topmenu_flag    { height: 26px; margin: 0 0.8em 0 0;           } }
-@media (max-width: 1024px) {
-.header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 2.1rem; }
-.header_topmenu_account { height: 2.6rem; margin: 0.2em 0.8em 0 0;       }
-.header_topmenu_mail    { height: 2.5rem; margin: 0.1em 0.6em 0 0;       }
-.header_topmenu_panel   { height: 2.6rem; margin: 0 1.0em 0 0em;         }
-.header_topmenu_flag    { height: 2.2rem; margin: 0 0.8em 0.15em 0;    } }
+@media (max-width: 1080px) {
+.header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 1.8rem; }
+.header_topmenu_account { height: 1.9rem; margin: 0.2em 0.8em 0 0;       }
+.header_topmenu_mail    { height: 1.8rem; margin: 0.1em 0.6em 0 0;       }
+.header_topmenu_panel   { height: 1.9rem; margin: 0 1.0em 0 0em;         }
+.header_topmenu_flag    { height: 1.8rem; margin: 0 0.8em 0.15em 0;    } }
+@media (max-width: 960px) {
+.header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 1.5rem; }
+.header_topmenu_account { height: 1.6rem; margin: 0.2em 0.8em 0 0;       }
+.header_topmenu_mail    { height: 1.5rem; margin: 0.1em 0.6em 0 0;       }
+.header_topmenu_panel   { height: 1.6rem; margin: 0 1.0em 0 0em;         }
+.header_topmenu_flag    { height: 1.5rem; margin: 0 0.8em 0.15em 0;    } }
+@media (max-width: 828px) {
+.header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 1.3rem; }
+.header_topmenu_account { height: 1.4rem; margin: 0.2em 0.8em 0 0;       }
+.header_topmenu_mail    { height: 1.3rem; margin: 0.1em 0.6em 0 0;       }
+.header_topmenu_panel   { height: 1.4rem; margin: 0 1.0em 0 0em;         }
+.header_topmenu_flag    { height: 1.3rem; margin: 0 0.8em 0.15em 0;    } }
+@media (max-width: 760px) {
+.header_topmenu_title   { padding: 6px 18px 6px 18px; font-size: 1.2rem; }
+.header_topmenu_account { height: 1.3rem; margin: 0.2em 0.8em 0 0;       }
+.header_topmenu_mail    { height: 1.2rem; margin: 0.1em 0.6em 0 0;       }
+.header_topmenu_panel   { height: 1.3rem; margin: 0 1.0em 0 0em;         }
+.header_topmenu_flag    { height: 1.2rem; margin: 0 0.8em 0.15em 0;    } }
 
 /****************************************************** SUBMENU ******************************************************/
 .header_submenu              { display: none; white-space: nowrap; background-color: #121212           ;
@@ -46,7 +64,7 @@
                                100%  { filter: none; }                                                 }
 .header_submenu_remember_me  { margin-top: 6px;                                                        }
 
-@media(min-width: 1025px) {
+@media(min-width: 1081px) {
 .header_submenu           { border-bottom: 2px solid #B00B1E           ;
                             font-size: 2.2rem; grid-auto-flow: column  ;
                             grid-template-columns: repeat(5, 20%);     }
@@ -63,7 +81,7 @@
 @media(max-width: 1200px) {
 .header_submenu           { font-size: 1.4rem;                         }
 .header_submenu_title     { font-size: 1.6rem;                       } }
-@media(max-width: 1024px) {
+@media(max-width: 1080px) {
 .header_submenu           { font-size: 2.0rem; grid-auto-flow: row     ;
                             grid-template-columns: repeat(2)           }
 .header_submenu_title     { font-size: 2.0rem;                         }
@@ -71,12 +89,12 @@
 .header_submenu_fullwidth { border-bottom: 2px solid #B00B1E;        } }
 
 /************************************************** MAIN PAGE BODY ***************************************************/
-@media (min-width: 1025px) { .header_main_page { margin-top: 80px; padding-left: 25px; padding-right: 25px;  }
+@media (min-width: 1081px) { .header_main_page { margin-top: 80px; padding-left: 25px; padding-right: 25px;  }
                              hr                { margin-left: -25px; margin-right: -25px;                  } }
-@media (max-width: 1024px) { .header_main_page { margin-top: 150px; padding-left: 40px; padding-right: 40px; }
+@media (max-width: 1080px) { .header_main_page { margin-top: 150px; padding-left: 40px; padding-right: 40px; }
                              hr                { margin-left: -40px; margin-right: -40px;                  } }
 
 /****************************************************** FOOTER *******************************************************/
 footer { width: 100%; text-align: center; color: #999999; filter: drop-shadow(0 0 15px #B00B1E);    }
-@media (min-width: 1025px) { footer { font-size: 1.4rem; margin-top: 100px; margin-bottom: 50px;  } }
-@media (max-width: 1024px) { footer { font-size: 1.0rem; margin-top: 200px; margin-bottom: 100px; } }
+@media (min-width: 1081px) { footer { font-size: 1.4rem; margin-top: 100px; margin-bottom: 50px;  } }
+@media (max-width: 1080px) { footer { font-size: 1.0rem; margin-top: 200px; margin-bottom: 100px; } }

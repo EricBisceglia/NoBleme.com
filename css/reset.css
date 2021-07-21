@@ -37,8 +37,8 @@ td, tfoot, th, thead, time, tr, ul, video { margin: 0; padding: 0; border: 0; fo
 /******************************* DEFAULT STYLES OF GENERIC TAGS FOR THE WHOLE WEBSITE ********************************/
 *, *:after, *:before    { box-sizing: inherit;                                                                        }
 html                    { box-sizing: border-box;                                                                     }
-@media (min-width: 1025px) { html { font-size: 62.5%;                                                               } }
-@media (max-width: 1024px) { html { font-size: 125.0%;                                                              } }
+@media (min-width: 1081px) { html { font-size: 62.5%;                                                               } }
+@media (max-width: 1080px) { html { font-size: 125.0%;                                                              } }
 body                    { color: #FFFFFF; background-color: #121212; min-height: 100vh;                               ;
                           font-family: 'NoBleme', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif                  ;
                           font-size: 1.6rem; font-weight: 300; letter-spacing: 0.01rem; line-height: 1.45;            }
@@ -51,7 +51,7 @@ h3                      { font-size: 3.6rem;                                    
 h4                      { font-size: 3.0rem;                                                                          }
 h5                      { font-size: 2.4rem;                                                                          }
 h6                      { font-size: 1.5rem;                                                                          }
-@media (max-width: 1024px) { body { font-size: 1.0rem;                                                                }
+@media (max-width: 1080px) { body { font-size: 1.0rem;                                                                }
 h1                      { font-size: 3.5rem;                                                                          }
 h2                      { font-size: 3.0rem;                                                                          }
 h3                      { font-size: 2.5rem;                                                                          }
@@ -100,6 +100,6 @@ input[type='submit']:hover:not([disabled]):not(:focus), button:hover:not([disabl
 input[type='text']:focus, input[type='password']:focus, input[type='reset']:focus, input[type='submit']:focus         ,
 button:focus, select:focus { border-color: #888888; background-color: #323232;                                        }
 input:not([type])       { background-color: #121212;                                                                  }
-@media (max-width: 1024px) { input, select, button, textarea { font-size: 2.0rem;                                     }
+@media (max-width: 1080px) { input, select, button, textarea { font-size: 2.0rem;                                     }
 label                      { font-size: 1.8rem                                                                        }
 input[type='checkbox']     { transform: scale(2.0); margin: 0 0.8rem; vertical-align: middle;                       } }

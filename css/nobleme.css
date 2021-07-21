@@ -29,20 +29,20 @@
 
 /************************************************** GENERIC CLASSES **************************************************/
 .hidden  { display: none;   }
-@media (min-width: 1025px) {
+@media (min-width: 1081px) {
 .mobile  { display: none; } }
-@media (max-width: 1024px) {
+@media (max-width: 1080px) {
 .desktop { display: none; } }
 
 .margin_auto     { margin: auto;                    }
-@media (min-width: 1025px) {
+@media (min-width: 1081px) {
 .width_30        { margin: auto; max-width: 30em;   }
 .width_40        { margin: auto; max-width: 40em;   }
 .width_50        { margin: auto; max-width: 50em;   }
 .width_60        { margin: auto; max-width: 60em;   }
 .width_70        { margin: auto; max-width: 70em;   }
 .width_80        { margin: auto; max-width: 80em; } }
-@media (max-width: 1024px) {
+@media (max-width: 1080px) {
 .width_30        { margin: auto; max-width: 35em;   }
 .width_40        { margin: auto; max-width: 40em;   }
 .width_50        { margin: auto; max-width: 45em;   }
@@ -126,11 +126,11 @@
 .scrollbar       { overflow-x: scroll;                          }
 .vscrollbar      { overflow-y: scroll;                          }
 
-@media (min-width: 1025px)            {
+@media (min-width: 1081px)            {
 .icon         { height: 3.0rem;       }
 .smallicon    { height: 1.6rem;       }
 .floater      { font-size: 1.4rem;  } }
-@media (max-width: 1024px)            {
+@media (max-width: 1080px)            {
 .icon         { height: 2.0rem;       }
 .smallicon    { height: 1.3rem;       }
 .floater      { width: 20.0rem;       }
@@ -167,7 +167,7 @@ select.table_search, input.table_search { height: auto; padding: 0.2rem; font-we
 input.table_search[type='submit'], input.table_search[type='reset'] { font-size: 1.6rem; letter-spacing: 0.1rem;   }
 select.table_search:hover, input.table_search:hover, input.table_search[type='text']:hover:not([disabled]):not(:focus)
                                         { background-color: #454545;                                               }
-@media (max-width: 1024px) { select.table_search, input.table_search { font-size: 1.0rem; }                        }
+@media (max-width: 1080px) { select.table_search, input.table_search { font-size: 1.0rem; }                        }
 select.intext, input.intext             { background-color: #121212; border: 2px solid #232323                     ;
                                           color: #CACACA; padding: 0.2rem;                                         }
 input.intext                            { width: 150px;                                                            }
@@ -209,9 +209,9 @@ table.xdebug-error tr:first-child th:first-child { filter: drop-shadow(0 0 4px #
 .tooltip_container:hover .tooltip { display: inline; position: absolute; color: #FFFFFF; text-align: left            ;
                                     background-color: #232323 ; border-radius: 5px; border: 1px solid #888888        ;
                                     box-shadow: 2px 2px 2px #888888;                                                 }
-@media (min-width: 1025px)        {
+@media (min-width: 1081px)        {
 .tooltip_container:hover .tooltip { max-width: 500px; max-height: 250px; overflow-y: auto;                         } }
-@media (max-width: 1024px)        {
+@media (max-width: 1080px)        {
 .tooltip_container:hover .tooltip { max-width: 750px; max-height: 1250px; overflow-y: scroll; font-size: 1.5em;    } }
 
 /****************************************************** POPINS *******************************************************/
@@ -225,9 +225,9 @@ div.popin_body              { margin: auto; margin-top: 10em; background: #12121
 a.popin_close               { position: absolute; transition: all 0.5s; font-size: 2.5em            ;
                               filter: none; color: #B00B1E; z-index: 10000; cursor: pointer;        }
 a.popin_close:hover         { filter: drop-shadow(0 0 10px #B00B1E);                                }
-@media (min-width: 1025px)  {
+@media (min-width: 1081px)  {
 div.popin_body              { padding: 2.25em;                                                      }
 a.popin_close               { top: -0.2em; right: 0.2em;                                          } }
-@media (max-width: 1024px)  {
+@media (max-width: 1080px)  {
 div.popin_body              { padding: 1.5em;                                                       }
 a.popin_close               { top: 0; right: 0.3em;                                               } }

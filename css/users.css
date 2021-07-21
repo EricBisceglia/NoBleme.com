@@ -10,10 +10,10 @@
 .profile_admin          { margin-top: 4em;                                          }
 .profile_text_cell      { max-height: 10em; overflow-x: auto;                       }
 
-@media (min-width: 1025px) {
+@media (min-width: 1081px) {
 .profile_text { max-height: 12em; padding: 0.25em 0.5em;  }
 .profile_flag { height: 18px; margin: 0 0.1em;          } }
 
-@media (max-width: 1024px) {
+@media (max-width: 1080px) {
 .profile_text { max-height: 20em; padding: 1.0em;         }
 .profile_flag { height: 32px; margin: 0 0.2em;          } }

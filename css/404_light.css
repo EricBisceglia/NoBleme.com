@@ -21,5 +21,5 @@ body { background-color: #000000; }
 .img404right                { margin-left: 10px;                                                   }
 .text404                    { background-color: #000000; border: 0px solid #000000; color: #CACACA ;
                               text-align: center; overflow: auto; resize: none;                    }
-@media (min-width: 1025px) { .text404 { font-size: 1.5rem; height: 17.0rem;                      } }
-@media (max-width: 1024px) { .text404 { font-size: 1.5rem; height: 40.0rem;                      } }
+@media (min-width: 1081px) { .text404 { font-size: 1.5rem; height: 17.0rem;                      } }
+@media (max-width: 1080px) { .text404 { font-size: 1.5rem; height: 40.0rem;                      } }
