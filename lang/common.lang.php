@@ -189,6 +189,8 @@ function __link(  string  $href                       ,
  * @param   string  $alt          (OPTIONAL)  The alt text which will be displayed if the image can't be found.
  * @param   string  $title        (OPTIONAL)  The hover text which shows up when the pointer rests over the image.
  * @param   string  $title_case   (OPTIONAL)  Change the case of the icon's hover title.
+ * @param   bool    $use_dark     (OPTIONAL)  Whether to use the dark version of the icon instead of user settings.
+ * @param   bool    $use_light    (OPTIONAL)  Whether to use the light version of the icon instead of user settings.
  * @param   string  $identifier   (OPTIONAL)  Gives a html id to the element.
  * @param   string  $path         (OPTIONAL)  The path to the website's root (defaults to 2 folders from root).
  * @param   string  $onclick      (OPTIONAL)  A javascript option to trigger upon clicking the link.
@@ -206,6 +208,8 @@ function __icon(  string  $icon                                   ,
                   string  $alt          = 'X'                     ,
                   string  $title        = ' '                     ,
                   string  $title_case   = ''                      ,
+                  bool    $use_dark     = false                   ,
+                  bool    $use_light    = false                   ,
                   string  $identifier   = ''                      ,
                   string  $path         = "./../../"              ,
                   string  $onclick      = ''                      ,
@@ -235,7 +239,7 @@ function __icon(  string  $icon                                   ,
 
   // Prepare the image path
   $icon = ($is_small) ? $icon.'_small' : $icon;
-  $icon = (user_get_mode() == 'light') ? $icon.'_dark' : $icon;
+  $icon = (!$use_light && (user_get_mode() == 'light' || $use_dark)) ? $icon.'_dark' : $icon;
   $src  = 'src="'.$path.'img/icons/'.$icon.'.svg"';
 
   // Prepare the alt text and title

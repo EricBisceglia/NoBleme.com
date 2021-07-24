@@ -65,5 +65,32 @@ ___('tasks_list_count_open',            'EN', "And {{1}} still to do");
 ___('tasks_list_count_open',            'FR', "Et {{1}} à faire");
 ___('tasks_list_count_open_short',      'EN', "{{1}} to do");
 ___('tasks_list_count_open_short',      'FR', "{{1}} à faire");
-___('tasks_list_count_solved',          'EN', "Total {{1}}% solved");
-___('tasks_list_count_solved',          'FR', "Soit {{1}}% finies");
+___('tasks_list_count_solved',          'EN', "Total {{1}} solved");
+___('tasks_list_count_solved',          'FR', "Soit {{1}} finies");
+
+
+// List: Table
+___('tasks_list_state_0',     'EN', "Maybe some day");
+___('tasks_list_state_0',     'FR', "À faire un jour");
+___('tasks_list_state_1',     'EN', "No hurry");
+___('tasks_list_state_1',     'FR', "Pas pressé");
+___('tasks_list_state_2',     'EN', "There's time");
+___('tasks_list_state_2',     'FR', "Y'a le temps");
+___('tasks_list_state_3',     'EN', "To consider");
+___('tasks_list_state_3',     'FR', "À considérer");
+___('tasks_list_state_4',     'EN', "Important");
+___('tasks_list_state_4',     'FR', "Important");
+___('tasks_list_state_5',     'EN', "Emergency");
+___('tasks_list_state_5',     'FR', "Urgence");
+___('tasks_list_solved',      'EN', "Solved");
+___('tasks_list_solved',      'FR', "Résolu");
+___('tasks_list_nolang_en',   'EN', "No english translation");
+___('tasks_list_nolang_en',   'FR', "Pas de traduction anglaise");
+___('tasks_list_nolang_fr',   'EN', "No french translation");
+___('tasks_list_nolang_fr',   'FR', "Pas de traduction française");
+___('tasks_list_deleted',     'EN', "Deleted task");
+___('tasks_list_deleted',     'FR', "Tâche supprimée");
+___('tasks_list_private',     'EN', "Private task");
+___('tasks_list_private',     'FR', "Tâche privée");
+___('tasks_list_unvalidated', 'EN', "Unvalidated task");
+___('tasks_list_unvalidated', 'FR', "Tâche non validée");
