@@ -1921,7 +1921,7 @@ Un bot IRC non officiel se trouve sur chacun des deux {{link|pages/social/irc?ch
 EOT
 );
 ___('irc_faq_bots_private_body_2',  'EN', <<<EOT
-On the #english channel, the bot nicknamed <span class="bold">Croissant</span> gives a few quality of life features missing on IRC: previews links, offers a translation service, converts timezones, gives the weather on demand, and more. It is an instance of the {{external|https://sopel.chat/|Sopel}} bot maintained by a user nicknamed Phixion.
+On the #english channel, the bot nicknamed <span class="bold">Chocolatine</span> gives a few quality of life features missing on IRC: previews links, offers a translation service, converts timezones, gives the weather on demand, and more. It is an instance of the {{external|https://sopel.chat/|Sopel}} bot maintained by a user nicknamed Exirel.
 EOT
 );
 ___('irc_faq_bots_private_body_2',  'FR', <<<EOT
@@ -1933,7 +1933,7 @@ On the #NoBleme channel, the bot nicknamed <span class="bold">Akundo</span> offe
 EOT
 );
 ___('irc_faq_bots_private_body_3',  'FR', <<<EOT
-Sur le canal #english, le bot portant le pseudonyme <span class="bold">Croissant</span> offre des services de qualité de vie manquants sur IRC : prévisualisation de liens, traduction de messages, conversion de fuseaux horaires, météo à la demande, etc. Il s'agit d'un {{external|https://sopel.chat/|Sopel}} maintenu par Phixion.
+Sur le canal #english, le bot portant le pseudonyme <span class="bold">Chocolatine</span> offre des services de qualité de vie manquants sur IRC : prévisualisation de liens, traduction de messages, conversion de fuseaux horaires, météo à la demande, etc. Il s'agit d'un {{external|https://sopel.chat/|Sopel}} maintenu par Exirel.
 EOT
 );
 

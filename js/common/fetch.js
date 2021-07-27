@@ -137,7 +137,8 @@ function fetch_sanitize(data)
 
 function fetch_sanitize_id(element)
 {
-  return encodeURIComponent(document.getElementById(element).value);
+  if(document.getElementById(element))
+    return encodeURIComponent(document.getElementById(element).value);
 }
 
 
