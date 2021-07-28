@@ -736,7 +736,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('add', 'add', 1, '+')."');")?>
         </td>
         <td>
-          &nbsp;
+          <?=__icon('add', is_small: true, alt: '+', title: __('add'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('add', 'add', 1, '+', 'small')."');")?>
         </td>
       </tr>
       <tr>
@@ -857,7 +857,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           <?=__icon('maximize', alt: 'M', title: __('maximize'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('maximize', 'maximize', 1, 'M')."');")?>
         </td>
         <td>
-          &nbsp;
+          <?=__icon('maximize', is_small: true, alt: 'M', title: __('maximize'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('maximize', 'maximize', 1, 'M', 'small')."');")?>
         </td>
       </tr>
       <tr>
@@ -868,7 +868,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           <?=__icon('minimize', alt: 'M', title: __('minimize'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('minimize', 'minimize', 1, 'M')."');")?>
         </td>
         <td>
-          &nbsp;
+          <?=__icon('minimize', is_small: true, alt: 'M', title: __('minimize'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('minimize', 'minimize', 1, 'M', 'small')."');")?>
         </td>
       </tr>
       <tr>
@@ -879,7 +879,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           <?=__icon('message', alt: 'M', title: __('message'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('message', 'message', 1, 'M')."');")?>
         </td>
         <td>
-          &nbsp;
+          <?=__icon('message', is_small: true, alt: 'M', title: __('message'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('message', 'message', 1, 'M', 'small')."');")?>
         </td>
       </tr>
       <tr>
@@ -934,7 +934,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           <?=__icon('settings_gear', alt: 'S', title: __('settings'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('settings_gear', 'settings', 1, 'S')."');")?>
         </td>
         <td>
-          &nbsp;
+          <?=__icon('settings_gear', is_small: true, alt: 'S', title: __('settings'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('settings_gear', 'settings', 1, 'S', 'small')."');")?>
         </td>
       </tr>
       <tr>
@@ -978,7 +978,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           <?=__icon('upload', alt: 'U', title: __('upload'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('upload', 'upload', 1, 'U')."');")?>
         </td>
         <td>
-          &nbsp;
+          <?=__icon('upload', is_small: true, alt: 'U', title: __('upload'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('upload', 'upload', 1, 'U', 'small')."');")?>
         </td>
       </tr>
       <tr>
@@ -1033,7 +1033,7 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
           <?=__icon('warning', alt: '!', title: __('warning'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('warning', 'warning', 1, '!')."');")?>
         </td>
         <td>
-          &nbsp;
+          <?=__icon('warning', is_small: true, alt: '!', title: __('warning'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('warning', 'warning', 1, '!', 'small')."');")?>
         </td>
       </tr>
       <tr>
