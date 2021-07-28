@@ -8,6 +8,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  tasks_get                 Returns data related to a task.                                                        */
 /*  tasks_list                Fetches a list of tasks.                                                               */
 /*                                                                                                                   */
 /*  tasks_categories_list     Fetches a list of task categories.                                                     */
@@ -15,6 +16,71 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  tasks_milestones_list     Fetches a list of task milestones.                                                     */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+
+/**
+ * Returns data related to a task.
+ *
+ * @param   int         $task_id  The task's id.
+ *
+ * @return  array|null            An array containing task related data, or NULL if it does not exist.
+ */
+
+function tasks_get( int $task_id ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+
+  // Get the user's current language and access rights
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  $is_admin = user_is_administrator();
+
+  // Sanitize the data
+  $task_id = sanitize($task_id, 'int', 0);
+
+  // Check if the task exists
+  if(!database_row_exists('dev_tasks', $task_id))
+    return NULL;
+
+  // Fetch the data
+  $dtask = mysqli_fetch_array(query(" SELECT    dev_tasks.is_deleted        AS 't_deleted'    ,
+                                                dev_tasks.admin_validation  AS 't_validated'  ,
+                                                dev_tasks.is_public         AS 't_public'     ,
+                                                dev_tasks.created_at        AS 't_created'    ,
+                                                dev_tasks.finished_at       AS 't_solved'     ,
+                                                dev_tasks.title_$lang       AS 't_title'      ,
+                                                dev_tasks.body_$lang        AS 't_body'       ,
+                                                dev_tasks.source_code_link  AS 't_source'     ,
+                                                users.id                    AS 'u_id'         ,
+                                                users.username              AS 'u_name'
+                                      FROM      dev_tasks
+                                      LEFT JOIN users ON dev_tasks.fk_users = users.id
+                                      WHERE     dev_tasks.id = '$task_id' "));
+
+  // Return null if the task should not be displayed
+  if(!$is_admin && $dtask['t_deleted'])
+    return NULL;
+  if(!$is_admin && !$dtask['t_validated'])
+    return NULL;
+  if(!$is_admin && !$dtask['t_public'])
+    return NULL;
+
+  // Assemble an array with the data
+  $data['title']      = sanitize_output($dtask['t_title']);
+  $data['created']    = sanitize_output(date_to_text($dtask['t_created'], strip_day: 1));
+  $data['creator']    = sanitize_output($dtask['u_name']);
+  $data['creator_id'] = sanitize_output($dtask['u_id']);
+  $temp               = sanitize_output(date_to_text($dtask['t_solved'], strip_day: 1));
+  $data['solved']     = ($dtask['t_solved']) ? $temp : '';
+  $data['body']       = bbcodes(sanitize_output($dtask['t_body'], preserve_line_breaks: true));
+  $data['source']     = ($dtask['t_source']) ? sanitize_output($dtask['t_source']) : '';
+
+  // Return the array
+  return $data;
+}
+
+
+
 
 /**
  * Fetches a list of tasks.

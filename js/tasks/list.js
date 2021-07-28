@@ -1,6 +1,7 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  tasks_list_search           Performs a search through the todo list.                                             */
+/*  tasks_list_details          Shows the details of a task in the todo list.                                        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -33,4 +34,27 @@ function tasks_list_search( sort_data = null )
 
   // Submit the search
   fetch_page('list', 'tasks_list_tbody', postdata);
+}
+
+
+
+
+/**
+ * Shows the details of a task in the todo list.
+ *
+ * @param   {int}   [task_id]   The id of the task for which details will be displayed.
+ *
+ * @returns {void}
+ */
+
+function tasks_list_details( task_id )
+{
+  // Show the task details container
+  toggle_element('tasks_list_row_' + task_id, 'table-row');
+
+  // Assemble the postdata
+  postdata = 'task_id=' + fetch_sanitize(task_id);
+
+  // Fetch the task details
+  fetch_page('task_details', 'tasks_list_' + task_id, postdata, null, null, null, 1);
 }

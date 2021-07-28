@@ -763,6 +763,17 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
       </tr>
       <tr>
         <td>
+          done
+        </td>
+        <td>
+          <?=__icon('done', alt: 'D', title: __('done'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('done', 'done', 1, 'D')."');")?>
+        </td>
+        <td>
+          <?=__icon('done', is_small: true, alt: 'D', title: __('done'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('done', 'done', 1, 'D', 'small')."');")?>
+        </td>
+      </tr>
+      <tr>
+        <td>
           duplicate
         </td>
         <td>

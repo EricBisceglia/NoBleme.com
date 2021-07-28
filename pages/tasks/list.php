@@ -19,7 +19,7 @@ $page_description = "List of tasks laying the roadmap for NoBleme's past and fut
 
 // Extra CSS & JS
 $css  = array('tasks');
-$js   = array('tasks/list');
+$js   = array('tasks/list', 'common/toggle');
 
 
 
@@ -250,7 +250,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?php for($i = 0; $i < $task_list['rows']; $i++) { ?>
 
-      <tr class="align_center pointer text_dark light_hover <?=$task_list[$i]['css_row']?>">
+      <tr class="align_center pointer text_dark light_hover <?=$task_list[$i]['css_row']?>" onclick="tasks_list_details('<?=$task_list[$i]['id']?>');">
 
         <td>
           #<?=$task_list[$i]['id']?>
@@ -312,13 +312,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       </tr>
 
-      <tr>
+      <tr class="hidden" id="tasks_list_row_<?=$task_list[$i]['id']?>">
 
-        <td class="desktop hidden" colspan="<?=$tasks_rows_desktop?>">
-          &nbsp;
-        </td>
-
-        <td class="mobile hidden" colspan="<?=$tasks_rows_mobile?>">
+        <td colspan="<?=$tasks_rows_desktop?>" id="tasks_list_<?=$task_list[$i]['id']?>">
           &nbsp;
         </td>
 

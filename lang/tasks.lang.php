@@ -100,3 +100,32 @@ ___('tasks_list_private',       'EN', "Private task");
 ___('tasks_list_private',       'FR', "Tâche privée");
 ___('tasks_list_unvalidated',   'EN', "Unvalidated task");
 ___('tasks_list_unvalidated',   'FR', "Tâche non validée");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   TASK DETAILS                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Task summary
+___('tasks_details_error',    'EN', "This task does not exist or has been deleted");
+___('tasks_details_error',    'FR', "Cette tâche n'existe pas ou a été supprimée");
+___('tasks_details_title',    'EN', "#{{1}}: {{2}}");
+___('tasks_details_title',    'FR', "#{{1}} : {{2}}");
+___('tasks_details_no_title', 'EN', "Title has not been translated");
+___('tasks_details_no_title', 'FR', "Le titre n'a pas été traduit");
+___('tasks_details_id',       'EN', "Task #{{1}}");
+___('tasks_details_id',       'FR', "Tâche #{{1}}");
+___('tasks_details_link',     'EN', "Direct link to this task:");
+___('tasks_details_link',     'FR', "Lien direct vers cette tâche :");
+___('tasks_details_created',  'EN', "Task opened on {{1}} by");
+___('tasks_details_created',  'FR', "Tâche ouverte le {{1}} par");
+___('tasks_details_solved',   'EN', "Task solved on {{1}}");
+___('tasks_details_solved',   'FR', "Tâche résolue le {{1}}");
+___('tasks_details_source',   'EN', "Source code");
+___('tasks_details_source',   'FR', "Code source");
+___('tasks_details_no_body',  'EN', "This task has not been translated into english.");
+___('tasks_details_no_body',  'FR', "Le contenu de cette tâche n'a pas été traduit en français.");

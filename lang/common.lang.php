@@ -349,6 +349,8 @@ ___('copy',       'EN', "copy");
 ___('copy',       'FR', "copier");
 ___('delete',     'EN', "delete");
 ___('delete',     'FR', "supprimer");
+___('done',       'EN', "done");
+___('done',       'FR', "fini");
 ___('duplicate',  'EN', "duplicate");
 ___('duplicate',  'FR', "dupliquer");
 ___('details',    'EN', "details");
