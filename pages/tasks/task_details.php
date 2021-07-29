@@ -49,7 +49,7 @@ $task_details = tasks_get($task_id);
   <h5 class="tinypadding_bot">
 
     <?php if($task_details['title']) { ?>
-    <?=__link('todo_link?id='.$task_id, __('tasks_details_title', preset_values: array($task_id, $task_details['title'])), 'noglow')?>
+    <?=__link('pages/tasks/'.$task_id, __('tasks_details_title', preset_values: array($task_id, $task_details['title'])), 'noglow')?>
     <?php } else { ?>
     <?=__('tasks_details_no_title')?>
     <?php } ?>
@@ -62,7 +62,7 @@ $task_details = tasks_get($task_id);
 
 
   <span class="bold">
-    <?=__('tasks_details_link', spaces_after: 1).__link('todo_link?id='.$task_id, __('tasks_details_id', preset_values: array($task_id)))?>
+    <?=__('tasks_details_link', spaces_after: 1).__link('pages/tasks/'.$task_id, __('tasks_details_id', preset_values: array($task_id)))?>
   </span>
 
   <br>
@@ -84,7 +84,7 @@ $task_details = tasks_get($task_id);
 
   <?php } ?>
 
-  <p class="padding_bot">
+  <p>
     <?php if($task_details['body']) { ?>
     <?=$task_details['body']?>
     <?php } else { ?>

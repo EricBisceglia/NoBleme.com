@@ -129,3 +129,26 @@ ___('tasks_details_source',   'EN', "Source code");
 ___('tasks_details_source',   'FR', "Code source");
 ___('tasks_details_no_body',  'EN', "This task has not been translated into english.");
 ___('tasks_details_no_body',  'FR', "Le contenu de cette tâche n'a pas été traduit en français.");
+
+
+// Full details
+___('tasks_full_unvalidated', 'EN', "This task has not been validated yet, only admins can see it");
+___('tasks_full_unvalidated', 'FR', "Cette tâche n'a pas été validée, seule l'administration peut la voir");
+___('tasks_full_private',     'EN', "This task is private, only admins can see it");
+___('tasks_full_private',     'FR', "Cette tâche est privée, seule l'administration peut la voir");
+___('tasks_full_created',     'EN', "Task opened {{1}} ({{2}}) by");
+___('tasks_full_created',     'FR', "Tâche ouverte {{1}} ({{2}}) par");
+___('tasks_full_solved',      'EN', "Task solved {{1}} ({{2}})");
+___('tasks_full_solved',      'FR', "Tâche résolue {{1}} ({{2}})");
+___('tasks_full_source',      'EN', "Source code of the patch that solved the task");
+___('tasks_full_source',      'FR', "Code source du patch qui a résolu la tâche");
+___('tasks_full_unsolved',    'EN', "This task has not been solved yet");
+___('tasks_full_unsolved',    'FR', "Cette tâche n'a pas encore été résolue");
+___('tasks_full_priority',    'EN', "Task priority status:");
+___('tasks_full_priority',    'FR', "Priorité de la résolution :");
+___('tasks_full_category',    'EN', "Task category:");
+___('tasks_full_category',    'FR', "Catégorie de la tâche :");
+___('tasks_full_milestone',   'EN', "Task milestone:");
+___('tasks_full_milestone',   'FR', "Objectif de la tâche :");
+___('tasks_full_body',        'EN', "Task details:");
+___('tasks_full_body',        'FR', "Détails de la tâche :");

@@ -34,6 +34,9 @@ function error_page( string $message ) : void
   // Fetch the user's language
   $lang = user_get_language();
 
+  // Fetch the user's mode
+  $mode = user_get_mode();
+
   // Is the user logged in and/or IP banned? - check from the session (required by the header)
   $is_logged_in = (isset($_SESSION['user_id'])) ? $_SESSION['user_id'] : 0;
   $is_ip_banned = user_is_ip_banned();

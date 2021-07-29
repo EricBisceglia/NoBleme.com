@@ -43,19 +43,31 @@ function tasks_get( int $task_id ) : mixed
     return NULL;
 
   // Fetch the data
-  $dtask = mysqli_fetch_array(query(" SELECT    dev_tasks.is_deleted        AS 't_deleted'    ,
-                                                dev_tasks.admin_validation  AS 't_validated'  ,
-                                                dev_tasks.is_public         AS 't_public'     ,
-                                                dev_tasks.created_at        AS 't_created'    ,
-                                                dev_tasks.finished_at       AS 't_solved'     ,
-                                                dev_tasks.title_$lang       AS 't_title'      ,
-                                                dev_tasks.body_$lang        AS 't_body'       ,
-                                                dev_tasks.source_code_link  AS 't_source'     ,
-                                                users.id                    AS 'u_id'         ,
-                                                users.username              AS 'u_name'
+  $dtask = mysqli_fetch_array(query(" SELECT    dev_tasks.is_deleted              AS 't_deleted'    ,
+                                                dev_tasks.admin_validation        AS 't_validated'  ,
+                                                dev_tasks.is_public               AS 't_public'     ,
+                                                dev_tasks.priority_level          AS 't_priority'   ,
+                                                dev_tasks.created_at              AS 't_created'    ,
+                                                dev_tasks.finished_at             AS 't_solved'     ,
+                                                dev_tasks.title_$lang             AS 't_title'      ,
+                                                dev_tasks.title_en                AS 't_title_en'   ,
+                                                dev_tasks.title_fr                AS 't_title_fr'   ,
+                                                dev_tasks.body_$lang              AS 't_body'       ,
+                                                dev_tasks.body_en                 AS 't_body_en'    ,
+                                                dev_tasks.body_fr                 AS 't_body_fr'    ,
+                                                dev_tasks.source_code_link        AS 't_source'     ,
+                                                users.id                          AS 'u_id'         ,
+                                                users.username                    AS 'u_name'       ,
+                                                dev_tasks_categories.title_$lang  AS 'tc_name'      ,
+                                                dev_tasks_milestones.title_$lang  AS 'tm_name'
                                       FROM      dev_tasks
-                                      LEFT JOIN users ON dev_tasks.fk_users = users.id
-                                      WHERE     dev_tasks.id = '$task_id' "));
+                                      LEFT JOIN users
+                                      ON        dev_tasks.fk_users                = users.id
+                                      LEFT JOIN dev_tasks_categories
+                                      ON        dev_tasks.fk_dev_tasks_categories = dev_tasks_categories.id
+                                      LEFT JOIN dev_tasks_milestones
+                                      ON        dev_tasks.fk_dev_tasks_milestones = dev_tasks_milestones.id
+                                      WHERE     dev_tasks.id                      = '$task_id' "));
 
   // Return null if the task should not be displayed
   if(!$is_admin && $dtask['t_deleted'])
@@ -66,14 +78,27 @@ function tasks_get( int $task_id ) : mixed
     return NULL;
 
   // Assemble an array with the data
-  $data['title']      = sanitize_output($dtask['t_title']);
-  $data['created']    = sanitize_output(date_to_text($dtask['t_created'], strip_day: 1));
-  $data['creator']    = sanitize_output($dtask['u_name']);
-  $data['creator_id'] = sanitize_output($dtask['u_id']);
-  $temp               = sanitize_output(date_to_text($dtask['t_solved'], strip_day: 1));
-  $data['solved']     = ($dtask['t_solved']) ? $temp : '';
-  $data['body']       = bbcodes(sanitize_output($dtask['t_body'], preserve_line_breaks: true));
-  $data['source']     = ($dtask['t_source']) ? sanitize_output($dtask['t_source']) : '';
+  $data['validated']      = $dtask['t_validated'];
+  $data['public']         = $dtask['t_public'];
+  $data['title']          = sanitize_output($dtask['t_title']);
+  $data['title_en_raw']   = $dtask['t_title_en'];
+  $data['title_fr_raw']   = $dtask['t_title_fr'];
+  $data['created']        = sanitize_output(date_to_text($dtask['t_created'], strip_day: 1));
+  $data['created_full']   = sanitize_output(date_to_text($dtask['t_created'], include_time: 1));
+  $data['created_since']  = sanitize_output(time_since($dtask['t_created']));
+  $data['creator']        = sanitize_output($dtask['u_name']);
+  $data['creator_id']     = sanitize_output($dtask['u_id']);
+  $temp                   = sanitize_output(date_to_text($dtask['t_solved'], strip_day: 1));
+  $data['solved']         = ($dtask['t_solved']) ? $temp : '';
+  $data['solved_full']    = sanitize_output(date_to_text($dtask['t_solved'], include_time: 1));
+  $data['solved_since']   = sanitize_output(time_since($dtask['t_solved']));
+  $data['priority']       = sanitize_output($dtask['t_priority']);
+  $data['category']       = sanitize_output($dtask['tc_name']);
+  $data['milestone']      = sanitize_output($dtask['tm_name']);
+  $data['body']           = bbcodes(sanitize_output($dtask['t_body'], preserve_line_breaks: true));
+  $data['source']         = ($dtask['t_source']) ? sanitize_output($dtask['t_source']) : '';
+  $temp                   = ($dtask['t_title_en']) ? $dtask['t_title_en'] : $dtask['t_title_fr'];
+  $data['summary']        = sanitize_output('Task #'.$task_id.': '.string_truncate($temp, 100, '…'));
 
   // Return the array
   return $data;
