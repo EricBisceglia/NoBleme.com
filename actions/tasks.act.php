@@ -8,6 +8,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  tasks_add                 Creates a new task.                                                                    */
 /*  tasks_get                 Returns data related to a task.                                                        */
 /*  tasks_list                Fetches a list of tasks.                                                               */
 /*                                                                                                                   */
@@ -16,6 +17,93 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  tasks_milestones_list     Fetches a list of task milestones.                                                     */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+
+/**
+ * Creates a new task.
+ *
+ * @param   array       $contents   The contents of the task.
+ *
+ * @return  string|int              An error string, or the task's id if it was properly created.
+ */
+
+function tasks_add( array $contents ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('tasks.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $task_title_en  = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
+  $task_title_fr  = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
+  $task_body_en   = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')      : '';
+  $task_body_fr   = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')      : '';
+  $task_priority  = (isset($contents['priority']))  ? sanitize($contents['priority'], 'int', 0, 5)  : 0;
+  $task_category  = (isset($contents['category']))  ? sanitize($contents['category'], 'int', 0)     : 0;
+  $task_milestone = (isset($contents['milestone'])) ? sanitize($contents['milestone'], 'int', 0)    : 0;
+  $task_private   = (isset($contents['private']))   ? sanitize($contents['private'], 'int', 0, 1)   : 0;
+  $task_public    = ($task_private)                 ? 0                                             : 1;
+  $task_silent    = (isset($contents['silent']))    ? sanitize($contents['silent'], 'int', 0, 1)    : 0;
+
+  // Error: No title
+  if(!$task_title_en && !$task_title_fr)
+    return __('tasks_add_error_title');
+
+  // Fetch the current user's ID and timestamp
+  $user_id    = sanitize(user_get_id(), 'int', 0);
+  $timestamp  = sanitize(time(), 'int', 0);
+
+  // Create the task
+  query(" INSERT INTO dev_tasks
+          SET         dev_tasks.fk_users                  = '$user_id'        ,
+                      dev_tasks.created_at                = '$timestamp'      ,
+                      dev_tasks.admin_validation          = 1                 ,
+                      dev_tasks.is_public                 = '$task_public'    ,
+                      dev_tasks.priority_level            = '$task_priority'  ,
+                      dev_tasks.title_en                  = '$task_title_en'  ,
+                      dev_tasks.title_fr                  = '$task_title_fr'  ,
+                      dev_tasks.body_en                   = '$task_body_en'   ,
+                      dev_tasks.body_fr                   = '$task_body_fr'   ,
+                      dev_tasks.fk_dev_tasks_categories   = '$task_category'  ,
+                      dev_tasks.fk_dev_tasks_milestones   = '$task_milestone' ");
+
+  // Fetch the newly created task's id
+  $task_id = query_id();
+
+  // If the task is private or must be created silently, stop here and return the task's id
+  if($task_private || $task_silent)
+    return $task_id;
+
+  // Determine the activity language
+  $activity_lang  = ($task_title_en) ? 'EN' : '';
+  $activity_lang .= ($task_title_fr) ? 'FR' : '';
+
+  // Fetch the raw task title
+  $task_title_en_raw = ($task_title_en) ? $contents['title_en'] : '';
+  $task_title_fr_raw = ($task_title_fr) ? $contents['title_fr'] : '';
+
+  // Fetch the current user's username
+  $admin_username = user_get_username();
+
+  // Activity log
+  log_activity( 'dev_task_new'                            ,
+                language:             $activity_lang      ,
+                activity_id:          $task_id            ,
+                activity_summary_en:  $task_title_en_raw  ,
+                activity_summary_fr:  $task_title_fr_raw  ,
+                username:             $admin_username     );
+
+  // IRC bot message
+  if($task_title_en)
+    irc_bot_send_message("A new task has been added to the to-do list by $admin_username : $task_title_en_raw - ".$GLOBALS['website_url']."pages/tasks/$task_id", 'dev');
+
+  // Return the task's id
+  return $task_id;
+}
+
+
 
 
 /**

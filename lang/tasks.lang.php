@@ -152,3 +152,49 @@ ___('tasks_full_milestone',   'EN', "Task milestone:");
 ___('tasks_full_milestone',   'FR', "Objectif de la tâche :");
 ___('tasks_full_body',        'EN', "Task details:");
 ___('tasks_full_body',        'FR', "Détails de la tâche :");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   CREATE A TASK                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('tasks_add_title',  'EN', "New task");
+___('tasks_add_title',  'FR', "Nouvelle tâche");
+
+
+// Form
+___('tasks_add_title_en',   'EN', "Title in english");
+___('tasks_add_title_en',   'FR', "Titre en anglais");
+___('tasks_add_title_fr',   'EN', "Title in french");
+___('tasks_add_title_fr',   'FR', "Titre en français");
+___('tasks_add_body_en',    'EN', "Description in english ({{link|pages/doc/bbcodes|BBCodes}} allowed)");
+___('tasks_add_body_en',    'FR', "Description en anglais ({{link|pages/doc/bbcodes|BBCodes}} autorisés)");
+___('tasks_add_body_fr',    'EN', "Description in french ({{link|pages/doc/bbcodes|BBCodes}} allowed)");
+___('tasks_add_body_fr',    'FR', "Description en français ({{link|pages/doc/bbcodes|BBCodes}} autorisés)");
+___('tasks_add_milestone',  'EN', "Milestone");
+___('tasks_add_milestone',  'FR', "Objectif");
+___('tasks_add_priority',   'EN', "Priority level");
+___('tasks_add_priority',   'FR', "Importance");
+___('tasks_add_private',    'EN', "Private task (will not be publicly visible)");
+___('tasks_add_private',    'FR', "Tâche privée (ne sera visible que pour l'administration)");
+___('tasks_add_silent',     'EN', "Silent (no IRC notification)");
+___('tasks_add_silent',     'FR', "Silencieux (pas de notification IRC)");
+___('tasks_add_submit',     'EN', "Create a task");
+___('tasks_add_submit',     'FR', "Créer une tâche");
+
+
+// Preview
+___('tasks_add_preview_en', 'EN', "Preview (english):");
+___('tasks_add_preview_en', 'FR', "Prévisualisation (anglais):");
+___('tasks_add_preview_fr', 'EN', "Preview (french);");
+___('tasks_add_preview_fr', 'FR', "Prévisualisation (français);");
+
+
+// Errors
+___('tasks_add_error_title',  'EN', "The task must have a title in either french or english");
+___('tasks_add_error_title',  'FR', "La tâche doit avoir un titre en français ou en anglais");

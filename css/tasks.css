@@ -8,3 +8,12 @@
 .task_solved   { background:#599B49; }
 
 .tasks_admin_selector { width: 4.5em !important; }
+
+/**************************************************** EDIT TASKS *****************************************************/
+
+@media (min-width: 1081px) {
+.tasks_edit_category      { flex: 10;            }
+.tasks_edit_category_icon { margin-top: 1.5em; } }
+@media (max-width: 1080px) {
+.tasks_edit_category      { flex: 6;             }
+.tasks_edit_category_icon { margin-top: 3.5em; } }

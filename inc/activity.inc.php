@@ -65,14 +65,14 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'dev_blog')
   {
     $return['css']  = ($mode == 'dark') ? 'brown bold' : 'light bold';
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/dev/blog?id='.$id;
     $return['EN']   = ($title_en) ? "New devblog published: ".$title_en : '';
     $return['FR']   = ($title_fr) ? "Nouveau devblog publié : ".$title_fr : '';
   }
 
   else if($type === 'dev_task_new')
   {
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/tasks/'.$id;
     $return['EN']   = ($title_en) ? $username." opened a new task: ".$title_en : '';
     $return['FR']   = ($title_fr) ? $username." a ouvert une tâche : ".$title_fr : '';
 

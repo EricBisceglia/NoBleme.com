@@ -72,7 +72,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1>
+
     <?=__('submenu_nobleme_todolist')?>
+
+    <?php if($is_admin) { ?>
+    <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/tasks/add')?>
+    <?php } ?>
+
   </h1>
 
   <h5>
@@ -299,7 +305,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <img src="<?=$path?>img/icons/lang_en.png" class="valign_middle" height="14" alt="<?=__('EN')?>" title="<?=__('tasks_list_nolang_en')?>">
           <?php } if($task_list[$i]['nolang_fr']) { ?>
           <img src="<?=$path?>img/icons/lang_fr.png" class="valign_middle" height="14" alt="<?=__('FR')?>" title="<?=__('tasks_list_nolang_fr')?>">
-          <?=__icon('lang_fr', is_small: true, class: 'valign_middle', alt: 'FR', title: __('tasks_list_nolang_fr'))?>
           <?php } if($task_list[$i]['deleted']) { ?>
           <?=__icon('delete', is_small: true, class: 'valign_middle', alt: 'X', title: __('tasks_list_deleted'), use_dark: true)?>
           <?php } if($task_list[$i]['private']) { ?>
