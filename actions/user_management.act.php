@@ -82,7 +82,7 @@ function admin_account_deactivate( string $username ) : mixed
   irc_bot_send_message("$mod_nick_raw has deleted the account of $username_raw - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
 
   // Discord message
-  discord_send_message("$mod_nick_raw has deleted the account of $username_raw".PHP_EOL.$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
+  discord_send_message("$mod_nick_raw has deleted the account of $username_raw".PHP_EOL."<".$GLOBALS['website_url']."pages/nobleme/activity?mod>", 'mod');
 
   // Return that all went well
   return NULL;
@@ -145,7 +145,7 @@ function admin_account_reactivate( string $user_id ) : mixed
   irc_bot_send_message("$admin_nick_raw has reactivated the deleted account of $username_raw - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
 
   // Discord message
-  discord_send_message("$admin_nick_raw has reactivated the deleted account of $username_raw".PHP_EOL.$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
+  discord_send_message("$admin_nick_raw has reactivated the deleted account of $username_raw".PHP_EOL."<".$GLOBALS['website_url']."pages/nobleme/activity?mod>", 'mod');
 
   // Return that all went well
   return NULL;
@@ -283,7 +283,7 @@ function admin_account_rename(  string  $username     ,
   irc_bot_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw - ".$GLOBALS['website_url']."pages/users/".$user_id, 'mod');
 
   // Discord message
-  discord_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw".PHP_EOL.$GLOBALS['website_url']."pages/users/".$user_id, 'mod');
+  discord_send_message("$mod_nick_raw has renamed $username_raw to $new_username_raw".PHP_EOL."<".$GLOBALS['website_url']."pages/users/".$user_id.">", 'mod');
 
   // Return that all went well
   return NULL;
@@ -360,7 +360,7 @@ function admin_account_change_password( string  $username ,
   irc_bot_send_message("$mod_nick_raw has changed $username_raw's password - ".$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
 
   // Discord message
-  discord_send_message("$mod_nick_raw has changed $username_raw's password".PHP_EOL.$GLOBALS['website_url']."pages/nobleme/activity?mod", 'mod');
+  discord_send_message("$mod_nick_raw has changed $username_raw's password".PHP_EOL."<".$GLOBALS['website_url']."pages/nobleme/activity?mod>", 'mod');
 
   // Return that all went well
   return NULL;
@@ -443,7 +443,7 @@ function admin_account_change_rights( string  $username ,
     irc_bot_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'mod');
 
     // Discord message
-    discord_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw".PHP_EOL.$GLOBALS['website_url']."pages/users/admins", 'mod');
+    discord_send_message("$username_raw has been removed from the administrative team by $admin_nick_raw".PHP_EOL."<".$GLOBALS['website_url']."pages/users/admins>", 'mod');
   }
 
   // Promotion to moderator
@@ -479,7 +479,7 @@ function admin_account_change_rights( string  $username ,
     irc_bot_send_message("$username_raw has been promoted to moderator by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'mod');
 
     // Discord message
-    discord_send_message("$username_raw has been promoted to moderator by $admin_nick_raw".PHP_EOL.$GLOBALS['website_url']."pages/users/admins", 'mod');
+    discord_send_message("$username_raw has been promoted to moderator by $admin_nick_raw".PHP_EOL."<".$GLOBALS['website_url']."pages/users/admins>", 'mod');
   }
 
   // Promotion to administrator
@@ -511,7 +511,7 @@ function admin_account_change_rights( string  $username ,
     irc_bot_send_message("$username_raw has been promoted to administrator by $admin_nick_raw - ".$GLOBALS['website_url']."pages/users/admins", 'mod');
 
     // Discord message
-    discord_send_message("$username_raw has been promoted to administrator by $admin_nick_raw".PHP_EOL.$GLOBALS['website_url']."pages/users/admins", 'mod');
+    discord_send_message("$username_raw has been promoted to administrator by $admin_nick_raw".PHP_EOL."<".$GLOBALS['website_url']."pages/users/admins>", 'mod');
   }
 
   // Return that all went well

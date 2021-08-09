@@ -8,9 +8,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  irc_channels_add                    Creates a new entry in the IRC channel list.                                 */
 /*  irc_channels_get                    Returns data regarder to an IRC channel.                                     */
 /*  irc_channels_list                   Returns a list of IRC channels.                                              */
+/*  irc_channels_add                    Creates a new entry in the IRC channel list.                                 */
 /*  irc_channels_edit                   Modifies an existing IRC channel.                                            */
 /*  irc_channels_delete                 Hard deletes an IRC channel.                                                 */
 /*                                                                                                                   */
@@ -33,6 +33,96 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  discord_webhook_send_message        Sends a message through the Discord webhook from the admin interface.        */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+
+/**
+ * Returns data related to an IRC channel.
+ *
+ * @param   int         $channel_id   The channel's id.
+ *
+ * @return  array|null                An array containing related data, or null if it does not exist.
+ */
+
+function irc_channels_get( int $channel_id ) : mixed
+{
+  // Sanitize the data
+  $channel_id = sanitize($channel_id, 'int', 0);
+
+  // Check if the channel exists
+  if(!database_row_exists('irc_channels', $channel_id))
+    return NULL;
+
+  // Fetch the data
+  $dchannel = mysqli_fetch_array(query("  SELECT  irc_channels.name           AS 'c_name'     ,
+                                                  irc_channels.channel_type   AS 'c_type'     ,
+                                                  irc_channels.languages      AS 'c_lang'     ,
+                                                  irc_channels.description_en AS 'c_desc_en'  ,
+                                                  irc_channels.description_fr AS 'c_desc_fr'
+                                          FROM    irc_channels
+                                          WHERE   irc_channels.id = '$channel_id' "));
+
+  // Assemble an array with the data
+  $data['name']     = sanitize_output($dchannel['c_name']);
+  $data['type']     = sanitize_output($dchannel['c_type']);
+  $data['lang_en']  = str_contains($dchannel['c_lang'], 'EN');
+  $data['lang_fr']  = str_contains($dchannel['c_lang'], 'FR');
+  $data['desc_en']  = sanitize_output($dchannel['c_desc_en']);
+  $data['desc_fr']  = sanitize_output($dchannel['c_desc_fr']);
+
+  // Return the data
+  return $data;
+}
+
+
+
+
+/**
+ * Returns a list of IRC channels.
+ *
+ * @return  array   An array containing IRC channels.
+ */
+
+function irc_channels_list() : array
+{
+  // Check if the required files have been included
+  require_included_file('integrations.lang.php');
+
+  // Fetch the user's language
+  $lang = user_get_language();
+
+  // Fetch the IRC channels
+  $qchannels = query("  SELECT    irc_channels.id             AS 'c_id'       ,
+                                  irc_channels.name           AS 'c_name'     ,
+                                  irc_channels.channel_type   AS 'c_type'     ,
+                                  irc_channels.languages      AS 'c_lang'     ,
+                                  irc_channels.description_en AS 'c_desc_en'  ,
+                                  irc_channels.description_fr AS 'c_desc_fr'
+                        FROM      irc_channels
+                        ORDER BY  irc_channels.channel_type DESC  ,
+                                  irc_channels.name         ASC   ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qchannels); $i++)
+  {
+    $data[$i]['id']       = $row['c_id'];
+    $data[$i]['name']     = sanitize_output($row['c_name']);
+    $temp                 = irc_channels_type_get($row['c_type']);
+    $data[$i]['type']     = sanitize_output($temp['name']);
+    $data[$i]['type_css'] = sanitize_output($temp['css']);
+    $data[$i]['lang_en']  = str_contains($row['c_lang'], 'EN');
+    $data[$i]['lang_fr']  = str_contains($row['c_lang'], 'FR');
+    $temp                 = ($lang == 'EN') ? $row['c_desc_en'] : $row['c_desc_fr'];
+    $data[$i]['desc']     = sanitize_output($temp);
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
 
 
 /**
@@ -124,96 +214,6 @@ function irc_channels_add( array $contents ) : mixed
 
   // Return the channel's id
   return $channel_id;
-}
-
-
-
-
-/**
- * Returns data related to an IRC channel.
- *
- * @param   int         $channel_id   The channel's id.
- *
- * @return  array|null                An array containing related data, or null if it does not exist.
- */
-
-function irc_channels_get( int $channel_id ) : mixed
-{
-  // Sanitize the data
-  $channel_id = sanitize($channel_id, 'int', 0);
-
-  // Check if the channel exists
-  if(!database_row_exists('irc_channels', $channel_id))
-    return NULL;
-
-  // Fetch the data
-  $dchannel = mysqli_fetch_array(query("  SELECT  irc_channels.name           AS 'c_name'     ,
-                                                  irc_channels.channel_type   AS 'c_type'     ,
-                                                  irc_channels.languages      AS 'c_lang'     ,
-                                                  irc_channels.description_en AS 'c_desc_en'  ,
-                                                  irc_channels.description_fr AS 'c_desc_fr'
-                                          FROM    irc_channels
-                                          WHERE   irc_channels.id = '$channel_id' "));
-
-  // Assemble an array with the data
-  $data['name']     = sanitize_output($dchannel['c_name']);
-  $data['type']     = sanitize_output($dchannel['c_type']);
-  $data['lang_en']  = str_contains($dchannel['c_lang'], 'EN');
-  $data['lang_fr']  = str_contains($dchannel['c_lang'], 'FR');
-  $data['desc_en']  = sanitize_output($dchannel['c_desc_en']);
-  $data['desc_fr']  = sanitize_output($dchannel['c_desc_fr']);
-
-  // Return the data
-  return $data;
-}
-
-
-
-
-/**
- * Returns a list of IRC channels.
- *
- * @return  array   An array containing IRC channels.
- */
-
-function irc_channels_list() : array
-{
-  // Check if the required files have been included
-  require_included_file('integrations.lang.php');
-
-  // Fetch the user's language
-  $lang = user_get_language();
-
-  // Fetch the IRC channels
-  $qchannels = query("  SELECT    irc_channels.id             AS 'c_id'       ,
-                                  irc_channels.name           AS 'c_name'     ,
-                                  irc_channels.channel_type   AS 'c_type'     ,
-                                  irc_channels.languages      AS 'c_lang'     ,
-                                  irc_channels.description_en AS 'c_desc_en'  ,
-                                  irc_channels.description_fr AS 'c_desc_fr'
-                        FROM      irc_channels
-                        ORDER BY  irc_channels.channel_type DESC  ,
-                                  irc_channels.name         ASC   ");
-
-  // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qchannels); $i++)
-  {
-    $data[$i]['id']       = $row['c_id'];
-    $data[$i]['name']     = sanitize_output($row['c_name']);
-    $temp                 = irc_channels_type_get($row['c_type']);
-    $data[$i]['type']     = sanitize_output($temp['name']);
-    $data[$i]['type_css'] = sanitize_output($temp['css']);
-    $data[$i]['lang_en']  = str_contains($row['c_lang'], 'EN');
-    $data[$i]['lang_fr']  = str_contains($row['c_lang'], 'FR');
-    $temp                 = ($lang == 'EN') ? $row['c_desc_en'] : $row['c_desc_fr'];
-    $data[$i]['desc']     = sanitize_output($temp);
-  }
-
-  // Add the number of rows to the data
-  $data['rows'] = $i;
-
-  // Return the prepared data
-  return $data;
 }
 
 

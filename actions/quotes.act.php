@@ -8,11 +8,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  quotes_add                    Creates a new unvalidated quote proposal.                                          */
 /*  quotes_get                    Returns data related to a quote.                                                   */
 /*  quotes_get_linked_users       Returns a list of users linked to a quote.                                         */
 /*  quotes_get_random_id          Returns a random quote ID.                                                         */
 /*  quotes_list                   Returns a list of quotes.                                                          */
+/*  quotes_add                    Creates a new unvalidated quote proposal.                                          */
 /*  quotes_edit                   Modifies an existing quote.                                                        */
 /*  quotes_delete                 Deletes a quote.                                                                   */
 /*  quotes_restore                Restores a soft deleted quote.                                                     */
@@ -26,75 +26,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_setting_quotes           Returns the quote related settings of the current user.                            */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
-
-/**
- * Creates a new unvalidated quote proposal.
- *
- * @param   string      $body   The quote proposal's contents.
- *
- * @return  string|int          A string if an error happened, or the newly created quote's id if all went well.
- */
-
-function quotes_add( string $body ) : mixed
-{
-  // Require the user to be logged in to run this action
-  user_restrict_to_users();
-
-  // Sanitize the data
-  $body_raw = $body;
-  $body     = sanitize($body, 'string');
-
-  // Stop here if no quote was provided
-  if(!$body)
-    return __('quotes_add_empty');
-
-  // Check for flood
-  flood_check();
-
-  // Fetch data regarding the proposal
-  $timestamp      = sanitize(time(), 'int', 0);
-  $submitter_id   = sanitize(user_get_id(), 'int', 0);
-  $submitter_nick = user_get_username();
-  $is_admin       = user_is_administrator();
-  $language       = sanitize(user_get_language(), 'string');
-
-  // Create the quote
-  query(" INSERT INTO quotes
-          SET         quotes.fk_users_submitter = '$submitter_id' ,
-                      quotes.submitted_at       = '$timestamp'    ,
-                      quotes.language           = '$language'     ,
-                      quotes.body               = '$body'         ");
-
-  // Grab the newly created quote's id
-  $quote_id = query_id();
-
-  // Notify admins of the new proposal
-  if(!$is_admin)
-  {
-    // Prepare the admin mail
-    $path       = root_path();
-    $mail_body  = <<<EOT
-A new quote proposal has been made by [url=${path}pages/users/${submitter_id}]${submitter_nick}[/url] : [url=${path}pages/quotes/${quote_id}][Quote #${quote_id}][/url]
-
-[quote=${submitter_nick}]${body_raw}[/quote]
-EOT;
-
-    // Send the admin mail
-    private_message_send( 'Quote proposal'    ,
-                          $mail_body          ,
-                          recipient: 0        ,
-                          sender: 0           ,
-                          is_admin_only: true );
-
-    // IRC notification
-    irc_bot_send_message("Quote proposal #$quote_id has been made by $submitter_nick: ".$GLOBALS['website_url']."pages/admin/inbox", "admin");
-  }
-
-  // Return the new quote's id
-  return $quote_id;
-}
-
-
 
 
 /**
@@ -343,6 +274,76 @@ function quotes_list( ?array  $search         = array() ,
 
 
 /**
+ * Creates a new unvalidated quote proposal.
+ *
+ * @param   string      $body   The quote proposal's contents.
+ *
+ * @return  string|int          A string if an error happened, or the newly created quote's id if all went well.
+ */
+
+function quotes_add( string $body ) : mixed
+{
+  // Require the user to be logged in to run this action
+  user_restrict_to_users();
+
+  // Sanitize the data
+  $body_raw = $body;
+  $body     = sanitize($body, 'string');
+
+  // Stop here if no quote was provided
+  if(!$body)
+    return __('quotes_add_empty');
+
+  // Check for flood
+  flood_check();
+
+  // Fetch data regarding the proposal
+  $timestamp      = sanitize(time(), 'int', 0);
+  $submitter_id   = sanitize(user_get_id(), 'int', 0);
+  $submitter_nick = user_get_username();
+  $is_admin       = user_is_administrator();
+  $language       = sanitize(user_get_language(), 'string');
+
+  // Create the quote
+  query(" INSERT INTO quotes
+          SET         quotes.fk_users_submitter = '$submitter_id' ,
+                      quotes.submitted_at       = '$timestamp'    ,
+                      quotes.language           = '$language'     ,
+                      quotes.body               = '$body'         ");
+
+  // Grab the newly created quote's id
+  $quote_id = query_id();
+
+  // Notify admins of the new proposal
+  if(!$is_admin)
+  {
+    // Prepare the admin mail
+    $path       = root_path();
+    $mail_body  = <<<EOT
+A new quote proposal has been made by [url=${path}pages/users/${submitter_id}]${submitter_nick}[/url] : [url=${path}pages/quotes/${quote_id}][Quote #${quote_id}][/url]
+
+[quote=${submitter_nick}]${body_raw}[/quote]
+EOT;
+
+    // Send the admin mail
+    private_message_send( 'Quote proposal'    ,
+                          $mail_body          ,
+                          recipient: 0        ,
+                          sender: 0           ,
+                          is_admin_only: true );
+
+    // IRC notification
+    irc_bot_send_message("Quote proposal #$quote_id has been made by $submitter_nick: ".$GLOBALS['website_url']."pages/admin/inbox", "admin");
+  }
+
+  // Return the new quote's id
+  return $quote_id;
+}
+
+
+
+
+/**
  * Modifies an existing quote.
  *
  * @param   int     $quote_id     The quote's id.
@@ -556,9 +557,9 @@ EOT;
 
   // Notify Discord
   if($dquote['q_lang'] == 'EN')
-    discord_send_message("A new quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation anglophone a été ajoutée à la collection de citations de NoBleme.".PHP_EOL.$GLOBALS['website_url']."pages/quotes/$quote_id", 'main');
+    discord_send_message("A new quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation anglophone a été ajoutée à la collection de citations de NoBleme.".PHP_EOL."<".$GLOBALS['website_url']."pages/quotes/$quote_id>", 'main');
   else if($dquote['q_lang'] == 'FR')
-    discord_send_message("A new french speaking quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation a été ajoutée à la collection de citations de NoBleme.".PHP_EOL.$GLOBALS['website_url']."pages/quotes/$quote_id", 'main');
+    discord_send_message("A new french speaking quote has been added to NoBleme's quote database.".PHP_EOL."Une nouvelle citation a été ajoutée à la collection de citations de NoBleme.".PHP_EOL."<".$GLOBALS['website_url']."pages/quotes/$quote_id>", 'main');
 
   // All went well
   return NULL;

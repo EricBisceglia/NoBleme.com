@@ -1910,30 +1910,22 @@ Le bot NoBleme officiel partage toute activité intéressante venant du site sur
 EOT
 );
 
-___('irc_faq_bots_private_title',   'EN', "Non official bots");
-___('irc_faq_bots_private_title',   'FR', "Bots non officiels");
+___('irc_faq_bots_private_title',   'EN', "Non official bot");
+___('irc_faq_bots_private_title',   'FR', "Bot non officiels");
 ___('irc_faq_bots_private_body_1',  'EN', <<<EOT
-A non official bot can be found in each of the two major {{link|pages/social/irc?channels|channels}} of NoBleme's IRC server. Both of these are interactive bots, which have a variety of uses - observe how the regulars use the bots and you might find them useful for your own needs!
+A non official bot can be found in every major {{link|pages/social/irc?channels|channel}} of NoBleme's IRC server. It is an interactive bot, which has a variety of uses - observe how the regulars use it and you might find it useful for your own needs!
 EOT
 );
 ___('irc_faq_bots_private_body_1',  'FR', <<<EOT
-Un bot IRC non officiel se trouve sur chacun des deux {{link|pages/social/irc?channels|canaux}} principaux du serveur IRC NoBleme. Il s'agit de bots interactifs, qui peuvent s'utiliser de plusieurs façons - observez les utilisations qu'en font les personnes habituées, peut-être que vous leur trouverez une utilité !
+Un bot IRC non officiel se trouve sur chaque {{link|pages/social/irc?channels|canal}} important du serveur IRC NoBleme. Il s'agit d'un bot interactif, qui peut s'utiliser de plusieurs façons - observez les utilisations qu'en font les personnes habituées, peut-être que vous lui trouverez une utilité !
 EOT
 );
 ___('irc_faq_bots_private_body_2',  'EN', <<<EOT
-On the #english channel, the bot nicknamed <span class="bold">Chocolatine</span> gives a few quality of life features missing on IRC: previews links, offers a translation service, converts timezones, gives the weather on demand, and more. It is an instance of the {{external|https://sopel.chat/|Sopel}} bot maintained by a user nicknamed Exirel.
+Nicknamed <span class="bold">Chocolatine</span>, its role is to give a few quality of life features missing on IRC: previews links, offers a translation service, converts timezones, gives the weather on demand, and more. It is an instance of {{external|https://sopel.chat/|Sopel}} maintained by a user nicknamed Exirel.
 EOT
 );
 ___('irc_faq_bots_private_body_2',  'FR', <<<EOT
-Sur le canal #NoBleme, le bot portant le pseudonyme <span class="bold">Akundo</span> protège des spammeurs, et possède quelques commandes sans utilité particulière. Il s'agit d'un {{external|https://fr.wikipedia.org/wiki/Eggdrop|Eggdrop}} maintenu par ThArGos.
-EOT
-);
-___('irc_faq_bots_private_body_3',  'EN', <<<EOT
-On the #NoBleme channel, the bot nicknamed <span class="bold">Akundo</span> offers flood protection services and has a few silly and useless built-in commands. It is an instance of the {{external|https://en.wikipedia.org/wiki/Eggdrop|Eggdrop}} bot maintained by the user ThArGos.
-EOT
-);
-___('irc_faq_bots_private_body_3',  'FR', <<<EOT
-Sur le canal #english, le bot portant le pseudonyme <span class="bold">Chocolatine</span> offre des services de qualité de vie manquants sur IRC : prévisualisation de liens, traduction de messages, conversion de fuseaux horaires, météo à la demande, etc. Il s'agit d'un {{external|https://sopel.chat/|Sopel}} maintenu par Exirel.
+Il porte le pseudonyme <span class="bold">Chocolatine</span> et offre des services de qualité de vie manquants sur IRC : prévisualisation de liens, traduction de messages, conversion de fuseaux horaires, météo à la demande, etc. Il s'agit d'un {{external|https://sopel.chat/|Sopel}} maintenu par Exirel.
 EOT
 );
 

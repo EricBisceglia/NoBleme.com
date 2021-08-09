@@ -1155,10 +1155,6 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('irc_faq_bots_private_body_2')?>
   </p>
 
-  <p>
-    <?=__('irc_faq_bots_private_body_3')?>
-  </p>
-
   <h5 class="bigpadding_top">
     <?=__('irc_faq_bots_custom_title')?>
   </h5>

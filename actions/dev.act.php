@@ -587,11 +587,33 @@ function dev_blogs_add( array $contents ) : mixed
   // Fetch the newly created devblog's id
   $blog_id = query_id();
 
+  // Determine the blog's language
+  $activity_lang  = ($blog_title_en) ? 'EN' : '';
+  $activity_lang .= ($blog_title_fr) ? 'FR' : '';
+
+  // Activity log
+  log_activity( 'dev_blog'                                ,
+                language:             $activity_lang      ,
+                activity_id:          $blog_id            ,
+                activity_summary_en:  $blog_title_en_raw  ,
+                activity_summary_fr:  $blog_title_fr_raw  );
+
   // IRC bot messages in the appropriate languages
   if($blog_title_en)
     irc_bot_send_message("A new devblog has been posted: $blog_title_en_raw - ".$GLOBALS['website_url']."pages/dev/blog?id=".$blog_id, 'english');
   if($blog_title_fr)
     irc_bot_send_message("Un nouveau devblog a été publié : $blog_title_fr_raw - ".$GLOBALS['website_url']."pages/dev/blog?id=".$blog_id, 'french');
+
+  // Discord message
+  $discord_message = '';
+  if($blog_title_en)
+    $discord_message  = "New development blog: $blog_title_en_raw";
+  if($blog_title_en && $blog_title_fr)
+    $discord_message .= PHP_EOL;
+  if($blog_title_fr)
+    $discord_message .= "Nouveau blog de développement : $blog_title_fr_raw";
+  $discord_message   .= PHP_EOL."@here <".$GLOBALS['website_url']."pages/dev/blog?id=".$blog_id.">";
+  discord_send_message($discord_message, 'main');
 
   // Return the blog's id
   return $blog_id;
@@ -695,6 +717,10 @@ function dev_blogs_delete(  int   $blog_id                ,
   else
     query(" DELETE FROM dev_blogs
             WHERE       dev_blogs.id = '$blog_id' ");
+
+  // Delete activity log
+  log_activity_delete(  'dev_blog'            ,
+                        activity_id: $blog_id );
 
   // All went well
   return NULL;
