@@ -198,3 +198,25 @@ ___('tasks_add_preview_fr', 'FR', "Prévisualisation (français);");
 // Errors
 ___('tasks_add_error_title',  'EN', "The task must have a title in either french or english");
 ___('tasks_add_error_title',  'FR', "La tâche doit avoir un titre en français ou en anglais");
+
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                             CATEGORIES AND MILESTONES                                             */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Manage categories
+___('tasks_categories_title_en',  'EN', "Category title (english)");
+___('tasks_categories_title_en',  'FR', "Nom de la catégorie (anglais)");
+___('tasks_categories_title_fr',  'EN', "Category title (french)");
+___('tasks_categories_title_fr',  'FR', "Nom de la catégorie (français)");
+___('tasks_categories_edit',      'EN', "Edit category");
+___('tasks_categories_edit',      'FR', "Modifier la catégorie");
+___('tasks_categories_close',     'EN', "Close this form");
+___('tasks_categories_close',     'FR', "Fermer ce formulaire");
+___('tasks_categories_delete',    'EN', "Confirm the irreversible deletion of this task category");
+___('tasks_categories_delete',    'FR', "Confirmer la suppression irréversible de cette catégorie de tâches");

@@ -13,6 +13,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  tasks_add                 Creates a new task.                                                                    */
 /*                                                                                                                   */
 /*  tasks_categories_list     Fetches a list of task categories.                                                     */
+/*  tasks_categories_add      Creates a new task category.                                                           */
+/*  tasks_categories_edit     Modifies a task category.                                                              */
+/*  tasks_categories_delete   Deletes a task category.                                                               */
 /*                                                                                                                   */
 /*  tasks_milestones_list     Fetches a list of task milestones.                                                     */
 /*                                                                                                                   */
@@ -422,7 +425,9 @@ function tasks_categories_list() : array
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch the categories
-  $qcategories  = " SELECT    dev_tasks_categories.id           AS 'c_id' ,
+  $qcategories  = " SELECT    dev_tasks_categories.id           AS 'c_id'       ,
+                              dev_tasks_categories.title_en     AS 'c_title_en' ,
+                              dev_tasks_categories.title_fr     AS 'c_title_fr' ,
                               dev_tasks_categories.title_$lang  AS 'c_title'
                     FROM      dev_tasks_categories
                     ORDER BY  dev_tasks_categories.title_$lang  ASC ";
@@ -433,8 +438,10 @@ function tasks_categories_list() : array
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
   {
-    $data[$i]['id']     = sanitize_output($row['c_id']);
-    $data[$i]['title']  = sanitize_output($row['c_title']);
+    $data[$i]['id']       = sanitize_output($row['c_id']);
+    $data[$i]['title']    = sanitize_output($row['c_title']);
+    $data[$i]['title_en'] = sanitize_output($row['c_title_en']);
+    $data[$i]['title_fr'] = sanitize_output($row['c_title_fr']);
   }
 
   // Add the number of rows to the data
@@ -442,6 +449,119 @@ function tasks_categories_list() : array
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Creates a new task category.
+ *
+ * @param   array   $contents   The contents of the task category.
+ *
+ * @return  void
+ */
+
+function tasks_categories_add( array $contents ) : void
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string') : '';
+  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
+
+  // Set default values in case some are missing
+  $title_en = ($title_en) ? $title_en : '-';
+  $title_fr = ($title_fr) ? $title_fr : '-';
+
+  // Create the task category
+  query(" INSERT INTO dev_tasks_categories
+          SET         dev_tasks_categories.title_en = '$title_en' ,
+                      dev_tasks_categories.title_fr = '$title_fr' ");
+}
+
+
+
+
+/**
+ * Modifies a task category.
+ *
+ * @param   int     $category_id  The id of the task category to edit.
+ * @param   array   $contents     The updated task category contents.
+ *
+ * @return  void
+ */
+
+function tasks_categories_edit( int   $category_id  = 0       ,
+                                array $contents     = array() ) : void
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the task category id
+  $category_id = sanitize($category_id, 'int', 0);
+
+  // Stop here if the task category doesn't exist
+  if(!database_row_exists('dev_tasks_categories', $category_id))
+    return;
+
+  // Sanitize and prepare the data
+  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string') : '';
+  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
+
+  // Update the task category
+  query(" UPDATE  dev_tasks_categories
+          SET     dev_tasks_categories.title_en = '$title_en' ,
+                  dev_tasks_categories.title_fr = '$title_fr'
+          WHERE   dev_tasks_categories.id       = '$category_id' ");
+}
+
+
+
+
+/**
+ * Deletes a task category
+ *
+ * @param   int   $category_id  The id of the task category to delete.
+ *
+ * @return  void
+ */
+
+function tasks_categories_delete( int $category_id = 0 ) : void
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the task category id
+  $category_id = sanitize($category_id, 'int', 0);
+
+  // Fetch the category name
+  $dcategory = mysqli_fetch_array(query(" SELECT  dev_tasks_categories.title_en  AS 'tc_name'
+                                          FROM    dev_tasks_categories
+                                          WHERE   dev_tasks_categories.id = '$category_id' "));
+  $category_name = $dcategory['tc_name'];
+
+  // Fetch the number of tasks linked to the category
+  $dtasks = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 't_count'
+                                        FROM    dev_tasks
+                                        WHERE   dev_tasks.fk_dev_tasks_categories = '$category_id' "));
+  $task_count = $dtasks['t_count'];
+
+  // Unlink all tasks currently linked to this category
+  query(" UPDATE  dev_tasks
+          SET     dev_tasks.fk_dev_tasks_categories = 0
+          WHERE   dev_tasks.fk_dev_tasks_categories = '$category_id' ");
+
+  // Delete the task category
+  query(" DELETE FROM dev_tasks_categories
+          WHERE       dev_tasks_categories.id = '$category_id' ");
+
+  // Fetch the username of the admin deleting the category
+  $admin_name = user_get_username();
+
+  // IRC bot message
+  irc_bot_send_message("$admin_name deleted the task category named \"$category_name\" - $task_count task(s) were linked to it and are now uncategorized - ".$GLOBALS['website_url']."pages/tasks/list", 'admin');
 }
 
 

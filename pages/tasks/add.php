@@ -20,8 +20,9 @@ $page_url         = "pages/tasks/new";
 $page_title_en    = "New task";
 $page_title_fr    = "Nouvelle tâche";
 
-// Extra CSS
-$css = array('tasks');
+// Extra JS & CSS
+$js   = array('common/toggle', 'tasks/edit');
+$css  = array('tasks');
 
 
 
@@ -111,7 +112,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <fieldset>
 
       <div class="flexcontainer smallpadding_bot">
-        <span style="flex: 10;">
+        <div style="flex: 10;">
 
           <div class="smallpadding_bot">
             <label for="tasks_add_title_en"><?=__('tasks_add_title_en')?></label>
@@ -121,11 +122,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <label for="tasks_add_body_en"><?=__('tasks_add_body_en')?></label>
           <textarea class="indiv" id="tasks_add_body_en" name="tasks_add_body_en"><?=$tasks_add_body_en?></textarea>
 
-        </span>
-        <span class="flex">
+        </div>
+        <div class="flex">
           &nbsp;
-        </span>
-        <span style="flex: 10;">
+        </div>
+        <div style="flex: 10;">
 
           <div class="smallpadding_bot">
             <label for="tasks_add_title_fr"><?=__('tasks_add_title_fr')?></label>
@@ -135,7 +136,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <label for="tasks_add_body_fr"><?=__('tasks_add_body_fr')?></label>
           <textarea class="indiv" id="tasks_add_body_fr" name="tasks_add_body_fr"><?=$tasks_add_body_fr?></textarea>
 
-        </span>
+        </div>
       </div>
 
       <div class="smallpadding_bot">
@@ -147,7 +148,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </select>
       </div>
 
-      <div class="flexcontainer smallpadding_bot">
+      <div class="flexcontainer smallpadding_bot" id="task_categories_selector">
+
+        <?php } if(!isset($_POST['reload_milestones'])) { ?>
+
         <div class="tasks_edit_category">
 
           <label for="tasks_add_category"><?=__('tasks_list_category')?></label>
@@ -159,14 +163,22 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </select>
 
         </div>
-        <div class="flex align_center tasks_edit_category_icon">
+        <div class="flex align_center tasks_edit_category_icon nowrap">
 
-          <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials')?>
+          <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_categories_popin();')?>
+
+          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_categories_reload();')?>
 
         </div>
+
+        <?php } if(!page_is_fetched_dynamically()) { ?>
+
       </div>
 
-      <div class="flexcontainer smallpadding_bot">
+      <div class="flexcontainer smallpadding_bot" id="task_milestones_selector">
+
+        <?php } if(!isset($_POST['reload_categories'])) {?>
+
         <div class="tasks_edit_category">
 
           <label for="tasks_add_milestone"><?=__('tasks_add_milestone')?></label>
@@ -178,11 +190,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           </select>
 
         </div>
-        <div class="flex align_center tasks_edit_category_icon">
+        <div class="flex align_center tasks_edit_category_icon nowrap">
 
-          <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials')?>
+          <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced')?>
+
+          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_milestones_reload();')?>
 
         </div>
+
+        <?php } if(!page_is_fetched_dynamically()) { ?>
+
       </div>
 
       <input type="checkbox" id="tasks_add_private" name="tasks_add_private"<?=$tasks_add_private?>>
@@ -237,6 +254,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <?php } ?>
 
+</div>
+
+<div id="task_categories_popin" class="popin_background">
+  <div class="popin_body">
+    <a class="popin_close" onclick="popin_close('task_categories_popin');">&times;</a>
+    <div id="task_categories_popin_body">
+      &nbsp;
+    </div>
+  </div>
 </div>
 
 <?php /***************************************************************************************************************/
