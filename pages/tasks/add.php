@@ -192,7 +192,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </div>
         <div class="flex align_center tasks_edit_category_icon nowrap">
 
-          <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced')?>
+          <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_milestones_popin();')?>
 
           <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_milestones_reload();')?>
 
@@ -260,6 +260,15 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <div class="popin_body">
     <a class="popin_close" onclick="popin_close('task_categories_popin');">&times;</a>
     <div id="task_categories_popin_body">
+      &nbsp;
+    </div>
+  </div>
+</div>
+
+<div id="task_milestones_popin" class="popin_background">
+  <div class="popin_body">
+    <a class="popin_close" onclick="popin_close('task_milestones_popin');">&times;</a>
+    <div id="task_milestones_popin_body">
       &nbsp;
     </div>
   </div>

@@ -18,6 +18,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  tasks_categories_delete   Deletes a task category.                                                               */
 /*                                                                                                                   */
 /*  tasks_milestones_list     Fetches a list of task milestones.                                                     */
+/*  tasks_milestones_add      Creates a new task milestone.                                                          */
+/*  tasks_milestones_edit     Modifies a task milestone.                                                             */
+/*  tasks_milestones_delete   Deletes a task milestone.                                                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -579,8 +582,13 @@ function tasks_milestones_list() : array
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch the milestones
-  $qmilestones  = " SELECT    dev_tasks_milestones.id           AS 'm_id' ,
-                              dev_tasks_milestones.title_$lang  AS 'm_title'
+  $qmilestones  = " SELECT    dev_tasks_milestones.id             AS 'm_id'       ,
+                              dev_tasks_milestones.title_en       AS 'm_title_en' ,
+                              dev_tasks_milestones.title_fr       AS 'm_title_fr' ,
+                              dev_tasks_milestones.title_$lang    AS 'm_title'    ,
+                              dev_tasks_milestones.sorting_order  AS 'm_order'    ,
+                              dev_tasks_milestones.summary_en     AS 'm_body_en'  ,
+                              dev_tasks_milestones.summary_fr     AS 'm_body_fr'
                     FROM      dev_tasks_milestones
                     ORDER BY  dev_tasks_milestones.sorting_order DESC ";
 
@@ -590,8 +598,13 @@ function tasks_milestones_list() : array
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qmilestones); $i++)
   {
-    $data[$i]['id']     = sanitize_output($row['m_id']);
-    $data[$i]['title']  = sanitize_output($row['m_title']);
+    $data[$i]['id']       = sanitize_output($row['m_id']);
+    $data[$i]['title']    = sanitize_output($row['m_title']);
+    $data[$i]['title_en'] = sanitize_output($row['m_title_en']);
+    $data[$i]['title_fr'] = sanitize_output($row['m_title_fr']);
+    $data[$i]['order']    = sanitize_output($row['m_order']);
+    $data[$i]['body_en']  = sanitize_output($row['m_body_en']);
+    $data[$i]['body_fr']  = sanitize_output($row['m_body_fr']);
   }
 
   // Add the number of rows to the data
@@ -599,4 +612,125 @@ function tasks_milestones_list() : array
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Creates a new task milestone.
+ *
+ * @param   array   $contents   The contents of the task milestone.
+ *
+ * @return  void
+ */
+
+function tasks_milestones_add( array $contents ) : void
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $order    = (isset($contents['order']))     ? sanitize($contents['order'], 'int', 0)    : 0;
+  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string') : '';
+  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
+
+  // Set default values in case some are missing
+  $title_en = ($title_en) ? $title_en : '-';
+  $title_fr = ($title_fr) ? $title_fr : '-';
+
+  // Create the task milestone
+  query(" INSERT INTO dev_tasks_milestones
+          SET         dev_tasks_milestones.sorting_order  = '$order'  ,
+                      dev_tasks_milestones.title_en       = '$title_en' ,
+                      dev_tasks_milestones.title_fr       = '$title_fr' ");
+}
+
+
+
+
+/**
+ * Modifies a task milestone.
+ *
+ * @param   int     $milestone_id   The id of the task milestone to edit.
+ * @param   array   $contents       The updated task milestone contents.
+ *
+ * @return  void
+ */
+
+function tasks_milestones_edit( int   $milestone_id = 0       ,
+                                array $contents     = array() ) : void
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the task milestone id
+  $milestone_id = sanitize($milestone_id, 'int', 0);
+
+  // Stop here if the task milestone doesn't exist
+  if(!database_row_exists('dev_tasks_milestones', $milestone_id))
+    return;
+
+  // Sanitize and prepare the data
+  $order    = (isset($contents['order']))     ? sanitize($contents['order'], 'int', 0)    : 0;
+  $title_en = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string') : '';
+  $title_fr = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string') : '';
+  $body_en  = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')  : '';
+  $body_fr  = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')  : '';
+
+  // Update the task milestone
+  query(" UPDATE  dev_tasks_milestones
+          SET     dev_tasks_milestones.sorting_order  = '$order'    ,
+                  dev_tasks_milestones.title_en       = '$title_en' ,
+                  dev_tasks_milestones.title_fr       = '$title_fr' ,
+                  dev_tasks_milestones.summary_en     = '$body_en'  ,
+                  dev_tasks_milestones.summary_fr     = '$body_fr'
+          WHERE   dev_tasks_milestones.id             = '$milestone_id' ");
+}
+
+
+
+
+/**
+ * Deletes a task milestone.
+ *
+ * @param   int   $milestone_id   The id of the task milestone to delete.
+ *
+ * @return  void
+ */
+
+function tasks_milestones_delete( int $milestone_id = 0 ) : void
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the task milestone id
+  $milestone_id = sanitize($milestone_id, 'int', 0);
+
+  // Fetch the milestone name
+  $dmilestone = mysqli_fetch_array(query("  SELECT  dev_tasks_milestones.title_en AS 'tm_name'
+                                            FROM    dev_tasks_milestones
+                                            WHERE   dev_tasks_milestones.id = '$milestone_id' "));
+  $milestone_name = $dmilestone['tm_name'];
+
+  // Fetch the number of tasks linked to the milestone
+  $dtasks = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 't_count'
+                                        FROM    dev_tasks
+                                        WHERE   dev_tasks.fk_dev_tasks_milestones = '$milestone_id' "));
+  $task_count = $dtasks['t_count'];
+
+  // Unlink all tasks currently linked to this milestone
+  query(" UPDATE  dev_tasks
+          SET     dev_tasks.fk_dev_tasks_milestones = 0
+          WHERE   dev_tasks.fk_dev_tasks_milestones = '$milestone_id' ");
+
+  // Delete the task milestone
+  query(" DELETE FROM dev_tasks_milestones
+          WHERE       dev_tasks_milestones.id = '$milestone_id' ");
+
+  // Fetch the username of the admin deleting the milestone
+  $admin_name = user_get_username();
+
+  // IRC bot message
+  irc_bot_send_message("$admin_name deleted the task milestone named \"$milestone_name\" - $task_count task(s) were linked to it and are not roadmapped anymore - ".$GLOBALS['website_url']."pages/tasks/list", 'admin');
 }

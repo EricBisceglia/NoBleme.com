@@ -210,13 +210,30 @@ ___('tasks_add_error_title',  'FR', "La tâche doit avoir un titre en français 
 /*********************************************************************************************************************/
 
 // Manage categories
-___('tasks_categories_title_en',  'EN', "Category title (english)");
-___('tasks_categories_title_en',  'FR', "Nom de la catégorie (anglais)");
-___('tasks_categories_title_fr',  'EN', "Category title (french)");
-___('tasks_categories_title_fr',  'FR', "Nom de la catégorie (français)");
+___('tasks_categories_title_en',  'EN', "Category title in english");
+___('tasks_categories_title_en',  'FR', "Nom de la catégorie en anglais");
+___('tasks_categories_title_fr',  'EN', "Category title in french");
+___('tasks_categories_title_fr',  'FR', "Nom de la catégorie en français");
 ___('tasks_categories_edit',      'EN', "Edit category");
 ___('tasks_categories_edit',      'FR', "Modifier la catégorie");
 ___('tasks_categories_close',     'EN', "Close this form");
 ___('tasks_categories_close',     'FR', "Fermer ce formulaire");
 ___('tasks_categories_delete',    'EN', "Confirm the irreversible deletion of this task category");
 ___('tasks_categories_delete',    'FR', "Confirmer la suppression irréversible de cette catégorie de tâches");
+
+
+// Manage milestones
+___('tasks_milestones_order',     'EN', "Order");
+___('tasks_milestones_order',     'FR', "Classement");
+___('tasks_milestones_title_en',  'EN', "Milestone title in english");
+___('tasks_milestones_title_en',  'FR', "Nom de l'objectif en anglais");
+___('tasks_milestones_title_fr',  'EN', "Milestone title in french");
+___('tasks_milestones_title_fr',  'FR', "Nom de l'objectif en français");
+___('tasks_milestones_body_en',   'EN', "Milestone description in english ({{link|pages/doc/bbcodes|BBCodes}} allowed)");
+___('tasks_milestones_body_en',   'FR', "Description de l'objectif en anglais ({{link|pages/doc/bbcodes|BBCodes}} autorisés)");
+___('tasks_milestones_body_fr',   'EN', "Milestone description in french ({{link|pages/doc/bbcodes|BBCodes}} allowed)");
+___('tasks_milestones_body_fr',   'FR', "Description de l'objectif en français ({{link|pages/doc/bbcodes|BBCodes}} autorisés)");
+___('tasks_milestones_edit',      'EN', "Edit milestone");
+___('tasks_milestones_edit',      'FR', "Modifier l'objectif");
+___('tasks_milestones_delete',    'EN', "Confirm the irreversible deletion of this task milestone");
+___('tasks_milestones_delete',    'FR', "Confirmer la suppression irréversible de cet objectif de tâches");
