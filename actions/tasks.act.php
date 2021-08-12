@@ -11,6 +11,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  tasks_get                 Returns data related to a task.                                                        */
 /*  tasks_list                Fetches a list of tasks.                                                               */
 /*  tasks_add                 Creates a new task.                                                                    */
+/*  tasks_propose             Creates a new unvalidated task proposal.                                               */
 /*                                                                                                                   */
 /*  tasks_categories_list     Fetches a list of task categories.                                                     */
 /*  tasks_categories_add      Creates a new task category.                                                           */
@@ -88,6 +89,8 @@ function tasks_get( int $task_id ) : mixed
   $data['validated']      = $dtask['t_validated'];
   $data['public']         = $dtask['t_public'];
   $data['title']          = sanitize_output($dtask['t_title']);
+  $temp                   = ($dtask['t_title_en']) ? $dtask['t_title_en'] : $dtask['t_title_fr'];
+  $data['title_flex']     = sanitize_output($temp);
   $data['title_en_raw']   = $dtask['t_title_en'];
   $data['title_fr_raw']   = $dtask['t_title_fr'];
   $data['created']        = sanitize_output(date_to_text($dtask['t_created'], strip_day: 1));
@@ -103,6 +106,8 @@ function tasks_get( int $task_id ) : mixed
   $data['category']       = sanitize_output($dtask['tc_name']);
   $data['milestone']      = sanitize_output($dtask['tm_name']);
   $data['body']           = bbcodes(sanitize_output($dtask['t_body'], preserve_line_breaks: true));
+  $temp                   = ($dtask['t_body_en']) ? $dtask['t_body_en'] : $dtask['t_body_fr'];
+  $data['body_flex']      = bbcodes(sanitize_output($temp, preserve_line_breaks: true));
   $data['source']         = ($dtask['t_source']) ? sanitize_output($dtask['t_source']) : '';
   $temp                   = ($dtask['t_title_en']) ? $dtask['t_title_en'] : $dtask['t_title_fr'];
   $data['summary']        = sanitize_output('Task #'.$task_id.': '.string_truncate($temp, 100, '…'));
@@ -249,7 +254,8 @@ function tasks_list(  string  $sort_by  = 'status'  ,
                               dev_tasks.priority_level            DESC    ,
                               dev_tasks.created_at                DESC    ";
   else
-    $qtasks .= "  ORDER BY    dev_tasks.finished_at             != ''   ,
+    $qtasks .= "  ORDER BY    dev_tasks.admin_validation        = 1     ,
+                              dev_tasks.finished_at             != ''   ,
                               dev_tasks.finished_at             DESC    ,
                               dev_tasks.priority_level          DESC    ,
                               dev_tasks.created_at              DESC    ";
@@ -408,6 +414,61 @@ function tasks_add( array $contents ) : mixed
   // IRC bot message
   if($task_title_en)
     irc_bot_send_message("A new task has been added to the to-do list by $admin_username : $task_title_en_raw - ".$GLOBALS['website_url']."pages/tasks/$task_id", 'dev');
+
+  // Return the task's id
+  return $task_id;
+}
+
+
+
+
+/**
+ * Creates a new unvalidated task proposal.
+ *
+ * @param   string        $body   The task proposal's body.
+ *
+ * @return  string|int            A string if an error happened, or the newly created task's id.
+*/
+
+function tasks_propose( string $body ) : mixed
+{
+  // Require users to be logged in to run this action
+  user_restrict_to_users();
+
+  // Check if the required files have been included
+  require_included_file('tasks.lang.php');
+
+  // Sanitize the data
+  $user_id    = sanitize(user_get_id(), 'int', 1);
+  $username   = user_get_username();
+  $body       = sanitize($body, 'string');
+  $timestamp  = sanitize(time(), 'int', 0);
+
+  // Error: No body
+  if(!str_replace(' ', '', $body))
+    return __('tasks_proposal_error');
+
+  // Check if the user is flooding the website
+  if(!flood_check(error_page: false))
+    return __('tasks_proposal_flood');
+
+  // Determine the body's language and the task's title
+  $lang       = string_change_case(user_get_language(), 'lowercase');
+  $task_title = ($lang == 'en') ? "Unvalidated task" : "Tâche non validée";
+
+  // Create the unvalidated task
+  query(" INSERT INTO dev_tasks
+          SET         dev_tasks.fk_users          = '$user_id'    ,
+                      dev_tasks.created_at        = '$timestamp'  ,
+                      dev_tasks.is_public         = 1             ,
+                      dev_tasks.title_$lang       = '$task_title' ,
+                      dev_tasks.body_$lang        = '$body'       ");
+
+  // Get the newly created task's id
+  $task_id = query_id();
+
+  // IRC bot notification
+  irc_bot_send_message("Task proposal submitted by $username - ".$GLOBALS['website_url']."pages/tasks/$task_id", 'admin');
 
   // Return the task's id
   return $task_id;

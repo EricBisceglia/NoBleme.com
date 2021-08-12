@@ -201,10 +201,10 @@ ___('nobleme_history_img_2005_forum', 'EN', "NoBleme's message board in april 20
 ___('nobleme_history_img_2005_forum', 'FR', "Le forum NoBleme en avril 2005, un mois après sa création (cliquez sur les images pour les agrandir)");
 ___('nobleme_history_img_2006_home',  'EN', "NoBleme's very bare homepage in early 2006 reflects how ugly the Internet used to look as a whole");
 ___('nobleme_history_img_2006_home',  'FR', "La page d'accueil très vide de NoBleme en 2006 nous rappelle à quel point l'Internet était moche à cette époque");
-___('nobleme_history_img_2008_nrm',   'EN', "The {{link|todo_link|NRM Online}} in 2008. Would you believe that this was considered very good looking by 2008 Internet standards? Times change.");
-___('nobleme_history_img_2008_nrm',   'FR', "Le {{link|todo_link|NRM Online}} en 2008. Ce site était considéré comme très joli en 2008. Les temps changent.");
-___('nobleme_history_img_2008_nbrpg', 'EN', "Behind the scenes, the original {{link|todo_link|NoBlemeRPG}}'s dungeon master interface (players never saw it)");
-___('nobleme_history_img_2008_nbrpg', 'FR', "Le dessous du {{link|todo_link|NoBlemeRPG}} : l'interface d'administration du jeu");
+___('nobleme_history_img_2008_nrm',   'EN', "The {{link|pages/social/games_history#nrm|NRM Online}} in 2008. Would you believe that this was considered very good looking by 2008 Internet standards? Times change.");
+___('nobleme_history_img_2008_nrm',   'FR', "Le {{link|pages/social/games_history#nrm|NRM Online}} en 2008. Ce site était considéré comme très joli en 2008. Les temps changent.");
+___('nobleme_history_img_2008_nbrpg', 'EN', "Behind the scenes, the original {{link|pages/social/games_history#nbrpg|NoBlemeRPG}}'s dungeon master interface (players never saw it)");
+___('nobleme_history_img_2008_nbrpg', 'FR', "Le dessous du {{link|pages/social/games_history#nbrpg|NoBlemeRPG}} : l'interface d'administration du jeu");
 ___('nobleme_history_img_2008_wiki',  'EN', "NoBleme's wiki's homepage in 2008");
 ___('nobleme_history_img_2008_wiki',  'FR', "Le Wiki NoBleme en 2008");
 ___('nobleme_history_img_2010_black', 'EN', "The 2010 blackout");

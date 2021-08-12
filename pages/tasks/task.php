@@ -65,7 +65,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h4>
 
-    <?php if($task_details['title']) { ?>
+    <?php if(!$task_details['validated']) { ?>
+    <?=$task_details['title_flex']?>
+    <?php } else if($task_details['title']) { ?>
     <?=$task_details['title']?>
     <?php } else { ?>
     <?=__('tasks_details_no_title')?>
@@ -117,7 +119,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p>
 
-    <?php if($task_details['body']) { ?>
+    <?php if(!$task_details['validated']) { ?>
+    <?=$task_details['body_flex']?>
+    <?php } else if($task_details['body']) { ?>
     <?=$task_details['body']?>
     <?php } else { ?>
     <?=__('tasks_details_no_body')?>

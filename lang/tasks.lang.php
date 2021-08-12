@@ -24,11 +24,11 @@ Ce tableau contient tous les bugs et idées d'évolutions liés au développemen
 EOT
 );
 ___('tasks_list_body_2',    'EN', <<<EOT
-If you happen to find a bug on NoBleme, please {{link|todo_link|submit a bug report}}.
+If you happen to find a bug on NoBleme, please {{link|pages/tasks/proposal|submit a bug report}}.
 EOT
 );
 ___('tasks_list_body_2',    'FR', <<<EOT
-Si vous trouvez un bug sur NoBleme, nous vous serions reconnaissants de {{link|todo_link|rapporter le bug}}.
+Si vous trouvez un bug sur NoBleme, nous vous serions reconnaissants de {{link|pages/tasks/proposal|rapporter le bug}}.
 EOT
 );
 
@@ -237,3 +237,54 @@ ___('tasks_milestones_edit',      'EN', "Edit milestone");
 ___('tasks_milestones_edit',      'FR', "Modifier l'objectif");
 ___('tasks_milestones_delete',    'EN', "Confirm the irreversible deletion of this task milestone");
 ___('tasks_milestones_delete',    'FR', "Confirmer la suppression irréversible de cet objectif de tâches");
+
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    BUG REPORT                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('tasks_proposal_title',     'EN', "Task proposal");
+___('tasks_proposal_title',     'FR', "Proposition de tâche");
+___('tasks_proposal_subtitle',  'EN', "Bug report or feature request");
+___('tasks_proposal_subtitle',  'FR', "Rapport de bug ou demande de fonctionnalité");
+___('tasks_proposal_intro_1',   'EN', <<<EOT
+If you have found a flaw or issue during your usage of NoBleme or while browsing its {{link|pages/doc/dev|source code}}, please fill up the form below and make sure to give as many details as possible.
+EOT
+);
+___('tasks_proposal_intro_1',   'FR', <<<EOT
+Si vous repérez une faille ou un problème lors de votre utilisation de NoBleme ou dans son {{link|pages/doc/dev|code source}}, remplissez le formulaire ci-dessous avec le plus d'informations possibles y son sujet.
+EOT
+);
+___('tasks_proposal_intro_2',   'EN', <<<EOT
+If you have an idea for a change or improvement to NoBleme that would make the website better, or an idea for a new feature that would benefit the website, you can also use the form below to make your proposal.
+EOT
+);
+___('tasks_proposal_intro_2',   'FR', <<<EOT
+Si vous avez une idée d'amélioration qui rendrait NoBleme plus pratique à utiliser, ou une idée de nouvelle fonctionnalité, vous pouvez également utiliser le formulaire ci-dessous pour faire une proposition.
+EOT
+);
+___('tasks_proposal_intro_3',   'EN', <<<EOT
+In either case, please check the {{link|pages/tasks/list|to-do list}} and ensure your bug report or feature request has not already been made by someone else. Thanks in advance for your contribution to NoBleme!
+EOT
+);
+___('tasks_proposal_intro_3',   'FR', <<<EOT
+Dans les deux cas, regardez d'abord si votre rapport de bug ou proposition de fonctionnalité n'est pas déjà présent sur la {{link|pages/tasks/list|liste des tâches}}. Merci d'avance pour votre contribution à NoBleme !
+EOT
+);
+
+
+// Bug report form
+___('tasks_proposal_submit',  'EN', "Submit proposal");
+___('tasks_proposal_submit',  'FR', "Envoyer la proposition");
+___('tasks_proposal_error',   'EN', "The proposal can not be empty");
+___('tasks_proposal_error',   'FR', "La proposition ne peut pas être vide");
+___('tasks_proposal_flood',   'EN', "Your proposal has not been sent. In order to prevent flood, you must wait before performing another action on the website");
+___('tasks_proposal_flood',   'FR', "Votre proposition n'a pas été envoyée. Afin d'éviter le flood, vous devez attendre avant de pouvoir effectuer une autre action sur le site");
+___('tasks_proposal_sent',    'EN', "Your proposal has been submitted. Thank you!");
+___('tasks_proposal_sent',    'FR', "Votre proposition a été envoyée. Merci !");

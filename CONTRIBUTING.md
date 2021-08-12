@@ -5,9 +5,9 @@ Contributors are welcome to contribute to NoBleme's source code, be it for a tin
 
 All contributions should be done by creating a branch of your own from `develop`, then opening a merge request on the `develop` branch.
 
-If your contribution is related to a task on [NoBleme's to-do list](https://nobleme.com/todo_link), include the task's ID in your branch name, and include the task's ID and task's description in your pull request message.
+If your contribution is related to a task on [NoBleme's to-do list](https://nobleme.com/pages/tasks/list), include the task's ID in your branch name, and include the task's ID and task's description in your pull request message.
 
-Before doing any contribution, especially if it is a new feature, it might save you a lot of time to discuss it beforehand with Bad on the #dev channel of [NoBleme's IRC server](https://nobleme.com/todo_link).
+Before doing any contribution, especially if it is a new feature, it might save you a lot of time to discuss it beforehand with Bad on the #dev channel of [NoBleme's IRC server](https://nobleme.com/pages/tasks/list).
 
  
 

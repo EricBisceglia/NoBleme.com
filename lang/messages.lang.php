@@ -223,11 +223,11 @@ Si vous avez l'intention de signaler le non respect du {{link|pages/doc/coc|code
 EOD
 );
 ___('users_message_admins_bug',   'EN', <<<EOD
-If you want to report a bug in the website's usage, or want to suggest a new feature that you'd like to have on the website, please use the {{link|todo_link|bug report form}} instead.
+If you want to report a bug in the website's usage, or want to suggest a new feature that you'd like to have on the website, please use the {{link|pages/tasks/proposal|bug report form}} instead.
 EOD
 );
 ___('users_message_admins_bug',   'FR', <<<EOD
-Si vous avez trouvé un bug dans le fonctionnement du site, ou que vous avez une suggestion pour un nouveau contenu que vous aimeriez bien voir sur le site, utilisez plutôt le {{link|todo_link|formulaire de rapport de bug}}.
+Si vous avez trouvé un bug dans le fonctionnement du site, ou que vous avez une suggestion pour un nouveau contenu que vous aimeriez bien voir sur le site, utilisez plutôt le {{link|pages/tasks/proposal|formulaire de rapport de bug}}.
 EOD
 );
 

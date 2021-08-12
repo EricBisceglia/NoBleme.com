@@ -1,6 +1,6 @@
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*  tasks_categories_popin          Shows a popin containing the editable task milestone list.                        */
+/*  tasks_categories_popin          Shows a popin containing the editable task milestone list.                       */
 /*  tasks_categories_add            Submits the creation of a new task category.                                     */
 /*  tasks_categories_edit_form      Displays a form allowing the modification an existing task category.             */
 /*  tasks_categories_edit           Submits the modification af an existing task category.                           */

@@ -81,7 +81,7 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'dev_task_finished')
   {
     $return['css']  = 'text_green bold';
-    $return['href'] = $path.'todo_link?id='.$id;
+    $return['href'] = $path.'pages/tasks/'.$id;
     $return['EN']   = ($title_en) ? "Task solved: ".$title_en : '';
     $return['FR']   = ($title_fr) ? "Tache résolue : ".$title_fr : '';
   }

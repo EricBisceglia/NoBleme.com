@@ -550,7 +550,7 @@ $javascripts .= '
           <?=__link('todo_link', __('submenu_nobleme_roadmap'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_nobleme_report_bug'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/tasks/proposal', __('submenu_nobleme_report_bug'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
