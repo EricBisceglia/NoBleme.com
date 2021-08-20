@@ -12,6 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  tasks_list                Fetches a list of tasks.                                                               */
 /*  tasks_add                 Creates a new task.                                                                    */
 /*  tasks_propose             Creates a new unvalidated task proposal.                                               */
+/*  tasks_approve             Approves an unvalidated task proposal.                                                 */
 /*                                                                                                                   */
 /*  tasks_categories_list     Fetches a list of task categories.                                                     */
 /*  tasks_categories_add      Creates a new task category.                                                           */
@@ -38,6 +39,7 @@ function tasks_get( int $task_id ) : mixed
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
+  require_included_file('bbcodes.inc.php');
 
   // Get the user's current language and access rights
   $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
@@ -108,6 +110,7 @@ function tasks_get( int $task_id ) : mixed
   $data['body']           = bbcodes(sanitize_output($dtask['t_body'], preserve_line_breaks: true));
   $temp                   = ($dtask['t_body_en']) ? $dtask['t_body_en'] : $dtask['t_body_fr'];
   $data['body_flex']      = bbcodes(sanitize_output($temp, preserve_line_breaks: true));
+  $data['body_proposal']  = sanitize_output($temp);
   $data['source']         = ($dtask['t_source']) ? sanitize_output($dtask['t_source']) : '';
   $temp                   = ($dtask['t_title_en']) ? $dtask['t_title_en'] : $dtask['t_title_fr'];
   $data['summary']        = sanitize_output('Task #'.$task_id.': '.string_truncate($temp, 100, '…'));
@@ -472,6 +475,148 @@ function tasks_propose( string $body ) : mixed
 
   // Return the task's id
   return $task_id;
+}
+
+
+
+
+/**
+ * Approves an unvalidated task proposal.
+ *
+ * @param   int           $task_id    The ID of the task being approved.
+ * @param   array         $contents   The contents of the task being approved.
+ *
+ * @return  string|null               An error string, or null if the task was properly approved.
+ */
+
+function tasks_approve( int   $task_id  ,
+                        array $contents ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('tasks.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $task_id        = sanitize($task_id, 'int', 0);
+  $task_title_en  = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
+  $task_title_fr  = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
+  $task_body_en   = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')      : '';
+  $task_body_fr   = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')      : '';
+  $task_priority  = (isset($contents['priority']))  ? sanitize($contents['priority'], 'int', 0, 5)  : 0;
+  $task_category  = (isset($contents['category']))  ? sanitize($contents['category'], 'int', 0)     : 0;
+  $task_milestone = (isset($contents['milestone'])) ? sanitize($contents['milestone'], 'int', 0)    : 0;
+  $task_private   = (isset($contents['private']))   ? sanitize($contents['private'], 'int', 0, 1)   : 0;
+  $task_public    = ($task_private)                 ? 0                                             : 1;
+  $task_silent    = (isset($contents['silent']))    ? sanitize($contents['silent'], 'int', 0, 1)    : 0;
+
+  // Error: No title
+  if(!$task_title_en && !$task_title_fr)
+    return __('tasks_add_error_title');
+
+  // Error: Task does not exist
+  if(!database_row_exists('dev_tasks', $task_id))
+    return __('tasks_details_error');
+
+  // Update the task
+  query(" UPDATE      dev_tasks
+          SET         dev_tasks.admin_validation          = 1                 ,
+                      dev_tasks.is_public                 = '$task_public'    ,
+                      dev_tasks.priority_level            = '$task_priority'  ,
+                      dev_tasks.title_en                  = '$task_title_en'  ,
+                      dev_tasks.title_fr                  = '$task_title_fr'  ,
+                      dev_tasks.body_en                   = '$task_body_en'   ,
+                      dev_tasks.body_fr                   = '$task_body_fr'   ,
+                      dev_tasks.fk_dev_tasks_categories   = '$task_category'  ,
+                      dev_tasks.fk_dev_tasks_milestones   = '$task_milestone'
+          WHERE       dev_tasks.id                        = '$task_id'        ");
+
+  // Fetch the task's author
+  $dtask = mysqli_fetch_array(query(" SELECT    dev_tasks.id    AS 't_id'   ,
+                                                users.id        AS 'tu_id'  ,
+                                                users.username  AS 'tu_nick'
+                                      FROM      dev_tasks
+                                      LEFT JOIN users ON dev_tasks.fk_users = users.id
+                                      WHERE     dev_tasks.id = '$task_id' "));
+  $username = $dtask['tu_nick'];
+  $user_id  = $dtask['tu_id'];
+
+  // Fetch some data about the user
+  $admin_id = sanitize(user_get_id(), 'int', 0);
+  $user_id  = sanitize($user_id, 'int', 0);
+  $lang     = user_get_language($user_id);
+  $path     = root_path();
+
+  // Prepare the message's title
+  $message_title = ($lang == 'FR') ? 'Tâche acceptée' : 'Task proposal approved';
+
+  // Prepare the message's body
+  if($lang == 'FR')
+    $message_body = <<<EOT
+[url=${path}pages/tasks/${task_id}]Votre proposition de tâche a été approuvée.[/url]
+
+Nous vous remercions pour votre participation au développement de NoBleme.
+EOT;
+  else
+    $message_body = <<<EOT
+[url=${path}pages/tasks/${task_id}]Your task proposal has been approved.[/url]
+
+Thank you for helping NoBleme's development.
+EOT;
+
+  // If the task is private, prepare a different message
+  if($task_private && $lang == 'FR')
+    $message_body = <<<EOT
+Une proposition de [url=${path}pages/tasks/list]tâche[/url] que vous avez fait récemment a été acceptée.
+
+La tâche va rester privée pour le moment : soit elle est sensible pour la sécurité du site, soit il s'agit d'une idée qui sera meilleure sous la forme d'une surprise pour le reste des personnes utilisant le site.
+
+Merci d'en conserver le secret. Nous vous remercions pour votre participation au développement de NoBleme.
+EOT;
+  else if($task_private)
+    $message_body = <<<EOT
+You made a [url=${path}pages/tasks/list]task[/url] proposal which has been approved.
+
+The task will remain private for now: it is either too sensitive for the website's security, or is a great idea that would be better kept secret in order to surprise everyone else once it is done.
+
+Thank you for helping NoBleme's development. Please keep this secret for now!
+EOT;
+
+  // Send the notification message
+  private_message_send( $message_title          ,
+                        $message_body           ,
+                        recipient: $user_id     ,
+                        sender: 0               ,
+                        true_sender: $admin_id  ,
+                        hide_admin_mail: true   );
+
+  // If the task is private or must be created silently, stop here and return null
+  if($task_private || $task_silent)
+    return null;
+
+  // Determine the activity language
+  $activity_lang  = ($task_title_en) ? 'EN' : '';
+  $activity_lang .= ($task_title_fr) ? 'FR' : '';
+
+  // Fetch the raw task title
+  $task_title_en_raw = ($task_title_en) ? $contents['title_en'] : '';
+  $task_title_fr_raw = ($task_title_fr) ? $contents['title_fr'] : '';
+
+  // Activity log
+  log_activity( 'dev_task_new'                            ,
+                language:             $activity_lang      ,
+                activity_id:          $task_id            ,
+                activity_summary_en:  $task_title_en_raw  ,
+                activity_summary_fr:  $task_title_fr_raw  ,
+                username:             $username           );
+
+  // IRC bot message
+  if($task_title_en)
+    irc_bot_send_message("A new task has been added to the to-do list by $username : $task_title_en_raw - ".$GLOBALS['website_url']."pages/tasks/$task_id", 'dev');
+
+  // All went well, return NULL
+  return null;
 }
 
 

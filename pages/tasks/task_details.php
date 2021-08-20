@@ -55,7 +55,10 @@ $task_details = tasks_get($task_id);
     <?php } ?>
 
     <?php if($is_admin) { ?>
-    <?=__icon('done', alt: 'D', title: __('done'), title_case: 'initials')?>
+    <?php if(!$task_details['validated']) { ?>
+    <?=__icon('user_confirm', alt: 'O', title: __('confirm'), title_case: 'initials', href: 'pages/tasks/approve?id='.$task_id)?>
+    <?=__icon('user_delete', alt: 'X', title: __('delete'), title_case: 'initials', href: 'pages/tasks/delete?id='.$task_id)?>
+    <?php } ?>
     <?php } ?>
 
   </h5>

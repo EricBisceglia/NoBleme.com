@@ -34,6 +34,7 @@ input:not([type])       { background-color: #EEEEEE;                            
 .header_submenu_link            { color: #37536B;                                                               }
 .header_submenu_link:hover      { filter: none; color: #78A1BC;                                                 }
 footer                          { color: #999999; filter: none;                                                 }
+.login_form_text                { color: #121212;                                                               }
 
 /***************************************************** TOOLTIPS ******************************************************/
 .tooltip_container:hover .tooltip { color: #121212; background-color: #FFFFFF ; border-radius: 5px  ;

@@ -88,6 +88,9 @@
 .header_submenu_column    { border-bottom: 2px solid #B00B1E;          }
 .header_submenu_fullwidth { border-bottom: 2px solid #B00B1E;        } }
 
+/**************************************************** LOGIN FORM *****************************************************/
+.login_form_text { color: #CACACA; }
+
 /************************************************** MAIN PAGE BODY ***************************************************/
 @media (min-width: 1081px) { .header_main_page { margin-top: 80px; padding-left: 25px; padding-right: 25px;  }
                              hr                { margin-left: -25px; margin-right: -25px;                  } }

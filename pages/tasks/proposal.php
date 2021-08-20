@@ -90,7 +90,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php if(isset($task_proposal_error) && !is_int($task_proposal_error)) { ?>
       <div class="tinypadding_top padding_bot">
         <div class="red text_white uppercase bold spaced bigger">
-          <?=__('error').__(':').$task_proposal_error?>
+          <?=__('error').__(':', spaces_after: 1).$task_proposal_error?>
         </div>
       </div>
       <?php } ?>

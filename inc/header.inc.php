@@ -777,23 +777,23 @@ $javascripts .= '
           <fieldset>
 
             <div class="smallpadding_bot">
-              <label class="text_light" id="label_login_form_username" for="login_form_username"><?=string_change_case(__('username'), 'initials')?></label>
+              <label class="login_form_text" id="label_login_form_username" for="login_form_username"><?=string_change_case(__('username'), 'initials')?></label>
               <input id="login_form_username" name="login_form_username" class="indiv" type="text" value="">
             </div>
 
             <div class="padding_bot">
-              <label class="text_light" id="label_login_form_password" for="login_form_password"><?=string_change_case(__('password'), 'initials')?> </label>
+              <label class="login_form_text" id="label_login_form_password" for="login_form_password"><?=string_change_case(__('password'), 'initials')?> </label>
               <input id="login_form_password" name="login_form_password" class="indiv" type="password" value="">
             </div>
 
             <div class="desktop float_right">
               <input id="login_form_remember_desktop" name="login_form_remember_desktop" type="checkbox" checked>
-              <label class="label_inline" for="login_form_remember_desktop"><?=__('login_form_form_remember')?></label>
+              <label class="label_inline login_form_text" for="login_form_remember_desktop"><?=__('login_form_form_remember')?></label>
             </div>
 
             <div class="mobile padding_bot">
               <input id="login_form_remember_mobile" name="login_form_remember_mobile" type="checkbox" checked>
-              <label class="label_inline" for="login_form_remember_mobile"><?=__('login_form_form_remember')?></label>
+              <label class="label_inline login_form_text" for="login_form_remember_mobile"><?=__('login_form_form_remember')?></label>
             </div>
 
             <input type="submit" class="button_chain" value="<?=__('login_form_title')?>">

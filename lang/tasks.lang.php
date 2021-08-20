@@ -205,6 +205,25 @@ ___('tasks_add_error_title',  'FR', "La tâche doit avoir un titre en français 
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                         APPROVE / REJECT A TASK PROPOSAL                                          */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Approve a task
+___('tasks_approve_impossible', 'EN', "This task has already been approved or rejected");
+___('tasks_approve_impossible', 'FR', "Cette tâche a déjà été approuvée ou rejetée");
+___('tasks_approve_title',      'EN', "Approve a task proposal");
+___('tasks_approve_title',      'FR', "Accepter une proposition de tâche");
+___('tasks_approve_subtitle',   'EN', "Task proposal by");
+___('tasks_approve_subtitle',   'FR', "Proposition par");
+___('tasks_approve_submit',     'EN', "Approve task proposal");
+___('tasks_approve_submit',     'FR', "Approuver la proposition");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                             CATEGORIES AND MILESTONES                                             */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -284,7 +303,7 @@ ___('tasks_proposal_submit',  'EN', "Submit proposal");
 ___('tasks_proposal_submit',  'FR', "Envoyer la proposition");
 ___('tasks_proposal_error',   'EN', "The proposal can not be empty");
 ___('tasks_proposal_error',   'FR', "La proposition ne peut pas être vide");
-___('tasks_proposal_flood',   'EN', "Your proposal has not been sent. In order to prevent flood, you must wait before performing another action on the website");
+___('tasks_proposal_flood',   'EN', "Your proposal has not been sent. In order to prevent website flooding, you must wait before performing another action on the website");
 ___('tasks_proposal_flood',   'FR', "Votre proposition n'a pas été envoyée. Afin d'éviter le flood, vous devez attendre avant de pouvoir effectuer une autre action sur le site");
 ___('tasks_proposal_sent',    'EN', "Your proposal has been submitted. Thank you!");
 ___('tasks_proposal_sent',    'FR', "Votre proposition a été envoyée. Merci !");

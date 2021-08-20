@@ -1244,6 +1244,7 @@ for($i = 0; $i < $random; $i++)
   $deleted_log  = (mt_rand(0,25) < 25) ? 0 : 1;
   $created_at   = strtotime($event_date) - (mt_rand(0,100) * 86400);
   $created_at   = ($created_at < 1111239420) ? mt_rand(1111239420, strtotime($event_date)) : $created_at;
+  $created_at   = ($created_at > time()) ? (time() -1) : $created_at;
   $meetup_date  = strtotime($event_date);
   if(!$deleted)
     query(" INSERT INTO logs_activity
@@ -1270,6 +1271,7 @@ for($i = 0; $i < $random; $i++)
   {
     $deleted_log  = (mt_rand(0,5) < 5) ? 0 : 1;
     $edited_at    = mt_rand($created_at, strtotime($event_date));
+    $edited_at    = ($edited_at > time()) ? (time() -1) : $edited_at;
     $old_location = fixtures_generate_data('string', 5, 15);
     query(" INSERT INTO logs_activity
             SET         logs_activity.is_deleted                  = '$deleted_log'  ,
@@ -1294,6 +1296,7 @@ for($i = 0; $i < $random; $i++)
   if($deleted)
   {
     $deleted_at = mt_rand($created_at, strtotime($event_date));
+    $deleted_at = ($deleted_at > time()) ? (time() -1) : $deleted_at;
     query(" INSERT INTO logs_activity
             SET         logs_activity.is_deleted                  = '$deleted_log'    ,
                         logs_activity.happened_at                 = '$deleted_at'     ,
@@ -1344,6 +1347,7 @@ for($i = 0; $i < $random; $i++)
       // Activity logs
       $deleted_log  = (mt_rand(0,25) < 25) ? 0 : 1;
       $added_at     = mt_rand($created_at, strtotime($event_date));
+      $added_at     = ($added_at > time()) ? time() : $added_at;
       if(!$deleted && $username)
         query(" INSERT INTO logs_activity
                 SET         logs_activity.is_deleted          = '$deleted_log'        ,
@@ -1372,6 +1376,7 @@ for($i = 0; $i < $random; $i++)
       {
         $deleted_log  = (mt_rand(0,5) < 5) ? 0 : 1;
         $edited_at    = mt_rand($created_at, strtotime($event_date));
+        $edited_at    = ($edited_at > time()) ? time() : $edited_at;
         $old_extra    = fixtures_generate_data('sentence', 2, 5, 1);
         $new_extra    = ($extra_en) ? $extra_en : $extra_fr;
         query(" INSERT INTO logs_activity
@@ -1399,6 +1404,7 @@ for($i = 0; $i < $random; $i++)
       {
         $deleted_log  = (mt_rand(0,5) < 5) ? 0 : 1;
         $deleted_at   = mt_rand($created_at, strtotime($event_date));
+        $deleted_at   = ($deleted_at > time()) ? time() : $deleted_at;
         $deleted_nick = fixtures_generate_data('string', 3, 18);
         $extra_info   = fixtures_generate_data('sentence', 2, 5, 1);
         query(" INSERT INTO logs_activity
