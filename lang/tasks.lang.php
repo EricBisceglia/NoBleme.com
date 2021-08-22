@@ -209,15 +209,30 @@ ___('tasks_add_error_title',  'FR', "La tâche doit avoir un titre en français 
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Approve a task
-___('tasks_approve_impossible', 'EN', "This task has already been approved or rejected");
-___('tasks_approve_impossible', 'FR', "Cette tâche a déjà été approuvée ou rejetée");
+// Approve a task proposal
 ___('tasks_approve_title',      'EN', "Approve a task proposal");
 ___('tasks_approve_title',      'FR', "Accepter une proposition de tâche");
+___('tasks_approve_icon',       'EN', "Approve task proposal");
+___('tasks_approve_icon',       'FR', "Approuver la proposition de tâche");
+___('tasks_approve_impossible', 'EN', "This task has already been approved or rejected");
+___('tasks_approve_impossible', 'FR', "Cette tâche a déjà été approuvée ou rejetée");
 ___('tasks_approve_subtitle',   'EN', "Task proposal by");
 ___('tasks_approve_subtitle',   'FR', "Proposition par");
 ___('tasks_approve_submit',     'EN', "Approve task proposal");
 ___('tasks_approve_submit',     'FR', "Approuver la proposition");
+
+
+// Reject a task proposal
+___('tasks_reject_title',   'EN', "Reject a task proposal");
+___('tasks_reject_title',   'FR', "Rejeter une proposition de tâche");
+___('tasks_reject_icon',    'EN', "Reject task proposal");
+___('tasks_reject_icon',    'FR', "Rejeter la proposition de tâche");
+___('tasks_reject_reason',  'EN', "Rejection reason (optional)");
+___('tasks_reject_reason',  'FR', "Raison du rejet (optionnel)");
+___('tasks_reject_silent',  'EN', "Silent (do not send a rejection private message)");
+___('tasks_reject_silent',  'FR', "Silencieux (ne pas envoyer de message privé de rejet)");
+___('tasks_reject_submit',  'EN', "Reject task proposal");
+___('tasks_reject_submit',  'FR', "Rejecter la proposition");
 
 
 

@@ -56,8 +56,8 @@ $task_details = tasks_get($task_id);
 
     <?php if($is_admin) { ?>
     <?php if(!$task_details['validated']) { ?>
-    <?=__icon('user_confirm', alt: 'O', title: __('confirm'), title_case: 'initials', href: 'pages/tasks/approve?id='.$task_id)?>
-    <?=__icon('user_delete', alt: 'X', title: __('delete'), title_case: 'initials', href: 'pages/tasks/delete?id='.$task_id)?>
+    <?=__icon('user_confirm', alt: 'O', title: __('tasks_approve_icon'), title_case: 'initials', href: 'pages/tasks/approve?id='.$task_id)?>
+    <?=__icon('user_delete', alt: 'X', title: __('tasks_reject_icon'), title_case: 'initials', href: 'pages/tasks/reject?id='.$task_id)?>
     <?php } ?>
     <?php } ?>
 
@@ -88,7 +88,9 @@ $task_details = tasks_get($task_id);
   <?php } ?>
 
   <p>
-    <?php if($task_details['body']) { ?>
+    <?php if(!$task_details['validated']) { ?>
+    <?=$task_details['body_flex']?>
+    <?php } else if($task_details['body']) { ?>
     <?=$task_details['body']?>
     <?php } else { ?>
     <?=__('tasks_details_no_body')?>

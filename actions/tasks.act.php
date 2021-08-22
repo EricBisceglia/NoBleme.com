@@ -13,6 +13,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  tasks_add                 Creates a new task.                                                                    */
 /*  tasks_propose             Creates a new unvalidated task proposal.                                               */
 /*  tasks_approve             Approves an unvalidated task proposal.                                                 */
+/*  tasks_reject              Rejects and hard deletes an unvalidated task proposal.                                 */
 /*                                                                                                                   */
 /*  tasks_categories_list     Fetches a list of task categories.                                                     */
 /*  tasks_categories_add      Creates a new task category.                                                           */
@@ -583,13 +584,14 @@ The task will remain private for now: it is either too sensitive for the website
 Thank you for helping NoBleme's development. Please keep this secret for now!
 EOT;
 
-  // Send the notification message
-  private_message_send( $message_title          ,
-                        $message_body           ,
-                        recipient: $user_id     ,
-                        sender: 0               ,
-                        true_sender: $admin_id  ,
-                        hide_admin_mail: true   );
+  // Send the notification message unless it's being sent to self
+  if($user_id != $admin_id)
+    private_message_send( $message_title          ,
+                          $message_body           ,
+                          recipient: $user_id     ,
+                          sender: 0               ,
+                          true_sender: $admin_id  ,
+                          hide_admin_mail: true   );
 
   // If the task is private or must be created silently, stop here and return null
   if($task_private || $task_silent)
@@ -614,6 +616,105 @@ EOT;
   // IRC bot message
   if($task_title_en)
     irc_bot_send_message("A new task has been added to the to-do list by $username : $task_title_en_raw - ".$GLOBALS['website_url']."pages/tasks/$task_id", 'dev');
+
+  // All went well, return NULL
+  return null;
+}
+
+
+
+
+/**
+ * Rejects and hard deletes an unvalidated task proposal.
+ *
+ * @param   int           $task_id                The ID of the task being rejected.
+ * @param   string        $reason     (OPTIONAL)  The reason for which the proposal was rejected.
+ * @param   bool          $is_silent  (OPTIONAL)  Whether to make it a silent rejection (no private message).
+ *
+ * @return  string|null                           An error string, or null if the task was properly rejected.
+ */
+
+function tasks_reject(  int     $task_id    ,
+                        string  $reason     ,
+                        bool    $is_silent  ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('tasks.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the task's id
+  $task_id = sanitize($task_id, 'int', 0);
+
+  // Error: Task does not exist
+  if(!database_row_exists('dev_tasks', $task_id))
+    return __('tasks_details_error');
+
+  // Fetch the task's author
+  $dtask = mysqli_fetch_array(query(" SELECT    dev_tasks.id    AS 't_id' ,
+                                                users.id        AS 'tu_id'
+                                      FROM      dev_tasks
+                                      LEFT JOIN users ON dev_tasks.fk_users = users.id
+                                      WHERE     dev_tasks.id = '$task_id' "));
+  $user_id  = $dtask['tu_id'];
+
+  // Delete the task
+  query(" DELETE FROM dev_tasks
+          WHERE       dev_tasks.id = '$task_id' ");
+
+  // If silent mode is requested, stop here
+  if($is_silent)
+    return null;
+
+  // Fetch some data about the user
+  $lang     = user_get_language($user_id);
+  $path     = root_path();
+  $admin_id = user_get_id();
+
+  // Prepare the message's title
+  $message_title = ($lang == 'FR') ? 'Tâche refusée' : 'Task proposal rejected';
+
+  // If a reason is specified, prepare it
+  if($reason && $lang == 'FR')
+    $reason = <<<EOT
+
+Votre proposition a été rejetée pour la raison suivante : ${reason}
+
+EOT;
+  else if($reason)
+    $reason = <<<EOT
+
+Your proposal has been rejected for the following reason: ${reason}
+
+EOT;
+
+  // Prepare the message's body
+  if($lang == 'FR')
+    $message_body = <<<EOT
+Vous avez fait une [url=${path}pages/tasks/proposal]proposition de tâche[/url], qui a été rejetée.
+${reason}
+Malgré ce rejet, nous vous encourageons à continuer à contribuer dans le futur en rapportant des bugs ou en proposant vos idées.
+
+Nous vous remercions pour votre participation au développement de NoBleme.
+EOT;
+  else
+    $message_body = <<<EOT
+You made a [url=${path}pages/tasks/proposal]task proposal[/url], which has been rejected.
+${reason}
+Despite this rejection, we encourage you to continue contributing to NoBleme in the future by reporting bugs or suggesting your ideas.
+
+Thank you for helping NoBleme's development.
+EOT;
+
+  // Send the notification message unless it's being sent to self
+  if($user_id != $admin_id)
+    private_message_send( $message_title          ,
+                          $message_body           ,
+                          recipient: $user_id     ,
+                          sender: 0               ,
+                          true_sender: $admin_id  ,
+                          hide_admin_mail: true   );
 
   // All went well, return NULL
   return null;
