@@ -40,7 +40,7 @@ $css  = array('tasks');
 // Fetch the task's id
 $task_id = (int)form_fetch_element('id', 0, request_type: 'GET');
 
-// Fecth the task's details
+// Fetch the task's details
 $task_details = tasks_get($task_id);
 
 // Throw an error if the task does not exist

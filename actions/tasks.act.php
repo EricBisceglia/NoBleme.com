@@ -14,6 +14,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  tasks_propose             Creates a new unvalidated task proposal.                                               */
 /*  tasks_approve             Approves an unvalidated task proposal.                                                 */
 /*  tasks_reject              Rejects and hard deletes an unvalidated task proposal.                                 */
+/*  tasks_solve               Marks a task as solved.                                                                */
 /*                                                                                                                   */
 /*  tasks_categories_list     Fetches a list of task categories.                                                     */
 /*  tasks_categories_add      Creates a new task category.                                                           */
@@ -89,6 +90,7 @@ function tasks_get( int $task_id ) : mixed
     return NULL;
 
   // Assemble an array with the data
+  $data['deleted']        = $dtask['t_deleted'];
   $data['validated']      = $dtask['t_validated'];
   $data['public']         = $dtask['t_public'];
   $data['title']          = sanitize_output($dtask['t_title']);
@@ -634,9 +636,9 @@ EOT;
  * @return  string|null                           An error string, or null if the task was properly rejected.
  */
 
-function tasks_reject(  int     $task_id    ,
-                        string  $reason     ,
-                        bool    $is_silent  ) : mixed
+function tasks_reject(  int     $task_id            ,
+                        string  $reason     = ''    ,
+                        bool    $is_silent  = true  ) : mixed
 {
   // Check if the required files have been included
   require_included_file('tasks.lang.php');
@@ -717,6 +719,125 @@ EOT;
                           hide_admin_mail: true   );
 
   // All went well, return NULL
+  return null;
+}
+
+
+
+
+/**
+ * Marks a task as solved.
+ *
+ * @param   int           $task_id                  The ID of the task being solved.
+ * @param   string        $source       (OPTIONAL)  A link to the patch's source code.
+ * @param   bool          $is_silent    (OPTIONAL)  Whether to make it a silent solving (no IRC message).
+ * @param   bool          $is_stealthy  (OPTIONAL)  Whether to send a private message to the task's original author.
+ *
+ * @return  string|null                             An error string, or null if the task was properly solved.
+ */
+
+function tasks_solve( int     $task_id              ,
+                      string  $source       = ''    ,
+                      bool    $is_silent    = true  ,
+                      bool    $is_stealthy  = true  ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('tasks.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $task_id    = sanitize($task_id, 'int', 0);
+  $source     = sanitize($source, 'string');
+  $admin_id   = user_get_id();
+  $timestamp  = sanitize(time(), 'int', 0);
+
+  // Error: Task does not exist
+  if(!database_row_exists('dev_tasks', $task_id))
+    return __('tasks_details_error');
+
+  // Fetch data on the task
+  $task_data = tasks_get($task_id);
+
+  // Error: Task has already been solved
+  if($task_data['solved'])
+    return __('tasks_solve_impossible');
+
+  // Error: Task has been deleted
+  if($task_data['deleted'])
+    return __('tasks_details_error');
+
+  // Mark the task as solved
+  query(" UPDATE  dev_tasks
+          SET     dev_tasks.finished_at       = '$timestamp'  ,
+                  dev_tasks.source_code_link  = '$source'
+          WHERE   dev_tasks.id                = '$task_id'    ");
+
+  // If the task is private, end here
+  if(!$task_data['public'])
+    return null;
+
+  // Determine the activity language
+  $activity_lang  = ($task_data['title_en_raw']) ? 'EN' : '';
+  $activity_lang .= ($task_data['title_fr_raw']) ? 'FR' : '';
+
+  // Fetch the raw task title
+  $task_title_en_raw = $task_data['title_en_raw'];
+  $task_title_fr_raw = $task_data['title_fr_raw'];
+
+  // Activity log
+  if(!$is_silent)
+    log_activity( 'dev_task_finished'                       ,
+                  language:             $activity_lang      ,
+                  activity_id:          $task_id            ,
+                  activity_summary_en:  $task_title_en_raw  ,
+                  activity_summary_fr:  $task_title_fr_raw  );
+
+  // IRC bot message
+  if($task_title_en_raw && !$is_silent)
+  {
+    irc_bot_send_message("A task has been solved: $task_title_en_raw - ".$GLOBALS['website_url']."pages/tasks/$task_id", 'dev');
+    if($source)
+      irc_bot_send_message("Patch link: $source", 'dev');
+  }
+
+  // If stealthy mode is requested or the author is the one currently approving the task, stop here
+  if($is_stealthy || $task_data['creator_id'] == user_get_id())
+    return null;
+
+  // Fetch some data about the user
+  $user_id  = $task_data['creator_id'];
+  $lang     = user_get_language($user_id);
+  $path     = root_path();
+  $admin_id = user_get_id();
+
+  // Prepare the message's title
+  $message_title = ($lang == 'FR') ? 'Tâche résolue' : 'Task solved';
+
+  // Prepare the message's body
+  if($lang == 'FR')
+    $message_body = <<<EOT
+Une tâche que vous avez proposée a été résolue : [url=${path}pages/tasks/${task_id}]Tâche #${task_id}[/url].
+
+Nous vous remercions pour votre participation au développement de NoBleme.
+EOT;
+  else
+    $message_body = <<<EOT
+A task you opened has been solved: [url=${path}pages/tasks/${task_id}]Task #${task_id}[/url].
+
+Thank you for helping NoBleme's development.
+EOT;
+
+  // Send the notification message
+  private_message_send( $message_title          ,
+                        $message_body           ,
+                        recipient: $user_id     ,
+                        sender: 0               ,
+                        true_sender: $admin_id  ,
+                        hide_admin_mail: true   );
+
+  // All went well, return null
   return null;
 }
 

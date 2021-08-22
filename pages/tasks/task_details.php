@@ -24,7 +24,7 @@ page_must_be_fetched_dynamically();
 // Fetch the task's id
 $task_id = (int)form_fetch_element('task_id', 0);
 
-// Fecth the task's details
+// Fetch the task's details
 $task_details = tasks_get($task_id);
 
 
@@ -58,6 +58,8 @@ $task_details = tasks_get($task_id);
     <?php if(!$task_details['validated']) { ?>
     <?=__icon('user_confirm', alt: 'O', title: __('tasks_approve_icon'), title_case: 'initials', href: 'pages/tasks/approve?id='.$task_id)?>
     <?=__icon('user_delete', alt: 'X', title: __('tasks_reject_icon'), title_case: 'initials', href: 'pages/tasks/reject?id='.$task_id)?>
+    <?php } else if(!$task_details['solved'] && !$task_details['deleted']) { ?>
+    <?=__icon('done', alt: 'D', title: __('done'), title_case: 'initials', href: 'pages/tasks/solved?id='.$task_id)?>
     <?php } ?>
     <?php } ?>
 

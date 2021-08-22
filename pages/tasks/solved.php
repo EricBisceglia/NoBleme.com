@@ -18,11 +18,8 @@ $hidden_activity = 1;
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/tasks/list";
-$page_title_en    = "Reject task";
-$page_title_fr    = "Rejeter une tâche";
-
-// Extra JS
-$js = array('common/clipboard');
+$page_title_en    = "Solve task";
+$page_title_fr    = "Résoudre une tâche";
 
 
 
@@ -42,36 +39,38 @@ $task_id = (int)form_fetch_element('id', 0, request_type: 'GET');
 // Fetch the task's details
 $task_details = tasks_get($task_id);
 
-// Throw an error if the task does not exist
-if(!$task_details)
+// Throw an error if the task does not exist or has been deleted
+if(!$task_details || $task_details['deleted'])
   error_page(__('tasks_details_error'));
 
-// Throw an error if the task has already been rejected
-if($task_details['validated'])
-  error_page(__('tasks_approve_impossible'));
+// Throw an error if the task has already been solved
+if($task_details['solved'])
+  error_page(__('tasks_solve_impossible'));
 
 
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Reject the task
+// Solve the task
 
-// Attempt to reject the task
-if(isset($_POST['tasks_reject_submit']))
+// Attempt to solve the task
+if(isset($_POST['tasks_solve_submit']))
 {
-  // Reject the task
-  $tasks_reject = tasks_reject( $task_id                                                        ,
-                                form_fetch_element('tasks_reject_reason')                       ,
-                                form_fetch_element('tasks_reject_silent', element_exists: true) );
+  // Solve the task
+  $tasks_solve = tasks_solve( $task_id                                                            ,
+                              form_fetch_element('tasks_solve_source')                            ,
+                              form_fetch_element('tasks_solve_silent', element_exists: true)      ,
+                              form_fetch_element('tasks_solve_no_message', element_exists: true)  );
 
-  // If the task was properly rejected, redirect to the task list
-  if(is_null($tasks_reject))
-    exit(header("Location: ".$path."pages/tasks/list"));
+  // If the task was properly solved, redirect to it
+  if(is_null($tasks_solve))
+    exit(header("Location: ".$path."pages/tasks/".$task_id));
 }
 
 // Keep the forms filled if there was an error
-$tasks_reject_reason  = sanitize_output(form_fetch_element('tasks_reject_reason'));
-$tasks_reject_silent  = form_fetch_element('tasks_reject_silent', element_exists: true) ? ' checked' : '';
+$tasks_solve_source     = sanitize_output(form_fetch_element('tasks_solve_source'));
+$tasks_solve_silent     = form_fetch_element('tasks_solve_silent', element_exists: true) ? ' checked' : '';
+$tasks_solve_no_message = form_fetch_element('tasks_solve_no_message', element_exists: true) ? ' checked' : '';
 
 
 
@@ -85,43 +84,42 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h2>
-    <?=__('tasks_reject_title')?>
+    <?=__link('pages/tasks/'.$task_id, __('tasks_solve_title', preset_values: array($task_id)), 'noglow')?>
   </h2>
-
-  <h5 class="bigpadding_top padding_bot">
-    <?=__('tasks_approve_subtitle', spaces_after: 1).__link('pages/users/'.$task_details['creator_id'], $task_details['creator']).__(':')?>
-  </h5>
-
-  <pre id="task_reject_body" onclick="to_clipboard('', 'task_reject_body', 1);"><?=$task_details['body_proposal']?>
-  </pre>
 
   <form method="POST">
     <fieldset>
 
-      <div class="padding_top">
-        <label for="tasks_reject_reason"><?=__('tasks_reject_reason')?></label>
-        <input type="text" class="indiv" id="tasks_reject_reason" name="tasks_reject_reason" value="<?=$tasks_reject_reason?>">
+      <div class="padding_top smallpadding_bot">
+        <label for="tasks_solve_source"><?=__('tasks_solve_source')?></label>
+        <input type="text" class="indiv" id="tasks_solve_source" name="tasks_solve_source" value="<?=$tasks_solve_source?>">
       </div>
 
-      <div class="smallpadding_top">
-        <input type="checkbox" id="tasks_reject_silent" name="tasks_reject_silent"<?=$tasks_reject_silent?>>
-        <label class="label_inline" for="tasks_reject_silent"><?=__('tasks_reject_silent')?></label>
-      </div>
+      <?php if($task_details['creator_id'] != user_get_id()) { ?>
+      <input type="checkbox" id="tasks_solve_no_message" name="tasks_solve_no_message"<?=$tasks_solve_no_message?>>
+      <label class="label_inline" for="tasks_solve_no_message"><?=__('tasks_solve_no_message')?></label><br>
+      <?php } ?>
 
-      <?php if(isset($tasks_reject)) { ?>
+      <?php if($task_details['public']) { ?>
+      <input type="checkbox" id="tasks_solve_silent" name="tasks_solve_silent"<?=$tasks_solve_silent?>>
+      <label class="label_inline" for="tasks_solve_silent"><?=__('tasks_add_silent')?></label>
+      <?php } ?>
+
+      <?php if(isset($tasks_solve)) { ?>
       <div class="smallpadding_top smallpadding_bot">
         <div class="red text_white uppercase bold spaced big">
-          <?=__('error').__(':', spaces_after: 1).$tasks_reject?>
+          <?=__('error').__(':', spaces_after: 1).$tasks_solve?>
         </div>
       </div>
       <?php } ?>
 
       <div class="smallpadding_top">
-        <input type="submit" name="tasks_reject_submit" value="<?=__('tasks_reject_submit')?>">
+        <input type="submit" name="tasks_solve_submit" value="<?=__('tasks_solve_submit')?>">
       </div>
 
     </fieldset>
   </form>
+
 </div>
 
 <?php /***************************************************************************************************************/
