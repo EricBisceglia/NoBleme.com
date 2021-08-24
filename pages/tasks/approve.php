@@ -190,7 +190,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_categories_popin();')?>
 
-          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_categories_reload();')?>
+          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_categories_reload("approve");')?>
 
         </div>
 
@@ -217,7 +217,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_milestones_popin();')?>
 
-          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_milestones_reload();')?>
+          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_milestones_reload("approve");')?>
 
         </div>
 

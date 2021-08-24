@@ -39,7 +39,7 @@ if(!$task_details)
 $page_url         = "pages/tasks/".$task_id;
 $page_title_en   .= " #".$task_id.": ".$task_details['title_en_raw'];
 $page_title_fr   .= " #".$task_id." : ".$task_details['title_fr_raw'];
-$page_description = $task_details['summary'];
+$page_description = ($task_details['summary']) ? $task_details['summary'] : $page_description;
 
 
 
@@ -61,7 +61,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php if(!$task_details['validated']) { ?>
     <?=__icon('user_confirm', alt: 'O', title: __('tasks_approve_icon'), title_case: 'initials', href: 'pages/tasks/approve?id='.$task_id)?>
     <?=__icon('user_delete', alt: 'X', title: __('tasks_reject_icon'), title_case: 'initials', href: 'pages/tasks/reject?id='.$task_id)?>
-    <?php } else if(!$task_details['solved'] && !$task_details['deleted']) { ?>
+    <?php } if($task_details['validated']) { ?>
+    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/tasks/edit?id='.$task_id)?>
+    <?php } if($task_details['validated'] && !$task_details['solved'] && !$task_details['deleted']) { ?>
     <?=__icon('done', alt: 'D', title: __('done'), title_case: 'initials', href: 'pages/tasks/solved?id='.$task_id)?>
     <?php } ?>
     <?php } ?>

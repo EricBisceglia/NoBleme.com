@@ -16,7 +16,7 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/tasks/new";
+$page_url         = "pages/tasks/add";
 $page_title_en    = "New task";
 $page_title_fr    = "Nouvelle tâche";
 
@@ -167,7 +167,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_categories_popin();')?>
 
-          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_categories_reload();')?>
+          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_categories_reload("add");')?>
 
         </div>
 
@@ -194,7 +194,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
           <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_milestones_popin();')?>
 
-          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_milestones_reload();')?>
+          <?=__icon('refresh', alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced', onclick: 'tasks_milestones_reload("add");')?>
 
         </div>
 

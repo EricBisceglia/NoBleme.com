@@ -260,6 +260,30 @@ ___('tasks_solve_submit',     'FR', "Résoudre la tâche");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                    EDIT A TASK                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Form
+___('tasks_edit_author',  'EN', "Task proposal by");
+___('tasks_edit_author',  'FR', "Tâche proposée par");
+___('tasks_edit_solved',  'EN', "Task has been solved");
+___('tasks_edit_solved',  'FR', "La tâche a été résolue");
+___('tasks_edit_submit',  'EN', "Edit task");
+___('tasks_edit_submit',  'FR', "Modifier la tâche");
+
+
+// Errors
+___('tasks_edit_unvalidated', 'EN', "Unvalidated tasks can not be edited");
+___('tasks_edit_unvalidated', 'FR', "Les tâches ne peuvent pas être modifiées avant d'avoir été validées");
+___('tasks_edit_no_author',   'EN', "The task proposal author must be a valid username");
+___('tasks_edit_no_author',   'FR', "La tâche doit être proposée par un compte valide");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                             CATEGORIES AND MILESTONES                                             */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

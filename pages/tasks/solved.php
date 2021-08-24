@@ -17,7 +17,7 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/tasks/list";
+$page_url         = "pages/tasks/solved";
 $page_title_en    = "Solve task";
 $page_title_fr    = "Résoudre une tâche";
 

@@ -15,6 +15,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  tasks_approve             Approves an unvalidated task proposal.                                                 */
 /*  tasks_reject              Rejects and hard deletes an unvalidated task proposal.                                 */
 /*  tasks_solve               Marks a task as solved.                                                                */
+/*  tasks_edit                Modifies an existing task.                                                             */
 /*                                                                                                                   */
 /*  tasks_categories_list     Fetches a list of task categories.                                                     */
 /*  tasks_categories_add      Creates a new task category.                                                           */
@@ -70,7 +71,9 @@ function tasks_get( int $task_id ) : mixed
                                                 dev_tasks.source_code_link        AS 't_source'     ,
                                                 users.id                          AS 'u_id'         ,
                                                 users.username                    AS 'u_name'       ,
+                                                dev_tasks_categories.id           AS 'tc_id'        ,
                                                 dev_tasks_categories.title_$lang  AS 'tc_name'      ,
+                                                dev_tasks_milestones.id           AS 'tm_id'        ,
                                                 dev_tasks_milestones.title_$lang  AS 'tm_name'
                                       FROM      dev_tasks
                                       LEFT JOIN users
@@ -96,6 +99,8 @@ function tasks_get( int $task_id ) : mixed
   $data['title']          = sanitize_output($dtask['t_title']);
   $temp                   = ($dtask['t_title_en']) ? $dtask['t_title_en'] : $dtask['t_title_fr'];
   $data['title_flex']     = sanitize_output($temp);
+  $data['title_en']       = sanitize_output($dtask['t_title_en']);
+  $data['title_fr']       = sanitize_output($dtask['t_title_fr']);
   $data['title_en_raw']   = $dtask['t_title_en'];
   $data['title_fr_raw']   = $dtask['t_title_fr'];
   $data['created']        = sanitize_output(date_to_text($dtask['t_created'], strip_day: 1));
@@ -109,11 +114,15 @@ function tasks_get( int $task_id ) : mixed
   $data['solved_since']   = sanitize_output(time_since($dtask['t_solved']));
   $data['priority']       = sanitize_output($dtask['t_priority']);
   $data['category']       = sanitize_output($dtask['tc_name']);
+  $data['category_id']    = ($dtask['tc_id']) ? sanitize_output($dtask['tc_id']) : 0;
   $data['milestone']      = sanitize_output($dtask['tm_name']);
+  $data['milestone_id']   = ($dtask['tm_id']) ? sanitize_output($dtask['tm_id']) : 0;
   $data['body']           = bbcodes(sanitize_output($dtask['t_body'], preserve_line_breaks: true));
   $temp                   = ($dtask['t_body_en']) ? $dtask['t_body_en'] : $dtask['t_body_fr'];
   $data['body_flex']      = bbcodes(sanitize_output($temp, preserve_line_breaks: true));
   $data['body_proposal']  = sanitize_output($temp);
+  $data['body_en']        = sanitize_output($dtask['t_body_en']);
+  $data['body_fr']        = sanitize_output($dtask['t_body_fr']);
   $data['source']         = ($dtask['t_source']) ? sanitize_output($dtask['t_source']) : '';
   $temp                   = ($dtask['t_title_en']) ? $dtask['t_title_en'] : $dtask['t_title_fr'];
   $data['summary']        = sanitize_output('Task #'.$task_id.': '.string_truncate($temp, 100, '…'));
@@ -836,6 +845,80 @@ EOT;
                         sender: 0               ,
                         true_sender: $admin_id  ,
                         hide_admin_mail: true   );
+
+  // All went well, return null
+  return null;
+}
+
+
+
+
+/**
+ * Modifies an existing task
+ *
+ * @param   int           $task_id    The ID of the task being solved.
+ * @param   array         $contents   The contents of the task.
+ *
+ * @return  string|null               An error string, or null if the task was properly modified.
+ */
+
+function tasks_edit(  int     $task_id  ,
+                      array   $contents ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('tasks.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $task_id        = sanitize($task_id, 'int', 0);
+  $task_title_en  = (isset($contents['title_en']))  ? sanitize($contents['title_en'], 'string')     : '';
+  $task_title_fr  = (isset($contents['title_fr']))  ? sanitize($contents['title_fr'], 'string')     : '';
+  $task_body_en   = (isset($contents['body_en']))   ? sanitize($contents['body_en'], 'string')      : '';
+  $task_body_fr   = (isset($contents['body_fr']))   ? sanitize($contents['body_fr'], 'string')      : '';
+  $task_priority  = (isset($contents['priority']))  ? sanitize($contents['priority'], 'int', 0, 5)  : 0;
+  $task_category  = (isset($contents['category']))  ? sanitize($contents['category'], 'int', 0)     : 0;
+  $task_milestone = (isset($contents['milestone'])) ? sanitize($contents['milestone'], 'int', 0)    : 0;
+  $task_source    = (isset($contents['source']))    ? sanitize($contents['source'], 'string')       : '';
+  $task_author    = (isset($contents['author']))    ? $contents['author']                           : 0;
+  $task_private   = (isset($contents['private']))   ? sanitize($contents['private'], 'int', 0, 1)   : 0;
+  $task_public    = ($task_private)                 ? 0                                             : 1;
+  $task_solved    = (isset($contents['solved']))    ? sanitize($contents['solved'], 'int', 0, 1)    : 0;
+
+  // Error: No title
+  if(!$task_title_en && !$task_title_fr)
+    return __('tasks_add_error_title');
+
+  // Error: Task does not exist
+  if(!database_row_exists('dev_tasks', $task_id))
+    return __('tasks_details_error');
+
+  // Fetch the task's author
+  if($task_author)
+    $task_author = sanitize(user_fetch_id($task_author), 'int', 0);
+
+  // Error: Author does not exist
+  if(!$task_author)
+    return __('tasks_edit_no_author');
+
+  // Prepare an extra statement if the task hasn't been solved or is being unsolved
+  $query_solved = (!$task_solved) ? " , dev_tasks.finished_at = 0 " : "";
+
+  // Update the task
+  query(" UPDATE      dev_tasks
+          SET         dev_tasks.fk_users                  = '$task_author'    ,
+                      dev_tasks.is_public                 = '$task_public'    ,
+                      dev_tasks.priority_level            = '$task_priority'  ,
+                      dev_tasks.title_en                  = '$task_title_en'  ,
+                      dev_tasks.title_fr                  = '$task_title_fr'  ,
+                      dev_tasks.body_en                   = '$task_body_en'   ,
+                      dev_tasks.body_fr                   = '$task_body_fr'   ,
+                      dev_tasks.fk_dev_tasks_categories   = '$task_category'  ,
+                      dev_tasks.fk_dev_tasks_milestones   = '$task_milestone' ,
+                      dev_tasks.source_code_link          = '$task_source'
+                      $query_solved
+          WHERE       dev_tasks.id                        = '$task_id'        ");
 
   // All went well, return null
   return null;

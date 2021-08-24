@@ -120,13 +120,15 @@ function tasks_categories_delete( category_id ,
 /**
  * Reloads the task category selector.
  *
+ * @param   {string}  page  The page on which the reloading is happening.
+ *
  * @returns {void}
  */
 
-function tasks_categories_reload()
+function tasks_categories_reload( page )
 {
   // Reload the selector
-  fetch_page('add', 'task_categories_selector', 'reload_categories=1');
+  fetch_page(page, 'task_categories_selector', 'reload_categories=1');
 }
 
 
@@ -236,11 +238,13 @@ function tasks_milestones_delete( milestone_id  ,
 /**
  * Reloads the task milestone selector.
  *
+ * @param   {string}  page  The page on which the reloading is happening.
+ *
  * @returns {void}
  */
 
-function tasks_milestones_reload()
+function tasks_milestones_reload( page )
 {
   // Reload the selector
-  fetch_page('add', 'task_milestones_selector', 'reload_milestones=1');
+  fetch_page(page, 'task_milestones_selector', 'reload_milestones=1');
 }

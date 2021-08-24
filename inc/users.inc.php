@@ -16,6 +16,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_unban                        Unbans a banned user.                                                          */
 /*                                                                                                                   */
 /*  user_get_id                       Returns the current user's id.                                                 */
+/*  user_fetch_id                     Returns the user id for a specific username.                                   */
 /*  user_get_username                 Returns a user's username from their id.                                       */
 /*  user_get_language                 Returns a user's language.                                                     */
 /*  user_get_mode                     Returns the current user's display mode.                                       */
@@ -552,6 +553,31 @@ function user_get_id() : int
 {
   // As simple as it sounds, return the value stored in the session if the user is logged in, else 0
   return (user_is_logged_in()) ? $_SESSION['user_id'] : 0;
+}
+
+
+
+
+/**
+ * Returns the user id for a specific username.
+ *
+ * @param   string  The user's username.
+ *
+ * @return  int     The user's id, or 0 if it wasn't found.
+ */
+
+function user_fetch_id( string $username ) : int
+{
+  // Sanitize the username
+  $username = sanitize($username, 'string');
+
+  // Fetch the username
+  $duser = mysqli_fetch_array(query(" SELECT  users.id AS 'u_id'
+                                      FROM    users
+                                      WHERE   users.username LIKE '$username' "));
+
+  // Return the user's id, or 0 if it wasn't found
+  return isset($duser['u_id']) ? $duser['u_id'] : 0;
 }
 
 
