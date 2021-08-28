@@ -4,6 +4,7 @@
 /*  tasks_list_details          Shows the details of a task in the todo list.                                        */
 /*                                                                                                                   */
 /*  tasks_delete                Triggers the soft deletion of a task.                                                */
+/*  tasks_restore               Triggers the restoration of a soft deleted task.                                     */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -81,6 +82,30 @@ function tasks_list_details( task_id )
   postdata += '&task_delete=1';
 
   // Trigger the deletion
+  if(confirm(message))
+    fetch_page('task_details', 'tasks_list_' + task_id, postdata, null, null, null, 1);
+}
+
+
+
+
+/**
+ * Triggers the restoration of a soft deleted task.
+ *
+ * @param   {string}  task_id   The ID of the task that should be restored.
+ * @param   {string}  message   The confirmation message which will be displayed prior to the restoration.
+ *
+ * @return  {void}
+ */
+
+ function tasks_restore(  task_id ,
+                          message )
+{
+  // Assemble the postdata
+  postdata =  'task_id=' + fetch_sanitize(task_id);
+  postdata += '&task_restore=1';
+
+  // Trigger the restoration
   if(confirm(message))
     fetch_page('task_details', 'tasks_list_' + task_id, postdata, null, null, null, 1);
 }

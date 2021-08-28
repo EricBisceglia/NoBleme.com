@@ -22,17 +22,18 @@ page_must_be_fetched_dynamically();
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Delete the task
+// Delete or restore the task
 
 // Fetch the task's id
 $task_id = (int)form_fetch_element('task_id', 0);
 
-// Check if a deletion request has been made
+// Soft delete a task
 if(isset($_POST['task_delete']))
-{
-  // Soft delete the task
   tasks_delete($task_id);
-}
+
+// Restore a deleted task
+if(isset($_POST['task_restore']))
+  tasks_restore($task_id);
 
 
 
@@ -81,7 +82,7 @@ $task_details = tasks_get($task_id);
     <?php } if($task_details['validated'] && !$task_details['deleted']) { ?>
     <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "tasks_delete('".$task_id."', '".__('tasks_delete_confirm')."')")?>
     <?php } if($task_details['validated'] && $task_details['deleted']) { ?>
-    <?=__icon('refresh', alt: 'R', title: __('restore'), title_case: 'initials')?>
+    <?=__icon('refresh', alt: 'R', title: __('restore'), title_case: 'initials', onclick: "tasks_restore('".$task_id."', '".__('tasks_restore_confirm')."')")?>
     <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials')?>
     <?php } ?>
     <?php } ?>

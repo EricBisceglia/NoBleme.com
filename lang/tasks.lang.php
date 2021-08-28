@@ -286,13 +286,18 @@ ___('tasks_edit_no_author',   'FR', "La tâche doit être proposée par un compt
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                   DELETE A TASK                                                   */
+/*                                              DELETE / RESTORE A TASK                                              */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
 // Soft deletion
 ___('tasks_delete_confirm', 'EN', "Confirm the soft deletion of this task.");
 ___('tasks_delete_confirm', 'FR', "Confirmer la suppression non définitive de cette tâche.");
+
+
+// Restoration
+___('tasks_restore_confirm',  'EN', "Confirm the restoration of this deleted task");
+___('tasks_restore_confirm',  'FR', "Confirmer la restauration de cette tâche supprimée");
 
 
 
