@@ -16,6 +16,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  tasks_reject              Rejects and hard deletes an unvalidated task proposal.                                 */
 /*  tasks_solve               Marks a task as solved.                                                                */
 /*  tasks_edit                Modifies an existing task.                                                             */
+/*  tasks_delete              Soft deletes an existing task.                                                         */
 /*                                                                                                                   */
 /*  tasks_categories_list     Fetches a list of task categories.                                                     */
 /*  tasks_categories_add      Creates a new task category.                                                           */
@@ -270,6 +271,7 @@ function tasks_list(  string  $sort_by  = 'status'  ,
                               dev_tasks.created_at                DESC    ";
   else
     $qtasks .= "  ORDER BY    dev_tasks.admin_validation        = 1     ,
+                              dev_tasks.is_deleted              != ''   ,
                               dev_tasks.finished_at             != ''   ,
                               dev_tasks.finished_at             DESC    ,
                               dev_tasks.priority_level          DESC    ,
@@ -290,7 +292,8 @@ function tasks_list(  string  $sort_by  = 'status'  ,
   {
     // Prepare the data
     $data[$i]['id']         = sanitize_output($row['t_id']);
-    $data[$i]['css_row']    = ($row['t_finished']) ? 'task_solved' : 'task_status_'.sanitize_output($row['t_status']);
+    $temp                   = ($row['t_finished']) ? 'task_solved' : 'task_status_'.sanitize_output($row['t_status']);
+    $data[$i]['css_row']    = ($row['t_deleted']) ? 'brown' : $temp;
     $temp                   = ($row['t_status'] < 2) ? ' italics' : '';
     $temp                   = ($row['t_status'] > 3) ? ' bold' : $temp;
     $temp                   = ($row['t_status'] > 4) ? ' bold uppercase underlined' : $temp;
@@ -922,6 +925,47 @@ function tasks_edit(  int     $task_id  ,
 
   // All went well, return null
   return null;
+}
+
+
+
+
+/**
+ * Soft deletes an existing task
+ *
+ * @param   int   $task_id  The task's id.
+ *
+ * @return  void
+ */
+
+function tasks_delete( int $task_id ) : void
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the task's id
+  $task_id = sanitize($task_id, 'int', 0);
+
+  // Fetch data on the task
+  $task_data = tasks_get($task_id);
+
+  // Proceed only if the task exists
+  if(!isset($task_data))
+    return;
+
+  // Proceed only if the task has already been validated
+  if(!$task_data['validated'])
+    return;
+
+  // Soft delete the task
+  query(" UPDATE  dev_tasks
+          SET     dev_tasks.is_deleted  = 1
+          WHERE   dev_tasks.id          = '$task_id' ");
+
+  // Delete related task activity
+  log_activity_delete(  'dev_task'                  ,
+                        activity_id:      $task_id  ,
+                        global_type_wipe: true      );
 }
 
 

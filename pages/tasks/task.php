@@ -16,6 +16,9 @@ $page_title_en    = "Task";
 $page_title_fr    = "Tâche";
 $page_description = "Task linked to a bug or feature in NoBleme's development";
 
+// Extra JS
+$js = array('tasks/task');
+
 
 
 
@@ -25,8 +28,24 @@ $page_description = "Task linked to a bug or feature in NoBleme's development";
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete the task
+
 // Fetch the task's id
 $task_id = (int)form_fetch_element('id', 0, request_type: 'GET');
+
+// Check if a deletion request has been made
+if(isset($_POST['task_delete']))
+{
+  // Soft delete the task
+  tasks_delete($task_id);
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch task data
 
 // Fetch the task's details
 $task_details = tasks_get($task_id);
@@ -51,7 +70,9 @@ $page_description = ($task_details['summary']) ? $task_details['summary'] : $pag
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_50">
+<div class="width_50" id="task_full_body">
+
+  <?php } ?>
 
   <h1>
 
@@ -65,6 +86,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/tasks/edit?id='.$task_id)?>
     <?php } if($task_details['validated'] && !$task_details['solved'] && !$task_details['deleted']) { ?>
     <?=__icon('done', alt: 'D', title: __('done'), title_case: 'initials', href: 'pages/tasks/solved?id='.$task_id)?>
+    <?php } if($task_details['validated'] && !$task_details['deleted']) { ?>
+    <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "task_delete('".$task_id."', '".__('tasks_delete_confirm')."')")?>
+    <?php } if($task_details['validated'] && $task_details['deleted']) { ?>
+    <?=__icon('refresh', alt: 'R', title: __('restore'), title_case: 'initials')?>
+    <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials')?>
     <?php } ?>
     <?php } ?>
 
@@ -82,10 +108,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   </h4>
 
-  <?php if($is_admin && (!$task_details['public'] || !$task_details['validated'])) { ?>
+  <?php if($is_admin && ($task_details['deleted'] || !$task_details['public'] || !$task_details['validated'])) { ?>
   <p>
 
-    <?php if(!$task_details['validated']) { ?>
+    <?php if($task_details['deleted']) { ?>
+    <span class="bold red text_white spaced"><?=__('tasks_full_deleted')?></span>
+    <?php } else if(!$task_details['validated']) { ?>
     <span class="bold red text_white spaced"><?=__('tasks_full_unvalidated')?></span>
     <?php } else if(!$task_details['public']) { ?>
     <span class="bold red text_white spaced"><?=__('tasks_full_private')?></span>
@@ -135,6 +163,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?php } ?>
 
   </p>
+
+  <?php if(!page_is_fetched_dynamically()) { ?>
 
 </div>
 

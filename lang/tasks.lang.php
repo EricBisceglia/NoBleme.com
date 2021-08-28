@@ -132,6 +132,8 @@ ___('tasks_details_no_body',  'FR', "Le contenu de cette tâche n'a pas été tr
 
 
 // Full details
+___('tasks_full_deleted',     'EN', "This task has been deleted, only admins can see it");
+___('tasks_full_deleted',     'FR', "Cette tâche a été supprimée, seule l'adminstration peut la voir");
 ___('tasks_full_unvalidated', 'EN', "This task has not been validated yet, only admins can see it");
 ___('tasks_full_unvalidated', 'FR', "Cette tâche n'a pas été validée, seule l'administration peut la voir");
 ___('tasks_full_private',     'EN', "This task is private, only admins can see it");
@@ -278,6 +280,19 @@ ___('tasks_edit_unvalidated', 'EN', "Unvalidated tasks can not be edited");
 ___('tasks_edit_unvalidated', 'FR', "Les tâches ne peuvent pas être modifiées avant d'avoir été validées");
 ___('tasks_edit_no_author',   'EN', "The task proposal author must be a valid username");
 ___('tasks_edit_no_author',   'FR', "La tâche doit être proposée par un compte valide");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   DELETE A TASK                                                   */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Soft deletion
+___('tasks_delete_confirm', 'EN', "Confirm the soft deletion of this task.");
+___('tasks_delete_confirm', 'FR', "Confirmer la suppression non définitive de cette tâche.");
 
 
 
