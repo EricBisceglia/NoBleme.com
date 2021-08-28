@@ -18,6 +18,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  tasks_edit                Modifies an existing task.                                                             */
 /*  tasks_delete              Soft deletes an existing task.                                                         */
 /*  tasks_restore             Restores a deleted task.                                                               */
+/*  tasks_delete_hard         Hard deletes a deleted task.                                                           */
 /*                                                                                                                   */
 /*  tasks_categories_list     Fetches a list of task categories.                                                     */
 /*  tasks_categories_add      Creates a new task category.                                                           */
@@ -932,7 +933,7 @@ function tasks_edit(  int     $task_id  ,
 
 
 /**
- * Soft deletes an existing task
+ * Soft deletes an existing task.
  *
  * @param   int   $task_id  The task's id.
  *
@@ -999,6 +1000,41 @@ function tasks_restore( int $task_id ) : void
   query(" UPDATE  dev_tasks
           SET     dev_tasks.is_deleted  = 0
           WHERE   dev_tasks.id          = '$task_id' ");
+}
+
+
+
+
+/**
+ * Hard deletes a deleted task.
+ *
+ * @param   int   $task_id  The task's id.
+ *
+ * @return  void
+ */
+
+function tasks_delete_hard( int $task_id ) : void
+{
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the task's id
+  $task_id = sanitize($task_id, 'int', 0);
+
+  // Fetch data on the task
+  $task_data = tasks_get($task_id);
+
+  // Proceed only if the task exists
+  if(!isset($task_data))
+    return;
+
+  // Proceed only if the task has already been deleted
+  if(!$task_data['deleted'])
+    return;
+
+  // Hard delete the task
+  query(" DELETE FROM dev_tasks
+          WHERE       dev_tasks.id = '$task_id' ");
 }
 
 

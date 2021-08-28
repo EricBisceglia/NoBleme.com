@@ -35,6 +35,10 @@ if(isset($_POST['task_delete']))
 if(isset($_POST['task_restore']))
   tasks_restore($task_id);
 
+// Hard delete a task
+if(isset($_POST['task_delete_hard']))
+  tasks_delete_hard($task_id);
+
 
 
 
@@ -83,7 +87,7 @@ $task_details = tasks_get($task_id);
     <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "tasks_delete('".$task_id."', '".__('tasks_delete_confirm')."')")?>
     <?php } if($task_details['validated'] && $task_details['deleted']) { ?>
     <?=__icon('refresh', alt: 'R', title: __('restore'), title_case: 'initials', onclick: "tasks_restore('".$task_id."', '".__('tasks_restore_confirm')."')")?>
-    <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials')?>
+    <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "tasks_delete_hard('".$task_id."', '".__('tasks_delete_hard_confirm')."')")?>
     <?php } ?>
     <?php } ?>
 

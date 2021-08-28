@@ -300,6 +300,15 @@ ___('tasks_restore_confirm',  'EN', "Confirm the restoration of this deleted tas
 ___('tasks_restore_confirm',  'FR', "Confirmer la restauration de cette tâche supprimée");
 
 
+// Hard deletion
+___('tasks_delete_hard_confirm',  'EN', "Confirm the permanent and irreversible deletion of this task");
+___('tasks_delete_hard_confirm',  'FR', "Confirmer la suppression définitive et irréversible de cette tâche");
+___('tasks_delete_hard_ok',       'EN', "The task has properly been deleted");
+___('tasks_delete_hard_ok',       'FR', "La tâche a bien été supprimée");
+___('tasks_delete_hard_error',    'EN', "The task could not be deleted or has already been deleted");
+___('tasks_delete_hard_error',    'FR', "La tâche n'a pas pu être supprimée ou a déjà été supprimée");
+
+
 
 
 /*********************************************************************************************************************/

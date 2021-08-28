@@ -91,7 +91,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "task_delete('".$task_id."', '".__('tasks_delete_confirm')."')")?>
     <?php } if($task_details['validated'] && $task_details['deleted']) { ?>
     <?=__icon('refresh', alt: 'R', title: __('restore'), title_case: 'initials', onclick: "task_restore('".$task_id."', '".__('tasks_restore_confirm')."')")?>
-    <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials')?>
+    <?=__icon('delete', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "task_delete_hard('".$task_id."', '".__('tasks_delete_hard_confirm')."')")?>
     <?php } ?>
     <?php } ?>
 

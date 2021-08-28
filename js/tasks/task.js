@@ -2,6 +2,7 @@
 /*                                                                                                                   */
 /*  task_delete               Triggers the soft deletion of a task.                                                  */
 /*  task_restore              Triggers the restoration of a soft deleted task.                                       */
+/*  task_delete_hard          Triggers the hard deletion of a task.                                                  */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -48,4 +49,28 @@
   // Trigger the restoration
   if(confirm(message))
     fetch_page(task_id, 'task_full_body', postdata);
+}
+
+
+
+
+/**
+ * Triggers the hard deletion of a task.
+ *
+ * @param   {string}  task_id   The ID of the task that should be hard deleted.
+ * @param   {string}  message   The confirmation message which will be displayed prior to the hard deletion.
+ *
+ * @return  {void}
+ */
+
+ function task_delete_hard( task_id ,
+                            message )
+{
+  // Assemble the postdata
+  postdata =  'task_id=' + fetch_sanitize(task_id);
+  postdata += '&task_delete_hard=1';
+
+  // Trigger the hard deletion
+  if(confirm(message))
+    fetch_page('delete', 'task_full_body', postdata);
 }
