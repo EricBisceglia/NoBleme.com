@@ -140,23 +140,26 @@ function tasks_get( int $task_id ) : mixed
 /**
  * Fetches a list of tasks.
  *
- * @param   string  $sort_by  (OPTIONAL)  How the returned data should be sorted.
- * @param   array   $search   (OPTIONAL)  Search for specific field values.
+ * @param   string  $sort_by    (OPTIONAL)  How the returned data should be sorted.
+ * @param   array   $search     (OPTIONAL)  Search for specific field values.
+ * @param   bool    $user_view  (OPTIONAL)  Views the list as a regular user even if the account is an administrator.
  *
- * @return  array                         An array containing tasks.
+ * @return  array                           An array containing tasks.
  */
 
-function tasks_list(  string  $sort_by  = 'status'  ,
-                      array   $search   = array()   ) : array
+function tasks_list(  string  $sort_by    = 'status'  ,
+                      array   $search     = array()   ,
+                      bool    $user_view  = false     ) : array
 {
   // Check if the required files have been included
+  require_included_file('bbcodes.inc.php');
   require_included_file('functions_time.inc.php');
   require_included_file('functions_numbers.inc.php');
   require_included_file('functions_mathematics.inc.php');
 
   // Get the user's current language and access rights
   $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
-  $is_admin = user_is_administrator();
+  $is_admin = ($user_view) ? 0 : user_is_administrator();
 
   // Sanitize the search parameters
   $search_id        = isset($search['id'])        ? sanitize($search['id'], 'int', 0)         : 0;
@@ -170,20 +173,21 @@ function tasks_list(  string  $sort_by  = 'status'  ,
   $search_admin     = isset($search['admin'])     ? sanitize($search['admin'], 'int', 0, 5)   : 0;
 
   // Fetch the tasks
-  $qtasks = "     SELECT    dev_tasks.id                      AS 't_id'           ,
-                            dev_tasks.is_deleted              AS 't_deleted'      ,
-                            dev_tasks.created_at              AS 't_created'      ,
-                            dev_tasks.finished_at             AS 't_finished'     ,
-                            dev_tasks.is_public               AS 't_public'       ,
-                            dev_tasks.admin_validation        AS 't_validated'    ,
-                            dev_tasks.priority_level          AS 't_status'       ,
-                            dev_tasks.title_en                AS 't_title_en'     ,
-                            dev_tasks.title_fr                AS 't_title_fr'     ,
-                            dev_tasks_categories.id           AS 't_category_id'  ,
-                            dev_tasks_categories.title_$lang  AS 't_category'     ,
-                            dev_tasks_milestones.id           AS 't_milestone_id' ,
-                            dev_tasks_milestones.title_$lang  AS 't_milestone'    ,
-                            users.username                    AS 't_author'
+  $qtasks = "     SELECT    dev_tasks.id                        AS 't_id'             ,
+                            dev_tasks.is_deleted                AS 't_deleted'        ,
+                            dev_tasks.created_at                AS 't_created'        ,
+                            dev_tasks.finished_at               AS 't_finished'       ,
+                            dev_tasks.is_public                 AS 't_public'         ,
+                            dev_tasks.admin_validation          AS 't_validated'      ,
+                            dev_tasks.priority_level            AS 't_status'         ,
+                            dev_tasks.title_en                  AS 't_title_en'       ,
+                            dev_tasks.title_fr                  AS 't_title_fr'       ,
+                            dev_tasks_categories.id             AS 't_category_id'    ,
+                            dev_tasks_categories.title_$lang    AS 't_category'       ,
+                            dev_tasks_milestones.id             AS 't_milestone_id'   ,
+                            dev_tasks_milestones.title_$lang    AS 't_milestone'      ,
+                            dev_tasks_milestones.summary_$lang  AS 't_milestone_body' ,
+                            users.username                      AS 't_author'
                   FROM      dev_tasks
                   LEFT JOIN dev_tasks_categories  ON dev_tasks.fk_dev_tasks_categories  = dev_tasks_categories.id
                   LEFT JOIN dev_tasks_milestones  ON dev_tasks.fk_dev_tasks_milestones  = dev_tasks_milestones.id
@@ -235,6 +239,12 @@ function tasks_list(  string  $sort_by  = 'status'  ,
   else if($search_admin == 5)
     $qtasks .= "  AND       dev_tasks.title_fr                          = ''                    ";
 
+  // Limit the returned data in roadmap view
+  if($sort_by == 'roadmap')
+    $qtasks .= "  AND       dev_tasks.is_deleted                        = 0
+                  AND       dev_tasks.admin_validation                  = 1
+                  AND       dev_tasks.fk_dev_tasks_milestones           > 0                     ";
+
   // Sort the data
   if($sort_by == 'id')
     $qtasks .= "  ORDER BY    dev_tasks.id                      ASC     ";
@@ -259,6 +269,13 @@ function tasks_list(  string  $sort_by  = 'status'  ,
     $qtasks .= "  ORDER BY    dev_tasks.finished_at               != ''   ,
                               dev_tasks_milestones.id             IS NULL ,
                               dev_tasks_milestones.sorting_order  DESC    ,
+                              dev_tasks.finished_at               DESC    ,
+                              dev_tasks.priority_level            DESC    ,
+                              dev_tasks.created_at                DESC    ";
+  else if($sort_by == 'roadmap')
+    $qtasks .= "  ORDER BY    dev_tasks_milestones.id             IS NULL ,
+                              dev_tasks_milestones.sorting_order  DESC    ,
+                              dev_tasks.finished_at               > 0     ,
                               dev_tasks.finished_at               DESC    ,
                               dev_tasks.priority_level            DESC    ,
                               dev_tasks.created_at                DESC    ";
@@ -303,15 +320,20 @@ function tasks_list(  string  $sort_by  = 'status'  ,
     $temp                   = ($lang == 'en') ? $row['t_title_en'] : $row['t_title_fr'];
     $temp                   = ($lang == 'en' && !$row['t_title_en']) ? $row['t_title_fr'] : $temp;
     $temp                   = ($lang != 'en' && !$row['t_title_fr']) ? $row['t_title_en'] : $temp;
+    $temp                   = ($sort_by == 'roadmap' && !$row['t_public']) ? __('tasks_roadmap_private').$temp : $temp;
     $data[$i]['title']      = sanitize_output(string_truncate($temp, 42, '…'));
+    $data[$i]['road_title'] = sanitize_output(string_truncate($temp, 60, '…'));
     $data[$i]['fulltitle']  = (strlen($temp) > 42) ? sanitize_output($temp) : '';
+    $data[$i]['road_full']  = (strlen($temp) > 60) ? sanitize_output($temp) : '';
     $data[$i]['shorttitle'] = sanitize_output(string_truncate($temp, 38, '…'));
     $temp                   = sanitize_output(__('tasks_list_solved'));
     $data[$i]['status']     = ($row['t_finished']) ? $temp : sanitize_output(__('tasks_list_state_'.$row['t_status']));
     $data[$i]['created']    = sanitize_output(time_since($row['t_created']));
+    $data[$i]['solved']     = ($row['t_finished']) ? sanitize_output(time_since($row['t_finished'])) : __('tasks_roadmap_unsolved');
     $data[$i]['author']     = sanitize_output($row['t_author']);
     $data[$i]['category']   = sanitize_output($row['t_category']);
     $data[$i]['milestone']  = sanitize_output($row['t_milestone']);
+    $data[$i]['goal_body']  = bbcodes(sanitize_output($row['t_milestone_body'], preserve_line_breaks: true));
     $data[$i]['nolang_en']  = (!$row['t_title_en']);
     $data[$i]['nolang_fr']  = (!$row['t_title_fr']);
     $data[$i]['deleted']    = ($row['t_deleted']);

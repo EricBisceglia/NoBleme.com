@@ -16,11 +16,11 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 ___('tasks_list_subtitle',  'EN', "Tasks, bugs, and features");
 ___('tasks_list_subtitle',  'FR', "Suivi du développement de NoBleme");
 ___('tasks_list_body_1',    'EN', <<<EOT
-The table below lists all of the bugs and functional changes related to NoBleme's past and future evolution. Click on any task to see more details about it. You can use the first rows to sort, filter, and search the to-do list. These tasks are presented in a more organized format on {{link|todo_link|NoBleme's roadmap}}.
+The table below lists all of the bugs and functional changes related to NoBleme's past and future evolution. Click on any task to see more details about it. You can use the first rows to sort, filter, and search the to-do list. These tasks are presented in a more organized format on {{link|pages/tasks/roadmap|NoBleme's roadmap}}.
 EOT
 );
 ___('tasks_list_body_1',    'FR', <<<EOT
-Ce tableau contient tous les bugs et idées d'évolutions liés au développement passé et futur de NoBleme. Cliquez sur une tâche pour plus de détails à son sujet. Les premières lignes du tableau vous permettent de filtrer, trier, et chercher les tâches. Le {{link|todo_link|plan de route}} présente le même contenu de façon plus organisée.
+Ce tableau contient tous les bugs et idées d'évolutions liés au développement passé et futur de NoBleme. Cliquez sur une tâche pour plus de détails à son sujet. Les premières lignes du tableau vous permettent de filtrer, trier, et chercher les tâches. Le {{link|pages/tasks/roadmap|plan de route}} présente le même contenu de façon plus organisée.
 EOT
 );
 ___('tasks_list_body_2',    'EN', <<<EOT
@@ -100,6 +100,48 @@ ___('tasks_list_private',       'EN', "Private task");
 ___('tasks_list_private',       'FR', "Tâche privée");
 ___('tasks_list_unvalidated',   'EN', "Unvalidated task");
 ___('tasks_list_unvalidated',   'FR', "Tâche non validée");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                      ROADMAP                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('tasks_roadmap_title',  'EN', "Roadmap");
+___('tasks_roadmap_title',  'FR', "Plan de route");
+___('tasks_roadmap_user',   'EN', "View as a regular user");
+___('tasks_roadmap_user',   'FR', "Voir comme un compte normal");
+___('tasks_roadmap_admin',  'EN', "View as an administrator");
+___('tasks_roadmap_admin',  'FR', "Voir comme un compte administratif");
+___('tasks_roadmap_body_1', 'EN', <<<EOT
+As NoBleme is a constantly evolving website, this page acts as both a roadmap previewing plans for future developments and a changelog archiving past evolutions and bug fixes. All of the tasks listed below are taken from the {{link|pages/tasks/list|to-do list}}, and listed in reverse chronological order.
+EOT
+);
+___('tasks_roadmap_body_1', 'FR', <<<EOT
+NoBleme étant un site Internet en évolution permanente, cette page sert à la fois de plan de route pour les développements futurs et d'archive des évolutions et correctifs qui ont eu lieu dans le passé. Toutes les tâches listées ci-dessous sont issues de la {{link|pages/tasks/list|liste des tâches}}, et sont listées antéchronologiquement.
+EOT
+);
+___('tasks_roadmap_body_2', 'EN', <<<EOT
+Future tasks which are yet to be completed appear in <span class="task_status_1 spaced text_dark bold">shades</span><span class="task_status_3 spaced text_dark bold">of</span><span class="task_status_5 spaced text_dark bold">red</span> depending on their priority level, whereas finished tasks appear in <span class="task_solved spaced text_dark bold">green</span>. You can click on a task to see its details.
+EOT
+);
+___('tasks_roadmap_body_2', 'FR', <<<EOT
+Les tâches futures (qui n'ont pas encore été complétées) apparaissent en <span class="task_status_1 spaced text_dark bold">nuances</span><span class="task_status_3 spaced text_dark bold">de</span><span class="task_status_5 spaced text_dark bold">rouge</span> selon leur niveau de priorité, tandis que les tâches complétées apparaissent en <span class="task_solved spaced text_dark bold">vert</span>. Vous pouvez cliquer sur une tâche pour afficher plus d'informations à son sujet.
+EOT
+);
+
+
+// Table
+___('tasks_roadmap_task',     'EN', "Task");
+___('tasks_roadmap_task',     'FR', "Tâche");
+___('tasks_roadmap_unsolved', 'EN', "Not yet");
+___('tasks_roadmap_unsolved', 'FR', "Pas encore");
+___('tasks_roadmap_private',  'EN', "[PRIVATE] ");
+___('tasks_roadmap_private',  'FR', "[PRIVÉ] ");
 
 
 

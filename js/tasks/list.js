@@ -8,6 +8,8 @@
 /*  tasks_delete_hard           Triggers the hard deletion of a task.                                                */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+// Close the milestones popin if it is open upon loading the page
+popin_close('task_categories_popin');
 
 
 /**

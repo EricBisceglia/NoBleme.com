@@ -264,7 +264,7 @@ function dev_versions_create( int     $major                    ,
 
   // Send a message on IRC
   if($notify_irc)
-  irc_bot_send_message(chr(0x02).chr(0x03).'03'."A new version of NoBleme has been released: $version_number - ".$GLOBALS['website_url']."todo_link", "dev");
+  irc_bot_send_message(chr(0x02).chr(0x03).'03'."A new version of NoBleme has been released: $version_number - ".$GLOBALS['website_url']."pages/tasks/roadmap", "dev");
 
   // Return that all went well
   return NULL;

@@ -67,7 +67,7 @@ if($GLOBALS['dev_mode'] && $GLOBALS['full_debug_mode'])
 
       <footer>
 
-        <?=__link("todo_link", string_change_case(__('version'), 'initials').' '.$version, "", 1, $path);?><br>
+        <?=__link("pages/tasks/roadmap", string_change_case(__('version'), 'initials').' '.$version, "", 1, $path);?><br>
 
         <?php if($is_admin) { ?>
 
