@@ -985,6 +985,9 @@ ___('submenu_admin_doc_js',         'FR', "Outils JavaScript");
 ___('submenu_admin_doc_functions',  'EN', "Functions list");
 ___('submenu_admin_doc_functions',  'FR', "Liste de fonctions");
 
+___('submenu_admin_local_fixtures', 'EN', "Local dev: Fixtures");
+___('submenu_admin_local_fixtures', 'FR', "Dev local : Fixtures");
+
 
 
 

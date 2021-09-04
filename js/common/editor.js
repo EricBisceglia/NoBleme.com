@@ -9,10 +9,10 @@
  * @returns {void}
  */
 
-function editor_bold( target_element          ,
-                      bbcode                  ,
-                      prompt_text     = null  ,
-                      prompt_text_2   = null  )
+function editor_apply(  target_element          ,
+                        bbcode                  ,
+                        prompt_text     = null  ,
+                        prompt_text_2   = null  )
 {
   // Fetch the target element
   target_element = document.getElementById(target_element);
