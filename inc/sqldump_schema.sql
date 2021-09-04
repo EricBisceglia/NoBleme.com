@@ -379,6 +379,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_visited_page_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_page_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_url` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `visited_page_count` int UNSIGNED NOT NULL DEFAULT '0',
   `current_ip_address` varchar(135) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0',
   `is_banned_since` int UNSIGNED NOT NULL DEFAULT '0',
   `is_banned_until` int UNSIGNED NOT NULL DEFAULT '0',
@@ -386,8 +387,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `is_banned_because_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_access_rights` (`is_administrator`,`is_moderator`),
-  KEY `index_language` (`current_language`),
-  KEY `index_theme` (`current_theme`),
   KEY `index_doppelganger` (`current_ip_address`),
   KEY `index_banned` (`is_banned_until`),
   KEY `index_deleted` (`is_deleted`)
@@ -399,10 +398,13 @@ CREATE TABLE IF NOT EXISTS `users_guests` (
   `ip_address` varchar(135) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0.0.0.0',
   `randomly_assigned_name_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `randomly_assigned_name_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `current_language` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `current_theme` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_at` int UNSIGNED NOT NULL DEFAULT '0',
   `last_visited_page_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_page_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_url` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `visited_page_count` int UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

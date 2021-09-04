@@ -173,12 +173,13 @@ $activity_user              = (user_is_logged_in()) ? sanitize(user_get_id(), 'i
 // Logged in user activity
 if($activity_user)
   query(" UPDATE  users
-          SET     users.current_language      = '$activity_language'          ,
-                  users.current_theme         = '$activity_mode'              ,
-                  users.last_visited_at       = '$activity_timestamp'         ,
-                  users.last_visited_page_en  = '$activity_page_en_sanitized' ,
-                  users.last_visited_page_fr  = '$activity_page_fr_sanitized' ,
-                  users.last_visited_url      = '$activity_url_sanitized'     ,
+          SET     users.current_language      = '$activity_language'            ,
+                  users.current_theme         = '$activity_mode'                ,
+                  users.last_visited_at       = '$activity_timestamp'           ,
+                  users.last_visited_page_en  = '$activity_page_en_sanitized'   ,
+                  users.last_visited_page_fr  = '$activity_page_fr_sanitized'   ,
+                  users.last_visited_url      = '$activity_url_sanitized'       ,
+                  users.visited_page_count    = (users.visited_page_count + 1)  ,
                   users.current_ip_address    = '$activity_ip'
           WHERE   users.id                    = '$activity_user'              ");
 
@@ -211,11 +212,14 @@ else
 
   // Update guest activity data
   query(" UPDATE  users_guests
-          SET     users_guests.last_visited_at      = '$activity_timestamp'         ,
-                  users_guests.last_visited_page_en = '$activity_page_en_sanitized' ,
-                  users_guests.last_visited_page_fr = '$activity_page_fr_sanitized' ,
-                  users_guests.last_visited_url     = '$activity_url_sanitized'
-          WHERE   users_guests.ip_address           = '$activity_ip'                ");
+          SET     users_guests.current_language     = '$activity_language'                  ,
+                  users_guests.current_theme        = '$activity_mode'                      ,
+                  users_guests.last_visited_at      = '$activity_timestamp'                 ,
+                  users_guests.last_visited_page_en = '$activity_page_en_sanitized'         ,
+                  users_guests.last_visited_page_fr = '$activity_page_fr_sanitized'         ,
+                  users_guests.last_visited_url     = '$activity_url_sanitized'             ,
+                  users_guests.visited_page_count   = (users_guests.visited_page_count + 1)
+          WHERE   users_guests.ip_address           = '$activity_ip'                        ");
 }
 
 

@@ -600,20 +600,28 @@ for($i = 0; $i < $random; $i++)
   $name_en      = ucfirst(fixtures_generate_data('sentence', 1, 3, 1));
   $name_fr      = ucfirst(fixtures_generate_data('sentence', 1, 3, 1));
   $current_ip   = fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255).'.'.fixtures_generate_data('int', 0, 255);
+  $current_lang = (mt_rand(0,3) < 3) ? 'EN' : 'FR';
+  $current_mode = (mt_rand(0,5) < 5) ? 'dark' : 'light';
   $last_visit   = mt_rand((time() - 2629746), time());
   $last_page_fr = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
   $last_page_en = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
   $last_url     = (mt_rand(0,2) < 2) ? 'index' : '';
+  $temp         = mt_rand(0,10);
+  $temp         = (mt_rand(0,1)) ? 1 : $temp;
+  $visit_count  = (mt_rand(0,10) < 10) ? $temp : mt_rand(10, 100);
 
   // Generate the guests
   query(" INSERT INTO users_guests
           SET         users_guests.randomly_assigned_name_en  = '$name_en'      ,
                       users_guests.randomly_assigned_name_fr  = '$name_fr'      ,
                       users_guests.ip_address                 = '$current_ip'   ,
+                      users_guests.current_language           = '$current_lang' ,
+                      users_guests.current_theme              = '$current_mode' ,
                       users_guests.last_visited_at            = '$last_visit'   ,
                       users_guests.last_visited_page_en       = '$last_page_en' ,
                       users_guests.last_visited_page_fr       = '$last_page_fr' ,
-                      users_guests.last_visited_url           = '$last_url'     ");
+                      users_guests.last_visited_url           = '$last_url'     ,
+                      users_guests.visited_page_count         = '$visit_count'  ");
 }
 
 // Output progress
@@ -648,6 +656,9 @@ for($i = 0; $i < $random; $i++)
   $last_page_fr = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
   $last_page_en = ucfirst(fixtures_generate_data('sentence', 1, 4, 1));
   $last_url     = (mt_rand(0,2) < 2) ? 'index' : '';
+  $temp2        = mt_rand(0, 100);
+  $temp2        = (mt_rand(0, 10) < 10) ? $temp2 : mt_rand(0, 1000);
+  $visit_count  = ($temp) ? 0 : $temp2;
   $birthday     = (mt_rand(0,4) < 4) ? '0000-00-00' : mt_rand(1980, 2010).'-'.mt_rand(1,12).'-'.mt_rand(1,28);
   $languages    = (mt_rand(0,5) < 5) ? '' : 'EN';
   $languages   .= (mt_rand(0,5) < 5) ? '' : 'FR';
@@ -678,6 +689,7 @@ for($i = 0; $i < $random; $i++)
                         users.last_visited_page_en  = '$last_page_en' ,
                         users.last_visited_page_fr  = '$last_page_fr' ,
                         users.last_visited_url      = '$last_url'     ,
+                        users.visited_page_count    = '$visit_count'  ,
                         users.current_ip_address    = '$current_ip'   ");
 
     // Fetch the id of the generated users

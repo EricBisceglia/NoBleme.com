@@ -1153,6 +1153,7 @@ if($last_query < 26)
           SET     users.last_visited_page_fr = users.last_visited_page_en ,
                   users.last_visited_page_en = '-'                        ");
   sql_rename_field('users', 'derniere_visite_url', 'last_visited_url', "VARCHAR(510) NOT NULL");
+  sql_create_field('users', 'visited_page_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'last_visited_url');
   sql_rename_field('users', 'derniere_visite_ip', 'current_ip_address', "VARCHAR(135) NOT NULL DEFAULT '0.0.0.0'");
   sql_rename_field('users', 'derniere_activite', 'last_action_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_move_field('users', 'last_action_at', 'INT UNSIGNED NOT NULL DEFAULT 0', 'last_visited_at');
@@ -1165,8 +1166,6 @@ if($last_query < 26)
   sql_delete_index('users', 'index_login');
   sql_delete_index('users', 'index_droits');
   sql_create_index('users', 'index_access_rights', 'is_administrator, is_moderator');
-  sql_create_index('users', 'index_language', 'current_language');
-  sql_create_index('users', 'index_theme', 'current_theme');
   sql_create_index('users', 'index_doppelganger', 'current_ip_address');
   sql_create_index('users', 'index_banned', 'is_banned_until');
 
@@ -1291,6 +1290,8 @@ if($last_query < 26)
   sql_rename_field('users_guests', 'ip', 'ip_address', "VARCHAR(135) NOT NULL DEFAULT '0.0.0.0'");
   sql_rename_field('users_guests', 'surnom', 'randomly_assigned_name_en', 'VARCHAR(510) NOT NULL');
   sql_create_field('users_guests', 'randomly_assigned_name_fr', 'VARCHAR(510) NOT NULL', 'randomly_assigned_name_en');
+  sql_create_field('users_guests', 'current_language', 'VARCHAR(16) NOT NULL', 'randomly_assigned_name_fr');
+  sql_create_field('users_guests', 'current_theme', 'VARCHAR(20) NOT NULL', 'current_language');
   sql_rename_field('users_guests', 'derniere_visite', 'last_visited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users_guests', 'derniere_visite_page', 'last_visited_page_en', "VARCHAR(510) NOT NULL");
   sql_create_field('users_guests', 'last_visited_page_fr', "VARCHAR(510) NOT NULL", 'last_visited_page_en');
@@ -1300,6 +1301,7 @@ if($last_query < 26)
                   users_guests.randomly_assigned_name_en  = '-'                                     ,
                   users_guests.last_visited_page_en       = '-'                                     ");
   sql_rename_field('users_guests', 'derniere_visite_url', 'last_visited_url', "VARCHAR(510) NOT NULL");
+  sql_create_field('users_guests', 'visited_page_count', 'INT UNSIGNED NOT NULL DEFAULT 0', 'last_visited_url');
   sql_delete_index('users_guests', 'ip');
 
   sql_change_field_type('users_login_attempts', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
