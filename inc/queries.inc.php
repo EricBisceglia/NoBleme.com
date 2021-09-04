@@ -1145,6 +1145,7 @@ if($last_query < 26)
   sql_delete_field('users', 'moderateur_description_fr');
   sql_delete_field('users', 'moderateur_description_en');
   sql_create_field('users', 'current_language', 'VARCHAR(16) NOT NULL', 'is_moderator');
+  sql_create_field('users', 'current_theme', 'VARCHAR(20) NOT NULL', 'current_language');
   sql_rename_field('users', 'derniere_visite', 'last_visited_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_rename_field('users', 'derniere_visite_page', 'last_visited_page_en', "VARCHAR(510) NOT NULL");
   sql_create_field('users', 'last_visited_page_fr', "VARCHAR(510) NOT NULL", 'last_visited_page_en');
@@ -1165,6 +1166,7 @@ if($last_query < 26)
   sql_delete_index('users', 'index_droits');
   sql_create_index('users', 'index_access_rights', 'is_administrator, is_moderator');
   sql_create_index('users', 'index_language', 'current_language');
+  sql_create_index('users', 'index_theme', 'current_theme');
   sql_create_index('users', 'index_doppelganger', 'current_ip_address');
   sql_create_index('users', 'index_banned', 'is_banned_until');
 

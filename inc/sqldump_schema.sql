@@ -373,6 +373,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `is_administrator` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `is_moderator` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `current_language` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `current_theme` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_visited_at` int UNSIGNED NOT NULL DEFAULT '0',
   `last_action_at` int UNSIGNED NOT NULL DEFAULT '0',
   `last_visited_page_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -386,6 +387,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   KEY `index_access_rights` (`is_administrator`,`is_moderator`),
   KEY `index_language` (`current_language`),
+  KEY `index_theme` (`current_theme`),
   KEY `index_doppelganger` (`current_ip_address`),
   KEY `index_banned` (`is_banned_until`),
   KEY `index_deleted` (`is_deleted`)

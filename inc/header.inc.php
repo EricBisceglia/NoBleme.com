@@ -163,6 +163,7 @@ if(isset($page_url) && !isset($error_mode))
 // Fetch and sanitize all the data required to track recent activity
 $activity_timestamp         = sanitize(time(), 'int', 0);
 $activity_language          = sanitize(user_get_language(), 'string');
+$activity_mode              = sanitize(user_get_mode(), 'dark');
 $activity_ip                = sanitize($_SERVER["REMOTE_ADDR"], 'string');
 $activity_page_en_sanitized = sanitize($activity_page_en, 'string');
 $activity_page_fr_sanitized = sanitize($activity_page_fr, 'string');
@@ -173,6 +174,7 @@ $activity_user              = (user_is_logged_in()) ? sanitize(user_get_id(), 'i
 if($activity_user)
   query(" UPDATE  users
           SET     users.current_language      = '$activity_language'          ,
+                  users.current_theme         = '$activity_mode'              ,
                   users.last_visited_at       = '$activity_timestamp'         ,
                   users.last_visited_page_en  = '$activity_page_en_sanitized' ,
                   users.last_visited_page_fr  = '$activity_page_fr_sanitized' ,
