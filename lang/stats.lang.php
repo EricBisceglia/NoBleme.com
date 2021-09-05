@@ -95,6 +95,68 @@ ___('admin_views_delete', 'FR', "Confirmer la suppression irréversible des donn
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                      GUESTS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('admin_stats_guests_storage',   'EN', <<<EOT
+Guest data is currently being stored for <span class="bold text_red glow">{{1}} day</span>.
+EOT
+);
+___('admin_stats_guests_storage',   'FR', <<<EOT
+Les données sur les invités sont actuellement stockées sur <span class="bold text_red glow">{{1}} jour</span>.
+EOT
+);
+___('admin_stats_guests_storage+',  'EN', <<<EOT
+Guest data is currently being stored for <span class="bold text_red glow">{{1}} days</span>.
+EOT
+);
+___('admin_stats_guests_storage+',  'FR', <<<EOT
+Les données sur les invités sont actuellement stockées sur <span class="bold text_red glow">{{1}} jours</span>.
+EOT
+);
+___('admin_stats_guests_languages', 'EN', <<<EOT
+<span class="bold text_red glow">{{1}}</span> use the <span class="bold text_red glow">english</span> language ({{3}}).<br>
+<span class="bold text_red glow">{{2}}</span> use the <span class="bold text_red glow">french</span> language ({{4}}).<br>
+EOT
+);
+___('admin_stats_guests_languages', 'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> utilisent le site en <span class="bold text_red glow">anglais</span> ({{3}}).<br>
+<span class="bold text_red glow">{{2}}</span> utilisent le site en <span class="bold text_red glow">français</span> ({{4}}).<br>
+EOT
+);
+___('admin_stats_guests_themes',    'EN', <<<EOT
+<span class="bold text_red glow">{{1}}</span> use the <span class="bold text_red glow">dark</span> theme ({{3}}).<br>
+<span class="bold text_red glow">{{2}}</span> use the <span class="bold text_red glow">light</span> theme ({{4}}).<br>
+EOT
+);
+___('admin_stats_guests_themes',    'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> utilisent le mode <span class="bold text_red glow">sombre</span> ({{3}}).<br>
+<span class="bold text_red glow">{{2}}</span> utilisent le mode <span class="bold text_red glow">clair</span> ({{4}}).<br>
+EOT
+);
+
+
+// Table
+___('admin_stats_guests_count',       'EN', "{{1}} guests stored in the database");
+___('admin_stats_guests_count',       'FR', "{{1}} invités stockés en base de données");
+___('admin_stats_guests_identity',    'EN', "Identity");
+___('admin_stats_guests_identity',    'FR', "Identité");
+___('admin_stats_guests_visits',      'EN', "Visits");
+___('admin_stats_guests_visits',      'FR', "Visites");
+___('admin_stats_guests_theme',       'EN', "Theme");
+___('admin_stats_guests_theme',       'FR', "Thème");
+___('admin_stats_guests_theme_light', 'EN', "Light");
+___('admin_stats_guests_theme_light', 'FR', "Clair");
+___('admin_stats_guests_theme_dark',  'EN', "Dark");
+___('admin_stats_guests_theme_dark',  'FR', "Sombre");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                   DOPPELGÄNGER                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

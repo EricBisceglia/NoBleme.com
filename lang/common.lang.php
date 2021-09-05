@@ -410,6 +410,8 @@ ___('language+',  'EN', "languages");
 ___('language+',  'FR', "langues");
 ___('no',         'EN', "no");
 ___('no',         'FR', "non");
+___('page',       'EN', "page");
+___('page',       'FR', "page");
 ___('the',        'EN', "the");
 ___('the',        'FR', "le");
 ___('with',       'EN', "with");
@@ -973,6 +975,8 @@ ___('submenu_admin_metrics',        'EN', "Metrics");
 ___('submenu_admin_metrics',        'FR', "Performances");
 ___('submenu_admin_pageviews',      'EN', "Pageviews");
 ___('submenu_admin_pageviews',      'FR', "Pages populaires");
+___('submenu_admin_stats_guests',   'EN', "Guests");
+___('submenu_admin_stats_guests',   'FR', "Invités");
 
 ___('submenu_admin_doc',            'EN', "Dev docs");
 ___('submenu_admin_doc',            'FR', "Docs dev");

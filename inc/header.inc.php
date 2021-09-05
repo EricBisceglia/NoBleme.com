@@ -916,6 +916,9 @@ $javascripts .= '
         <div class="header_submenu_item">
           <?=__link('pages/admin/stats_views', __('submenu_admin_pageviews'), 'header_submenu_link', 1, $path);?>
         </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/admin/stats_guests', __('submenu_admin_stats_guests'), 'header_submenu_link', 1, $path);?>
+        </div>
       </div>
 
       <div class="header_submenu_column">
