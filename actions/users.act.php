@@ -11,7 +11,6 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_get                            Fetches data related to a user.                                              */
 /*  user_list                           Fetches a list of users.                                                     */
 /*  user_list_admins                    Fetches a list of administrative team members.                               */
-/*  user_list_guests                    Fetches a list of non registered users of the website.                       */
 /*  user_edit_profile                   Modifies a user's own public profile.                                        */
 /*  user_delete_profile                 Deletes a user's public profile.                                             */
 /*                                                                                                                   */
@@ -22,7 +21,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  user_autocomplete_username          Autocompletes a username.                                                    */
 /*                                                                                                                   */
-/*  user_guest_storage_length           Returns for how long guests are currently being stored in the database.      */
+/*  user_guests_count                   Returns the number of guests stored in the database.                         */
+/*  user_guests_storage_length          Returns for how long guests are currently being stored in the database.      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -489,98 +489,6 @@ function user_list_admins( string $sort_by = '' ) : array
 
 
 /**
- * Fetches a list of non registered users of the website.
- *
- *  @return  array  A list of guests.
- */
-
-function user_list_guests() : array
-{
-  // Check if the required files have been included
-  require_included_file('functions_time.inc.php');
-  require_included_file('functions_mathematics.inc.php');
-  require_included_file('functions_numbers.inc.php');
-
-  // Require special rights to run this action
-  user_restrict_to_administrators();
-
-  // Fetch current user's language
-  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
-
-  // Fetch the guest list
-  $qguests = "    SELECT    users_guests.ip_address               AS 'g_ip'     ,
-                            users_guests.current_language         AS 'g_lang'   ,
-                            users_guests.current_theme            AS 'g_theme'  ,
-                            users_guests.last_visited_at          AS 'g_visit'  ,
-                            users_guests.last_visited_page_$lang  AS 'g_page'   ,
-                            users_guests.last_visited_url         AS 'g_url'    ,
-                            users_guests.visited_page_count       AS 'g_visits' ,
-                            users.id                              AS 'u_id'     ,
-                            users.username                        AS 'u_nick'
-                  FROM      users_guests
-                  LEFT JOIN users
-                  ON        users_guests.ip_address LIKE users.current_ip_address ";
-
-  // Avoid duplication when multiple users match a guest's IP
-  $qguests .= "   GROUP BY  users_guests.id ";
-
-  // Sorting order
-  $qguests .= "   ORDER BY  users_guests.last_visited_at DESC ";
-
-  // Run the query
-  $qguests = query($qguests);
-
-  // Initialize variables used for stats
-  $sum_english  = 0;
-  $sum_french   = 0;
-  $sum_language = 0;
-  $sum_dark     = 0;
-  $sum_light    = 0;
-  $sum_theme    = 0;
-
-  // Loop through the data
-  for($i = 0; $row = mysqli_fetch_array($qguests); $i++)
-  {
-    // Prepare the data
-    $data[$i]['user_id']  = sanitize_output($row['u_id']);
-    $data[$i]['identity'] = ($row['u_nick']) ? sanitize_output($row['u_nick']) : sanitize_output($row['g_ip']);
-    $data[$i]['language'] = sanitize_output($row['g_lang']);
-    $data[$i]['theme']    = sanitize_output($row['g_theme']);
-    $data[$i]['active']   = sanitize_output(time_since($row['g_visit']));
-    $data[$i]['page']     = sanitize_output(string_truncate($row['g_page'], 40, '...'));
-    $data[$i]['url']      = sanitize_output($row['g_url']);
-    $data[$i]['visits']   = ($row['g_visits'] > 1) ? sanitize_output($row['g_visits']) : '-';
-
-    // Update the stats
-    $sum_english  += ($row['g_lang'] == 'EN')     ? 1 : 0;
-    $sum_french   += ($row['g_lang'] == 'FR')     ? 1 : 0;
-    $sum_dark     += ($row['g_theme'] == 'dark')  ? 1 : 0;
-    $sum_light    += ($row['g_theme'] == 'light') ? 1 : 0;
-  }
-
-  // Calculate more stats
-  $data['percent_english']  = number_display_format(maths_percentage_of($sum_english, $i), 'percentage', decimals: 1);
-  $data['percent_french']   = number_display_format(maths_percentage_of($sum_french , $i), 'percentage', decimals: 1);
-  $data['percent_dark']     = number_display_format(maths_percentage_of($sum_dark   , $i), 'percentage', decimals: 1);
-  $data['percent_light']    = number_display_format(maths_percentage_of($sum_light  , $i), 'percentage', decimals: 1);
-
-  // Add the stats to the data
-  $data['sum_en']     = $sum_english;
-  $data['sum_fr']     = $sum_french;
-  $data['sum_dark']   = $sum_dark;
-  $data['sum_light']  = $sum_light;
-
-  // Add the number of rows to the data
-  $data['rows'] = $i;
-
-  // Return the prepared data
-  return $data;
-}
-
-
-
-
-/**
  * Modifies a user's own public profile.
  *
  * @param   array   $user_data   The data to update on the user's profile.
@@ -960,12 +868,31 @@ function user_autocomplete_username(  string  $input        ,
 
 
 /**
+ * Returns the number of guests stored in the database.
+ *
+ * @return  int   The number of guests.
+ */
+
+function user_guests_count() : int
+{
+  // Fetch the guest count
+  $dguest = mysqli_fetch_array(query("  SELECT  COUNT(*) AS 'g_count'
+                                        FROM    users_guests "));
+
+  // Return the guest count
+  return $dguest['g_count'];
+}
+
+
+
+
+/**
  * Returns for how long guests are currently being stored in the database.
  *
  * @return  int   The number of days for which the oldest guest has been stored in the database.
  */
 
-function user_guest_storage_length() : int
+function user_guests_storage_length() : int
 {
   // Fetch the oldest guest
   $dguest = mysqli_fetch_array(query("  SELECT    users_guests.last_visited_at AS 'g_date'

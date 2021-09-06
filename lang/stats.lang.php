@@ -141,6 +141,10 @@ EOT
 // Table
 ___('admin_stats_guests_count',       'EN', "{{1}} guests stored in the database");
 ___('admin_stats_guests_count',       'FR', "{{1}} invités stockés en base de données");
+___('admin_stats_guests_partial',     'EN', "{{1}} guest out of {{2}} shown ({{3}})");
+___('admin_stats_guests_partial',     'FR', "{{1}} invité sur {{2}} affiché ({{3}})");
+___('admin_stats_guests_partial+',    'EN', "{{1}} guests out of {{2}} shown ({{3}})");
+___('admin_stats_guests_partial+',    'FR', "{{1}} invités sur {{2}} affichés ({{3}})");
 ___('admin_stats_guests_identity',    'EN', "Identity");
 ___('admin_stats_guests_identity',    'FR', "Identité");
 ___('admin_stats_guests_visits',      'EN', "Visits");

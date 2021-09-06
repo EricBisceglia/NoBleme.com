@@ -6,6 +6,8 @@
 /*  admin_views_search      Performs a search through the pageviews.                                                 */
 /*  admin_views_delete      Triggers the deletion of an entry in the pageviews.                                      */
 /*                                                                                                                   */
+/*  admin_guests_search     Performs a search through the guests.                                                    */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -113,4 +115,32 @@ function admin_views_delete(  message ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('stats_views', target_element, postdata);
+}
+
+
+
+
+/**
+ * Performs a search through the guests.
+ *
+ * @param   {string}  [sort_data] The column which should be used to sort the data.
+ *
+ * @returns {void}
+*/
+
+function admin_guests_search( sort_data = null )
+{
+  // Update the data sort input if requested
+  if(sort_data)
+    document.getElementById('stats_guests_sort').value = sort_data;
+
+  // Assemble the postdata
+  postdata  = 'stats_guests_sort='              + fetch_sanitize_id('stats_guests_sort');
+  postdata += '&stats_guests_search_identity='  + fetch_sanitize_id('stats_guests_identity');
+  postdata += '&stats_guests_search_page='      + fetch_sanitize_id('stats_guests_page');
+  postdata += '&stats_guests_search_language='  + fetch_sanitize_id('stats_guests_language');
+  postdata += '&stats_guests_search_theme='     + fetch_sanitize_id('stats_guests_theme');
+
+  // Submit the search
+  fetch_page('stats_guests', 'stats_guests_tbody', postdata);
 }

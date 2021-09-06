@@ -410,6 +410,8 @@ ___('language+',  'EN', "languages");
 ___('language+',  'FR', "langues");
 ___('no',         'EN', "no");
 ___('no',         'FR', "non");
+___('none',       'EN', "none");
+___('none',       'FR', "aucun");
 ___('page',       'EN', "page");
 ___('page',       'FR', "page");
 ___('the',        'EN', "the");

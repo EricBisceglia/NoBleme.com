@@ -8,6 +8,7 @@ include_once './../../inc/functions_time.inc.php';        # Time management
 include_once './../../inc/functions_mathematics.inc.php'; # Mathematics
 include_once './../../inc/functions_numbers.inc.php';     # Number formatting
 include_once './../../actions/users.act.php';             # User actions
+include_once './../../actions/stats.act.php';             # Stats
 include_once './../../lang/stats.lang.php';               # Translations
 
 // Limit page access rights
@@ -22,6 +23,9 @@ $page_url         = "pages/admins/stats_guests";
 $page_title_en    = "Guests";
 $page_title_fr    = "Invités";
 
+// Extra JS
+$js = array('admin/stats');
+
 
 
 
@@ -31,11 +35,21 @@ $page_title_fr    = "Invités";
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
+// Fetch total guest count
+$guests_total_count = user_guests_count();
+
 // Fetch guest storage length
-$guests_storage_length = user_guest_storage_length();
+$guests_storage_length = user_guests_storage_length();
+
+// Fetch the search data
+$guests_search_data = array(  'identity'  => form_fetch_element('stats_guests_search_identity') ,
+                              'page'      => form_fetch_element('stats_guests_search_page')     ,
+                              'language'  => form_fetch_element('stats_guests_search_language') ,
+                              'theme'     => form_fetch_element('stats_guests_search_theme')    );
 
 // Fetch guests
-$guests_data = user_list_guests();
+$guests_data = stats_guests_list( form_fetch_element('stats_guests_sort', 'activity') ,
+                                  $guests_search_data                                 );
 
 
 
@@ -70,30 +84,83 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr class="uppercase">
         <th>
           <?=__('admin_stats_guests_identity')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('identity');")?>
         </th>
         <th>
           <?=__('admin_stats_guests_visits')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('visits');")?>
         </th>
         <th>
           <?=__('activity')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('activity');")?>
+          <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('ractivity');")?>
         </th>
         <th>
           <?=__('page')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('page');")?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('url');")?>
         </th>
         <th>
           <?=__('language')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('language');")?>
         </th>
         <th>
           <?=__('admin_stats_guests_theme')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "admin_guests_search('theme');")?>
         </th>
       </tr>
 
+      <tr>
+
+        <th>
+          <input type="hidden" name="stats_guests_sort" id="stats_guests_sort" disabled>
+          <input type="text" class="table_search" name="stats_guests_identity" id="stats_guests_identity" value="" size="1" onkeyup="admin_guests_search();">
+        </th>
+
+        <th>
+          &nbsp;
+        </th>
+
+        <th>
+          &nbsp;
+        </th>
+
+        <th>
+          <input type="text" class="table_search" name="stats_guests_page" id="stats_guests_page" value="" size="1" onkeyup="admin_guests_search();">
+        </th>
+
+        <th>
+          <select class="table_search" name="stats_guests_language" id="stats_guests_language" onchange="admin_guests_search();">
+            <option value="0">&nbsp;</option>
+            <option value="EN"><?=string_change_case(__('english'), 'initials')?></option>
+            <option value="FR"><?=string_change_case(__('french'), 'initials')?></option>
+            <option value="None"><?=string_change_case(__('none'), 'initials')?></option>
+          </select>
+        </th>
+
+        <th>
+          <select class="table_search" name="stats_guests_theme" id="stats_guests_theme" onchange="admin_guests_search();">
+            <option value="0">&nbsp;</option>
+            <option value="dark" class="dark text_light"><?=__('admin_stats_guests_theme_dark')?></option>
+            <option value="light" class="light text_dark"><?=__('admin_stats_guests_theme_light')?></option>
+            <option value="None"><?=string_change_case(__('none'), 'initials')?></option>
+          </select>
+        </th>
+
+      </tr>
+
     </thead>
-    <tbody class="altc align_center">
+    <tbody class="altc align_center" id="stats_guests_tbody">
+
+      <?php } ?>
 
       <tr class="uppercase bold dark text_light">
         <td colspan="6">
+          <?php if($guests_data['rows'] == $guests_total_count) { ?>
           <?=__('admin_stats_guests_count', preset_values: array($guests_data['rows']))?>
+          <?php } else { ?>
+          <?=__('admin_stats_guests_partial', amount: $guests_data['rows'], preset_values: array($guests_data['rows'], $guests_total_count, $guests_data['percent_guests']))?>
+          <?php } ?>
         </td>
       </tr>
 
@@ -101,13 +168,18 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
 
-        <td>
-          <?php if($guests_data[$i]['user_id']) { ?>
+        <?php if($guests_data[$i]['user_id']) { ?>
+        <td class="tooltip_container">
           <?=__link('pages/users/'.$guests_data[$i]['user_id'], $guests_data[$i]['identity'])?>
-          <?php } else { ?>
-          <?=$guests_data[$i]['identity']?>
-          <?php } ?>
+          <div class="tooltip">
+            <?=$guests_data[$i]['ip']?>
+          </div>
         </td>
+        <?php } else { ?>
+        <td>
+          <?=$guests_data[$i]['identity']?>
+        </td>
+        <?php } ?>
 
         <td>
           <?=$guests_data[$i]['visits']?>
@@ -118,7 +190,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td>
+          <?php if($guests_data[$i]['url']) { ?>
           <?=__link($guests_data[$i]['url'], $guests_data[$i]['page'])?>
+          <?php } else { ?>
+          <?=$guests_data[$i]['page']?>
+          <?php } ?>
         </td>
 
         <td>
@@ -148,6 +224,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       </tr>
 
       <?php } ?>
+
+      <?php if(!page_is_fetched_dynamically()) { ?>
 
     </tbody>
   </table>
