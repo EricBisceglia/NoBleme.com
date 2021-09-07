@@ -19,7 +19,7 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/admins/stats_users";
+$page_url         = "pages/admin/stats_users";
 $page_title_en    = "Users";
 $page_title_fr    = "Comptes";
 
@@ -342,7 +342,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=$users_data[$i]['birthday']?>
         </td>
 
-        <td class="pointer" onclick="window.location = '<?=$path?>pages/users/<?=$users_data[$i]['id']?>'">
+        <td class="pointer tooltip_container" onclick="window.location = '<?=$path?>pages/users/<?=$users_data[$i]['id']?>'">
           <?php if($users_data[$i]['speaks']) { ?>
           <span class="text_green" title="<?=__('admin_stats_users_speaks')?>">&check;</span>
           <?php } else { ?>
@@ -364,9 +364,32 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } else { ?>
           <span class="text_red" title="<?=__('admin_stats_users_profile_text')?>">&cross;</span>
           <?php } ?>
+          <div class="tooltip">
+            <?php if($users_data[$i]['speaks']) { ?>
+            <span class="text_green">&check;</span> <?=__('admin_stats_users_speaks')?><br>
+            <?php } else { ?>
+            <span class="text_red">&cross;</span> <?=__('admin_stats_users_speaks')?><br>
+            <?php } if($users_data[$i]['birthday']) { ?>
+            <span class="text_green">&check;</span> <?=__('admin_stats_users_has_birthday')?><br>
+            <?php } else { ?>
+            <span class="text_red">&cross;</span> <?=__('admin_stats_users_has_birthday')?><br>
+            <?php } if($users_data[$i]['location']) { ?>
+            <span class="text_green">&check;</span> <?=__('admin_stats_users_location')?><br>
+            <?php } else { ?>
+            <span class="text_red">&cross;</span> <?=__('admin_stats_users_location')?><br>
+            <?php } if($users_data[$i]['pronouns']) { ?>
+            <span class="text_green">&check;</span> <?=__('admin_stats_users_pronouns')?><br>
+            <?php } else { ?>
+            <span class="text_red">&cross;</span> <?=__('admin_stats_users_pronouns')?><br>
+            <?php } if($users_data[$i]['profile']) { ?>
+            <span class="text_green">&check;</span> <?=__('admin_stats_users_profile_text')?>
+            <?php } else { ?>
+            <span class="text_red">&cross;</span> <?=__('admin_stats_users_profile_text')?>
+            <?php } ?>
+          </div>
         </td>
 
-        <td class="pointer" onclick="window.location = '<?=$path?>pages/users/<?=$users_data[$i]['id']?>'">
+        <td class="pointer tooltip_container" onclick="window.location = '<?=$path?>pages/users/<?=$users_data[$i]['id']?>'">
           <?php if($users_data[$i]['nsfw'] == 0) { ?>
           <span class="text_red" title="<?=__('admin_stats_users_no_nsfw')?>">&cross;</span>
           <?php } else if($users_data[$i]['nsfw'] == 1) { ?>
@@ -384,6 +407,25 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?php } if($users_data[$i]['hidden']) { ?>
           <span class="text_red" title="<?=__('admin_stats_users_hidden')?>">&cross;</span>
           <?php } ?>
+          <div class="tooltip">
+            <?php if($users_data[$i]['nsfw'] == 0) { ?>
+            <span class="text_red">&cross;</span> <?=__('admin_stats_users_no_nsfw')?>
+            <?php } else if($users_data[$i]['nsfw'] == 1) { ?>
+            <span class="text_orange">&cross;</span> <?=__('admin_stats_users_some_nsfw')?>
+            <?php } else { ?>
+            <span class="text_green">&check;</span> <?=__('admin_stats_users_all_nsfw')?>
+            <?php } if($users_data[$i]['youtube']) { ?>
+            <br><span class="text_red">&cross;</span> <?=__('admin_stats_users_youtube')?>
+            <?php } if($users_data[$i]['trends']) { ?>
+            <br><span class="text_red">&cross;</span> <?=__('admin_stats_users_trends')?>
+            <?php } if($users_data[$i]['discord']) { ?>
+            <br><span class="text_red">&cross;</span> <?=__('admin_stats_users_discord')?>
+            <?php } if($users_data[$i]['kiwiirc']) { ?>
+            <br><span class="text_red">&cross;</span> <?=__('admin_stats_users_kiwiirc')?>
+            <?php } if($users_data[$i]['hidden']) { ?>
+            <br><span class="text_red">&cross;</span> <?=__('admin_stats_users_hidden')?>
+            <?php } ?>
+          </div>
         </td>
 
       </tr>

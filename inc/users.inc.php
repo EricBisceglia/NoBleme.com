@@ -967,7 +967,7 @@ function user_restrict_to_users() : void
     if($lang == 'EN')
       error_page("This page is restricted to logged in users.<br><br>Log in by clicking the <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle red\"> icon on the top right of the page");
     else
-      error_page("Cette page est réservée aux utilisateurs connectés.<br><br>Connectez vous en cliquant sur l'icône <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle red\"> en haut à droite de la page");
+      error_page("Cette page nécessite de vous connecter à un compte.<br><br>Connectez vous en cliquant sur l'icône <img src=\"".$path."img/icons/login.svg\" alt=\"Account\" class=\"icon valign_middle red\"> en haut à droite de la page");
   }
 }
 

@@ -980,7 +980,7 @@ ___('submenu_admin_pageviews',      'FR', "Pages populaires");
 ___('submenu_admin_stats_users',    'EN', "Users");
 ___('submenu_admin_stats_users',    'FR', "Comptes");
 ___('submenu_admin_stats_guests',   'EN', "Guests");
-___('submenu_admin_stats_guests',   'FR', "Invités");
+___('submenu_admin_stats_guests',   'FR', "Visites");
 
 ___('submenu_admin_doc',            'EN', "Dev docs");
 ___('submenu_admin_doc',            'FR', "Docs dev");
@@ -1086,7 +1086,7 @@ EOT
 );
 ___('users_ip_banned_body',   'FR', <<<EOT
 <p>
-  Votre adresse IP actuelle est bannie : vous ne pouvez pas vous connecter à un compte utilisateur.
+  Votre adresse IP actuelle est bannie : vous ne pouvez pas vous connecter à un compte.
 </p>
 <p>
 Ce type de punition extrême n'est utilisé que dans des cas spéciaux où nous n'avons pas d'autre option qu'une exclusion totale. Si vous êtes responsable du chaos qui a mené à ce bannissement, vous savez exactement pourquoi vous voyez ce message. Si ce n'est pas le cas, nous sommes désolés de vous annoncer que vous êtes victime de dommages collatéraux : quelqu'un d'autre partageant la même {{external|https://fr.wikipedia.org/wiki/Adresse_IP|Adresse IP}} que vous a causé tant de problèmes que nous n'avons pas eu d'autre option que de bannir cette adresse IP.

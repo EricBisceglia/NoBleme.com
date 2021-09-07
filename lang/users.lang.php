@@ -20,7 +20,7 @@ This page lists the most recently visited page of all users that were active on 
 EOD
 );
 ___('users_online_header_intro',  'FR', <<<EOD
-Cette page recense la dernière activité des visiteurs de NoBleme ce mois-ci. Dans le cas des invités (visiteurs non connectés), seuls les 1000 entrées les plus récentes sont affichées, et de petits surnoms stupides leur sont aléatoirement assignés. Si vous craignez que cette page permette à des gens de vous traquer ou n'êtes juste pas confortable avec le fait d'avoir votre activité listée publiquement, vous pouvez retirer votre compte de la liste via vos {{link|pages/account/settings_privacy|options de vie privée}}.
+Cette page recense les visites sur NoBleme ce mois-ci. Dans le cas des personnes sans compte, seules les 1000 entrées les plus récentes sont affichées, et des surnoms niais leur sont aléatoirement assignés. Si vous craignez que cette page permette à des gens de vous traquer ou n'êtes juste pas confortable avec le fait d'avoir votre activité listée publiquement, vous pouvez retirer votre compte de la liste via vos {{link|pages/account/settings_privacy|options de vie privée}}.
 EOD
 );
 ___('users_online_header_colors', 'EN', <<<EOD
@@ -34,9 +34,9 @@ In order to tell them apart from each other, users are color coded:
 EOD
 );
 ___('users_online_header_colors', 'FR', <<<EOD
-Afin de les distinguer, les visiteurs suivent un code couleur :
+Le code couleur suivant est appliqué afin de simplifier la lecture :
 <ul class="nopadding">
-  <li>Les invités n'ont pas de formattage spécifique.</li>
+  <li>Les personnes sans compte n'ont pas de formattage spécifique.</li>
   <li>{{link|pages/users/list|Les membres du site}} apparaissent en <span class="bold">gras</span>.</li>
   <li>{{link|pages/users/admins|La modération}} apparait en <span class="text_orange bold">orange.</span></li>
   <li>{{link|pages/users/admins|L'administration}} apparait en <span class="text_red glow bold">rouge.</span></li>
@@ -47,9 +47,9 @@ EOD
 
 // Options
 ___('users_online_hide_gests',      'EN', "Do not show guests in the list");
-___('users_online_hide_gests',      'FR', "Ne pas afficher les invités dans la liste");
+___('users_online_hide_gests',      'FR', "Ne pas afficher les personnes sans compte dans la liste");
 ___('users_online_admin_view',      'EN', "See the table like a regular user would");
-___('users_online_admin_view',      'FR', "Voir la page comme un utilisateur normal");
+___('users_online_admin_view',      'FR', "Voir la page comme un compte normal");
 ___('users_online_refresh',         'EN', "Automatically reload the list every 10 seconds");
 ___('users_online_refresh',         'FR', "Recharger automatiquement la liste toutes les 10 secondes");
 ___('users_online_refresh_mobile',  'EN', "Refresh the table every 10 seconds");
@@ -137,7 +137,7 @@ ___('users_admins_mods',    'EN', <<<EOT
 EOT
 );
 ___('users_admins_mods',    'FR', <<<EOT
-<span class="text_orange bold">La modération</span> dispose des pleins pouvoirs sur tous les contenus du site impliquant des utilisateurs : bannissements, suppression de comptes, remise à zéro de mots de passe, gestion de rencontres IRL, etc.
+<span class="text_orange bold">La modération</span> dispose des pleins pouvoirs sur tous les contenus du site impliquant des personnes : bannissements, suppression de comptes, remise à zéro de mots de passe, gestion de rencontres IRL, etc.
 EOT
 );
 ___('users_admins_admins',  'EN', <<<EOT
@@ -145,7 +145,7 @@ ___('users_admins_admins',  'EN', <<<EOT
 EOT
 );
 ___('users_admins_admins',  'FR', <<<EOT
-<span class="text_red bold">L'administration</span> gère les aspiects technique du site : elle possède les mêmes pouvoirs que la modération, et peut également gérer le contenu des pages, fermer le site lors des maintenances techniques, etc.
+<span class="text_red bold">L'administration</span> gère les aspects technique du site : elle possède les mêmes pouvoirs que la modération, et peut également gérer le contenu des pages, fermer le site lors des maintenances techniques, etc.
 EOT
 );
 

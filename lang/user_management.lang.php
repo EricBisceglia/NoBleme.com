@@ -86,7 +86,7 @@ Renaming an account should only be done if there is a very good reason to do so 
 EOT
 );
 ___('admin_rename_warning', 'FR', <<<EOT
-Renommer un compte ne doit être fait que s'il y a une très bonne raison de le faire (par exemple un pseudonyme offensant ou une demande correctement justifiée de la part d'un utilisateur). Le système ne notifiera pas l'utilisateur de son changement de pseudonyme, par conséquent il faudra l'en informer vous-même.
+Renommer un compte ne doit être fait que s'il y a une très bonne raison de le faire (par exemple un pseudonyme offensant ou une demande correctement justifiée). Le système ne notifiera pas la personne concernée de son changement de pseudonyme, par conséquent il faudra l'en informer vous-même.
 EOT
 );
 
@@ -142,7 +142,7 @@ Changing a password should only be done if there is a very good reason to do so 
 EOT
 );
 ___('admin_password_warning', 'FR', <<<EOT
-Changer un mot de passe ne doit être fait que s'il y a une très bonne raison de le faire (par exemple en cas de mot de passe perdu, en cas de problème de sécurité, ou pour verrouiller l'utilisateur hors de son compte). Le système ne notifiera pas l'utilisateur de son changement de mot de passe, par conséquent il faudra l'en informer vous-même.
+Changer un mot de passe ne doit être fait que s'il y a une très bonne raison de le faire (par exemple en cas de mot de passe perdu, en cas de problème de sécurité, ou pour verrouiller quelqu'un hors de son compte). Le système ne notifiera pas la personne de son changement de mot de passe, par conséquent il faudra l'en informer vous-même.
 EOT
 );
 
@@ -173,7 +173,7 @@ ___('admin_password_error_admin',   'FR', "Les modérateurs ne peuvent pas chang
 
 // Rights: Title
 ___('admin_rights_title', 'EN', "Account rights");
-___('admin_rights_title', 'FR', "Permissions utilisateur");
+___('admin_rights_title', 'FR', "Permissions");
 
 
 // Rights: Form
@@ -197,7 +197,7 @@ ___('admin_rights_error_mod',       'FR', "Ce compte fait déjà partie de la mo
 ___('admin_rights_error_admin',     'EN', "This account is already an administrator");
 ___('admin_rights_error_admin',     'FR', "Ce compte fait déjà partie de l'administration");
 ___('admin_rights_error_demotion',  'EN', "Administrators can only be demoted to regular users (you can promote them back to anything afterwards)");
-___('admin_rights_error_demotion',  'FR', "Les administrateurs ne peuvent que être réduits au statut de simple utilisateurs (vous pourrez leur donner n'importe quel autre statut ensuite)");
+___('admin_rights_error_demotion',  'FR', "Les administrateurs ne peuvent que être réduits au statut de simple membre (vous pourrez leur donner n'importe quel autre statut ensuite)");
 
 
 // Rights: Administrative team memebers

@@ -19,9 +19,9 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/admins/stats_guests";
+$page_url         = "pages/admin/stats_guests";
 $page_title_en    = "Guests";
-$page_title_fr    = "Invités";
+$page_title_fr    = "Visites";
 
 // Extra JS
 $js = array('admin/stats');

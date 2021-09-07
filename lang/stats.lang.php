@@ -105,7 +105,7 @@ Guest data is currently being stored for <span class="bold text_red glow">{{1}} 
 EOT
 );
 ___('admin_stats_guests_storage',   'FR', <<<EOT
-Les données sur les invités sont actuellement stockées sur <span class="bold text_red glow">{{1}} jour</span>.
+Les données sur les personnes sans compte sont actuellement stockées <span class="bold text_red glow">{{1}} jour</span>.
 EOT
 );
 ___('admin_stats_guests_storage+',  'EN', <<<EOT
@@ -113,7 +113,7 @@ Guest data is currently being stored for <span class="bold text_red glow">{{1}} 
 EOT
 );
 ___('admin_stats_guests_storage+',  'FR', <<<EOT
-Les données sur les invités sont actuellement stockées sur <span class="bold text_red glow">{{1}} jours</span>.
+Les données sur les personnes sans compte sont actuellement stockées <span class="bold text_red glow">{{1}} jours</span>.
 EOT
 );
 ___('admin_stats_guests_languages', 'EN', <<<EOT
@@ -140,11 +140,11 @@ EOT
 
 // Table
 ___('admin_stats_guests_count',       'EN', "{{1}} guests stored in the database");
-___('admin_stats_guests_count',       'FR', "{{1}} invités stockés en base de données");
+___('admin_stats_guests_count',       'FR', "{{1}} personnes en base de données");
 ___('admin_stats_guests_partial',     'EN', "{{1}} guest out of {{2}} shown ({{3}})");
-___('admin_stats_guests_partial',     'FR', "{{1}} invité sur {{2}} affiché ({{3}})");
+___('admin_stats_guests_partial',     'FR', "{{1}} personne sur {{2}} affichée ({{3}})");
 ___('admin_stats_guests_partial+',    'EN', "{{1}} guests out of {{2}} shown ({{3}})");
-___('admin_stats_guests_partial+',    'FR', "{{1}} invités sur {{2}} affichés ({{3}})");
+___('admin_stats_guests_partial+',    'FR', "{{1}} personnes sur {{2}} affichées ({{3}})");
 ___('admin_stats_guests_identity',    'EN', "Identity");
 ___('admin_stats_guests_identity',    'FR', "Identité");
 ___('admin_stats_guests_visits',      'EN', "Visits");
@@ -168,19 +168,19 @@ ___('admin_stats_guests_theme_dark',  'FR', "Sombre");
 
 // Header
 ___('admin_stats_users_visited',      'EN', <<<EOT
-<span class="bold text_red glow">{{1}}</span> users logged into their account in the past <span class="bold text_red glow">100</span> days ({{2}}).<br>
+<span class="bold text_red glow">{{1}}</span> users logged into their account in the past <span class="bold text_red glow">100 days</span> ({{2}}).<br>
 EOT
 );
 ___('admin_stats_users_visited',      'FR', <<<EOT
-<span class="bold text_red glow">{{1}}</span> personnes ont utilisé leur compte dans les <span class="bold text_red glow">100</span> derniers jours ({{2}}).<br>
+<span class="bold text_red glow">{{1}}</span> personnes se sont connectées à leur compte dans les <span class="bold text_red glow">100 jours</span> passés ({{2}}).<br>
 EOT
 );
 ___('admin_stats_users_profiledata',  'EN', <<<EOT
-<span class="bold text_red glow">{{1}}</span> accounts have filled some profile data ({{2}}).<br>
+<span class="bold text_red glow">{{1}}</span> accounts have filled some <span class="bold text_red glow">profile</span> data ({{2}}).<br>
 EOT
 );
 ___('admin_stats_users_profiledata',  'FR', <<<EOT
-<span class="bold text_red glow">{{1}}</span> comptes ont modifié leur profil ({{2}}).<br>
+<span class="bold text_red glow">{{1}}</span> comptes ont modifié leur <span class="bold text_red glow">profil</span> ({{2}}).<br>
 EOT
 );
 

@@ -22,7 +22,7 @@ Being banned from NoBleme means that you are unable to take part in any form of 
 EOD
 );
 ___('users_banned_header',        'FR', <<<EOD
-Se faire bannir de NoBleme signifie que vous ne pouvez plus interagir sur le site depuis votre compte tant que vous n'avez pas purgé l'intégralité de votre peine. Si vous voulez vous servir du site avant la fin de votre bannissement, vous pouvez toujours vous déconnecter de votre compte et utiliser le site en tant qu'invité.
+Se faire bannir de NoBleme signifie que vous ne pouvez plus interagir sur le site depuis votre compte tant que vous n'avez pas purgé l'intégralité de votre peine. Si vous voulez vous servir du site avant la fin de votre bannissement, vous pouvez toujours vous déconnecter de votre compte et utiliser le site sans compte.
 EOD
 );
 ___('users_banned_header_evason', 'EN', <<<EOD
@@ -30,7 +30,7 @@ Take note that <span class="bold underlined">ban evasion will get you IP banned<
 EOD
 );
 ___('users_banned_header_evason', 'FR', <<<EOD
-Attention, <span class="bold underlined">tentez de contourner le bannissement et vous vous ferez bannir par adresse IP</span> : si vous essayez de défier ce bannissement en créant un nouveau compte, vous vous perdrez la possibilité même d'utiliser le site en tant qu'invité. Si vous n'êtes pas d'accord avec votre bannissement, la seule chose que vous pouvez faire est tenter de faire appel de la décision de vous bannir. Continuez à lire cette page si vous désirez savoir comment faire appel de votre bannissement.
+Attention, <span class="bold underlined">tentez de contourner le bannissement et vous vous ferez bannir par adresse IP</span> : si vous essayez de défier ce bannissement en créant un nouveau compte, vous vous perdrez la possibilité même d'utiliser le site sans compte. Si vous n'êtes pas d'accord avec votre bannissement, la seule chose que vous pouvez faire est tenter de faire appel de la décision de vous bannir. Continuez à lire cette page si vous désirez savoir comment faire appel de votre bannissement.
 EOD
 );
 
@@ -127,9 +127,9 @@ ___('admin_ban_add_username_ip',  'FR', "OU pseudonyme d'un compte - son adresse
 ___('admin_ban_add_full_ip_ban',  'EN', "Severity of the IP ban (total bans are extreme cases only)");
 ___('admin_ban_add_full_ip_ban',  'FR', "Sévérité du ban IP (réserver le ban total aux cas extrêmes)");
 ___('admin_ban_add_full_ip_no',   'EN', "Standard: affected users will not be able to log into their accounts");
-___('admin_ban_add_full_ip_no',   'FR', "Standard : les utilisateurs affectés ne pourront pas se connecter à leurs comptes");
+___('admin_ban_add_full_ip_no',   'FR', "Standard : les personnes affectées ne pourront pas se connecter à leurs comptes");
 ___('admin_ban_add_full_ip_yes',  'EN', "Full: affected users will not be able to see the website at all");
-___('admin_ban_add_full_ip_yes',  'FR', "Total : les utilisateurs affectés ne pourront pas voir le contenu du site");
+___('admin_ban_add_full_ip_yes',  'FR', "Total : les personnes affectées ne pourront pas voir le contenu du site");
 ___('admin_ban_add_reason_fr',    'EN', "Ban justification in french (optional)");
 ___('admin_ban_add_reason_fr',    'FR', "Raison du bannissement en français (optionnel)");
 ___('admin_ban_add_reason_en',    'EN', "Ban justification (optional)");

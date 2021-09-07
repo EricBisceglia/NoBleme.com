@@ -245,7 +245,7 @@ ___('irc_bot_message_body',     'FR', "Envoyer un message sur IRC via le bot");
 ___('irc_bot_message_channel',  'EN', "[OPTIONAL] Send the message on this channel");
 ___('irc_bot_message_channel',  'FR', "[OPTIONNEL] Envoyer le message sur ce canal");
 ___('irc_bot_message_user',     'EN', "[OPTIONAL] Send the message to this user");
-___('irc_bot_message_user',     'FR', "[OPTIONNEL] Envoyer le message à cet utilisateur");
+___('irc_bot_message_user',     'FR', "[OPTIONNEL] Envoyer le message à ce pseudonyme");
 ___('irc_bot_message_send',     'EN', "Send the message");
 ___('irc_bot_message_send',     'FR', "Envoyer the message");
 
@@ -1187,7 +1187,7 @@ All actions related to user accounts or channel administrations are done through
 EOT
 );
 ___('irc_faq_vocabulary_body_7',    'FR', <<<EOT
-Toutes les actions touchant aux comptes des membres ou à l'administration des canaux se font via des utilisateurs automatisés nommés "Services", qui sont présents de façon permanente sur le serveur IRC NoBleme sous le nom NickServ (pour gérer les comptes) et ChanServ (pour gérer les canaux). Vous pouvez en apprendre plus à leur sujet dans les sections {{link|pages/social/irc?nickserv|NickServ}} et {{link|pages/social/irc?chanserv|ChanServ}} de cette FAQ.
+Toutes les actions touchant aux comptes des membres ou à l'administration des canaux se font via des comptes automatisés nommés "Services", qui sont présents de façon permanente sur le serveur IRC NoBleme sous le nom NickServ (pour gérer les comptes) et ChanServ (pour gérer les canaux). Vous pouvez en apprendre plus à leur sujet dans les sections {{link|pages/social/irc?nickserv|NickServ}} et {{link|pages/social/irc?chanserv|ChanServ}} de cette FAQ.
 EOT
 );
 ___('irc_faq_vocabulary_title_8',   'EN', "Command");
@@ -1780,7 +1780,7 @@ Sets the channel to invite-only mode: the only way to join it is to be invited b
 EOT
 );
 ___('irc_faq_chanserv_mode_i',          'FR', <<<EOT
-Passe le canal en mode invitation : il n'est possible de le rejoindre qu'en y étant invité par quelqu'un qui s'y trouve déjà via la commande <span class="monospace">/msg ChanServ invite #[canal] [pseudonyme]</span>, ou en étant sur la liste des invitations.
+Passe le canal en mode invitation : il n'est possible de le rejoindre qu'en s'y faisant inviter par quelqu'un qui s'y trouve déjà via la commande <span class="monospace">/msg ChanServ invite #[canal] [pseudonyme]</span>, ou en étant sur la liste des invitations.
 EOT
 );
 ___('irc_faq_chanserv_mode_i_caps',      'EN', <<<EOT

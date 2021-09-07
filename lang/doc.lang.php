@@ -200,7 +200,7 @@ However, stay aware that anonymity on the public Internet has its limits. It is 
 EOT
 );
 ___('privacy_anonymity_2',     'FR', <<<EOT
-Toutefois, ayez conscience que l'anonymat sur Internet a ses limites. Il se peut que les forces de l'ordre nous demandent de partager des données sur nos utilisateurs dans le cadre d'une enquête, auquel cas nous serons forcés de partager le peu de données personnelles que nous avons à votre sujet. Cela signifie que l'anonymat sur NoBleme (et ailleurs) protège votre identité réelle face aux autres membres du site, mais ne vous protège pas des conséquences d'actions illégales que vous pourriez réaliser.
+Toutefois, ayez conscience que l'anonymat sur Internet a ses limites. Il se peut que les forces de l'ordre nous demandent de partager des données sur nos comptes dans le cadre d'une enquête, auquel cas nous serons forcés de partager le peu de données personnelles que nous avons à votre sujet. Cela signifie que l'anonymat sur NoBleme (et ailleurs) protège votre identité réelle face aux autres membres du site, mais ne vous protège pas des conséquences d'actions illégales que vous pourriez réaliser.
 EOT
 );
 
@@ -213,7 +213,7 @@ Everything on NoBleme is custom made and handcrafted with love, none of the webs
 EOT
 );
 ___('privacy_external_1',     'FR', <<<EOT
-Tout NoBleme est fabriqué à la main, sur mesure, avec amour. Le site n'utilise aucun script ou logiciel tiers. La plupart des sites Internet se servent de scripts externes pour la publicité, faire des statistiques, traquer les utilisateurs, mais vu que nous ne faisons aucune de ces choses nous n'avons aucun besoin de partager vos données avec des tiers. C'est pour cela que vous n'avez pas eu de bannière vous demandant votre consentement pour utiliser vos cookies comme vous pouvez en trouver sur les autres sites : nous n'avons pas besoin de vous faire consentir au partage de vos données avec des tiers vu que nous ne le faisons pas.
+Tout NoBleme est fabriqué à la main, sur mesure, avec amour. Le site n'utilise aucun script ou logiciel tiers. La plupart des sites Internet se servent de scripts externes pour la publicité, faire des statistiques, traquer les données privées, mais vu que nous ne faisons aucune de ces choses nous n'avons aucun besoin de partager vos données avec des tiers. C'est pour cela que vous n'avez pas eu de bannière vous demandant votre consentement pour utiliser vos cookies comme vous pouvez en trouver sur les autres sites : nous n'avons pas besoin de vous faire consentir au partage de vos données avec des tiers vu que nous ne le faisons pas.
 EOT
 );
 ___('privacy_external_2',     'EN', <<<EOT
@@ -236,7 +236,7 @@ EOT
 
 // User agreement
 ___('privacy_agreement_title',  'EN', "User agreement");
-___('privacy_agreement_title',  'FR', "Contrat utilisateur");
+___('privacy_agreement_title',  'FR', "Contrat d'utilisation");
 ___('privacy_agreement_1',      'EN', <<<EOT
 When registering an account on a website, you might be used to having to accept a very long user agreement. The lack of such a user agreement on NoBleme is a guarantee of privacy: it means that we have no legal rights to do anything with your personal data.
 EOT
@@ -250,7 +250,7 @@ Do keep in mind though that user agreements are only used for legal disputes, an
 EOT
 );
 ___('privacy_agreement_2',      'FR', <<<EOT
-Sachez tout de même que les contrats utilisateur ne concernent que les disputes légales, et n'ont donc aucun impact sur l'administration interne de NoBleme. Même si vous ne l'avez pas expressément accepté, vous restez sous la gouverne de notre simple et court {{link|pages/doc/coc|code de conduite}}, et nous gardons le droit de vous exclure de NoBleme si vous ne le respectez pas.
+Sachez tout de même que les contrats d'utilisation ne concernent que les disputes légales, et n'ont donc aucun impact sur l'administration interne de NoBleme. Même si vous ne l'avez pas expressément accepté, vous restez sous la gouverne de notre simple et court {{link|pages/doc/coc|code de conduite}}, et nous gardons le droit de vous exclure de NoBleme si vous ne le respectez pas.
 EOT
 );
 ___('privacy_agreement_3',      'EN', <<<EOT
@@ -305,7 +305,7 @@ EOT
 
 // Responsibility
 ___('legal_responsibility_title', 'EN', "Responsibility over user submitted content");
-___('legal_responsibility_title', 'FR', "Responsabilité sur les contenus utilisateur");
+___('legal_responsibility_title', 'FR', "Responsabilité sur les contenus");
 ___('legal_responsibility_body',  'EN', <<<EOT
 As it is free for anyone to create an account on NoBleme, and as moderation of user submitted content happens only after said content has been submitted on the website, we can not be held responsible for the content being submitted by users on the website until we see them. However, we have a clear {{link|pages/doc/coc|code of conduct}} which we expect both our users and ourselves to follow. Any content which goes against this code of conduct will be deleted as soon as possible, in a <span class="italics">best effort</span> manner, depending on the availability of our administrative team. Any users which go against this code of conduct will find themselves temporarily or permanently excluded from submitting content to NoBleme, preventing further abuse.
 EOT
@@ -318,7 +318,7 @@ EOT
 
 // User content
 ___('legal_user_content_title', 'EN', "Intellectual property rights over user submitted content");
-___('legal_user_content_title', 'FR', "Propriété intellectuelle des contenus utilisateur");
+___('legal_user_content_title', 'FR', "Propriété intellectuelle sur les contenus");
 ___('legal_user_content_body',  'EN', <<<EOT
 Any time you submit your own creative and/or original content on NoBleme, you implicitly authorize NoBleme to reuse this content within the boundaries of the website or any other platform belonging to NoBleme, and authorize other users of the website to quote the content that you posted. However, as the author of these creative and/or original works, you automatically gain the ownership of the full intellectual property rights on any of those works by submitting them to NoBleme. This means that NoBleme does not own the right to reuse, distribute, or monetize your works in any way of form without your authorization. We respect ownership.
 EOT
@@ -415,7 +415,7 @@ We use IP addresses as a way to differentiate guests on the {{link|pages/users/o
 EOT
 );
 ___('doc_data_ip_guest_2',  'FR', <<<EOT
-Nous utilisons les adresses IP pour différencier les invités sur {{link|pages/users/online|qui est en ligne}}, ainsi que pour conserver les tentatives de connexions aux comptes utilisateur afin de prévenir le {{external|https://fr.wikipedia.org/wiki/Attaque_par_force_brute|bruteforcing}} des mots de passe. Votre adresse IP n'est pas utilisée pour traquer votre activité sur le site, et n'apparait que dans des logs qui sont supprimés au bout d'un mois. Nous n'avons aucun intérêt à traquer l'activité des invités à part pour préserver la sécurité des comptes.
+Nous utilisons les adresses IP pour différencier les personnes sur {{link|pages/users/online|qui est en ligne}}, ainsi que pour conserver les tentatives de connexions aux comptes afin de prévenir le {{external|https://fr.wikipedia.org/wiki/Attaque_par_force_brute|bruteforcing}} des mots de passe. Votre adresse IP n'est pas utilisée pour traquer votre activité sur le site, et n'apparait que dans des logs qui sont supprimés au bout d'un mois. Nous n'avons aucun intérêt à traquer l'activité des personnes sans compte à part pour préserver la sécurité des comptes.
 EOT
 );
 ___('doc_data_ip_user_1',  'EN', <<<EOT
@@ -481,7 +481,7 @@ NoBleme has no interest in tracking the language of guests browsing the website.
 EOT
 );
 ___('doc_data_lang_guest_2',  'FR', <<<EOT
-NoBleme n'a aucun intérêt à conserver les données de langue des invités. Par conséquent, cette information est stockée sur votre ordinateur/appareil plutôt que sur NoBleme.
+NoBleme n'a aucun intérêt à conserver les données de langue des personnes sans compte. Par conséquent, cette information est stockée sur votre ordinateur/appareil plutôt que sur NoBleme.
 EOT
 );
 ___('doc_data_lang_users_1',  'EN', <<<EOT
@@ -576,7 +576,7 @@ ___('doc_bts_creed_3',      'EN', <<<EOT
 EOT
 );
 ___('doc_bts_creed_3',      'FR', <<<EOT
-<span class="bold text_red">Multiplicité des expériences utilisateur :</span> Les {{external|https://fr.wikipedia.org/wiki/Dark_pattern|dark patterns}} sont strictement interdits. Tout le contenu de NoBleme doit être testé sur un ordinateur fixe, mais doit également être testé via simulateur comme étant utilisé sur divers appareils mobiles, smartphones, tablettes. Les lecteurs d'écran pour personnes malvoyantes doivent également être pris en compte. Il est impossible de garantir la meilleure expérience utilisateur possible sur tous les appareils, mais ils doivent au moins tous être pris en compte lors des phases de design et de test.
+<span class="bold text_red">Multiplicité des expériences d'utilisation:</span> Les {{external|https://fr.wikipedia.org/wiki/Dark_pattern|dark patterns}} sont strictement interdits. Tout le contenu de NoBleme doit être testé sur un ordinateur fixe, mais doit également être testé via simulateur comme étant utilisé sur divers appareils mobiles, smartphones, tablettes. Les lecteurs d'écran pour personnes malvoyantes doivent également être pris en compte. Il est impossible de garantir la meilleure expérience possible sur tous les appareils, mais ils doivent au moins tous être pris en compte lors des phases de design et de test.
 EOT
 );
 ___('doc_bts_creed_4',      'EN', <<<EOT
