@@ -18,3 +18,11 @@
 .admin_mail_right_panel   { flex: 3;              }
 .admin_mail_search_label  { font-size: 0.6rem;    }
 .admin_mail_icon          { height: 1.4rem;     } }
+
+/******************************************************* STATS *******************************************************/
+@media (max-width: 1080px) {
+.admin_stats_profile_dropdown  { width: 5.0rem !important;   }
+.admin_stats_settings_dropdown { width: 5.0rem !important; } }
+@media (min-width: 1081px) {
+.admin_stats_profile_dropdown  { width: 9.0rem !important;   }
+.admin_stats_settings_dropdown { width: 9.0rem !important; } }

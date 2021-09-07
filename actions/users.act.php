@@ -21,6 +21,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  user_autocomplete_username          Autocompletes a username.                                                    */
 /*                                                                                                                   */
+/*  user_total_count                    Returns the number of users stored in the database.                          */
 /*  user_guests_count                   Returns the number of guests stored in the database.                         */
 /*  user_guests_storage_length          Returns for how long guests are currently being stored in the database.      */
 /*                                                                                                                   */
@@ -862,6 +863,25 @@ function user_autocomplete_username(  string  $input        ,
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Returns the number of users stored in the database.
+ *
+ * @return  int   The number of users.
+ */
+
+function user_total_count() : int
+{
+  // Fetch the user count
+  $duser = mysqli_fetch_array(query(" SELECT  COUNT(*) AS 'u_count'
+                                      FROM    users "));
+
+  // Return the user count
+  return $duser['u_count'];
 }
 
 

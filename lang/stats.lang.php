@@ -159,6 +159,93 @@ ___('admin_stats_guests_theme_dark',  'FR', "Sombre");
 
 
 
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       USERS                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('admin_stats_users_visited',      'EN', <<<EOT
+<span class="bold text_red glow">{{1}}</span> users logged into their account in the past <span class="bold text_red glow">100</span> days ({{2}}).<br>
+EOT
+);
+___('admin_stats_users_visited',      'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> personnes ont utilisé leur compte dans les <span class="bold text_red glow">100</span> derniers jours ({{2}}).<br>
+EOT
+);
+___('admin_stats_users_profiledata',  'EN', <<<EOT
+<span class="bold text_red glow">{{1}}</span> accounts have filled some profile data ({{2}}).<br>
+EOT
+);
+___('admin_stats_users_profiledata',  'FR', <<<EOT
+<span class="bold text_red glow">{{1}}</span> comptes ont modifié leur profil ({{2}}).<br>
+EOT
+);
+
+
+// Table
+___('admin_stats_users_created',      'EN', "Created");
+___('admin_stats_users_created',      'FR', "Crée");
+___('admin_stats_users_language',     'EN', "Lang.");
+___('admin_stats_users_language',     'FR', "Lang.");
+___('admin_stats_users_speaks',       'EN', "Speaks");
+___('admin_stats_users_speaks',       'FR', "Parle");
+___('admin_stats_users_birthday',     'EN', "B.day");
+___('admin_stats_users_birthday',     'FR', "Anniv.");
+___('admin_stats_users_profile',      'EN', "Profile");
+___('admin_stats_users_profile',      'FR', "Profil");
+___('admin_stats_users_settings',     'EN', "Settings");
+___('admin_stats_users_settings',     'FR', "Réglages");
+___('admin_stats_users_count',        'EN', "{{1}} users registered on the website");
+___('admin_stats_users_count',        'FR', "{{1}} comptes crées sur le site");
+___('admin_stats_users_partial',      'EN', "{{1}} user out of {{2}} shown ({{3}})");
+___('admin_stats_users_partial',      'FR', "{{1}} compte sur {{2}} affiché ({{3}})");
+___('admin_stats_users_partial+',     'EN', "{{1}} user out of {{2}} shown ({{3}})");
+___('admin_stats_users_partial+',     'FR', "{{1}} comptes sur {{2}} affichés ({{3}})");
+___('admin_stats_users_bilingual',    'EN', "Bilingual");
+___('admin_stats_users_bilingual',    'FR', "Bilingue");
+___('admin_stats_users_empty',        'EN', "Empty");
+___('admin_stats_users_empty',        'FR', "Vide");
+___('admin_stats_users_filled',       'EN', "Filled");
+___('admin_stats_users_filled',       'FR', "Rempli");
+___('admin_stats_users_complete',     'EN', "Complete");
+___('admin_stats_users_complete',     'FR', "Complet");
+___('admin_stats_users_action',       'EN', "Happened");
+___('admin_stats_users_action',       'FR', "A agi");
+___('admin_stats_users_noaction',     'EN', "Never");
+___('admin_stats_users_noaction',     'FR', "Jamais");
+___('admin_stats_users_spoken',       'EN', "Languages");
+___('admin_stats_users_spoken',       'FR', "Langues");
+___('admin_stats_users_has_birthday', 'EN', "Birthday");
+___('admin_stats_users_has_birthday', 'FR', "Anniversaire");
+___('admin_stats_users_location',     'EN', "Location");
+___('admin_stats_users_location',     'FR', "Lieu");
+___('admin_stats_users_pronouns',     'EN', "Pronouns");
+___('admin_stats_users_pronouns',     'FR', "Pronoms");
+___('admin_stats_users_profile_text', 'EN', "Profile text");
+___('admin_stats_users_profile_text', 'FR', "Texte libre");
+___('admin_stats_users_all_nsfw',     'EN', "Sees all NSFW content");
+___('admin_stats_users_all_nsfw',     'FR', "Voit tout le contenu NSFW");
+___('admin_stats_users_some_nsfw',    'EN', "Sees NSFW text only");
+___('admin_stats_users_some_nsfw',    'FR', "Texte NSFW uniquement");
+___('admin_stats_users_no_nsfw',      'EN', "Blocks NSFW content");
+___('admin_stats_users_no_nsfw',      'FR', "Bloque le contenu NSFW");
+___('admin_stats_users_youtube',      'EN', "Blocked YouTube");
+___('admin_stats_users_youtube',      'FR', "Bloque YouTube");
+___('admin_stats_users_discord',      'EN', "Blocked Discord");
+___('admin_stats_users_discord',      'FR', "Bloque Discord");
+___('admin_stats_users_trends',       'EN', "Blocked Trends");
+___('admin_stats_users_trends',       'FR', "Bloque Trends");
+___('admin_stats_users_kiwiirc',      'EN', "Blocked KiwiIRC");
+___('admin_stats_users_kiwiirc',      'FR', "Bloque KiwiIRC");
+___('admin_stats_users_hidden',       'EN', "Hidden from recent activity");
+___('admin_stats_users_hidden',       'FR', "N'apparait pas dans l'activité récente");
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                   DOPPELGÄNGER                                                    */

@@ -977,6 +977,8 @@ ___('submenu_admin_metrics',        'EN', "Metrics");
 ___('submenu_admin_metrics',        'FR', "Performances");
 ___('submenu_admin_pageviews',      'EN', "Pageviews");
 ___('submenu_admin_pageviews',      'FR', "Pages populaires");
+___('submenu_admin_stats_users',    'EN', "Users");
+___('submenu_admin_stats_users',    'FR', "Comptes");
 ___('submenu_admin_stats_guests',   'EN', "Guests");
 ___('submenu_admin_stats_guests',   'FR', "Invités");
 

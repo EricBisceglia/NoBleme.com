@@ -6,6 +6,7 @@
 /*  admin_views_search      Performs a search through the pageviews.                                                 */
 /*  admin_views_delete      Triggers the deletion of an entry in the pageviews.                                      */
 /*                                                                                                                   */
+/*  admin_users_search      Performs a search through the users.                                                     */
 /*  admin_guests_search     Performs a search through the guests.                                                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
@@ -115,6 +116,40 @@ function admin_views_delete(  message ,
   // Make sure the user knows what they're doing and trigger the deletion
   if(confirm(message))
     fetch_page('stats_views', target_element, postdata);
+}
+
+
+
+
+/**
+ * Performs a search through the users.
+ *
+ * @param   {string}  [sort_data] The column which should be used to sort the data.
+ *
+ * @returns {void}
+*/
+
+function admin_users_search( sort_data = null )
+{
+  // Update the data sort input if requested
+  if(sort_data)
+    document.getElementById('stats_users_sort').value = sort_data;
+
+  // Assemble the postdata
+  postdata  = 'stats_users_sort='             + fetch_sanitize_id('stats_users_sort');
+  postdata += '&stats_users_search_username=' + fetch_sanitize_id('stats_users_username');
+  postdata += '&stats_users_search_created='  + fetch_sanitize_id('stats_users_created');
+  postdata += '&stats_users_search_page='     + fetch_sanitize_id('stats_users_page');
+  postdata += '&stats_users_search_action='   + fetch_sanitize_id('stats_users_action');
+  postdata += '&stats_users_search_language=' + fetch_sanitize_id('stats_users_language');
+  postdata += '&stats_users_search_speaks='   + fetch_sanitize_id('stats_users_speaks');
+  postdata += '&stats_users_search_theme='    + fetch_sanitize_id('stats_users_theme');
+  postdata += '&stats_users_search_birthday=' + fetch_sanitize_id('stats_users_birthday');
+  postdata += '&stats_users_search_profile='  + fetch_sanitize_id('stats_users_profile');
+  postdata += '&stats_users_search_settings=' + fetch_sanitize_id('stats_users_settings');
+
+  // Submit the search
+  fetch_page('stats_users', 'stats_users_tbody', postdata);
 }
 
 

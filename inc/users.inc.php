@@ -39,6 +39,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  user_settings_privacy             Third party content privacy settings of the current user.                      */
 /*                                                                                                                   */
 /*  user_get_oldest                   Finds when the oldest user registered on the website.                          */
+/*  user_get_birth_years              Returns all the years during which a user was born.                            */
 /*                                                                                                                   */
 /*  user_generate_random_username     Generates a random username for a guest.                                       */
 /*                                                                                                                   */
@@ -1160,6 +1161,34 @@ function user_get_oldest() : int
 
   // Return the registration year
   return isset($qoldest['u_min']) ? date('Y', $qoldest['u_min']) : date('Y');
+}
+
+
+
+/**
+ * Returns all the years during which a user was born.
+ *
+ * @return  array   The birth years.
+ */
+
+function user_get_birth_years() : array
+{
+  // Fetch the birth years
+  $qbirths = query("  SELECT    YEAR(users_profile.birthday) AS 'u_year'
+                      FROM      users_profile
+                      WHERE     users_profile.birthday != '0000-00-00'
+                      GROUP BY  YEAR(users_profile.birthday)
+                      ORDER BY  YEAR(users_profile.birthday) DESC ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qbirths); $i++)
+    $data[$i]['year'] = sanitize_output($row['u_year']);
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
 }
 
 

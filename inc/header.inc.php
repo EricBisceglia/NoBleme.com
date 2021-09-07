@@ -350,7 +350,7 @@ $stylesheets .= '
     <link rel="stylesheet" href="'.$path.'css/light_mode.css" type="text/css">';
 
 // If extra stylesheets are set, add them to the list
-if (isset($css))
+if(isset($css))
 {
   // Loop through all extra sheets and include them
   for($i = 0; $i < count($css); $i++)
@@ -915,6 +915,9 @@ $javascripts .= '
         </div>
         <div class="header_submenu_item">
           <?=__link('pages/admin/stats_views', __('submenu_admin_pageviews'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/admin/stats_users', __('submenu_admin_stats_users'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('pages/admin/stats_guests', __('submenu_admin_stats_guests'), 'header_submenu_link', 1, $path);?>
