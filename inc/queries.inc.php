@@ -1503,105 +1503,120 @@ if($last_query < 29)
 
 if($last_query < 30)
 {
-  sql_rename_table('nbdb_web_notes_admin', 'internet_admin_notes');
-  sql_rename_table('nbdb_web_categorie', 'internet_categories');
-  sql_rename_table('nbdb_web_periode', 'internet_eras');
-  sql_rename_table('nbdb_web_image', 'internet_images');
-  sql_rename_table('nbdb_web_page', 'internet_pages');
-  sql_rename_table('nbdb_web_page_categorie', 'internet_pages_categories');
+  sql_rename_table('nbdb_web_notes_admin', 'compendium_admin_tools');
+  sql_rename_table('nbdb_web_categorie', 'compendium_categories');
+  sql_rename_table('nbdb_web_periode', 'compendium_eras');
+  sql_rename_table('nbdb_web_image', 'compendium_images');
+  sql_rename_table('nbdb_web_page', 'compendium_pages');
+  sql_rename_table('nbdb_web_page_categorie', 'compendium_pages_categories');
 
-  sql_rename_field('internet_admin_notes', 'notes_admin', 'global_notes', 'LONGTEXT NOT NULL');
-  sql_rename_field('internet_admin_notes', 'brouillon_fr', 'draft_fr', 'LONGTEXT NOT NULL');
-  sql_rename_field('internet_admin_notes', 'brouillon_en', 'draft_en', 'LONGTEXT NOT NULL');
-  sql_move_field('internet_admin_notes', 'draft_fr', 'LONGTEXT NOT NULL', 'draft_en');
-  sql_rename_field('internet_admin_notes', 'template_global', 'snippets', 'LONGTEXT NOT NULL');
-  sql_change_field_type('internet_admin_notes', 'template_fr', 'LONGTEXT NOT NULL');
-  sql_change_field_type('internet_admin_notes', 'template_en', 'LONGTEXT NOT NULL');
-  sql_move_field('internet_admin_notes', 'template_fr', 'LONGTEXT NOT NULL', 'template_en');
+  sql_rename_field('compendium_admin_tools', 'notes_admin', 'global_notes', 'LONGTEXT NOT NULL');
+  sql_delete_field('compendium_admin_tools', 'brouillon_fr');
+  sql_delete_field('compendium_admin_tools', 'brouillon_en');
+  sql_move_field('compendium_admin_tools', 'draft_fr', 'LONGTEXT NOT NULL', 'draft_en');
+  sql_rename_field('compendium_admin_tools', 'template_global', 'snippets', 'LONGTEXT NOT NULL');
+  sql_change_field_type('compendium_admin_tools', 'template_fr', 'LONGTEXT NOT NULL');
+  sql_change_field_type('compendium_admin_tools', 'template_en', 'LONGTEXT NOT NULL');
+  sql_move_field('compendium_admin_tools', 'template_fr', 'LONGTEXT NOT NULL', 'template_en');
 
-  sql_change_field_type('internet_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('internet_categories', 'titre_fr', 'name_fr', 'VARCHAR(510) NOT NULL');
-  sql_rename_field('internet_categories', 'titre_en', 'name_en', 'VARCHAR(510) NOT NULL');
-  sql_move_field('internet_categories', 'name_fr', 'VARCHAR(510) NOT NULL', 'name_en');
-  sql_rename_field('internet_categories', 'ordre_affichage', 'display_order', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('internet_categories', 'display_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_rename_field('internet_categories', 'description_fr', 'description_fr', 'TEXT NOT NULL');
-  sql_rename_field('internet_categories', 'description_en', 'description_en', 'TEXT NOT NULL');
-  sql_move_field('internet_categories', 'description_fr', 'TEXT NOT NULL', 'description_en');
-  sql_delete_index('internet_categories', 'index_ordre_affichage');
-  sql_delete_index('internet_categories', 'index_description_fr');
-  sql_delete_index('internet_categories', 'index_description_en');
-  sql_create_index('internet_categories', 'index_display_order', 'display_order');
+  sql_change_field_type('compendium_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('compendium_categories', 'titre_fr', 'name_fr', 'VARCHAR(510) NOT NULL');
+  sql_rename_field('compendium_categories', 'titre_en', 'name_en', 'VARCHAR(510) NOT NULL');
+  sql_move_field('compendium_categories', 'name_fr', 'VARCHAR(510) NOT NULL', 'name_en');
+  sql_rename_field('compendium_categories', 'ordre_affichage', 'display_order', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('compendium_categories', 'display_order', 'INT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_rename_field('compendium_categories', 'description_fr', 'description_fr', 'TEXT NOT NULL');
+  sql_rename_field('compendium_categories', 'description_en', 'description_en', 'TEXT NOT NULL');
+  sql_move_field('compendium_categories', 'description_fr', 'TEXT NOT NULL', 'description_en');
+  sql_delete_index('compendium_categories', 'index_ordre_affichage');
+  sql_delete_index('compendium_categories', 'index_description_fr');
+  sql_delete_index('compendium_categories', 'index_description_en');
+  sql_create_index('compendium_categories', 'index_display_order', 'display_order');
 
-  sql_change_field_type('internet_eras', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('internet_eras', 'titre_fr', 'name_fr', 'VARCHAR(510) NOT NULL');
-  sql_rename_field('internet_eras', 'titre_en', 'name_en', 'VARCHAR(510) NOT NULL');
-  sql_move_field('internet_eras', 'name_fr', 'VARCHAR(510) NOT NULL', 'name_en');
-  sql_rename_field('internet_eras', 'description_fr', 'description_fr', 'TEXT NOT NULL');
-  sql_rename_field('internet_eras', 'description_en', 'description_en', 'TEXT NOT NULL');
-  sql_move_field('internet_eras', 'description_fr', 'TEXT NOT NULL', 'description_en');
-  sql_rename_field('internet_eras', 'annee_debut', 'began_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('internet_eras', 'annee_fin', 'ended_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('internet_eras', 'began_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_move_field('internet_eras', 'ended_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0', 'began_in_year');
+  sql_change_field_type('compendium_eras', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('compendium_eras', 'titre_fr', 'name_fr', 'VARCHAR(510) NOT NULL');
+  sql_rename_field('compendium_eras', 'titre_en', 'name_en', 'VARCHAR(510) NOT NULL');
+  sql_move_field('compendium_eras', 'name_fr', 'VARCHAR(510) NOT NULL', 'name_en');
+  sql_rename_field('compendium_eras', 'description_fr', 'description_fr', 'TEXT NOT NULL');
+  sql_rename_field('compendium_eras', 'description_en', 'description_en', 'TEXT NOT NULL');
+  sql_move_field('compendium_eras', 'description_fr', 'TEXT NOT NULL', 'description_en');
+  sql_rename_field('compendium_eras', 'annee_debut', 'year_start', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('compendium_eras', 'annee_fin', 'year_end', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_move_field('compendium_eras', 'year_start', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_move_field('compendium_eras', 'year_end', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0', 'year_start');
 
-  sql_change_field_type('internet_images', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('internet_images', 'timestamp_upload', 'uploaded_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('internet_images', 'nom_fichier', 'file_name', 'VARCHAR(510) NOT NULL');
-  sql_change_field_type('internet_images', 'tags', 'TEXT NOT NULL');
-  sql_rename_field('internet_images', 'nsfw', 'is_nsfw', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('internet_images', 'pages_utilisation_fr', 'used_in_pages_fr', 'TEXT NOT NULL');
-  sql_rename_field('internet_images', 'pages_utilisation_en', 'used_in_pages_en', 'TEXT NOT NULL');
-  sql_move_field('internet_images', 'pages_utilisation_fr', 'TEXT NOT NULL', 'pages_utilisation_en');
-  sql_create_index('internet_images', 'index_file_name', 'file_name', 1);
-  sql_create_index('internet_images', 'index_tags', 'tags', 1);
+  sql_change_field_type('compendium_images', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('compendium_images', 'timestamp_upload', 'uploaded_at', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('compendium_images', 'nom_fichier', 'file_name', 'VARCHAR(510) NOT NULL');
+  sql_change_field_type('compendium_images', 'tags', 'TEXT NOT NULL');
+  sql_rename_field('compendium_images', 'nsfw', 'is_nsfw', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_create_field('compendium_images', 'is_gross', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'is_nsfw');
+  sql_create_field('compendium_images', 'is_offensive', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'is_gross');
+  sql_rename_field('compendium_images', 'pages_utilisation_fr', 'used_in_pages_fr', 'TEXT NOT NULL');
+  sql_rename_field('compendium_images', 'pages_utilisation_en', 'used_in_pages_en', 'TEXT NOT NULL');
+  sql_move_field('compendium_images', 'used_in_pages_fr', 'TEXT NOT NULL', 'used_in_pages_en');
+  sql_create_field('compendium_images', 'caption', 'MEDIUMTEXT NOT NULL', 'used_in_pages_fr');
+  sql_create_index('compendium_images', 'index_file_name', 'file_name', 1);
 
-  sql_change_field_type('internet_pages', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('internet_pages', 'FKnbdb_web_periode', 'fk_internet_eras', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_create_field('internet_pages', 'is_dictionary_entry', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_internet_eras');
-  sql_create_field('internet_pages', 'is_cultural_entry', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'is_dictionary_entry');
-  sql_rename_field('internet_pages', 'titre_fr', 'title_fr', 'VARCHAR(510) NOT NULL');
-  sql_rename_field('internet_pages', 'titre_en', 'title_en', 'VARCHAR(510) NOT NULL');
-  sql_move_field('internet_pages', 'title_fr', 'VARCHAR(510) NOT NULL', 'title_en');
-  sql_change_field_type('internet_pages', 'redirection_fr', 'VARCHAR(510) NOT NULL');
-  sql_change_field_type('internet_pages', 'redirection_en', 'VARCHAR(510) NOT NULL');
-  sql_move_field('internet_pages', 'redirection_fr', 'VARCHAR(510) NOT NULL', 'redirection_en');
-  sql_rename_field('internet_pages', 'contenu_fr', 'definition_fr', 'LONGTEXT NOT NULL');
-  sql_rename_field('internet_pages', 'contenu_en', 'definition_en', 'LONGTEXT NOT NULL');
-  sql_rename_field('internet_pages', 'annee_apparition', 'appeared_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('internet_pages', 'mois_apparition', 'appeared_in_month', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('internet_pages', 'annee_popularisation', 'spread_in_year', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('internet_pages', 'mois_popularisation', 'spread_in_month', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('internet_pages', 'contenu_floute', 'is_nsfw', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('internet_pages', 'est_vulgaire', 'is_gross', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('internet_pages', 'est_politise', 'is_political', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('internet_pages', 'est_incorrect', 'is_politically_incorrect', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_move_field('internet_pages', 'definition_en', 'LONGTEXT NOT NULL', 'is_politically_incorrect');
-  sql_move_field('internet_pages', 'definition_fr', 'LONGTEXT NOT NULL', 'definition_en');
-  sql_rename_field('internet_pages', 'notes_admin', 'private_admin_notes', 'MEDIUMTEXT NOT NULL');
-  sql_delete_index('internet_pages', 'index_periode');
-  sql_delete_index('internet_pages', 'index_apparition');
-  sql_delete_index('internet_pages', 'index_popularisation');
-  sql_delete_index('internet_pages', 'index_titre_fr');
-  sql_delete_index('internet_pages', 'index_titre_en');
-  sql_delete_index('internet_pages', 'index_contenu_en');
-  sql_delete_index('internet_pages', 'index_contenu_fr');
-  sql_create_index('internet_pages', 'index_era', 'fk_internet_eras');
-  sql_create_index('internet_pages', 'index_dictionary', 'is_dictionary_entry');
-  sql_create_index('internet_pages', 'index_cultural', 'is_cultural_entry');
-  sql_create_index('internet_pages', 'index_appeared', 'appeared_in_year, appeared_in_month');
-  sql_create_index('internet_pages', 'index_spread', 'spread_in_year, spread_in_month');
-  sql_create_index('internet_pages', 'index_title_en', 'title_en(255), redirection_en(255)', 1);
-  sql_create_index('internet_pages', 'index_title_fr', 'title_fr(255), redirection_fr(255)', 1);
-  sql_create_index('internet_pages', 'index_contents_en', 'definition_en', 1);
-  sql_create_index('internet_pages', 'index_contents_fr', 'definition_fr', 1);
+  sql_create_table('compendium_missing');
+  sql_create_field('compendium_missing', 'page_type', 'VARCHAR(510) NOT NULL', 'id');
+  sql_create_field('compendium_missing', 'page_url', 'VARCHAR(510) NOT NULL', 'page_type');
+  sql_create_field('compendium_missing', 'title_en', 'VARCHAR(510) NOT NULL', 'page_url');
+  sql_create_field('compendium_missing', 'title_fr', 'VARCHAR(510) NOT NULL', 'title_en');
+  sql_create_field('compendium_missing', 'notes', 'MEDIUMTEXT NOT NULL', 'title_fr');
+  sql_create_index('compendium_missing', 'index_url', 'page_url(255)');
 
-  sql_change_field_type('internet_pages_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
-  sql_rename_field('internet_pages_categories', 'FKnbdb_web_page', 'fk_internet_pages', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_rename_field('internet_pages_categories', 'FKnbdb_web_categorie', 'fk_internet_categories', 'INT UNSIGNED NOT NULL DEFAULT 0');
-  sql_delete_index('internet_pages_categories', 'index_pages');
-  sql_create_index('internet_pages_categories', 'index_page', 'fk_internet_pages');
-  sql_create_index('internet_pages_categories', 'index_category', 'fk_internet_categories');
+  sql_change_field_type('compendium_pages', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('compendium_pages', 'FKnbdb_web_periode', 'fk_compendium_eras', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_create_field('compendium_pages', 'is_draft', 'TINYINT NOT NULL DEFAULT 0', 'fk_compendium_eras');
+  sql_create_field('compendium_pages', 'page_type', 'VARCHAR(510) NOT NULL', 'is_draft');
+  sql_create_field('compendium_pages', 'page_url', 'VARCHAR(510) NOT NULL', 'page_type');
+  sql_rename_field('compendium_pages', 'titre_fr', 'title_fr', 'VARCHAR(510) NOT NULL');
+  sql_rename_field('compendium_pages', 'titre_en', 'title_en', 'VARCHAR(510) NOT NULL');
+  sql_move_field('compendium_pages', 'title_fr', 'VARCHAR(510) NOT NULL', 'title_en');
+  sql_change_field_type('compendium_pages', 'redirection_fr', 'VARCHAR(510) NOT NULL');
+  sql_change_field_type('compendium_pages', 'redirection_en', 'VARCHAR(510) NOT NULL');
+  sql_move_field('compendium_pages', 'redirection_fr', 'VARCHAR(510) NOT NULL', 'redirection_en');
+  sql_rename_field('compendium_pages', 'contenu_fr', 'definition_fr', 'LONGTEXT NOT NULL');
+  sql_rename_field('compendium_pages', 'contenu_en', 'definition_en', 'LONGTEXT NOT NULL');
+  sql_rename_field('compendium_pages', 'annee_apparition', 'year_appeared', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('compendium_pages', 'mois_apparition', 'month_appeared', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('compendium_pages', 'annee_popularisation', 'year_peak', 'SMALLINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('compendium_pages', 'mois_popularisation', 'month_peak', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('compendium_pages', 'contenu_floute', 'is_nsfw', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('compendium_pages', 'est_vulgaire', 'is_gross', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_delete_field('compendium_pages', 'est_politise');
+  sql_rename_field('compendium_pages', 'est_incorrect', 'is_offensive', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
+  sql_create_field('compendium_pages', 'summary_en', 'TEXT NOT NULL', 'is_offensive');
+  sql_create_field('compendium_pages', 'summary_fr', 'TEXT NOT NULL', 'summary_en');
+  sql_move_field('compendium_pages', 'definition_en', 'LONGTEXT NOT NULL', 'summary_fr');
+  sql_move_field('compendium_pages', 'definition_fr', 'LONGTEXT NOT NULL', 'definition_en');
+  sql_rename_field('compendium_pages', 'notes_admin', 'admin_notes', 'MEDIUMTEXT NOT NULL');
+  sql_create_field('compendium_pages', 'admin_urls', 'TEXT NOT NULL', 'admin_notes');
+  sql_delete_index('compendium_pages', 'index_periode');
+  sql_delete_index('compendium_pages', 'index_apparition');
+  sql_delete_index('compendium_pages', 'index_popularisation');
+  sql_delete_index('compendium_pages', 'index_titre_fr');
+  sql_delete_index('compendium_pages', 'index_titre_en');
+  sql_delete_index('compendium_pages', 'index_contenu_en');
+  sql_delete_index('compendium_pages', 'index_contenu_fr');
+  sql_create_index('compendium_pages', 'index_era', 'fk_compendium_eras');
+  sql_create_index('compendium_pages', 'index_type', 'page_type(255)');
+  sql_create_index('compendium_pages', 'index_url', 'page_url(255)');
+  sql_create_index('compendium_pages', 'index_appeared', 'year_appeared, month_appeared');
+  sql_create_index('compendium_pages', 'index_spread', 'year_peak, month_peak');
+  sql_create_index('compendium_pages', 'index_title_en', 'title_en(255), redirection_en(255)', 1);
+  sql_create_index('compendium_pages', 'index_title_fr', 'title_fr(255), redirection_fr(255)', 1);
+
+  sql_change_field_type('compendium_pages_categories', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
+  sql_rename_field('compendium_pages_categories', 'FKnbdb_web_page', 'fk_compendium_pages', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_rename_field('compendium_pages_categories', 'FKnbdb_web_categorie', 'fk_compendium_categories', 'INT UNSIGNED NOT NULL DEFAULT 0');
+  sql_delete_index('compendium_pages_categories', 'index_pages');
+  sql_create_index('compendium_pages_categories', 'index_page', 'fk_compendium_pages');
+  sql_create_index('compendium_pages_categories', 'index_category', 'fk_compendium_categories');
+
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.page_type = 'meme' ");
 
   $qinternet = query("  SELECT  nbdb_web_definition.titre_fr        AS 'title_fr'     ,
                                 nbdb_web_definition.titre_en        AS 'title_en'     ,
@@ -1611,47 +1626,53 @@ if($last_query < 30)
                                 nbdb_web_definition.definition_en   AS 'body_en'      ,
                                 nbdb_web_definition.contenu_floute  AS 'is_nsfw'      ,
                                 nbdb_web_definition.est_vulgaire    AS 'is_gross'     ,
-                                nbdb_web_definition.est_politise    AS 'is_political' ,
                                 nbdb_web_definition.est_incorrect   AS 'is_incorrect' ,
                                 nbdb_web_definition.notes_admin     AS 'admin_notes'
                         FROM    nbdb_web_definition ");
   while($dinternet = mysqli_fetch_array($qinternet))
-    query(" INSERT INTO internet_pages
-            SET         internet_pages.is_dictionary_entry    = 1                                                   ,
-                        internet_pages.title_en               = '".sql_sanitize_data($dinternet['title_en'])."'     ,
-                        internet_pages.title_fr               = '".sql_sanitize_data($dinternet['title_fr'])."'     ,
-                        internet_pages.redirection_en         = '".sql_sanitize_data($dinternet['redirect_en'])."'  ,
-                        internet_pages.redirection_fr         = '".sql_sanitize_data($dinternet['redirect_fr'])."'  ,
-                        internet_pages.is_nsfw                = '".sql_sanitize_data($dinternet['is_nsfw'])."'      ,
-                        internet_pages.is_gross               = '".sql_sanitize_data($dinternet['is_gross'])."'     ,
-                        internet_pages.is_political           = '".sql_sanitize_data($dinternet['is_political'])."' ,
-                      internet_pages.is_politically_incorrect = '".sql_sanitize_data($dinternet['is_incorrect'])."' ,
-                        internet_pages.definition_en          = '".sql_sanitize_data($dinternet['body_en'])."'      ,
-                        internet_pages.definition_fr          = '".sql_sanitize_data($dinternet['body_fr'])."'      ,
-                        internet_pages.private_admin_notes    = '".sql_sanitize_data($dinternet['admin_notes'])."'  ");
+    query(" INSERT INTO compendium_pages
+            SET         compendium_pages.page_type      = 'definition'                                        ,
+                        compendium_pages.title_en       = '".sql_sanitize_data($dinternet['title_en'])."'     ,
+                        compendium_pages.title_fr       = '".sql_sanitize_data($dinternet['title_fr'])."'     ,
+                        compendium_pages.redirection_en = '".sql_sanitize_data($dinternet['redirect_en'])."'  ,
+                        compendium_pages.redirection_fr = '".sql_sanitize_data($dinternet['redirect_fr'])."'  ,
+                        compendium_pages.is_nsfw        = '".sql_sanitize_data($dinternet['is_nsfw'])."'      ,
+                        compendium_pages.is_gross       = '".sql_sanitize_data($dinternet['is_gross'])."'     ,
+                        compendium_pages.is_offensive   = '".sql_sanitize_data($dinternet['is_incorrect'])."' ,
+                        compendium_pages.definition_en  = '".sql_sanitize_data($dinternet['body_en'])."'      ,
+                        compendium_pages.definition_fr  = '".sql_sanitize_data($dinternet['body_fr'])."'      ,
+                        compendium_pages.admin_notes    = '".sql_sanitize_data($dinternet['admin_notes'])."'  ");
+
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.page_url = LOWER(REPLACE(compendium_pages.title_fr, ' ', '_'))");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.page_url = LOWER(REPLACE(REPLACE(REPLACE(REPLACE(compendium_pages.title_en, ' ', '_'), '?', ''), '\'', ''), ',', ''))
+          WHERE   compendium_pages.title_en NOT LIKE '' ");
+  query(" DELETE FROM compendium_pages
+          WHERE       compendium_pages.redirection_en LIKE 'O RLY?' ");
 
   sql_delete_table('nbdb_web_definition');
 
-  query(" UPDATE  internet_pages
-          SET     internet_pages.definition_en = REPLACE(internet_pages.definition_en, '[[web:', '[[internet:') ");
-  query(" UPDATE  internet_pages
-          SET     internet_pages.definition_fr = REPLACE(internet_pages.definition_fr, '[[web:', '[[internet:') ");
-  query(" UPDATE  internet_pages
-          SET     internet_pages.definition_en = REPLACE(internet_pages.definition_en, '[[dico:', '[[internet:') ");
-  query(" UPDATE  internet_pages
-          SET     internet_pages.definition_fr = REPLACE(internet_pages.definition_fr, '[[dico:', '[[internet:') ");
-  query(" UPDATE  internet_pages
-          SET     internet_pages.definition_en = REPLACE(internet_pages.definition_en, '[[lien:', '[[link:') ");
-  query(" UPDATE  internet_pages
-          SET     internet_pages.definition_fr = REPLACE(internet_pages.definition_fr, '[[lien:', '[[link:') ");
-  query(" UPDATE  internet_pages
-          SET     internet_pages.definition_en = REPLACE(internet_pages.definition_en, '[[galerie', '[[gallery') ");
-  query(" UPDATE  internet_pages
-          SET     internet_pages.definition_fr = REPLACE(internet_pages.definition_fr, '[[galerie', '[[gallery') ");
-  query(" UPDATE  internet_pages
-          SET     internet_pages.definition_en = REPLACE(internet_pages.definition_en, '/galerie]]', '/gallery]]') ");
-  query(" UPDATE  internet_pages
-          SET     internet_pages.definition_fr = REPLACE(internet_pages.definition_fr, '/galerie]]', '/gallery]]') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '[[web:', '[[compendium:') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '[[web:', '[[compendium:') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '[[dico:', '[[compendium:') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '[[dico:', '[[compendium:') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '[[lien:', '[[link:') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '[[lien:', '[[link:') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '[[galerie', '[[gallery') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '[[galerie', '[[gallery') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '/galerie]]', '/gallery]]') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '/galerie]]', '/gallery]]') ");
 
   query(" DELETE FROM logs_activity
           WHERE       logs_activity.activity_type LIKE 'internet_*' ");
@@ -1680,10 +1701,10 @@ if($last_query < 31)
   sql_create_field('meetups', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
   sql_create_index('meetups', 'index_deleted', 'is_deleted');
 
-  sql_create_field('internet_images', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
-  sql_create_index('internet_images', 'index_deleted', 'is_deleted');
-  sql_create_field('internet_pages', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_internet_eras');
-  sql_create_index('internet_pages', 'index_deleted', 'is_deleted');
+  sql_create_field('compendium_images', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'id');
+  sql_create_index('compendium_images', 'index_deleted', 'is_deleted');
+  sql_create_field('compendium_pages', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_compendium_eras');
+  sql_create_index('compendium_pages', 'index_deleted', 'is_deleted');
 
   sql_create_field('quotes', 'is_deleted', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'fk_users_submitter');
   sql_create_index('quotes', 'index_deleted', 'is_deleted');

@@ -835,18 +835,20 @@ ___('submenu_nobleme_contact_admin',  'FR', "Contacter l'administration");
 
 
 // Submenu: Pages
-___('submenu_pages_internet',             'EN', "Internet culture");
-___('submenu_pages_internet',             'FR', "Culture internet");
-___('submenu_pages_internet_index',       'EN', "21st century compendium");
-___('submenu_pages_internet_index',       'FR', "Étude du 21ème siècle");
-___('submenu_pages_internet_pages',       'EN', "Meme encyclopedia");
-___('submenu_pages_internet_pages',       'FR', "Enyclopédie des memes");
-___('submenu_pages_internet_dictionary',  'EN', "Slang dictionnary");
-___('submenu_pages_internet_dictionary',  'FR', "Dictionnaire d'argot");
-___('submenu_pages_internet_culture',     'EN', "Sociocultural guide");
-___('submenu_pages_internet_culture',     'FR', "Guide socioculturel");
-___('submenu_pages_internet_random',      'EN', "Random page");
-___('submenu_pages_internet_random',      'FR', "Page au hasard");
+___('submenu_pages_compendium',             'EN', "Compendium");
+___('submenu_pages_compendium',             'FR', "Compendium");
+___('submenu_pages_compendium_index',       'EN', "21st century culture");
+___('submenu_pages_compendium_index',       'FR', "Culture du 21ème siècle");
+___('submenu_pages_compendium_pages',       'EN', "List of all pages");
+___('submenu_pages_compendium_pages',       'FR', "Liste des pages");
+___('submenu_pages_compendium_memes',       'EN', "Meme encyclopedia");
+___('submenu_pages_compendium_memes',       'FR', "Enyclopédie des memes");
+___('submenu_pages_compendium_dictionary',  'EN', "Slang dictionnary");
+___('submenu_pages_compendium_dictionary',  'FR', "Dictionnaire d'argot");
+___('submenu_pages_compendium_culture',     'EN', "Sociocultural guide");
+___('submenu_pages_compendium_culture',     'FR', "Guide socioculturel");
+___('submenu_pages_compendium_random',      'EN', "Random page");
+___('submenu_pages_compendium_random',      'FR', "Page au hasard");
 
 ___('submenu_pages_politics',             'EN', "Politics");
 ___('submenu_pages_politics',             'FR', "Politique");

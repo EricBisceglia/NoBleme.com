@@ -590,22 +590,25 @@ $javascripts .= '
 
       <div class="header_submenu_column">
         <div class="header_submenu_title">
-          <?=__('submenu_pages_internet')?>
+          <?=__('submenu_pages_compendium')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_internet_index'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_pages_compendium_index'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_internet_pages'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_pages_compendium_pages'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_internet_dictionary'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_pages_compendium_memes'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_internet_culture'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_pages_compendium_dictionary'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_internet_random'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('todo_link', __('submenu_pages_compendium_culture'), 'header_submenu_link text_blue', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('todo_link', __('submenu_pages_compendium_random'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 

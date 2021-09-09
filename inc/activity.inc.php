@@ -392,49 +392,22 @@ function log_activity_parse(  bool    $admins_only        ,
 
 
   //*****************************************************************************************************************//
-  //                                        ENCYCLOPEDIA OF INTERNET CULTURE                                         //
+  //                                             21ST CENTURY COMPENDIUM                                             //
   //*****************************************************************************************************************//
 
-  else if($type === 'internet_page_new')
+  else if($type === 'compendium_new')
   {
     $return['css']  = 'brown bold';
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['EN']   = ($title_en) ? 'New page in the internet encyclopedia : '.$title_en : '';
-    $return['FR']   = ($title_fr) ? "Nouvelle page dans l'encyclopédie du web : ".$title_fr : '';
+    $return['EN']   = ($title_en) ? 'New page in the 21st century compendium: '.$title_en : '';
+    $return['FR']   = ($title_fr) ? "Nouveau dans le compendium du 21ème siècle : ".$title_fr : '';
   }
 
-  else if($type === 'internet_page_edit')
+  else if($type === 'compendium_edit')
   {
     $return['href'] = $path.'todo_link?id='.$id;
-    $return['EN']   = ($title_en) ? "Page modified in the internet encyclopedia : ".$title_en : '';
-    $return['FR']   = ($title_fr) ? "Page modifiée dans l'encyclopédie du web : ".$title_fr : '';
-  }
-
-  else if($type === 'internet_page_delete')
-  {
-    $return['EN']   = ($title_en) ? 'Page deleted in the internet encyclopedia : '.$title_en : '';
-    $return['FR']   = ($title_fr) ? "Page supprimée dans l'encyclopédie du web : ".$title_fr : '';
-  }
-
-  else if($type === 'internet_definition_new')
-  {
-    $return['css']  = 'brown bold';
-    $return['href'] = $path.'todo_link?id='.$id;
-    $return['EN']   = ($title_en) ? 'New entry in the internet dictionary : '.$title_en : '';
-    $return['FR']   = ($title_fr) ? 'Nouvelle entrée dans le dictionnaire du web : '.$title_fr : '';
-  }
-
-  else if($type === 'internet_definition_edit')
-  {
-    $return['href'] = $path.'todo_link?id='.$id;
-    $return['EN']   = ($title_en) ? 'Entry modified in the internet dictionary : '.$title_en : '';
-    $return['FR']   = ($title_fr) ? 'Entrée modifiée dans le dictionnaire du web : '.$title_fr : '';
-  }
-
-  else if($type === 'internet_definition_delete')
-  {
-    $return['EN']   = ($title_en) ? 'Entry deleted in the internet dictionary : '.$title_en : '';
-    $return['FR']   = ($title_fr) ? 'Entrée supprimée dans le dictionnaire du web : '.$title_fr : '';
+    $return['EN']   = ($title_en) ? "Changes in the 21st century compendium: ".$title_en : '';
+    $return['FR']   = ($title_fr) ? "Modifications dans le compendium du 21ème siècle : ".$title_fr : '';
   }
 
 

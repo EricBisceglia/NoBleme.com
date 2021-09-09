@@ -4,7 +4,7 @@ inc/configuration.inc.php
 # IRCBot .txt file fills up during tests
 ircbot.txt
 
-# Images of the internet encyclopedia don't need to be stored in the repository
+# Images for the 21st century compendium shouldn't be stored in the repository
 img/internet/*
 
 # Google verification file
