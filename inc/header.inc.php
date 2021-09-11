@@ -88,10 +88,16 @@ if($website_closed  && !$is_admin)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Creation of URLs to use for logging out, changing language, and changing mode
 
-$temp       = ($mode == "dark") ? "light" : "dark";
-$url_mode   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&'.$temp.'_mode=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$temp.'_mode=1';
-$url_logout = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
-$url_lang   = ($_SERVER['QUERY_STRING']) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$_SERVER['QUERY_STRING'].'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
+// Determine which query string to use in case of redirection
+$query_string = isset($_SERVER['REDIRECT_QUERY_STRING']) ? $_SERVER['REDIRECT_QUERY_STRING'] : $_SERVER['QUERY_STRING'];
+
+// Determine the color theme to suggest
+$color_theme  = ($mode == "dark") ? "light" : "dark";
+
+// Assemble the redirections
+$url_mode   = ($query_string) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&'.$color_theme.'_mode=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$color_theme.'_mode=1';
+$url_logout = ($query_string) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&logout' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?logout';
+$url_lang   = ($query_string) ? substr(basename($_SERVER['PHP_SELF']),0,-4).'?'.$query_string.'&changelang=1' : substr(basename($_SERVER['PHP_SELF']),0,-4).'?changelang=1';
 
 
 
@@ -593,22 +599,22 @@ $javascripts .= '
           <?=__('submenu_pages_compendium')?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_compendium_index'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/compendium/index', __('submenu_pages_compendium_index'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_compendium_pages'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/compendium/list', __('submenu_pages_compendium_pages'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_compendium_memes'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/compendium/memes', __('submenu_pages_compendium_memes'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_compendium_dictionary'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/compendium/dictionary', __('submenu_pages_compendium_dictionary'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_compendium_culture'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/compendium/culture', __('submenu_pages_compendium_culture'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_compendium_random'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/compendium/random', __('submenu_pages_compendium_random'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
