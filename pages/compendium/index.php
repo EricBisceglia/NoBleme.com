@@ -45,6 +45,22 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__('compendium_index_subitle')?>
   </h5>
 
+  <p>
+    <?=__('compendium_index_intro_1')?>
+  </p>
+
+  <p>
+    <?=__('compendium_index_intro_2')?>
+  </p>
+
+  <p>
+    <?=__('compendium_index_intro_3')?>
+  </p>
+
+  <p>
+    <?=__('compendium_index_intro_4')?>
+  </p>
+
 </div>
 
 <?php /***************************************************************************************************************/

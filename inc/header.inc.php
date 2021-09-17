@@ -602,19 +602,19 @@ $javascripts .= '
           <?=__link('pages/compendium/index', __('submenu_pages_compendium_index'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/compendium/list', __('submenu_pages_compendium_pages'), 'header_submenu_link', 1, $path);?>
+          <?=__link('todo_link', __('submenu_pages_compendium_pages'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/compendium/memes', __('submenu_pages_compendium_memes'), 'header_submenu_link', 1, $path);?>
+          <?=__link('todo_link', __('submenu_pages_compendium_memes'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/compendium/dictionary', __('submenu_pages_compendium_dictionary'), 'header_submenu_link', 1, $path);?>
+          <?=__link('todo_link', __('submenu_pages_compendium_dictionary'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/compendium/culture', __('submenu_pages_compendium_culture'), 'header_submenu_link', 1, $path);?>
+          <?=__link('todo_link', __('submenu_pages_compendium_culture'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('pages/compendium/random', __('submenu_pages_compendium_random'), 'header_submenu_link', 1, $path);?>
+          <?=__link('todo_link', __('submenu_pages_compendium_random'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
       </div>
 

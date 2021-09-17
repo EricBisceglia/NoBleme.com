@@ -18,12 +18,8 @@ RewriteRule ^pages/tasks/([0-9]+)$ pages/tasks/task.php?id=$1 [NC]
 RewriteRule ^pages/users/([0-9]+)$ pages/users/profile.php?id=$1 [NC]
 
 # Better looking compendium URLs (not strictly enforced)
-RewriteCond %{THE_REQUEST} !/culture [NC]
-RewriteCond %{THE_REQUEST} !/dictionary [NC]
 RewriteCond %{THE_REQUEST} !/index [NC]
-RewriteCond %{THE_REQUEST} !/list [NC]
-RewriteCond %{THE_REQUEST} !/memes [NC]
-RewriteCond %{THE_REQUEST} !/random [NC]
+RewriteCond %{THE_REQUEST} !/mission_statement [NC]
 RewriteRule ^pages/compendium/(.*)$ pages/compendium/page.php?page=$1 [QSA,NC]
 
 # Actively get rid of .php extension
