@@ -139,7 +139,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <option value="meetups"><?=__('activity_type_meetups')?></option>
       <?php if(!$activity_modlogs) { ?>
       <option value="quotes"><?=__('activity_type_quotes')?></option>
-      <option value="internet"><?=__('activity_type_internet')?></option>
+      <option value="compendium"><?=__('activity_type_compendium')?></option>
       <?php } else { ?>
       <option value="irc"><?=__('activity_type_irc')?></option>
       <?php } ?>

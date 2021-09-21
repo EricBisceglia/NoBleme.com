@@ -158,6 +158,57 @@ function fixtures_fetch_random_id( string $table ) : int
 
 
 
+/**
+ * Finds a random legitimate entry in a table.
+ *
+ * @param   string  $table  The name of the table from which to fetch a random entry.
+ * @param   string  $field  The name of the field from which the entry will be taken.
+ *
+ * @return  mixed           The value of an existing field.
+ */
+
+function fixtures_fetch_random_value( string  $table  ,
+                                      string  $field  ) : mixed
+{
+  // Fetch an entry in the database
+  $drand = mysqli_fetch_array(query(" SELECT    $table.$field AS 'u_value'
+                                      FROM      $table
+                                      ORDER BY  RAND()
+                                      LIMIT     1 "));
+
+   // Return the ID
+   return $drand['u_value'];
+}
+
+
+
+
+/**
+ * Check if a table entry already exists.
+ *
+ * @param   string  $table  The name of the table to check.
+ * @param   string  $field  The name of the field to check.
+ * @param   mixed   $value  The value of the field to check.
+ *
+ * @return  bool            Whether the entry already exists.
+ */
+
+function fixtures_check_entry(  string  $table  ,
+                                string  $field  ,
+                                mixed   $value  ) : bool
+{
+  // Check for the entry in the database
+  $qrand = query("  SELECT    $table.$field AS 'u_value'
+                    FROM      $table
+                    WHERE     $table.$field LIKE '$value' ");
+
+   // Return whether the entry already exists
+   return mysqli_num_rows($qrand);
+}
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                      SYSTEM                                                       */
@@ -1557,7 +1608,7 @@ flush();
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
-/*                                                 INTERNET CULTURE                                                  */
+/*                                                    COMPENDIUM                                                     */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
@@ -1578,7 +1629,7 @@ query(" INSERT INTO compendium_admin_tools
                     compendium_admin_tools.template_fr  = '$template_fr'  ");
 
 // Output progress
-echo "<tr><td>Generated</td><td style=\"text-align:right\">1</td><td>internet encyclopedia admin notes</td></tr>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">1</td><td>compendium admin note</td></tr>";
 ob_flush();
 flush();
 
@@ -1586,7 +1637,7 @@ flush();
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// internet encyclopedia
+// Pages
 
 // Generate some random categories
 $random = mt_rand(10,15);
@@ -1609,7 +1660,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>internet encyclopedia categories</td></tr>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>compendium categories</td></tr>";
 ob_flush();
 flush();
 
@@ -1636,7 +1687,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>internet encyclopedia eras</td></tr>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>compendium eras</td></tr>";
 ob_flush();
 flush();
 
@@ -1648,30 +1699,47 @@ for($i = 0; $i < $random; $i++)
 {
   // Generate random data
   $deleted      = (mt_rand(0,20) < 20) ? 0 : 1;
+  $draft        = (!$deleted && mt_rand(0,20) == 20) ? 1 : 0;
   $era          = fixtures_fetch_random_id('compendium_eras');
   $type         = mt_rand(0,1) ? 'definition' : 'meme';
-  $title_en     = ucfirst(fixtures_generate_data('sentence', 1, 6, 1));
-  $title_fr     = ucfirst(fixtures_generate_data('sentence', 1, 6, 1));
+  $type         = (mt_rand(0,4) < 4) ? $type : 'sociocultural';
+  $type         = (mt_rand(0,10) < 10) ? $type : 'drama';
+  $type         = (mt_rand(0,15) < 15) ? $type : 'history';
+  $url          = fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true);
+  $title_en     = (mt_rand(0,5) < 5) ? ucfirst(fixtures_generate_data('sentence', 1, 6, 1)) : '';
+  $title_fr     = (mt_rand(0,5) < 5) ? ucfirst(fixtures_generate_data('sentence', 1, 6, 1)) : '';
   $appeared_y   = (mt_rand(0,4) < 4) ? mt_rand(1999, date('Y')) : 0;
   $appeared_m   = ($appeared_y && mt_rand(0,4) < 4) ? mt_rand(1,12) : 0;
   $spread_y     = ($appeared_y && mt_rand(0,3) < 3) ? mt_rand($appeared_y, date('Y')) : 0;
   $spread_m     = ($appeared_y && mt_rand(0,4) < 4) ? mt_rand($appeared_m, 12) : 0;
   $is_nsfw      = (mt_rand(0,5) < 5) ? 0 : 1;
-  $is_gross     = (mt_rand(0,10) < 10) ? 0 : 1;
+  $is_gross     = (mt_rand(0,15) < 15) ? 0 : 1;
   $is_offensive = (mt_rand(0,10) < 10) ? 0 : 1;
+  $summary_en   = fixtures_generate_data('text', 1, 1);
+  $summary_fr   = fixtures_generate_data('text', 1, 1);
   $body_en      = fixtures_generate_data('text', 2, 5);
   $body_fr      = fixtures_generate_data('text', 2, 5);
-  $admin_notes  = (mt_rand(0,10) < 10) ? '' : fixtures_generate_data('text', 1, 1);
+  $admin_notes  = (mt_rand(0,7) < 7) ? '' : fixtures_generate_data('text', 1, 1);
+  $temp         = 'https://www.'.fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true).'.com';
+  $temp2        = 'https://www.'.fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true).'.com';
+  $temp3        = 'https://www.'.fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true).'.com';
+  $temp         = (mt_rand(0, 1)) ? $temp : $temp.';'.$temp2;
+  $temp         = (mt_rand(0,3) < 3) ? $temp : $temp.';'.$temp3;
+  $admin_urls   = (mt_rand(0,7) < 7) ? '' : $temp;
 
   // Generate the pages if they don't exist already
   if(!in_array($title_en, $page_titles_en) && !in_array($title_fr, $page_titles_fr))
   {
-    array_push($page_titles_en, $title_en);
-    array_push($page_titles_fr, $title_fr);
+    if($title_en)
+      array_push($page_titles_en, $title_en);
+    if($title_fr)
+      array_push($page_titles_fr, $title_fr);
     query(" INSERT INTO compendium_pages
             SET         compendium_pages.is_deleted           = '$deleted'      ,
+                        compendium_pages.is_draft             = '$draft'        ,
                         compendium_pages.fk_compendium_eras   = '$era'          ,
                         compendium_pages.page_type            = '$type'         ,
+                        compendium_pages.page_url             = '$url'          ,
                         compendium_pages.title_en             = '$title_en'     ,
                         compendium_pages.title_fr             = '$title_fr'     ,
                         compendium_pages.year_appeared        = '$appeared_y'   ,
@@ -1681,42 +1749,41 @@ for($i = 0; $i < $random; $i++)
                         compendium_pages.is_nsfw              = '$is_nsfw'      ,
                         compendium_pages.is_gross             = '$is_gross'     ,
                         compendium_pages.is_offensive         = '$is_offensive' ,
+                        compendium_pages.summary_en           = '$summary_en'   ,
+                        compendium_pages.summary_fr           = '$summary_fr'   ,
                         compendium_pages.definition_en        = '$body_en'      ,
                         compendium_pages.definition_fr        = '$body_fr'      ,
-                        compendium_pages.admin_notes          = '$admin_notes'  ");
+                        compendium_pages.admin_notes          = '$admin_notes'  ,
+                        compendium_pages.admin_urls           = '$admin_urls'   ");
 
     // Activity logs
-    $page       = query_id();
-    $created_at = mt_rand(1111239420, time());
-    query(" INSERT INTO logs_activity
-            SET         logs_activity.is_deleted          = '$deleted'        ,
-                        logs_activity.happened_at         = '$created_at'     ,
-                        logs_activity.language            = 'ENFR'            ,
-                        logs_activity.activity_type       = 'compendium_new'  ,
-                        logs_activity.activity_id         = '$page'           ,
-                        logs_activity.activity_summary_en = '$title_en'       ,
-                        logs_activity.activity_summary_fr = '$title_fr'       ");
+    $page           = query_id();
+    $created_at     = mt_rand(1111239420, time());
+    $activity_lang  = ($title_en) ? 'EN' : '';
+    $activity_lang  = ($title_fr) ? $activity_lang.'FR' : $activity_lang;
+    if(!$deleted && !$draft && $activity_lang)
+      query(" INSERT INTO logs_activity
+              SET         logs_activity.is_deleted          = '$deleted'        ,
+                          logs_activity.happened_at         = '$created_at'     ,
+                          logs_activity.language            = '$activity_lang'  ,
+                          logs_activity.activity_type       = 'compendium_new'  ,
+                          logs_activity.activity_id         = '$page'           ,
+                          logs_activity.activity_summary_en = '$title_en'       ,
+                          logs_activity.activity_summary_fr = '$title_fr'       ,
+                          logs_activity.activity_username   = '$url'            ");
     if(mt_rand(0,30) >= 30)
     {
       $edited_at  = mt_rand($created_at, time());
-      query(" INSERT INTO logs_activity
-              SET         logs_activity.is_deleted          = '$deleted'        ,
-                          logs_activity.happened_at         = '$edited_at'      ,
-                          logs_activity.language            = 'ENFR'            ,
-                          logs_activity.activity_type       = 'compendium_edit' ,
-                          logs_activity.activity_id         = '$page'           ,
-                          logs_activity.activity_summary_en = '$title_en'       ,
-                          logs_activity.activity_summary_fr = '$title_fr'       ");
-    }
-    if($deleted)
-    {
-      $deleted_at = mt_rand($created_at, time());
-      query(" INSERT INTO logs_activity
-              SET         logs_activity.happened_at         = '$deleted_at'       ,
-                          logs_activity.language            = 'ENFR'              ,
-                          logs_activity.activity_type       = 'compendium_delete' ,
-                          logs_activity.activity_summary_en = '$title_en'         ,
-                          logs_activity.activity_summary_fr = '$title_fr'         ");
+      if(!$deleted && !$draft && $activity_lang)
+        query(" INSERT INTO logs_activity
+                SET         logs_activity.is_deleted          = '$deleted'        ,
+                            logs_activity.happened_at         = '$edited_at'      ,
+                            logs_activity.language            = '$activity_lang'  ,
+                            logs_activity.activity_type       = 'compendium_edit' ,
+                            logs_activity.activity_id         = '$page'           ,
+                            logs_activity.activity_summary_en = '$title_en'       ,
+                            logs_activity.activity_summary_fr = '$title_fr'       ,
+                            logs_activity.activity_username   = '$url'            ");
     }
 
     // Add some categories to the page
@@ -1740,7 +1807,7 @@ for($i = 0; $i < $random; $i++)
 }
 
 // Output progress
-echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>internet encyclopedia entries</td></tr>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>compendium entries</td></tr>";
 ob_flush();
 flush();
 
@@ -1773,7 +1840,7 @@ while($dpages = mysqli_fetch_array($qpages))
 }
 
 // Output progress
-echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>internet encyclopedia redirections</td></tr>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>compendium redirections</td></tr>";
 ob_flush();
 flush();
 
@@ -1784,7 +1851,7 @@ flush();
 // Images
 
 // Generate some random non existing image placeholders
-$random = mt_rand(50,100);
+$random = mt_rand(150,250);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
@@ -1794,19 +1861,71 @@ for($i = 0; $i < $random; $i++)
   $tags         = (mt_rand(0,2) < 2) ? fixtures_generate_data('string', 5, 15) : '';
   $tags        .= ($tags && mt_rand(0,1)) ? ';'.fixtures_generate_data('string', 5, 15) : '';
   $tags        .= ($tags && mt_rand(0,1)) ? ';'.fixtures_generate_data('string', 5, 15) : '';
-  $nsfw         = (mt_rand(0,10) < 10) ? 0 : 1;
+  $nsfw         = (mt_rand(0,20) < 15) ? 0 : 1;
+  $gross        = (mt_rand(0,30) < 25) ? 0 : 1;
+  $offensive    = (mt_rand(0,20) < 20) ? 0 : 1;
+  $used_en      = (mt_rand(0,2) < 2) ? fixtures_fetch_random_value('compendium_pages', 'page_url') : '';
+  $used_en     .= ($used_en && mt_rand(0,1)) ? ';'.fixtures_fetch_random_value('compendium_pages', 'page_url') : '';
+  $used_en     .= ($used_en && mt_rand(0,1)) ? ';'.fixtures_fetch_random_value('compendium_pages', 'page_url') : '';
+  $used_fr      = (mt_rand(0,2) < 2) ? fixtures_fetch_random_value('compendium_pages', 'page_url') : '';
+  $used_fr     .= ($used_fr && mt_rand(0,1)) ? ';'.fixtures_fetch_random_value('compendium_pages', 'page_url') : '';
+  $used_fr     .= ($used_fr && mt_rand(0,1)) ? ';'.fixtures_fetch_random_value('compendium_pages', 'page_url') : '';
+  $caption_en   = (mt_rand(0, 1)) ? fixtures_generate_data('sentence', 5, 20) : '';
+  $caption_fr   = (mt_rand(0, 1)) ? fixtures_generate_data('sentence', 5, 20) : '';
 
   // Generate the image placeholders
   query(" INSERT INTO compendium_images
-          SET         compendium_images.is_deleted  = '$deleted'      ,
-                      compendium_images.uploaded_at = '$uploaded_at'  ,
-                      compendium_images.file_name   = '$file_name'    ,
-                      compendium_images.tags        = '$tags'         ,
-                      compendium_images.is_nsfw     = '$nsfw'         ");
+          SET         compendium_images.is_deleted        = '$deleted'      ,
+                      compendium_images.uploaded_at       = '$uploaded_at'  ,
+                      compendium_images.file_name         = '$file_name'    ,
+                      compendium_images.tags              = '$tags'         ,
+                      compendium_images.is_nsfw           = '$nsfw'         ,
+                      compendium_images.is_gross          = '$gross'        ,
+                      compendium_images.is_offensive      = '$offensive'    ,
+                      compendium_images.used_in_pages_en  = '$used_en'      ,
+                      compendium_images.used_in_pages_fr  = '$used_fr'      ,
+                      compendium_images.caption_en        = '$caption_en'   ,
+                      compendium_images.caption_fr        = '$caption_fr'   ");
 }
 
 // Output progress
-echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>internet encyclopedia images</td></tr>";
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>compendium images</td></tr>";
+ob_flush();
+flush();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Missing pages
+
+// Generate some random missing pages
+$random = mt_rand(25,75);
+for($i = 0; $i < $random; $i++)
+{
+  // Generate random data
+  $type     = mt_rand(0,1) ? 'definition' : 'meme';
+  $type     = (mt_rand(0,4) < 4) ? $type : 'sociocultural';
+  $type     = (mt_rand(0,10) < 10) ? $type : 'drama';
+  $type     = (mt_rand(0,15) < 15) ? $type : 'history';
+  $url      = fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true);
+  $title_en = ucfirst(fixtures_generate_data('sentence', 1, 6, 1));
+  $title_fr = ucfirst(fixtures_generate_data('sentence', 1, 6, 1));
+  $notes    = (mt_rand(0, 1)) ? fixtures_generate_data('sentence', 5, 20) : '';
+
+  // Generate the missing pages
+  if(!fixtures_check_entry('compendium_pages', 'page_url', $url))
+    query(" INSERT INTO compendium_missing
+            SET         compendium_missing.page_type  = '$type'     ,
+                        compendium_missing.page_url   = '$url'      ,
+                        compendium_missing.title_en   = '$title_en' ,
+                        compendium_missing.title_fr   = '$title_fr' ,
+                        compendium_missing.notes      = '$notes'    ");
+
+}
+
+// Output progress
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>compendium missing pages</td></tr>";
 ob_flush();
 flush();
 

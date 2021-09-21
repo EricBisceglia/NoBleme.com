@@ -132,8 +132,8 @@ function activity_list( bool    $show_mod_logs  = false ,
     $qlogs .= " AND       logs_activity.activity_type LIKE 'users_%' ";
   else if($type == 'meetups')
     $qlogs .= " AND       logs_activity.activity_type LIKE 'meetups_%' ";
-  else if($type == 'internet')
-    $qlogs .= " AND       logs_activity.activity_type LIKE 'internet_%' ";
+  else if($type == 'compendium')
+    $qlogs .= " AND       logs_activity.activity_type LIKE 'compendium_%' ";
   else if($type == 'quotes')
     $qlogs .= " AND       logs_activity.activity_type LIKE 'quotes_%' ";
   else if($type == 'irc')

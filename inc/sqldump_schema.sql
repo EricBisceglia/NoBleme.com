@@ -47,7 +47,8 @@ CREATE TABLE IF NOT EXISTS `compendium_images` (
   `is_offensive` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `used_in_pages_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `used_in_pages_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `caption` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `caption_en` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `caption_fr` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_deleted` (`is_deleted`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

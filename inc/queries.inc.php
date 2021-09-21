@@ -1555,7 +1555,8 @@ if($last_query < 30)
   sql_rename_field('compendium_images', 'pages_utilisation_fr', 'used_in_pages_fr', 'TEXT NOT NULL');
   sql_rename_field('compendium_images', 'pages_utilisation_en', 'used_in_pages_en', 'TEXT NOT NULL');
   sql_move_field('compendium_images', 'used_in_pages_fr', 'TEXT NOT NULL', 'used_in_pages_en');
-  sql_create_field('compendium_images', 'caption', 'MEDIUMTEXT NOT NULL', 'used_in_pages_fr');
+  sql_create_field('compendium_images', 'caption_en', 'MEDIUMTEXT NOT NULL', 'used_in_pages_fr');
+  sql_create_field('compendium_images', 'caption_fr', 'MEDIUMTEXT NOT NULL', 'caption_en');
   sql_create_index('compendium_images', 'index_file_name', 'file_name', 1);
 
   sql_create_table('compendium_missing');
@@ -1616,7 +1617,11 @@ if($last_query < 30)
   sql_create_index('compendium_pages_categories', 'index_category', 'fk_compendium_categories');
 
   query(" UPDATE  compendium_pages
-          SET     compendium_pages.page_type = 'meme' ");
+          SET     compendium_pages.page_type  = 'meme'  ,
+                  compendium_pages.is_draft   = 1       ");
+  query(" UPDATE  compendium_images
+          SET     compendium_images.used_in_pages_en = '' ,
+                  compendium_images.used_in_pages_fr = '' ");
 
   $qinternet = query("  SELECT  nbdb_web_definition.titre_fr        AS 'title_fr'     ,
                                 nbdb_web_definition.titre_en        AS 'title_en'     ,
