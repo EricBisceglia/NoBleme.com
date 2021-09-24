@@ -208,6 +208,19 @@ function fixtures_check_entry(  string  $table  ,
 
 
 
+/**
+ * Returns the ID of the latest inserted row.
+ *
+ * @return  int   The ID of the latest inserted row.
+ */
+
+function fixtures_query_id() : int
+{
+  return mysqli_insert_id($GLOBALS['db']);
+}
+
+
+
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
@@ -582,7 +595,7 @@ for($i = 0; $i < $random; $i++)
                       logs_activity.activity_summary_fr         = '$ban_reason_fr'  ,
                       logs_activity.activity_username           = '$ip'             ,
                       logs_activity.activity_moderator_username = 'Admin'           ");
-  $log_id = query_id();
+  $log_id = fixtures_query_id();
   if($ban_reason_en)
     query(" INSERT INTO logs_activity_details
             SET         logs_activity_details.fk_logs_activity        = '$log_id'         ,
@@ -614,7 +627,7 @@ for($i = 0; $i < $random; $i++)
                         logs_activity.activity_summary_fr         = '$unban_reason_fr'  ,
                         logs_activity.activity_username           = '$ip'               ,
                         logs_activity.activity_moderator_username = 'Admin'             ");
-    $log_id = query_id();
+    $log_id = fixtures_query_id();
     if($unban_reason_en)
       query(" INSERT INTO logs_activity_details
               SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
@@ -746,7 +759,7 @@ for($i = 0; $i < $random; $i++)
                         users.current_ip_address    = '$current_ip'   ");
 
     // Fetch the id of the generated users
-    $user_id = query_id();
+    $user_id = fixtures_query_id();
 
     // Generate the rest of the user data
     query(" INSERT INTO users_profile
@@ -793,7 +806,7 @@ for($i = 0; $i < $random; $i++)
                           logs_activity.activity_type       = 'users_profile_edit'  ,
                           logs_activity.fk_users            = '$user_id'            ,
                           logs_activity.activity_username   = '$username'           ");
-      $log_id = query_id();
+      $log_id = fixtures_query_id();
       if($text_en)
         query(" INSERT INTO logs_activity_details
                 SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
@@ -823,7 +836,7 @@ for($i = 0; $i < $random; $i++)
                           logs_activity.fk_users                    = '$user_id'                  ,
                           logs_activity.activity_username           = '$username'                 ,
                           logs_activity.activity_moderator_username = 'Admin'                     ");
-      $log_id = query_id();
+      $log_id = fixtures_query_id();
       if($text_en)
         query(" INSERT INTO logs_activity_details
                 SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
@@ -852,7 +865,7 @@ for($i = 0; $i < $random; $i++)
                           logs_activity.activity_type       = 'users_profile_edit'  ,
                           logs_activity.fk_users            = '$user_id'            ,
                           logs_activity.activity_username   = '$username'           ");
-      $log_id = query_id();
+      $log_id = fixtures_query_id();
       query(" INSERT INTO logs_activity_details
               SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
                           logs_activity_details.content_description_en  = 'Profile text (EN)' ,
@@ -900,7 +913,7 @@ for($i = 0; $i < $random; $i++)
                           logs_activity.activity_id                 = '$user_id'        ,
                           logs_activity.activity_username           = '$username'       ,
                           logs_activity.activity_moderator_username = 'Admin'           ");
-      $log_id = query_id();
+      $log_id = fixtures_query_id();
       if($ban_reason_en)
         query(" INSERT INTO logs_activity_details
                 SET         logs_activity_details.fk_logs_activity        = '$log_id'         ,
@@ -952,7 +965,7 @@ for($i = 0; $i < $random; $i++)
                               logs_activity.activity_id                 = '$user_id'          ,
                               logs_activity.activity_username           = '$username'         ,
                               logs_activity.activity_moderator_username = 'Admin'             ");
-          $log_id = query_id();
+          $log_id = fixtures_query_id();
           if($unban_reason_en)
             query(" INSERT INTO logs_activity_details
                     SET         logs_activity_details.fk_logs_activity        = '$log_id'           ,
@@ -1082,7 +1095,7 @@ while($dusers = mysqli_fetch_array($qusers))
       $read_at    = ($i < $random2 || mt_rand(0,5) < 3) ? mt_rand($sent_at, time()) : 0;
       $title      = ($i) ? 'RE: '.$title : fixtures_generate_data('sentence', 1, 2);
       $body       = fixtures_generate_data('text', 1, 3);
-      $parent     = ($i) ? query_id() : 0;
+      $parent     = ($i) ? fixtures_query_id() : 0;
 
       // Generate the private messages
       query(" INSERT INTO users_private_messages
@@ -1142,7 +1155,7 @@ for($i = 0; $i < $random; $i++)
 
   // Activity logs
   $deleted_log  = (mt_rand(0,15) < 15) ? 0 : 1;
-  $blog_id      = query_id();
+  $blog_id      = fixtures_query_id();
   query(" INSERT INTO logs_activity
           SET         logs_activity.is_deleted          = '$deleted_log'  ,
                       logs_activity.happened_at         = '$posted_at'    ,
@@ -1247,7 +1260,7 @@ for($i = 0; $i < $random; $i++)
 
   // Activity logs
   $deleted_log  = (mt_rand(0,40) < 40) ? 0 : 1;
-  $task_id      = query_id();
+  $task_id      = fixtures_query_id();
   $dusername    = mysqli_fetch_array(query("  SELECT  users.username AS 'u_nick'
                                               FROM    users
                                               WHERE   users.id = '$fk_users' "));
@@ -1313,7 +1326,7 @@ for($i = 0; $i < $random; $i++)
                       meetups.details_fr      = '$details_fr' ");
 
   // Fetch the ID of the generated meetup
-  $meetup = query_id();
+  $meetup = fixtures_query_id();
 
   // Activity logs
   $deleted_log  = (mt_rand(0,25) < 25) ? 0 : 1;
@@ -1358,7 +1371,7 @@ for($i = 0; $i < $random; $i++)
                         logs_activity.activity_id                 = '$meetup'       ,
                         logs_activity.activity_summary_en         = '$meetup_date'  ,
                         logs_activity.activity_summary_fr         = '$meetup_date'  ");
-    $log_id = query_id();
+    $log_id = fixtures_query_id();
     query(" INSERT INTO logs_activity_details
             SET         logs_activity_details.fk_logs_activity        = '$log_id'       ,
                         logs_activity_details.content_description_en  = 'Location'      ,
@@ -1381,7 +1394,7 @@ for($i = 0; $i < $random; $i++)
                         logs_activity.activity_type               = 'meetups_delete'  ,
                         logs_activity.activity_summary_en         = '$meetup_date'  ,
                         logs_activity.activity_summary_fr         = '$meetup_date'  ");
-    $log_id   = query_id();
+    $log_id   = fixtures_query_id();
     $random2  = mt_rand(1,10);
     for($i = 0; $i < $random2; $i++)
     {
@@ -1465,7 +1478,7 @@ for($i = 0; $i < $random; $i++)
                             logs_activity.activity_summary_en         = '$meetup_date'        ,
                             logs_activity.activity_summary_fr         = '$meetup_date'        ,
                             logs_activity.activity_moderator_username = 'Admin'               ");
-        $log_id = query_id();
+        $log_id = fixtures_query_id();
         query(" INSERT INTO logs_activity_details
                 SET         logs_activity_details.fk_logs_activity        = '$log_id'       ,
                             logs_activity_details.content_description_en  = 'Extra info'    ,
@@ -1502,7 +1515,7 @@ for($i = 0; $i < $random; $i++)
                             logs_activity.activity_summary_en         = '$meetup_date'          ,
                             logs_activity.activity_summary_fr         = '$meetup_date'          ,
                             logs_activity.activity_moderator_username = 'Admin'                 ");
-        $log_id = query_id();
+        $log_id = fixtures_query_id();
         query(" INSERT INTO logs_activity_details
                 SET         logs_activity_details.fk_logs_activity        = '$log_id'       ,
                             logs_activity_details.content_description_en  = 'Extra info'    ,
@@ -1563,7 +1576,7 @@ for($i = 0; $i < $random; $i++)
                       quotes.body               = '$body'       ");
 
   // Activity logs
-  $quote = query_id();
+  $quote = fixtures_query_id();
   if(!$deleted && $language == 'EN')
     query(" INSERT INTO logs_activity
             SET         logs_activity.happened_at       = '$submitted'    ,
@@ -1700,6 +1713,7 @@ for($i = 0; $i < $random; $i++)
   // Generate random data
   $deleted      = (mt_rand(0,20) < 20) ? 0 : 1;
   $draft        = (!$deleted && mt_rand(0,20) == 20) ? 1 : 0;
+  $created_at   = mt_rand(1111239420, time());
   $era          = fixtures_fetch_random_id('compendium_eras');
   $type         = mt_rand(0,1) ? 'definition' : 'meme';
   $type         = (mt_rand(0,4) < 4) ? $type : 'sociocultural';
@@ -1737,6 +1751,7 @@ for($i = 0; $i < $random; $i++)
     query(" INSERT INTO compendium_pages
             SET         compendium_pages.is_deleted           = '$deleted'      ,
                         compendium_pages.is_draft             = '$draft'        ,
+                        compendium_pages.created_at           = '$created_at'   ,
                         compendium_pages.fk_compendium_eras   = '$era'          ,
                         compendium_pages.page_type            = '$type'         ,
                         compendium_pages.page_url             = '$url'          ,
@@ -1757,7 +1772,7 @@ for($i = 0; $i < $random; $i++)
                         compendium_pages.admin_urls           = '$admin_urls'   ");
 
     // Activity logs
-    $page           = query_id();
+    $page           = fixtures_query_id();
     $created_at     = mt_rand(1111239420, time());
     $activity_lang  = ($title_en) ? 'EN' : '';
     $activity_lang  = ($title_fr) ? $activity_lang.'FR' : $activity_lang;
@@ -1771,19 +1786,46 @@ for($i = 0; $i < $random; $i++)
                           logs_activity.activity_summary_en = '$title_en'       ,
                           logs_activity.activity_summary_fr = '$title_fr'       ,
                           logs_activity.activity_username   = '$url'            ");
-    if(mt_rand(0,30) >= 30)
+    if(mt_rand(0,4) >= 4)
     {
-      $edited_at  = mt_rand($created_at, time());
-      if(!$deleted && !$draft && $activity_lang)
-        query(" INSERT INTO logs_activity
-                SET         logs_activity.is_deleted          = '$deleted'        ,
-                            logs_activity.happened_at         = '$edited_at'      ,
-                            logs_activity.language            = '$activity_lang'  ,
-                            logs_activity.activity_type       = 'compendium_edit' ,
-                            logs_activity.activity_id         = '$page'           ,
-                            logs_activity.activity_summary_en = '$title_en'       ,
-                            logs_activity.activity_summary_fr = '$title_fr'       ,
-                            logs_activity.activity_username   = '$url'            ");
+      // Add some history to the page
+      $last_edited_at  = mt_rand($created_at, time());
+      $random2 = mt_rand(0,10);
+      if(mt_rand(0,1))
+      {
+        $edited_at = $last_edited_at;
+        for($j = 0; $j < $random2; $j++)
+        {
+          $edited_at    = mt_rand($edited_at, time());
+          $edit_en      = (mt_rand(0,1)) ? '' : fixtures_generate_data('sentence', 5, 15);
+          $edit_fr      = (mt_rand(0,1)) ? '' : fixtures_generate_data('sentence', 5, 15);
+          $major_edit   = (mt_rand(0, 5) < 5) ? 0 : 1;
+          $major_check  = 0;
+          query(" INSERT INTO compendium_pages_history
+                  SET         compendium_pages_history.fk_compendium_pages  = '$page'       ,
+                              compendium_pages_history.edited_at            = '$edited_at'  ,
+                              compendium_pages_history.is_major_edit        = '$major_edit' ,
+                              compendium_pages_history.summary_en           = '$edit_en'    ,
+                              compendium_pages_history.summary_fr           = '$edit_fr'    ");
+          if($major_edit && !$major_check)
+          {
+            $major_check = 1;
+            query(" UPDATE  compendium_pages
+                    SET     compendium_pages.last_edited_at = '$edited_at'
+                    WHERE   compendium_pages.id             = '$page' ");
+          }
+          if(!$deleted && !$draft && $activity_lang && $major_edit)
+            query(" INSERT INTO logs_activity
+                    SET         logs_activity.is_deleted          = '$deleted'        ,
+                                logs_activity.happened_at         = '$edited_at'      ,
+                                logs_activity.language            = '$activity_lang'  ,
+                                logs_activity.activity_type       = 'compendium_edit' ,
+                                logs_activity.activity_id         = '$page'           ,
+                                logs_activity.activity_summary_en = '$title_en'       ,
+                                logs_activity.activity_summary_fr = '$title_fr'       ,
+                                logs_activity.activity_username   = '$url'            ");
+        }
+      }
     }
 
     // Add some categories to the page

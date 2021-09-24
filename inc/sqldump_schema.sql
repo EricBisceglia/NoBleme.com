@@ -71,6 +71,8 @@ CREATE TABLE IF NOT EXISTS `compendium_pages` (
   `fk_compendium_eras` int UNSIGNED NOT NULL DEFAULT '0',
   `is_deleted` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `is_draft` tinyint NOT NULL DEFAULT '0',
+  `created_at` int UNSIGNED NOT NULL,
+  `last_edited_at` int UNSIGNED NOT NULL,
   `page_type` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `page_url` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -92,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `compendium_pages` (
   `admin_urls` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `index_era` (`fk_compendium_eras`),
+  KEY `index_activity` (`created_at`,`last_edited_at`),
   KEY `index_type` (`page_type`(250)),
   KEY `index_url` (`page_url`(250)),
   KEY `index_appeared` (`year_appeared`,`month_appeared`),
@@ -107,6 +110,19 @@ CREATE TABLE IF NOT EXISTS `compendium_pages_categories` (
   PRIMARY KEY (`id`),
   KEY `index_page` (`fk_compendium_pages`),
   KEY `index_category` (`fk_compendium_categories`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `compendium_pages_history`;
+CREATE TABLE IF NOT EXISTS `compendium_pages_history` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fk_compendium_pages` int UNSIGNED NOT NULL,
+  `edited_at` int UNSIGNED NOT NULL,
+  `is_major_edit` tinyint UNSIGNED NOT NULL,
+  `summary_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `summary_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `index_page` (`fk_compendium_pages`),
+  KEY `index_history` (`edited_at`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `dev_blogs`;

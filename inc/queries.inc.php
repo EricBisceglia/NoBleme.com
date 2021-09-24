@@ -1570,7 +1570,9 @@ if($last_query < 30)
   sql_change_field_type('compendium_pages', 'id', 'INT UNSIGNED NOT NULL AUTO_INCREMENT');
   sql_rename_field('compendium_pages', 'FKnbdb_web_periode', 'fk_compendium_eras', 'INT UNSIGNED NOT NULL DEFAULT 0');
   sql_create_field('compendium_pages', 'is_draft', 'TINYINT NOT NULL DEFAULT 0', 'fk_compendium_eras');
-  sql_create_field('compendium_pages', 'page_type', 'VARCHAR(510) NOT NULL', 'is_draft');
+  sql_create_field('compendium_pages', 'created_at', 'INT UNSIGNED NOT NULL', 'is_draft');
+  sql_create_field('compendium_pages', 'last_edited_at', 'INT UNSIGNED NOT NULL', 'created_at');
+  sql_create_field('compendium_pages', 'page_type', 'VARCHAR(510) NOT NULL', 'last_edited_at');
   sql_create_field('compendium_pages', 'page_url', 'VARCHAR(510) NOT NULL', 'page_type');
   sql_rename_field('compendium_pages', 'titre_fr', 'title_fr', 'VARCHAR(510) NOT NULL');
   sql_rename_field('compendium_pages', 'titre_en', 'title_en', 'VARCHAR(510) NOT NULL');
@@ -1602,6 +1604,7 @@ if($last_query < 30)
   sql_delete_index('compendium_pages', 'index_contenu_en');
   sql_delete_index('compendium_pages', 'index_contenu_fr');
   sql_create_index('compendium_pages', 'index_era', 'fk_compendium_eras');
+  sql_create_index('compendium_pages', 'index_activity', 'created_at, last_edited_at');
   sql_create_index('compendium_pages', 'index_type', 'page_type(255)');
   sql_create_index('compendium_pages', 'index_url', 'page_url(255)');
   sql_create_index('compendium_pages', 'index_appeared', 'year_appeared, month_appeared');
@@ -1616,9 +1619,19 @@ if($last_query < 30)
   sql_create_index('compendium_pages_categories', 'index_page', 'fk_compendium_pages');
   sql_create_index('compendium_pages_categories', 'index_category', 'fk_compendium_categories');
 
+  sql_create_table('compendium_pages_history');
+  sql_create_field('compendium_pages_history', 'fk_compendium_pages', 'INT UNSIGNED NOT NULL', 'id');
+  sql_create_field('compendium_pages_history', 'edited_at', 'INT UNSIGNED NOT NULL', 'fk_compendium_pages');
+  sql_create_field('compendium_pages_history', 'is_major_edit', 'TINYINT UNSIGNED NOT NULL', 'edited_at');
+  sql_create_field('compendium_pages_history', 'summary_en', 'TEXT NOT NULL', 'is_major_edit');
+  sql_create_field('compendium_pages_history', 'summary_fr', 'TEXT NOT NULL', 'summary_en');
+  sql_create_index('compendium_pages_history', 'index_page', 'fk_compendium_pages');
+  sql_create_index('compendium_pages_history', 'index_history', 'edited_at');
+
   query(" UPDATE  compendium_pages
-          SET     compendium_pages.page_type  = 'meme'  ,
-                  compendium_pages.is_draft   = 1       ");
+          SET     compendium_pages.page_type      = 'meme'       ,
+                  compendium_pages.is_draft       = 1            ,
+                  compendium_pages.created_at     = '".time()."' ");
   query(" UPDATE  compendium_images
           SET     compendium_images.used_in_pages_en = '' ,
                   compendium_images.used_in_pages_fr = '' ");
