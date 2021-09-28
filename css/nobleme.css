@@ -200,6 +200,9 @@ table.xdebug-error th, table.xdebug-error td { color: #CACACA; background-color:
 table.xdebug-error tr:first-child th:first-child { filter: drop-shadow(0 0 4px #B00B1E)                  ;
                           padding-top: 0.8em; padding-bottom: 0.8em;                                     }
 
+a.forced_link                            { color: #B00B1E; text-decoration: none; }
+a.forced_link:focus, a.forced_link:hover { filter: drop-shadow(0 0 5px #B00B1E);  }
+
 /****************************************************** BBCODES ******************************************************/
 .bbcode_quote_title   { border-bottom: 1px solid #343434; margin-bottom: 3px; font-weight: bold; }
 .bbcode_quote_body    { padding: 0.25em; background-color: #121212; border: 1px solid #343434;   }

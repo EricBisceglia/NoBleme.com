@@ -6,6 +6,8 @@
 include_once './../../inc/includes.inc.php';        # Core
 include_once './../../actions/compendium.act.php';  # Actions
 include_once './../../lang/compendium.lang.php';    # Translations
+include_once './../../inc/bbcodes.inc.php';         # BBCodes
+include_once './../../inc/functions_time.inc.php';  # Time management
 
 // Page summary
 $page_lang        = array('FR', 'EN');
@@ -24,7 +26,13 @@ $page_description = "An encyclopedia of 21st century culture, internet memes, mo
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//
+// Fetch the page list
+
+$compendium_pages_list = compendium_pages_list( search:     array(  'nsfw'      => 0    ,
+                                                                    'gross'     => 0    ,
+                                                                    'offensive' => 0  ) ,
+                                                limit:      10                          ,
+                                                user_view:  true                        );
 
 
 
@@ -60,6 +68,29 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <p>
     <?=__('compendium_index_intro_4')?>
   </p>
+
+  <h3 class="bigpadding_top">
+    <?=__('compendium_index_recent_title')?>
+  </h3>
+
+  <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
+
+  <p class="padding_top">
+    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow forced_link')?><br>
+    <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('pages/compendium/'.$compendium_pages_list[$i]['type_url'], $compendium_pages_list[$i]['type'])?></span><br>
+    <?php if($compendium_pages_list[$i]['edited']) { ?>
+    <span class=""><?=__('compendium_index_recent_reworked', spaces_after: 1).$compendium_pages_list[$i]['edited']?></span><br>
+    <?php } ?>
+    <span class=""><?=__('compendium_index_recent_created', spaces_after: 1).$compendium_pages_list[$i]['created']?></span>
+  </p>
+
+  <?php if($compendium_pages_list[$i]['summary']) { ?>
+  <p class="tinypadding_top smallpadding_bot">
+    <?=$compendium_pages_list[$i]['summary']?>
+  </p>
+  <?php } ?>
+
+  <?php } ?>
 
 </div>
 

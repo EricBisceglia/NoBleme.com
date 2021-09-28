@@ -12,7 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Header
+// Introduction
 ___('compendium_index_title',   'EN', "Compendium");
 ___('compendium_index_title',   'FR', "Compendium");
 ___('compendium_index_subitle', 'EN', "Documenting 21st century culture");
@@ -49,6 +49,17 @@ ___('compendium_index_intro_4', 'FR', <<<EOT
 Des sections de cette encyclopédie sont dédiées à la documentation des {{link|todo_link|memes}}, de {{link|todo_link|l'argot}}, et des concepts {{link|todo_link|socioculturels}} du 21ème siècle. Vous retrouverez tout ceci et plus encore sur la {{link|todo_link|liste des pages}}, ou peut-être préféreriez-vous commencer votre exploration en lisant une {{link|todo_link|page au hasard}}.
 EOT
 );
+
+
+// Recent changes
+___('compendium_index_recent_title',    'EN', "Latest updates");
+___('compendium_index_recent_title',    'FR', "Nouveau contenu");
+___('compendium_index_recent_type',     'EN', "Page type:");
+___('compendium_index_recent_type',     'FR', "Thème :");
+___('compendium_index_recent_reworked', 'EN', "Reworked");
+___('compendium_index_recent_reworked', 'FR', "Modifié");
+___('compendium_index_recent_created',  'EN', "Created");
+___('compendium_index_recent_created',  'FR', "Crée");
 
 
 

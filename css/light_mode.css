@@ -55,7 +55,6 @@ div.popin_body { background: #FFFFFF; }
 
 .glow_dark { filter: none; }
 
-
 select.intext, input.intext             { background-color: #FFFFFF; border: 2px solid #EEEEEE; color: #121212; }
 select.intext:hover, input.intext:hover, input.intext[type='text']:hover:not([disabled]):not(:focus),
 input.intext:focus, select.intext:focus { border-color: #CACACA; background-color: #FFFFFF;                     }
@@ -83,3 +82,6 @@ select.table_search:hover, input.table_search:hover, input.table_search[type='te
                                         { background-color: #FFFFFF; }
 
 blockquote.nobackground { background-color: #FFFFFF; }
+
+a.forced_link                            { color: #37536B; text-decoration: none; filter: none; }
+a.forced_link:focus, a.forced_link:hover { color: #78A1BC; text-decoration: none; filter: none; }
