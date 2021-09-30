@@ -66,6 +66,50 @@ ___('compendium_index_recent_created',  'FR', "Crée");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                     PAGE LIST                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Header
+___('compendium_list_subtitle', 'EN', "List of all compendium pages");
+___('compendium_list_subtitle', 'FR', "Liste des pages du compendium");
+___('compendium_list_intro',    'EN', <<<EOT
+The table below lists all entries in NoBleme's {{link|pages/compendium/index|21st century compendium}}. If you are looking for specific content, you can use the first rows of the table to sort and filter through the entries.
+EOT
+);
+___('compendium_list_blur',     'EN', <<<EOT
+Some page titles might appear blurred due to being considered not safe for work: put your pointer over them to reveal them. If you'd rather see all titles at all times, this feature can be permanently deactivated in your {{link|pages/account/settings_nsfw|adult content options}}.
+EOT
+);
+___('compendium_list_intro',    'FR', <<<EOT
+La liste ci-dessous recense toutes les pages du {{link|pages/compendium/index|compendium du 21ème siècle}} de NoBleme. Si vous êtes à la recherche de pages spécifiques, vous pouvez utiliser les premières lignes du tableau pour trier et filtrer son contenu.
+EOT
+);
+___('compendium_list_blur',     'FR', <<<EOT
+Certains titres de pages sont floutés, il s'agit de contenus vulgaires ou politiquement incorrects : passez votre curseur dessus pour les révéler. Si vous préféreriez voir tous les contenus sans floutage, cette fonctionnalité peut se désactiver dans vos {{link|pages/account/settings_nsfw|options de vulgarité}}.
+EOT
+);
+
+
+// Table
+___('compendium_list_title',    'EN', "Page title");
+___('compendium_list_title',    'FR', "Titre de la page");
+___('compendium_list_theme',    'EN', "Theme");
+___('compendium_list_theme',    'FR', "Thème");
+___('compendium_list_created',  'EN', "Page created");
+___('compendium_list_created',  'FR', "Page crée");
+___('compendium_list_appeared', 'EN', "Appeared");
+___('compendium_list_appeared', 'FR', "Apparition");
+___('compendium_list_peak',     'EN', "Peak popularity");
+___('compendium_list_peak',     'FR', "Pic de popularité");
+___('compendium_list_count',    'EN', "{{1}} compendium pages");
+___('compendium_list_count',    'FR', "{{1}} pages dans le compendium");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                 MISSION STATEMENT                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

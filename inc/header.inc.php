@@ -602,7 +602,7 @@ $javascripts .= '
           <?=__link('pages/compendium/index', __('submenu_pages_compendium_index'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_compendium_pages'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/compendium/page_list', __('submenu_pages_compendium_pages'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
           <?=__link('todo_link', __('submenu_pages_compendium_memes'), 'header_submenu_link text_blue', 1, $path);?>

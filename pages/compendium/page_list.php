@@ -1,0 +1,240 @@
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                       SETUP                                                       */
+/*                                                                                                                   */
+// File inclusions /**************************************************************************************************/
+include_once './../../inc/includes.inc.php';        # Core
+include_once './../../actions/compendium.act.php';  # Actions
+include_once './../../lang/compendium.lang.php';    # Translations
+include_once './../../inc/bbcodes.inc.php';         # BBCodes
+include_once './../../inc/functions_time.inc.php';  # Time management
+
+// Page summary
+$page_lang        = array('FR', 'EN');
+$page_url         = "pages/compendium/page_list";
+$page_title_en    = "Compendium";
+$page_title_fr    = "Compendium";
+$page_description = "List of pages in NoBleme's encyclopedia of 21st century culture, internet memes, modern slang, and sociocultural concepts";
+
+// Extra js
+$js = array('compendium/list');
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     BACK END                                                      */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch the compendium pages
+
+// Fetch the user's nsfw options
+$user_settings_nsfw = user_settings_nsfw();
+
+// Fetch the sorting order
+$compendium_pages_sort_order = form_fetch_element('compendium_pages_search_order', 'created');
+
+// Assemble the search query
+$compendium_pages_list_search = array(  'title'     => form_fetch_element('compendium_search_title')    ,
+                                        'type'      => form_fetch_element('compendium_search_type')     ,
+                                        'appeared'  => form_fetch_element('compendium_search_appeared') ,
+                                        'peaked'    => form_fetch_element('compendium_search_peak')     ,
+                                        'created'   => form_fetch_element('compendium_search_created')  );
+
+// Fetch the pages
+$compendium_pages_list = compendium_pages_list( sort_by:    $compendium_pages_sort_order  ,
+                                                search:     $compendium_pages_list_search ,
+                                                user_view:  true                          );
+
+// Fetch the page types
+$compendium_page_type_meme          = compendium_page_type_get('meme');
+$compendium_page_type_definition    = compendium_page_type_get('definition');
+$compendium_page_type_sociocultural = compendium_page_type_get('sociocultural');
+$compendium_page_type_drama         = compendium_page_type_get('drama');
+$compendium_page_type_history       = compendium_page_type_get('history');
+
+// Fetch the appearance, peak, and page creation years
+$compendium_page_list_years       = compendium_pages_list_years();
+$compendium_appearance_list_years = compendium_appearance_list_years();
+$compendium_peak_list_years       = compendium_peak_list_years();
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     FRONT END                                                     */
+/*                                                                                                                   */
+if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
+
+<div class="width_50 bigpadding_bot">
+
+  <h1>
+    <?=__link('pages/compendium/index', __('compendium_index_title'), 'noglow')?>
+  </h1>
+
+  <h5>
+    <?=__('compendium_list_subtitle')?>
+  </h5>
+
+  <p>
+    <?=__('compendium_list_intro')?>
+    <?php if($user_settings_nsfw < 2) { ?>
+    <?=__('compendium_list_blur')?>
+    <?php } ?>
+  </p>
+
+</div>
+
+<div class="width_60">
+
+  <table>
+    <thead>
+
+      <tr class="uppercase">
+        <th>
+          <?=__('compendium_list_title')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('title');")?>
+        </th>
+        <th>
+          <?=__('compendium_list_theme')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('theme');")?>
+        </th>
+        <th>
+          <?=__('compendium_list_appeared')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('appeared');")?>
+          <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('appeared_desc');", class: 'valign_middle pointer desktop')?>
+        </th>
+        <th>
+          <?=__('compendium_list_peak')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('peak');")?>
+          <?=__icon('sort_up', is_small: true, alt: '^', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('peak_desc');", class: 'valign_middle pointer desktop')?>
+        </th>
+        <th class="desktop">
+          <?=__('compendium_list_created')?>
+          <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('created');")?>
+        </th>
+      </tr>
+
+      <tr>
+
+        <th>
+          <input type="hidden" name="compendium_pages_search_order" id="compendium_pages_search_order" value="<?=$compendium_pages_sort_order?>">
+          <input type="text" class="table_search" name="compendium_search_title" id="compendium_search_title" value="" onkeyup="compendium_page_list_search();">
+        </th>
+
+        <th>
+          <select class="table_search" name="compendium_search_type" id="compendium_search_type" onchange="compendium_page_list_search();">
+            <option value="0">&nbsp;</option>
+            <option value="meme"><?=string_change_case($compendium_page_type_meme['name_'.string_change_case($lang, 'lowercase')], 'initials')?></option>
+            <option value="definition"><?=string_change_case($compendium_page_type_definition['name_'.string_change_case($lang, 'lowercase')], 'initials')?></option>
+            <option value="sociocultural"><?=string_change_case($compendium_page_type_sociocultural['name_'.string_change_case($lang, 'lowercase')], 'initials')?></option>
+            <option value="drama"><?=string_change_case($compendium_page_type_drama['name_'.string_change_case($lang, 'lowercase')], 'initials')?></option>
+            <option value="history"><?=string_change_case($compendium_page_type_history['name_'.string_change_case($lang, 'lowercase')], 'initials')?></option>
+          </select>
+        </th>
+
+        <th>
+          <select class="table_search" name="compendium_search_appeared" id="compendium_search_appeared" onchange="compendium_page_list_search();">
+            <option value="0">&nbsp;</option>
+            <?php for($i = 0; $i < $compendium_appearance_list_years['rows']; $i++) { ?>
+            <?php if($compendium_appearance_list_years[$i]['year'] > 0) { ?>
+            <option value="<?=$compendium_appearance_list_years[$i]['year']?>"><?=$compendium_appearance_list_years[$i]['year']?></option>
+            <?php } ?>
+            <?php } ?>
+          </select>
+        </th>
+
+        <th>
+          <select class="table_search" name="compendium_search_peak" id="compendium_search_peak" onchange="compendium_page_list_search();">
+            <option value="0">&nbsp;</option>
+            <?php for($i = 0; $i < $compendium_peak_list_years['rows']; $i++) { ?>
+            <?php if($compendium_peak_list_years[$i]['year'] > 0) { ?>
+            <option value="<?=$compendium_peak_list_years[$i]['year']?>"><?=$compendium_peak_list_years[$i]['year']?></option>
+            <?php } ?>
+            <?php } ?>
+          </select>
+        </th>
+
+        <th class="desktop">
+          <select class="table_search" name="compendium_search_created" id="compendium_search_created" onchange="compendium_page_list_search();">
+            <option value="0">&nbsp;</option>
+            <?php for($i = 0; $i < $compendium_page_list_years['rows']; $i++) { ?>
+            <option value="<?=$compendium_page_list_years[$i]['year']?>"><?=$compendium_page_list_years[$i]['year']?></option>
+            <?php } ?>
+          </select>
+        </th>
+
+      </tr>
+
+    </thead>
+
+    <tbody class="altc2" id="compendium_pages_tbody">
+
+      <?php } ?>
+
+      <tr>
+        <td colspan="5" class="uppercase text_light dark bold align_center">
+          <?=__('compendium_list_count', preset_values: array($compendium_pages_list['rows']))?>
+        </td>
+      </tr>
+
+      <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
+
+      <tr>
+
+        <?php if(!$compendium_pages_list[$i]['fulltitle'] && !$compendium_pages_list[$i]['summary']) { ?>
+        <td class="align_left<?=$compendium_pages_list[$i]['blur']?>">
+          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'bold'.$compendium_pages_list[$i]['blur'])?>
+        </td>
+        <?php } else { ?>
+        <td class="tooltip_container<?=$compendium_pages_list[$i]['blur']?>">
+          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['shorttitle'], 'bold'.$compendium_pages_list[$i]['blur'])?>
+          <div class="tooltip">
+            <h5>
+              <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'noglow')?>
+            </h5>
+            <?php if($compendium_pages_list[$i]['summary']) { ?>
+            <p>
+              <?=$compendium_pages_list[$i]['summary']?>
+            </p>
+            <?php } ?>
+          </div>
+        </td>
+        <?php } ?>
+
+        <td class="align_center">
+          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['type_url'], string_change_case($compendium_pages_list[$i]['type'], 'initials'))?>
+        </td>
+
+        <td class="align_center">
+          <?=$compendium_pages_list[$i]['appeared']?>
+        </td>
+
+        <td class="align_center">
+          <?=$compendium_pages_list[$i]['peak']?>
+        </td>
+
+        <td class="align_center desktop">
+          <?=$compendium_pages_list[$i]['created']?>
+        </td>
+
+      </tr>
+
+      <?php } ?>
+
+      <?php if(!page_is_fetched_dynamically()) { ?>
+
+    </tbody>
+  </table>
+
+</div>
+
+<?php /***************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    END OF PAGE                                                    */
+/*                                                                                                                   */
+/*****************************************************************************/ include './../../inc/footer.inc.php'; }
