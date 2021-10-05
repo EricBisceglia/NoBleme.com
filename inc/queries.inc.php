@@ -1537,6 +1537,8 @@ if($last_query < 30)
   sql_rename_field('compendium_eras', 'titre_fr', 'name_fr', 'VARCHAR(510) NOT NULL');
   sql_rename_field('compendium_eras', 'titre_en', 'name_en', 'VARCHAR(510) NOT NULL');
   sql_move_field('compendium_eras', 'name_fr', 'VARCHAR(510) NOT NULL', 'name_en');
+  sql_create_field('compendium_eras', 'short_name_en', 'VARCHAR(510) NOT NULL', 'name_fr');
+  sql_create_field('compendium_eras', 'short_name_fr', 'VARCHAR(510) NOT NULL', 'short_name_en');
   sql_rename_field('compendium_eras', 'description_fr', 'description_fr', 'TEXT NOT NULL');
   sql_rename_field('compendium_eras', 'description_en', 'description_en', 'TEXT NOT NULL');
   sql_move_field('compendium_eras', 'description_fr', 'TEXT NOT NULL', 'description_en');
@@ -1636,30 +1638,32 @@ if($last_query < 30)
           SET     compendium_images.used_in_pages_en = '' ,
                   compendium_images.used_in_pages_fr = '' ");
 
-  $qinternet = query("  SELECT  nbdb_web_definition.titre_fr        AS 'title_fr'     ,
-                                nbdb_web_definition.titre_en        AS 'title_en'     ,
-                                nbdb_web_definition.redirection_fr  AS 'redirect_fr'  ,
-                                nbdb_web_definition.redirection_en  AS 'redirect_en'  ,
-                                nbdb_web_definition.definition_fr   AS 'body_fr'      ,
-                                nbdb_web_definition.definition_en   AS 'body_en'      ,
-                                nbdb_web_definition.contenu_floute  AS 'is_nsfw'      ,
-                                nbdb_web_definition.est_vulgaire    AS 'is_gross'     ,
-                                nbdb_web_definition.est_incorrect   AS 'is_incorrect' ,
-                                nbdb_web_definition.notes_admin     AS 'admin_notes'
-                        FROM    nbdb_web_definition ");
-  while($dinternet = mysqli_fetch_array($qinternet))
+  $qcompendium = query("  SELECT  nbdb_web_definition.titre_fr        AS 'title_fr'     ,
+                                  nbdb_web_definition.titre_en        AS 'title_en'     ,
+                                  nbdb_web_definition.redirection_fr  AS 'redirect_fr'  ,
+                                  nbdb_web_definition.redirection_en  AS 'redirect_en'  ,
+                                  nbdb_web_definition.definition_fr   AS 'body_fr'      ,
+                                  nbdb_web_definition.definition_en   AS 'body_en'      ,
+                                  nbdb_web_definition.contenu_floute  AS 'is_nsfw'      ,
+                                  nbdb_web_definition.est_vulgaire    AS 'is_gross'     ,
+                                  nbdb_web_definition.est_incorrect   AS 'is_incorrect' ,
+                                  nbdb_web_definition.notes_admin     AS 'admin_notes'
+                          FROM    nbdb_web_definition ");
+  while($dcompendium = mysqli_fetch_array($qcompendium))
     query(" INSERT INTO compendium_pages
-            SET         compendium_pages.page_type      = 'definition'                                        ,
-                        compendium_pages.title_en       = '".sql_sanitize_data($dinternet['title_en'])."'     ,
-                        compendium_pages.title_fr       = '".sql_sanitize_data($dinternet['title_fr'])."'     ,
-                        compendium_pages.redirection_en = '".sql_sanitize_data($dinternet['redirect_en'])."'  ,
-                        compendium_pages.redirection_fr = '".sql_sanitize_data($dinternet['redirect_fr'])."'  ,
-                        compendium_pages.is_nsfw        = '".sql_sanitize_data($dinternet['is_nsfw'])."'      ,
-                        compendium_pages.is_gross       = '".sql_sanitize_data($dinternet['is_gross'])."'     ,
-                        compendium_pages.is_offensive   = '".sql_sanitize_data($dinternet['is_incorrect'])."' ,
-                        compendium_pages.definition_en  = '".sql_sanitize_data($dinternet['body_en'])."'      ,
-                        compendium_pages.definition_fr  = '".sql_sanitize_data($dinternet['body_fr'])."'      ,
-                        compendium_pages.admin_notes    = '".sql_sanitize_data($dinternet['admin_notes'])."'  ");
+            SET         compendium_pages.page_type      = 'definition'                                          ,
+                        compendium_pages.is_draft       = 1                                                     ,
+                        compendium_pages.created_at     = '".time()."'                                          ,
+                        compendium_pages.title_en       = '".sql_sanitize_data($dcompendium['title_en'])."'     ,
+                        compendium_pages.title_fr       = '".sql_sanitize_data($dcompendium['title_fr'])."'     ,
+                        compendium_pages.redirection_en = '".sql_sanitize_data($dcompendium['redirect_en'])."'  ,
+                        compendium_pages.redirection_fr = '".sql_sanitize_data($dcompendium['redirect_fr'])."'  ,
+                        compendium_pages.is_nsfw        = '".sql_sanitize_data($dcompendium['is_nsfw'])."'      ,
+                        compendium_pages.is_gross       = '".sql_sanitize_data($dcompendium['is_gross'])."'     ,
+                        compendium_pages.is_offensive   = '".sql_sanitize_data($dcompendium['is_incorrect'])."' ,
+                        compendium_pages.definition_en  = '".sql_sanitize_data($dcompendium['body_en'])."'      ,
+                        compendium_pages.definition_fr  = '".sql_sanitize_data($dcompendium['body_fr'])."'      ,
+                        compendium_pages.admin_notes    = '".sql_sanitize_data($dcompendium['admin_notes'])."'  ");
 
   query(" UPDATE  compendium_pages
           SET     compendium_pages.page_url = LOWER(REPLACE(compendium_pages.title_fr, ' ', '_'))");
@@ -1696,6 +1700,16 @@ if($last_query < 30)
           WHERE       logs_activity.activity_type LIKE 'internet_*' ");
   query(" DELETE FROM logs_activity
           WHERE       logs_activity.activity_type LIKE 'nbdb_*' ");
+
+  $qeras = query("  SELECT  compendium_eras.id      AS 'id'       ,
+                            compendium_eras.name_en AS 'name_en'  ,
+                            compendium_eras.name_fr AS 'name_fr'
+                    FROM    compendium_eras ");
+  while($deras = mysqli_fetch_array($qeras))
+    query(" UPDATE  compendium_eras
+            SET     compendium_eras.short_name_en = '".sql_sanitize_data(mb_substr($deras['name_en'], 0, 20))."'  ,
+                    compendium_eras.short_name_fr = '".sql_sanitize_data(mb_substr($deras['name_fr'], 0, 20))."'
+            WHERE   compendium_eras.id            = '".sql_sanitize_data($deras['id'])."' ");
 
   sql_update_query_id(30);
 }

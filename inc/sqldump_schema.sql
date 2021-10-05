@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS `compendium_eras` (
   `year_end` smallint UNSIGNED NOT NULL DEFAULT '0',
   `name_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `short_name_en` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `short_name_fr` varchar(510) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description_en` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `description_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)

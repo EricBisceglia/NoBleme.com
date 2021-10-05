@@ -1686,6 +1686,8 @@ for($i = 0; $i < $random; $i++)
   $end_year   = (!$i) ? 0 : mt_rand($start_year, date('Y'));
   $title_en   = ucfirst(fixtures_generate_data('string', 5, 15));
   $title_fr   = ucfirst(fixtures_generate_data('string', 5, 15));
+  $short_en   = mb_substr($title_en, 0, 20);
+  $short_fr   = mb_substr($title_fr, 0, 20);
   $details_en = ucfirst(fixtures_generate_data('sentence', 10, 20));
   $details_fr = ucfirst(fixtures_generate_data('sentence', 10, 20));
 
@@ -1695,6 +1697,8 @@ for($i = 0; $i < $random; $i++)
                       compendium_eras.year_end        = '$end_year'   ,
                       compendium_eras.name_en         = '$title_en'   ,
                       compendium_eras.name_fr         = '$title_fr'   ,
+                      compendium_eras.short_name_en   = '$short_en'   ,
+                      compendium_eras.short_name_fr   = '$short_fr'   ,
                       compendium_eras.description_en  = '$details_en' ,
                       compendium_eras.description_fr  = '$details_fr' ");
 }
@@ -1714,8 +1718,8 @@ for($i = 0; $i < $random; $i++)
   $deleted      = (mt_rand(0,20) < 20) ? 0 : 1;
   $draft        = (!$deleted && mt_rand(0,20) == 20) ? 1 : 0;
   $created_at   = mt_rand(1111239420, time());
-  $era          = fixtures_fetch_random_id('compendium_eras');
-  $type         = mt_rand(0,1) ? 'definition' : 'meme';
+  $era          = (mt_rand(0,1)) ? fixtures_fetch_random_id('compendium_eras') : 0;
+  $type         = (mt_rand(0,1)) ? 'definition' : 'meme';
   $type         = (mt_rand(0,4) < 4) ? $type : 'sociocultural';
   $type         = (mt_rand(0,10) < 10) ? $type : 'drama';
   $type         = (mt_rand(0,15) < 15) ? $type : 'history';

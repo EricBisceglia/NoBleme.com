@@ -22,6 +22,7 @@ function compendium_page_list_search( sort_data = null )
   postdata  = 'compendium_pages_search_order='  + fetch_sanitize_id('compendium_pages_search_order');
   postdata += '&compendium_search_title='       + fetch_sanitize_id('compendium_search_title');
   postdata += '&compendium_search_type='        + fetch_sanitize_id('compendium_search_type');
+  postdata += '&compendium_search_era='         + fetch_sanitize_id('compendium_search_era');
   postdata += '&compendium_search_appeared='    + fetch_sanitize_id('compendium_search_appeared');
   postdata += '&compendium_search_peak='        + fetch_sanitize_id('compendium_search_peak');
   postdata += '&compendium_search_created='     + fetch_sanitize_id('compendium_search_created');

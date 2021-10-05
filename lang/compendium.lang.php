@@ -81,7 +81,7 @@ ___('compendium_page_no_page',  'FR', "Cette page n'a pas de titre dans la langu
 
 // Header
 ___('compendium_page_type',       'EN', "Page type");
-___('compendium_page_type',       'FR', "Sujet");
+___('compendium_page_type',       'FR', "Thème");
 ___('compendium_page_era',        'EN', "Era");
 ___('compendium_page_era',        'FR', "Période");
 ___('compendium_page_category',   'EN', "Category");
@@ -102,6 +102,10 @@ ___('compendium_page_gross',      'FR', "Cette page inclut du contenu dégueulas
 
 
 // Footer
+___('compendium_page_list',         'EN', "List of all pages");
+___('compendium_page_list',         'FR', "Liste des pages");
+___('compendium_page_compendium',   'EN', "NoBleme's 21st century compendium");
+___('compendium_page_compendium',   'FR', "Compendium du 21ème siècle de NoBleme");
 ___('compendium_page_random_page',  'EN', "Another random page");
 ___('compendium_page_random_page',  'FR', "Autre page au hasard");
 ___('compendium_page_random_type',  'EN', "Another random {{1}}");
