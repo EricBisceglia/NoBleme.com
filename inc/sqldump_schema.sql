@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS `compendium_pages` (
   `is_nsfw` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `is_gross` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `is_offensive` tinyint UNSIGNED NOT NULL DEFAULT '0',
+  `title_is_nsfw` tinyint UNSIGNED NOT NULL DEFAULT '0',
   `summary_en` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `summary_fr` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `definition_en` longtext COLLATE utf8mb4_unicode_ci NOT NULL,

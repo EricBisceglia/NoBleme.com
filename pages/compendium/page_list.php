@@ -210,7 +210,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } else { ?>
         <td class="tooltip_container<?=$compendium_pages_list[$i]['blur']?>">
           <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['shorttitle'], 'bold'.$compendium_pages_list[$i]['blur'])?>
-          <div class="tooltip">
+          <div class="tooltip dowrap">
             <h5>
               <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'noglow')?>
             </h5>

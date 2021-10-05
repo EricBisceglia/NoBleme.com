@@ -322,26 +322,26 @@ function nbcodes( string  $message                                              
   // [[image:image.png|left|description of the image]]
 
   // Handle this with a regex
-  $message = preg_replace('/\[\[image:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a href="'.$path.'todo_link?image=$1"><img src="'.$path.'img/internet/$1" alt="$1"></a>$3</div>', $message);
+  $message = preg_replace('/\[\[image:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a href="'.$path.'todo_link?image=$1"><img src="'.$path.'img/compendium/$1" alt="$1"></a>$3</div>', $message);
 
   // Same thing if the image has no description
-  $message = preg_replace('/\[\[image:(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a href="'.$path.'todo_link?image=$1"><img src="'.$path.'img/internet/$1" alt="$1"></a></div>', $message);
+  $message = preg_replace('/\[\[image:(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a href="'.$path.'todo_link?image=$1"><img src="'.$path.'img/compendium/$1" alt="$1"></a></div>', $message);
 
   // Same thing if the images has no description or alignment
-  $message = preg_replace('/\[\[image:(.*?)\]\]/i','<a href="'.$path.'todo_link/web_image?image=$1"><img src="'.$path.'img/internet/$1" alt="$1"></a>', $message);
+  $message = preg_replace('/\[\[image:(.*?)\]\]/i','<a href="'.$path.'todo_link/web_image?image=$1"><img src="'.$path.'img/compendium/$1" alt="$1"></a>', $message);
 
 
   /*******************************************************************************************************************/
   // [[image-nsfw:image.png|left|description of the image]]
 
   // Handle this with a regex
-  $message = preg_replace('/\[\[image-nsfw:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a href="'.$path.'todo_link?image=$1"><img '.$blurring2.' src="'.$path.'img/internet/$1" alt="$1"></a>$3</div>', $message);
+  $message = preg_replace('/\[\[image-nsfw:(.*?)\|(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a href="'.$path.'todo_link?image=$1"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1"></a>$3</div>', $message);
 
   // Same thing if the image has no description
-  $message = preg_replace('/\[\[image-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a href="'.$path.'todo_link?image=$1"><img '.$blurring2.' src="'.$path.'img/internet/$1" alt="$1"></a></div>', $message);
+  $message = preg_replace('/\[\[image-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_floater web_float_$2"><a href="'.$path.'todo_link?image=$1"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1"></a></div>', $message);
 
   // Same thing if the images has no description or alignment
-  $message = preg_replace('/\[\[image-nsfw:(.*?)\]\]/i','<a href="'.$path.'todo_link?image=$1"><img '.$blurring.' src="'.$path.'img/internet/$1" alt="$1"></a>', $message);
+  $message = preg_replace('/\[\[image-nsfw:(.*?)\]\]/i','<a href="'.$path.'todo_link?image=$1"><img '.$blurring.' src="'.$path.'img/compendium/$1" alt="$1"></a>', $message);
 
 
   /*******************************************************************************************************************/
@@ -400,20 +400,20 @@ function nbcodes( string  $message                                              
   // [[gallery:image.png|description of the image]]
 
   // Handle this with a regex
-  $message = preg_replace('/\[\[gallery:(.*?)\|(.*?)\]\]/i','<div class="web_gallery_image"><div style="height:150px"><a href="'.$path.'todo_link?image=$1"><img src="'.$path.'img/internet/$1" alt="$1" style="max-height:150px"></a></div><hr class="web_gallery_hr">$2</div>', $message);
+  $message = preg_replace('/\[\[gallery:(.*?)\|(.*?)\]\]/i','<div class="web_gallery_image"><div style="height:150px"><a href="'.$path.'todo_link?image=$1"><img src="'.$path.'img/compendium/$1" alt="$1" style="max-height:150px"></a></div><hr class="web_gallery_hr">$2</div>', $message);
 
   // Same thing if the image has no description
-  $message = preg_replace('/\[\[gallery:(.*?)\]\]/i','<div class="web_gallery_image"><a href="'.$path.'todo_link?image=$1"><img src="'.$path.'img/internet/$1" alt="$1" style="max-height:150px"></a></div>', $message);
+  $message = preg_replace('/\[\[gallery:(.*?)\]\]/i','<div class="web_gallery_image"><a href="'.$path.'todo_link?image=$1"><img src="'.$path.'img/compendium/$1" alt="$1" style="max-height:150px"></a></div>', $message);
 
 
   /*******************************************************************************************************************/
   // [[gallery-nsfw:image.png|description of the image]]
 
   // Handle this with a regex
-  $message = preg_replace('/\[\[gallery-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_gallery_image"><div style="height:150px"><a href="'.$path.'todo_link?image=$1"><img '.$blurring2.' src="'.$path.'img/internet/$1" alt="$1" style="max-height:150px"></a></div><hr class="web_gallery_hr">$2</div>', $message);
+  $message = preg_replace('/\[\[gallery-nsfw:(.*?)\|(.*?)\]\]/i','<div class="web_gallery_image"><div style="height:150px"><a href="'.$path.'todo_link?image=$1"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1" style="max-height:150px"></a></div><hr class="web_gallery_hr">$2</div>', $message);
 
   // Same thing if the image has no description
-  $message = preg_replace('/\[\[gallery-nsfw:(.*?)\]\]/i','<div class="web_gallery_image"><a href="'.$path.'todo_link?image=$1"><img '.$blurring2.' src="'.$path.'img/internet/$1" alt="$1" style="max-height:150px"></a></div>', $message);
+  $message = preg_replace('/\[\[gallery-nsfw:(.*?)\]\]/i','<div class="web_gallery_image"><a href="'.$path.'todo_link?image=$1"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1" style="max-height:150px"></a></div>', $message);
 
 
   /*******************************************************************************************************************/

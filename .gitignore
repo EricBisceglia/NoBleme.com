@@ -1,11 +1,12 @@
-# Config should not be committed
+# Local config should not be committed
 inc/configuration.inc.php
 
-# IRCBot .txt file fills up during tests
+# IRCBot .txt file fills up during tests and shouldn't be committed
 ircbot.txt
 
 # Images for the 21st century compendium shouldn't be stored in the repository
-img/internet/*
+img/compendium/*
+!img/compendium/index.php
 
 # Google verification file
 google3*8.html

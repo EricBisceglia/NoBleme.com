@@ -1592,7 +1592,8 @@ if($last_query < 30)
   sql_rename_field('compendium_pages', 'est_vulgaire', 'is_gross', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
   sql_delete_field('compendium_pages', 'est_politise');
   sql_rename_field('compendium_pages', 'est_incorrect', 'is_offensive', 'TINYINT UNSIGNED NOT NULL DEFAULT 0');
-  sql_create_field('compendium_pages', 'summary_en', 'TEXT NOT NULL', 'is_offensive');
+  sql_create_field('compendium_pages', 'title_is_nsfw', 'TINYINT UNSIGNED NOT NULL DEFAULT 0', 'is_offensive');
+  sql_create_field('compendium_pages', 'summary_en', 'TEXT NOT NULL', 'title_is_nsfw');
   sql_create_field('compendium_pages', 'summary_fr', 'TEXT NOT NULL', 'summary_en');
   sql_move_field('compendium_pages', 'definition_en', 'LONGTEXT NOT NULL', 'summary_fr');
   sql_move_field('compendium_pages', 'definition_fr', 'LONGTEXT NOT NULL', 'definition_en');

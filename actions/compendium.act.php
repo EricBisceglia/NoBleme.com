@@ -9,6 +9,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*  compendium_pages_get                Returns data related to a compendium page.                                   */
+/*  compendium_pages_get_random         Returns data related to a random compendium page.                            */
 /*  compendium_pages_list               Fetches a list of compendium pages.                                          */
 /*                                                                                                                   */
 /*  compendium_page_type_get            Returns data related to a compendium page type.                              */
@@ -107,6 +108,7 @@ function compendium_pages_get(  int     $page_id  = 0   ,
   $data['no_page']    = ($dpage['p_title']) ? 0 : 1;
   $page_type          = compendium_page_type_get($dpage['p_type']);
   $data['type']       = sanitize_output(string_change_case($page_type['name_'.$lang], 'initials'));
+  $data['type_raw']   = sanitize_output($dpage['p_type']);
   $data['type_url']   = sanitize_output($page_type['url']);
   $data['type_other'] = sanitize_output($page_type['other_'.$lang]);
   $temp               = (strlen($dpage['p_title']) > 25) ? 'h2' : 'h1';
@@ -181,6 +183,50 @@ function compendium_pages_get(  int     $page_id  = 0   ,
 
 
 /**
+ * Returns data related to a random compendium page.
+ *
+ * @param   string  $type   (OPTIONAL)  Request a specific page type for the randomly returned page.
+ *
+ * @return  string                      The url of a randomly chosen compendium page.
+ */
+
+function compendium_pages_get_random( string $type = '' ) : string
+{
+  // Sanitize the page type
+  $type = sanitize($type, 'string');
+
+  // Prepare the page type condition
+  $type = ($type) ? " AND compendium_pages.page_type LIKE '$type' " : '';
+
+  // Get the user's current language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+
+  // Fetch a random page's url
+  $dpage = mysqli_fetch_array(query(" SELECT    compendium_pages.page_url AS 'c_url'
+                                      FROM      compendium_pages
+                                      WHERE     compendium_pages.is_deleted         = 0
+                                      AND       compendium_pages.is_draft           = 0
+                                      AND       compendium_pages.title_$lang        NOT LIKE ''
+                                      AND       compendium_pages.redirection_$lang  LIKE ''
+                                      AND       compendium_pages.is_nsfw            = 0
+                                      AND       compendium_pages.is_gross           = 0
+                                      AND       compendium_pages.is_offensive       = 0
+                                      $type
+                                      ORDER BY  RAND()
+                                      LIMIT     1 "));
+
+  // If no page has been found, return an empty string
+  if(!isset($dpage['c_url']))
+    return '';
+
+  // Otherwise, return the page url
+  return $dpage['c_url'];
+}
+
+
+
+
+/**
  * Fetches a list of compendium pages.
  *
  * @param   string  $sort_by    (OPTIONAL)  How the returned data should be sorted.
@@ -226,9 +272,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                             compendium_pages.month_appeared   AS 'p_app_month'  ,
                             compendium_pages.year_peak        AS 'p_peak_year'  ,
                             compendium_pages.month_peak       AS 'p_peak_month' ,
-                            compendium_pages.is_nsfw          AS 'p_nsfw'       ,
-                            compendium_pages.is_gross         AS 'p_gross'      ,
-                            compendium_pages.is_offensive     AS 'p_offensive'  ,
+                            compendium_pages.title_is_nsfw    AS 'p_nsfw_title' ,
                             compendium_pages.summary_$lang    AS 'p_summary'    ,
                             compendium_eras.id                AS 'pe_id'        ,
                             compendium_eras.short_name_$lang  AS 'pe_name'
@@ -332,8 +376,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['appeared']   = ($row['p_app_year']) ? $temp.$row['p_app_year'] : '';
     $temp                   = ($row['p_peak_month']) ? __('month_'.$row['p_peak_month'], spaces_after: 1) : '';
     $data[$i]['peak']       = ($row['p_peak_year']) ? $temp.$row['p_peak_year'] : '';
-    $temp                   = ($row['p_nsfw'] || $row['p_gross']);
-    $data[$i]['blur']       = ($temp && $nsfw_settings < 2) ? ' blur' : '';
+    $data[$i]['blur']       = ($row['p_nsfw_title'] && $nsfw_settings < 2) ? ' blur' : '';
     $data[$i]['summary']    = nbcodes(bbcodes(sanitize_output($row['p_summary'], preserve_line_breaks: true)));
     $data[$i]['era_id']     = sanitize_output($row['pe_id']);
     $data[$i]['era']        = sanitize_output($row['pe_name']);

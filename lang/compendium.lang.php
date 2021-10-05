@@ -42,11 +42,11 @@ Si vous vous demandez dans quel but ce compendium a été crée, d'où viennent 
 EOT
 );
 ___('compendium_index_intro_4', 'EN', <<<EOT
-Subsections of this encyclopedia are dedicated to documenting {{link|todo_link|memes}}, a {{link|todo_link|slang dictionary}}, a {{link|todo_link|sociocultural guide}}, and more: all of the compendium's contents can be found on the {{link|pages/compendium/page_list|list of all pages}}. Though maybe you would rather get started in your browsing by reading a {{link|todo_link|randomly chosen page}}.
+Subsections of this encyclopedia are dedicated to documenting {{link|todo_link|memes}}, a {{link|todo_link|slang dictionary}}, a {{link|todo_link|sociocultural guide}}, and more: all of the compendium's contents can be found on the {{link|pages/compendium/page_list|list of all pages}}. Though maybe you would rather get started in your browsing by reading a {{link|pages/compendium/random_page|randomly chosen page}}.
 EOT
 );
 ___('compendium_index_intro_4', 'FR', <<<EOT
-Des sections de cette encyclopédie sont dédiées à la documentation des {{link|todo_link|memes}}, de {{link|todo_link|l'argot}}, et des concepts {{link|todo_link|socioculturels}} du 21ème siècle. Vous retrouverez tout ceci et plus encore sur la {{link|pages/compendium/page_list|liste des pages}}, ou peut-être préféreriez-vous commencer votre exploration en lisant une {{link|todo_link|page au hasard}}.
+Des sections de cette encyclopédie sont dédiées à la documentation des {{link|todo_link|memes}}, de {{link|todo_link|l'argot}}, et des concepts {{link|todo_link|socioculturels}} du 21ème siècle. Vous retrouverez tout ceci et plus encore sur la {{link|pages/compendium/page_list|liste des pages}}, ou peut-être préféreriez-vous commencer votre exploration en lisant une {{link|pages/compendium/random_page|page au hasard}}.
 EOT
 );
 

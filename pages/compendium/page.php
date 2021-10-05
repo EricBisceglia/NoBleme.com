@@ -163,9 +163,8 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </div>
 
   <p class="align_center bigpadding_top big">
-    <?=__link('pages/compendium/page_list', __('compendium_page_list'))?><br>
-    <?=__link('todo_link', __('compendium_page_random_page'))?><br>
-    <?=__link('todo_link', __('compendium_page_random_type', preset_values: array($compendium_page_data['type_other'])))?><br>
+    <?=__link('pages/compendium/random_page', __('compendium_page_random_page'))?><br>
+    <?=__link('pages/compendium/random_page?type='.$compendium_page_data['type_raw'], __('compendium_page_random_type', preset_values: array($compendium_page_data['type_other'])))?><br>
     <?=__link('pages/compendium/index', __('compendium_page_compendium'))?>
   </p>
 

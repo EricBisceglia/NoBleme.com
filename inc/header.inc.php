@@ -614,7 +614,7 @@ $javascripts .= '
           <?=__link('todo_link', __('submenu_pages_compendium_culture'), 'header_submenu_link text_blue', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_compendium_random'), 'header_submenu_link text_blue', 1, $path);?>
+          <?=__link('pages/compendium/random_page', __('submenu_pages_compendium_random'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
