@@ -42,11 +42,11 @@ Si vous vous demandez dans quel but ce compendium a été crée, d'où viennent 
 EOT
 );
 ___('compendium_index_intro_4', 'EN', <<<EOT
-Subsections of this encyclopedia are dedicated to documenting {{link|todo_link|memes}}, a {{link|todo_link|slang dictionary}}, a {{link|todo_link|sociocultural guide}}, and more: all of the compendium's contents can be found on the {{link|todo_link|list of all pages}}. Though maybe you would rather get started in your browsing by reading a {{link|todo_link|randomly chosen page}}.
+Subsections of this encyclopedia are dedicated to documenting {{link|todo_link|memes}}, a {{link|todo_link|slang dictionary}}, a {{link|todo_link|sociocultural guide}}, and more: all of the compendium's contents can be found on the {{link|pages/compendium/page_list|list of all pages}}. Though maybe you would rather get started in your browsing by reading a {{link|todo_link|randomly chosen page}}.
 EOT
 );
 ___('compendium_index_intro_4', 'FR', <<<EOT
-Des sections de cette encyclopédie sont dédiées à la documentation des {{link|todo_link|memes}}, de {{link|todo_link|l'argot}}, et des concepts {{link|todo_link|socioculturels}} du 21ème siècle. Vous retrouverez tout ceci et plus encore sur la {{link|todo_link|liste des pages}}, ou peut-être préféreriez-vous commencer votre exploration en lisant une {{link|todo_link|page au hasard}}.
+Des sections de cette encyclopédie sont dédiées à la documentation des {{link|todo_link|memes}}, de {{link|todo_link|l'argot}}, et des concepts {{link|todo_link|socioculturels}} du 21ème siècle. Vous retrouverez tout ceci et plus encore sur la {{link|pages/compendium/page_list|liste des pages}}, ou peut-être préféreriez-vous commencer votre exploration en lisant une {{link|todo_link|page au hasard}}.
 EOT
 );
 
@@ -60,6 +60,52 @@ ___('compendium_index_recent_reworked', 'EN', "Reworked");
 ___('compendium_index_recent_reworked', 'FR', "Modifié");
 ___('compendium_index_recent_created',  'EN', "Created");
 ___('compendium_index_recent_created',  'FR', "Crée");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                  INDIVIDUAL PAGE                                                  */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Warnings
+___('compendium_page_deleted',  'EN', "This page has been soft deleted. It is not viewable by the general public.");
+___('compendium_page_deleted',  'FR', "Cette page a été supprimée de façon non définitive. Elle n'est pas visible par le public.");
+___('compendium_page_draft',    'EN', "This page is an unpublished draft. It is not viewable by the general public.");
+___('compendium_page_draft',    'FR', "Cette page est un brouillon non publié. Elle n'est pas visible par le public.");
+___('compendium_page_no_page',  'EN', "This page has no title in the current language. It is not viewable by the general public.");
+___('compendium_page_no_page',  'FR', "Cette page n'a pas de titre dans la langue actuelle. Elle n'est pas visible par le public.");
+
+
+// Header
+___('compendium_page_type',       'EN', "Page type");
+___('compendium_page_type',       'FR', "Sujet");
+___('compendium_page_era',        'EN', "Era");
+___('compendium_page_era',        'FR', "Période");
+___('compendium_page_category',   'EN', "Category");
+___('compendium_page_category',   'FR', "Catégorie");
+___('compendium_page_category+',  'EN', "Categories");
+___('compendium_page_category+',  'FR', "Catégories");
+___('compendium_page_appeared',   'EN', "First appearance");
+___('compendium_page_appeared',   'FR', "Première apparition");
+
+
+// Warnings
+___('compendium_page_nsfw',       'EN', "This page covers a topic which can be considered not safe for work");
+___('compendium_page_nsfw',       'FR', "Cette page couvre un sujet non approprié pour lecture sur un lieu de travail");
+___('compendium_page_offensive',  'EN', "This page covers an offensive topic: it is documented here for purely encyclopedic purposes, avoid using it yourself");
+___('compendium_page_offensive',  'FR', "Cette page couvre un sujet offensant : il est documenté ici pour des raisons purement encyclopédiques, évitez de l'utiliser");
+___('compendium_page_gross',      'EN', "This page contains some gross and/or gore content, read it at your own risk");
+___('compendium_page_gross',      'FR', "Cette page inclut du contenu dégueulasse et/ou particulièrement violent");
+
+
+// Footer
+___('compendium_page_random_page',  'EN', "Another random page");
+___('compendium_page_random_page',  'FR', "Autre page au hasard");
+___('compendium_page_random_type',  'EN', "Another random {{1}}");
+___('compendium_page_random_type',  'FR', "Autre {{1}} au hasard");
 
 
 
@@ -172,11 +218,11 @@ Une documentation d'éléments de la culture du 21ème siècle.
 EOT
 );
 ___('compendium_faq_answer_1_2',  'EN', <<<EOT
-The hyperconnected era ushered in by the advent of the Internet altered both mainstream and underground culture in many ways, which this compendium tries to document as much as possible. The {{link|todo_link|list of all pages}} lets you see all the types and categories of contents which are covered by the compendium. Special attention is given to three types of contents in particular:
+The hyperconnected era ushered in by the advent of the Internet altered both mainstream and underground culture in many ways, which this compendium tries to document as much as possible. The {{link|pages/compendium/page_list|list of all pages}} lets you see all the types and categories of contents which are covered by the compendium. Special attention is given to three types of contents in particular:
 EOT
 );
 ___('compendium_faq_answer_1_2',  'FR', <<<EOT
-L'avènement d'Internet et d'une nouvelle ère hyperconnectée a modifié la culture populaire de nombreuses façons, que ce compendium essaye de documenter autant que possible. La {{link|todo_link|liste des pages}} vous permet de voir tous les types et catégories de contenus couvertes dans ce compendium. Une attention particulière est donnée aux trois types de contenus suivants:
+L'avènement d'Internet et d'une nouvelle ère hyperconnectée a modifié la culture populaire de nombreuses façons, que ce compendium essaye de documenter autant que possible. La {{link|pages/compendium/page_list|liste des pages}} vous permet de voir tous les types et catégories de contenus couvertes dans ce compendium. Une attention particulière est donnée aux trois types de contenus suivants:
 EOT
 );
 ___('compendium_faq_answer_1_3',  'EN', <<<EOT
@@ -536,11 +582,11 @@ EOT
 );
 
 ___('compendium_faq_answer_15_1', 'EN', <<<EOT
-NoBleme's {{link|pages/nobleme/activity|recent activity}} page and the compendium's {{link|todo_link|list of all pages}} both let you filter data in a way which allows you to track recent activity in the 21st century compendium.
+NoBleme's {{link|pages/nobleme/activity|recent activity}} page and the compendium's {{link|pages/compendium/page_list|list of all pages}} both let you filter data in a way which allows you to track recent activity in the 21st century compendium.
 EOT
 );
 ___('compendium_faq_answer_15_1', 'FR', <<<EOT
-La page {{link|pages/nobleme/activity|activité récente}} de NoBleme et la {{link|todo_link|liste des pages}} de ce compendium vous permettent de trier et filtrer les données afin de voir les pages crées ou modifiées récemment.
+La page {{link|pages/nobleme/activity|activité récente}} de NoBleme et la {{link|pages/compendium/page_list|liste des pages}} de ce compendium vous permettent de trier et filtrer les données afin de voir les pages crées ou modifiées récemment.
 EOT
 );
 ___('compendium_faq_answer_15_2', 'EN', <<<EOT

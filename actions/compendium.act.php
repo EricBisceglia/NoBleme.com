@@ -8,6 +8,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*  compendium_pages_get                Returns data related to a compendium page.                                   */
 /*  compendium_pages_list               Fetches a list of compendium pages.                                          */
 /*                                                                                                                   */
 /*  compendium_page_type_get            Returns data related to a compendium page type.                              */
@@ -17,6 +18,164 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_peak_list_years          Fetches the years at which compendium content has peaked.                    */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+
+/**
+ * Returns data related to a compendium page.
+ *
+ * @param   int         $page_id  (OPTIONAL)  The page's id. Only one of these two parameters should be set.
+ * @param   string      $page_url (OPTIONAL)  The page's url. Only one of these two parameters should be set.
+ *
+ * @return  array|null                        An array containing page related data, or NULL if it does not exist.
+ */
+
+function compendium_pages_get(  int     $page_id  = 0   ,
+                                string  $page_url = ''  ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+  require_included_file('bbcodes.inc.php');
+
+  // Get the user's current language and access rights
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  $is_admin = user_is_administrator();
+
+  // Sanitize the data
+  $page_id  = sanitize($page_id, 'int', 0);
+  $page_url = sanitize($page_url, 'string');
+
+  // Return null if both parameters are missing
+  if(!$page_id && !$page_url)
+    return NULL;
+
+  // Return null if both parameters are set
+  if($page_id && $page_url)
+    return NULL;
+
+  // Check if the page exists
+  if($page_id && !database_row_exists('compendium_pages', $page_id))
+    return NULL;
+  if($page_url && !database_entry_exists('compendium_pages', 'page_url', $page_url))
+    return NULL;
+
+  // Prepare the correct condition for the query
+  if($page_id)
+    $where = " compendium_pages.id = '$page_id' ";
+  if($page_url)
+    $where = " compendium_pages.page_url LIKE '$page_url' ";
+
+  // Fetch the data
+  $dpage = mysqli_fetch_array(query(" SELECT    compendium_pages.id                 AS 'p_id'         ,
+                                                compendium_pages.is_deleted         AS 'p_deleted'    ,
+                                                compendium_pages.is_draft           AS 'p_draft'      ,
+                                                compendium_pages.page_type          AS 'p_type'       ,
+                                                compendium_pages.title_$lang        AS 'p_title'      ,
+                                                compendium_pages.title_en           AS 'p_title_en'   ,
+                                                compendium_pages.title_fr           AS 'p_title_fr'   ,
+                                                compendium_pages.redirection_$lang  AS 'p_redirect'   ,
+                                                compendium_pages.year_appeared      AS 'p_new_year'   ,
+                                                compendium_pages.month_appeared     AS 'p_new_month'  ,
+                                                compendium_pages.year_peak          AS 'p_peak_year'  ,
+                                                compendium_pages.month_peak         AS 'p_peak_month' ,
+                                                compendium_pages.is_nsfw            AS 'p_nsfw'       ,
+                                                compendium_pages.is_gross           AS 'p_gross'      ,
+                                                compendium_pages.is_offensive       AS 'p_offensive'  ,
+                                                compendium_pages.summary_$lang      AS 'p_summary'    ,
+                                                compendium_pages.definition_$lang   AS 'p_body'       ,
+                                                compendium_eras.id                  AS 'pe_id'        ,
+                                                compendium_eras.name_$lang          AS 'pe_name'
+                                      FROM      compendium_pages
+                                      LEFT JOIN compendium_eras
+                                      ON        compendium_pages.fk_compendium_eras = compendium_eras.id
+                                      WHERE     $where "));
+
+  // Return null if the task should not be displayed
+  if(!$is_admin && $dpage['p_deleted'])
+    return NULL;
+  if(!$is_admin && $dpage['p_draft'])
+    return NULL;
+  if(!$is_admin && !$dpage['p_title'])
+    return NULL;
+
+  // Assemble an array with the data
+  $page_id            = sanitize($dpage['p_id'], 'int', 0);
+  $data['id']         = sanitize_output($dpage['p_id']);
+  $data['deleted']    = $dpage['p_deleted'];
+  $data['draft']      = $dpage['p_draft'];
+  $data['no_page']    = ($dpage['p_title']) ? 0 : 1;
+  $page_type          = compendium_page_type_get($dpage['p_type']);
+  $data['type']       = sanitize_output(string_change_case($page_type['name_'.$lang], 'initials'));
+  $data['type_url']   = sanitize_output($page_type['url']);
+  $data['type_other'] = sanitize_output($page_type['other_'.$lang]);
+  $temp               = (strlen($dpage['p_title']) > 25) ? 'h2' : 'h1';
+  $temp               = (strlen($dpage['p_title']) > 30) ? 'h3' : $temp;
+  $temp               = (strlen($dpage['p_title']) > 40) ? 'h4' : $temp;
+  $data['title_size'] = (strlen($dpage['p_title']) > 50) ? 'h5' : $temp;
+  $data['title']      = sanitize_output($dpage['p_title']);
+  $data['title_en']   = sanitize_output($dpage['p_title_en']);
+  $data['title_fr']   = sanitize_output($dpage['p_title_fr']);
+  $temp               = ($dpage['p_new_month']) ? __('month_'.$dpage['p_new_month'], spaces_after: 1) : '';
+  $data['appeared']   = ($dpage['p_new_year']) ? $temp.$dpage['p_new_year'] : '';
+  $temp               = ($dpage['p_peak_month']) ? __('month_'.$dpage['p_peak_month'], spaces_after: 1) : '';
+  $data['peak']       = ($dpage['p_peak_year']) ? $temp.$dpage['p_peak_year'] : '';
+  $data['nsfw']       = $dpage['p_nsfw'];
+  $data['offensive']  = $dpage['p_offensive'];
+  $data['gross']      = $dpage['p_gross'];
+  $data['meta']       = sanitize_output(string_truncate($dpage['p_summary'], 140, '...'));
+  $data['summary']    = sanitize_output($dpage['p_summary']);
+  $data['body']       = nbcodes(bbcodes(sanitize_output($dpage['p_body'], preserve_line_breaks: true)));
+  $data['era_id']     = sanitize_output($dpage['pe_id']);
+  $data['era']        = sanitize_output($dpage['pe_name']);
+
+  // Fetch any associated categories
+  $qcategories = query("  SELECT    compendium_pages_categories.id    AS 'cpc_id'   ,
+                                    compendium_categories.id          AS 'pc_id'    ,
+                                    compendium_categories.name_$lang  AS 'pc_name'
+                          FROM      compendium_pages_categories
+                          LEFT JOIN compendium_categories
+                          ON        compendium_pages_categories.fk_compendium_categories  = compendium_categories.id
+                          WHERE     compendium_pages_categories.fk_compendium_pages       = '$page_id'
+                          ORDER BY  compendium_categories.display_order ASC ");
+
+  // Prepare the category data
+  for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
+  {
+    $data['category_id'][$i]    = sanitize_output($row['pc_id']);
+    $data['category_name'][$i]  = sanitize_output($row['pc_name']);
+  }
+
+  // Add the number of categories do the data
+  $data['categories'] = $i;
+
+  // If the page is a redirection, check whether it is a legal redirection
+  if($dpage['p_redirect'])
+  {
+    // Sanitize the redirection
+    $redirect_page = sanitize($dpage['p_redirect'], 'string');
+
+    // Return null if the redirection does not exist
+    if(!database_entry_exists('compendium_pages', 'title_'.$lang, $redirect_page))
+      return NULL;
+
+    // Check if the redirection is a redirection
+    $dredirect = mysqli_fetch_array(query(" SELECT  compendium_pages.page_url           AS 'p_url' ,
+                                                    compendium_pages.redirection_$lang  AS 'p_redirect'
+                                            FROM    compendium_pages
+                                            WHERE   compendium_pages.title_$lang LIKE '$redirect_page' "));
+
+    // Return null if the redirection is a redirection
+    if($dredirect['p_redirect'])
+      return NULL;
+
+    // Otherwise add the redirection's url to the returned data
+    $data['redirect'] = sanitize_output($dredirect['p_url']);
+  }
+
+  // Return the data
+  return $data;
+}
+
+
 
 
 /**
@@ -80,7 +239,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   if(!$is_admin)
     $qpages .= "  AND       compendium_pages.redirection_$lang = '' ";
 
-  // Regular users should only see tasks with a title matching their current language
+  // Regular users should only see pages with a title matching their current language
   if(!$is_admin)
     $qpages .= "  AND       compendium_pages.title_$lang != '' ";
 
@@ -188,33 +347,43 @@ function compendium_page_type_get( string $page_type = '' ) : mixed
 {
   // Page type: meme
   if($page_type == 'meme')
-    return array( 'name_en' => "meme"   ,
-                  'name_fr' => "meme"   ,
-                  'url'     => "memes"  );
+    return array( 'name_en'   => "meme"   ,
+                  'name_fr'   => "meme"   ,
+                  'url'       => "memes"  ,
+                  'other_en'  => "meme"   ,
+                  'other_fr'  => "meme"   );
 
   // Page type: definition
   else if($page_type == 'definition')
-    return array( 'name_en' => "definition" ,
-                  'name_fr' => "définition" ,
-                  'url'     => "slang"      );
+    return array( 'name_en'   => "definition" ,
+                  'name_fr'   => "définition" ,
+                  'url'       => "slang"      ,
+                  'other_en'  => "definition" ,
+                  'other_fr'  => "definition" );
 
   // Page type: sociocultural
   else if($page_type == 'sociocultural')
-    return array( 'name_en' => "sociocultural" ,
-                  'name_fr' => "socioculturel" ,
-                  'url'     => "sociocultural"  );
+    return array( 'name_en'   => "sociocultural"          ,
+                  'name_fr'   => "socioculturel"          ,
+                  'url'       => "sociocultural"          ,
+                  'other_en'  => "sociocultural entry"    ,
+                  'other_fr'  => "contenu socioculturel"  );
 
   // Page type: drama
   else if($page_type == 'drama')
-    return array( 'name_en' => "drama"  ,
-                  'name_fr' => "drame"  ,
-                  'url'     => "dramas" );
+    return array( 'name_en'   => "drama"  ,
+                  'name_fr'   => "drame"  ,
+                  'url'       => "dramas" ,
+                  'other_en'  => "drama"  ,
+                  'other_fr'  => "drame"  );
 
   // Page type: history
   else if($page_type == 'history')
-    return array( 'name_en' => "history"    ,
-                  'name_fr' => "histoire"   ,
-                  'url'     => "historical" );
+    return array( 'name_en'   => "history"            ,
+                  'name_fr'   => "histoire"           ,
+                  'url'       => "historical"         ,
+                  'other_en'  => "historical entry"   ,
+                  'other_fr'  => "contenu historique" );
 
   // Page type no found
   return null;
