@@ -19,7 +19,7 @@ $page_title_en  = "Code snippets";
 $page_title_fr  = "Modèles de code";
 
 // Extra JS
-$js = array('dev/doc', 'common/clipboard');
+$js = array('dev/doc');
 
 
 

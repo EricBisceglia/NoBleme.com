@@ -158,7 +158,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </div>
   <?php } ?>
 
-  <div class="smallpadding_top padding_bot">
+  <div class="smallpadding_top padding_bot align_justify">
     <?=$compendium_page_data['body']?>
   </div>
 

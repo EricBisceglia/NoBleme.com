@@ -604,12 +604,12 @@ ___('bbcodes_spoiler_show', 'FR', "VOIR LE CONTENU CACHÉ");
 
 
 // NBCodes
-___('nbcodes_video_hidden',       'EN', "This video is hidden ({{link|{{1}}pages/account/settings_privacy|privacy options}})");
-___('nbcodes_video_hidden',       'FR', "Cette vidéo est masquée ({{link|{{1}}pages/account/settings_privacy|options de vie privée}}");
-___('nbcodes_video_hidden_small', 'EN', "Video hidden ({{link|{{1}}pages/account/settings_privacy|privacy options}})");
-___('nbcodes_video_hidden_small', 'FR', "Vidéo masquée ({{link|{{1}}pages/account/settings_privacy|options de vie privée}})");
-___('nbcodes_trends_hidden',      'EN', "This Google trends graph is hidden ({{link|{{1}}pages/account/settings_privacy|privacy options}})");
-___('nbcodes_trends_hidden',      'FR', "Ce graphe Google trends est masqué ({{link|{{1}}pages/account/settings_privacy|options de vie privée}})");
+___('nbcodes_video_hidden',       'EN', "This video is hidden ({{link|pages/account/settings_privacy|privacy options}})");
+___('nbcodes_video_hidden',       'FR', "Cette vidéo est masquée ({{link|pages/account/settings_privacy|options de vie privée}}");
+___('nbcodes_video_hidden_small', 'EN', "Video hidden ({{link|pages/account/settings_privacy|privacy options}})");
+___('nbcodes_video_hidden_small', 'FR', "Vidéo masquée ({{link|pages/account/settings_privacy|options de vie privée}})");
+___('nbcodes_trends_hidden',      'EN', "This Google trends graph is hidden ({{link|pages/account/settings_privacy|privacy options}})");
+___('nbcodes_trends_hidden',      'FR', "Ce graphe Google trends est masqué ({{link|pages/account/settings_privacy|options de vie privée}})");
 
 
 

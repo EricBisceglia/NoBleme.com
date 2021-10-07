@@ -1677,13 +1677,13 @@ if($last_query < 30)
   sql_delete_table('nbdb_web_definition');
 
   query(" UPDATE  compendium_pages
-          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '[[web:', '[[compendium:') ");
+          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '[[web:', '[[page:') ");
   query(" UPDATE  compendium_pages
-          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '[[web:', '[[compendium:') ");
+          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '[[web:', '[[page:') ");
   query(" UPDATE  compendium_pages
-          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '[[dico:', '[[compendium:') ");
+          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '[[dico:', '[[page:') ");
   query(" UPDATE  compendium_pages
-          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '[[dico:', '[[compendium:') ");
+          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '[[dico:', '[[page:') ");
   query(" UPDATE  compendium_pages
           SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '[[lien:', '[[link:') ");
   query(" UPDATE  compendium_pages
@@ -1696,6 +1696,22 @@ if($last_query < 30)
           SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '/galerie]]', '/gallery]]') ");
   query(" UPDATE  compendium_pages
           SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '/galerie]]', '/gallery]]') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '[[', '[') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '[[', '[') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, ']]', ']') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, ']]', ']') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '|droite', '|right') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '|droite', '|right') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_en = REPLACE(compendium_pages.definition_en, '|gauche', '|left') ");
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.definition_fr = REPLACE(compendium_pages.definition_fr, '|gauche', '|left') ");
 
   query(" DELETE FROM logs_activity
           WHERE       logs_activity.activity_type LIKE 'internet_*' ");

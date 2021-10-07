@@ -98,7 +98,7 @@ ___('compendium_page_nsfw',       'FR', "Cette page couvre un sujet non appropri
 ___('compendium_page_offensive',  'EN', "This page covers an offensive topic: it is documented here for purely encyclopedic purposes, avoid using it yourself");
 ___('compendium_page_offensive',  'FR', "Cette page couvre un sujet offensant : il est documenté ici pour des raisons purement encyclopédiques, évitez de l'utiliser");
 ___('compendium_page_gross',      'EN', "This page contains some gross and/or gore content, read it at your own risk");
-___('compendium_page_gross',      'FR', "Cette page inclut du contenu dégueulasse et/ou particulièrement violent");
+___('compendium_page_gross',      'FR', "Cette page inclut du contenu dégueulasse et/ou gore, à lire à vos propres risques");
 
 
 // Footer

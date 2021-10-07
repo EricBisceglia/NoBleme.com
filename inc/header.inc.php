@@ -373,6 +373,7 @@ if(isset($css))
 // Include the default javascript files (weird line breaks are for indentation)
 $javascripts = '
     <script src="'.$path.'js/common/header.js"> </script>
+    <script src="'.$path.'js/common/clipboard.js"> </script>
     <script src="'.$path.'js/common/fetch.js"> </script>';
 
 // If extra JS files are set, add them to the list

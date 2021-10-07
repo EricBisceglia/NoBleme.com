@@ -21,9 +21,6 @@ $page_url         = "pages/tasks/list";
 $page_title_en    = "Reject task";
 $page_title_fr    = "Rejeter une tâche";
 
-// Extra JS
-$js = array('common/clipboard');
-
 
 
 

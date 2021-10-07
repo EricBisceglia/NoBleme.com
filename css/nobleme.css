@@ -210,6 +210,35 @@ a.forced_link:focus, a.forced_link:hover { filter: drop-shadow(0 0 5px #B00B1E);
                         margin-bottom: 3px; font-weight: bold;                                   }
 .bbcode_spoiler_body  { padding: 0.25em; background-color: #121212; border: 1px solid #343434;   }
 
+/****************************************************** NBCODES ******************************************************/
+.nbcode_blur            { filter: blur(20px);                                                         }
+.nbcode_blur:hover      { filter: none;                                                               }
+.nbcode_blur_2          { filter: blur(10px);                                                         }
+.nbcode_blur_2:hover    { filter: none;                                                               }
+.nbcode_blur_3          { filter: blur(5px);                                                          }
+.nbcode_blur_3:hover    { filter: none;                                                               }
+.nbcode_dead_link       { color: #0069C0;                                                             }
+.nbcode_dead_link:hover { color: #673AB7;                                                             }
+.nbcode_link_icon       { vertical-align: middle; padding-left: 0.2em; padding-bottom: 0.3em;         }
+.nbcode_floater         { width: 20em; border: double #232323 3px; padding: 0.6em; font-size: 0.78em  ;
+                          border-radius: 0.3em; text-align: justify; text-align-last: center;         }
+.nbcode_floater_left    { float: left; margin-top: 0.4em; margin-bottom: 0.5em; margin-right: 1.0em;  }
+.nbcode_floater_right   { float: right; margin-top: 0.4em; margin-bottom: 0.5em; margin-left: 1.0em;  }
+.nbcode_gallery         { display: flex; flex-wrap: wrap;                                             }
+.nbcode_gallery_cell    { border: 1px solid #232323; margin: 0.1em; border-radius: 0.15em             ;
+                          text-align: justify; text-align-last: center; font-size: 0.85em             ;
+                          padding-top: 0.3em; padding-bottom: 0.3em; padding-left: 0.5em              ;
+                          padding-right: 0.5em;                                                       }
+.nbcode_gallery_hr      { height: 1px; background: #232323; border: 0px; margin-top: 0.5em            ;
+                          margin-bottom: 0.5em; margin-left: -0.5em; margin-right: -0.5em;            }
+.nbcode_gallery_image   { max-height: 12.0em;                                                         }
+.nbcode_copypasta       { padding-left: 0.7em; padding-right: 0.8em;                                  }
+
+@media (min-width: 1081px) {
+.nbcode_gallery_cell { flex: 0 0 32%; } }
+@media (max-width: 1080px) {
+.nbcode_gallery_cell { flex: 0 0 49%; } }
+
 /***************************************************** TOOLTIPS ******************************************************/
 .tooltip_container                { cursor: pointer;                                                                 }
 .tooltip_container .tooltip       { display: none; padding: 0.5em; z-index: 1337; margin-top: -20px; cursor: normal; }

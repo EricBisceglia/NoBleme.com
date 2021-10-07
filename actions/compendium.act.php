@@ -11,6 +11,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_pages_get                Returns data related to a compendium page.                                   */
 /*  compendium_pages_get_random         Returns data related to a random compendium page.                            */
 /*  compendium_pages_list               Fetches a list of compendium pages.                                          */
+/*  compendium_pages_list_urls          Fetches a list of all public compendium page urls.                           */
 /*                                                                                                                   */
 /*  compendium_page_type_get            Returns data related to a compendium page type.                              */
 /*                                                                                                                   */
@@ -39,9 +40,13 @@ function compendium_pages_get(  int     $page_id  = 0   ,
   require_included_file('functions_time.inc.php');
   require_included_file('bbcodes.inc.php');
 
-  // Get the user's current language and access rights
+  // Get the user's current language, access rights, settings, and the compendium pages which they can access
   $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
   $is_admin = user_is_administrator();
+  $nsfw     = user_settings_nsfw();
+  $privacy  = user_settings_privacy();
+  $mode     = user_get_mode();
+  $pages    = compendium_pages_list_urls();
 
   // Sanitize the data
   $page_id  = sanitize($page_id, 'int', 0);
@@ -127,7 +132,8 @@ function compendium_pages_get(  int     $page_id  = 0   ,
   $data['gross']      = $dpage['p_gross'];
   $data['meta']       = sanitize_output(string_truncate($dpage['p_summary'], 140, '...'));
   $data['summary']    = sanitize_output($dpage['p_summary']);
-  $data['body']       = nbcodes(bbcodes(sanitize_output($dpage['p_body'], preserve_line_breaks: true)));
+  $temp               = bbcodes(sanitize_output($dpage['p_body'], preserve_line_breaks: true));
+  $data['body']       = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['era_id']     = sanitize_output($dpage['pe_id']);
   $data['era']        = sanitize_output($dpage['pe_name']);
 
@@ -386,6 +392,37 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   $data['rows'] = $i;
 
   // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Fetches a list of all public compendium page urls.
+ *
+ * @return  array   An array containing all compendium page urls which the user is allowed to access.
+ */
+
+function compendium_pages_list_urls() : array
+{
+  // Get the user's current language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+
+  // Fetch the page urls
+  $qpages = query(" SELECT    compendium_pages.page_url AS 'p_url'
+                    FROM      compendium_pages
+                    WHERE     compendium_pages.title_$lang != ''
+                    AND       compendium_pages.is_deleted   = 0
+                    AND       compendium_pages.is_draft     = 0
+                    ORDER BY  compendium_pages.page_url ASC ");
+
+  // Prepare an array with the page urls
+  $data = array();
+  while($dpages = mysqli_fetch_array($qpages))
+    array_push($data, $dpages['p_url']);
+
+  // Return the array containing the page urls
   return $data;
 }
 
