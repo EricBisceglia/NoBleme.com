@@ -604,6 +604,8 @@ ___('bbcodes_spoiler_show', 'FR', "VOIR LE CONTENU CACHÉ");
 
 
 // NBCodes
+___('nbcodes_menu_contents',      'EN', "Page contents:");
+___('nbcodes_menu_contents',      'FR', "Contenu de la page :");
 ___('nbcodes_video_hidden',       'EN', "This video is hidden ({{link|pages/account/settings_privacy|privacy options}})");
 ___('nbcodes_video_hidden',       'FR', "Cette vidéo est masquée ({{link|pages/account/settings_privacy|options de vie privée}}");
 ___('nbcodes_video_hidden_small', 'EN', "Video hidden ({{link|pages/account/settings_privacy|privacy options}})");

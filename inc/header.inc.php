@@ -781,7 +781,7 @@ $javascripts .= '
 
         <div class="width_30 bigpadding_top hugepadding_bot">
 
-        <h1 class="align_center padding_bot">
+        <h1 class="align_center padding_bot header_login_form_title">
           <?=__('login_form_title')?>
         </h1>
 

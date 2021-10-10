@@ -1,17 +1,20 @@
 /***************************************************** 404 ERROR *****************************************************/
 body { background-color: #000000; }
 
-.header_topmenu                 { background-color: #CACACA;                                                    }
-.header_topmenu_title           { color: #121212; background-color: #CACACA;                                    }
-.header_topmenu_title:hover     { color: #CACACA; background-color: #121212;                                    }
-.header_topmenu_title_selected  { color: #CACACA; background-color: #121212;                                    }
-.header_infobar                 { background-color: #CACACA; border-bottom: 3px solid #121212;                  }
-.header_infobar_link            { color: #37536B;                                                               }
-.header_infobar_link:hover      { color: #78A1BC;                                                               }
-.header_submenu                 { background-color: #CACACA; color: #37536B; border-bottom: 2px solid #CACACA;  }
-.header_submenu_title           { color: #121212;                                                               }
-.header_submenu_link            { color: #37536B;                                                               }
-.header_submenu_link:hover      { filter: none; color: #78A1BC;                                                 }
+.header_topmenu                 { background-color: #B00B1E;                                                    }
+.header_topmenu_title           { color: #000000; background-color: #B00B1E;                                    }
+.header_topmenu_title:hover     { color: #B00B1E; background-color: #000000;                                    }
+.header_topmenu_title_selected  { color: #B00B1E; background-color: #000000;                                    }
+.header_infobar                 { background-color: #000000; border-bottom: 3px solid #B00B1E;                  }
+.header_infobar_link            { color: #B00B1E;                                                               }
+.header_infobar_link:hover      { color: #B00B1E;                                                               }
+.header_submenu                 { background-color: #000000; color: #B00B1E; border-bottom: 2px solid #B00B1E;  }
+.header_submenu_title           { color: #CACACA;                                                               }
+.header_submenu_link            { color: #B00B1E;                                                               }
+.header_submenu_link:hover      { filter:drop-shadow(0 0 5px #B00B1E); color: #B00B1E;                          }
+
+.header_login_form_title { color: #B00B1E; }
+.login_form_text         { color: #CACACA; }
 
 .container404               { width: 1000px; max-width: 100%;                                      }
 .table404                   { background-color: #000000;                                           }
