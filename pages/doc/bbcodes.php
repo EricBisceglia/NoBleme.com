@@ -277,13 +277,205 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </tbody>
   </table>
 
+  <?php if($is_admin) { ?>
+  <h1 class="hugepadding_top" id="nbcodes">
+    <?=__('nbcodes')?>
+  </h1>
+
+  <h5>
+    <?=__('nbcodes_subtitle')?>
+  </h5>
+
+  <p class="padding_bot">
+    <?=__('nbcodes_intro')?>
+  </p>
+
+  <table>
+    <thead>
+
+      <tr class="uppercase">
+        <th>
+          <?=__('nbcodes_nbcode')?>
+        </th>
+        <th>
+          <?=__('bbcodes_effect')?>
+        </th>
+        <th>
+          <?=__('nbcodes_example')?>
+        </th>
+      </tr>
+
+    </thead>
+    <tbody class="altc align_center valign_middle">
+
+      <tr>
+        <td class="nowrap monospace">
+          == ==<br>
+          === ===
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_title_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_title_example')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nowrap monospace">
+          [nsfw]
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_nsfw_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_nsfw_example')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nowrap monospace">
+          [page:name|text]
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_page_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_page_example')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nowrap monospace">
+          [link:url|text]
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_link_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_link_example')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nowrap monospace">
+          [image:img.png]<br>
+          [image-nsfw:img.png]
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_image_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_image_example')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nowrap monospace">
+          [youtube:id]<br>
+          [youtube-nsfw:id]
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_youtube_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_youtube_example')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nowrap monospace">
+          [trends1:id]<br>
+          [trends2:id|id]<br>
+          [trends3:id|id|id]<br>
+          [trends4:id|id|id|id]<br>
+          [trends5:id|id|id|id|id]
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_trends_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_trends_example')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nowrap monospace">
+          [copypasta=id]<br>
+          [copypasta-nsfw=id]
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_pasta_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_pasta_example')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nowrap monospace">
+          [menu]<br>
+          [menuitem:id|text]<br>
+          [anchor:id]
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_menu_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_menu_example')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nowrap monospace">
+          [gallery]<br>
+          [gallery:img.png]<br>
+          [gallery-nsfw:img.png]<br>
+          [gallery-youtube:id]<br>
+          [gallery-youtube-nsfw:id]
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_gallery_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_gallery_example')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nowrap monospace">
+          [source:id]<br>
+          [sources:id|text]
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_source_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_source_example')?>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  <?php } ?>
+
   <h1 class="hugepadding_top">
     <?=__('bbcodes_experiment')?>
   </h1>
 
-  <p class="padding_bot">
-    <?=__('bbcodes_test_zone')?>
-  </p>
+  <div class="padding_bot">
+
+    <p>
+      <?=__('bbcodes_test_zone')?>
+    </p>
+
+    <?php if($is_admin) { ?>
+    <p>
+      <?=__('bbcodes_test_admin')?>
+    </p>
+    <?php } ?>
+
+  </div>
 
   <?php
   $editor_target_element  = 'bbcodes_doc_input';

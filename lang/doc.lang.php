@@ -12,7 +12,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Header
+// BBCodes Header
 ___('bbcodes_subtitle', 'EN', "Message styling tool");
 ___('bbcodes_subtitle', 'FR', "Personnalisation des messages");
 ___('bbcodes_intro',    'EN', <<<EOT
@@ -25,7 +25,7 @@ EOT
 );
 
 
-// Table
+// BBCodes table
 ___('bbcodes_bbcode',           'EN', "BBCode");
 ___('bbcodes_bbcode',           'FR', "BBCode");
 ___('bbcodes_effect',           'EN', "Effect");
@@ -111,6 +111,83 @@ ___('bbcodes_doc_spoiler_full', 'EN', "[spoiler=Star Wars]Han shot first[/spoile
 ___('bbcodes_doc_spoiler_full', 'FR', "[spoiler=Star Wars]Han a tiré en premier[/spoiler]");
 
 
+// NBCodes header
+___('nbcodes',          'EN', "NBCodes");
+___('nbcodes',          'FR', "NBCodes");
+___('nbcodes_subtitle', 'EN', "Admin only customization");
+___('nbcodes_subtitle', 'FR', "Personnalisation des contenus administratifs");
+___('nbcodes_intro',    'EN', <<<EOT
+The tags listed in the table below can only be used by administrators, and only in specific contents where it is indicated that they are allowed. NBCodes can be used in combination with BBCodes. Visual examples will not be given, as they tend to be self explanatory.
+EOT
+);
+___('nbcodes_intro',    'FR', <<<EOT
+Les balises listées dans la table ci-dessous ne peuvent être utilisées que par l'administration, et seulement dans certains continus où il est indiqués que les NBCodes sont autorisés. Les NBCodes peuvent être combinés avec des BBCodes. Des exemples visuels ne seront pas fournis, car les NBCodes ont un rôle simple et clair.
+EOT
+);
+
+
+// NBCodes table
+___('nbcodes_nbcode',           'EN', "NBCode");
+___('nbcodes_nbcode',           'FR', "NBCode");
+___('nbcodes_example',          'EN', "Example");
+___('nbcodes_example',          'FR', "Exemple");
+
+___('nbcodes_title_name',       'EN', "Title<br>Subtitle");
+___('nbcodes_title_name',       'FR', "Title<br>Subtitle");
+___('nbcodes_title_example',    'EN', "== Title ==<br>=== Subtitle ===");
+___('nbcodes_title_example',    'FR', "== Titre ==<br>=== Sous-titre ===");
+
+___('nbcodes_nsfw_name',        'EN', "Optional blur");
+___('nbcodes_nsfw_name',        'FR', "Flou optionnel");
+___('nbcodes_nsfw_example',     'EN', "[nsfw]Contenu[/nsfw]");
+___('nbcodes_nsfw_example',     'FR', "[nsfw]Contents[/nsfw]");
+
+___('nbcodes_page_name',        'EN', "Compendium link");
+___('nbcodes_page_name',        'FR', "Lien compendium");
+___('nbcodes_page_example',     'EN', "[page:compendium_url|Compendium page name]");
+___('nbcodes_page_example',     'FR', "[page:compendium_url|Page du compendium]");
+
+___('nbcodes_link_name',        'EN', "External link");
+___('nbcodes_link_name',        'FR', "Lien externe");
+___('nbcodes_link_example',     'EN', "[link:example.com|External website]");
+___('nbcodes_link_example',     'FR', "[link:example.com|Site externe]");
+
+___('nbcodes_image_name',       'EN', "Compendium image<br>Blurry variant");
+___('nbcodes_image_name',       'FR', "Image compendium<br>Variante floutée");
+___('nbcodes_image_example',    'EN', "[image:image.png]<br>[image:image.png|left]<br>[image:image.png|right|Description]<br><br>[image-nsfw:image.png]<br>[image-nsfw:image.png|left]<br>[image-nsfw:image.png|right|Description]");
+___('nbcodes_image_example',    'FR', "[image:image.png]<br>[image:image.png|left]<br>[image:image.png|right|Description]<br><br>[image-nsfw:image.png]<br>[image-nsfw:image.png|left]<br>[image-nsfw:image.png|right|Description]");
+
+___('nbcodes_youtube_name',     'EN', "Compendium image<br>Blurry variant");
+___('nbcodes_youtube_name',     'FR', "Image compendium<br>Variante floutée");
+___('nbcodes_youtube_example',  'EN', "[youtube:video_id]<br>[youtube:video_id|left]<br>[youtube:video_id|right|Description]<br><br>[youtube-nsfw:video_id]<br>[youtube-nsfw:video_id|left]<br>[youtube-nsfw:video_id|right|Description]");
+___('nbcodes_youtube_example',  'FR', "[youtube:video_id]<br>[youtube:video_id|left]<br>[youtube:video_id|right|Description]<br><br>[youtube-nsfw:video_id]<br>[youtube-nsfw:video_id|left]<br>[youtube-nsfw:video_id|right|Description]");
+
+___('nbcodes_trends_name',      'EN', "Trends graph");
+___('nbcodes_trends_name',      'FR', "Graphe Trends");
+___('nbcodes_trends_example',   'EN', "[trends:Word]<br>[trends2:Word|Other word]<br>etc.");
+___('nbcodes_trends_example',   'FR', "[trends:Mot]<br>[trends2:Mot|Autre mot]<br>etc.");
+
+___('nbcodes_pasta_name',       'EN', "Copypasta<br>Blurry variant");
+___('nbcodes_pasta_name',       'FR', "Copypasta<br>Variante floutée");
+___('nbcodes_pasta_example',    'EN', "[copypasta=unique_id]Some text[/copypasta]<br>[copypasta-nsfw=unique_id]Some text[/copypasta-nsfw]");
+___('nbcodes_pasta_example',    'FR', "[copypasta=id_unique]Un texte[/copypasta]<br>[copypasta-nsfw=id_unique]Un texte[/copypasta-nsfw]");
+
+___('nbcodes_menu_name',        'EN', "Menu section<br>Menu item<br>Link anchor");
+___('nbcodes_menu_name',        'FR', "Bloc menu<br>Élément de menu<br>Ancre de lien");
+___('nbcodes_menu_example',     'EN', "[menu]<br>[menuitem:anchor_id|Menu entry]<br>[menuitem:anchor_id_2|Menu entry]<br>[/menu]<br><br>[anchor:anchor_id]");
+___('nbcodes_menu_example',     'FR', "[menu]<br>[menuitem:id_ancre|Élément du menu]<br>[menuitem:id_ancre_2|Élément du menu]<br>[/menu]<br><br>[anchor:id_ancre]");
+
+___('nbcodes_gallery_name',      'EN', "Menu section<br>Menu item<br>Link anchor");
+___('nbcodes_gallery_name',      'FR', "Bloc menu<br>Élément de menu<br>Ancre de lien");
+___('nbcodes_gallery_example',   'EN', "[gallery]<br>[gallery:image.png]<br>[gallery:image.png|description]<br>[gallery-nsfw:image.png]<br>[gallery-nsfw:image.png|description]<br>[gallery-youtube:video_id]<br>[gallery-youtube:video_id|description]<br>[gallery-youtube-nsfw:video_id]<br>[gallery-youtube-nsfw:video_id|description]<br>[/gallery]");
+___('nbcodes_gallery_example',   'FR', "[gallery]<br>[gallery:image.png]<br>[gallery:image.png|description]<br>[gallery-nsfw:image.png]<br>[gallery-nsfw:image.png|description]<br>[gallery-youtube:video_id]<br>[gallery-youtube:video_id|description]<br>[gallery-youtube-nsfw:video_id]<br>[gallery-youtube-nsfw:video_id|description]<br>[/gallery]");
+
+___('nbcodes_source_name',       'EN', "Source link<br>Source reference");
+___('nbcodes_source_name',       'FR', "Lien source<br>Référence source");
+___('nbcodes_source_example',    'EN', "[source:1]<br>[sources:1|Source reference]");
+___('nbcodes_source_example',    'FR', "[source:1]<br>[sources:1|Référence de la source]");
+
+
 // Experimental zone
 ___('bbcodes_experiment', 'EN', "Experimental zone");
 ___('bbcodes_experiment', 'FR', "Zone d'expérimentation");
@@ -120,6 +197,14 @@ EOT
 );
 ___('bbcodes_test_zone',  'FR', <<<EOT
 La meilleure façon de comprendre comment les BBCodes fonctionnent est de les utiliser ! Écrivez ce que vous voulez dans la zone de texte ci-dessous, le résultat transformé apparaîtra en temps réel en dessous. Quelques BBCodes y ont été pré-remplis , libre à vous de les supprimer et de faire vos propres expériences.
+EOT
+);
+___('bbcodes_test_admin', 'EN', <<<EOT
+This testing zone is for BBCodes only. NBCodes will not work here.
+EOT
+);
+___('bbcodes_test_admin', 'FR', <<<EOT
+Cette zone de test est pour les BBCodes uniquement. Les NBCodes ne fonctionneront pas ici.
 EOT
 );
 ___('bbcodes_test_input', 'EN', <<<EOT

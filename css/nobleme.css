@@ -220,13 +220,13 @@ a.forced_link:focus, a.forced_link:hover { filter: drop-shadow(0 0 5px #B00B1E);
 .nbcode_dead_link         { color: #0069C0;                                                             }
 .nbcode_dead_link:hover   { color: #673AB7;                                                             }
 .nbcode_link_icon         { vertical-align: middle; padding-left: 0.2em; padding-bottom: 0.3em;         }
-.nbcode_floater           { width: 20em; border: double #232323 3px; padding: 0.6em; font-size: 0.78em  ;
+.nbcode_floater           { border: double #232323 3px; padding: 0.6em; font-size: 0.78em               ;
                             border-radius: 0.3em; text-align: justify; text-align-last: center;         }
 .nbcode_floater_left      { float: left; margin-top: 0.4em; margin-bottom: 0.5em; margin-right: 1.0em;  }
 .nbcode_floater_right     { float: right; margin-top: 0.4em; margin-bottom: 0.5em; margin-left: 1.0em;  }
 .nbcode_gallery           { display: flex; flex-wrap: wrap;                                             }
-.nbcode_gallery_cell      { border: 1px solid #232323; margin: 0.25em; border-radius: 0.25em             ;
-                            text-align: justify; text-align-last: center; font-size: 0.95em             ;
+.nbcode_gallery_cell      { border: 1px solid #232323; margin: 0.25em; border-radius: 0.25em            ;
+                            text-align: justify; text-align-last: center; font-size: 0.85em             ;
                             padding-top: 0.3em; padding-bottom: 0.3em; padding-left: 0.5em              ;
                             padding-right: 0.5em; flex: 0 0 48%;                                        }
 .nbcode_gallery_hr        { height: 1px; background: #232323; border: 0px; margin-top: 0.5em            ;
@@ -235,6 +235,13 @@ a.forced_link:focus, a.forced_link:hover { filter: drop-shadow(0 0 5px #B00B1E);
 .nbcode_gallery_contents  { max-height: 16.0em;                                                         }
 .nbcode_copypasta         { padding-left: 0.7em; padding-right: 0.8em;                                  }
 .nbcode_source            { font-size: 0.7em; vertical-align: top;                                      }
+
+@media (min-width: 1081px) {
+.nbcode_floater       { max-width: 24em;      }
+.nbcode_gallery_cell  { font-size: 0.88em;  } }
+@media (max-width: 1080px) {
+.nbcode_floater       { max-width: 15em;      }
+.nbcode_gallery_cell  { font-size: 0.78em;  } }
 
 /***************************************************** TOOLTIPS ******************************************************/
 .tooltip_container                { cursor: pointer;                                                                 }
