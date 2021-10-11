@@ -17,8 +17,9 @@ $page_title_en    = "Compendium: ";
 $page_title_fr    = "Compendium : ";
 $page_description = "An encyclopedia of 21st century culture, internet memes, modern slang, and sociocultural concepts";
 
-// Extra CSS
-$css = array('compendium');
+// Extra CSS & JS
+$css  = array('compendium');
+$js   = array('compendium/page');
 
 
 
@@ -162,12 +163,22 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=$compendium_page_data['body']?>
   </div>
 
-  <p class="align_center bigpadding_top big">
+  <p class="align_center bigpadding_top">
     <?=__link('pages/compendium/random_page', __('compendium_page_random_page'))?><br>
     <?=__link('pages/compendium/random_page?type='.$compendium_page_data['type_raw'], __('compendium_page_random_type', preset_values: array($compendium_page_data['type_other'])))?><br>
-    <?=__link('pages/compendium/index', __('compendium_page_compendium'))?>
+    <?=__link('pages/compendium/index', __('compendium_page_compendium'))?><br>
+    <?=__link('#compendium_page_history', __('compendium_page_modified', preset_values: array($compendium_page_data['updated'])), is_internal: false, onclick: "compendium_page_fetch_history('".$compendium_page_data['id']."')")?>
   </p>
 
+</div>
+
+<div id="compendium_page_history" class="popin_background">
+  <div class="popin_body">
+    <a class="popin_close" onclick="popin_close('compendium_page_history');">&times;</a>
+    <div class="nopadding_top" id="compendium_page_history_body">
+      &nbsp;
+    </div>
+  </div>
 </div>
 
 <?php /***************************************************************************************************************/

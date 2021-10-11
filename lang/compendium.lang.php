@@ -90,6 +90,8 @@ ___('compendium_page_category+',  'EN', "Categories");
 ___('compendium_page_category+',  'FR', "Catégories");
 ___('compendium_page_appeared',   'EN', "First appearance");
 ___('compendium_page_appeared',   'FR', "Première apparition");
+___('compendium_page_modified',   'EN', "Page last modified {{1}}");
+___('compendium_page_modified',   'FR', "Dernière modification {{1}}");
 
 
 // Warnings
@@ -110,6 +112,29 @@ ___('compendium_page_random_page',  'EN', "Another random page");
 ___('compendium_page_random_page',  'FR', "Autre page au hasard");
 ___('compendium_page_random_type',  'EN', "Another random {{1}}");
 ___('compendium_page_random_type',  'FR', "Autre {{1}} au hasard");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                   PAGE HISTORY                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Error message
+___('compendium_page_history_error',  'EN', "This page has no history.");
+___('compendium_page_history_error',  'FR', "La page n'a pas d'historique.");
+
+
+// Header
+___('compendium_page_history_title',  'EN', "Page modification history");
+___('compendium_page_history_title',  'FR', "Historique des changements de la page");
+
+
+// History table
+___('compendium_page_history_creation', 'EN', "Page created");
+___('compendium_page_history_creation', 'FR', "Création de la page");
 
 
 

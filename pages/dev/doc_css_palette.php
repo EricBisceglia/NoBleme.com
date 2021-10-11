@@ -741,6 +741,28 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
       </tr>
       <tr>
         <td>
+          calendar
+        </td>
+        <td>
+          <?=__icon('calendar', alt: 'C', title: __('calendar'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('calendar', 'calendar', 1, 'C')."');")?>
+        </td>
+        <td>
+          <?=__icon('calendar', is_small: true, alt: 'C', title: __('calendar'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('calendar', 'calendar', 1, 'C', 'small')."');")?>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          clock
+        </td>
+        <td>
+          <?=__icon('clock', alt: 'C', title: __('clock'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('clock', 'clock', 1, 'C')."');")?>
+        </td>
+        <td>
+          <?=__icon('clock', is_small: true, alt: 'C', title: __('clock'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('clock', 'clock', 1, 'C', 'small')."');")?>
+        </td>
+      </tr>
+      <tr>
+        <td>
           copy
         </td>
         <td>
@@ -792,6 +814,17 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
         </td>
         <td>
           <?=__icon('edit', is_small: true, alt: 'E', title: __('edit'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('edit', 'edit', 1, 'E', 'small')."');")?>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          graph
+        </td>
+        <td>
+          <?=__icon('graph', alt: 'G', title: __('graph'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('graph', 'graph', 1, 'G')."');")?>
+        </td>
+        <td>
+          <?=__icon('graph', is_small: true, alt: 'G', title: __('graph'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('graph', 'graph', 1, 'G', 'small')."');")?>
         </td>
       </tr>
       <tr>
@@ -957,6 +990,17 @@ Lorem ipsum dolor sit ame, consectetur adipiscing elit. Etiam risus nulla, tempo
         </td>
         <td>
           <?=__icon('sort_up', is_small: true, alt: 'S', title: __('sort'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('sort_up', 'sort', 1, 'S', 'true')."');")?>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          star
+        </td>
+        <td>
+          <?=__icon('star', alt: 'S', title: __('star'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('star', 'star', 1, 'S')."');")?>
+        </td>
+        <td>
+          <?=__icon('star', is_small: true, alt: 'S', title: __('star'), title_case: 'initials', onclick: "to_clipboard('".dev_doc_icon_to_clipboard('star', 'star', 1, 'S', 'small')."');")?>
         </td>
       </tr>
       <tr>

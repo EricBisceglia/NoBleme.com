@@ -17,6 +17,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  compendium_eras_list                Fetches a list of compendium eras.                                           */
 /*                                                                                                                   */
+/*  compendium_page_history_list        Returns data related to a compendium page's history.                         */
+/*                                                                                                                   */
 /*  compendium_pages_list_years         Fetches the years at which compendium pages have been created.               */
 /*  compendium_appearance_list_years    Fetches the years at which compendium content has appeared.                  */
 /*  compendium_peak_list_years          Fetches the years at which compendium content has peaked.                    */
@@ -76,6 +78,7 @@ function compendium_pages_get(  int     $page_id  = 0   ,
   $dpage = mysqli_fetch_array(query(" SELECT    compendium_pages.id                 AS 'p_id'         ,
                                                 compendium_pages.is_deleted         AS 'p_deleted'    ,
                                                 compendium_pages.is_draft           AS 'p_draft'      ,
+                                                compendium_pages.created_at         AS 'p_created'    ,
                                                 compendium_pages.page_type          AS 'p_type'       ,
                                                 compendium_pages.title_$lang        AS 'p_title'      ,
                                                 compendium_pages.title_en           AS 'p_title_en'   ,
@@ -136,6 +139,17 @@ function compendium_pages_get(  int     $page_id  = 0   ,
   $data['body']       = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
   $data['era_id']     = sanitize_output($dpage['pe_id']);
   $data['era']        = sanitize_output($dpage['pe_name']);
+
+  // Fetch the latest update
+  $dupdate = mysqli_fetch_array(query(" SELECT    compendium_pages_history.edited_at AS 'ph_time'
+                                        FROM      compendium_pages_history
+                                        WHERE     compendium_pages_history.fk_compendium_pages = '$page_id'
+                                        ORDER BY  compendium_pages_history.edited_at DESC
+                                        LIMIT     1 "));
+
+  // Prepare the lastest update
+  $temp             = (isset($dupdate['ph_time']) && $dupdate['ph_time']) ? $dupdate['ph_time'] : $dpage['p_created'];
+  $data['updated']  = ($temp) ? sanitize_output(time_since($temp)) : __('error');
 
   // Fetch any associated categories
   $qcategories = query("  SELECT    compendium_pages_categories.id    AS 'cpc_id'   ,
@@ -512,6 +526,69 @@ function compendium_eras_list() : array
 
   // Add the number of rows to the data
   $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
+}
+
+
+
+
+/**
+ * Returns data related to a compendium page's history.
+ *
+ * @param   int         $page_id  The page's id
+ *
+ * @return  array|null            An array containing the data, or null if the page type doesn't exist.
+ */
+
+function compendium_page_history_list( int $page_id ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+
+  // Sanitize the page's id
+  $page_id = sanitize($page_id, 'int', 0);
+
+  // Return null if the page doesn't exist
+  if(!database_row_exists('compendium_pages', $page_id))
+    return null;
+
+  // Get the user's current language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+
+  // Fetch the related page history
+  $qhistory = query(" SELECT    compendium_pages_history.id             AS 'ph_id'    ,
+                                compendium_pages_history.edited_at      AS 'ph_date'  ,
+                                compendium_pages_history.is_major_edit  AS 'ph_major' ,
+                                compendium_pages_history.summary_$lang  AS 'ph_body'
+                      FROM      compendium_pages_history
+                      WHERE     compendium_pages_history.fk_compendium_pages = '$page_id'
+                      ORDER BY  compendium_pages_history.edited_at DESC ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qhistory); $i++)
+  {
+    $data[$i]['id']     = sanitize_output($row['ph_id']);
+    $data[$i]['date']   = sanitize_output(time_since($row['ph_date']));
+    $data[$i]['major']  = $row['ph_major'];
+    $data[$i]['body']   = sanitize_output($row['ph_body']);
+  }
+
+  // Fetch the page's creation date
+  $dpage = mysqli_fetch_array(query(" SELECT  compendium_pages.created_at AS 'p_created'
+                                      FROM    compendium_pages
+                                      WHERE   compendium_pages.id = '$page_id' "));
+
+  // Add the page creation info to the data
+  $data[$i]['id']     = 0;
+  $data[$i]['date']   = sanitize_output(time_since($dpage['p_created']));
+  $data[$i]['major']  = 1;
+  $data[$i]['body']   = '';
+  $data[$i]['edit']   = 1;
+
+  // Add the number of rows to the data
+  $data['rows'] = $i + 1;
 
   // Return the prepared data
   return $data;
