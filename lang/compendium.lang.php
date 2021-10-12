@@ -125,6 +125,8 @@ ___('compendium_page_random_type',  'FR', "Autre {{1}} au hasard");
 // Error message
 ___('compendium_page_history_error',  'EN', "This page has no history.");
 ___('compendium_page_history_error',  'FR', "La page n'a pas d'historique.");
+___('compendium_page_history_none',   'EN', "This compendium page's history entry does not exist or has been deleted");
+___('compendium_page_history_none',   'FR', "Cette entrée de l'historique de la page du compendium n'existe pas ou a été supprimée");
 
 
 // Header
@@ -135,6 +137,19 @@ ___('compendium_page_history_title',  'FR', "Historique des changements de la pa
 // History table
 ___('compendium_page_history_creation', 'EN', "Page created");
 ___('compendium_page_history_creation', 'FR', "Création de la page");
+
+
+// Edit a history entry
+___('compendium_page_history_edit_title',   'EN', "Edit the page history entry");
+___('compendium_page_history_edit_title',   'FR', "Modifier un élément de l'historique");
+___('compendium_page_history_edit_body_en', 'EN', "Change summary (english)");
+___('compendium_page_history_edit_body_en', 'FR', "Résumé du changement (anglais)");
+___('compendium_page_history_edit_body_fr', 'EN', "Change summary (french)");
+___('compendium_page_history_edit_body_fr', 'FR', "Résumé du changement (français)");
+___('compendium_page_history_edit_major',   'EN', "Major change");
+___('compendium_page_history_edit_major',   'FR', "Changement majeur");
+___('compendium_page_history_edit_submit',  'EN', "Edit history entry");
+___('compendium_page_history_edit_submit',  'FR', "Modifier l'historique");
 
 
 

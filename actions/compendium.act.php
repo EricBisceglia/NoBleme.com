@@ -17,7 +17,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  compendium_eras_list                Fetches a list of compendium eras.                                           */
 /*                                                                                                                   */
-/*  compendium_page_history_list        Returns data related to a compendium page's history.                         */
+/*  compendium_page_history_get         Returns data related to an entry in a compendium page's history.             */
+/*  compendium_page_history_list        Returns data related to a compendium page's history entry.                   */
+/*  compendium_page_history_edit        Modifies an existing compendium page's history entry.                        */
 /*                                                                                                                   */
 /*  compendium_pages_list_years         Fetches the years at which compendium pages have been created.               */
 /*  compendium_appearance_list_years    Fetches the years at which compendium content has appeared.                  */
@@ -535,6 +537,47 @@ function compendium_eras_list() : array
 
 
 /**
+ * Returns data related to an entry in a compendium page's history entry.
+ *
+ * @param   int         $history_id   The compendium page's history entry id.
+ *
+ * @return  array|null                An array containing page related data, or NULL if it does not exist.
+ */
+
+function compendium_page_history_get( int $history_id ) : mixed
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the history entry's id
+  $history_id = sanitize($history_id, 'int', 0);
+
+  // Return null if the history entry doesn't exist
+  if(!database_row_exists('compendium_pages_history', $history_id))
+    return NULL;
+
+  // Fetch the data
+  $dhistory = mysqli_fetch_array(query("  SELECT  compendium_pages_history.fk_compendium_pages  AS 'ph_page'    ,
+                                                  compendium_pages_history.is_major_edit        AS 'ph_major'   ,
+                                                  compendium_pages_history.summary_en           AS 'ph_body_en' ,
+                                                  compendium_pages_history.summary_fr           AS 'ph_body_fr'
+                                          FROM    compendium_pages_history
+                                          WHERE   compendium_pages_history.id = '$history_id' "));
+
+  // Assemble an array with the data
+  $data['page_id']  = sanitize_output($dhistory['ph_page']);
+  $data['major']    = $dhistory['ph_major'];
+  $data['body_en']  = sanitize_output($dhistory['ph_body_en']);
+  $data['body_fr']  = sanitize_output($dhistory['ph_body_fr']);
+
+  // Return the data
+  return $data;
+}
+
+
+
+
+/**
  * Returns data related to a compendium page's history.
  *
  * @param   int         $page_id  The page's id
@@ -569,10 +612,10 @@ function compendium_page_history_list( int $page_id ) : mixed
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qhistory); $i++)
   {
-    $data[$i]['id']     = sanitize_output($row['ph_id']);
-    $data[$i]['date']   = sanitize_output(time_since($row['ph_date']));
-    $data[$i]['major']  = $row['ph_major'];
-    $data[$i]['body']   = sanitize_output($row['ph_body']);
+    $data[$i]['id']   = sanitize_output($row['ph_id']);
+    $data[$i]['date'] = sanitize_output(time_since($row['ph_date']));
+    $data[$i]['css']  = ($row['ph_major']) ? ' class="bold"' : '';
+    $data[$i]['body'] = sanitize_output($row['ph_body']);
   }
 
   // Fetch the page's creation date
@@ -581,17 +624,55 @@ function compendium_page_history_list( int $page_id ) : mixed
                                       WHERE   compendium_pages.id = '$page_id' "));
 
   // Add the page creation info to the data
-  $data[$i]['id']     = 0;
-  $data[$i]['date']   = sanitize_output(time_since($dpage['p_created']));
-  $data[$i]['major']  = 1;
-  $data[$i]['body']   = '';
-  $data[$i]['edit']   = 1;
+  $data[$i]['id']   = 0;
+  $data[$i]['date'] = sanitize_output(time_since($dpage['p_created']));
+  $data[$i]['css']  = ' class="bold"';
+  $data[$i]['body'] = '';
 
   // Add the number of rows to the data
   $data['rows'] = $i + 1;
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Modifies an existing compendium page's history entry.
+ *
+ * @param   int     $history_id     The compendium page's history entry id.
+ * @param   array   $history_data   The compendium page's history entry's data.
+ *
+ * @return  void
+ */
+
+function compendium_page_history_edit(  int   $history_id   ,
+                                        array $history_data ) : void
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the history entry's id
+  $history_id = sanitize($history_id, 'int', 0);
+
+  // Stop here if the history entry does not exist
+  if(!database_row_exists('compendium_pages_history', $history_id))
+    return;
+
+  // Sanitize the updated data
+  $history_body_en  = isset($history_data['body_en']) ? sanitize($history_data['body_en'], 'string')  : '';
+  $history_body_fr  = isset($history_data['body_fr']) ? sanitize($history_data['body_fr'], 'string')  : '';
+  $history_major    = isset($history_data['major'])   ? sanitize($history_data['major'], 'string')    : 'false';
+  $history_major    = ($history_major == 'false')     ? 0                                             : 1;
+
+  // Update the quote
+  query(" UPDATE  compendium_pages_history
+          SET     compendium_pages_history.is_major_edit  = '$history_major'    ,
+                  compendium_pages_history.summary_en     = '$history_body_en'  ,
+                  compendium_pages_history.summary_fr     = '$history_body_fr'
+          WHERE   compendium_pages_history.id             = '$history_id' ");
 }
 
 

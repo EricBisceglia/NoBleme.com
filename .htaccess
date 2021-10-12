@@ -20,8 +20,7 @@ RewriteRule ^pages/users/([0-9]+)$ pages/users/profile.php?id=$1 [NC]
 # Better looking compendium URLs (not strictly enforced)
 RewriteCond %{THE_REQUEST} !/index [NC]
 RewriteCond %{THE_REQUEST} !/mission_statement [NC]
-RewriteCond %{THE_REQUEST} !/page_history [NC]
-RewriteCond %{THE_REQUEST} !/page_list [NC]
+RewriteCond %{THE_REQUEST} !/page_ [NC]
 RewriteCond %{THE_REQUEST} !/random_page [NC]
 RewriteRule ^pages/compendium/(.*)$ pages/compendium/page.php?page=$1 [QSA,NC]
 

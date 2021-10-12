@@ -21,7 +21,30 @@ page_must_be_fetched_dynamically();
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Compendium page history
+// Edit compendium page history entry
+
+// Edit a page history entry if requested
+if(isset($_POST['compendium_page_history_edit']))
+{
+  // Only administrators can edit history entries
+  user_restrict_to_administrators();
+
+  // Fetch the history entry's id and new values
+  $compendium_history_id    = (int)form_fetch_element('compendium_page_history_edit');
+  $compendium_history_data  = array(  'body_en' => form_fetch_element('compendium_page_history_edit_summary_en')  ,
+                                      'body_fr' => form_fetch_element('compendium_page_history_edit_summary_fr')  ,
+                                      'major'   => form_fetch_element('compendium_page_history_edit_major')       );
+
+  // Edit the history entry
+  compendium_page_history_edit( $compendium_history_id    ,
+                                $compendium_history_data  );
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch compendium page history
 
 // Fetch the compendium page's id
 $compendium_page_id = (int)form_fetch_element('compendium_page_id');
@@ -60,24 +83,45 @@ if(!$compendium_page_history)
       <th>
         <?=__('description')?>
       </th>
+      <?php if($is_admin && $compendium_page_history['rows'] > 1) { ?>
+      <th>
+        <?=__('act')?>
+      </th>
+      <?php } ?>
     </tr>
 
   </thead>
   <tbody class="altc align_center">
 
     <?php for($i = 0; $i < $compendium_page_history['rows']; $i++) { ?>
-    <tr>
-      <td class="nowrap">
+
+    <tr<?=$compendium_page_history[$i]['css']?>>
+
+      <td class="spaced nowrap">
         <?=$compendium_page_history[$i]['date']?>
       </td>
-      <td>
+
+      <td class="spaced">
         <?php if(($i + 1) == $compendium_page_history['rows']) { ?>
         <?=__('compendium_page_history_creation')?>
         <?php } else { ?>
         <?=$compendium_page_history[$i]['body']?>
         <?php } ?>
       </td>
+
+      <?php if($is_admin && $compendium_page_history['rows'] > 1) { ?>
+      <td class="spaced nowrap">
+        <?php if(($i + 1) == $compendium_page_history['rows']) { ?>
+        &nbsp;
+        <?php } else { ?>
+        <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', onclick: "compendium_page_history_edit_form('".$compendium_page_history[$i]['id']."');")?>
+        <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
+        <?php } ?>
+      </td>
+      <?php } ?>
+
     </tr>
+
     <?php } ?>
 
   </tbody>

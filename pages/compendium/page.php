@@ -164,10 +164,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </div>
 
   <p class="align_center bigpadding_top">
-    <?=__link('pages/compendium/random_page', __('compendium_page_random_page'))?><br>
+  <?=__link('pages/compendium/index', __('compendium_page_compendium'))?><br>
+    <?=__link('#compendium_page_history', __('compendium_page_modified', preset_values: array($compendium_page_data['updated'])), is_internal: false, onclick: "compendium_page_history_fetch('".$compendium_page_data['id']."')")?><br>
     <?=__link('pages/compendium/random_page?type='.$compendium_page_data['type_raw'], __('compendium_page_random_type', preset_values: array($compendium_page_data['type_other'])))?><br>
-    <?=__link('pages/compendium/index', __('compendium_page_compendium'))?><br>
-    <?=__link('#compendium_page_history', __('compendium_page_modified', preset_values: array($compendium_page_data['updated'])), is_internal: false, onclick: "compendium_page_fetch_history('".$compendium_page_data['id']."')")?>
+    <?=__link('pages/compendium/random_page', __('compendium_page_random_page'))?>
   </p>
 
 </div>
