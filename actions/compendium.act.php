@@ -20,6 +20,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_page_history_get         Returns data related to an entry in a compendium page's history.             */
 /*  compendium_page_history_list        Returns data related to a compendium page's history entry.                   */
 /*  compendium_page_history_edit        Modifies an existing compendium page's history entry.                        */
+/*  compendium_page_history_delete      Hard deletes an existing compendium page's history entry.                    */
 /*                                                                                                                   */
 /*  compendium_pages_list_years         Fetches the years at which compendium pages have been created.               */
 /*  compendium_appearance_list_years    Fetches the years at which compendium content has appeared.                  */
@@ -673,6 +674,34 @@ function compendium_page_history_edit(  int   $history_id   ,
                   compendium_pages_history.summary_en     = '$history_body_en'  ,
                   compendium_pages_history.summary_fr     = '$history_body_fr'
           WHERE   compendium_pages_history.id             = '$history_id' ");
+}
+
+
+
+
+/**
+ * Hard deletes an existing compendium page's history entry.
+ *
+ * @param   int   $history_id   The compendium page's history entry id.
+ *
+ * @return  void
+ */
+
+function compendium_page_history_delete( int $history_id ) : void
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the history entry's id
+  $history_id = sanitize($history_id, 'int', 0);
+
+  // Stop here if the history entry does not exist
+  if(!database_row_exists('compendium_pages_history', $history_id))
+    return;
+
+  // Delete the history entry
+  query(" DELETE FROM compendium_pages_history
+          WHERE       compendium_pages_history.id = '$history_id' ");
 }
 
 

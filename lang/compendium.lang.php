@@ -152,6 +152,11 @@ ___('compendium_page_history_edit_submit',  'EN', "Edit history entry");
 ___('compendium_page_history_edit_submit',  'FR', "Modifier l'historique");
 
 
+// Delete a history entry
+___('compendium_page_history_delete', 'EN', "Confirm the permanent and irreversible deletion of this compendium page\'s history entry.");
+___('compendium_page_history_delete', 'FR', "Confirmer la suppression définitive et irréversible de cette entrée de l\'historique de la page du compendium.");
+
+
 
 
 /*********************************************************************************************************************/

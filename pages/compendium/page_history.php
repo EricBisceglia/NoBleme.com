@@ -21,7 +21,7 @@ page_must_be_fetched_dynamically();
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Edit compendium page history entry
+// Edit a compendium page history entry
 
 // Edit a page history entry if requested
 if(isset($_POST['compendium_page_history_edit']))
@@ -38,6 +38,25 @@ if(isset($_POST['compendium_page_history_edit']))
   // Edit the history entry
   compendium_page_history_edit( $compendium_history_id    ,
                                 $compendium_history_data  );
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete a compendium page history entry
+
+// Delete a page history entry if requested
+if(isset($_POST['compendium_page_history_delete']))
+{
+  // Only administrators can edit history entries
+  user_restrict_to_administrators();
+
+  // Fetch the history entry's id
+  $compendium_history_id = (int)form_fetch_element('compendium_page_history_delete');
+
+  // Delete the history entry
+  compendium_page_history_delete( $compendium_history_id );
 }
 
 
@@ -115,7 +134,7 @@ if(!$compendium_page_history)
         &nbsp;
         <?php } else { ?>
         <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', onclick: "compendium_page_history_edit_form('".$compendium_page_history[$i]['id']."');")?>
-        <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
+        <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "compendium_page_history_delete('".$compendium_page_id."', '".$compendium_page_history[$i]['id']."', '".__('compendium_page_history_delete')."');")?>
         <?php } ?>
       </td>
       <?php } ?>
