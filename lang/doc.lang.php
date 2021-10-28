@@ -302,11 +302,11 @@ Tout NoBleme est fabriqué à la main, sur mesure, avec amour. Le site n'utilise
 EOT
 );
 ___('privacy_external_2',     'EN', <<<EOT
-There is however one area of NoBleme which contains third party content. For the purpose of documenting Internet culture, the {{link|todo_link|21st century compendium}} embeds external content in some of its pages (YouTube videos and Google Trends graphs). In order to minimize the potential for these third parties to do something nefarious with your data, we try to use as few of them as possible.
+There is however one area of NoBleme which contains third party content. For the purpose of documenting Internet culture, the {{link|pages/compendium/index|21st century compendium}} embeds external content in some of its pages (YouTube videos and Google Trends graphs). In order to minimize the potential for these third parties to do something nefarious with your data, we try to use as few of them as possible.
 EOT
 );
 ___('privacy_external_2',     'FR', <<<EOT
-Il y a toutefois une partie de NoBleme où se trouvent des contenus tiers. Dans le {{link|todo_link|compendium du 21ème siècle}}, certaines pages incluent des contenus externes, qui servent d'illustration (des vidéos YouTube et des graphes Google Trends). Afin de minimiser le potentiel de collecte de vos données personnelles par ces tiers, nous en utilisons le plus petit nombre possible.
+Il y a toutefois une partie de NoBleme où se trouvent des contenus tiers. Dans le {{link|pages/compendium/index|compendium du 21ème siècle}}, certaines pages incluent des contenus externes, qui servent d'illustration (des vidéos YouTube et des graphes Google Trends). Afin de minimiser le potentiel de collecte de vos données personnelles par ces tiers, nous en utilisons le plus petit nombre possible.
 EOT
 );
 ___('privacy_external_3',     'EN', <<<EOT
@@ -418,11 +418,11 @@ EOT
 ___('legal_fair_title', 'EN', "Fair use of third party content");
 ___('legal_fair_title', 'FR', "Usage loyal de contenus tiers");
 ___('legal_fair_body',  'EN', <<<EOT
-Some third party content might be used on NoBleme for educative or encyclopedic purposes, mainly in the {{link|todo_link|21st century compendium}}. For these use cases, credit will be given to the original author when possible. In some cases, due to the anonymous nature of many Internet platforms, it is hard or even impossible to find and credit the author of some original creative works. If you can demonstrate ownership of a piece of creative work hosted on NoBleme over which you hold intellectual property rights, use our {{link|pages/messages/admins|administrative contact form}} to make your request and it will be removed as soon as possible.
+Some third party content might be used on NoBleme for educative or encyclopedic purposes, mainly in the {{link|pages/compendium/index|21st century compendium}}. For these use cases, credit will be given to the original author when possible. In some cases, due to the anonymous nature of many Internet platforms, it is hard or even impossible to find and credit the author of some original creative works. If you can demonstrate ownership of a piece of creative work hosted on NoBleme over which you hold intellectual property rights, use our {{link|pages/messages/admins|administrative contact form}} to make your request and it will be removed as soon as possible.
 EOT
 );
 ___('legal_fair_body',  'FR', <<<EOT
-Certains contenus tiers sont utilisés sur NoBleme à titre pédagogique ou encyclopédique, principalement dans le {{link|todo_link|compendium du 21ème siècle}}. Dans ces cas, nous nous efforçons de créditer les auteurs de ces contenus. Malheureusement, de par la nature anonyme et chaotique d'Internet, il n'est pas toujours possible d'identifier l'auteur de contenus créatifs. Si vous pouvez démontrer que vous êtes à l'origine d'un contenu tiers hébergé sur NoBleme et que vous désirez vous faire créditer ou demander la suppression de ce contenu, utilisez notre {{link|pages/messages/admins|formulaire de contact administratif}} pour formuler votre requête, qui sera traitée dès que possible.
+Certains contenus tiers sont utilisés sur NoBleme à titre pédagogique ou encyclopédique, principalement dans le {{link|pages/compendium/index|compendium du 21ème siècle}}. Dans ces cas, nous nous efforçons de créditer les auteurs de ces contenus. Malheureusement, de par la nature anonyme et chaotique d'Internet, il n'est pas toujours possible d'identifier l'auteur de contenus créatifs. Si vous pouvez démontrer que vous êtes à l'origine d'un contenu tiers hébergé sur NoBleme et que vous désirez vous faire créditer ou demander la suppression de ce contenu, utilisez notre {{link|pages/messages/admins|formulaire de contact administratif}} pour formuler votre requête, qui sera traitée dès que possible.
 EOT
 );
 

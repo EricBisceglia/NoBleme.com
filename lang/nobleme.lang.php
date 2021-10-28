@@ -84,7 +84,7 @@ ___('nobleme_home_tour',        'EN', <<<EOT
     {{link++|pages/social/irc|The IRC chat server|bold|}} is where the community hangs out and communicates. Come join!
   </li>
   <li class="smallpadding_top">
-    {{link++|todo_link|The 21st century compendium|bold|}} is a deep dive into modern culture, society, slang, and memes.
+    {{link++|pages/compendium/index|The 21st century compendium|bold|}} is a deep dive into modern culture, society, slang, and memes.
   </li>
   <li class="smallpadding_top">
     {{link++|pages/politics/manifesto|The contrapositionist manifesto|bold|}} will give you some insight on where NoBleme stands politically.
@@ -104,7 +104,7 @@ ___('nobleme_home_tour',        'FR', <<<EOT
     {{link++|pages/social/irc|Le serveur de chat IRC|bold|}}, où vous pourrez trouver et interagir avec la communauté de NoBleme.
   </li>
   <li class="smallpadding_top">
-    {{link++|todo_link|Une étude du 21ème siècle|bold|}}, où sont analysés la culture, la société, le langage, et les memes.
+    {{link++|pages/compendium/index|Une étude du 21ème siècle|bold|}}, où sont analysés la culture, la société, le langage, et les memes.
   </li>
   <li class="smallpadding_top">
     {{link++|pages/politics/manifesto|Le manifeste contrapositioniste|bold|}}, qui devrait clarifier les positions politiques de NoBleme.
@@ -395,11 +395,11 @@ EOT
 );
 ___('nobleme_history_community6', 'EN', <<<EOT
 Last but not least, the very lazily named "Wiki NoBleme" was the most successful part of this era of NoBleme's history.
-As modern {{link|todo_link|internet culture}} was starting to become a proper thing, and as {{link|todo_link|memes}} were becoming a big part of modern culture, NoBleme's wiki was from 2006 onwards the only french language website documenting memes, listing, categorizing, and explaining them. It became wildly popular, bringing thousands of new visitors per day to NoBleme. Sadly, very few of those visitors joined the community (or even knew that there was a community behind the website), and those who did were usually the undesirable kind: trolls, kids, edgy teenagers. Lessons learned: growing a community is truly hard, people were craving content about Internet culture, kids and teenagers love memes a lot more than you'd think (and that's great!).
+As modern {{link|pages/compendium/index|internet culture}} was starting to become a proper thing, and as {{link|todo_link|memes}} were becoming a big part of modern culture, NoBleme's wiki was from 2006 onwards the only french language website documenting memes, listing, categorizing, and explaining them. It became wildly popular, bringing thousands of new visitors per day to NoBleme. Sadly, very few of those visitors joined the community (or even knew that there was a community behind the website), and those who did were usually the undesirable kind: trolls, kids, edgy teenagers. Lessons learned: growing a community is truly hard, people were craving content about Internet culture, kids and teenagers love memes a lot more than you'd think (and that's great!).
 EOT
 );
 ___('nobleme_history_community6', 'FR', <<<EOT
-Il faut également mentionner le créativement nommé Wiki NoBleme, qui fut la partie la plus populaire de cette époque de NoBleme. Tandis que la {{link|todo_link|culture internet}} moderne commençait à devenir quelque chose de concret, et que les {{link|todo_link|memes}} devenaient une partie importante de la culture populaire, le Wiki NoBleme était dès 2006 l'unique site Internet francophone listant, documentant, catégorisant, et expliquant les memes. Même si le Wiki amenait des milliers de visiteurs par jour sur NoBleme, la grande majorité de ces personnes ne rejoignaient pas la communauté (ou ne réalisaient même pas qu'elle existait), et lorsqu'un membre rejoignait la communauté depuis le Wiki il s'agissait souvent d'un indésirable : trolls, gamins, provocateurs. Leçons apprises : faire grandir une communauté n'est pas une chose simple, la culture Internet est un sujet populaire, les enfants et les jeunes adolescents s'intéressent beaucoup aux memes (et c'est tant mieux !).
+Il faut également mentionner le créativement nommé Wiki NoBleme, qui fut la partie la plus populaire de cette époque de NoBleme. Tandis que la {{link|pages/compendium/index|culture internet}} moderne commençait à devenir quelque chose de concret, et que les {{link|todo_link|memes}} devenaient une partie importante de la culture populaire, le Wiki NoBleme était dès 2006 l'unique site Internet francophone listant, documentant, catégorisant, et expliquant les memes. Même si le Wiki amenait des milliers de visiteurs par jour sur NoBleme, la grande majorité de ces personnes ne rejoignaient pas la communauté (ou ne réalisaient même pas qu'elle existait), et lorsqu'un membre rejoignait la communauté depuis le Wiki il s'agissait souvent d'un indésirable : trolls, gamins, provocateurs. Leçons apprises : faire grandir une communauté n'est pas une chose simple, la culture Internet est un sujet populaire, les enfants et les jeunes adolescents s'intéressent beaucoup aux memes (et c'est tant mieux !).
 EOT
 );
 ___('nobleme_history_community7', 'EN', <<<EOT
@@ -522,11 +522,11 @@ NoBleme, en tant que petite communauté isolée, ne cherchait pas à avoir la mo
 EOT
 );
 ___('nobleme_history_political4',  'EN', <<<EOT
-In 2021, as NoBleme was in its 16th year, the website was yet again relaunched. The presence of a {{link|pages/politics/manifesto|political manifesto}} made it clear where NoBleme stood, and the old Wiki documenting Internet culture was modernized and rebranded as the {{link|todo_link|21st century compendium}}. But at its core, NoBleme didn't change: it remains to this day a small community centered website, a living memory of what the Internet used to be.
+In 2021, as NoBleme was in its 16th year, the website was yet again relaunched. The presence of a {{link|pages/politics/manifesto|political manifesto}} made it clear where NoBleme stood, and the old Wiki documenting Internet culture was modernized and rebranded as the {{link|pages/compendium/index|21st century compendium}}. But at its core, NoBleme didn't change: it remains to this day a small community centered website, a living memory of what the Internet used to be.
 EOT
 );
 ___('nobleme_history_political4',  'FR', <<<EOT
-En 2021, lors de la 16ème année de NoBleme, une nouvelle refonte du site eut lieu. La présence d'un {{link|pages/politics/manifesto|manifeste politique}} ne laisse plus aucune ambiguité sur les opinions que soutiennent NoBleme, et l'ancien wiki documentant la culture Internet fut retravaillé intégralement et remis à neuf sous le nom du {{link|todo_link|compendium du 21ème siècle}}. Malgré tout cela, NoBleme n'a pas changé : il s'agit toujours d'un petit site Internet plutôt isolé et centré sur sa communauté, une mémoire vivante de ce qu'Internet était à ses débuts.
+En 2021, lors de la 16ème année de NoBleme, une nouvelle refonte du site eut lieu. La présence d'un {{link|pages/politics/manifesto|manifeste politique}} ne laisse plus aucune ambiguité sur les opinions que soutiennent NoBleme, et l'ancien wiki documentant la culture Internet fut retravaillé intégralement et remis à neuf sous le nom du {{link|pages/compendium/index|compendium du 21ème siècle}}. Malgré tout cela, NoBleme n'a pas changé : il s'agit toujours d'un petit site Internet plutôt isolé et centré sur sa communauté, une mémoire vivante de ce qu'Internet était à ses débuts.
 EOT
 );
 

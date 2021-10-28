@@ -240,11 +240,11 @@ ___('compendium_image_used+', 'FR', "Cette image est utilisée sur ces pages :"
 
 // Disclaimer
 ___('compendium_image_disclaimer',  'EN', <<<EOT
-This image is being hosted here for encyclopedic purposes, as a part of NoBleme's {{link|pages/compendium/index|21st century compendium}}. If you are the author of this image and want it to be removed from this website, contact us by using our {{link|todo_link|contact form}} and it will be removed from the website.
+This image is being hosted here for encyclopedic purposes, as a part of NoBleme's {{link|pages/compendium/index|21st century compendium}}. If you are the author of this image and want it to be removed from this website, contact us by using our {{link|pages/messages/admins|contact form}} and it will be removed from the website.
 EOT
 );
 ___('compendium_image_disclaimer',  'FR', <<<EOT
-Cette image est présente ici pour des raisons encyclopédiques, en tant qu'élément du {{link|pages/compendium/index|compendium du 21ème siècle}} de NoBleme. Si vous détenez la propriété intellectuelle de cette image et désirez qu'elle soit supprimée, utilisez notre {{link|todo_link|formulaire de contact}} et nous coopèrerons.
+Cette image est présente ici pour des raisons encyclopédiques, en tant qu'élément du {{link|pages/compendium/index|compendium du 21ème siècle}} de NoBleme. Si vous détenez la propriété intellectuelle de cette image et désirez qu'elle soit supprimée, utilisez notre {{link|pages/messages/admins|formulaire de contact}} et nous coopèrerons.
 EOT
 );
 
@@ -408,11 +408,11 @@ Tenter de corriger ce biais ne ferait qu'amener un nouveau problème : ce n'est
 EOT
 );
 ___('compendium_faq_answer_3_3',  'EN', <<<EOT
-If you want to alleviate this issue by offering documentation on memes, slangs, sociocultural concepts of your language and/or culture, you can do so using our {{link|todo_link|contact form}}. We would be delighted with the help. Contributors are credited on the pages which they have contributed to (unless they asked to not be credited).
+If you want to alleviate this issue by offering documentation on memes, slangs, sociocultural concepts of your language and/or culture, you can do so using our {{link|pages/messages/admins|contact form}}. We would be delighted with the help. Contributors are credited on the pages which they have contributed to (unless they asked to not be credited).
 EOT
 );
 ___('compendium_faq_answer_3_3',  'FR', <<<EOT
-Toutefois, si vous voulez nous aider à remédier à ce problème en proposant de la documentation sur des memes, de l'argot, des concepts socioculturels propres à votre langue et/ou culture, vous pouvez le faire via notre {{link|todo_link|formulaire de contact}}. Nous apprécierons assurément votre aide. Les personnes offrant des contributions sont créditées sur les pages concernées (sauf si elles demandent à rester anonymes).
+Toutefois, si vous voulez nous aider à remédier à ce problème en proposant de la documentation sur des memes, de l'argot, des concepts socioculturels propres à votre langue et/ou culture, vous pouvez le faire via notre {{link|pages/messages/admins|formulaire de contact}}. Nous apprécierons assurément votre aide. Les personnes offrant des contributions sont créditées sur les pages concernées (sauf si elles demandent à rester anonymes).
 EOT
 );
 
@@ -491,11 +491,11 @@ N'avoir qu'une seule personne en charge de la rédaction des contenus est un cho
 EOT
 );
 ___('compendium_faq_answer_6_3',  'EN', <<<EOT
-However, third party contributors are more than welcome. Whether you would like to suggest new content or point out inaccuracies in existing content, you can do so using our {{link|todo_link|contact form}}. Contributors are credited on the pages which they have contributed to (unless they asked to not be credited).
+However, third party contributors are more than welcome. Whether you would like to suggest new content or point out inaccuracies in existing content, you can do so using our {{link|pages/messages/admins|contact form}}. Contributors are credited on the pages which they have contributed to (unless they asked to not be credited).
 EOT
 );
 ___('compendium_faq_answer_6_3',  'FR', <<<EOT
-Toutefois, les contributions tierces sont encouragées. Que vous vouliez proposer de nouveaux contenus ou signaler des erreurs dans du contenu existant, vous pouvez le faire via notre {{link|todo_link|formulaire de contact}}. Les personnes offrant des contributions sont créditées sur les pages concernées (sauf si elles demandent à rester anonymes).
+Toutefois, les contributions tierces sont encouragées. Que vous vouliez proposer de nouveaux contenus ou signaler des erreurs dans du contenu existant, vous pouvez le faire via notre {{link|pages/messages/admins|formulaire de contact}}. Les personnes offrant des contributions sont créditées sur les pages concernées (sauf si elles demandent à rester anonymes).
 EOT
 );
 
@@ -549,11 +549,11 @@ Certains contenus peuvent être remontés jusqu'à leurs origines authentiques, 
 EOT
 );
 ___('compendium_faq_answer_8_3',  'EN', <<<EOT
-As our sources might be unreliable, the documentation will evolve as needed to correct inaccuracies. Please report any incorrect content using our {{link|todo_link|contact form}}.
+As our sources might be unreliable, the documentation will evolve as needed to correct inaccuracies. Please report any incorrect content using our {{link|pages/messages/admins|contact form}}.
 EOT
 );
 ___('compendium_faq_answer_8_3',  'FR', <<<EOT
-Même si un gros effort est fait pour tout sourcer, les contenus évolueront autant que nécessaire pour corriger les erreurs qui peuvent s'y trouver. Signalez-nous les contenus inexacts ou les sources questionnables via notre {{link|todo_link|formulaire de contact}}.
+Même si un gros effort est fait pour tout sourcer, les contenus évolueront autant que nécessaire pour corriger les erreurs qui peuvent s'y trouver. Signalez-nous les contenus inexacts ou les sources questionnables via notre {{link|pages/messages/admins|formulaire de contact}}.
 EOT
 );
 
@@ -652,11 +652,11 @@ EOT
 );
 
 ___('compendium_faq_answer_13_1', 'EN', <<<EOT
-Please use our {{link|todo_link|contact form}} for any corrections or claims. Even if you are looking to have an e-mail or legal exchange with us, the contact form is our starting point for any conversation.
+Please use our {{link|pages/messages/admins|contact form}} for any corrections or claims. Even if you are looking to have an e-mail or legal exchange with us, the contact form is our starting point for any conversation.
 EOT
 );
 ___('compendium_faq_answer_13_1', 'FR', <<<EOT
-Utilisez notre {{link|todo_link|formulaire de contact}} pour tout signalement d'erreur ou toute réclamation. Même si vous désirez discuter par e-mail ou avoir un échange légal avec nous, le formulaire de contact est le point d'entrée de toute conversation.
+Utilisez notre {{link|pages/messages/admins|formulaire de contact}} pour tout signalement d'erreur ou toute réclamation. Même si vous désirez discuter par e-mail ou avoir un échange légal avec nous, le formulaire de contact est le point d'entrée de toute conversation.
 EOT
 );
 ___('compendium_faq_answer_13_2', 'EN', <<<EOT
@@ -669,11 +669,11 @@ EOT
 );
 
 ___('compendium_faq_answer_14_1', 'EN', <<<EOT
-Third party contributors are more than welcome. Whether you would like to suggest new content or point out inaccuracies in existing content, you can do so using our {{link|todo_link|contact form}}. Contributors are credited on the pages which they have contributed to (unless they asked to not be credited).
+Third party contributors are more than welcome. Whether you would like to suggest new content or point out inaccuracies in existing content, you can do so using our {{link|pages/messages/admins|contact form}}. Contributors are credited on the pages which they have contributed to (unless they asked to not be credited).
 EOT
 );
 ___('compendium_faq_answer_14_1', 'FR', <<<EOT
-Les contributions sont plus que bienvenues. Que vous désiriez proposer des nouveaux contenus, signaler des erreurs, proposer des améliorations, vous pouvez le faire via notre {{link|todo_link|formulaire de contact}}. Les personnes offrant des contributions sont créditées sur les pages concernées (sauf si elles demandent à rester anonymes).
+Les contributions sont plus que bienvenues. Que vous désiriez proposer des nouveaux contenus, signaler des erreurs, proposer des améliorations, vous pouvez le faire via notre {{link|pages/messages/admins|formulaire de contact}}. Les personnes offrant des contributions sont créditées sur les pages concernées (sauf si elles demandent à rester anonymes).
 EOT
 );
 ___('compendium_faq_answer_14_2', 'EN', <<<EOT

@@ -1535,11 +1535,11 @@ Le symbole du mouvement est un N à l'intérieur d'un cercle. Bien entendu inspi
 EOT
 );
 ___('politics_faq_branding_4',      'EN', <<<EOT
-The catchphrase associated with the contramovement is "Dissent", or "We must dissent". The world has become enough of a {{external|https://youtu.be/iwqN3Ur-wP0|self-aware colony}} after all (stealing a catchphrase from obscure nerd culture is a nod to the movement's place within {{link|todo_link|21st century counterculture}}). For now, this catchphrase is used only in english, and has no translation in any other language.
+The catchphrase associated with the contramovement is "Dissent", or "We must dissent". The world has become enough of a {{external|https://youtu.be/iwqN3Ur-wP0|self-aware colony}} after all (stealing a catchphrase from obscure nerd culture is a nod to the movement's place within {{link|pages/compendium/index|21st century counterculture}}). For now, this catchphrase is used only in english, and has no translation in any other language.
 EOT
 );
 ___('politics_faq_branding_4',      'FR', <<<EOT
-Le slogan associé au contramouvement est "Dissent" (dissidence), ou "We must dissent" (nous devons nous opposer). Après tout, le monde est devenu assez proche de la {{external|https://youtu.be/iwqN3Ur-wP0|colonie autoconsciente}} (voler une référence obscure de la culture nerd pour en faire son slogan est un clin d'œil à la {{link|todo_link|contreculture du 21ème siècle}} dont le mouvement est issu). Pour le moment, ce slogan n'est utilisé qu'en anglais, et n'a pas de traduction dans les autres langues.
+Le slogan associé au contramouvement est "Dissent" (dissidence), ou "We must dissent" (nous devons nous opposer). Après tout, le monde est devenu assez proche de la {{external|https://youtu.be/iwqN3Ur-wP0|colonie autoconsciente}} (voler une référence obscure de la culture nerd pour en faire son slogan est un clin d'œil à la {{link|pages/compendium/index|contreculture du 21ème siècle}} dont le mouvement est issu). Pour le moment, ce slogan n'est utilisé qu'en anglais, et n'a pas de traduction dans les autres langues.
 EOT
 );
 ___('politics_faq_branding_5',      'EN', <<<EOT

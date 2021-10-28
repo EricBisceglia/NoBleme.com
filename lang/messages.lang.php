@@ -215,11 +215,11 @@ Les messages envoyés via ce formulaire arriveront sur une page que toute {{link
 EOD
 );
 ___('users_message_admins_proof', 'EN', <<<EOD
-If you plan to use this form to report a breach of the {{link|pages/doc/coc|code of conduct}} by another user, make sure to provide enough proof (links, screenshots, descriptions of incriminating content).
+If you plan to use this form to report a breach of the {{link|pages/doc/coc|code of conduct}} by another user or make a copyright claim, make sure to provide enough proof (links, screenshots, descriptions of incriminating content).
 EOD
 );
 ___('users_message_admins_proof', 'FR', <<<EOD
-Si vous avez l'intention de signaler le non respect du {{link|pages/doc/coc|code de conduite}} par un autre compte, assurez-vous d'inclure des preuves (liens, captures d'écran, descriptions du contenu incriminant).
+Si vous avez l'intention de signaler un non respect du {{link|pages/doc/coc|code de conduite}} ou une brêche de votre propriété intellectuelle, assurez-vous d'inclure des preuves (liens, captures d'écran, descriptions du contenu incriminant).
 EOD
 );
 ___('users_message_admins_bug',   'EN', <<<EOD

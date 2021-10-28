@@ -398,14 +398,14 @@ function log_activity_parse(  bool    $admins_only        ,
   else if($type === 'compendium_new')
   {
     $return['css']  = 'brown bold';
-    $return['href'] = $path.'todo_link'.$username;
+    $return['href'] = $path.'pages/compendium/'.$username;
     $return['EN']   = ($title_en) ? 'New 21st century compendium entry: '.$title_en : '';
     $return['FR']   = ($title_fr) ? "Nouvelle page dans le compendium : ".$title_fr : '';
   }
 
   else if($type === 'compendium_edit')
   {
-    $return['href'] = $path.'todo_link'.$username;
+    $return['href'] = $path.'pages/compendium/'.$username;
     $return['EN']   = ($title_en) ? "Edited 21st century compendium entry: ".$title_en : '';
     $return['FR']   = ($title_fr) ? "Page modifiée dans le compendium : ".$title_fr : '';
   }
