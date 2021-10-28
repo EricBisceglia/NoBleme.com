@@ -363,26 +363,26 @@ function nbcodes( string  $message                                              
   // [image:image.png|left|description of the image]
 
   // Handle this with a regex
-  $message = preg_replace('/\[image:(.*?)\|(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a href="'.$path.'todo_link?image=$1" class="noglow"><img src="'.$path.'img/compendium/$1" alt="$1"></a><br>$3</div>', $message);
+  $message = preg_replace('/\[image:(.*?)\|(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><img src="'.$path.'img/compendium/$1" alt="$1"></a><br>$3</div>', $message);
 
   // Same thing if the image has no description
-  $message = preg_replace('/\[image:(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a href="'.$path.'todo_link?image=$1" class="noglow"><img src="'.$path.'img/compendium/$1" alt="$1"></a></div>', $message);
+  $message = preg_replace('/\[image:(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><img src="'.$path.'img/compendium/$1" alt="$1"></a></div>', $message);
 
   // Same thing if the images has no description or alignment
-  $message = preg_replace('/\[image:(.*?)\]/i','<a href="'.$path.'todo_link?image=$1" class="noglow"><img src="'.$path.'img/compendium/$1" alt="$1"></a>', $message);
+  $message = preg_replace('/\[image:(.*?)\]/i','<a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><img src="'.$path.'img/compendium/$1" alt="$1"></a>', $message);
 
 
   /*******************************************************************************************************************/
   // [image-nsfw:image.png|left|description of the image]
 
   // Handle this with a regex
-  $message = preg_replace('/\[image-nsfw:(.*?)\|(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a href="'.$path.'todo_link?image=$1" class="noglow"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1"></a><br>$3</div>', $message);
+  $message = preg_replace('/\[image-nsfw:(.*?)\|(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1"></a><br>$3</div>', $message);
 
   // Same thing if the image has no description
-  $message = preg_replace('/\[image-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a href="'.$path.'todo_link?image=$1" class="noglow"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1"></a></div>', $message);
+  $message = preg_replace('/\[image-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_floater nbcode_floater_$2"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1"></a></div>', $message);
 
   // Same thing if the images has no description or alignment
-  $message = preg_replace('/\[image-nsfw:(.*?)\]/i','<a href="'.$path.'todo_link?image=$1" class="noglow"><img '.$blurring.' src="'.$path.'img/compendium/$1" alt="$1"></a>', $message);
+  $message = preg_replace('/\[image-nsfw:(.*?)\]/i','<a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><img '.$blurring.' src="'.$path.'img/compendium/$1" alt="$1"></a>', $message);
 
 
   /*******************************************************************************************************************/
@@ -441,20 +441,20 @@ function nbcodes( string  $message                                              
   // [gallery:image.png|description of the image]
 
   // Handle this with a regex
-  $message = preg_replace('/\[gallery:(.*?)\|(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'todo_link?image=$1" class="noglow"><div class="nbcode_gallery_container"><img src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a><hr class="nbcode_gallery_hr">$2</div>', $message);
+  $message = preg_replace('/\[gallery:(.*?)\|(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><div class="nbcode_gallery_container"><img src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a><hr class="nbcode_gallery_hr">$2</div>', $message);
 
   // Same thing if the image has no description
-  $message = preg_replace('/\[gallery:(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'todo_link?image=$1" class="noglow"><div class="nbcode_gallery_container"><img src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a></div>', $message);
+  $message = preg_replace('/\[gallery:(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><div class="nbcode_gallery_container"><img src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a></div>', $message);
 
 
   /*******************************************************************************************************************/
   // [gallery-nsfw:image.png|description of the image]
 
   // Handle this with a regex
-  $message = preg_replace('/\[gallery-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'todo_link?image=$1" class="noglow"><div class="nbcode_gallery_container"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a><hr class="nbcode_gallery_hr">$2</div>', $message);
+  $message = preg_replace('/\[gallery-nsfw:(.*?)\|(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><div class="nbcode_gallery_container"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a><hr class="nbcode_gallery_hr">$2</div>', $message);
 
   // Same thing if the image has no description
-  $message = preg_replace('/\[gallery-nsfw:(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'todo_link?image=$1" class="noglow"><div class="nbcode_gallery_container"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a></div>', $message);
+  $message = preg_replace('/\[gallery-nsfw:(.*?)\]/i','<div class="nbcode_gallery_cell"><a href="'.$path.'pages/compendium/image?name=$1" class="noglow"><div class="nbcode_gallery_container"><img '.$blurring2.' src="'.$path.'img/compendium/$1" alt="$1" class="nbcode_gallery_contents" loading="lazy"></div></a></div>', $message);
 
 
   /*******************************************************************************************************************/

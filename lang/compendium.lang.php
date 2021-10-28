@@ -205,6 +205,61 @@ ___('compendium_list_count',    'FR', "{{1}} pages dans le compendium");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                       IMAGE                                                       */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Warnings
+___('compendium_image_deleted',   'EN', "This image has been soft deleted. It is not viewable by the general public.");
+___('compendium_image_deleted',   'FR', "Cette image a été supprimée de façon non définitive. Elle n'est pas visible par le public.");
+___('compendium_image_nsfw',      'EN', "This image's contents can be considered not safe for work");
+___('compendium_image_nsfw',      'FR', "Le contenu de cette image est non approprié pour un lieu de travail");
+___('compendium_image_offensive', 'EN', "This image is offensive: it is here for purely encyclopedic purposes, avoid using it yourself");
+___('compendium_image_offensive', 'FR', "Cette image est offensante : elle est ici pour des raisons purement encyclopédiques, évitez de l'utiliser hors d'un contexte de documentation");
+___('compendium_image_gross',     'EN', "This image contains some gross and/or gore content, watch it at your own risk");
+___('compendium_image_gross',     'FR', "Cette image inclut du contenu gore et/ou dégueulasse");
+
+
+// Privacy message
+___('compendium_image_blurred', 'EN', <<<EOT
+This image below appears as blurred due to its crude, shocking, or offensive nature. You can unblur it by moving your pointer over the image. Image blurring can be permanently disabled in your {{link|pages/account/settings_nsfw|privacy settings}}.
+EOT
+);
+___('compendium_image_blurred', 'FR', <<<EOT
+L'image ci-dessous est floutée de par sa nature vulgaire, choquante, ou offensante. Vous pouvez révéler son contenu en déplaçant votre pointeur sur l'image. Le floutage des images peut être désactivé de façon permanente via vos {{link|pages/account/settings_nsfw|options de vulgarité}}.
+EOT
+);
+
+
+// Image usage
+___('compendium_image_used',  'EN', "This image is being used on this page:");
+___('compendium_image_used',  'FR', "Cette image est utilisée sur cette page :");
+___('compendium_image_used+', 'EN', "This image is being used on these pages:");
+___('compendium_image_used+', 'FR', "Cette image est utilisée sur ces pages :");
+
+
+// Disclaimer
+___('compendium_image_disclaimer',  'EN', <<<EOT
+This image is being hosted here for encyclopedic purposes, as a part of NoBleme's {{link|pages/compendium/index|21st century compendium}}. If you are the author of this image and want it to be removed from this website, contact us by using our {{link|todo_link|contact form}} and it will be removed from the website.
+EOT
+);
+___('compendium_image_disclaimer',  'FR', <<<EOT
+Cette image est présente ici pour des raisons encyclopédiques, en tant qu'élément du {{link|pages/compendium/index|compendium du 21ème siècle}} de NoBleme. Si vous détenez la propriété intellectuelle de cette image et désirez qu'elle soit supprimée, utilisez notre {{link|todo_link|formulaire de contact}} et nous coopèrerons.
+EOT
+);
+
+
+// Footer
+___('compendium_image_compendium',  'EN', "21st century compendium");
+___('compendium_image_compendium',  'FR', "Compendium du 21ème siècle");
+___('compendium_image_random',      'EN', "Another random image");
+___('compendium_image_random',      'FR', "Autre image au hasard");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                 MISSION STATEMENT                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

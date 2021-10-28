@@ -133,21 +133,23 @@ function database_row_exists( string  $table  ,
 /**
  * Checks whether an entry exists in a table.
  *
- * @param   string  $table  Name of the table.
- * @param   string  $field  Name of the field.
- * @param   mixed   $value  Data value to look for.
+ * @param   string  $table                  Name of the table.
+ * @param   string  $field                  Name of the field.
+ * @param   mixed   $value                  Data value to look for.
+ * @param   bool    $sanitize  (OPTIONAL)   Sanitize the value before looking it up.
  *
- * @return  int             The id of the row containing the entry, or 0 if it does not exist.
+ * @return  int                             The id of the row containing the entry, or 0 if it does not exist.
  */
 
-function database_entry_exists( string  $table  ,
-                                string  $field  ,
-                                mixed   $value  ) : int
+function database_entry_exists( string  $table            ,
+                                string  $field            ,
+                                mixed   $value            ,
+                                bool    $sanitize = false ) : int
 {
   // Sanitize the data before running the query
   $table  = sanitize($table, 'string');
   $field  = sanitize($field, 'string');
-  $value  = sanitize($value, 'string');
+  $value  = ($sanitize) ? sanitize($value, 'string') : $value;
 
   // Check whether the entry exists
   $dcheck = mysqli_fetch_array(query("  SELECT  $table.id AS 'r_id'

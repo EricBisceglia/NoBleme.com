@@ -6,20 +6,18 @@
 include_once './../../inc/includes.inc.php';        # Core
 include_once './../../actions/compendium.act.php';  # Actions
 include_once './../../lang/compendium.lang.php';    # Translations
-include_once './../../inc/functions_time.inc.php';  # Core
 include_once './../../inc/bbcodes.inc.php';         # Core
-
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/compendium/";
-$page_title_en    = "Compendium: ";
-$page_title_fr    = "Compendium : ";
-$page_description = "An encyclopedia of 21st century culture, internet memes, modern slang, and sociocultural concepts";
+$page_url         = "pages/compendium/image";
+$page_title_en    = "Image";
+$page_title_fr    = "Image";
+$page_description = "An image used to illustrate NoBleme's 21st century culture compendium.";
 
-// Extra CSS & JS
-$css  = array('compendium');
-$js   = array('compendium/page');
+// Extra CSS
+$css = array('compendium');
+
 
 
 
@@ -30,27 +28,24 @@ $js   = array('compendium/page');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Page contents
+// Fetch the image data
 
-// Fetch the page's url
-$compendium_page_url = (string)form_fetch_element('page', request_type: 'GET');
+// Fetch the image's file name
+$compendium_image_file_name = (string)form_fetch_element('name', request_type: 'GET');
 
-// Fetch the page's data
-$compendium_page_data = compendium_pages_get( page_url: $compendium_page_url );
+// Fetch the image data
+$compendium_image_data = compendium_images_get( file_name: $compendium_image_file_name );
 
-// Redirect if the page doesn't exist or shouldn't be accessed
-if(!$compendium_page_data)
-  exit(header('Location: '.$path.'pages/compendium/page_list'));
-
-// Redirect if needed
-if(isset($compendium_page_data['redirect']))
-  exit(header('Location: '.$path.'pages/compendium/'.$compendium_page_data['redirect']));
+// Stop here if the image doesn't exist or isn't allowed to be seen
+if(!isset($compendium_image_data) || !$compendium_image_data)
+  exit(header("Location: ".$path."pages/compendium/page_list"));
 
 // Update the page summary
-$page_url        .= $compendium_page_url;
-$page_title_en   .= $compendium_page_data['title_en'];
-$page_title_fr   .= $compendium_page_data['title_fr'];
-$page_description = ($compendium_page_data['summary']) ? $compendium_page_data['meta'] : $page_description;
+$page_url        .= '?name='.$compendium_image_file_name;
+$page_title_en   .= ': '.$compendium_image_file_name;
+$page_title_fr   .= ' : '.$compendium_image_file_name;
+$page_description = ($compendium_image_data['body_clean']) ? $compendium_image_data['body_clean'] : $page_description;
+
 
 
 
@@ -62,68 +57,25 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
 <div class="width_50">
 
-  <?php if($compendium_page_data['deleted']) { ?>
+  <?php if($compendium_image_data['deleted']) { ?>
   <div class="padding_bot">
     <h5 class="uppercase red text_white bold spaced align_center">
-      <?=__('compendium_page_deleted')?>
+      <?=__('compendium_image_deleted')?>
     </h5>
   </div>
   <?php } ?>
 
-  <?php if($compendium_page_data['draft']) { ?>
-  <div class="padding_bot">
-    <h5 class="uppercase orange text_white bold spaced align_center">
-      <?=__('compendium_page_draft')?>
-    </h5>
-  </div>
-  <?php } ?>
+  <h2 class="align_center padding_bot">
+    <?=__link('pages/compendium/page_list', $compendium_image_file_name, 'noglow')?>
+  </h2>
 
-  <?php if($compendium_page_data['no_page']) { ?>
-  <div class="padding_bot">
-    <h5 class="uppercase red text_white bold spaced align_center">
-      <?=__('compendium_page_no_page')?>
-    </h5>
-  </div>
-  <?php } ?>
-
-  <<?=$compendium_page_data['title_size']?>>
-    <?=__link('pages/compendium/page_list', $compendium_page_data['title'], 'noglow')?>
-  </<?=$compendium_page_data['title_size']?>>
-
-  <p class="tinypadding_top padding_bot">
-    <span class="bold"><?=__('compendium_page_type').__(':')?></span>
-    <?=__link('pages/compendium/'.$compendium_page_data['type_url'], $compendium_page_data['type'])?>
-    <?php if($compendium_page_data['era']) { ?>
-    <br>
-    <span class="bold"><?=__('compendium_page_era').__(':')?></span>
-    <?=__link('todo_link'.$compendium_page_data['era_id'], $compendium_page_data['era'])?>
-    <?php } if($compendium_page_data['categories']) { ?>
-    <br>
-    <span class="bold"><?=__('compendium_page_category', amount: $compendium_page_data['categories']).__(':')?></span>
-    <?php for($i = 0; $i < $compendium_page_data['categories']; $i++) { ?>
-    <?=__link('todo_link'.$compendium_page_data['category_id'][$i], $compendium_page_data['category_name'][$i])?>
-    <?php if(($i + 1) < $compendium_page_data['categories']) { ?>
-    ;
-    <?php } ?>
-    <?php } ?>
-    <?php } if($compendium_page_data['appeared']) { ?>
-    <br>
-    <span class="bold"><?=__('compendium_page_appeared').__(':')?></span>
-    <?=$compendium_page_data['appeared']?>
-    <?php } if($compendium_page_data['peak']) { ?>
-    <br>
-    <span class="bold"><?=__('compendium_list_peak').__(':')?></span>
-    <?=$compendium_page_data['peak']?>
-    <?php } ?>
-  </p>
-
-  <?php if($compendium_page_data['nsfw']) { ?>
+  <?php if($compendium_image_data['nsfw']) { ?>
   <div class="flexcontainer align_center padding_top bigpadding_bot">
     <div class="flex">
       <?=__icon('warning', alt: '!', title: __('warning'), title_case: 'initials', class: 'valign_middle compendium_warning_icon')?>
     </div>
     <div class="compendium_warning_text uppercase bigger bold">
-      <?=__('compendium_page_nsfw')?>
+      <?=__('compendium_image_nsfw')?>
     </div>
     <div class="flex">
       <?=__icon('warning', alt: '!', title: __('warning'), title_case: 'initials', class: 'valign_middle compendium_warning_icon')?>
@@ -131,13 +83,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </div>
   <?php } ?>
 
-  <?php if($compendium_page_data['offensive']) { ?>
+  <?php if($compendium_image_data['offensive']) { ?>
   <div class="flexcontainer align_center padding_top bigpadding_bot">
     <div class="flex">
       <?=__icon('warning', alt: '!', title: __('warning'), title_case: 'initials', class: 'valign_middle compendium_warning_icon')?>
     </div>
     <div class="compendium_warning_text uppercase big bold">
-      <?=__('compendium_page_offensive')?>
+      <?=__('compendium_image_offensive')?>
     </div>
     <div class="flex">
       <?=__icon('warning', alt: '!', title: __('warning'), title_case: 'initials', class: 'valign_middle compendium_warning_icon')?>
@@ -145,13 +97,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </div>
   <?php } ?>
 
-  <?php if($compendium_page_data['gross']) { ?>
+  <?php if($compendium_image_data['gross']) { ?>
   <div class="flexcontainer align_center padding_top bigpadding_bot">
     <div class="flex">
       <?=__icon('warning', alt: '!', title: __('warning'), title_case: 'initials', class: 'valign_middle compendium_warning_icon')?>
     </div>
     <div class="compendium_warning_text uppercase bigger bold">
-      <?=__('compendium_page_gross')?>
+      <?=__('compendium_image_gross')?>
     </div>
     <div class="flex">
       <?=__icon('warning', alt: '!', title: __('warning'), title_case: 'initials', class: 'valign_middle compendium_warning_icon')?>
@@ -159,26 +111,47 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </div>
   <?php } ?>
 
-  <div class="smallpadding_top padding_bot align_justify">
-    <?=$compendium_page_data['body']?>
-  </div>
-
-  <p class="align_center bigpadding_top">
-    <?=__link('pages/compendium/index', __('compendium_page_compendium'))?><br>
-    <?=__link('#compendium_page_history', __('compendium_page_modified', preset_values: array($compendium_page_data['updated'])), is_internal: false, onclick: "compendium_page_history_fetch('".$compendium_page_data['id']."')")?><br>
-    <?=__link('pages/compendium/random_page?type='.$compendium_page_data['type_raw'].'&id='.$compendium_page_data['id'], __('compendium_page_random_type', preset_values: array($compendium_page_data['type_other'])))?><br>
-    <?=__link('pages/compendium/random_page?id='.$compendium_page_data['id'], __('compendium_page_random_page'))?>
+  <?php if($compendium_image_data['blurred']) { ?>
+  <p class="hugepadding_bot">
+    <?=__('compendium_image_blurred')?>
   </p>
+  <?php } ?>
 
 </div>
 
-<div id="compendium_page_history" class="popin_background">
-  <div class="popin_body">
-    <a class="popin_close" onclick="popin_close('compendium_page_history');">&times;</a>
-    <div class="nopadding_top" id="compendium_page_history_body">
-      &nbsp;
-    </div>
+<div class="width_70">
+
+  <div class="padding_top padding_bot align_center">
+    <img src="<?=$path?>img/compendium/<?=$compendium_image_file_name?>"<?=$compendium_image_data['blur']?>>
   </div>
+
+</div>
+
+<div class="width_50">
+
+  <?php if($compendium_image_data['body']) { ?>
+
+  <div class="padding_top padding_bot align_center">
+    <?=$compendium_image_data['body']?>
+  </div>
+
+  <?php } if($compendium_image_data['used']) { ?>
+
+  <p class="align_center padding_bot">
+    <?=__('compendium_image_used', amount: $compendium_image_data['used_count'])?><br>
+    <?=$compendium_image_data['used']?>
+  </p>
+
+  <?php } ?>
+
+  <p class="align_center padding_bot bigger">
+    <?=__link('pages/compendium/random_image?id='.$compendium_image_data['id'], __('compendium_image_random'))?>
+  </p>
+
+  <p class="small align_center">
+    <?=__('compendium_image_disclaimer')?>
+  </p>
+
 </div>
 
 <?php /***************************************************************************************************************/

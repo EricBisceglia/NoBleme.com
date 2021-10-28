@@ -81,8 +81,8 @@ function stats_metrics_list(  string  $sort_by  = 'activity'  ,
   for($i = 0; $row = mysqli_fetch_array($qmetrics); $i++)
   {
     $data[$i]['id']       = sanitize_output($row['s_id']);
-    $data[$i]['url']      = sanitize_output(string_truncate($row['s_url'], 40, '...'));
-    $data[$i]['url_full'] = (mb_strlen($row['s_url']) > 40) ? sanitize_output($row['s_url']) : '';
+    $data[$i]['url']      = sanitize_output(string_truncate($row['s_url'], 35, '...'));
+    $data[$i]['url_full'] = (mb_strlen($row['s_url']) > 35) ? sanitize_output($row['s_url']) : '';
     $data[$i]['activity'] = sanitize_output(time_since($row['s_activity']));
     $data[$i]['views']    = number_display_format($row['s_views'], 'number');
     $data[$i]['queries']  = sanitize_output($row['s_queries']);

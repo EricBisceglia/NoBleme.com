@@ -779,13 +779,6 @@ ___('header_language_error', 'EN', "Sorry! This page is only available in french
 ___('header_language_error', 'FR', "Désolé ! Cette page n'est disponible qu'en anglais et n'a pas encore de traduction française.");
 
 
-// Meta description length warning
-___('header_meta_error_short',  'EN', "The meta description tag is too short ({{1}} <= 25)");
-___('header_meta_error_short',  'FR', "Le tag meta de description est trop court ({{1}} <= 25)");
-___('header_meta_error_long',   'EN', "The meta description tag is too long ({{1}} => 155)");
-___('header_meta_error_long',   'FR', "Le tag meta de description est trop long ({{1}} => 155)");
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

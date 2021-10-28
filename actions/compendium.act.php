@@ -7,25 +7,31 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 /*********************************************************************************************************************/
+/*                                                                                                                  */
+/*  compendium_pages_get                    Returns data related to a compendium page.                               */
+/*  compendium_pages_get_random             Returns data related to a random compendium page.                        */
+/*  compendium_pages_list                   Fetches a list of compendium pages.                                      */
+/*  compendium_pages_list_urls              Fetches a list of all public compendium page urls.                       */
 /*                                                                                                                   */
-/*  compendium_pages_get                Returns data related to a compendium page.                                   */
-/*  compendium_pages_get_random         Returns data related to a random compendium page.                            */
-/*  compendium_pages_list               Fetches a list of compendium pages.                                          */
-/*  compendium_pages_list_urls          Fetches a list of all public compendium page urls.                           */
+/*  compendium_images_get                   Returns data related to an image used in the compendium.                 */
+/*  compendium_images_get_random            Returns data related to a random image used in the compendium.           */
+/*  compendium_images_recalculate_links     Recalculates the compendium pages on which an image is being used.       */
+/*  compendium_images_assemble_links        Transforms the list of compendium pages on which an image is being used  */
+/*                                          into a usable string.                                                    */
 /*                                                                                                                   */
-/*  compendium_page_type_get            Returns data related to a compendium page type.                              */
+/*  compendium_page_type_get                Returns data related to a compendium page type.                          */
 /*                                                                                                                   */
-/*  compendium_eras_list                Fetches a list of compendium eras.                                           */
+/*  compendium_eras_list                    Fetches a list of compendium eras.                                       */
 /*                                                                                                                   */
-/*  compendium_page_history_get         Returns data related to an entry in a compendium page's history.             */
-/*  compendium_page_history_list        Returns data related to a compendium page's history entry.                   */
-/*  compendium_page_history_edit        Modifies an existing compendium page's history entry.                        */
-/*  compendium_page_history_delete      Hard deletes an existing compendium page's history entry.                    */
+/*  compendium_page_history_get             Returns data related to an entry in a compendium page's history.         */
+/*  compendium_page_history_list            Returns data related to a compendium page's history entry.               */
+/*  compendium_page_history_edit            Modifies an existing compendium page's history entry.                    */
+/*  compendium_page_history_delete          Hard deletes an existing compendium page's history entry.                */
 /*                                                                                                                   */
-/*  compendium_pages_list_years         Fetches the years at which compendium pages have been created.               */
-/*  compendium_appearance_list_years    Fetches the years at which compendium content has appeared.                  */
-/*  compendium_peak_list_years          Fetches the years at which compendium content has peaked.                    */
-/*                                                                                                                   */
+/*  compendium_pages_list_years             Fetches the years at which compendium pages have been created.           */
+/*  compendium_appearance_list_years        Fetches the years at which compendium content has appeared.              */
+/*  compendium_peak_list_years              Fetches the years at which compendium content has peaked.                */
+/*                                                                                                                  */
 /*********************************************************************************************************************/
 
 
@@ -103,7 +109,7 @@ function compendium_pages_get(  int     $page_id  = 0   ,
                                       ON        compendium_pages.fk_compendium_eras = compendium_eras.id
                                       WHERE     $where "));
 
-  // Return null if the task should not be displayed
+  // Return null if the page should not be displayed
   if(!$is_admin && $dpage['p_deleted'])
     return NULL;
   if(!$is_admin && $dpage['p_draft'])
@@ -208,18 +214,26 @@ function compendium_pages_get(  int     $page_id  = 0   ,
 /**
  * Returns data related to a random compendium page.
  *
- * @param   string  $type   (OPTIONAL)  Request a specific page type for the randomly returned page.
+ * @param   int     $exclude_id   (OPTIONAL)  A page id to exclude from the pages being fetched.
+ * @param   string  $type         (OPTIONAL)  Request a specific page type for the randomly returned page.
  *
- * @return  string                      The url of a randomly chosen compendium page.
+ * @return  string                            The url of a randomly chosen compendium page.
  */
 
-function compendium_pages_get_random( string $type = '' ) : string
+function compendium_pages_get_random( int     $exclude_id = 0   ,
+                                      string  $type       = ''  ) : string
 {
   // Sanitize the page type
   $type = sanitize($type, 'string');
 
   // Prepare the page type condition
-  $type = ($type) ? " AND compendium_pages.page_type LIKE '$type' " : '';
+  $query_type = ($type) ? " AND compendium_pages.page_type LIKE '$type' " : '';
+
+  // Sanitize the excluded id
+  $exclude_id = sanitize($exclude_id, 'int', 0);
+
+  // Add the excluded id if necessary
+  $query_exclude = ($exclude_id) ? " AND compendium_pages.id != '$exclude_id' " : '';
 
   // Get the user's current language
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
@@ -234,7 +248,8 @@ function compendium_pages_get_random( string $type = '' ) : string
                                       AND       compendium_pages.is_nsfw            = 0
                                       AND       compendium_pages.is_gross           = 0
                                       AND       compendium_pages.is_offensive       = 0
-                                      $type
+                                                $query_type
+                                                $query_exclude
                                       ORDER BY  RAND()
                                       LIMIT     1 "));
 
@@ -269,10 +284,13 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   require_included_file('bbcodes.inc.php');
   require_included_file('functions_time.inc.php');
 
-  // Get the user's current language, access rights, and nsfw settings
-  $lang           = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
-  $is_admin       = ($user_view) ? 0 : user_is_administrator();
-  $nsfw_settings  = user_settings_nsfw();
+  // Get the user's current language, access rights, settings, and the compendium pages which they can access
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  $is_admin = ($user_view) ? 0 : user_is_administrator();
+  $nsfw     = user_settings_nsfw();
+  $privacy  = user_settings_privacy();
+  $mode     = user_get_mode();
+  $pages    = compendium_pages_list_urls();
 
   // Sanitize the search parameters
   $search_type      = isset($search['type'])      ? sanitize($search['type'], 'string')                 : '';
@@ -399,8 +417,9 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['appeared']   = ($row['p_app_year']) ? $temp.$row['p_app_year'] : '';
     $temp                   = ($row['p_peak_month']) ? __('month_'.$row['p_peak_month'], spaces_after: 1) : '';
     $data[$i]['peak']       = ($row['p_peak_year']) ? $temp.$row['p_peak_year'] : '';
-    $data[$i]['blur']       = ($row['p_nsfw_title'] && $nsfw_settings < 2) ? ' blur' : '';
-    $data[$i]['summary']    = nbcodes(bbcodes(sanitize_output($row['p_summary'], preserve_line_breaks: true)));
+    $data[$i]['blur']       = ($row['p_nsfw_title'] && $nsfw < 2) ? ' blur' : '';
+    $temp                   = bbcodes(sanitize_output($row['p_summary'], preserve_line_breaks: true));
+    $data[$i]['summary']    = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
     $data[$i]['era_id']     = sanitize_output($row['pe_id']);
     $data[$i]['era']        = sanitize_output($row['pe_name']);
   }
@@ -440,6 +459,251 @@ function compendium_pages_list_urls() : array
     array_push($data, $dpages['p_url']);
 
   // Return the array containing the page urls
+  return $data;
+}
+
+
+
+
+/**
+ * Returns data related to an image used in the compendium.
+ *
+ * @param   int         $image_id   (OPTIONAL)  The image's id. Only one of these two parameters should be set.
+ * @param   string      $file_name  (OPTIONAL)  The image file's name  Only one of these two parameters should be set.
+ *
+ *
+ * @return  array|null              An array containing page image data, or NULL if it does not exist.
+ */
+
+function compendium_images_get( int     $image_id   = 0 ,
+                                string  $file_name  = '') : mixed
+{
+  // Check if the required files have been included
+  require_included_file('bbcodes.inc.php');
+
+  // Get the user's current language, access rights, settings, and the compendium pages which they can access
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  $is_admin = user_is_administrator();
+  $nsfw     = user_settings_nsfw();
+  $privacy  = user_settings_privacy();
+  $mode     = user_get_mode();
+  $pages    = compendium_pages_list_urls();
+
+  // Sanitize the parameters
+  $image_id  = sanitize($image_id, 'int', 0);
+  $file_name = sanitize($file_name, 'string');
+
+  // Return null if both parameters are missing
+  if(!$image_id && !$file_name)
+    return NULL;
+
+  // Return null if both parameters are set
+  if($image_id && $file_name)
+    return NULL;
+
+  // Fetch the image id if it wasn't set
+  if($file_name)
+    $image_id = database_entry_exists('compendium_images', 'file_name', $file_name);
+
+  // Return null if the image doesn't exist
+  if(!database_row_exists('compendium_images', $image_id))
+    return NULL;
+
+  // Recalculate the image's links
+  compendium_images_recalculate_links($image_id);
+
+  // Fetch the data
+  $dimage = mysqli_fetch_array(query("  SELECT  compendium_images.id                  AS 'ci_id'        ,
+                                                compendium_images.is_deleted          AS 'ci_deleted'   ,
+                                                compendium_images.file_name           AS 'ci_filename'  ,
+                                                compendium_images.is_nsfw             AS 'ci_nsfw'      ,
+                                                compendium_images.is_gross            AS 'ci_gross'     ,
+                                                compendium_images.is_offensive        AS 'ci_offensive' ,
+                                                compendium_images.used_in_pages_$lang AS 'ci_used'      ,
+                                                compendium_images.caption_$lang       AS 'ci_body'
+                                        FROM    compendium_images
+                                        WHERE   compendium_images.id = '$image_id' "));
+
+  // Return null if the image should not be displayed
+  if(!$is_admin && $dimage['ci_deleted'])
+    return NULL;
+
+  // Assemble an array with the data
+  $data['id']         = sanitize_output($dimage['ci_id']);
+  $data['deleted']    = sanitize_output($dimage['ci_deleted']);
+  $data['nsfw']       = sanitize_output($dimage['ci_nsfw']);
+  $data['gross']      = sanitize_output($dimage['ci_gross']);
+  $data['offensive']  = sanitize_output($dimage['ci_offensive']);
+  $temp               = ($dimage['ci_nsfw'] || $dimage['ci_gross'] || $dimage['ci_offensive']) ? 1 : 0;
+  $data['blur']       = ($nsfw < 2 && $temp) ? ' class="compendium_image_blur"' : '';
+  $data['blurred']    = ($nsfw < 2 && $temp) ? 1 : 0;
+  $data['body_clean'] = sanitize_output($dimage['ci_body']);
+  $temp               = bbcodes(sanitize_output($dimage['ci_body'], preserve_line_breaks: true));
+  $data['body']       = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  $page_links         = ($dimage['ci_used']) ? compendium_images_assemble_links($dimage['ci_used']) : '';
+  $data['used']       = ($dimage['ci_used']) ? $page_links['list'] : '';
+  $data['used_count'] = ($dimage['ci_used']) ? $page_links['count'] : 0;
+
+  // Return the data
+  return $data;
+}
+
+
+
+
+/**
+ * Returns data related to a random image used in the compendium.
+ *
+ * @param   int     $exclude_id   (OPTIONAL)  An image id to exclude from the images being fetched.
+ *
+ * @return  string                            The url of a randomly chosen compendium image.
+ */
+
+function compendium_images_get_random( int $exclude_id = 0 ) : string
+{
+  // Sanitize the excluded id
+  $exclude_id = sanitize($exclude_id, 'int', 0);
+
+  // Add the excluded id if necessary
+  $query_exclude = ($exclude_id) ? " AND compendium_images.id != '$exclude_id' " : '';
+
+  // Get the user's current language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+
+  // Fetch a random page's url
+  $dimage = mysqli_fetch_array(query("  SELECT    compendium_images.file_name AS 'c_name'
+                                        FROM      compendium_images
+                                        WHERE     compendium_images.is_deleted          = 0
+                                        AND       compendium_images.used_in_pages_$lang NOT LIKE ''
+                                        AND       compendium_images.is_nsfw             = 0
+                                        AND       compendium_images.is_gross            = 0
+                                        AND       compendium_images.is_offensive        = 0
+                                                  $query_exclude
+                                        ORDER BY  RAND()
+                                        LIMIT     1 "));
+
+  // If no page has been found, return an empty string
+  if(!isset($dimage['c_name']))
+    return '';
+
+  // Otherwise, return the page url
+  return $dimage['c_name'];
+}
+
+
+
+
+/**
+ * Recalculates the compendium pages on which an image is being used.
+ *
+ * @param   int   $image_id   The image's id.
+ *
+ * @return  void
+ */
+function compendium_images_recalculate_links( int $image_id ) : void
+{
+  // Sanitize the image's id
+  $image_id = sanitize($image_id, 'int', 0);
+
+  // Stop here if the image doesn't exist
+  if(!database_row_exists('compendium_images', $image_id))
+    return;
+
+  // Get the user's current language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+
+  // Fetch the image's name
+  $dimage = mysqli_fetch_array(query("  SELECT  compendium_images.file_name AS 'ci_name'
+                                        FROM    compendium_images
+                                        WHERE   compendium_images.id = '$image_id' "));
+
+  // Sanitize the image's name
+  $image_name = sanitize($dimage['ci_name'], 'string');
+
+  // Stop here if the image doesn't have a name
+  if(!$image_name)
+    return;
+
+  // Look up pages containing the image in english
+  $qusage = query(" SELECT    compendium_pages.page_url   AS 'c_url'  ,
+                              compendium_pages.title_en   AS 'c_title'
+                    FROM      compendium_pages
+                    WHERE     compendium_pages.is_deleted     =   0
+                    AND       compendium_pages.is_draft       =   0
+                    AND       compendium_pages.title_en       !=  ''
+                    AND       compendium_pages.redirection_en =   ''
+                    AND       compendium_pages.definition_en  LIKE '%:$image_name%'
+                    ORDER BY  compendium_pages.title_en       ASC ");
+
+  // Assemble the english page names into an string
+  $usage_list_en = '';
+  for($i = 0; $dusage = mysqli_fetch_array($qusage); $i++)
+  {
+    if($i > 0)
+      $usage_list_en .= '|||';
+    $usage_list_en .= $dusage['c_url'].'|||'.$dusage['c_title'];
+  }
+
+  // Look up pages containing the image in french
+  $qusage = query(" SELECT    compendium_pages.page_url   AS 'c_url'  ,
+                              compendium_pages.title_fr   AS 'c_title'
+                    FROM      compendium_pages
+                    WHERE     compendium_pages.is_deleted     =   0
+                    AND       compendium_pages.is_draft       =   0
+                    AND       compendium_pages.title_fr       !=  ''
+                    AND       compendium_pages.redirection_fr =   ''
+                    AND       compendium_pages.definition_fr  LIKE '%:$image_name%'
+                    ORDER BY  compendium_pages.title_fr       ASC ");
+
+  // Assemble the french page names into an string
+  $usage_list_fr = '';
+  for($i = 0; $dusage = mysqli_fetch_array($qusage); $i++)
+  {
+    if($i > 0)
+      $usage_list_fr .= '|||';
+    $usage_list_fr .= $dusage['c_url'].'|||'.$dusage['c_title'];
+  }
+
+  // Sanitize the page lists
+  $usage_list_en = sanitize($usage_list_en, 'string');
+  $usage_list_fr = sanitize($usage_list_fr, 'string');
+
+  // Update the image's links
+  query(" UPDATE  compendium_images
+          SET     compendium_images.used_in_pages_en  = '$usage_list_en'  ,
+                  compendium_images.used_in_pages_fr  = '$usage_list_fr'
+          WHERE   compendium_images.id                = '$image_id'       ");
+}
+
+
+
+
+/**
+ * Transforms the list of compendium pages on which an image is being used into a usable string.
+ *
+ * @param   string  $page_list  A list of compendium pages.
+ *
+ * @return  array               The formatted list and the page count.
+ */
+
+function compendium_images_assemble_links( string $page_list ) : array
+{
+  // Split the page list
+  $page_list_array = explode("|||", $page_list);
+
+  // Format the page list
+  $formatted_page_list = '';
+  for($i = 0; $i < count($page_list_array); $i++)
+  {
+    if(!($i % 2) && isset($page_list_array[$i + 1]))
+      $formatted_page_list .= __link('pages/compendium/'.$page_list_array[$i], $page_list_array[$i + 1]).'<br>';
+  }
+
+  // Add the formatted page list and the page count to the returned data
+  $data['list']   = $formatted_page_list;
+  $data['count']  = ($i) ? floor($i / 2) : 0;
+
+  // Return the formatted page list
   return $data;
 }
 

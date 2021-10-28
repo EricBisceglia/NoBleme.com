@@ -313,25 +313,13 @@ $page_description = (isset($page_description)) ? $page_description : $page_title
 // Make the page's description W3C meta tag compliant
 $page_description = html_fix_meta_tags($page_description);
 
-// If the user is an admin, show a warning if the page description is too long
-if($is_admin)
-{
-  // No warning if the description is of correct length
-  if(strlen($page_description) > 25 && strlen($page_description) < 155)
-    $meta_alert = "";
+// Shorten the description if it is too long
+if(strlen($page_description) >= 155)
+  $page_description = string_truncate($page_description, 150, '...');
 
-  // Warning if the description is too short
-  else if (strlen($page_description) <= 25)
-    $meta_alert  = __('header_meta_error_short', 0, 0, 0, array(strlen($page_description)));
-
-  // Warning if the description is too long
-  else
-    $meta_alert  = __('header_meta_error_long', 0, 0, 0, array(strlen($page_description)));
-}
-
-// No warning if the user is not an admin
-else
-  $meta_alert = "";
+// Set the page description to default if it is too short
+if(strlen($page_description) <= 25)
+  $page_description = $page_title_en." - See more by visiting this page on NoBleme.com";
 
 
 
@@ -971,12 +959,6 @@ $javascripts .= '
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////?>
 
     <div class="header_main_page">
-
-      <?php } if($meta_alert) { ?>
-
-      <h5 class="align_center monospace padding_top">
-        <?=$meta_alert?>
-      </h5>
 
       <?php } if($lang_error) { ?>
 
