@@ -104,11 +104,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('title');")?>
         </th>
         <th>
-          <?=__('compendium_list_theme')?>
+          <?=__link('todo_link', __('compendium_list_theme'))?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('theme');")?>
         </th>
         <th>
-          <?=__('compendium_page_era')?>
+          <?=__link('pages/compendium/cultural_era_list', __('compendium_page_era'))?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('era');")?>
         </th>
         <th>

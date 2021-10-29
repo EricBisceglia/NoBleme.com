@@ -780,15 +780,25 @@ function compendium_eras_list() : array
 
   // Fetch the compendium eras
   $qeras = query("  SELECT    compendium_eras.id                AS 'ce_id'    ,
-                              compendium_eras.short_name_$lang  AS 'ce_short'
+                              compendium_eras.name_$lang        AS 'ce_name'  ,
+                              compendium_eras.short_name_$lang  AS 'ce_short' ,
+                              compendium_eras.year_start        AS 'ce_start' ,
+                              compendium_eras.year_end          AS 'ce_end'   ,
+                              COUNT(compendium_pages.id)        AS 'ce_count'
                     FROM      compendium_eras
+                    LEFT JOIN compendium_pages ON compendium_eras.id = compendium_pages.fk_compendium_eras
+                    GROUP BY  compendium_eras.id
                     ORDER BY  compendium_eras.year_start ASC ");
 
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qeras); $i++)
   {
     $data[$i]['id']     = sanitize_output($row['ce_id']);
+    $data[$i]['name']   = sanitize_output($row['ce_name']);
     $data[$i]['short']  = sanitize_output($row['ce_short']);
+    $data[$i]['start']  = ($row['ce_start']) ? sanitize_output($row['ce_start']) : '-';
+    $data[$i]['end']    = ($row['ce_end']) ? sanitize_output($row['ce_end']) : '-';
+    $data[$i]['count']  = ($row['ce_count']) ? sanitize_output($row['ce_count']) : '-';
   }
 
   // Add the number of rows to the data

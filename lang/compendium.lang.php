@@ -260,6 +260,59 @@ ___('compendium_image_random',      'FR', "Autre image au hasard");
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                       ERAS                                                        */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Era list: Header
+___('compendium_eras_title',    'EN', "Eras");
+___('compendium_eras_title',    'FR', "Périodes");
+___('compendium_eras_subtitle', 'EN', "21st century culture");
+___('compendium_eras_subtitle', 'FR', "Culture du 21ème siècle");
+
+
+// Era list: Introduction
+___('compendium_eras_intro_1',  'EN', <<<EOT
+Time changes all things. Culture is no exception. It evolves, takes various forms over time, picks up new themes and leaves older ones behind. Most of the {{link|todo_link|vocabulary}} or the {{link|todo_link|sociocultural topics}} of the 21st century are not locked in time. However {{link|todo_link|memes}} tend to be a reflection of the time period in which they appeared, which causes a lot of them to age poorly.
+EOT
+);
+___('compendium_eras_intro_1',  'FR', <<<EOT
+Le passage du temps affecte tout. La culture n'y échappe pas. Elle évolue, change de forme, abandonne certains sujets pour en adopter d'autres. La plupart du {{link|todo_link|vocabulaire}} ou des {{link|todo_link|concepts socioculturels}} du 21ème siècle ne sont pas verrouillés dans le temps. Toutefois, les {{link|todo_link|memes}} ont tendance à être fortement influencés par l'époque à laquelle ils sont crées, ce qui fait que beaucoup d'entre eux vieillissent mal.
+EOT
+);
+___('compendium_eras_intro_2',  'EN', <<<EOT
+In order to add context to them, most memes documented in this {{link|pages/compendium/index|compendium}} are linked to an era. These eras are entirely made up for the purpose of this documentation, they are not based on anything other than subjective observations and feelings.
+EOT
+);
+___('compendium_eras_intro_2',  'FR', <<<EOT
+Afin de leur donner du contexte, une période est assignée à la plupart des memes documentés dans ce {{link|pages/compendium/index|compendium}}. Ces périodes ne sont pas basées sur des éléments factuels, ce sont des catégories crées artificiellement pour cette documentation, en se basant sur des observations subjectives.
+EOT
+);
+___('compendium_eras_intro_3',  'EN', <<<EOT
+The table below presents all eras in chronological order. Click on an era's name to learn more about it and see a list of all memes categorized as being part of this specific era.
+EOT
+);
+___('compendium_eras_intro_3',  'FR', <<<EOT
+Le tableau ci-dessous présente les périodes dans l'ordre chronologique. Cliquez sur le nom d'une période pour en apprendre plus à son sujet et voir une liste de tous les memes catégorisés comme en faisant partie.
+EOT
+);
+
+
+// Era list: Table
+___('compendium_eras_start',    'EN', "Start");
+___('compendium_eras_start',    'FR', "Début");
+___('compendium_eras_end',      'EN', "End");
+___('compendium_eras_end',      'FR', "Fin");
+___('compendium_eras_name',     'EN', "Era name");
+___('compendium_eras_name',     'FR', "Nom de la période");
+___('compendium_eras_entries',  'EN', "Entries");
+___('compendium_eras_entries',  'FR', "Pages");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                 MISSION STATEMENT                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
