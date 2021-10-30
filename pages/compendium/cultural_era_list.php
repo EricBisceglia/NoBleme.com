@@ -91,7 +91,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td>
-          <?=__link('todo_link?era='.$compendium_eras_list[$i]['id'], $compendium_eras_list[$i]['name'])?>
+          <?=__link('pages/compendium/cultural_era?era='.$compendium_eras_list[$i]['id'], $compendium_eras_list[$i]['name'])?>
         </td>
 
         <td>

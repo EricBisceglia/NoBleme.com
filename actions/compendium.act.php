@@ -21,6 +21,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  compendium_page_type_get                Returns data related to a compendium page type.                          */
 /*                                                                                                                   */
+/*  compendium_eras_get                     Returns data related to a compendium era.                                */
 /*  compendium_eras_list                    Fetches a list of compendium eras.                                       */
 /*                                                                                                                   */
 /*  compendium_page_history_get             Returns data related to an entry in a compendium page's history.         */
@@ -293,15 +294,16 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   $pages    = compendium_pages_list_urls();
 
   // Sanitize the search parameters
-  $search_type      = isset($search['type'])      ? sanitize($search['type'], 'string')                 : '';
-  $search_title     = isset($search['title'])     ? sanitize($search['title'], 'string')                : '';
-  $search_nsfw      = isset($search['nsfw'])      ? sanitize($search['nsfw'], 'int', -1, 1)             : -1;
-  $search_gross     = isset($search['gross'])     ? sanitize($search['gross'], 'int', -1, 1)            : -1;
-  $search_offensive = isset($search['offensive']) ? sanitize($search['offensive'], 'int', -1, 1)        : -1;
-  $search_era       = isset($search['era'])       ? sanitize($search['era'], 'int', 0)                  : 0;
-  $search_appeared  = isset($search['appeared'])  ? sanitize($search['appeared'], 'int', 0, date('Y'))  : 0;
-  $search_peaked    = isset($search['peaked'])    ? sanitize($search['peaked'], 'int', 0, date('Y'))    : 0;
-  $search_created   = isset($search['created'])   ? sanitize($search['created'], 'int', 0, date('Y'))   : 0;
+  $search_type        = isset($search['type'])        ? sanitize($search['type'], 'string')                 : '';
+  $search_title       = isset($search['title'])       ? sanitize($search['title'], 'string')                : '';
+  $search_nsfw        = isset($search['nsfw'])        ? sanitize($search['nsfw'], 'int', -1, 1)             : -1;
+  $search_gross       = isset($search['gross'])       ? sanitize($search['gross'], 'int', -1, 1)            : -1;
+  $search_offensive   = isset($search['offensive'])   ? sanitize($search['offensive'], 'int', -1, 1)        : -1;
+  $search_nsfw_title  = isset($search['nsfw_title'])  ? sanitize($search['nsfw_title'], 'int', -1, 1)       : -1;
+  $search_era         = isset($search['era'])         ? sanitize($search['era'], 'int', 0)                  : 0;
+  $search_appeared    = isset($search['appeared'])    ? sanitize($search['appeared'], 'int', 0, date('Y'))  : 0;
+  $search_peaked      = isset($search['peaked'])      ? sanitize($search['peaked'], 'int', 0, date('Y'))    : 0;
+  $search_created     = isset($search['created'])     ? sanitize($search['created'], 'int', 0, date('Y'))   : 0;
 
   // Fetch the pages
   $qpages = "     SELECT    compendium_pages.created_at       AS 'p_created'    ,
@@ -336,23 +338,25 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
 
   // Search the data
   if($search_type)
-    $qpages .= "  AND       compendium_pages.page_type                        LIKE  '%$search_type%'    ";
+    $qpages .= "  AND       compendium_pages.page_type                        LIKE  '%$search_type%'      ";
   if($search_title)
-    $qpages .= "  AND       compendium_pages.title_$lang                      LIKE  '%$search_title%'   ";
+    $qpages .= "  AND       compendium_pages.title_$lang                      LIKE  '%$search_title%'     ";
   if($search_nsfw > -1)
-    $qpages .= "  AND       compendium_pages.is_nsfw                          =     '$search_nsfw'      ";
+    $qpages .= "  AND       compendium_pages.is_nsfw                          =     '$search_nsfw'        ";
   if($search_gross > -1)
-    $qpages .= "  AND       compendium_pages.is_gross                         =     '$search_gross'     ";
+    $qpages .= "  AND       compendium_pages.is_gross                         =     '$search_gross'       ";
   if($search_offensive > -1)
-    $qpages .= "  AND       compendium_pages.is_offensive                     =     '$search_offensive' ";
+    $qpages .= "  AND       compendium_pages.is_offensive                     =     '$search_offensive'   ";
+  if($search_nsfw_title > -1)
+    $qpages .= "  AND       compendium_pages.title_is_nsfw                    =     '$search_nsfw_title'  ";
   if($search_era)
-    $qpages .= "  AND       compendium_pages.fk_compendium_eras               =     '$search_era'       ";
+    $qpages .= "  AND       compendium_pages.fk_compendium_eras               =     '$search_era'         ";
   if($search_appeared)
-    $qpages .= "  AND       compendium_pages.year_appeared                    =     '$search_appeared'  ";
+    $qpages .= "  AND       compendium_pages.year_appeared                    =     '$search_appeared'    ";
   if($search_peaked)
-    $qpages .= "  AND       compendium_pages.year_peak                        =     '$search_peaked'    ";
+    $qpages .= "  AND       compendium_pages.year_peak                        =     '$search_peaked'      ";
   if($search_created)
-    $qpages .= "  AND       YEAR(FROM_UNIXTIME(compendium_pages.created_at))  =     '$search_created'   ";
+    $qpages .= "  AND       YEAR(FROM_UNIXTIME(compendium_pages.created_at))  =     '$search_created'     ";
 
   // Sort the data
   if($sort_by == 'title')
@@ -418,6 +422,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $temp                   = ($row['p_peak_month']) ? __('month_'.$row['p_peak_month'], spaces_after: 1) : '';
     $data[$i]['peak']       = ($row['p_peak_year']) ? $temp.$row['p_peak_year'] : '';
     $data[$i]['blur']       = ($row['p_nsfw_title'] && $nsfw < 2) ? ' blur' : '';
+    $data[$i]['blur_link']  = ($row['p_nsfw_title'] && $nsfw < 2) ? ' blur' : ' forced_link';
     $temp                   = bbcodes(sanitize_output($row['p_summary'], preserve_line_breaks: true));
     $data[$i]['summary']    = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
     $data[$i]['era_id']     = sanitize_output($row['pe_id']);
@@ -762,6 +767,59 @@ function compendium_page_type_get( string $page_type = '' ) : mixed
 
   // Page type no found
   return null;
+}
+
+
+
+
+/**
+ * Returns data related to a compendium era.
+ *
+ * @param   int         $history_id   The compendium era's id.
+ *
+ * @return  array|null                An array containing era related data, or NULL if it does not exist.
+ */
+
+function compendium_eras_get( int $era_id ) : mixed
+{
+  // Sanitize the era's id
+  $era_id = sanitize($era_id, 'int', 0);
+
+  // Return null if the era doesn't exist
+  if(!database_row_exists('compendium_eras', $era_id))
+    return NULL;
+
+  // Get the user's current language, access rights, settings, and the compendium pages which they can access
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  $is_admin = user_is_administrator();
+  $nsfw     = user_settings_nsfw();
+  $privacy  = user_settings_privacy();
+  $mode     = user_get_mode();
+  $pages    = compendium_pages_list_urls();
+
+  // Fetch the data
+  $dera = mysqli_fetch_array(query("  SELECT  compendium_eras.year_start        AS 'ce_start'   ,
+                                              compendium_eras.year_end          AS 'ce_end'     ,
+                                              compendium_eras.name_$lang        AS 'ce_name'    ,
+                                              compendium_eras.name_en           AS 'ce_name_en' ,
+                                              compendium_eras.name_fr           AS 'ce_name_fr' ,
+                                              compendium_eras.description_$lang AS 'ce_body'
+                                      FROM    compendium_eras
+                                      WHERE   compendium_eras.id = '$era_id' "));
+
+  // Assemble an array with the data
+  $data['start']        = sanitize_output($dera['ce_start']);
+  $data['end']          = sanitize_output($dera['ce_end']);
+  $data['name']         = sanitize_output($dera['ce_name']);
+  $data['name_en_raw']  = $dera['ce_name_en'];
+  $data['name_fr_raw']  = $dera['ce_name_fr'];
+  $data['name_en']      = sanitize_output($dera['ce_name_en']);
+  $data['name_fr']      = sanitize_output($dera['ce_name_fr']);
+  $temp                 = bbcodes(sanitize_output($dera['ce_body'], preserve_line_breaks: true));
+  $data['body']         = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+
+  // Return the data
+  return $data;
 }
 
 

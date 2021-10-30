@@ -11,10 +11,10 @@ include_once './../../inc/functions_time.inc.php';  # Time management
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/compendium/index";
-$page_title_en    = "Compendium";
-$page_title_fr    = "Compendium";
-$page_description = "An encyclopedia of 21st century culture, internet memes, modern slang, and sociocultural concepts";
+$page_url         = "pages/compendium/cultural_era";
+$page_title_en    = "Compendium: ";
+$page_title_fr    = "Compendium : ";
+$page_description = "An encyclopedia of 21st century culture, documenting the ";
 
 
 
@@ -26,14 +26,28 @@ $page_description = "An encyclopedia of 21st century culture, internet memes, mo
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Fetch the page list
+// Fetch the cultural era
 
-$compendium_pages_list = compendium_pages_list( search:     array(  'nsfw'        => 0    ,
-                                                                    'gross'       => 0    ,
-                                                                    'offensive'   => 0    ,
-                                                                    'nsfw_title'  => 0  ) ,
-                                                limit:      10                            ,
-                                                user_view:  true                          );
+// Fetch the era id
+$compendium_era_id = (int)form_fetch_element('era', request_type: 'GET');
+
+// Fetch the era data
+$compendium_era_data = compendium_eras_get($compendium_era_id);
+
+// Stop here if the era doesn't exist
+if(!$compendium_era_data)
+  exit(header("Location: ".$path."pages/compendium/cultural_era_list"));
+
+// Update the page summary
+$page_url         .= "?era=".$compendium_era_id;
+$page_title_en    .= $compendium_era_data['name_en_raw'];
+$page_title_fr    .= $compendium_era_data['name_fr_raw'];
+$page_description .= string_change_case($compendium_era_data['name_en'], 'lowercase')." and its associated memes";
+
+// Fetch the page list
+$compendium_pages_list = compendium_pages_list( sort_by:    'title'                              ,
+                                                search:     array( 'era' => $compendium_era_id ) ,
+                                                user_view:  true                                 );
 
 
 
@@ -47,42 +61,28 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h1>
-    <?=__('compendium_index_title')?>
+    <?=__link('pages/compendium/index', __('compendium_index_title'), 'noglow')?>
   </h1>
 
   <h5>
-    <?=__('compendium_index_subitle')?>
+    <?=__link('pages/compendium/cultural_era_list', __('compendium_era_subtitle', spaces_after: 1).$compendium_era_data['name'], 'noglow')?>
   </h5>
 
-  <p>
-    <?=__('compendium_index_intro_1')?>
-  </p>
-
-  <p>
-    <?=__('compendium_index_intro_2')?>
-  </p>
-
-  <p>
-    <?=__('compendium_index_intro_3')?>
-  </p>
-
-  <p>
-    <?=__('compendium_index_intro_4')?>
-  </p>
+  <?php if($compendium_era_data['body']) { ?>
+  <div class="padding_top">
+    <?=$compendium_era_data['body']?>
+  </div>
+  <?php } ?>
 
   <h3 class="bigpadding_top">
-    <?=__('compendium_index_recent_title')?>
+    <?=__('compendium_era_pages')?>
   </h3>
 
   <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
 
   <p class="padding_top">
-    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow forced_link')?><br>
+    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow'.$compendium_pages_list[$i]['blur_link'])?><br>
     <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('pages/compendium/'.$compendium_pages_list[$i]['type_url'], $compendium_pages_list[$i]['type'])?></span><br>
-    <?php if($compendium_pages_list[$i]['edited']) { ?>
-    <span class=""><?=__('compendium_index_recent_reworked', spaces_after: 1).$compendium_pages_list[$i]['edited']?></span><br>
-    <?php } ?>
-    <span class=""><?=__('compendium_index_recent_created', spaces_after: 1).$compendium_pages_list[$i]['created']?></span>
   </p>
 
   <?php if($compendium_pages_list[$i]['summary']) { ?>
@@ -90,6 +90,12 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=$compendium_pages_list[$i]['summary']?>
   </p>
   <?php } ?>
+
+  <?php } if(!$i) { ?>
+
+  <p>
+    <?=__('compendium_era_empty')?>
+  </p>
 
   <?php } ?>
 

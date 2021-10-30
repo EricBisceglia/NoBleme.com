@@ -309,6 +309,24 @@ ___('compendium_eras_entries',  'EN', "Entries");
 ___('compendium_eras_entries',  'FR', "Pages");
 
 
+// Era: Header
+___('compendium_era_subtitle',  'EN', "Era:");
+___('compendium_era_subtitle',  'FR', "Période :");
+
+
+// Era: Page list
+___('compendium_era_pages', 'EN', "Content from this era");
+___('compendium_era_pages', 'FR', "Pages issues de cette période");
+___('compendium_era_empty', 'EN', <<<EOT
+There are currently no pages documenting content from this era. Until this section of the {{link|pages/compendium/index|compendium}} gets filled up, you can browse content from other {{link|pages/compendium/cultural_era_list|eras}}.
+EOT
+);
+___('compendium_era_empty', 'FR', <<<EOT
+Il n'y a pour le moment aucune page documentant des contenus issus de cette période. En attendant que cette section du {{link|pages/compendium/index|compendium}} soit remplie, vous pouvez parcourir les autres {{link|pages/compendium/cultural_era_list|périodes}}.
+EOT
+);
+
+
 
 
 /*********************************************************************************************************************/
