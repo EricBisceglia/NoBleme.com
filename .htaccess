@@ -18,6 +18,7 @@ RewriteRule ^pages/tasks/([0-9]+)$ pages/tasks/task.php?id=$1 [NC]
 RewriteRule ^pages/users/([0-9]+)$ pages/users/profile.php?id=$1 [NC]
 
 # Better looking compendium URLs (not strictly enforced)
+RewriteCond %{THE_REQUEST} !/category [NC]
 RewriteCond %{THE_REQUEST} !/cultural_era [NC]
 RewriteCond %{THE_REQUEST} !/index [NC]
 RewriteCond %{THE_REQUEST} !/image [NC]

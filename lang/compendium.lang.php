@@ -331,6 +331,32 @@ EOT
 
 /*********************************************************************************************************************/
 /*                                                                                                                   */
+/*                                                    CATEGORIES                                                     */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Category list: Header
+___('compendium_categories_title',    'EN', "Categories");
+___('compendium_categories_title',    'FR', "Catégories");
+___('compendium_categories_intro',    'EN', <<<EOT
+This {{link|pages/compendium/index|compendium}} is full of varied content. In order to keep everything organized, most pages are categorized as belonging to one or more category. All the categories used to classify compendium pages are lited in the table below, along with the number of pages belonging to each category. If you are looking to browse specific types of content, then click on a category's name to learn more about it and see a list of all pages belonging to it.
+EOT
+);
+___('compendium_categories_intro',    'FR', <<<EOT
+Ce {{link|pages/compendium/index|compendium}} est rempli de contenu varié. Afin d'organiser ce contenu, une ou plusieurs catégories sont assignées à la plupart des pages. Le tableau ci-dessous contient toutes les catégories, ainsi que le nombre de pages appartenant à chaque catégorie. Vous pouvez cliquer sur le nom d'une catégorie pour en apprendre plus à son sujet et voir la liste des pages y correspondant.
+EOT
+);
+
+
+// Category list: Table
+___('compendium_categories_name', 'EN', "Category");
+___('compendium_categories_name', 'FR', "Catégorie");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
 /*                                                 MISSION STATEMENT                                                 */
 /*                                                                                                                   */
 /*********************************************************************************************************************/

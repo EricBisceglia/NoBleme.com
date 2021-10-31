@@ -21,6 +21,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  compendium_page_type_get                Returns data related to a compendium page type.                          */
 /*                                                                                                                   */
+/*  compendium_categories_list              Fetches a list of compendium categories.                                 */
+/*                                                                                                                   */
 /*  compendium_eras_get                     Returns data related to a compendium era.                                */
 /*  compendium_eras_list                    Fetches a list of compendium eras.                                       */
 /*                                                                                                                   */
@@ -767,6 +769,45 @@ function compendium_page_type_get( string $page_type = '' ) : mixed
 
   // Page type no found
   return null;
+}
+
+
+
+
+/**
+ * Fetches a list of compendium categories.
+ *
+ * @return  array   An array containing categories.
+ */
+
+function compendium_categories_list() : array
+{
+  // Get the user's current language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+
+  // Fetch the compendium categories
+  $qeras = query("  SELECT    compendium_categories.id                AS 'cc_id'    ,
+                              compendium_categories.name_$lang        AS 'cc_name'  ,
+                              COUNT(compendium_categories.id)         AS 'cc_count'
+                    FROM      compendium_categories
+                    LEFT JOIN compendium_pages_categories
+                    ON        compendium_categories.id = compendium_pages_categories.fk_compendium_categories
+                    GROUP BY  compendium_categories.id
+                    ORDER BY  compendium_categories.display_order ASC ");
+
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qeras); $i++)
+  {
+    $data[$i]['id']     = sanitize_output($row['cc_id']);
+    $data[$i]['name']   = sanitize_output($row['cc_name']);
+    $data[$i]['count']  = ($row['cc_count']) ? sanitize_output($row['cc_count']) : '-';
+  }
+
+  // Add the number of rows to the data
+  $data['rows'] = $i;
+
+  // Return the prepared data
+  return $data;
 }
 
 
