@@ -353,6 +353,24 @@ ___('compendium_categories_name', 'EN', "Category");
 ___('compendium_categories_name', 'FR', "Catégorie");
 
 
+// Category: Header
+___('compenidum_category_subtitle', 'EN', "Category:");
+___('compenidum_category_subtitle', 'FR', "Catégorie :");
+
+
+// Category: Page list
+___('compendium_category_pages',  'EN', "Content from this category");
+___('compendium_category_pages',  'FR', "Pages issues de cette catégorie");
+___('compendium_category_empty',  'EN', <<<EOT
+There are currently no pages belonging to this category. Until this section of the {{link|pages/compendium/index|compendium}} gets filled up, you can browse content from other {{link|pages/compendium/category_list|categories}}.
+EOT
+);
+___('compendium_category_empty',  'FR', <<<EOT
+Il n'y a pour le moment aucune page appartenant à cette catégorie. En attendant que cette section du {{link|pages/compendium/index|compendium}} soit remplie, vous pouvez parcourir les autres {{link|pages/compendium/category_list|catégories}}.
+EOT
+);
+
+
 
 
 /*********************************************************************************************************************/

@@ -21,6 +21,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  compendium_page_type_get                Returns data related to a compendium page type.                          */
 /*                                                                                                                   */
+/*  compendium_categories_get               Returns data related to a compendium category.                           */
 /*  compendium_categories_list              Fetches a list of compendium categories.                                 */
 /*                                                                                                                   */
 /*  compendium_eras_get                     Returns data related to a compendium era.                                */
@@ -303,9 +304,14 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   $search_offensive   = isset($search['offensive'])   ? sanitize($search['offensive'], 'int', -1, 1)        : -1;
   $search_nsfw_title  = isset($search['nsfw_title'])  ? sanitize($search['nsfw_title'], 'int', -1, 1)       : -1;
   $search_era         = isset($search['era'])         ? sanitize($search['era'], 'int', 0)                  : 0;
+  $search_category    = isset($search['category'])    ? sanitize($search['category'], 'int', 0)             : 0;
   $search_appeared    = isset($search['appeared'])    ? sanitize($search['appeared'], 'int', 0, date('Y'))  : 0;
   $search_peaked      = isset($search['peaked'])      ? sanitize($search['peaked'], 'int', 0, date('Y'))    : 0;
   $search_created     = isset($search['created'])     ? sanitize($search['created'], 'int', 0, date('Y'))   : 0;
+
+  // Join categories if required
+  $join_categories = ($search_category) ? ' LEFT JOIN compendium_pages_categories ON compendium_pages_categories.fk_compendium_pages = compendium_pages.id ': '';
+
 
   // Fetch the pages
   $qpages = "     SELECT    compendium_pages.created_at       AS 'p_created'    ,
@@ -323,6 +329,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                             compendium_eras.short_name_$lang  AS 'pe_name'
                   FROM      compendium_pages
                   LEFT JOIN compendium_eras ON compendium_pages.fk_compendium_eras = compendium_eras.id
+                            $join_categories
                   WHERE     1 = 1 ";
 
   // Do not show deleted pages or drafts to regular users
@@ -340,25 +347,27 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
 
   // Search the data
   if($search_type)
-    $qpages .= "  AND       compendium_pages.page_type                        LIKE  '%$search_type%'      ";
+    $qpages .= "  AND       compendium_pages.page_type                            LIKE  '%$search_type%'      ";
   if($search_title)
-    $qpages .= "  AND       compendium_pages.title_$lang                      LIKE  '%$search_title%'     ";
+    $qpages .= "  AND       compendium_pages.title_$lang                          LIKE  '%$search_title%'     ";
   if($search_nsfw > -1)
-    $qpages .= "  AND       compendium_pages.is_nsfw                          =     '$search_nsfw'        ";
+    $qpages .= "  AND       compendium_pages.is_nsfw                              =     '$search_nsfw'        ";
   if($search_gross > -1)
-    $qpages .= "  AND       compendium_pages.is_gross                         =     '$search_gross'       ";
+    $qpages .= "  AND       compendium_pages.is_gross                             =     '$search_gross'       ";
   if($search_offensive > -1)
-    $qpages .= "  AND       compendium_pages.is_offensive                     =     '$search_offensive'   ";
+    $qpages .= "  AND       compendium_pages.is_offensive                         =     '$search_offensive'   ";
   if($search_nsfw_title > -1)
-    $qpages .= "  AND       compendium_pages.title_is_nsfw                    =     '$search_nsfw_title'  ";
+    $qpages .= "  AND       compendium_pages.title_is_nsfw                        =     '$search_nsfw_title'  ";
   if($search_era)
-    $qpages .= "  AND       compendium_pages.fk_compendium_eras               =     '$search_era'         ";
+    $qpages .= "  AND       compendium_pages.fk_compendium_eras                   =     '$search_era'         ";
+  if($search_category)
+    $qpages .= "  AND       compendium_pages_categories.fk_compendium_categories  =     '$search_category'  ";
   if($search_appeared)
-    $qpages .= "  AND       compendium_pages.year_appeared                    =     '$search_appeared'    ";
+    $qpages .= "  AND       compendium_pages.year_appeared                        =     '$search_appeared'    ";
   if($search_peaked)
-    $qpages .= "  AND       compendium_pages.year_peak                        =     '$search_peaked'      ";
+    $qpages .= "  AND       compendium_pages.year_peak                            =     '$search_peaked'      ";
   if($search_created)
-    $qpages .= "  AND       YEAR(FROM_UNIXTIME(compendium_pages.created_at))  =     '$search_created'     ";
+    $qpages .= "  AND       YEAR(FROM_UNIXTIME(compendium_pages.created_at))      =     '$search_created'     ";
 
   // Sort the data
   if($sort_by == 'title')
@@ -775,6 +784,54 @@ function compendium_page_type_get( string $page_type = '' ) : mixed
 
 
 /**
+ * Returns data related to a compendium category.
+ *
+ * @param   int         $category_id  The compendium category's id.
+ *
+ * @return  array|null                An array containing category related data, or NULL if it does not exist.
+ */
+
+function compendium_categories_get( int $category_id ) : mixed
+{
+  // Sanitize the category's id
+  $category_id = sanitize($category_id, 'int', 0);
+
+  // Return null if the category doesn't exist
+  if(!database_row_exists('compendium_categories', $category_id))
+    return NULL;
+
+  // Get the user's current language, settings, and the compendium pages which they can access
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  $nsfw     = user_settings_nsfw();
+  $privacy  = user_settings_privacy();
+  $mode     = user_get_mode();
+  $pages    = compendium_pages_list_urls();
+
+  // Fetch the data
+  $dcategory = mysqli_fetch_array(query(" SELECT  compendium_categories.name_$lang        AS 'cc_name'    ,
+                                                  compendium_categories.name_en           AS 'cc_name_en' ,
+                                                  compendium_categories.name_fr           AS 'cc_name_fr' ,
+                                                  compendium_categories.description_$lang AS 'cc_body'
+                                          FROM    compendium_categories
+                                          WHERE   compendium_categories.id = '$category_id' "));
+
+  // Assemble an array with the data
+  $data['name']         = sanitize_output($dcategory['cc_name']);
+  $data['name_en_raw']  = $dcategory['cc_name_en'];
+  $data['name_fr_raw']  = $dcategory['cc_name_fr'];
+  $data['name_en']      = sanitize_output($dcategory['cc_name_en']);
+  $data['name_fr']      = sanitize_output($dcategory['cc_name_fr']);
+  $temp                 = bbcodes(sanitize_output($dcategory['cc_body'], preserve_line_breaks: true));
+  $data['body']         = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+
+  // Return the data
+  return $data;
+}
+
+
+
+
+/**
  * Fetches a list of compendium categories.
  *
  * @return  array   An array containing categories.
@@ -786,17 +843,17 @@ function compendium_categories_list() : array
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch the compendium categories
-  $qeras = query("  SELECT    compendium_categories.id                AS 'cc_id'    ,
-                              compendium_categories.name_$lang        AS 'cc_name'  ,
-                              COUNT(compendium_categories.id)         AS 'cc_count'
-                    FROM      compendium_categories
-                    LEFT JOIN compendium_pages_categories
-                    ON        compendium_categories.id = compendium_pages_categories.fk_compendium_categories
-                    GROUP BY  compendium_categories.id
-                    ORDER BY  compendium_categories.display_order ASC ");
+  $qcategories = query("  SELECT    compendium_categories.id                AS 'cc_id'    ,
+                                    compendium_categories.name_$lang        AS 'cc_name'  ,
+                                    COUNT(compendium_pages_categories.id)   AS 'cc_count'
+                          FROM      compendium_categories
+                          LEFT JOIN compendium_pages_categories
+                          ON        compendium_categories.id = compendium_pages_categories.fk_compendium_categories
+                          GROUP BY  compendium_categories.id
+                          ORDER BY  compendium_categories.display_order ASC ");
 
   // Prepare the data
-  for($i = 0; $row = mysqli_fetch_array($qeras); $i++)
+  for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
   {
     $data[$i]['id']     = sanitize_output($row['cc_id']);
     $data[$i]['name']   = sanitize_output($row['cc_name']);
@@ -816,9 +873,9 @@ function compendium_categories_list() : array
 /**
  * Returns data related to a compendium era.
  *
- * @param   int         $history_id   The compendium era's id.
+ * @param   int         $era_id   The compendium era's id.
  *
- * @return  array|null                An array containing era related data, or NULL if it does not exist.
+ * @return  array|null            An array containing era related data, or NULL if it does not exist.
  */
 
 function compendium_eras_get( int $era_id ) : mixed
@@ -830,9 +887,8 @@ function compendium_eras_get( int $era_id ) : mixed
   if(!database_row_exists('compendium_eras', $era_id))
     return NULL;
 
-  // Get the user's current language, access rights, settings, and the compendium pages which they can access
+  // Get the user's current language, settings, and the compendium pages which they can access
   $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
-  $is_admin = user_is_administrator();
   $nsfw     = user_settings_nsfw();
   $privacy  = user_settings_privacy();
   $mode     = user_get_mode();

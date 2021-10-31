@@ -6,13 +6,15 @@
 include_once './../../inc/includes.inc.php';        # Core
 include_once './../../actions/compendium.act.php';  # Actions
 include_once './../../lang/compendium.lang.php';    # Translations
+include_once './../../inc/bbcodes.inc.php';         # BBCodes
+include_once './../../inc/functions_time.inc.php';  # Time management
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/compendium/category_list";
-$page_title_en    = "Compendium categories";
-$page_title_fr    = "Compendium : Catégories";
-$page_description = "Categorizations used to filter pages within NoBleme's 21st century culture compendium";
+$page_url         = "pages/compendium/category";
+$page_title_en    = "Compendium: ";
+$page_title_fr    = "Compendium : ";
+$page_description = "Pages categorized as being ";
 
 
 
@@ -23,8 +25,29 @@ $page_description = "Categorizations used to filter pages within NoBleme's 21st 
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Fetch a list of eras
-$compendium_categories_list = compendium_categories_list();
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch the category
+
+// Fetch the category id
+$compendium_category_id = (int)form_fetch_element('id', request_type: 'GET');
+
+// Fetch the category data
+$compendium_category_data = compendium_categories_get($compendium_category_id);
+
+// Stop here if the category doesn't exist
+if(!$compendium_category_data)
+  exit(header("Location: ".$path."pages/compendium/category_list"));
+
+// Update the page summary
+$page_url         .= "?id=".$compendium_category_id;
+$page_title_en    .= $compendium_category_data['name_en_raw'];
+$page_title_fr    .= $compendium_category_data['name_fr_raw'];
+$page_description .= string_change_case($compendium_category_data['name_en'], 'lowercase')." in NoBleme's encyclopedia of 21st century culture";
+
+// Fetch the page list
+$compendium_pages_list = compendium_pages_list( sort_by:    'title'                                         ,
+                                                search:     array( 'category' => $compendium_category_id )  ,
+                                                user_view:  true                                            );
 
 
 
@@ -35,53 +58,46 @@ $compendium_categories_list = compendium_categories_list();
 /*                                                                                                                   */
 if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
 
-<div class="width_30">
+<div class="width_50">
 
   <h1>
-    <?=__link('pages/compendium/index', __('compendium_categories_title'), 'noglow')?>
+    <?=__link('pages/compendium/index', __('compendium_index_title'), 'noglow')?>
   </h1>
 
   <h5>
-    <?=__link('pages/compendium/index', __('compendium_eras_subtitle'), 'noglow')?>
+    <?=__link('pages/compendium/category_list', __('compenidum_category_subtitle', spaces_after: 1).$compendium_category_data['name'], 'noglow')?>
   </h5>
 
-  <p class="bigpadding_bot">
-    <?=__('compendium_categories_intro')?>
+  <?php if($compendium_category_data['body']) { ?>
+  <div class="padding_top">
+    <?=$compendium_category_data['body']?>
+  </div>
+  <?php } ?>
+
+  <h3 class="bigpadding_top">
+    <?=__('compendium_category_pages')?>
+  </h3>
+
+  <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
+
+  <p class="padding_top">
+    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow'.$compendium_pages_list[$i]['blur_link'])?><br>
+    <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('pages/compendium/'.$compendium_pages_list[$i]['type_url'], $compendium_pages_list[$i]['type'])?></span><br>
   </p>
 
-  <table>
-    <thead>
+  <?php if($compendium_pages_list[$i]['summary']) { ?>
+  <p class="tinypadding_top">
+    <?=$compendium_pages_list[$i]['summary']?>
+  </p>
+  <?php } ?>
 
-      <tr class="uppercase">
-        <th>
-          <?=__('compendium_categories_name')?>
-        </th>
-        <th>
-          <?=__('compendium_eras_entries')?>
-        </th>
-      </tr>
+  <?php } if(!$i) { ?>
 
-    </thead>
-    <tbody class="altc align_center">
+  <p>
+    <?=__('compendium_category_empty')?>
+  </p>
 
-      <?php for($i = 0; $i < $compendium_categories_list['rows']; $i++) { ?>
-
-      <tr>
-
-        <td>
-          <?=__link('pages/compendium/category?id='.$compendium_categories_list[$i]['id'], $compendium_categories_list[$i]['name'])?>
-        </td>
-
-        <td>
-          <?=$compendium_categories_list[$i]['count']?>
-        </td>
-
-      </tr>
-
-      <?php } ?>
-
-    </tbody>
-  </table>
+  <?php } ?>
 
 </div>
 
