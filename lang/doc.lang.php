@@ -142,10 +142,15 @@ ___('nbcodes_nsfw_name',        'FR', "Flou optionnel");
 ___('nbcodes_nsfw_example',     'EN', "[nsfw]Contenu[/nsfw]");
 ___('nbcodes_nsfw_example',     'FR', "[nsfw]Contents[/nsfw]");
 
+___('nbcodes_nobleme_name',     'EN', "Internal link");
+___('nbcodes_nobleme_name',     'FR', "Lien interne");
+___('nbcodes_nobleme_example',  'EN', "[nobleme:pages/doc/bbcodes|Page name]");
+___('nbcodes_nobleme_example',  'FR', "[nobleme:pages/doc/bbcodes|Nom de la page]");
+
 ___('nbcodes_page_name',        'EN', "Compendium link");
 ___('nbcodes_page_name',        'FR', "Lien compendium");
-___('nbcodes_page_example',     'EN', "[page:compendium_url|Compendium page name]");
-___('nbcodes_page_example',     'FR', "[page:compendium_url|Page du compendium]");
+___('nbcodes_page_example',     'EN', "[page:page_url|Page name]");
+___('nbcodes_page_example',     'FR', "[page:url_page|Nom de la page]");
 
 ___('nbcodes_link_name',        'EN', "External link");
 ___('nbcodes_link_name',        'FR', "Lien externe");

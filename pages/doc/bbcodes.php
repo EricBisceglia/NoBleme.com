@@ -335,6 +335,18 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr>
         <td class="nowrap monospace">
+          [nobleme:url|text]
+        </td>
+        <td class="bold nowrap">
+          <?=__('nbcodes_nobleme_name')?>
+        </td>
+        <td class="padding_top padding_bot align_left">
+          <?=__('nbcodes_nobleme_example')?>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="nowrap monospace">
           [page:name|text]
         </td>
         <td class="bold nowrap">

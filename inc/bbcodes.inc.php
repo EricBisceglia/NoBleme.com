@@ -339,6 +339,13 @@ function nbcodes( string  $message                                              
 
 
   /*******************************************************************************************************************/
+  // [nobleme:pages/compendium/index|internal link name]
+
+  // Handle this with a regex
+  $message = preg_replace('/\[nobleme:(.*?)\|(.*?)\]/i','<a href="'.$path.'$1">$2</a>', $message);
+
+
+  /*******************************************************************************************************************/
   // [anchor:name]
 
   // Handle this with a regex
