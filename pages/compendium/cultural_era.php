@@ -68,6 +68,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <?=__link('pages/compendium/cultural_era_list', __('compendium_era_subtitle', spaces_after: 1).$compendium_era_data['name'], 'noglow')?>
   </h5>
 
+  <p class="italics">
+    <?=__('compendium_eras_summary')?>
+  </p>
+
   <?php if($compendium_era_data['body']) { ?>
   <div class="padding_top">
     <?=$compendium_era_data['body']?>
@@ -82,7 +86,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p class="padding_top">
     <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow'.$compendium_pages_list[$i]['blur_link'])?><br>
-    <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('pages/compendium/'.$compendium_pages_list[$i]['type_url'], $compendium_pages_list[$i]['type'])?></span><br>
+    <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('todo_link?id='.$compendium_pages_list[$i]['type_id'], $compendium_pages_list[$i]['type'])?></span><br>
   </p>
 
   <?php if($compendium_pages_list[$i]['summary']) { ?>

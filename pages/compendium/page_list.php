@@ -50,17 +50,13 @@ $compendium_pages_list = compendium_pages_list( sort_by:    $compendium_pages_so
                                                 search:     $compendium_pages_list_search ,
                                                 user_view:  true                          );
 
-// Fetch the page types
-$compendium_page_type_meme          = compendium_page_type_get('meme');
-$compendium_page_type_definition    = compendium_page_type_get('definition');
-$compendium_page_type_sociocultural = compendium_page_type_get('sociocultural');
-$compendium_page_type_drama         = compendium_page_type_get('drama');
-$compendium_page_type_history       = compendium_page_type_get('history');
-
 // Fetch the appearance, peak, and page creation years
 $compendium_page_list_years       = compendium_pages_list_years();
 $compendium_appearance_list_years = compendium_appearance_list_years();
 $compendium_peak_list_years       = compendium_peak_list_years();
+
+// Fetch the page types
+$compendium_types_list = compendium_types_list();
 
 // Fetch the eras
 $compendium_eras_list = compendium_eras_list();
@@ -104,11 +100,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('title');")?>
         </th>
         <th>
-          <?=__link('todo_link', __('compendium_list_theme'))?>
+          <?=__('compendium_list_theme')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('theme');")?>
         </th>
         <th>
-          <?=__link('pages/compendium/cultural_era_list', __('compendium_page_era'))?>
+          <?=__('compendium_page_era')?>
           <?=__icon('sort_down', is_small: true, alt: 'v', title: __('sort'), title_case: 'initials', onclick: "compendium_page_list_search('era');")?>
         </th>
         <th>
@@ -137,11 +133,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <th>
           <select class="table_search" name="compendium_search_type" id="compendium_search_type" onchange="compendium_page_list_search();">
             <option value="0">&nbsp;</option>
-            <option value="meme"><?=string_change_case($compendium_page_type_meme['name_'.string_change_case($lang, 'lowercase')], 'initials')?></option>
-            <option value="definition"><?=string_change_case($compendium_page_type_definition['name_'.string_change_case($lang, 'lowercase')], 'initials')?></option>
-            <option value="sociocultural"><?=string_change_case($compendium_page_type_sociocultural['name_'.string_change_case($lang, 'lowercase')], 'initials')?></option>
-            <option value="drama"><?=string_change_case($compendium_page_type_drama['name_'.string_change_case($lang, 'lowercase')], 'initials')?></option>
-            <option value="history"><?=string_change_case($compendium_page_type_history['name_'.string_change_case($lang, 'lowercase')], 'initials')?></option>
+            <?php for($i = 0; $i < $compendium_types_list['rows']; $i++) { ?>
+            <option value="<?=$compendium_types_list[$i]['id']?>"><?=$compendium_types_list[$i]['name']?></option>
+            <?php } ?>
           </select>
         </th>
 
@@ -224,7 +218,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } ?>
 
         <td class="align_center">
-          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['type_url'], string_change_case($compendium_pages_list[$i]['type'], 'initials'))?>
+          <?=__link('todo_link?id='.$compendium_pages_list[$i]['type_id'], string_change_case($compendium_pages_list[$i]['type'], 'initials'))?>
         </td>
 
         <td class="align_center">

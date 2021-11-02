@@ -13,8 +13,8 @@ include_once './../../inc/bbcodes.inc.php';         # Core
 // Page summary
 $page_lang        = array('FR', 'EN');
 $page_url         = "pages/compendium/";
-$page_title_en    = "Compendium: ";
-$page_title_fr    = "Compendium : ";
+$page_title_en    = "";
+$page_title_fr    = "";
 $page_description = "An encyclopedia of 21st century culture, internet memes, modern slang, and sociocultural concepts";
 
 // Extra CSS & JS
@@ -92,16 +92,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p class="tinypadding_top padding_bot">
     <span class="bold"><?=__('compendium_page_type').__(':')?></span>
-    <?=__link('pages/compendium/'.$compendium_page_data['type_url'], $compendium_page_data['type'])?>
+    <?=__link('todo_link?id='.$compendium_page_data['type_id'], $compendium_page_data['type'])?>
     <?php if($compendium_page_data['era']) { ?>
     <br>
     <span class="bold"><?=__('compendium_page_era').__(':')?></span>
-    <?=__link('todo_link'.$compendium_page_data['era_id'], $compendium_page_data['era'])?>
+    <?=__link('pages/compendium/cultural_era?era='.$compendium_page_data['era_id'], $compendium_page_data['era'])?>
     <?php } if($compendium_page_data['categories']) { ?>
     <br>
     <span class="bold"><?=__('compendium_page_category', amount: $compendium_page_data['categories']).__(':')?></span>
     <?php for($i = 0; $i < $compendium_page_data['categories']; $i++) { ?>
-    <?=__link('todo_link'.$compendium_page_data['category_id'][$i], $compendium_page_data['category_name'][$i])?>
+    <?=__link('pages/compendium/category?id='.$compendium_page_data['category_id'][$i], $compendium_page_data['category_name'][$i])?>
     <?php if(($i + 1) < $compendium_page_data['categories']) { ?>
     ;
     <?php } ?>
@@ -166,7 +166,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <p class="align_center bigpadding_top">
     <?=__link('pages/compendium/index', __('compendium_page_compendium'))?><br>
     <?=__link('#compendium_page_history', __('compendium_page_modified', preset_values: array($compendium_page_data['updated'])), is_internal: false, onclick: "compendium_page_history_fetch('".$compendium_page_data['id']."')")?><br>
-    <?=__link('pages/compendium/random_page?type='.$compendium_page_data['type_raw'].'&id='.$compendium_page_data['id'], __('compendium_page_random_type', preset_values: array($compendium_page_data['type_other'])))?><br>
+    <?=__link('pages/compendium/random_page?type='.$compendium_page_data['type_id'].'&id='.$compendium_page_data['id'], __('compendium_page_random_type', preset_values: array($compendium_page_data['type_full'])))?><br>
     <?=__link('pages/compendium/random_page?id='.$compendium_page_data['id'], __('compendium_page_random_page'))?>
   </p>
 

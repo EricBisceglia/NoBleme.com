@@ -1677,6 +1677,91 @@ echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>compe
 ob_flush();
 flush();
 
+// Preset page types
+$details_en = ucfirst(fixtures_generate_data('sentence', 10, 20));
+$details_fr = ucfirst(fixtures_generate_data('sentence', 10, 20));
+query(" INSERT INTO compendium_types
+        SET         compendium_types.id             = 1             ,
+                    compendium_types.display_order  = 1             ,
+                    compendium_types.name_en        = 'Meme'        ,
+                    compendium_types.name_fr        = 'Meme'        ,
+                    compendium_types.full_name_en   = 'Meme'        ,
+                    compendium_types.full_name_fr   = 'Meme'        ,
+                    compendium_types.description_en = '$details_en' ,
+                    compendium_types.description_fr = '$details_fr' ");
+$details_en = ucfirst(fixtures_generate_data('sentence', 10, 20));
+$details_fr = ucfirst(fixtures_generate_data('sentence', 10, 20));
+query(" INSERT INTO compendium_types
+        SET         compendium_types.id             = 2             ,
+                    compendium_types.display_order  = 10            ,
+                    compendium_types.name_en        = 'Definition'  ,
+                    compendium_types.name_fr        = 'Définition'  ,
+                    compendium_types.full_name_en   = 'Definition'  ,
+                    compendium_types.full_name_fr   = 'Definition'  ,
+                    compendium_types.description_en = '$details_en' ,
+                    compendium_types.description_fr = '$details_fr' ");
+$details_en = ucfirst(fixtures_generate_data('sentence', 10, 20));
+$details_fr = ucfirst(fixtures_generate_data('sentence', 10, 20));
+query(" INSERT INTO compendium_types
+        SET         compendium_types.id             = 3                       ,
+                    compendium_types.display_order  = 100                     ,
+                    compendium_types.name_en        = 'Sociocultural'         ,
+                    compendium_types.name_fr        = 'Socioculturel'         ,
+                    compendium_types.full_name_en   = 'Sociocultural entry'   ,
+                    compendium_types.full_name_fr   = 'Contenu socioculturel' ,
+                    compendium_types.description_en = '$details_en'           ,
+                    compendium_types.description_fr = '$details_fr'           ");
+$details_en = ucfirst(fixtures_generate_data('sentence', 10, 20));
+$details_fr = ucfirst(fixtures_generate_data('sentence', 10, 20));
+query(" INSERT INTO compendium_types
+        SET         compendium_types.id             = 4             ,
+                    compendium_types.display_order  = 1000          ,
+                    compendium_types.name_en        = 'Drama'       ,
+                    compendium_types.name_fr        = 'Drame'       ,
+                    compendium_types.full_name_en   = 'Drama'       ,
+                    compendium_types.full_name_fr   = 'Drame'       ,
+                    compendium_types.description_en = '$details_en' ,
+                    compendium_types.description_fr = '$details_fr' ");
+$details_en = ucfirst(fixtures_generate_data('sentence', 10, 20));
+$details_fr = ucfirst(fixtures_generate_data('sentence', 10, 20));
+query(" INSERT INTO compendium_types
+        SET         compendium_types.id             = 5                     ,
+                    compendium_types.display_order  = 10000                 ,
+                    compendium_types.name_en        = 'History'             ,
+                    compendium_types.name_fr        = 'Histoire'            ,
+                    compendium_types.full_name_en   = 'Historical entry'    ,
+                    compendium_types.full_name_fr   = 'Contenu historique'  ,
+                    compendium_types.description_en = '$details_en'           ,
+                    compendium_types.description_fr = '$details_fr'           ");
+
+// Generate some random types
+$random = mt_rand(3,6);
+for($i = 0; $i < $random; $i++)
+{
+  // Generate random data
+  $display    = mt_rand(10001, 100000);
+  $title_en   = ucfirst(fixtures_generate_data('string', 5, 15));
+  $title_fr   = ucfirst(fixtures_generate_data('string', 5, 15));
+  $details_en = ucfirst(fixtures_generate_data('sentence', 10, 20));
+  $details_fr = ucfirst(fixtures_generate_data('sentence', 10, 20));
+
+  // Generate the categories
+  query(" INSERT INTO compendium_types
+          SET         compendium_types.display_order  = '$display' ,
+                      compendium_types.name_en        = '$title_en'   ,
+                      compendium_types.name_fr        = '$title_fr'   ,
+                      compendium_types.full_name_en   = '$title_en'   ,
+                      compendium_types.full_name_fr   = '$title_fr'   ,
+                      compendium_types.description_en = '$details_en' ,
+                      compendium_types.description_fr = '$details_fr' ");
+}
+
+// Output progress
+$random += 5;
+echo "<tr><td>Generated</td><td style=\"text-align:right\">$random</td><td>compendium types</td></tr>";
+ob_flush();
+flush();
+
 // Generate some random eras
 $random = mt_rand(5,10);
 for($i = 0; $i < $random; $i++)
@@ -1719,10 +1804,9 @@ for($i = 0; $i < $random; $i++)
   $draft        = (!$deleted && mt_rand(0,20) == 20) ? 1 : 0;
   $created_at   = mt_rand(1111239420, time());
   $era          = (mt_rand(0,1)) ? fixtures_fetch_random_id('compendium_eras') : 0;
-  $type         = (mt_rand(0,1)) ? 'definition' : 'meme';
-  $type         = (mt_rand(0,4) < 4) ? $type : 'sociocultural';
-  $type         = (mt_rand(0,10) < 10) ? $type : 'drama';
-  $type         = (mt_rand(0,15) < 15) ? $type : 'history';
+  $temp         = (mt_rand(0,1)) ? 3 : fixtures_fetch_random_id('compendium_types');
+  $temp         = (mt_rand(0,1)) ? 2 : $temp;
+  $type         = (mt_rand(0,1)) ? 1 : $temp;
   $url          = fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true);
   $title_en     = (mt_rand(0,5) < 5) ? ucfirst(fixtures_generate_data('sentence', 1, 6, 1)) : '';
   $title_fr     = (mt_rand(0,5) < 5) ? ucfirst(fixtures_generate_data('sentence', 1, 6, 1)) : '';
@@ -1758,7 +1842,7 @@ for($i = 0; $i < $random; $i++)
                         compendium_pages.is_draft             = '$draft'        ,
                         compendium_pages.created_at           = '$created_at'   ,
                         compendium_pages.fk_compendium_eras   = '$era'          ,
-                        compendium_pages.page_type            = '$type'         ,
+                        compendium_pages.fk_compendium_types  = '$type'         ,
                         compendium_pages.page_url             = '$url'          ,
                         compendium_pages.title_en             = '$title_en'     ,
                         compendium_pages.title_fr             = '$title_fr'     ,
@@ -1952,10 +2036,9 @@ $random = mt_rand(25,75);
 for($i = 0; $i < $random; $i++)
 {
   // Generate random data
-  $type     = mt_rand(0,1) ? 'definition' : 'meme';
-  $type     = (mt_rand(0,4) < 4) ? $type : 'sociocultural';
-  $type     = (mt_rand(0,10) < 10) ? $type : 'drama';
-  $type     = (mt_rand(0,15) < 15) ? $type : 'history';
+  $temp     = (mt_rand(0,1)) ? 3 : fixtures_fetch_random_id('compendium_types');
+  $temp     = (mt_rand(0,1)) ? 2 : $temp;
+  $type     = (mt_rand(0,1)) ? 1 : $temp;
   $url      = fixtures_generate_data('string', 5, 15, no_periods: true, no_spaces: true);
   $title_en = ucfirst(fixtures_generate_data('sentence', 1, 6, 1));
   $title_fr = ucfirst(fixtures_generate_data('sentence', 1, 6, 1));
@@ -1964,11 +2047,11 @@ for($i = 0; $i < $random; $i++)
   // Generate the missing pages
   if(!fixtures_check_entry('compendium_pages', 'page_url', $url))
     query(" INSERT INTO compendium_missing
-            SET         compendium_missing.page_type  = '$type'     ,
-                        compendium_missing.page_url   = '$url'      ,
-                        compendium_missing.title_en   = '$title_en' ,
-                        compendium_missing.title_fr   = '$title_fr' ,
-                        compendium_missing.notes      = '$notes'    ");
+            SET         compendium_missing.fk_compendium_types  = '$type'     ,
+                        compendium_missing.page_url             = '$url'      ,
+                        compendium_missing.title_en             = '$title_en' ,
+                        compendium_missing.title_fr             = '$title_fr' ,
+                        compendium_missing.notes                = '$notes'    ");
 
 }
 

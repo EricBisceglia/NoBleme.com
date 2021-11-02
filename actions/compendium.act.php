@@ -19,7 +19,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_images_assemble_links        Transforms the list of compendium pages on which an image is being used  */
 /*                                          into a usable string.                                                    */
 /*                                                                                                                   */
-/*  compendium_page_type_get                Returns data related to a compendium page type.                          */
+/*  compendium_type_list                    Returns data related to a compendium page type.                          */
 /*                                                                                                                   */
 /*  compendium_categories_get               Returns data related to a compendium category.                           */
 /*  compendium_categories_list              Fetches a list of compendium categories.                                 */
@@ -92,7 +92,6 @@ function compendium_pages_get(  int     $page_id  = 0   ,
                                                 compendium_pages.is_deleted         AS 'p_deleted'    ,
                                                 compendium_pages.is_draft           AS 'p_draft'      ,
                                                 compendium_pages.created_at         AS 'p_created'    ,
-                                                compendium_pages.page_type          AS 'p_type'       ,
                                                 compendium_pages.title_$lang        AS 'p_title'      ,
                                                 compendium_pages.title_en           AS 'p_title_en'   ,
                                                 compendium_pages.title_fr           AS 'p_title_fr'   ,
@@ -107,10 +106,15 @@ function compendium_pages_get(  int     $page_id  = 0   ,
                                                 compendium_pages.summary_$lang      AS 'p_summary'    ,
                                                 compendium_pages.definition_$lang   AS 'p_body'       ,
                                                 compendium_eras.id                  AS 'pe_id'        ,
-                                                compendium_eras.name_$lang          AS 'pe_name'
+                                                compendium_eras.name_$lang          AS 'pe_name'      ,
+                                                compendium_types.id                 AS 'pt_id'        ,
+                                                compendium_types.name_$lang         AS 'pt_name'      ,
+                                                compendium_types.full_name_$lang    AS 'pt_display'
                                       FROM      compendium_pages
+                                      LEFT JOIN compendium_types
+                                      ON        compendium_pages.fk_compendium_types  = compendium_types.id
                                       LEFT JOIN compendium_eras
-                                      ON        compendium_pages.fk_compendium_eras = compendium_eras.id
+                                      ON        compendium_pages.fk_compendium_eras   = compendium_eras.id
                                       WHERE     $where "));
 
   // Return null if the page should not be displayed
@@ -127,11 +131,6 @@ function compendium_pages_get(  int     $page_id  = 0   ,
   $data['deleted']    = $dpage['p_deleted'];
   $data['draft']      = $dpage['p_draft'];
   $data['no_page']    = ($dpage['p_title']) ? 0 : 1;
-  $page_type          = compendium_page_type_get($dpage['p_type']);
-  $data['type']       = sanitize_output(string_change_case($page_type['name_'.$lang], 'initials'));
-  $data['type_raw']   = sanitize_output($dpage['p_type']);
-  $data['type_url']   = sanitize_output($page_type['url']);
-  $data['type_other'] = sanitize_output($page_type['other_'.$lang]);
   $temp               = (strlen($dpage['p_title']) > 25) ? 'h2' : 'h1';
   $temp               = (strlen($dpage['p_title']) > 30) ? 'h3' : $temp;
   $temp               = (strlen($dpage['p_title']) > 40) ? 'h4' : $temp;
@@ -150,6 +149,9 @@ function compendium_pages_get(  int     $page_id  = 0   ,
   $data['summary']    = sanitize_output($dpage['p_summary']);
   $temp               = bbcodes(sanitize_output($dpage['p_body'], preserve_line_breaks: true));
   $data['body']       = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  $data['type_id']    = sanitize_output($dpage['pt_id']);
+  $data['type']       = sanitize_output($dpage['pt_name']);
+  $data['type_full']  = sanitize_output(string_change_case($dpage['pt_display'], 'lowercase'));
   $data['era_id']     = sanitize_output($dpage['pe_id']);
   $data['era']        = sanitize_output($dpage['pe_name']);
 
@@ -162,7 +164,7 @@ function compendium_pages_get(  int     $page_id  = 0   ,
 
   // Prepare the lastest update
   $temp             = (isset($dupdate['ph_time']) && $dupdate['ph_time']) ? $dupdate['ph_time'] : $dpage['p_created'];
-  $data['updated']  = ($temp) ? sanitize_output(time_since($temp)) : __('error');
+  $data['updated']  = ($temp) ? sanitize_output(string_change_case(time_since($temp), 'lowercase')) : __('error');
 
   // Fetch any associated categories
   $qcategories = query("  SELECT    compendium_pages_categories.id    AS 'cpc_id'   ,
@@ -219,19 +221,19 @@ function compendium_pages_get(  int     $page_id  = 0   ,
  * Returns data related to a random compendium page.
  *
  * @param   int     $exclude_id   (OPTIONAL)  A page id to exclude from the pages being fetched.
- * @param   string  $type         (OPTIONAL)  Request a specific page type for the randomly returned page.
+ * @param   int     $type         (OPTIONAL)  Request a specific page type for the randomly returned page.
  *
  * @return  string                            The url of a randomly chosen compendium page.
  */
 
-function compendium_pages_get_random( int     $exclude_id = 0   ,
-                                      string  $type       = ''  ) : string
+function compendium_pages_get_random( int $exclude_id = 0 ,
+                                      int $type       = 0 ) : string
 {
   // Sanitize the page type
   $type = sanitize($type, 'string');
 
   // Prepare the page type condition
-  $query_type = ($type) ? " AND compendium_pages.page_type LIKE '$type' " : '';
+  $query_type = ($type) ? " AND compendium_pages.fk_compendium_types = '$type' " : '';
 
   // Sanitize the excluded id
   $exclude_id = sanitize($exclude_id, 'int', 0);
@@ -297,12 +299,12 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   $pages    = compendium_pages_list_urls();
 
   // Sanitize the search parameters
-  $search_type        = isset($search['type'])        ? sanitize($search['type'], 'string')                 : '';
   $search_title       = isset($search['title'])       ? sanitize($search['title'], 'string')                : '';
   $search_nsfw        = isset($search['nsfw'])        ? sanitize($search['nsfw'], 'int', -1, 1)             : -1;
   $search_gross       = isset($search['gross'])       ? sanitize($search['gross'], 'int', -1, 1)            : -1;
   $search_offensive   = isset($search['offensive'])   ? sanitize($search['offensive'], 'int', -1, 1)        : -1;
   $search_nsfw_title  = isset($search['nsfw_title'])  ? sanitize($search['nsfw_title'], 'int', -1, 1)       : -1;
+  $search_type        = isset($search['type'])        ? sanitize($search['type'], 'int', 0)                 : 0;
   $search_era         = isset($search['era'])         ? sanitize($search['era'], 'int', 0)                  : 0;
   $search_category    = isset($search['category'])    ? sanitize($search['category'], 'int', 0)             : 0;
   $search_appeared    = isset($search['appeared'])    ? sanitize($search['appeared'], 'int', 0, date('Y'))  : 0;
@@ -312,23 +314,25 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   // Join categories if required
   $join_categories = ($search_category) ? ' LEFT JOIN compendium_pages_categories ON compendium_pages_categories.fk_compendium_pages = compendium_pages.id ': '';
 
-
   // Fetch the pages
-  $qpages = "     SELECT    compendium_pages.created_at       AS 'p_created'    ,
-                            compendium_pages.last_edited_at   AS 'p_edited'     ,
-                            compendium_pages.page_type        AS 'p_type'       ,
-                            compendium_pages.page_url         AS 'p_url'        ,
-                            compendium_pages.title_$lang      AS 'p_title'      ,
-                            compendium_pages.year_appeared    AS 'p_app_year'   ,
-                            compendium_pages.month_appeared   AS 'p_app_month'  ,
-                            compendium_pages.year_peak        AS 'p_peak_year'  ,
-                            compendium_pages.month_peak       AS 'p_peak_month' ,
-                            compendium_pages.title_is_nsfw    AS 'p_nsfw_title' ,
-                            compendium_pages.summary_$lang    AS 'p_summary'    ,
-                            compendium_eras.id                AS 'pe_id'        ,
-                            compendium_eras.short_name_$lang  AS 'pe_name'
+  $qpages = "     SELECT    compendium_pages.created_at         AS 'p_created'    ,
+                            compendium_pages.last_edited_at     AS 'p_edited'     ,
+                            compendium_pages.page_url           AS 'p_url'        ,
+                            compendium_pages.title_$lang        AS 'p_title'      ,
+                            compendium_pages.year_appeared      AS 'p_app_year'   ,
+                            compendium_pages.month_appeared     AS 'p_app_month'  ,
+                            compendium_pages.year_peak          AS 'p_peak_year'  ,
+                            compendium_pages.month_peak         AS 'p_peak_month' ,
+                            compendium_pages.title_is_nsfw      AS 'p_nsfw_title' ,
+                            compendium_pages.summary_$lang      AS 'p_summary'    ,
+                            compendium_eras.id                  AS 'pe_id'        ,
+                            compendium_eras.short_name_$lang    AS 'pe_name'      ,
+                            compendium_types.id                 AS 'pt_id'        ,
+                            compendium_types.name_$lang         AS 'pt_name'      ,
+                            compendium_types.full_name_$lang    AS 'pt_display'
                   FROM      compendium_pages
-                  LEFT JOIN compendium_eras ON compendium_pages.fk_compendium_eras = compendium_eras.id
+                  LEFT JOIN compendium_types  ON compendium_pages.fk_compendium_types = compendium_types.id
+                  LEFT JOIN compendium_eras   ON compendium_pages.fk_compendium_eras  = compendium_eras.id
                             $join_categories
                   WHERE     1 = 1 ";
 
@@ -346,8 +350,6 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $qpages .= "  AND       compendium_pages.title_$lang != '' ";
 
   // Search the data
-  if($search_type)
-    $qpages .= "  AND       compendium_pages.page_type                            LIKE  '%$search_type%'      ";
   if($search_title)
     $qpages .= "  AND       compendium_pages.title_$lang                          LIKE  '%$search_title%'     ";
   if($search_nsfw > -1)
@@ -358,10 +360,12 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $qpages .= "  AND       compendium_pages.is_offensive                         =     '$search_offensive'   ";
   if($search_nsfw_title > -1)
     $qpages .= "  AND       compendium_pages.title_is_nsfw                        =     '$search_nsfw_title'  ";
+  if($search_type)
+    $qpages .= "  AND       compendium_pages.fk_compendium_types                  =     '$search_type'        ";
   if($search_era)
     $qpages .= "  AND       compendium_pages.fk_compendium_eras                   =     '$search_era'         ";
   if($search_category)
-    $qpages .= "  AND       compendium_pages_categories.fk_compendium_categories  =     '$search_category'  ";
+    $qpages .= "  AND       compendium_pages_categories.fk_compendium_categories  =     '$search_category'    ";
   if($search_appeared)
     $qpages .= "  AND       compendium_pages.year_appeared                        =     '$search_appeared'    ";
   if($search_peaked)
@@ -373,10 +377,10 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   if($sort_by == 'title')
     $qpages .= "  ORDER BY    compendium_pages.title_$lang      ASC                 ";
   else if($sort_by == 'theme')
-    $qpages .= "  ORDER BY    compendium_pages.page_type        != 'meme'           ,
-                              compendium_pages.page_type        != 'definition'     ,
-                              compendium_pages.page_type        != 'sociocultural'  ,
-                              compendium_pages.page_type        ASC                 ,
+    $qpages .= "  ORDER BY    compendium_types.name_en          != 'meme'           ,
+                              compendium_types.name_en          != 'definition'     ,
+                              compendium_types.name_en          != 'sociocultural'  ,
+                              compendium_types.name_en          ASC                 ,
                               compendium_pages.title_$lang      ASC                 ";
   else if($sort_by == 'era')
     $qpages .= "  ORDER BY    compendium_eras.id                IS NULL             ,
@@ -419,11 +423,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   // Prepare the data
   for($i = 0; $row = mysqli_fetch_array($qpages); $i++)
   {
-    $temp                   = compendium_page_type_get($row['p_type']);
     $data[$i]['created']    = ($row['p_created']) ? sanitize_output(time_since($row['p_created'])) : '';
     $data[$i]['edited']     = ($row['p_edited']) ? sanitize_output(time_since($row['p_edited'])) : '';
-    $data[$i]['type']       = ($temp) ? sanitize_output($temp['name_'.$lang]) : '';
-    $data[$i]['type_url']   = ($temp) ? sanitize_output($temp['url']) : '';
     $data[$i]['url']        = sanitize_output($row['p_url']);
     $data[$i]['title']      = sanitize_output($row['p_title']);
     $data[$i]['shorttitle'] = sanitize_output(string_truncate($row['p_title'], 32, '...'));
@@ -436,6 +437,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['blur_link']  = ($row['p_nsfw_title'] && $nsfw < 2) ? ' blur' : ' forced_link';
     $temp                   = bbcodes(sanitize_output($row['p_summary'], preserve_line_breaks: true));
     $data[$i]['summary']    = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+    $data[$i]['type_id']    = sanitize_output($row['pt_id']);
+    $data[$i]['type']       = sanitize_output($row['pt_name']);
     $data[$i]['era_id']     = sanitize_output($row['pe_id']);
     $data[$i]['era']        = sanitize_output($row['pe_name']);
   }
@@ -727,57 +730,42 @@ function compendium_images_assemble_links( string $page_list ) : array
 
 
 /**
- * Returns data related to a compendium page type.
+ * Fetches a list of compendium page types.
  *
- * @param   string      $page_type  The requested page type.
- *
- * @return  array|null              An array containing the data, or null if the page type doesn't exist.
+ * @return  array   An array containing page types.
  */
 
-function compendium_page_type_get( string $page_type = '' ) : mixed
+function compendium_types_list() : array
 {
-  // Page type: meme
-  if($page_type == 'meme')
-    return array( 'name_en'   => "meme"   ,
-                  'name_fr'   => "meme"   ,
-                  'url'       => "memes"  ,
-                  'other_en'  => "meme"   ,
-                  'other_fr'  => "meme"   );
+  // Get the user's current language
+  $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
-  // Page type: definition
-  else if($page_type == 'definition')
-    return array( 'name_en'   => "definition" ,
-                  'name_fr'   => "définition" ,
-                  'url'       => "slang"      ,
-                  'other_en'  => "definition" ,
-                  'other_fr'  => "definition" );
+  // Fetch the compendium page types
+  $qtypes = query(" SELECT    compendium_types.id         AS 'ct_id'    ,
+                              compendium_types.name_$lang AS 'ct_name'  ,
+                              COUNT(compendium_pages.id)  AS 'ct_count'
+                    FROM      compendium_types
+                    LEFT JOIN compendium_pages ON compendium_types.id = compendium_pages.fk_compendium_types
+                    AND       compendium_pages.is_deleted             = 0
+                    AND       compendium_pages.is_draft               = 0
+                    AND       compendium_pages.title_$lang           != ''
+                    AND       compendium_pages.redirection_$lang      = ''
+                    GROUP BY  compendium_types.id
+                    ORDER BY  compendium_types.display_order ASC ");
 
-  // Page type: sociocultural
-  else if($page_type == 'sociocultural')
-    return array( 'name_en'   => "sociocultural"          ,
-                  'name_fr'   => "socioculturel"          ,
-                  'url'       => "sociocultural"          ,
-                  'other_en'  => "sociocultural entry"    ,
-                  'other_fr'  => "contenu socioculturel"  );
+  // Prepare the data
+  for($i = 0; $row = mysqli_fetch_array($qtypes); $i++)
+  {
+    $data[$i]['id']     = sanitize_output($row['ct_id']);
+    $data[$i]['name']   = sanitize_output($row['ct_name']);
+    $data[$i]['count']  = ($row['ct_count']) ? sanitize_output($row['ct_count']) : '-';
+  }
 
-  // Page type: drama
-  else if($page_type == 'drama')
-    return array( 'name_en'   => "drama"  ,
-                  'name_fr'   => "drame"  ,
-                  'url'       => "dramas" ,
-                  'other_en'  => "drama"  ,
-                  'other_fr'  => "drame"  );
+  // Add the number of rows to the data
+  $data['rows'] = $i;
 
-  // Page type: history
-  else if($page_type == 'history')
-    return array( 'name_en'   => "history"            ,
-                  'name_fr'   => "histoire"           ,
-                  'url'       => "historical"         ,
-                  'other_en'  => "historical entry"   ,
-                  'other_fr'  => "contenu historique" );
-
-  // Page type no found
-  return null;
+  // Return the prepared data
+  return $data;
 }
 
 
@@ -843,12 +831,18 @@ function compendium_categories_list() : array
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch the compendium categories
-  $qcategories = query("  SELECT    compendium_categories.id                AS 'cc_id'    ,
-                                    compendium_categories.name_$lang        AS 'cc_name'  ,
-                                    COUNT(compendium_pages_categories.id)   AS 'cc_count'
+  $qcategories = query("  SELECT    compendium_categories.id          AS 'cc_id'    ,
+                                    compendium_categories.name_$lang  AS 'cc_name'  ,
+                                    COUNT(compendium_pages.id)        AS 'cc_count'
                           FROM      compendium_categories
                           LEFT JOIN compendium_pages_categories
                           ON        compendium_categories.id = compendium_pages_categories.fk_compendium_categories
+                          LEFT JOIN compendium_pages
+                          ON        compendium_pages_categories.fk_compendium_pages = compendium_pages.id
+                          AND       compendium_pages.is_deleted                     = 0
+                          AND       compendium_pages.is_draft                       = 0
+                          AND       compendium_pages.title_$lang                   != ''
+                          AND       compendium_pages.redirection_$lang              = ''
                           GROUP BY  compendium_categories.id
                           ORDER BY  compendium_categories.display_order ASC ");
 
@@ -941,7 +935,11 @@ function compendium_eras_list() : array
                               compendium_eras.year_end          AS 'ce_end'   ,
                               COUNT(compendium_pages.id)        AS 'ce_count'
                     FROM      compendium_eras
-                    LEFT JOIN compendium_pages ON compendium_eras.id = compendium_pages.fk_compendium_eras
+                    LEFT JOIN compendium_pages ON compendium_eras.id  = compendium_pages.fk_compendium_eras
+                    AND       compendium_pages.is_deleted             = 0
+                    AND       compendium_pages.is_draft               = 0
+                    AND       compendium_pages.title_$lang           != ''
+                    AND       compendium_pages.redirection_$lang      = ''
                     GROUP BY  compendium_eras.id
                     ORDER BY  compendium_eras.year_start ASC ");
 
