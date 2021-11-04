@@ -19,7 +19,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_images_assemble_links        Transforms the list of compendium pages on which an image is being used  */
 /*                                          into a usable string.                                                    */
 /*                                                                                                                   */
-/*  compendium_type_list                    Returns data related to a compendium page type.                          */
+/*  compendium_type_get                     Returns data related to a compendium page type.                          */
+/*  compendium_type_list                    Fetches a list of compendium page types.                                 */
 /*                                                                                                                   */
 /*  compendium_categories_get               Returns data related to a compendium category.                           */
 /*  compendium_categories_list              Fetches a list of compendium categories.                                 */
@@ -723,6 +724,54 @@ function compendium_images_assemble_links( string $page_list ) : array
   $data['count']  = ($i) ? floor($i / 2) : 0;
 
   // Return the formatted page list
+  return $data;
+}
+
+
+
+
+/**
+ * Returns data related to a compendium page type.
+ *
+ * @param   int         $type_id  The compendium page type's id.
+ *
+ * @return  array|null            An array containing page type related data, or NULL if it does not exist.
+ */
+
+function compendium_types_get( int $type_id ) : mixed
+{
+  // Sanitize the page type's id
+  $type_id = sanitize($type_id, 'int', 0);
+
+  // Return null if the category doesn't exist
+  if(!database_row_exists('compendium_types', $type_id))
+    return NULL;
+
+  // Get the user's current language, settings, and the compendium pages which they can access
+  $lang     = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
+  $nsfw     = user_settings_nsfw();
+  $privacy  = user_settings_privacy();
+  $mode     = user_get_mode();
+  $pages    = compendium_pages_list_urls();
+
+  // Fetch the data
+  $dcategory = mysqli_fetch_array(query(" SELECT  compendium_types.full_name_$lang    AS 'ct_full'    ,
+                                                  compendium_types.full_name_en       AS 'ct_full_en' ,
+                                                  compendium_types.full_name_fr       AS 'ct_full_fr' ,
+                                                  compendium_types.description_$lang  AS 'ct_body'
+                                          FROM    compendium_types
+                                          WHERE   compendium_types.id = '$type_id' "));
+
+  // Assemble an array with the data
+  $data['full']         = sanitize_output($dcategory['ct_full']);
+  $data['full_en']      = sanitize_output($dcategory['ct_full_en']);
+  $data['full_fr']      = sanitize_output($dcategory['ct_full_fr']);
+  $data['full_en_raw']  = $dcategory['ct_full_en'];
+  $data['full_fr_raw']  = $dcategory['ct_full_fr'];
+  $temp                 = bbcodes(sanitize_output($dcategory['ct_body'], preserve_line_breaks: true));
+  $data['body']         = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+
+  // Return the data
   return $data;
 }
 

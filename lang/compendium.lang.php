@@ -407,11 +407,11 @@ Des contenus variés sont documentés dans ce {{link|pages/compendium/index|comp
 EOT
 );
 ___('compendium_types_intro_2', 'EN', <<<EOT
-Below is a list of all the page types along with the number of pages belonging to each type. Click on a page type to read more about it. You can look up all entries of a specific type by using the filters on the {{link|pages/compendium/page_list|list of all pages}}.
+Below is a list of all the page types along with the number of pages belonging to each type. Click on a page type to read more about it.
 EOT
 );
 ___('compendium_types_intro_2', 'FR', <<<EOT
-Le tableau ci-dessous liste les thèmatiques abordées dans le compendium, ainsi que le nombre de pages correspondant à chaque thématique. Cliquez sur le nom d'un thème pour en lire plus à son sujet. Vous pouvez lister toutes les pages correspondant à un thème spécifique en utilisant les filtres de recherche sur la {{link|pages/compendium/page_list|liste des pages}}.
+Le tableau ci-dessous liste les thèmatiques abordées dans le compendium, ainsi que le nombre de pages correspondant à chaque thématique. Cliquez sur le nom d'un thème pour en lire plus à son sujet.
 EOT
 );
 
@@ -419,6 +419,32 @@ EOT
 // Types list: Table
 ___('compendium_types_name',  'EN', "Page type");
 ___('compendium_types_name',  'FR', "Thème");
+
+
+// Type: Header
+___('compenidum_type_subtitle', 'EN', "Page type:");
+___('compenidum_type_subtitle', 'FR', "Thématique :");
+___('compendium_type_summary',  'EN', <<<EOT
+Pages are each given a {{link|pages/compendium/page_type_list|type}} in order to keep this compendium organized, more on this in the {{link|pages/compendium/page_type_list|page type list}}.
+EOT
+);
+___('compendium_type_summary',  'FR', <<<EOT
+Une {{link|pages/compendium/page_type_list|thématique}} est assignée à chaque page, vous pouvez en voir plus à ce sujet sur la {{link|pages/compendium/page_type_list|liste des thèmes}}.
+EOT
+);
+
+
+// Type: Page list
+___('compendium_type_pages',  'EN', "Content of this type");
+___('compendium_type_pages',  'FR', "Pages ayant cette thématique");
+___('compendium_type_empty',  'EN', <<<EOT
+There are currently no pages of this type. Until this section of the {{link|pages/compendium/index|compendium}} gets filled up, you can browse content from other {{link|pages/compendium/page_type_list|page types}}.
+EOT
+);
+___('compendium_type_empty',  'FR', <<<EOT
+Il n'y a pour le moment aucune page ayant ce thème. En attendant que cette section du {{link|pages/compendium/index|compendium}} soit remplie, vous pouvez parcourir les autres {{link|pages/compendium/page_type_list|thématiques}}.
+EOT
+);
 
 
 

@@ -218,7 +218,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <?php } ?>
 
         <td class="align_center">
-          <?=__link('todo_link?id='.$compendium_pages_list[$i]['type_id'], string_change_case($compendium_pages_list[$i]['type'], 'initials'))?>
+          <?=__link('pages/compendium/page_type?type='.$compendium_pages_list[$i]['type_id'], string_change_case($compendium_pages_list[$i]['type'], 'initials'))?>
         </td>
 
         <td class="align_center">

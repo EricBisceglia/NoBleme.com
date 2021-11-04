@@ -92,7 +92,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <p class="tinypadding_top padding_bot">
     <span class="bold"><?=__('compendium_page_type').__(':')?></span>
-    <?=__link('todo_link?id='.$compendium_page_data['type_id'], $compendium_page_data['type'])?>
+    <?=__link('pages/compendium/page_type?type='.$compendium_page_data['type_id'], $compendium_page_data['type'])?>
     <?php if($compendium_page_data['era']) { ?>
     <br>
     <span class="bold"><?=__('compendium_page_era').__(':')?></span>

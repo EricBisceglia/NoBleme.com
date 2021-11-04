@@ -9,7 +9,7 @@ include_once './../../lang/compendium.lang.php';    # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/compendium/page_types";
+$page_url         = "pages/compendium/page_type_list";
 $page_title_en    = "Compendium types";
 $page_title_fr    = "Compendium : Thèmes";
 $page_description = "List of page types present of NoBleme's 21st century culture compendium";
@@ -73,7 +73,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <tr>
 
         <td>
-          <?=__link('todo_link?id='.$compendium_types_list[$i]['id'], $compendium_types_list[$i]['name'])?>
+          <?=__link('pages/compendium/page_type?type='.$compendium_types_list[$i]['id'], $compendium_types_list[$i]['name'])?>
         </td>
 
         <td>
