@@ -354,14 +354,6 @@ ___('compendium_categories_intro',    'FR', <<<EOT
 Ce {{link|pages/compendium/index|compendium}} est rempli de contenu varié. Afin d'organiser ce contenu, une ou plusieurs catégories sont assignées à certaines pages. Le tableau ci-dessous contient toutes les catégories, ainsi que le nombre de pages appartenant à chaque catégorie. Vous pouvez cliquer sur le nom d'une catégorie pour en apprendre plus à son sujet et voir la liste des pages y correspondant.
 EOT
 );
-___('compendium_categories_summary',  'EN', <<<EOT
-Content is {{link|pages/compendium/category_list|categorized}} in order to keep this compendium organized, more on this in the {{link|pages/compendium/category_list|category list}}.
-EOT
-);
-___('compendium_categories_summary',  'FR', <<<EOT
-Le contenu du compendium est organisé en catégories, vous pouvez en voir plus sur la {{link|pages/compendium/category_list|liste des catégories}}.
-EOT
-);
 
 
 // Category list: Table
@@ -372,6 +364,14 @@ ___('compendium_categories_name', 'FR', "Catégorie");
 // Category: Header
 ___('compenidum_category_subtitle', 'EN', "Category:");
 ___('compenidum_category_subtitle', 'FR', "Catégorie :");
+___('compendium_category_summary',  'EN', <<<EOT
+Content is {{link|pages/compendium/category_list|categorized}} in order to keep this compendium organized, more on this in the {{link|pages/compendium/category_list|category list}}.
+EOT
+);
+___('compendium_category_summary',  'FR', <<<EOT
+Le contenu du compendium est organisé en catégories, vous pouvez en voir plus sur la {{link|pages/compendium/category_list|liste des catégories}}.
+EOT
+);
 
 
 // Category: Page list
@@ -385,6 +385,40 @@ ___('compendium_category_empty',  'FR', <<<EOT
 Il n'y a pour le moment aucune page appartenant à cette catégorie. En attendant que cette section du {{link|pages/compendium/index|compendium}} soit remplie, vous pouvez parcourir les autres {{link|pages/compendium/category_list|catégories}}.
 EOT
 );
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                     PAGE TYPES                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Types list: Header
+___('compendium_types_title',   'EN', "Page types");
+___('compendium_types_title',   'FR', "Thématiques");
+___('compendium_types_intro_1', 'EN', <<<EOT
+In this {{link|pages/compendium/index|compendium}}, various different types of contents are covered. Some of you might be looking solely for the light hearted entertainment of memes, while others will desire a deep dive into more serious sociocultural topics. In order to let you find the contents you are looking for, each page is assigned a <span class="italics">type</span>.
+EOT
+);
+___('compendium_types_intro_1', 'FR', <<<EOT
+Des contenus variés sont documentés dans ce {{link|pages/compendium/index|compendium}}. Si vous êtes uniquement à la recherche de la légèreté des memes, ou au contraire désirez spécifiquement plonger dans les sujets socioculturels sérieux, un <span class="italics">thème</span> est assigné à chaque page afin que vous puissiez trouver et parcourir les contenus qui vous intéressent.
+EOT
+);
+___('compendium_types_intro_2', 'EN', <<<EOT
+Below is a list of all the page types along with the number of pages belonging to each type. Click on a page type to read more about it. You can look up all entries of a specific type by using the filters on the {{link|pages/compendium/page_list|list of all pages}}.
+EOT
+);
+___('compendium_types_intro_2', 'FR', <<<EOT
+Le tableau ci-dessous liste les thèmatiques abordées dans le compendium, ainsi que le nombre de pages correspondant à chaque thématique. Cliquez sur le nom d'un thème pour en lire plus à son sujet. Vous pouvez lister toutes les pages correspondant à un thème spécifique en utilisant les filtres de recherche sur la {{link|pages/compendium/page_list|liste des pages}}.
+EOT
+);
+
+
+// Types list: Table
+___('compendium_types_name',  'EN', "Page type");
+___('compendium_types_name',  'FR', "Thème");
 
 
 

@@ -9,10 +9,10 @@ include_once './../../lang/compendium.lang.php';    # Translations
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/compendium/category_list";
-$page_title_en    = "Compendium categories";
-$page_title_fr    = "Compendium : Catégories";
-$page_description = "Categorizations used to filter pages within NoBleme's 21st century culture compendium";
+$page_url         = "pages/compendium/page_types";
+$page_title_en    = "Compendium types";
+$page_title_fr    = "Compendium : Thèmes";
+$page_description = "List of page types present of NoBleme's 21st century culture compendium";
 
 
 
@@ -23,8 +23,8 @@ $page_description = "Categorizations used to filter pages within NoBleme's 21st 
 /*                                                                                                                   */
 /*********************************************************************************************************************/
 
-// Fetch a list of categories
-$compendium_categories_list = compendium_categories_list();
+// Fetch a list of page types
+$compendium_types_list = compendium_types_list();
 
 
 
@@ -38,15 +38,19 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_30">
 
   <h1>
-    <?=__link('pages/compendium/index', __('compendium_categories_title'), 'noglow')?>
+    <?=__link('pages/compendium/index', __('compendium_types_title'), 'noglow')?>
   </h1>
 
   <h5>
     <?=__link('pages/compendium/index', __('compendium_eras_subtitle'), 'noglow')?>
   </h5>
 
+  <p>
+    <?=__('compendium_types_intro_1')?>
+  </p>
+
   <p class="bigpadding_bot">
-    <?=__('compendium_categories_intro')?>
+    <?=__('compendium_types_intro_2')?>
   </p>
 
   <table>
@@ -54,7 +58,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <tr class="uppercase">
         <th>
-          <?=__('compendium_categories_name')?>
+          <?=__('compendium_types_name')?>
         </th>
         <th>
           <?=__('compendium_eras_entries')?>
@@ -64,16 +68,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     </thead>
     <tbody class="altc align_center">
 
-      <?php for($i = 0; $i < $compendium_categories_list['rows']; $i++) { ?>
+      <?php for($i = 0; $i < $compendium_types_list['rows']; $i++) { ?>
 
       <tr>
 
         <td>
-          <?=__link('pages/compendium/category?id='.$compendium_categories_list[$i]['id'], $compendium_categories_list[$i]['name'])?>
+          <?=__link('todo_link?id='.$compendium_types_list[$i]['id'], $compendium_types_list[$i]['name'])?>
         </td>
 
         <td>
-          <?=$compendium_categories_list[$i]['count']?>
+          <?=$compendium_types_list[$i]['count']?>
         </td>
 
       </tr>

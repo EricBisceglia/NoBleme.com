@@ -69,7 +69,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </h5>
 
   <p class="italics">
-    <?=__('compendium_categories_summary')?>
+    <?=__('compendium_category_summary')?>
   </p>
 
   <?php if($compendium_category_data['body']) { ?>

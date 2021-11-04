@@ -222,7 +222,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td class="align_center">
-          <?=__link('todo_link?id='.$compendium_pages_list[$i]['era_id'], $compendium_pages_list[$i]['era'])?>
+          <?=__link('pages/compendium/cultural_era?era='.$compendium_pages_list[$i]['era_id'], $compendium_pages_list[$i]['era'])?>
         </td>
 
         <td class="align_center">
