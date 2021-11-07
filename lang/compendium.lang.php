@@ -42,11 +42,11 @@ Si vous vous demandez dans quel but ce compendium a été crée, d'où viennent 
 EOT
 );
 ___('compendium_index_intro_4', 'EN', <<<EOT
-Subsections of this encyclopedia are dedicated to documenting {{link|todo_link|memes}}, a {{link|todo_link|slang dictionary}}, a {{link|todo_link|sociocultural guide}}, and more: all of the compendium's contents can be found on the {{link|pages/compendium/page_list|list of all pages}}. Though maybe you would rather get started in your browsing by reading a {{link|pages/compendium/random_page|randomly chosen page}}.
+All of the compendium's contents can be found on the {{link|pages/compendium/page_list|list of all pages}}. Though maybe you would rather get started in your browsing by reading a {{link|pages/compendium/random_page|randomly chosen page}}.
 EOT
 );
 ___('compendium_index_intro_4', 'FR', <<<EOT
-Des sections de cette encyclopédie sont dédiées à la documentation des {{link|todo_link|memes}}, de {{link|todo_link|l'argot}}, et des concepts {{link|todo_link|socioculturels}} du 21ème siècle. Vous retrouverez tout ceci et plus encore sur la {{link|pages/compendium/page_list|liste des pages}}, ou peut-être préféreriez-vous commencer votre exploration en lisant une {{link|pages/compendium/random_page|page au hasard}}.
+Toutes les pages du compendium sont listées sur la {{link|pages/compendium/page_list|liste des pages}}, mais peut-être préféreriez-vous commencer votre exploration en lisant une {{link|pages/compendium/random_page|page au hasard}}.
 EOT
 );
 
@@ -281,11 +281,11 @@ EOT
 
 // Era list: Introduction
 ___('compendium_eras_intro_1',  'EN', <<<EOT
-Time changes all things. Culture is no exception. It evolves, takes various forms over time, picks up new themes and leaves older ones behind. Most of the {{link|todo_link|vocabulary}} or the {{link|todo_link|sociocultural topics}} of the 21st century are not locked in time. However {{link|todo_link|memes}} tend to be a reflection of the time period in which they appeared, which causes a lot of them to age poorly.
+Time changes all things. Culture is no exception. It evolves, takes various forms over time, picks up new themes and leaves older ones behind. Most of the vocabulary or the sociocultural topics of the 21st century are not locked in time. However memes tend to be a reflection of the time period in which they appeared, which causes a lot of them to age poorly.
 EOT
 );
 ___('compendium_eras_intro_1',  'FR', <<<EOT
-Le passage du temps affecte tout. La culture n'y échappe pas. Elle évolue, change de forme, abandonne certains sujets pour en adopter d'autres. La plupart du {{link|todo_link|vocabulaire}} ou des {{link|todo_link|concepts socioculturels}} du 21ème siècle ne sont pas verrouillés dans le temps. Toutefois, les {{link|todo_link|memes}} ont tendance à être fortement influencés par l'époque à laquelle ils sont crées, ce qui fait que beaucoup d'entre eux vieillissent mal.
+Le passage du temps affecte tout. La culture n'y échappe pas. Elle évolue, change de forme, abandonne certains sujets pour en adopter d'autres. La plupart du vocabulaire ou des concepts socioculturels propres au 21ème siècle ne sont pas verrouillés dans le temps. Toutefois, les memes ont tendance à être fortement influencés par l'époque à laquelle ils sont crées, ce qui fait que beaucoup d'entre eux vieillissent mal.
 EOT
 );
 ___('compendium_eras_intro_2',  'EN', <<<EOT
@@ -513,41 +513,46 @@ Une documentation d'éléments de la culture du 21ème siècle.
 EOT
 );
 ___('compendium_faq_answer_1_2',  'EN', <<<EOT
-The hyperconnected era ushered in by the advent of the Internet altered both mainstream and underground culture in many ways, which this compendium tries to document as much as possible. The {{link|pages/compendium/page_list|list of all pages}} lets you see all the types and categories of contents which are covered by the compendium. Special attention is given to three types of contents in particular:
+The hyperconnected era ushered in by the advent of the Internet altered both mainstream and underground culture in many ways, which this compendium tries to document as much as possible. Several different {{link|pages/compendium/page_type_list|types}} and {{link|pages/compendium/category_list|categories}} of contents are covered by the compendium. Special attention is given to three types of contents in particular:
 EOT
 );
 ___('compendium_faq_answer_1_2',  'FR', <<<EOT
-L'avènement d'Internet et d'une nouvelle ère hyperconnectée a modifié la culture populaire de nombreuses façons, que ce compendium essaye de documenter autant que possible. La {{link|pages/compendium/page_list|liste des pages}} vous permet de voir tous les types et catégories de contenus couvertes dans ce compendium. Une attention particulière est donnée aux trois types de contenus suivants:
+L'avènement d'Internet et d'une nouvelle ère hyperconnectée a modifié la culture populaire de nombreuses façons, que ce compendium essaye de documenter autant que possible. Plusieurs {{link|pages/compendium/page_type_list|thématiques}} et {{link|pages/compendium/category_list|catégories}} de contenus sont documentées, en prêtant une attention particulière aux trois types de contenus suivants:
 EOT
 );
 ___('compendium_faq_answer_1_3',  'EN', <<<EOT
-{{link|todo_link|Memes}} have become an unavoidable source of entertainment and amusement, or sometimes controversy and confusion. Memes are documented with a focus on fun, featuring image and video galleries showcasing how entertaining and creative people can be.
+<span class="bold">Memes</span> have become an unavoidable source of entertainment and amusement, or sometimes controversy and confusion. Memes are documented with a focus on fun, featuring image and video galleries showcasing how entertaining and creative people can be.
 EOT
 );
 ___('compendium_faq_answer_1_3',  'FR', <<<EOT
-{{link|todo_link|Les memes}} sont devenus une source omniprésente de divertissement et d'amusement, ou parfois de controverse et de confusion. Les memes sont documentés en mettant l'accent sur leur côté divertissant, via des galeries d'images et de vidéos montrant le potentiel de créativité des gens.
+<span class="bold">Les memes</span> sont devenus une source omniprésente de divertissement et d'amusement, ou parfois de controverse et de confusion. Les memes sont documentés en mettant l'accent sur leur côté divertissant, via des galeries d'images et de vidéos montrant le potentiel de créativité des gens.
 EOT
 );
 ___('compendium_faq_answer_1_4',  'EN', <<<EOT
-{{link|todo_link|Slang}} born or popularized in the 21st century gets featured in short pages explaining their meaning, and sometimes also the hidden meanings which can apear when used in funny or nefarious ways.
+<span class="bold">Slang</span> born or popularized in the 21st century gets featured in short pages explaining their meaning, and sometimes also the hidden meanings which can apear when used in funny or nefarious ways.
 EOT
 );
 ___('compendium_faq_answer_1_4',  'FR', <<<EOT
-{{link|todo_link|L'argot}} propre à la culture du 21ème siècle est documenté dans des pages courtes explicant son sens, et parfois les sens cachés qui peuvent exister lorsque les mots sont utilisés dans un but comique ou néfaste.
+<span class="bold">L'argot</span> propre à la culture du 21ème siècle est documenté dans des pages courtes explicant son sens, et parfois les sens cachés qui peuvent exister lorsque les mots sont utilisés dans un but comique ou néfaste.
 EOT
 );
 ___('compendium_faq_answer_1_5',  'EN', <<<EOT
-{{link|todo_link|Sociocultural}} concepts which people were not aware of before the turn of the 21st century have become mainstream notions as many groups became able to express themselves on platforms that could reach a global audience. The 21st century compendium aims to demystify these sociocultural concepts by explaining them in simple terms, both the good and the bad, whether they belong to the oppressed or the oppressive, in order to explain their history, their meanings, their reach, and their real world consequences.
+<span class="bold">Sociocultural</span> concepts which people were not aware of before the turn of the 21st century have become mainstream notions as many groups became able to express themselves on platforms that could reach a global audience. The 21st century compendium aims to demystify these sociocultural concepts by explaining them in simple terms, both the good and the bad, whether they belong to the oppressed or the oppressive, in order to explain their history, their meanings, their reach, and their real world consequences.
 EOT
 );
 ___('compendium_faq_answer_1_5',  'FR', <<<EOT
-{{link|todo_link|Des concepts socioculturels}} sont également documentés. Pas tous propres au 21ème siècle, ils se sont popularisés grâce à la libération de la parole au tourant du siècle, Internet permettant à des groupes marginalisés de se faire entendre à une échelle globale. Ce compendium cherche à démystifier ces concepts socioculturels en les expliquant le plus simplement possible, qu'ils soient bons ou mauvais, oppressés ou oppressants, afin d'expliquer leur histoire, leur sens, leur portée, et leurs impacts dans le monde.
+<span class="bold">Des concepts socioculturels</span> sont également documentés. Pas tous propres au 21ème siècle, ils se sont popularisés grâce à la libération de la parole au tourant du siècle, Internet permettant à des groupes marginalisés de se faire entendre à une échelle globale. Ce compendium cherche à démystifier ces concepts socioculturels en les expliquant le plus simplement possible, qu'ils soient bons ou mauvais, oppressés ou oppressants, afin d'expliquer leur histoire, leur sens, leur portée, et leurs impacts dans le monde.
 EOT
 );
 ___('compendium_faq_answer_1_6',  'EN', <<<EOT
 You might believe that these elements do not belong together, but they are fully interconnected. Most memes include slang and use sociocultural concepts as their theme, most sociocultural movements express themselves through slang and memes, and other types of contents covered in this compendium also contain callbacks to the three main themes mentioned above.
 EOT
 );
+___('compendium_faq_answer_1_6',  'FR', <<<EOT
+Vous pourriez croire que ces contenus devraient être documentés séparément, mais ils sont inextricablement interconnectés. Les memes utilisent de l'argot et ont des thèmes socioculturels, la plupart des mouvements socioculturels s'expriment via des memes et un argot qui leur est propre, et les autres contenus couverts dans ce compendium référencent régulièrement ces trois types de contenus.
+EOT
+);
+
 
 ___('compendium_faq_answer_2_1',  'EN', <<<EOT
 The 21st century compendium is trying to achieve three different goals.
@@ -574,11 +579,11 @@ En tant que documentation de son époque, un objectif secondaire de ce compendiu
 EOT
 );
 ___('compendium_faq_answer_2_4',  'EN', <<<EOT
-Lastly, as {{link|todo_link|sociocultural}} topics have to be explained when documenting 21st century culture, an effort is also done to try and explain those concepts in the clearest way possible. Having to explain basic concepts to people over and over can be exhausting, we try our best to demystify them in a simple to read and understand format which can be linked to people in order to hopefully relieve some of that burden.
+Lastly, as sociocultural topics have to be explained when documenting 21st century culture, an effort is also done to try and explain those concepts in the clearest way possible. Having to explain basic concepts to people over and over can be exhausting, we try our best to demystify them in a simple to read and understand format which can be linked to people in order to hopefully relieve some of that burden.
 EOT
 );
 ___('compendium_faq_answer_2_4',  'FR', <<<EOT
-Troisièmement, vu que des concepts {{link|todo_link|socioculturels}} doivent être documentés en tant qu'éléments de la culture du 21ème siècle, un effort est fait pour les expliquer de la façon la plus claire possible. Nous savons à quel point devoir expliquer encore et encore les mêmes concepts de base à d'autres personnes peut être épuisant, et espérons que certaines pages de ce compendium pourront vous libérer de ces efforts et vous servir de liens que vous pourrez partager avec les personnes non sensibilisées à ces sujets.
+Troisièmement, vu que des concepts socioculturels doivent être documentés en tant qu'éléments de la culture du 21ème siècle, un effort est fait pour les expliquer de la façon la plus claire possible. Nous savons à quel point devoir expliquer encore et encore les mêmes concepts de base à d'autres personnes peut être épuisant, et espérons que certaines pages de ce compendium pourront vous libérer de ces efforts et vous servir de liens que vous pourrez partager avec les personnes non sensibilisées à ces sujets.
 EOT
 );
 

@@ -594,16 +594,19 @@ $javascripts .= '
           <?=__link('pages/compendium/page_list', __('submenu_pages_compendium_pages'), 'header_submenu_link', 1, $path);?>
         </div>
         <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_compendium_memes'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_compendium_dictionary'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
-          <?=__link('todo_link', __('submenu_pages_compendium_culture'), 'header_submenu_link text_blue', 1, $path);?>
-        </div>
-        <div class="header_submenu_item">
           <?=__link('pages/compendium/random_page', __('submenu_pages_compendium_random'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/compendium/random_image', __('submenu_pages_compendium_image'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/compendium/page_type_list', __('submenu_pages_compendium_types'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/compendium/category_list', __('submenu_pages_compendium_categories'), 'header_submenu_link', 1, $path);?>
+        </div>
+        <div class="header_submenu_item">
+          <?=__link('pages/compendium/cultural_era_list', __('submenu_pages_compendium_eras'), 'header_submenu_link', 1, $path);?>
         </div>
       </div>
 
