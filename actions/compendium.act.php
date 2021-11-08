@@ -7,7 +7,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 
 
 /*********************************************************************************************************************/
-/*                                                                                                                  */
+/*                                                                                                                   */
 /*  compendium_pages_get                    Returns data related to a compendium page.                               */
 /*  compendium_pages_get_random             Returns data related to a random compendium page.                        */
 /*  compendium_pages_list                   Fetches a list of compendium pages.                                      */
@@ -301,13 +301,14 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
 
   // Sanitize the search parameters
   $search_title       = isset($search['title'])       ? sanitize($search['title'], 'string')                : '';
+  $search_redirect    = isset($search['redirect'])    ? sanitize($search['redirect'], -1, 1)                : 0;
   $search_nsfw        = isset($search['nsfw'])        ? sanitize($search['nsfw'], 'int', -1, 1)             : -1;
   $search_gross       = isset($search['gross'])       ? sanitize($search['gross'], 'int', -1, 1)            : -1;
   $search_offensive   = isset($search['offensive'])   ? sanitize($search['offensive'], 'int', -1, 1)        : -1;
   $search_nsfw_title  = isset($search['nsfw_title'])  ? sanitize($search['nsfw_title'], 'int', -1, 1)       : -1;
   $search_type        = isset($search['type'])        ? sanitize($search['type'], 'int', 0)                 : 0;
   $search_era         = isset($search['era'])         ? sanitize($search['era'], 'int', 0)                  : 0;
-  $search_category    = isset($search['category'])    ? sanitize($search['category'], 'int', 0)             : 0;
+  $search_category    = isset($search['category'])    ? sanitize($search['category'], 'int', -1)            : 0;
   $search_appeared    = isset($search['appeared'])    ? sanitize($search['appeared'], 'int', 0, date('Y'))  : 0;
   $search_peaked      = isset($search['peaked'])      ? sanitize($search['peaked'], 'int', 0, date('Y'))    : 0;
   $search_created     = isset($search['created'])     ? sanitize($search['created'], 'int', 0, date('Y'))   : 0;
@@ -351,8 +352,14 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $qpages .= "  AND       compendium_pages.title_$lang != '' ";
 
   // Search the data
-  if($search_title)
+  if($search_title == 'exists' && $is_admin)
+    $qpages .= "  AND       compendium_pages.title_$lang                          !=    ''                    ";
+  else if($search_title)
     $qpages .= "  AND       compendium_pages.title_$lang                          LIKE  '%$search_title%'     ";
+  if($search_redirect == -1)
+    $qpages .= "  AND       compendium_pages.redirection_$lang                    =     ''                    ";
+  else if($search_redirect == 1 && $is_admin)
+    $qpages .= "  AND       compendium_pages.redirection_$lang                    !=    ''                    ";
   if($search_nsfw > -1)
     $qpages .= "  AND       compendium_pages.is_nsfw                              =     '$search_nsfw'        ";
   if($search_gross > -1)
@@ -365,8 +372,10 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $qpages .= "  AND       compendium_pages.fk_compendium_types                  =     '$search_type'        ";
   if($search_era)
     $qpages .= "  AND       compendium_pages.fk_compendium_eras                   =     '$search_era'         ";
-  if($search_category)
+  if($search_category > 0)
     $qpages .= "  AND       compendium_pages_categories.fk_compendium_categories  =     '$search_category'    ";
+  else if($search_category == -1)
+    $qpages .= "  AND       compendium_pages_categories.fk_compendium_categories  IS NULL                     ";
   if($search_appeared)
     $qpages .= "  AND       compendium_pages.year_appeared                        =     '$search_appeared'    ";
   if($search_peaked)

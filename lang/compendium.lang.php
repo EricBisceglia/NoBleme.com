@@ -387,6 +387,16 @@ EOT
 );
 
 
+// Category edit: Header
+___('compendium_category_admin_title',  'EN', "Category administration");
+___('compendium_category_admin_title',  'FR', "Administration des catégories");
+
+
+// Category edit: Table
+___('compendium_category_admin_uncategorized',  'EN', "Uncategorized pages");
+___('compendium_category_admin_uncategorized',  'FR', "Pages non catégorisées");
+
+
 
 
 /*********************************************************************************************************************/
