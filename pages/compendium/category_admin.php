@@ -17,12 +17,9 @@ $hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/compendium/category_edit";
+$page_url         = "pages/compendium/category_admin";
 $page_title_en    = "Compendium categories";
 $page_title_fr    = "Compendium : Catégories";
-
-// Extra CSS & JS
-$js = array('');
 
 
 
@@ -56,18 +53,21 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 <div class="width_50">
 
   <h3 class="align_center">
-    <?=__link('todo_link', __('compendium_category_admin_title'), 'noglow')?>
+    <?=__link('pages/compendium/category_list', __('compendium_category_admin_title'), 'noglow')?>
     <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/category_add')?>
   </h3>
 
 </div>
 
-<div class="bigpadding_top width_30">
+<div class="bigpadding_top width_40">
 
   <table>
     <thead>
 
       <tr class="uppercase">
+        <th>
+          <?=__('compendium_category_admin_order')?>
+        </th>
         <th>
           <?=__('compendium_categories_name')?>
         </th>
@@ -83,6 +83,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
     <tbody class="altc align_center">
 
       <tr>
+        <td>
+          -
+        </td>
         <td class="bold pointer">
           <?=__('compendium_category_admin_uncategorized')?>
         </td>
@@ -97,6 +100,10 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
       <?php for($i = 0; $i < $compendium_categories_list['rows']; $i++) { ?>
 
       <tr>
+
+        <td>
+          <?=$compendium_categories_list[$i]['order']?>
+        </td>
 
         <td>
           <?=__link('pages/compendium/category?id='.$compendium_categories_list[$i]['id'], $compendium_categories_list[$i]['name'])?>

@@ -5,3 +5,6 @@
 /************************************************* COMPENDIUM IMAGE **************************************************/
 .compendium_image_blur        { filter: blur(25px); }
 .compendium_image_blur:hover  { filter: none;       }
+
+/********************************************* COMPENDIUM ADMINISTRATION *********************************************/
+.compendium_admin_editor { min-height: 35.0rem; }

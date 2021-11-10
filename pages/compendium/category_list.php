@@ -40,7 +40,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   <h1>
     <?=__link('pages/compendium/index', __('compendium_categories_title'), 'noglow')?>
     <?php if($is_admin) { ?>
-    <?=__icon('edit', alt: 'E', title: __('edit'), title_case: 'initials', href: 'pages/compendium/category_edit')?>
+    <?=__icon('settings', alt: 'E', title: __('settings'), title_case: 'initials', href: 'pages/compendium/category_admin')?>
     <?php } ?>
   </h1>
 

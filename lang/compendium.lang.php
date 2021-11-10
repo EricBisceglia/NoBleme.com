@@ -387,14 +387,32 @@ EOT
 );
 
 
-// Category edit: Header
-___('compendium_category_admin_title',  'EN', "Category administration");
-___('compendium_category_admin_title',  'FR', "Administration des catégories");
-
-
-// Category edit: Table
+// Category administration
+___('compendium_category_admin_title',          'EN', "Category administration");
+___('compendium_category_admin_title',          'FR', "Administration des catégories");
+___('compendium_category_admin_order',          'EN', "Order");
+___('compendium_category_admin_order',          'FR', "Ordre");
 ___('compendium_category_admin_uncategorized',  'EN', "Uncategorized pages");
 ___('compendium_category_admin_uncategorized',  'FR', "Pages non catégorisées");
+
+
+// Create a new category
+___('compendium_category_add_title',    'EN', "New category");
+___('compendium_category_add_title',    'FR', "Nouvelle catégorie");
+___('compendium_category_add_name_en',  'EN', "Category name (english)");
+___('compendium_category_add_name_en',  'FR', "Nom de la catégorie (anglais)");
+___('compendium_category_add_name_fr',  'EN', "Category name (french)");
+___('compendium_category_add_name_fr',  'FR', "Nom de la catégorie (français)");
+___('compendium_category_add_body_en',  'EN', "Description (EN) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_category_add_body_en',  'FR', "Description (EN) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_category_add_body_fr',  'EN', "Description (FR) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_category_add_body_fr',  'FR', "Description (FR) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_category_add_order',    'EN', "Sorting order");
+___('compendium_category_add_order',    'FR', "Ordre de tri");
+___('compendium_category_add_submit',   'EN', "Create new category");
+___('compendium_category_add_submit',   'FR', "Créer la catégorie");
+___('compendium_category_add_no_name',  'EN', "Categories must have a name in both languages");
+___('compendium_category_add_no_name',  'FR', "Les catégories doivent avoir un nom dans les deux langues");
 
 
 

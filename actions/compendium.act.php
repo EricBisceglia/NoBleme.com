@@ -24,6 +24,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  compendium_categories_get               Returns data related to a compendium category.                           */
 /*  compendium_categories_list              Fetches a list of compendium categories.                                 */
+/*  compendium_categories_add               Creates a new compendium category.                                       */
 /*                                                                                                                   */
 /*  compendium_eras_get                     Returns data related to a compendium era.                                */
 /*  compendium_eras_list                    Fetches a list of compendium eras.                                       */
@@ -36,7 +37,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_pages_list_years             Fetches the years at which compendium pages have been created.           */
 /*  compendium_appearance_list_years        Fetches the years at which compendium content has appeared.              */
 /*  compendium_peak_list_years              Fetches the years at which compendium content has peaked.                */
-/*                                                                                                                  */
+/*                                                                                                                   */
+/*  compendium_nbcodes_apply                Applies NBCodes to a string.                                             */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -889,9 +892,10 @@ function compendium_categories_list() : array
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch the compendium categories
-  $qcategories = query("  SELECT    compendium_categories.id          AS 'cc_id'    ,
-                                    compendium_categories.name_$lang  AS 'cc_name'  ,
-                                    COUNT(compendium_pages.id)        AS 'cc_count'
+  $qcategories = query("  SELECT    compendium_categories.id            AS 'cc_id'    ,
+                                    compendium_categories.display_order AS 'cc_order' ,
+                                    compendium_categories.name_$lang    AS 'cc_name'  ,
+                                    COUNT(compendium_pages.id)          AS 'cc_count'
                           FROM      compendium_categories
                           LEFT JOIN compendium_pages_categories
                           ON        compendium_categories.id = compendium_pages_categories.fk_compendium_categories
@@ -908,6 +912,7 @@ function compendium_categories_list() : array
   for($i = 0; $row = mysqli_fetch_array($qcategories); $i++)
   {
     $data[$i]['id']     = sanitize_output($row['cc_id']);
+    $data[$i]['order']  = sanitize_output($row['cc_order']);
     $data[$i]['name']   = sanitize_output($row['cc_name']);
     $data[$i]['count']  = ($row['cc_count']) ? sanitize_output($row['cc_count']) : '-';
   }
@@ -917,6 +922,51 @@ function compendium_categories_list() : array
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Creates a new compendium category.
+ *
+ * @param   array         $contents   The contents of the category.
+ *
+ * @return  string|int                A string if an error happened, or the new category's ID if all went well.
+ */
+
+function compendium_categories_add( array $contents ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('compendium.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $order    = sanitize($contents['order'], 'int', 0);
+  $name_en  = sanitize($contents['name_en'], 'string');
+  $name_fr  = sanitize($contents['name_fr'], 'string');
+  $body_en  = sanitize($contents['body_en'], 'string');
+  $body_fr  = sanitize($contents['body_fr'], 'string');
+
+  // Error: No title
+  if(!$name_en && !$name_fr)
+    return __('compendium_category_add_no_name');
+
+  // Create the compendium category
+  query(" INSERT INTO compendium_categories
+          SET         compendium_categories.display_order   = '$order'      ,
+                      compendium_categories.name_en         = '$name_en'    ,
+                      compendium_categories.name_fr         = '$name_fr'    ,
+                      compendium_categories.description_en  = '$body_en'    ,
+                      compendium_categories.description_fr  = '$body_fr'    ");
+
+  // Fetch the newly created compendium category's id
+  $category_id = query_id();
+
+  // Return the compendium category's id
+  return $category_id;
 }
 
 
@@ -1271,4 +1321,31 @@ function compendium_peak_list_years() : array
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Applies NBCodes to a string.
+ *
+ * @param   string  $text   A string with NBCodes in it.
+ *
+ * @return  string          The formatted string.
+ */
+
+function compendium_nbcodes_apply( string $text ) : string
+{
+  // Get the user's current settings, and the compendium pages which they can access
+  $nsfw     = user_settings_nsfw();
+  $privacy  = user_settings_privacy();
+  $mode     = user_get_mode();
+  $pages    = compendium_pages_list_urls();
+
+  // Format the string
+  $temp = bbcodes(sanitize_output($text, preserve_line_breaks: true));
+  $text = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+
+  // Return the formatted string
+  return $text;
 }
