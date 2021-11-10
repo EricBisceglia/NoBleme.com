@@ -415,6 +415,15 @@ ___('compendium_category_add_no_name',  'EN', "Categories must have a name in bo
 ___('compendium_category_add_no_name',  'FR', "Les catégories doivent avoir un nom dans les deux langues");
 
 
+// Edit a category
+___('compendium_category_edit_title',   'EN', "Edit category");
+___('compendium_category_edit_title',   'FR', "Modifier la catégorie");
+___('compendium_category_edit_submit',  'EN', "Edit category");
+___('compendium_category_edit_submit',  'FR', "Modifier la catégorie");
+___('compendium_category_edit_error',   'EN', "The category doesn't exist or has been deleted");
+___('compendium_category_edit_error',   'FR', "La catégorie n'existe pas ou a été supprimée");
+
+
 
 
 /*********************************************************************************************************************/

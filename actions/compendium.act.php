@@ -25,6 +25,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_categories_get               Returns data related to a compendium category.                           */
 /*  compendium_categories_list              Fetches a list of compendium categories.                                 */
 /*  compendium_categories_add               Creates a new compendium category.                                       */
+/*  compendium_categories_edit              Modifies an existing compendium category.                                */
 /*                                                                                                                   */
 /*  compendium_eras_get                     Returns data related to a compendium era.                                */
 /*  compendium_eras_list                    Fetches a list of compendium eras.                                       */
@@ -857,14 +858,18 @@ function compendium_categories_get( int $category_id ) : mixed
   $pages    = compendium_pages_list_urls();
 
   // Fetch the data
-  $dcategory = mysqli_fetch_array(query(" SELECT  compendium_categories.name_$lang        AS 'cc_name'    ,
+  $dcategory = mysqli_fetch_array(query(" SELECT  compendium_categories.display_order     AS 'cc_order'   ,
+                                                  compendium_categories.name_$lang        AS 'cc_name'    ,
                                                   compendium_categories.name_en           AS 'cc_name_en' ,
                                                   compendium_categories.name_fr           AS 'cc_name_fr' ,
-                                                  compendium_categories.description_$lang AS 'cc_body'
+                                                  compendium_categories.description_$lang AS 'cc_body'    ,
+                                                  compendium_categories.description_en    AS 'cc_body_en' ,
+                                                  compendium_categories.description_fr    AS 'cc_body_fr'
                                           FROM    compendium_categories
                                           WHERE   compendium_categories.id = '$category_id' "));
 
   // Assemble an array with the data
+  $data['order']        = sanitize_output($dcategory['cc_order']);
   $data['name']         = sanitize_output($dcategory['cc_name']);
   $data['name_en_raw']  = $dcategory['cc_name_en'];
   $data['name_fr_raw']  = $dcategory['cc_name_fr'];
@@ -872,6 +877,8 @@ function compendium_categories_get( int $category_id ) : mixed
   $data['name_fr']      = sanitize_output($dcategory['cc_name_fr']);
   $temp                 = bbcodes(sanitize_output($dcategory['cc_body'], preserve_line_breaks: true));
   $data['body']         = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  $data['body_en']      = sanitize_output($dcategory['cc_body_en']);
+  $data['body_fr']      = sanitize_output($dcategory['cc_body_fr']);
 
   // Return the data
   return $data;
@@ -951,22 +958,72 @@ function compendium_categories_add( array $contents ) : mixed
   $body_fr  = sanitize($contents['body_fr'], 'string');
 
   // Error: No title
-  if(!$name_en && !$name_fr)
+  if(!$name_en || !$name_fr)
     return __('compendium_category_add_no_name');
 
   // Create the compendium category
   query(" INSERT INTO compendium_categories
-          SET         compendium_categories.display_order   = '$order'      ,
-                      compendium_categories.name_en         = '$name_en'    ,
-                      compendium_categories.name_fr         = '$name_fr'    ,
-                      compendium_categories.description_en  = '$body_en'    ,
-                      compendium_categories.description_fr  = '$body_fr'    ");
+          SET         compendium_categories.display_order   = '$order'    ,
+                      compendium_categories.name_en         = '$name_en'  ,
+                      compendium_categories.name_fr         = '$name_fr'  ,
+                      compendium_categories.description_en  = '$body_en'  ,
+                      compendium_categories.description_fr  = '$body_fr'  ");
 
   // Fetch the newly created compendium category's id
   $category_id = query_id();
 
   // Return the compendium category's id
   return $category_id;
+}
+
+
+
+
+/**
+ * Modifies an existing compendium category.
+ *
+ * @param   int           $category_id  The category's id.
+ * @param   array         $contents     The category's contents.
+ *
+ * @return  string|null                 A string if an error happened, or NULL if all went well.
+ */
+
+function compendium_categories_edit(  int   $category_id  ,
+                                      array $contents     ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('compendium.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $category_id  = sanitize($category_id, 'int', 0);
+  $order        = sanitize($contents['order'], 'int', 0);
+  $name_en      = sanitize($contents['name_en'], 'string');
+  $name_fr      = sanitize($contents['name_fr'], 'string');
+  $body_en      = sanitize($contents['body_en'], 'string');
+  $body_fr      = sanitize($contents['body_fr'], 'string');
+
+  // Error: Category does not exist
+  if(!$category_id || !database_row_exists('compendium_categories', $category_id))
+    return __('compendium_category_edit_error');
+
+  // Error: No title
+  if(!$name_en || !$name_fr)
+    return __('compendium_category_add_no_name');
+
+  // Edit the compendium category
+  query(" UPDATE  compendium_categories
+          SET     compendium_categories.display_order   = '$order'    ,
+                  compendium_categories.name_en         = '$name_en'  ,
+                  compendium_categories.name_fr         = '$name_fr'  ,
+                  compendium_categories.description_en  = '$body_en'  ,
+                  compendium_categories.description_fr  = '$body_fr'
+          WHERE   compendium_categories.id              = '$category_id' ");
+
+  // All went well
+  return NULL;
 }
 
 

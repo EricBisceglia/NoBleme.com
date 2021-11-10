@@ -143,7 +143,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <div class="padding_top">
     <div class="red text_white align_center uppercase bold bigger spaced">
-      <?=$compendium_category_add_error?>
+      <?=__('error').__(':', spaces_after: 1).$compendium_category_add_error?>
     </div>
   </div>
 
