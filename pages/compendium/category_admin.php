@@ -21,6 +21,9 @@ $page_url         = "pages/compendium/category_admin";
 $page_title_en    = "Compendium categories";
 $page_title_fr    = "Compendium : Catégories";
 
+// Extra JS
+$js = array('compendium/admin');
+
 
 
 
@@ -99,7 +102,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?php for($i = 0; $i < $compendium_categories_list['rows']; $i++) { ?>
 
-      <tr>
+      <tr id="compendium_admin_category_row_<?=$compendium_categories_list[$i]['id']?>">
 
         <td>
           <?=$compendium_categories_list[$i]['order']?>
@@ -115,7 +118,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
         <td class="align_center">
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/category_edit?id='.$compendium_categories_list[$i]['id'])?>
-          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "compendium_category_delete('".$compendium_categories_list[$i]['id']."', '".__('compendium_category_delete_confirm')."')")?>
         </td>
 
       </tr>

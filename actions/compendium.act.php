@@ -26,6 +26,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_categories_list              Fetches a list of compendium categories.                                 */
 /*  compendium_categories_add               Creates a new compendium category.                                       */
 /*  compendium_categories_edit              Modifies an existing compendium category.                                */
+/*  compendium_categories_delete            Deletes an existing compendium category.                                 */
 /*                                                                                                                   */
 /*  compendium_eras_get                     Returns data related to a compendium era.                                */
 /*  compendium_eras_list                    Fetches a list of compendium eras.                                       */
@@ -1021,6 +1022,53 @@ function compendium_categories_edit(  int   $category_id  ,
                   compendium_categories.description_en  = '$body_en'  ,
                   compendium_categories.description_fr  = '$body_fr'
           WHERE   compendium_categories.id              = '$category_id' ");
+
+  // All went well
+  return NULL;
+}
+
+
+
+
+/**
+ * Deletes an existing compendium_category.
+ *
+ * @param   int           $category_id  The compendium category's id.
+ *
+ * @return  string|null                 A string if an error happened, or NULL if all went well.
+ */
+
+function compendium_categories_delete( int $category_id ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('compendium.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the compendium category's id
+  $category_id = sanitize($category_id, 'int', 0);
+
+  // Error: Compendium category does not exist
+  if(!$category_id || !database_row_exists('compendium_categories', $category_id))
+    return __('compendium_category_edit_error');
+
+  // Check if there are any pages tied to the category
+  $dcategory = mysqli_fetch_array(query("
+    SELECT    COUNT(*)  AS 'count'
+    FROM      compendium_pages_categories
+    LEFT JOIN compendium_pages
+    ON        compendium_pages_categories.fk_compendium_pages       = compendium_pages.id
+    WHERE     compendium_pages_categories.fk_compendium_categories  = '$category_id'
+    AND       compendium_pages.id IS NOT NULL "));
+
+  // Error: Category has pages linked to it
+  if($dcategory['count'])
+    return __('compendium_category_delete_impossible');
+
+  // Delete the category
+  query(" DELETE FROM compendium_categories
+          WHERE       compendium_categories.id = '$category_id' ");
 
   // All went well
   return NULL;
