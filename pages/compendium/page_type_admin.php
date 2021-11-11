@@ -68,6 +68,9 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
       <tr class="uppercase">
         <th>
+          <?=__('compendium_category_admin_order')?>
+        </th>
+        <th>
           <?=__('compendium_type_admin_short')?>
         </th>
         <th>
@@ -87,6 +90,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
       <?php for($i = 0; $i < $compendium_types_list['rows']; $i++) { ?>
 
       <tr id="compendium_admin_type_row_<?=$compendium_types_list[$i]['id']?>">
+
+        <td>
+          <?=$compendium_types_list[$i]['order']?>
+        </td>
 
         <td>
           <?=__link('pages/compendium/page_type?type='.$compendium_types_list[$i]['id'], $compendium_types_list[$i]['name'])?>

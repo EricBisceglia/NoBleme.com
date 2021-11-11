@@ -21,6 +21,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  compendium_type_get                     Returns data related to a compendium page type.                          */
 /*  compendium_type_list                    Fetches a list of compendium page types.                                 */
+/*  compendium_type_add                     Creates a new compendium page type.                                      */
 /*                                                                                                                   */
 /*  compendium_categories_get               Returns data related to a compendium category.                           */
 /*  compendium_categories_list              Fetches a list of compendium categories.                                 */
@@ -805,6 +806,7 @@ function compendium_types_list() : array
 
   // Fetch the compendium page types
   $qtypes = query(" SELECT    compendium_types.id               AS 'ct_id'    ,
+                              compendium_types.display_order    AS 'ct_order' ,
                               compendium_types.name_$lang       AS 'ct_name'  ,
                               compendium_types.full_name_$lang  AS 'ct_full'  ,
                               COUNT(compendium_pages.id)        AS 'ct_count'
@@ -821,6 +823,7 @@ function compendium_types_list() : array
   for($i = 0; $row = mysqli_fetch_array($qtypes); $i++)
   {
     $data[$i]['id']     = sanitize_output($row['ct_id']);
+    $data[$i]['order']  = sanitize_output($row['ct_order']);
     $data[$i]['name']   = sanitize_output($row['ct_name']);
     $data[$i]['full']   = sanitize_output($row['ct_full']);
     $data[$i]['count']  = ($row['ct_count']) ? sanitize_output($row['ct_count']) : '-';
@@ -831,6 +834,55 @@ function compendium_types_list() : array
 
   // Return the prepared data
   return $data;
+}
+
+
+
+
+/**
+ * Creates a new compendium page type.
+ *
+ * @param   array         $contents   The contents of the page type.
+ *
+ * @return  string|int                A string if an error happened, or the new page type's ID if all went well.
+ */
+
+function compendium_types_add( array $contents ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('compendium.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $order    = sanitize($contents['order'], 'int', 0);
+  $name_en  = sanitize($contents['name_en'], 'string');
+  $name_fr  = sanitize($contents['name_fr'], 'string');
+  $full_en  = sanitize($contents['full_en'], 'string');
+  $full_fr  = sanitize($contents['full_fr'], 'string');
+  $body_en  = sanitize($contents['body_en'], 'string');
+  $body_fr  = sanitize($contents['body_fr'], 'string');
+
+  // Error: No title
+  if(!$name_en || !$name_fr || !$full_en || !$full_fr)
+    return __('compendium_type_add_no_name');
+
+  // Create the compendium page type
+  query(" INSERT INTO compendium_types
+          SET         compendium_types.display_order  = '$order'    ,
+                      compendium_types.name_en        = '$name_en'  ,
+                      compendium_types.name_fr        = '$name_fr'  ,
+                      compendium_types.full_name_en   = '$full_en'  ,
+                      compendium_types.full_name_fr   = '$full_fr'  ,
+                      compendium_types.description_en = '$body_en'  ,
+                      compendium_types.description_fr = '$body_fr'  ");
+
+  // Fetch the newly created compendium page type's id
+  $type_id = query_id();
+
+  // Return the compendium page type's id
+  return $type_id;
 }
 
 

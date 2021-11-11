@@ -58,7 +58,7 @@ if(isset($_POST['compendium_category_add_submit']))
 
   // Redirect if it was successfully created
   if(is_int($compendium_category_add_error))
-    exit(header("Location: ".$path."pages/compendium/category_admin"));
+    exit(header("Location: ".$path."pages/compendium/category?id=".$compendium_category_add_error));
 }
 
 

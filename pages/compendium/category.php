@@ -65,7 +65,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
   </h1>
 
   <h5>
-    <?=__link('pages/compendium/category_list', __('compenidum_category_subtitle', spaces_after: 1).$compendium_category_data['name'], 'noglow')?>
+    <?=__link('pages/compendium/category_list', __('compendium_category_subtitle', spaces_after: 1).$compendium_category_data['name'], 'noglow')?>
     <?php if($is_admin) { ?>
     <?=__icon('edit', is_small: true, alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced_left', href: 'pages/compendium/category_edit?id='.$compendium_category_id)?>
     <?php } ?>

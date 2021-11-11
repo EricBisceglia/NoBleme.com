@@ -362,8 +362,8 @@ ___('compendium_categories_name', 'FR', "Catégorie");
 
 
 // Category: Header
-___('compenidum_category_subtitle', 'EN', "Category:");
-___('compenidum_category_subtitle', 'FR', "Catégorie :");
+___('compendium_category_subtitle', 'EN', "Category:");
+___('compendium_category_subtitle', 'FR', "Catégorie :");
 ___('compendium_category_summary',  'EN', <<<EOT
 Content is {{link|pages/compendium/category_list|categorized}} in order to keep this compendium organized, more on this in the {{link|pages/compendium/category_list|category list}}.
 EOT
@@ -401,10 +401,10 @@ ___('compendium_category_add_name_en',  'EN', "Category name (english)");
 ___('compendium_category_add_name_en',  'FR', "Nom de la catégorie (anglais)");
 ___('compendium_category_add_name_fr',  'EN', "Category name (french)");
 ___('compendium_category_add_name_fr',  'FR', "Nom de la catégorie (français)");
-___('compendium_category_add_body_en',  'EN', "Description (EN) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
-___('compendium_category_add_body_en',  'FR', "Description (EN) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
-___('compendium_category_add_body_fr',  'EN', "Description (FR) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
-___('compendium_category_add_body_fr',  'FR', "Description (FR) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_category_add_body_en',  'EN', "Description (english) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_category_add_body_en',  'FR', "Description (anglais) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_category_add_body_fr',  'EN', "Description (french) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_category_add_body_fr',  'FR', "Description (français) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_category_add_order',    'EN', "Sorting order");
 ___('compendium_category_add_order',    'FR', "Ordre de tri");
 ___('compendium_category_add_submit',   'EN', "Create new category");
@@ -466,8 +466,8 @@ ___('compendium_types_name',  'FR', "Thème");
 
 
 // Type: Header
-___('compenidum_type_subtitle', 'EN', "Page type:");
-___('compenidum_type_subtitle', 'FR', "Thématique :");
+___('compendium_type_subtitle', 'EN', "Page type:");
+___('compendium_type_subtitle', 'FR', "Thématique :");
 ___('compendium_type_summary',  'EN', <<<EOT
 Pages are each given a {{link|pages/compendium/page_type_list|type}} in order to keep this compendium organized, more on this in the {{link|pages/compendium/page_type_list|page type list}}.
 EOT
@@ -496,6 +496,27 @@ ___('compendium_type_admin_short',  'EN', "Page type");
 ___('compendium_type_admin_short',  'FR', "Thématique");
 ___('compendium_type_admin_long',   'EN', "Full name");
 ___('compendium_type_admin_long',   'FR', "Nom complet");
+
+
+// Create a new page type
+___('compendium_type_add_title',    'EN', "New page type");
+___('compendium_type_add_title',    'FR', "Nouvelle thématique");
+___('compendium_type_add_name_en',  'EN', "Type name (english)");
+___('compendium_type_add_name_en',  'FR', "Nom du thème (anglais)");
+___('compendium_type_add_name_fr',  'EN', "Type name (french)");
+___('compendium_type_add_name_fr',  'FR', "Nom du thème (français)");
+___('compendium_type_add_full_en',  'EN', "Full name (english)");
+___('compendium_type_add_full_en',  'FR', "Nom complet (anglais)");
+___('compendium_type_add_full_fr',  'EN', "Full name (french)");
+___('compendium_type_add_full_fr',  'FR', "Nom complet (français)");
+___('compendium_type_add_body_en',  'EN', "Description (english) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_type_add_body_en',  'FR', "Description (anglais) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_type_add_body_fr',  'EN', "Description (french) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_type_add_body_fr',  'FR', "Description (français) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_type_add_submit',   'EN', "Create new page type");
+___('compendium_type_add_submit',   'FR', "Créer la thématique");
+___('compendium_type_add_no_name',  'EN', "Page types must have a name and a full name in both languages");
+___('compendium_type_add_no_name',  'FR', "Les thématiques doivent avoir un nom et un nom complet dans les deux langues");
 
 
 
