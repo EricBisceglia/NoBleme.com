@@ -388,8 +388,6 @@ EOT
 
 
 // Category administration
-___('compendium_category_admin_title',          'EN', "Category administration");
-___('compendium_category_admin_title',          'FR', "Administration des catégories");
 ___('compendium_category_admin_order',          'EN', "Order");
 ___('compendium_category_admin_order',          'FR', "Ordre");
 ___('compendium_category_admin_uncategorized',  'EN', "Uncategorized pages");
@@ -493,6 +491,24 @@ EOT
 );
 
 
+// Type administration
+___('compendium_type_admin_short',  'EN', "Page type");
+___('compendium_type_admin_short',  'FR', "Thématique");
+___('compendium_type_admin_long',   'EN', "Full name");
+___('compendium_type_admin_long',   'FR', "Nom complet");
+
+
+
+
+/*********************************************************************************************************************/
+/*                                                                                                                   */
+/*                                                    ADMIN TOOLS                                                    */
+/*                                                                                                                   */
+/*********************************************************************************************************************/
+
+// Admin menu
+___('compendium_admin_menu_title',  'EN', "Compendium administration");
+___('compendium_admin_menu_title',  'FR', "Administration du compendium");
 
 
 /*********************************************************************************************************************/

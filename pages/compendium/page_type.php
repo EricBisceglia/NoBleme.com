@@ -66,6 +66,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h5>
     <?=__link('pages/compendium/page_type_list', __('compenidum_type_subtitle', spaces_after: 1).$compendium_type_data['full'], 'noglow')?>
+    <?php if($is_admin) { ?>
+    <?=__icon('edit', is_small: true, alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced_left', href: 'pages/compendium/page_type_edit?id='.$compendium_type_id)?>
+    <?php } ?>
   </h5>
 
   <p class="italics">

@@ -804,9 +804,10 @@ function compendium_types_list() : array
   $lang = sanitize(string_change_case(user_get_language(), 'lowercase'), 'string');
 
   // Fetch the compendium page types
-  $qtypes = query(" SELECT    compendium_types.id         AS 'ct_id'    ,
-                              compendium_types.name_$lang AS 'ct_name'  ,
-                              COUNT(compendium_pages.id)  AS 'ct_count'
+  $qtypes = query(" SELECT    compendium_types.id               AS 'ct_id'    ,
+                              compendium_types.name_$lang       AS 'ct_name'  ,
+                              compendium_types.full_name_$lang  AS 'ct_full'  ,
+                              COUNT(compendium_pages.id)        AS 'ct_count'
                     FROM      compendium_types
                     LEFT JOIN compendium_pages ON compendium_types.id = compendium_pages.fk_compendium_types
                     AND       compendium_pages.is_deleted             = 0
@@ -821,6 +822,7 @@ function compendium_types_list() : array
   {
     $data[$i]['id']     = sanitize_output($row['ct_id']);
     $data[$i]['name']   = sanitize_output($row['ct_name']);
+    $data[$i]['full']   = sanitize_output($row['ct_full']);
     $data[$i]['count']  = ($row['ct_count']) ? sanitize_output($row['ct_count']) : '-';
   }
 
@@ -1069,6 +1071,10 @@ function compendium_categories_delete( int $category_id ) : mixed
   // Delete the category
   query(" DELETE FROM compendium_categories
           WHERE       compendium_categories.id = '$category_id' ");
+
+  // Delete any dead links to the category
+  query(" DELETE FROM compendium_pages_categories
+          WHERE       compendium_pages_categories.fk_compendium_categories = '$category_id' ");
 
   // All went well
   return NULL;

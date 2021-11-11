@@ -8,3 +8,8 @@
 
 /********************************************* COMPENDIUM ADMINISTRATION *********************************************/
 .compendium_admin_editor { min-height: 35.0rem; }
+
+@media (min-width: 1081px) {
+.compendium_admin_menu { margin-top: -40px; } }
+@media (max-width: 1080px) {
+.compendium_admin_menu { margin-top: -75px; } }
