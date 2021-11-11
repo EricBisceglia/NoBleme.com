@@ -405,8 +405,8 @@ ___('compendium_category_add_body_en',  'EN', "Description (english) ({{link_pop
 ___('compendium_category_add_body_en',  'FR', "Description (anglais) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_category_add_body_fr',  'EN', "Description (french) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
 ___('compendium_category_add_body_fr',  'FR', "Description (français) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
-___('compendium_category_add_order',    'EN', "Sorting order");
-___('compendium_category_add_order',    'FR', "Ordre de tri");
+___('compendium_category_add_order',    'EN', "Display order");
+___('compendium_category_add_order',    'FR', "Ordre d'affichage");
 ___('compendium_category_add_submit',   'EN', "Create new category");
 ___('compendium_category_add_submit',   'FR', "Créer la catégorie");
 ___('compendium_category_add_no_name',  'EN', "Categories must have a name in both languages");
@@ -517,6 +517,15 @@ ___('compendium_type_add_submit',   'EN', "Create new page type");
 ___('compendium_type_add_submit',   'FR', "Créer la thématique");
 ___('compendium_type_add_no_name',  'EN', "Page types must have a name and a full name in both languages");
 ___('compendium_type_add_no_name',  'FR', "Les thématiques doivent avoir un nom et un nom complet dans les deux langues");
+
+
+// Edit a page type
+___('compendium_type_edit_title',   'EN', "Edit a page type");
+___('compendium_type_edit_title',   'FR', "Modifier la thématique");
+___('compendium_type_edit_submit',  'EN', "Edit page type");
+___('compendium_type_edit_submit',  'FR', "Modifier la thématique");
+___('compendium_type_edit_error',   'EN', "The page type doesn't exist or has been deleted");
+___('compendium_type_edit_error',   'FR', "La thématique n'existe pas ou a été supprimée");
 
 
 

@@ -61,7 +61,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
 </div>
 
-<div class="bigpadding_top width_40">
+<div class="bigpadding_top width_50">
 
   <table>
     <thead>
