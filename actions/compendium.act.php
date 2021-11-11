@@ -22,7 +22,8 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_types_get                    Returns data related to a compendium page type.                          */
 /*  compendium_types_list                   Fetches a list of compendium page types.                                 */
 /*  compendium_types_add                    Creates a new compendium page type.                                      */
-/*  compendium_types_edit                   Modifies an existing compendium category.                                */
+/*  compendium_types_edit                   Modifies an existing compendium page type.                               */
+/*  compendium_types_delete                 Deletes an existing compendium page type.                                */
 /*                                                                                                                   */
 /*  compendium_categories_get               Returns data related to a compendium category.                           */
 /*  compendium_categories_list              Fetches a list of compendium categories.                                 */
@@ -954,6 +955,49 @@ function compendium_types_edit( int   $type_id  ,
 
 
 /**
+ * Deletes an existing page type.
+ *
+ * @param   int           $type_id  The compendium page type's id.
+ *
+ * @return  string|null             A string if an error happened, or NULL if all went well.
+ */
+
+function compendium_types_delete( int $type_id ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('compendium.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the compendium page type's id
+  $type_id = sanitize($type_id, 'int', 0);
+
+  // Error: Compendium page type does not exist
+  if(!$type_id || !database_row_exists('compendium_types', $type_id))
+    return __('compendium_type_edit_error');
+
+  // Check if there are any pages tied to the page type
+  $dtype = mysqli_fetch_array(query(" SELECT    COUNT(*)  AS 'count'
+                                      FROM      compendium_pages
+                                      WHERE     compendium_pages.fk_compendium_types = '$type_id' "));
+
+  // Error: Page type has pages linked to it
+  if($dtype['count'])
+    return __('compendium_type_delete_impossible');
+
+  // Delete the page type
+  query(" DELETE FROM compendium_types
+          WHERE       compendium_types.id = '$type_id' ");
+
+  // All went well
+  return NULL;
+}
+
+
+
+
+/**
  * Returns data related to a compendium category.
  *
  * @param   int         $category_id  The compendium category's id.
@@ -1150,7 +1194,7 @@ function compendium_categories_edit(  int   $category_id  ,
 
 
 /**
- * Deletes an existing compendium_category.
+ * Deletes an existing compendium category.
  *
  * @param   int           $category_id  The compendium category's id.
  *

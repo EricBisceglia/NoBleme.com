@@ -528,6 +528,15 @@ ___('compendium_type_edit_error',   'EN', "The page type doesn't exist or has be
 ___('compendium_type_edit_error',   'FR', "La thématique n'existe pas ou a été supprimée");
 
 
+// Delete a page type
+___('compendium_type_delete_confirm',     'EN', "Confirm the irreversible deletion of this page type");
+___('compendium_type_delete_confirm',     'FR', "Confirmer la suppression irréversible de cette thématique");
+___('compendium_type_delete_impossible',  'EN', "Page types with any page linked to them can not be deleted");
+___('compendium_type_delete_impossible',  'FR', "Impossible de supprimer une thématique tant qu'une page y est liée");
+___('compendium_type_delete_ok',          'EN', "The page type has successfully been deleted");
+___('compendium_type_delete_ok',          'FR', "La thématique a bien été supprimée");
+
+
 
 
 /*********************************************************************************************************************/
