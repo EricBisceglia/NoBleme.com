@@ -116,7 +116,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
         <td class="align_center">
           <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/cultural_era_edit?id='.$compendium_eras_list[$i]['id'])?>
-          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials', onclick: "compendium_era_delete('".$compendium_eras_list[$i]['id']."', '".__('compendium_era_delete_confirm')."')")?>
         </td>
 
       </tr>

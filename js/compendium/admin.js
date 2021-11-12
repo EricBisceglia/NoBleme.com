@@ -6,6 +6,8 @@
 /*                                                                                                                   */
 /*  compendium_category_delete        Triggers the deletion of a compendium category.                                */
 /*                                                                                                                   */
+/*  compendium_era_delete             Triggers the deletion of a compendium era.                                     */
+/*                                                                                                                   */
 /*********************************************************************************************************************/
 
 
@@ -73,5 +75,31 @@ function compendium_admin_menu()
 
     // Trigger the deletion
     fetch_page('category_delete', 'compendium_admin_category_row_' + category_id, postdata);
+  }
+}
+
+
+
+
+/**
+ * Triggers the deletion of a compendium era.
+ *
+ * @param   {int}     era_id    The compendium era's id.
+ * @param   {string}  message   The confirmation message that is shown before triggering the deletion.
+ *
+ * @returns {void}
+ */
+
+ function compendium_era_delete(  era_id  ,
+                                  message )
+{
+  // Make sure the user knows what they're doing
+  if(confirm(message))
+  {
+    // Assemble the postdata
+    postdata = 'compendium_era_delete=' + fetch_sanitize(era_id);
+
+    // Trigger the deletion
+    fetch_page('cultural_era_delete', 'compendium_admin_era_row_' + era_id, postdata);
   }
 }

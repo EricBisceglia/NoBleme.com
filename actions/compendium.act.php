@@ -35,6 +35,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_eras_list                    Fetches a list of compendium eras.                                       */
 /*  compendium_eras_add                     Creates a new compendium era.                                            */
 /*  compendium_eras_edit                    Modifies an existing compendium era.                                     */
+/*  compendium_eras_delete                  Deletes an existing compendium era.                                      */
 /*                                                                                                                   */
 /*  compendium_page_history_get             Returns data related to an entry in a compendium page's history.         */
 /*  compendium_page_history_list            Returns data related to a compendium page's history entry.               */
@@ -1453,6 +1454,49 @@ function compendium_eras_edit(  int   $era_id   ,
                   compendium_eras.description_en  = '$body_en'  ,
                   compendium_eras.description_fr  = '$body_fr'
           WHERE   compendium_eras.id              = '$era_id' ");
+
+  // All went well
+  return NULL;
+}
+
+
+
+
+/**
+ * Deletes an existing era.
+ *
+ * @param   int           $era_id   The compendium era's id.
+ *
+ * @return  string|null             A string if an error happened, or NULL if all went well.
+ */
+
+function compendium_eras_delete( int $era_id ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('compendium.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the compendium era's id
+  $era_id = sanitize($era_id, 'int', 0);
+
+  // Error: Compendium era does not exist
+  if(!$era_id || !database_row_exists('compendium_eras', $era_id))
+    return __('compendium_era_edit_error');
+
+  // Check if there are any pages tied to the era
+  $dera = mysqli_fetch_array(query("  SELECT    COUNT(*)  AS 'count'
+                                      FROM      compendium_pages
+                                      WHERE     compendium_pages.fk_compendium_eras = '$era_id' "));
+
+  // Error: Era has pages linked to it
+  if($dera['count'])
+    return __('compendium_era_delete_impossible');
+
+  // Delete the era
+  query(" DELETE FROM compendium_eras
+          WHERE       compendium_eras.id = '$era_id' ");
 
   // All went well
   return NULL;
