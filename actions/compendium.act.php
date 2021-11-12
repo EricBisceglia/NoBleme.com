@@ -34,6 +34,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_eras_get                     Returns data related to a compendium era.                                */
 /*  compendium_eras_list                    Fetches a list of compendium eras.                                       */
 /*  compendium_eras_add                     Creates a new compendium era.                                            */
+/*  compendium_eras_edit                    Modifies an existing compendium era.                                     */
 /*                                                                                                                   */
 /*  compendium_page_history_get             Returns data related to an entry in a compendium page's history.         */
 /*  compendium_page_history_list            Returns data related to a compendium page's history entry.               */
@@ -921,13 +922,13 @@ function compendium_types_edit( int   $type_id  ,
 
   // Sanitize and prepare the data
   $type_id  = sanitize($type_id, 'int', 0);
-  $order        = sanitize($contents['order'], 'int', 0);
-  $name_en      = sanitize($contents['name_en'], 'string');
-  $name_fr      = sanitize($contents['name_fr'], 'string');
-  $full_en      = sanitize($contents['full_en'], 'string');
-  $full_fr      = sanitize($contents['full_fr'], 'string');
-  $body_en      = sanitize($contents['body_en'], 'string');
-  $body_fr      = sanitize($contents['body_fr'], 'string');
+  $order    = sanitize($contents['order'], 'int', 0);
+  $name_en  = sanitize($contents['name_en'], 'string');
+  $name_fr  = sanitize($contents['name_fr'], 'string');
+  $full_en  = sanitize($contents['full_en'], 'string');
+  $full_fr  = sanitize($contents['full_fr'], 'string');
+  $body_en  = sanitize($contents['body_en'], 'string');
+  $body_fr  = sanitize($contents['body_fr'], 'string');
 
   // Error: Page type does not exist
   if(!$type_id || !database_row_exists('compendium_types', $type_id))
@@ -1270,12 +1271,16 @@ function compendium_eras_get( int $era_id ) : mixed
   $pages    = compendium_pages_list_urls();
 
   // Fetch the data
-  $dera = mysqli_fetch_array(query("  SELECT  compendium_eras.year_start        AS 'ce_start'   ,
-                                              compendium_eras.year_end          AS 'ce_end'     ,
-                                              compendium_eras.name_$lang        AS 'ce_name'    ,
-                                              compendium_eras.name_en           AS 'ce_name_en' ,
-                                              compendium_eras.name_fr           AS 'ce_name_fr' ,
-                                              compendium_eras.description_$lang AS 'ce_body'
+  $dera = mysqli_fetch_array(query("  SELECT  compendium_eras.year_start        AS 'ce_start'     ,
+                                              compendium_eras.year_end          AS 'ce_end'       ,
+                                              compendium_eras.name_$lang        AS 'ce_name'      ,
+                                              compendium_eras.name_en           AS 'ce_name_en'   ,
+                                              compendium_eras.name_fr           AS 'ce_name_fr'   ,
+                                              compendium_eras.short_name_en     AS 'ce_short_en'  ,
+                                              compendium_eras.short_name_fr     AS 'ce_short_fr'  ,
+                                              compendium_eras.description_$lang AS 'ce_body'      ,
+                                              compendium_eras.description_en    AS 'ce_body_en'   ,
+                                              compendium_eras.description_fr    AS 'ce_body_fr'
                                       FROM    compendium_eras
                                       WHERE   compendium_eras.id = '$era_id' "));
 
@@ -1287,8 +1292,12 @@ function compendium_eras_get( int $era_id ) : mixed
   $data['name_fr_raw']  = $dera['ce_name_fr'];
   $data['name_en']      = sanitize_output($dera['ce_name_en']);
   $data['name_fr']      = sanitize_output($dera['ce_name_fr']);
+  $data['short_en']     = sanitize_output($dera['ce_short_en']);
+  $data['short_fr']     = sanitize_output($dera['ce_short_fr']);
   $temp                 = bbcodes(sanitize_output($dera['ce_body'], preserve_line_breaks: true));
   $data['body']         = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+  $data['body_en']      = sanitize_output($dera['ce_body_en']);
+  $data['body_fr']      = sanitize_output($dera['ce_body_fr']);
 
   // Return the data
   return $data;
@@ -1391,6 +1400,62 @@ function compendium_eras_add( array $contents ) : mixed
 
   // Return the compendium era's id
   return $era_id;
+}
+
+
+
+
+/**
+ * Modifies an existing compendium era.
+ *
+ * @param   int           $era_id     The era's id.
+ * @param   array         $contents   The era's contents.
+ *
+ * @return  string|null               A string if an error happened, or NULL if all went well.
+ */
+
+function compendium_eras_edit(  int   $era_id   ,
+                                array $contents ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('compendium.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $era_id   = sanitize($era_id, 'int', 0);
+  $start    = sanitize($contents['start'], 'int', 0);
+  $end      = sanitize($contents['end'], 'int', 0);
+  $name_en  = sanitize($contents['name_en'], 'string');
+  $name_fr  = sanitize($contents['name_fr'], 'string');
+  $short_en = sanitize($contents['short_en'], 'string');
+  $short_fr = sanitize($contents['short_fr'], 'string');
+  $body_en  = sanitize($contents['body_en'], 'string');
+  $body_fr  = sanitize($contents['body_fr'], 'string');
+
+  // Error: Era does not exist
+  if(!$era_id || !database_row_exists('compendium_eras', $era_id))
+    return __('compendium_era_edit_error');
+
+  // Error: No title
+  if(!$name_en || !$name_fr || !$short_en || !$short_fr)
+    return __('compendium_era_add_no_name');
+
+  // Edit the compendium era
+  query(" UPDATE  compendium_eras
+          SET     compendium_eras.year_start      = '$start'    ,
+                  compendium_eras.year_end        = '$end'      ,
+                  compendium_eras.name_en         = '$name_en'  ,
+                  compendium_eras.name_fr         = '$name_fr'  ,
+                  compendium_eras.short_name_en   = '$short_en'  ,
+                  compendium_eras.short_name_fr   = '$short_fr'  ,
+                  compendium_eras.description_en  = '$body_en'  ,
+                  compendium_eras.description_fr  = '$body_fr'
+          WHERE   compendium_eras.id              = '$era_id' ");
+
+  // All went well
+  return NULL;
 }
 
 

@@ -367,6 +367,15 @@ ___('compendium_era_add_no_name',   'EN', "Eras must have a name and a short nam
 ___('compendium_era_add_no_name',   'FR', "Les périodes doivent avoir un nom et un nom court dans les deux langues");
 
 
+// Edit an era
+___('compendium_era_edit_title',  'EN', "Edit an era");
+___('compendium_era_edit_title',  'FR', "Modifier la période");
+___('compendium_era_edit_submit', 'EN', "Edit era");
+___('compendium_era_edit_submit', 'FR', "Modifier la période");
+___('compendium_era_edit_error',  'EN', "The era doesn't exist or has been deleted");
+___('compendium_era_edit_error',  'FR', "La période n'existe pas ou a été supprimée");
+
+
 
 
 /*********************************************************************************************************************/
@@ -446,7 +455,7 @@ ___('compendium_category_add_no_name',  'FR', "Les catégories doivent avoir un 
 
 
 // Edit a category
-___('compendium_category_edit_title',   'EN', "Edit category");
+___('compendium_category_edit_title',   'EN', "Edit a category");
 ___('compendium_category_edit_title',   'FR', "Modifier la catégorie");
 ___('compendium_category_edit_submit',  'EN', "Edit category");
 ___('compendium_category_edit_submit',  'FR', "Modifier la catégorie");
