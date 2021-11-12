@@ -66,6 +66,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h5>
     <?=__link('pages/compendium/cultural_era_list', __('compendium_era_subtitle', spaces_after: 1).$compendium_era_data['name'], 'noglow')?>
+    <?php if($is_admin) { ?>
+    <?=__icon('edit', is_small: true, alt: 'E', title: __('edit'), title_case: 'initials', class: 'valign_middle pointer spaced_left', href: 'pages/compendium/cultural_era_edit?id='.$compendium_era_id)?>
+    <?php } ?>
   </h5>
 
   <p class="italics">

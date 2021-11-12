@@ -335,6 +335,13 @@ EOT
 );
 
 
+// Era administration
+___('compendium_era_admin_name',  'EN', "Full name");
+___('compendium_era_admin_name',  'FR', "Nom complet");
+___('compendium_era_admin_short', 'EN', "Short name");
+___('compendium_era_admin_short', 'FR', "Nom court");
+
+
 
 
 /*********************************************************************************************************************/

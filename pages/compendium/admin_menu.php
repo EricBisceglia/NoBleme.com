@@ -19,6 +19,7 @@ user_restrict_to_administrators();
 
 $compendium_admin_menu['page_types']  = isset($compendium_admin_menu['page_types']) ? ' selected' : '';
 $compendium_admin_menu['categories']  = isset($compendium_admin_menu['categories']) ? ' selected' : '';
+$compendium_admin_menu['eras']        = isset($compendium_admin_menu['eras']) ? ' selected' : '';
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,6 +35,9 @@ $compendium_admin_menu['categories']  = isset($compendium_admin_menu['categories
         </option>
         <option value="category_admin"<?=$compendium_admin_menu['categories']?>>
           <?=__('compendium_categories_title')?>
+        </option>
+        <option value="cultural_era_admin"<?=$compendium_admin_menu['eras']?>>
+          <?=__('compendium_eras_title')?>
         </option>
       </select>
     </h5>

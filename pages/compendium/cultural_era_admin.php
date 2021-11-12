@@ -6,13 +6,27 @@
 include_once './../../inc/includes.inc.php';        # Core
 include_once './../../actions/compendium.act.php';  # Actions
 include_once './../../lang/compendium.lang.php';    # Translations
+include_once './../../inc/bbcodes.inc.php';         # BBCodes
+include_once './../../inc/functions_time.inc.php';  # Time management
+
+// Limit page access rights
+user_restrict_to_administrators();
+
+// Hide the page from who's online
+$hidden_activity = 1;
 
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/compendium/cultural_era_list";
+$page_url         = "pages/compendium/cultural_era_admin";
 $page_title_en    = "Compendium eras";
-$page_title_fr    = "Compendium : Périodes";
-$page_description = "Cultural eras of 21st culture";
+$page_title_fr    = "Compendium : Ères";
+
+// Compendium admin menu selection
+$compendium_admin_menu['eras'] = 1;
+
+// Extra CSS & JS
+$css  = array('compendium');
+$js   = array('compendium/admin');
 
 
 
@@ -22,6 +36,9 @@ $page_description = "Cultural eras of 21st culture";
 /*                                                     BACK END                                                      */
 /*                                                                                                                   */
 /*********************************************************************************************************************/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Eras list
 
 // Fetch a list of eras
 $compendium_eras_list = compendium_eras_list();
@@ -33,32 +50,18 @@ $compendium_eras_list = compendium_eras_list();
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
+if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'; /****/ include './admin_menu.php'; ?>
 
-<div class="width_50">
+<div class="width_50 padding_top">
 
-  <h1>
-    <?=__link('pages/compendium/index', __('compendium_eras_title'), 'noglow')?>
-    <?php if($is_admin) { ?>
-    <?=__icon('settings', alt: 'E', title: __('settings'), title_case: 'initials', href: 'pages/compendium/cultural_era_admin')?>
-    <?php } ?>
-  </h1>
+  <h2 class="align_center">
+    <?=__link('pages/compendium/cultural_era_list', __('compendium_eras_title'), 'noglow')?>
+    <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/cultural_era_add')?>
+  </h2>
 
-  <h5>
-    <?=__link('pages/compendium/index', __('compendium_eras_subtitle'), 'noglow')?>
-  </h5>
+</div>
 
-  <p>
-    <?=__('compendium_eras_intro_1')?>
-  </p>
-
-  <p>
-    <?=__('compendium_eras_intro_2')?>
-  </p>
-
-  <p class="bigpadding_bot">
-    <?=__('compendium_eras_intro_3')?>
-  </p>
+<div class="bigpadding_top width_50">
 
   <table>
     <thead>
@@ -71,10 +74,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
           <?=__('compendium_eras_end')?>
         </th>
         <th>
-          <?=__('compendium_eras_name')?>
+          <?=__('compendium_era_admin_name')?>
+        </th>
+        <th>
+          <?=__('compendium_era_admin_short')?>
         </th>
         <th>
           <?=__('compendium_eras_entries')?>
+        </th>
+        <th>
+          <?=__('act')?>
         </th>
       </tr>
 
@@ -83,7 +92,7 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
       <?php for($i = 0; $i < $compendium_eras_list['rows']; $i++) { ?>
 
-      <tr>
+      <tr id="compendium_admin_era_row_<?=$compendium_eras_list[$i]['id']?>">
 
         <td>
           <?=$compendium_eras_list[$i]['start']?>
@@ -98,7 +107,16 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         </td>
 
         <td>
+          <?=$compendium_eras_list[$i]['short']?>
+        </td>
+
+        <td>
           <?=$compendium_eras_list[$i]['count']?>
+        </td>
+
+        <td class="align_center">
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/cultural_era_edit?id='.$compendium_eras_list[$i]['id'])?>
+          <?=__icon('delete', is_small: true, class: 'valign_middle pointer spaced', alt: 'X', title: __('delete'), title_case: 'initials')?>
         </td>
 
       </tr>
