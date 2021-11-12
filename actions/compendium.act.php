@@ -33,6 +33,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*                                                                                                                   */
 /*  compendium_eras_get                     Returns data related to a compendium era.                                */
 /*  compendium_eras_list                    Fetches a list of compendium eras.                                       */
+/*  compendium_eras_add                     Creates a new compendium era.                                            */
 /*                                                                                                                   */
 /*  compendium_page_history_get             Returns data related to an entry in a compendium page's history.         */
 /*  compendium_page_history_list            Returns data related to a compendium page's history entry.               */
@@ -1345,6 +1346,57 @@ function compendium_eras_list() : array
 
 
 /**
+ * Creates a new compendium era.
+ *
+ * @param   array         $contents   The contents of the era.
+ *
+ * @return  string|int                A string if an error happened, or the new era's ID if all went well.
+ */
+
+function compendium_eras_add( array $contents ) : mixed
+{
+  // Check if the required files have been included
+  require_included_file('compendium.lang.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize and prepare the data
+  $start    = sanitize($contents['start'], 'int', 0);
+  $end      = sanitize($contents['end'], 'int', 0);
+  $name_en  = sanitize($contents['name_en'], 'string');
+  $name_fr  = sanitize($contents['name_fr'], 'string');
+  $short_en = sanitize($contents['short_en'], 'string');
+  $short_fr = sanitize($contents['short_fr'], 'string');
+  $body_en  = sanitize($contents['body_en'], 'string');
+  $body_fr  = sanitize($contents['body_fr'], 'string');
+
+  // Error: No title
+  if(!$name_en || !$name_fr || !$short_en || !$short_fr)
+    return __('compendium_era_add_no_name');
+
+  // Create the compendium era
+  query(" INSERT INTO compendium_eras
+          SET         compendium_eras.year_start      = '$start'    ,
+                      compendium_eras.year_end        = '$end'      ,
+                      compendium_eras.name_en         = '$name_en'  ,
+                      compendium_eras.name_fr         = '$name_fr'  ,
+                      compendium_eras.short_name_en   = '$short_en'  ,
+                      compendium_eras.short_name_fr   = '$short_fr'  ,
+                      compendium_eras.description_en  = '$body_en'  ,
+                      compendium_eras.description_fr  = '$body_fr'  ");
+
+  // Fetch the newly created compendium era's id
+  $era_id = query_id();
+
+  // Return the compendium era's id
+  return $era_id;
+}
+
+
+
+
+/**
  * Returns data related to an entry in a compendium page's history entry.
  *
  * @param   int         $history_id   The compendium page's history entry id.
@@ -1390,7 +1442,7 @@ function compendium_page_history_get( int $history_id ) : mixed
  *
  * @param   int         $page_id  The page's id
  *
- * @return  array|null            An array containing the data, or null if the page type doesn't exist.
+ * @return  array|null            An array containing the data, or null if the page history doesn't exist.
  */
 
 function compendium_page_history_list( int $page_id ) : mixed

@@ -342,6 +342,31 @@ ___('compendium_era_admin_short', 'EN', "Short name");
 ___('compendium_era_admin_short', 'FR', "Nom court");
 
 
+// Create a new era
+___('compendium_era_add_title',     'EN', "New era");
+___('compendium_era_add_title',     'FR', "Nouvelle période");
+___('compendium_era_add_start',     'EN', "Start year");
+___('compendium_era_add_start',     'FR', "Année de début");
+___('compendium_era_add_end',       'EN', "End year");
+___('compendium_era_add_end',       'FR', "Année de fin");
+___('compendium_era_add_name_en',   'EN', "Era name (english)");
+___('compendium_era_add_name_en',   'FR', "Nom de la période (anglais)");
+___('compendium_era_add_name_fr',   'EN', "Era name (french)");
+___('compendium_era_add_name_fr',   'FR', "Nom de la période (français)");
+___('compendium_era_add_short_en',  'EN', "Short name (english)");
+___('compendium_era_add_short_en',  'FR', "Nom court (anglais)");
+___('compendium_era_add_short_fr',  'EN', "Short name (french)");
+___('compendium_era_add_short_fr',  'FR', "Nom court (français)");
+___('compendium_era_add_body_en',   'EN', "Description (english) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_era_add_body_en',   'FR', "Description (anglais) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_era_add_body_fr',   'EN', "Description (french) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_era_add_body_fr',   'FR', "Description (français) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_era_add_submit',    'EN', "Create new era");
+___('compendium_era_add_submit',    'FR', "Créer la période");
+___('compendium_era_add_no_name',   'EN', "Eras must have a name and a short name in both languages");
+___('compendium_era_add_no_name',   'FR', "Les périodes doivent avoir un nom et un nom court dans les deux langues");
+
+
 
 
 /*********************************************************************************************************************/
