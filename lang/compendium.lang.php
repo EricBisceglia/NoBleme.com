@@ -201,6 +201,65 @@ ___('compendium_list_count',    'EN', "{{1}} compendium pages");
 ___('compendium_list_count',    'FR', "{{1}} pages dans le compendium");
 
 
+// Admin
+___('compendium_list_admin_title',            'EN', "Compendium pages");
+___('compendium_list_admin_title',            'FR', "Pages du compendium");
+___('compendium_list_admin_menu',             'EN', "Page list");
+___('compendium_list_admin_menu',             'FR', "Liste des pages");
+___('compendium_list_admin_url',              'EN', "Page URL");
+___('compendium_list_admin_url',              'FR', "Adresse");
+___('compendium_list_admin_redirect',         'EN', "Redirection");
+___('compendium_list_admin_redirect',         'FR', "Redirection");
+___('compendium_list_admin_redirect_no',      'EN', "Pages");
+___('compendium_list_admin_redirect_no',      'FR', "Pages");
+___('compendium_list_admin_redirect_yes',     'EN', "Redirections");
+___('compendium_list_admin_redirect_yes',     'FR', "Redirections");
+___('compendium_list_admin_translated',       'EN', "Translated");
+___('compendium_list_admin_translated',       'FR', "Traduit");
+___('compendium_list_admin_untranslated',     'EN', "Not translated");
+___('compendium_list_admin_untranslated',     'FR', "Non traduit");
+___('compendium_list_admin_missing',          'EN', "No title in this language");
+___('compendium_list_admin_missing',          'FR', "Pas de titre dans cette langue");
+___('compendium_list_admin_categories',       'EN', "Cat.");
+___('compendium_list_admin_categories',       'FR', "Cat.");
+___('compendium_list_admin_categories_no',    'EN', "Uncategorized");
+___('compendium_list_admin_categories_no',    'FR', "Sans catégorie");
+___('compendium_list_admin_categories_yes',   'EN', "Categorized");
+___('compendium_list_admin_categories_yes',   'FR', "Catégorisé");
+___('compendium_list_admin_category_count',   'EN', "Page has {{1}} category");
+___('compendium_list_admin_category_count',   'FR', "La page a {{1}} catégorie");
+___('compendium_list_admin_category_count+',  'EN', "Page has {{1}} categories");
+___('compendium_list_admin_category_count+',  'FR', "La page a {{1}} catégories");
+___('compendium_list_admin_language',         'EN', "Lang.");
+___('compendium_list_admin_language',         'FR', "Lang.");
+___('compendium_list_admin_monolingual',      'EN', "Monolingual");
+___('compendium_list_admin_monolingual',      'FR', "Monolangue");
+___('compendium_list_admin_bilingual',        'EN', "Bilingual");
+___('compendium_list_admin_bilingual',        'FR', "Bilingue");
+___('compendium_list_admin_nsfw',             'EN', "NSFW");
+___('compendium_list_admin_nsfw',             'FR', "NSFW");
+___('compendium_list_admin_safe',             'EN', "Safe");
+___('compendium_list_admin_safe',             'FR', "Propre");
+___('compendium_list_admin_unsafe',           'EN', "Unsafe");
+___('compendium_list_admin_unsafe',           'FR', "Sale");
+___('compendium_list_admin_nsfw_title',       'EN', "NSFW title");
+___('compendium_list_admin_nsfw_title',       'FR', "Titre NSFW");
+___('compendium_list_admin_nsfw_page',        'EN', "NSFW page");
+___('compendium_list_admin_nsfw_page',        'FR', "Page NSFW");
+___('compendium_list_admin_gross',            'EN', "Gross");
+___('compendium_list_admin_gross',            'FR', "Dégueu");
+___('compendium_list_admin_offensive',        'EN', "Offensive");
+___('compendium_list_admin_offensive',        'FR', "Offensant");
+___('compendium_list_admin_wip',              'EN', "WIP");
+___('compendium_list_admin_wip',              'FR', "WIP");
+___('compendium_list_admin_finished',         'EN', "Finished");
+___('compendium_list_admin_finished',         'FR', "Complet");
+___('compendium_list_admin_draft',            'EN', "Draft");
+___('compendium_list_admin_draft',            'FR', "Brouillon");
+___('compendium_list_admin_deleted',          'EN', "Deleted");
+___('compendium_list_admin_deleted',          'FR', "Supprimé");
+
+
 
 
 /*********************************************************************************************************************/

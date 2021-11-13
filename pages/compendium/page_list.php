@@ -74,6 +74,9 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <h1>
     <?=__link('pages/compendium/index', __('compendium_index_title'), 'noglow')?>
+    <?php if($is_admin) { ?>
+    <?=__icon('settings', alt: 'E', title: __('settings'), title_case: 'initials', href: 'pages/compendium/page_list_admin')?>
+    <?php } ?>
   </h1>
 
   <h5>
