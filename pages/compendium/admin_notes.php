@@ -9,12 +9,24 @@ include_once './../../lang/compendium.lang.php';    # Translations
 include_once './../../inc/bbcodes.inc.php';         # BBCodes
 include_once './../../inc/functions_time.inc.php';  # Time management
 
+// Limit page access rights
+user_restrict_to_administrators();
+
+// Hide the page from who's online
+$hidden_activity = 1;
+
 // Page summary
 $page_lang        = array('FR', 'EN');
-$page_url         = "pages/compendium/index";
-$page_title_en    = "Compendium";
-$page_title_fr    = "Compendium";
-$page_description = "An encyclopedia of 21st century culture, internet memes, modern slang, and sociocultural concepts";
+$page_url         = "pages/compendium/admin_notes";
+$page_title_en    = "Compendium admin notes";
+$page_title_fr    = "Compendium : Notes admin";
+
+// Compendium admin menu selection
+$compendium_admin_menu['notes'] = 1;
+
+// Extra CSS & JS
+$css  = array('compendium');
+$js   = array('compendium/admin');
 
 
 
@@ -28,12 +40,8 @@ $page_description = "An encyclopedia of 21st century culture, internet memes, mo
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the page list
 
-$compendium_pages_list = compendium_pages_list( search:     array(  'nsfw'        => 0    ,
-                                                                    'gross'       => 0    ,
-                                                                    'offensive'   => 0    ,
-                                                                    'nsfw_title'  => 0  ) ,
-                                                limit:      10                            ,
-                                                user_view:  true                          );
+$compendium_pages_list = compendium_pages_list( sort_by:  'page_url'            ,
+                                                search:   array( 'notes' => 1 ) );
 
 
 
@@ -42,59 +50,64 @@ $compendium_pages_list = compendium_pages_list( search:     array(  'nsfw'      
 /*                                                                                                                   */
 /*                                                     FRONT END                                                     */
 /*                                                                                                                   */
-if(!page_is_fetched_dynamically()) { /***************************************/ include './../../inc/header.inc.php'; ?>
+if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'; /****/ include './admin_menu.php'; ?>
 
-<div class="width_50">
+<div class="width_70">
 
-  <h1>
-    <?=__('compendium_index_title')?>
-    <?php if($is_admin) { ?>
-    <?=__icon('settings', alt: 'S', title: __('settings'), title_case: 'initials', href: 'pages/compendium/admin_notes')?>
-    <?php } ?>
-  </h1>
+  <h2 class="padding_top bigpadding_bot align_center">
+    <?=__link('pages/compendium/index', __('compendium_admin_notes_title'), 'noglow')?>
+  </h2>
 
-  <h5>
-    <?=__('compendium_index_subitle')?>
-  </h5>
+  <table>
+    <thead>
 
-  <p>
-    <?=__('compendium_index_intro_1')?>
-  </p>
+      <tr class="uppercase">
+        <th>
+          <?=__('compendium_list_admin_url')?>
+        </th>
+        <th>
+          <?=__('compendium_admin_notes_text')?>
+        </th>
+        <th>
+          <?=__('compendium_admin_notes_url')?>
+        </th>
+      </tr>
 
-  <p>
-    <?=__('compendium_index_intro_2')?>
-  </p>
+    </thead>
 
-  <p>
-    <?=__('compendium_index_intro_3')?>
-  </p>
+    <tbody class="altc">
 
-  <p>
-    <?=__('compendium_index_intro_4')?>
-  </p>
+      <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
 
-  <h3 class="bigpadding_top">
-    <?=__('compendium_index_recent_title')?>
-  </h3>
+      <tr>
 
-  <?php for($i = 0; $i < $compendium_pages_list['rows']; $i++) { ?>
+        <?php if(!$compendium_pages_list[$i]['fullurl']) { ?>
+        <td class="align_left nowrap">
+          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['url'])?>
+        </td>
+        <?php } else { ?>
+        <td class="align_left tooltip_container">
+          <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['urldisplay'])?>
+          <div class="tooltip">
+            <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['fullurl'])?>
+          </div>
+        </td>
+        <?php } ?>
 
-  <p class="padding_top">
-    <?=__link('pages/compendium/'.$compendium_pages_list[$i]['url'], $compendium_pages_list[$i]['title'], 'big bold noglow forced_link')?><br>
-    <span class=""><?=__('compendium_index_recent_type', spaces_after: 1).__link('pages/compendium/page_type?type='.$compendium_pages_list[$i]['type_id'], $compendium_pages_list[$i]['type'])?></span><br>
-    <?php if($compendium_pages_list[$i]['edited']) { ?>
-    <span class=""><?=__('compendium_index_recent_reworked', spaces_after: 1).$compendium_pages_list[$i]['edited']?></span><br>
-    <?php } ?>
-    <span class=""><?=__('compendium_index_recent_created', spaces_after: 1).$compendium_pages_list[$i]['created']?></span>
-  </p>
+        <td class="align_left">
+          <?=$compendium_pages_list[$i]['notes']?>
+        </td>
 
-  <?php if($compendium_pages_list[$i]['summary']) { ?>
-  <p class="tinypadding_top">
-    <?=$compendium_pages_list[$i]['summary']?>
-  </p>
-  <?php } ?>
+        <td class="align_left nowrap">
+          <?=$compendium_pages_list[$i]['urlnotes']?>
+        </td>
 
-  <?php } ?>
+      </tr>
+
+      <?php } ?>
+
+    </tbody>
+  </table>
 
 </div>
 

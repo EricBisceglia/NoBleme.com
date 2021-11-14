@@ -659,6 +659,17 @@ ___('compendium_admin_menu_title',  'EN', "Compendium administration");
 ___('compendium_admin_menu_title',  'FR', "Administration du compendium");
 
 
+// Admin notes
+___('compendium_admin_notes_title', 'EN', "Admin notes");
+___('compendium_admin_notes_title', 'FR', "Notes admin");
+___('compendium_admin_notes_text',  'EN', "Page notes");
+___('compendium_admin_notes_text',  'FR', "Notes sur la page");
+___('compendium_admin_notes_url',   'EN', "Related links");
+___('compendium_admin_notes_url',   'FR', "Liens");
+
+
+
+
 /*********************************************************************************************************************/
 /*                                                                                                                   */
 /*                                                 MISSION STATEMENT                                                 */

@@ -17,6 +17,7 @@ user_restrict_to_administrators();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Prepare the menu entries
 
+$compendium_admin_menu['notes']       = isset($compendium_admin_menu['notes']) ? ' selected' : '';
 $compendium_admin_menu['page_list']   = isset($compendium_admin_menu['page_list']) ? ' selected' : '';
 $compendium_admin_menu['page_types']  = isset($compendium_admin_menu['page_types']) ? ' selected' : '';
 $compendium_admin_menu['categories']  = isset($compendium_admin_menu['categories']) ? ' selected' : '';
@@ -31,6 +32,9 @@ $compendium_admin_menu['eras']        = isset($compendium_admin_menu['eras']) ? 
     <h5>
       <?=__('compendium_admin_menu_title').__(':')?>
       <select class="inh" id="compendium_admin_menu" name="compendium_admin_menu" onchange="compendium_admin_menu();">
+        <option value="admin_notes"<?=$compendium_admin_menu['notes']?>>
+          <?=__('compendium_admin_notes_title')?>
+        </option>
         <option value="page_list_admin"<?=$compendium_admin_menu['page_list']?>>
           <?=__('compendium_list_admin_menu')?>
         </option>

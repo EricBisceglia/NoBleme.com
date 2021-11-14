@@ -40,9 +40,6 @@ $js   = array('compendium/list', 'compendium/admin');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the compendium pages
 
-// Fetch the user's nsfw options
-$user_settings_nsfw = user_settings_nsfw();
-
 // Fetch the sorting order
 $compendium_pages_sort_order = form_fetch_element('compendium_pages_search_order', 'url');
 

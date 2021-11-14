@@ -349,6 +349,7 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   $search_created     = isset($search['created'])     ? sanitize($search['created'], 'int', 0, date('Y'))   : 0;
   $search_nsfw_admin  = isset($search['nsfw_admin'])  ? sanitize($search['nsfw_admin'], 'string')           : '';
   $search_wip         = isset($search['wip'])         ? sanitize($search['wip'], 'string')                  : '';
+  $search_notes       = isset($search['notes'])       ? sanitize($search['notes'], 'int', 0, 1)             : 0;
 
   // Join categories if required
   $join_categories = ($search_category || isset($search['join_categories'])) ? " LEFT JOIN compendium_pages_categories ON compendium_pages_categories.fk_compendium_pages = compendium_pages.id ": '';
@@ -373,6 +374,8 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
                             compendium_pages.is_offensive       AS 'p_offensive'  ,
                             compendium_pages.title_is_nsfw      AS 'p_nsfw_title' ,
                             compendium_pages.summary_$lang      AS 'p_summary'    ,
+                            compendium_pages.admin_notes        AS 'p_notes'      ,
+                            compendium_pages.admin_urls         AS 'p_urlnotes'   ,
                             compendium_eras.id                  AS 'pe_id'        ,
                             compendium_eras.short_name_$lang    AS 'pe_name'      ,
                             compendium_types.id                 AS 'pt_id'        ,
@@ -474,6 +477,9 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
   else if($search_wip == 'finished' && $is_admin)
     $qpages .= "  AND       compendium_pages.is_draft                             =     0
                   AND       compendium_pages.is_deleted                           =     0                     ";
+  if($search_notes && $is_admin)
+    $qpages .= "  AND     ( compendium_pages.admin_notes                          !=    ''
+                  OR        compendium_pages.admin_urls                           !=    '' )                  ";
 
   // Avoid duplicates if categories are included
   if($join_categories)
@@ -588,11 +594,29 @@ function compendium_pages_list( string  $sort_by    = 'date'    ,
     $data[$i]['offensive']  = ($row['p_offensive']);
     $data[$i]['nsfwtitle']  = ($row['p_nsfw_title']);
     $data[$i]['summary']    = nbcodes($temp, page_list: $pages, privacy_level: $privacy, nsfw_settings: $nsfw, mode: $mode);
+    $data[$i]['notes']      = sanitize_output($row['p_notes']);
+    $data[$i]['urlnotes']   = sanitize_output($row['p_urlnotes']);
     $data[$i]['type_id']    = sanitize_output($row['pt_id']);
     $data[$i]['type']       = sanitize_output($row['pt_name']);
     $data[$i]['era_id']     = sanitize_output($row['pe_id']);
     $data[$i]['era']        = sanitize_output($row['pe_name']);
     $data[$i]['categories'] = ($join_categories) ? sanitize_output($row['pc_count']) : 0;
+
+    // Prepare the admin urls
+    if($row['p_urlnotes'])
+    {
+      // Split the urls
+      $admin_urls = explode("|||", $row['p_urlnotes']);
+
+      // Format the url list
+      $formatted_admin_urls = '';
+      for($j = 0; $j < count($admin_urls); $j++)
+        $formatted_admin_urls .= __link($admin_urls[$j], string_truncate($admin_urls[$j], 40, '...'), is_internal: false).'<br>';
+
+      // Add the formatted page list and the page count to the data
+      $data[$i]['urlnotes'] = $formatted_admin_urls;
+      $data[$i]['urlcount'] = $j;
+    }
   }
 
   // Add the number of rows to the data
