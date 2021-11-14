@@ -7,7 +7,8 @@
 .compendium_image_blur:hover  { filter: none;       }
 
 /********************************************* COMPENDIUM ADMINISTRATION *********************************************/
-.compendium_admin_editor { min-height: 35.0rem; }
+.compendium_admin_editor  { min-height: 35.0rem;  }
+.compendium_admin_notes   { min-height: 20.0rem;  }
 
 .compendium_admin_search_small  { width: 7.0rem;  }
 .compendium_admin_search_big    { width: 10.0rem; }

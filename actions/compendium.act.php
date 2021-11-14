@@ -42,6 +42,9 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_page_history_edit            Modifies an existing compendium page's history entry.                    */
 /*  compendium_page_history_delete          Hard deletes an existing compendium page's history entry.                */
 /*                                                                                                                   */
+/*  compendium_admin_notes_get              Fetches the admin notes.                                                 */
+/*  compendium_admin_notes_edit             Modifies the admin notes.                                                */
+/*                                                                                                                   */
 /*  compendium_pages_list_years             Fetches the years at which compendium pages have been created.           */
 /*  compendium_appearance_list_years        Fetches the years at which compendium content has appeared.              */
 /*  compendium_peak_list_years              Fetches the years at which compendium content has peaked.                */
@@ -1825,6 +1828,68 @@ function compendium_page_history_delete( int $history_id ) : void
   // Delete the history entry
   query(" DELETE FROM compendium_pages_history
           WHERE       compendium_pages_history.id = '$history_id' ");
+}
+
+
+
+
+/**
+ * Fetches the admin notes.
+ *
+ * @return  array   An array containing the admin notes.
+ */
+
+function compendium_admin_notes_get() : array
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Fetch the data
+  $dnotes = mysqli_fetch_array(query("  SELECT  compendium_admin_tools.global_notes AS 'cn_global'      ,
+                                                compendium_admin_tools.snippets     AS 'cn_snippets'    ,
+                                                compendium_admin_tools.template_en  AS 'cn_template_en' ,
+                                                compendium_admin_tools.template_fr  AS 'cn_template_fr'
+                                        FROM    compendium_admin_tools
+                                        LIMIT   1 "));
+
+  // Assemble an array with the data
+  $data['global']       = sanitize_output($dnotes['cn_global']);
+  $data['snippets']     = sanitize_output($dnotes['cn_snippets']);
+  $data['template_en']  = sanitize_output($dnotes['cn_template_en']);
+  $data['template_fr']  = sanitize_output($dnotes['cn_template_fr']);
+
+  // Return the data
+  return $data;
+}
+
+
+
+
+/**
+ * Modifies the admin notes.
+ *
+ * @param   array   $notes_data   The new compendium admin notes.
+ *
+ * @return  void
+ */
+
+function compendium_admin_notes_edit( array $notes_data ) : void
+{
+  // Require administrator rights to run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the updated admin notes
+  $notes_global       = isset($notes_data['global'])      ? sanitize($notes_data['global'], 'string')       : '';
+  $notes_snippets     = isset($notes_data['snippets'])    ? sanitize($notes_data['snippets'], 'string')     : '';
+  $notes_template_en  = isset($notes_data['template_en']) ? sanitize($notes_data['template_en'], 'string')  : '';
+  $notes_template_fr  = isset($notes_data['template_fr']) ? sanitize($notes_data['template_fr'], 'string')  : '';
+
+  // Update the admin notes
+  query(" UPDATE  compendium_admin_tools
+          SET     compendium_admin_tools.global_notes = '$notes_global'       ,
+                  compendium_admin_tools.snippets     = '$notes_snippets'     ,
+                  compendium_admin_tools.template_en  = '$notes_template_en'  ,
+                  compendium_admin_tools.template_fr  = '$notes_template_fr'  ");
 }
 
 

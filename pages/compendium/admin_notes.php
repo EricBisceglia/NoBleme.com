@@ -38,6 +38,26 @@ $js   = array('compendium/admin');
 /*********************************************************************************************************************/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Update the admin notes
+
+if(isset($_POST['compendium_admin_notes_submit']))
+  compendium_admin_notes_edit(array(  'global'      => form_fetch_element('compendium_admin_notes_global')      ,
+                                      'snippets'    => form_fetch_element('compendium_admin_notes_snippets')    ,
+                                      'template_en' => form_fetch_element('compendium_admin_notes_template_en') ,
+                                      'template_fr' => form_fetch_element('compendium_admin_notes_template_fr') ));
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Fetch the admin notes
+
+$compendium_admin_notes = compendium_admin_notes_get();
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Fetch the page list
 
 $compendium_pages_list = compendium_pages_list( sort_by:  'page_url'            ,
@@ -54,16 +74,51 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
 <div class="width_70">
 
-  <h2 class="padding_top bigpadding_bot align_center">
+  <h2 class="padding_top padding_bot align_center">
     <?=__link('pages/compendium/index', __('compendium_admin_notes_title'), 'noglow')?>
   </h2>
+
+  <form method="POST">
+    <fieldset>
+
+      <div class="flexcontainer tinypadding_top smallpadding_bot">
+        <div class="flex spaced_right">
+
+          <div class="smallpadding_bot">
+            <label for="compendium_admin_notes_global"><?=__('compendium_admin_notes_global')?></label>
+            <textarea class="compendium_admin_notes" id="compendium_admin_notes_global" name="compendium_admin_notes_global"><?=$compendium_admin_notes['global']?></textarea>
+          </div>
+
+          <label for="compendium_admin_notes_template_en"><?=__('compendium_admin_notes_template_en')?></label>
+          <textarea class="compendium_admin_notes" id="compendium_admin_notes_template_en" name="compendium_admin_notes_template_en"><?=$compendium_admin_notes['template_en']?></textarea>
+
+        </div>
+        <div class="flex spaced_left">
+
+          <div class="smallpadding_bot">
+            <label for="compendium_admin_notes_snippets"><?=__('compendium_admin_notes_snippets')?></label>
+            <textarea class="compendium_admin_notes" id="compendium_admin_notes_snippets" name="compendium_admin_notes_snippets"><?=$compendium_admin_notes['snippets']?></textarea>
+          </div>
+
+          <label for="compendium_admin_notes_template_fr"><?=__('compendium_admin_notes_template_fr')?></label>
+          <textarea class="compendium_admin_notes" id="compendium_admin_notes_template_fr" name="compendium_admin_notes_template_fr"><?=$compendium_admin_notes['template_fr']?></textarea>
+
+        </div>
+      </div>
+
+      <div class="tinypadding_top bigpadding_bot">
+        <input type="submit" name="compendium_admin_notes_submit" value="<?=__('compendium_admin_notes_submit')?>">
+      </div>
+
+    </fieldset>
+  </form>
 
   <table>
     <thead>
 
       <tr class="uppercase">
         <th>
-          <?=__('compendium_list_admin_url')?>
+          <?=__('compendium_admin_notes_page')?>
         </th>
         <th>
           <?=__('compendium_admin_notes_text')?>

@@ -660,12 +660,24 @@ ___('compendium_admin_menu_title',  'FR', "Administration du compendium");
 
 
 // Admin notes
-___('compendium_admin_notes_title', 'EN', "Admin notes");
-___('compendium_admin_notes_title', 'FR', "Notes admin");
-___('compendium_admin_notes_text',  'EN', "Page notes");
-___('compendium_admin_notes_text',  'FR', "Notes sur la page");
-___('compendium_admin_notes_url',   'EN', "Related links");
-___('compendium_admin_notes_url',   'FR', "Liens");
+___('compendium_admin_notes_title',       'EN', "Admin notes");
+___('compendium_admin_notes_title',       'FR', "Notes admin");
+___('compendium_admin_notes_global',      'EN', "Global notes");
+___('compendium_admin_notes_global',      'FR', "Notes globales");
+___('compendium_admin_notes_snippets',    'EN', "Useful snippets");
+___('compendium_admin_notes_snippets',    'FR', "Bribes utiles");
+___('compendium_admin_notes_template_en', 'EN', "English template ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_admin_notes_template_en', 'FR', "Modèle anglophone ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_admin_notes_template_fr', 'EN', "French template ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_admin_notes_template_fr', 'FR', "Modèle francophone ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_admin_notes_submit',      'EN', "Update admin notes");
+___('compendium_admin_notes_submit',      'FR', "Mettre à jour les notes admin");
+___('compendium_admin_notes_page',        'EN', "Compendium page");
+___('compendium_admin_notes_page',        'FR', "Page du compendium");
+___('compendium_admin_notes_text',        'EN', "Page notes");
+___('compendium_admin_notes_text',        'FR', "Notes sur la page");
+___('compendium_admin_notes_url',         'EN', "Related links");
+___('compendium_admin_notes_url',         'FR', "Liens");
 
 
 
