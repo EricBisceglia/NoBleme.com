@@ -695,15 +695,28 @@ function compendium_pages_add( array $contents ) : mixed
   $page_title_fr  = isset($contents['title_fr']) ? compendium_format_title($contents['title_fr']) : '';
 
   // Sanitize and prepare the data
-  $page_url         = sanitize($page_url, 'string');
-  $page_title_en    = sanitize($page_title_en, 'string');
-  $page_title_fr    = sanitize($page_title_fr, 'string');
-  $page_redirect_en = isset($contents['redirect_en']) ? sanitize($contents['redirect_en'], 'string')  : '';
-  $page_redirect_fr = isset($contents['redirect_fr']) ? sanitize($contents['redirect_fr'], 'string')  : '';
-  $page_summary_en  = isset($contents['summary_en'])  ? sanitize($contents['summary_en'], 'string')   : '';
-  $page_summary_fr  = isset($contents['summary_fr'])  ? sanitize($contents['summary_fr'], 'string')   : '';
-  $page_body_en     = isset($contents['body_en'])     ? sanitize($contents['body_en'], 'string')      : '';
-  $page_body_fr     = isset($contents['body_fr'])     ? sanitize($contents['body_fr'], 'string')      : '';
+  $timestamp          = sanitize(time(), 'int', 0);
+  $page_url           = sanitize($page_url, 'string');
+  $page_title_en      = sanitize($page_title_en, 'string');
+  $page_title_fr      = sanitize($page_title_fr, 'string');
+  $page_redirect_en   = isset($contents['redirect_en'])   ? sanitize($contents['redirect_en'], 'string')      : '';
+  $page_redirect_fr   = isset($contents['redirect_fr'])   ? sanitize($contents['redirect_fr'], 'string')      : '';
+  $page_summary_en    = isset($contents['summary_en'])    ? sanitize($contents['summary_en'], 'string')       : '';
+  $page_summary_fr    = isset($contents['summary_fr'])    ? sanitize($contents['summary_fr'], 'string')       : '';
+  $page_body_en       = isset($contents['body_en'])       ? sanitize($contents['body_en'], 'string')          : '';
+  $page_body_fr       = isset($contents['body_fr'])       ? sanitize($contents['body_fr'], 'string')          : '';
+  $page_appear_month  = isset($contents['appear_month'])  ? sanitize($contents['appear_month'], 'int', 0, 12) : 0;
+  $page_appear_year   = isset($contents['appear_year'])   ? sanitize($contents['appear_year'], 'int', 0)      : 0;
+  $page_peak_month    = isset($contents['peak_month'])    ? sanitize($contents['peak_month'], 'int', 0, 12)   : 0;
+  $page_peak_year     = isset($contents['peak_year'])     ? sanitize($contents['peak_year'], 'int', 0)        : 0;
+  $page_nsfw_title    = isset($contents['nsfw_title'])    ? sanitize($contents['nsfw_title'], 'int', 0, 1)    : 0;
+  $page_nsfw          = isset($contents['nsfw'])          ? sanitize($contents['nsfw'], 'int', 0, 1)          : 0;
+  $page_gross         = isset($contents['gross'])         ? sanitize($contents['gross'], 'int', 0, 1)         : 0;
+  $page_offensive     = isset($contents['offensive'])     ? sanitize($contents['offensive'], 'int', 0, 1)     : 0;
+  $page_type          = isset($contents['type'])          ? sanitize($contents['type'], 'int', 0)             : 0;
+  $page_era           = isset($contents['era'])           ? sanitize($contents['era'], 'int', 0)              : 0;
+  $page_admin_notes   = isset($contents['admin_notes'])   ? sanitize($contents['admin_notes'], 'string')      : '';
+  $page_admin_urls    = isset($contents['admin_urls'])    ? sanitize($contents['admin_urls'], 'string')       : '';
 
   // Error: No URL or URL already taken
   if(!$page_url || database_entry_exists('compendium_pages', 'page_url', $page_url))
@@ -719,21 +732,58 @@ function compendium_pages_add( array $contents ) : mixed
   if($page_redirect_fr && !database_entry_exists('compendium_pages', 'page_url', $page_redirect_fr))
     return __('compendium_page_new_bad_redirect');
 
+  // Error: No page type
+  if(!$page_type)
+    return __('compendium_page_new_no_type');
+
   // Create the compendium page
   query(" INSERT INTO compendium_pages
-          SET         compendium_pages.is_draft       = 1                   ,
-                      compendium_pages.page_url       = '$page_url'         ,
-                      compendium_pages.title_en       = '$page_title_en'    ,
-                      compendium_pages.title_fr       = '$page_title_fr'    ,
-                      compendium_pages.redirection_en = '$page_redirect_en' ,
-                      compendium_pages.redirection_fr = '$page_redirect_fr' ,
-                      compendium_pages.summary_en     = '$page_summary_en'  ,
-                      compendium_pages.summary_fr     = '$page_summary_fr'  ,
-                      compendium_pages.definition_en  = '$page_body_en'     ,
-                      compendium_pages.definition_fr  = '$page_body_fr'     ");
+          SET         compendium_pages.fk_compendium_types  = '$page_type'          ,
+                      compendium_pages.fk_compendium_eras   = '$page_era'           ,
+                      compendium_pages.is_draft             = 1                     ,
+                      compendium_pages.created_at           = '$timestamp'          ,
+                      compendium_pages.page_url             = '$page_url'           ,
+                      compendium_pages.title_en             = '$page_title_en'      ,
+                      compendium_pages.title_fr             = '$page_title_fr'      ,
+                      compendium_pages.redirection_en       = '$page_redirect_en'   ,
+                      compendium_pages.redirection_fr       = '$page_redirect_fr'   ,
+                      compendium_pages.year_appeared        = '$page_appear_year'   ,
+                      compendium_pages.month_appeared       = '$page_appear_month'  ,
+                      compendium_pages.year_peak            = '$page_peak_year'     ,
+                      compendium_pages.month_peak           = '$page_peak_month'    ,
+                      compendium_pages.is_nsfw              = '$page_nsfw'          ,
+                      compendium_pages.is_gross             = '$page_gross'         ,
+                      compendium_pages.is_offensive         = '$page_offensive'     ,
+                      compendium_pages.title_is_nsfw        = '$page_nsfw_title'    ,
+                      compendium_pages.summary_en           = '$page_summary_en'    ,
+                      compendium_pages.summary_fr           = '$page_summary_fr'    ,
+                      compendium_pages.definition_en        = '$page_body_en'       ,
+                      compendium_pages.definition_fr        = '$page_body_fr'       ,
+                      compendium_pages.admin_notes          = '$page_admin_notes'   ,
+                      compendium_pages.admin_urls           = '$page_admin_urls'    ");
 
   // Fetch the newly created compendium page's id
   $page_id = query_id();
+
+  // Fetch the category list
+  $categories = compendium_categories_list();
+
+  // Loop through the categories
+  for($i = 0; $i < $categories['rows']; $i++)
+  {
+    // Sanitize the category id
+    $category_id = sanitize($categories[$i]['id'], 'int', 0);
+
+    // Link any selected categories to the newly created page
+    if(isset($contents['category_'.$category_id]) && $contents['category_'.$category_id])
+      query(" INSERT INTO compendium_pages_categories
+              SET         compendium_pages_categories.fk_compendium_pages       = '$page_id'      ,
+                          compendium_pages_categories.fk_compendium_categories  = '$category_id'  ");
+  }
+
+  // Delete any related missing page
+  query(" DELETE FROM compendium_missing
+          WHERE       compendium_missing.page_url LIKE '$page_url' ");
 
   // Return the compendium page's id
   return $page_id;
@@ -1622,7 +1672,9 @@ function compendium_eras_list() : array
     $data[$i]['name']   = sanitize_output($row['ce_name']);
     $data[$i]['short']  = sanitize_output($row['ce_short']);
     $data[$i]['start']  = ($row['ce_start']) ? sanitize_output($row['ce_start']) : '-';
+    $data[$i]['startx'] = ($row['ce_start']) ? sanitize_output($row['ce_start']) : 'xxxx';
     $data[$i]['end']    = ($row['ce_end']) ? sanitize_output($row['ce_end']) : '-';
+    $data[$i]['endx']   = ($row['ce_end']) ? sanitize_output($row['ce_end']) : 'xxxx';
     $data[$i]['count']  = ($row['ce_count']) ? sanitize_output($row['ce_count']) : '-';
   }
 
@@ -2129,6 +2181,18 @@ function compendium_format_url( ?string $url ) : string
   $url = str_replace('*', '', $url);
   $url = str_replace('+', '', $url);
   $url = str_replace('#', '', $url);
+  $url = str_replace('&', '', $url);
+  $url = str_replace('?', '', $url);
+
+  // Prohibit reserved urls
+  $url = (mb_substr($url, 0, 6)   == 'admin_')            ? mb_substr($url, 6)  : $url;
+  $url = (mb_substr($url, 0, 8)   == 'category')          ? mb_substr($url, 8)  : $url;
+  $url = (mb_substr($url, 0, 12)  == 'cultural_era')      ? mb_substr($url, 12) : $url;
+  $url = (mb_substr($url, 0, 5)   == 'index')             ? mb_substr($url, 5)  : $url;
+  $url = (mb_substr($url, 0, 5)   == 'image')             ? mb_substr($url, 5)  : $url;
+  $url = (mb_substr($url, 0, 17)  == 'mission_statement') ? mb_substr($url, 17) : $url;
+  $url = (mb_substr($url, 0, 5)   == 'page_')             ? mb_substr($url, 5)  : $url;
+  $url = (mb_substr($url, 0, 7)   == 'random_')           ? mb_substr($url, 7)  : $url;
 
   // Return the formatted url
   return $url;
