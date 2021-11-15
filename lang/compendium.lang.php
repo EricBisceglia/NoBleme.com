@@ -114,6 +114,41 @@ ___('compendium_page_random_type',  'EN', "Another random {{1}}");
 ___('compendium_page_random_type',  'FR', "Autre {{1}} au hasard");
 
 
+// New page
+___('compendium_page_new_title',        'EN', "New page");
+___('compendium_page_new_title',        'FR', "Nouvelle page");
+___('compendium_page_new_url',          'EN', "Page URL (unique, lowercase, no spaces, avoid special characters)");
+___('compendium_page_new_url',          'FR', "Adresse de la page (unique, en minuscules, sans espaces, éviter les caractères spéciaux)");
+___('compendium_page_new_title_en',     'EN', "Page title (english)");
+___('compendium_page_new_title_en',     'FR', "Titre de la page (anglais)");
+___('compendium_page_new_title_fr',     'EN', "Page title (french)");
+___('compendium_page_new_title_fr',     'FR', "Titre de la page (français)");
+___('compendium_page_new_redirect_en',  'EN', "Redirection (english)");
+___('compendium_page_new_redirect_en',  'FR', "Redirection (anglais)");
+___('compendium_page_new_redirect_fr',  'EN', "Redirection (french)");
+___('compendium_page_new_redirect_fr',  'FR', "Redirection (français)");
+___('compendium_page_new_summary_en',   'EN', "Page summary (english) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_page_new_summary_en',   'FR', "Résumé de la page (anglais) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_page_new_summary_fr',   'EN', "Page summary (french) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_page_new_summary_fr',   'FR', "Résumé de la page (français) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_page_new_body_en',      'EN', "Page contents (english) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_page_new_body_en',      'FR', "Contenu de la page (anglais) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_page_new_body_fr',      'EN', "Page contents (french) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_page_new_body_fr',      'FR', "Contenu de la page (français) ({{link_popup|pages/doc/bbcodes|NBCodes}})");
+___('compendium_page_new_draft',        'EN', "The page will be created as a draft: it will not be publicly visible until you publish it.");
+___('compendium_page_new_draft',        'FR', "La page crée sera un brouillon : elle ne sera pas visible du public tant que vous ne l'aurez pas publiée.");
+___('compendium_page_new_submit',       'EN', "Create a new page");
+___('compendium_page_new_submit',       'FR', "Créer une nouvelle page");
+___('compendium_page_new_no_url',       'EN', "Every page must have a unique URL");
+___('compendium_page_new_no_url',       'FR', "Chaque page doit avoir une adresse unique");
+___('compendium_page_new_no_title',     'EN', "The page must have a title in at least one language");
+___('compendium_page_new_no_title',     'FR', "La page doit avoir un titre dans au moins une langue");
+___('compendium_page_new_bad_redirect', 'EN', "Redirection points to a non existing page URL");
+___('compendium_page_new_bad_redirect', 'FR', "Redirection vers une adresse de page non existante");
+___('compendium_page_new_preview',      'EN', "Preview");
+___('compendium_page_new_preview',      'FR', "Prévisualisation");
+
+
 
 
 /*********************************************************************************************************************/

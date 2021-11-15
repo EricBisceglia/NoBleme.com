@@ -474,7 +474,7 @@ function string_truncate( string  $string       ,
  * @return  string            The string, with its case changed.
  */
 
-function string_change_case(  string  $string ,
+function string_change_case(  ?string $string ,
                               string  $case   ) : string
 {
   // Changes the string to all uppercase

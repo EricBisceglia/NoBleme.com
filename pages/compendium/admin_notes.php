@@ -126,6 +126,9 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
         <th>
           <?=__('compendium_admin_notes_url')?>
         </th>
+        <th>
+          <?=__('act')?>
+        </th>
       </tr>
 
     </thead>
@@ -155,6 +158,10 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
         <td class="align_left nowrap">
           <?=$compendium_pages_list[$i]['urlnotes']?>
+        </td>
+
+        <td class="align_center">
+          <?=__icon('edit', is_small: true, class: 'valign_middle pointer spaced', alt: 'M', title: __('edit'), title_case: 'initials', href: 'pages/compendium/page_edit?id='.$compendium_pages_list[$i]['id'])?>
         </td>
 
       </tr>

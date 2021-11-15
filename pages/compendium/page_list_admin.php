@@ -83,6 +83,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
 
   <h2 class="padding_top bigpadding_bot align_center">
     <?=__link('pages/compendium/page_list', __('compendium_list_admin_title'), 'noglow')?>
+    <?=__icon('add', alt: '+', title: __('add'), title_case: 'initials', href: 'pages/compendium/page_add')?>
   </h2>
 
   <table>

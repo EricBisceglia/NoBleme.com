@@ -2,6 +2,8 @@
 /*                                                                                                                   */
 /*  compendium_admin_menu             Navigates between compendium administration pages.                             */
 /*                                                                                                                   */
+/*  compendium_autocomplete_url       Updates the datalist used to autocomplete compendium page urls.                */
+/*                                                                                                                   */
 /*  compendium_type_delete            Triggers the deletion of a compendium page type.                               */
 /*                                                                                                                   */
 /*  compendium_category_delete        Triggers the deletion of a compendium category.                                */
@@ -24,6 +26,35 @@ function compendium_admin_menu()
 
   // Go to the requested page
   window.location.href = page;
+}
+
+
+
+
+/**
+ * Updates the datalist used to autocomplete compendium page urls.
+ *
+ * @param   {string}  url_input_id        ID of the input containing the page url.
+ * @param   {string}  parent_element_id   ID of the element containing the datalist of the url being autocompleted.
+ * @param   {string}  list_id             ID of the datalist used for autocompletion.
+ * @param   {string}  [no_redirects]      Exclude redirections from the autocompletion proposals.
+ *
+ * @returns {void}
+ */
+
+function compendium_autocomplete_url( url_input_id            ,
+                                      target_element          ,
+                                      list_id                 ,
+                                      no_redirects    = null  )
+{
+  // Assemble the postdata
+  postdata  = 'compendium_autocomplete_url='  + fetch_sanitize_id(url_input_id);
+  postdata += '&compendium_autocomplete_id='  + fetch_sanitize(list_id);
+  if(no_redirects)
+    postdata += '&compendium_autocomplete_no_redirects=true';
+
+  // Submit the fetch request
+  fetch_page('page_autocomplete_url', target_element, postdata);
 }
 
 
