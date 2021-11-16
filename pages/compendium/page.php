@@ -88,6 +88,11 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
 
   <<?=$compendium_page_data['title_size']?>>
     <?=__link('pages/compendium/page_list', $compendium_page_data['title'], 'noglow')?>
+    <?php if($is_admin) { ?>
+    <?php if($compendium_page_data['draft']) { ?>
+    <?=__icon('done', alt: 'D', title: __('compendium_page_draft_icon'), href: 'pages/compendium/page_publish?id='.$compendium_page_data['id'])?>
+    <?php } ?>
+    <?php } ?>
   </<?=$compendium_page_data['title_size']?>>
 
   <p class="tinypadding_top padding_bot">

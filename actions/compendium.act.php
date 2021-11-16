@@ -13,6 +13,7 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /*  compendium_pages_list                   Fetches a list of compendium pages.                                      */
 /*  compendium_pages_list_urls              Fetches a list of all public compendium page urls.                       */
 /*  compendium_pages_add                    Creates a new compendium page.                                           */
+/*  compendium_pages_publish                Publishes an existing compendium page.                                   */
 /*  compendium_pages_autocomplete           Autocompletes a page url.                                                */
 /*                                                                                                                   */
 /*  compendium_images_get                   Returns data related to an image used in the compendium.                 */
@@ -61,14 +62,16 @@ if(substr(dirname(__FILE__),-8).basename(__FILE__) == str_replace("/","\\",subst
 /**
  * Returns data related to a compendium page.
  *
- * @param   int         $page_id  (OPTIONAL)  The page's id. Only one of these two parameters should be set.
- * @param   string      $page_url (OPTIONAL)  The page's url. Only one of these two parameters should be set.
+ * @param   int         $page_id      (OPTIONAL)  The page's id. Only one of these two parameters should be set.
+ * @param   string      $page_url     (OPTIONAL)  The page's url. Only one of these two parameters should be set.
+ * @param   bool        $no_loops     (OPTIONAL)  If false, page data will be returned even if it is a redirect loop.
  *
  * @return  array|null                        An array containing page related data, or NULL if it does not exist.
  */
 
-function compendium_pages_get(  int     $page_id  = 0   ,
-                                string  $page_url = ''  ) : mixed
+function compendium_pages_get(  int     $page_id  = 0     ,
+                                string  $page_url = ''    ,
+                                bool    $no_loops = true  ) : mixed
 {
   // Check if the required files have been included
   require_included_file('functions_time.inc.php');
@@ -111,6 +114,7 @@ function compendium_pages_get(  int     $page_id  = 0   ,
                                                 compendium_pages.is_deleted         AS 'p_deleted'      ,
                                                 compendium_pages.is_draft           AS 'p_draft'        ,
                                                 compendium_pages.created_at         AS 'p_created'      ,
+                                                compendium_pages.page_url           AS 'p_url'          ,
                                                 compendium_pages.title_$lang        AS 'p_title'        ,
                                                 compendium_pages.title_en           AS 'p_title_en'     ,
                                                 compendium_pages.title_fr           AS 'p_title_fr'     ,
@@ -151,6 +155,8 @@ function compendium_pages_get(  int     $page_id  = 0   ,
   $data['id']         = sanitize_output($dpage['p_id']);
   $data['deleted']    = $dpage['p_deleted'];
   $data['draft']      = $dpage['p_draft'];
+  $data['url']        = sanitize_output($dpage['p_url']);
+  $data['url_raw']    = $dpage['p_url'];
   $data['no_page']    = ($dpage['p_title']) ? 0 : 1;
   $temp               = (strlen($dpage['p_title']) > 25) ? 'h2' : 'h1';
   $temp               = (strlen($dpage['p_title']) > 30) ? 'h3' : $temp;
@@ -159,6 +165,8 @@ function compendium_pages_get(  int     $page_id  = 0   ,
   $data['title']      = sanitize_output($dpage['p_title']);
   $data['title_en']   = sanitize_output($dpage['p_title_en']);
   $data['title_fr']   = sanitize_output($dpage['p_title_fr']);
+  $data['titleenraw'] = $dpage['p_title_en'];
+  $data['titlefrraw'] = $dpage['p_title_fr'];
   $temp               = ($dpage['p_new_month']) ? __('month_'.$dpage['p_new_month'], spaces_after: 1) : '';
   $data['redir_en']   = sanitize_output($dpage['p_redirect_en']);
   $data['redir_fr']   = sanitize_output($dpage['p_redirect_fr']);
@@ -210,7 +218,7 @@ function compendium_pages_get(  int     $page_id  = 0   ,
   $data['categories'] = $i;
 
   // If the page is a redirection, check whether it is a legal redirection
-  if($dpage['p_redirect'])
+  if($dpage['p_redirect'] && $no_loops)
   {
     // Sanitize the redirection
     $redirect_page = sanitize($dpage['p_redirect'], 'string');
@@ -785,10 +793,123 @@ function compendium_pages_add( array $contents ) : mixed
   query(" DELETE FROM compendium_missing
           WHERE       compendium_missing.page_url LIKE '$page_url' ");
 
+  // Immediately publish the page if it is a redirection
+  if($page_redirect_en || $page_redirect_fr)
+    compendium_pages_publish($page_id);
+
   // Return the compendium page's id
   return $page_id;
 }
 
+
+
+
+/**
+ * Publishes an existing compendium page.
+ *
+ * @param   int   $page_id                      The ID of the compendium page to publish.
+ * @param   bool  $recent_activity  (OPTIONAL)  Whether to create an entry in the recent activity.
+ * @param   bool  $irc_message      (OPTIONAL)  Whether to broadcast a message on IRC.
+ * @param   bool  $discord_message  (OPTIONAL)  Whether to broadcast a message on Discord.
+ *
+ * @return  void
+ */
+
+function compendium_pages_publish(  int   $page_id                  ,
+                                    bool  $recent_activity  = false ,
+                                    bool  $irc_message      = false ,
+                                    bool  $discord_message  = false ) : void
+{
+  // Check if the required files have been included
+  require_included_file('functions_time.inc.php');
+  require_included_file('bbcodes.inc.php');
+
+  // Only administrators can run this action
+  user_restrict_to_administrators();
+
+  // Sanitize the data
+  $page_id    = sanitize($page_id, 'int', 0);
+  $timestamp  = sanitize(time(), 'int', 0);
+
+  // Stop here if the page does not exist
+  if(!database_row_exists('compendium_pages', $page_id))
+    return;
+
+  // Fetch the page's data
+  $page_data = compendium_pages_get($page_id);
+
+  // Stop here if the page data is invalid
+  if(!isset($page_data) || !$page_data)
+    return;
+
+  // Stop here if the page is not a draft
+  if(!$page_data['draft'])
+    return;
+
+  // Publish the page
+  query(" UPDATE  compendium_pages
+          SET     compendium_pages.is_draft   = 0             ,
+                  compendium_pages.created_at = '$timestamp'
+          WHERE   compendium_pages.id         = '$page_id'    ");
+
+  // Stop here if the page is a redirection
+  if($page_data['redir_en'] || $page_data['redir_fr'])
+    return;
+
+  // Recent activity
+  if($recent_activity)
+  {
+    // Determine the language to use
+    $lang   = ($page_data['titleenraw']) ? 'EN' : '';
+    $lang  .= ($page_data['titlefrraw']) ? 'FR' : '';
+
+    // Create the activity entry
+    if($lang)
+      log_activity( 'compendium_new',
+                    language:             'ENFR'                    ,
+                    activity_id:          $page_id                  ,
+                    activity_summary_en:  $page_data['titleenraw']  ,
+                    activity_summary_fr:  $page_data['titlefrraw']  ,
+                    username:             $page_data['url_raw']     );
+  }
+
+  // IRC bot message
+  if($irc_message)
+  {
+    if($page_data['titleenraw'])
+      irc_bot_send_message("New entry in the 21st century compendium: ".$page_data['titleenraw']." - ".$GLOBALS['website_url']."pages/compendium/".$page_data['url'], 'english');
+    if($page_data['titlefrraw'])
+      irc_bot_send_message("Nouvelle page dans le compendium du 21ème siècle : ".$page_data['titlefrraw']." - ".$GLOBALS['website_url']."pages/compendium/".$page_data['url'], 'french');
+  }
+
+  // Discord message
+  if($discord_message)
+  {
+    // Prepare the correct message
+    if($page_data['titleenraw'] && $page_data['titlefrraw'])
+    {
+      $message  = "New 21st century compendium page: ".$page_data['titleenraw'];
+      $message .= PHP_EOL."Nouvelle page dans le compendium : ".$page_data['titlefrraw'];
+      $message .= PHP_EOL."<".$GLOBALS['website_url']."pages/compendium/".$page_data['url'].">";
+    }
+    else if($page_data['titleenraw'])
+    {
+      $message  = "New 21st century compendium page: ".$page_data['titleenraw'];
+      $message .= PHP_EOL."Nouvelle page dans le compendium - n'est pas disponible en français";
+      $message .= PHP_EOL."<".$GLOBALS['website_url']."pages/compendium/".$page_data['url'].">";
+    }
+    else if($page_data['titlefrraw'])
+    {
+      $message  = "New 21st century compendium page - not available in englsih";
+      $message .= PHP_EOL."Nouvelle page dans le compendium : ".$page_data['titlefrraw'];
+      $message .= PHP_EOL."<".$GLOBALS['website_url']."pages/compendium/".$page_data['url'].">";
+    }
+
+    // Send the message
+    if(isset($message))
+      discord_send_message($message, 'main');
+  }
+}
 
 
 

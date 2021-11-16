@@ -165,6 +165,8 @@ ___('compendium_pages_new_admin_urls',  'EN', "Useful URLs, separated by three b
 ___('compendium_pages_new_admin_urls',  'FR', "URLs utiles, séparées par trois barres ||| (privées)");
 ___('compendium_page_new_draft',        'EN', "The page will be created as a draft: it will not be publicly visible until you publish it.");
 ___('compendium_page_new_draft',        'FR', "La page crée sera un brouillon : elle ne sera pas visible du public tant que vous ne l'aurez pas publiée.");
+___('compendium_page_new_draft_redir',  'EN', "Redirection pages skip the draft stage, they are immediately published.");
+___('compendium_page_new_draft_redir',  'FR', "Les redirections ne passent pas par la phase brouillon et sont immédiatement publiées.");
 ___('compendium_page_new_submit',       'EN', "Create a new page");
 ___('compendium_page_new_submit',       'FR', "Créer une nouvelle page");
 ___('compendium_page_new_no_url',       'EN', "Every page must have a unique URL");
@@ -177,6 +179,29 @@ ___('compendium_page_new_no_type',      'EN', "Every compendium page must have a
 ___('compendium_page_new_no_type',      'FR', "Toutes les pages du compendium doivent avoir une thématique");
 ___('compendium_page_new_preview',      'EN', "Preview");
 ___('compendium_page_new_preview',      'FR', "Prévisualisation");
+
+
+// Publish draft
+___('compendium_page_draft_icon',     'EN', "Publish draft");
+___('compendium_page_draft_icon',     'FR', "Publier le brouillon");
+___('compendium_page_draft_title',    'EN', "Publish page");
+___('compendium_page_draft_title',    'FR', "Publier la page");
+___('compendium_page_draft_name_en',  'EN', "Page name (english):");
+___('compendium_page_draft_name_en',  'FR', "Nom de la page (anglais) :");
+___('compendium_page_draft_name_fr',  'EN', "Page name (french):");
+___('compendium_page_draft_name_fr',  'FR', "Nom de la page (français) :");
+___('compendium_page_draft_redir_en', 'EN', "Redirects to (english):");
+___('compendium_page_draft_redir_en', 'FR', "Redirige vers (anglais) :");
+___('compendium_page_draft_redir_fr', 'EN', "Redirects to (french):");
+___('compendium_page_draft_redir_fr', 'FR', "Redirige vers (français) :");
+___('compendium_page_draft_activity', 'EN', "Create an entry in {{link_popup|pages/nobleme/activity|recent activity}}");
+___('compendium_page_draft_activity', 'FR', "Créer une entrée dans l'{{link_popup|pages/nobleme/activity|activité récente}}");
+___('compendium_page_draft_irc',      'EN', "Send a message on IRC");
+___('compendium_page_draft_irc',      'FR', "Envoyer un message sur IRC");
+___('compendium_page_draft_discord',  'EN', "Send a message on Discord");
+___('compendium_page_draft_discord',  'FR', "Envoyer un message sur Discord");
+___('compendium_page_draft_submit',   'EN', "Publish the page");
+___('compendium_page_draft_submit',   'FR', "Publier la page");
 
 
 

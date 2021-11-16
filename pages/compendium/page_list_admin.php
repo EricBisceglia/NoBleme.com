@@ -349,7 +349,7 @@ if(!page_is_fetched_dynamically()) { /****/ include './../../inc/header.inc.php'
           <?php if($compendium_pages_list[$i]['deleted']) { ?>
           <?=__icon('x', is_small: true, alt: 'X', title: __('compendium_list_admin_deleted'), title_case: 'initials')?>
           <?php } else if($compendium_pages_list[$i]['draft']) { ?>
-          <?=__icon('copy', is_small: true, alt: 'C', title: __('compendium_list_admin_draft'), title_case: 'initials')?>
+          <?=__icon('copy', is_small: true, alt: 'C', title: __('compendium_list_admin_draft'), title_case: 'initials', href: 'pages/compendium/page_publish?id='.$compendium_pages_list[$i]['id'])?>
           <?php } else { ?>
           &nbsp;
           <?php } ?>

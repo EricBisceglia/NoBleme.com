@@ -6,6 +6,7 @@
 include_once './../../inc/includes.inc.php';        # Core
 include_once './../../actions/compendium.act.php';  # Actions
 include_once './../../lang/compendium.lang.php';    # Translations
+include_once './../../inc/functions_time.inc.php';  # Time management
 include_once './../../inc/bbcodes.inc.php';         # BBCodes
 
 // Limit page access rights
@@ -335,12 +336,13 @@ if(!page_is_fetched_dynamically()) { /***************************************/ i
         <textarea class="indiv compendium_admin_urls" id="compendium_new_admin_urls" name="compendium_new_admin_urls"><?=$compendium_new_admin_urls?></textarea>
       </div>
 
-      <p class="text_red bold">
-        <?=__('compendium_page_new_draft')?>
+      <p class="text_orange bold smallpadding_bot">
+        <?=__('compendium_page_new_draft')?><br>
+        <?=__('compendium_page_new_draft_redir')?>
       </p>
 
       <?php if(isset($compendium_pages_add)) { ?>
-      <div class="smallpadding_top smallpadding_bot">
+      <div class="smallpadding_bot">
         <div class="red text_white uppercase bold bigger spaced">
           <?=__('error').__(':', spaces_after: 1).$compendium_pages_add?>
         </div>
